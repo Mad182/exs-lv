@@ -1,0 +1,34 @@
+<?php
+
+if (!im_mod()) {
+	redirect();
+}
+
+$logs = $db->get_results("SELECT * FROM `logs` ORDER BY `created` DESC LIMIT 200");
+if ($logs) {
+	foreach ($logs as $log) {
+		$tpl->newBlock('logs-list-node');
+		if ($log->user_id) {
+			$who = get_user($log->user_id);
+			$log->user_id = '<a href="/user/' . $who->id . '">' . usercolor($who->nick, $who->level, false, $who->id) . '</a>';
+		}
+
+		$place = '';
+
+		if ($log->foreign_table == 'pages') {
+			$page = $db->get_row("SELECT `title`, `strid` FROM `pages` WHERE `id` = '$log->foreign_key'");
+			$place = '<a href="/read/' . $page->strid . '">' . $log->foreign_table . '-' . $log->foreign_key . '</a>';
+		} else {
+			$place = $log->foreign_table . '-' . $log->foreign_key;
+		}
+
+		$tpl->assign(array(
+			'log-id' => $log->id,
+			'log-ip' => $log->ip,
+			'log-who' => $log->user_id,
+			'log-place' => $place,
+			'log-action' => $log->action,
+			'log-time' => $log->created,
+		));
+	}
+}

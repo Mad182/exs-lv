@@ -1,0 +1,26 @@
+/* ajax comments */
+#new-c-text {
+	height: 50px;
+}
+#comments-ajax-list {
+	padding: 0 10px 10px;
+	margin: 0;
+	list-style: none;
+}
+#comments-ajax-list li {
+	padding: 2px 0;
+	margin: 0;
+	border-bottom: 1px dashed #ccc;
+	height: auto !important;
+	height: 50px;
+	min-height: 50px;
+	background: transparent
+}
+#comments-ajax-list li p {
+	padding: 2px 0;
+	margin: 0;
+}
+#comments-ajax-list li p.comment-author {
+	font-size: 90%;
+	color: #888;
+}

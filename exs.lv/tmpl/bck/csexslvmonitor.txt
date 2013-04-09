@@ -1,0 +1,11 @@
+<h3>Spēļu serveri</h3>
+<div class="box monitor">
+<ul id="cstabs" class="shadetabs"><li><a href="/cs_1.html" rel="cst">CS PUB</a></li></ul>
+<div id="cs" class="ajaxbox"></div>
+<script type="text/javascript">
+var cst=new ddajaxtabs("cstabs", "cs")
+cst.setpersist(true)
+cst.setselectedClassTarget("link")
+cst.init(170000)
+</script>
+</div>

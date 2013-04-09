@@ -1,0 +1,258 @@
+body {
+	background: #ccc url('http://exs.lv/bildes/noise.png') repeat fixed 0 0;
+	font: normal 11px "Trebuchet MS",tahoma,helvetica,arial,sans-serif;
+}	
+
+#header {
+	background: url('http://exs.lv/bildes/personas/lfs.jpg') repeat 100% 10px;
+	height: 192px;
+}
+
+#wrapper h1, #wrapper h2, #wrapper h3 {
+	font-family: "Trebuchet MS",tahoma,helvetica,arial,sans-serif;
+}
+
+#wrapper {
+	background:#fff;
+	-webkit-box-shadow:rgba(0,0,0,0.1) 0px 1px 5px;
+	-moz-box-shadow:rgba(0,0,0,0.1) 0px 1px 5px;
+	box-shadow:rgba(0,0,0,0.1) 0px 1px 5px;
+	border:1px solid #aaa;
+	height: auto !important;
+	height: 1100px;
+}
+
+#left {
+	display:none;
+}
+
+#tools-bar {
+	background: #333;
+	text-shadow: rgba(255,255,255,0.05) 0px 1px 0px;
+	font-size: 11px;
+	border-bottom: 1px solid #252319;
+	padding: 1px 10px 0;
+}
+
+#header-overlay {
+	background: transparent;
+	height: 192px;
+}
+
+#top-menu {
+	padding: 2px 10px 0;
+	margin: 0;
+	background: #353535 url('http://exs.lv/bildes/lfs/navbar.png') repeat;
+	height: 35px;
+	line-height: 35px;
+	border: 0;
+}
+ 
+#top-menu ul {
+	padding: 0;
+	margin: 0;
+	height: 35px;
+	line-height: 35px;
+
+}
+
+#top-menu li {
+	padding: 0;
+	margin: 0;
+	height: 35px;
+	line-height: 35px;
+}
+
+#top-menu li a {
+	color: #fafafa;
+	text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px;
+	font-size: 12px;
+	font-weight: normal;
+	padding: 0 12px 0 14px;
+	margin: 0;
+	height: 35px;
+	line-height: 35px;
+	background: transparent url('http://exs.lv/bildes/lfs/seperator.png') no-repeat 0 -2px;
+}
+#top-menu li a:hover {
+	color: #fff;
+	text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px;
+}
+
+#top-menu li .first {
+	background: transparent 
+}
+
+#top-menu .selected a {
+	color: #eee;
+	background: #313131;
+	border-radius: 0;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+#top-menu ul#top-menu-right li ul {
+	height: auto;
+	border: 1px solid #847e59;
+	background: #bcb279;
+	top: 30px;
+}
+	
+#top-menu ul#top-menu-right li ul li {
+	background: transparent;
+
+}
+#top-menu ul#top-menu-right li ul li a {
+	color: #6E6949;
+	background: transparent;
+
+}
+#login-form label {
+	float: none;
+	display: inline;
+	margin: 0;
+}
+
+#login-form {
+	padding: 0 5px;
+}
+
+#top-menu a.external-login span {
+	margin-top: 8px;
+}
+
+#logo {
+	height: 158px;
+}
+
+#exs-logo {
+	background: transparent url('http://exs.lv/bildes/lfs/lfs-logo.png') no-repeat 60px 4px;
+	width: 500px;
+	height: 152px;
+}
+
+
+/* forum */
+
+#forum th, #forum th.first, #forum th.last {
+	background: #EDEFF1 url('http://exs.lv/bildes/noise.png') repeat;
+	text-shadow: rgba(255, 255, 255, 0.9) 0px 1px 0px;
+	color: #768089;
+	box-shadow: inset #b3bac1 0px 1px 3px;
+	padding: 10px 20px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin: 0 0 3px 0;
+	font-weight:700;
+	text-transform:uppercase;
+}
+
+#forum td {
+	border-right: none;
+	border-bottom: 1px solid #F3F3F3;
+}
+
+#forum td h3 {
+	padding: 5px 0;
+	text-shadow: 0;
+}
+
+#forum td h3, #forum h3 a {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+a {
+	color: #51A6C2;
+}
+
+#ucl .user a {
+	background: #51A6C2;
+}
+
+h1, h2 {
+	font-size: 16px;
+}
+
+#latest-topics {
+	margin: 4px 0;
+}
+
+p.core-pager {
+	padding: 6px 0;
+}
+
+#latest-topics li {
+	height: auto !important;
+	min-height: 45px;
+	height: 45px;
+}
+
+/* foruma komenti */
+#comments dt {
+	width: 120px;
+	text-align: center;
+}
+#comments dt a.username {
+	text-align: left;
+}
+#comments dt img {
+	padding: 1px;
+	margin: 5px auto 1px;
+	border: 1px solid #eee;
+}
+
+#comments dd {
+	margin: 0 0 0 120px;
+}
+
+#content .custom-title { 
+	color: #5a5a5a;
+	text-align: center;
+	font-size: 12px;
+}
+
+.author-info span.title {
+	font-weight: normal;
+}
+
+.author-info {
+	font-size: 11px;
+	line-height: 12px;
+	color: #999;
+}
+
+.comment-signature {
+	color: #666;
+}
+
+.comment-text {
+	height: auto !important;
+	height: 130px;
+	min-height: 130px;
+}
+
+#add-comment-form {
+	margin: 16px 10px 10px 110px;
+}
+
+
+#latest-topics.blockhref li a {
+	height: auto !important;
+	height: 39px;
+	min-height: 39px;
+	padding-left: 3px;
+}
+
+.content-block {
+	width: 728px;
+}
+
+#inner-content {
+	padding: 0 8px;
+}

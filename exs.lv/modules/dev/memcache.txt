@@ -1,0 +1,7 @@
+$m = new Memcache;
+$m->connect('localhost', 11211);
+
+if (!($data = $m->get('tmp'))) {
+  $m->set('tmp', $data, false, 10);
+}
+

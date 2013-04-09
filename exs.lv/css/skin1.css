@@ -1,0 +1,1172 @@
+html, body {
+color: #ddd;
+background: #dde2e4 url(http://exs.lv/bildes/dark/body.jpg) repeat 0 0
+}
+#wrapper {
+background: #50504A url('http://exs.lv/bildes/dark/grain_dark.gif');
+margin: 0 auto 10px;
+padding: 0 8px;
+width: 992px;
+}
+#container {
+background: #3A3A3A;
+border: 1px solid #333;
+border-bottom: 1px solid #111
+}
+#logo {
+height: 130px;
+position: relative;
+margin: 0;
+}
+#header-stuff {
+bottom: 10px;
+}
+#header-overlay {
+background: transparent;
+}
+#tools-bar {
+background: transparent url('http://exs.lv/bildes/top-nav.png') repeat 0 0;
+margin: 0;
+height: 22px;
+line-height: 22px;
+}
+#site-links li {
+height: 22px;
+}
+#site-links a {
+height: 22px;
+}
+#top-menu {
+height: 16px;
+background: transparent url('http://exs.lv/bildes/333_90.png') repeat;
+border-bottom: 1px solid #222;
+border-top: 1px solid #444;
+font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+font-size: 11px;
+padding: 6px 7px;
+margin: 0;
+line-height: 16px;
+}
+#top-menu-left {
+float: left;
+height: 16px;
+margin: 0;
+line-height: 16px;
+padding: 0
+}
+#top-menu li {
+background: transparent;
+float: left;
+position: relative;
+margin: 0;
+line-height: 16px;
+padding: 0
+}
+#top-menu li a {
+float: left;
+height: 16px;
+color: #E5E5D5;
+padding: 0 6px
+}
+#top-menu-right li a {
+border-left: 1px solid #222;
+}
+#top-menu-left li a {
+border-right: 1px solid #222;
+}
+#top-menu li.selected a {
+color: #fff;
+background: #333;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px
+}
+#top-menu-right li ul {
+position: absolute;
+display: none;
+background: #222;
+top: 15px;
+z-index: 100;
+border: 5px solid #111;
+margin: 0;
+padding: 0;
+list-style: none;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px
+}
+#top-menu-right li ul#user-group-menu li {
+background: transparent url('http://exs.lv/bildes/333_90.png') repeat;
+}
+#top-menu-right li ul#user-group-menu li a {
+background: transparent;
+}
+#top-menu-right li:hover ul {
+display: block
+}
+#top-menu-right li li {
+background: transparent;
+display: inline;
+padding: 0;
+margin: 0;
+}
+#top-menu-right li li a {
+background: transparent url('http://exs.lv/bildes/333_90.png') repeat;
+display: block;
+height: auto;
+width: 170px;
+margin: 1px 0 0;
+padding: 1px 6px
+}
+.monitor {
+font-size: 90%;
+line-height: 1.2
+}
+table.players td {
+background: #333;
+color: #888;
+}
+table.players .odd td {
+background: #222
+}
+ul.menu {
+padding: 1px 5px 3px
+}
+ul.menu li {
+display: inline;
+background: transparent;
+padding: 0
+}
+ul.menu li ul {
+display: none;
+margin: 0;
+padding: 0 0 0 10px
+}
+ul.menu li a {
+text-align: justify;
+font-weight: 700;
+line-height: 18px;
+display: block;
+outline: none;
+margin: 0;
+padding: 0 0 0 6px
+}
+ul.menu li a:hover, ul.menu li a:focus {
+border-left: 6px solid #777
+}
+#wrapper ul.menu li.selected a {
+color: #fff;
+border-left: 6px solid #555
+}
+#content ul#topmenu {
+margin: 2px 0 5px;
+padding: 0
+}
+#content ul#topmenu li {
+float: left;
+padding: 2px 4px 5px 12px
+}
+
+.tabs {
+background: transparent;
+border-bottom: 1px solid #444;
+}
+.tabs li a {
+background: #444;
+border: 1px solid #333;
+text-shadow: 1px 1px 1px #222;
+border-bottom: 0;
+}
+
+.tabs li a.tab:hover {
+background-position: 0 -15px;
+color: #333;
+text-decoration: none;
+border-color: #E6B800
+}
+.tabs li a.active, .tabs li a.selected, .tabs li a.active:hover {
+background: #555;
+color: #999;
+text-shadow: 1px 1px 1px #222;
+}
+
+
+#content div.tabMain {
+background: #555;
+border: 1px solid #363636;
+border-top: 0;
+}
+textarea {
+border: 1px solid #ddd;
+color: #555;
+background: #eff3f8;
+}
+#wrapper .red, #wrapper .r {
+color: #ef6000
+}
+#wrapper .green, #wrapper .g {
+color: #60ef00
+}
+ul#mainlist li {
+background: transparent;
+margin: 0;
+padding: 0 0 10px
+}
+ul#mainlist ul.article-info li, ul.article-info li {
+float: left;
+color: #666;
+font-size: 11px;
+line-height: 18px;
+height: 18px;
+margin: 0;
+padding: 0 7px 0 19px
+}
+#wrapper .article-info .share a {
+background-color: #555;
+border: 1px solid #333;
+-moz-box-shadow: 2px 2px 4px #363636;
+-webkit-box-shadow: 2px 2px 4px #363636;
+box-shadow: 2px 2px 4px #363636;
+}
+#mainlist h3 {
+background: transparent;
+border: 0;
+font-size: 14px;
+line-height: 16px;
+clear: both;
+margin: 12px 0 3px;
+padding: 0
+}
+table.v2 {
+border: 1px solid #000;
+margin: 5px auto
+}
+table.v2 td, table.v2 th {
+border: 1px solid #aaa;
+padding: 3px 6px
+}
+table.v2 th {
+text-align: center;
+font-weight: 700;
+background: #fafafa
+}
+.comment-signature {
+border-top: 1px solid #444
+}
+table#forum {
+width: 100%;
+border: 0;
+border-top: 0;
+margin: 8px auto;
+padding: 0
+}
+table#forum tr td {
+border: 1px solid #444;
+border-left: 0;
+border-top: 0;
+border-right: 1px dashed #444;
+color: #6e6e6e;
+text-align: left;
+font-size: 90%;
+padding: 2px 6px
+}
+table#forum tr td.last {
+border-right: 0
+}
+table#forum tr td h3 {
+font-size: 12px;
+margin: 2px 0;
+padding: 0
+}
+table#forum tr th {
+border: 0;
+font-weight: 400;
+color: #999;
+text-align: left;
+background: #333;
+font-size: 10px;
+line-height: 13px;
+height: 13px;
+padding: 5px 8px
+}
+table#forum tr th.first {
+font-weight: 700;
+color: #aaa
+}
+.core-pager a {
+border: 1px solid #444;
+margin: 0 -1px 0 0;
+padding: 0 2px;
+background: #333;
+}
+.core-pager a.selected {
+border: 1px solid #333;
+background: #555;
+font-weight: 700
+}
+#comments dt {
+border-top: 4px solid #333;
+}
+#comments dd {
+border-top: 4px solid #333;
+}
+#comments dt .username {
+font-weight: 700;
+background: #444;
+}
+.inf {
+background: #444;
+color: #aaa;
+}
+p.comment-tools {
+border-top: 1px solid #444;
+}
+a.friend-right, a.friend {
+border: 1px solid #eee;
+}
+.fieldbox fieldset, .new-topic fieldset {
+border: 1px solid #444;
+padding: 1em
+}
+#blog-edit fieldset {
+border: 0;
+padding: 0
+}
+.fieldbox legend {
+border: 1px solid #444;
+color: #aaa;
+font-size: 90%;
+text-align: right;
+padding: 0 5px
+}
+.new-topic label {
+display: block;
+padding: 6px 0 2px
+}
+.new-topic textarea {
+display: block;
+width: 400px;
+height: 140px;
+background: #fff
+}
+.new-topic input.new-title {
+display: block;
+font-weight: 700;
+background: #fff;
+width: 300px
+}
+a.friend-right:hover, a.friend:hover {
+border: 1px solid #ddd
+}
+.bloglist li {
+background: transparent;
+}
+.av {
+float: left;
+display: inline;
+background: #555;
+border: 1px solid #333;
+margin: 3px 8px 3px 1px;
+padding: 2px;
+-moz-box-shadow: 2px 2px 3px #363636;
+-webkit-box-shadow: 2px 2px 3px #363636;
+box-shadow: 2px 2px 3px #363636;
+}
+.mb-av {
+background: #555;
+border: 1px solid #333;
+margin: 3px 8px 3px 1px;
+padding: 2px;
+-moz-box-shadow: 2px 2px 3px #464646;
+-webkit-box-shadow: 2px 2px 3px #464646;
+box-shadow: 2px 2px 3px #464646;
+}
+.mb-col li {
+border-bottom: 1px solid #444;
+}
+.mb-col li.group {
+border-right: 3px solid #E6B800;
+border-bottom: 1px solid #E6B800
+}
+#miniblog-list li ul li {
+border-bottom: 1px solid #4a4a4a;
+}
+.blockhref li a:hover {
+background: #333
+}
+.blockhref li a span {
+color: #aaa;
+font-family: arial;
+}
+.mb-col li .author {
+color: #999;
+}
+.form textarea#newminiblog {
+height: 70px;
+}
+.form textarea#responseminiblog {
+height: 50px;
+}
+.mbox {
+background: #444;
+border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+padding: 2px 6px
+}
+ul#sitemap li {
+background: transparent
+}
+#footer {
+background: #222;
+border-top: 1px solid #2A2A2A;
+border-bottom: 1px solid #1A1A1A;
+margin: 0;
+padding: 8px 0 0
+}
+#footer div.infoblock {
+width: 223px;
+color: #777;
+height: 130px;
+float: left;
+display: inline;
+background: #333;
+border: 1px solid #222;
+font-size: 11px;
+margin: 4px;
+padding: 6px
+}
+#footer div.infoblock ul {
+margin: 4px 0;
+padding: 0
+}
+#footer div.infoblock ul li {
+background: transparent;
+display: inline;
+margin: 0;
+padding: 0
+}
+#footer div.infoblock ul li a {
+border-bottom: 1px dashed #444;
+display: block
+}
+#online-users {
+background: #333;
+border: 1px solid #222;
+margin: 4px;
+padding: 6px 10px;
+font-size: 90%;
+}
+#edit-signature {
+width: 330px;
+height: 90px
+}
+#wrapper #mb-tags {
+float: right;
+}
+#wrapper .list-tags {
+padding: 0;
+margin: 5px 0;
+list-style: none;
+}
+#wrapper .list-tags li {
+float: left;
+margin: 3px 4px;
+height: 20px;
+min-height: 20px;
+line-height: 20px;
+padding: 0 7px 0 15px;
+background: url('http://exs.lv/bildes/tag_bg.png') no-repeat 0 0;
+text-shadow: 0 1px 0 #fff;
+font-size: 12px;
+font-family: helvetica, arial, sans-serif;
+-webkit-border-top-right-radius: 2px;
+-webkit-border-bottom-right-radius: 2px;
+-moz-border-radius-topright: 2px;
+-moz-border-radius-bottomright: 2px;
+border-top-right-radius: 2px;
+border-bottom-right-radius: 2px;
+}
+#wrapper .list-tags li a {
+color: #656565;
+}
+#wrapper .list-tags li a:hover {
+color: #369;
+text-decoration: none;
+}
+.small-userlist li a img {
+border: 1px solid #fff
+}
+#walpaper a img {
+border: 1px solid #fff
+}
+#wallpapers li a span {
+background: #000;
+color: #fff;
+}
+#wallpapers li a img {
+border: 2px solid #fff
+}
+#wallpapers li a:hover img {
+border: 2px solid #000
+}
+h1, h2, h3, h4 {
+font-weight: 700;
+font-size: 12px;
+line-height: 15px;
+border-bottom: 4px solid #777;
+border-top: 1px solid #3A3A3A;
+font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
+text-shadow: 0 1px 1px #555;
+background: #222 url(http://exs.lv/bildes/dark/post_top.gif) repeat-x scroll left top;
+margin: 0 0 4px;
+padding: 3px 6px;
+color: #ccc;
+}
+#header h1 {
+border: 0;
+}
+h1 {
+font-size: 15px;
+}
+h2 {
+font-size: 15px;
+}
+h3 {
+font-size: 13px;
+}
+h4, #content h4 {
+font-size: 12px;
+}
+#forum h3 {
+padding: 0;
+background: transparent;
+border: 0;
+}
+#wrapper h1 a.rss, #wrapper h2 a.rss {
+float: right;
+color: #DC6500;
+padding: 0 2px 0 10px
+}
+#wrapper .tabMain h2 {
+background: transparent;
+border: 0;
+padding: 6px 0 9px;
+margin: 0;
+}
+#full-story h2, #full-story h1 {
+background: transparent;
+color: #000;
+border: 0;
+font-variant: normal;
+padding: .6em 0 .4em
+}
+#search-form input {
+height: 16px;
+float: left;
+width: 90px;
+border-right: 0;
+margin: 0;
+padding: 1px 5px
+}
+#search-form input.submit {
+border: 0;
+background: url(http://exs.lv/bildes/skins/1/searchbg.gif) no-repeat 100% 0;
+height: 20px;
+text-align: left;
+color: #fff;
+width: 67px;
+line-height: 20px;
+font-size: 10px;
+font-weight: 700;
+margin: 0;
+padding: 0 0 0 3px
+}
+.imgs a {
+float: left;
+width: 54px;
+height: 54px;
+overflow: hidden;
+display: inline;
+border: 1px solid #fff;
+position: relative;
+background: #888;
+margin: 0
+}
+.imgs .items a {
+float: left;
+width: 50px;
+height: 50px;
+overflow: hidden;
+display: inline;
+border: 1px solid #fff;
+position: relative;
+background: #888;
+margin: 1px
+}
+.imgs a span {
+font-size: 10px;
+position: absolute;
+bottom: 1px;
+right: 1px;
+height: 16px;
+width: 20px;
+background: #000;
+color: #fff;
+display: block;
+text-align: center
+}
+#listsub-list li {
+padding: 2px 20px
+}
+.top-infoblock {
+position: absolute;
+left: 240px;
+top: 30px
+}
+.form fieldset {
+border: 1px solid #444;
+margin: 0 0 1.5em;
+padding: 1.4em
+}
+.form legend {
+font-weight: 700;
+font-size: 1.1em;
+color: #ddd;
+text-shadow: none;
+}
+.form input.text, .form input.title, .form textarea, .form select {
+border: 1px solid #eee;
+margin: .5em 0;
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+background: #ddd
+}
+.form input.text:focus, .form input.smtext:focus, .form input.title:focus, .form textarea:focus, .form select:focus {
+border: 1px solid #fff
+}
+.form input.text, .form input.title {
+width: 300px;
+padding: 5px
+}
+.form input.title {
+font-size: 1.5em
+}
+.form textarea {
+width: 390px;
+height: 250px;
+padding: 5px
+}
+.form .error, .form .notice, .form .success {
+margin-bottom: 1em;
+border: 2px solid #ddd;
+padding: .8em
+}
+.form .error {
+background: #FBE3E4;
+color: #8a1f11;
+border-color: #FBC2C4
+}
+.form .notice {
+background: #FFF6BF;
+color: #514721;
+border-color: #FFD324
+}
+.form .success {
+background: #E6EFC2;
+color: #264409;
+border-color: #C6D880
+}
+.form .error a {
+color: #8a1f11
+}
+.form .notice a {
+color: #514721
+}
+.form .success a {
+color: #264409
+}
+#picture-game {
+background: #4a4a4a;
+border: 2px solid #525252;
+padding: 10px
+}
+#image-game-banner {
+display: block;
+margin: 6px auto
+}
+.moar {
+display: block;
+font-size: 10px;
+text-align: right
+}
+div.inline-ads-box {
+float: right;
+margin: 0 0 10px 10px
+}
+#wrapper .auto-embed, #wrapper .auto-embed-placeholder {
+background: #444;
+border: 1px solid #333;
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+-moz-box-shadow: 2px 2px 4px #363636;
+-webkit-box-shadow: 2px 2px 4px #363636;
+box-shadow: 2px 2px 4px #363636
+}
+#wrapper div.auto-embed a {
+color: #999;
+float: right
+}
+#wrapper div.auto-embed strong {
+color: #aaa
+}
+#related-topics {
+margin: 10px 0 0
+}
+#related-topics li {
+background: url(http://exs.lv/bildes/arr_up.gif) no-repeat 0 50%
+}
+#latest-blogs li {
+background: transparent;
+border-bottom: 1px solid #444;
+margin: 0;
+padding: 5px 0
+}
+#latest-blogs li h3 {
+margin: 0;
+}
+#latest-blogs li div.author {
+float: left;
+width: 90px;
+height: 110px;
+text-align: center;
+line-height: 13px
+}
+#latest-blogs li div.author img {
+width: 75px;
+height: 75px;
+display: inline;
+float: none;
+margin: 0;
+padding: 0
+}
+.inliner-link {
+font-size: 90%;
+padding: 2px
+}
+.comment-edited-by {
+color: #999;
+}
+#page-options li {
+float: left;
+background: transparent;
+margin: 0;
+padding: 0
+}
+#ucl li {
+color: #999;
+}
+#ucl li a {
+border: 1px solid #222;
+}
+#ucl li.user a {
+background: #EEC
+}
+#ucl li.editor a {
+background: #070
+}
+#ucl li.moder a {
+background: #00b
+}
+#ucl li.admin a {
+background: #700
+}
+.video-thb img {
+border: 1px solid #333;
+background: #444;
+}
+#profile-image {
+background: #555;
+border: 1px solid #333;
+padding: 2px;
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+-moz-box-shadow: 2px 2px 3px #363636;
+-webkit-box-shadow: 2px 2px 3px #363636;
+box-shadow: 2px 2px 3px #363636;
+}
+.index-list {
+list-style: none;
+margin: 0;
+padding: 0 0 10px
+}
+.index-list li {
+background: transparent;
+margin: 0;
+padding: 0 0 5px
+}
+.index-list li.sm {
+background: transparent;
+margin: 0;
+padding: 0 0 0 30px
+}
+.index-list li p {
+font-size: 90%;
+line-height: 15px
+}
+.index-list li h3, .index-list li h3 a {
+font-size: 12px;
+line-height: 16px;
+font-weight: 700;
+margin: 0;
+padding: 0
+}
+.index-list li.sm h3, .index-list li.sm h3 a {
+font-size: 11px;
+line-height: 14px;
+font-weight: 400;
+margin: 0;
+padding: 0
+}
+body.mceContentBody {
+font: 400 8pt/13pt Verdana, Arial, sans-serif;
+color: #000;
+margin: 3px;
+padding: 0
+}
+a {
+color: #EEC;
+}
+a:hover {
+color: #FFA;
+}
+blockquote {
+border: 1px solid #333;
+color: #BBB;
+display: block;
+background: #4A4A4A url(http://exs.lv/bildes/dark/quote.gif) no-repeat left top;
+margin: 5px;
+padding: 6px 14px 6px 44px
+}
+code, pre, .code {
+background: #333;
+border: 1px solid #222;
+border-left: 6px solid #444;
+display: block;
+font-family: Tahoma, sans-serif;
+font-size: 11px;
+white-space: pre;
+margin: .5em 1em;
+padding: 4px
+}
+.admins {
+color: #f32
+}
+.mods {
+color: #66f
+}
+.rautors {
+color: #6f6
+}
+.bot {
+color: #777
+}
+.banned {
+text-decoration: line-through;
+color: #000
+}
+html .banned {
+color: #000
+}
+table.main-table, table.infotable {
+border: 1px solid #333;
+border-collapse: collapse;
+margin: 8px auto;
+padding: 0
+}
+table.main-table th, table.main-table td, table.infotable td {
+border: 1px solid #333;
+padding: 2px 4px
+}
+table.main-table th, table.main-table thead td, table.infotable th {
+background: #222;
+text-align: center;
+font-weight: 700;
+font-size: 10px;
+padding: 1px 4px
+}
+table.main-table tr.darker td, table.infotable tr.r2 td {
+background: #555
+}
+table.infotable tr.hirank td {
+background: #fbe6f3
+}
+hr {
+color: #333;
+background: #333;
+height: 1px;
+border: none;
+margin: 6px 100px;
+padding: 0
+}
+.rater-block span {
+line-height: 12px;
+margin: -4px 0 0
+}
+div.copyright {
+text-align: center;
+font-size: 10px;
+color: #777;
+padding: 10px
+}
+img.attels_pa_labi {
+float: right;
+border: 1px solid #333;
+background: #444;
+margin: 5px 0 5px 10px;
+padding: 4px;
+-moz-box-shadow: 2px 2px 4px #363636;
+-webkit-box-shadow: 2px 2px 4px #363636;
+box-shadow: 2px 2px 4px #363636
+}
+img.attels_pa_kreisi {
+float: left;
+border: 1px solid #333;
+background: #444;
+margin: 5px 10px 5px 0;
+padding: 4px;
+-moz-box-shadow: 2px 2px 4px #363636;
+-webkit-box-shadow: 2px 2px 4px #363636;
+box-shadow: 2px 2px 4px #363636
+}
+img.attels_centrets {
+display: block;
+border: 1px solid #333;
+background: #444;
+margin: 8px auto;
+padding: 4px;
+-moz-box-shadow: 2px 2px 4px #363636;
+-webkit-box-shadow: 2px 2px 4px #363636;
+box-shadow: 2px 2px 4px #363636
+}
+a.thb-image img {
+border: 1px solid #333;
+background: #444;
+-moz-box-shadow: 2px 2px 4px #363636;
+-webkit-box-shadow: 2px 2px 4px #363636;
+box-shadow: 2px 2px 4px #363636
+}
+a.mb-api-twitter {
+background: url(http://exs.lv/bildes/ic.png) no-repeat 0 -280px;
+line-height: 17px;
+font-size: 90%;
+color: #999;
+padding: 0 0 0 16px
+}
+#exs-groups li {
+background: transparent;
+height: 87px;
+width: 32%;
+float: left;
+margin: 0;
+padding: 5px
+}
+#exs-groups li h3 {
+font-size: 14px;
+margin: 0;
+padding: 6px 0
+}
+#exs-groups li h3 a {
+font-size: 14px
+}
+#exs-groups li p {
+font-size: 90%;
+color: #888;
+line-height: 1.2
+}
+.rpl-avatar {
+height: 45px;
+width: 45px;
+float: left;
+margin: 0 8px 0 0
+}
+.rpl-list {
+list-style: none;
+margin: 12px;
+padding: 0 10px 10px
+}
+.rpl-list li {
+border-bottom: 1px dashed #ccc;
+height: auto!important;
+min-height: 45px;
+background: transparent;
+margin: 0;
+padding: 5px 0
+}
+.rpl-list li div {
+margin: 0;
+padding: 2px 0
+}
+.rpl-list li p.comment-author {
+font-size: 90%;
+color: #888
+}
+.unhidden, ul.menu li.selected ul {
+display: block
+}
+#top-menu-right, #ucl {
+float: right;
+margin: 0;
+padding: 0
+}
+.monitor img, .small-userlist li a:hover img, #walpaper a:hover img, .imgs a:hover, a.radio:hover {
+border: 1px solid #000
+}
+table.players td.score, table#forum tr td.stat {
+text-align: right
+}
+a.fl, .core-pager span, #newpic, .code-header, .quote-nouser {
+display: none
+}
+img.floatLeft, a.friend {
+float: left
+}
+.core-pager, #walpaper {
+text-align: center
+}
+a.friend-right, .rater-block {
+float: right
+}
+#miniblog-list, blockquote p {
+padding: .5em 0
+}
+/* notifikacijas */
+#user-notify li {
+border-bottom: 1px solid #444;
+}
+#user-notify li a:hover {
+background-color: #333
+}
+#user-notify li span {
+color: #aaa;
+}
+#pm-table {
+border: 0;
+}
+#pm-table td {
+border-bottom: 1px solid #4a4a4a;
+border-top: 1px solid #4a4a4a;
+background: transparent;
+}
+#pm-table tr:hover td {
+background: #606060;
+}
+#pm-table tr.read-0 td {
+background: #522;
+}
+#pm-read-footer {
+border-top: 1px solid #444;
+}
+#pm-h h3 {
+background: #777;
+}
+#pm-h h3 span {
+color: #999;
+}
+#friends-pending li {
+background: transparent;
+border: 1px solid #f3f3f3;
+margin: 3px 0;
+padding: 3px
+}
+#friends-pending li a.image {
+float: left;
+margin: 0 5px 0 0
+}
+#friends-pending li a.image img {
+width: 47px;
+height: 47px
+}
+#friends-pending li h3 span {
+color: #bbb;
+font-weight: normal
+}
+ul#friend-list li {
+background: transparent;
+float: left;
+position: relative;
+padding: 3px 0;
+border: 1px solid #ccc;
+margin: 3px;
+text-align: center;
+width: 81px;
+height: 95px
+}
+ul#friend-list li.owner {
+border: 1px solid #911;
+}
+ul#friend-list li.mod {
+border: 1px solid #119;
+}
+ul#friend-list li a.delete {
+position: absolute;
+top: 1px;
+right: 1px;
+line-height: 0;
+font-size: 0;
+-moz-opacity: 0.90;
+opacity: .90;
+filter: alpha(opacity=90)
+}
+ul#friend-list li a.delete:hover {
+-moz-opacity: 1.00;
+opacity: 1.00;
+filter: alpha(opacity=100)
+}
+
+.usr-awards li {
+background: #444;
+border: 1px solid #666;
+}
+#user-awards-inactive li {
+background: #444;
+border: 1px solid #666
+}
+
+
+/* site map */
+div#sitemap ul li {
+background: transparent;
+}
+div#sitemap ul li a, div#sitemap ul li a:hover {
+border-bottom: 3px solid #333;
+border-left: 7px solid #333;
+padding: 3px 8px;
+}
+div#sitemap ul li li a, div#sitemap ul li li a:hover {
+border-bottom: 2px solid #333;
+border-left: 6px solid #333;
+padding: 2px 7px;
+}
+
+/* gallery */
+.scrollable {
+border: 1px solid #444;
+}
+
+.imgs a {
+border: 1px solid #333;
+
+}
+
+#latest-topics li {
+	border-bottom: 1px solid #444;
+}
+
+/* filmu infobox */
+#movie-info {
+border: 1px solid #333;
+}

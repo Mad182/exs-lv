@@ -1,0 +1,73 @@
+#game-wrapper {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background: #D4BA8C url('./images/dirt.gif') repeat 0 -10px;
+	border: 0;
+	padding: 0;
+	width: 920px;
+	margin: 10px auto;
+	border: 1px solid #946A2C;
+	color: #eee;
+}
+
+#game-menu {
+  background: url('/bildes/custom/custom_wrapper_light_2.png');
+}
+
+#game-menu ul {
+  height: 24px;
+  padding: 0 10px;
+  margin: 0;
+}
+
+#game-menu ul li {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+
+#game-menu ul li a {
+  background: transparent;
+  padding: 2px 8px;
+  margin: 0;
+  float: left;
+  height: 20px;
+  color: #000;
+  font-size: 11px;
+  line-height: 20px;
+}
+
+#game-menu ul li a:hover {
+  background: url('/bildes/custom/custom_wrapper_light.png');
+}
+
+#game-content {
+  padding: 10px;
+}
+
+#world {
+  width: 900px;
+  height: 1200px;
+  position: relative;
+  border-right: 1px solid #64A2D5;
+  border-bottom: 1px solid #64A2D5;
+}
+
+.map {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  border-left: 1px solid #64A2D5;
+  border-top: 1px solid #64A2D5;
+  text-indent: -99999px;
+}
+
+.map-0 {
+  background: url('./images/water.gif') no-repeat 0 0;
+}
+
+.map-1 {
+  background: url('./images/water.gif') no-repeat 0 0;
+}

@@ -1,0 +1,145 @@
+.fleft {
+  float:left
+}
+.fright {
+  float:right
+}
+.dg {
+  color:#adb2b6
+}
+.rs_content_title {
+  clear:both;
+  margin:10px 0 10px 10px;
+  color:#e3e6e8;
+  padding-bottom:5px;
+  border-bottom:1px solid #747677
+}
+#rs_info_block {
+  padding:3px 7px;
+  border:1px solid #d8d8d8;
+  border-left:4px solid #d8d8d8;
+  margin:7px 0;
+  font-size:11px
+}
+#rs_info_block img {
+  float:left;
+  margin-right:5px;
+  vertical-align:middle
+}
+/* tabulas stilizējumi */
+.rslist {
+  font-size:11px;
+  /*clear:both;*/
+  margin-bottom:10px
+}
+.rslist tr.listhead {
+  border-bottom:2px solid #9c9a9a;
+  font-weight:bold;
+  text-align:center;
+  /*background:transparent url('img/header.png') repeat-x top;*/
+  /*color:#374a55*/
+} 
+.rslist tr td {
+  padding:3px;
+  border-bottom:1px solid #515050
+} 
+.rslist tr:hover td {
+  background:#3c4042
+}   
+.rslist tr.listhead:hover td {
+  background-color:none
+}   
+.rslist tr td.center, .rslist-center td {
+  text-align:center
+}
+.rslist tr td.right {
+  text-align:right
+}
+.rslist tr.letter td {
+  font-weight:bold
+}
+.rslist .number {
+  color:#333;
+  font-weight:bold
+}
+.rslist .border {
+  border-top:2px solid #727476
+}
+.rslist .level, .rslist .quest {
+  font-size:12px;
+  border:0px;
+  height:25px;
+  font-family:tahoma,verdana,arial;
+  font-size:11px;
+  padding:3px 
+}
+.rslist .level {
+  width:25px;  
+  text-align:center;
+  color:orangered
+}
+.rslist .quest {
+  width:200px;  
+}
+.skill-level {
+  margin:10px 0 0 50px
+}
+
+#quest-form {
+  margin:40px 0 0 80px
+}
+#quest-form p {
+  margin:3px 0;
+  font-weight:bold;
+  color:#b0b0b0
+}
+#quest-form .text {
+  width:500px;
+  height:60px;
+  font-size:10px;
+  display:block
+}
+#quest-form fieldset {
+  width:520px
+}
+/* --------------------- */
+
+/* quests mainpage */
+#quests-intro {
+ margin:10px 20px 0 20px;
+ padding:15px 15px 15px 110px;
+ border:1px solid #6e7274;
+ border-bottom:3px solid #6e7274;
+ border-top:3px solid #6e7274;
+ background:transparent url('/bildes/rs/goblins.png') no-repeat left;
+}
+#quests-intro p {
+  text-indent:10px;
+  font-size:11px
+}
+.quests-tabs {
+  margin:0 0 20px 40px;
+  padding:0;
+  border:1px solid #747677;
+  border-top:0px;  
+  float:left  
+}
+.quests-tabs li {
+  float:left;
+  background:transparent;
+  padding:3px 8px;
+  margin:0px;
+  border-right:1px solid #56595a;
+  font-size:11px
+}
+.quests-tabs .nohover {
+  font-weight:bold
+}
+.quests-tabs li:hover {
+  background:#3c4042
+}
+.quests-tabs .nohover:hover {
+  background:none
+}
+
+

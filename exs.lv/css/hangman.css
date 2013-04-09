@@ -1,0 +1,62 @@
+#hm-game-container {
+	height: auto !important;
+	height: 400px;
+	min-height: 400px;
+}
+#hm-game-body {
+	height: 340px;
+	color: #000;
+	background: #fff;
+}
+#hm-game-question {
+	float: right;
+	margin: 100px 0 0;
+	font-weight: bold;
+	width: 310px;
+	text-align: center;
+	font-size: 12px;
+	color: #666;
+}
+#hm-game-answer {
+	font-size: 14px;
+	color: #000;
+	text-transform: uppercase;
+}
+#hm-game-answer #hm-new-game {
+	font-size: 16px;
+	text-transform: lowercase;
+}
+#hm-game-alphabet {
+	float: right;
+	margin: 130px 10px 0;
+	font-weight: bold;
+	width: 399px;
+	text-align: right;
+}
+#hm-game-alphabet a, #hm-game-alphabet span {
+	text-transform: uppercase;
+	color: #369;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	background: #eee;
+	margin: 1px;
+	float: left;
+	padding: 4px 3px;
+	font-size: 11px;
+	width: 11px;
+	line-height: 16px;
+	text-align: center;
+}
+#hm-game-alphabet a:hover {
+	background: #f3f3f3;
+}
+#hm-game-alphabet span.correct {
+	color: #ddd;
+	text-decoration: line-through;
+}
+#hm-game-alphabet span.wrong {
+	color: #ddd;
+	text-decoration: line-through;
+}

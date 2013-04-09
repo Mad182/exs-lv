@@ -1,0 +1,906 @@
+.fleft {
+  float:left
+}
+.fright {
+  float:right
+}
+.dg {
+  color:#adb2b6
+}
+.cab {
+  font-weight:bold;
+  color:#9facbb
+}
+.rs_content_title {
+  clear:both;
+  margin:10px 0 10px 10px;
+  color:#e3e6e8;
+  padding-bottom:5px;
+  border-bottom:1px solid #747677
+}
+#rs_info_block {
+  padding:3px 7px;
+  border:1px solid #d8d8d8;
+  border-left:4px solid #d8d8d8;
+  margin:7px 0;
+  font-size:11px
+}
+#rs_info_block img {
+  float:left;
+  margin-right:5px;
+  vertical-align:middle
+}
+/* tabulas stilizējumi */
+.rslist {
+  font-size:11px;
+  margin-bottom:10px
+}
+.rslist tr.listhead {
+  border-bottom:2px solid #9c9a9a;
+  font-weight:bold;
+  text-align:center
+} 
+.rslist tr td {
+  padding:3px;
+  border-bottom:1px solid #515050
+} 
+.rslist tr:hover td {
+  background-color:#3c4042
+}  
+.rslist tr td.center, .rslist-center td {
+  text-align:center
+}
+.rslist tr td.right {
+  text-align:right
+}
+.rslist tr.letter td {
+  font-weight:bold
+}
+.rslist .number {
+  color:#333;
+  font-weight:bold
+}
+.rslist .border {
+  border-top:2px solid #727476
+}
+.rslist .level, .rslist .quest {
+  font-size:12px;
+  border:0px;
+  height:25px;
+  font-family:tahoma,verdana,arial;
+  font-size:11px 
+}
+.rslist .level {
+  width:25px;  
+  text-align:center;
+  color:orangered
+}
+.rslist .quest {
+  width:200px;  
+}
+.skill-level {
+  margin:10px 0 0 50px
+}
+.skill-level .center {
+  color:#6d7d92
+}
+.rslist #table-title {
+  text-align:center;
+  font-weight:bold;
+  color:#fff
+}
+.rslist #table-title img {
+  max-height:10px;
+  vertical-align:middle
+}
+/* quests mainpage */
+#quests-intro {
+ margin:10px 20px 0 20px;
+ padding:15px 15px 15px 15px;
+ border:1px solid #6e7274;
+ border-bottom:3px solid #6e7274;
+ border-top:3px solid #6e7274;
+ /*background:transparent url('/bildes/rs/goblins.png') no-repeat left;*/
+}
+#quests-intro img {
+  max-height:130px;
+  float:left;
+  margin:-5px 10px 5px 0
+}
+#quests-intro p {
+  text-indent:10px;
+  font-size:11px
+}
+.quests-tabs {
+  margin:0 0 20px 40px;
+  padding:0;
+  border:1px solid #747677;
+  border-top:0px;  
+  float:left  
+}
+.quests-tabs li {
+  float:left;
+  background:transparent;
+  padding:3px 8px;
+  margin:0px;
+  border-right:1px solid #56595a;
+  font-size:11px
+}
+.quests-tabs .nohover {
+  font-weight:bold
+}
+.quests-tabs li:hover {
+  background:#3c4042
+}
+.quests-tabs .nohover:hover {
+  background:none
+}
+.storyline {
+  float:left;
+  width:160px;
+  min-height:150px;
+  padding:5px 5px 8px 5px;
+  margin:0 7px 20px 0;
+  background:#474747;
+  border:1px solid #626363;      
+  font-size:11px
+}
+.storyline .story-title {
+  margin:0 auto 5px;
+  padding:0 0 3px 0;
+  font-weight:bold;
+  color:#fff;
+  display:block;
+  border-bottom:1px solid #aaa
+}
+.storyline img {
+  margin:3px auto 10px;
+  border:2px solid #727476;
+  max-width:150px
+}                  
+.storyline a {
+  margin:0;
+  display:block;
+  overflow:auto;
+}
+.storyline a.nolink {
+  color:#212222
+}
+.storyline a.border {
+  border-top:1px dotted #33353a
+}
+.newline {
+  clear:left
+}
+.storyline a, #quests-facts li, #quests-skills li {
+  background:url('/bildes/rs/bullet_white.png') no-repeat;
+  padding-left:17px;
+} 
+/* outro */
+#outro {
+  display:block;
+  float:left;
+  position:relative;
+  border-top:2px solid #bbb
+}
+#outro p {
+  padding:5px 0 3px 5px;
+  border-bottom:1px dotted #ddd;
+  font-size:13px
+}
+#outro p .left-margin {
+  margin-left:50px
+}  
+#qstats {
+  display:block;
+  min-height:50px;
+  overflow:auto;
+  width:350px
+}
+.balance {
+  position:absolute;
+  border-bottom:1px solid #515050;
+  left:125px;
+  top:-20px;
+  max-height:220px;
+  padding-bottom:5px
+}
+#quests-stats, #quests-stats-2 {
+  margin:10px 0 0 0;
+}
+#quests-stats tr td, #quests-stats-2 tr td {
+  padding:0 0 5px 5px;
+  color:#b5b8ba
+}
+#quests-stats td.left, #quests-stats-2 td.left {
+  text-align:right;
+  color:#fff
+}
+#quests-stats tr.space td, #quests-stats-2 tr.space td {
+  padding-top:17px
+}
+#quests-facts {
+  margin:0 0 0 -20px;
+  clear:both;
+  padding-top:10px
+}
+#quests-facts li {
+  padding-bottom:2px;
+  margin:0 0 5px 0;
+  border-bottom:1px solid #515050;
+  font-size:11px;
+  width:350px
+}
+/* freeplay & miniquests */
+.ext-quests {
+  margin:20px 50px
+  font-size:11px;
+  clear:both;
+  width:730px
+}
+.ext-quests tr.listhead td {
+  border:0px;
+  border-bottom:2px solid #ddd;
+  font-weight:bold;
+  text-align:center;
+  background:transparent url('/bildes/rs/header.png') repeat-x top;
+  color:#374a55  
+}
+.ext-quests tr td {
+  padding:5px;
+  border:1px solid #555454;
+  min-height:15px;
+  vertical-align:top
+} 
+.ext-quests img {
+  max-width:150px;
+  max-height:80px
+}
+.ext-quests p {
+  margin:0 0 0 7px
+}
+.ext-quests .mq-title {
+  margin:-2px 0 3px 7px;
+  padding:0;
+  color:#7e888a
+}
+.ext-quests .warning {
+  position:absolute;
+  bottom:2px;
+  right:2px
+}
+.ext-quests .warning_small {
+  position:absolute;
+  bottom:2px;
+  right:2px;
+  max-height:16px;
+  max-width:16px
+}
+.ext-quests .exist-not {
+  padding:2px;
+  width:150px
+} 
+/* padomi */  
+.rshelp-ghost {
+  background:url('/bildes/rs/guides/ghost.png') no-repeat;
+  background-position:center;
+}
+.rshelp-money {
+  background:url('/bildes/rs/guides/money.png') no-repeat;
+  background-position:center;
+}
+.rshelp-info {
+  background:url('/bildes/rs/guides/Home.png') no-repeat;
+  background-position:center;
+}
+.rshelp-armour {
+  background:url('/bildes/rs/guides/boots.png') no-repeat;
+  background-position:center;
+}
+.rshelp-training {
+  background:url('/bildes/rs/guides/sword.png') no-repeat;
+  background-position:center;
+}
+.rshelp-legend {
+  background:url('/bildes/rs/guides/feather.png') no-repeat;
+  background-position:center;
+}
+/* minispēļu stilizējumi */
+.banner-imp {
+  float:left;
+  margin:-12px 10px 0 0;
+  position:relative;
+  z-index:5;   
+  max-height:105px
+}
+#eviltree {
+  float:left;
+  margin:-15px 5px 5px 0;
+  max-height:140px;
+  z-index:5;
+  position:relative
+}
+.mg-intro {
+  font-size:11px
+}
+.rslist p {
+  margin:0 5px 2px;
+  padding:0
+}
+.rslist tr td {
+  font-size:11px;
+  font-family:tahoma,verdana,arial;
+  line-height:1.5
+}
+.mg-intro {
+  position:relative;
+  z-index:2;
+  display:block;
+  margin:0 10px 20px 10px;
+  text-indent:15px;
+  padding:5px;
+  border-bottom:3px solid #ccc
+}
+.rslist .mg-avatar {
+  width:80px
+}
+.rslist .mg-av {
+  max-width:80px;
+	max-height:80px;
+	margin:3px;
+	border:2px solid #5d5c5d
+}
+.rslist .mg-title {
+	font-weight:bold;
+	color:#153f54;
+	text-transform:uppercase
+}
+.rslist .mg-info {
+   position:relative;
+   width:150px
+}
+.rslist .mg-old {
+  float:right;
+  position:absolute;
+  top:2px;
+  right:0px
+}
+
+#mg-txtarea {
+  width:550px !important;
+  height:150px !important;
+}
+.mg-top-info {
+  display:block;
+  margin:0 10px 20px 10px;
+  text-indent:15px;
+  padding:5px;
+  border-bottom:3px solid #ccc;
+}
+#textarea {
+  width:500px !important;
+  height:150px !important;  
+}
+
+.order-title {
+  font-weight:bold;
+  text-align:center;
+  color:#5f697b
+}
+/* prasmju stilizējumi */
+#skills_intro {
+  font-size:11px;
+  padding:7px;
+  margin:5px 5px 20px 5px;
+  border:1px solid #6a6c6e;
+  border-bottom:3px solid #6a6c6e
+}
+#skills_intro p {
+  text-indent:17px
+}
+#sage {
+  float:left;
+  margin:5px 5px 5px -15px;
+  max-height:170px
+}
+#wagtail {
+  position:absolute;
+  right:-12px;
+  top:-5px;
+  max-height:90px
+}
+#xenia {
+  position:absolute;
+  max-height:120px;
+  right:-15px;
+}
+.skill-block {
+  border:1px solid #6a6c6e;
+  border-bottom:2px solid #6a6c6e;
+  width:345px;
+  height:180px;
+  float:left;
+  margin:10px 15px 10px 0;
+  font-size:11px
+}
+.skill-block-2 { /* linux */
+  border:1px solid #6a6c6e;
+  border-bottom:2px solid #6a6c6e;
+  width:345px;
+  height:210px;
+  float:left;
+  margin:10px 15px 10px 0;
+  font-size:11px
+}
+.skill-name {
+  font-weight:bold;
+  color:#bdc8d3;
+  font-size:13px
+}
+.skill-info {
+  padding:5px;
+  float:left;
+  width:60%;
+  display:inline;
+}
+.skill-links {
+  padding-top:5px;
+  border-left:1px solid #6a6c6e;
+  width:15%;
+  float:left;
+  height:175px;
+  position:relative
+}
+.skill-links-2 { /* linux */
+  padding-top:5px;
+  width:15%;
+  float:left;
+  height:205px;  
+  position:relative;
+  border-left:1px solid #6a6c6e
+}
+.skill-links p {
+  font-weight:bold;
+  color:#708ba7;
+  padding-left:7px
+}
+.skill-links a {
+  border-bottom:1px dotted #605f5f;
+  padding:0 5px 3px 8px;
+  margin:2px 0 0 8px;
+  display:inline-block
+}
+.skill-pages {
+  background:#444445;
+  border-top:1px solid #6a6c6e;
+  position:absolute;
+  bottom:0px;
+  display:block;
+  /*width:97%;*/
+  width:150px;
+  padding:0 6px
+}
+.skill-pages, .skill-pages a, .skill-pages a:visited, .skill-pages a:active, .skill-pages a:focus {
+  border-bottom:0px
+}
+.skill-icon {
+  margin:5px;
+  float:left;
+  vertical-align:middle
+} 
+#skills_facts {
+  margin:10px 70px 10px 0;
+  clear:both;
+  position:relative
+}
+#skills_facts ul {
+  margin:0;
+  padding:0
+}
+#skills_facts ul li {
+  list-style-type:none;
+  background:url('/bildes/rs/bullet_white.png') no-repeat;
+  font-size:11px;
+  padding-left:20px
+}
+#show-facts, #show-rows {
+  text-align:right;
+  margin-right:30px
+}
+.rslist .number2 {
+  color:#85a7bd;
+  font-weight:bold;
+  border-left:1px solid #605f5f;
+  border-right:1px solid #605f5f
+}
+.rslist-center {
+  margin-left:30px
+}
+
+/* tasks/achievement diaries un ģildes */
+#page_intro {
+  font-size:11px;
+  padding:7px;
+  margin:5px 5px 20px 5px;
+  border:1px solid #6a6c6e;
+  border-bottom:3px solid #6a6c6e
+}
+#page_intro p {
+  text-indent:17px
+}
+#trollis {
+  max-height:100px;
+  float:left;
+  margin:0 10px 5px 0
+}
+#montai {
+  max-height:80px;
+  float:left;
+  margin:0 10px 5px 0
+}
+#wise-old-man {
+  max-height:90px;
+  float:left;
+  margin:0 10px 5px 0
+}
+.page_block {
+  float:left;  
+  padding:5px 0px 0px;
+  margin:0 7px 20px 10px;
+  border:1px solid #626363;
+  border-bottom:1px solid #b3b8bc;
+  background:#474747;      
+  font-size:11px;
+  position:relative
+}
+  .border-gray {
+    border:1px solid #cccdcd;
+    border-bottom:1px solid #b3b8bc
+  }
+  .border-orange {
+    border:1px solid #95a5c2;
+    border-bottom:1px solid #677898
+  }
+  
+.page_block .page_title {
+  margin:0 5px 5px;
+  padding:0 5px 3px 7px;
+  font-weight:bold;
+  color:#fff;
+  display:block;
+  border-bottom:1px dotted #79797a
+}
+  .page_block .guild-icon {     
+    vertical-align:middle;
+    border:0px !important;
+    margin:-4px 3px 0 5px
+  }
+  .page_block .old {    
+    float:right;
+    position:absolute;
+    top:-3px;
+    right:-2px;
+    border:0px !important;
+  }
+.page_block img {
+  margin:3px 5px 10px;
+  border:3px solid #727476;
+  max-width:200px
+} 
+.page_block p {
+  margin:0 7px 3px 7px;
+  padding:0;
+  line-height:1.3
+}  
+.page_block ul {
+  padding:0;
+  margin:0
+}               
+  .page_block ul li {
+    overflow:auto;
+    list-style-type:none;
+    background:transparent;
+    padding:0px
+    /*background:url('/bildes/rs/tasks-li.png') repeat-x*/  
+  }
+  .page_block ul li a.page {
+    padding:3px 5px 3px 10px;
+    border-bottom:0px solid #7a7777;
+    border-top:1px solid #7a7777;
+    margin:0px;
+    display:block
+  }
+  .page_block li:hover {
+    background:#5a5858;
+    border-left:3px solid #949191;
+  }
+  .page_block li:hover a.page {
+    padding-left:7px;
+    text-decoration:none
+  }
+  
+ /* ceļveži */
+#musician {
+  max-height:100px;
+  float:left;
+  margin:0 10px 5px 0
+}
+.areas-margin {
+	margin-left:20px;
+	margin-bottom:15px
+}
+.area, .area-left, .area-right {
+  border:2px solid #414040;
+  outline:1px solid #2d2e2e;  
+  width:170px;  
+  margin:0 20px 10px 5px;
+  position:relative;
+  background-color:#4d4d4d;  
+  font-size:11px;
+}
+.area, .area-left {
+  float:left
+}
+.area-right {
+  float:right;
+  margin-right:43px
+}
+.area {
+  height:30px;
+  padding:0px 5px 0px 35px;
+}
+	.area-empty {
+		opacity:0.6;
+		filter:alpha(opacity=60); /* For IE8 and earlier */
+	}
+	.area-empty:hover {
+		/*opacity:0.75;
+		filter:alpha(opacity=75); /* For IE8 and earlier */
+		/*outline:1px solid #5d5d5e*/
+	}
+.area-left, .area-right {
+  height:113px;
+  padding:5px 5px 0px 35px;
+}
+  .area a, .area-left a, .area-right a {
+    clear:both;
+    display:block    
+  }
+  .area a {
+    padding: 7px 7px 7px 5px
+  }
+  .area-left a.link, .area-right a.link {
+    padding: 7px 7px 5px 5px;
+    margin-left:-30px
+  }
+  .area:hover,.area-left:hover, .area-right:hover {
+    background:#3e3e3e  
+  }
+  .area:hover a, .area-left:hover a, .area-right:hover a {
+    text-decoration:none;
+	/*background:red*/
+  }
+.area-left img, .area-right img  {
+  height:85px;
+  width:200px;
+  margin-left:-30px !important
+}
+.area img.area-ico {
+  position:absolute;
+  top:7px;
+  left:3px;
+  max-height:40px;
+  max-width:30px;
+  margin-top:-6px !important;
+  border:0px !important;
+  overflow:hidden
+}
+.area img.cross {
+	position:absolute;
+	top:6px;
+	left:5px;
+	max-height:20px;
+	max-width:20px;
+	border:0px !important;
+}
+
+/* runescape mainpage */
+#rswelcome {
+  display:block;
+  clear:both;
+  margin:0 0 0 20px
+}
+  #left-col, #right-col, #center-col {
+    float:left
+  }
+  #left-col, #right-col {
+    width:150px  
+  }
+  #left-col {
+    margin-right:1px
+  }
+  #right-col {
+    margin-left:1px
+  }
+  #left-col .sm_banner, #right-col .sm_banner {
+    width:150px;
+    height:80px;
+    position:relative;
+    background-color:transparent;
+    background-repeat:no-repeat
+  }
+  #left-col .upper-image, #right-col .upper-image {
+    margin:/*14px*/45px 0 0 0;
+    border-bottom:2px solid #bbb;
+  }
+  #center-col {
+    /*width:400px*/  
+  }
+    #center-col img {
+      /*border:1px solid orange;*/
+      width:400px;
+      /*padding:1px*/
+    }
+.bannertitle {
+  position:absolute;
+  text-align:center;
+  width:150px;
+  color:#fff;
+  letter-spacing:1px;
+  bottom:4px;
+  font-size:11px 
+}
+#quests-banner {
+  background-image:url('/bildes/rs/intro/grand-tree-light.png');
+}
+  #quests-banner:hover {
+    background-image:url('/bildes/rs/intro/grand-tree.png');
+  }
+#minigames-banner {
+  background-image:url('/bildes/rs/intro/barrows-light.png');  
+}
+  #minigames-banner:hover {
+    background-image:url('/bildes/rs/intro/barrows.png');
+  }
+#skills-banner {
+  background-image:url('/bildes/rs/intro/flash-powder-light.png');
+}
+  #skills-banner:hover {
+    background-image:url('/bildes/rs/intro/flash-powder.png');
+  }
+#areas-banner {
+  background-image:url('/bildes/rs/intro/crucible-light.png');
+}
+  #areas-banner:hover {
+    background-image:url('/bildes/rs/intro/crucible.png');
+  }
+/*
+#rsmenu {
+  margin:auto;
+  clear:both;
+  padding:0;
+  margin-top:-2px;
+  margin-left:250px
+}
+#rsmenu li {
+  background:transparent url('/bildes/rs/intro/menu-border-bottom-2.png') bottom repeat-x;
+  padding:3px 7px 6px;
+  float:left;
+  color:#fff;
+  font-size:11px;
+  letter-spacing:1px  
+}
+  #rsmenu li#left-border {
+    background:transparent url('/bildes/rs/intro/menu-border-left.png') repeat-y;
+    padding:0px !important;
+    width:5px;
+    height:25px;
+    clear:left
+  }
+  #rsmenu li#right-border {
+    background:transparent url('/bildes/rs/intro/menu-border-right.png') repeat-y;
+    padding:0px !important;
+    width:5px;
+    height:25px
+  } */
+#rsarticles {
+  margin:0;
+  padding:0 ;
+  width:100%
+}
+  #rsarticles li {
+    list-style:none;
+    background:transparent;
+    display:block;
+    clear:both;
+    border-bottom:1px dotted #656b72;
+    overflow:auto
+  }
+  #rsarticles .atc-title {
+    font-weight:bold;
+    font-size:13px;
+    letter-spacing:1px;
+    margin:13px 10px 0 0;
+    padding-left:7px;
+    line-height:1.3;
+    border-bottom:1px solid #656b72
+  }  
+  #rsarticles .atc-info {
+    font-size:11px;
+    /*background:lavender;*/
+    clear:both;
+    overflow:auto;
+    color:#989c9f;
+  }
+    #rsarticles .atc-left {
+      /*margin:3px 0;*/
+      float:left;      
+      margin-left:95px
+    }
+    #rsarticles .atc-right {
+      float:right;
+      margin-right:27px
+    }
+    #rsarticles .atc-number {
+      color:#9ec5e8
+    }
+  #rsarticles .atc-avatar-outer {
+    min-height:69px;
+    width:89px;
+    float:left;
+    clear:left;
+    margin:-10px 7px 5px 0
+  }
+  #rsarticles .atc-avatar {
+    max-height:85px;
+    max-width:85px;
+    border:2px solid #444a50
+  }     
+  #rsarticles .atc-intro {
+    margin:2px 0 5px;
+    font-size:11px;
+    text-align:left
+  }
+  
+ul.rspages {
+	display:block;
+	clear:left;
+	margin:15px 0 20px 30px;
+	height:20px;	
+}
+
+ul.rspages li {
+	list-style:none;
+	background:transparent;
+  float:left;
+	margin:0 5px 10px 0;
+	padding:0;
+	border:1px solid #53595a;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+ul.rspages li:hover {
+  border:1px solid #53595a;
+  background:#3c3e3e
+}
+ul.rspages li a {
+  padding:4px 10px;
+	color:#93a3b9;
+	font-weight:bold
+}
+ul.rspages li a:hover {
+  text-decoration:none;
+  color:#bbc2cd
+}
+ul.rspages li.end a, ul.rspages li.end a:active, ul.rspages li.start a, ul.rspages li.start a:active {
+	color:#4e8dd4;
+}
+ul.rspages li.active {
+  padding:0px 10px;
+  font-weight:bold;
+  color:#468cdc
+}
+ul.rspages li.arrows a, ul.rspages li.arrows a:active {
+  color:#64757a
+}

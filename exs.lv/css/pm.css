@@ -1,0 +1,80 @@
+#pm-table {
+	border: 0;
+	width: 100%;
+	border-collapse: collapse
+}
+#pm-table td {
+	border-bottom: 1px solid #eee;
+	border-top: 1px solid #eee;
+	padding: 3px 7px;
+	background: #fff;
+	line-height: 16px
+}
+#pm-table tr:hover td {
+	background: #F5F5F6
+}
+#pm-table td.title {
+	font-weight: bold
+}
+#pm-table td.title a {
+	display: block
+}
+#wrapper #pm-table td.pm {
+background: url('http://exs.lv/bildes/icons.png') no-repeat 50% -646px;
+}
+#wrapper #pm-table td.pm-read {
+background: url('http://exs.lv/bildes/icons.png') no-repeat 50% -620px;
+}
+#pm-table th {
+	text-align: center;
+	font-weight: 700
+}
+#wrapper #pm-table th.date {
+	width: 100px;
+	padding: 3px 7px;
+	background: transparent
+}
+#pm-table th.isread, #pm-table td.isread {
+	text-align: center
+}
+#pm-table tr.read-0 td {
+	background: #fbe6f3
+}
+#pm-read-footer {
+	border-top: 1px solid #eee;
+	margin: 10px 0 0;
+	padding: 10px 0 2px
+}
+#pm-h {
+	padding: 6px 0
+}
+#pm-h h3 {
+	font-size: 110%;
+	font-weight: normal;
+	background: #ECEFF5;
+	padding: 3px 10px;
+	margin: 10px 0 3px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px
+}
+#pm-h h3 span {
+	float: right;
+	font-size: 100%;
+	color: #999
+}
+.pm-h-content {
+	padding: 3px 10px
+}
+#wrapper .inbox {
+	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -520px
+}
+#wrapper .outbox {
+	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -546px
+}
+#wrapper .compose {
+	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -572px
+}
+#wrapper .mail-search {
+	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -598px;
+}

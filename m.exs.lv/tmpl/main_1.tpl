@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>{page-title}</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="content-language" content="lv" />
+<meta name="googlebot" content="noindex" />
+<link rel="stylesheet" href="/m.css" type="text/css" />
+<script type="text/javascript" src="http://exs.lv/js/jquery.min.js"></script>
+<script type="text/javascript" src="/j.js"></script>
+<script type="text/javascript">
+	var mb_refresh_limit = 14000;
+	var current_user = {currentuser-id};
+	var query_timeout = 80000;
+	var c_url = "{page-url}";
+</script>
+<!-- START BLOCK : mb-head-->
+<script type="text/javascript">
+	var lastid = {lastid};
+	var mbid = {mbid};
+	var usrid = {usrid};
+	var edit_time = {edit_time};
+	var refreshlim = mb_refresh_limit;
+	var mbtype = "{type}";
+	var mbRefreshId = setInterval("update_mb()",refreshlim);
+</script>
+<!-- END BLOCK : mb-head-->
+<!-- INCLUDE BLOCK : module-head -->
+<!-- START BLOCK : tinymce-enabled-->
+<!-- END BLOCK : tinymce-enabled-->
+<!-- START BLOCK : tinymce-simple-->
+<!-- END BLOCK : tinymce-simple-->
+</head>
+
+<body>
+<div id="outer-wrapper">
+<div id="header">
+	<div id="user-tools">
+	  <a href="/user/{currentuser-id}"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
+		<a href="/">Čau,&nbsp;{currentuser-nick}!</a><br /><a href="/user/{currentuser-id}">Tavs&nbsp;profils</a>
+	</div>
+	<a id="logo" href="/">eXs.lv</a>
+</div>
+<div id="buttons">
+<ul>
+<li><a href="/">Siena</a></li>
+<li><a href="/forums">Forums</a></li>
+<li><a href="/raksti">Raksti</a></li>
+<!-- START BLOCK : user-menu-->
+<li><a href="/pm">PM{new-messages}</a></li>
+<li><a href="/say/{currentuser-id}">M-blogs</a></li>
+<!-- END BLOCK : user-menu-->          
+<li><a href="/grupas">Grupas</a></li>
+</ul>
+</div>
+<div id="wrapper">
+<!-- START BLOCK : profile-menu-->
+<h2>{user-nick}</h2>
+
+<ul class="tabs">
+	<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile">Profils</span></a></li>
+	<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+	<!-- START BLOCK : profilebox-blog-link-->
+	<li><a href="/?c={profile-blogid}" id="l-blog"><span class="pages">Blogs</span></a></li>
+	<!-- END BLOCK : profilebox-blog-link-->
+</ul>
+
+<!-- END BLOCK : profile-menu-->
+<!-- INCLUDE BLOCK : module-core-error -->
+<!-- INCLUDE BLOCK : module-currrent -->
+<div class="c"></div>
+<!-- START BLOCK : events-->
+{events-title}
+<div class="box">
+<div id="miniblog-block">
+<ul id="friendssay-list" class="blockhref">
+<!-- START BLOCK : events-node-->
+<li><a href="{url}"><span class="time-ago">{time}</span> <img class="av" src="{avatar}" alt="" /> <span class="author">{author}{where}</span> {title}&nbsp;[{posts}]<br style="clear: both;" /></a></li>
+<!-- END BLOCK : events-node-->
+</ul>
+</div>
+</div>
+<!-- END BLOCK : events-->
+<!-- START BLOCK : mod-box-->
+<h3>Moderatoru forums</h3>
+<div class="box">
+<p>
+<!-- START BLOCK : mod-box-node-->
+<a href="{url}">{title}&nbsp;[{posts}]</a><br />
+<!-- END BLOCK : mod-box-node-->
+</p>
+</div>
+<!-- END BLOCK : mod-box-->
+</div>
+<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; exs.lv, 2013 | <a href="/?do=logout">Iziet</a></div>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-4190387-2']);
+  _gaq.push(['_setDomainName', 'exs.lv']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- START BLOCK : sharethis-->
+<!-- END BLOCK : sharethis-->
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+body.mceContentBody {
+	font-family: Verdana, Arial, sans-serif;
+	color: #000;
+	padding: 0;
+	margin: 3px;
+}
+code, pre, .code, span.c, .codebox {
+	background: #FFF;
+	border: 1px solid #EEE;
+	border-left: 6px solid #C1CAD3;
+	color: #666;
+	display: block;
+	font-family: Courier, 'Courier New',  monospace;
+	margin: .5em 1em;
+	padding: 5px;
+	white-space: pre
+}
+.code-header {
+	display: none
+}
+blockquote, .q {
+	background: #f6f6f7 url('http://exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
+	padding: 3px 8px 3px 25px;
+	color: #555;
+	margin: .5em 1.5em;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	display: block
+}
+.admins {
+color: #700
+}
+.mods {
+color: #00b
+}
+.rautors {
+color: #070
+}
+p {
+margin: 0;
+padding: .4em 0
+}
+h4 {
+	padding: .5em 0
+}
+table.main-table, table.infotable {
+	border: 1px solid #ccc;
+	margin: 8px auto;
+	padding: 0;
+	border-collapse: collapse
+}
+table.main-table th, table.main-table td, table.infotable td {
+	border: 1px solid #ccc;
+	padding: 2px 4px
+}
+table.main-table th, table.main-table thead td, table.infotable th {
+	background: #f3f3f3;
+	text-align: center;
+	font-weight: 700;
+	font-size: 10px;
+	padding: 1px 3px;
+	color: #555
+}
+table.main-table tr.darker td, table.infotable tr.r2 td {
+	background: #fafafa
+}
+table.infotable tr.hirank td {
+	background: #fbe6f3
+}
+hr {
+	color: #ccc;
+	background: #ccc;
+	margin: 6px 100px 6px;
+	height: 1px;
+	border: none;
+	padding: 0
+}
+.lightbox {
+	border: 0
+}
+.rater-block {
+	float: right
+}
+.rater-block span {
+	margin: -4px 0 0 0;
+	line-height: 12px
+}
+.quote-nouser {
+	display: none
+}
+img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
+	padding: 2px;
+	background: #eee;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-box-shadow: 2px 2px 4px #ddd;
+	-webkit-box-shadow: 2px 2px 4px #ddd;
+	box-shadow: 2px 2px 4px #ddd
+}
+img.attels_pa_labi {
+	float: right;
+	margin: 6px 5px 6px 10px
+}
+img.attels_pa_kreisi {
+	float: left;
+	margin: 6px 10px 6px 5px
+}
+img.attels_centrets {
+	display: block;
+	margin: 8px auto;
+	padding: 2px;
+}
+a.thb-image img {
+	margin: 6px 5px;
+}
+.inlinecode {
+	font-family: Courier, 'Courier New', Verdana, Arial;
+	background: #f3f3f3;
+	color: #369
+}
+.download {
+	background: url('http://exs.lv/bildes/fugue-icons/disk.png') no-repeat 0 1px;
+	display: block;
+	margin: 3px 20px;
+	padding: 2px 0 2px 20px;
+}
+.text-notice {
+	background: #F7E7D6 url('http://exs.lv/bildes/notice.png') no-repeat 5px 5px;
+	border: 1px solid #FAAF56;
+	padding: 5px 8px 5px 45px;
+	margin: 10px 0;
+	color: #1D211F;
+	font-size: 10px;
+	height: auto !important;
+	height: 32px;
+	min-height: 32px;
+	display: block;
+}
+pre.prettyprint, code.prettyprint {
+	display: block;
+}
+hr {
+color: #ccc;
+background: #ccc;
+height: 1px;
+border: none;
+margin: 6px 100px;
+padding: 0
+}
+
+h1, h2, h3, h4 {
+color: #444;
+font-weight: normal;
+font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
+text-shadow: 0 1px 1px #ddd;
+margin: 8px 0 4px;
+padding: 3px 0
+}
+h1 {
+font-size: 18px
+}
+h2 {
+font-size: 16px
+}
+h3 {
+font-size: 14px
+}
+h4, #content h4 {
+font-size: 13px;
+margin: 6px 0 2px
+}
+a {
+text-decoration: none;
+color: #0A4E81
+}
+a:hover {
+color: #000;
+text-decoration: underline
+}
+a:focus {
+color: #c00
+}
+ul, ol {
+padding: 3px 0 3px 24px;
+margin: 8px
+}
+ul {
+list-style: none
+}
+ul li {
+background: url('http://exs.lv/bildes/i.png') no-repeat 0 -542px;
+padding: 0 0 0 14px
+}

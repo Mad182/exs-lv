@@ -1,0 +1,547 @@
+.titlemsg {
+	color: #000000;
+	font-weight: bold
+}
+.heading {
+	font-size: 12pt;
+	color: #ffffff;
+	background: #0e0067;
+	font-weight: bold
+}
+.medheading {
+	font-size: 10pt;
+	color: #ffffff;
+	background: #0e0067;
+	font-weight: bold
+}
+.hlheading {
+	font-size: 10pt;
+	color: #fdd932;
+	background: #0e0067;
+	font-weight: bold
+}
+.hlheadingred {
+	font-size: 10pt;
+	color: #d80000;
+	background: #0e0067;
+	font-weight: bold
+}
+.hlheadingblue {
+	font-size: 10pt;
+	color: #2222e8;
+	background: #0e0067;
+	font-weight: bold
+}
+.smheading {
+	font-size: 8pt;
+	color: #ffffff;
+	background: #0e0067;
+	font-weight: bold;
+	text-decoration: none
+}
+a.smheading:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #0e0067;
+	font-weight: bold;
+	text-decoration: none
+}
+.tinytext {
+	font-family: Arial, Helvetica, Verdana;
+	font-size: 8pt;
+	font-weight: normal
+}
+.dark {
+	font-size: 8pt;
+	color: #ffffff;
+	background: #000000;
+	font-weight: bold
+}
+a.dark {
+	font-size: 8pt;
+	color: #ffffff;
+	background: #000000;
+	font-weight: bold
+}
+a.dark:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #000000;
+	font-weight: bold
+}
+.darkn {
+	font-size: 8pt;
+	color: #ffffff;
+	background: #000000;
+	font-weight: bold;
+	white-space: nowrap
+}
+.grey {
+	font-size: 8pt;
+	color: #000000;
+	background: #cccccc;
+	font-weight: bold
+}
+a.grey {
+	font-size: 8pt;
+	color: #000000;
+	background: #cccccc;
+	font-weight: bold
+}
+a.grey:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #cccccc;
+	font-weight: bold
+}
+.greyn {
+	font-size: 8pt;
+	color: #000000;
+	background: #cccccc;
+	font-weight: bold;
+	white-space: nowrap
+}
+.darkgrey {
+	font-size: 8pt;
+	color: #000000;
+	background: #808080;
+	font-weight: bold
+}
+.warn {
+	font-size: 8pt;
+	color: #880000;
+	background: #cccccc;
+	font-weight: bold
+}
+.gselog {
+	font-size: 8pt;
+	color: #0f5465;
+	background: #cccccc;
+	font-weight: bold
+}
+.tclog {
+	font-size: 8pt;
+	color: #4d2821;
+	background: #cccccc;
+	font-weight: bold
+}
+.opnote {
+	font-size: 8pt;
+	color: #600000;
+	font-weight: bold
+}
+.gsedark {
+	font-size: 8pt;
+	color: #147588;
+	background: #000000;
+	font-weight: bold
+}
+.chatlink {
+	font-size: 10pt;
+	color: #ffffff;
+	background: #0e0067;
+	font-weight: bold
+}
+a.chatlink {
+	font-size: 10pt;
+	color: #ffff00;
+	background: #0e0067;
+	font-weight: bold
+}
+a.chatlink:hover {
+	font-size: 10pt;
+	color: #ff0000;
+	background: #0e0067;
+	font-weight: bold
+}
+.chat {
+	font-size: 8pt;
+	color: #000000;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatred {
+	font-size: 8pt;
+	color: #800000;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatblue {
+	font-size: 8pt;
+	color: #000080;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatgreen {
+	font-size: 8pt;
+	color: #008000;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatgold {
+	font-size: 8pt;
+	color: #808000;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatsys {
+	font-size: 8pt;
+	color: #408040;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatkill {
+	font-size: 8pt;
+	color: #a4a21c;
+	background: #cccccc;
+	font-weight: bold
+}
+.votesys {
+	font-size: 8pt;
+	color: #006e6d;
+	background: #cccccc;
+	font-weight: bold
+}
+.chatweapspec {
+	font-size: 8pt;
+	color: #74229a;
+	background: #cccccc;
+	font-weight: bold
+}
+.darkhuman {
+	font-size: 8pt;
+	color: #fdd932;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+a.darkhuman {
+	font-size: 8pt;
+	color: #fdd932;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+a.darkhuman:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+.greyhuman {
+	font-size: 8pt;
+	color: #fdd932;
+	background: #cccccc;
+	font-weight: bold;
+	text-decoration: none
+}
+a.greyhuman {
+	font-size: 8pt;
+	color: #fdd932;
+	background: #cccccc;
+	font-weight: bold;
+	text-decoration: none
+}
+a.greyhuman:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #cccccc;
+	font-weight: bold;
+	text-decoration: none
+}
+.darkbot {
+	font-size: 8pt;
+	color: #0575dd;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+a.darkbot {
+	font-size: 8pt;
+	color: #0575dd;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+a.darkbot:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+.greybot {
+	font-size: 8pt;
+	color: #0575dd;
+	background: #cccccc;
+	font-weight: bold;
+	text-decoration: none
+}
+a.greybot {
+	font-size: 8pt;
+	color: #0575dd;
+	background: #cccccc;
+	font-weight: bold;
+	text-decoration: none
+}
+a.greybot:hover {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #cccccc;
+	font-weight: bold;
+	text-decoration: none
+}
+a.sidebar {
+	display: none;
+}
+.topbar {
+	font-size: 12pt;
+	color: #000000;
+	font-weight: bold
+}
+a.topbar {
+	font-size: 12pt;
+	color: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+a.topbar:hover {
+	font-size: 12pt;
+	color: #ff0000;
+	font-weight: bold;
+	text-decoration: none
+}
+.pages {
+	font-size: 9pt;
+	font-weight: bold
+}
+a.pages {
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none
+}
+a.pages:hover {
+	font-size: 9pt;
+	font-weight: bold;
+	text-decoration: none
+}
+.searchform {
+	font-size: 8pt;
+	font-weight: bold
+}
+.searchformbox {
+	font-size: 8pt;
+	font-weight: normal
+}
+.blueteam {
+	font-size: 8pt;
+	color: #000000;
+	background: #0000ee;
+	font-weight: bold
+}
+.redteam {
+	font-size: 8pt;
+	color: #000000;
+	background: #ee0000;
+	font-weight: bold
+}
+.greenteam {
+	font-size: 8pt;
+	color: #000000;
+	background: #00ee00;
+	font-weight: bold
+}
+.goldteam {
+	font-size: 8pt;
+	color: #000000;
+	background: #eeee00;
+	font-weight: bold
+}
+.blueteamscore {
+	font-size: 8pt;
+	color: #505080;
+	background: #cccccc;
+	font-weight: bold
+}
+.redteamscore {
+	font-size: 8pt;
+	color: #805050;
+	background: #cccccc;
+	font-weight: bold
+}
+.greenteamscore {
+	font-size: 8pt;
+	color: #508050;
+	background: #cccccc;
+	font-weight: bold
+}
+.goldteamscore {
+	font-size: 8pt;
+	color: #808050;
+	background: #cccccc;
+	font-weight: bold
+}
+.lglheading {
+	font-size: 12pt;
+	color: #fdd932;
+	background: #0e0067;
+	font-weight: bold
+}
+a.lglheading {
+	font-size: 12pt;
+	color: #ffffff;
+	background: #0e0067;
+	font-weight: bold
+}
+a.lglheading:hover {
+	font-size: 12pt;
+	color: #ff0000;
+	background: #0e0067;
+	font-weight: bold
+}
+.status {
+	font-size: 9pt;
+	color: #000000;
+	background: #cccccc;
+	border: 1px #000000 solid;
+	text-align: left
+}
+a.status {
+	font-size: 9pt;
+	color: #7B6613;
+	text-decoration: none;
+	border: none
+}
+a.status:hover {
+	font-size: 9pt;
+	color: #bd0000;
+	text-decoration: none;
+	border: none
+}
+.statusnb {
+	font-size: 9pt;
+	color: #000000;
+	background: #cccccc;
+	padding-left: 4px
+}
+.statusnbw {
+	font-size: 9pt;
+	color: #000000;
+	background: #cccccc;
+	white-space: nowrap;
+	padding-left: 4px
+}
+.statustitle {
+	font-size: 9pt;
+	color: #ffffff;
+	background: #000066
+}
+.spectitle {
+	font-size: 9pt;
+	color: #ffffff;
+	background: #000066
+}
+.blueteambar {
+	font-size: 9pt;
+	color: #ffffff;
+	background: #000066
+}
+.redteambar {
+	font-size: 9pt;
+	color: #ffffff;
+	background: #660000
+}
+.offline {
+	color: #a50000
+}
+.mapimage {
+	padding-left: 4px;
+	padding-right: 2px
+}
+#matchup {
+	width: 720px;
+	overflow: auto
+}
+.tgheading {
+	font-size: 10pt;
+	color: #ffffff;
+	background: #d5d5d5;
+	font-weight: bold
+}
+.tglheading {
+	font-size: 10pt;
+	color: #000000;
+	background: #d5d5d5;
+	font-weight: bold
+}
+.tgmainbox {
+	overflow: hidden;
+	text-align: left;
+	width: 480px;
+	height: 150px
+}
+.tgsubbox {
+	font-size: 0pt;
+	width: 480px;
+	height: 130px;
+	background-color: #d5d5d5;
+	border-bottom: 1px solid #666666;
+	float: right
+}
+.tgbarspace {
+	width: 6px;
+	float: left
+}
+.tgbar {
+	font-size: 0pt;
+	width: 12px;
+	background-color: #00ce00;
+	border: 1px solid #000000;
+	border-bottom-width: 0;
+	float: left;
+	position: relative
+}
+.tglabel {
+	font-size: 8pt;
+	font-family: arial, sans-serif;
+	color: #000000;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	width: 12px;
+	text-align: center;
+	float: left;
+	overflow: visible;
+	position: relative;
+	border: 1px solid transparent
+}
+.tgblank {
+	font-size: 0pt;
+	height: 0px;
+	clear: both
+}
+.help {
+	color: #000000;
+	font-size: 10pt;
+	text-align: left
+}
+.helphdr {
+	font-size: 14pt;
+	font-weight: bold
+}
+a.help {
+	color: #dcb604;
+	font-weight: bold;
+	text-decoration: none
+}
+a.idmatch {
+	font-size: 8pt;
+	color: #ff0000;
+	background: #000000;
+	font-weight: bold;
+	text-decoration: none
+}
+html #wrapper .pages {
+	background: transparent;
+}

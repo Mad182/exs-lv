@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+	ServerAdmin info@exs.lv
+	ServerName img.exs.lv
+
+	DocumentRoot /home/www/img.exs.lv/
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+	<Directory /home/www/img.exs.lv/>
+		Options FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+		ExpiresActive on
+		ExpiresByType image/png "access plus 1 month"
+		ExpiresByType image/gif "access plus 1 month"
+		ExpiresByType image/jpeg "access plus 1 month"
+	</Directory>
+
+	php_value engine off
+
+	# ErrorLog /var/log/apache2/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	# LogLevel warn
+
+	# CustomLog /var/log/apache2/access.log combined
+
+</VirtualHost>

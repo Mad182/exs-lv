@@ -1,0 +1,63 @@
+ErrorDocument 404 /index.php?c=240
+
+# gads
+#<FilesMatch "\.(ico)$">
+#Header set Cache-Control "max-age=29030400, public"
+#</FilesMatch>
+
+# nedela
+#<FilesMatch "\.(jpg|png|gif|swf|js|css)$">
+#Header set Cache-Control "max-age=604800, public"
+#</FilesMatch>
+
+Options +FollowSymlinks
+RewriteEngine on
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{HTTP_HOST} ^www\.exs\.lv$ [NC]
+RewriteRule ^(.*)$ http://exs.lv/$1 [L,R=301]
+
+RewriteCond %{REQUEST_URI} ^(.*)//$
+RewriteRule . http://exs.lv%1/ [R=301]
+
+RewriteCond %{HTTP_HOST} ^m.rp.exs.lv$
+RewriteRule ^favicon\.ico$ /dati/bildes/gta/favicon.ico
+
+RewriteCond %{HTTP_HOST} ^m.coding.lv$
+RewriteRule ^favicon\.ico$ /dati/bildes/coding/favicon.ico
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^av/([0-9a-z\-_.]+)$ index.php?viewcat=mav&img=$1 [NC,L,QSA]
+
+RewriteRule ^page/([0-9]+)-(.*)/com_page-([0-9]+)$ index.php?p=$1&com_page=$3 [NC,L,QSA]
+RewriteRule ^page/([0-9]+)-(.*)/attach$ index.php?p=$1&attach [NC,L]
+RewriteRule ^page/([0-9]+)-(.*)/detach$ index.php?p=$1&detach [NC,L]
+RewriteRule ^page/([0-9]+)-(.*)/?$ index.php?p=$1 [NC,L,QSA]
+RewriteRule ^user/([0-9]+)-(.*)/?$ index.php?u=$1 [NC,L,QSA]
+
+RewriteRule ^group/([0-9]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?group=$1&act=$2&param=$3&param2=$4 [NC,L,QSA]
+RewriteRule ^group/([0-9]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?group=$1&act=$2&param=$3 [NC,L,QSA]
+RewriteRule ^group/([0-9]+)/([0-9a-z\-_]+)/?$ index.php?group=$1&act=$2 [NC,L,QSA]
+RewriteRule ^group/([0-9]+)/?$ index.php?group=$1 [NC,L]
+
+RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/open$ index.php?m=$1&single=$2&unclose [NC,L]
+RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/close$ index.php?m=$1&single=$2&close [NC,L]
+RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/?$ index.php?m=$1&single=$2 [NC,L,QSA]
+RewriteRule ^say/([0-9]+)/skip-([0-9]+)/?$ index.php?m=$1&skip=$2 [NC,L]
+RewriteRule ^say/([0-9]+)/?$ index.php?m=$1 [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?viewcat=$1&var1=$2&var2=$3&var3=$4 [NC,L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_.]+)/?$ index.php?viewcat=$1&var1=$2&var2=$3 [NC,L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_.]+)/?$ index.php?viewcat=$1&var1=$2 [NC,L,QSA]
+RewriteRule ^([0-9a-z\-_]+)/?$ index.php?viewcat=$1 [NC,L,QSA]
+

@@ -1,0 +1,173 @@
+<?php
+
+if (isset($_GET['tag'])) {
+	$tagid = (int) $_GET['tag'];
+	$tag = $db->get_row("SELECT * FROM `tags` WHERE `id` = '$tagid'");
+	if ($tag) {
+		redirect('/tag/' . $tag->slug, true);
+	} else {
+		redirect('/tag');
+	}
+}
+
+if (isset($_GET['var1'])) {
+	$tslug = mkslug($_GET['var1']);
+	$tag = $db->get_row("SELECT * FROM `tags` WHERE `slug` = '$tslug'");
+
+	if ($tag) {
+		$url = '/tag/' . $tag->slug;
+		if ($_SERVER['REQUEST_URI'] != $url) {
+			redirect($url, true);
+		}
+
+		$tpl->newBlock('tags-current');
+		$tpl->assign(array(
+			'tag-name' => $tag->name,
+			'tag-id' => $tag->id
+		));
+		if (!empty($tag->description)) {
+			$tpl->newBlock('tags-description');
+			$tpl->assign('description', $tag->description);
+		}
+		$page_title = $tag->name . ' | ' . $page_title;
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 0 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 25");
+		if ($findtaged) {
+			$tpl->newBlock('tags-articles');
+			foreach ($findtaged as $taged) {
+				if ($taged->type == 0) {
+					$article = $db->get_row("SELECT `title`,`strid`,`author`,`text` FROM `pages` WHERE `id` = '" . $taged->page_id . "' ORDER BY `date` DESC");
+					//pr($article->text);
+					if ($article) {
+						$author = get_user($article->author);
+						$tpl->newBlock('tags-articles-node');
+						$tpl->assign(array(
+							'url' => '/read/' . $article->strid,
+							'aurl' => mkurl('user', $article->author, $author->nick),
+							'text' => textlimit($article->text, 140),
+							'title' => $article->title,
+							'author' => usercolor($author->nick, $author->level),
+						));
+					} else {
+						//clean database from broken tags
+						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
+					}
+				}
+			}
+		}
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 25");
+		if ($findtaged) {
+			$tpl->newBlock('tags-images');
+			foreach ($findtaged as $taged) {
+				if ($taged->type == 1) {
+					$article = $db->get_row("SELECT * FROM images WHERE `id` = ('" . $taged->page_id . "')");
+					if ($article) {
+						$author = get_user($article->uid);
+						$tpl->newBlock('tags-articles-node-img');
+						$tpl->assign(array(
+							'articles-node-id' => $article->id,
+							'articles-node-title' => ucfirst(htmlspecialchars(substr(strip_tags($article->text), 0, 128))),
+							'articles-node-date' => $article->date,
+							'articles-node-author' => usercolor($author->nick, $author->level),
+							'articles-node-author-id' => $article->uid,
+							'articles-node-posts' => $article->posts
+						));
+					} else {
+						//clean database from broken tags
+						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
+					}
+				}
+			}
+		}
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 2 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 25");
+		if ($findtaged) {
+			$tpl->newBlock('tags-miniblogs');
+			foreach ($findtaged as $taged) {
+				if ($taged->type == 2) {
+					$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = ('" . $taged->page_id . "') AND `removed` = '0'");
+
+					if ($mb) {
+						$mb->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4") ', strip_tags(str_replace(array('<br/>', '<br>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $mb->text)));
+						$mb->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4")', $mb->text);
+						$url_title = mkslug(textlimit($mb->text, 36, ''));
+						$text = textlimit(hide_spoilers($mb->text), 64, '');
+						$tpl->newBlock('tags-articles-node-mb');
+						$tpl->assign(array(
+							'uid' => $mb->author,
+							'id' => $mb->id,
+							'url' => $url_title,
+							'text' => $text
+						));
+					} else {
+						//clean database from broken tags
+						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
+					}
+				}
+			}
+		}
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 3 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 25");
+		if ($findtaged) {
+			$tpl->newBlock('tags-groups');
+			foreach ($findtaged as $taged) {
+				if ($taged->type == 3) {
+					$group = $db->get_row("SELECT id,title FROM clans WHERE `id` = ('" . $taged->page_id . "')");
+
+					if ($group) {
+						$tpl->newBlock('tags-articles-node-group');
+						$tpl->assign(array(
+							'title' => $group->title,
+							'id' => $group->id
+						));
+					} else {
+						//clean database from broken tags
+						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
+					}
+				}
+			}
+		}
+	} else {
+		header("HTTP/1.1 410 Gone");
+		redirect('/tag');
+	}
+}
+
+
+$cloud = rand(0, 200);
+$cache_created = filemtime(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html');
+if (!$cache_created || (time() - $cache_created) > 115200) {
+	$tags = $db->get_results("
+		SELECT
+			`tags`.*
+		FROM
+			`tags`,
+			`taged`
+		WHERE
+			`taged`.`tag_id` = `tags`.`id` AND
+			`taged`.`lang` = '$lang'
+		GROUP BY
+		  `tags`.`id`
+		ORDER BY
+			rand()
+		LIMIT 100"
+	);
+	if ($tags) {
+		$out = '';
+		if ($lang == 1) {
+			$multiplier = 2.5;
+		} else {
+			$multiplier = 3.5;
+		}
+		foreach ($tags as $tag) {
+			$count = $db->get_var("SELECT count(*) FROM `taged` WHERE `tag_id` = '$tag->id' AND `lang` = '$lang'");
+			$size = (7 + ceil(log($count + 1) * $multiplier));
+			$out .= '<a style="font-size:' . $size . 'px" href="/tag/' . $tag->slug . '">' . htmlspecialchars($tag->name) . '</a> ';
+		}
+	}
+	$handle = fopen(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html', 'wb');
+	fwrite($handle, $out);
+	fclose($handle);
+} else {
+	$out = file_get_contents(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html');
+}
+
+$tpl->newBlock('tags-rand');
+$tpl->assign('out', $out);

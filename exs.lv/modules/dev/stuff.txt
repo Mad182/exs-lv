@@ -1,0 +1,953 @@
+<?php
+exit;
+
+d0nT_!54Lts|1Tsdf
+
+$handle = opendir("upload/flash-games/playhub");
+while (($file = readdir($handle))!==false) {
+  if($file != "." && $file != ".."){
+
+  	if(file_exists("upload/flash-games/playhub/".$file."/".$file.".swf")) {
+			$flash_file = "/upload/flash-games/playhub/".$file."/".$file.".swf";
+			$new_str = ucwords(str_replace(array('_','-'),' ',$file));
+
+			$new_img = str_replace('-','_',strtolower(mkslug($new_str)));
+			$new_slug = mkslug($new_str);
+			echo '<strong>'.$new_str.'</strong><br />';
+			echo $new_slug .' <br />';
+
+			echo '<img src="/upload/flash-games/thb/'.$new_img.'.jpg" alt="" /><br />';
+
+			if(file_exists("upload/flash-games/playhub/".$file."/readme.txt")) {
+				$readme = file_get_contents("upload/flash-games/playhub/".$file."/readme.txt");
+				//echo $readme;
+				$desc = explode("Description
+--------------------------",$readme);
+				$desc = nl2br($desc[1]);
+				$dimensions = get_between($readme,'Dimensions are: ',' pixels (');
+				//echo $dimensions . '<br />';
+				list($x,$y) = explode(' x ',$dimensions);
+				if($x > 0 && $y > 0) {
+					$width = $x;
+					$height = $y;
+				} else {
+					$width = 640;
+					$height = 480;
+				}
+			} else {
+				$width = 640;
+				$height = 480;
+			}
+
+				echo 'width: '.$width.'<br />';
+				echo 'height: '.$height.'<br />';
+				echo '<p>'.$desc.'</p>';
+				$thb_local =  $new_img . '.jpg';
+
+
+	//$db->query("INSERT INTO kongregate_games (slug,title,thb_local,launch_date,category,category_slug,flash_file,width,height,description,gameplays,rating,rating_count)
+	//	VALUES ('$new_slug','$new_str','$thb_local','".date('Y-m-d')."','Dažādas','Dazadas','$flash_file','$width','$height','$desc','1','4','1')
+	//");
+	//userlog($auth->user_id,'Pievienoja flash spēli <a href="/Flash-speles/'.$new_slug.'" title="Spēle '.htmlspecialchars($new_str).'">'.$new_str.'</a>','/upload/flash-games/thb/'.$new_img.'.jpg');
+
+
+
+
+		} else {
+			echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SWF FAIL<br />';
+		}
+
+		echo '<br /><br />';
+
+  }
+}
+closedir($handle);
+
+destroy_cdir('/home/exs/public_html/catche/flash/');
+exit;
+
+?><?php
+exit;
+$usrs = array(16267,4711,12605,9048,2324,6001,9247,543,140,325,14911,3650,2339);
+
+foreach($usrs as $usr) {
+  update_awards($usr);
+}
+
+exit;
+/*include_once('includes_3.0/class.tags.php');
+$tags = new Tags;
+
+$groups = $db->get_results("SELECT id,title FROM rsex_clans");
+foreach($groups as $group) {
+
+	$newtag = htmlspecialchars(ucfirst(strip_tags(trim($group->title))));
+	$nslug = safe_string($newtag);
+	if(!empty($newtag)) {
+		$tagid = $db->get_var("SELECT id FROM rsex_tags WHERE slug = '$nslug'");
+		if(!$tagid) {
+			$db->query("INSERT INTO rsex_tags (name,slug) VALUES ('". sanitize($newtag)."','$nslug')");
+			$tagid = $db->insert_id;
+		}
+		if($tags->add_tag($group->id,$tagid,3)) {
+		}
+	}
+
+}
+*/
+
+exit;
+
+/*
+	This is a simple example script that shows how easy is to integrate your page with Draugiem.lv Passport.
+	Feel free to use it in your own projects.
+*/
+
+$app_key = 'f38c225b8f65df03c5aaa847b1f052a9';//Application API key of your app goes here
+$app_id = 15005147;//Application ID of your app goes here
+
+
+include 'includes_3.0/DraugiemApi.php';
+
+$draugiem = new DraugiemApi($app_id, $app_key);//Create Draugiem.lv API object
+
+$session = $draugiem->getSession(); //Try to authenticate user
+
+if($session && !empty($_GET['dr_auth_code'])){//New session, check if we are not redirected from popup
+	if(!empty($_GET['dr_popup'])){//Redirected from popup, refresh parent window and close the popup with Javascript
+		?>
+		<script type="text/javascript">
+		window.opener.location.reload();
+		window.opener.focus();
+		if(window.opener!=window){
+			window.close();
+		}
+		</script>
+		<?php
+	} else {//No popup, simply reload current window
+		header('Location: ?');
+	}
+	exit;
+}
+
+?><html>
+	<head>
+		<title>Draugiem Passport test</title>
+	</head>
+	<body>
+<?php
+	if($session){//Authentication successful
+
+		$user = $draugiem->getUserData();//Get user info
+		//draugiem_id
+		//Print greeting for user
+		echo '<h2>Hello, '.$user['name'].' '.$user['surname'].'</h2>';
+		if($user['img']){
+			echo '<img src="'.$draugiem->imageForSize($user['img'], 'medium').'" alt="" />';
+		}
+		pr($user);
+
+		echo '<hr />';
+
+		//Show 10 friends with normal size image
+		if($users = $draugiem->getUserFriends(1, 10)){
+
+			echo '<h3>Your friends who also use this application</h3>';
+
+			foreach($users as $friend){
+				if($friend['img']){
+					echo '<img src="'.$friend['img'].'" alt="" align="left" style="clear:left" />';
+				}
+				echo '<a target="_top" href="http://www.draugiem.lv/friend/?'.$friend['uid'].'">';
+				echo $friend['name'].' '.$friend['surname'].'</a><br />';
+				if($friend['nick']){
+					echo '('.$friend['nick'].') ';
+				}
+				echo $friend['place'].'<br style="clear:both" />';
+			}
+		}
+
+		//Logout link
+		echo '<hr /><a href="?logout">Logout ['.$user['name'].' '.$user['surname'].']</a>';
+
+	} else { //User not logged in, show login button
+
+		echo '<h2>Welcome to our site. Please login with draugiem.lv Passport</h2>';
+
+		$redirect = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];//Where to redirect after authorization
+
+		echo $draugiem->getLoginButton($redirect);//Show the button
+
+		echo '<hr />';
+
+		//Show 10 users of this app with small image
+		if($users = $draugiem->getAppUsers(1, 10)){
+
+			echo '<h3>Users of this website</h3>';
+
+			foreach($users as $friend){
+				if($friend['img']){
+					echo '<img src="'.$draugiem->imageForSize($friend['img'], 'icon').'" alt="" align="left"  />';
+				}
+				echo '<a target="_top" href="http://www.draugiem.lv/friend/?'.$friend['uid'].'">';
+				echo $friend['name'].' '.$friend['surname'].'</a><br />';
+				if($friend['nick']){
+					echo '('.$friend['nick'].') ';
+				}
+				echo $friend['place'].'<br style="clear:both" />';
+			}
+		}
+	}
+?>
+	</body>
+</html>
+<?php
+
+exit;
+
+//so velak izsauks tikai tur kur vajag,
+//pagaidam lai updato katru reizi, kamer nav daudz ierakstu
+$c = (int)$_GET['c'];
+for($i=$c;$i<$c+30;$i++) {
+	//update_karma($i);
+	update_awards($i);
+}
+
+
+?>
+<html><head><meta http-equiv="refresh" content="1; url=/dev?c=<?php echo ($i);?>"></head></html>
+<?php
+exit;
+/*function mksprite($avatars = array(),$time) {
+
+	$total = count($avatars);
+	
+
+	$dest = imagecreatetruecolor(75, ($total*75));
+
+	$white = imagecolorallocate($dest, 255, 255, 255);
+	imagefill($dest, 0, 0, $white);
+	
+	$i = 0;
+	foreach($avatars as $avatar) {
+		if(file_exists('dati/bildes/av_sm/'.$avatar.'.jpg')) {
+			$src = imagecreatefromjpeg('dati/bildes/av_sm/'.$avatar.'.jpg');
+		} else {
+			$src = imagecreatefrompng('dati/bildes/av_sm/none.png');
+		}
+		
+		imagecopy($dest, $src, 0, $i*75, 0, 0, 75, 75);
+		
+		$i++;
+	}
+
+	imagejpeg($dest,'catche/sprite/'.$time.'.jpg',85);
+
+}
+
+$time = time();
+mksprite(array(47218,47217,47216,47215,47214),$time);
+
+header('content-type: image/jpeg');
+echo file_get_contents('catche/sprite/'.$time.'.jpg');*/
+
+
+
+/*$games = $db->get_results("SELECT * FROM kongregate_games");
+
+foreach($games as $game) {
+	
+	if(substr($game->flash_file,0,10) == 'http://ext') {
+		//$db->debug();
+		$title = strtolower(mkslug($game->title . '-' . $game->category . '-spele')).'.swf';
+		$data = file_get_contents($game->flash_file);
+		if($data && file_put_contents('upload/flash-games/swf/'.$title,$data)) {
+		
+			$db->query("UPDATE kongregate_games SET flash_file = '/upload/flash-games/swf/".$title."' WHERE slug = '$game->slug'");
+		}
+		
+		echo $title;
+	}
+
+
+}*/
+
+
+//
+
+
+
+//$comments = $db->get_results("SELECT * FROM rsex_comments WHERE pid = '917' ORDER BY date ASC");
+
+//$db->debug();
+
+//foreach($comments as $com) {
+
+	//$db->query("INSERT INTO comments (user_id,parent,time,ip,text) VALUES ('$com->author','fg-7','".strtotime($com->date)."','$com->ip','".sanitize($com->text)."')");
+//}
+
+exit;
+?>
+
+
+<?php
+/*
+
+
+
+$maps = $db->get_results("SELECT * FROM lostmaps WHERE game = 'cs' AND gt = '1' ORDER BY hits DESC limit 100");
+
+foreach($maps as $map) {
+  if($data = file_get_contents('http://image.www.gametracker.com/images/maps/160x120/' . $map->game . '/' . $map->title . '.jpg')) {
+    file_put_contents('bildes/cs_tmp/' . $map->title . '.jpg',$data);
+  } else {
+    $db->query("UPDATE lostmaps SET gt = '0' WHERE title = '$map->title'");
+  }
+}
+
+
+require_once('includes_3.0/class.upload.php');
+if ($handle = opendir('./bildes/cs_tmp')) {
+    while (false !== ($file = readdir($handle))) {
+        if ($file != "." && $file != "..") {
+            $body = substr($file,0,-4);
+            echo "$body<br />";
+
+
+
+
+            $foo = new upload('bildes/cs_tmp/'.$file);
+
+            $foo->file_new_name_body = $body;
+        	  $foo->image_resize = true;
+        	  $foo->image_convert = 'jpg';
+        	  $foo->image_x = 128;
+        	  $foo->image_y =	79;
+        	  $foo->allowed = array('image/*');
+        		$foo->image_ratio_crop = true;
+        		$foo->jpeg_quality = 92;
+        		$foo->file_auto_rename = false;
+        		$foo->file_overwrite = true;
+            $foo->process('bildes/cs/');
+            if ($foo->processed) {
+                echo $foo->file_dst_name_body . '<br />';
+
+                $db->query("DELETE FROM lostmaps WHERE title = '$body'");
+                $foo->clean();
+
+            } else {
+                echo 'error : ' . $foo->error . '<br />';
+            }
+
+
+
+
+
+        }
+    }
+    closedir($handle);
+}
+
+
+
+
+	//	require_once('includes_3.0/class.upload.php');
+
+//$maps = $db->get_results("SELECT * FROM lostmaps");
+
+/*if ($handle = opendir('bildes/tmp/cs')) {
+    while (false !== ($file = readdir($handle))) {
+        if ($file != "." && $file != "..") {
+            echo "$file\n";
+
+           // $foo = new upload('bildes/tmp/cs/'.$file);
+
+            /*$foo->file_new_name_body = $file;
+        	  $foo->image_resize = true;
+        	  $foo->image_convert = 'jpg';
+        	  $foo->image_x = 128;
+        	  $foo->image_y =	79;
+        	  $foo->allowed = array('image/*');
+        		$foo->image_ratio_crop = true;
+        		$foo->jpeg_quality = 92;
+        		$foo->file_auto_rename = false;
+        		$foo->file_overwrite = true;
+            $foo->process('bildes/tmp/cstmp/');
+            if ($foo->processed) {
+                echo $foo->file_dst_name_body . '<br />';
+
+                //$db->query("DELETE FROM lostmaps WHERE title = '$map->title'");
+                $foo->clean();
+
+            } else {
+                echo 'error : ' . $foo->error . '<br />';
+            }
+
+        }
+    }
+    closedir($handle);
+}
+
+
+
+
+exit;
+/*
+
+
+
+
+
+  if(!file_exists('bildes/tmp/' . $map->game . '/' . $map->title . '.jpg') && $data = file_get_contents('http://image.www.gametracker.com/images/maps/160x120/' . $map->game . '/' . $map->title . '.jpg')) {
+    file_put_contents('bildes/tmp/' . $map->game . '/' . $map->title . '.jpg',$data);
+  }
+
+
+
+
+
+
+$users = $db->get_results("SELECT id FROM rsex_users");
+
+foreach($users as $user) {
+	$db->query("INSERT INTO rsex_viewprofile (profile,viewer,time) VALUES ('$user->id','1','".time()."')");
+}
+
+
+
+exit;
+
+*/
+/*
+	$games = $db->get_results("SELECT id,slug,title,thumbnail,rating,category FROM kongregate_games");
+
+	if($games) {
+
+		require_once('includes_3.0/class.upload.php');
+
+		foreach($games as $game) {
+
+			file_put_contents('upload/flash-games/tmp/'.basename($game->thumbnail),file_get_contents($game->thumbnail));
+
+      $foo = new upload('upload/flash-games/tmp/'.basename($game->thumbnail));
+
+      $foo->file_new_name_body = strtolower($game->slug);
+		  $foo->image_resize = true;
+		  $foo->image_convert = 'jpg';
+		  $foo->image_x = 93;
+		  $foo->image_y =	74;
+		  $foo->allowed = array('image/*');
+			$foo->image_ratio_crop = true;
+			$foo->jpeg_quality = 92;
+			$foo->file_auto_rename = false;
+			$foo->file_overwrite = true;
+      $foo->process('upload/flash-games/thb/');
+      if ($foo->processed) {
+          echo $foo->file_dst_name_body . '<br />';
+          $file = $foo->file_dst_name_body.'.jpg';
+
+          $db->query("UPDATE kongregate_games SET thb_local	= '$file' WHERE id = '$game->id'");
+          $foo->clean();
+
+      } else {
+          echo 'error : ' . $foo->error . '<br />';
+      }
+
+		}
+
+ }
+
+exit;
+
+*/
+
+/*  $userid = 1;
+ 	$user = $db->get_row("SELECT * FROM rsex_users WHERE id = ('" . $userid . "')");
+
+
+
+  	$posts = ($db->get_var("SELECT count(*) FROM rsex_comments WHERE author = '$user->id' AND date > '".date('Y-m-d')." 00:00:00'")+$db->get_var("SELECT count(*) FROM rsex_galcom WHERE author = '$user->id' AND date > '".date('Y-m-d')." 00:00:00'"));
+    $miniblog = $db->get_var("SELECT count(*) FROM rsex_miniblog WHERE author = ('" . $user->id . "') AND removed = '0' AND date > '".date('Y-m-d')." 00:00:00'");
+    $today = $posts+$miniblog;
+
+    //echo $today;
+
+    if($today != $user->today) {
+      $db->query("UPDATE rsex_users SET today = ('$today') WHERE id = '$user->id' LIMIT 1");
+  	}
+
+$topics = $db->get_results("SELECT * FROM muzika_pages");
+
+foreach($topics as $topic) {
+  $authnick = $db->get_var("SELECT nick FROM muzika_users WHERE id = '$topic->author'");
+
+  $exsid = $db->get_var("SELECT id FROM rsex_users WHERE nick = ('".sanitize($authnick)."')");
+  $topic->title = sanitize($topic->title);
+  $topic->text = sanitize($topic->text . '<p>(Šis raksts ticis atjaunots no muzika.exs.lv)</p>');
+  echo $exsid . '-' . $authnick . ' - ' . $topic->title . '<br />';
+
+  if(!$exsid) {
+    $exsid = 15810;
+  }
+
+  $db->query("INSERT INTO rsex_pages (textid,category,text,title,author,date,bump,ip,avatar,posts,views)
+    VALUES ('$topic->textid','323','$topic->text','$topic->title','$exsid','$topic->date','$topic->bump','$topic->ip','$topic->avatar','$topic->posts','$topic->views')
+    ");
+
+  $pid = $db->insert_id;
+
+  $comments = $db->get_results("SELECT * FROM muzika_comments WHERE pid = '$topic->id'");
+
+  foreach($comments as $comment) {
+    //echo $comment->text;
+    $authnick = $db->get_var("SELECT nick FROM muzika_users WHERE id = '$comment->author'");
+    $exsid = $db->get_var("SELECT id FROM rsex_users WHERE nick = ('".sanitize($authnick)."')");
+
+    $anon_nick = '';
+    if(!$exsid) {
+      $exsid = 0;
+      $anon_nick = 'Muzika user';
+    }
+
+    $db->query("INSERT INTO rsex_comments (pid,author,text,date,ip,anon_nick)
+      VALUES ('$pid','$exsid','".sanitize($comment->text)."','$comment->date','$comment->ip','$anon_nick')");
+    $db->query("DELETE FROM muzika_comments WHERE id = '$comment->id'");
+  }
+  $db->query("DELETE FROM muzika_pages WHERE id = '$topic->id'");
+
+
+} */
+
+/*
+include('includes_3.0/class.lastrss.php');
+
+$rss = new lastRSS;
+$nocheck = date('Y-m-d H:i:s', time()-180);
+$feeds = $db->get_results("SELECT * FROM `rsex_rssresources` WHERE `category` = 118 AND `updated` < '$nocheck' ORDER BY `updated` ASC LIMIT 1");
+
+if($feeds) {
+	foreach ($feeds as $feed) {
+		if ($rs = $rss->get($feed->rss_url)) {
+			foreach($rs['items'] as $item) {
+			  $check = $db->get_var("SELECT count(*) FROM rsex_rssdata WHERE link = ('" . mysql_real_escape_string($item['link']) . "')");
+			  if(!$check) {
+					if($item['pubDate']) {
+						$time = date('Y-m-d H:i:s', strtotime($item['pubDate']));
+					} elseif($item['dc:date']) {
+						$time = date('Y-m-d H:i:s', strtotime($item['dc:date']));
+					} else {
+            $time = date('Y-m-d H:i:s');
+					}
+					$link = sanitize($item['link']);
+					$title = sanitize($item['title']);
+					$description = sanitize($rss->unhtmlentities(str_replace(array('<![CDATA[','<![cdata[',']]>'),array('','',''),$item['description'])));
+
+			    $db->query("INSERT INTO `rsex_rssdata` (resource,link,title,description,date) VALUES ('$feed->id','$link','$title','$description','$time')");
+				}
+			}
+			$db->query("UPDATE `rsex_rssresources` SET `updated` = '" . date('Y-m-d H:i:s') . "' WHERE id = '$feed->id'");
+		}
+	}
+}
+
+
+?/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Updating...</title>
+  <meta http-equiv="refresh" content="15">
+  </head>
+  <body>
+
+  </body>
+</html>
+<?php
+die();
+
+
+
+
+IZTIRA DATUBEZI NO LIEKIEM PROFILA SKATIJUMU IERAKSTIEM
+
+
+$times = $db->get_results("SELECT id,date FROM rsex_viewprofile");
+
+foreach($times as $time) {
+    $db->query("UPDATE rsex_viewprofile SET time = '".strtotime($time->date)."' WHERE id = '$time->id'");
+
+}
+
+$users = $db->get_results("SELECT id FROM rsex_users");
+
+foreach($users as $user) {
+
+	$viewers = $db->get_results("SELECT id FROM rsex_viewprofile WHERE profile = '$user->id' ORDER BY time DESC LIMIT 22,1000");
+	foreach($viewers as $viewer) {
+	   $db->query("DELETE FROM rsex_viewprofile WHERE id = '$viewer->id'");
+	}
+}
+
+
+$users = $db->get_results("SELECT id,date FROM rsex_users WHERE date < '2011-01-09 13:57:00' ORDER BY lastseen DESC");
+
+
+
+foreach($users as $user) {
+
+	$comments = $db->get_results("SELECT id,pid,date FROM rsex_comments WHERE author = '$user->id' AND date < '".date('Y-m-d H:i:s', 1294575558)."' ORDER BY date DESC LIMIT 10");
+	if($comments) {
+		foreach($comments as $comment) {
+			//echo $comment->pid . '<br />';
+			$topic = $db->get_row("SELECT title,id FROM rsex_pages WHERE id = '$comment->pid'");
+			//echo $topic->id . $topic->title . $comment->date. '<br />';
+
+			$db->query("INSERT INTO rsex_userlogs (time,user,action) VALUES ('".strtotime($comment->date)."','".intval($user->id)."','".sanitize('Komentēja rakstu &quot;<a href="'.mkurl('page',$topic->id,$topic->title).$skip.'#c'.$comment->id.'">'.$topic->title.'</a>&quot;')."')");
+
+
+		}
+	}
+
+}
+
+
+exit;
+
+*/
+/*
+
+
+
+
+
+
+
+
+
+
+//improvised cron
+if(rand(0,40) == 2) {
+	include('includes_3.0/class.lastrss.php');
+	$rss = new lastRSS;
+	$nocheck = date('Y-m-d H:i:s', 1294575558);
+	$feeds = $db->get_results("SELECT * FROM `rsex_rssresources` WHERE `category` = 118 AND `updated` < '$nocheck' ORDER BY `updated` ASC LIMIT 1");
+
+	if($feeds) {
+		foreach ($feeds as $feed) {
+			if ($rs = $rss->get($feed->rss_url)) {
+				foreach($rs['items'] as $item) {
+				  $check = $db->get_var("SELECT count(*) FROM rsex_rssdata WHERE link = ('" . mysql_real_escape_string($item['link']) . "')");
+				  if(!$check) {
+						if($item['pubDate']) {
+							$time = date('Y-m-d H:i:s', strtotime($item['pubDate']));
+						} elseif($item['dc:date']) {
+							$time = date('Y-m-d H:i:s', strtotime($item['dc:date']));
+						} else {
+	            $time = date('Y-m-d H:i:s');
+						}
+						$link = sanitize($item['link']);
+						$title = sanitize($item['title']);
+						$description = sanitize($rss->unhtmlentities(str_replace(array('<![CDATA[','<![cdata[',']]>'),array('','',''),$item['description'])));
+
+				    $db->query("INSERT INTO `rsex_rssdata` (resource,link,title,description,date) VALUES ('$feed->id','$link','$title','$description','$time')");
+					}
+				}
+				$db->query("UPDATE `rsex_rssresources` SET `updated` = '" . date('Y-m-d H:i:s') . "' WHERE id = '$feed->id'");
+			}
+		}
+	}
+}
+
+
+
+
+	*/
+
+
+//for($i=11000;$i<12000;$i++) {
+//echo 'k<br />';
+//update_karma($i);
+
+//}
+
+/*$images = $db->get_results("SELECT * FROM rsex_images WHERE `date` < '2009-01-01 00:00:00' LIMIT 500");
+
+if($images) {
+
+	foreach($images as $image) {
+	  echo $image->url . '<br />';
+			$db->query("DELETE FROM rsex_images WHERE id = '$image->id' LIMIT 1");
+			$db->query("DELETE FROM rsex_galcom WHERE bid = '$image->id'");
+			$db->query("DELETE FROM rsex_ratings WHERE id = 'i" . $image->id . "' LIMIT 1");
+			@unlink($image->url);
+			@unlink($image->thb);
+	}
+
+}
+
+exit;
+$images = $db->get_results("SELECT * FROM rsex_images WHERE `thb` = '' AND url LIKE ('dati/bildes/g%') ORDER BY rand() LIMIT 50");
+
+if($images) {
+
+	foreach($images as $image) {
+
+
+
+
+		if(!$image->thb && stristr($image->url,'dati/bildes/g') && file_exists($image->url)) {
+
+			require_once('includes_3.0/class.upload.php');
+			$text = date('dHis',strtotime($image->date)) . '_' . $image->uid;
+			$folder = 'dati/bildes/g' . date('Y',strtotime($image->date)) . '_' . date('m',strtotime($image->date)) . '/';
+
+			if(file_exists($folder . $text . '.jpg')) {
+				$text = date('dHis',strtotime($image->date)+2) . '_' . $image->uid;
+			}
+
+	$foo = new Upload($image->url);
+  $foo->file_new_name_body = 'large_' . $text;
+  $foo->image_resize = true;
+  $foo->image_convert = 'jpg';
+  $foo->image_x = 510;
+  $foo->image_y =	500;
+  $foo->allowed = array('image/*');
+	$foo->image_ratio_no_zoom_in = true;
+	$foo->jpeg_quality = 80;
+  $foo->process($folder);
+
+  if ($foo->processed) {
+
+			$foo = new Upload($image->url);
+		  $foo->file_new_name_body = 'thb_' . $text;
+		  $foo->image_resize = true;
+		  $foo->image_convert = 'jpg';
+		  $foo->image_x = 50;
+		  $foo->image_y =	50;
+			$foo->file_auto_rename = false;
+			$foo->file_overwrite = true;
+		  $foo->allowed = array('image/*');
+			$foo->image_ratio_crop = true;
+			$foo->jpeg_quality = 90;
+		  $foo->process($folder);
+
+	  	if ($foo->processed) {
+
+				$file = $folder . 'large_' . $text . '.jpg';
+				$thb = $folder . 'thb_' . $text . '.jpg';
+				unlink($image->url);
+
+				$db->query("UPDATE rsex_images SET url = ('$file'), thb = ('$thb') WHERE id = '$image->id'");
+        $image->url = $file;
+        build_latest_gal();
+        $foo->clean();
+
+        echo $image->id . ' parveidots...<br />';
+			} else {
+        echo $image->id . ' thbfail...<br />';
+			}
+
+
+		} else {
+        echo $image->id . ' fail...<br />';
+		}
+	}
+
+  }
+
+} else {
+	echo 'vairaak nav :)';
+}
+
+exit;
+
+
+
+//mass pm
+$users = $db->get_results("SELECT id,nick FROM rsex_users WHERE lastseen > '".date('Y-m-d H:i:s',time()-3000000)."' AND karma > '1' AND level = '0' OR level = '1'");
+$i=0;
+foreach($users as $user) {
+
+$text = 'Sveiks, '.$user->nick.'!<br /><br />
+Vēlos Tev piedāvāt iespēju reģistrēties pavisam jaunā blogu portālā <a href="http://blocins.lv/">blocins.lv</a>.<br />
+Mēs vēlamies izveidot jaunu, draudzīgu blogu komūnu. Ja esi ieinteresēts, Tu bez maksas vari izveidot pats savu blogu, ar adresi <em>vārds</em>.blocins.lv<br />
+Ja ir kādi jautājumi, vai esi izvediojis blogu un vēlies tam pievienot sevis izvēlētu &quot;skinu&quot;, droši jautā man šeit sūtot pm vai arī <a href="http://blocins.lv/2009/12/05/hello-world/">te</a>!<br />
+Patīkamu dienu! ;)
+';
+
+	//$db->query("INSERT INTO rsex_pm (from_uid,to_uid,date,ip,title,text,is_read) VALUES ('1','$user->id','".date('Y-m-d H:i:s')."','127.0.0.1','Jauns blogošanas projekts','$text','0')");
+	//echo $text . $i . $user->nick . '<br />';
+	$i++;
+}
+*/
+//	$db->query("DELETE FROM rsex_pm WHERE to_uid = '0'");
+
+
+
+
+
+/*function getStats($n) {
+  $d = file_get_contents("http://services.runescape.com/m=hiscore/hiscorepersonal.ws?user1=".$n);
+  preg_match_all("/<td class=\"alL\">(.*?)<\/tr>/s",$d,$m);
+  $u = array("\n","\r");
+  $g = array('/^\s+/','/\s{2,}/');
+  $o = array('',' ');
+  $s = array();
+  foreach ($m[1] as $v) {
+    $ta = explode(" ",preg_replace($g,$o,str_replace($u,' ',strip_tags($v))));
+    $line .= $ta[2];
+    $s[$ta[0]] = array('Ranks' => $ta[1],'Limenis' => $ta[2],'Exp' => $ta[3]);
+  }
+  return (($s['Overall']['Level'] == "does")? "false":$s);
+}
+
+$variable = getStats('Gertjaars');
+
+foreach ($variable as $skill => $v) {
+	$line = $skill;
+	foreach ($variable[$skill] as $aspect => $data) {
+		$line .= " ".$aspect.": ".$data;
+	}
+	echo $line . '<br />';
+}
+
+$bms = $db->get_results("SELECT * FROM rsex_miniblog WHERE removed = '0' ORDER BY date DESC LIMIT 10000,3000");
+
+if($bms) {
+
+	foreach($bms as $bm) {
+
+		$yt_check = strip_tags($bm->text);
+		if(substr($yt_check,0,28) == 'http://www.youtube.com/watch') {
+			$bm->text = sanitize('<strong>' . preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)(</a>)?#ime", 'get_youtube_title(\\4)', $bm->text) . ':</strong><br />' . $bm->text);
+			$db->query("UPDATE rsex_miniblog SET text = ('$bm->text') WHERE id = '$bm->id' LIMIT 1");
+			echo $bm->id . '<br />';
+		}
+
+	}
+
+}
+
+
+ */
+
+
+ /*
+$msgs = $db->get_results("SELECT * FROM rsex_clans_community");
+
+foreach($msgs as $msg) {
+  echo $msg->text . '<br />';
+  $date = date('Y-m-d H:i:s',$msg->time);
+	//$db->query("INSERT INTO rsex_miniblog (groupid,author,date,text,ip,bump) VALUES ('$msg->clan','$msg->author','$date','$msg->text','$msg->ip','$msg->time')");
+
+}
+
+*//*
+
+
+
+
+exit;
+
+$starttime = microtime();
+$startarray = explode(" ", $starttime);
+$starttime = $startarray[1] + $startarray[0];
+
+for($i=1;$i<1000;$i++) {
+			$responses = $db->get_results("
+										SELECT
+						 					`rsex_miniblog`.`text` AS `text`,
+						 					`rsex_miniblog`.`date` AS `date`,
+						 					`rsex_miniblog`.`author` AS `uid`,
+						 					`rsex_miniblog`.`id` AS `id`,
+						 					`rsex_miniblog`.`img_path` AS `img_path`,
+						 					`rsex_miniblog`.`img_src` AS `img_src`,
+						 					`rsex_users`.`nick` AS `nick`,
+						 					`rsex_users`.`avatar` AS `avatar`,
+						 					`rsex_users`.`level` AS `level`
+										FROM
+											rsex_miniblog,
+											rsex_users
+										WHERE
+											`rsex_miniblog`.`parent` = '77390' AND
+											`rsex_miniblog`.`removed` = '0' AND
+											`rsex_users`.`id` = `rsex_miniblog`.`author`
+										ORDER BY
+											`rsex_miniblog`.`date`
+										ASC");
+}
+
+
+$endtime = microtime();
+$endarray = explode(" ", $endtime);
+$endtime = $endarray[1] + $endarray[0];
+$totaltime = $endtime - $starttime;
+$totaltime = round($totaltime,5);
+echo "This page loaded in $totaltime seconds.";
+*/
+
+
+
+
+
+#GALLERY#########################
+
+			/*if($auth->showsig && $author->signature) {
+			  $tpl->assign('comment-author-signature','<div class="comment-signature">' . $author->signature . '</div>');
+			}*/
+
+			/*if($comment->vote_value > 0) {
+				$vclass = 'positive';
+			} elseif($comment->vote_value < 0) {
+				$vclass = 'negative';
+			} else {
+				$vclass = 'zero';
+			}
+
+      $pluslnk = '<span class="disabled">+</span>';
+      $minuslnk = '<span class="disabled">-</span>';
+
+			if($auth->ok) {
+			  $check = md5($comment->date . $comment->id . $auth->user_id);
+			  $voters = explode(',',$comment->vote_users);
+			  $voted = in_array($auth->user_id,$voters);
+			  if(isset($_GET['vc']) && isset($_GET['check']) && !$voted && $_GET['check'] == $check && isset($_GET['action'])) {
+					$vc = (int)$_GET['vc'];
+				  if($_GET['action'] == 'plus') {
+						$db->query("UPDATE rsex_galcom SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "," . $auth->user_id . "' WHERE id = '$vc'");
+          } else {
+						$db->query("UPDATE rsex_galcom SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "," . $auth->user_id . "' WHERE id = '$vc'");
+					}
+					$_SESSION['last_session_request'] = 0;
+					header('Location: ?g=' . $userid . '&i=' . $image->id);
+					exit;
+				}
+				if(!$voted) {
+					$pluslnk = '<a href="/?g=' . $userid . '&amp;i=' . $image->id . '&amp;vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus">+</a>';
+					$minuslnk = '<a href="/?g=' . $userid . '&amp;i=' . $image->id . '&amp;vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus">-</a>';
+				}
+			}
+
+			$tpl->newBlock('comments-vote');
+			$tpl->assign(array(
+			  'comment-vote_value' => $comment->vote_value,
+			  'comment-plus' => $pluslnk,
+			  'comment-minus' => $minuslnk,
+			  'comment-vclass' => $vclass
+			));*/
+
+
+
+
+
+/*$records = $db->get_results("SELECT id FROM rsex_miniblog WHERE removed = '0' AND parent = '0' ORDER BY date DESC LIMIT 10000,10000");
+			$i = 0;
+foreach($records as $record) {
+$i++;
+	$responsestot = $db->get_var("SELECT count(*) FROM rsex_miniblog WHERE parent = '$record->id' AND removed = '0'");
+	$db->query("UPDATE rsex_miniblog SET posts = ('$responsestot') WHERE id = '$record->id' LIMIT 1");
+}
+		echo $i;
+
+		*/

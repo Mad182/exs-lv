@@ -1,0 +1,52 @@
+body {
+	background: #ebebeb
+}
+#wrapper {
+	background:#fff;
+	margin: 0 auto 20px;
+	-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	-moz-box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	padding: 0 3px 5px;
+	height: auto !important;
+	height: 1100px;
+	min-height: 1100px;
+}
+#header-overlay {
+	background: url('http://exs.lv/bildes/overlay-3-lighter.png') no-repeat 0 0;
+	height: 160px;
+}
+#forum th {
+	border: 0;
+	font-weight: 400;
+	color: #eee;
+	text-align: left;
+	background: #1C597E url('http://exs.lv/bildes/forum.png') no-repeat 50% 0;
+	font-size: 11px;
+	line-height: 14px;
+	height: 14px;
+	font-family: Tahoma, Geneva, sans-serif;
+	padding: 7px 8px 9px
+}
+#forum th.first {
+	background: #1C597E url('http://exs.lv/bildes/forum.png') no-repeat;
+	font-weight: 700;
+	color: #fff;
+	text-transform: uppercase;
+	padding: 7px 8px 9px 12px
+}
+#forum th.last {
+	background: #1C597E url('http://exs.lv/bildes/forum.png') no-repeat 100% 0
+}
+#login-form input {
+	background: #EAEAEA url('http://exs.lv/bildes/s.png');
+}
+#tools-bar {
+	margin: 0 5px;
+	background: transparent url('http://exs.lv/bildes/black_35.png') repeat
+}

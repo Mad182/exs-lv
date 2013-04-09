@@ -1,0 +1,10 @@
+<?php
+$pages = $db->get_results("SELECT id FROM pages ORDER BY id DESC");
+
+foreach($pages as $page) {
+	$count = $db->get_var("SELECT count(*) FROM comments WHERE pid = '$page->id'");
+	$db->query("UPDATE pages SET posts = '$count' WHERE id = '$page->id'");
+}
+
+exit;
+?>

@@ -1,0 +1,55 @@
+/* site map */
+div#sitemap ul {
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+div#sitemap ul li {
+	background: url('http://exs.lv/bildes/map_title.gif') no-repeat scroll 0 0 transparent;
+	margin: 0;
+	padding: 0;
+}
+div#sitemap ul li a {
+	font-size: 13px;
+	line-height: 38px;
+	margin: 0 0 0 35px;
+	padding: 0;
+	text-decoration: none;
+}
+div#sitemap ul li li a {
+	font-size: 12px;
+}
+div#sitemap ul li li li a {
+	font-size: 11px;
+}
+div#sitemap ul li li li a {
+	font-size: 10px;
+}
+div#sitemap ul li ul {
+	list-style: none outside none;
+	margin: 5px 0 10px 40px;
+	padding: 0;
+}
+div#sitemap ul li li {
+	background: none repeat scroll 0 0 transparent;
+	margin: 0;
+	padding: 0;
+}
+div#sitemap ul li li a {
+	padding: 3px 10px;
+	line-height: 1.4;
+	margin: 5px 0;
+	display: block;
+	text-decoration: none;
+	border-bottom: 1px solid #eee;
+	border-left: 5px solid #eee;
+}
+div#sitemap ul li li a:hover {
+	border-bottom: 1px solid #ddd;
+	border-left: 5px solid #ddd;
+}
+div#sitemap ul li li ul {
+	padding: 0 0 0 20px;
+	margin: 0;
+	list-style: none;
+}

@@ -1,0 +1,177 @@
+/*
+code.css
+(c) 2012-2013 exs.lv
+
+coding.lv specifiskie stili
+
+*/
+
+body {
+	background: #F4F7F9 url('http://exs.lv/bildes/coding/top.gif') repeat-x 0 0;
+	font-size: 13px;
+}
+#wrapper {
+	margin: 0 auto 10px;
+	box-shadow: 0pt 5px 9px rgba(0, 0, 0, 0.2);
+	min-height: 100%;
+	border-left: 5px solid #fff;
+	border-right: 5px solid #fff;
+}
+#tools-bar {
+	background: transparent url("http://exs.lv/bildes/mobile/top-bg-90.png") repeat-x 0 100%;
+	padding: 1px 10px;
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+#logo {
+	height: 122px;
+}
+#header-overlay {
+	height: 152px;
+}
+#top-menu {
+	margin: 0;
+	background: transparent url("http://exs.lv/bildes/mobile/top-bg-grad.png") repeat-x 0 100%;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px
+}
+#header {
+	height: 152px
+}
+#header-stuff {
+	right: 15px
+}
+#inner-content {
+	padding: 5px 10px;
+	text-align: left;
+}
+h1, h2, h3 {
+	font-weight: normal;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	padding: .8em 0 .3em;
+	margin: 0
+}
+h1 {
+	font-size: 22px
+}
+h2 {
+	font-size: 20px
+}
+h3 {
+	font-size: 18px
+}
+#forum td, .user-actions, .blockhref li a, #user-notify li a, table td, table th {
+	font-size: 11px
+}
+#forum td.last {
+	font-size: 11px
+}
+#wrapper .index-list li h3, .index-list li h3 a, #forum td h3, #forum td h3 a {
+	font-size: 16px;
+}
+#wrapper #pm-table th.date {
+	width: 120px
+}
+#top-menu li a {
+	font-size: 12px;
+	padding: 0 8px 2px;
+	margin: 0 1px;
+}
+#footer .infoblock {
+	width: 22%;
+}
+#forum th {
+	background: transparent url("http://exs.lv/bildes/mobile/top-bg.png") repeat-x 0 0;
+	color: #fff;
+	font-size: 12px
+}
+#forum th.first {
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	border-top-left-radius: 5px;
+}
+#forum th.last {
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-right-radius: 5px
+}
+#top-menu-left {
+	padding-right: 0
+}
+#top-menu-right {
+	padding-left: 0
+}
+#exs-logo {
+	background: url('http://exs.lv/bildes/logos/logo_coding.png') no-repeat -20px -25px;
+	width: 240px;
+}
+#latest-topics li {
+	background: transparent;
+	padding: 1px 0;
+	margin: 0;
+	height: auto !important;
+	height: 38px;
+	min-height: 38px;
+	border-bottom: 1px solid #eee;
+	line-height: 1.1;
+}
+#latest-topics.blockhref li a {
+	height: auto !important;
+	height: 38px;
+	min-height: 38px;
+}
+#latest-topics li .av {
+	width: 32px;
+	height: 32px;
+	margin-top: 0;
+}
+/* foruma komenti */
+#comments dt {
+	width: 120px;
+	text-align: center;
+}
+#comments dt a.username {
+	text-align: left;
+}
+#comments dt img {
+	padding: 1px;
+	margin: 3px auto 1px;
+	border: 1px solid #eee;
+}
+#comments dd {
+	margin: 0 0 0 120px;
+}
+#content .custom-title { 
+	color: #5a5a5a;
+	text-align: center;
+	font-size: 12px;
+}
+.author-info span.title {
+	font-weight: normal
+}
+.author-info {
+	font-size: 11px;
+	line-height: 12px;
+	color: #999;
+}
+.content-block {
+	width: 728px
+}
+.comment-text {
+	height: auto !important;
+	height: 130px;
+	min-height: 130px
+}
+#add-comment-form {
+	margin: 16px 10px 10px 110px
+}
+
+#right {
+	padding-left: 0;
+	width: 208px;
+}

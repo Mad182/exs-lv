@@ -1,0 +1,8 @@
+<!-- (c) 2010-2020 AdOcean Sp. z o.o. -->
+<script language="javascript1.2" type="text/javascript">
+// pula: 180x150_LAT
+// program: Pica LULŪ
+//<![CDATA[
+document.write('<scr'+'ipt src="http://afilv.adocean.pl/_'+(new Date()).getTime()+'/ad.js?id=fIf6Sl.WQxIqM9H86PKoYng0EHhoUEM6WDOTdj4SKBn.h7" language="javascript"></scr'+'ipt>');
+//]]>
+</script>

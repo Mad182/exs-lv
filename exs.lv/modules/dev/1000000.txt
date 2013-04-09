@@ -1,0 +1,6 @@
+		//1000000
+		if($lastins == 1000000) {
+      $db->query("INSERT INTO rsex_autoawards (user_id,award,title,created) VALUES ('$auth->user_id','mb-1000000','Miljonā posta autors',NOW())");
+      $db->query("UPDATE rsex_autoawards SET importance = '$db->insert_id' WHERE id = '$db->insert_id'");
+      push('Ieguva medaļu &quot;Miljonā posta autors&quot;','/dati/bildes/awards/mb-1000000.png');
+		}

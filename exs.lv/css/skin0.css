@@ -1,0 +1,636 @@
+html, body {
+	font-family: tahoma, verdana, arial;
+	color: #000;
+	background: #dde2e4
+}
+#wrapper {
+	border: 1px solid #bbb;
+	margin: 6px auto;
+	padding: 6px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-box-shadow: 2px 2px 4px #ddd;
+	-webkit-box-shadow: 2px 2px 4px #ddd;
+	box-shadow: 2px 2px 4px #ddd;
+	background: #fff
+}
+#logo {
+	height: 128px;
+	position: relative
+}
+#header-overlay {
+	background: transparent;
+	height: 155px;
+}
+#header {
+	height: 155px;
+}
+#header-stuff, #header-stuff-alt {
+	bottom: 10px;
+}
+#tools-bar {
+	background: #222;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+	color: #ccc;
+}
+#site-links {
+	float: right;
+	margin: 0;
+	padding: 0
+}
+#site-links a {
+	color: #ccc
+}
+#site-links a:hover {
+	color: #eee
+}
+#top-menu {
+	height: 16px;
+	background: #d9d9d9 url(http://exs.lv/bildes/topmenu.gif) repeat-x 0 100%;
+	border-bottom: 1px solid #999;
+	border-top: 1px solid #999;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	font-size: 11px;
+	margin: 0;
+	padding: 6px 7px
+}
+#top-menu li {
+	background: transparent;
+	float: left;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: 16px;
+}
+#top-menu li a {
+	color: #444;
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	text-shadow: 0 1px 0 #aaa;
+}
+#top-menu ul {
+	padding: 1px 0 0;
+	margin: 0;
+}
+#top-menu-right li a {
+	background: url(http://exs.lv/bildes/topmenu-seperator.gif) no-repeat 0 50%;
+	padding: 0 5px 0 7px
+}
+#top-menu-left li a {
+	background: url(http://exs.lv/bildes/topmenu-seperator.gif) no-repeat 100% 50%;
+	padding: 0 7px 0 5px
+}
+#top-menu-right li.selected a {
+	background: #ddd url(http://exs.lv/bildes/topmenu-seperator.gif) no-repeat 0 50%;
+	color: #222
+}
+#top-menu-left li.selected a {
+	background: #ddd url(http://exs.lv/bildes/topmenu-seperator.gif) no-repeat 100% 50%;
+	color: #222
+}
+#top-menu-right li ul {
+	position: absolute;
+	display: none;
+	background: #bbb;
+	top: 15px;
+	z-index: 100;
+	border: 3px solid #aaa;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px
+}
+#top-menu-right li ul#user-group-menu li {
+	background: #eee
+}
+#top-menu-right li ul#user-group-menu li a {
+	background: transparent;
+	color: #222;
+}
+#top-menu-right li:hover ul {
+	display: block
+}
+#top-menu-right li li {
+	background: transparent;
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+#top-menu-right li li a {
+	background: #ddd;
+	display: block;
+	height: auto;
+	width: 170px;
+	margin: 1px 0 0;
+	padding: 1px 4px
+}
+.ext ul, .ext ul li {
+	background: transparent;
+	font-size: 90%;
+	margin: 0;
+	padding: 0
+}
+table#forum {
+	width: 100%;
+	border: 0;
+	border-top: 0;
+	margin: 8px auto;
+	padding: 0
+}
+table#forum tr td {
+	border: 1px solid #dadada;
+	border-left: 0;
+	border-top: 0;
+	border-right: 1px dashed #dbdbdb;
+	color: #6e6e6e;
+	text-align: left;
+	font-size: 90%;
+	padding: 2px 6px
+}
+table#forum tr td.last {
+	border-right: 0
+}
+table#forum tr td h3 {
+	font-size: 12px;
+	margin: 2px 0;
+	padding: 0
+}
+table#forum tr th {
+	border: 0;
+	font-weight: 400;
+	color: #999;
+	text-align: left;
+	background: #E3E3E3 url(http://exs.lv/bildes/topmenu.gif) repeat-x 0 0;
+	font-size: 10px;
+	line-height: 13px;
+	height: 13px;
+	padding: 5px 8px
+}
+table#forum tr th.first {
+	font-weight: 700;
+	color: #333
+}
+.core-pager a {
+	border: 1px solid #eee;
+	margin: 0 -1px 0 0;
+	padding: 0 2px
+}
+.core-pager a.selected {
+	border: 1px solid #ddd;
+	background: #eee;
+	font-weight: 700
+}
+#comments {
+	margin: 10px 0;
+	padding: 0
+}
+#comments dt {
+	border-top: 4px solid #B5C0CF;
+	float: left;
+	width: 100px;
+	margin: 0;
+	padding: 0
+}
+#comments dd {
+	border-top: 4px solid #B5C0CF;
+	margin: 0 0 0 100px;
+	padding: 0
+}
+#comments dt .username {
+	font-weight: 700;
+	display: block;
+	height: 18px;
+	background: #ECEFF5;
+	margin: 0 0 3px;
+	padding: 1px 1px 1px 3px
+}
+.inf {
+	display: block;
+	height: 18px;
+	background: #ECEFF5;
+	color: #445;
+	margin: 0;
+	padding: 1px 0
+}
+.comment-text {
+	height: auto!important;
+	min-height: 120px;
+	margin: 0;
+	padding: 3px 0
+}
+p.comment-tools {
+	border-top: 1px solid #ECEFF5;
+	height: 16px;
+	margin: 0;
+	padding: 2px 0
+}
+p.comment-tools a {
+	font-size: 85%;
+	color: #fff;
+	background: #3A3A3A;
+	width: 50px;
+	text-align: right;
+	height: 15px;
+	line-height: 15px;
+	float: left;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	margin: 0 4px 0 0;
+	padding: 0 3px
+}
+a.friend-right, a.friend {
+	border: 1px solid #eee;
+	text-align: center;
+	width: 80px;
+	display: inline;
+	margin: 3px;
+	padding: 5px
+}
+a.friend img {
+	width: 75px;
+	height: 75px
+}
+#blog-edit fieldset {
+	border: 0;
+	padding: 0
+}
+a.friend-right:hover, a.friend:hover {
+	border: 1px solid #ddd
+}
+a.friend-right img, a.friend img {
+	display: block;
+	margin: 0 auto
+}
+.poll-answers li, #poll-questions li {
+	background: transparent;
+	margin: 0;
+	padding: 1px 0
+}
+.poll-answers li span {
+	position: absolute;
+	font-size: 9px;
+	line-height: 9px;
+	z-index: 10;
+	right: 1px;
+	top: -1px;
+	color: #fff
+}
+.poll-answers li div {
+	background: #337FC6 url(http://exs.lv/bildes/skins/1/bar.gif) no-repeat 0 0;
+	height: 8px;
+	font-size: 1px;
+	line-height: 1px;
+	position: relative;
+	margin: 0 0 2px;
+	padding: 0
+}
+.poll-answers li div div {
+	background: #5FA9F0;
+	height: 8px;
+	z-index: 1;
+	margin: 0;
+	padding: 0
+}
+.half-left {
+	width: 282px;
+	float: left
+}
+.half-right {
+	width: 282px;
+	float: right
+}
+.tabMain .half-left, .tabMain .half-right {
+	width: 265px
+}
+.bloglist li {
+	background: transparent;
+	margin: 0;
+	padding: 0
+}
+.mb-col li .av {
+	margin-top: 0;
+	width: 45px;
+	height: 45px;
+}
+.index-list .av {
+	width: 75px;
+	height: 75px;
+}
+.mb-col li .av {
+	width: 45px;
+	height: 45px;
+	margin-top: 3px
+}
+.blockhref li a {
+	display: block;
+	text-decoration: none;
+	font-size: 11px;
+	line-height: 16px;
+	padding: 3px 1px
+}
+.blockhref li a:hover {
+	background: #f5f5f6
+}
+.blockhref li a span {
+	display: block;
+	font-weight: 400;
+	color: #aaa;
+	font-family: arial;
+	font-size: 11px;
+	line-height: 12px
+}
+.mb-col li .author {
+	color: #999;
+	font-weight: 700
+}
+.mbox {
+	background: #ECEFF5;
+}
+ul#sitemap li {
+	background: transparent
+}
+#footer {
+	background: #f5f5f5;
+	border-top: 1px solid #ddd;
+	margin: 0;
+	padding: 8px 0 0
+}
+#footer div.infoblock {
+	width: 220px;
+	color: #777;
+	height: 120px;
+	float: left;
+	display: inline;
+	background: #f2f2f2;
+	border: 1px solid #dfdfdf;
+	font-size: 11px;
+	overflow: hidden;
+	margin: 4px;
+	padding: 6px 5px 6px 10px
+}
+#footer div.infoblock ul {
+	margin: 4px 0;
+	padding: 0
+}
+#footer div.infoblock ul li {
+	background: transparent;
+	display: inline;
+	margin: 0;
+	padding: 0
+}
+#footer div.infoblock ul li a {
+	border-bottom: 1px dashed #dfdfdf;
+	display: block
+}
+#online-users {
+	background: #f2f2f2;
+	border: 1px solid #dfdfdf;
+	margin: 4px;
+	padding: 6px 10px
+}
+#edit-signature {
+	width: 330px;
+	height: 90px
+}
+#wrapper #mb-tags {
+	float: right;
+}
+#wrapper .list-tags {
+	padding: 0;
+	margin: 5px 0;
+	list-style: none;
+}
+#wrapper .list-tags li {
+	float: left;
+	margin: 3px 4px;
+	height: 20px;
+	min-height: 20px;
+	line-height: 20px;
+	padding: 0 7px 0 15px;
+	background: url('http://exs.lv/bildes/tag_bg.png') no-repeat 0 0;
+	text-shadow: 0 1px 0 #fff;
+	font-size: 12px;
+	font-family: helvetica, arial, sans-serif;
+	-webkit-border-top-right-radius: 2px;
+	-webkit-border-bottom-right-radius: 2px;
+	-moz-border-radius-topright: 2px;
+	-moz-border-radius-bottomright: 2px;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px
+}
+#wrapper .list-tags li a {
+	color: #656565;
+}
+#wrapper .list-tags li a:hover {
+	color: #369;
+	text-decoration: none;
+}
+.comments-avatar {
+	width: 90px;
+	height: 90px
+}
+.small-userlist li {
+	background: transparent;
+	float: left;
+	margin: 0;
+	padding: 2px
+}
+.small-userlist li a img {
+	width: 45px;
+	height: 45px;
+	border: 1px solid #fff
+}
+#left h3, #right h3 {
+	background: #EBEBEB url('http://exs.lv/bildes/topmenu.gif') repeat-x 0 50%;
+	font-size: 12px;
+	padding: 4px 6px 1px;
+}
+#left h3 {
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 1px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-bottomleft: 1px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 1px;
+}
+#right h3 {
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 1px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 1px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 1px;
+}
+#wrapper h1 a.rss, #wrapper h2 a.rss {
+	float: right;
+	color: #DC6500;
+	padding: 0 2px 0 10px
+}
+#full-story h2, #full-story h1 {
+	background: transparent;
+	color: #000;
+	border: 0;
+	font-variant: normal;
+	padding: .6em 0 .4em
+}
+#search-form input.text {
+	height: 14px;
+	float: left;
+	width: 90px;
+	font-size: 11px;
+	line-height: 14px;
+	border-right: 0;
+	background: url(http://exs.lv/bildes/i.png) repeat 0 -418px;
+	border: 1px solid #8D9AAC;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	margin: 0;
+	padding: 2px 5px
+}
+#search-form input.submit {
+	height: 20px;
+	text-align: left;
+	width: auto;
+	line-height: 14px;
+	margin: 0 0 0 3px;
+	padding: 2px 5px
+}
+#search-form input:hover {
+	border: 1px solid #5D6A8C
+}
+.top-infoblock {
+	position: absolute;
+	left: 241px;
+	top: 29px
+}
+#listsub-list li {
+	padding: 2px 20px
+}
+#related-topics {
+	margin: 10px 0 0
+}
+#related-topics li {
+	background: url(http://exs.lv/bildes/arr_up.gif) no-repeat 0 50%
+}
+#latest-blogs li {
+	background: transparent;
+	border-bottom: 1px solid #E3E3E3;
+	margin: 0;
+	padding: 5px 0
+}
+#latest-blogs li h3 {
+	margin: 0;
+	padding: 5px 0
+}
+#latest-blogs li div.author {
+	float: left;
+	width: 90px;
+	height: 100px;
+	text-align: center;
+	line-height: 13px
+}
+#latest-blogs li div.author img {
+	width: 75px;
+	height: 75px;
+	display: inline;
+	float: none;
+	margin: 0;
+	padding: 0
+}
+.index-list li {
+	background: transparent;
+	margin: 0;
+	padding: 0 0 5px
+}
+.index-list li.sm {
+	background: transparent;
+	margin: 0;
+	padding: 0 0 0 30px
+}
+.index-list li p {
+	font-size: 90%;
+	line-height: 15px
+}
+.index-list li h3, .index-list li h3 a {
+	font-size: 12px;
+	line-height: 17px;
+	font-weight: 700;
+	margin: 0;
+	padding: 0
+}
+.index-list li.sm h3, .index-list li.sm h3 a {
+	font-size: 11px;
+	line-height: 14px;
+	font-weight: 400;
+	margin: 0;
+	padding: 0
+}
+.rater-block span {
+	line-height: 12px;
+	margin: -4px 0 0
+}
+img.attels_pa_labi {
+	float: right;
+	border: 1px solid #ccc;
+	background: #eee;
+	margin: 6px 5px 6px 10px;
+	padding: 4px
+}
+img.attels_pa_kreisi {
+	float: left;
+	border: 1px solid #ccc;
+	background: #eee;
+	margin: 6px 10px 6px 5px;
+	padding: 4px
+}
+img.attels_centrets {
+	display: block;
+	border: 1px solid #ccc;
+	background: #eee;
+	margin: 6px auto;
+	padding: 4px
+}
+a.thb-image img {
+	border: 1px solid #ccc;
+	background: #eee;
+	margin: 6px 5px;
+	padding: 4px
+}
+#exs-groups li {
+	background: transparent;
+	height: 87px;
+	width: 32%;
+	float: left;
+	margin: 0;
+	padding: 5px
+}
+#exs-groups li h3 {
+	font-size: 14px;
+	margin: 0;
+	padding: 6px 0
+}
+#exs-groups li h3 a {
+	font-size: 14px
+}
+#exs-groups li p {
+	font-size: 90%;
+	color: #888;
+	line-height: 1.2
+}
+#miniblog-list, h4 {
+	padding: .5em 0
+}
+/* notifikacijas */
+#user-notify li a:hover {
+	background-color: #f5f5f6
+}
+#user-notify li span {
+	color: #aaa;
+}

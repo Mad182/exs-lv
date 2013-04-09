@@ -1,0 +1,49 @@
+<?php
+
+if($auth->user_id != 1) {
+  die('err');
+}
+?>
+
+<form action="" method="post">
+  <input type="text" name="keyword" />
+  <input type="submit" value="tag it" />
+</form>
+
+
+<?php
+
+if(isset($_POST['keyword'])) {
+  $tagz = sanitize(trim($_POST['keyword']));
+
+  include_once('includes/class.tags.php');
+  $tags = new Tags;
+
+  $groups = $db->get_results("SELECT id,parent,text
+  			FROM miniblog WHERE removed = '0' AND groupid = '0'
+  			AND `text` LIKE '%".$tagz."%'");
+
+
+  foreach($groups as $group) {
+
+  	if($group->parent != 0) {
+  		$group->id = $group->parent;
+  	}
+  	$newtag = $tagz;
+  	$nslug = mkslug($newtag);
+  	if(!empty($newtag)) {
+  		$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
+  		if(!$tagid) {
+  			$db->query("INSERT INTO tags (name,slug) VALUES ('". sanitize($newtag)."','$nslug')");
+  			$tagid = $db->insert_id;
+  		}
+  		if($tags->add_tag($group->id,$tagid,2)) {
+  	   echo '<p>'.textlimit($group->text,50) . '</p>';
+  		}
+  	}
+
+  }
+
+}
+ exit;
+?>

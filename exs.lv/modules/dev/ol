@@ -1,0 +1,40 @@
+<?php
+
+
+/dati/bildes/futzals-06-04-2013/large
+
+$pages = $db->get_results("SELECT sum(value) as sum, junk_id FROM `junk_votes` GROUP BY junk_id ORDER BY `sum`  DESC LIMIT 20");
+
+foreach($pages as $p) {
+	$junk = $db->get_row("SELECT * FROM junk WHERE id = '$p->junk_id'");
+
+
+
+echo $junk->title . '<br />';
+echo '<img src="//img.exs.lv'.$junk->image.'" /><br /><br /><br />';
+}
+
+
+exit;
+$lang = 5;
+
+function add_mod_recursive($catid, $usrid) {
+	global $db;
+	$usr = get_user($usrid);
+	$cat = get_cat($catid);
+	if($cat && $usr) {
+		if(!$db->get_var("SELECT count(*) FROM `cat_moderators` WHERE `category_id` = '$cat->id' AND `user_id` = '$usr->id'")) {
+			$db->query("INSERT INTO `cat_moderators` (`category_id`,`user_id`) VALUES ('$cat->id', '$usr->id')");
+			echo "INSERT INTO `cat_moderators` (`category_id`,`user_id`) VALUES ('$cat->id', '$usr->id')<br />";
+		}
+		$subcats = $db->get_results("SELECT `id` FROM `cat` WHERE `parent` = '$cat->id'");
+		if($subcats) {
+			foreach($subcats as $subcat) {
+				add_mod_recursive($subcat->id, $usr->id);
+			}
+		}
+
+	}
+}
+
+add_mod_recursive(979, 24974);

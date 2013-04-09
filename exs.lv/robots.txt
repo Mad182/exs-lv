@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /upload/flash-games/swf/
+Disallow: /dati/speles/swf/
+Disallow: /dati/speles/speles/
+Disallow: /tmpl/

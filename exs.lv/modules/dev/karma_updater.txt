@@ -1,0 +1,11 @@
+<?php
+exit;
+
+$i = (int)$_GET['i'];
+$end = $i+150;
+for($i;$i<$end;$i++) {
+  update_karma($i,true);
+}
+?>
+<meta HTTP-EQUIV="REFRESH" content="2; url=/dev/?i=<?php echo $end; ?>" />
+

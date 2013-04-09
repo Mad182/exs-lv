@@ -1,0 +1,46 @@
+<!-- START BLOCK : donations-->
+<div class="box">
+  <h3>Ziedojumi exs minecraft servera iegādei:</h3>
+
+	<p>
+		Mērķis: LVL {total}<br />
+		Savākts: LVL {current} ({percent}%)
+	</p>
+
+	<div style="width:96%;height:15px;border: 1px solid #999;border-bottom-color:#777;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);-moz-box-shadow:inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);-webkit-transition:0.1s linear all;-moz-transition:0.1s linear all;-ms-transition:0.1s linear all;-o-transition:0.1s linear all;transition:0.1s linear allbackground-color:#c43c35;background-repeat:repeat-x;background-image:-khtml-gradient(linear,left top,left bottom,from(#ee5f5b),to(#c43c35));background-image:-moz-linear-gradient(top,#ee5f5b,#c43c35);background-image:-ms-linear-gradient(top,#ee5f5b,#c43c35);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#ee5f5b),color-stop(100%,#c43c35));background-image:-webkit-linear-gradient(top,#ee5f5b,#c43c35);background-image:-o-linear-gradient(top,#ee5f5b,#c43c35);background-image:linear-gradient(top,#ee5f5b,#c43c35">
+	  <div style="width:{percent}%;background:#369;float: left;height:15px;background-color:#57a957;background-repeat:repeat-x;background-image:-khtml-gradient(linear,left top,left bottom,from(#62c462),to(#57a957));background-image:-moz-linear-gradient(top,#62c462,#57a957);background-image:-ms-linear-gradient(top,#62c462,#57a957);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#62c462),color-stop(100%,#57a957));background-image:-webkit-linear-gradient(top,#62c462,#57a957);background-image:-o-linear-gradient(top,#62c462,#57a957);background-image:linear-gradient(top,#62c462,#57a957);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF62C462',endColorstr='#FF57A957',GradientType=0);text-shadow:0 -1px 0 rgba(0,0,0,0.25);border-color:#57a957 #57a957 #3d773d;border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1),15"></div>
+	</div>
+
+	<strong><a href="/ziedot-mc" class="lightbox">Ziedot!</a></strong>
+
+	<p style="line-height:1.05">
+		Maadinsh: 35.00 LVL<br />
+		Skakri: 26.00 LVL<br />
+		Viesty: 5.00 LVL<br />
+		Panducis: 5.00 LVL<br />
+		Alberts00: 5.00 LVL<br />
+		Static: 31.17 LVL<br />
+		robertinjsh;): 0.60 LVL<br />
+		geek: 2.65 LVL<br />
+		Stoned.: 1.46 LVL<br />
+		arvo95: 1.04 LVL<br />
+		Ābolu vīrs: 4.89 LVL<br />
+		Pooh: 2.50 LVL<br />
+		Danalabi: 0.23 LVL<br />
+		Ridiculus: 0.32 LVL<br />
+		Castiel: 0.27 LVL<br />
+		Peljux: 3.00 LVL<br />
+		lllaas: 1.00 LVL<br />
+		omlete112: 0.89 LVL<br />
+		rocky__lv: 5.00 LVL<br />
+		burvis: 1.50 LVL<br />
+		??: 3.38 LVL<br />
+		low ki: 1.85 LVL<br />
+    Rõdzhs: 1.00 LVL<br />
+    Famas: 0.20 LVL<br />
+    normunds11: 0.30 LVL<br />
+    killerjv: 30.00 LVL
+	</p>
+
+</div>
+<!-- END BLOCK : donations-->

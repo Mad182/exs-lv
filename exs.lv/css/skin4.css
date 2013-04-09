@@ -1,0 +1,88 @@
+body {
+	background: rgb(216, 221, 232);
+	font-size: 13px;
+}
+#wrapper {
+	margin: 0 auto 10px;
+	box-shadow: 0pt 5px 9px rgba(0, 0, 0, 0.2);
+	min-height: 100%;
+	border-left: 5px solid #fff;
+	border-right: 5px solid #fff;
+}
+#tools-bar {
+	background: transparent url("http://exs.lv/bildes/mobile/top-bg-90.png") repeat-x 0 100%;
+	padding: 1px 10px;
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+#logo {
+	height: 122px;
+}
+#header-overlay {
+	height: 152px;
+}
+#top-menu {
+	margin: 0;
+	background: transparent url("http://exs.lv/bildes/mobile/top-bg-grad.png") repeat-x 0 100%;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#header {
+	height: 152px;
+}
+#header-stuff {
+	right: 15px;
+}
+h1, h2, h3 {
+	font-weight: normal;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 20px;
+}
+#left h3, #right h3 {
+	font-size: 18px
+}
+#forum td, .user-actions, .blockhref li a, #user-notify li a, #miniblog-list li ul li, table td, table th {
+	font-size: 12px
+}
+#forum td.last {
+	font-size: 11px
+}
+#wrapper .index-list li h3, .index-list li h3 a, #forum td h3, #forum td h3 a {
+	font-size: 16px;
+}
+#wrapper #pm-table th.date {
+	width: 120px
+}
+#top-menu li a {
+	font-size: 12px;
+	padding: 0 7px 2px;
+}
+#footer .infoblock {
+	width: 22%;
+}
+#forum th {
+	background: transparent url("http://exs.lv/bildes/mobile/top-bg.png") repeat-x 0 0;
+	color: #fff;
+	font-size: 12px
+}
+#forum th.first {
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	border-top-left-radius: 5px;
+}
+#forum th.last {
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-right-radius: 5px
+}
+#top-menu-left {
+	padding-right: 0
+}
+#top-menu-right {
+	padding-left: 0
+}

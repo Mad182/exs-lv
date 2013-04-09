@@ -1,0 +1,24 @@
+<?php
+
+if ($auth->level != 1) {
+	redirect('/');
+}
+
+if (isset($_GET['var1'])) {
+
+	$parent = get_cat(intval($_GET['var1']));
+
+	if (($parent->module == 'forums' || ($parent->module == 'list' && $parent->isforum)) && isset($_POST['title'])) {
+
+		$title = title2db($_POST['title']);
+		$content = '';
+		if (!empty($_POST['content'])) {
+			$content = sanitize(htmlspecialchars(strip_tags($_POST['content'])));
+		}
+		$textid = mkslug($title);
+
+		$db->query("INSERT INTO `cat` (`textid`, `lang`, `module`, `title`, `content`, `parent`, `isforum`) VALUES ('$textid', '$parent->lang', 'list', '$title', '$content', '$parent->id', '1')");
+		$db->query("UPDATE `cat` SET `ordered` = '$db->insert_id' WHERE id = '$db->insert_id'");
+		redirect('/' . $parent->textid);
+	}
+}

@@ -1,0 +1,13 @@
+<iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fexs.lv&amp;width=200&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=true&amp;height=290" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:290px;" allowTransparency="true"></iframe>
+<div id="fansBlock"></div>
+<script type="text/javascript" src="http://www.draugiem.lv/api/api.js" charset="utf-8"></script>
+<script type="text/javascript">
+var fans = new DApi.BizFans({
+	name:'exs.lv',
+	showFans:1,
+	count:9,
+	showSay:0,
+	saycount:0
+});
+fans.append('fansBlock');
+</script>
