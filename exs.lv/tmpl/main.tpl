@@ -93,27 +93,8 @@
 </script>
 <!-- END BLOCK : mb-head-->
 <!-- INCLUDE BLOCK : module-head -->
-<!-- START BLOCK : comic-sans-->
-<style type="text/css">
-	body #content, #content h1, #content input, #content p {
-		font-family: 'Comic Sans', 'Comic Sans MS' !important;
-		font-size: 110%;
-	}
-	#content h1 {
-		font-size: 20px;
-	}
-	html #content .tabMain a, html #content .tabMain a span {
-		color: indigo;
-	}
-	body #content textarea {
-		background: #fff url('http://img.exs.lv/maadinsh/gif_im_color_dither_64_gif_180x164_ea2351.gif') no-repeat 100% 50%;
-		color: #000;
-		height: 154px;
-		padding: 3px 140px 3px 6px
-	}
-</style>
-<!-- END BLOCK : comic-sans-->
 </head>
+
 <body{onload} class="{layout-options}">
 <div id="wrapper">
 <div id="container">
@@ -155,7 +136,7 @@
 				<li{cat-sel-599}><a href="/runescape" title="RuneScape">RS{idb-count}</a></li>
 				<li{cat-sel-81}><a href="/speles">Spēles</a></li>
 				<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
-				<li{cat-sel-247}><a href="/raksti">Raksti</a></li>				
+				<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
 			</ul>
 			<!-- START BLOCK : user-menu-->
 			<ul id="top-menu-right">
@@ -229,7 +210,7 @@
 	<p><a id="close-flash-message" href="#"><img src="http://exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 </div>
 <div class="c"></div>
-<!-- END BLOCK : flash-message-->     
+<!-- END BLOCK : flash-message-->
 
 <div id="content" class="{layout-options}">
 	<!-- START BLOCK : page-path-->
@@ -314,7 +295,7 @@
 	<h3>RuneScape</h3>
 	<ul class="menu">
 		<li{sel-102}><a href="/{strid-102}">{title-102}</a></li>
-		<li{sel-160}><a href="/{strid-160}">{title-160}</a></li>  	
+		<li{sel-160}><a href="/{strid-160}">{title-160}</a></li>
 		<li{sel-4}><a href="/{strid-4}">{title-4}</a></li>
 		<li{sel-194}><a href="/{strid-194}">{title-194}</a></li>
 		<li{sel-792}><a href="/{strid-792}">{title-792}</a></li>

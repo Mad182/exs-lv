@@ -71,7 +71,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		$foo->image_resize = true;
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 560;
-		if($lang == 7) {
+		if ($lang == 7) {
 			$foo->image_x = 540;
 		}
 		$foo->image_y = 700;
@@ -164,7 +164,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$tpl->newBlock('add-image-form');
 			$tpl->assign('gallery-check', md5($remote_salt . $auth->id));
 
-			if($lang == 1) {
+			if ($lang == 1) {
 				$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
 				foreach ($interests as $interest) {
 					$tpl->newBlock('select-new-interest');
@@ -439,7 +439,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					'edit-image-text' => $image->text
 				));
 
-				if($lang == 1) {
+				if ($lang == 1) {
 					$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
 					foreach ($interests as $interest) {
 						$tpl->newBlock('select-interest');

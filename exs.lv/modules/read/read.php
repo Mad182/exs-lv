@@ -5,30 +5,30 @@ $ignore_tla = true;
 function can_edit_page($article) {
 	global $lang, $auth, $min_page_edit, $category, $page_edit_time;
 
-	if(!$auth->ok || $lang != $article->lang) {
+	if (!$auth->ok || $lang != $article->lang) {
 		return false;
 	}
 
-	if(im_mod() || im_cat_mod()) {
+	if (im_mod() || im_cat_mod()) {
 		return true;
 	}
 
-	if($category->isblog == $auth->id) {
+	if ($category->isblog == $auth->id) {
 		return true;
 	}
 
-	if($auth->id == $article->author) {
-		if($auth->level == 3) {
+	if ($auth->id == $article->author) {
+		if ($auth->level == 3) {
 			return true;
 		}
-		if($auth->karma >= $min_page_edit) {
-			if($page_edit_time == 0) {
+		if ($auth->karma >= $min_page_edit) {
+			if ($page_edit_time == 0) {
 				return true;
 			}
-			if($page_edit_time >= time()-strtotime($article->date)) {
+			if ($page_edit_time >= time() - strtotime($article->date)) {
 				return true;
 			}
-		}	
+		}
 	}
 
 	return false;
@@ -93,7 +93,7 @@ if ($article) {
 		}
 
 		update_stats($article->category);
-		if(!empty($category->parent)) {
+		if (!empty($category->parent)) {
 			update_stats($category->parent);
 		}
 
@@ -122,7 +122,7 @@ if ($article) {
 			}
 
 			update_stats($article->category);
-			if(!empty($category->parent)) {
+			if (!empty($category->parent)) {
 				update_stats($category->parent);
 			}
 
@@ -141,7 +141,7 @@ if ($article) {
 		}
 		if ($auth->level == 0) {
 			if (($auth->karma < $min_post_edit or $edit_comment_author != $auth->id) && !im_cat_mod()) {
-				set_flash('Tev jābūt vismaz '.$min_post_edit.' karmai un tu vari labot tikai savus komentārus!', 'error');
+				set_flash('Tev jābūt vismaz ' . $min_post_edit . ' karmai un tu vari labot tikai savus komentārus!', 'error');
 				redirect('/read/' . $article->strid);
 			}
 		}
@@ -157,9 +157,9 @@ if ($article) {
 			$db->query("UPDATE `comments` SET `removed` = 1 WHERE `id` = '$del' AND `pid` = '$article->id'");
 
 			//delete comment replies
-			if($comment->replies && !$comment->parent) {
+			if ($comment->replies && !$comment->parent) {
 				$db->query("UPDATE `comments` SET `removed` = 1 WHERE `parent` = '$del' AND `pid` = '$article->id'");
-			} elseif($comment->parent) {
+			} elseif ($comment->parent) {
 				$db->query("UPDATE `comments` SET `posts` = `posts`-1 WHERE `id` = '$comment->parent'");
 			}
 
@@ -193,7 +193,7 @@ if ($article) {
 						$tagid = $db->insert_id;
 					}
 					if ($tags->add_tag($article->id, $tagid)) {
-						$auth->log('Pievienoja tagu ('.$nslug.')', 'pages', $article->id);
+						$auth->log('Pievienoja tagu (' . $nslug . ')', 'pages', $article->id);
 						echo '<li><a href="/tag/' . $nslug . '" rel="tag">' . $newtag . '</a></li>';
 					}
 				}
@@ -208,7 +208,7 @@ if ($article) {
 			$message = sanitize(htmlspecialchars(strip_tags($_GET['message'])));
 			$db->query("UPDATE `users` SET `signature` = ('<small>Noņēma: " . $auth->nick . ". Iemesls: " . $message . "</small>') WHERE `id` = '" . $remove_signature . "' LIMIT 1");
 			get_user($remove_signature, true);
-			$auth->log('Nodzēsa parakstu ('.$message.')', 'users', $remove_signature);
+			$auth->log('Nodzēsa parakstu (' . $message . ')', 'users', $remove_signature);
 			redirect('/read/' . $article->strid);
 		}
 	}
@@ -277,13 +277,12 @@ if ($article) {
 			if (isset($_POST['close-do'])) {
 				$closed = (bool) $_POST['close'];
 				$db->query("UPDATE `pages` SET `closed` = '$closed' WHERE `id` = '$article->id'");
-				if($closed) {
+				if ($closed) {
 					$auth->log('Aizslēdza komentārus rakstam', 'pages', $article->id);
 				} else {
 					$auth->log('Atvēra komentārus rakstam', 'pages', $article->id);
 				}
 				die('ok');
-
 			}
 		}
 
@@ -291,7 +290,7 @@ if ($article) {
 			if (isset($_POST['disable-close-do'])) {
 				$closed = (bool) $_POST['disable-close'];
 				$db->query("UPDATE `pages` SET `disable_close` = '$closed' WHERE `id` = '$article->id'");
-				if($closed) {
+				if ($closed) {
 					$auth->log('Bloķēja autora komentāru atvēršanu', 'pages', $article->id);
 				} else {
 					$auth->log('Atbloķēja autora komentāru atvēršanu', 'pages', $article->id);
@@ -319,7 +318,7 @@ if ($article) {
 			}
 			if ($auth->level == 0) {
 				if (($auth->karma < $min_post_edit or $comment->author != $auth->id) && !im_cat_mod()) {
-					echo 'Tev jābūt vismaz '.$min_post_edit.' karmai un tu vari labot tikai savus komentārus!';
+					echo 'Tev jābūt vismaz ' . $min_post_edit . ' karmai un tu vari labot tikai savus komentārus!';
 					exit;
 				}
 			}
@@ -370,7 +369,7 @@ if ($article) {
 							$foo->file_overwrite = true;
 							$foo->process('dati/bildes/av_sm/');
 							destroy_cdir(CORE_PATH . '/dati/bildes/cache/');
-							unlink('dati/bildes/topic-av/'.$topicid.'.jpg');
+							unlink('dati/bildes/topic-av/' . $topicid . '.jpg');
 							$foo->clean();
 							$article->avatar = 'dati/bildes/avatari/' . $topicid . '.jpg';
 							$article->sm_avatar = 'dati/bildes/av_sm/' . $topicid . '.jpg';
@@ -397,43 +396,43 @@ if ($article) {
 						edit_user = ('$auth->id'),
 						edit_times = edit_times+1
 					WHERE id = '$topicid'");
-					/*} else {
-						$db->query("UPDATE pages SET
-							text = ('$body'),
-							intro = (''),
-							title = ('$title'),
-							avatar = ('$article->avatar'),
-							sm_avatar = ('$article->sm_avatar'),
-							category = ('$topiccat'),
-							edit_time = ('" . time() . "'),
-							edit_times = edit_times+1
-						WHERE id = '$topicid'");
-					}*/
+					/* } else {
+					  $db->query("UPDATE pages SET
+					  text = ('$body'),
+					  intro = (''),
+					  title = ('$title'),
+					  avatar = ('$article->avatar'),
+					  sm_avatar = ('$article->sm_avatar'),
+					  category = ('$topiccat'),
+					  edit_time = ('" . time() . "'),
+					  edit_times = edit_times+1
+					  WHERE id = '$topicid'");
+					  } */
 
 					build_latest();
 					update_stats($topiccat);
 
-					if($category->textid == 'filmas' && im_mod()) {
+					if ($category->textid == 'filmas' && im_mod()) {
 						$title_lv = title2db($_POST['movie-titlelv']);
-						if($title_lv == 'Bez nosaukuma') {
+						if ($title_lv == 'Bez nosaukuma') {
 							$title_lv = '';
 						}
 						$year = intval($_POST['movie-year']);
-						if(empty($year)) {
+						if (empty($year)) {
 							$year = '';
 						}
 						$imdb_id = sanitize($_POST['movie-imdb']);
 						$movie_type = sanitize($_POST['movie-type']);
 
 						$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
-						if(!empty($movie_data)) {
+						if (!empty($movie_data)) {
 							$db->query("UPDATE `movie_data` SET `year` = '$year', `title_lv` = '$title_lv', `imdb_id` = '$imdb_id', `type` = '$movie_type' WHERE `page_id` = '$article->id'");
 						} else {
 							$db->query("INSERT INTO `movie_data` (`page_id`, `title_lv`, `imdb_id`, `year`, `type`) VALUES ('$article->id', '$title_lv', '$imdb_id', '$year', '$movie_type')");
 						}
 
 
-						if($_POST['imdb-getdata'] && $imdb_id != '') {
+						if ($_POST['imdb-getdata'] && $imdb_id != '') {
 
 							require("imdb/imdb.class.php");
 							$movie = new imdb($imdb_id);
@@ -442,22 +441,22 @@ if ($article) {
 							$out = array();
 							$out['year'] = $movie->year();
 
-							if($year = $movie->year()) {
+							if ($year = $movie->year()) {
 								$db->query("UPDATE `movie_data` SET `year` = '$year' WHERE `page_id` = '$article->id'");
 							}
 
-							if($runtime = $movie->runtime()) {
+							if ($runtime = $movie->runtime()) {
 								$db->query("UPDATE `movie_data` SET `runtime` = '$runtime' WHERE `page_id` = '$article->id'");
 							}
 
-							if($rating = $movie->rating()) {
+							if ($rating = $movie->rating()) {
 								$db->query("UPDATE `movie_data` SET `rating` = '$rating' WHERE `page_id` = '$article->id'");
 							}
 
-							if($genres = $movie->genres()) {
-								foreach($genres as $genre) {
+							if ($genres = $movie->genres()) {
+								foreach ($genres as $genre) {
 									$genre = sanitize(trim($genre));
-									if(!$db->get_var("SELECT count(*) FROM `movie_genres` WHERE `page_id` = '$article->id' AND `genre` = '$genre'")) {
+									if (!$db->get_var("SELECT count(*) FROM `movie_genres` WHERE `page_id` = '$article->id' AND `genre` = '$genre'")) {
 										$db->query("INSERT INTO `movie_genres` (`page_id`, `genre`) VALUES ('$article->id', '$genre')");
 									}
 								}
@@ -465,12 +464,10 @@ if ($article) {
 							}
 
 							$auth->log('Atjaunoja IMDB datus', 'pages', $topicid);
-
 						}
-
 					}
 
-					$auth->log('Laboja rakstu', 'pages', $topicid);	
+					$auth->log('Laboja rakstu', 'pages', $topicid);
 					redirect('/read/' . $article->strid);
 				}
 			}
@@ -511,15 +508,15 @@ if ($article) {
 			}
 
 
-			if($category->textid == 'filmas' && im_mod()) {
+			if ($category->textid == 'filmas' && im_mod()) {
 
 				$images = array();
 
-				if(isset($_POST['avatar-url']) && !empty($_POST['avatar-url']) && isset($_POST['submit'])) {
+				if (isset($_POST['avatar-url']) && !empty($_POST['avatar-url']) && isset($_POST['submit'])) {
 
 					$data = file_get_contents($_POST['avatar-url']);
 					$ext = substr($_POST['avatar-url'], -4);
-					if($data) {
+					if ($data) {
 						//directory
 						$dir1 = substr($article->id, -1);
 						if (!$dir1) {
@@ -533,7 +530,7 @@ if ($article) {
 						rmkdir('/home/www/img.exs.lv/movies/large/' . $path . '/');
 						rmkdir('/home/www/img.exs.lv/movies/thb/' . $path . '/');
 
-						$tmpname = '/tmp/'. uniqid() . '.'.$ext;
+						$tmpname = '/tmp/' . uniqid() . '.' . $ext;
 						file_put_contents($tmpname, $data);
 
 						$file_title = mkslug($article->title . '-poster');
@@ -569,21 +566,16 @@ if ($article) {
 
 							$db->query("DELETE FROM `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id'");
 							$db->query("INSERT INTO `movie_images` (`page_id`, `main`, `image`, `thb`, `title`, `created`, `created_by`)
-									VALUES ('$article->id', 1, '".sanitize('/movies/large/' . $path . '/'.$foo->file_dst_name)."', '".sanitize('/movies/thb/' . $path . '/'.$foo->file_dst_name)."', '".sanitize($article->title . ' poster')."', NOW(), '$auth->id')");
+									VALUES ('$article->id', 1, '" . sanitize('/movies/large/' . $path . '/' . $foo->file_dst_name) . "', '" . sanitize('/movies/thb/' . $path . '/' . $foo->file_dst_name) . "', '" . sanitize($article->title . ' poster') . "', NOW(), '$auth->id')");
 
 							$foo->clean();
 							set_flash('Attēls pievienots', 'success');
-
 						}
-
-
 					}
-
-
-				} elseif(isset($_POST['search-avatar'])) {
+				} elseif (isset($_POST['search-avatar'])) {
 
 					$q = urlencode($article->title . ' movie poster');
-					$jsonurl = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&tbs=iar:t&q='.$q;
+					$jsonurl = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&tbs=iar:t&q=' . $q;
 					$result = json_decode(file_get_contents($jsonurl), true);
 					$images = array(
 						$result['responseData']['results'][0]['url'],
@@ -591,14 +583,13 @@ if ($article) {
 						$result['responseData']['results'][2]['url'],
 						$result['responseData']['results'][3]['url']
 					);
-			
 				}
 
 				$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
 				$tpl->newBlock('edit-movie-data');
-				if(!empty($movie_data)) {
+				if (!empty($movie_data)) {
 					$tpl->assignAll($movie_data);
-					$tpl->assign('sel-'.$movie_data->type, ' selected="selected"');
+					$tpl->assign('sel-' . $movie_data->type, ' selected="selected"');
 				}
 
 
@@ -606,24 +597,22 @@ if ($article) {
 				$tpl->assign(array(
 					'article-id' => $article->id,
 				));
-				if(!empty($images)) {
-					foreach($images as $img) {
+				if (!empty($images)) {
+					foreach ($images as $img) {
 						$tpl->newBlock('edit-movie-image');
 						$tpl->assign(array(
 							'url' => $img,
 						));
 					}
-				}	
+				}
 
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
-				if($avatar) {
+				if ($avatar) {
 					$tpl->newBlock('edit-movie-avatar');
 					$tpl->assign(array(
 						'url' => $avatar->thb,
 					));
 				}
-
-
 			}
 
 
@@ -654,8 +643,8 @@ if ($article) {
 		} elseif ($auth->ok && isset($_GET['mode']) && $_GET['mode'] == 'bookmark') {
 			if (!$db->get_var("SELECT id FROM bookmarks WHERE userid = '$auth->id' AND pageid = '$article->id'")) {
 				$db->query("INSERT INTO bookmarks (userid,pageid) VALUES ('$auth->id','$article->id')");
-				if(!empty($article->avatar)) {
-					push('Pievienoja savai izlasei rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/'.$article->id.'.jpg');
+				if (!empty($article->avatar)) {
+					push('Pievienoja savai izlasei rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
 				} else {
 					push('Pievienoja savai izlasei rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;');
 				}
@@ -681,7 +670,7 @@ if ($article) {
 			}
 
 			$article_text = add_smile($article->text, 1, $article->disable_emotions);
-			if($article->strid == 'exs-lv-infografiks') {
+			if ($article->strid == 'exs-lv-infografiks') {
 				$article_text .= '<iframe src="//infogr.am/exs_lv-9431592631" width="499" height="12542" scrolling="no" frameborder="0" style="border:none;margin: 0 auto;width:499px;display:block;"></iframe><div style="width:499px;border-top:1px solid #acacac;padding-top:3px;font-family:Arial;font-size:10px;text-align:center;"><a target="_blank" href="http://infogr.am/exs_lv-9431592631" style="color:#acacac;text-decoration:none;">VĒSTURESTATISTIKA</a> | <a style="color:#acacac;text-decoration:none;" href="http://infogr.am" target="_blank">Create infographics</a></div>';
 			}
 
@@ -706,27 +695,26 @@ if ($article) {
 
 			$page_title = $article->title . ' | ' . $category->title;
 
-			if($category->textid == 'filmas') {
+			if ($category->textid == 'filmas') {
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
-				if(!empty($avatar)) {
+				if (!empty($avatar)) {
 
 					$tpl->newBlock('movie-avatar');
 					$tpl->assignAll($avatar);
 
-					if(!$auth->mobile) {
+					if (!$auth->mobile) {
 						$tpl->newBlock('opengraph');
 						$tpl->assign(array(
 							'title' => htmlspecialchars($article->title),
 							'type' => 'video.movie',
-							'url' => 'http://'.$_SERVER['SERVER_NAME'].'/read/'.$article->strid,
-							'image' => 'http://img.exs.lv'.$avatar->thb
+							'url' => 'http://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
+							'image' => 'http://img.exs.lv' . $avatar->thb
 						));
 					}
-
 				}
 				$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
-				if(!empty($movie_data)) {
-					if(!empty($movie_data->title_lv)) {
+				if (!empty($movie_data)) {
+					if (!empty($movie_data->title_lv)) {
 						$tpl->newBlock('title-lv');
 						$tpl->assign('title', $movie_data->title_lv);
 					}
@@ -735,27 +723,27 @@ if ($article) {
 
 					$page_title = $article->title;
 
-					if(!empty($movie_data->title_lv)) { 
+					if (!empty($movie_data->title_lv)) {
 						$page_title .= ' / ' . $movie_data->title_lv;
 					}
 
-					if(!empty($movie_data->year)) {
-						$page_title .= ' ('.$movie_data->year.')';
+					if (!empty($movie_data->year)) {
+						$page_title .= ' (' . $movie_data->year . ')';
 						$tpl->newBlock('movie-info-year');
 						$tpl->assign('year', $movie_data->year);
 					}
 
-					if(!empty($movie_data->runtime)) {
+					if (!empty($movie_data->runtime)) {
 						$tpl->newBlock('movie-info-runtime');
 						$tpl->assign('runtime', $movie_data->runtime);
 					}
 
-					if(!empty($movie_data->rating)) {
+					if (!empty($movie_data->rating)) {
 						$tpl->newBlock('movie-info-rating');
 						$tpl->assign('rating', $movie_data->rating);
 					}
 
-					if(!empty($movie_data->type)) {
+					if (!empty($movie_data->type)) {
 
 						$types = array(
 							'movie' => 'Filma',
@@ -770,20 +758,18 @@ if ($article) {
 					}
 
 
-					if($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
+					if ($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
 						$gen = array();
-						foreach($genres as $genre) {
-							$gen[] = '<a href="/filmas/search?genre='.$genre.'">'.translate_genres($genre).'</a>';
+						foreach ($genres as $genre) {
+							$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
 						}
 						$tpl->newBlock('movie-info-genres');
 						$tpl->assign('genres', implode(' / ', $gen));
 					}
-
-
 				}
 			} elseif ($article->avatar) {
 
-				if (in_array($article->category,array(81,1))) {
+				if (in_array($article->category, array(81, 1))) {
 					$tpl->newBlock('article-avatar-box');
 					$tpl->assign(array(
 						'article-avatar-image' => trim($article->avatar),
@@ -869,7 +855,7 @@ if ($article) {
 					$closemark = '';
 				}
 				$tpl->assign('edit-page-closed', $closemark);
-				if($auth->id == $article->author && !im_mod() && !im_cat_mod()) {
+				if ($auth->id == $article->author && !im_mod() && !im_cat_mod()) {
 					if ($article->disable_close) {
 						$disablemark = ' disabled="disabled"';
 					} else {
@@ -877,7 +863,7 @@ if ($article) {
 					}
 					$tpl->assign('edit-page-disable-closing', $disablemark);
 				}
-				if(im_mod() || im_cat_mod()) {
+				if (im_mod() || im_cat_mod()) {
 					$tpl->newBlock('post-disableclose');
 					if ($article->disable_close) {
 						$closemark = ' checked="checked"';
@@ -967,8 +953,8 @@ if ($article) {
 							'comment-editedby' => $editedby,
 						));
 
-						if($article->lang == 1 && $auth->mobile != true) {
-							$tpl->assign('group', '<span class="title">Grupa:</span> <span>'.$userclass[$author[$comment->author]->level].'</span><br />');
+						if ($article->lang == 1 && $auth->mobile != true) {
+							$tpl->assign('group', '<span class="title">Grupa:</span> <span>' . $userclass[$author[$comment->author]->level] . '</span><br />');
 						}
 
 						if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {
@@ -1126,7 +1112,7 @@ if ($article) {
 							}
 						}
 
-						if(!$auth->mobile && $lang == 1) {
+						if (!$auth->mobile && $lang == 1) {
 							$tpl->newBlock('comment-tools');
 							$tpl->assign('id', $comment->author);
 							if ($auth->ok) {
@@ -1173,8 +1159,8 @@ if ($article) {
 				//pager
 				$total = $db->get_var("SELECT count(*) FROM `comments` WHERE `pid` = '" . $article->id . "' AND `parent` = '0' AND `removed` = 0");
 				if ($total > $end) {
-					$total = $total/$end;
-					$skip = $skip/$end;
+					$total = $total / $end;
+					$skip = $skip / $end;
 
 					$pager = pager($total, $skip, 1, '/read/' . $article->strid . '/com_page/');
 					$tpl->assignGlobal(array(
@@ -1201,7 +1187,7 @@ if ($article) {
 					'comment-pid-check' => substr(md5($article->id . $remote_salt . $auth->id), 0, 8),
 				));
 
-				if($auth->id == 1) {
+				if ($auth->id == 1) {
 					$tpl->newBlock('resp-tools');
 				}
 				$tpl->newBlock('tinymce-simple');
@@ -1226,9 +1212,9 @@ if ($article) {
 
 		if (!empty($article->custom_ad) && $article->custom_ad == 'dateks') {
 			$tpl->newBlock('page-ad-dateks');
-		} elseif($lang == 3) {
+		} elseif ($lang == 3) {
 			$tpl->newBlock('page-ad-coding');
-		} elseif($lang == 5) {
+		} elseif ($lang == 5) {
 			$tpl->newBlock('page-ad-rp');
 		} else {
 			$tpl->newBlock('page-ad-google');

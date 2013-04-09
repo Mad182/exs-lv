@@ -57,7 +57,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 }
 
-if($auth->ok && $lang == 1 && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'interests') && empty($_POST) && !isset($_GET['_']) && !$db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")) {
+if ($auth->ok && $lang == 1 && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'interests') && empty($_POST) && !isset($_GET['_']) && !$db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")) {
 	redirect('/interests');
 }
 
@@ -149,10 +149,10 @@ if ($lang !== 1 && $skin === 'main') {
 	$loadskin = $skin . '_' . $lang;
 }
 
-if($locale == 'lv' || !file_exists(CORE_PATH . '/tmpl/' . $loadskin . '['.$locale.'].tpl')) {
+if ($locale == 'lv' || !file_exists(CORE_PATH . '/tmpl/' . $loadskin . '[' . $locale . '].tpl')) {
 	$tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
 } else {
-	$tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '['.$locale.'].tpl');
+	$tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '[' . $locale . '].tpl');
 }
 $tpl->assignInclude('module-core-error', CORE_PATH . '/modules/core/error.tpl');
 
@@ -178,15 +178,15 @@ if (isset($_GET['u'])) {
 	//"jauno" moduļu ielāde
 	if (!empty($category->module)) {
 		$page_title = strip_tags($category->title);
-		
-		if(isset($_GET['_'])) {
+
+		if (isset($_GET['_'])) {
 			$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			$tpl->prepare();
 		} else {
-			if($locale == 'lv' || !file_exists(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '['.$locale.'].tpl')) {
+			if ($locale == 'lv' || !file_exists(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '[' . $locale . '].tpl')) {
 				$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			} else {
-				$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '['.$locale.'].tpl');
+				$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '[' . $locale . '].tpl');
 			}
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
 			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $locale . '_' . $category->module)) === false || $debug === true) {
@@ -197,16 +197,15 @@ if (isset($_GET['u'])) {
 				unset($tpl2);
 			}
 		}
-	
+
 		$pagepath = $category->title;
-		
+
 		include(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
-		
-		if(isset($_GET['_'])) {
+
+		if (isset($_GET['_'])) {
 			$tpl->printToScreen();
 			exit;
 		}
-		
 	} else {
 		//404
 		set_flash('Pieprasītā lapa netika atrasta!', 'error');
@@ -265,9 +264,9 @@ if (!empty($inprofile)) {
 	$in_gender = $inprofile->gender;
 }
 
-/*if ((im_mod() || $auth->level == 3) && $auth->id != '8872') {
-	$idb_count = get_itemsdb_action();
-}*/
+/* if ((im_mod() || $auth->level == 3) && $auth->id != '8872') {
+  $idb_count = get_itemsdb_action();
+  } */
 
 $load = sys_getloadavg();
 $mb_refresh_limit = '8000';

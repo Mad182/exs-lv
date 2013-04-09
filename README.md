@@ -5,8 +5,10 @@ Exs.lv dev
 
 
 mysql imports:
-~/exs-lv/dev-draza$ mysql -u exs -p exs < schema.sql
-~/exs-lv/dev-draza$ mysql -u exs -p exs < cat.sql
+
+mysql -u exs -p exs < schema.sql
+
+mysql -u exs -p exs < cat.sql
 
 
 mysql/smtp/memcache konfigurācija:
@@ -28,7 +30,12 @@ es ieteiktu uztaisīt virtualhostu, un hosts failā norādīt 127.0.0.1 dev.exs.
 
 
 libs mapē vajadzīgi:
+
 https://github.com/ezyang/htmlpurifier
+
 https://github.com/swiftmailer/swiftmailer
+
 https://github.com/Austinb/GameQ
+
 principā ja negribas sūtīt meilus un nesatrauc serveru monitori, pietiek ar htmlpurifier.
+

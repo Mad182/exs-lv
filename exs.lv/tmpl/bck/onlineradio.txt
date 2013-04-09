@@ -1,4 +1,0 @@
-<h3>Online radio</h3>
-<div class="box">
-<a id="r101_png" class="radio" rel="nofollow" href="http://www.radio101.lv/content/streams.m3u">Radio 101</a> <a id="top_png" class="radio" rel="nofollow" href="http://77.93.23.12:8000/listen.pls">TOP radio</a> <a id="swhrock_png" class="radio" rel="nofollow" href="http://www.radioswh.lv/rocke_s.m3u">SWH Rock</a> <a id="ehr_png" class="radio" rel="nofollow" href="http://stream.europeanhitradio.com:8000/ehr64.m3u">EHR</a> <a id="swh_png" class="radio" rel="nofollow" href="http://www.radioswh.lv/swhlivee_s.m3u">SWH</a> <a id="latviesu_png" class="radio" rel="nofollow" href="http://latviesuradio.lv/JoomlaRadio_v4/Radiostations/lhr.mp3.m3u">Latviešu radio</a><div class="clear"></div>
-</div>

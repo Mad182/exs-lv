@@ -29,7 +29,7 @@ $tpl->assign(array(
 ));
 unset($out);
 
-if(empty($ignore_tla)) {
+if (empty($ignore_tla)) {
 	$tpl->newBlock('tla-ads');
 	$tpl->assign('ads', tla_ads());
 }
@@ -138,32 +138,30 @@ if ($auth->ok === true) {
 }
 
 //filmu meklētājs
-if($category->module == 'movies') {
+if ($category->module == 'movies') {
 	$tpl->newBlock('movie-search');
 
-	if(isset($_GET['genre'])) {
+	if (isset($_GET['genre'])) {
 		$_GET['genres'] = array($_GET['genre']);
 
-		if(translate_genres($_GET['genre']) != $_GET['genre']) {
+		if (translate_genres($_GET['genre']) != $_GET['genre']) {
 			$page_title = translate_genres($_GET['genre']);
 		}
-	} elseif(isset($_GET['genres']) && count($_GET['genres']) == 1) {
-		if(translate_genres($_GET['genres'][0]) != $_GET['genres'][0]) {
-			redirect('/filmas/search/?genre='.$_GET['genres'][0]);
+	} elseif (isset($_GET['genres']) && count($_GET['genres']) == 1) {
+		if (translate_genres($_GET['genres'][0]) != $_GET['genres'][0]) {
+			redirect('/filmas/search/?genre=' . $_GET['genres'][0]);
 		}
 	}
 
 	$genres = $db->get_col("SELECT DISTINCT(`genre`) FROM `movie_genres` ORDER BY `genre` ASC");
-	foreach($genres as $genre) {
+	foreach ($genres as $genre) {
 		$tpl->newBlock('genre-node');
 		$tpl->assign(array(
 			'genre' => $genre,
 			'translated' => translate_genres($genre)
 		));
-		if(!empty($_GET['genres']) && in_array($genre, $_GET['genres'])) {
+		if (!empty($_GET['genres']) && in_array($genre, $_GET['genres'])) {
 			$tpl->assign('checked', ' checked="checked"');
 		}
 	}
-
 }
-

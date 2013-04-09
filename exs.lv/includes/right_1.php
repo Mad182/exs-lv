@@ -122,42 +122,12 @@ if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] ==
 
 $tpl->assign('out', $mbs);
 
-if($auth->ok) {
+if ($auth->ok) {
 	$tpl->newBlock('friendssay-tabs');
 	$tpl->assign(array(
 		$sel . '-selected' => 'active '
 	));
 }
-
-//random tagi
-/*$cloud = rand(0, 200);
-$cache_created = filemtime(CORE_PATH . '/cache/tags/' . $cloud . '.html');
-if (!$cache_created or (time() - $cache_created) > 432000) {
-	$tags = $db->get_results("SELECT * FROM `tags` ORDER BY rand() LIMIT 20");
-	if ($tags) {
-		$out = '';
-		foreach ($tags as $tag) {
-			$count = $db->get_var("SELECT count(*) FROM `taged` WHERE `tag_id` = '$tag->id'");
-			if (!$count) {
-				$db->query("DELETE FROM `tags` WHERE `id` = '$tag->id' LIMIT 1");
-			}
-			$size = (7 + ceil(log($count + 1) * 3.6));
-			if ($size > 28) {
-				$size = 28;
-			}
-			$out .= '<a style="font-size:' . $size . 'px" href="/tag/' . $tag->slug . '">' . htmlspecialchars($tag->name) . '</a> ';
-		}
-	}
-	$handle = fopen(CORE_PATH . '/cache/tags/' . $cloud . '.html', 'wb');
-	fwrite($handle, $out);
-	fclose($handle);
-} else {
-	$out = file_get_contents(CORE_PATH . '/cache/tags/' . $cloud . '.html');
-}
-
-$tpl->newBlock('tags-list-side');
-$tpl->assign('out', $out);
-*/
 
 if (im_mod()) {
 	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");
@@ -174,4 +144,3 @@ if (im_mod()) {
 if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
-
