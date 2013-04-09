@@ -2,7 +2,7 @@
 
 require('configdb.php');
 require(CORE_PATH . '/includes/class.mdb.php');
-require('includes/functions.core.php');
+require(CORE_PATH . '/includes/functions.core.php');
 
 //connect to database
 $db = new mdb($username, $password, $database, $hostname);
