@@ -175,6 +175,3 @@ if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
 
-if(date('Y-m-d') == '2013-04-05' || date('Y-m-d') == '2013-04-06') {
-	$tpl->newBlock('football');
-}
