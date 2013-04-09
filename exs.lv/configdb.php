@@ -29,8 +29,17 @@ $dr_api_id = null;
 $dr_api_key = null;
 
 //include folderi
-define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
-define('LIB_PATH', '/home/madars/www/exs-lv/libs');
+if (!getenv('CORE_PATH')) {
+    define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
+} else {
+    define('CORE_PATH', getenv('CORE_PATH'));
+}
+
+if (!getenv('LIB_PATH')) {
+    define('LIB_PATH', '/home/madars/www/exs-lv/libs');
+} else {
+    define('LIB_PATH', getenv('LIB_PATH'));
+}
 
 //debug konfigurācija
 $dev_ips = array(
