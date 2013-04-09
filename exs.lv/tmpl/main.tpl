@@ -156,6 +156,7 @@
 					<ul>
 						<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
 						<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+						<li{cat-sel-1132}><a href="/checkform">Lietotāju meklēšana</a></li>
 						<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
 						<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
 						<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>

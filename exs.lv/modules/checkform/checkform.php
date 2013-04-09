@@ -1,8 +1,7 @@
 <?php
 
-if (!$auth->ok || !im_mod()) {
+if (!im_mod()) {
 	redirect();
-	exit;
 }
 
 // jquery ielādē izvēlētā lietotāja vecos nikus
@@ -112,7 +111,3 @@ if (isset($_POST['submit'])) {
 	}
 }	
 
-	
-	
-
-?>
