@@ -39,3 +39,15 @@ https://github.com/Austinb/GameQ
 
 principā ja negribas sūtīt meilus un nesatrauc serveru monitori, pietiek ar htmlpurifier.
 
+## Arch
+
+    sudo pacman -Su apache php php-apache php-gd php-memcached mariadb imagemagick memcached
+    cd
+    mkdir projects && cd projects
+    git clone git@github.com:Mad182/exs-lv.git exs && cd exs
+    export CORE_PATH=/home/$(whoami)/projects/exs/exs.lv
+    export LIB_PATH=/home/$(whoami)/projects/exs/libs
+    # ^ append to .bashrc/.zshrc
+    git submodule init && git submodule update
+
+Turpināt ar db/Apache2 iestatījumiem
