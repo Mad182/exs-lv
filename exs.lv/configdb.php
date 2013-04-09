@@ -30,15 +30,15 @@ $dr_api_key = null;
 
 //include folderi
 if (!getenv('CORE_PATH')) {
-    define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
+	define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
 } else {
-    define('CORE_PATH', getenv('CORE_PATH'));
+	define('CORE_PATH', getenv('CORE_PATH'));
 }
 
 if (!getenv('LIB_PATH')) {
-    define('LIB_PATH', '/home/madars/www/exs-lv/libs');
+	define('LIB_PATH', '/home/madars/www/exs-lv/libs');
 } else {
-    define('LIB_PATH', getenv('LIB_PATH'));
+	define('LIB_PATH', getenv('LIB_PATH'));
 }
 
 //debug konfigurācija
