@@ -18,10 +18,6 @@ if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localho
 
 } elseif ($_SERVER['SERVER_NAME'] === 'ezgif.com') {
 	require(CORE_PATH . '/config/ezgif-com.php');
-	$locale = 'en';
-
-//} elseif ($_SERVER['SERVER_NAME'] === 'lv.ezgif.com') {
-//	require(CORE_PATH . '/config/ezgif-com.php');
 
 } elseif ($_SERVER['SERVER_NAME'] === 'www.code.exs.lv' || $_SERVER['SERVER_NAME'] === 'code.exs.lv' || $_SERVER['SERVER_NAME'] === 'www.coding.lv') {
 	redirect('http://coding.lv' . $_SERVER['REQUEST_URI'], true);
