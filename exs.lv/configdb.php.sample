@@ -71,7 +71,6 @@ $tinymce_skin_variant = 'o2k7';
 $mention_counter = 0;
 $hashtag_counter = 0;
 $lang = 1;
-$locale = 'lv';
 $generic_f_icon = 'modules/forums/images/generic.png';
 $disable_emotions = 0;
 $profile_views_limit = 30;

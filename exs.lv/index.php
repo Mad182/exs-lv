@@ -149,11 +149,7 @@ if ($lang !== 1 && $skin === 'main') {
 	$loadskin = $skin . '_' . $lang;
 }
 
-if ($locale == 'lv' || !file_exists(CORE_PATH . '/tmpl/' . $loadskin . '[' . $locale . '].tpl')) {
-	$tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
-} else {
-	$tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '[' . $locale . '].tpl');
-}
+$tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
 $tpl->assignInclude('module-core-error', CORE_PATH . '/modules/core/error.tpl');
 
 //izdomā, ko tad īsti rādīsim :)
@@ -183,15 +179,12 @@ if (isset($_GET['u'])) {
 			$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			$tpl->prepare();
 		} else {
-			if ($locale == 'lv' || !file_exists(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '[' . $locale . '].tpl')) {
-				$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
-			} else {
-				$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '[' . $locale . '].tpl');
-			}
+		
+			$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
-			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $locale . '_' . $category->module)) === false || $debug === true) {
+			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
 				$tpl->prepare();
-				$m->set('tpl_' . $lang . '_' . $locale . '_' . $category->module, $tpl, false, 3600);
+				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, false, 3600);
 			} else {
 				$tpl = $tpl2;
 				unset($tpl2);
