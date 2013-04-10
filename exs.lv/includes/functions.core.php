@@ -755,98 +755,22 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 	$txt = str_replace(' rel="nofollow" href="http://otrapuse.lv', ' href="http://otrapuse.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.otrapuse.lv', ' href="http://otrapuse.lv', $txt);
 
+	
+	//aizvieto lapas kas ievietotas `blacklisted_sites` ar linku uz /ES_SPAMOJU_SUDUS
+	$blacklisted_sites = get_blacklisted_sites();
+	foreach($blacklisted_sites as $site) {
+		if (strpos($txt, $site) !== false) {
+		
+			$replace = array(
+				'http://'.$site,
+				'https://'.$site,
+				'http://www.'.$site,
+				'https://www.'.$site,
+			);
 
-	$txt = str_replace(array(
-		'http://www.awsurveys.com',
-		'http://www.runescapemembership4free.com',
-		'http://RunescapeMembership4free.com',
-		'http://www.RunescapePinGenerator.com',
-		'http://runescapepingenerator.com',
-		'http://www.runescapepingenerator.com',
-		'http://www.freeps3.tv',
-		'http://freeps3.tv',
-		'http://ipremii.com',
-		'http://www.e-castig.com',
-		'http://www.bigmoneyptc.com',
-		'http://www.sexyemilie.com',
-		'http://gifts.freebiejeebies.co.uk',
-		'http://servces-runescape.com',
-		'http://www.servces-runescape.com',
-		'http://wildernesupdate.tk',
-		'http://servics-runescape.com',
-		'http://www.servics-runescape.com',
-		'http://www.services-runecape.com',
-		'http://minecraftgiveaway.com',
-		'http://www.minecraftgiveaway.com',
-		'http://servics-runecape.com',
-		'http://www.servics-runecape.com',
-		'http://www.services-runescape.ws',
-		'http://servces-runescape',
-		'http://servces-runecape',
-		'http://gratispremium.info',
-		'http://www.gratispremium.info',
-		'http://minecraft4free.com',
-		'http://www.minecraft4free.com',
-		'http://servcis-runescape.com',
-		'http://www.servcis-runescape.com',
-		'http://s.exs.lv/63',
-		'http://s.exs.lv/6q',
-		'http://s.exs.lv/2tt',
-		'http://s.exs.lv/31p',
-		'http://secure.runscape.com',
-		'http://www.runeskapes.t35.com',
-		'http://runeskapes.t35.com',
-		'http://piratebay.com',
-		'http://www.yotube.com',
-		'http://www.mediafire.com/?zdnxuar9up5ndqg',
-		'http://mediafire.com/?zdnxuar9up5ndqg',
-		'http://yotube.com',
-		'http://modapplicationrune.tk/',
-		'http://runescapeforums.byethost4.com',
-		'http://tiny.lv/?GoGTM',
-		'http://cut.lv/Q7M/',
-		'http://www.pelninaudu.info',
-		'http://www.moneystrategy.info',
-		'http://moneystrategy.info',
-		'http://pelninaudu.info',
-		'http://www.2shared.com/file/r9M0b2fG/SWE_DDoS_227.html',
-		'http://www.megaupload.com/?d=XQK8B0IO',
-		'http://megaupload.com/?d=XQK8B0IO',
-		'http://tiny.lv/?GPFsg',
-		'http://is.gd/9ivAOU',
-		'http://www.gamingelite.lv/Yellow',
-		'http://cut.lv/Qi5',
-		'http://s.exs.lv/5v1',
-		'http://sn.im/21yxwpu',
-		'http://bit.ly/yXwUxN',
-		'http://goo.gl/VhULw',
-		'http://photo-upload.at.ua/i600/2012/m14/e23568734345.jpg',
-		'https://rapidshare.com/files/1499757716/SwiftKit.exe',
-		'http://www.bildites.lv/images/9884basw0nv2k6akv8vs.jpg',
-		'http://www.powerplaymanager.com/r979345',
-		'http://www.dahoodbrothas.com',
-		'http://dahoodbrothas.com',
-		'http://free-steam-games.com',
-		'http://www.free-steam-games.com',
-		'http://freeminecraft.me',
-		'http://steam.store-powred.com.nu',
-		'http://failiem.lv/u/gwrtqbc',
-		'http://tinyurl.com/d2c86wo',
-		'http://freeitems.info.tm',
-		'http://epicfreeprizes.com',
-		'http://steam-games-free.com',
-		'http://www.money-friends.net',
-		'http://money-friends.net',
-		'http://esimsecura.com',
-		'http://zoneexp.com',
-		'http://freeleaguecodes.net',
-		'http://www.freesteamgifts.com',
-		'http://cs.noob.lv',
-		'http://mta.dga.lv',
-		'http://rp.slime.lv',
-		'http://skilled.ez.lv',
-		'http://noob.lv'
-			), '/ES_SPAMOJU_SUDUS', $txt);
+			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
+		}
+	}
 
 	$txt = str_replace(array(
 		'.space.lv',
@@ -856,24 +780,21 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 		'playpro.lv',
 		'MOBM1ODD',
 		's.exs.lv/63',
-		'www.runeskapes.t35.com',
 		'MODAPPLICATIONRUNE.TK',
 		'?ref=',
-		'cs.noob.lv',
-		'rp.slime.lv',
 		'91.135.84.135',
 		'servics-',
 		'servces-',
 		'.org/lan.',
-		'magicera.lv',
-		'usfine.com',
 		'4f200c32f12e7.jpg'
 			), 'ES_SPAMOJU_SUDUS', $txt);
+
 
 	$txt = str_replace(array(
 		'/ref.php',
 		'/referrer/'
 			), '/ES_SPAMOJU_SUDUS/', $txt);
+
 
 	if (strpos($txt, 'spoiler') !== false) {
 		$txt = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/iseU', 'replace_spoiler("\\1")', $txt);
@@ -890,10 +811,25 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 	return $txt;
 }
 
+
+/* atgriež masīvu ar bloķētiem mājas lapu domēniem */
+function get_blacklisted_sites() {
+	global $db, $m, $blacklisted_sites;
+	if(empty($blacklisted_sites)) {
+		if (($blacklisted_sites = $m->get('blacklisted_sites')) === false) {
+			$blacklisted_sites = $db->get_col("SELECT `url` FROM `blacklisted_sites`");
+			$m->set('blacklisted_sites', $blacklisted_sites, false, 3600);
+		}
+	}
+	return $blacklisted_sites;
+}
+
+
 function replace_spoiler($text) {
 	$text = str_replace(array('<p>', '</p>'), array('<br />', '<br />'), $text);
 	return '<span class="spoiler"><a href="javascript:void(0);" class="spoiler-title" title="Slēpt/rādīt spoilera saturu">Rādīt spoileri</a><br /><span style="display:none" class="spoiler-content">'.$text.'</span></span>';
 }
+
 
 function hide_spoilers($text) {
 	if (strpos($text, 'spoiler') !== false) {
@@ -902,6 +838,7 @@ function hide_spoilers($text) {
 	}
 	return $text;
 }
+
 
 function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 
@@ -914,6 +851,7 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 
 	return $text;
 }
+
 
 function get_tags_mb($tag, $mbid) {
 	global $db;
