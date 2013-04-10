@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 	}	
 
 	
-	$results 	= $db->get_results("SELECT `id`,`nick`,`mail`,`lastip`,`karma`,`date` FROM `users` WHERE ".$criteria." ORDER BY ABS(`level`) DESC, `nick` ASC LIMIT 0,50");
+	$results 	= $db->get_results("SELECT `id`,`nick`,`mail`,`lastip`,`karma`,`date`,`level` FROM `users` WHERE ".$criteria." ORDER BY ABS(`level`) DESC, `nick` ASC LIMIT 0,50");
 	
 	if ($results) {
 	
