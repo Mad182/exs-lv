@@ -132,7 +132,7 @@ if (isset($_GET['var1'])) {
 
 
 $cloud = rand(0, 200);
-$cache_created = filemtime(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html');
+$cache_created = @filemtime(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html');
 if (!$cache_created || (time() - $cache_created) > 115200) {
 	$tags = $db->get_results("
 		SELECT
