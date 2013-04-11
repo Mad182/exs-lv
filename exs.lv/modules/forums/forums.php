@@ -1,5 +1,6 @@
 <?php
 
+$ignore_tla = true;
 $add_css .= ',forum.css';
 
 //add

@@ -1,7 +1,7 @@
 <?php
 
 if ($auth->level != 1) {
-	redirect('/');
+	redirect();
 }
 
 if (isset($_GET['var1'])) {

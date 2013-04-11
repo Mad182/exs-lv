@@ -1,6 +1,6 @@
 <!-- START BLOCK : add-wp-form-->
 
-<h2>Ekrāntapešu administrācija</h2>
+<h1>Ekrāntapešu administrācija</h1>
 <form id="add-image" class="form" action="{page-url}" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Pievienot jaunu attēlu</legend>

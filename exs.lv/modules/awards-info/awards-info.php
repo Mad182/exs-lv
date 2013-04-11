@@ -122,6 +122,10 @@ if (!empty($user)) {
 			$out = 'MTA lietotājs. Aktīvs rp.exs.lv forumā';
 			break;
 
+		case 'lol-user':
+			$out = 'lol.exs.lv lietotājs. Aktīvs lol.exs.lv forumā';
+			break;
+
 		/*
 		  case '':
 		  $out = '';
