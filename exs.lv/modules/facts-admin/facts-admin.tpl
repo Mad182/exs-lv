@@ -1,8 +1,8 @@
 <!-- START BLOCK : facts_admin-tabs-->
-<div class="mbox tabArea">
-	<a href="/?c=206" class="tab activeTab"><span class="pages">Gaming fakti</span></a>
-	<a href="/?c=206&amp;type=rs" class="tab activeTab"><span class="bookmarks">RuneScape fakti</span></a>
-</div>
+<ul class="tabs">
+	<li><a href="/{category-url}"><span class="pages">Gaming fakti</span></a></li>
+	<li><a href="/{category-url}/?type=rs"><span class="bookmarks">RuneScape fakti</span></a></li>
+</ul>
 <!-- END BLOCK : facts_admin-tabs-->
 
 <!-- START BLOCK : facts_admin-edit-->
