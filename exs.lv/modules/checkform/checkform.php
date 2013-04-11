@@ -13,37 +13,37 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 	$user = $db->get_row("SELECT `id`,`nick`,`pwd`,`level` FROM `users` WHERE `id` = '" . $userid . "' ");
 	if ($user) {
 
-		// atrod vecos lietotājvārdus
-		$usernames = $db->get_results("SELECT `user_id` AS `id`,`nick`,`changed` FROM `nick_history` WHERE `user_id` = '" . $user->id . "' ORDER BY `changed` DESC ");
-		if ($usernames) {
-			$content .= '<p><strong>Iepriekšējie lietotājvārdi:</strong><br />';
-			foreach ($usernames as $uname) {
-				$uname->changed = date("d.m.Y, H:i", strtotime($uname->changed));
-				$content .= '<a href="/user/' . $uname->id . '">' . $uname->nick . '</a> (mainīts: ' . $uname->changed . ')<br />';
-			}
-			$content .= '</p>';
-		} else {
-			$content .= '<p style="font-weight:bold;">Šis lietotājs savu lietotājvārdu pēdējā laikā nav mainījis!</p>';
-		}
-
 		// veic salīdzināšanu, vai paroles hash sakrīt ar kādu citu
 		if (strlen($user->pwd) > 5 && !in_array($user->pwd, array('', ' '))) {
-			$pass = $db->get_results("SELECT `id`,`nick`,`lastseen`,`level` FROM `users` WHERE `pwd` LIKE '%" . $user->pwd . "%' AND `id` != '" . $user->id . "' ORDER BY `nick` ASC ");
+			$pass = $db->get_results("SELECT `id`,`nick`,`lastseen`,`level`,`lastip` FROM `users` WHERE `pwd` LIKE '%" . $user->pwd . "%' AND `id` != '" . $user->id . "' AND `id` != '".$auth->id."' ORDER BY `nick` ASC ");
 			if ($pass) {
-				$content .= '<p><strong>Parole sakrīt ar šādiem lietotājiem:</strong><br />';
+				$content .= '<p class="infop"><strong>Parole sakrīt ar šādiem lietotājiem:</strong></p><p>';
+				$content .= '<table><tr><th>Profils</th><th>Manīts</th><th>Pēdējā IP</th></tr>';
 				foreach ($pass as $pwd) {
 					$pwd->lastseen = time_ago(strtotime($pwd->lastseen));
-					//$content .= '<a href="/user/'.$pwd->id.'">'.$pwd->nick.'</a>&nbsp;&nbsp;&nbsp;pēdējoreiz manīts pirms '.$pwd->lastseen.'<br />';
 					$pwd->nick = usercolor($pwd->nick, $pwd->level, false, $pwd->id);
-					$content .= '<a href="/user/' . $pwd->id . '">' . $pwd->nick . '</a>&nbsp;&nbsp;&nbsp;manīts pirms ' . $pwd->lastseen . '<br />';
+					$content .= '<tr><td><a href="/user/'.$pwd->id.'">'.$pwd->nick.'</a></td><td class="centered-result">pirms ' . $pwd->lastseen . '</td><td class="centered-result">'.$pwd->lastip.'</td></tr>';
 				}
-				$content .= '</p>';
+				$content .= '</table></p>';
 			} else
-				$content .= '<p><strong>Parole ne ar vienu lietotāju nesakrīt.<strong></p>';
+				$content .= '<p class="infop"><strong>Parole ne ar vienu lietotāju nesakrīt.</strong></p>';
 
 			// jāpārbauda vecā parole
 		} else {
-			$content .= '<p><strong>Parole ne ar vienu lietotāju nesakrīt.<strong></p>';
+			$content .= '<p class="infop"><strong>Parole ne ar vienu lietotāju nesakrīt.</strong></p>';
+		}		
+		
+		// atrod vecos lietotājvārdus
+		$usernames = $db->get_results("SELECT `user_id` AS `id`,`nick`,`changed` FROM `nick_history` WHERE `user_id` = '" . $user->id . "' ORDER BY `changed` DESC ");
+		if ($usernames) {
+			$content .= '<p class="infop"><strong>Iepriekšējie lietotājvārdi:</strong></p><p>';
+			foreach ($usernames as $uname) {
+				$uname->changed = date("d.m.Y, H:i", strtotime($uname->changed));
+				$content .= '<a href="/user/' . $uname->id . '">' . $uname->nick . '</a> &nbsp;&nbsp;&nbsp;(mainīts: ' . $uname->changed . ')<br />';
+			}
+			$content .= '</p>';
+		} else {
+			$content .= '<p class="infop" style="font-weight:bold;">Šis lietotājs savu lietotājvārdu pēdējā laikā nav mainījis!</p>';
 		}
 
 		echo $content;
@@ -57,8 +57,8 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
-//$skinid = ($auth->skin == 1) ? 'dark' : 'light';
-$tpl->assign('skinid', 'light');
+$skinid = ($auth->skin == 1) ? 'dark' : 'light';
+$tpl->assign('skinid', $skinid);
 
 $tpl->newBlock('mod-cpanel');
 

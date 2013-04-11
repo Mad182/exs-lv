@@ -1,5 +1,5 @@
 <!-- START BLOCK : mod-cpanel -->
-<h1>Lapas lietotāju kontroles forma</h1>
+<h1>Profilu meklēšana un pārbaude</h1>
 <div id="checkform">
 	<form id="search-nick" action="" method="post">
 		<p><strong>Lietotājvārds:</strong></p>
@@ -28,7 +28,7 @@
 	<!-- END BLOCK : search-ignored -->
 	<table id="user-results">
 		<tr>
-			<th>Niks</th>
+			<th>Profils</th>
 			<th>IP</th>
 			<th>E-pasts</th>
 			<th>Karma</th>
@@ -37,10 +37,10 @@
 		<!-- START BLOCK : search-result -->
 		<tr>
 			<td style="width:120px;" class="get-user-info" data-id="{id}"><a href="/user/{id}">{nick}</a></td>
-			<td style="width:120px;">{lastip}</td>
-			<td style="width:90px;text-align:center">{mail}</td>
-			<td style="width:80px;text-align:center">{karma}</td>
-			<td style="width:50px;text-align:center">{date}</td>
+			<td class="centered-result" style="width:120px;">{lastip}</td>
+			<td class="centered-result" style="width:90px;">{mail}</td>
+			<td class="centered-result" style="width:60px;">{karma}</td>
+			<td class="centered-result" style="width:50px;">{date}</td>
 		</tr>
 		<tr class="hide-userdata"><td id="data-{id}" class="wider-row" colspan="5"></td></tr>
 		<!-- END BLOCK : search-result -->
