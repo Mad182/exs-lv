@@ -1,7 +1,5 @@
 <?php
 
-//testing deploy
-
 require('configdb.php');
 
 /* ielādē kopīgos failus */
