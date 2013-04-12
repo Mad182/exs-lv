@@ -180,8 +180,8 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 
 				$domain = '';
 				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
-					$domain = 'http://' . $config_domains[$late->lang]['domain'];
-					$site = '&nbsp;<span class="site-name">' . $config_domains[$late->lang]['domain'] . '</span>';
+					$domain = 'http://' . $config_domains[$notify->lang]['domain'];
+					$site = '&nbsp;<span class="site-name">' . $config_domains[$notify->lang]['domain'] . '</span>';
 				}
 
 				if ($notify->type == 5 || $notify->type == 6) {
