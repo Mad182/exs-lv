@@ -2648,9 +2648,9 @@ function get_latest_posts() {
 
 			$domain = '';
 			$prefix = '';
-			if ($late->lang != 1 && $late->lang != $lang) {
-				$domain = 'http://' . $config_domains[$lang]['domain'];
-				$prefix = '<span class="lp-prefix">' . $config_domains[$lang]['prefix'] . '</span> ';
+			if ($late->lang != $lang) {
+				$domain = 'http://' . $config_domains[$late->lang]['domain'];
+				$prefix = '<span class="lp-prefix">' . $config_domains[$late->lang]['prefix'] . '</span> ';
 			}
 			
 			$add = '';
@@ -2818,7 +2818,7 @@ function get_latest_images() {
 }
 
 function get_latest_mbs($friends = false) {
-	global $auth, $db, $lang;
+	global $auth, $db, $lang, $config_domains;
 
 	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
 
@@ -2912,20 +2912,12 @@ function get_latest_mbs($friends = false) {
 			if ($auth->ok && $lang != $mb->lang) {
 				$add = $auth->transfer;
 			}
-			if ($lang == 1 && $mb->lang == 3) {
+			
+			$domain = '';
+			$prefix = '';
+			if ($mb->lang != $lang) {
+				$domain = 'http://' . $config_domains[$mb->lang]['domain'];
 				$spec = ' class="linkcode"';
-				$domain = 'http://coding.lv';
-			} elseif ($lang == 1 && $mb->lang == 5) {
-				$spec = ' class="linkcode"';
-				$domain = 'http://rp.exs.lv';
-			} elseif ($lang == 1 && $mb->lang == 6) {
-				$spec = ' class="linkcode"';
-				$domain = 'http://lfs.lv';
-			} elseif ($lang == 1 && $mb->lang == 7) {
-				$spec = ' class="linkcode"';
-				$domain = 'http://lol.exs.lv';
-			} else {
-				$domain = '';
 			}
 
 			if ($mb->groupid != 0) {
@@ -2950,17 +2942,12 @@ function get_latest_mbs($friends = false) {
 
 			if ($mb->groupid != 0) {
 				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 7) {
-				$mb->text = '<em><span>lol.exs.lv</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 5) {
-				$mb->text = '<em><span>rp.exs.lv</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 6) {
-				$mb->text = '<em><span>lfs.lv</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 3) {
-				$mb->text = '<em><span>coding.lv</span></em>' . textlimit($mb->text, 88, '...');
+			} elseif ($mb->lang != $lang) {
+				$mb->text = '<em><span>' . $config_domains[$mb->lang]['domain'] . '</span></em>' . textlimit($mb->text, 88, '...');
 			} else {
 				$mb->text = textlimit($mb->text, 98, '...');
 			}
+		
 			if ($lang == 1) {
 				$time = time_ago(strtotime($mb->date));
 			} else {
