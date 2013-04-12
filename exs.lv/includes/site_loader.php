@@ -37,3 +37,30 @@ if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localho
 if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
+
+
+/**
+ * Info par domēniem, kuri atbilst katram $lang (lai veidotu linkus starp projektiem u.c.)
+ */
+$config_domains = array(
+	1 => array(
+		'domain' => 'exs.lv',
+		'prefix' => ''
+	),
+	3 => array(
+		'domain' => 'coding.lv',
+		'prefix' => 'code'
+	),
+	5 => array(
+		'domain' => 'rp.exs.lv',
+		'prefix' => 'mta'
+	),
+	6 => array(
+		'domain' => 'lfs.lv',
+		'prefix' => 'lfs'
+	),
+	7 => array(
+		'domain' => 'lol.exs.lv',
+		'prefix' => 'lol'
+	)
+);

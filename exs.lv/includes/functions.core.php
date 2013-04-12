@@ -2590,7 +2590,7 @@ function redirect($location = '/', $perm = false) {
 }
 
 function get_latest_posts() {
-	global $auth, $db, $lang, $comments_per_page;
+	global $auth, $db, $lang, $comments_per_page, $config_domains;
 	$out = '';
 
 	$skip = 0;
@@ -2645,35 +2645,19 @@ function get_latest_posts() {
 					$skip = '/com_page/' . floor(($posts - 1) / $comments_per_page);
 				}
 			}
+
 			$domain = '';
 			$prefix = '';
-			if ($late->lang == 1) {
-				$domain = 'http://exs.lv';
-			} elseif ($late->lang == 3) {
-				$domain = 'http://coding.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">code</span> ';
-				}
-			} elseif ($late->lang == 5) {
-				$domain = 'http://rp.exs.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">mta</span> ';
-				}
-			} elseif ($late->lang == 7) {
-				$domain = 'http://lol.exs.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">lol</span> ';
-				}
-			} elseif ($late->lang == 6) {
-				$domain = 'http://lfs.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">lfs</span> ';
-				}
+			if ($late->lang != 1 && $late->lang != $lang) {
+				$domain = 'http://' . $config_domains[$lang]['domain'];
+				$prefix = '<span class="lp-prefix">' . $config_domains[$lang]['prefix'] . '</span> ';
 			}
+			
 			$add = '';
 			if ($auth->ok && $lang != $late->lang) {
 				$add = $auth->transfer;
 			}
+
 			$url = $domain . '/read/' . $late->strid;
 			if ($late->category == 83 || $late->category == 954) {
 				$late->title = '<em>' . $late->title . '</em>';
