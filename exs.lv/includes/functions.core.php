@@ -2139,55 +2139,27 @@ function get_footer_mb($force = false) {
 	return $html;
 }
 
+
+/**
+ * Linki uz jaunākajiem rakstiem footerī
+ */
 function get_footer_topics($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($html = $m->get('f_topics_' . $lang))) {
 		$html = '';
-		if ($lang == 1) {
-			$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND (`lang` = '1' OR `lang` = '3') ORDER BY `id` DESC LIMIT 6");
-		} else {
-			$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
-		}
+		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
-
-				$domain = '';
-				$prefix = '';
-				if ($late->lang == 3 && $lang != $late->lang) {
-					$domain = 'http://coding.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">code</span> ';
-					}
-				}
-				if ($late->lang == 5 && $lang != $late->lang) {
-					$domain = 'http://rp.exs.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">mta</span> ';
-					}
-				}
-				if ($late->lang == 7 && $lang != $late->lang) {
-					$domain = 'http://lol.exs.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">lol</span> ';
-					}
-				}
-				if ($late->lang == 6 && $lang != $late->lang) {
-					$domain = 'http://lfs.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">lfs</span> ';
-					}
-				}
-				$url = $domain . '/read/' . $late->strid;
-
-				$html .= '<li><a href="' . $url . '" title="' . htmlspecialchars($late->title) . '">' . $prefix . textlimit($late->title, 36) . '</a></li>';
+				$html .= '<li><a href="/read/' . $late->strid . '" title="' . htmlspecialchars($late->title) . '">' . textlimit($late->title, 36) . '</a></li>';
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, false, 60);
+		$m->set('f_topics_' . $lang, $html, false, 120);
 	}
 	return $html;
 }
+
 
 function get_online($force = false) {
 	global $db, $m;
