@@ -361,6 +361,7 @@
 			<li><a href="/cache/cs_monitor.html" class="active remember-cs ajax"><span class="game-cs">Counter Strike</span></a></li>
 		</ul>
 		<div id="cs-content" class="ajaxbox">{latest-cs}</div>
+		<p style="padding: 0 0 10px;text-align: cetner;"><script src="http://wos.lv/d.php?26271"></script></p>
 		<div class="c"></div>
 	</div>
 
