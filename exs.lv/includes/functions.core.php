@@ -4,7 +4,6 @@
  * functions.core.php
  * satur pmata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
  * */
-
 if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
 	function mb_ucfirst($string) {
@@ -15,6 +14,7 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 }
 
 /* aprekina un updato lietotja karmu */
+
 function update_karma($userid, $force_award = false) {
 	global $db; //I feel your pain
 	$userid = intval($userid);
@@ -135,7 +135,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 }
 
 function get_notify($user_id, $base = '/events-pager?events-page=') {
-	global $db, $lang, $new_msg_html, $auth; //man kauns :(
+	global $db, $lang, $new_msg_html, $auth, $config_domains; //man kauns :(
 	$user_id = intval($user_id);
 	$out = '';
 	$texts = array(
@@ -177,23 +177,11 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if ($auth->ok && $lang != $notify->lang) {
 					$addt = $auth->transfer;
 				}
-				if ($notify->lang == $lang || in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
-					$domain = '';
-				} elseif ($notify->lang == 3) {
-					$domain = 'http://coding.lv';
-					$site = '&nbsp;<span class="site-name">coding.lv</span>';
-				} elseif ($notify->lang == 5) {
-					$domain = 'http://rp.exs.lv';
-					$site = '&nbsp;<span class="site-name">rp.exs.lv</span>';
-				} elseif ($notify->lang == 6) {
-					$domain = 'http://lfs.lv';
-					$site = '&nbsp;<span class="site-name">lfs.lv</span>';
-				} elseif ($notify->lang == 7) {
-					$domain = 'http://lol.exs.lv';
-					$site = '&nbsp;<span class="site-name">lol.exs.lv</span>';
-				} else {
-					$domain = 'http://exs.lv';
-					$site = '&nbsp;<span class="site-name">exs.lv</span>';
+
+				$domain = '';
+				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
+					$domain = 'http://' . $config_domains[$late->lang]['domain'];
+					$site = '&nbsp;<span class="site-name">' . $config_domains[$late->lang]['domain'] . '</span>';
 				}
 
 				if ($notify->type == 5 || $notify->type == 6) {
@@ -740,6 +728,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 	$txt = str_replace(' rel="nofollow" href="http://www.exs.lv', ' href="http://exs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://img.exs.lv', ' href="http://img.exs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://rp.exs.lv', ' href="http://rp.exs.lv', $txt);
+	$txt = str_replace(' rel="nofollow" href="http://lol.exs.lv', ' href="http://lol.exs.lv', $txt);
 
 	$txt = str_replace(' rel="nofollow" href="http://openidea.lv', ' href="http://openidea.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.openidea.lv', ' href="http://openidea.lv', $txt);
@@ -2139,7 +2128,6 @@ function get_footer_mb($force = false) {
 	return $html;
 }
 
-
 /**
  * Linki uz jaunākajiem rakstiem footerī
  */
@@ -2159,7 +2147,6 @@ function get_footer_topics($force = false) {
 	}
 	return $html;
 }
-
 
 function get_online($force = false) {
 	global $db, $m;
@@ -2598,9 +2585,7 @@ function get_latest_posts() {
 		$skip = 8 * intval($_GET['pg']);
 	}
 
-	$conditions = array(
-		"`category` != '6'"
-	);
+	$conditions = array();
 
 	if ($lang == 1) {
 		$add_langs = array("`pages`.`lang` = '1'");
@@ -2618,12 +2603,6 @@ function get_latest_posts() {
 		$conditions[] = "`pages`.`lang` = '$lang'";
 	}
 
-
-	if (!im_mod()) {
-		$conditions[] = "`category` != 83";
-		$conditions[] = "`category` != 954";
-	}
-
 	if ($auth->ok) {
 		$ignores = $db->get_col("SELECT `category_id` FROM `cat_ignore` WHERE `user_id` = '$auth->id'");
 		if (!empty($ignores)) {
@@ -2633,7 +2612,28 @@ function get_latest_posts() {
 		}
 	}
 
-	$latest = $db->get_results("SELECT `title`,`id`,`posts`,`readby`,`strid`,`category`,`lang`,`bump` FROM `pages` WHERE " . implode(' AND ', $conditions) . " ORDER BY `bump` DESC LIMIT $skip,8");
+	$mods_only = '';
+	if (!im_mod()) {
+		$mods_only = " AND `cat`.`mods_only` = 0";
+	}
+
+	$latest = $db->get_results("SELECT
+					`pages`.`title`,
+					`pages`.`id`,`posts`,
+					`pages`.`readby`,
+					`pages`.`strid`,
+					`pages`.`category`,
+					`pages`.`lang`,
+					`pages`.`bump`,
+					`cat`.`mods_only`
+				FROM
+					`pages`,
+					`cat`
+				WHERE
+					" . implode(' AND ', $conditions) . $mods_only . "
+					AND `cat`.`id` = `pages`.`category`
+				ORDER BY
+					`pages`.`bump` DESC LIMIT $skip,8");
 
 	if ($latest) {
 		$out = '<ul id="latest-topics" class="blockhref">';
@@ -2652,16 +2652,17 @@ function get_latest_posts() {
 				$domain = 'http://' . $config_domains[$late->lang]['domain'];
 				$prefix = '<span class="lp-prefix">' . $config_domains[$late->lang]['prefix'] . '</span> ';
 			}
-			
+			$url = $domain . '/read/' . $late->strid;
+
 			$add = '';
 			if ($auth->ok && $lang != $late->lang) {
 				$add = $auth->transfer;
 			}
 
-			$url = $domain . '/read/' . $late->strid;
-			if ($late->category == 83 || $late->category == 954) {
+			if ($late->mods_only == 1) {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
+
 			if ($lang == 1) {
 				$out .= '<li><a href="' . $url . $skip . $add . '">';
 
@@ -2912,7 +2913,7 @@ function get_latest_mbs($friends = false) {
 			if ($auth->ok && $lang != $mb->lang) {
 				$add = $auth->transfer;
 			}
-			
+
 			$domain = '';
 			$prefix = '';
 			if ($mb->lang != $lang) {
@@ -2947,7 +2948,7 @@ function get_latest_mbs($friends = false) {
 			} else {
 				$mb->text = textlimit($mb->text, 98, '...');
 			}
-		
+
 			if ($lang == 1) {
 				$time = time_ago(strtotime($mb->date));
 			} else {
