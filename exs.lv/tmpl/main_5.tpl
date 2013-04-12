@@ -290,6 +290,11 @@
 			</div>
 			<!-- END BLOCK : notification-list-->
 
+			<h3>Balso par mums!</h3>
+			<div class="box">
+				<p><script src="http://wos.lv/d.php?9530"></script></p>
+			</div>
+
 			<!-- START BLOCK : user-top-->
 			<h3>Šodien aktīvākie</h3>
 			<div class="box">
