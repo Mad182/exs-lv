@@ -46,7 +46,11 @@ class Auth {
 	}
 
 	function setcookie($title, $data = null) {
-		setcookie($title, $data, time() + 3600, "/", ".exs.lv", 0, false);
+		if (defined('LOCAL_DEV')) {
+			setcookie($title, $data, time() + 3600, "/");
+		} else {
+			setcookie($title, $data, time() + 3600, "/", ".exs.lv", 0, false);
+		}
 	}
 
 	function update_visits() {
@@ -250,9 +254,15 @@ class Auth {
 			$_SESSION['auth_id'] = '';
 			session_destroy();
 
-			setcookie("ex_nick", "", 1, "/", ".exs.lv", 0, true);
-			setcookie("ex_id", "", 1, "/", ".exs.lv", 0, true);
-			setcookie("ex_check", "", 1, "/", ".exs.lv", 0, true);
+			$domain = '.exs.lv';
+
+			if (defined('LOCAL_DEV')) {
+				$domain = '';
+			}
+
+			setcookie("ex_nick", "", 1, "/", $domain, 0, true);
+			setcookie("ex_id", "", 1, "/", $domain, 0, true);
+			setcookie("ex_check", "", 1, "/", $domain, 0, true);
 		} else {
 			$_SESSION['auth_id'] = $_SESSION['admin_simulate'];
 			$_SESSION['admin_simulate'] = '';
