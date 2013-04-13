@@ -1,3 +1,5 @@
+<h1>Pievienot foruma apakšsadaļu</h1>
+
 <form class="form" action="" method="post">
 	<fieldset>
 		<p>

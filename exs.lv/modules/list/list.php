@@ -1,5 +1,7 @@
 <?php
 
+$ignore_tla = true;
+
 if (!isset($_GET['viewcat']) || $_GET['viewcat'] !== $category->textid) {
 	redirect('/' . $category->textid, true);
 }

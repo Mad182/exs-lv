@@ -11,8 +11,8 @@ body {
 }
 
 #header {
-	background: url('http://img.exs.lv/exclusive_lv/111a.png') repeat 50% 10px;
-	height: 192px;
+	background: url('http://exs.lv/bildes/gta-header.jpg') no-repeat 50% 10px;
+	height: 180px;
 }
 
 #wrapper h1, #wrapper h2, #wrapper h3 {
@@ -50,7 +50,7 @@ body {
 
 #header-overlay {
 	background: transparent;
-	height: 192px;
+	height: 180px;
 }
 
 #top-menu {
@@ -147,13 +147,13 @@ body {
 }
 
 #logo {
-	height: 158px;
+	height: 146px;
 }
 
 #exs-logo {
 	background: transparent;
 	width: 500px;
-	height: 152px;
+	height: 1402px;
 }
 
 

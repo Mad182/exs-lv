@@ -1,4 +1,7 @@
-<h2>Pierakstītās darbības</h2>
+<h1>Logotās darbības</h1>
+
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
+
 <table class="main-table">
   <tr>
     <th>Lietotājs</th>
@@ -17,3 +20,5 @@
  </tr>
 <!-- END BLOCK : logs-list-node-->
 </table>
+
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>

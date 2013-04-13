@@ -39,6 +39,3 @@ if ($actions) {
 		));
 	}
 }
-
-$tpl->newBlock('meta-description');
-$tpl->assign('description', 'Pēdējās lietotāju aktivitātes exs.lv mājas lapā');

@@ -4,13 +4,18 @@
 
 <script type="text/javascript">
 
-	$(function($){
+	$(document).ready(function() {
+
+		var jcrop_api;
+
 
 		$('#target').Jcrop({
 			onChange:   showCoords,
 			onSelect:   showCoords,
 			onRelease:  clearCoords
-		});
+		},function(){
+		    jcrop_api = this;
+		  });
 
 
 		$('#coords').live('submit', function() {
@@ -28,15 +33,27 @@
 			return false;
 		});
 
+		$('#set-to').click(function(e) {
+
+			var r_x1 = Math.floor($('#x1').val());
+			var r_y1 = Math.floor($('#y1').val());
+			var r_x2 = r_x1+Math.floor($('#w').val());
+			var r_y2 = r_y1+Math.floor($('#h').val());
+
+			jcrop_api.setSelect([r_x1,r_y1,r_x2,r_y2]);
+
+			return false;
+		});
+
 	});
 
 	function showCoords(c) {
-		$('#x1').val(c.x);
-		$('#y1').val(c.y);
-		$('#x2').val(c.x2);
-		$('#y2').val(c.y2);
-		$('#w').val(c.w);
-		$('#h').val(c.h);
+		$('#x1').val(Math.floor(c.x));
+		$('#y1').val(Math.floor(c.y));
+		$('#x2').val(Math.floor(c.x2));
+		$('#y2').val(Math.floor(c.y2));
+		$('#w').val(Math.floor(c.w));
+		$('#h').val(Math.floor(c.h));
 	};
 
 	function clearCoords() {
@@ -54,12 +71,13 @@
 	<form id="coords" class="form coords" action="/crop">
 		<input type="hidden" value="{file}" name="file">
 		<p>
-			<label>X1 <input type="text" size="4" id="x1" name="x1" readonly="readonly" class="text tiny" /></label>
-			<label>Y1 <input type="text" size="4" id="y1" name="y1" readonly="readonly" class="text tiny" /></label>
+			<label>X1 <input type="text" size="4" id="x1" name="x1" class="text tiny animate-to" /></label>
+			<label>Y1 <input type="text" size="4" id="y1" name="y1" class="text tiny animate-to" /></label>
 			<label style="display:none;">X2 <input type="text" size="4" id="x2" name="x2" readonly="readonly" class="text tiny" /></label>
 			<label style="display:none;">Y2 <input type="text" size="4" id="y2" name="y2" readonly="readonly" class="text tiny" /></label>
-			<label>W <input type="text" size="4" id="w" name="w" readonly="readonly" class="text tiny" /></label>
-			<label>H <input type="text" size="4" id="h" name="h" readonly="readonly" class="text tiny" /></label>
+			<label>W <input type="text" size="4" id="w" name="w" class="text tiny animate-to" /></label>
+			<label>H <input type="text" size="4" id="h" name="h" class="text tiny animate-to" /></label>
+			<input type="submit" value="Set" id="set-to" class="button primary small" />
 		</p>
 
 		<p>
@@ -104,5 +122,6 @@
 <div id="crop-result"></div>
 
 <p>
-	* If there happens to be some problem with the output file (missing frames or strange artifacts), try the other option.
+	* If there happens to be some problem with the output file (missing frames or strange artifacts), try the other option.<br />
+	There may be difference, depending on compression used for the source image.
 </p>

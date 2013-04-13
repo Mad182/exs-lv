@@ -29,6 +29,9 @@
 <div>Other tools: {menu}</div>
 
 <img src="http://img.exs.lv/tmp/{file}" id="target" alt="" /><br />
+	<p>
+		File size: {filesize}
+	</p>
 
 <form id="optimize" class="form coords" action="/optimize">
 	<input type="hidden" value="{file}" name="file">
@@ -41,6 +44,10 @@
 		<option value="gifsicle_1">Gifsicle level 1</option>
 		<option value="gifsicle_2">Gifsicle level 2</option>
 	</select>
+	</p>
+	<p>
+		<label>Reduce colors to <input type="text" size="4" id="colors" name="colors" class="text tiny" value="{manual-colors}" />&nbsp;(1 - 256)</label><br />
+		<small>0 = set of variations (200/128/90/64/32/16/8)</small>
 	</p>
 
 	<input type="submit" class="button primary" value="Optimize it!" name="optimize" />

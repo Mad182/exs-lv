@@ -38,8 +38,15 @@ if ($user) {
 		if (isset($_POST['block-reason'])) {
 			$reason = sanitize(htmlspecialchars($_POST['block-reason']));
 			$length = (int) $_POST['block-length'];
-			$db->query("INSERT INTO banned (user_id,reason,time,length,author,ip)
-				VALUES ('$user->id','$reason','" . time() . "','$length','$auth->id','$user->lastip')");
+			
+			$site = 0;
+			/* ja admins nav "globāls", tb norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu */
+			if(in_array($auth->id, $site_mods) || in_array($auth->id, $site_admins)) {
+				$site = $lang;
+			}
+
+			$db->query("INSERT INTO `banned` (`user_id`,`reason`,`time`,`length`,`author`,`ip`,`lang`)
+				VALUES ('$user->id','$reason','" . time() . "','$length','$auth->id','$user->lastip', '$site')");
 			get_banlist(true);
 			redirect('/banned');
 		}

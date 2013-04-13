@@ -1,4 +1,4 @@
-<h1>Samazināt GIF animāciju</h1>
+<h1>Animated gif resizer</h1>
 
 <!-- START BLOCK : resize-->
 
@@ -26,21 +26,21 @@
 
 </script>
 
-<div>Citi rīki: {menu}</div>
+<div>Other tools: {menu}</div>
 
 <img src="http://img.exs.lv/tmp/{file}" id="target" alt="" /><br />
 
 <form id="resize" class="form coords" action="/resize">
 	<input type="hidden" value="{file}" name="file">
 	<p>
-		Esošais platums: {width}px<br />
-		Esošais augstums: {height}px<br />
-		<label>Jaunais platums: <input type="text" size="4" id="width" name="width" class="text tiny" />&nbsp;(0 - auto)</label><br />
-		<label>Jaunais augstums: <input type="text" size="4" id="height" name="height" class="text tiny" />&nbsp;(0 - auto)</label>
+		Current width: {width}px<br />
+		Current height: {height}px<br />
+		<label>New width: <input type="text" size="4" id="width" name="width" class="text tiny" />&nbsp;(0 - auto)</label><br />
+		<label>New height: <input type="text" size="4" id="height" name="height" class="text tiny" />&nbsp;(0 - auto)</label>
 	</p>
 
 	<p>
-	<label for="method">Samazināšanas metode*:</label><br />
+	<label for="method">Resize method*:</label><br />
 	<select name="method" id="method">
 		<option value="im">ImageMagick</option>
 		<option value="gifsicle">Gifsicle</option>
@@ -48,7 +48,7 @@
 	</select>
 	</p>
 
-	<input type="submit" class="button primary" value="Mainīt izmēru!" name="crop" />
+	<input type="submit" class="button primary" value="Resize it!" name="crop" />
 
 </form>
 
@@ -58,29 +58,29 @@
 
 <form class="form" action="/resize" method="post" enctype="multipart/form-data">
 	<fieldset>
-		<legend>Norādi attēlu</legend>
+		<legend>Select image</legend>
 		<p>
-			<label>Ielādēt attēlu no datora:</label><br />
+			<label>Upload image from your computer:</label><br />
 			<input type="file" name="new-image" />
 		</p>
 		<p>
-			<label>Vai iekopēt saiti uz attēlu:</label><br />
+			<label>OR paste image url:</label><br />
 			<input type="text" class="text" name="new-image-url" />
 		</p>
 		<p>
-			(Tikai gif attēliem, līdz 12 MB!)
+			(Only gif images, up to 12MB accepted)
 		</p>
-		<p><input type="submit" class="button primary" value="Ielādēt!" /></p>
+		<p><input type="submit" class="button primary" value="Upload!" /></p>
 	</fieldset>
 </form>
-<p class="small">Tu vari izmantot arī: http://lv.ezgif.com/resize?url=<span style="color:#393;">http://link/to/image.gif</span></p>
+<p class="small">You can also use: http://ezgif.com/resize?url=<span style="color:#393;">http://link/to/image.gif</span></p>
 <!-- END BLOCK : resize-upl-->
 
-<h3>Rezultāts:</h3>
+<h3>Output:</h3>
 <div id="crop-result"></div>
 
 <p>
-	* GIF animāciju samazināšana ir nedaudz sarežģīts process, un bieži vien atkarībā no vajadzībām ir jāizvēlas starp labāku kvalitāti vai mazāku faila izmēru.<br />
-	Izmēģini citu samazināšanas metodi, ja neesi apmierināts ar rezultātu (piemēram, bojāts attēls vai slikta kvalitāte).<br />
-	&quot;Gifsicle&quot; parasti strādā visātrāk un izveido vismazākos failu izmērus, bet tas ir paredzēts ātrumam, nevis kvalitātei.
+	* GIF animation resizing is usually tricky, and you will probably have to choose between smaller file size or better quality. Some gifs may require coalesce option, for best results.<br />
+	Try different methods if you are not satisfied with the result.<br />
+	Gifsicle is usually the fastest tool and produces smaller files, but is designed for speed, not quality.
 </p>

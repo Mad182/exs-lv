@@ -3,7 +3,7 @@
 	padding:20px;
 	border:1px solid #ddd;
 	margin:20px auto 10px;
-	width:80%
+	width:90%
 }
 #checkform th {
 	padding:5px 8px;
@@ -17,14 +17,36 @@
 	display:block
 }
 #checkform input[type=text] {
-	width:200px
+	width:250px;
+	padding:3px 5px;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 #user-results {
 	margin-top:10px
 }
 #user-results td {
-	padding:3px 8px;
-	border-bottom:1px dotted #ddd
+	padding:4px 8px;
+	border-bottom:1px dotted #ddd;
+	border-top:none
+}
+#user-results table {
+	margin-right:20px;
+	margin-left:-15px
+}
+#user-results table th {
+	color:rgb(73, 81, 90);
+	border-bottom:1px solid #ddd
+}
+#user-results table th, #user-results table td {
+	padding:3px 12px
+}
+#user-results p a {
+	margin-left:10px
+}
+.centered-result {
+	text-align:center
 }
 .res-info {
 	color:rgb(63, 67, 119)
@@ -40,4 +62,10 @@
 }
 .wider-row {
 	padding-left:30px !important
+}
+.wider-row p {
+	margin:5px 0
+}
+.infop {
+	color:rgb(226, 62, 62)
 }

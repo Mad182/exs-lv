@@ -4,7 +4,13 @@ if (!im_mod()) {
 	redirect();
 }
 
-$logs = $db->get_results("SELECT * FROM `logs` ORDER BY `created` DESC LIMIT 200");
+$end = 100;
+$skip = 0;
+if (isset($_GET['skip'])) {
+	$skip = (int) $_GET['skip'];
+}
+
+$logs = $db->get_results("SELECT * FROM `logs` ORDER BY `created` DESC LIMIT $skip, $end");
 if ($logs) {
 	foreach ($logs as $log) {
 		$tpl->newBlock('logs-list-node');
@@ -32,3 +38,11 @@ if ($logs) {
 		));
 	}
 }
+
+$pager = pager($db->get_var("SELECT count(*) FROM `logs`"), $skip, $end, '/' . $category->textid . '/?skip=');
+$tpl->assignGlobal(array(
+	'pager-next' => $pager['next'],
+	'pager-prev' => $pager['prev'],
+	'pager-numeric' => $pager['pages']
+));
+

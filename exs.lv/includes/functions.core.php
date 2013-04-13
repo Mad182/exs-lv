@@ -135,7 +135,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 }
 
 function get_notify($user_id, $base = '/events-pager?events-page=') {
-	global $db, $lang, $new_msg_html, $auth; //man kauns :(
+	global $db, $lang, $new_msg_html, $auth, $config_domains; //man kauns :(
 	$user_id = intval($user_id);
 	$out = '';
 	$texts = array(
@@ -177,23 +177,11 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if ($auth->ok && $lang != $notify->lang) {
 					$addt = $auth->transfer;
 				}
-				if ($notify->lang == $lang || in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
-					$domain = '';
-				} elseif ($notify->lang == 3) {
-					$domain = 'http://coding.lv';
-					$site = '&nbsp;<span class="site-name">coding.lv</span>';
-				} elseif ($notify->lang == 5) {
-					$domain = 'http://rp.exs.lv';
-					$site = '&nbsp;<span class="site-name">rp.exs.lv</span>';
-				} elseif ($notify->lang == 6) {
-					$domain = 'http://lfs.lv';
-					$site = '&nbsp;<span class="site-name">lfs.lv</span>';
-				} elseif ($notify->lang == 7) {
-					$domain = 'http://lol.exs.lv';
-					$site = '&nbsp;<span class="site-name">lol.exs.lv</span>';
-				} else {
-					$domain = 'http://exs.lv';
-					$site = '&nbsp;<span class="site-name">exs.lv</span>';
+
+				$domain = '';
+				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
+					$domain = 'http://' . $config_domains[$notify->lang]['domain'];
+					$site = '&nbsp;<span class="site-name">' . $config_domains[$notify->lang]['domain'] . '</span>';
 				}
 
 				if ($notify->type == 5 || $notify->type == 6) {
@@ -264,8 +252,8 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	}
 
 	$cakeday = '';
-	if(!empty($cday_users)) {
-		if(!empty($cday_users[$userid]) || in_array($nick, $cday_users)) {
+	if (!empty($cday_users)) {
+		if (!empty($cday_users[$userid]) || in_array($nick, $cday_users)) {
 			$cakeday = '<img src="http://exs.lv/bildes/cakeday.png" alt="" title="Cake Day!" style="display:inline-block;width:16px;height:16px;" />';
 		}
 	}
@@ -313,7 +301,7 @@ function im_mod() {
 
 function im_cat_mod($id = null) {
 	global $auth, $category;
-	if(!empty($id)) {
+	if (!empty($id)) {
 		$ct = get_cat($id);
 	} else {
 		$ct = $category;
@@ -726,127 +714,50 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 
 	//friendly domains, no nofollow
 	$txt = str_replace(' rel="nofollow" href="http://akredits.lv', ' href="http://akredits.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://lfs.lv', ' href="http://lfs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.lfs.lv', ' href="http://lfs.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://ezgif.com', ' href="http://ezgif.com', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://gif-avatars.com', ' href="http://gif-avatars.com', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://www.coding.lv', ' href="http://coding.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://coding.lv', ' href="http://coding.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://exs.lv', ' href="http://exs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.exs.lv', ' href="http://exs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://img.exs.lv', ' href="http://img.exs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://rp.exs.lv', ' href="http://rp.exs.lv', $txt);
-	
+	$txt = str_replace(' rel="nofollow" href="http://lol.exs.lv', ' href="http://lol.exs.lv', $txt);
+
 	$txt = str_replace(' rel="nofollow" href="http://openidea.lv', ' href="http://openidea.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.openidea.lv', ' href="http://openidea.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://nvsk.lv', ' href="http://nvsk.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://grab.lv', ' href="http://grab.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.grab.lv', ' href="http://www.grab.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://irdarbs.lv', ' href="http://irdarbs.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.irdarbs.lv', ' href="http://irdarbs.lv', $txt);
-	
+
 	$txt = str_replace(' rel="nofollow" href="http://otrapuse.lv', ' href="http://otrapuse.lv', $txt);
 	$txt = str_replace(' rel="nofollow" href="http://www.otrapuse.lv', ' href="http://otrapuse.lv', $txt);
 
 
-	$txt = str_replace(array(
-		'http://www.awsurveys.com',
-		'http://www.runescapemembership4free.com',
-		'http://RunescapeMembership4free.com',
-		'http://www.RunescapePinGenerator.com',
-		'http://runescapepingenerator.com',
-		'http://www.runescapepingenerator.com',
-		'http://www.freeps3.tv',
-		'http://freeps3.tv',
-		'http://ipremii.com',
-		'http://www.e-castig.com',
-		'http://www.bigmoneyptc.com',
-		'http://www.sexyemilie.com',
-		'http://gifts.freebiejeebies.co.uk',
-		'http://servces-runescape.com',
-		'http://www.servces-runescape.com',
-		'http://wildernesupdate.tk',
-		'http://servics-runescape.com',
-		'http://www.servics-runescape.com',
-		'http://www.services-runecape.com',
-		'http://minecraftgiveaway.com',
-		'http://www.minecraftgiveaway.com',
-		'http://servics-runecape.com',
-		'http://www.servics-runecape.com',
-		'http://www.services-runescape.ws',
-		'http://servces-runescape',
-		'http://servces-runecape',
-		'http://gratispremium.info',
-		'http://www.gratispremium.info',
-		'http://minecraft4free.com',
-		'http://www.minecraft4free.com',
-		'http://servcis-runescape.com',
-		'http://www.servcis-runescape.com',
-		'http://s.exs.lv/63',
-		'http://s.exs.lv/6q',
-		'http://s.exs.lv/2tt',
-		'http://s.exs.lv/31p',
-		'http://secure.runscape.com',
-		'http://www.runeskapes.t35.com',
-		'http://runeskapes.t35.com',
-		'http://piratebay.com',
-		'http://www.yotube.com',
-		'http://www.mediafire.com/?zdnxuar9up5ndqg',
-		'http://mediafire.com/?zdnxuar9up5ndqg',
-		'http://yotube.com',
-		'http://modapplicationrune.tk/',
-		'http://runescapeforums.byethost4.com',
-		'http://tiny.lv/?GoGTM',
-		'http://cut.lv/Q7M/',
-		'http://www.pelninaudu.info',
-		'http://www.moneystrategy.info',
-		'http://moneystrategy.info',
-		'http://pelninaudu.info',
-		'http://www.2shared.com/file/r9M0b2fG/SWE_DDoS_227.html',
-		'http://www.megaupload.com/?d=XQK8B0IO',
-		'http://megaupload.com/?d=XQK8B0IO',
-		'http://tiny.lv/?GPFsg',
-		'http://is.gd/9ivAOU',
-		'http://www.gamingelite.lv/Yellow',
-		'http://cut.lv/Qi5',
-		'http://s.exs.lv/5v1',
-		'http://sn.im/21yxwpu',
-		'http://bit.ly/yXwUxN',
-		'http://goo.gl/VhULw',
-		'http://photo-upload.at.ua/i600/2012/m14/e23568734345.jpg',
-		'https://rapidshare.com/files/1499757716/SwiftKit.exe',
-		'http://www.bildites.lv/images/9884basw0nv2k6akv8vs.jpg',
-		'http://www.powerplaymanager.com/r979345',
-		'http://www.dahoodbrothas.com',
-		'http://dahoodbrothas.com',
-		'http://free-steam-games.com',
-		'http://www.free-steam-games.com',
-		'http://freeminecraft.me',
-		'http://steam.store-powred.com.nu',
-		'http://failiem.lv/u/gwrtqbc',
-		'http://tinyurl.com/d2c86wo',
-		'http://freeitems.info.tm',
-		'http://epicfreeprizes.com',
-		'http://steam-games-free.com',
-		'http://www.money-friends.net',
-		'http://money-friends.net',
-		'http://esimsecura.com',
-		'http://zoneexp.com',
-		'http://freeleaguecodes.net',
-		'http://www.freesteamgifts.com',
-		'http://cs.noob.lv',
-		'http://mta.dga.lv',
-		'http://rp.slime.lv',
-		'http://skilled.ez.lv',
-		'http://noob.lv'
-			), '/ES_SPAMOJU_SUDUS', $txt);
+	//aizvieto lapas kas ievietotas `blacklisted_sites` ar linku uz /ES_SPAMOJU_SUDUS
+	$blacklisted_sites = get_blacklisted_sites();
+	foreach ($blacklisted_sites as $site) {
+		if (strpos($txt, $site) !== false) {
+
+			$replace = array(
+				'http://' . $site,
+				'http://www.' . $site
+			);
+
+			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
+		}
+	}
 
 	$txt = str_replace(array(
 		'.space.lv',
@@ -856,24 +767,21 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 		'playpro.lv',
 		'MOBM1ODD',
 		's.exs.lv/63',
-		'www.runeskapes.t35.com',
 		'MODAPPLICATIONRUNE.TK',
 		'?ref=',
-		'cs.noob.lv',
-		'rp.slime.lv',
 		'91.135.84.135',
 		'servics-',
 		'servces-',
 		'.org/lan.',
-		'magicera.lv',
-		'usfine.com',
 		'4f200c32f12e7.jpg'
 			), 'ES_SPAMOJU_SUDUS', $txt);
+
 
 	$txt = str_replace(array(
 		'/ref.php',
 		'/referrer/'
 			), '/ES_SPAMOJU_SUDUS/', $txt);
+
 
 	if (strpos($txt, 'spoiler') !== false) {
 		$txt = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/iseU', 'replace_spoiler("\\1")', $txt);
@@ -890,9 +798,22 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 	return $txt;
 }
 
+/* atgriež masīvu ar bloķētiem mājas lapu domēniem */
+
+function get_blacklisted_sites() {
+	global $db, $m, $blacklisted_sites;
+	if (empty($blacklisted_sites)) {
+		if (($blacklisted_sites = $m->get('blacklisted_sites')) === false) {
+			$blacklisted_sites = $db->get_col("SELECT `url` FROM `blacklisted_sites`");
+			$m->set('blacklisted_sites', $blacklisted_sites, false, 3600);
+		}
+	}
+	return $blacklisted_sites;
+}
+
 function replace_spoiler($text) {
 	$text = str_replace(array('<p>', '</p>'), array('<br />', '<br />'), $text);
-	return '<span class="spoiler"><a href="javascript:void(0);" class="spoiler-title" title="Slēpt/rādīt spoilera saturu">Rādīt spoileri</a><br /><span style="display:none" class="spoiler-content">'.$text.'</span></span>';
+	return '<span class="spoiler"><a href="javascript:void(0);" class="spoiler-title" title="Slēpt/rādīt spoilera saturu">Rādīt spoileri</a><br /><span style="display:none" class="spoiler-content">' . $text . '</span></span>';
 }
 
 function hide_spoilers($text) {
@@ -1040,7 +961,7 @@ function tla_ads($config_cache = "local_307458.xml", $config_key = "BCMVOQLYMIYC
 	if (filemtime($LOCAL_XML_FILENAME) < (time() - 3600) || filesize($LOCAL_XML_FILENAME) < 20) {
 		$request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
 		$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
-		tla_updateLocalXML("http://www.text-link-ads.com/xml.php?inventory_key=".$config_key."&referer=" . urlencode($request_uri) . "&user_agent=" . urlencode($user_agent), $LOCAL_XML_FILENAME, $CONNECTION_TIMEOUT);
+		tla_updateLocalXML("http://www.text-link-ads.com/xml.php?inventory_key=" . $config_key . "&referer=" . urlencode($request_uri) . "&user_agent=" . urlencode($user_agent), $LOCAL_XML_FILENAME, $CONNECTION_TIMEOUT);
 	}
 	$xml = tla_getLocalXML($LOCAL_XML_FILENAME);
 	$arr_xml = tla_decodeXML($xml);
@@ -2000,75 +1921,19 @@ function update_awards($user) {
 
 
 	/* gada balva */
-	/*if (in_array($user, array(16433))) {
-		$awards_list['gada-balva-2012'] = array(
-			'title' => 'Exs gada balva 2012',
-			'state' => 'active'
-		);
-	}*/
+	/* if (in_array($user, array(16433))) {
+	  $awards_list['gada-balva-2012'] = array(
+	  'title' => 'Exs gada balva 2012',
+	  'state' => 'active'
+	  );
+	  } */
 
-	if (in_array($user, array(
-24587,
-25778,
-11807,
-18773,
-10734,
-13004,
-10065,
-1822,
-1473,
-2037,
-273,
-858,
-14836,
-4845,
-23678,
-15960,
-11722,
-6001,
-5356,
-7825,
-4226,
-16817,
-6671,
-21450,
-1621,
-12108,
-8516,
-15390,
-23512,
-23282,
-21704,
-703,
-655,
-1003,
-20858,
-11525,
-5965,
-1385,
-22051,
-8601,
-10433,
-25254,
-24706,
-25709,
-1220,
-16433,
-21230,
-1,
-16261,
-27098,
-27089,
-1306,
-3217,
-13388
-			))) {
-		$awards_list['futzals-06-04-2013'] = array(
-			'title' => 'Exs futzāla turnīrs 06.04.2013',
-			'state' => 'active'
-		);
-	}
-
+	/* if (in_array($user, array(1))) {
+	  $awards_list['futzals-06-04-2013'] = array(
+	  'title' => 'Exs futzāla turnīrs 06.04.2013',
+	  'state' => 'active'
+	  );
+	  } */
 
 	/* 	if(in_array($user,array(13004))) {
 	  $awards_list['db-1'] = array(
@@ -2080,13 +1945,6 @@ function update_awards($user) {
 	/* CS
 	  if(in_array($user,array(13004,8707,3906,4088,16395,10880,1322,23622,5547,17341,24437,
 	  24049,
-	  17532,
-	  24853,
-	  22518,
-	  1611,
-	  10081,
-	  23107,
-	  1621,
 	  1280))) {
 	  $awards_list['counter-strike'] = array(
 	  'title' => '<a href="/group/150" title="Counter Strike">CS</a> mēneša top 15',
@@ -2211,7 +2069,7 @@ function get_page_strid($id = null) {
 
 function get_banlist($force = false) {
 	global $db, $m, $lang;
-	if ($force || !($busers = $m->get('banlist_'.$lang))) {
+	if ($force || !($busers = $m->get('banlist_' . $lang))) {
 		$data = $db->get_results("SELECT `user_id` FROM `banned` WHERE `user_id` != 0 AND `time`+`length` > " . time() . " AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC");
 		$busers = array();
 		if ($data) {
@@ -2219,7 +2077,7 @@ function get_banlist($force = false) {
 				$busers[$banned->user_id] = $banned->user_id;
 			}
 		}
-		$m->set('banlist_'.$lang, $busers, false, 100);
+		$m->set('banlist_' . $lang, $busers, false, 100);
 	}
 	return $busers;
 }
@@ -2270,52 +2128,22 @@ function get_footer_mb($force = false) {
 	return $html;
 }
 
+/**
+ * Linki uz jaunākajiem rakstiem footerī
+ */
 function get_footer_topics($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($html = $m->get('f_topics_' . $lang))) {
 		$html = '';
-		if ($lang == 1) {
-			$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND (`lang` = '1' OR `lang` = '3') ORDER BY `id` DESC LIMIT 6");
-		} else {
-			$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
-		}
+		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
-
-				$domain = '';
-				$prefix = '';
-				if ($late->lang == 3 && $lang != $late->lang) {
-					$domain = 'http://coding.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">code</span> ';
-					}
-				}
-				if ($late->lang == 5 && $lang != $late->lang) {
-					$domain = 'http://rp.exs.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">mta</span> ';
-					}
-				}
-				if ($late->lang == 7 && $lang != $late->lang) {
-					$domain = 'http://lol.exs.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">lol</span> ';
-					}
-				}
-				if ($late->lang == 6 && $lang != $late->lang) {
-					$domain = 'http://lfs.lv';
-					if ($lang == 1) {
-						$prefix = '<span class="lp-prefix">lfs</span> ';
-					}
-				}
-				$url = $domain . '/read/' . $late->strid;
-
-				$html .= '<li><a href="' . $url . '" title="' . htmlspecialchars($late->title) . '">' . $prefix . textlimit($late->title, 36) . '</a></li>';
+				$html .= '<li><a href="/read/' . $late->strid . '" title="' . htmlspecialchars($late->title) . '">' . textlimit($late->title, 36) . '</a></li>';
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, false, 60);
+		$m->set('f_topics_' . $lang, $html, false, 120);
 	}
 	return $html;
 }
@@ -2417,12 +2245,12 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 	$pager_next = '';
 	$pager_numeric = '';
 	if ($total > $end) {
-	
+
 		$ajax_class = '';
-		if($ajax) {
+		if ($ajax) {
 			$ajax_class = 'ajax-module ';
 		}
-	
+
 		if ($skip > 0) {
 			if ($skip > $end) {
 				$iepriekseja = $skip - $end;
@@ -2444,9 +2272,9 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 			$page_number++;
 			$class = '';
 			if ($skip === $startnext) {
-				$class = ' class="'.$ajax_class.'selected"';
-			} elseif($ajax) {
-				$class = ' class="'.$ajax_class.'"';
+				$class = ' class="' . $ajax_class . 'selected"';
+			} elseif ($ajax) {
+				$class = ' class="' . $ajax_class . '"';
 			}
 			if ($total / $end < 10 || $page_number < 4 || $page_number > $total / $end - 2 || $startnext === $skip || $startnext === $skip + $end || $startnext === $skip - $end) {
 				if ($page_number != 1) {
@@ -2733,8 +2561,6 @@ function get_friends($user_id, $force = false) {
 	return $friends;
 }
 
-
-
 function set_flash($message, $class = 'error') {
 	$_SESSION['flash_message'] = array(
 		'message' => $message,
@@ -2751,7 +2577,7 @@ function redirect($location = '/', $perm = false) {
 }
 
 function get_latest_posts() {
-	global $auth, $db, $lang, $comments_per_page;
+	global $auth, $db, $lang, $comments_per_page, $config_domains;
 	$out = '';
 
 	$skip = 0;
@@ -2759,31 +2585,22 @@ function get_latest_posts() {
 		$skip = 8 * intval($_GET['pg']);
 	}
 
-	$conditions = array(
-		"`category` != '6'"
-	);
+	$conditions = array();
 
 	if ($lang == 1) {
 		$add_langs = array("`pages`.`lang` = '1'");
-		if(!empty($auth->show_code)) {
+		if (!empty($auth->show_code)) {
 			$add_langs[] = "`pages`.`lang` = '3'";
 		}
-		if(!empty($auth->show_rp)) {
+		if (!empty($auth->show_rp)) {
 			$add_langs[] = "`pages`.`lang` = '5'";
 		}
-		if(!empty($auth->show_lol)) {
+		if (!empty($auth->show_lol)) {
 			$add_langs[] = "`pages`.`lang` = '7'";
 		}
 		$conditions[] = '(' . implode(' OR ', $add_langs) . ')';
-		
 	} else {
 		$conditions[] = "`pages`.`lang` = '$lang'";
-	}
-
-
-	if (!im_mod()) {
-		$conditions[] = "`category` != 83";
-		$conditions[] = "`category` != 954";
 	}
 
 	if ($auth->ok) {
@@ -2795,7 +2612,28 @@ function get_latest_posts() {
 		}
 	}
 
-	$latest = $db->get_results("SELECT `title`,`id`,`posts`,`readby`,`strid`,`category`,`lang`,`bump` FROM `pages` WHERE " . implode(' AND ', $conditions) . " ORDER BY `bump` DESC LIMIT $skip,8");
+	$mods_only = '';
+	if (!im_mod()) {
+		$mods_only = " AND `cat`.`mods_only` = 0";
+	}
+
+	$latest = $db->get_results("SELECT
+					`pages`.`title`,
+					`pages`.`id`,`posts`,
+					`pages`.`readby`,
+					`pages`.`strid`,
+					`pages`.`category`,
+					`pages`.`lang`,
+					`pages`.`bump`,
+					`cat`.`mods_only`
+				FROM
+					`pages`,
+					`cat`
+				WHERE
+					" . implode(' AND ', $conditions) . $mods_only . "
+					AND `cat`.`id` = `pages`.`category`
+				ORDER BY
+					`pages`.`bump` DESC LIMIT $skip,8");
 
 	if ($latest) {
 		$out = '<ul id="latest-topics" class="blockhref">';
@@ -2807,39 +2645,24 @@ function get_latest_posts() {
 					$skip = '/com_page/' . floor(($posts - 1) / $comments_per_page);
 				}
 			}
+
 			$domain = '';
 			$prefix = '';
-			if ($late->lang == 1) {
-				$domain = 'http://exs.lv';
-			} elseif ($late->lang == 3) {
-				$domain = 'http://coding.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">code</span> ';
-				}
-			} elseif ($late->lang == 5) {
-				$domain = 'http://rp.exs.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">mta</span> ';
-				}
-			} elseif ($late->lang == 7) {
-				$domain = 'http://lol.exs.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">lol</span> ';
-				}
-			} elseif ($late->lang == 6) {
-				$domain = 'http://lfs.lv';
-				if ($lang == 1) {
-					$prefix = '<span class="lp-prefix">lfs</span> ';
-				}
+			if ($late->lang != $lang) {
+				$domain = 'http://' . $config_domains[$late->lang]['domain'];
+				$prefix = '<span class="lp-prefix">' . $config_domains[$late->lang]['prefix'] . '</span> ';
 			}
+			$url = $domain . '/read/' . $late->strid;
+
 			$add = '';
 			if ($auth->ok && $lang != $late->lang) {
 				$add = $auth->transfer;
 			}
-			$url = $domain . '/read/' . $late->strid;
-			if ($late->category == 83 || $late->category == 954) {
+
+			if ($late->mods_only == 1) {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
+
 			if ($lang == 1) {
 				$out .= '<li><a href="' . $url . $skip . $add . '">';
 
@@ -2915,7 +2738,7 @@ function get_index_events() {
 					$action->avatar = 'http://img.exs.lv/userpic/small/none.png';
 				}
 			}
-			
+
 			$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $action->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
 		$out .= '</ul>';
@@ -2938,7 +2761,7 @@ function get_latest_images() {
 		$interests[] = 0;
 		$int_q = implode(',', $interests);
 		$int .= " AND `images`.`interest_id` IN(" . $int_q . ")";
-	} 
+	}
 
 	$latest = $db->get_results("SELECT
 		`images`.`uid` AS `uid`,
@@ -2996,7 +2819,7 @@ function get_latest_images() {
 }
 
 function get_latest_mbs($friends = false) {
-	global $auth, $db, $lang;
+	global $auth, $db, $lang, $config_domains;
 
 	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
 
@@ -3029,26 +2852,25 @@ function get_latest_mbs($friends = false) {
 
 	if ($lang == 1) {
 		$add_langs = array("`miniblog`.`lang` = '1'");
-		if(!empty($auth->show_code)) {
+		if (!empty($auth->show_code)) {
 			$add_langs[] = "`miniblog`.`lang` = '3'";
 		}
-		if(!empty($auth->show_rp)) {
+		if (!empty($auth->show_rp)) {
 			$add_langs[] = "`miniblog`.`lang` = '5'";
 		}
-		if(!empty($auth->show_lol)) {
+		if (!empty($auth->show_lol)) {
 			$add_langs[] = "`miniblog`.`lang` = '7'";
 		}
 		$addlang = '(' . implode(' OR ', $add_langs) . ')';
-		
 	} else {
 		$addlang = "`miniblog`.`lang` = '$lang'";
 	}
 
 	$friendsquery = '';
-	if($auth->ok && $friends) {
+	if ($auth->ok && $friends) {
 		$myfriends = get_friends($auth->id);
 		$myfriends[] = $auth->id;
-		$friendsquery = 'AND `miniblog`.`author` IN('.implode(',', $myfriends).')';
+		$friendsquery = 'AND `miniblog`.`author` IN(' . implode(',', $myfriends) . ')';
 	}
 
 
@@ -3091,20 +2913,12 @@ function get_latest_mbs($friends = false) {
 			if ($auth->ok && $lang != $mb->lang) {
 				$add = $auth->transfer;
 			}
-			if ($lang == 1 && $mb->lang == 3) {
+
+			$domain = '';
+			$prefix = '';
+			if ($mb->lang != $lang) {
+				$domain = 'http://' . $config_domains[$mb->lang]['domain'];
 				$spec = ' class="linkcode"';
-				$domain = 'http://coding.lv';
-			} elseif ($lang == 1 && $mb->lang == 5) {
-				$spec = ' class="linkcode"';
-				$domain = 'http://rp.exs.lv';
-			} elseif ($lang == 1 && $mb->lang == 6) {
-				$spec = ' class="linkcode"';
-				$domain = 'http://lfs.lv';
-			} elseif ($lang == 1 && $mb->lang == 7) {
-				$spec = ' class="linkcode"';
-				$domain = 'http://lol.exs.lv';
-			} else {
-				$domain = '';
 			}
 
 			if ($mb->groupid != 0) {
@@ -3119,27 +2933,22 @@ function get_latest_mbs($friends = false) {
 			}
 
 			if (strpos($mb->text, 'spoiler') !== false) {
-				$mb->text= preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', "(spoiler)", $mb->text);
+				$mb->text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', "(spoiler)", $mb->text);
 			}
 
 			$mb->text = wordwrap($mb->text, 36, "\n", 1);
 			$mb->text = str_replace('/', "/&#8203;", $mb->text);
 			$mb->text = str_replace('.', ".&#8203;", $mb->text);
 			$mb->text = str_replace('-', "-&#8203;", $mb->text);
-			
+
 			if ($mb->groupid != 0) {
 				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 7) {
-				$mb->text = '<em><span>lol.exs.lv</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 5) {
-				$mb->text = '<em><span>rp.exs.lv</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 6) {
-				$mb->text = '<em><span>lfs.lv</span></em>' . textlimit($mb->text, 88, '...');
-			} elseif ($lang == 1 && $mb->lang == 3) {
-				$mb->text = '<em><span>coding.lv</span></em>' . textlimit($mb->text, 88, '...');
+			} elseif ($mb->lang != $lang) {
+				$mb->text = '<em><span>' . $config_domains[$mb->lang]['domain'] . '</span></em>' . textlimit($mb->text, 88, '...');
 			} else {
 				$mb->text = textlimit($mb->text, 98, '...');
 			}
+
 			if ($lang == 1) {
 				$time = time_ago(strtotime($mb->date));
 			} else {
@@ -3156,7 +2965,7 @@ function get_latest_mbs($friends = false) {
 	$out .= '</ul><p class="core-pager ajax-pager">';
 
 	$pager_add = '';
-	if($friends) {
+	if ($friends) {
 		$pager_add .= '&amp;friendmb=true';
 	}
 
@@ -3398,11 +3207,10 @@ function translate_genres($en) {
 		'Western' => 'Vesterns'
 	);
 
-	if(!empty($genres[$en])) {
+	if (!empty($genres[$en])) {
 		return $genres[$en];
 	}
 	return $en;
-
 }
 
 function get_cakeday() {
@@ -3410,15 +3218,15 @@ function get_cakeday() {
 
 	$out = array();
 
-	if (($out = $m->get('cday_'.date('Y-m-d'))) === false) {
+	if (($out = $m->get('cday_' . date('Y-m-d'))) === false) {
 
-		$users = $db->get_results("SELECT `id`, `nick` FROM `users` WHERE `date` < '".date('Y')."-01-01 00:00:00' AND `date` LIKE '%-".date('m')."-".date('d')." %' ORDER BY `users`.`lastseen` DESC");
-		if(!empty($users)) {
-			foreach($users as $user) {
+		$users = $db->get_results("SELECT `id`, `nick` FROM `users` WHERE `date` < '" . date('Y') . "-01-01 00:00:00' AND `date` LIKE '%-" . date('m') . "-" . date('d') . " %' ORDER BY `users`.`lastseen` DESC");
+		if (!empty($users)) {
+			foreach ($users as $user) {
 				$out[$user->id] = $user->nick;
 			}
 		}
-		$m->set('cday_'.date('Y-m-d'), $out, false, 3600);
+		$m->set('cday_' . date('Y-m-d'), $out, false, 3600);
 	}
 
 	return $out;
