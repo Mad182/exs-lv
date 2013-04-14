@@ -3,7 +3,6 @@
 $lang = 3;
 
 $tpl_options = 'no-left';
-ini_set("session.cookie_domain", ".coding.lv");
 
 //facebok login
 $fb_api_id = '352399534849590';

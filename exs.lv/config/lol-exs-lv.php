@@ -2,8 +2,6 @@
 
 $lang = 7;
 
-ini_set("session.cookie_domain", ".exs.lv");
-
 $tpl_options = '';
 
 //facebok login

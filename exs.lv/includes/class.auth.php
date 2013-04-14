@@ -45,14 +45,6 @@ class Auth {
 		return $this->ok;
 	}
 
-	function setcookie($title, $data = null) {
-		if (defined('LOCAL_DEV')) {
-			setcookie($title, $data, time() + 3600, "/");
-		} else {
-			setcookie($title, $data, time() + 3600, "/", ".exs.lv", 0, false);
-		}
-	}
-
 	function update_visits() {
 		global $db, $lang;
 		$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = $this->id AND `ip` = '$this->ip' AND `site_id` = $lang");
@@ -83,15 +75,6 @@ class Auth {
 			}
 
 			$this->ok = true;
-
-			/*
-			 * ieseto cepumus
-			 * šie nav paredzēti lai autentificētu lietotāju exs.lv,
-			 * bet lai varētu piekļūt nikam/id no flash spēlēm un party.exs.lv
-			 */
-			$this->setcookie("ex_nick", $this->nick);
-			$this->setcookie("ex_id", $this->id);
-			$this->setcookie("ex_check", md5($this->nick . '-' . $this->id . '-aargh'));
 
 			if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 480) {
 				if (empty($_SESSION['admin_simulate'])) {
@@ -210,10 +193,6 @@ class Auth {
 			$_SESSION['lastseen'] = time();
 			$this->error = 0;
 
-			$this->setcookie("ex_nick", $this->nick);
-			$this->setcookie("ex_id", $this->id);
-			$this->setcookie("ex_check", md5($this->nick . '-' . $this->id . '-aargh'));
-
 			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
 				$this->logout();
 				set_flash('Pieeja lapai ir liegta!', 'error');
@@ -254,15 +233,6 @@ class Auth {
 			$_SESSION['auth_id'] = '';
 			session_destroy();
 
-			$domain = '.exs.lv';
-
-			if (defined('LOCAL_DEV')) {
-				$domain = '';
-			}
-
-			setcookie("ex_nick", "", 1, "/", $domain, 0, true);
-			setcookie("ex_id", "", 1, "/", $domain, 0, true);
-			setcookie("ex_check", "", 1, "/", $domain, 0, true);
 		} else {
 			$_SESSION['auth_id'] = $_SESSION['admin_simulate'];
 			$_SESSION['admin_simulate'] = '';

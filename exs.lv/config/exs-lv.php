@@ -2,12 +2,6 @@
 
 $lang = 1;
 
-if (defined('LOCAL_DEV')) {
-	ini_set("session.cookie_domain", "");
-} else {
-	ini_set("session.cookie_domain", ".exs.lv");
-}
-
 //facebook login
 $fb_api_id = '353222841436117';
 $fb_api_key = 'f6ac0e495e8b5a09ff2ea463383dc57c';
