@@ -310,7 +310,7 @@
 		Meklēt lapā ar <a href="/search/">google</a>:
 		<form method="get" action="/search/" id="search-form">
 			<fieldset>
-				<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
+				<input type="hidden" name="cx" value="014557532850324448350:00ymkcfoxlo" />
 				<input type="hidden" name="cof" value="FORID:11" />
 				<input type="hidden" name="ie" value="UTF-8" />
 				<input class="text" name="q" size="16" type="text" value="" />
