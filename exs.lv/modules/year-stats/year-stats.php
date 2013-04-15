@@ -10,7 +10,7 @@ if(isset($_GET['var1'])) {
 } elseif($auth->ok) {
 	$inprofile = get_user($auth->id);
 } else {
-	set_fash('Lietotājs nav atrasts!', 'error');
+	set_flash('Lietotājs nav atrasts!', 'error');
 	redirect();
 }
 
