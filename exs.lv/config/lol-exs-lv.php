@@ -5,8 +5,8 @@ $lang = 7;
 $tpl_options = '';
 
 //facebok login
-$fb_api_id = '480869031952190';
-$fb_api_key = 'cbf65eee0645935797da97f33b6a77b1';
+$fb_api_id = '515114255212769';
+$fb_api_key = '383e184012b182ca5cba6b54c5387ee3';
 
 //draugiem pase
 $dr_api_id = 15005147;
