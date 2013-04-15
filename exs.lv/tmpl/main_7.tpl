@@ -449,9 +449,16 @@
 			Jaunākais miniblogos: {footer-mb}
 		</div>
 		<div class="infoblock">
+			<p>&copy; SIA OpenIdea, 2013</p>
+			<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
+			<p>Teamspeak 3:<br />ts.exs.lv</p>
 		</div>
 		<div class="infoblock">
-			lol.exs.lv ir neoficeāls Leafue of Legends spēlētāju forums.
+			<ul id="internal-links">
+				<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+				<li><a href="/sitemap">Lapas karte</a></li>
+				<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+			</ul>
 		</div>
 		<div class="c"></div>
 	</div>

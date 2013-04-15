@@ -561,6 +561,7 @@
 		<li><a href="/sitemap">Lapas karte</a></li>
 		<li><a href="/reklama">Reklāma portālā</a></li>
 	</ul>
+	<p>Teamspeak 3:<br />ts.exs.lv</p>
 </div>
 <div class="c"></div>
 </div>
