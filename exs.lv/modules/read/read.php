@@ -37,14 +37,9 @@ function can_edit_page($article) {
 $strid = sanitize($_GET['var1']);
 $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' LIMIT 1");
 
-if ($article->lang == 3 && $lang != 3) {
-	redirect('http://coding.lv/read/' . $article->strid, true);
-}
-if ($article->lang == 5 && $lang != 5) {
-	redirect('http://rp.exs.lv/read/' . $article->strid, true);
-}
-if ($article->lang == 1 && $lang != 1) {
-	redirect('http://exs.lv/read/' . $article->strid, true);
+//redirektē uz pareizo adresi, ja kaut kādā veidā atvērts derīgs strid, bet nepareizā domēnā
+if ($article->lang != $lang) {
+	redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
 }
 
 if ($article) {
