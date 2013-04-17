@@ -37,12 +37,12 @@ function can_edit_page($article) {
 $strid = sanitize($_GET['var1']);
 $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' LIMIT 1");
 
-//redirektē uz pareizo adresi, ja kaut kādā veidā atvērts derīgs strid, bet nepareizā domēnā
-if ($article->lang != $lang) {
-	redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
-}
-
 if ($article) {
+
+	//redirektē uz pareizo adresi, ja kaut kādā veidā atvērts derīgs strid, bet nepareizā domēnā
+	if ($article->lang != $lang) {
+		redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
+	}
 
 	$category = get_cat($article->category);
 
