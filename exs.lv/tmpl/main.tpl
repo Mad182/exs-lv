@@ -112,7 +112,7 @@
 				</script>
 				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 			</div>
-			<a id="exs-logo" href="/" title="Uz sākumlapu">eXs.lv</a>
+			<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 			<div id="tools-bar">
 			<ul id="site-links">
 				<li><a href="/img">Bilžu hostings</a></li>
