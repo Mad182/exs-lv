@@ -4,7 +4,7 @@
 <ul id="mainlist">
 	<!-- START BLOCK : list-->
 	<li>
-	<h2><a href="{node-url}">{title}{title-lv}</a></h2>
+	<h2><a href="{node-url}">{title-prefix}{title}{title-lv}</a></h2>
 	<ul class="article-info">
 		<li class="date">{date}</li>
 		<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>

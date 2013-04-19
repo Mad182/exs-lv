@@ -2985,6 +2985,35 @@ margin: 35px 15px 20px;padding: 8px 16px;border: 1px solid #ddd;float:right;widt
 #movie-info .title {
 font-size:115%
 }
+
+/* virsrakstu prefix */
+.title-prefix {
+	float: left;
+	padding: 3px 6px;
+	font-size: 11px;
+	background: #aaa;
+	color: #fff;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	line-height: 13px;
+	text-shadow: 0 1px 1px #333;
+	margin: 8px 5px 4px 0;
+	text-decoration: none;
+}
+
+.title-prefix.series {
+	background-color: #c43c35;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear,left top,left bottom,from(#ee5f5b), to(#c43c35));
+	background-image: -moz-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: -ms-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#ee5f5b), color-stop(100%,#c43c35));
+	background-image: -webkit-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: -o-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: linear-gradient(top,#ee5f5b,#c43c35);
+}
+
 /* spoileri */
 .spoiler {
 	display:block;

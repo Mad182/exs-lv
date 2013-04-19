@@ -1170,3 +1170,9 @@ border: 1px solid #333;
 #movie-info {
 border: 1px solid #333;
 }
+
+
+/* virsrakstu prefix */
+.title-prefix {
+	margin: 1px 5px 4px 0;
+}

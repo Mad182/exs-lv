@@ -107,7 +107,12 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			if(!empty($movie_data->year)) {
 				$tpl->assign('year', '<p>Gads: ' . $movie_data->year . '</p>');
 			}
+			
+			if(!empty($movie_data->type) && $movie_data->type == 'series') {
+				$tpl->assign('title-prefix', '<span class="title-prefix series">Seriāls</span> ');
+			}
 		}
+		
 
 		if($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
 			$gen = array();
