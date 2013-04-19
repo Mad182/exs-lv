@@ -17,6 +17,10 @@ if (isset($_GET['var1'])) {
 		}
 		$textid = mkslug($title);
 
+		if($db->get_var("SELECT count(*) FROM `cat` WHERE `textid` = '$textid'")) {
+			$textid .= '-' . rand(111,999);
+		}
+
 		$db->query("INSERT INTO `cat` (`textid`, `lang`, `module`, `title`, `content`, `parent`, `isforum`) VALUES ('$textid', '$parent->lang', 'list', '$title', '$content', '$parent->id', '1')");
 		$db->query("UPDATE `cat` SET `ordered` = '$db->insert_id' WHERE id = '$db->insert_id'");
 		redirect('/' . $parent->textid);
