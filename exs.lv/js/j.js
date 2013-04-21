@@ -482,6 +482,6 @@ $('#junk-vote-wrap a').live('click', function (e) {
 
 setTimeout('msgrr()', query_timeout);
 
-/*$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');*/
+$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
 
 });
