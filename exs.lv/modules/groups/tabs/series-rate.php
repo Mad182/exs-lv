@@ -87,9 +87,9 @@ if (!empty($series)) {
 		if (!empty($ratings)) {
 			foreach ($ratings as $rating) {
 				if ($rating->rating == 1) {
-					$likes[] = usercolor($rating->nick, $rating->level, false, $rating->user_id) . ', ';
+					$likes[] = usercolor($rating->nick, $rating->level, false, $rating->user_id);
 				} elseif ($rating->rating == -1) {
-					$dislikes[] = usercolor($rating->nick, $rating->level, false, $rating->user_id) . ', ';
+					$dislikes[] = usercolor($rating->nick, $rating->level, false, $rating->user_id);
 				}
 			}
 		}
