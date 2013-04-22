@@ -35,15 +35,20 @@ if (empty($group->avatar)) {
 	$group->avatar = 'none.png';
 }
 
-$ingroup = $group;
-
-$group_tabs = $db->get_results("SELECT `id`,`title`,`slug` FROM `clans_tabs` WHERE `clan_id` = '$group->id'");
-
-if ($auth->ok && $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1' AND moderator = '1'")) {
+/* grupas administratora vai moderatora pieeja */
+$is_mod = false;
+$is_admin = false;
+$is_member = false;
+if ($auth->ok && ($auth->id == $group->owner || $auth->level == 1)) {
+	$is_admin = true;
+} elseif ($auth->ok && $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' AND `approve` = 1 AND `moderator` = 1")) {
 	$is_mod = true;
-} else {
-	$is_mod = false;
+} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
+	$is_member = true;
 }
+
+$ingroup = $group;
+$group_tabs = $db->get_results("SELECT `id`,`title`,`slug` FROM `clans_tabs` WHERE `clan_id` = '$group->id'");
 
 $pagepath = '<a href="/grupas">Domubiedru grupas</a> / ' . $group->title;
 
@@ -69,14 +74,14 @@ if ($group_tabs) {
 	}
 }
 
-if ($auth->ok && ($auth->id == $group->owner or $auth->level == 1)) {
+if ($is_admin) {
 	$tpl->newBlock("group-menu-options");
 	$tpl->assign(array(
 		'group-id' => $group->id
 	));
 }
 
-if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id or im_mod() or $is_mod)) {
+if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im_mod())) {
 
 	if (isset($_POST['edit-group-text'])) {
 		$edit_text = htmlpost2db($_POST['edit-group-text']);
@@ -151,7 +156,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 	$tpl->assignGlobal('active-tab-members', 'active');
 	$tpl->newBlock('group-members');
 
-	if ($group->owner == $auth->id or $is_mod or $auth->level == 1) {
+	if ($is_admin || $is_mod) {
 		$pendings = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '0'");
 		if ($pendings) {
 			$tpl->newBlock('pending');
@@ -215,16 +220,18 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 				'member-nick' => usercolor($m_user->nick, $m_user->level),
 				'avatar' => $avatar,
 			));
-			//cancel friendship
-			if ($auth->ok && $group->owner == $auth->id or $auth->level == 1 or $is_mod) {
+
+			//delete member from group
+			if ($is_admin || $is_mod) {
 				$tpl->newBlock('member-delete');
 				$tpl->assign(array(
 					'group-id' => $group->id,
 					'member-id' => $m_user->id,
 				));
 			}
+			
 			//set moderator
-			if ($auth->ok && ($auth->level == 1 or $auth->id == $group->owner)) {
+			if ($is_admin) {
 				if ($member->moderator) {
 					$tpl->newBlock('member-unmoderator');
 				} else {
@@ -247,23 +254,23 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 	));
 
 	$page_title = $group->title . ' | Biedri';
-} elseif (isset($_GET['act']) && $_GET['act'] == 'drop' && ($group->owner == $auth->id or $auth->level == 1 or $is_mod)) {
+} elseif (isset($_GET['act']) && $_GET['act'] == 'drop' && ($is_admin || $is_mod)) {
 	$drop = (int) $_GET['drop'];
 	$db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$drop'");
 	$db->query("UPDATE clans SET members = '" . $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND approve = '1'") . "' WHERE id = '$group->id'");
 	$auth->log('Izmeta biedru #'.$drop, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
-} elseif (isset($_GET['act']) && $_GET['act'] == 'setmod' && ($auth->level == 1 or $auth->id == $group->owner)) {
+} elseif (isset($_GET['act']) && $_GET['act'] == 'setmod' && $is_admin) {
 	$uid = (int) $_GET['uid'];
 	$db->query("UPDATE clans_members SET moderator = ('1') WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Uzlika par moderatoru #'.$uid, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
-} elseif (isset($_GET['act']) && $_GET['act'] == 'unsetmod' && ($auth->level == 1 or $auth->id == $group->owner)) {
+} elseif (isset($_GET['act']) && $_GET['act'] == 'unsetmod' && $is_admin) {
 	$uid = (int) $_GET['uid'];
 	$db->query("UPDATE clans_members SET moderator = ('0') WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Noņēma moderatora tiesības #'.$uid, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
-} elseif (isset($_GET['act']) && $_GET['act'] == 'confirm' && ($group->owner == $auth->id or $auth->level == 1 or $is_mod)) {
+} elseif (isset($_GET['act']) && $_GET['act'] == 'confirm' && ($is_admin || $is_mod)) {
 	$confirm = (int) $_GET['confirm'];
 	$db->query("UPDATE clans_members SET approve = ('1') WHERE clan = '$group->id' AND id = '$confirm'");
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
@@ -364,7 +371,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 		$_GET['single'] = base_convert($_GET['param'], 36, 10);
 	}
 
-	if ($group->public || ($auth->ok && ($is_mod or $auth->id == $group->owner or $auth->level == 1 or $auth->level == '5' or $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")))) {
+	if ($group->public || ($is_mod || $is_admin || $is_member)) {
 
 		$skip = 0;
 		if (isset($_GET['skip'])) {
@@ -487,7 +494,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 
 		$tpl->newBlock('user-miniblog');
 
-		if ($auth->ok && !isset($_GET['single']) && $auth->level != '5' && !$group->archived) {
+		if ($auth->ok && !isset($_GET['single']) && !$group->archived) {
 			$tpl->newBlock('user-miniblog-form');
 		} elseif ($group->archived) {
 			$tpl->newBlock('archived');
@@ -628,7 +635,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 				}
 			}
 
-			if (isset($_GET['single']) && $auth->ok && !$record->closed && $auth->level != '5' && !$group->archived) {
+			if (isset($_GET['single']) && $auth->ok && !$record->closed && !$group->archived) {
 				$tpl->newBlock('user-miniblog-resp');
 				$tpl->assign(array(
 					'id' => $record->id,
@@ -698,9 +705,9 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 				'tab-text' => htmlspecialchars($tab->text)
 			));
 			$page_title = $group->title . ' | Labot &quot;' . $tab->title . '&quot;';
-		} elseif ($tab->public or ($auth->ok && ($is_mod or $auth->id == $group->owner or $auth->level == 1 or $auth->level == '5' or $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")))) {
+		} elseif ($tab->public or ($is_mod || $is_admin || $is_member)) {
 
-			if ($auth->ok && $group->owner == $auth->id or $auth->level == 1 or $is_mod) {
+			if ($is_admin || $is_mod) {
 				$tpl->newBlock('tab-options');
 				$tpl->assign(array(
 					'group-id' => $group->id,
@@ -726,7 +733,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 	$tpl->assignGlobal('active-tab-options', 'active');
 	$tpl->newBlock('group-settings');
 
-	if ($auth->ok && ($auth->id == $group->owner or $auth->level == 1)) {
+	if ($is_admin) {
 
 		if (isset($_GET['deltab'])) {
 			$delete = intval($_GET['deltab']);
@@ -818,7 +825,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 	$tpl->assignGlobal('active-tab-search', 'active');
 	$tpl->newBlock('group-search');
 
-	if ($auth->ok && ($is_mod or $auth->id == $group->owner or $auth->level == 1 or $auth->level == '5' or $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'"))) {
+	if ($group->public || ($is_mod || $is_admin || $is_member)) {
 
 		$tpl->newBlock('form-search');
 
@@ -923,7 +930,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($group->owner == $auth->id
 
 		$responded = $db->get_var("SELECT count(*) FROM  `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid='" . $poll->id . "'");
 
-		if ($responded or !($auth->ok && ($is_mod or $auth->id == $group->owner or $auth->level == 1 or $auth->level == '5' or $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")))) {
+		if ($responded or !($is_mod or $is_admin or $is_member)) {
 			$total = $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `pid` = '" . $poll->id . "'");
 			$tpl->newBlock('g-poll-box');
 			$tpl->assign('poll-title', $title);
