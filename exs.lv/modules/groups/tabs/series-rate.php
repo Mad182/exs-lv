@@ -64,8 +64,8 @@ if (!empty($series)) {
 				}
 			}
 
-			$rate_like = '<p class="movie-liker"><a href="?movie=' . $s->id . '&amp;check=' . $token . '&amp;like" class="rautors">Man patīk</a></p>';
-			$rate_dislike = '<p class="movie-liker"><a href="?movie=' . $s->id . '&amp;check=' . $token . '&amp;dislike" class="admins">Man nepatīk</a></p>';
+			$rate_like = '<p style="padding: 20px 0 0" class="movie-liker"><a href="?movie=' . $s->id . '&amp;check=' . $token . '&amp;like" class="rautors">Man patīk</a></p>';
+			$rate_dislike = '<p style="padding: 20px 0 0" class="movie-liker"><a href="?movie=' . $s->id . '&amp;check=' . $token . '&amp;dislike" class="admins">Man nepatīk</a></p>';
 		}
 
 		$ratings = $db->get_results("SELECT
