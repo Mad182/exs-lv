@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_GET['group'])) {
+if (!isset($_GET['group']) || !$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '" . intval($_GET['group']) . "' AND `lang` = '$lang'")) {
 	redirect('/grupas');
 }
 
@@ -20,15 +20,8 @@ $tpl->assignGlobal('cat-sel-319', ' class="selected"');
 
 set_action('grupas');
 
-$group_id = (int) $_GET['group'];
-$group = $db->get_row("SELECT * FROM clans WHERE id = '$group_id' AND `lang` = '$lang'");
-
 if ($group->id == 65) {
 	redirect('http://lol.exs.lv/', true);
-}
-
-if (!$group) {
-	redirect('/grupas');
 }
 
 if (empty($group->avatar)) {
@@ -229,7 +222,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 					'member-id' => $m_user->id,
 				));
 			}
-			
+
 			//set moderator
 			if ($is_admin) {
 				if ($member->moderator) {
@@ -258,17 +251,17 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 	$drop = (int) $_GET['drop'];
 	$db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$drop'");
 	$db->query("UPDATE clans SET members = '" . $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND approve = '1'") . "' WHERE id = '$group->id'");
-	$auth->log('Izmeta biedru #'.$drop, 'clans', $group->id);
+	$auth->log('Izmeta biedru #' . $drop, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
 } elseif (isset($_GET['act']) && $_GET['act'] == 'setmod' && $is_admin) {
 	$uid = (int) $_GET['uid'];
 	$db->query("UPDATE clans_members SET moderator = ('1') WHERE clan = '$group->id' AND user = '$uid'");
-	$auth->log('Uzlika par moderatoru #'.$uid, 'clans', $group->id);
+	$auth->log('Uzlika par moderatoru #' . $uid, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
 } elseif (isset($_GET['act']) && $_GET['act'] == 'unsetmod' && $is_admin) {
 	$uid = (int) $_GET['uid'];
 	$db->query("UPDATE clans_members SET moderator = ('0') WHERE clan = '$group->id' AND user = '$uid'");
-	$auth->log('Noņēma moderatora tiesības #'.$uid, 'clans', $group->id);
+	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
 } elseif (isset($_GET['act']) && $_GET['act'] == 'confirm' && ($is_admin || $is_mod)) {
 	$confirm = (int) $_GET['confirm'];
@@ -276,7 +269,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
 	$db->query("UPDATE clans SET members = '" . $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND approve = '1'") . "' WHERE id = '$group->id'");
 	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="/group/' . $group->id . '">' . $group->title . '</a>&quot;', '/dati/bildes/u_small/' . $group->avatar, 'gsign' . $group->id);
-	$auth->log('Apstiprināja grupā biedru #'.$auser, 'clans', $group->id);
+	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
 } elseif (isset($_GET['act']) && $_GET['act'] == 'apply' && $group->paid == 0) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
@@ -285,11 +278,9 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 		$url = '/group/' . $group->id;
 		push('Pieteicās grupā &quot;<a href="' . $url . '">' . $group->title . '</a>&quot;', '/dati/bildes/u_small/' . $group->avatar, 'gsign' . $group->id);
 		notify($group->owner, 4, $group->id, $url . '/members', $group->title);
-
 		if ($group->id == 53 || $group->id == 89) {
 			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
 		}
-
 		redirect($url);
 	}
 } elseif (isset($_GET['act']) && $_GET['act'] == 'submitpay' && $auth->ok && $group->paid) {
@@ -355,7 +346,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 			}
 		}
 	}
-} elseif (isset($_GET['act']) && $_GET['act'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . 'cancel4noobs')) {
+} elseif (isset($_GET['act']) && $_GET['act'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		$db->query("UPDATE clans SET members = '" . $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND approve = '1'") . "' WHERE id = '$group->id'");
 		push('Izstājās no grupas &quot;<a href="/group/' . $group->id . '">' . $group->title . '</a>&quot;', '/dati/bildes/u_small/' . $group->avatar);
@@ -690,7 +681,7 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 	}
 	if ($tab) {
 
-		if (isset($_GET['param2']) && $_GET['param2'] == 'edit' && ($auth->ok && $group->owner == $auth->id or $auth->level == 1 or $is_mod)) {
+		if (isset($_GET['param2']) && $_GET['param2'] == 'edit' && ($is_admin || $is_mod)) {
 
 			if (isset($_POST['tab-text'])) {
 				$tab_text = htmlpost2db($_POST['tab-text']);
@@ -865,7 +856,6 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 	}
 
 	$page_title = $group->title . ' | Meklēšana';
-
 } else {
 
 	$tpl->assignGlobal('active-tab-info', 'active');
@@ -900,13 +890,13 @@ if (isset($_GET['act']) && $_GET['act'] == 'edit' && ($is_admin || $is_mod || im
 			$tpl->newBlock('group-info-cancel');
 			$tpl->assign(array(
 				'group-id' => $group->id,
-				'hash' => md5($group->id . $auth->id . 'cancel4noobs')
+				'hash' => md5($group->id . $auth->id . $remote_salt)
 			));
 		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
 			$tpl->newBlock('group-info-quit');
 			$tpl->assign(array(
 				'group-id' => $group->id,
-				'hash' => md5($group->id . $auth->id . 'cancel4noobs')
+				'hash' => md5($group->id . $auth->id . $remote_salt)
 			));
 		}
 	}
