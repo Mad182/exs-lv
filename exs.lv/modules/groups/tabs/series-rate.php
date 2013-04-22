@@ -24,6 +24,8 @@ $series = $db->get_results("SELECT
 
 if (!empty($series)) {
 
+	$module_content .= '<h2>Exs.lv seriālu tops</h2>';
+	$module_content .= '<p style="font-size:90%;">Lūdzu nobalso par seriāliem, kurus esi skatījies. Ja Tev seriāls patika un iesaki to citiem, spied "Man patīk", bet ja skatījies un uzskati, ka nav vērts tērēt laiku, spied "Man nepatīk". Balsot var sasnidzot 100. karmas līmeni. Tavi vērtējumi būs redzami citiem.</p>';
 	$module_content .= '<table class="main-table" id="series-ratings-ingroup">';
 	$module_content .= '	<tr>';
 	$module_content .= '		<th></th>';
