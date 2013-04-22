@@ -38,7 +38,8 @@ font-weight: normal;
 font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 text-shadow: 0 1px 1px #ddd;
 margin: 8px 0 4px;
-padding: 3px 0
+padding: 3px 0;
+line-height: 1.4em;
 }
 h1 {
 font-size: 18px
@@ -2989,7 +2990,6 @@ font-size:115%
 /* virsrakstu prefix */
 .title-prefix {
 	float: left;
-	padding: 3px 6px;
 	font-size: 11px;
 	background: #aaa;
 	color: #fff;
@@ -2998,7 +2998,8 @@ font-size:115%
 	-webkit-border-radius: 3px;
 	line-height: 13px;
 	text-shadow: 0 1px 1px #333;
-	margin: 8px 5px 4px 0;
+	padding: 3px 6px;
+	margin: 2px 5px 0 0;
 	text-decoration: none;
 }
 
