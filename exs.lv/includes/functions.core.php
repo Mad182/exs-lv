@@ -712,49 +712,28 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 	$txt = str_replace('="/dati/bildes', '="http://exs.lv/dati/bildes', $txt);
 	$txt = str_replace('="/upload/', '="http://exs.lv/upload/', $txt);
 
-	//friendly domains, no nofollow
-	$txt = str_replace(' rel="nofollow" href="http://akredits.lv', ' href="http://akredits.lv', $txt);
 
-	$txt = str_replace(' rel="nofollow" href="http://lfs.lv', ' href="http://lfs.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://www.lfs.lv', ' href="http://lfs.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://ezgif.com', ' href="http://ezgif.com', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://gif-avatars.com', ' href="http://gif-avatars.com', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://www.coding.lv', ' href="http://coding.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://coding.lv', ' href="http://coding.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://exs.lv', ' href="http://exs.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://www.exs.lv', ' href="http://exs.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://img.exs.lv', ' href="http://img.exs.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://rp.exs.lv', ' href="http://rp.exs.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://lol.exs.lv', ' href="http://lol.exs.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://openidea.lv', ' href="http://openidea.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://www.openidea.lv', ' href="http://openidea.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://nvsk.lv', ' href="http://nvsk.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://grab.lv', ' href="http://grab.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://www.grab.lv', ' href="http://www.grab.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://irdarbs.lv', ' href="http://irdarbs.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://www.irdarbs.lv', ' href="http://irdarbs.lv', $txt);
-
-	$txt = str_replace(' rel="nofollow" href="http://otrapuse.lv', ' href="http://otrapuse.lv', $txt);
-	$txt = str_replace(' rel="nofollow" href="http://www.otrapuse.lv', ' href="http://otrapuse.lv', $txt);
+	//draudzīgās uz atbalstāmās lapas no ` dofollow_sites`, noņemam nofollow
+	$dofollow_sites = get_dofollow_sites();
+	foreach ($dofollow_sites as $site) {
+		if (strpos($txt, $site) !== false) {
+			$replace = array(
+				' rel="nofollow" href="http://' . $site,
+				' rel="nofollow" href="http://www.' . $site
+			);
+			$txt = str_ireplace($replace, ' href="http://'.$site, $txt);
+		}
+	}
 
 
 	//aizvieto lapas kas ievietotas `blacklisted_sites` ar linku uz /ES_SPAMOJU_SUDUS
 	$blacklisted_sites = get_blacklisted_sites();
 	foreach ($blacklisted_sites as $site) {
 		if (strpos($txt, $site) !== false) {
-
 			$replace = array(
 				'http://' . $site,
 				'http://www.' . $site
 			);
-
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
 	}
@@ -799,6 +778,17 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 }
 
 /* atgriež masīvu ar bloķētiem mājas lapu domēniem */
+
+function get_dofollow_sites() {
+	global $db, $m, $dofollow_sites;
+	if (empty($dofollow_sites)) {
+		if (($dofollow_sites = $m->get('dofollow_sites')) === false) {
+			$dofollow_sites = $db->get_col("SELECT `url` FROM `dofollow_sites`");
+			$m->set('dofollow_sites', $dofollow_sites, false, 3600);
+		}
+	}
+	return $dofollow_sites;
+}
 
 function get_blacklisted_sites() {
 	global $db, $m, $blacklisted_sites;
