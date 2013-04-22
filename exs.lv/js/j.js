@@ -422,6 +422,15 @@ $('.smiley-list a').live('click', function (e) {
 	e.preventDefault();
 });
 
+$('.movie-liker a').live('click', function (e) {
+	var elem = $(this).parent();
+	elem.fadeTo(250, 0.3);
+	elem.load($(this).attr('href'), function() {
+		elem.fadeTo(250, 0.3);
+	});
+	e.preventDefault();
+});
+
 /* vertesana */
 $('#star').raty({
 	half: true,
