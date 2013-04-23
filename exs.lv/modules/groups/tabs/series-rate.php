@@ -30,7 +30,7 @@ if (!empty($series)) {
 	$module_content .= '<table class="main-table" id="series-ratings-ingroup">';
 	$module_content .= '	<tr>';
 	$module_content .= '		<th></th>';
-	$module_content .= '		<th>Nosaukums</th>';
+	$module_content .= '		<th style="width:115px;">Nosaukums</th>';
 	$module_content .= '		<th><span class="rautors">Patīk</span></th>';
 	$module_content .= '		<th><span class="admins">Nepatīk</span></th>';
 	$module_content .= '	</tr>';
@@ -43,7 +43,7 @@ if (!empty($series)) {
 				<img style="width:145px;height:215px;" src="http://img.exs.lv' . $s->thb . '" alt="' . htmlspecialchars($s->title) . '" />
 			</a>
 		</td>
-		<td style="vertical-align:top;padding: 20px 10px">
+		<td style="vertical-align:top;padding: 20px 10px;width:115px;">
 			<strong>' . $s->title . '</strong>
 			<br />' . $s->title_lv . '
 			<br />
