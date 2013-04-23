@@ -32,16 +32,23 @@ if (!empty($series)) {
 	$module_content .= '	<tr>';
 	$module_content .= '		<th></th>';
 	$module_content .= '		<th>Nosaukums</th>';
-	$module_content .= '		<th>IMDB</th>';
 	$module_content .= '		<th><span class="rautors">Patīk</span></th>';
 	$module_content .= '		<th><span class="admins">Nepatīk</span></th>';
 	$module_content .= '	</tr>';
 
 	foreach ($series as $s) {
-		$module_content .= '	<tr>';
-		$module_content .= '		<td><a href="/read/' . $s->strid . '"><img style="width:145px;height:215px;" src="http://img.exs.lv' . $s->thb . '" alt="' . htmlspecialchars($s->title) . '" /></a></td>';
-		$module_content .= '		<td style="vertical-align:top;padding: 20px 10px;"><strong>' . $s->title . '</strong><br />' . $s->title_lv . '<br /><br />' . $s->year . '</td>';
-		$module_content .= '		<td style="vertical-align:top;padding: 20px 10px;">' . $s->rating . '</td>';
+		$module_content .= '
+	<tr>
+		<td>
+			<a href="/read/' . $s->strid . '">
+				<img style="width:145px;height:215px;" src="http://img.exs.lv' . $s->thb . '" alt="' . htmlspecialchars($s->title) . '" />
+			</a>
+		</td>
+		<td style="vertical-align:top;padding: 20px 10px">
+			<strong>' . $s->title . '</strong>
+			<br /><br />' . $s->year . '
+			<br />IMDB: ' . $s->rating . '
+		</td>';
 
 		/* vertejuma pievienošana */
 		$rate_like = '';
