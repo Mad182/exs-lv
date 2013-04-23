@@ -20,6 +20,7 @@ $series = $db->get_results("SELECT
 				`movie_images`.`main` = 1
 			ORDER BY
 				`movie_data`.`exs_likes` DESC,
+				`movie_data`.`exs_dislikes` ASC,
 				`movie_data`.`rating` DESC
 			");
 
@@ -64,7 +65,11 @@ if (!empty($series)) {
 					$rating = -1;
 				}
 				$db->query("INSERT INTO `movie_ratings` (`page_id`, `user_id`, `rating`, `created`, `ip`) VALUES ('$s->id', '$auth->id', '$rating', NOW(), '$auth->ip')");
-				$db->query("UPDATE `movie_data` SET `exs_likes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = 1) WHERE `page_id` = $s->id");
+				$db->query("UPDATE 
+						`movie_data` SET `exs_likes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = 1),
+						`movie_data` SET `exs_dislikes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = '-1')
+					WHERE
+						`page_id` = $s->id");
 
 				//ajax
 				if (isset($_GET['_'])) {
