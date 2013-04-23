@@ -31,7 +31,7 @@ if (!empty($series)) {
 	$module_content .= '	<tr>';
 	$module_content .= '		<th></th>';
 	$module_content .= '		<th style="width:115px;">Nosaukums</th>';
-	$module_content .= '		<th><span class="rautors">Patīk</span></th>';
+	$module_content .= '		<th><span class="rautors">Iesaka</span></th>';
 	$module_content .= '		<th><span class="admins">Nepatīk</span></th>';
 	$module_content .= '	</tr>';
 
