@@ -5,7 +5,6 @@ $series = $db->get_results("SELECT
 				`movie_data`.`runtime`,
 				`movie_data`.`rating`,
 				`movie_data`.`title_lv`,
-				`movie_data`.`exs_likes`,
 				`pages`.`title`,
 				`pages`.`id`,
 				`pages`.`strid`,
@@ -46,7 +45,9 @@ if (!empty($series)) {
 		</td>
 		<td style="vertical-align:top;padding: 20px 10px">
 			<strong>' . $s->title . '</strong>
-			<br /><br />' . $s->year . '
+			<br />' . $s->title_lv . '
+			<br />
+			<br />Gads: ' . $s->year . '
 			<br />IMDB: ' . $s->rating . '
 		</td>';
 
