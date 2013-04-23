@@ -6,8 +6,6 @@ if (!isset($_GET['var1']) || !$group = $db->get_row("SELECT * FROM `clans` WHERE
 	redirect('/grupas');
 }
 
-$category = get_cat('grupas');
-
 set_action('grupas');
 
 if ($group->id == 65) {
