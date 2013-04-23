@@ -168,8 +168,7 @@ if (isset($_GET['u'])) {
 	include(CORE_PATH . '/modules/core/miniblog.php');
 } elseif (isset($_GET['y'])) {
 	include(CORE_PATH . '/modules/core/youtube.php');
-} elseif (isset($_GET['group'])) {
-	include(CORE_PATH . '/modules/core/group.php');
+
 } else {
 	//"jauno" moduļu ielāde
 	if (!empty($category->module)) {
