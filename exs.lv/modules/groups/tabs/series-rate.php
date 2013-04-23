@@ -66,8 +66,10 @@ if (!empty($series)) {
 				}
 				$db->query("INSERT INTO `movie_ratings` (`page_id`, `user_id`, `rating`, `created`, `ip`) VALUES ('$s->id', '$auth->id', '$rating', NOW(), '$auth->ip')");
 				$db->query("UPDATE 
-						`movie_data` SET `exs_likes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = 1),
-						`movie_data` SET `exs_dislikes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = '-1')
+						`movie_data`
+					SET
+						`exs_likes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = 1),
+						`exs_dislikes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $s->id AND `rating` = '-1')
 					WHERE
 						`page_id` = $s->id");
 
