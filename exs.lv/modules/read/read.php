@@ -781,6 +781,10 @@ if ($article) {
 									`exs_dislikes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = '-1')
 								WHERE
 									`page_id` = $article->id");
+							
+							if($rating == 1 && !empty($types[$movie_data->type])) {
+								push('Patīk ' . strtolower($types[$movie_data->type]) . ' &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
+							}
 
 							//ajax
 							if (isset($_GET['_'])) {

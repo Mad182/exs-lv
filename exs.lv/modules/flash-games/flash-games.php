@@ -153,9 +153,9 @@ if (isset($_GET['var1'])) {
 					destroy_cdir(CORE_PATH . '/cache/' . $category->textid . '/');
 
 					if ($vote > 3) {
-						userlog($auth->id, 'Patīk flash spēle <a href="/' . $category->textid . '/' . $game->slug . '">' . $game->title . '</a>, vērtējums: ' . $vote, '/upload/flash-games/thb/' . $game->thb_local);
+						push('Patīk flash spēle <a href="/' . $category->textid . '/' . $game->slug . '">' . $game->title . '</a>, vērtējums: ' . $vote, '/upload/flash-games/thb/' . $game->thb_local);
 					} else {
-						userlog($auth->id, 'Novērtēja flash spēli <a href="/' . $category->textid . '/' . $game->slug . '">' . $game->title . '</a>, vērtējums: ' . $vote, '/upload/flash-games/thb/' . $game->thb_local);
+						push('Novērtēja flash spēli <a href="/' . $category->textid . '/' . $game->slug . '">' . $game->title . '</a>, vērtējums: ' . $vote, '/upload/flash-games/thb/' . $game->thb_local);
 					}
 
 					die('Spēlētāju vērtējums: ' . round($rating / ($game->rating_count + 1), 2) . ' (' . ($game->rating_count + 1) . ' balsis)');
