@@ -7,7 +7,7 @@ $pinfo = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$page'");
 $original = null;
 
 if($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
-	$original '/home/www/img.exs.lv'.$avatar->image;
+	$original = '/home/www/img.exs.lv'.$avatar->image;
 } elseif(!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
 	$original = $pinfo->avatar;
 } else {
