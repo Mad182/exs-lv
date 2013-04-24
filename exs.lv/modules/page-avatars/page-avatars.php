@@ -5,7 +5,10 @@ $page = intval(str_replace('','',$_GET['img']));
 $pinfo = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$page'");
 
 $original = null;
-if(!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
+
+if($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
+	$original '/home/www/img.exs.lv'.$avatar->image;
+} elseif(!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
 	$original = $pinfo->avatar;
 } else {
 	$uinfo = get_user($pinfo->author);
@@ -19,9 +22,7 @@ if(!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
 		if(!empty($category->icon) && file_exists($category->icon)) {
 			$original = $category->icon;
 		}
-
 	}
-
 }
 
 if ($original != null && file_exists($original)) {
