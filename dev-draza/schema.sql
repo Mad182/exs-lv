@@ -62,9 +62,10 @@ CREATE TABLE IF NOT EXISTS `approve` (
   `ip` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `lang` tinyint(4) NOT NULL DEFAULT '1',
+  `removed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `lang` (`lang`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=2038 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1084,8 +1085,13 @@ CREATE TABLE IF NOT EXISTS `movie_data` (
   `year` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
   `runtime` int(11) NOT NULL DEFAULT '0',
   `rating` float NOT NULL DEFAULT '0',
+  `exs_likes` mediumint(9) NOT NULL DEFAULT '0',
+  `exs_dislikes` mediumint(9) NOT NULL DEFAULT '0',
   `type` enum('movie','series','documentary','animation') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'movie',
-  PRIMARY KEY (`page_id`)
+  PRIMARY KEY (`page_id`),
+  KEY `type` (`type`),
+  KEY `exs_likes` (`exs_likes`),
+  KEY `exs_dislikes` (`exs_dislikes`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
