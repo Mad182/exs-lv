@@ -33,7 +33,6 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		`pages`.`avatar` AS `avatar`,
 		`pages`.`readby` AS `readby`,
 		`pages`.`views` AS `views`,
-		`pages`.`attach` AS `attach`,
 		`pages`.`intro` AS `intro`,
 		`users`.`nick` AS `nick`,
 		`users`.`level` AS `level`,
@@ -71,18 +70,12 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 		$date = display_time(strtotime($article->date));
 
-		if ($article->attach) {
-			$article->title = '<strong><img src="http://exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
-		} else {
-			$article->title = $article->title;
-		}
-
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 500);
 			$article->intro = sanitize($article->text);
-			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
+			$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
 		}
 
 		$tpl->assign(array(
@@ -104,10 +97,15 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			if(!empty($movie_data->title_lv)) {
 				$tpl->assign('title-lv', ' &nbsp;<small>'.$movie_data->title_lv.'</small>');
 			}
+
 			if(!empty($movie_data->year)) {
-				$tpl->assign('year', '<p>Gads: ' . $movie_data->year . '</p>');
+				$tpl->assign('year', '<strong>Gads:</strong> ' . $movie_data->year . '<br />');
 			}
-			
+
+			if(!empty($movie_data->runtime)) {
+				$tpl->assign('runtime', '<strong>Garums:</strong> ' . $movie_data->runtime . ' minūtes<br />');
+			}
+
 			if(!empty($movie_data->type) && $movie_data->type == 'series') {
 				$tpl->assign('title-prefix', '<span class="title-prefix series">Seriāls</span> ');
 			}
@@ -119,7 +117,7 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			foreach($genres as $genre) {
 				$gen[] = '<a href="/filmas/search?genre='.$genre.'">'.translate_genres($genre).'</a>';
 			}
-			$tpl->assign('genres', '<p>Žanri: ' . implode(' / ', $gen) . '</p>');
+			$tpl->assign('genres', '<strong>Žanrs:</strong> ' . implode(' / ', $gen) . '<br />');
 		}
 
 
@@ -180,7 +178,6 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		`pages`.`avatar` AS `avatar`,
 		`pages`.`readby` AS `readby`,
 		`pages`.`views` AS `views`,
-		`pages`.`attach` AS `attach`,
 		`pages`.`intro` AS `intro`,
 		`users`.`nick` AS `nick`,
 		`users`.`level` AS `level`,

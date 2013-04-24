@@ -14,9 +14,12 @@
 	<!-- START BLOCK : list-avatar-->
 	<img class="av" src="http://img.exs.lv{node-avatar-image}" alt="{node-avatar-alt}" />
 	<!-- END BLOCK : list-avatar-->
-	{year}
-	{genres}
-	<p>{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
+	<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
+		{year}
+		{genres}
+		{runtime}
+	</p>
+	<p style="text-align:left;">{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
 	<div class="c"></div>
 	</li>
 	<!-- END BLOCK : list-->
