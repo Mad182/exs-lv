@@ -306,6 +306,14 @@
 				<div class="c"></div>
 			</div>
 			<!-- END BLOCK : user-top-->
+			
+			<div class="box monitor">
+				<ul class="tabs">
+					<li><a href="/cache/mta_monitor.html" class="active remember-mta ajax"><span class="game-mta">MTA:RP</span></a></li>
+				</ul>
+				<div id="mta-content" class="ajaxbox">{latest-mta}</div>
+				<div class="c"></div>
+			</div>
 
 			<!-- START BLOCK : poll-box-->
 			<h3>Aptauja</h3>

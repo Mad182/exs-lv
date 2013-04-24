@@ -268,7 +268,6 @@ fclose($fh);
 
 
 
-/*
 
 
 
@@ -399,7 +398,7 @@ $fh = fopen('cache/mta_monitor.html', 'w');
 fwrite($fh, $out);
 fclose($fh);
 
-*/
+
 
 
 
