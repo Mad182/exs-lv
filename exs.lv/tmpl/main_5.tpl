@@ -292,7 +292,7 @@
 
 			<h3>Balso par mums!</h3>
 			<div class="box">
-				<p><script src="http://wos.lv/d.php?9530"></script></p>
+				<p><script src="http://wos.lv/d.php?9530" type="text/javascript"></script></p>
 			</div>
 
 			<!-- START BLOCK : user-top-->
