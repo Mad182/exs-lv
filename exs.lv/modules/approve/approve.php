@@ -131,9 +131,9 @@ if (isset($_POST['new-topic-body'])) {
 
 if ($auth->ok) {
 
-	if (($auth->level == 1 or $auth->level == 2 or $auth->id == '115') && isset($_GET['var1']) && $_GET['var1'] == 'delete') {
+	if (im_mod() && isset($_GET['var1']) && $_GET['var1'] == 'delete') {
 		$delete = (int) $_GET['var2'];
-		$db->query("DELETE FROM approve WHERE id = '$delete' LIMIT 1");
+		$db->query("UPDATE `approve` SET `removed` = 1 WHERE `id` = '$delete'");
 		@unlink('modules/approve/av_l/' . $delete . '.jpg');
 		@unlink('modules/approve/av_sm/' . $delete . '.jpg');
 		redirect('/write/list');
@@ -172,14 +172,14 @@ if ($auth->ok) {
 					$db->query("UPDATE pages SET avatar = ('$avatar'), sm_avatar = ('$sm_avatar') WHERE id = '$topicid'");
 				}
 
-				$db->query("DELETE FROM approve WHERE id = '$edit' LIMIT 1");
+				$db->query("UPDATE `approve` SET `removed` = 1 WHERE `id` = '$edit'");
 				build_latest();
 				update_karma($author, true);
 				redirect('/read/' . $strid);
 			}
 		}
 
-		$article = $db->get_row("SELECT * FROM approve WHERE id = '$edit'");
+		$article = $db->get_row("SELECT * FROM approve WHERE id = '$edit' AND `removed` = 0");
 		$author = get_user($article->author);
 
 		$tpl->newBlock('approve-edit');
@@ -224,7 +224,7 @@ if ($auth->ok) {
 		$tpl->assign('edit-active', 'active');
 		$tpl->newBlock('approve-view');
 
-		$articles = $db->get_results("SELECT id,title FROM `approve` WHERE `author` = '" . $auth->id . "'");
+		$articles = $db->get_results("SELECT id,title FROM `approve` WHERE `author` = '" . $auth->id . "' AND `lang` = '$lang' AND `removed` = 0");
 		if ($articles) {
 			$tpl->newBlock('approve-list');
 			foreach ($articles as $article) {
@@ -238,7 +238,7 @@ if ($auth->ok) {
 
 		if (im_mod()) {
 			$tpl->newBlock('approveadm-view');
-			$articles = $db->get_results("SELECT id,title FROM `approve` WHERE `lang` = '$lang' ORDER BY `date` ASC");
+			$articles = $db->get_results("SELECT id,title FROM `approve` WHERE `lang` = '$lang' AND `removed` = 0 ORDER BY `date` ASC");
 			if ($articles) {
 				$tpl->newBlock('approveadm-list');
 				foreach ($articles as $article) {
