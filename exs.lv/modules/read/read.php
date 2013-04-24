@@ -761,6 +761,46 @@ if ($article) {
 						$tpl->newBlock('movie-info-genres');
 						$tpl->assign('genres', implode(' / ', $gen));
 					}
+
+					/* vertejuma pievienošana */
+					$like = '';
+					if ($auth->ok && $auth->karma >= 100 && !$db->get_var("SELECT count(*) FROM `movie_ratings` WHERE `page_id` = '$article->id' AND `user_id` = '$auth->id'")) {
+
+						$token = md5($auth->id . '-' . $article->id . '-' . $remote_salt);
+
+						if (isset($_GET['movie']) && isset($_GET['check']) && $_GET['check'] == $token) {
+							$rating = 1;
+							if (isset($_GET['dislike'])) {
+								$rating = -1;
+							}
+							$db->query("INSERT INTO `movie_ratings` (`page_id`, `user_id`, `rating`, `created`, `ip`) VALUES ('$article->id', '$auth->id', '$rating', NOW(), '$auth->ip')");
+							$db->query("UPDATE
+									`movie_data`
+								SET
+									`exs_likes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = 1),
+									`exs_dislikes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = '-1')
+								WHERE
+									`page_id` = $article->id");
+
+							//ajax
+							if (isset($_GET['_'])) {
+								die('Balsojums pieņemts!');
+
+								//nav ajax, redirektejam
+							} else {
+								set_flash('Balsojums pieņemts!', 'success');
+								redirect('/read/' . $article->strid);
+							}
+						}
+
+						$like .= '<strong>Tavs vērtējums:</strong> <span style="padding: 20px 0 0" class="movie-liker"><a href="?movie=' . $article->id . '&amp;check=' . $token . '&amp;like" class="button success small">Man patīk</a> ';
+						$like .= '<a href="?movie=' . $article->id . '&amp;check=' . $token . '&amp;dislike" class="button danger small">Man nepatīk</a></span>';
+					}
+					if(!empty($like)) {
+						$tpl->newBlock('movie-like');
+						$tpl->assign('like', $like);
+					}
+
 				}
 			} elseif ($article->avatar) {
 

@@ -203,6 +203,10 @@
 	<!-- START BLOCK : movie-info-runtime-->
 	<p><strong>Garums:</strong> {runtime} minūtes</p>
 	<!-- END BLOCK : movie-info-runtime-->
+
+	<!-- START BLOCK : movie-like-->
+	{like}
+	<!-- END BLOCK : movie-like-->
 </div>
 <div class="c"></div>
 <p>&nbsp;</p>
