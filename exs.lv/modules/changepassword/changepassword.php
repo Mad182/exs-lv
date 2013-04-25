@@ -15,7 +15,7 @@ if (!$auth->ok) {
 					`reset_time` > '".date('Y-m-d H:i:s', strtotime('-6 hours'))."' LIMIT 1");
 
 		if(!empty($userdata)) {
-			$newpass = createPassword(6);
+			$newpass = createPassword(8);
 			$newhash = pwd($newpass);
 
 			//suta e-pastu

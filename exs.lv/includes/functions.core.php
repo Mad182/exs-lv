@@ -930,7 +930,7 @@ function get_youtube_title($videoid) {
 }
 
 function createPassword($length) {
-	$chars = "1234567890abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-+_=|/.,";
+	$chars = "1234567890abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&";
 	$i = 0;
 	$password = "";
 	while ($i <= $length) {
