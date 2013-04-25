@@ -1,5 +1,5 @@
 <!-- START BLOCK : passreset-form-->
-<h2>Aizmirsu paroli</h2>
+<h1>Aizmirsu paroli</h1>
 <form id="reset-password" class="form" action="" method="post">
   <fieldset>
 		<legend>Nozaudētas paroles atjaunošana</legend>
