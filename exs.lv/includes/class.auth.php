@@ -206,6 +206,7 @@ class Auth {
 			$this->update_visits();
 			return true;
 		} else {
+			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
 			sleep(rand(2,4));
 			$this->error = 1;
 			return false;
