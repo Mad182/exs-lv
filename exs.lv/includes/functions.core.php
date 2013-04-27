@@ -1925,6 +1925,14 @@ function update_awards($user) {
 	  );
 	  } */
 
+	 if (in_array($user, array(1, 12108, 140, 24706, 23282, 12407))) {
+	  $awards_list['talka'] = array(
+	  'title' => 'Pašaizliedzīga piedalīšanās Ogres uzkopšanā, spītējot laika apstākļiem',
+	  'state' => 'active'
+	  );
+	  }
+
+
 	/* 	if(in_array($user,array(13004))) {
 	  $awards_list['db-1'] = array(
 	  'title' => 'aktīva dalība datubāzes tulkošanā',
