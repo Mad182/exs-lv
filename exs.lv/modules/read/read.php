@@ -688,7 +688,7 @@ if ($article) {
 
 
 
-			$page_title = $article->title . ' | ' . $category->title;
+			$page_title = $article->title . ' - ' . $category->title;
 
 			if ($category->textid == 'filmas') {
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
@@ -727,6 +727,8 @@ if ($article) {
 						$tpl->newBlock('movie-info-year');
 						$tpl->assign('year', $movie_data->year);
 					}
+
+					$page_title .= ' - ' . $category->title;
 
 					if (!empty($movie_data->runtime)) {
 						$tpl->newBlock('movie-info-runtime');

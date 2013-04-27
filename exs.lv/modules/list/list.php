@@ -181,14 +181,14 @@ if (!$category->mods_only || im_mod()) {
 	if ($category->module == 'list') {
 
 		if ($skip) {
-			$page_title = $page_title . ' - lapa ' . ($skip / $end + 1);
+			$page_title = $page_title . ' (lapa ' . ($skip / $end + 1) . ')';
 		}
 
 		if ($category->isforum) {
 
 			$add_css .= ',forum.css';
 
-			$page_title = $page_title . ' | Forums';
+			$page_title = $page_title . ' - forums';
 
 			$root_cat = get_cat(get_top($category->parent));
 
