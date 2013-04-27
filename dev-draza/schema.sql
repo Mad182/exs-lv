@@ -1979,3 +1979,18 @@ CREATE TABLE IF NOT EXISTS `zgame` (
   `add_check` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=134 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `failed_logins`
+--
+
+CREATE TABLE IF NOT EXISTS `failed_logins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `username` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
