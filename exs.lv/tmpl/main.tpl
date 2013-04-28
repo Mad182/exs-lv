@@ -118,6 +118,7 @@
 				<li><a href="/img">Bilžu hostings</a></li>
 				<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 				<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
+				<li><a href="http://rp.exs.lv/{site-transfer}" title="MTA San Andreas Roleplay serveris un forums">rp.exs.lv</a></li>
 				<li><a href="http://lol.exs.lv/{site-transfer}" title="League of Legends forums">lol.exs.lv</a></li>
 				<li><a href="http://coding.lv/{site-transfer}" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
 				<li><a href="/statistika" title="Statistika">Statistika</a></li>
