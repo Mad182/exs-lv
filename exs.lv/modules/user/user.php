@@ -13,11 +13,6 @@ $user = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "'");
 
 if ($user) {
 
-	//rakstziņi ir īpašs "lietotājs", redirektējam uz grupu ja kāds grib apskatīt profilu
-	if ($user->id == 21610 && $auth->id != $user->id) {
-		redirect('/group/157');
-	}
-
 	if ($auth->ok) {
 		set_action('<a href="/user/' . $user->id . '">' . sanitize($user->nick) . '</a> profilu');
 	}
