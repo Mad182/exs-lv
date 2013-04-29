@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta http-equiv="content-language" content="lv" />
-<title>{page-title} | lol.exs.lv</title>
+<title>{page-title}</title>
 <!-- START BLOCK : meta-description-->
 <meta name="description" content="{description}" />
 <!-- END BLOCK : meta-description-->

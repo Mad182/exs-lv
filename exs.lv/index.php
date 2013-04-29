@@ -297,6 +297,11 @@ if ($auth->hosts_online > $ss->get('most_online')) {
 	$ss->set('most_online_time', time());
 }
 
+$page_title = hide_spoilers($page_title);
+if(strlen($page_title) < 55 && $lang != 4) {
+	$page_title .= ' - ' . $config_domains[$lang]['domain'];
+}
+
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
