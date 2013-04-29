@@ -22,7 +22,7 @@ $tpl->assign(array(
 	'latest-cs' => file_get_contents(CORE_PATH . '/cache/cs_monitor.html'),
 	'latest-csdm' => file_get_contents(CORE_PATH . '/cache/csdm_monitor.html'),
 //	'latest-mc' => file_get_contents(CORE_PATH . '/cache/mc_monitor.html'),
-//	'latest-mta' => file_get_contents(CORE_PATH . '/cache/mta_monitor.html'),
+	'latest-mta' => file_get_contents(CORE_PATH . '/cache/mta_monitor.html'),
 	'random-fact' => $fact,
 	$sel . '-selected' => 'active ',
 	$fsel . '-selected' => 'active ',
