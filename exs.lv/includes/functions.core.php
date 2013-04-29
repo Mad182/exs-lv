@@ -2410,6 +2410,8 @@ function title2db($text) {
 	if (empty($text)) {
 		$text = 'Bez nosaukuma';
 	}
+	$text = str_replace('  ', ' ', $text);
+	$text = str_replace('  ', ' ', $text);
 	return sanitize($text);
 }
 
