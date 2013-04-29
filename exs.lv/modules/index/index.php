@@ -136,7 +136,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 			ORDER BY
 				`pages`.`id` DESC
 			LIMIT
-				0,4");
+				0,3");
 
 		foreach ($articles as $article) {
 
@@ -157,102 +157,64 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 				'node-url' => '/read/' . $article->strid,
 				'title' => textlimit($article->title, 26, '...'),
 				'date' => $date,
-				'intro' => textlimit(strip_tags(trim(str_replace(array('Spēles nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
+				'intro' => textlimit(strip_tags(trim(str_replace('&nbsp;', ' ', $article->text))), 90),
 				'av' => $av
 			));
 		}
+		
+		$list_cats = array(
+			'games' => 81,
+			'movies' => 80,
+			'music' => 323
+		);
 
-		$articles = $db->get_results("
-			SELECT
-				`pages`.`id` AS `id`,
-				`pages`.`title` AS `title`,
-				`pages`.`sm_avatar` AS `avatar`,
-				`pages`.`text` AS `text`,
-				`pages`.`strid` AS `strid`,
-				`pages`.`intro` AS `intro`,
-				`users`.`nick` AS `nick`,
-				`users`.`level` AS `level`
-			FROM
-				`pages`,
-				`users`
-			WHERE
-				`pages`.`category` = '81' AND
-				`users`.`id` = `pages`.`author`
-			ORDER BY
-				`pages`.`id` DESC
-			LIMIT
-				0,4");
+		foreach($list_cats as $cat_type => $cat_id) {
 
-		foreach ($articles as $article) {
+			$articles = $db->get_results("
+				SELECT
+					`pages`.`id` AS `id`,
+					`pages`.`title` AS `title`,
+					`pages`.`sm_avatar` AS `avatar`,
+					`pages`.`text` AS `text`,
+					`pages`.`strid` AS `strid`,
+					`pages`.`intro` AS `intro`,
+					`users`.`nick` AS `nick`,
+					`users`.`level` AS `level`
+				FROM
+					`pages`,
+					`users`
+				WHERE
+					`pages`.`category` = " . $cat_id . " AND
+					`users`.`id` = `pages`.`author`
+				ORDER BY
+					`pages`.`id` DESC
+				LIMIT
+					0,3");
 
-			$tpl_cachable->newBlock('index-games-node');
+			foreach ($articles as $article) {
 
-			if (!empty($article->intro)) {
-				$article->text = $article->intro;
-			} else {
-				$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+				$tpl_cachable->newBlock('index-' . $cat_type . '-node');
+
+				if (!empty($article->intro)) {
+					$article->text = $article->intro;
+				} else {
+					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+				}
+
+				$av = '';
+				if(!empty($article->avatar)) {
+					$av = '<a href="/read/' . $article->strid . '" class="av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+				}
+
+				$tpl_cachable->assign(array(
+					'node-url' => '/read/' . $article->strid,
+					'title' => $article->title,
+					'date' => $date,
+					'intro' => textlimit(strip_tags(trim(str_replace(array('Spēles nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
+					'av' => $av
+				));
 			}
-
-			$av = '';
-			if(!empty($article->avatar)) {
-				$av = '<a href="/read/' . $article->strid . '" class="av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
-			}
-
-			$tpl_cachable->assign(array(
-				'node-url' => '/read/' . $article->strid,
-				'title' => $article->title,
-				'date' => $date,
-				'intro' => textlimit(strip_tags(trim(str_replace(array('Spēles nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
-				'av' => $av
-			));
-		}
-
-		$articles = $db->get_results("
-			SELECT
-				`pages`.`id` AS `id`,
-				`pages`.`title` AS `title`,
-				`pages`.`strid` AS `strid`,
-				`pages`.`text` AS `text`,
-				`pages`.`sm_avatar` AS `avatar`,
-				`pages`.`intro` AS `intro`,
-				`users`.`nick` AS `nick`,
-				`users`.`level` AS `level`
-			FROM
-				`pages`,
-				`users`
-			WHERE
-				(`pages`.`category` = '80' OR
-				`pages`.`category` = '323') AND
-				`users`.`id` = `pages`.`author`
-			ORDER BY
-				`pages`.`id` DESC
-			LIMIT
-				0,5");
-
-		foreach ($articles as $article) {
-
-			$tpl_cachable->newBlock('index-movies-node');
-
-			if (!empty($article->intro)) {
-				$article->text = $article->intro;
-			} else {
-				$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
-			}
-
-			$av = '';
-			if(!empty($article->avatar)) {
-				$av = '<a href="/read/' . $article->strid . '" class="av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
-			}
-
-			$tpl_cachable->assign(array(
-				'node-url' => '/read/' . $article->strid,
-				'title' => $article->title,
-				'date' => $date,
-				'intro' => textlimit(strip_tags(trim(str_replace(array('Oriģinālnosaukums:', 'Nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
-				'av' => $av
-			));
-
-
+			
 		}
 
 		file_put_contents('cache/index/right.html', $tpl_cachable->getOutputContent());
