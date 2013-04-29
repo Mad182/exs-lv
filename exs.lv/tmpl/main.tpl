@@ -1,14 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="lv" lang="lv">
+<!DOCTYPE html>
+<html lang="lv">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta http-equiv="content-language" content="lv" />
+<meta charset="UTF-8">
 <title>{page-title}</title>
 <!-- START BLOCK : meta-description-->
 <meta name="description" content="{description}" />
 <!-- END BLOCK : meta-description-->
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <!-- START BLOCK : opengraph-->
 <meta property="og:title" content="{title}" />
 <meta property="og:type" content="{type}" />
