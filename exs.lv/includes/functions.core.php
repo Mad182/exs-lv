@@ -2937,9 +2937,7 @@ function get_latest_mbs($friends = false) {
 			}
 
 			$mb->text = wordwrap($mb->text, 36, "\n", 1);
-			$mb->text = str_replace('/', "/&#8203;", $mb->text);
-			$mb->text = str_replace('.', ".&#8203;", $mb->text);
-			$mb->text = str_replace('-', "-&#8203;", $mb->text);
+			$mb->text = str_replace('/', "/<wbr />", $mb->text);
 
 			if ($mb->groupid != 0) {
 				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88, '...');
@@ -2948,6 +2946,9 @@ function get_latest_mbs($friends = false) {
 			} else {
 				$mb->text = textlimit($mb->text, 98, '...');
 			}
+			
+			$mb->text = str_replace('.', ".<wbr />", $mb->text);
+			$mb->text = str_replace('-', "-<wbr />", $mb->text);
 
 			if ($lang == 1) {
 				$time = time_ago(strtotime($mb->date));
