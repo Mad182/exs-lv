@@ -42,7 +42,6 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 				`pages`.`strid` AS `strid`,
 				`pages`.`posts` AS `posts`,
 				`pages`.`text` AS `text`,
-				`pages`.`avatar` AS `avatar`,
 				`pages`.`sm_avatar` AS `sm_avatar`,
 				`pages`.`intro` AS `intro`,
 				`users`.`nick` AS `nick`,
@@ -77,8 +76,8 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
 
-		if ($article->avatar == '') {
-			$article->avatar = '/dati/bildes/useravatar/none.png';
+		if ($article->sm_avatar == '') {
+			$article->sm_avatar = '/dati/bildes/useravatar/none.png';
 		}
 
 		$date = display_time(strtotime($article->date));
@@ -90,8 +89,8 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 			'author' => usercolor($article->nick, $article->level, false, $article->author),
 			'posts' => $article->posts,
 			'level' => $article->level,
-			'intro' => textlimit($article->text, 240),
-			'node-avatar-image' => trim($article->avatar)
+			'intro' => textlimit($article->text, 270),
+			'node-avatar-image' => trim($article->sm_avatar)
 		));
 	}
 
@@ -203,7 +202,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 
 				$av = '';
 				if(!empty($article->avatar)) {
-					$av = '<a href="/read/' . $article->strid . '" class="av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
 				}
 
 				$tpl_cachable->assign(array(

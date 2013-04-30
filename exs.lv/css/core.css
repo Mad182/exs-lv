@@ -913,6 +913,11 @@ box-shadow: 2px 2px 3px #eee
 .mb-av {
 position: relative
 }
+.index-av {
+	width: 75px;
+	height: 75px;
+	margin: 7px 11px 5px 1px;
+}
 .user-deco {
 width: 16px;
 height: 16px;
@@ -1723,10 +1728,15 @@ padding: 0 0 0 30px
 font-size: 90%;
 line-height: 15px
 }
-#wrapper .index-list li h3, .index-list li h3 a {
+#wrapper .index-list li h3 {
 font-size: 13px;
 line-height: 17px;
-margin: 0
+margin: 5px 0 0
+}
+#wrapper .index-list.main li h3 {
+font-size: 14px;
+line-height: 18px;
+margin: 10px 0 0
 }
 body.mceContentBody {
 font: 400 8pt/13pt Verdana, Arial, sans-serif;
