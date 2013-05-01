@@ -303,7 +303,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		));
 
 		if ($credit >= 3) {
-			$tpl->assign('pay', '<p><a href="/group/' . $group->id . '?act=submitpay">Pieteikties grupā</a></p>');
+			$tpl->assign('pay', '<p><a href="/group/' . $group->id . '/submitpay">Pieteikties grupā</a></p>');
 		}
 
 		$members = $db->get_col("SELECT user FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
