@@ -47,8 +47,7 @@
 			relative_urls : false,
 			paste_remove_styles : true,
 			paste_auto_cleanup_on_paste : true,
-			nonbreaking_force_tab : true,
-			file_browser_callback : MadFileBrowser
+			nonbreaking_force_tab : true
 		});
 	});
 </script>

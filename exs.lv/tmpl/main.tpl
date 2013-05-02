@@ -47,8 +47,7 @@
 			convert_fonts_to_spans : true,
 			relative_urls : false,
 			paste_remove_styles : true,
-			paste_auto_cleanup_on_paste : true,
-			file_browser_callback : MadFileBrowser
+			paste_auto_cleanup_on_paste : true
 		});
 	});
 </script>

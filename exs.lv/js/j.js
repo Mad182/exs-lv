@@ -7,22 +7,6 @@ function prompt_why_delete(url){
 	}
 }
 
-function MadFileBrowser(field_name, url, type, win) {
-	tinyMCE.activeEditor.windowManager.open({
-		file : "/mfm.php?field=" + field_name + "&url=" + url,
-		title : 'File Manager',
-		width : 640,
-		height : 450,
-		resizable : "no",
-		inline : "yes",
-		close_previous : "no"
-	}, {
-		window : win,
-		input : field_name
-	});
-	return false;
-}
-
 function autoSaveDraft() {
 	$.ajax({
 		type: "POST",
