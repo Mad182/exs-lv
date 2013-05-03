@@ -7,3 +7,6 @@
 [submodule "libs/GameQ"]
 	path = libs/GameQ
 	url = https://github.com/Austinb/GameQ
+[submodule "libs/facebook-php-sdk"]
+	path = libs/facebook-php-sdk
+	url = https://github.com/facebook/facebook-php-sdk.git

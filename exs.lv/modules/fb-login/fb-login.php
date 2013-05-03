@@ -13,8 +13,8 @@ function fb_award($id) {
 	}
 }
 
-require(CORE_PATH . '/includes/base_facebook.php');
-require(CORE_PATH . '/includes/facebook.php');
+require(LIB_PATH . '/facebook-php-sdk/src/base_facebook.php');
+require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
 
 $facebook = new Facebook(array(
 			'appId' => $fb_api_id,
