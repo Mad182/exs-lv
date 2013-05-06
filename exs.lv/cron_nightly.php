@@ -32,7 +32,7 @@ $m = new Memcache;
 $m->connect($mc_host, $mc_port);
 
 ####################### PROFILA SKATIJUMU UN LOGU TIRISANA
-$users = $db->get_results("SELECT id FROM users");
+$users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIMIT 10000");
 $i = 0;
 foreach ($users as $user) {
 
@@ -44,10 +44,12 @@ foreach ($users as $user) {
 
 	$db->query("DELETE FROM `viewprofile` WHERE profile='$user->id' AND id NOT IN (SELECT * FROM (SELECT id FROM viewprofile WHERE profile='$user->id' ORDER BY `time` DESC LIMIT 100) AS TAB)");
 
+	update_karma($user->id, true);
+
 	$i++;
 }
 
-echo 'cleanup... ' . $i . '... ok' . "\n";
+echo 'cleanup un karma update... ' . $i . '... ok' . "\n";
 
 $cats = $db->get_results("SELECT id FROM cat");
 foreach ($cats as $cat) {
@@ -64,15 +66,3 @@ $db->query("DELETE FROM `taged` WHERE `tag_id` IN(SELECT id FROM `tags` WHERE `n
 $db->query("DELETE FROM `tags` WHERE `name` LIKE '%;%'");
 echo "remve ugly tags... ok\n";
 
-
-$users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIMIT 10000");
-
-$i = 0;
-foreach ($users as $val) {
-	update_karma($val->id, true);
-	$i++;
-	if ($i > 99) {
-		$i = 0;
-		sleep(1);
-	}
-}
