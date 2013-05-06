@@ -43,8 +43,6 @@ $db->query("UPDATE `users` SET `max_in_row` = `days_in_row` WHERE `days_in_row` 
 $db->query("UPDATE `users` SET `days_in_row` = 0 WHERE `seen_today` = 0");
 $db->query("UPDATE `users` SET `seen_today` = 0, `vote_today` = 0, `today` = 0");
 
-$db->query("UPDATE `users` SET `show_code` = '1' WHERE `source_site` = '3'");
-
 ######################### Vecie warni automātiki noņemas pēc 2 mēnešiem
 
 $warns = $db->get_results("SELECT * FROM warns WHERE active = 1 AND created < '" . date('Y-m-d H:i:s', strtotime('-2 months')) . "'");

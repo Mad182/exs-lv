@@ -8,15 +8,22 @@ if (isset($_GET['var1'])) {
 
 	if ($user) {
 
-		if (strlen($user->password) < 60) {
-			$db->query("INSERT INTO users (id,nick,password,mail,date,lastseen,lastip,skin,user_agent,source_site)
+		$db->query("INSERT INTO users (id,nick,pwd,mail,date,lastseen,lastip,skin,user_agent,source_site)
 		VALUES (NULL,'" . sanitize($user->nick) . "','" . $user->password . "','" . $user->mail . "','" . $user->created . "',NOW(),'" . sanitize($auth->ip) . "','3','" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', '$lang')");
-		} else {
-			$db->query("INSERT INTO users (id,nick,pwd,mail,date,lastseen,lastip,skin,user_agent,source_site)
-		VALUES (NULL,'" . sanitize($user->nick) . "','" . $user->password . "','" . $user->mail . "','" . $user->created . "',NOW(),'" . sanitize($auth->ip) . "','3','" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', '$lang')");
-		}
 
 		$newid = $db->insert_id;
+
+		if($lang == 3) {
+			$db->query("UPDATE `users` SET `show_code` = '1' WHERE `id` = '$newid'");
+		}
+
+		if($lang == 7) {
+			$db->query("UPDATE `users` SET `show_lol` = '1' WHERE `id` = '$newid'");
+		}
+
+		if($lang == 5) {
+			$db->query("UPDATE `users` SET `show_rp` = '1' WHERE `id` = '$newid'");
+		}
 
 		$db->query("INSERT INTO visits (user_id,site_id,ip,lastseen) VALUES ('$newid','$lang','$auth->ip',NOW())");
 
