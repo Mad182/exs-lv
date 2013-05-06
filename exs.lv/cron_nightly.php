@@ -35,12 +35,12 @@ $m->connect($mc_host, $mc_port);
 $users = $db->get_results("SELECT id FROM users");
 $i = 0;
 foreach ($users as $user) {
-	$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '1' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '1' ORDER BY id DESC LIMIT 120) AS TAB)");
 
-	$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '3' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '3' ORDER BY id DESC LIMIT 120) AS TAB)");
+	$langs = array(1,3,5,7);
 
-	$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '5' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '5' ORDER BY id DESC LIMIT 120) AS TAB)");
-
+	foreach($langs as $clean) {
+		$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '$clean' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '$clean' ORDER BY id DESC LIMIT 200) AS TAB)");
+	}
 
 	$db->query("DELETE FROM `viewprofile` WHERE profile='$user->id' AND id NOT IN (SELECT * FROM (SELECT id FROM viewprofile WHERE profile='$user->id' ORDER BY `time` DESC LIMIT 100) AS TAB)");
 
@@ -64,8 +64,6 @@ $db->query("DELETE FROM `taged` WHERE `tag_id` IN(SELECT id FROM `tags` WHERE `n
 $db->query("DELETE FROM `tags` WHERE `name` LIKE '%;%'");
 echo "remve ugly tags... ok\n";
 
-
-$db->query("OPTIMIZE TABLE `ajax_comments`, `animations`, `approve`, `autoawards`, `awards`, `banned`, `bookmarks`, `cat`, `city`, `clans`, `clans_categories`, `clans_members`, `clans_paid`, `clans_tabs`, `comments`, `counter`, `counter_ip`, `desas`, `desas_moves`, `downloads`, `drafts`, `emails`, `facts`, `flash_games`, `friends`, `galcom`, `gamescore`, `ig_games`, `ig_items`, `ig_results`, `images`, `imgupload`, `items_db`, `items_db_cats`, `items_db_queue`, `items_db_three`, `items_db_whitelist`, `lolimages`, `lostmaps`, `miniblog`, `nhl`, `nick_history`, `notes`, `notify`, `pages`, `pages_ver`, `pm`, `poll`, `portfolio`, `qgame_answers`, `qgame_questions`, `questions`, `responses`, `rpg_users`, `rs_help`, `serverlist`, `serverlist_log`, `sidelinks`, `sms`, `taged`, `tags`, `userlogs`, `users`, `users_tmp`, `viewprofile`, `vouches`, `wallpapers`, `warns`, `wg_games`, `wg_results`, `wg_words`, `ytlocal`, `ytrss`, `zgame`, `zvera_pics`");
 
 $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIMIT 10000");
 
