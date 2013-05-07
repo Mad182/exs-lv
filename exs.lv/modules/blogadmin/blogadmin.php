@@ -3,6 +3,17 @@
 if (!$auth->ok) {
 	$tpl->newBlock('error-nologin');
 } elseif (!get_blog_by_user($auth->id)) {
+
+	if ($auth->karma >= 200) {
+		$nick = sanitize($auth->nick);
+		$db->query("INSERT INTO `cat` (textid,title,isblog,parent) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$auth->id','110')");
+		push('Ieguva <a href="/' . strtolower(mkslug($nick)) . '">blogu</a> exā');
+		$m->delete('isb_' . $auth->id);
+		update_karma($auth->id, true);
+		$db->query("UPDATE `cat` SET `ordered` = `id` WHERE `ordered` = 0");
+		header('Location: /' . strtolower(mkslug($nick)));
+	}
+
 	$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 	$pay = '';
 	if ($credit >= 5) {

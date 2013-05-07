@@ -265,16 +265,3 @@ if ($last > 5) {
 
 file_put_contents('cache/twitter.txt', $last);
 
-//blogi (200 karma)
-$users = $db->get_results("SELECT id,nick FROM users WHERE karma > '199' AND karma < '220'");
-foreach ($users as $user) {
-	if (!$db->get_var("SELECT count(*) FROM cat WHERE isblog = '$user->id'")) {
-		$nick = sanitize($user->nick);
-		$db->query("INSERT INTO cat (textid,title,isblog,parent) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$user->id','110')");
-		$db->query("INSERT INTO pm (from_uid,to_uid,date,ip,title,text,is_read) VALUES ('1','$user->id','" . date('Y-m-d H:i:s') . "','127.0.0.1','Blogs exs.lv','" . '<p>Čau ' . $nick . '!</p><p>Tu esi sasniedzis 200+ karmas līmeni, tādēļ Tev piešķirts Exs.lv blogs.</p><p>Bloga administrācijai vari piekļūt <a href="/myblog">šeit</a>.</p><p style="font-size:90%;color: #888;">Šī ziņa ir nosūtīta automātiski.</p>' . "','0')");
-		userlog($user->id, 'Sasniedza 200 karmas līmeni un ieguva <a href="/' . strtolower(mkslug($nick)) . '">blogu</a>');
-		$m->delete('isb_' . $user->id);
-		update_karma($user->id, true);
-		$db->query("UPDATE `cat` SET `ordered` = `id` WHERE `ordered` = 0");
-	}
-}
