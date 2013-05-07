@@ -95,7 +95,7 @@ if ($wallpaper) {
 	$tpl->assignGlobal('wallpaper-image', $wallpaper);
 }
 
-$bumps = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 6");
+$bumps = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 4");
 if ($bumps) {
 	$tpl->newBlock('side-junk');
 	foreach ($bumps as $junk) {

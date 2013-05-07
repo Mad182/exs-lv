@@ -474,8 +474,8 @@
 	<div class="box">
 		<!-- START BLOCK : side-junk-node-->
 		<a style="float: left;position:relative;width: 50%;padding:0;margin:0;text-align: center;" href="http://exs.lv/junk/{id}" title="{title}">
-			<img src="http://img.exs.lv{thb}" alt="" class="av" style="float: left;width: 86%;" />
-			<span style="position: absolute;left: 10px; top: 10px; color: #fff;background: #555;padding: 1px 4px;">{posts}</span>
+			<img src="http://img.exs.lv{thb}" alt="" class="av" style="float: left;width: 90%;" />
+			<span style="position: absolute;left: 10px; top: 10px; color: #fff;background: #555;padding:1px 4px">{posts}</span>
 		</a>
 		<!-- END BLOCK : side-junk-node-->
 		<div class="c"></div>
