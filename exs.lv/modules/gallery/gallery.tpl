@@ -158,7 +158,7 @@
 	<dt>
 		<a class="username" id="c{comment-id}" href="{aurl}">{comment-author}</a>
 		<a href="{aurl}">
-			<img class="comments-avatar" src="/dati/bildes/useravatar/{comment-author-avatar}" alt="{comment-author-title}" />
+			<img class="comments-avatar" src="{avatar}" alt="{comment-author-title}" />
 		</a>
 		<span class="custom-title">{comment-author-custom_title}</span>
 		<span class="author-info">
