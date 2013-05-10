@@ -35,10 +35,10 @@
 			<input type="file" name="new-image" />
 		</p>
 		<p>
-			<input type="submit" class="button primary" value="Upload!" />
+			<label><input type="checkbox" name="resize" /> samazināt, lai liktu rakstā (540px)</label>
 		</p>
 		<p>
-		  <label><input type="checkbox" name="resize" /> samazināt, lai liktu rakstā (540px)</label>
+			<input type="submit" class="button primary" value="Upload!" />
 		</p>
   </fieldset>
 </form>
