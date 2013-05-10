@@ -520,7 +520,12 @@
 
 	<!-- START BLOCK : daily-wallpaper-->
 	<h3>Dienas tapete</h3>
-	<div id="walpaper" class="box"><a href="http://exs.lv/dati/wallpapers/{wallpaper-image}"><img src="http://exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" /></a><br /><a href="/wallpapers">Tapetes</a></div>
+	<div id="walpaper" class="box">
+		<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
+			<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
+		</a><br />
+		<a href="/wallpapers">Tapetes</a>
+	</div>
 	<!-- END BLOCK : daily-wallpaper-->
 
 	<div id="fansBlock" style="width:200px;"></div>
