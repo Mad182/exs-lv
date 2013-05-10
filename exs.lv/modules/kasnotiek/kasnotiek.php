@@ -23,7 +23,7 @@ if ($actions) {
 	foreach ($actions as $action) {
 
 		if (empty($action->action_avatar)) {
-			$action->avatar = get_avatar($action, 's');
+			$action->action_avatar = get_avatar($action, 's');
 		}
 	
 		$tpl->newBlock('user-actions-node');
