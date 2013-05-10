@@ -22,7 +22,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		$addcom->add_comment($page_id, $auth->id, $_POST['commenttext'], 1);
 		$img = $db->get_row("SELECT thb,text FROM images WHERE id = '$page_id'");
 		$url = '/gallery/' . $inprofile->id . '/' . $page_id;
-		push('Pievienoja komentāru <a href="' . $url . '">' . $inprofile->nick . ' attēlam ' . textlimit($img->text, 32, '...') . '</a>', '/' . $img->thb, 'img' . $page_id);
+		push('Pievienoja komentāru <a href="' . $url . '">' . $inprofile->nick . ' attēlam ' . textlimit($img->text, 32, '...') . '</a>', 'http://img.exs.lv/' . $img->thb, 'img' . $page_id);
 		notify($inprofile->id, 1, $page_id, $url);
 		redirect($url);
 	}
@@ -97,7 +97,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 			if (file_exists($file)) {
 				$db->query("INSERT INTO images (`id`,`uid`,`url`,`thb`,`text`,`date`,`bump`, `ip`, `interest_id`, `lang`) VALUES (NULL,'$auth->id','$file','$thb','$description',NOW(),NOW(),'$auth->ip','$interest_id', '$lang')");
-				push('Pievienoja <a href="/gallery/' . $auth->id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit($description, 32, '...') . '</a>', '/' . $thb);
+				push('Pievienoja <a href="/gallery/' . $auth->id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit($description, 32, '...') . '</a>', 'http://img.exs.lv/' . $thb);
 				update_karma($auth->id, true);
 			}
 		} else {
@@ -468,7 +468,8 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		`galcom`.`vote_users` AS `vote_users`,
 		`users`.`nick` AS `author_nick`,
 		`users`.`level` AS `author_level`,
-		`users`.`avatar` AS `author_avatar`,
+		`users`.`avatar` AS `avatar`,
+		`users`.`av_alt` AS `av_alt`,
 		`users`.`karma` AS `author_karma`
 	FROM
 		`galcom`,
@@ -502,10 +503,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 					$comment->date = display_time(strtotime($comment->date));
 
-					if ($comment->author_avatar == '') {
-						$comment->author_avatar = 'none.png';
-					}
-
 					//assign comment variables
 					$tpl->assign(array(
 						'comment-id' => $comment->id,
@@ -515,7 +512,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						'comment-author' => usercolor($comment->author_nick, $comment->author_level, false, $comment->author),
 						'comment-author-id' => $comment->author,
 						'aurl' => mkurl('user', $comment->author, $comment->author_nick),
-						'comment-author-avatar' => $comment->author_avatar,
+						'avatar' => get_avatar($comment),
 						'comment-author-karma' => $comment->author_karma,
 						'comment-author-class' => $userclass[$comment->author_level],
 						'comment-author-title' => htmlspecialchars($comment->author_nick),

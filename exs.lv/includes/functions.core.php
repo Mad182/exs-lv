@@ -2784,9 +2784,7 @@ function get_latest_images() {
 	if ($latest) {
 		foreach ($latest as $late) {
 
-			//remake_thb($late->url, $late->thb);
-
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="http://exs.lv/' . $late->thb . '" alt="" />';
+			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="http://img.exs.lv/' . $late->thb . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
