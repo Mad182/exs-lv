@@ -3,9 +3,9 @@
 $actions = $db->get_results("SELECT
 		`userlogs`.`action`,
 		`userlogs`.`time`,
-		`userlogs`.`avatar`,
+		`userlogs`.`avatar` AS `action_avatar`,
 		`userlogs`.`user`,
-		`users`.`avatar` AS `uavatar`,
+		`users`.`avatar`,
 		`users`.`av_alt`,
 		`users`.`nick`
 	FROM
@@ -21,21 +21,17 @@ $actions = $db->get_results("SELECT
 if ($actions) {
 	$tpl->newBlock('user-actions');
 	foreach ($actions as $action) {
-		if (!$action->avatar) {
-			if ($action->av_alt) {
-				$action->avatar = '/dati/bildes/u_small/' . $action->uavatar;
-			} elseif ($action->uavatar) {
-				$action->avatar = '/dati/bildes/useravatar/' . $action->uavatar;
-			} else {
-				$action->avatar = '/dati/bildes/u_small/none.png';
-			}
+
+		if (empty($action->action_avatar)) {
+			$action->avatar = get_avatar($action, 's');
 		}
+	
 		$tpl->newBlock('user-actions-node');
 		$tpl->assign(array(
 			'action' => $action->action,
 			'usrnick' => $action->nick,
 			'action-date' => time_ago($action->time),
-			'action-avatar' => $action->avatar,
+			'action-avatar' => $action->action_avatar
 		));
 	}
 }
