@@ -1,13 +1,13 @@
-	<!-- START BLOCK : err-->
+<!-- START BLOCK : err-->
 <div class="form">
 	<p class="error">Kļūda - profils ir jau apstiprināts, vai ievadīta kļūdaina adrese!</p>
 </div>
-	<!-- END BLOCK : err-->
-	
-	<!-- START BLOCK : succ-->
+<!-- END BLOCK : err-->
+
+<!-- START BLOCK : succ-->
 <form class="form" id="login-form-inline" action="/" method="post">
 	<p class="success">Viss kārtībā :)<br />tagad vari ielogoties...</p>
-  <fieldset>
+	<fieldset>
 		<legend>Ielogoties</legend>
 		<p>
 			<label for="login-nick-inline">Niks:</label><br />
@@ -20,6 +20,6 @@
 		<p>
 			<input name="login-submit" id="login-submit-inline" value="Ienākt" type="submit" />
 		</p>
-  </fieldset>
+	</fieldset>
 </form>
-	<!-- END BLOCK : succ-->
+<!-- END BLOCK : succ-->
