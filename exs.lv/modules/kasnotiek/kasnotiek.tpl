@@ -10,6 +10,7 @@
 			<span>{usrnick} pirms {action-date}</span><br />
 			{action}
 		</div>
+		<div class="clear"></div>
 	</li>
 <!-- END BLOCK : user-actions-node-->
 </ul>
