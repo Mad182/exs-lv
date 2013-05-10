@@ -44,6 +44,14 @@ if (empty($_GET['var1']) || empty($_GET['viewcat'])) {
 				$foo->image_ratio_no_zoom_in = true;
 			}
 
+			if ($_POST['resize']) {
+				$foo->image_resize = true;
+				$foo->image_convert = 'jpg';
+				$foo->image_x = 540;
+				$foo->image_ratio_no_zoom_in = true;
+				$foo->jpeg_quality = 97;
+			}
+
 			$foo->process('/home/www/img.exs.lv/' . $path . '/');
 
 			if ($foo->processed) {
@@ -57,6 +65,12 @@ if (empty($_GET['var1']) || empty($_GET['viewcat'])) {
 				if ($foo->image_src_type == 'bmp') {
 					$foo->image_convert = 'png';
 				}
+
+				if ($_POST['resize']) {
+					$foo->image_convert = 'jpg';
+					$foo->jpeg_quality = 96;
+				}
+
 				$foo->process('/home/www/img.exs.lv/' . $path . '/small/');
 
 				$db->query("INSERT INTO `imgupload` (path,user_id,ip,created,file) VALUES ('$path','$auth->id','" . sanitize($auth->ip) . "',NOW(),'" . sanitize($foo->file_dst_name) . "')");

@@ -30,9 +30,16 @@
 <!-- END BLOCK : img-upload-success-->
 <form class="form" action="{page-url}" method="post" enctype="multipart/form-data">
   <fieldset>
-		<p><label>Attēls:</label><br />
-		<input type="file" name="new-image" /></p>
-		<p><input type="submit" class="button primary" value="Upload!" /></p>
+		<p>
+			<label>Attēls:</label><br />
+			<input type="file" name="new-image" />
+		</p>
+		<p>
+			<input type="submit" class="button primary" value="Upload!" />
+		</p>
+		<p>
+		  <label><input type="checkbox" name="resize" /> samazināt, lai liktu rakstā (540px)</label>
+		</p>
   </fieldset>
 </form>
 <!-- START BLOCK : img-upload-item-->
