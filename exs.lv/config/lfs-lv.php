@@ -1,5 +1,7 @@
 <?php
 
+redirect('http://exs.lv/'. true);
+
 $lang = 6;
 
 $tpl_options = 'no-left';
