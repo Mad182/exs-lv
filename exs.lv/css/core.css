@@ -911,7 +911,8 @@ border-radius: 3px;
 box-shadow: 2px 2px 3px #eee
 }
 .mb-av {
-position: relative
+position: relative;
+line-height: 1px;
 }
 .index-av {
 	width: 75px;
