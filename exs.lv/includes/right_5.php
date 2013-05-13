@@ -70,8 +70,7 @@ if (!empty($inprofile)) {
 	$tpl->assign(array(
 		'group-id' => $ingroup->id,
 		'group-title' => $ingroup->title,
-		'group-av' => $av,
-		'av-path' => 'u_large',
+		'group-av' => $av
 	));
 }
 

@@ -137,7 +137,7 @@
 							<!-- START BLOCK : mygroups-->
 							<ul id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="http://exs.lv/dati/bildes/u_small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+								<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
 								<!-- END BLOCK : myg-node-->
 							</ul>
 							<!-- END BLOCK : mygroups-->
@@ -261,7 +261,7 @@
 			<!-- START BLOCK : group-box-->
 			<h3>{group-title}</h3>
 			<div class="box">
-				<a href="/group/{group-id}"><img id="profile-image" src="http://exs.lv/dati/bildes/{av-path}/{group-av}" alt="{group-alt}" /></a>
+				<a href="/group/{group-id}"><img id="profile-image" src="http://img.exs.lv/userpic/large/{group-av}" alt="{group-alt}" /></a>
 			</div>
 			<!-- END BLOCK : group-box-->
 
