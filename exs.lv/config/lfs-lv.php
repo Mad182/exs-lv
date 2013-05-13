@@ -1,6 +1,6 @@
 <?php
 
-redirect('http://exs.lv/'. true);
+redirect('http://exs.lv/', true);
 
 $lang = 6;
 
