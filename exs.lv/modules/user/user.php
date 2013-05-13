@@ -624,7 +624,7 @@ if ($user) {
 					if (!$action->avatar) {
 						$action->avatar = get_avatar($user, 's');
 					} else {
-						$action->avatar = 'http://exs.lv' . $action->avatar;
+						$action->avatar = $action->avatar;
 					}
 					$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
 				}
