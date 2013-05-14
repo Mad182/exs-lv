@@ -90,7 +90,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 			'posts' => $article->posts,
 			'level' => $article->level,
 			'intro' => textlimit($article->text, 270),
-			'node-avatar-image' => trim($article->sm_avatar)
+			'avatar' => trim($article->sm_avatar)
 		));
 	}
 
@@ -149,7 +149,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 
 			$av = '';
 			if(!empty($article->avatar)) {
-				$av = '<a href="/read/' . $article->strid . '" class="av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+				$av = '<a href="/read/' . $article->strid . '" class="av"><img src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
 			}
 
 			$tpl_cachable->assign(array(
@@ -202,7 +202,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 
 				$av = '';
 				if(!empty($article->avatar)) {
-					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img src="/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
 				}
 
 				$tpl_cachable->assign(array(
