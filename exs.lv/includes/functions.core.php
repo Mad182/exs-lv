@@ -708,9 +708,18 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 		}
 	}
 
-	$txt = str_replace('="/bildes', '="http://exs.lv/bildes', $txt);
-	$txt = str_replace('="/dati/bildes', '="http://exs.lv/dati/bildes', $txt);
+
+	//pārveidot vecos avatatu linkus uz jaunajiem
+	$txt = str_replace('="/dati/bildes/useravatar/', '="http://img.exs.lv/userpic/medium/', $txt);
+	$txt = str_replace('="/dati/bildes/u_small/', '="http://img.exs.lv/userpic/small/', $txt);
+	$txt = str_replace('="/dati/bildes/u_large/', '="http://img.exs.lv/userpic/large/', $txt);
+
+	//visu iekš /dati/bildes lādē caur img.exs.lv cache
+	$txt = str_replace('="/dati/bildes', '="http://img.exs.lv/dati/bildes', $txt);
+
+	//absolūtie ceļi, lai viss no /upload un /bildes rādītos arī m.exs.lv
 	$txt = str_replace('="/upload/', '="http://exs.lv/upload/', $txt);
+	$txt = str_replace('="/bildes', '="http://exs.lv/bildes', $txt);
 
 
 	//draudzīgās uz atbalstāmās lapas no ` dofollow_sites`, noņemam nofollow
@@ -2923,7 +2932,7 @@ function get_latest_mbs($friends = false) {
 				$spec = ' class="group"';
 				$group = $db->get_row("SELECT `title`,`avatar` FROM `clans` WHERE `id` = '$mb->groupid'");
 				if ($group->avatar) {
-					$avatar = 'http://exs.lv/dati/bildes/u_small/' . $group->avatar;
+					$avatar = 'http://img.exs.lv/userpic/small/' . $group->avatar;
 				}
 				$url = $domain . '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
 			} else {
