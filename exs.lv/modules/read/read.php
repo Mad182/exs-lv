@@ -130,7 +130,7 @@ if ($article) {
 		$edit_comment_text = htmlpost2db($_POST['edit-comment-text']);
 
 		$edit_comment_author = $db->get_var("SELECT author FROM comments WHERE id = '$edit_comment_id' LIMIT 1");
-		if ((($auth->level == 3 || $article->lang == 5) && $edit_comment_author != $auth->id) && !im_cat_mod()) {
+		if ((($auth->level == 3 || $article->lang == 5) && $edit_comment_author != $auth->id) && !im_cat_mod() && !im_mod()) {
 			set_flash('Tu vari labot tikai savus komentārus!', 'error');
 			redirect('/read/' . $article->strid);
 		}
