@@ -21,9 +21,9 @@ if (!$auth->ok) {
 	if (isset($_POST['tavaiesauka'])) {
 
 		//check mail
-		if (filter_var($_POST['username'], FILTER_VALIDATE_EMAIL)) {
+		if (filter_var($_POST['age'], FILTER_VALIDATE_EMAIL)) {
 
-			$regdata['mail'] = email2db($_POST['username']);
+			$regdata['mail'] = email2db($_POST['age']);
 
 			if ($db->get_row("SELECT * FROM users WHERE mail = ('" . $regdata['mail'] . "')") || $db->get_row("SELECT * FROM users_tmp WHERE mail = ('" . $regdata['mail'] . "')")) {
 				$tpl->newBlock('invalid-mail-taken');
@@ -32,7 +32,7 @@ if (!$auth->ok) {
 				$regdata['mailok'] = true;
 			}
 
-			$emparts = explode('@', $_POST['username']);
+			$emparts = explode('@', $_POST['age']);
 			if ($db->get_var("SELECT count(*) FROM `email_blacklist` WHERE `domain` = '" . sanitize($emparts[1]) . "'")) {
 				set_flash('Neatļauts e-pasts!', 'error');
 				redirect('/' . $category->textid);
@@ -70,7 +70,7 @@ if (!$auth->ok) {
 			$regdata['passok'] = true;
 		}
 
-		if (strtolower($_POST['password']) == '2' or strtolower($_POST['password']) == 'divi' or strtolower($_POST['password']) == 'two') {
+		if (strtolower($_POST['password']) == '7' or strtolower($_POST['password']) == 'septiņi' or strtolower($_POST['password']) == 'septini') {
 			$regdata['botsok'] = true;
 		} else {
 			$tpl->newBlock('invalid-bots');

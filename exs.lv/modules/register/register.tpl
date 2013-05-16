@@ -47,11 +47,11 @@
 			<input type="text" class="text usercheck" name="tavaiesauka" id="tavaiesauka" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
 		</p>
 		<p>
-			<label for="username">E-pasta adrese:<br />
+			<label for="age">E-pasta adrese:<br />
 				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts<br />
 				reģistrācijas apstiprinājuma e-pasts.</span>
 			</label><br />
-			<input type="text" class="text" name="username" id="username" value="{new-mail}" maxlength="64" />
+			<input type="text" class="text" name="age" id="age" value="{new-mail}" maxlength="64" />
 		</p>
 		<p>
 			<label for="omnomnom">Parole:</label><br />
@@ -62,7 +62,7 @@
 			<input type="password" class="text" name="url" id="url" />
 		</p>
 		<p>
-			<label for="password">5 - 3 =<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />
+			<label for="password">pieci plus divi ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />
 			<input type="text" class="text" name="password" id="password" />
 		</p>
 		<h2>Reģistrējoties tu piekrīti mājas lapas lietošanas noteikumiem:</h2>
