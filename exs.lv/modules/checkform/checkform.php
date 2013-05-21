@@ -16,6 +16,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 		// veic salīdzināšanu, vai paroles hash sakrīt ar kādu citu
 		if (strlen($user->pwd) > 5 && !in_array($user->pwd, array('', ' '))) {
 		
+			// moderatori neredzēs, ja viņu paroles sakritīs ar kāda cita profila parolēm
 			$pass = $db->get_results("SELECT `id`,`nick`,`lastseen`,`level`,`lastip` FROM `users` WHERE `pwd` LIKE '%" .$user->pwd . "%' AND `id` != '" . $user->id . "' AND `id` != '".$auth->id."' ORDER BY `nick` ASC ");
 			
 			if ($pass) {
@@ -78,22 +79,22 @@ $tpl->newBlock('mod-cpanel');
 if (isset($_POST['submit'])) {
 
 	// meklēšana pēc lietotāja nika
-	if (isset($_POST['nick']) && strlen($_POST['nick']) >= 3) {
+	if (isset($_POST['nick']) && strlen(trim($_POST['nick'])) >= 3) {
 		$field = 'nick';
-		$criteria = '`nick` LIKE \'%' . sanitize($_POST['nick']) . '%\'';
-		$tpl->assign('niks', $_POST['nick']);
+		$criteria = '`nick` LIKE \'%' . sanitize(trim($_POST['nick'])) . '%\'';
+		$tpl->assign('niks', trim($_POST['nick']));
 
 		// meklēšana pēc e-pasta
-	} else if (isset($_POST['mail']) && strlen($_POST['mail']) >= 3) {
+	} else if (isset($_POST['mail']) && strlen(trim($_POST['mail'])) >= 3) {
 		$field = 'mail';
-		$criteria = '`mail` LIKE \'%' . sanitize($_POST['mail']) . '%\'';
-		$tpl->assign('mails', $_POST['mail']);
+		$criteria = '`mail` LIKE \'%' . sanitize(trim($_POST['mail'])) . '%\'';
+		$tpl->assign('mails', trim($_POST['mail']));
 
-		// meklēšana pēc pēdējās lietotājs IP adreses
-	} else if (isset($_POST['ip']) && strlen($_POST['ip']) >= 3) {
+		// meklēšana pēc pēdējās lietotās IP adreses
+	} else if (isset($_POST['ip']) && strlen(trim($_POST['ip'])) >= 3) {
 		$field = 'ip';
-		$criteria = '`lastip` LIKE \'%' . sanitize($_POST['ip']) . '%\'';
-		$tpl->assign('aipii', $_POST['ip']);
+		$criteria = '`lastip` LIKE \'' . sanitize(trim($_POST['ip'])) . '\'';
+		$tpl->assign('aipii', trim($_POST['ip']));
 
 		// kļūdu gadījumā
 	} else {
@@ -112,10 +113,19 @@ if (isset($_POST['submit'])) {
 
 			$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);
 			if ($field == 'mail') {
-				$res->mail = str_replace($_POST['mail'], '<strong>' . $_POST['mail'] . '</strong>', $res->mail);
+			
+				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt
+				//$escaped = str_replace('%','',trim($_POST['mail']));
+				// laikam nevajag. Parasti modi % nekur neliks.
+				$escaped = trim($_POST['mail']);
+				$res->mail = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->mail);
 			}
-			if (isset($_POST['ip']) && !empty($_POST['ip'])) {
-				$res->lastip = str_replace($_POST['ip'], '<strong>' . $_POST['ip'] . '</strong>', $res->lastip);
+			else if ($field == 'ip') {
+			
+				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt.
+				// Šeit lai % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP, kam beigās ir vēl viens/divi cipari.
+				$escaped = str_replace('%','',trim($_POST['ip']));
+				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
 			}
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
 			$tpl->newBlock('search-result');
