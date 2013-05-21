@@ -1934,13 +1934,21 @@ function update_awards($user) {
 	  );
 	  } */
 
-	 if (in_array($user, array(1, 12108, 140, 24706, 23282, 12407))) {
-	  $awards_list['talka'] = array(
-	  'title' => 'Pašaizliedzīga piedalīšanās Ogres uzkopšanā, spītējot laika apstākļiem',
-	  'state' => 'active'
-	  );
-	  }
+	//ghetto games floorball
+	if (in_array($user, array(1822, 12382, 21450, 13004))) {
+		$awards_list['ghetto-floorball'] = array(
+			'title' => 'Piedalījās Ghetto Games (florbolā)',
+			'state' => 'active'
+		);
+	}
 
+	//ghetto games football
+	if (in_array($user, array(1822, 13004, 858, 23282))) {
+		$awards_list['ghetto-football'] = array(
+			'title' => 'Piedalījās Ghetto Games (futbolā)',
+			'state' => 'active'
+		);
+	}
 
 	/* 	if(in_array($user,array(13004))) {
 	  $awards_list['db-1'] = array(
