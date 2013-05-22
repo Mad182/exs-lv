@@ -12,6 +12,7 @@ if ($auth->ok) {
 	  
 	if (isset($_SESSION['antiflood_rate']) && microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
 		$_SESSION["antiflood_rate"] = microtime(true);
+		$db->query("UPDATE `users` SET `vote_today` = `vote_today`+1 WHERE `id` = '$auth->id'");
 		die('Hold your horses!');
 	}
 	$_SESSION["antiflood_rate"] = microtime(true);
