@@ -2,6 +2,18 @@
 
 if ($auth->ok) {
 
+	/** neļauj vienā sekundē pievienot vairāk kā vienu vērtējumu
+	  * pagaiu variants lai izsargātos no plusiņu flooda
+	  *
+	  * TODO: vajadzetu uztaisīt inteliģentāku sistemu, kas saprot,
+	  * ka pēc kārtas pievienoti piemēram 5 vērtējumi pārāk īsā laikā,
+	  * un vairs neļauj no šī profila un/vai ip vērtēt šajā dienā
+	  */
+	if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] >= time() - 1) {
+		die('Hold your horses!');
+	}
+	$_SESSION["antiflood"] = time();
+
 	$table = 'comments';
 
 	if (isset($_GET['type'])) {
