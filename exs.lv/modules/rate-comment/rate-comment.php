@@ -9,10 +9,12 @@ if ($auth->ok) {
 	  * ka pēc kārtas pievienoti piemēram 5 vērtējumi pārāk īsā laikā,
 	  * un vairs neļauj no šī profila un/vai ip vērtēt šajā dienā
 	  */
-	if (isset($_SESSION['antiflood_rate']) && $_SESSION['antiflood_rate'] >= time() - 1) {
+	  
+	if (isset($_SESSION['antiflood_rate']) && microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
+		$_SESSION["antiflood_rate"] = microtime(true);
 		die('Hold your horses!');
 	}
-	$_SESSION["antiflood_rate"] = time();
+	$_SESSION["antiflood_rate"] = microtime(true);
 
 	$table = 'comments';
 
