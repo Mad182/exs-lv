@@ -23,9 +23,6 @@ RewriteRule ^apple-touch-icon\.png$ /bildes/coding/apple-touch-icon.png
 RewriteCond %{HTTP_HOST} ^coding.lv$
 RewriteRule ^favicon\.ico$ /bildes/coding/favicon.ico
 
-RewriteCond %{HTTP_HOST} ^lfs.lv$
-RewriteRule ^favicon\.ico$ /bildes/lfs/favicon.ico
-
 RewriteCond %{HTTP_HOST} ^rp.exs.lv$
 RewriteRule ^favicon\.ico$ /bildes/gta/favicon.ico
 
