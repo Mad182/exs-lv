@@ -7,9 +7,6 @@ if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localho
 } elseif ($_SERVER['SERVER_NAME'] === 'coding.lv') {
 	require(CORE_PATH . '/config/coding-lv.php');
 
-} elseif ($_SERVER['SERVER_NAME'] === 'lfs.lv') {
-	require(CORE_PATH . '/config/lfs-lv.php');
-
 } elseif ($_SERVER['SERVER_NAME'] === 'rp.exs.lv') {
 	require(CORE_PATH . '/config/mtaforum.php');
 
@@ -23,8 +20,6 @@ if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localho
 	redirect('http://coding.lv' . $_SERVER['REQUEST_URI'], true);
 } elseif ($_SERVER['SERVER_NAME'] === 'www.ezgif.com') {
 	redirect('http://ezgif.com' . $_SERVER['REQUEST_URI'], true);
-} elseif ($_SERVER['SERVER_NAME'] === 'www.lfs.lv') {
-	redirect('http://lfs.lv' . $_SERVER['REQUEST_URI'], true);
 } elseif ($_SERVER['SERVER_NAME'] === 'www.lol.exs.lv') {
 	redirect('http://lol.exs.lv' . $_SERVER['REQUEST_URI'], true);
 } elseif ($_SERVER['SERVER_NAME'] === 'mta-forum.exs.lv' || $_SERVER['SERVER_NAME'] === 'www.rp.exs.lv') {
@@ -54,10 +49,6 @@ $config_domains = array(
 	5 => array(
 		'domain' => 'rp.exs.lv',
 		'prefix' => 'mta'
-	),
-	6 => array(
-		'domain' => 'lfs.lv',
-		'prefix' => 'lfs'
 	),
 	7 => array(
 		'domain' => 'lol.exs.lv',
