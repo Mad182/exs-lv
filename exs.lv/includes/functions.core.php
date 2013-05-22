@@ -2466,11 +2466,10 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 		$level++;
 		foreach ($data[$key] as $val) {
 			$out .= '<li>';
-			$avatar = get_avatar($val, 's');
 			$val->date = strtotime($val->date);
 			if (!$auth->mobile) {
 				$out .= '<div class="mb-av"><a id="m' . $val->id . '" href="/user/' . $val->author . '">';
-				$out .= '<img width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($val->nick) . '" /></a>';
+				$out .= '<img width="45" height="45" src="' . get_avatar($val, 's') . '" alt="' . htmlspecialchars($val->nick) . '" /></a>';
 				if (!empty($val->decos)) {
 					$decos = unserialize($val->decos);
 					if (!empty($decos)) {
@@ -2483,7 +2482,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				}
 				$out .= '</div>';
 			} else {
-				$out .= '<a class="mb-av" id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" width="40" height="40" src="' . $avatar . '" alt="" /></a>';
+				$out .= '<a class="mb-av" id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" width="40" height="40" src="' . get_avatar($val, 's') . '" alt="" /></a>';
 			}
 			$out .= '<div class="response-content">';
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {

@@ -68,14 +68,7 @@ if ($resps) {
 
 	$is_miniblog = $mbid;
 	foreach ($resps as $resp) {
-		if ($resp->avatar == '') {
-			$resp->avatar = 'none.png';
-		}
-		if ($resp->av_alt) {
-			$u_small_path = 'u_small';
-		} else {
-			$u_small_path = 'useravatar';
-		}
+
 		$json['id'] = $resp->id;
 
 		$level = get_mb_level($resp->id);
@@ -102,7 +95,7 @@ if ($resps) {
 			$limit = 2;
 		}
 
-		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="' . mkurl('user', $resp->author, $resp->nick) . '"><img width="45" height="45" src="http://exs.lv/dati/bildes/' . $u_small_path . '/' . $resp->avatar . '" alt="" /></a>';
+		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="' . mkurl('user', $resp->author, $resp->nick) . '"><img width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
 
 		if (!empty($resp->decos)) {
 			$decos = unserialize($resp->decos);
