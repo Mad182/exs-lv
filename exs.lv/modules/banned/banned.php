@@ -19,7 +19,7 @@ if (!$auth->ok) {
 	}
 } elseif (im_mod()) {
 
-	if (isset($_GET['delete']) && $_GET['delete'] != 7258) {
+	if (isset($_GET['delete'])) {
 		$delete = (int) $_GET['delete'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' LIMIT 1");
 		$db->query("DELETE FROM banned WHERE id = '$delete' LIMIT 1");
@@ -29,7 +29,7 @@ if (!$auth->ok) {
 		redirect('/' . $category->textid);
 	}
 
-	if (isset($_GET['delete_ip']) && $_GET['delete_ip'] != 7258) {
+	if (isset($_GET['delete_ip'])) {
 		$delete = (int) $_GET['delete_ip'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' LIMIT 1");
 		$db->query("UPDATE `banned` SET `ip` = '--' WHERE `id` = '$delete' LIMIT 1");
