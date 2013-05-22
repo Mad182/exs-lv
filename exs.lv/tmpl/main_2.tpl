@@ -18,7 +18,7 @@
 	var query_timeout = 45000;
 	var c_url = "{page-url}";
 </script>
-<script type="text/javascript" src="/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox-1.3.4.pack.js,jquery.raty.min.js,swfobject.js,j.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">

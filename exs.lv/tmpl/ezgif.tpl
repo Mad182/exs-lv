@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.Jcrop.js"></script>
+	<script type="text/javascript" src="/js/jquery.jcrop.js"></script>
 	<!-- INCLUDE BLOCK : module-head -->
 </head>
 <body>
