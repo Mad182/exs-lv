@@ -11,7 +11,7 @@ if (isset($_POST['file'])) {
 
 		if (!file_exists('/home/www/img.exs.lv/tmp/' . $out)) {
 			$str = "jpegoptim --strip-all '/home/www/img.exs.lv/tmp/" . $file . "' -d '/home/www/img.exs.lv/tmp/" . $out . "'";
-
+			echo '<code>'.$str.'</code>';
 			$test = `$str`;
 		}
 
