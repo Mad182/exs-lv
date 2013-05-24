@@ -65,7 +65,7 @@ if (isset($_POST['file'])) {
 		$foo->mime_check = true;
 		$foo->no_script = true;
 		$foo->file_max_size = '12M';
-		$foo->allowed = array('image/jpg');
+		$foo->allowed = array('image/jpeg');
 		$foo->image_resize = false;
 		$foo->process('/home/www/img.exs.lv/tmp/');
 		$foo->clean();
