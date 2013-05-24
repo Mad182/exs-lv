@@ -27,6 +27,12 @@ imagemagick
 mysql
 apache2 ar mod_rewrite un .htaccess atbalstu
 
+### lai darbotos ezgif.com rīki:
+advancecomp
+pngcrush
+optipng
+gifsicle
+
 uz servera ir arī apc, bet darbību tā trūkumam teorētiski nevajadzētu ietekmēt.
 
 
