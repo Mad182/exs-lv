@@ -1,4 +1,4 @@
-<h1>Optimize PNG images</h1>
+<h1>Optimize JPEG (JPG) images</h1>
 
 <!-- START BLOCK : optimize-->
 
