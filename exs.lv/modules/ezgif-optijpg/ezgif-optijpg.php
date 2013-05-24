@@ -11,7 +11,6 @@ if (isset($_POST['file'])) {
 
 		if (!file_exists('/home/www/img.exs.lv/tmp/' . $out)) {
 			$str = "cp '/home/www/img.exs.lv/tmp/" . $file . "' '/home/www/img.exs.lv/tmp/" . $out . "' && jpegoptim --strip-all '/home/www/img.exs.lv/tmp/" . $out . "'";
-			echo '<code>'.$str.'</code>';
 			$test = `$str`;
 		}
 
@@ -21,8 +20,6 @@ if (isset($_POST['file'])) {
 		echo '<p><img src="http://img.exs.lv/tmp/' . $out . '" alt="" /></p>';
 
 		echo '<p>File size: ' . human_filesize($fs_old) . ' > ' . human_filesize($fs) . '</p>';
-
-		/*echo '<p>' . ezgif_jpg_menu($out) . '</p>';*/
 
 		echo '<p>Please do not hotlink, but save the image when finished.<br />Files are not stored here indefinitely.</p>';
 		exit;
