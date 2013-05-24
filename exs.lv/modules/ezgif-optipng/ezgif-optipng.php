@@ -10,7 +10,10 @@ if (isset($_POST['file'])) {
 		$out = 'optipng_' . ezgif_filename($_POST['method']) . '_' . $file;
 
 		if (!file_exists('/home/www/img.exs.lv/tmp/' . $out)) {
-			$str = "optipng '/home/www/img.exs.lv/tmp/" . $file . "' -out '/home/www/img.exs.lv/tmp/" . $out . "'";
+			//$str = "optipng '/home/www/img.exs.lv/tmp/" . $file . "' -out '/home/www/img.exs.lv/tmp/" . $out . "'";
+
+			$str = "optipng '/home/www/img.exs.lv/tmp/" . $file . "' -out '/home/www/img.exs.lv/tmp/" . $out . "' && advpng -z4 '/home/www/img.exs.lv/tmp/" . $out . "' && pngcrush -rem gAMA -rem alla -rem cHRM -rem iCCP -rem sRGB -rem time '/home/www/img.exs.lv/tmp/" . $out . "' '/home/www/img.exs.lv/tmp/" . $out . ".bak' && mv '/home/www/img.exs.lv/tmp/" . $out . ".bak' '/home/www/img.exs.lv/tmp/" . $out . "'";
+
 			$test = `$str`;
 		}
 
