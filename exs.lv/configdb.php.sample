@@ -41,8 +41,15 @@ $dev_ips = array(
 	'46.109.90.191'	// burvis
 );
 
-if(empty($_SERVER['HTTP_CF_RAY'])) {
-	$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+/* ugly varnish + cloudflare hack */
+if(empty($_SERVER['HTTP_CF_RAY']) && 
+        !empty($_SERVER['HTTP_X_VARNISH']) && 
+        $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+}
+
+if(!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 }
 
 if (in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $dev_ips) && !isset($_GET['_']) && !isset($_POST['newtags']) && substr($_SERVER['REQUEST_URI'], -4) != '.jpg') {
