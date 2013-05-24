@@ -10,20 +10,19 @@ if (isset($_POST['file'])) {
 		$out = 'optijpg_' . ezgif_filename($_POST['method']) . '_' . $file;
 
 		if (!file_exists('/home/www/img.exs.lv/tmp/' . $out)) {
-			$str = "jpegoptim --strip-all '/home/www/img.exs.lv/tmp/" . $file . "' -d '/home/www/img.exs.lv/tmp/" . $out . "'";
+			$str = "cp '/home/www/img.exs.lv/tmp/" . $file . "' '/home/www/img.exs.lv/tmp/" . $out . "' && jpegoptim --strip-all '/home/www/img.exs.lv/tmp/" . $out . "'";
 			echo '<code>'.$str.'</code>';
-			//$test = `$str`;
+			$test = `$str`;
 		}
 
-		/*$fs = filesize('/home/www/img.exs.lv/tmp/' . $out);
+		$fs = filesize('/home/www/img.exs.lv/tmp/' . $out);
 		$fs_old = filesize($fullPath);
 
 		echo '<p><img src="http://img.exs.lv/tmp/' . $out . '" alt="" /></p>';
-		//echo $test;
 
 		echo '<p>File size: ' . human_filesize($fs_old) . ' > ' . human_filesize($fs) . '</p>';
 
-		echo '<p>' . ezgif_jpg_menu($out) . '</p>';*/
+		echo '<p>' . ezgif_jpg_menu($out) . '</p>';
 
 		echo '<p>Please do not hotlink, but save the image when finished.<br />Files are not stored here indefinitely.</p>';
 		exit;
