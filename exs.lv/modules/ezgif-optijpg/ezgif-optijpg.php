@@ -22,7 +22,7 @@ if (isset($_POST['file'])) {
 
 		echo '<p>File size: ' . human_filesize($fs_old) . ' > ' . human_filesize($fs) . '</p>';
 
-		echo '<p>' . ezgif_jpg_menu($out) . '</p>';
+		/*echo '<p>' . ezgif_jpg_menu($out) . '</p>';*/
 
 		echo '<p>Please do not hotlink, but save the image when finished.<br />Files are not stored here indefinitely.</p>';
 		exit;
