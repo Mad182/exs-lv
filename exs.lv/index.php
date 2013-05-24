@@ -460,6 +460,10 @@ if ($debug) {
 	pr($_GET);
 	echo '<strong>$_POST</strong><br />';
 	pr($_POST);
+	echo '<strong>$auth</strong><br />';
+	pr($auth);
+	echo '<strong>$_SERVER</strong><br />';
+	pr($_SERVER);
 	echo '</div></div></div>';
 }
 
