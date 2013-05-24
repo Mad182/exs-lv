@@ -15,7 +15,7 @@ if (isset($_POST['file'])) {
 			//$test = `$str`;
 		}
 
-		$fs = filesize('/home/www/img.exs.lv/tmp/' . $out);
+		/*$fs = filesize('/home/www/img.exs.lv/tmp/' . $out);
 		$fs_old = filesize($fullPath);
 
 		echo '<p><img src="http://img.exs.lv/tmp/' . $out . '" alt="" /></p>';
@@ -23,7 +23,7 @@ if (isset($_POST['file'])) {
 
 		echo '<p>File size: ' . human_filesize($fs_old) . ' > ' . human_filesize($fs) . '</p>';
 
-		echo '<p>' . ezgif_jpg_menu($out) . '</p>';
+		echo '<p>' . ezgif_jpg_menu($out) . '</p>';*/
 
 		echo '<p>Please do not hotlink, but save the image when finished.<br />Files are not stored here indefinitely.</p>';
 		exit;
