@@ -89,7 +89,7 @@ if (!empty($cats)) {
 		$forums = $db->get_results("SELECT `title`, `textid`, `icon`, `id`, `content`, `stat_topics`, `stat_com`, `mods_only_post`, `status` FROM `cat` WHERE `parent` = '$cat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
 		foreach ($forums as $forum) {
-			if (!$forum->mods_only_post || im_mod() && $forum->status == 'active') {
+			if ((!$forum->mods_only_post || im_mod()) && $forum->status == 'active') {
 				$fcategorys[] = array(
 					'id' => $forum->id,
 					'title' => $forum->title,
@@ -197,7 +197,7 @@ if (!empty($cats)) {
 }
 
 //form
-if ($auth->ok) {
+if ($auth->ok && $category->status == 'active') {
 
 	$tpl->newBlock('tinymce-enabled');
 	$tpl->newBlock('forum-addtopic');
