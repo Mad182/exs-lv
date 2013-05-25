@@ -86,10 +86,10 @@ if (!empty($cats)) {
 			$add = ' AND `mods_only` = 0';
 		}
 
-		$forums = $db->get_results("SELECT `title`, `textid`, `icon`, `id`, `content`, `stat_topics`, `stat_com`, `mods_only_post` FROM `cat` WHERE `parent` = '$cat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
+		$forums = $db->get_results("SELECT `title`, `textid`, `icon`, `id`, `content`, `stat_topics`, `stat_com`, `mods_only_post`, `status` FROM `cat` WHERE `parent` = '$cat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
 		foreach ($forums as $forum) {
-			if (!$forum->mods_only_post || im_mod()) {
+			if (!$forum->mods_only_post || im_mod() && $cat->status == 'active') {
 				$fcategorys[] = array(
 					'id' => $forum->id,
 					'title' => $forum->title,
