@@ -16,7 +16,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart') {
 	}
 
 	$data = array();
-	for ($i = 0; $i <= 365; $i++) {
+	for ($i = 0; $i <= 364; $i++) {
 		$key = date('Y-m-d', strtotime('-' . $i . ' days'));
 		if (!empty($values[$key])) {
 			$data[$key] = $values[$key];
