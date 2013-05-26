@@ -1,7 +1,5 @@
 <?php
 
-$ignore_tla = true;
-
 function can_edit_page($article) {
 	global $lang, $auth, $min_page_edit, $category, $page_edit_time;
 

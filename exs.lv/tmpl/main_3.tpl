@@ -353,9 +353,6 @@
 		<div class="infoblock">
 			<ul id="external-links">
 				<li><a href="http://ezgif.com/crop" title="ezgif.com crop tool">Crop animated gifs online</a></li>
-				<!-- START BLOCK : tla-ads-->
-				{ads}
-				<!-- END BLOCK : tla-ads-->
 			</ul>
 		</div>
 		<div class="c"></div>

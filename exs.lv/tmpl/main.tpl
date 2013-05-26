@@ -408,10 +408,6 @@
 		<div id="random-fact" class="ajaxbox">{random-fact}</div>
 	</div>
 
-	<!-- START BLOCK : tla-ads-->
-	<h3 class="ext">Ieskaties te!</h3>
-	<div class="box ext"><ul style="padding:0">{ads}</ul></div>
-	<!-- END BLOCK : tla-ads-->
 </div>
 <!-- END BLOCK : main-layout-left-->
 

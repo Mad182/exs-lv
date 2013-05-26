@@ -1,6 +1,5 @@
 <?php
 
-$ignore_tla = true;
 $add_css .= ',forum.css';
 
 //add
@@ -217,7 +216,7 @@ if ($auth->ok && $category->status == 'active') {
 			));
 		}
 	}
-} else {
+} elseif($category->status == 'active') {
 	$tpl->newBlock('forum-addtopic-no');
 }
 

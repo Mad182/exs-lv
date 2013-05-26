@@ -89,8 +89,3 @@ if ($auth->ok === true) {
 
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
-
-if($category->textid == 'index') {
-	$tpl->newBlock('tla-ads');
-	$tpl->assign('ads', tla_ads('local_575725.xml', 'CRRLSZUSJVW7SXSK0QAB'));
-}

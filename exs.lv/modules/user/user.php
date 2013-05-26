@@ -1,9 +1,5 @@
 <?php
 
-$ignore_tla = true;
-
-//$fields = array('twitter','yt_name','skype','rs_nick');
-
 if (isset($_GET['var1']) && !in_array($_GET['var1'], array('edit', 'buytitle', 'changenick'))) {
 	$userid = (int) $_GET['var1'];
 } else {

@@ -1,7 +1,5 @@
 <?php
 
-$ignore_tla = true;
-
 if(!$inprofile = get_user(intval($_GET['m']))) {
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	header("Status: 404 Not Found");

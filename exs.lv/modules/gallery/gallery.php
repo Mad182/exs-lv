@@ -1,7 +1,5 @@
 <?php
 
-$ignore_tla = true;
-
 if ($inprofile = get_user(intval($_GET['var1']))) {
 
 	include(CORE_PATH . '/includes/class.tags.php');

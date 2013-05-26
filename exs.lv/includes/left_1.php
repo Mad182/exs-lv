@@ -29,11 +29,6 @@ $tpl->assign(array(
 ));
 unset($out);
 
-if (empty($ignore_tla)) {
-	$tpl->newBlock('tla-ads');
-	$tpl->assign('ads', tla_ads());
-}
-
 //izvēlne
 $parent_id = get_top($category->id);
 if ($parent_id != 0) {
