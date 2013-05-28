@@ -174,7 +174,7 @@ if (!empty($cats)) {
 					));
 					$fcategorys[] = array(
 						'id' => $subcat->id,
-						'title' => '&nbsp;&nbsp;&raquo;&nbsp;' . $subcat->title,
+						'title' => '&nbsp;&nbsp;&raquo;&nbsp;' . $subcat->title
 					);
 
 
@@ -185,8 +185,23 @@ if (!empty($cats)) {
 						foreach ($subcats2 as $subcat2) {
 							$fcategorys[] = array(
 								'id' => $subcat2->id,
-								'title' => '&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&nbsp;' . $subcat2->title,
+								'title' => '&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&nbsp;' . $subcat2->title
 							);
+							
+							
+							$subcats3 = $db->get_results("SELECT `id`, `title` FROM `cat` WHERE `parent` = '$subcat2->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
+
+							if (!empty($subcats3)) {
+
+								foreach ($subcats3 as $subcat3) {
+									$fcategorys[] = array(
+										'id' => $subcat3->id,
+										'title' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&nbsp;' . $subcat3->title
+									);
+								}
+							}
+							
+							
 						}
 					}
 				}
