@@ -216,6 +216,9 @@ if ($auth->ok && $category->status == 'active') {
 			));
 		}
 	}
+	
+	$tpl->newBlock('forum-new');
+	
 } elseif($category->status == 'active') {
 	$tpl->newBlock('forum-addtopic-no');
 }

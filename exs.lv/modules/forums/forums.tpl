@@ -1,6 +1,8 @@
 <!-- START BLOCK : forum-->
 <h1>
+	<!-- START BLOCK : forum-new-->
 	<a class="add-topic button primary" href="#new">+ izveidot tēmu</a>
+	<!-- END BLOCK : forum-new-->
 	{title}
 </h1>
 
@@ -31,8 +33,8 @@
 <!-- END BLOCK : forum-list-->
 </table>
 
-<h2 id="new">Pievienot jaunu tēmu</h2>
 <!-- START BLOCK : forum-addtopic-->
+<h2 id="new">Pievienot jaunu tēmu</h2>
 <form class="form" action="" method="post">
 	<fieldset>
 		<legend>Jauna tēma</legend>
@@ -56,6 +58,7 @@
 </form>
 <!-- END BLOCK : forum-addtopic-->
 <!-- START BLOCK : forum-addtopic-no-->
+<h2 id="new">Pievienot jaunu tēmu</h2>
 <p>Ielogojies vai <a href="/register">reģistrējies</a>, lai pievienotu tēmu!</p>
 <!-- END BLOCK : forum-addtopic-no-->
 
