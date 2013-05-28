@@ -345,7 +345,6 @@ if(!empty($mta->results['server']['hostname'])) {
 		</span>
 
 		<a class="server-link link1" href="http://rp.exs.lv/">Forums</a>
-		<a class="server-link link2" href="http://mta.exs.lv/ucp/login/">UCP</a>
 	</div> Ports: 22003<br />';
 
 	
@@ -386,7 +385,6 @@ if(!empty($mta->results['server']['hostname'])) {
 		</span>
 
 		<a class="server-link link1" href="http://rp.exs.lv/">Forums</a>
-		<a class="server-link link2" href="http://mta.exs.lv/ucp/login/">UCP</a>
 	</div>';
 
 
