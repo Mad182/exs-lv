@@ -5,6 +5,7 @@ function ezgif_menu($file) {
 	<a class="small button primary" href="/crop/' . htmlspecialchars($file) . '">crop</a>
 	<a class="small button primary" href="/resize/' . htmlspecialchars($file) . '">resize</a>
 	<a class="small button primary" href="/optimize/' . htmlspecialchars($file) . '">optimize</a>
+	<a class="small button primary" href="/effects/' . htmlspecialchars($file) . '">effects</a>
 	<a class="small button primary" href="/split/' . htmlspecialchars($file) . '">split</a>
 	<a class="small button danger" href="/save/' . htmlspecialchars($file) . '?_">save</a>
 ';
