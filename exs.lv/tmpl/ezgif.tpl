@@ -45,6 +45,7 @@
 			<li{cat-sel-888}><a class="crop" href="/crop" title="Crop selection of image">GIF Crop</a></li>
 			<li{cat-sel-890}><a class="resize" href="/resize" title="Resize animated image">GIF Resize</a></li>
 			<li{cat-sel-891}><a class="optimize" href="/optimize" title="Reduce animation size">GIF Optimizer</a></li>
+			<li{cat-sel-891}><a class="effects" href="/effects" title="Add effects to animation">GIF Effects</a></li>
 			<li{cat-sel-893}><a class="split" href="/split" title="Split GIF image to frames">GIF Split</a></li>
 			<li{cat-sel-1044}><a class="optimize" href="/optipng" title="Reduce PNG file size">PNG Optimizer</a></li>
 		</ul>

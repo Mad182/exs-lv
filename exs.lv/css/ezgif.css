@@ -179,6 +179,9 @@ background: url('../bildes/ezgif/ico.png') no-repeat 10px -46px;
 #top-menu li a.split {
 background: url('../bildes/ezgif/ico.png') no-repeat 10px 6px;
 }
+#top-menu li a.effects {
+background: url('../bildes/ezgif/ico.png') no-repeat 10px -124px;
+}
 #top-menu li a:hover, #top-menu li a:active {
 text-decoration: underline;
 }
