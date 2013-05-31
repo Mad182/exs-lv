@@ -51,7 +51,7 @@
 		
 		
 	</p>
-	<input type="submit" class="button primary" value="effects it!" name="effects" />
+	<input type="submit" class="button primary" value="Load!" name="effects" />
 
 </form>
 
