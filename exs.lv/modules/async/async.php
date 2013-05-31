@@ -5,7 +5,7 @@
 if(isset($_GET['site'])) {
 
 	if($_GET['site'] == 'mta') {
-		die('<html><body><script src=http://wos.lv/c.php?9530></script></body></html>');
+		die('<html><body><script src=http://wos.lv/c.php?16006></script></body></html>');
 	}
 
 	if($_GET['site'] == 'exs') {
