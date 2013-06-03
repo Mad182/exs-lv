@@ -104,3 +104,6 @@ $comments_per_page = 50;
 //sadaļa, kurā parādās aptaujas jautājumu tēmas
 $polls_cat = 0;
 
+//instrukcijas meklētājiem
+$robotstag = array();
+

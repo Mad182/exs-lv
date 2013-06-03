@@ -14,3 +14,6 @@ $polls_cat = 2;
 
 //radamo profila skatijumu skaits
 $profile_views_limit = 27;
+
+$robotstag[] = 'noodp';
+

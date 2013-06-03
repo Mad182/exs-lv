@@ -1,5 +1,7 @@
 <?php
 
+$robotstag[] = 'noindex';
+
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
 	$inprofile = get_user($userid);

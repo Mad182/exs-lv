@@ -1,5 +1,7 @@
 <?php
 
+$robotstag[] = 'noindex';
+
 $tpl->newBlock('profile-menu');
 $tpl->assign('user-menu-add', ' grāmatzīmes');
 

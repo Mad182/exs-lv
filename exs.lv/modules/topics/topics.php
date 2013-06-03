@@ -1,5 +1,7 @@
 <?php
 
+$robotstag[] = 'noindex';
+
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
 } else {

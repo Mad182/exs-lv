@@ -12,6 +12,9 @@
 <meta property="og:url" content="{url}" />
 <meta property="og:image" content="{image}" />
 <!-- END BLOCK : opengraph-->
+<!-- START BLOCK : robots-->
+<meta name="robots" content="{value}">
+<!-- START BLOCK : robots-->
 <link rel="stylesheet" href="/css/core.css{add-css},gta.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="http://feeds.feedburner.com/exs_roleplay" />
@@ -90,12 +93,6 @@
 <!-- INCLUDE BLOCK : module-head -->
 </head>
 <body class="{layout-options}">
-
-
-<div id="art-page-background-glare-wrapper">
-	<div id="art-page-background-glare"></div>
-</div>
-
 
 <div id="wrapper">
 	<div id="container">

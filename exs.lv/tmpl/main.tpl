@@ -12,7 +12,9 @@
 <meta property="og:url" content="{url}" />
 <meta property="og:image" content="{image}" />
 <!-- END BLOCK : opengraph-->
-<meta name="robots" content="noodp" />
+<!-- START BLOCK : robots-->
+<meta name="robots" content="{value}">
+<!-- START BLOCK : robots-->
 <link rel="stylesheet" href="/css/core.css{add-css},skin{page-skinid}.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes" />

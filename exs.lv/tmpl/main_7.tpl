@@ -12,6 +12,9 @@
 <meta property="og:url" content="{url}" />
 <meta property="og:image" content="{image}" />
 <!-- END BLOCK : opengraph-->
+<!-- START BLOCK : robots-->
+<meta name="robots" content="{value}">
+<!-- START BLOCK : robots-->
 <link rel="stylesheet" href="/css/core.css{add-css},lol.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <script type="text/javascript">

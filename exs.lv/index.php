@@ -437,6 +437,12 @@ if ($skin === 'main') {
 	}
 }
 
+/* robots meta taga pievienošana */
+if(!empty($robotstag)) {
+	$tpl->newBlock('robots');
+	$tpl->assign('value', implode(',',$robotstag));
+}
+
 /* flash error or success message */
 if (!empty($_SESSION['flash_message'])) {
 	$tpl->newBlock('flash-message');
