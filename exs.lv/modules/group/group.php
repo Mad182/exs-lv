@@ -472,13 +472,13 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 		if (im_mod() && isset($_GET['close']) && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
-			$db->query("UPDATE miniblog SET closed = '1' WHERE id = '$sid'");
+			$db->query("UPDATE `miniblog` SET `closed` = '1', `closed_by` = '$auth->id' WHERE `id` = '$sid'");
 			redirect('/group/' . $group->id . '/forum/' . base_convert($sid, 10, 36));
 		}
 
 		if (im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
-			$db->query("UPDATE miniblog SET closed = '0' WHERE id = '$sid'");
+			$db->query("UPDATE `miniblog` SET `closed` = '0', `closed_by` = '0' WHERE `id` = '$sid'");
 			redirect('/group/' . $group->id . '/forum/' . base_convert($sid, 10, 36));
 		}
 
