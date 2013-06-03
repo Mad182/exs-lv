@@ -173,10 +173,6 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$add = '';
 
 				$site = '';
-				$addt = '';
-				if ($auth->ok && $lang != $notify->lang) {
-					$addt = $auth->transfer;
-				}
 
 				$domain = '';
 				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
@@ -209,7 +205,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= 'title="' . htmlspecialchars($notify->info) . '" ';
 				}
-				$out .= 'href="' . $domain . $notify->url . $addt . '"><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add . '</a></li>';
+				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add . '</a></li>';
 			}
 			$out .= '</ul>';
 
@@ -2577,17 +2573,12 @@ function get_latest_posts() {
 			}
 			$url = $domain . '/read/' . $late->strid;
 
-			$add = '';
-			if ($auth->ok && $lang != $late->lang) {
-				$add = $auth->transfer;
-			}
-
 			if ($late->mods_only == 1) {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
 
 			if ($lang == 1) {
-				$out .= '<li><a href="' . $url . $skip . $add . '">';
+				$out .= '<li><a href="' . $url . $skip . '">';
 
 				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']<span>pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
@@ -2595,7 +2586,7 @@ function get_latest_posts() {
 					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span>pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
 				}
 			} else {
-				$out .= '<li><a href="' . $url . $skip . $add . '"><img src="http://exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
+				$out .= '<li><a href="' . $url . $skip . '"><img src="http://exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
 				$out .= '<span>pirms ' . time_ago(strtotime($late->bump)) . '</span>';
 
@@ -2830,11 +2821,6 @@ function get_latest_mbs($friends = false) {
 			$avatar = get_avatar($mb, 's');
 
 			$mb->text = mb_get_title($mb->text);
-			$add = '';
-			if ($auth->ok && $lang != $mb->lang) {
-				$add = $auth->transfer;
-			}
-
 			$domain = '';
 			$prefix = '';
 			if ($mb->lang != $lang) {
@@ -2881,7 +2867,7 @@ function get_latest_mbs($friends = false) {
 				$tw = '<span style="background: url(\'http://exs.lv/bildes/i.png\') no-repeat 0 -280px;width:16px;height:16px;position:absolute;right:2px;bottom:3px"></span>';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . $add . '"><span class="av"><img width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" />' . $tw . '</span><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span>pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '"><span class="av"><img width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" />' . $tw . '</span><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span>pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';

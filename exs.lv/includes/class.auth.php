@@ -87,8 +87,6 @@ class Auth {
 				$_SESSION['updvisits'] = time();
 			}
 
-			$this->transfer = '?transfer=' . $this->token;
-
 			if (!isset($_GET['_']) && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
 				$this->logout();
 				set_flash('Pieeja lapai ir liegta!', 'error');
@@ -96,40 +94,6 @@ class Auth {
 			}
 
 			return true;
-		} elseif (isset($_GET['transfer']) && !empty($_GET['transfer'])) {
-			$transfer = sanitize($_GET['transfer']);
-
-			$userinfo = $db->get_row("SELECT * FROM `users` WHERE `token` = '$transfer' AND `lastip` = '$this->ip' AND `lastseen` > '" . date('Y-m-d H:i:s', time() - 3600) . "' AND `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "'");
-
-			if (!empty($userinfo)) {
-
-				foreach ($userinfo as $key => $val) {
-					$this->$key = $val;
-				}
-
-				$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
-
-				if (in_array($this->id, $site_admins)) {
-					$this->level = 1;
-				}
-
-				if (in_array($this->id, $site_mods)) {
-					$this->level = 2;
-				}
-
-				$this->ok = true;
-				$_SESSION['auth_id'] = $this->id;
-				$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `seen_today` = 1 WHERE `id` = '$this->id'");
-				$this->update_visits();
-
-				$_SESSION['lastseen'] = time();
-
-				if (!isset($_GET['_']) && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
-					$this->logout();
-					set_flash('Pieeja lapai ir liegta!', 'error');
-					redirect('http://exs.lv/?c=125&bid=' . $ban);
-				}
-			}
 		} else {
 			return false;
 		}
@@ -192,7 +156,6 @@ class Auth {
 
 			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
-			$this->transfer = '?transfer=' . $userinfo->token;
 
 			$this->update_visits();
 			return true;

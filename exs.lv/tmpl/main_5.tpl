@@ -103,7 +103,7 @@
 					<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
-							<li><a href="http://exs.lv/{site-transfer}">exs.lv community</a></li>
+							<li><a href="http://exs.lv/">exs.lv community</a></li>
 							<li><a href="http://m.rp.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>

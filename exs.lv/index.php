@@ -43,12 +43,6 @@ if (isset($_GET['kategorija']) && isset($_GET['id'])) {
 //izveido aktīvā lietotāja objektu
 $auth = new Auth();
 
-//login no vienas lapas otrā - novāc tokenu no linka
-if (isset($_GET['transfer'])) {
-	$url = explode('?transfer=', $_SERVER['REQUEST_URI']);
-	redirect($url[0]);
-}
-
 //login
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
@@ -326,8 +320,7 @@ $tpl->assignGlobal(array(
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
 	'tinymce_skin_variant' => $tinymce_skin_variant,
-	'main-ad-include' => file_get_contents(CORE_PATH . '/tmpl/' . $main_ad),
-	'site-transfer' => $auth->transfer
+	'main-ad-include' => file_get_contents(CORE_PATH . '/tmpl/' . $main_ad)
 ));
 // 'idb-count' => $idb_count,
 
