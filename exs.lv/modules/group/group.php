@@ -444,6 +444,19 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 					$db->query("UPDATE clans SET posts = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "' WHERE id = '$group->id'");
 
+
+					/* auto close after 500 posts */
+					$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mainid'");
+					if ($topic->posts >= 500) {
+						$body = sanitize($topic->text . '<p>(<a href="' . $url . '">Tēmas</a> turpinājums)</p>');
+						$db->query("INSERT INTO miniblog (`groupid`, `author`,`date`,`text`,`ip`,`bump`,`lang`) VALUES ('$group->id', '$topic->author',NOW(),'$body','$topic->ip','" . time() . "','$topic->lang')");
+						$newurl = '/group/' . $group->id . '/forum/' . base_convert($db->insert_id, 10, 36);
+						$reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">http://' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
+						$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '17077' WHERE `id` = '$mainid'");
+						redirect($newurl);
+					}
+
+
 					if (isset($_GET['postcomment'])) {
 						die('ok');
 					}
@@ -627,6 +640,15 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'type' => 'miniblog',
 					'lastid' => (int) $db->get_var("SELECT id FROM miniblog WHERE parent = '$record->id' AND removed = '0' ORDER BY id DESC LIMIT 1")
 				));
+			} elseif ($record->closed) {
+				$tpl->newBlock('user-miniblog-closed');
+				if (!empty($record->close_reason)) {
+					$tpl->assign('reason', add_smile($record->close_reason));
+				}
+				if (!empty($record->closed_by)) {
+					$closer = get_user($record->closed_by);
+					$tpl->assign('by', '<br />Aizslēdza: ' . usercolor($closer->nick, $closer->level, false, $record->closed_by));
+				}
 			}
 
 			if (!isset($_GET['single'])) {
