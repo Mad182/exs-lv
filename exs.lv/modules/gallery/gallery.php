@@ -282,6 +282,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					@unlink($image->url);
 					@unlink($image->thb);
 				}
+
+				$auth->log('Izdzēsa attēlu # ' . $image->id, 'users', $inprofile->id);
+
 				redirect('/gallery/' . $inprofile->id);
 			}
 
