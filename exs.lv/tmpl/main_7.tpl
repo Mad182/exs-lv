@@ -106,7 +106,7 @@
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
 						</ul>
-						{current-date}
+						{current-date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
 					</div>
 				</div>
 				<div id="top-menu">
@@ -447,7 +447,6 @@
 		<div class="infoblock">
 			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
 			<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
-			<p>Teamspeak 3:<br />ts.exs.lv</p>
 		</div>
 		<div class="infoblock">
 			<ul id="internal-links">
