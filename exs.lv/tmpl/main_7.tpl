@@ -445,7 +445,7 @@
 			Jaunākais miniblogos: {footer-mb}
 		</div>
 		<div class="infoblock">
-			<p>&copy; SIA OpenIdea, 2013</p>
+			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
 			<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
 			<p>Teamspeak 3:<br />ts.exs.lv</p>
 		</div>

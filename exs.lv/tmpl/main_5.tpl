@@ -389,6 +389,14 @@
 					</fieldset>
 				</form>
 			</div>
+			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+		</div>
+		<div class="infoblock">
+			<ul id="internal-links">
+				<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+				<li><a href="/sitemap">Lapas karte</a></li>
+				<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+			</ul>
 		</div>
 		<div class="c"></div>
 	</div>
