@@ -107,8 +107,8 @@ if (!empty($me)) {
 						}
 
 						//write down
-						$db->query("INSERT INTO users (id,nick,password,mail,date,lastip,skin,facebook_id,source_site,gender, `user_agent`)
-							VALUES (NULL,'" . $nick . "','draugiem_user','',NOW(),'" . $auth->ip . "','3','" . sanitize($me['id']) . "', '$lang', '$gender', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
+						$db->query("INSERT INTO users (id,nick,mail,date,lastip,skin,facebook_id,source_site,gender, `user_agent`)
+							VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($me['id']) . "', '$lang', '$gender', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
 						$newid = $db->insert_id;
 
 						//log registration
