@@ -4,7 +4,6 @@ class Auth {
 
 	var $id;
 	var $nick;
-	var $password;
 	var $ok;
 	var $level = 0;
 	var $rte = 0;
@@ -113,16 +112,10 @@ class Auth {
 			return false;
 		}
 
-		$pwd_old = md5(md5($password));
 		$pwd = pwd($password);
-		$found = $db->get_var("SELECT `id` FROM `users` WHERE (`nick` = '".sanitize($username)."' OR `mail` = '".sanitize($username)."') AND `pwd` = '$pwd' LIMIT 1");
+		$login = sanitize($username);
 
-		if(!$found) {
-			$found = $db->get_var("SELECT `id` FROM `users` WHERE (`nick` = '".sanitize($username)."' OR `mail` = '".sanitize($username)."') AND `password` = '$pwd_old' LIMIT 1");
-			if($found) {
-				$db->query("UPDATE `users` SET `pwd` = '$pwd', `password` = '' WHERE `id` = '$found'");
-			}
-		}
+		$found = $db->get_var("SELECT `id` FROM `users` WHERE (`nick` = '".$login."' OR `mail` = '".$login."') AND `pwd` = '$pwd' LIMIT 1");
 
 		if ($found) {
 			$userinfo = get_user($found, true);

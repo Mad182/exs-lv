@@ -179,7 +179,7 @@ if ($user) {
 			update_karma($auth->id, true);
 
 			if (!empty($_POST['password-1']) && !empty($_POST['password-2']) && $_POST['password-1'] === $_POST['password-2']) {
-				if (pwd($_POST['password-old']) == $user->pwd || $user->password == 'draugiem_user') {
+				if (pwd($_POST['password-old']) == $user->pwd || ($user->pwd == '' && (!empty($user->draugiem_id) || !empty($user->facebook_id)))) {
 					if (strlen($_POST['password-1']) > 5) {
 
 						$db->update('users', $auth->id, array('pwd' => pwd($_POST['password-1'])));
