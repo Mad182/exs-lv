@@ -255,17 +255,17 @@ if (!empty($inprofile)) {
   } */
 
 $load = sys_getloadavg();
-$mb_refresh_limit = '8000';
+$mb_refresh_limit = '10000';
 if ($load[0] > 5) {
 	$mb_refresh_limit = '120000';
 } elseif ($load[0] > 4) {
-	$mb_refresh_limit = '60000';
+	$mb_refresh_limit = '63000';
 } elseif ($load[0] > 3) {
-	$mb_refresh_limit = '45000';
+	$mb_refresh_limit = '46000';
 } elseif ($load[0] > 2) {
-	$mb_refresh_limit = '26000';
+	$mb_refresh_limit = '28000';
 } elseif ($load[0] > 1) {
-	$mb_refresh_limit = '12000';
+	$mb_refresh_limit = '16000';
 }
 
 $today_date = date_lv('l, j. F', time());
