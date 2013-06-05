@@ -321,7 +321,7 @@ if (isset($_GET['s']) && !empty($_GET['s'])) {
 
 					</script>
 
-					<iframe width="0" height="0" border="0" frameborder="0" src="http://exs.lv/saync"></iframe>
+					<iframe width="0" height="0" border="0" frameborder="0" src="http://exs.lv/async"></iframe>
 
 				</body>
 			</html>
