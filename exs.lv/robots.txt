@@ -4,3 +4,11 @@ Disallow: /upload/flash-games/swf/
 Disallow: /dati/speles/swf/
 Disallow: /dati/speles/speles/
 Disallow: /tmpl/
+
+User-Agent: bingbot
+Crawl-delay: 1
+Allow: /
+Disallow: /upload/flash-games/swf/
+Disallow: /dati/speles/swf/
+Disallow: /dati/speles/speles/
+Disallow: /tmpl/
