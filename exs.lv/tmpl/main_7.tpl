@@ -462,7 +462,14 @@
 	</div>
 </div>
 
+<!-- START BLOCK : async-call -->
 <div id="async-placeholder"></div>
+<script>
+$(document).ready(function() {
+	$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
+});
+</script>
+<!-- END BLOCK : async-call -->
 
 <script>
   (function(i,s,o,g,r,a,m){
