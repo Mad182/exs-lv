@@ -38,7 +38,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
 }
 
-if (!$auth->ok) {
+if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 	$tpl = new TemplatePower('tmpl/login.tpl');
 	$tpl->prepare();
 	$tpl->assignGlobal(array(
