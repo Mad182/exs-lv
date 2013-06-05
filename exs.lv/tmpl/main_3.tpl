@@ -354,9 +354,7 @@
 			<p>E-pasts: info@exs.lv<br />Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.</p>
 		</div>
 		<div class="infoblock">
-			<ul id="external-links">
-				<li><a href="http://ezgif.com/crop" title="ezgif.com crop tool">Crop animated gifs online</a></li>
-			</ul>
+
 		</div>
 		<div class="c"></div>
 	</div>
