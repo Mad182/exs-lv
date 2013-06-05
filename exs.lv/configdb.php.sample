@@ -64,7 +64,7 @@ if(!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
 //ja HTTP_X_FORWARDED_FOR satur vairākas
 if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
 	$addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
-	$_SERVER['HTTP_X_FORWARDED_FOR'] = $addr[sizeof($addr)-1];
+	$_SERVER['HTTP_X_FORWARDED_FOR'] = trim($addr[sizeof($addr)-1]);
 }
 
 if (in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $dev_ips) && !isset($_GET['_']) && !isset($_POST['newtags']) && substr($_SERVER['REQUEST_URI'], -4) != '.jpg') {
