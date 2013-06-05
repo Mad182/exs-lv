@@ -45,7 +45,8 @@ $dev_ips = array(
  * jo dažām lapām tiek lietots cloudflare un varnish,
  * dažām tikai varnish, un lokāli visticamāk nav ne viena ne otra
  *
- * aplikācijā REMOTE_ADDR netiek izmantots vispār, tā vietā HTTP_X_FORWARDED_FOR
+ * aplikācijā REMOTE_ADDR netiek izmantots vispār, tā vietā HTTP_X_FORWARDED_FOR,
+ * jeb $auth->ip, visur kur pieejams $auth objekts
  * kuru iepriekš pārrakstam ar (cerams) pareizo IP
  */
 
