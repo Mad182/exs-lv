@@ -35,21 +35,35 @@ define('LIB_PATH', '/home/madars/www/exs-lv/libs');
 //debug konfigurācija
 $dev_ips = array(
 	'127.0.0.1',
-	'87.110.18.3', //m home
-	'213.180.98.21', //m work
-	//'87.110.104.96',
+	'85.9.218.21', //m work
 	'46.109.90.191'	// burvis
 );
 
-/* ugly varnish + cloudflare hack */
-if(empty($_SERVER['HTTP_CF_RAY']) && 
-        !empty($_SERVER['HTTP_X_VARNISH']) && 
-        $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
-}
 
+/**
+ * Pareizas klienta IP adreses noteikšana ir somewhat tricky,
+ * jo dažām lapām tiek lietots cloudflare un varnish,
+ * dažām tikai varnish, un lokāli visticamāk nav ne viena ne otra
+ *
+ * aplikācijā REMOTE_ADDR netiek izmantots vispār, tā vietā HTTP_X_FORWARDED_FOR
+ * kuru iepriekš pārrakstam ar (cerams) pareizo IP
+ */
+
+//cloudflare gadījums, vienalga vai ar vai bez varnish
 if(!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+
+//ja pieprasījums ir bez varnish
+} elseif(empty($_SERVER['HTTP_X_VARNISH'])) {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+
+}
+
+//paņemam pēdējo IP adresi (jebšu pirmo, ja skatamies no klienta puses),
+//ja HTTP_X_FORWARDED_FOR satur vairākas
+if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
+	$addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
+	$_SERVER['HTTP_X_FORWARDED_FOR'] = $addr[sizeof($addr)-1];
 }
 
 if (in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $dev_ips) && !isset($_GET['_']) && !isset($_POST['newtags']) && substr($_SERVER['REQUEST_URI'], -4) != '.jpg') {
