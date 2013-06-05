@@ -21,7 +21,7 @@
 	var mb_refresh_limit = {mb-refresh-limit};
 	var current_user = {currentuser-id};
 	var new_msg_count = {new-messages-count};
-	var query_timeout = 32000;
+	var query_timeout = 60000;
 	var c_url = "{page-url}";
 </script>
 <script type="text/javascript" src="/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
