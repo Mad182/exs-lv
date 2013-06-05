@@ -80,7 +80,25 @@ $db->query("TRUNCATE TABLE `async_ip`");
 
 
 
+############################ draugiem.lv sekotāji
+$str = file_get_contents('http://www.draugiem.lv/exs.lv/js/fans/?count=1000');
+$str = explode('[',$str);
+$str = explode(']',$str[1]);
+$str = json_decode('['.$str[0].']');
 
+foreach ($str as $usr) {
+	if (stristr($usr->url, '/user/')) {
+		$id = str_replace(array('/user/', '/'), '', $usr->url);
+	} else {
+		$id = get_between($usr->image, '/i_', '.jpg');
+	}
+	if ($id > 1000) {
+		if (!$db->get_var("SELECT count(*) FROM `draugiem_followers` WHERE id = '$id'")) {
+			$db->query("INSERT INTO `draugiem_followers` (id) VALUES ('$id')");
+			echo $id . "\n";
+		}
+	}
+}
 
 
 ############### KONGREGATE XML FLASH SPELU IMPORTS ################
