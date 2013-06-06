@@ -1838,15 +1838,15 @@ function update_awards($user) {
 	  } */
 
 	//ghetto games floorball
-	if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282))) {
+	/*if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282))) {
 		$awards_list['ghetto-floorball'] = array(
 			'title' => 'Piedalījās Ghetto Games (florbolā)',
 			'state' => 'active'
 		);
-	}
+	}*/
 
 	//ghetto games football
-	if (in_array($user, array(1822, 13004, 858, 23282))) {
+	if (in_array($user, array(1822, 13004, 858, 23282, 23715, 21450))) {
 		$awards_list['ghetto-football'] = array(
 			'title' => 'Piedalījās Ghetto Games (futbolā)',
 			'state' => 'active'
