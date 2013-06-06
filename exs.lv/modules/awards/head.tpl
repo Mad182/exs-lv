@@ -25,4 +25,3 @@
 </script>
 
 <link rel="stylesheet" href="/css/jquery.cluetip.css" type="text/css" />
-

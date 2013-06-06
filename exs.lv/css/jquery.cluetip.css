@@ -24,7 +24,7 @@ div.ui-cluetip {
   width: 43px;
   height: 11px;
   position: absolute;
-  background-image: url(bildes/cluetip/wait.gif);
+  background-image: url('http://exs.lv/bildes/loading.gif');
 }
 .cluetip-arrows {
   display: none;

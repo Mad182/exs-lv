@@ -1171,7 +1171,7 @@ function get_top_awards($user) {
 		if ($res) {
 			$data .= '<p style="margin:0;padding:4px 0 10px">';
 			foreach ($res as $award) {
-				$data .= '<img width="32" height="32" src="http://exs.lv/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . htmlspecialchars(strip_tags($award->title)) . '" />&nbsp;';
+				$data .= '<img width="32" height="32" src="http://img.exs.lv/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . htmlspecialchars(strip_tags($award->title)) . '" />&nbsp;';
 			}
 			$total = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user'");
 			if ($total > 4) {
@@ -1884,7 +1884,7 @@ function update_awards($user) {
 			if (!in_array($key, $existing_awards)) {
 				$db->query("INSERT INTO autoawards (user_id,award,title,created) VALUES ('$user','$key','" . $val['title'] . "',NOW())");
 				$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
-				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', '/dati/bildes/awards/' . $key . '.png');
+				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', 'http://img.exs.lv/dati/bildes/awards/' . $key . '.png');
 				notify($user, 7);
 				$m->delete('aw_' . $user);
 			}
