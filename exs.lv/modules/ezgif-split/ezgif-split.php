@@ -9,7 +9,7 @@ if (isset($_POST['file'])) {
 
 	if (!is_dir('/home/www/img.exs.lv' . $path)) {
 		mkdir('/home/www/img.exs.lv' . $path, 0700);
-		$str = "convert '/home/www/img.exs.lv/tmp/" . $file . "' -coalesce /home/www/img.exs.lv" . $path . "frame_%d.gif";
+		$str = "convert '/home/www/img.exs.lv/tmp/" . $file . "' -coalesce /home/www/img.exs.lv" . $path . "frame_%03d.gif";
 		$test = `$str`;
 	}
 
