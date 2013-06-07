@@ -34,9 +34,9 @@
 
 		<div class="box">
 			<ul id="paytabs" class="shadetabs">
-				<li><a href="/?c=313" rel="pay"><img src="/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-				<li><a href="/?c=313&lang=uk" rel="pay"><img src="/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-				<li><a href="/?c=313&lang=ie" rel="pay"><img src="/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+				<li><a href="/?c=313" rel="pay"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+				<li><a href="/?c=313&lang=uk" rel="pay"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+				<li><a href="/?c=313&lang=ie" rel="pay"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 			</ul>
 
 			<div id="pay" class="ajaxbox"><noscript><p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
@@ -277,13 +277,13 @@
 		<!-- START BLOCK : members-node-->
 		<li class="{member-class}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />{member-nick}</a>
 			<!-- START BLOCK : member-delete-->
-			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="/group/{group-id}/drop/{member-id}"><img src="/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
+			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="/group/{group-id}/drop/{member-id}"><img src="http://img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
 			<!-- END BLOCK : member-delete-->
 			<!-- START BLOCK : member-moderator-->
-			<a class="moderator confirm" href="/group/{group-id}/setmod/{member-id}"><img src="/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
+			<a class="moderator confirm" href="/group/{group-id}/setmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
 			<!-- END BLOCK : member-moderator-->
 			<!-- START BLOCK : member-unmoderator-->
-			<a class="unmoderator confirm" href="/group/{group-id}/unsetmod/{member-id}"><img src="/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
+			<a class="unmoderator confirm" href="/group/{group-id}/unsetmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
 			<!-- END BLOCK : member-unmoderator-->
 		</li>
 		<!-- END BLOCK : members-node-->
@@ -384,10 +384,10 @@
 			<a href="#" class="mb-reply-main mb-icon">Atbildēt</a>
 			<!-- END BLOCK : mb-reply-main-->
 			<!-- START BLOCK : mb-edit-main-->
-			<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit"><img src="http://exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" /></a>
+			<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit"><img src="http://img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" /></a>
 			<!-- START BLOCK : mb-edit-main-->
 			<!-- START BLOCK : mb-delete-->
-			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}"><img src="http://exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" /></a>
+			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}"><img src="http://img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" /></a>
 			<!-- END BLOCK : mb-delete-->
 			<div class="mb-rater">{rater}</div>
 			<p class="post-info"><a href="/user/{author-id}">{author}</a> <span class="date-time" title="{date-title}">{date}</span> teica:</p>

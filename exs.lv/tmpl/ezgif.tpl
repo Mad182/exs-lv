@@ -9,11 +9,11 @@
 	<meta name="description" content="{description}" />
 	<!-- END BLOCK : meta-description-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<link rel="stylesheet" href="/css/ezgif.css{add-css}" type="text/css" />
+	<link rel="stylesheet" href="{static-server}/css/ezgif.css{add-css}" type="text/css" />
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.jcrop.js"></script>
+	<script type="text/javascript" src="{static-server}/js/jquery.jcrop.js"></script>
 	<!-- INCLUDE BLOCK : module-head -->
 </head>
 <body>

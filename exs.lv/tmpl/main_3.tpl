@@ -15,7 +15,7 @@
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
 <!-- START BLOCK : robots-->
-<link rel="stylesheet" href="/css/core.css{add-css},code.css,prettify.css" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="http://feeds.feedburner.com/codinglv" />
 <script type="text/javascript">
@@ -26,7 +26,7 @@
 	var c_url = "{page-url}";
 	window.google_analytics_uacct = "UA-4190387-9";
 </script>
-<script type="text/javascript" src="/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
+<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">
@@ -45,7 +45,7 @@
 			theme_advanced_statusbar_location : "none",
 			theme_advanced_resizing : true,
 			theme_advanced_blockformats : "p,h2,h3,h4,code,blockquote",
-			content_css : "/css/style.css",
+			content_css : "{static-server}/css/style.css",
 			convert_fonts_to_spans : true,
 			relative_urls : false,
 			paste_remove_styles : true,
@@ -70,7 +70,7 @@
 			theme_advanced_buttons3 : "",
 			theme_advanced_toolbar_location : "bottom",
 			theme_advanced_toolbar_align : "center",
-			content_css : "/css/style.css",
+			content_css : "{static-server}/css/style.css",
 			convert_fonts_to_spans : true,
 			relative_urls : false,
 			paste_remove_styles : true,

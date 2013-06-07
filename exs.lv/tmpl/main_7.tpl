@@ -15,7 +15,7 @@
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
 <!-- START BLOCK : robots-->
-<link rel="stylesheet" href="/css/core.css{add-css},lol.css" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <script type="text/javascript">
 	var mb_refresh_limit = {mb-refresh-limit};
@@ -24,7 +24,7 @@
 	var query_timeout = 60000;
 	var c_url = "{page-url}";
 </script>
-<script type="text/javascript" src="/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
+<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">
@@ -44,7 +44,7 @@
 			theme_advanced_statusbar_location : "none",
 			theme_advanced_resizing : true,
 			theme_advanced_blockformats : "p,h2,h3,h4,h5,code,blockquote",
-			content_css : "/css/style.css",
+			content_css : "{static-server}/css/style.css",
 			convert_fonts_to_spans : true,
 			relative_urls : false,
 			paste_remove_styles : true,
@@ -70,7 +70,7 @@
 			theme_advanced_buttons3 : "",
 			theme_advanced_toolbar_location : "bottom",
 			theme_advanced_toolbar_align : "center",
-			content_css : "/css/style.css",
+			content_css : "{static-server}/css/style.css",
 			convert_fonts_to_spans : true,
 			relative_urls : false,
 			paste_remove_styles : true,

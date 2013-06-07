@@ -320,7 +320,8 @@ $tpl->assignGlobal(array(
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
 	'tinymce_skin_variant' => $tinymce_skin_variant,
-	'main-ad-include' => file_get_contents(CORE_PATH . '/tmpl/' . $main_ad)
+	'main-ad-include' => file_get_contents(CORE_PATH . '/tmpl/' . $main_ad),
+	'static-server' => $static_server
 ));
 // 'idb-count' => $idb_count,
 

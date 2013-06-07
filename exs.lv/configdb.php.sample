@@ -39,6 +39,9 @@ $dev_ips = array(
 	'46.109.90.191'	// burvis
 );
 
+//domēns no kura lādēt pseido-statiskos (/css, /js) failus
+//testējot lapu uz sava lokālā servera var aizvietot ar tukšumu
+$static_server = 'http://static.exs.lv';
 
 /**
  * Pareizas klienta IP adreses noteikšana ir somewhat tricky,
