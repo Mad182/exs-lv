@@ -17,10 +17,14 @@ if (isset($_POST['file'])) {
 	if ($handle = opendir('/home/www/img.exs.lv' . $path)) {
 		while (false !== ($ffile = readdir($handle))) {
 			if ($ffile != "." && $ffile != "..") {
-				echo '<img src="http://img.exs.lv' . $path . $ffile . '" alt="" /> ';
+				$files[] = $ffile;
 			}
 		}
 		closedir($handle);
+		sort($files);
+		foreach($files as $ffile) {
+			echo '<img src="http://img.exs.lv' . $path . $ffile . '" alt="" /> ';
+		}
 	}
 
 	echo '</p>';
