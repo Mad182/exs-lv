@@ -12,6 +12,10 @@ if ($group->id == 65) {
 	redirect('http://lol.exs.lv/', true);
 }
 
+if($group->id == 470) {
+	$tpl->newBlock('sekomums');
+}
+
 if (empty($group->avatar)) {
 	$group->avatar = 'none.png';
 }
