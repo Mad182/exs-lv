@@ -85,7 +85,7 @@ padding: 0;
 margin: 0;
 width: 100%;
 height: 100%;
-background: #fff url('../bildes/ezgif/bg.gif');
+background: #fff url('http://img.exs.lv/bildes/ezgif/bg.gif');
 }
 a img, fieldset {
 border: 0;
@@ -125,7 +125,7 @@ line-height: 38px;
 text-decoration: none;
 color: #222;
 font-size: 36px;
-background: url('../bildes/ezgif/logo.png') no-repeat 0 18px;
+background: url('http://img.exs.lv/bildes/ezgif/logo.png') no-repeat 0 18px;
 text-indent: -9999px;
 }
 #logo span {
@@ -165,22 +165,22 @@ border-top-left-radius: 2px;
 border-top-right-radius: 2px;
 }
 #top-menu li a.home {
-background: url('../bildes/ezgif/ico.png') no-repeat 10px -20px;
+background: url('http://img.exs.lv/bildes/ezgif/ico.png') no-repeat 10px -20px;
 }
 #top-menu li a.crop {
-background: url('../bildes/ezgif/ico.png') no-repeat 10px -72px;
+background: url('http://img.exs.lv/bildes/ezgif/ico.png') no-repeat 10px -72px;
 }
 #top-menu li a.resize {
-background: url('../bildes/ezgif/ico.png') no-repeat 10px -98px;
+background: url('http://img.exs.lv/bildes/ezgif/ico.png') no-repeat 10px -98px;
 }
 #top-menu li a.optimize {
-background: url('../bildes/ezgif/ico.png') no-repeat 10px -46px;
+background: url('http://img.exs.lv/bildes/ezgif/ico.png') no-repeat 10px -46px;
 }
 #top-menu li a.split {
-background: url('../bildes/ezgif/ico.png') no-repeat 10px 6px;
+background: url('http://img.exs.lv/bildes/ezgif/ico.png') no-repeat 10px 6px;
 }
 #top-menu li a.effects {
-background: url('../bildes/ezgif/ico.png') no-repeat 10px -124px;
+background: url('http://img.exs.lv/bildes/ezgif/ico.png') no-repeat 10px -124px;
 }
 #top-menu li a:hover, #top-menu li a:active {
 text-decoration: underline;
@@ -245,16 +245,16 @@ font-size: 12px;
 text-align: center;
 }
 #giftools-menu li.crop a {
-background: url('../bildes/ezgif/icons-96.png') no-repeat 0 0;
+background: url('http://img.exs.lv/bildes/ezgif/icons-96.png') no-repeat 0 0;
 }
 #giftools-menu li.resize a {
-background: url('../bildes/ezgif/icons-96.png') no-repeat -97px 0;
+background: url('http://img.exs.lv/bildes/ezgif/icons-96.png') no-repeat -97px 0;
 }
 #giftools-menu li.optimize a {
-background: url('../bildes/ezgif/icons-96.png') no-repeat -194px 0;
+background: url('http://img.exs.lv/bildes/ezgif/icons-96.png') no-repeat -194px 0;
 }
 #giftools-menu li.split a {
-background: url('../bildes/ezgif/icons-96.png') no-repeat -291px 0;
+background: url('http://img.exs.lv/bildes/ezgif/icons-96.png') no-repeat -291px 0;
 }
 body #crop-result {
 background: #f6f6f7;
@@ -569,7 +569,7 @@ color: #369
 
 /* jquery.Jcrop.min.css */
 .jcrop-holder{direction:ltr;text-align:left}
-.jcrop-vline,.jcrop-hline{background:#FFF url('../bildes/jcrop.gif') top left repeat;font-size:0;position:absolute}
+.jcrop-vline,.jcrop-hline{background:#FFF url('http://img.exs.lv/bildes/jcrop.gif') top left repeat;font-size:0;position:absolute}
 .jcrop-vline{height:100%;width:1px!important}
 .jcrop-hline{height:1px!important;width:100%}
 .jcrop-vline.right{right:0}

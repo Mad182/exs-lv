@@ -18,7 +18,7 @@ body {
 	min-height: 1100px;
 }
 #header-overlay {
-	background: url('http://exs.lv/bildes/overlay-3-lighter.png') no-repeat 0 0;
+	background: url('http://img.exs.lv/bildes/overlay-3-lighter.png') no-repeat 0 0;
 	height: 160px;
 }
 #forum th {
@@ -26,7 +26,7 @@ body {
 	font-weight: 400;
 	color: #eee;
 	text-align: left;
-	background: #1C597E url('http://exs.lv/bildes/forum.png') no-repeat 50% 0;
+	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 50% 0;
 	font-size: 11px;
 	line-height: 14px;
 	height: 14px;
@@ -34,19 +34,19 @@ body {
 	padding: 7px 8px 9px
 }
 #forum th.first {
-	background: #1C597E url('http://exs.lv/bildes/forum.png') no-repeat;
+	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat;
 	font-weight: 700;
 	color: #fff;
 	text-transform: uppercase;
 	padding: 7px 8px 9px 12px
 }
 #forum th.last {
-	background: #1C597E url('http://exs.lv/bildes/forum.png') no-repeat 100% 0
+	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 100% 0
 }
 #login-form input {
-	background: #EAEAEA url('http://exs.lv/bildes/login.png');
+	background: #EAEAEA url('http://img.exs.lv/bildes/login.png');
 }
 #tools-bar {
 	margin: 0 5px;
-	background: transparent url('http://exs.lv/bildes/black_35.png') repeat
+	background: transparent url('http://img.exs.lv/bildes/black_35.png') repeat
 }

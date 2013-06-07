@@ -143,7 +143,7 @@
 
 						<!-- END BLOCK : user-write-->
 						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a href="/piezimes"><img src="http://exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
+						<li{cat-sel-585}><a href="/piezimes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
 						<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
 					</ul>
 					<!-- END BLOCK : user-menu-->
@@ -171,7 +171,7 @@
 		<div class="c"></div>
 		<!-- START BLOCK : flash-message-->
 		<div class="mbox {class}" id="flash-message">
-			<p><a id="close-flash-message" href="#"><img src="http://exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+			<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 		</div>
 		<div class="c"></div>
 		<!-- END BLOCK : flash-message-->

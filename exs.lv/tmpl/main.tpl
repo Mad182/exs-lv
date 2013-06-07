@@ -179,7 +179,7 @@
 				<!-- END BLOCK : user-write-->
 				<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
 				<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-				<li{cat-sel-585}><a href="/piezimes" title="Piezīmes"><img src="http://exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+				<li{cat-sel-585}><a href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
 				<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
 			</ul>
 			<!-- END BLOCK : user-menu-->
@@ -207,7 +207,7 @@
 <div class="c"></div>
 <!-- START BLOCK : flash-message-->
 <div class="mbox {class}" id="flash-message">
-	<p><a id="close-flash-message" href="#"><img src="http://exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+	<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 </div>
 <div class="c"></div>
 <!-- END BLOCK : flash-message-->

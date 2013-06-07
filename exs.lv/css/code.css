@@ -7,7 +7,7 @@ coding.lv specifiskie stili
 */
 
 body {
-	background: #F4F7F9 url('http://exs.lv/bildes/coding/top.gif') repeat-x 0 0;
+	background: #F4F7F9 url('http://img.exs.lv/bildes/coding/top.gif') repeat-x 0 0;
 	font-size: 13px;
 }
 #wrapper {
@@ -18,7 +18,7 @@ body {
 	border-right: 5px solid #fff;
 }
 #tools-bar {
-	background: transparent url("http://exs.lv/bildes/mobile/top-bg-90.png") repeat-x 0 100%;
+	background: transparent url("http://img.exs.lv/bildes/mobile/top-bg-90.png") repeat-x 0 100%;
 	padding: 1px 10px;
 	-webkit-border-bottom-right-radius: 3px;
 	-webkit-border-bottom-left-radius: 3px;
@@ -35,7 +35,7 @@ body {
 }
 #top-menu {
 	margin: 0;
-	background: transparent url("http://exs.lv/bildes/mobile/top-bg-grad.png") repeat-x 0 100%;
+	background: transparent url("http://img.exs.lv/bildes/mobile/top-bg-grad.png") repeat-x 0 100%;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px
@@ -86,7 +86,7 @@ h3 {
 	width: 22%;
 }
 #forum th {
-	background: transparent url("http://exs.lv/bildes/mobile/top-bg.png") repeat-x 0 0;
+	background: transparent url("http://img.exs.lv/bildes/mobile/top-bg.png") repeat-x 0 0;
 	color: #fff;
 	font-size: 12px
 }
@@ -107,7 +107,7 @@ h3 {
 	padding-left: 0
 }
 #exs-logo {
-	background: url('http://exs.lv/bildes/logos/logo_coding.png') no-repeat -20px -25px;
+	background: url('http://img.exs.lv/bildes/logos/logo_coding.png') no-repeat -20px -25px;
 	width: 240px;
 }
 #latest-topics li {

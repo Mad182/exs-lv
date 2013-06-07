@@ -98,7 +98,7 @@ ul {
 }
 
 ul li {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -542px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -542px;
 	padding: 0 0 0 14px;
 }
 
@@ -130,7 +130,7 @@ code, pre, .code, span.c, .codebox {
 }
 
 blockquote, .q, .quote {
-	background: #f6f6f7 url('http://exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
+	background: #f6f6f7 url('http://img.exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
 	color: #555;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -203,7 +203,7 @@ html .banned {
 	width: 210px;
 	height: 100px;
 	position: absolute;
-	background: url('http://exs.lv/bildes/logos/logo_exs.png') no-repeat -14px -20px;
+	background: url('http://img.exs.lv/bildes/logos/logo_exs.png') no-repeat -14px -20px;
 	outline: 0;
 	text-indent: -20000px;
 }
@@ -234,7 +234,7 @@ html .banned {
 	margin: 0;
 	padding: 0;
 	height: 20px;
-	background: url('http://exs.lv/bildes/line.png') no-repeat 0 0;
+	background: url('http://img.exs.lv/bildes/line.png') no-repeat 0 0;
 }
 
 #site-links a {
@@ -247,7 +247,7 @@ html .banned {
 
 #site-links a:hover {
 	color: #fff;
-	background: url('http://exs.lv/bildes/hover.png') no-repeat 50% 0;
+	background: url('http://img.exs.lv/bildes/hover.png') no-repeat 50% 0;
 }
 
 #top-menu {
@@ -288,7 +288,7 @@ html .banned {
 
 #top-menu .selected a {
 	color: #7BBFE1;
-	background: transparent url('http://exs.lv/bildes/darkblue.png');
+	background: transparent url('http://img.exs.lv/bildes/darkblue.png');
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -302,7 +302,7 @@ html .banned {
 #top-menu-right li ul {
 	position: absolute;
 	display: none;
-	background: transparent url('http://exs.lv/bildes/darkblue.png');
+	background: transparent url('http://img.exs.lv/bildes/darkblue.png');
 	top: 15px;
 	z-index: 100;
 	border: 5px solid #071924;
@@ -324,7 +324,7 @@ html .banned {
 	padding: 3px 4px;
 	margin: 0 1px 1px 0;
 	height: 28px;
-	background: transparent url('http://exs.lv/bildes/lightblue.png');
+	background: transparent url('http://img.exs.lv/bildes/lightblue.png');
 }
 
 #top-menu-right li ul#user-group-menu li a {
@@ -358,7 +358,7 @@ html .banned {
 }
 
 #top-menu-right li li a {
-	background: transparent url('http://exs.lv/bildes/lightblue.png');
+	background: transparent url('http://img.exs.lv/bildes/lightblue.png');
 	display: block;
 	height: auto;
 	width: 170px;
@@ -396,7 +396,7 @@ html .banned {
 
 #login-form input.login-submit {
 	width: 50px;
-	background: url('http://exs.lv/bildes/login.png') no-repeat 0 -20px;
+	background: url('http://img.exs.lv/bildes/login.png') no-repeat 0 -20px;
 	height: 20px;
 	color: #fff;
 	text-align: center;
@@ -407,7 +407,7 @@ html .banned {
 }
 
 #login-form input.login-submit:hover {
-	background: url('http://exs.lv/bildes/login.png') no-repeat -50px -20px;
+	background: url('http://img.exs.lv/bildes/login.png') no-repeat -50px -20px;
 }
 
 #top-menu a.external-login span {
@@ -419,12 +419,12 @@ html .banned {
 }
 
 #top-menu a.external-dr span {
-	background: url('http://exs.lv/bildes/login.png') no-repeat 0 -40px;
+	background: url('http://img.exs.lv/bildes/login.png') no-repeat 0 -40px;
 	width: 76px;
 }
 
 #top-menu a.external-fb span {
-	background: url('http://exs.lv/bildes/login.png') no-repeat 0 -58px;
+	background: url('http://img.exs.lv/bildes/login.png') no-repeat 0 -58px;
 	width: 55px;
 }
 
@@ -587,7 +587,7 @@ table.players .blue td {
 	line-height: 18px;
 	padding: 0 3px;
 	color: #fff;
-	background: url('http://exs.lv/bildes/monitor-mask.png') repeat;
+	background: url('http://img.exs.lv/bildes/monitor-mask.png') repeat;
 }
 
 .server-addr small {
@@ -710,95 +710,95 @@ a.link3 {
 }
 
 #wrapper .group-profile {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 0;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 0;
 }
 
 #wrapper .profile {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -26px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -26px;
 }
 
 #wrapper .profile.user-gender-1 {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -52px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -52px;
 }
 
 #wrapper .profile.user-level-1 {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -78px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -78px;
 }
 
 #wrapper .profile.user-level-2 {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -104px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -104px;
 }
 
 #wrapper .profile.user-level-3 {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -130px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -130px;
 }
 
 #wrapper .profile.user-level-5 {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -156px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -156px;
 }
 
 #wrapper .users {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -182px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -182px;
 }
 
 #wrapper .pages {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -208px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -208px;
 }
 
 #wrapper .bookmarks {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -234px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -234px;
 }
 
 #wrapper .gallery {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -260px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -260px;
 }
 
 #wrapper .friends {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -286px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -286px;
 }
 
 #wrapper .awards {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -312px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -312px;
 }
 
 #wrapper .search {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -338px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -338px;
 }
 
 #wrapper .tools {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -364px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -364px;
 }
 
 #wrapper .date {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -390px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -390px;
 }
 
 #wrapper .comments {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -416px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -416px;
 }
 
 #wrapper .views {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -442px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
 }
 
 #wrapper .game-mc {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -468px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -468px;
 }
 
 #wrapper .game-mta {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -702px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -702px;
 }
 
 #wrapper .game-cs {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -494px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -494px;
 }
 
 #wrapper .fact-all {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -494px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -494px;
 }
 
 #wrapper .fact-rs {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -676px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -676px;
 }
 
 .tabs {
@@ -1159,7 +1159,7 @@ a.friend:hover {
 	float: right;
 	color: #888;
 	padding: 0 8px 0 22px;
-	background: url('http://exs.lv/bildes/icons/image_add.png') no-repeat 3px 50%;
+	background: url('http://img.exs.lv/bildes/icons/image_add.png') no-repeat 3px 50%;
 }
 
 .response-content {
@@ -1240,7 +1240,7 @@ a.friend:hover {
 
 #miniblog-list li ul li.more a {
 	padding: 0 0 0 20px;
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -754px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -754px;
 	display: block;
 	height: 16px;
 	line-height: 16px;
@@ -1419,7 +1419,7 @@ a.friend:hover {
 	min-height: 20px;
 	line-height: 20px;
 	padding: 0 7px 0 15px;
-	background: url('http://exs.lv/bildes/tag_bg.png') no-repeat 0 0;
+	background: url('http://img.exs.lv/bildes/tag_bg.png') no-repeat 0 0;
 	text-shadow: 0 1px 0 #fff;
 	font-size: 12px;
 	font-family: helvetica, arial, sans-serif;
@@ -1510,7 +1510,7 @@ a.friend:hover {
 	font-size: 11px;
 	line-height: 14px;
 	border-right: 0;
-	background: url('http://exs.lv/bildes/i.png') repeat 0 -418px;
+	background: url('http://img.exs.lv/bildes/i.png') repeat 0 -418px;
 	border: 1px solid #8D9AAC;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -1733,12 +1733,12 @@ a.friend:hover {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: url('http://exs.lv/bildes/play.png') no-repeat 50% 50%;
+	background: url('http://img.exs.lv/bildes/play.png') no-repeat 50% 50%;
 	text-decoration: none;
 }
 
 .auto-embed-placeholder .play-button:hover {
-	background: url('http://exs.lv/bildes/play_hover.png') no-repeat 50% 50%;
+	background: url('http://img.exs.lv/bildes/play_hover.png') no-repeat 50% 50%;
 }
 
 .auto-embed-placeholder .play-button span {
@@ -1798,7 +1798,7 @@ a.friend:hover {
 }
 
 #related-topics li {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 6px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 6px;
 }
 
 #latest-blogs li {
@@ -1868,11 +1868,11 @@ a.friend:hover {
 }
 
 #page-options .option-edit a {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -100px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -100px;
 }
 
 #page-options .option-history a {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -144px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -144px;
 }
 
 #ucl {
@@ -1959,47 +1959,47 @@ a.friend:hover {
 }
 
 #l-blog {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -14px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -14px;
 	padding: 0 0 0 19px;
 }
 
 #l-pm {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -124px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -124px;
 	padding: 0 0 0 19px;
 }
 
 #l-twitter {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -168px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -168px;
 	padding: 0 0 0 19px;
 }
 
 #l-warn {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -780px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
 	padding: 0 0 0 19px;
 }
 
 #l-warn.active {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -806px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -806px;
 	padding: 0 0 0 19px;
 }
 
 #l-yt {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -444px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -444px;
 	padding: 0 0 0 19px;
 }
 
 .l-gmember {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -190px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -190px;
 	padding: 0 0 0 19px;
 }
 
 .l-gmod {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -212px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -212px;
 	padding: 0 0 0 19px;
 }
 
 .l-gadmin {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -234px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -234px;
 	padding: 0 0 0 19px;
 }
 
@@ -2114,7 +2114,7 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 }
 
 .download {
-	background: url('http://exs.lv/bildes/fugue-icons/disk.png') no-repeat 0 50%;
+	background: url('http://img.exs.lv/bildes/fugue-icons/disk.png') no-repeat 0 50%;
 	display: block;
 	margin: 0 30px;
 	padding: 1px 0 1px 22px;
@@ -2122,7 +2122,7 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 }
 
 .text-notice {
-	background: #F7E7D6 url('http://exs.lv/bildes/notice.png') no-repeat 5px 5px;
+	background: #F7E7D6 url('http://img.exs.lv/bildes/notice.png') no-repeat 5px 5px;
 	border: 1px solid #FAAF56;
 	color: #1D211F;
 	font-size: 10px;
@@ -2141,14 +2141,14 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 
 #bottom-tools a.top {
 	float: right;
-	background: url('http://exs.lv/bildes/i.png') no-repeat 100% -296px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 100% -296px;
 	color: #888;
 	padding: 0 21px 0 0;
 }
 
 #bottom-tools a.back {
 	float: left;
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -309px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -309px;
 	color: #888;
 	padding: 0 0 0 11px;
 }
@@ -2179,15 +2179,15 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 }
 
 #gal-large .img-newer:hover {
-	background: url('http://exs.lv/bildes/arrow-left.png') no-repeat 30% 50%;
+	background: url('http://img.exs.lv/bildes/arrow-left.png') no-repeat 30% 50%;
 }
 
 #gal-large .img-older:hover {
-	background: url('http://exs.lv/bildes/arrow-rgt.png') no-repeat 70% 50%;
+	background: url('http://img.exs.lv/bildes/arrow-rgt.png') no-repeat 70% 50%;
 }
 
 a.mb-api-twitter {
-	background: url('http://exs.lv/bildes/i.png') no-repeat 0 -280px;
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -280px;
 	line-height: 17px;
 	font-size: 90%;
 	color: #888;
@@ -2647,29 +2647,29 @@ dl.list-attr dd {
 }
 
 .plus {
-	background: url('http://exs.lv/bildes/vote.png') no-repeat 0 0;
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 0;
 	text-indent: -9999px;
 }
 
 .plus:hover {
-	background: url('http://exs.lv/bildes/vote.png') no-repeat 0 -64px;
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -64px;
 }
 
 .minus {
-	background: url('http://exs.lv/bildes/vote.png') no-repeat 0 -16px;
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -16px;
 	text-indent: -9999px;
 }
 
 .minus:hover {
-	background: url('http://exs.lv/bildes/vote.png') no-repeat 0 -80px;
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -80px;
 }
 
 .voted1 {
-	background: url('http://exs.lv/bildes/vote.png') no-repeat 0 -32px;
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -32px;
 }
 
 .voted2 {
-	background: url('http://exs.lv/bildes/vote.png') no-repeat 0 -48px;
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -48px;
 }
 
 .c-rate span.r-val {
@@ -2693,7 +2693,7 @@ dl.list-attr dd {
 }
 
 #user-notify li a {
-	background: transparent url('http://exs.lv/bildes/icons-24.png') no-repeat 0 2px;
+	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 2px;
 }
 
 #user-notify li.notification-1 a {
@@ -2978,7 +2978,7 @@ a:hover .lp-prefix {
 }
 
 .mb-reply-to, .mb-reply-main {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 50% -412px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 50% -412px;
 	text-indent: -9999px;
 	outline: 0;
 }
@@ -3037,7 +3037,7 @@ ul.taged {
 	left: 0;
 	width: 40px;
 	height: 480px;
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 }
 
 #fancybox-overlay {
@@ -3101,7 +3101,7 @@ ul.taged {
 	right: -15px;
 	width: 30px;
 	height: 30px;
-	background: transparent url('http://exs.lv/bildes/fancybox.png') -40px 0;
+	background: transparent url('http://img.exs.lv/bildes/fancybox.png') -40px 0;
 	cursor: pointer;
 	z-index: 1103;
 	display: none;
@@ -3139,7 +3139,7 @@ ul.taged {
 	width: 35%;
 	cursor: pointer;
 	outline: none;
-	background: transparent url('http://exs.lv/bildes/blank.gif');
+	background: transparent url('http://img.exs.lv/bildes/blank.gif');
 	z-index: 1102;
 	display: none;
 }
@@ -3165,12 +3165,12 @@ ul.taged {
 }
 
 #fancybox-left-ico {
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 	background-position: -40px -30px;
 }
 
 #fancybox-right-ico {
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 	background-position: -40px -60px;
 }
 
@@ -3201,13 +3201,13 @@ ul.taged {
 	top: -20px;
 	left: 0;
 	width: 100%;
-	background-image: url('http://exs.lv/bildes/fancybox-x.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox-x.png');
 }
 
 #fancybox-bg-ne {
 	top: -20px;
 	right: -20px;
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 	background-position: -40px -162px;
 }
 
@@ -3215,14 +3215,14 @@ ul.taged {
 	top: 0;
 	right: -20px;
 	height: 100%;
-	background-image: url('http://exs.lv/bildes/fancybox-y.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox-y.png');
 	background-position: -20px 0;
 }
 
 #fancybox-bg-se {
 	bottom: -20px;
 	right: -20px;
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 	background-position: -40px -182px;
 }
 
@@ -3230,14 +3230,14 @@ ul.taged {
 	bottom: -20px;
 	left: 0;
 	width: 100%;
-	background-image: url('http://exs.lv/bildes/fancybox-x.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox-x.png');
 	background-position: 0 -20px;
 }
 
 #fancybox-bg-sw {
 	bottom: -20px;
 	left: -20px;
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 	background-position: -40px -142px;
 }
 
@@ -3245,13 +3245,13 @@ ul.taged {
 	top: 0;
 	left: -20px;
 	height: 100%;
-	background-image: url('http://exs.lv/bildes/fancybox-y.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox-y.png');
 }
 
 #fancybox-bg-nw {
 	top: -20px;
 	left: -20px;
-	background-image: url('http://exs.lv/bildes/fancybox.png');
+	background-image: url('http://img.exs.lv/bildes/fancybox.png');
 	background-position: -40px -122px;
 }
 
@@ -3283,7 +3283,7 @@ ul.taged {
 }
 
 #fancybox-title-over {
-	background-image: url('http://exs.lv/bildes/fancy_title_over.png');
+	background-image: url('http://img.exs.lv/bildes/fancy_title_over.png');
 	display: block;
 	padding: 10px;
 }
@@ -3307,7 +3307,7 @@ ul.taged {
 }
 
 #fancybox-title-float-left {
-	background: url('http://exs.lv/bildes/fancybox.png') -40px -90px no-repeat;
+	background: url('http://img.exs.lv/bildes/fancybox.png') -40px -90px no-repeat;
 	padding: 0 0 0 15px;
 }
 
@@ -3315,49 +3315,49 @@ ul.taged {
 	color: #FFF;
 	line-height: 29px;
 	font-weight: 700;
-	background: url('http://exs.lv/bildes/fancybox-x.png') 0 -40px;
+	background: url('http://img.exs.lv/bildes/fancybox-x.png') 0 -40px;
 	padding: 0 0 3px;
 }
 
 #fancybox-title-float-right {
-	background: url('http://exs.lv/bildes/fancybox.png') -55px -90px no-repeat;
+	background: url('http://img.exs.lv/bildes/fancybox.png') -55px -90px no-repeat;
 	padding: 0 0 0 15px;
 }
 
 .fancybox-ie6 #fancybox-close {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_close.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_close.png',sizingMethod='scale');
 }
 
 .fancybox-ie6 #fancybox-left-ico {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_nav_left.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_nav_left.png',sizingMethod='scale');
 }
 
 .fancybox-ie6 #fancybox-right-ico {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_nav_right.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_nav_right.png',sizingMethod='scale');
 }
 
 .fancybox-ie6 #fancybox-title-over {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_title_over.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_over.png',sizingMethod='scale');
 	zoom: 1;
 }
 
 .fancybox-ie6 #fancybox-title-float-left {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_title_left.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_left.png',sizingMethod='scale');
 }
 
 .fancybox-ie6 #fancybox-title-float-main {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_title_main.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_main.png',sizingMethod='scale');
 }
 
 .fancybox-ie6 #fancybox-title-float-right {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_title_right.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_right.png',sizingMethod='scale');
 }
 
 .fancybox-ie6 #fancybox-bg-w, .fancybox-ie6 #fancybox-bg-e, .fancybox-ie6 #fancybox-left, .fancybox-ie6 #fancybox-right, #fancybox-hide-sel-frame {
@@ -3372,7 +3372,7 @@ ul.taged {
 
 #fancybox-loading.fancybox-ie6 div {
 	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_loading.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_loading.png',sizingMethod='scale');
 }
 
 .fancybox-ie .fancybox-bg {
@@ -3380,35 +3380,35 @@ ul.taged {
 }
 
 .fancybox-ie #fancybox-bg-n {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_n.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_n.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-ne {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_ne.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_ne.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-e {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_e.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_e.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-se {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_se.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_se.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-s {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_s.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_s.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-sw {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_sw.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_sw.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-w {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_w.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_w.png',sizingMethod='scale');
 }
 
 .fancybox-ie #fancybox-bg-nw {
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://exs.lv/bildes/fancy_shadow_nw.png',sizingMethod='scale');
+	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_shadow_nw.png',sizingMethod='scale');
 }
 
 #wrapper ol li.code-row {
@@ -3458,7 +3458,7 @@ blockquote p {
 .mb-create {
 	font-size: 11px;
 	padding: 0 0 0 14px;
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -728px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -728px;
 }
 
 .imgselect img {

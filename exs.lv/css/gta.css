@@ -11,7 +11,7 @@ body {
 }
 
 #header {
-	background: url('http://exs.lv/bildes/gta/top.jpg') no-repeat 50% 19px;
+	background: url('http://img.exs.lv/bildes/gta/top.jpg') no-repeat 50% 19px;
 	height: 190px;
 }
 
@@ -56,7 +56,7 @@ body {
 #top-menu {
 	padding: 2px 10px 0;
 	margin: 0;
-	background: #bcb279 url('http://exs.lv/bildes/gta/navbar.png') repeat;
+	background: #bcb279 url('http://img.exs.lv/bildes/gta/navbar.png') repeat;
 	height: 35px;
 	line-height: 35px;
 	border: 0;
@@ -92,7 +92,7 @@ body {
 	margin: 0;
 	height: 35px;
 	line-height: 35px;
-	background: transparent url('http://exs.lv/bildes/gta/seperator.png') no-repeat 0 -2px;
+	background: transparent url('http://img.exs.lv/bildes/gta/seperator.png') no-repeat 0 -2px;
 }
 #top-menu li a:hover {
 	color: #fff;
@@ -160,7 +160,7 @@ body {
 /* forum */
 
 #forum th, #forum th.first, #forum th.last {
-	background: #EDEFF1 url('http://exs.lv/bildes/noise.png') repeat;
+	background: #EDEFF1 url('http://img.exs.lv/bildes/noise.png') repeat;
 	text-shadow: rgba(255, 255, 255, 0.9) 0px 1px 0px;
 	color: #768089;
 	box-shadow: inset #b3bac1 0px 1px 3px;

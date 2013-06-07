@@ -20,10 +20,10 @@
 	display: block
 }
 #wrapper #pm-table td.pm {
-background: url('http://exs.lv/bildes/icons.png') no-repeat 50% -646px;
+background: url('http://img.exs.lv/bildes/icons.png') no-repeat 50% -646px;
 }
 #wrapper #pm-table td.pm-read {
-background: url('http://exs.lv/bildes/icons.png') no-repeat 50% -620px;
+background: url('http://img.exs.lv/bildes/icons.png') no-repeat 50% -620px;
 }
 #pm-table th {
 	text-align: center;
@@ -67,14 +67,14 @@ background: url('http://exs.lv/bildes/icons.png') no-repeat 50% -620px;
 	padding: 3px 10px
 }
 #wrapper .inbox {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -520px
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -520px
 }
 #wrapper .outbox {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -546px
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -546px
 }
 #wrapper .compose {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -572px
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -572px
 }
 #wrapper .mail-search {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -598px;
+	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -598px;
 }

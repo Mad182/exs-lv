@@ -1,9 +1,9 @@
 html, body {
 color: #ddd;
-background: #dde2e4 url(http://exs.lv/bildes/dark/body.jpg) repeat 0 0
+background: #dde2e4 url(http://img.exs.lv/bildes/dark/body.jpg) repeat 0 0
 }
 #wrapper {
-background: #50504A url('http://exs.lv/bildes/dark/grain_dark.gif');
+background: #50504A url('http://img.exs.lv/bildes/dark/grain_dark.gif');
 margin: 0 auto 10px;
 padding: 0 8px;
 width: 992px;
@@ -25,7 +25,7 @@ bottom: 10px;
 background: transparent;
 }
 #tools-bar {
-background: transparent url('http://exs.lv/bildes/top-nav.png') repeat 0 0;
+background: transparent url('http://img.exs.lv/bildes/top-nav.png') repeat 0 0;
 margin: 0;
 height: 22px;
 line-height: 22px;
@@ -38,7 +38,7 @@ height: 22px;
 }
 #top-menu {
 height: 16px;
-background: transparent url('http://exs.lv/bildes/333_90.png') repeat;
+background: transparent url('http://img.exs.lv/bildes/333_90.png') repeat;
 border-bottom: 1px solid #222;
 border-top: 1px solid #444;
 font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
@@ -96,7 +96,7 @@ list-style: none;
 border-radius: 5px
 }
 #top-menu-right li ul#user-group-menu li {
-background: transparent url('http://exs.lv/bildes/333_90.png') repeat;
+background: transparent url('http://img.exs.lv/bildes/333_90.png') repeat;
 }
 #top-menu-right li ul#user-group-menu li a {
 background: transparent;
@@ -111,7 +111,7 @@ padding: 0;
 margin: 0;
 }
 #top-menu-right li li a {
-background: transparent url('http://exs.lv/bildes/333_90.png') repeat;
+background: transparent url('http://img.exs.lv/bildes/333_90.png') repeat;
 display: block;
 height: auto;
 width: 170px;
@@ -476,7 +476,7 @@ height: 20px;
 min-height: 20px;
 line-height: 20px;
 padding: 0 7px 0 15px;
-background: url('http://exs.lv/bildes/tag_bg.png') no-repeat 0 0;
+background: url('http://img.exs.lv/bildes/tag_bg.png') no-repeat 0 0;
 text-shadow: 0 1px 0 #fff;
 font-size: 12px;
 font-family: helvetica, arial, sans-serif;
@@ -518,7 +518,7 @@ border-bottom: 4px solid #777;
 border-top: 1px solid #3A3A3A;
 font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 text-shadow: 0 1px 1px #555;
-background: #222 url(http://exs.lv/bildes/dark/post_top.gif) repeat-x scroll left top;
+background: #222 url(http://img.exs.lv/bildes/dark/post_top.gif) repeat-x scroll left top;
 margin: 0 0 4px;
 padding: 3px 6px;
 color: #ccc;
@@ -571,7 +571,7 @@ padding: 1px 5px
 }
 #search-form input.submit {
 border: 0;
-background: url(http://exs.lv/bildes/skins/1/searchbg.gif) no-repeat 100% 0;
+background: url(http://img.exs.lv/bildes/skins/1/searchbg.gif) no-repeat 100% 0;
 height: 20px;
 text-align: left;
 color: #fff;
@@ -726,7 +726,7 @@ color: #aaa
 margin: 10px 0 0
 }
 #related-topics li {
-background: url(http://exs.lv/bildes/arr_up.gif) no-repeat 0 50%
+background: url(http://img.exs.lv/bildes/arr_up.gif) no-repeat 0 50%
 }
 #latest-blogs li {
 background: transparent;
@@ -847,7 +847,7 @@ blockquote {
 border: 1px solid #333;
 color: #BBB;
 display: block;
-background: #4A4A4A url(http://exs.lv/bildes/dark/quote.gif) no-repeat left top;
+background: #4A4A4A url(http://img.exs.lv/bildes/dark/quote.gif) no-repeat left top;
 margin: 5px;
 padding: 6px 14px 6px 44px
 }
@@ -960,7 +960,7 @@ background: #444;
 box-shadow: 2px 2px 4px #363636
 }
 a.mb-api-twitter {
-background: url(http://exs.lv/bildes/ic.png) no-repeat 0 -280px;
+background: url(http://img.exs.lv/bildes/ic.png) no-repeat 0 -280px;
 line-height: 17px;
 font-size: 90%;
 color: #999;

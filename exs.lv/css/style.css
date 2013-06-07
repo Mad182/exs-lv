@@ -19,7 +19,7 @@ code, pre, .code, span.c, .codebox {
 	display: none
 }
 blockquote, .q {
-	background: #f6f6f7 url('http://exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
+	background: #f6f6f7 url('http://img.exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
 	padding: 3px 8px 3px 25px;
 	color: #555;
 	margin: .5em 1.5em;
@@ -122,13 +122,13 @@ a.thb-image img {
 	color: #369
 }
 .download {
-	background: url('http://exs.lv/bildes/fugue-icons/disk.png') no-repeat 0 1px;
+	background: url('http://img.exs.lv/bildes/fugue-icons/disk.png') no-repeat 0 1px;
 	display: block;
 	margin: 3px 20px;
 	padding: 2px 0 2px 20px;
 }
 .text-notice {
-	background: #F7E7D6 url('http://exs.lv/bildes/notice.png') no-repeat 5px 5px;
+	background: #F7E7D6 url('http://img.exs.lv/bildes/notice.png') no-repeat 5px 5px;
 	border: 1px solid #FAAF56;
 	padding: 5px 8px 5px 45px;
 	margin: 10px 0;
@@ -191,6 +191,6 @@ ul {
 list-style: none
 }
 ul li {
-background: url('http://exs.lv/bildes/i.png') no-repeat 0 -542px;
+background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -542px;
 padding: 0 0 0 14px
 }

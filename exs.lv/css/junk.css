@@ -47,10 +47,10 @@
 	margin: 0 1px;
 }
 #junk-voter .uplink {
-	background: url('http://exs.lv/bildes/junk/upvote.png') no-repeat 50% 50%;
+	background: url('http://img.exs.lv/bildes/junk/upvote.png') no-repeat 50% 50%;
 }
 #junk-voter .downlink {
-	background: url('http://exs.lv/bildes/junk/downvote.png') no-repeat 50% 50%;
+	background: url('http://img.exs.lv/bildes/junk/downvote.png') no-repeat 50% 50%;
 }
 #junk-voter span.downlink, #junk-voter span.uplink {
 	filter: alpha(opacity=45);
