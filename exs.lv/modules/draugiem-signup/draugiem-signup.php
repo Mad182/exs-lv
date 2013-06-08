@@ -201,7 +201,7 @@ if ($session) {//Authentication successful
 			}
 		} else {
 			$_SESSION['auth_id'] = $userinfo->id;
-			update_karma($userinfo->id);
+			update_karma($userinfo->id, true);
 			redirect();
 		}
 	}
