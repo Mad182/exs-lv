@@ -257,7 +257,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="/group/' . $group->id . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect('/group/' . $group->id . '/members');
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0) {
+} elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
