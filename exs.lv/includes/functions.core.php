@@ -2030,7 +2030,7 @@ function get_footer_mb($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($html = $m->get('footer_mb_' . $lang))) {
 		$html = '';
-		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `groupid` = 0 AND `parent` = 0 AND `removed` = 0 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
+		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang ORDER BY `id` DESC LIMIT 6");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
