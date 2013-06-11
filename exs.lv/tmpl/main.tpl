@@ -525,7 +525,7 @@
 	</div>
 	<!-- END BLOCK : daily-wallpaper-->
 
-	<div id="fansBlock" style="width:200px;"></div>
+	<div id="fansBlock" style="width:205px"></div>
 	<script type="text/javascript" src="http://www.draugiem.lv/api/api.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		var fans = new DApi.BizFans({
