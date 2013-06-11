@@ -1070,7 +1070,53 @@ CREATE TABLE IF NOT EXISTS `miniblog` (
   KEY `count_pager` (`author`,`groupid`,`removed`,`parent`),
   KEY `type` (`type`),
   KEY `miniblog_list` (`parent`,`groupid`,`removed`,`lang`,`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2548351 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2752549 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dofollow_sites`
+--
+
+CREATE TABLE IF NOT EXISTS `dofollow_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blacklisted_sites`
+--
+
+CREATE TABLE IF NOT EXISTS `blacklisted_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=40 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movie_ratings`
+--
+
+CREATE TABLE IF NOT EXISTS `movie_ratings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `rating` tinyint(4) NOT NULL DEFAULT '0',
+  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `page_id` (`page_id`),
+  KEY `user_id` (`user_id`),
+  KEY `rating` (`rating`),
+  KEY `page_user` (`page_id`,`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7709 ;
 
 -- --------------------------------------------------------
 
@@ -1994,3 +2040,70 @@ CREATE TABLE IF NOT EXISTS `failed_logins` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `blacklisted_sites`
+--
+
+INSERT INTO `blacklisted_sites` (`id`, `url`) VALUES
+(1, 'awsurveys.com'),
+(2, 'runescapemembership4free.com'),
+(3, 'runescapepingenerator.com'),
+(4, 'freeps3.tv'),
+(5, 'bigmoneyptc.com'),
+(6, 'servces-runescape.com'),
+(7, 'servics-runescape.com'),
+(8, 'services-runecape.com'),
+(9, 'servics-runecape.com'),
+(10, 'services-runescape.ws'),
+(11, 'secure.runscape.com'),
+(12, 'runeskapes.t35.com'),
+(13, 'piratebay.com'),
+(14, 'cut.lv/Q7M/'),
+(15, 'pelninaudu.info'),
+(16, 'moneystrategy.info'),
+(17, '2shared.com/file/r9M0b2fG/SWE_DDoS_227.html'),
+(18, 'megaupload.com/?d=XQK8B0IO'),
+(19, 'is.gd/9ivAOU'),
+(20, 'rapidshare.com/files/1499757716/SwiftKit.exe'),
+(21, 'dahoodbrothas.com'),
+(22, 'free-steam-games.com'),
+(23, 'freeminecraft.me'),
+(24, 'steam.store-powred.com.nu'),
+(25, 'failiem.lv/u/gwrtqbc'),
+(26, 'tinyurl.com/d2c86wo'),
+(27, 'epicfreeprizes.com'),
+(28, 'freeitems.info.tm'),
+(29, 'steam-games-free.com'),
+(30, 'money-friends.net'),
+(31, 'esimsecura.com'),
+(32, 'zoneexp.com'),
+(33, 'freeleaguecodes.net'),
+(34, 'freesteamgifts.com'),
+(35, 'mta.dga.lv'),
+(36, 'cs.noob.lv'),
+(37, 'rp.slime.lv'),
+(38, 'skilled.ez.lv'),
+(39, 'noob.lv');
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `dofollow_sites`
+--
+
+INSERT INTO `dofollow_sites` (`id`, `url`) VALUES
+(1, 'akredits.lv'),
+(5, 'coding.lv'),
+(6, 'exs.lv'),
+(3, 'ezgif.com'),
+(4, 'gif-avatars.com'),
+(11, 'grab.lv'),
+(7, 'img.exs.lv'),
+(12, 'irdarbs.lv'),
+(2, 'lfs.lv'),
+(9, 'lol.exs.lv'),
+(10, 'openidea.lv'),
+(13, 'otrapuse.lv'),
+(8, 'rp.exs.lv');
