@@ -2051,7 +2051,6 @@ function get_footer_mb($force = false) {
  */
 function get_footer_topics($force = false) {
 	global $db, $m, $lang;
-	return '';
 	if ($force || !($html = $m->get('f_topics_' . $lang))) {
 		$html = '';
 		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
