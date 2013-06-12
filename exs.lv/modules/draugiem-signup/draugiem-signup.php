@@ -62,6 +62,9 @@ if ($session) {//Authentication successful
 										$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
 											VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
 										update_karma($existing->id, true);
+										notify($existing->id, 6);
+										notify($auth->id, 6);
+
 
 									}
 								}
@@ -112,6 +115,9 @@ if ($session) {//Authentication successful
 								if($existing) {
 									$db->query("INSERT INTO `friends` (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
 										VALUES ('$newid', '$existing->id', NOW(), NOW(), 1)");
+
+									notify($existing->id, 6);
+									notify($newid, 6);
 								}
 							}
 						}
