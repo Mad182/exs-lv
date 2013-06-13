@@ -42,15 +42,15 @@
 	</div>
 	<div class="vote-question">
 		<p{dark-skin}>Vai Tu būtu gatavs veikt maksājumu ar pārskaitījumu jau pirms pasākuma norises? (Maksāšana uz vietas būtu nedaudz dārgāka.)</p>
-		<input id="payment-yes"type="radio" name="payment" value="0" checked="checked" /> <label for="payment-yes">Jā</label><br />
-		<input id="payment-no"type="radio" name="payment" value="1" /> <label for="payment-no">Nē</label><br />
-		<input id="payment-other"type="radio" name="payment" value="2" /> <label for="payment-other">Maksātu uz vietas skaidrā naudā.</label>
+		<input id="payment-yes" type="radio" name="payment" value="0" checked="checked" /> <label for="payment-yes">Jā</label><br />
+		<input id="payment-no" type="radio" name="payment" value="1" /> <label for="payment-no">Nē</label><br />
+		<input id="payment-other" type="radio" name="payment" value="2" /> <label for="payment-other">Maksātu uz vietas skaidrā naudā.</label>
 	</div>
 	<div class="vote-question">
 		<p{dark-skin}>Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?</p>
-		<input id="25km"type="radio" name="distance" value="0" /> <label for="25km">25 km</label><br />
-		<input id="50km"type="radio" name="distance" value="1" /> <label for="50km">50 km</label><br />
-		<input id="80km"type="radio" name="distance" value="2" /> <label for="80km">80 km</label><br />
+		<input id="25km" type="radio" name="distance" value="0" /> <label for="25km">25 km</label><br />
+		<input id="50km" type="radio" name="distance" value="1" /> <label for="50km">50 km</label><br />
+		<input id="80km" type="radio" name="distance" value="2" /> <label for="80km">80 km</label><br />
 		<input id="150km" type="radio" name="distance" value="3" /> <label for="150km">150 km</label><br />
 		<input id="distance" type="radio" name="distance" value="4" checked="checked" /> <label for="distance">Attālums nav svarīgs</label> 
 	</div>

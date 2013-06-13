@@ -163,7 +163,7 @@ else {
 		$tpl->newBlock('already-voted');		
 	} else {	
 		$tpl->newBlock('vote-content');
-		$tpl->assign('cat',$category->id);
+		$tpl->assign('cat',$category->textid);
 		if ($auth->skin == 1) {
 			$tpl->assign('dark-skin',' style="background:#636262"');
 		}
