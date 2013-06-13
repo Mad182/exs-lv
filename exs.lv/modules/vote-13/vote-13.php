@@ -15,16 +15,11 @@ $arr_days = array(
 );
 // Kuri datumi Tev būtu vispieņemamākie?
 $arr_dates = array(
-	0 => '26.07',
-	1 => '27.07',
-	2 => '02.08',
-	3 => '03.08',
-	4 => '09.08',
-	5 => '10.08',
-	6 => '16.08',
-	7 => '17.08',
-	8 => '23.08',
-	9 => '24.08'
+	0 => '26.07 - 27.07',
+	1 => '02.08 - 03.08',
+	2 => '09.08 - 10.08',
+	3 => '16.08 - 17.08',
+	4 => '23.08 - 24.08'
 );
 // Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?
 $arr_cost = array(
@@ -63,7 +58,7 @@ if (!$voted && isset($_POST['submit']) && isset($_GET['var1']) && $_GET['var1'] 
 
 	$name 		= (isset($_POST['user-name'])) ? sanitize(substr($_POST['user-name'],0,49)) : 'not entered';
 	$age 		= (int)$_POST['user-age'];
-	$days		= (isset($_POST['days']) && ($_POST['days'] == 0 || $_POST['days'] == 1)) ? (int)$_POST['days'] : 0;
+	//$days		= (isset($_POST['days']) && ($_POST['days'] == 0 || $_POST['days'] == 1)) ? (int)$_POST['days'] : 0;
 	$cost 		= (isset($_POST['cost']) && ((int)$_POST['cost'] >= 0 && (int)$_POST['cost'] < 6)) ? (int)$_POST['cost'] : 0;
 	$payment 	= (isset($_POST['payment']) && ((int)$_POST['payment'] >= 0 && (int)$_POST['payment'] < 3)) ? (int)$_POST['payment'] : 0;
 	$distance 	= (isset($_POST['distance']) && ((int)$_POST['distance'] >= 0 && (int)$_POST['distance'] < 5)) ? (int)$_POST['distance'] : 4;
@@ -71,21 +66,22 @@ if (!$voted && isset($_POST['submit']) && isset($_GET['var1']) && $_GET['var1'] 
 	// checkbokšu pārbaude pieņemamajiem datumiem
 	if(!empty($_POST['date'])) {
 		foreach($_POST['date'] as $check) {
-			$db->query("INSERT INTO `votes13_dates` (user,date,choice) VALUES (
-				'".$auth->id."',
-				NOW(),
-				'".(int)$check."'
-			) ");
+			if ((int)$check < 5 && (int)$check >= 0) {
+				$db->query("INSERT INTO `votes13_dates` (user,date,choice) VALUES (
+					'".$auth->id."',
+					NOW(),
+					'".(int)$check."'
+				) ");
+			}
 		}
 	}
 	
-	$insert = $db->query("INSERT INTO `votes13` (user,date,ip,name,age,length,maxcost,paybycard,distance) VALUES(
+	$insert = $db->query("INSERT INTO `votes13` (user,date,ip,name,age,maxcost,paybycard,distance) VALUES(
 		'".$auth->id."',
 		NOW(),
 		'".$auth->ip."',
 		'".$name."',
 		'".$age."',
-		'".$days."',
 		'".$cost."',
 		'".$payment."',
 		'".$distance."'
@@ -124,10 +120,10 @@ if ($voted && isset($_GET['var1']) && $_GET['var1'] == 'results') {
 
 	// viss pārējais
 	$values_arr = array(
-		0 => array('length','Vai veidot divu dienu pasākumu (sākums piektdienas vakarā, bet beigas - svētdienas rītā)?','arr_days'),
-		1 => array('maxcost','Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?','arr_cost'),
-		2 => array('paybycard','Vai Tu būtu gatavs veikt maksājumu ar pārskaitījumu jau pirms pasākuma norises? (Uz vietas nedaudz dārgāk!)','arr_payment'),
-		3 => array('distance','Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?','arr_distance'),
+		//0 => array('length','Vai veidot divu dienu pasākumu (sākums piektdienas vakarā, bet beigas - svētdienas rītā)?','arr_days'),
+		0 => array('maxcost','Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?','arr_cost'),
+		1 => array('paybycard','Vai Tu būtu gatavs veikt maksājumu ar pārskaitījumu jau pirms pasākuma norises? (Uz vietas nedaudz dārgāk!)','arr_payment'),
+		2 => array('distance','Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?','arr_distance'),
 	);
 	
 	$data_count = $db->get_var("SELECT count(*) AS 'count' FROM `votes13` ");

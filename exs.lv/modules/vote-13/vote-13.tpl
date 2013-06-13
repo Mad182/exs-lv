@@ -13,23 +13,18 @@
 		<span id="user-age-error" class="input-error"></span>
 	</div>
 	<hr style="width:90%;margin:10px auto 20px" />
-	<div class="vote-question">
-		<p{dark-skin}>Vai veidot divu dienu pasākumu (sākums piektdienas vakarā, bet beigas - svētdienas rītā)?</p>
+	<!--<div class="vote-question">
+		<p>Vai veidot divu dienu pasākumu (sākums piektdienas vakarā, bet beigas - svētdienas rītā)?</p>
 		<input id="days-yes" type="radio" name="days" value="1" checked="checked" /> <label for="days-yes">Jā</label><br />
 		<input id="days-no" type="radio" name="days" value="0" /> <label for="days-no">Nē</label>
-	</div>
+	</div>//-->
 	<div class="vote-question">
 		<p{dark-skin}>Kuri datumi Tev būtu vispieņemamākie?</p>
-		<input id="2607" type="checkbox" name="date[]" value="0" /> <label for="2607">26.07 - piektdiena</label><br />
-		<input id="2707" type="checkbox" name="date[]" value="1" /> <label for="2707">27.07 - sestdiena</label><br />
-		<input id="0208" type="checkbox" name="date[]" value="2" /> <label for="0208">02.08 - piektdiena</label><br />
-		<input id="0308" type="checkbox" name="date[]" value="3" /> <label for="0308">03.08 - sestdiena</label><br />
-		<input id="0908" type="checkbox" name="date[]" value="4" /> <label for="0908">09.08 - piektdiena</label><br />
-		<input id="1008" type="checkbox" name="date[]" value="5" /> <label for="1008">10.08 - sestdiena</label><br />
-		<input id="1608" type="checkbox" name="date[]" value="6" /> <label for="1608">16.08 - piektdiena</label><br />
-		<input id="1708" type="checkbox" name="date[]" value="7" /> <label for="1708">17.08 - sestdiena</label><br />
-		<input id="2308" type="checkbox" name="date[]" value="8" /> <label for="2308">23.08 - piektdiena</label><br />
-		<input id="2408" type="checkbox" name="date[]" value="9" /> <label for="2408">24.08 - sestdiena</label>
+		<input id="2607" type="checkbox" name="date[]" value="0" /> <label for="2607">26.07 - 27.07</label><br />
+		<input id="0208" type="checkbox" name="date[]" value="1" /> <label for="0208">02.08 - 03.08</label><br />
+		<input id="0908" type="checkbox" name="date[]" value="2" /> <label for="0908">09.08 - 10.08</label><br />
+		<input id="1608" type="checkbox" name="date[]" value="3" /> <label for="1608">16.08 - 17.08</label><br />
+		<input id="2308" type="checkbox" name="date[]" value="4" /> <label for="2308">23.08 - 24.08</label>
 	</div>
 	<div class="vote-question">
 		<p{dark-skin}>Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?</p>
