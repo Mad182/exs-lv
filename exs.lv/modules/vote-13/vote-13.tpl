@@ -1,5 +1,5 @@
 <!-- START BLOCK : vote-content -->
-<form class="form" action="/vote13/voted" method="post">
+<form class="form" action="/{cat}/voted" method="post">
 <fieldset>
 	<legend>eXs party '13 aptauja</legend>
 	<div class="vote-question">
@@ -47,7 +47,7 @@
 		<input id="payment-other"type="radio" name="payment" value="2" /> <label for="payment-other">Maksātu uz vietas skaidrā naudā.</label>
 	</div>
 	<div class="vote-question">
-		<p{dark-skin}>Lielākas attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?</p>
+		<p{dark-skin}>Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?</p>
 		<input id="25km"type="radio" name="distance" value="0" /> <label for="25km">25 km</label><br />
 		<input id="50km"type="radio" name="distance" value="1" /> <label for="50km">50 km</label><br />
 		<input id="80km"type="radio" name="distance" value="2" /> <label for="80km">80 km</label><br />

@@ -92,7 +92,7 @@ if (!$voted && isset($_POST['submit']) && isset($_GET['var1']) && $_GET['var1'] 
 	) ");
 	
 	set_flash('Paldies par viedokli! Uz tikšanos grandiozākajā šīs vasaras ballītē!');
-	redirect('/vote13');
+	redirect('/'.$category->textid);
 	exit;
 
 }
@@ -163,6 +163,7 @@ else {
 		$tpl->newBlock('already-voted');		
 	} else {	
 		$tpl->newBlock('vote-content');
+		$tpl->assign('cat',$category->id);
 		if ($auth->skin == 1) {
 			$tpl->assign('dark-skin',' style="background:#636262"');
 		}
