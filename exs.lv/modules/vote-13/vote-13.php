@@ -113,7 +113,7 @@ if ($voted/* && isset($_GET['var1']) && $_GET['var1'] == 'results'*/) {
 			$tpl->assign(array(
 				'field' => $arr_dates[$date->choice],
 				'count' => $date->count,
-				'bar-width' => 150*($date->count / $data_count),
+				'bar-width' => floor(150*($date->count / $data_count)),
 				'percents' => round(($date->count / $data_count)*100,1)
 			));
 		}
@@ -146,7 +146,7 @@ if ($voted/* && isset($_GET['var1']) && $_GET['var1'] == 'results'*/) {
 				$tpl->assign(array(
 					'field' => ${$values[2]}[$single_data->$values[0]],
 					'count' => $single_data->count,
-					'bar-width' => 150*($single_data->count / $data_count),	// max 150 px garums
+					'bar-width' => floor(150*($single_data->count / $data_count)),	// max 150 px garums
 					'percents' => round(($single_data->count / $data_count)*100,1)
 				));
 			}
