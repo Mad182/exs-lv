@@ -58,6 +58,7 @@
 <!-- END BLOCK : already-voted -->
 <!-- START BLOCK : vote-results -->
 <h1>Aptaujas rezultāti</h1>
+<p style="margin:0;padding:3px 10px;"><strong>Forma aizpildīta {data-count}.</strong></p>
 	<!-- START BLOCK : vote-data -->
 		<div class="vote-question"><p{dark-skin}>{question}</p></div>
 		<table class="vote-table">

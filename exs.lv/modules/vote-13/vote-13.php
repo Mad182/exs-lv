@@ -94,13 +94,14 @@ if (!$voted && isset($_POST['submit']) && isset($_GET['var1']) && $_GET['var1'] 
 }
 
 // rezultāti
-if ($voted && isset($_GET['var1']) && $_GET['var1'] == 'results') {
+if ($voted/* && isset($_GET['var1']) && $_GET['var1'] == 'results'*/) {
 
 	// pieņemamākie datumi
 	$dates = $db->get_results("SELECT `choice`, count(*) AS 'count' FROM `votes13_dates` GROUP BY `choice` ORDER BY `choice` ASC");
 	$data_count = $db->get_var("SELECT count(*) AS 'count' FROM `votes13` ");
 	if ($dates) {
 		$tpl->newBlock('vote-results');
+		$tpl->assign('data-count',$data_count.' '.lv_dsk($data_count,'reizi','reizes'));
 		$tpl->newBlock('vote-data');
 		$tpl->assign('question','Kuri datumi Tev būtu vispieņemamākie?');
 		if ($auth->skin == 1) {
