@@ -98,7 +98,7 @@ if ($voted && isset($_GET['var1']) && $_GET['var1'] == 'results') {
 
 	// pieņemamākie datumi
 	$dates = $db->get_results("SELECT `choice`, count(*) AS 'count' FROM `votes13_dates` GROUP BY `choice` ORDER BY `choice` ASC");
-	$dates_count = $db->get_var("SELECT count(*) AS 'count' FROM `votes13_dates` ");
+	$data_count = $db->get_var("SELECT count(*) AS 'count' FROM `votes13` ");
 	if ($dates) {
 		$tpl->newBlock('vote-results');
 		$tpl->newBlock('vote-data');
@@ -112,8 +112,8 @@ if ($voted && isset($_GET['var1']) && $_GET['var1'] == 'results') {
 			$tpl->assign(array(
 				'field' => $arr_dates[$date->choice],
 				'count' => $date->count,
-				'bar-width' => 150*($date->count / $dates_count),
-				'percents' => round(($date->count / $dates_count)*100,1)
+				'bar-width' => 150*($date->count / $data_count),
+				'percents' => round(($date->count / $data_count)*100,1)
 			));
 		}
 	}
@@ -126,7 +126,7 @@ if ($voted && isset($_GET['var1']) && $_GET['var1'] == 'results') {
 		2 => array('distance','Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?','arr_distance'),
 	);
 	
-	$data_count = $db->get_var("SELECT count(*) AS 'count' FROM `votes13` ");
+	
 	
 	foreach ($values_arr as $values) {
 		$get_data = $db->get_results("SELECT `".$values[0]."`, count(*) AS 'count' FROM `votes13` GROUP BY `".$values[0]."` ORDER BY `".$values[0]."` ASC");
