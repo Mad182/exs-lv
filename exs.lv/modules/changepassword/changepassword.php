@@ -33,7 +33,7 @@ if (!$auth->ok) {
 
 
 			if ($mailer->send($message)) {
-				$db->query("UPDATE `users` SET `pwd` = '$newhash', `password` = '', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
+				$db->query("UPDATE `users` SET `pwd` = '$newhash', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
 				$auth->log('Nomainīta parole (e-pasts nosūtīts)', 'users', $userdata->id);
 				set_flash('Parole nosūtīta uz e-pastu!', 'success');
 			} else {
