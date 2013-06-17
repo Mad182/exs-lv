@@ -194,9 +194,9 @@
 					<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
 					<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
 					<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-					<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+					<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
-					<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+					<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
 				</fieldset>
 			</form>
@@ -357,7 +357,7 @@
 	<h3>Spēļu serveri</h3>
 	<div class="box monitor">
 		<ul class="tabs">
-			<li><a href="/cache/cs_monitor.html" class="active remember-cs ajax"><span class="game-cs">Counter Strike</span></a></li>
+			<li><a rel="nofollow" href="/cache/cs_monitor.html" class="active remember-cs ajax"><span class="game-cs">Counter Strike</span></a></li>
 		</ul>
 		<div id="cs-content" class="ajaxbox">{latest-cs}</div>
 		<div class="c"></div>
@@ -365,7 +365,7 @@
 
 	<div class="box monitor">
 		<ul class="tabs">
-			<li><a href="/cache/csdm_monitor.html" class="active remember-csdm ajax"><span class="game-cs">CSDM</span></a></li>
+			<li><a rel="nofollow" href="/cache/csdm_monitor.html" class="active remember-csdm ajax"><span class="game-cs">CSDM</span></a></li>
 		</ul>
 		<div id="csdm-content" class="ajaxbox">{latest-csdm}</div>
 		<div class="c"></div>
@@ -373,19 +373,11 @@
 
 	<div class="box monitor">
 		<ul class="tabs">
-			<li><a href="/cache/mta_monitor.html" class="active remember-mta ajax"><span class="game-mta">MTA:RP</span></a></li>
+			<li><a rel="nofollow" href="/cache/mta_monitor.html" class="active remember-mta ajax"><span class="game-mta">MTA:RP</span></a></li>
 		</ul>
 		<div id="mta-content" class="ajaxbox">{latest-mta}</div>
 		<div class="c"></div>
 	</div>
-
-	<!--<div class="box monitor">
-		<ul class="tabs">
-			<li><a href="/cache/mc_monitor.html" class="active remember-mc ajax"><span class="game-mc">MineCraft</span></a></li>
-		</ul>
-		<div id="mc-content" class="ajaxbox">{latest-mc}</div>
-		<div class="c"></div>
-	</div>-->
 
 	<!-- START BLOCK : user-top-->
 	<h3>Šodien aktīvākie</h3>

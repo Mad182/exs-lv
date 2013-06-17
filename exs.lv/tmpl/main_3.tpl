@@ -158,9 +158,9 @@
 							<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
 							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
 							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-							<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15010793' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15010793' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 							
-							<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
 						</fieldset>
 					</form>
@@ -322,11 +322,7 @@
 			<h3>Birkas</h3>
 			<div class="box">{out}</div>
 			<!-- END BLOCK : tags-list-side-->
-			
-			<div class="box">
-				<a href="http://www.defectivebydesign.org/no-drm-in-html5"><img style="display:block;margin: 15px auto;" src="//static.fsf.org/dbd/hollywebshare.jpeg" alt="Stop the Hollyweb! No DRM in HTML5." /></a>
-			</div>
-			
+
 		</div>
 		<!-- END BLOCK : main-layout-right-->
 		<div class="c"></div>
