@@ -4,21 +4,28 @@
 	<form id="search-nick" action="" method="post">
 		<p><strong>Lietotājvārds:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="nick" value="{niks}" /> 
+			<input type="text" name="nick" value="{nick}" /> 
 			<input type="submit" name="submit" class="danger button" value="Meklēt" />
 		</p>
 	</form>
 	<form id="search-mail" action="" method="post">
 		<p><strong>E-pasts:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="mail" value="{mails}" /> 
+			<input type="text" name="mail" value="{mail}" /> 
 			<input type="submit" name="submit" class="danger button" value="Meklēt" />
 		</p>
 	</form>
-	<form id="search-skype" action="" method="post">
+	<form id="search-ip" action="" method="post">
 		<p><strong>Pēdējā lietotā IP:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="ip" value="{aipii}" />		
+			<input type="text" name="ip" value="{ip}" />		
+			<input type="submit" name="submit" class="danger button" value="Meklēt" />
+		</p>
+	</form>
+	<form id="search-vip" action="" method="post">
+		<p><strong>Vispār lietota IP:</strong></p>
+		<p class="form-input-box">
+			<input type="text" name="vip" value="{vip}" />		
 			<input type="submit" name="submit" class="danger button" value="Meklēt" />
 		</p>
 	</form>
@@ -28,8 +35,8 @@
 	<!-- END BLOCK : search-ignored -->
 	<table id="user-results">
 		<tr>
-			<th>Profils</th>
-			<th>IP</th>
+			<th style="text-align:left">Profils</th>
+			<th>{ip-type}</th>
 			<th>E-pasts</th>
 			<th>Karma</th>
 			<th>Dienas</th>

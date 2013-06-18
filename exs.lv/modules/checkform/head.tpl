@@ -17,4 +17,10 @@
 		}		
 		return false;
 	});
+	$('.show-rows').live('click',function(){
+		$(this).parent().parent().siblings('.hide-rows').toggle('slow');
+		if ($(this).text() == 'rādīt vairāk') {
+			$(this).text('rādīt mazāk');
+		} else $(this).text('rādīt vairāk');
+	});
 </script>

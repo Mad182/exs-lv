@@ -1,5 +1,4 @@
 #checkform {
-	display:block;
 	padding:20px;
 	border:1px solid rgb(86, 90, 94);
 	margin:20px auto 10px;
@@ -30,18 +29,15 @@
 }
 #user-results td {
 	padding:3px 8px;
-	border:1px dotted rgb(88, 83, 83);
+	border-bottom:1px dotted rgb(88, 83, 83);
 	border-top:none
 }
-#user-results table {
-	margin-right:20px;
-	margin-left:-15px
-}
-#user-results table th {
+#user-results th {
 	color:rgb(153, 156, 160);
-	border-bottom:1px solid rgb(128, 128, 128)
+	border-bottom:1px solid rgb(128, 128, 128);	
+	text-align:center
 }
-#user-results table th, #user-results table td {
+#user-results th, #user-results td {
 	padding:3px 12px
 }
 #user-results p a {
@@ -49,6 +45,13 @@
 }
 .centered-result {
 	text-align:center
+}
+.hide-rows {
+	display:none
+}
+.toggle-rows {
+	text-align:center;
+	font-weight:bold
 }
 .res-info {
 	color:rgb(63, 67, 119)
@@ -68,6 +71,6 @@
 .wider-row p {
 	margin:5px 0
 }
-.infop {
+.infop strong{
 	color:rgb(255, 107, 107)
 }
