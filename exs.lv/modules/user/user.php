@@ -104,7 +104,7 @@ if ($user) {
 			if (isset($_FILES['edit-avatar'])) {
 			
 				$rand = md5(microtime() . $auth->id);
-				$avatar_path = substr($rand, 0, 2) . '/' . substr($rand, 2, 2) . '/';
+				$avatar_path = substr($rand, 0, 1) . '/' . substr($rand, 1, 1) . '/';
 
 				$text = time() . '_' . $auth->id;
 				$foo = new Upload($_FILES['edit-avatar']);
