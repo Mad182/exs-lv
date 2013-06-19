@@ -102,6 +102,9 @@ if ($user) {
 
 			//new avatar image
 			if (isset($_FILES['edit-avatar'])) {
+			
+				$rand = md5(microtime() . $auth->id);
+				$avatar_path = substr($rand, 0, 2) . '/' . substr($rand, 2, 2) . '/';
 
 				$text = time() . '_' . $auth->id;
 				$foo = new Upload($_FILES['edit-avatar']);
@@ -115,7 +118,7 @@ if ($user) {
 				$foo->jpeg_quality = 98;
 				$foo->file_auto_rename = false;
 				$foo->file_overwrite = true;
-				$foo->process(CORE_PATH . '/dati/bildes/useravatar/');
+				$foo->process(CORE_PATH . '/dati/bildes/useravatar/'.$avatar_path);
 				if ($foo->processed) {
 
 					$foo->file_new_name_body = $text;
@@ -128,7 +131,7 @@ if ($user) {
 					$foo->jpeg_quality = 98;
 					$foo->file_auto_rename = false;
 					$foo->file_overwrite = true;
-					$foo->process(CORE_PATH . '/dati/bildes/u_small/');
+					$foo->process(CORE_PATH . '/dati/bildes/u_small/'.$avatar_path);
 
 					$foo->file_new_name_body = $text;
 					$foo->image_resize = true;
@@ -141,13 +144,13 @@ if ($user) {
 					$foo->jpeg_quality = 98;
 					$foo->file_auto_rename = false;
 					$foo->file_overwrite = true;
-					$foo->process(CORE_PATH . '/dati/bildes/u_large/');
+					$foo->process(CORE_PATH . '/dati/bildes/u_large/'.$avatar_path);
 
-					if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $text . '.jpg')) {
+					if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $avatar_path . $text . '.jpg')) {
 						if ($user->avatar != 'none.png' && !empty($user->avatar) && !empty($user->av_alt)) {
 							$db->query("INSERT INTO `avatar_history` (user_id,avatar,changed) VALUES ('$user->id','$user->avatar',NOW())");
 						}
-						$user->avatar = $text . '.jpg';
+						$user->avatar = $avatar_path . $text . '.jpg';
 						$user->av_alt = 1;
 					}
 					$foo->clean();
