@@ -4223,6 +4223,9 @@ function process($server_path = null) {
 		$this->log .= '- <b>error</b>: ' . $this->error . '<br />';
 	}
 
+	// lossless optimization
+	$this->optimize($this->file_dst_pathname);
+
 	// we reinit all the vars
 	$this->init();
 
@@ -4363,6 +4366,22 @@ function imagebmp(&$im, $filename = "") {
 		fclose($file);
 	}
 	return true;
+}
+
+function optimize($img) {
+
+
+	//optimize png images
+	if(substr($img, -4) == '.png') {
+		$action = "optipng '" . $img . "'";
+		$exec = `$action`;
+
+	//strip useless jpeg info
+	} elseif(substr($img, -4) == '.jpg' || substr($img, -5) == '.jpeg') {
+		$action = "jepgoptim '" . $img . "' --strip-all";
+		$exec = `$action`;
+	}
+
 }
 
 }
