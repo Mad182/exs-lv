@@ -4378,7 +4378,7 @@ function optimize($img) {
 
 	//strip useless jpeg info
 	} elseif(substr($img, -4) == '.jpg' || substr($img, -5) == '.jpeg') {
-		$action = "jepgoptim '" . $img . "' --strip-all";
+		$action = "jpegoptim '" . $img . "' --strip-all";
 		$exec = `$action`;
 	}
 
