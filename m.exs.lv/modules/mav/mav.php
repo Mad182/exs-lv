@@ -1,6 +1,10 @@
 <?php
-
 $original = CORE_PATH . '/dati/bildes/useravatar/' . $_GET['img'];
+
+$path = '';
+if(substr($_GET['img'],1,1) == '/' && substr($_GET['img'],3,1) == '/') {
+	$path = substr($_GET['img'], 0, 4);
+}
 
 if (file_exists($original)) {
 	require_once(CORE_PATH . '/includes/class.upload.php');
@@ -14,9 +18,9 @@ if (file_exists($original)) {
 	$foo->jpeg_quality = 90;
 	$foo->file_auto_rename = false;
 	$foo->file_overwrite = true;
-	$foo->process('av/');
+	$foo->process('av/' . $path);
 	header("Content-Type: image/jpg");
-	echo file_get_contents('av/' . $_GET['img']);
+	echo file_get_contents('av/' . $path . $_GET['img']);
 } else {
 	header("Content-Type: image/png");
 	echo file_get_contents('av/none.png');

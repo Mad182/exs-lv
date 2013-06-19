@@ -31,7 +31,7 @@ RewriteRule ^favicon\.ico$ /dati/bildes/coding/favicon.ico
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^av/([0-9a-z\-_.]+)$ index.php?viewcat=mav&img=$1 [NC,L,QSA]
+RewriteRule ^av/(.*)$ index.php?viewcat=mav&img=$1 [NC,L,QSA]
 
 RewriteRule ^page/([0-9]+)-(.*)/com_page-([0-9]+)$ index.php?p=$1&com_page=$3 [NC,L,QSA]
 RewriteRule ^page/([0-9]+)-(.*)/attach$ index.php?p=$1&attach [NC,L]
