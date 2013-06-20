@@ -338,57 +338,49 @@ $('.tabs li a.ajax').live('click', function (e) {
 	if($(this).hasClass('remember-gallery')) {
 		$.cookie('last-sidebar-tab', 'gallery', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('remember-pages')) {
 		$.cookie('last-sidebar-tab', 'pages', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('remember-fact-all')) {
 		$.cookie('last-facts-tab', 'fact-all', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('remember-fact-rs')) {
 		$.cookie('last-facts-tab', 'fact-rs', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('remember-mc')) {
 		$.cookie('last-servers-tab', 'mc', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('remember-cs')) {
 		$.cookie('last-servers-tab', 'cs', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('mbs-friends')) {
 		$.cookie('last-mbs-tab', 'friends', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	if($(this).hasClass('mbs-all')) {
 		$.cookie('last-mbs-tab', 'all', {
 			expires: 14,
-			path: '/',
-			domain: 'exs.lv'
+			path: '/'
 		});
 	}
 	var elem = $(this).parent().parent().siblings('.ajaxbox');
