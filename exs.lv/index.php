@@ -282,10 +282,9 @@ if ($auth->skin == 0) {
 
 //reklāmas
 
+$ads_type = '_adsense';
 if(!empty($disable_adsense)) {
-	$main_ad = 'main_ad_include_noadsense.tpl';
-} else {
-	$main_ad = 'main_ad_include.tpl';
+	$ads_type = '';
 }
 
 if ($auth->hosts_online > $ss->get('most_online')) {
@@ -322,7 +321,9 @@ $tpl->assignGlobal(array(
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
 	'tinymce_skin_variant' => $tinymce_skin_variant,
-	'main-ad-include' => file_get_contents(CORE_PATH . '/tmpl/' . $main_ad),
+	'ad-468' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'),
+	'ad-728' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'),
+	'ad-top' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'),
 	'static-server' => $static_server
 ));
 // 'idb-count' => $idb_count,
@@ -360,9 +361,9 @@ if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
 }
 
 if ($skin === 'main') {
-	if (empty($tpl_options) && empty($disable_adsense)) {
+	if (empty($tpl_options)) {
 		$tpl->newBlock('ads-google');
-	} elseif (empty($disable_f_ad) && empty($disable_adsense)) {
+	} elseif (empty($disable_f_ad)) {
 		$tpl->newBlock('ads-google-wide');
 	}
 

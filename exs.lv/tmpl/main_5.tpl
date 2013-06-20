@@ -99,7 +99,7 @@
 		<div id="header">
 			<div id="header-overlay">
 				<div id="logo">
-					<div id="header-stuff-code"></div>
+					<div id="header-stuff">{ad-top}</div>
 					<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
