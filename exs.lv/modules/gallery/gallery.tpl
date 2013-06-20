@@ -146,7 +146,7 @@
 	</form>
 	<!-- END BLOCK : adm-edit-comment-->
 
-{main-ad-include}
+{ad-468}
 </div>
 <!-- END BLOCK : user-gallery-->
 
