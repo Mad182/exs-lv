@@ -16,6 +16,10 @@ if (empty($group->avatar)) {
 	$group->avatar = 'none.png';
 }
 
+if(!empty($group->disable_adsense)) {
+	$disable_adsense = true;
+}
+
 /* grupas administratora vai moderatora pieeja */
 $is_mod = false;
 $is_admin = false;

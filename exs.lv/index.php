@@ -281,10 +281,12 @@ if ($auth->skin == 0) {
 }
 
 //reklāmas
-$main_ad = 'main_ad_include.tpl';
-/* if($auth->skin == 1) {
-  $main_ad = 'main_ad_include_dark.tpl';
-  } */
+
+if(!empty($disable_adsense)) {
+	$main_ad = 'main_ad_include_noadsense.tpl';
+} else {
+	$main_ad = 'main_ad_include.tpl';
+}
 
 if ($auth->hosts_online > $ss->get('most_online')) {
 	$ss->set('most_online', $auth->hosts_online);
@@ -358,9 +360,9 @@ if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
 }
 
 if ($skin === 'main') {
-	if (empty($tpl_options)) {
+	if (empty($tpl_options) && empty($disable_adsense)) {
 		$tpl->newBlock('ads-google');
-	} elseif (empty($disable_f_ad)) {
+	} elseif (empty($disable_f_ad) && empty($disable_adsense)) {
 		$tpl->newBlock('ads-google-wide');
 	}
 
