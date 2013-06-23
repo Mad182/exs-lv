@@ -1,7 +1,7 @@
-<div class="content-block"><script type="text/javascript"><!--
+<script type="text/javascript"><!--
 google_ad_client = "ca-pub-9907860161851752";
-/* exs_saturs 468x60, created 3/28/11 */
-google_ad_slot = "4703722392";
+/* lol.exs.lv small */
+google_ad_slot = "7997271238";
 google_ad_width = 468;
 google_ad_height = 60;
 //-->
@@ -9,4 +9,3 @@ google_ad_height = 60;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
-</div>

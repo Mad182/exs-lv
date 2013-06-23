@@ -105,7 +105,6 @@
 		<div id="header"{page-persona}>
 			 <div id="header-overlay">
 				<div id="logo">
-					<div id="header-stuff-code"></div>
 					<a id="exs-logo" href="/" title="Uz sākumlapu">coding.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
@@ -206,19 +205,7 @@
 				<!-- START BLOCK : ads-google-wide-->
 				<!-- END BLOCK : ads-google-wide-->
 
-				<div class="content-block">
-					<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-					/* coding.lv */
-					google_ad_slot = "9940276436";
-					google_ad_width = 728;
-					google_ad_height = 90;
-					//-->
-					</script>
-					<script type="text/javascript"
-					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-					</script>
-				</div>
+				<div class="content-block">{ad-728}</div>
 
 				<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 

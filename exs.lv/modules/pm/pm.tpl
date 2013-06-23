@@ -9,7 +9,7 @@
 </ul>
 
 <div class="tabMain">
-	{main-ad-include}
+	{ad-468}
 
 	<!-- START BLOCK : pm-read-inbox-->
 	<!-- START BLOCK : pm-read-from-->

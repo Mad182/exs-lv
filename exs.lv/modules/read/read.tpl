@@ -131,7 +131,7 @@
 </h1>
 
 <!-- START BLOCK : page-ad-google-->
-{main-ad-include}
+{ad-468}
 <!-- END BLOCK : page-ad-google-->
 
 <!-- START BLOCK : page-ad-dateks-->

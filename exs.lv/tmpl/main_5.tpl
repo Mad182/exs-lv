@@ -99,7 +99,7 @@
 		<div id="header">
 			<div id="header-overlay">
 				<div id="logo">
-					<div id="header-stuff-code"></div>
+					<div id="header-stuff">{ad-top}</div>
 					<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
@@ -423,7 +423,7 @@ $(document).ready(function() {
 <!-- END BLOCK : async-call -->
 
 <script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//draugiem.lv/api/api.js"></script>
+<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 <script type="text/javascript">function r(f){ /in/.test(document.readyState)?setTimeout('r('+f+')',9):f() }; r(function(){ new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!","mta-exs"); });</script>
 
 </body>

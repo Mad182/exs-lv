@@ -100,7 +100,7 @@
 		<div id="header">
 			<div id="header-overlay">
 				<div id="logo">
-					<div id="header-stuff-code"></div>
+					<div id="header-stuff">{ad-top}</div>
 					<a id="exs-logo" href="/" title="League of Legends forums">lol.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
@@ -194,19 +194,7 @@
 				<!-- START BLOCK : profile-menu-->
 				<h1>{user-nick}{user-menu-add}</h1>
 
-				<div class="content-block">
-					<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-					/* lol.exs.lv small */
-					google_ad_slot = "7997271238";
-					google_ad_width = 468;
-					google_ad_height = 60;
-					//-->
-					</script>
-					<script type="text/javascript"
-					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-					</script>
-				</div>
+				{ad-468}
 
 				<ul class="tabs">
 					<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
@@ -225,30 +213,10 @@
 				{contentz}
 				<div class="c"></div>
 				<!-- START BLOCK : ads-google-->
-					<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-					/* lol.exs.lv small */
-					google_ad_slot = "7997271238";
-					google_ad_width = 468;
-					google_ad_height = 60;
-					//-->
-					</script>
-					<script type="text/javascript"
-					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-					</script>
+					{ad-468}
 				<!-- END BLOCK : ads-google-->
 				<!-- START BLOCK : ads-google-wide-->
-					<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-					/* lol.exs.lv large */
-					google_ad_slot = "5043804832";
-					google_ad_width = 728;
-					google_ad_height = 90;
-					//-->
-					</script>
-					<script type="text/javascript"
-					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-					</script>
+					{ad-728}
 				<!-- END BLOCK : ads-google-wide-->
 
 				<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>

@@ -100,15 +100,7 @@
 	 <div id="header-overlay">
 		<div id="logo">
 			<div id="header-stuff">
-				<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-					/* 728x90, created 8/2/11 */
-					google_ad_slot = "4996153277";
-					google_ad_width = 728;
-					google_ad_height = 90;
-					//-->
-				</script>
-				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+				{ad-top}
 			</div>
 			<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 			<div id="tools-bar">
@@ -220,7 +212,7 @@
 	<!-- START BLOCK : profile-menu-->
 	<h1>{user-nick}{user-menu-add}</h1>
 
-	{main-ad-include}
+	{ad-468}
 
 	<ul class="tabs">
 		<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
@@ -241,20 +233,10 @@
 	{contentz}
 	<div class="c"></div>
 	<!-- START BLOCK : ads-google-->
-	{main-ad-include}
+	{ad-468}
 	<!-- END BLOCK : ads-google-->
 	<!-- START BLOCK : ads-google-wide-->
-	<script type="text/javascript"><!--
-		google_ad_client = "ca-pub-9907860161851752";
-		/* exs_saturs_wide */
-		google_ad_slot = "6465649028";
-		google_ad_width = 728;
-		google_ad_height = 90;
-		//-->
-	</script>
-	<script type="text/javascript"
-			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-	</script>
+	{ad-728}
 	<!-- END BLOCK : ads-google-wide-->
 	<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 </div>
@@ -594,7 +576,7 @@ $(document).ready(function() {
 <!-- END BLOCK : async-call -->
 
 <script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//draugiem.lv/api/api.js"></script>
+<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 <script type="text/javascript">function r(f){ /in/.test(document.readyState)?setTimeout('r('+f+')',9):f() }; r(function(){ new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!","exs.lv"); });</script>
 
 </body>

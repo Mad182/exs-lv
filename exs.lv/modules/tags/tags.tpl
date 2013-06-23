@@ -4,7 +4,7 @@
 <p>{description}</p>
 <!-- END BLOCK : tags-description-->
 
-{main-ad-include}
+{ad-468}
 
 <!-- START BLOCK : tags-articles-->
 <h3>Raksti</h3>
