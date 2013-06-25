@@ -19,21 +19,22 @@ CORE_PATH uz exs.lv folderi,
 LIB_PATH uz libs folderi.
 
 
-### kas vajadzīgs, lai viss darbotos:
+### kas vajadzīgs, lai lapa būtu palaižama:
 php-gd
 php-memcache
 memcached
-imagemagick
 mysql
 apache2 ar mod_rewrite un .htaccess atbalstu
 
-### lai darbotos ezgif.com rīki:
+### lai darbotos ezgif.com un img.exs.lv:
+imagemagick
 advancecomp
 pngcrush
 optipng
 gifsicle
+jpegoptim
 
-uz servera ir arī apc, bet darbību tā trūkumam teorētiski nevajadzētu ietekmēt.
+uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
 
 
 nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt., 
