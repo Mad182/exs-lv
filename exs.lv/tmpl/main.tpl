@@ -113,7 +113,6 @@
 				<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
 				<li><a href="/statistika" title="Statistika">Statistika</a></li>
 				<li><a href="/servers" title="Latvijas Counter Strike serveru saraksts">CS Serveri</a></li>
-				<li><a href="/spelu-kodi" title="Spēļu kodi un pamācības">Spēļu kodi</a></li>
 				<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 			</ul>
 			{current-date}
