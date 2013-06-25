@@ -28,7 +28,7 @@ if (!$auth->ok) {
 			$message->setSubject('Tava jaunā parole ' . $_SERVER['HTTP_HOST']);
 			$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
 			$message->setTo($userdata->mail);
-			$message->setBody('<h3>Sveiki!</h3><p>Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā exs.lv. Jaunā parole ir ' . $newpass . '</p><p>Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '. Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.</p><p>__<br />Exs.lv adminu un moderatoru komanda!</p>');
+			$message->setBody('<p>Tava jaunā parole ir ' . $newpass . '</p><p>__<br />Exs.lv adminu un moderatoru komanda!</p>');
 			$message->setContentType("text/html");
 
 
