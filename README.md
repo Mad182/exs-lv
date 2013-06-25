@@ -19,38 +19,37 @@ CORE_PATH uz exs.lv folderi,
 LIB_PATH uz libs folderi.
 
 
-### kas vajadzīgs, lai viss darbotos:
-php-gd
-php-memcache
-memcached
-imagemagick
-mysql
+### kas vajadzīgs, lai lapa būtu palaižama:
+php-gd<br />
+php-memcache<br />
+memcached<br />
+mysql<br />
 apache2 ar mod_rewrite un .htaccess atbalstu
 
-### lai darbotos ezgif.com rīki:
-advancecomp
-pngcrush
-optipng
-gifsicle
-
-uz servera ir arī apc, bet darbību tā trūkumam teorētiski nevajadzētu ietekmēt.
-
-
-nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt., 
-ip adreses un viss pārējais tiek redirektēts uz exs.lv
-es ieteiktu uztaisīt virtualhostu, un hosts failā norādīt 127.0.0.1 dev.exs.lv
+### lai darbotos ezgif.com un img.exs.lv:
+imagemagick<br />
+advancecomp<br />
+pngcrush<br />
+optipng<br />
+gifsicle<br />
+jpegoptim<br />
+<br />
+uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt<br />
+<br />
+<br />
+nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt., <br />
+ip adreses un viss pārējais tiek redirektēts uz exs.lv<br />
+es ieteiktu uztaisīt virtualhostu, un hosts failā norādīt 127.0.0.1 dev.exs.lv<br />
 
 
 libs mapē vajadzīgi:
 (instalējas kā submoduļi)
 
-https://github.com/ezyang/htmlpurifier
+https://github.com/ezyang/htmlpurifier<br />
+https://github.com/swiftmailer/swiftmailer<br />
+https://github.com/Austinb/GameQ<br />
+https://github.com/facebook/facebook-php-sdk
 
-https://github.com/swiftmailer/swiftmailer
-
-https://github.com/Austinb/GameQ
-
-principā ja negribas sūtīt meilus un nesatrauc serveru monitori, pietiek ar htmlpurifier.
 
 ## Arch
 
