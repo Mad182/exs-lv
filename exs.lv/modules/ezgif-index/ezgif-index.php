@@ -37,7 +37,7 @@ $username = 'ezgif_com';
 $cache_file = 'cache/twitter-' . md5($username);
 $cache_created = filemtime($cache_file);
 
-if (!$cache_created || (time() - $cache_created) > 420) {
+if (false && (!$cache_created || (time() - $cache_created) > 420)) {
 
 	$xml = simplexml_load_file('https://api.twitter.com/1/statuses/user_timeline/' . $username . '.xml?count=10');
 	if ($xml) {
