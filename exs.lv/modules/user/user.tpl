@@ -169,10 +169,10 @@
 			<h4>Kā iegādāties 5 kredīta punktus?</h4>
 
 			<div class="box">
-				<ul id="paytabs" class="shadetabs">
-					<li><a href="/?c=313" class="selected"><img src="/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-					<li><a href="/?c=313&lang=uk"><img src="/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-					<li><a href="/?c=313&lang=ie"><img src="/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+				<ul class="tabs">
+					<li><a href="/?c=313" class="active ajax"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+					<li><a href="/?c=313&lang=uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+					<li><a href="/?c=313&lang=ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 				</ul>
 				<div id="pay" class="ajaxbox">
 					<p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
@@ -196,10 +196,10 @@
 	<h4>Kā iegādāties 5 kredīta punktus?</h4>
 
 	<div class="box">
-		<ul id="paytabs" class="shadetabs">
-			<li><a href="/?c=313" class="selected"><img src="/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-			<li><a href="/?c=313&lang=uk"><img src="/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-			<li><a href="/?c=313&lang=ie"><img src="/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+		<ul class="tabs">
+			<li><a href="/?c=313" class="active ajax"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+			<li><a href="/?c=313&lang=uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+			<li><a href="/?c=313&lang=ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 		</ul>
 		<div id="pay" class="ajaxbox">
 			<p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
@@ -365,3 +365,4 @@
 	</form>
 </div>
 <!-- END BLOCK : user-profile-give-->
+
