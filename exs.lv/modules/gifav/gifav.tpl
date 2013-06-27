@@ -15,7 +15,10 @@
 <!-- END BLOCK : av-node-->
 </ul>
 <div class="c"></div>
+<p>Bez avatariem kas redzami šeit, vari izvēlēties arī jebkuru avataru no <a href="http://gif-avatars.com/">http://gif-avatars.com/</a>, tur ir visi vajadzīgie izmēri. Tādā gadījumā sūti PM <a href="/user/1">@<span class="admins">Maadinsh</span></a> ar linku uz izvēlēto avataru :)</p>
+
 <p>Animētais avatars maksā 5 exs.lv kredīta punktus. Par to tu iegūsti vienu avataru, ko izvēlies. Citiem šis avatars vairs nebūs pieejams.</p>
+
 <!-- START BLOCK : av-buy-->
 <input type="submit" class="button primary" value="Nosūtīt" />
 <!-- END BLOCK : av-buy-->
