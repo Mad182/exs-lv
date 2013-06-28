@@ -478,7 +478,7 @@ if ($user) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Mājaslapa',
-				'value' => '<a href="'.htmlspecialchars($user->web).'" rel="nofollow">'.htmlspecialchars($user->web).'</a>'
+				'value' => add_smile('<a href="'.htmlspecialchars($user->web).'" rel="nofollow">'.htmlspecialchars($user->web).'</a>', 0, 1, 1)
 			));
 		}
 		

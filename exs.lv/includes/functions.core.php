@@ -612,7 +612,7 @@ function get_youtube_video($videoid) {
 	}
 }
 
-function add_smile($txt, $wide = 0, $disable_emotions = 0) {
+function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 	if (!$disable_emotions) {
 		$smilies = array(
@@ -771,12 +771,14 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0) {
 		$txt = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/iseU', 'replace_spoiler("\\1")', $txt);
 	}
 
-	if ($wide) {
-		$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video("\\4")', $txt);
-		$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video("\\4")', $txt);
-	} else {
-		$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video_small("\\4")', $txt);
-		$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video_small("\\4")', $txt);
+	if(!$disable_embed) {
+		if ($wide) {
+			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video("\\4")', $txt);
+			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video("\\4")', $txt);
+		} else {
+			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video_small("\\4")', $txt);
+			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video_small("\\4")', $txt);
+		}
 	}
 
 	return $txt;
