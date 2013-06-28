@@ -670,7 +670,6 @@ if ($article) {
 			$tpl->newBlock('read-article');
 			$tpl->assign(array(
 				'article-title' => $article->title,
-				'article-title-encoded' => htmlspecialchars($article->title),
 				'article-text' => $article_text,
 				'article-id' => $article->id,
 				'article-views' => $article->views + 1,
