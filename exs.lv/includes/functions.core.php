@@ -2293,7 +2293,7 @@ function post2db($text, $type = "notype", $mbid = "0") {
 
 function htmlpost2db($text) {
 	$text = filterb4db($text);
-	require_once(LIB_PATH . '/htmlpurifier/library/HTMLPurifier.auto.php');
+	require_once(LIB_PATH . '/htmlpurifier/library/HTMLPurifier.includes.php');
 	$config = HTMLPurifier_Config::createDefault();
 	$config->set('Cache.SerializerPath', CORE_PATH . '/cache/htmlpurifier');
 	$config->set('AutoFormat.Linkify', true);
