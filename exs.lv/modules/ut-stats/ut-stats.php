@@ -330,7 +330,7 @@ class san_andreas
 
 
 
-$mta = new san_andreas('94.100.6.70','22003');
+$mta = new san_andreas('92.240.80.63','22003');
 
 
 if(!empty($mta->results['server']['hostname'])) {
