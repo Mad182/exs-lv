@@ -237,7 +237,6 @@
 			<div style="float: left; margin: 0 12px 0 0" id="draugiemLike"></div>
 			<script type="text/javascript">
 			var p = {
-				title:"{article-title}",
 				titlePrefix:"{page-domain}",
 				name:"{page-domain}"
 			};
