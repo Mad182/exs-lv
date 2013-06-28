@@ -543,6 +543,7 @@
 		<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 		<li><a href="/sitemap">Lapas karte</a></li>
 		<li><a href="/reklama">Reklāma portālā</a></li>
+		<li><a href="/group/470/tab/atbildes">Makro atbildes ar bildēm</a></li>
 	</ul>
 	<p>Teamspeak 3:<br />ts.exs.lv</p>
 </div>
