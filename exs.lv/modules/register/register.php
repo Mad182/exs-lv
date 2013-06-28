@@ -5,6 +5,9 @@ if (!$auth->ok) {
 	/* show registration form */
 	$tpl->newBlock('registration-form');
 
+	$field_mail = md5($auth->xsrf . '-' . 'mail');
+	$field_nick = md5($auth->xsrf . '-' . 'nick');
+
 	$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 32137"));
 
 	$regdata = array();
@@ -18,12 +21,12 @@ if (!$auth->ok) {
 	$regdata['botsok'] = false;
 	$regdata['agree'] = false;
 
-	if (isset($_POST['tavaiesauka'])) {
+	if (isset($_POST[$field_nick])) {
 
 		//check mail
-		if (filter_var($_POST['age'], FILTER_VALIDATE_EMAIL)) {
+		if (filter_var($_POST[$field_mail], FILTER_VALIDATE_EMAIL)) {
 
-			$regdata['mail'] = email2db($_POST['age']);
+			$regdata['mail'] = email2db($_POST[$field_mail]);
 
 			if ($db->get_row("SELECT * FROM users WHERE mail = ('" . $regdata['mail'] . "')") || $db->get_row("SELECT * FROM users_tmp WHERE mail = ('" . $regdata['mail'] . "')")) {
 				$tpl->newBlock('invalid-mail-taken');
@@ -32,7 +35,7 @@ if (!$auth->ok) {
 				$regdata['mailok'] = true;
 			}
 
-			$emparts = explode('@', $_POST['age']);
+			$emparts = explode('@', $_POST[$field_mail]);
 			if ($db->get_var("SELECT count(*) FROM `email_blacklist` WHERE `domain` = '" . sanitize($emparts[1]) . "'")) {
 				set_flash('Neatļauts e-pasts!', 'error');
 				redirect('/' . $category->textid);
@@ -42,8 +45,8 @@ if (!$auth->ok) {
 		}
 
 		//check nick
-		if (strlen(trim($_POST['tavaiesauka'])) > 2 && strlen(trim($_POST['tavaiesauka'])) <= 16) {
-			$regdata['nick'] = sanitize(trim($_POST['tavaiesauka']));
+		if (strlen(trim($_POST[$field_nick])) > 2 && strlen(trim($_POST[$field_nick])) <= 16) {
+			$regdata['nick'] = sanitize(trim($_POST[$field_nick]));
 			$regdata['nickok'] = true;
 			if (mkslug($regdata['nick']) == 'page' || mkslug($regdata['nick']) == '-' || $db->get_row("SELECT * FROM users WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')") || $db->get_row("SELECT * FROM users_tmp WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')")) {
 				$tpl->newBlock('invalid-nick-taken');
@@ -119,7 +122,9 @@ if (!$auth->ok) {
 		$tpl->newBlock('form-fields');
 		$tpl->assign(array(
 			'new-nick' => htmlspecialchars($regdata['nick']),
-			'new-mail' => htmlspecialchars($regdata['mail'])
+			'new-mail' => htmlspecialchars($regdata['mail']),
+			'field_mail' => $field_mail,
+			'field_nick' => $field_nick
 		));
 	}
 } else {

@@ -43,15 +43,15 @@
 
 		<!-- START BLOCK : form-fields-->
 		<p>
-			<label for="tavaiesauka">Iesauka:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
-			<input type="text" class="text usercheck" name="tavaiesauka" id="tavaiesauka" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
+			<label for="{field_nick}">Iesauka:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
+			<input type="text" class="text usercheck" name="{field_nick}" id="{field_nick}" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
 		</p>
 		<p>
-			<label for="age">E-pasta adrese:<br />
+			<label for="{field_mail}">E-pasta adrese:<br />
 				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts<br />
 				reģistrācijas apstiprinājuma e-pasts.</span>
 			</label><br />
-			<input type="text" class="text" name="age" id="age" value="{new-mail}" maxlength="64" />
+			<input type="text" class="text" name="{field_mail}" id="{field_mail}" value="{new-mail}" maxlength="64" />
 		</p>
 		<p>
 			<label for="omnomnom">Parole:</label><br />
