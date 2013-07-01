@@ -722,7 +722,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			if($group->sharetabs) {
 				$share = '
 					<div style="float: right;width: 155px; height: 65px;">
-						<div style="float: right;width: 60x; height: 62px;">
+						<div style="float: right;width: 65px; height: 65px;">
 							<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 							<div id="draugiemLike"></div>
 							<script type="text/javascript">
@@ -733,7 +733,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 							</script>
 						</div>
 
-						<div style="float: right;width: 60px; height: 62px;">
+						<div style="float: right;width: 65px; height: 65px;">
 
 							<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
 							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script>
