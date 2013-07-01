@@ -6,6 +6,8 @@ backend default {
 
 # cache image and static script files
 sub vcl_recv {
+  call hot_link;
+
   if (req.url ~ "\.(png|gif|jpg|ico|txt|swf|css|js)$") {
     return(lookup);
   }
@@ -24,5 +26,12 @@ sub vcl_deliver {
     set resp.http.X-Cache = "HIT";
   } else {
     set resp.http.X-Cache = "MISS";
+  }
+}
+
+# makro atbilžu zaglēniem
+sub hot_link {
+  if (req.http.referer ~ "^http://makro.scf.lv/") {
+    error 403 "Zagt nav smuki :(<br />http://exs.lv/group/470/tab/atbildes";
   }
 }
