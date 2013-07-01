@@ -719,7 +719,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 
 			$share = '';
-			if($group->sharetabs) {
+			if($tab->share) {
 				$share = '
 					<div style="float: right;width: 155px; height: 65px;">
 						<div style="float: right;width: 65px; height: 65px;">
