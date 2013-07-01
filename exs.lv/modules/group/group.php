@@ -721,7 +721,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$share = '';
 			if($group->sharetabs) {
 				$share = '
-					<p style="float: right;">
+					<div style="float: right;width: 55px; height: 62px;">
 						<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 						<div id="draugiemLike"></div>
 						<script type="text/javascript">
@@ -730,7 +730,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						};
 						new DApi.Like(p).append(\'draugiemLike\');
 						</script>
-					</p>
+					</div>
 				';
 			}
 
