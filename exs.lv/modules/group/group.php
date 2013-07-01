@@ -728,7 +728,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						var p = {
 						 layout:"bubble"
 						};
-						new DApi.Like(p).append('draugiemLike');
+						new DApi.Like(p).append(\'draugiemLike\');
 						</script>
 					</p>
 				';
