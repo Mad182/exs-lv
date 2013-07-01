@@ -718,10 +718,26 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				));
 			}
 
+			$share = '';
+			if($group->sharetabs) {
+				$share = '
+					<p style="float: right;">
+						<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+						<div id="draugiemLike"></div>
+						<script type="text/javascript">
+						var p = {
+						 layout:"bubble"
+						};
+						new DApi.Like(p).append('draugiemLike');
+						</script>
+					</p>
+				';
+			}
+
 			$tpl->newBlock('group-tab');
 			$tpl->assign(array(
 				'tab-module' => $module_content,
-				'tab-text' => add_smile($tab->text, 1)
+				'tab-text' => $share . add_smile($tab->text, 1)
 			));
 			$page_title = $group->title . ' | ' . $tab->title;
 		} else {
