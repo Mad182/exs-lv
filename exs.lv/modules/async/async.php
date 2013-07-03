@@ -25,4 +25,3 @@ if(!$db->get_var("SELECT count(*) FROM `async_ip` WHERE `ip` = '$auth->ip'")) {
 }
 
 die('');
-

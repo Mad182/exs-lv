@@ -721,7 +721,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$share = '';
 			if($tab->share) {
 				$share = '
-					<div style="float: right;width: 155px; height: 65px;">
+					<div style="float: left;width: 136px; height: 65px;">
 						<div style="float: right;width: 65px; height: 65px;">
 							<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 							<div id="draugiemLike"></div>
