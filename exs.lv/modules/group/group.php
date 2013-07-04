@@ -20,6 +20,15 @@ if(!empty($group->disable_adsense)) {
 	$disable_adsense = true;
 }
 
+/* top ad in group */
+if(!empty($group->top_ad)) {
+	$tpl->assignGlobal('top-group-ad', $group->top_ad);
+} elseif(!$disable_adsense) {
+	$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl'));
+} else {
+	$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728.tpl'));
+}
+
 /* grupas administratora vai moderatora pieeja */
 $is_mod = false;
 $is_admin = false;

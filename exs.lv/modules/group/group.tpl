@@ -8,7 +8,7 @@
 <!-- START BLOCK : group-menu-->
 <h1>{group-title}</h1>
 
-{ad-728}
+{top-group-ad}
 
 <ul class="tabs">
 	<li><a href="/group/{group-id}" class="{active-tab-info}"><span class="group-profile">Sākums</span></a></li>
