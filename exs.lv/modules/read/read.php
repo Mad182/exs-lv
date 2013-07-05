@@ -1250,10 +1250,6 @@ if ($article) {
 
 		if (!empty($article->custom_ad) && $article->custom_ad == 'dateks') {
 			$tpl->newBlock('page-ad-dateks');
-		} elseif ($lang == 3) {
-			$tpl->newBlock('page-ad-coding');
-		} elseif ($lang == 5) {
-			$tpl->newBlock('page-ad-rp');
 		} else {
 			$tpl->newBlock('page-ad-google');
 		}

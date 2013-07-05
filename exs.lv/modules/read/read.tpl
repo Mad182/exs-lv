@@ -123,6 +123,16 @@
 </form>
 <!-- END BLOCK : edit-article-->
 
+<!-- START BLOCK : page-ad-google-->
+{ad-468}
+<!-- END BLOCK : page-ad-google-->
+
+<!-- START BLOCK : page-ad-dateks-->
+<div class="content-block">
+	<script type="text/javascript" src="http://affiliate.dateks.lv/scripts/banner.php?a_aid=view&amp;a_bid=8872f56e"></script>
+</div>
+<!-- END BLOCK : page-ad-dateks-->
+
 <!-- START BLOCK : read-article-->
 <article>
 	<h1>{article-title}
@@ -130,48 +140,6 @@
 	 <span class="slash">/</span> <small>{title}</small>
 	<!-- END BLOCK : title-lv-->
 	</h1>
-
-	<!-- START BLOCK : page-ad-google-->
-	{ad-468}
-	<!-- END BLOCK : page-ad-google-->
-
-	<!-- START BLOCK : page-ad-dateks-->
-	<div class="content-block">
-		<script type="text/javascript" src="http://affiliate.dateks.lv/scripts/banner.php?a_aid=view&amp;a_bid=8872f56e"></script>
-	</div>
-	<!-- END BLOCK : page-ad-dateks-->
-
-	<!-- START BLOCK : page-ad-coding-->
-	<div class="content-block">
-		<script type="text/javascript"><!--
-		google_ad_client = "ca-pub-9907860161851752";
-		/* coding.lv */
-		google_ad_slot = "9940276436";
-		google_ad_width = 728;
-		google_ad_height = 90;
-		//-->
-		</script>
-		<script type="text/javascript"
-		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		</script>
-	</div>
-	<!-- END BLOCK : page-ad-coding-->
-
-	<!-- START BLOCK : page-ad-rp-->
-	<div class="content-block">
-		<script type="text/javascript"><!--
-			google_ad_client = "ca-pub-9907860161851752";
-			/* rp.exs.lv bottom */
-			google_ad_slot = "8147315637";
-			google_ad_width = 728;
-			google_ad_height = 90;
-			//-->
-		</script>
-		<script type="text/javascript"
-				src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		</script>
-	</div>
-	<!-- END BLOCK : page-ad-rp-->
 
 	<!-- START BLOCK : article-avatar-box-->
 	<img class="av" src="http://exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
