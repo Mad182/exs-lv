@@ -6,7 +6,7 @@ if(in_array($auth->id, $site_mods) || in_array($auth->id, $site_admins)) {
 	$q_add = " AND `lang` = '$lang'";
 }
 
-$getban = $db->get_results("SELECT * FROM banned WHERE time+length > '" . time() . "' " . $add . " ORDER BY time DESC");
+$getban = $db->get_results("SELECT * FROM banned WHERE time+length > '" . time() . "' " . $q_add . " ORDER BY time DESC");
 
 $tpl->assignGlobal(array(
 	'category-id' => $category->id
