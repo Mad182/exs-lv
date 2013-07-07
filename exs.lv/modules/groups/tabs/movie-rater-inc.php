@@ -26,7 +26,7 @@ $series = $db->get_results("SELECT
 
 if (!empty($series)) {
 
-	$module_content .= '<h2>Exs.lv filmu tops</h2>';
+	$module_content .= '<h2>' . $movie_rater_title . '</h2>';
 	$module_content .= $movie_rater_description;
 	$module_content .= '<table class="main-table" id="series-ratings-ingroup">';
 	$module_content .= '	<tr>';
