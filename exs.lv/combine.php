@@ -1,6 +1,6 @@
 <?php
 
-$expires = 3600;
+$expires = 7200;
 header('Pragma: public');
 header('Cache-Control: max-age=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
@@ -13,6 +13,7 @@ $jsdir = dirname(__FILE__) . '/js';
 // Determine the directory and type we should use
 switch ($_GET['type']) {
 	case 'css':
+		require(dirname(__FILE__) . '/includes/cssmin.php');
 		$base = realpath($cssdir);
 		break;
 	case 'javascript':
@@ -115,6 +116,11 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
 
 	if($type == 'javascript') {
 		$contents = JSMin::minify($contents);
+	}
+
+	if($type == 'css') {
+		$cssmin = new CSSmin();
+		$contents = $cssmin->run($contents);
 	}
 
 	// Send Content-Type
