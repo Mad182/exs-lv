@@ -802,7 +802,7 @@ function get_blacklisted_sites() {
 	if (empty($blacklisted_sites)) {
 		if (($blacklisted_sites = $m->get('blacklisted_sites')) === false) {
 			$blacklisted_sites = $db->get_col("SELECT `url` FROM `blacklisted_sites`");
-			$m->set('blacklisted_sites', $blacklisted_sites, false, 3600);
+			$m->set('blacklisted_sites', $blacklisted_sites, false, 1200);
 		}
 	}
 	return $blacklisted_sites;
