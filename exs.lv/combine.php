@@ -16,6 +16,7 @@ switch ($_GET['type']) {
 		$base = realpath($cssdir);
 		break;
 	case 'javascript':
+		require(dirname(__FILE__) . '/includes/jsmin.php');
 		$base = realpath($jsdir);
 		break;
 	default:
@@ -110,6 +111,10 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
 			$contents .= "\n\n" . file_get_contents($path);
 		}
 		$i++;
+	}
+
+	if($type == 'javascript') {
+		$contents = JSMin::minify($contents);
 	}
 
 	// Send Content-Type
