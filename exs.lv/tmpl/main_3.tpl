@@ -15,7 +15,6 @@
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
 <!-- START BLOCK : robots-->
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="http://feeds.feedburner.com/codinglv" />
 <script type="text/javascript">
@@ -26,6 +25,7 @@
 	var c_url = "{page-url}";
 	window.google_analytics_uacct = "UA-4190387-9";
 </script>
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>

@@ -15,7 +15,6 @@
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
 <!-- START BLOCK : robots-->
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css" />
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <script type="text/javascript">
 	var mb_refresh_limit = {mb-refresh-limit};
@@ -24,6 +23,7 @@
 	var query_timeout = 60000;
 	var c_url = "{page-url}";
 </script>
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
