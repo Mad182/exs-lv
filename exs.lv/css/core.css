@@ -1104,11 +1104,6 @@ a.friend:hover {
 	top: 13px;
 }
 
-.content-block {
-	margin: 6px auto;
-	width: 468px;
-}
-
 #comments-ajax-list .av, .user-actions .av, #miniblog-list li li .av {
 	width: 45px;
 	height: 45px;
