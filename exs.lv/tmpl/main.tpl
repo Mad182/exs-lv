@@ -232,7 +232,6 @@
 	<!-- START BLOCK : ads-google-->
 	<!-- END BLOCK : ads-google-->
 	<!-- START BLOCK : ads-google-wide-->
-	{ad-728}
 	<!-- END BLOCK : ads-google-wide-->
 	<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 </div>
