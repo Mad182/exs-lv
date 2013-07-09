@@ -211,6 +211,8 @@
 	<!-- START BLOCK : profile-menu-->
 	<h1>{user-nick}{user-menu-add}</h1>
 
+	{ad-468}
+
 	<ul class="tabs">
 		<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
 		<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
@@ -230,6 +232,7 @@
 	{contentz}
 	<div class="c"></div>
 	<!-- START BLOCK : ads-google-->
+	{ad-468}
 	<!-- END BLOCK : ads-google-->
 	<!-- START BLOCK : ads-google-wide-->
 	{ad-728}
@@ -239,17 +242,6 @@
 
 <!-- START BLOCK : main-layout-left-->
 <div id="left">
-
-	<div class="box">
-		<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<ins class="adsbygoogle"
-		     style="display:inline-block;width:200px;height:200px"
-		     data-ad-client="ca-pub-0844454810885567"
-		     data-ad-slot="1398884625"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
 
 	<!-- START BLOCK : movie-search-->
 	<h3>Meklēt filmu</h3>
