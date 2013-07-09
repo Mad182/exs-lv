@@ -232,12 +232,24 @@
 	<!-- START BLOCK : ads-google-->
 	<!-- END BLOCK : ads-google-->
 	<!-- START BLOCK : ads-google-wide-->
+	{ad-728}
 	<!-- END BLOCK : ads-google-wide-->
 	<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 </div>
 
 <!-- START BLOCK : main-layout-left-->
 <div id="left">
+
+	<div class="box">
+		<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:inline-block;width:200px;height:200px"
+		     data-ad-client="ca-pub-0844454810885567"
+		     data-ad-slot="1398884625"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
 
 	<!-- START BLOCK : movie-search-->
 	<h3>Meklēt filmu</h3>
@@ -383,17 +395,6 @@
 
 <!-- START BLOCK : main-layout-right-->
 <div id="right">
-
-	<div class="box">
-		<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<ins class="adsbygoogle"
-		     style="display:inline-block;width:200px;height:200px"
-		     data-ad-client="ca-pub-0844454810885567"
-		     data-ad-slot="1398884625"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
 
 	<!-- START BLOCK : junk-info-->
 	<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
