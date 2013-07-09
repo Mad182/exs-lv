@@ -99,9 +99,7 @@
 <div id="header"{page-persona}>
 	 <div id="header-overlay">
 		<div id="logo">
-			<div id="header-stuff">
-				{ad-top}
-			</div>
+			<div id="header-stuff"></div>
 			<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 			<div id="tools-bar">
 			<ul id="site-links">
