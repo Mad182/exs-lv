@@ -2771,6 +2771,11 @@ dl.list-attr dd {
 	font-size: 9px;
 }
 
+#user-notify li span.info-content {
+	display: inline;
+	font-size: 11px;
+}
+
 #friends-pending, #friend-list {
 	padding: 0;
 	margin: 0;

@@ -205,7 +205,14 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= 'title="' . htmlspecialchars($notify->info) . '" ';
 				}
-				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add . '</a></li>';
+				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
+
+				if (!empty($notify->info) && $notify->info != 'twitter') {
+					//TODO: remove inline css
+					$out .= ' - <span style="display: inline;font-size:11px" class="info-content">' . htmlspecialchars(textlimit($notify->info, 40, '')) . '...</span>';
+				}
+
+				$out .= '</a></li>';
 			}
 			$out .= '</ul>';
 
