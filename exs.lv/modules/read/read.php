@@ -111,7 +111,7 @@ if ($article) {
 			}
 			$url = '/read/' . $article->strid . $skip;
 			if ($comment->author != $article->author) {
-				notify($comment->author, 0, $comment->id, $url);
+				notify($comment->author, 0, $comment->id, $url, textlimit(hide_spoilers($article->title), 64));
 			}
 
 			update_stats($article->category);

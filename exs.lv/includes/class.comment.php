@@ -71,7 +71,7 @@ class Comment {
 					if(!isset($_POST['no-bump'])) {
 
 						push('Komentēja rakstu &quot;<a href="' . $url . '#c' . $newid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/'.$article->id.'.jpg');
-						notify($article->author, 2, $article->id, $url);
+						notify($article->author, 2, $article->id, $url, textlimit(hide_spoilers($article->title), 64));
 						build_latest();
 
 					}
