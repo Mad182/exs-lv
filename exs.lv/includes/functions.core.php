@@ -126,7 +126,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 		if ($id = $db->get_var("SELECT `id` FROM `notify` WHERE `user_id` = '$user_id' AND `type` = '$type' AND `foreign_key` = '$place' AND `lang` = '$nlang'")) {
 			$db->update('notify', $id, array('bump' => 'NOW()'));
 			if(!empty($info)) {
-				$db->update('notify', $id, array('info' => '$info'));
+				$db->update('notify', $id, array('info' => $info));
 			}
 			return 2;
 		} else {
