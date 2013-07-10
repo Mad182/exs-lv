@@ -125,6 +125,9 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	if (!empty($user_id)) {
 		if ($id = $db->get_var("SELECT `id` FROM `notify` WHERE `user_id` = '$user_id' AND `type` = '$type' AND `foreign_key` = '$place' AND `lang` = '$nlang'")) {
 			$db->update('notify', $id, array('bump' => 'NOW()'));
+			if(!empty($info)) {
+				$db->update('notify', $id, array('info' => '$info'));
+			}
 			return 2;
 		} else {
 			$db->query("INSERT INTO `notify` (`user_id`,`type`,`foreign_key`,`bump`,`url`,`info`,`lang`) VALUES ('$user_id','$type','$place',NOW(),'$url','$info','$nlang')");
