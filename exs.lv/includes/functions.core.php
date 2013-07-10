@@ -209,7 +209,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					//TODO: remove inline css
-					$out .= ' - <span style="display: inline;font-size:11px" class="info-content">' . htmlspecialchars(textlimit($notify->info, 40, '')) . '...</span>';
+					$out .= ' - <span style="display: inline;font-size:11px" class="info-content">' . htmlspecialchars(textlimit($notify->info, 36, '')) . '...</span>';
 				}
 
 				$out .= '</a></li>';
