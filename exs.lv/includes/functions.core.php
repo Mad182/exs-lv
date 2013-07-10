@@ -201,7 +201,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if ($notify->type == 8) {
 					$class = 3;
 				}
-				$out .= '<li class="notification-' . $class . '"><a ';
+				$out .= '<li class="notification-' . $class . '"><a style="max-height: 38px;overflow: hidden;" ';
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= 'title="' . htmlspecialchars($notify->info) . '" ';
 				}
@@ -209,7 +209,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					//TODO: remove inline css
-					$out .= ' - <span style="display: inline;font-size:11px" class="info-content">' . htmlspecialchars(textlimit($notify->info, 36, '')) . '...</span>';
+					$out .= ' - <span style="display: inline;font-size:11px" class="info-content">' . htmlspecialchars(textlimit($notify->info, 45, '')) . '...</span>';
 				}
 
 				$out .= '</a></li>';

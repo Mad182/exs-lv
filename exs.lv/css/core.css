@@ -2748,6 +2748,8 @@ dl.list-attr dd {
 	height: auto !important;
 	height: 28px;
 	min-height: 28px;
+	max-height: 38px;
+	overflow: hidden;
 }
 
 #user-notify li a:hover {
