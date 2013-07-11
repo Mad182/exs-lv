@@ -10,3 +10,6 @@
 [submodule "libs/facebook-php-sdk"]
 	path = libs/facebook-php-sdk
 	url = https://github.com/facebook/facebook-php-sdk.git
+[submodule "libs/imdb-grabber"]
+	path = libs/imdb-grabber
+	url = https://github.com/FabianBeiner/PHP-IMDB-Grabber.git
