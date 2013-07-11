@@ -1118,7 +1118,7 @@ function destroy_cdir($dir = 'cache/index/') {
 function pr($data) {
 	global $debug;
 	if ($debug) {
-		echo '<pre style="color: #eee;background: #123;border: 1px solid #111;padding: 5px 10px;font-size:10px;line-height: 13px; margin: 0 0 10px;">';
+		echo '<pre style="color: #eee;background: #123;border: 1px solid #111;padding: 5px 10px;font-size:10px;line-height: 13px; margin: 0 0 10px;white-space:pre;">';
 		var_dump($data);
 		echo '</pre>';
 	}
