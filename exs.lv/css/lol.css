@@ -1,9 +1,9 @@
 body {
 	background: #ccc url('http://img.exs.lv/bildes/noise.png') repeat fixed 0 0;
-}	
+}
 
 #header {
-	background: url('http://img.exs.lv/bildes/personas/league_of_legends.png') repeat 100% 10px;
+	background: url('http://img.exs.lv/i/-/i-luv-u/Bilde2.png') repeat 100% 10px;
 	height: 192px;
 }
 
@@ -124,7 +124,7 @@ body {
 }
 
 #exs-logo {
-	background: transparent url('http://img.exs.lv/m/a/maadinsh/a5khzydv9r7ouu0xblt4.png') no-repeat 60px 40px;
+	background: transparent;
 	width: 500px;
 	height: 152px;
 }
