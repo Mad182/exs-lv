@@ -3478,7 +3478,7 @@ blockquote p {
 
 /* filmu infobox */
 #movie-info {
-	margin: 15px;
+	margin: 5px 15px 15px;
 	padding: 8px 15px;
 	border: 1px solid #ddd;
 	float: right;
