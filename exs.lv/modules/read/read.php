@@ -766,6 +766,45 @@ if ($article) {
 						$tpl->assign('genres', implode(' / ', $gen));
 					}
 
+					if($like_count = $db->get_var("SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = 1")) {
+
+						$likes = $db->get_results("
+							SELECT
+								`users`.`id`,
+								`users`.`nick`,
+								`users`.`avatar`,
+								`users`.`av_alt`
+							FROM
+								`movie_ratings`,
+								`users`
+							WHERE
+								`movie_ratings`.`page_id` = $article->id AND
+								`movie_ratings`.`rating` = 1 AND
+								`users`.`id` = `movie_ratings`.`user_id`
+							ORDER BY
+								`users`.`karma` DESC
+							LIMIT 9
+						");
+
+						$tpl->newBlock('movie-likes');
+
+						$rest = $like_count-count($likes);
+						if($rest > 0) {
+							$tpl->assign(array(
+									'rest' => ' un ' . $rest . ' citi...'
+								));
+						}
+
+						foreach($likes as $user_like) {
+							$tpl->newBlock('movie-likes-user');
+							$tpl->assign(array(
+									'avatar' => get_avatar($user_like, 's'),
+									'nick' => $user_like->nick
+								));
+						}
+
+					}
+
 					/* vertejuma pievienošana */
 					$like = '';
 					if ($auth->ok && $auth->karma >= 100 && !$db->get_var("SELECT count(*) FROM `movie_ratings` WHERE `page_id` = '$article->id' AND `user_id` = '$auth->id'")) {

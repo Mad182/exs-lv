@@ -176,6 +176,17 @@
 		<!-- START BLOCK : movie-like-->
 		{like}
 		<!-- END BLOCK : movie-like-->
+
+		<!-- START BLOCK : movie-likes-->
+		<p>
+			<strong>Iesaka:</strong><br />
+			<!-- START BLOCK : movie-likes-user-->
+			<img src="{avatar}" class="icon" alt="{nick}" title="{nick}" />
+			<!-- END BLOCK : movie-likes-user-->
+			<br style="clear:both"/>{rest}
+		</p>
+		<!-- END BLOCK : movie-likes-->
+
 	</div>
 	<div class="c"></div>
 	<p>&nbsp;</p>

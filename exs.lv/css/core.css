@@ -3478,8 +3478,8 @@ blockquote p {
 
 /* filmu infobox */
 #movie-info {
-	margin: 35px 15px 20px;
-	padding: 8px 16px;
+	margin: 15px;
+	padding: 8px 15px;
 	border: 1px solid #ddd;
 	float: right;
 	width: 330px;
@@ -3489,6 +3489,15 @@ blockquote p {
 
 #movie-info .title {
 	font-size: 115%;
+}
+
+#movie-info .icon {
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin: 2px;
+	border: 0;
+	padding: 0;
 }
 
 /* virsrakstu prefix */
