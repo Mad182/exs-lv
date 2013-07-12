@@ -572,9 +572,14 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'avatar' => get_avatar($user, 's'),
 					'author-nick' => $user->nick,
 					'id' => $record->id,
-					'title' => $title,
-					'rater' => mb_rater($record, $url)
+					'title' => $title
 				));
+
+				if(!$auth->mobile) {
+					$tpl->assign(array(
+						'rater' => mb_rater($record, $url)
+					));
+				}
 
 				if (isset($_GET['single'])) {
 
