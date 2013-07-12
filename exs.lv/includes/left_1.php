@@ -115,9 +115,16 @@ if ($groups = get_latest_groups()) {
 	$tpl->newBlock('groups-l-list');
 	foreach ($groups as $group) {
 		$tpl->newBlock('groups-l-node');
+
+		if(!empty($group->strid)) {
+			$group->link = '/'.$group->strid;
+		} else {
+			$group->link = '/group/'.$group->id;
+		}
+
 		$tpl->assign(array(
 			'title' => $group->title,
-			'id' => $group->id
+			'link' => $group->link
 		));
 	}
 	unset($groups);

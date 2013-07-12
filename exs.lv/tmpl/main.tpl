@@ -314,7 +314,7 @@
 	<div class="box">
 		<p>
 			<!-- START BLOCK : groups-l-node-->
-			<a href="/group/{id}">{title}</a><br />
+			<a href="{link}">{title}</a><br />
 			<!-- END BLOCK : groups-l-node-->
 		</p>
 		<a href="/grupas">Visas grupas &raquo;</a>
