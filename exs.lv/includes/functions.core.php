@@ -2980,12 +2980,11 @@ function post_mb($post) {
 	$db->query('INSERT INTO `miniblog` (' . implode(',', $fields) . ') VALUES (' . implode(',', $data) . ')');
 	$return = $db->insert_id;
 
-	//1000000
-	/* if ($return == 3000000) {
-	  $db->query("INSERT INTO autoawards (user_id,award,title,created) VALUES ('$auth->id','mb-1000000','Miljonā posta autors (3)',NOW())");
-	  $db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
-	  push('Ieguva medaļu &quot;Miljonā posta autors (3)&quot;', '/dati/bildes/awards/mb-1000000.png');
-	  } */
+	if (substr($return, -6) === '000000') {
+		$db->query("INSERT INTO autoawards (user_id,award,title,created) VALUES ('$auth->id','mb-1000000','Miljonā posta autors (" . substr($return, 0, -6) . ")',NOW())");
+		$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
+		push('Ieguva medaļu &quot;Miljonā posta autors (' . substr($return, 0, -6) . ')&quot;', '/dati/bildes/awards/mb-1000000.png');
+	}
 
 	if (!empty($post['parent'])) {
 		if (isset($_POST['no-bump'])) {
