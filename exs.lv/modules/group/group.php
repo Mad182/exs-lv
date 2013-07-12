@@ -39,12 +39,14 @@ if(!empty($group->disable_adsense)) {
 }
 
 /* top ad in group */
-if(!empty($group->top_ad)) {
-	$tpl->assignGlobal('top-group-ad', $group->top_ad);
-} elseif(empty($disable_adsense)) {
-	$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl'));
-} else {
-	$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728.tpl'));
+if(!$auth->mobile) {
+	if(!empty($group->top_ad)) {
+		$tpl->assignGlobal('top-group-ad', $group->top_ad);
+	} elseif(empty($disable_adsense)) {
+		$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl'));
+	} else {
+		$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728.tpl'));
+	}
 }
 
 /* grupas administratora vai moderatora pieeja */
@@ -1028,25 +1030,27 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
-	$members = $db->get_results("SELECT user,moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
-	if ($members) {
-		$tpl->newBlock('nmembers');
-		foreach ($members as $member) {
-			$m_user = get_user($member->user);
+	if(!$auth->mobile) {
+		$members = $db->get_results("SELECT user,moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
+		if ($members) {
+			$tpl->newBlock('nmembers');
+			foreach ($members as $member) {
+				$m_user = get_user($member->user);
 
-			$avatar = get_avatar($m_user, 's');
+				$avatar = get_avatar($m_user, 's');
 
-			$mclas = 'member';
-			if ($member->moderator) {
-				$mclas = 'mod';
+				$mclas = 'member';
+				if ($member->moderator) {
+					$mclas = 'mod';
+				}
+
+				$tpl->newBlock('nmembers-node');
+				$tpl->assign(array(
+					'member-id' => $m_user->id,
+					'member-nick' => htmlspecialchars($m_user->nick),
+					'avatar' => $avatar,
+				));
 			}
-
-			$tpl->newBlock('nmembers-node');
-			$tpl->assign(array(
-				'member-id' => $m_user->id,
-				'member-nick' => htmlspecialchars($m_user->nick),
-				'avatar' => $avatar,
-			));
 		}
 	}
 

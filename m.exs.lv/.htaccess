@@ -39,11 +39,6 @@ RewriteRule ^page/([0-9]+)-(.*)/detach$ index.php?p=$1&detach [NC,L]
 RewriteRule ^page/([0-9]+)-(.*)/?$ index.php?p=$1 [NC,L,QSA]
 RewriteRule ^user/([0-9]+)-(.*)/?$ index.php?u=$1 [NC,L,QSA]
 
-RewriteRule ^group/([0-9]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?group=$1&act=$2&param=$3&param2=$4 [NC,L,QSA]
-RewriteRule ^group/([0-9]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?group=$1&act=$2&param=$3 [NC,L,QSA]
-RewriteRule ^group/([0-9]+)/([0-9a-z\-_]+)/?$ index.php?group=$1&act=$2 [NC,L,QSA]
-RewriteRule ^group/([0-9]+)/?$ index.php?group=$1 [NC,L]
-
 RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/open$ index.php?m=$1&single=$2&unclose [NC,L]
 RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/close$ index.php?m=$1&single=$2&close [NC,L]
 RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/?$ index.php?m=$1&single=$2 [NC,L,QSA]
@@ -60,4 +55,3 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_.]+)/?$ index.php?viewcat=$1&var1=$2 [NC,L,QSA]
 RewriteRule ^([0-9a-z\-_]+)/?$ index.php?viewcat=$1 [NC,L,QSA]
-

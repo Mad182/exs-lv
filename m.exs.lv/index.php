@@ -107,8 +107,6 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 		include('modules/core/miniblog.php');
 	} elseif (isset($_GET['y'])) {
 		include('modules/core/youtube.php');
-	} elseif (isset($_GET['group'])) {
-		include('modules/core/group.php');
 	} else {
 		if (!empty($category)) {
 			$page_title = $category->title;
