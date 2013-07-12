@@ -2,11 +2,12 @@
 
 require(CORE_PATH . '/modules/group/functions.group.php');
 
+
 if(!empty($category->content)) {
-	$_GET['var2'] = $_GET['var1'];
-	$_GET['var3'] = $_GET['var2'];
-	$_GET['var4'] = $_GET['var3'];
 	$_GET['var5'] = $_GET['var4'];
+	$_GET['var4'] = $_GET['var3'];
+	$_GET['var3'] = $_GET['var2'];
+	$_GET['var2'] = $_GET['var1'];
 	$_GET['var1'] = $category->content;
 	$group_link = '/'.$category->textid;
 } else {
