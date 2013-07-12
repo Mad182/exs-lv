@@ -11,7 +11,7 @@ $categories = $db->get_results("SELECT title,id FROM clans_categories ORDER BY i
 
 foreach ($categories as $group_category) {
 
-	$groups = $db->get_results("SELECT id,title,avatar,posts,members,owner FROM clans WHERE `lang` = '$lang' AND category_id = '$group_category->id' $order");
+	$groups = $db->get_results("SELECT id,title,avatar,posts,members,owner,strid FROM clans WHERE `lang` = '$lang' AND category_id = '$group_category->id' $order");
 	if ($groups) {
 		$tpl->newBlock('groups-cat');
 		$tpl->assign('title', $group_category->title);
@@ -32,9 +32,16 @@ foreach ($categories as $group_category) {
 				$group->avatar = 'none.png';
 			}
 			$tpl->newBlock('list-groups-node');
+			
+			if(!empty($group->strid)) {
+				$group->link = '/'.$group->strid;
+			} else {
+				$group->link = '/group/'.$group->id;
+			}
+			
 			$tpl->assign(array(
 				'title' => $group->title,
-				'id' => $group->id,
+				'link' => $group->link,
 				'avatar' => $group->avatar,
 				'posts' => $group->posts,
 				'members' => $group->members + 1,
