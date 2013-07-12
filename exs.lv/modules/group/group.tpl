@@ -1,8 +1,8 @@
 <!-- START BLOCK : group-options-->
-<ul id="page-options"><li class="option-edit"><a href="/group/{group-id}/edit">labot lapu</a></ul>
+<ul id="page-options"><li class="option-edit"><a href="{group-link}/edit">labot lapu</a></ul>
 <!-- END BLOCK : group-options-->
 <!-- START BLOCK : tab-options-->
-<ul id="page-options"><li class="option-edit"><a href="/group/{group-id}/tab/{slug}/edit">labot lapu</a></ul>
+<ul id="page-options"><li class="option-edit"><a href="{group-link}/tab/{slug}/edit">labot lapu</a></ul>
 <!-- END BLOCK : tab-options-->
 
 <!-- START BLOCK : group-menu-->
@@ -11,15 +11,15 @@
 {top-group-ad}
 
 <ul class="tabs">
-	<li><a href="/group/{group-id}" class="{active-tab-info}"><span class="group-profile">Sākums</span></a></li>
-	<li><a href="/group/{group-id}/forum" class="{active-tab-community}"><span class="comments">Sarunas</span></a></li>
-	<li><a href="/group/{group-id}/members" class="{active-tab-members}"><span class="users">Biedri</span></a></li>
+	<li><a href="{group-link}" class="{active-tab-info}"><span class="group-profile">Sākums</span></a></li>
+	<li><a href="{group-link}/forum" class="{active-tab-community}"><span class="comments">Sarunas</span></a></li>
+	<li><a href="{group-link}/members" class="{active-tab-members}"><span class="users">Biedri</span></a></li>
 	<!-- START BLOCK : group-menu-add-->
-	<li><a href="/group/{group-id}/tab/{url}" class="{sel}">{title}</a></li>
+	<li><a href="{group-link}/tab/{url}" class="{sel}">{title}</a></li>
 	<!-- END BLOCK : group-menu-add-->
-	<li><a href="/group/{group-id}/search" class="{active-tab-search}"><span class="search">Meklēt</span></a></li>
+	<li><a href="{group-link}/search" class="{active-tab-search}"><span class="search">Meklēt</span></a></li>
 	<!-- START BLOCK : group-menu-options-->
-	<li><a href="/group/{group-id}/options" class="{active-tab-options}"><span class="tools">Rīki</span></a></li>
+	<li><a href="{group-link}/options" class="{active-tab-options}"><span class="tools">Rīki</span></a></li>
 	<!-- END BLOCK : group-menu-options-->
 </ul>
 <!-- END BLOCK : group-menu-->
@@ -81,11 +81,11 @@
 	</div>
 	<div style="float: right;width: 29%">
 		<!-- START BLOCK : group-info-apply-->
-		<p><a class="l-gmember" href="/group/{group-id}/apply">Pieteikties</a></p>
+		<p><a class="l-gmember" href="{group-link}/apply">Pieteikties</a></p>
 		<!-- END BLOCK : group-info-apply-->
 
 		<!-- START BLOCK : group-info-apply-paid-->
-		<p><a class="l-gmember" href="/group/{group-id}/pay">Pieteikties</a></p>
+		<p><a class="l-gmember" href="{group-link}/pay">Pieteikties</a></p>
 		<!-- END BLOCK : group-info-apply-paid-->
 
 		<!-- START BLOCK : glatest-box-->
@@ -152,11 +152,11 @@
 			Admins: {group-admin}
 		</p>
 		<!-- START BLOCK : group-info-cancel-->
-		<p><a class="l-gmember" href="/group/{group-id}/cancel?hash={hash}">Dzēst pieteikumu</a></p>
+		<p><a class="l-gmember" href="{group-link}/cancel?hash={hash}">Dzēst pieteikumu</a></p>
 		<!-- END BLOCK : group-info-cancel-->
 
 		<!-- START BLOCK : group-info-quit-->
-		<p><a class="l-gmember confirm" href="/group/{group-id}/cancel?hash={hash}">Pamest grupu</a></p>
+		<p><a class="l-gmember confirm" href="{group-link}/cancel?hash={hash}">Pamest grupu</a></p>
 		<!-- END BLOCK : group-info-quit-->
 	</div>
 	<div class="c"></div>
@@ -262,7 +262,7 @@
 		<li>
 			<a class="image" href="/user/{pending-uid}"><img src="{avatar}" alt="" /></a>
 			<h3><a href="/user/{pending-uid}">{pending-nick}</a> <span>{pending-date}</span></h3>
-			<a href="/group/{group-id}/confirm/{pending-id}">Apstiprināt</a>
+			<a href="{group-link}/confirm/{pending-id}">Apstiprināt</a>
 			<div class="c"></div>
 		</li>
 		<!-- END BLOCK : pending-node-->
@@ -277,13 +277,13 @@
 		<!-- START BLOCK : members-node-->
 		<li class="{member-class}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />{member-nick}</a>
 			<!-- START BLOCK : member-delete-->
-			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="/group/{group-id}/drop/{member-id}"><img src="http://img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
+			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="{group-link}/drop/{member-id}"><img src="http://img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
 			<!-- END BLOCK : member-delete-->
 			<!-- START BLOCK : member-moderator-->
-			<a class="moderator confirm" href="/group/{group-id}/setmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
+			<a class="moderator confirm" href="{group-link}/setmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
 			<!-- END BLOCK : member-moderator-->
 			<!-- START BLOCK : member-unmoderator-->
-			<a class="unmoderator confirm" href="/group/{group-id}/unsetmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
+			<a class="unmoderator confirm" href="{group-link}/unsetmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
 			<!-- END BLOCK : member-unmoderator-->
 		</li>
 		<!-- END BLOCK : members-node-->
@@ -507,7 +507,7 @@
 		<!-- START BLOCK : res-search-node-->
 		<li style="border-bottom: 1px solid #ddd">
 			<p style="padding: 0;margin: 0;font-size: 90%">{text}</p>
-			<p style="padding: 2px 0 10px;margin:0"><a href="http://exs.lv/group/{group-id}/forum/{link}">http://exs.lv/group/{group-id}/forum/{link}</a></p>
+			<p style="padding: 2px 0 10px;margin:0"><a href="http://exs.lv{group-link}/forum/{link}">http://exs.lv{group-link}/forum/{link}</a></p>
 		</li>
 		<!-- END BLOCK : res-search-node-->
 	</ol>

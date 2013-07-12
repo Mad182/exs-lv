@@ -2,8 +2,25 @@
 
 require(CORE_PATH . '/modules/group/functions.group.php');
 
+if(!empty($category->content)) {
+	$_GET['var2'] = $_GET['var1'];
+	$_GET['var3'] = $_GET['var2'];
+	$_GET['var4'] = $_GET['var3'];
+	$_GET['var5'] = $_GET['var4'];
+	$_GET['var1'] = $category->content;
+	$group_link = '/'.$category->textid;
+} else {
+	$group_link = '/group/'.intval($_GET['var1']);
+}
+
+$tpl->assignGlobal('group-link', $group_link);
+
 if (!isset($_GET['var1']) || !$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '" . intval($_GET['var1']) . "' AND `lang` = '$lang'")) {
 	redirect('/grupas');
+}
+
+if(!empty($group->strid) && $group->strid != $category->textid) {
+	redirect(str_replace('/group/'.$group->id, '/'.$group->strid, $_SERVER['REQUEST_URI']), true);
 }
 
 set_action('grupas');
