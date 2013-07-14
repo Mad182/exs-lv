@@ -105,7 +105,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 	} elseif (isset($_GET['g'])) {
 		include('modules/core/gallery.php');
 	} elseif (isset($_GET['m'])) {
-		include('modules/core/miniblog.php');
+		include(CORE_PATH . '/modules/core/miniblog.php');
 	} elseif (isset($_GET['y'])) {
 		include('modules/core/youtube.php');
 	} else {
