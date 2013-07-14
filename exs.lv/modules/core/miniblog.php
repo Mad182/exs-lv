@@ -152,11 +152,11 @@ if ($auth->ok && im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) 
 	}
 }
 
-if ($debug == true || ($tpl2 = $m->get('tpl_mb_' . $lang)) == false) {
+if ($debug == true || ($tpl2 = $m->get('tpl_mb_' . $lang . intval($auth->mobile))) == false) {
 	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/core/miniblog.tpl');
 	$tpl->assignInclude('conversation', CORE_PATH . '/modules/core/conversation.tpl');
 	$tpl->prepare();
-	$m->set('tpl_mb_' . $lang, $tpl, false, 7200);
+	$m->set('tpl_mb_' . $lang . intval($auth->mobile), $tpl, false, 7200);
 } else {
 	$tpl = $tpl2;
 	unset($tpl2);
