@@ -11,15 +11,15 @@
 {top-group-ad}
 
 <ul class="tabs">
-	<li><a href="{group-link}" class="{active-tab-info}"><span class="group-profile">Sākums</span></a></li>
-	<li><a href="{group-link}/forum" class="{active-tab-community}"><span class="comments">Sarunas</span></a></li>
-	<li><a href="{group-link}/members" class="{active-tab-members}"><span class="users">Biedri</span></a></li>
+	<li><a href="{group-link}" class="ajax-module-mobile {active-tab-info}"><span class="group-profile">Sākums</span></a></li>
+	<li><a href="{group-link}/forum" class="ajax-module-mobile {active-tab-community}"><span class="comments">Sarunas</span></a></li>
+	<li><a href="{group-link}/members" class="ajax-module-mobile {active-tab-members}"><span class="users">Biedri</span></a></li>
 	<!-- START BLOCK : group-menu-add-->
-	<li><a href="{group-link}/tab/{url}" class="{sel}">{title}</a></li>
+	<li><a href="{group-link}/tab/{url}" class="ajax-module-mobile {sel}">{title}</a></li>
 	<!-- END BLOCK : group-menu-add-->
-	<li><a href="{group-link}/search" class="{active-tab-search}"><span class="search">Meklēt</span></a></li>
+	<li><a href="{group-link}/search" class="ajax-module-mobile {active-tab-search}"><span class="search">Meklēt</span></a></li>
 	<!-- START BLOCK : group-menu-options-->
-	<li><a href="{group-link}/options" class="{active-tab-options}"><span class="tools">Rīki</span></a></li>
+	<li><a href="{group-link}/options" class="ajax-module-mobile {active-tab-options}"><span class="tools">Rīki</span></a></li>
 	<!-- END BLOCK : group-menu-options-->
 </ul>
 <!-- END BLOCK : group-menu-->
@@ -92,7 +92,7 @@
 		<h3>Jaunākais</h3>
 		<ul class="blockhref mb-col">
 			<!-- START BLOCK : glatest-box-node-->
-			<li style="font-size:10px;text-align:left"><a href="{url}"><img class="av" src="{avatar}" alt="{nick}" /> <span class="author">{nick}</span> <span>pirms {time}</span> {text}&nbsp;[{resp}]</a></li>
+			<li style="font-size:10px;text-align:left"><a href="{url}"><img class="av" src="{avatar}" alt="{nick}" /> <span class="author">{nick}</span> <span>pirms {time}</span> {text}&nbsp;[{resp}]</a><div class="c"></div></li>
 			<!-- END BLOCK : glatest-box-node-->
 		</ul>
 		<!-- END BLOCK : glatest-box-->

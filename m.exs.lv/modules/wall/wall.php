@@ -151,13 +151,13 @@ ksort($events);
 $events = array_reverse($events);
 
 if (!empty($events)) {
-	$tpl->newBlock('events');
+	$tpl->newBlock('wall-events');
 	$i = 0;
 	foreach ($events as $event) {
 		if ($i++ >= 20) {
 			break;
 		}
-		$tpl->newBlock('events-node');
+		$tpl->newBlock('wall-events-node');
 		$tpl->assign(array(
 			'url' => $event['url'],
 			'author' => $event['author'],

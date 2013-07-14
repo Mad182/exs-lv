@@ -20,19 +20,23 @@
 	display: block
 }
 #wrapper #pm-table td.pm {
-background: url('http://img.exs.lv/bildes/icons.png') no-repeat 50% -646px;
+	background: url('http://exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
 }
 #wrapper #pm-table td.pm-read {
-background: url('http://img.exs.lv/bildes/icons.png') no-repeat 50% -620px;
+	background: url('http://exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
 }
 #pm-table th {
 	text-align: center;
 	font-weight: 700
 }
-#wrapper #pm-table th.date {
+#wrapper #pm-table th.pmdate {
 	width: 100px;
-	padding: 3px 7px;
-	background: transparent
+	padding: 3px 7px
+}
+#wrapper #pm-table td.pmdate a {
+	color:#777;
+	display:block;
+	text-align:right
 }
 #pm-table th.isread, #pm-table td.isread {
 	text-align: center

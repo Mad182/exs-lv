@@ -1,15 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
+<html lang="lv">
 <head>
+<meta charset="UTF-8">
 <title>{page-title}</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta http-equiv="content-language" content="lv" />
-<meta name="googlebot" content="noindex" />
-<link rel="stylesheet" href="/m.css?a" type="text/css" />
-<script type="text/javascript" src="http://exs.lv/js/jquery.min.js"></script>
-<script type="text/javascript" src="/j.js"></script>
+<meta http-equiv="content-language" content="lv">
+<meta name="googlebot" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
+<script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
 <script type="text/javascript">
 	var mb_refresh_limit = 12000;
 	var current_user = {currentuser-id};

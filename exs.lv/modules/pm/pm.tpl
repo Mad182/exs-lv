@@ -4,7 +4,7 @@
 <ul class="tabs">
 	<li><a title="Saņemtās vēstules" href="/pm" class="ajax-module {inbox-active}"><span class="inbox">Saņemtās</span></a></li>
 	<li><a title="Sūtītās vēstules" href="/pm/sent" class="ajax-module {outbox-active}"><span class="outbox">Sūtītās</span></a></li>
-	<li><a title="Rakstīt vēstuli" href="/pm/write" class="{compose-active}"><span class="compose">Rakstīt</span></a></li>
+	<li><a title="Rakstīt vēstuli" href="/pm/write" class="ajax-module-mobile {compose-active}"><span class="compose">Rakstīt</span></a></li>
 	<li><a title="Meklēt vēstuli" href="/pm/search" class="ajax-module {search-active}"><span class="mail-search">Meklēt</span></a></li>
 </ul>
 
@@ -23,7 +23,7 @@
 
 	<div class="c"></div>
 	<p id="pm-read-footer">
-		<a class="button primary" href="/pm/write/?replyto={pm-id}" title="Rakstīt vēstuli">Atbildēt</a>
+		<a class="button primary ajax-module-mobile" href="/pm/write/?replyto={pm-id}" title="Rakstīt vēstuli">Atbildēt</a>
 		<a id="reply-history" class="button" href="/pm/?history=true&amp;msg_id={pm-id}">Sarunas vēsture</a>
 	</p>
 	<div class="c"></div>
@@ -57,14 +57,14 @@
 			<th class="type">&nbsp;</th>
 			<th class="title">Temats</th>
 			<th class="user">No kā?</th>
-			<th class="date">Datums</th>
+			<th class="pmdate">Datums</th>
 		</tr>
 		<!-- START BLOCK : pm-list-inbox-node-->
 		<tr class="read-{pm-read}">
 			<td class="{type}">&nbsp;</td>
 			<td class="title"><a href="/pm/inbox/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-title}</a></td>
 			<td>{from}</td>
-			<td><a style="color:#777;display:block;text-align:right" href="/pm/inbox/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
+			<td class="pmdate"><a href="/pm/inbox/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
 		</tr>
 		<!-- START BLOCK : pm-list-inbox-node-->
 
@@ -88,7 +88,7 @@
 			<th class="type">&nbsp;</th>
 			<th class="title">Temats</th>
 			<th class="user">Kam?</th>
-			<th class="date">Datums</th>
+			<th class="pmdate">Datums</th>
 		</tr>
 
 		<!-- START BLOCK : pm-list-outbox-node-->
@@ -96,7 +96,7 @@
 			<td class="{type}">&nbsp;</td>
 			<td class="title"><a href="/pm/sent/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-title}</a></td>
 			<td>{to}</td>
-			<td><a style="color:#777;display:block;text-align:right" href="/pm/sent/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
+			<td class="pmdate"><a href="/pm/sent/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
 		</tr>
 		<!-- START BLOCK : pm-list-outbox-node-->
 
