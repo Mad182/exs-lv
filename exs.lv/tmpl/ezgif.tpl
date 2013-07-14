@@ -26,19 +26,7 @@
 			<span>Animated GIFs Made Easy</span>
 		</a>
 		
-		<div style="float:right;width:728px;height:90px">
-			<script type="text/javascript"><!--
-			google_ad_client = "ca-pub-9907860161851752";
-			/* ezgif_horizontal */
-			google_ad_slot = "8624883234";
-			google_ad_width = 728;
-			google_ad_height = 90;
-			//-->
-			</script>
-			<script type="text/javascript"
-			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-			</script>
-		</div>
+		{ad-top}
 
 		<ul id="top-menu">
 			<li{cat-sel-887}><a class="home" href="/">Home</a></li>
