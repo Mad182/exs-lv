@@ -116,6 +116,12 @@ hr {
 	padding: 0;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+	border: 0;
+}
+
 code, pre, .code, span.c, .codebox {
 	background: #FFF;
 	border: 1px solid #EEE;
