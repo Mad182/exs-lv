@@ -1662,7 +1662,7 @@ function update_awards($user) {
 		}
 
 		if (!in_array('game-pages-5', $existing_awards) && $userr->posts > 5) {
-			$game_pages = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user' AND category = '81'");
+			$game_pages = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user' AND (`category` = 81 OR `category` = 603)");
 			if ($game_pages >= 1) {
 				$awards_list['game-pages-1']['state'] = 'active';
 			}
