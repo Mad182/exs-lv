@@ -53,18 +53,21 @@
 </ul>
 </div>
 <div id="wrapper">
-<!-- START BLOCK : profile-menu-->
-<h2>{user-nick}</h2>
+	<div id="current-module">
+		<!-- START BLOCK : profile-menu-->
+		<h2>{user-nick}</h2>
 
-<ul class="tabs">
-	<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile">Profils</span></a></li>
-	<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
-</ul>
+		<ul class="tabs">
+			<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile">Profils</span></a></li>
+			<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+		</ul>
 
-<!-- END BLOCK : profile-menu-->
-<!-- INCLUDE BLOCK : module-core-error -->
-<!-- INCLUDE BLOCK : module-currrent -->
-<div class="c"></div>
+		<!-- END BLOCK : profile-menu-->
+		<!-- INCLUDE BLOCK : module-core-error -->
+		<!-- INCLUDE BLOCK : module-currrent -->
+		<div class="c"></div>
+	</div>
+
 <!-- START BLOCK : events-->
 {events-title}
 <div class="box">
