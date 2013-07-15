@@ -99,7 +99,7 @@ html .banned {
 }
 
 #wrapper {
-	padding: 5px 3px;
+	padding: 6px;
 }
 
 #comments {
@@ -871,7 +871,7 @@ a.activeTab, a.activeTab:hover {
 	z-index: 2;
 	background: #f3f3f3;
 	padding: 6px 5px 0;
-	margin: 0 3px;
+	margin: 0 -4px;
 }
 
 .tabs li {
@@ -1271,55 +1271,55 @@ blockquote, .q, .quote {
 }
 
 #user-notify li a {
-	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 2px;
+	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 6px;
 }
 
 #user-notify li.notification-1 a {
-	background-position: 0 -42px;
+	background-position: 0 -38px;
 }
 
 #user-notify li.notification-2 a {
-	background-position: 0 -86px;
+	background-position: 0 -82px;
 }
 
 #user-notify li.notification-3 a {
-	background-position: 0 -130px;
+	background-position: 0 -126px;
 }
 
 #user-notify li.notification-4 a {
-	background-position: 0 -174px;
+	background-position: 0 -170px;
 }
 
 #user-notify li.notification-5 a {
-	background-position: 0 -218px;
+	background-position: 0 -214px;
 }
 
 #user-notify li.notification-6 a {
-	background-position: 0 -262px;
+	background-position: 0 -258px;
 }
 
 #user-notify li.notification-7 a {
-	background-position: 0 -306px;
+	background-position: 0 -302px;
 }
 
 #user-notify li.notification-9 a {
-	background-position: 0 -350px;
+	background-position: 0 -346px;
 }
 
 #user-notify li.notification-10 a {
-	background-position: 0 -394px;
+	background-position: 0 -390px;
 }
 
 #user-notify li.notification-11 a {
-	background-position: 0 -438px;
+	background-position: 0 -434px;
 }
 
 #user-notify li.notification-12 a {
-	background-position: 0 -482px;
+	background-position: 0 -478px;
 }
 
 #user-notify li.notification-13 a, #user-notify li.notification-14 a, #user-notify li.notification-15 a, #user-notify li.notification-16 a {
-	background-position: 0 -526px;
+	background-position: 0 -522px;
 }
 
 #user-notify li a {

@@ -8,6 +8,8 @@
 	<li><a title="Meklēt vēstuli" href="/pm/search" class="ajax-module {search-active}"><span class="mail-search">Meklēt</span></a></li>
 </ul>
 
+<div class="c"></div>
+
 <div class="tabMain">
 	{ad-468}
 

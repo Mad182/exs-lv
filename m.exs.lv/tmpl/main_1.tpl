@@ -37,7 +37,7 @@
 <div id="header">
 	<div id="user-tools">
 	  <a href="/user/{currentuser-id}" class="ajax-module"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
-		Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents">Tavi notikumi</a>
+		Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents" class="ajax-module">Tavi notikumi</a>
 	</div>
 	<a id="logo" href="/">eXs.lv</a>
 </div>
