@@ -3093,3 +3093,14 @@ function get_cakeday() {
 
 	return $out;
 }
+
+/* atgriež vērtību vai tukšumu, ja $val nav definēts */
+function esr(&$val, $empty = '') {
+	if(!empty($val)) {
+		return $val;
+	}
+	else {
+		return $empty;
+	}
+}
+
