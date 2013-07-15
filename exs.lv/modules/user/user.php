@@ -628,6 +628,9 @@ if ($user) {
 					if(substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
 						$action->avatar = 'http://exs.lv' . $action->avatar;
 					}
+					if(substr($action->avatar, 0, 8) == '/bildes/') {
+						$action->avatar = 'http://img.exs.lv' . $action->avatar;
+					}
 					$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
 				}
 				$out .= '</ul>';
