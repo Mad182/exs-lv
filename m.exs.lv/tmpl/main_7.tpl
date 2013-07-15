@@ -37,7 +37,7 @@
 <div id="header">
 	<div id="user-tools">
 	  <a href="/user/{currentuser-id}"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
-		<a href="/">Čau,&nbsp;{currentuser-nick}!</a><br /><a href="/user/{currentuser-id}">Tavs&nbsp;profils</a>
+		Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents">Tavi notikumi</a>
 	</div>
 	<a id="logo" href="/">lol.exs.lv</a>
 </div>

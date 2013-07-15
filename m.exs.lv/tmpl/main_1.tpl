@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
 <script type="text/javascript">
-	var mb_refresh_limit = 14000;
+	var mb_refresh_limit = 12000;
 	var current_user = {currentuser-id};
 	var query_timeout = 80000;
 	var c_url = "{page-url}";
@@ -37,7 +37,7 @@
 <div id="header">
 	<div id="user-tools">
 	  <a href="/user/{currentuser-id}" class="ajax-module"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
-		<a href="/">Čau,&nbsp;{currentuser-nick}!</a><br /><a href="/user/{currentuser-id}">Tavs&nbsp;profils</a>
+		Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents">Tavi notikumi</a>
 	</div>
 	<a id="logo" href="/">eXs.lv</a>
 </div>

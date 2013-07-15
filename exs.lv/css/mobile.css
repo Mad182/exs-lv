@@ -1253,3 +1253,133 @@ blockquote, .q, .quote {
 	padding: 10px;
 	display: block;
 }
+/* notifikacijas */
+#user-notify {
+	padding: 0;
+	margin: 0;
+	font-size: 11px;
+}
+
+#user-notify li {
+	padding: 1px 0;
+	margin: 0;
+	font-size: 11px;
+	background: transparent;
+	border-bottom: 1px solid #eee;
+}
+
+#user-notify li a {
+	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 2px;
+}
+
+#user-notify li.notification-1 a {
+	background-position: 0 -42px;
+}
+
+#user-notify li.notification-2 a {
+	background-position: 0 -86px;
+}
+
+#user-notify li.notification-3 a {
+	background-position: 0 -130px;
+}
+
+#user-notify li.notification-4 a {
+	background-position: 0 -174px;
+}
+
+#user-notify li.notification-5 a {
+	background-position: 0 -218px;
+}
+
+#user-notify li.notification-6 a {
+	background-position: 0 -262px;
+}
+
+#user-notify li.notification-7 a {
+	background-position: 0 -306px;
+}
+
+#user-notify li.notification-9 a {
+	background-position: 0 -350px;
+}
+
+#user-notify li.notification-10 a {
+	background-position: 0 -394px;
+}
+
+#user-notify li.notification-11 a {
+	background-position: 0 -438px;
+}
+
+#user-notify li.notification-12 a {
+	background-position: 0 -482px;
+}
+
+#user-notify li.notification-13 a, #user-notify li.notification-14 a, #user-notify li.notification-15 a, #user-notify li.notification-16 a {
+	background-position: 0 -526px;
+}
+
+#user-notify li a {
+	display: block;
+	text-decoration: none;
+	font-size: 11px;
+	line-height: 16px;
+	padding: 3px 0 3px 28px;
+	height: auto !important;
+	height: 28px;
+	min-height: 28px;
+	max-height: 38px;
+	overflow: hidden;
+}
+
+#user-notify li a:hover {
+	background-color: #f5f5f6;
+}
+
+#user-notify li span {
+	padding: 0;
+	margin: 0;
+	font-size: 10px;
+	display: block;
+	font-weight: 400;
+	color: #888;
+	font-family: arial;
+	font-size: 11px;
+	line-height: 12px;
+}
+
+#user-notify li span.site-name {
+	display: inline;
+	font-size: 9px;
+}
+
+#user-notify li span.info-content {
+	display: inline;
+	font-size: 11px;
+}
+/* pager */
+.core-pager {
+	margin: 10px 0;
+	text-align: center;
+}
+
+.core-pager span {
+	display: none;
+}
+
+.core-pager a {
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	background: #eee;
+	margin: 0 0 2px 0;
+	padding: 4px 9px;
+}
+
+.core-pager a.selected {
+	border: 1px solid #ccc;
+	background: #dadada;
+	font-weight: 700;
+}
