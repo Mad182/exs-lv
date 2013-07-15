@@ -164,7 +164,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	}
 
 	$tpl->newBlock('tinymce-enabled');
-	$page_title = $group->title . ' | labo grupas profilu';
+	$page_title = $group->title . ' - labo grupu';
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'members') {
 
 	$tpl->assignGlobal('active-tab-members', 'active');
@@ -265,7 +265,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		'pager-numeric' => $pager['pages']
 	));
 
-	$page_title = $group->title . ' | Biedri';
+	$page_title = $group->title . ' - biedri';
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod)) {
 	$drop = (int) $_GET['var3'];
 	$db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$drop'");
@@ -322,7 +322,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 		$tpl->assignGlobal('active-tab-info', 'active');
 		$tpl->newBlock('group-pay');
-		$page_title = $group->title . ' | iestāties grupā';
+		$page_title = $group->title . ' - iestāties grupā';
 
 		$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 		$owner = get_user($group->owner);
@@ -374,7 +374,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 	$tpl->assignGlobal('active-tab-community', 'active');
 	$tpl->newBlock('group-community');
-	$page_title = $group->title . ' | Grupas forums';
+	$page_title = $group->title . ' - forums';
 
 	if (isset($_GET['var3']) && !empty($_GET['var3'])) {
 		$_GET['single'] = base_convert($_GET['var3'], 36, 10);
@@ -540,7 +540,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$url = $group_link . '/forum/' . base_convert($record->id, 10, 36);
 
 				if (isset($_GET['single'])) {
-					$page_title = $title . ' | ' . $group->title . ' forums';
+					$page_title = $title . ' - forums';
 				}
 
 				$append = '';
@@ -740,7 +740,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				'tab-module' => $module_content,
 				'tab-text' => htmlspecialchars($tab->text)
 			));
-			$page_title = $group->title . ' | Labot &quot;' . $tab->title . '&quot;';
+			$page_title = $group->title . ' - labot &quot;' . $tab->title . '&quot;';
 		} elseif ($tab->public or ($is_mod || $is_admin || $is_member)) {
 
 			if ($is_admin || $is_mod) {
@@ -781,7 +781,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				'tab-module' => $module_content,
 				'tab-text' => $share . add_smile($tab->text, 1)
 			));
-			$page_title = $group->title . ' | ' . $tab->title;
+			$page_title = $group->title . ' - ' . $tab->title;
 		} else {
 			$page_title = $group->title . ' | ' . $tab->title;
 			$tpl->newBlock('noguestacc-tab');
@@ -880,7 +880,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		redirect($group_link);
 	}
 
-	$page_title = $group->title . ' | Rīki';
+	$page_title = $group->title . ' - rīki';
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
 	$tpl->assignGlobal('active-tab-search', 'active');
@@ -925,7 +925,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		$tpl->newBlock('noguestacc-search');
 	}
 
-	$page_title = $group->title . ' | Meklēšana';
+	$page_title = $group->title . ' - mklēšana';
 } else {
 
 	$tpl->assignGlobal('active-tab-info', 'active');
@@ -1109,5 +1109,5 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
-	$page_title = $group->title . ' | Grupa';
+	$page_title = $group->title;
 }
