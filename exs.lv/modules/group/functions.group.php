@@ -21,7 +21,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 		$foo->image_y = 90;
 		$foo->allowed = array('image/*');
 		$foo->image_ratio_crop = true;
-		$foo->jpeg_quality = 90;
+		$foo->jpeg_quality = 97;
 		$foo->file_auto_rename = false;
 		$foo->file_overwrite = true;
 		$foo->process('dati/bildes/useravatar/');
@@ -35,7 +35,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 			$foo->image_y = 45;
 			$foo->allowed = array('image/*');
 			$foo->image_ratio_crop = true;
-			$foo->jpeg_quality = 90;
+			$foo->jpeg_quality = 97;
 			$foo->file_auto_rename = false;
 			$foo->file_overwrite = true;
 			$foo->process('dati/bildes/u_small/');
@@ -44,12 +44,12 @@ function upload_user_avatar($post, $old_filename, $text) {
 			$foo->file_new_name_body = $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';
-			$foo->image_x = 170;
+			$foo->image_x = 180;
 			$foo->image_y = 220;
 			$foo->allowed = array('image/*');
 			$foo->image_ratio_crop = false;
 			$foo->image_ratio_no_zoom_in = true;
-			$foo->jpeg_quality = 94;
+			$foo->jpeg_quality = 97;
 			$foo->file_auto_rename = false;
 			$foo->file_overwrite = true;
 			$foo->process('dati/bildes/u_large/');
