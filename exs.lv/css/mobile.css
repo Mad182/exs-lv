@@ -226,6 +226,10 @@ p.comment-tools a {
 	margin: 0;
 }
 
+.mb-textarea {
+	width: 90%;
+}
+
 #miniblog-list li, #miniblog-list li li, #friendssay-list li, .responses li {
 	padding: 0;
 	margin: 0;
@@ -513,7 +517,7 @@ tr.read-0 td a {
 	padding: 5px 13px 5px;
 	text-shadow: 0 1px 1px #ccc;
 	color: #333;
-	font-size: 11px;
+	font-size: 100%;
 	line-height: normal;
 	border: 1px solid #ccc;
 	border-bottom-color: #bbb;
@@ -1257,13 +1261,11 @@ blockquote, .q, .quote {
 #user-notify {
 	padding: 0;
 	margin: 0;
-	font-size: 11px;
 }
 
 #user-notify li {
 	padding: 1px 0;
 	margin: 0;
-	font-size: 11px;
 	background: transparent;
 	border-bottom: 1px solid #eee;
 }
@@ -1323,14 +1325,10 @@ blockquote, .q, .quote {
 #user-notify li a {
 	display: block;
 	text-decoration: none;
-	font-size: 11px;
-	line-height: 16px;
 	padding: 3px 0 3px 28px;
 	height: auto !important;
 	height: 28px;
 	min-height: 28px;
-	max-height: 38px;
-	overflow: hidden;
 }
 
 #user-notify li a:hover {
@@ -1340,24 +1338,16 @@ blockquote, .q, .quote {
 #user-notify li span {
 	padding: 0;
 	margin: 0;
-	font-size: 10px;
+	font-size: 90%;
 	display: block;
-	font-weight: 400;
 	color: #888;
 	font-family: arial;
-	font-size: 11px;
-	line-height: 12px;
 }
 
-#user-notify li span.site-name {
+#user-notify li span.site-name, #user-notify li span.info-content {
 	display: inline;
-	font-size: 9px;
 }
 
-#user-notify li span.info-content {
-	display: inline;
-	font-size: 11px;
-}
 /* pager */
 .core-pager {
 	margin: 10px 0;
@@ -1374,8 +1364,9 @@ blockquote, .q, .quote {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	background: #eee;
-	margin: 0 0 2px 0;
-	padding: 4px 9px;
+	margin: 0 1px;
+	padding: 4px 10px;
+	display: inline-block;
 }
 
 .core-pager a.selected {
