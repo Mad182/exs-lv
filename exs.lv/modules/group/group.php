@@ -115,7 +115,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		$db->update('clans', $group->id, array('category_id' => $group->category_id, 'interest_id' => $group->interest_id, 'avatar' => $group->avatar, 'text' => $edit_text, 'date_modified' => time()));
 
 		$auth->log('Laboja grupas aprakstu', 'clans', $group->id);
-		redirect('/group/' . $group->id);
+		redirect($group_link);
 	}
 
 	$tpl->assignGlobal('active-tab-info', 'active');
@@ -258,7 +258,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
-	$pager = pager($group->members, $skip, $end, '/group/' . $group->id . '/members/?skip=');
+	$pager = pager($group->members, $skip, $end, $group_link . '/members/?skip=');
 	$tpl->assignGlobal(array(
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
@@ -271,36 +271,35 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$drop'");
 	update_members($group->id);
 	$auth->log('Izmeta biedru #' . $drop, 'clans', $group->id);
-	redirect('/group/' . $group->id . '/members');
+	redirect($group_link . '/members');
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin) {
 	$uid = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET moderator = '1' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Uzlika par moderatoru #' . $uid, 'clans', $group->id);
-	redirect('/group/' . $group->id . '/members');
+	redirect($group_link . '/members');
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
 	$uid = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET moderator = '0' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
-	redirect('/group/' . $group->id . '/members');
+	redirect($group_link . '/members');
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod)) {
 	$confirm = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET approve = '1' WHERE clan = '$group->id' AND id = '$confirm'");
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
 	update_members($group->id);
-	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="/group/' . $group->id . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
+	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
-	redirect('/group/' . $group->id . '/members');
+	redirect($group_link . '/members');
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
-		$url = '/group/' . $group->id;
-		push('Pieteicās grupā &quot;<a href="' . $url . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
-		notify($group->owner, 4, $group->id, $url . '/members', $group->title);
+		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
+		notify($group->owner, 4, $group->id, $group_link . '/members', $group->title);
 		if ($group->id == 53 || $group->id == 89) {
 			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
 		}
-		redirect($url);
+		redirect($group_link);
 	}
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'submitpay' && $auth->ok && $group->paid) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
@@ -309,14 +308,14 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 		if ($credit < 3) {
 			set_flash('Nepietiek exs.lv kredīta!', 'error');
-			redirect('/group/' . $group->id);
+			redirect($group_link);
 		}
 		$db->query("UPDATE users SET credit = credit-'3' WHERE id = ('" . $auth->id . "')");
 		$db->query("INSERT INTO clans_paid (clan_id,user_id,time) VALUES ('$group->id','$auth->id','" . time() . "')");
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','1','" . time() . "')");
 		update_members($group->id);
-		push('Pieteicās grupā &quot;<a href="/group/' . $group->id . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
-		redirect('/group/' . $group->id);
+		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
+		redirect($group_link);
 	}
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
@@ -336,7 +335,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		));
 
 		if ($credit >= 3) {
-			$tpl->assign('pay', '<p><a href="/group/' . $group->id . '/submitpay">Pieteikties grupā</a></p>');
+			$tpl->assign('pay', '<p><a href="' . $group_link . '/submitpay">Pieteikties grupā</a></p>');
 		}
 
 		$members = $db->get_col("SELECT user FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
@@ -368,9 +367,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
-		push('Izstājās no grupas &quot;<a href="/group/' . $group->id . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
+		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
 	}
-	redirect('/group/' . $group->id);
+	redirect($group_link);
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
 
 	$tpl->assignGlobal('active-tab-community', 'active');
@@ -401,14 +400,14 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'text' => $body
 						));
 
-				push('Izveidoja tematu grupā <a href="/group/' . $group->id . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g' . $ins);
+				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g' . $ins);
 				$db->query("UPDATE clans SET posts = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "' WHERE id = '$group->id'");
 
 				$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$ins'");
-				$topic->text = mention($topic->text, "/group/' . $group->id . '/forum/' . base_convert($ins, 10, 36) . '", 'group', $topic->id);
+				$topic->text = mention($topic->text, $group_link . '/forum/' . base_convert($ins, 10, 36), 'group', $topic->id);
 				$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($topic->text) . "' WHERE id = '$topic->id'");
 
-				redirect('/group/' . $group->id . '/forum/' . base_convert($ins, 10, 36));
+				redirect($group_link . '/forum/' . base_convert($ins, 10, 36));
 			} else {
 				set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu tēmu!');
 			}
@@ -463,7 +462,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
 
 					$title = mb_get_title(stripslashes($body));
-					$url = '/group/' . $group->id . '/forum/' . base_convert($mainid, 10, 36);
+					$url = $group_link . '/forum/' . base_convert($mainid, 10, 36);
 					push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $group->title . ' grupā &quot;' . textlimit($title, 32, '...') . '&quot;</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g-' . $mainid);
 
 					$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
@@ -483,7 +482,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					if ($topic->posts >= 500) {
 						$body = sanitize($topic->text . '<p>(<a href="' . $url . '">Tēmas</a> turpinājums)</p>');
 						$db->query("INSERT INTO miniblog (`groupid`, `author`,`date`,`text`,`ip`,`bump`,`lang`) VALUES ('$group->id', '$topic->author',NOW(),'$body','$topic->ip','" . time() . "','$topic->lang')");
-						$newurl = '/group/' . $group->id . '/forum/' . base_convert($db->insert_id, 10, 36);
+						$newurl = $group_link . '/forum/' . base_convert($db->insert_id, 10, 36);
 						$reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">http://' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
 						$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '17077' WHERE `id` = '$mainid'");
 						redirect($newurl);
@@ -506,13 +505,13 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		if (im_mod() && isset($_GET['close']) && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
 			$db->query("UPDATE `miniblog` SET `closed` = '1', `closed_by` = '$auth->id' WHERE `id` = '$sid'");
-			redirect('/group/' . $group->id . '/forum/' . base_convert($sid, 10, 36));
+			redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
 		}
 
 		if (im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
 			$db->query("UPDATE `miniblog` SET `closed` = '0', `closed_by` = '0' WHERE `id` = '$sid'");
-			redirect('/group/' . $group->id . '/forum/' . base_convert($sid, 10, 36));
+			redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
 		}
 
 		$tpl->newBlock('user-miniblog');
@@ -538,7 +537,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$title = textlimit(preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)(</a>)?#ime", 'get_youtube_title_mb("\\4") ', $record->text), 64, '...');
 				$user = get_user($record->author);
 
-				$url = '/group/' . $group->id . '/forum/' . base_convert($record->id, 10, 36);
+				$url = $group_link . '/forum/' . base_convert($record->id, 10, 36);
 
 				if (isset($_GET['single'])) {
 					$page_title = $title . ' | ' . $group->title . ' forums';
@@ -692,7 +691,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			if (!isset($_GET['single'])) {
 
 				$total = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = '" . $group->id . "' AND `removed` = '0' AND `parent` = '0'");
-				$pager = pager($total, $skip, $end, '/group/' . $group->id . '/forum/?skip=');
+				$pager = pager($total, $skip, $end, $group_link . '/forum/?skip=');
 				$tpl->newBlock('mb-pager');
 				$tpl->assign(array(
 					'pager-next' => $pager['next'],
@@ -732,7 +731,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			if (isset($_POST['tab-text'])) {
 				$tab_text = htmlpost2db($_POST['tab-text']);
 				$db->query("UPDATE clans_tabs SET `text` = '$tab_text' WHERE id = '$tab->id'");
-				redirect('/group/' . $group->id . '/tab/' . $tab->slug);
+				redirect($group_link . '/tab/' . $tab->slug);
 			}
 
 			$tpl->newBlock('tinymce-enabled');
@@ -788,7 +787,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$tpl->newBlock('noguestacc-tab');
 		}
 	} else {
-		redirect('/group/' . $group->id);
+		redirect($group_link);
 	}
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'options') {
 
@@ -802,7 +801,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			if ($delete && $delete != 303) {
 				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = '$group->id' AND `id` = '$delete' AND `module` = '' LIMIT 1");
 			}
-			redirect('/group/' . $group->id . '/options');
+			redirect($group_link . '/options');
 		}
 
 		if (isset($_POST['tab-title']) && count($group_tabs) < 6 && strlen($_POST['tab-title']) > 2) {
@@ -814,14 +813,14 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$db->query("INSERT INTO clans_tabs (clan_id,slug,title,date_modified,public)
 											VALUES ('$group->id','$slug','$title','" . time() . "','$public')");
 			}
-			redirect('/group/' . $group->id . '/tab/' . $slug . '/edit');
+			redirect($group_link . '/tab/' . $slug . '/edit');
 		}
 
 		if (isset($_POST['submit-main'])) {
 			$public = (bool) $_POST['main-public'];
 			$auto_approve = (bool) $_POST['main-auto_approve'];
 			$db->query("UPDATE `clans` SET `public` = '$public', `auto_approve` = '$auto_approve' WHERE `id` = '$group->id'");
-			redirect('/group/' . $group->id . '/options');
+			redirect($group_link . '/options');
 		}
 
 		if (count($group_tabs) < 6) {
@@ -878,7 +877,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$tpl->newBlock('polls_admin-add');
 		}
 	} else {
-		redirect('/group/' . $group->id);
+		redirect($group_link);
 	}
 
 	$page_title = $group->title . ' | Rīki';
@@ -1091,7 +1090,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 				$mb->text = mb_get_title($mb->text);
 
-				$url = '/group/' . $group->id . '/forum/' . base_convert($mb->id, 10, 36);
+				$url = $group_link . '/forum/' . base_convert($mb->id, 10, 36);
 
 				$mb->text = wordwrap($mb->text, 12, "\n", 1);
 				$mb->text = textlimit($mb->text, 48, '...');
