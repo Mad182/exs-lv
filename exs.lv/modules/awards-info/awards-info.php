@@ -77,6 +77,7 @@ if (!empty($user)) {
 		case 'online-7days':
 		case 'online-30days':
 		case 'online-100days':
+		case 'online-year':
 			$out = 'Šobrīd tu esi bijis online ' . ($user->days_in_row + $user->seen_today) . ' dienas pēc kārtas';
 			break;
 
