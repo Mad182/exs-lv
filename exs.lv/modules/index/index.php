@@ -188,7 +188,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 
 				$av = '';
 				if(!empty($article->avatar)) {
-					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img width="75" height="75" src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
 				}
 
 				$tpl_cachable->assign(array(
