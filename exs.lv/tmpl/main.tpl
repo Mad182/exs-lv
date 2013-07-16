@@ -549,6 +549,51 @@
 </div>
 </div>
 
+<!-- START BLOCK : async-call -->
+<div id="async-placeholder"></div>
+<script>
+$(document).ready(function() {
+	$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
+});
+</script>
+<!-- END BLOCK : async-call -->
+
+<!-- sekomums.lv -->
+<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
+<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+<script type="text/javascript">function r(f){ /in/.test(document.readyState)?setTimeout('r('+f+')',9):f() }; r(function(){ new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!","exs.lv"); });</script>
+
+<!-- smartad.eu -->
+<script type='text/javascript'>/* <![CDATA[ */
+	var _smartad = _smartad || new Object(); _smartad.page_id=Math.floor(Math.random()*10000001);
+	if(!_smartad.prop) { _smartad.prop='screen_width='+(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth)+unescape('%26screen_height=')+(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight)+unescape('%26os=')+navigator.platform+unescape('%26refurl=')+encodeURIComponent(document.referrer||'')+unescape('%26pageurl=')+encodeURIComponent(document.URL||'')+unescape('%26rnd=')+ new Date().getTime();}
+	(function() {
+		if (_smartad.space){
+			_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
+		}else{
+			_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
+			_smartad.type='onload';
+			var f=function(){
+				var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0],n = b.firstChild, s = d.createElement('SCRIPT');
+				s.type = 'text/javascript',s.language = 'javascript',s.async = true,s.charset='UTF-8';
+				s.src=location.protocol+'//serving.bepolite.eu/script?space='+_smartad.space+unescape('%26type=')+_smartad.type+unescape('%26page_id=')+_smartad.page_id+unescape('%26')+_smartad.prop;
+				n?b.insertBefore(s, n):b.appendChild(s);
+			};
+			if(document.readyState==='complete'){
+				f();
+				delete _smartad.space;
+			}else{
+				if(window.addEventListener){ 
+					window.addEventListener('load',f,false);
+				}else if(window.attachEvent){
+					window.attachEvent('onload',f);
+				}
+			}
+		}
+	})();
+/* ]]> */</script>
+
+<!-- google analytics -->
 <script>
 
 var _gaq = _gaq || [];
@@ -563,19 +608,6 @@ _gaq.push(['_trackPageview']);
 })();
 
 </script>
-
-<!-- START BLOCK : async-call -->
-<div id="async-placeholder"></div>
-<script>
-$(document).ready(function() {
-	$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
-});
-</script>
-<!-- END BLOCK : async-call -->
-
-<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-<script type="text/javascript">function r(f){ /in/.test(document.readyState)?setTimeout('r('+f+')',9):f() }; r(function(){ new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!","exs.lv"); });</script>
 
 </body>
 </html>
