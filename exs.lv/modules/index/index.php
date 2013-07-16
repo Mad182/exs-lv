@@ -12,20 +12,6 @@ if (isset($_GET['skip'])) {
 
 $end = 10;
 
-$bumps = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 8");
-if ($bumps) {
-	$tpl->newBlock('index-junk');
-	foreach ($bumps as $junk) {
-		$tpl->newBlock('index-junk-node');
-		$tpl->assign(array(
-			'id' => $junk->id,
-			'thb' => $junk->thb,
-			'title' => $junk->title,
-			'posts' => $junk->posts
-		));
-	}
-}
-
 if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 
 	$tpl_cachable = new TemplatePower('modules/index/index-cachable.tpl');
@@ -149,7 +135,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 
 			$av = '';
 			if(!empty($article->avatar)) {
-				$av = '<a href="/read/' . $article->strid . '" class="av"><img src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+				$av = '<a href="/read/' . $article->strid . '" class="av"><img width="75" height="75" src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
 			}
 
 			$tpl_cachable->assign(array(
