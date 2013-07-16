@@ -965,8 +965,9 @@ img.floatLeft {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	background: #eee;
-	margin: 0 0 2px 0;
-	padding: 2px 4px;
+	margin: 0 1px 0 0;
+	padding: 2px 5px;
+	display: inline-block;
 }
 
 .core-pager a.selected {

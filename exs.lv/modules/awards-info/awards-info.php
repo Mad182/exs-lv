@@ -31,22 +31,25 @@ if (!empty($user)) {
 		case 'news-1':
 		case 'news-5':
 		case 'news-15':
-			$out = 'Tev ir ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '1'") . ' jaunumu raksti';
+			$cnt = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '1'");
+			$out = 'Tev ir ' . $cnt . ' jaunumu ' . lv_dsk($cnt, 'raksts', 'raksti');
 			break;
 
 		case 'game-pages-1':
 		case 'game-pages-5':
-			$out = 'Tu esi uzrakstījis ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '81'") . ' spēļu apskatus';
+			$cnt = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '81'");
+			$out = 'Tev ir ' . $cnt . ' spēļu ' . lv_dsk($cnt, 'apskats', 'apskati');
 			break;
 
 		case 'music-pages-1':
 		case 'music-pages-5':
-			$out = 'Tu esi uzrakstījis ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '323'") . ' rakstus mūzikas sadaļā';
+			$out = 'Tev ir ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '323'") . ' rakstus mūzikas sadaļā';
 			break;
 
 		case 'film-pages-1':
 		case 'film-pages-5':
-			$out = 'Tu esi uzrakstījis ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '80'") . ' filmu apskatus';
+			$cnt = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '80'");
+			$out = 'Tev ir ' . $cnt . ' filmu ' . lv_dsk($cnt, 'apskats', 'apskati');
 			break;
 
 		case 'rs-pages-1':
@@ -77,6 +80,7 @@ if (!empty($user)) {
 		case 'online-7days':
 		case 'online-30days':
 		case 'online-100days':
+		case 'online-year':
 			$out = 'Šobrīd tu esi bijis online ' . ($user->days_in_row + $user->seen_today) . ' dienas pēc kārtas';
 			break;
 
