@@ -77,7 +77,13 @@ class Comment {
 					}
 				} else {
 					$db->query("INSERT INTO galcom (id,bid,author,text,date,ip) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip')");
+					$newid = $db->insert_id;
 					$db->query("UPDATE `images` SET `bump` = NOW(), `posts` = `posts`+1, `readby` = '' WHERE `id` = '$page_id'");
+
+					$newpost = $db->get_row("SELECT * FROM `galcom` WHERE `id` = '$newid'");
+					$newpost->text = mention($newpost->text, '#', 'image', $page_id);
+					$db->query("UPDATE `galcom` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
+
 				}
 				update_karma($user_id);
 			} else {

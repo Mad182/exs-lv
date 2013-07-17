@@ -883,7 +883,7 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 		$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
 	}
 
-	if (!empty($usr) && !in_array($nick, array('exs', 'inbox', 'gmail', 'mail')) && $mention_counter <= 6) {
+	if (!empty($usr) && !in_array($nick, array('exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail')) && $mention_counter <= 6) {
 		$mention_counter++;
 
 		if ($type == 'mb') {
@@ -914,6 +914,17 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 				$mb = $db->get_row("SELECT * FROM `pages` WHERE `id` = '" . intval($uniq) . "'");
 				if ($mb->author != $usr->id && $usr->id != $auth->id) {
 					notify($usr->id, 15, $mb->id, $url);
+				}
+			}
+		}
+
+		if ($type == 'image') {
+			if (!empty($uniq)) {
+				$mb = $db->get_row("SELECT * FROM `galcom` WHERE `id` = '" . intval($uniq) . "'");
+				$img_author = $db->get_var("SELECT `uid` FROM `images` WHERE `id` = $mb->bid");
+				$url = '/gallery/' . $img_author . '/' . $mb->bid;
+				if ($mb->author != $usr->id && $usr->id != $auth->id) {
+					notify($usr->id, 16, $mb->id, $url);
 				}
 			}
 		}
