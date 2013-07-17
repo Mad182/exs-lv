@@ -563,7 +563,6 @@ $(document).ready(function() {
 <script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 <script type="text/javascript">function r(f){ /in/.test(document.readyState)?setTimeout('r('+f+')',9):f() }; r(function(){ new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!","exs.lv"); });</script>
 
-<!-- START BLOCK : smartad-eu -->
 <!-- smartad.eu -->
 <script type='text/javascript'>/* <![CDATA[ */
 	var _smartad = _smartad || new Object(); _smartad.page_id=Math.floor(Math.random()*10000001);
@@ -593,7 +592,6 @@ $(document).ready(function() {
 		}
 	})();
 /* ]]> */</script>
-<!-- END BLOCK : smartad-eu -->
 
 <!-- google analytics -->
 <script>
