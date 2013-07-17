@@ -438,6 +438,11 @@ if ($skin === 'main') {
 		$tpl->newBlock('async-call');
 	}*/
 
+	/* smartad.eu */
+	if($lang == 1 && $auth->karma < 1000) {
+		$tpl->newBlock('smartad-eu');
+	}
+
 }
 
 /* robots meta taga pievienošana */
