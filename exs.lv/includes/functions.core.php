@@ -920,10 +920,9 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 
 		if ($type == 'image') {
 			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT * FROM `galcom` WHERE `id` = '" . intval($uniq) . "'");
-				$img_author = $db->get_var("SELECT `uid` FROM `images` WHERE `id` = $mb->bid");
-				$url = '/gallery/' . $img_author . '/' . $mb->bid;
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
+				$mb = $db->get_row("SELECT * FROM `images` WHERE `id` = '" . intval($uniq) . "'");
+				$url = '/gallery/' . $mb->uid . '/' . $mb->id;
+				if ($usr->id != $auth->id) {
 					notify($usr->id, 16, $mb->id, $url);
 				}
 			}
