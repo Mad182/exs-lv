@@ -1,4 +1,4 @@
-<div style="margin: 10px auto;width:728px;">
+<div style="margin: 12px auto;width:728px">
 	<!-- (c) 2008-2013 AdOcean Sp. z o.o.  -->
 	<script language="javascript1.2" type="text/javascript">
 	// pula: 728x90_LAT

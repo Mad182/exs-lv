@@ -1,4 +1,4 @@
-<div style="margin: 10px auto;width:728px">
+<div style="margin: 12px auto;width:728px">
 	<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<ins class="adsbygoogle"
 	     style="display:inline-block;width:728px;height:90px"
