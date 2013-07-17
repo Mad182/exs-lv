@@ -974,11 +974,11 @@ div.tabMain {
 }
 
 #wrapper #pm-table td.pm {
-	background: url('http://exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
+	background: transparent url('http://exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
 }
 
 #wrapper #pm-table td.pm-read {
-	background: url('http://exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
+	background: transparent url('http://exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
 }
 
 #pm-table th {
