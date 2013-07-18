@@ -359,18 +359,6 @@ $(document).ready(function () {
 				path: '/'
 			});
 		}
-		if ($(this).hasClass('remember-mc')) {
-			$.cookie('last-servers-tab', 'mc', {
-				expires: 14,
-				path: '/'
-			});
-		}
-		if ($(this).hasClass('remember-cs')) {
-			$.cookie('last-servers-tab', 'cs', {
-				expires: 14,
-				path: '/'
-			});
-		}
 		if ($(this).hasClass('mbs-friends')) {
 			$.cookie('last-mbs-tab', 'friends', {
 				expires: 14,
