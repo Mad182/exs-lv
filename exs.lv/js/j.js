@@ -348,7 +348,7 @@ $(document).ready(function () {
 			$.each(values, function(key, tab) {
 				if (clicked.hasClass('remember-' + tab)) {
 					$.cookie(position, tab, {
-						expires: 14,
+						expires: 7,
 						path: '/'
 					});
 				}
