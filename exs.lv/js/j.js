@@ -335,49 +335,33 @@ $(document).ready(function () {
 	});
 
 	$('.tabs li a.ajax').live('click', function (e) {
-		if ($(this).hasClass('remember-gallery')) {
-			$.cookie('last-sidebar-tab', 'gallery', {
-				expires: 14,
-				path: '/'
+
+		var clicked = $(this);
+
+		var tabs = {
+		    'last-sidebar-tab' : {tab1: 'pages', tab2: 'gallery'},
+		    'last-facts-tab' : {tab1: 'fact-all', tab2: 'fact-rs'},
+		    'last-mbs-tab' : {tab1: 'all', tab2: 'friends'}
+		};
+
+		$.each(tabs, function(position, values) {
+			$.each(values, function(key, tab) {
+				if (clicked.hasClass('remember-' + tab)) {
+					$.cookie(position, tab, {
+						expires: 14,
+						path: '/'
+					});
+				}
 			});
-		}
-		if ($(this).hasClass('remember-pages')) {
-			$.cookie('last-sidebar-tab', 'pages', {
-				expires: 14,
-				path: '/'
-			});
-		}
-		if ($(this).hasClass('remember-fact-all')) {
-			$.cookie('last-facts-tab', 'fact-all', {
-				expires: 14,
-				path: '/'
-			});
-		}
-		if ($(this).hasClass('remember-fact-rs')) {
-			$.cookie('last-facts-tab', 'fact-rs', {
-				expires: 14,
-				path: '/'
-			});
-		}
-		if ($(this).hasClass('mbs-friends')) {
-			$.cookie('last-mbs-tab', 'friends', {
-				expires: 14,
-				path: '/'
-			});
-		}
-		if ($(this).hasClass('mbs-all')) {
-			$.cookie('last-mbs-tab', 'all', {
-				expires: 14,
-				path: '/'
-			});
-		}
-		var elem = $(this).parent().parent().siblings('.ajaxbox');
+		});
+
+		var elem = clicked.parent().parent().siblings('.ajaxbox');
 		elem.fadeTo(250, 0.6);
-		elem.load($(this).attr('href'), function () {
+		elem.load(clicked.attr('href'), function () {
 			elem.fadeTo(150, 1);
 		});
-		$(this).parent().siblings().children('a').removeClass('active');
-		$(this).addClass('active');
+		clicked.parent().siblings().children('a').removeClass('active');
+		clicked.addClass('active');
 		e.preventDefault();
 	});
 
