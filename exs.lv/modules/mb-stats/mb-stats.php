@@ -2,7 +2,7 @@
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
 
-	$expires = 120;
+	$expires = 300;
 	header('Pragma: public');
 	header('Cache-Control: max-age=' . $expires);
 	header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
