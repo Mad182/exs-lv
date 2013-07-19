@@ -1,6 +1,12 @@
 <?php
 
-if (isset($_GET['var1']) && $_GET['var1'] == 'chart') {
+if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
+
+	$expires = 120;
+	header('Pragma: public');
+	header('Cache-Control: max-age=' . $expires);
+	header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
+
 	$sid = (int) $_GET['var1'];
 
 	if (isset($_GET['user'])) {
@@ -109,7 +115,13 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart') {
 
 
 
-if (isset($_GET['var1']) && $_GET['var1'] == 'chart2') {
+if (isset($_GET['var1']) && $_GET['var1'] == 'chart2.jpg') {
+
+	$expires = 600;
+	header('Pragma: public');
+	header('Cache-Control: max-age=' . $expires);
+	header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
+
 	$sid = (int) $_GET['var1'];
 
 	$servers = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `miniblog` WHERE `miniblog`.`removed` = '0' GROUP BY DATE(`miniblog`.`date`) ORDER BY `date` DESC");
