@@ -92,7 +92,7 @@ FROM
 	`miniblog`,
 	`users`
 WHERE
-	`miniblog`.`date` > '" . date('Y-m-d H:i:s', strtotime('-1 day')) . "' AND
+	`miniblog`.`date` > '" . date('Y-m-d H:i:s', strtotime('-10 days')) . "' AND
 	`miniblog`.`removed` = '0' AND
 	`miniblog`.`parent` = '0' AND
 	`miniblog`.`type` = 'miniblog' AND
