@@ -17,3 +17,25 @@ if ($_SERVER['SERVER_NAME'] === 'm.exs.lv') {
 if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
+
+/**
+ * Info par domēniem, kuri atbilst katram $lang (lai veidotu linkus starp projektiem u.c.)
+ */
+$config_domains = array(
+	1 => array(
+		'domain' => 'm.exs.lv',
+		'prefix' => ''
+	),
+	3 => array(
+		'domain' => 'm.coding.lv',
+		'prefix' => 'code'
+	),
+	5 => array(
+		'domain' => 'm.rp.exs.lv',
+		'prefix' => 'mta'
+	),
+	7 => array(
+		'domain' => 'm.lol.exs.lv',
+		'prefix' => 'lol'
+	)
+);
