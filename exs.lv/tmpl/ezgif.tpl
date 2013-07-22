@@ -96,6 +96,7 @@
 			© 2012 - 2013, ezgif.com
 		</p>
 		<p id="footer-links">
+			<a href="/help">Help / FAQ</a> | 
 			<a href="/about">About ezgif.com</a>
 		</p>
 		<div class="clear"></div>
