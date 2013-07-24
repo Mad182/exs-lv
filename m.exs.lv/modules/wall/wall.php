@@ -112,7 +112,7 @@ if ($mbs) {
 			$mb->avatar = '/av/' . $mb->avatar;
 		}
 
-		$mb->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4") ', strip_tags(str_replace(array('<br/>', '<br>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $mb->text)));
+		$mb->text = mb_get_title($mb->text);
 
 		if ($mb->groupid != 0) {
 			$group = $db->get_row("SELECT * FROM clans WHERE id = '$mb->groupid'");

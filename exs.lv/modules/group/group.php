@@ -534,7 +534,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			foreach ($records as $record) {
 				$tpl->newBlock('user-miniblog-list-node');
 
-				$title = textlimit(preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)(</a>)?#ime", 'get_youtube_title_mb("\\4") ', $record->text), 64, '...');
+				$title = youtube_title($record->text);
 				$user = get_user($record->author);
 
 				$url = $group_link . '/forum/' . base_convert($record->id, 10, 36);

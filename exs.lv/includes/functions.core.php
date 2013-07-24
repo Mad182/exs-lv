@@ -352,7 +352,7 @@ function sanitize($input) {
 	return $output;
 }
 
-function mkslug($string) {
+function mkslug($string, $lower = true) {
 	$translit = array(
 		'/ä|æ|ǽ/' => 'ae',
 		'/ö|œ/' => 'oe',
@@ -439,7 +439,10 @@ function mkslug($string) {
 	if (empty($string)) {
 		$string = 'page';
 	}
-	return strtolower($string);
+	if($lower) {
+		$string = strtolower($string);
+	}
+	return $string;
 }
 
 function mkslug_newpage($title) {
@@ -475,36 +478,35 @@ function mkurl($type, $id, $title, $add = '') {
 	return '/' . $type . '/' . $id . '-' . mkslug($title) . $add;
 }
 
-function get_youtube_title_mb($videoid) {
-	global $pagedesc;
-	$safe = mkslug($videoid);
-	$cach = get_youtube($safe);
-	if (!$cach) {
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
-		if (stristr($contents, "Syndication of this video was restricted by its owner")) {
-			$restricted = 1;
-		} else {
-			$restricted = 0;
-		}
-		$title = sanitize(get_between($contents, "<media:title type='plain'>", '</media:title>'));
-		$description = sanitize(get_between($contents, "<media:description type='plain'>", '</media:description>'));
-	} else {
-		$title = $cach->yt_title;
-		$description = $cach->yt_description;
+/* removes from text youtube links and replaces with video titles */
+function youtube_title($text) {
+	if(strpos($text, 'youtu') !== false) {
+		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
+		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
 	}
-	if (!$pagedesc) {
-		$pagedesc = stripslashes(str_replace(array('\n', '\r'), ' ', $description));
+	return $text;
+}
+
+function youtube_title_callback($matches) {
+	$safe = mkslug($matches[4], false);
+	$video = get_youtube($safe);
+	if (!$video) {
+		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
+		$title = get_between($contents, "<media:title type='plain'>", '</media:title>');
+	} else {
+		$title = $video->yt_title;
 	}
 	return ' Video: ' . $title . ' ';
 }
 
-function get_youtube_video_small($videoid) {
+function get_youtube_video_small($matches) {
 	global $db, $is_miniblog, $force_tag_update, $auth;
-	$safe = mkslug($videoid);
+
+	$safe = mkslug($matches[4], false);
 	$video = get_youtube($safe);
 	if (!$video || !empty($force_tag_update)) {
 
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
+		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
 		if ($contents) {
 			if (stristr($contents, "Syndication of this video was restricted by its owner")) {
 				$restricted = 1;
@@ -555,19 +557,20 @@ function get_youtube_video_small($videoid) {
 	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(stripslashes($title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 	if ($auth->ok === true) {
-		$videocode = htmlspecialchars('<div class="auto-embed" style="width:380px;"><iframe class="youtube-player" type="text/html" width="380" height="240" src="http://www.youtube.com/embed/' . $videoid . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $videoid . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div>');
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $videoid . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" rel="nofollow" title="Atskaņot ' . $title . '" href="http://www.youtube.com/watch?v=' . $videoid . '"><span><span>' . $title . '</span></span></a></div></div>';
+		$videocode = htmlspecialchars('<div class="auto-embed" style="width:380px;"><iframe class="youtube-player" type="text/html" width="380" height="240" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div>');
+		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" rel="nofollow" title="Atskaņot ' . $title . '" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
 	} else {
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $videoid . '/0.jpg" alt="' . $title . '" /><a class="play-button" rel="nofollow" title="Atskaņot ' . $title . '" href="http://www.youtube.com/watch?v=' . $videoid . '"><span><span>' . $title . '</span></span></a></div></div>';
+		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" rel="nofollow" title="Atskaņot ' . $title . '" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
 	}
 }
 
-function get_youtube_video($videoid) {
+function get_youtube_video($matches) {
 	global $db, $article, $auth;
-	$safe = mkslug($videoid);
+
+	$safe = mkslug($matches[4], false);
 	$video = get_youtube($safe);
 	if (!$video) {
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
+		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
 		if ($contents) {
 			if (stristr($contents, "Syndication of this video was restricted by its owner")) {
 				$restricted = 1;
@@ -614,10 +617,10 @@ function get_youtube_video($videoid) {
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 
 	if ($auth->ok === true) {
-		$videocode = htmlspecialchars('<div class="c"></div><div class="auto-embed" style="width:520px;"><iframe class="youtube-player" type="text/html" width="520" height="290" src="http://www.youtube.com/embed/' . $videoid . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $videoid . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div> ');
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $videoid . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $videoid . '"><span><span>' . $title . '</span></span></a></div></div>';
+		$videocode = htmlspecialchars('<div class="c"></div><div class="auto-embed" style="width:520px;"><iframe class="youtube-player" type="text/html" width="520" height="290" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div> ');
+		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
 	} else {
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $videoid . '/0.jpg" alt="' . $title . '" /><a class="play-button" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $videoid . '"><span><span>' . $title . '</span></span></a></div></div>';
+		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
 	}
 }
 
@@ -780,14 +783,15 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		$txt = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/iseU', 'replace_spoiler("\\1")', $txt);
 	}
 
-	if(!$disable_embed) {
+	/* auto embed youtube videos */
+	if(!$disable_embed && strpos($txt, 'youtu') !== false) {
 		if ($wide) {
-			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video("\\4")', $txt);
-			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video("\\4")', $txt);
+			$fn = 'get_youtube_video';
 		} else {
-			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video_small("\\4")', $txt);
-			$txt = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_video_small("\\4")', $txt);
+			$fn = 'get_youtube_video_small';
 		}
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
 	}
 
 	return $txt;
@@ -941,18 +945,6 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 	} else {
 		return '@' . $nick;
 	}
-}
-
-function get_youtube_title($videoid) {
-	$safe = mkslug($videoid);
-	$video = get_youtube($safe);
-	if (!$video) {
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
-		$title = get_between($contents, "<media:title type='plain'>", '</media:title>');
-	} else {
-		$title = $video->yt_title;
-	}
-	return ' Video: ' . $title . ' ';
 }
 
 function createPassword($length) {
@@ -1164,8 +1156,7 @@ function strTime($s) {
 }
 
 function mb_get_title($body = 'Bez nosaukuma') {
-	$body = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4") ', $body);
-	$body = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4")', $body);
+	$body = youtube_title($body);
 	$body = strip_tags(str_replace(array('<br/>', '<br>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $body));
 	return $body;
 }
@@ -2064,8 +2055,7 @@ function get_footer_mb($force = false) {
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
-				$late->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4") ', strip_tags(str_replace(array('<br/>', '<br>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $late->text)));
-				$late->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4")', $late->text);
+				$late->text = mb_get_title($late->text);
 				$url_title = mkslug(textlimit($late->text, 36, ''));
 				$html .= '<li><a href="/say/' . $late->author . '/' . $late->id . '-' . $url_title . '">' . textlimit($late->text, 36, '') . '</a></li>';
 			}

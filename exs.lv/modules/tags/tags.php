@@ -86,8 +86,7 @@ if (isset($_GET['var1'])) {
 					$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = ('" . $taged->page_id . "') AND `removed` = '0'");
 
 					if ($mb) {
-						$mb->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4") ', strip_tags(str_replace(array('<br/>', '<br>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $mb->text)));
-						$mb->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title("\\4")', $mb->text);
+						$mb->text = mb_get_title($mb->text);
 						$url_title = mkslug(textlimit($mb->text, 36, ''));
 						$text = textlimit(hide_spoilers($mb->text), 64, '');
 						$tpl->newBlock('tags-articles-node-mb');

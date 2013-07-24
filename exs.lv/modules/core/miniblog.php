@@ -204,7 +204,7 @@ if ($inprofile->id) {
 	}
 
 	if ($records) {
-		$pagedesc = false;
+
 		$tpl->newBlock('user-miniblog-list');
 		foreach ($records as $record) {
 
@@ -213,10 +213,7 @@ if ($inprofile->id) {
 
 				$tpl->newBlock('user-miniblog-list-node');
 
-				$title = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)(</a>)?#ime", 'get_youtube_title_mb("\\4") ', $record->text);
-				$title = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#ime", 'get_youtube_title_mb("\\4") ', $title);
-
-				$title = textlimit($title, 64, '...');
+				$title = textlimit(youtube_title($record->text), 64, '...');
 				$url = '/say/' . $record->author . '/' . $record->id . '-' . mb_get_strid($record->text, $record->id);
 
 				$is_miniblog = $record->id;
@@ -318,10 +315,6 @@ if ($inprofile->id) {
 					}
 
 					$limit = '';
-					if ($pagedesc) {
-						$tpl->newBlock('meta-description');
-						$tpl->assign('description', textlimit(htmlspecialchars(strip_tags($pagedesc . ' - ' . str_replace('<br />', ' ', $record->text))), 155));
-					}
 				} else {
 					$limit = ' LIMIT 0,3';
 				}
