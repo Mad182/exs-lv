@@ -446,11 +446,11 @@ html .banned {
 	margin: 0;
 	padding: 8px;
 	float: left;
-	overflow: hidden;
 	display: inline;
 }
 
 #left {
+	overflow: hidden;
 	width: 180px;
 	z-index: 1;
 	position: relative;
@@ -458,6 +458,7 @@ html .banned {
 }
 
 #right {
+	overflow: hidden;
 	width: 200px;
 	z-index: 1;
 	float: right;
