@@ -73,15 +73,7 @@ if ($articles) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', $article->text)))), 680);
-			$article->text = preg_replace("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)(</a>)?#im", '<div class="video-thb"><a href="/?p=' . $article->id . '"><img src="http://img.youtube.com/vi/$4/2.jpg" alt="" /></a><p>Youtube video</p><div class="c"></div></div>', $article->text, 1);
-			$videoid = get_between($article->text, 'img.youtube.com/vi/', '/2.jpg"');
-			if ($videoid) {
-				$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
-				$v_description = '<strong><a href="/?p=' . $article->id . '">' . get_between($contents, "<media:title type='plain'>", '</media:title>') . '</a></strong><br />';
-				$v_description .= textlimit(get_between($contents, "<media:description type='plain'>", '</media:description>'), 270);
-				$article->text = str_replace('<p>Youtube video</p>', '<p>' . $v_description . '</p>', $article->text);
-			}
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', youtube_title($article->text))))), 680);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
