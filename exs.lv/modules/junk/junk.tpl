@@ -7,6 +7,13 @@
 <!-- START BLOCK : junk-->
 
 <a class="junk-button" href="/junk/random" title="random"><img style="float: right;margin: 5px 10px;" src="http://exs.lv/bildes/junk/random.png" alt="Random" /></a>
+
+<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+<div style="float: right;margin: 20px 20px 0 0;" id="draugiemLike"></div>
+<script type="text/javascript">
+new DApi.Like().append('draugiemLike');
+</script>
+
 <div class="c"></div>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- START BLOCK : junk-item-date-->
