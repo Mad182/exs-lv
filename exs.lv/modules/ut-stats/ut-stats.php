@@ -328,8 +328,6 @@ class san_andreas
 
 
 
-
-
 $mta = new san_andreas('92.240.80.63','22003');
 
 
@@ -344,7 +342,7 @@ if(!empty($mta->results['server']['hostname'])) {
 			</span>
 		</span>
 
-		<a class="server-link link1" href="http://rp.exs.lv/">Forums</a>
+		<a class="server-link link1" href="http://rp.exs.lv/" rel="nofollow">Forums</a>
 	</div> Ports: 22003<br />';
 
 	
@@ -384,7 +382,7 @@ if(!empty($mta->results['server']['hostname'])) {
 			</span>
 		</span>
 
-		<a class="server-link link1" href="http://rp.exs.lv/">Forums</a>
+		<a class="server-link link1" href="http://rp.exs.lv/" rel="nofollow">Forums</a>
 	</div>';
 
 
@@ -395,12 +393,6 @@ $out .= '</div>';
 $fh = fopen('cache/mta_monitor.html', 'w');
 fwrite($fh, $out);
 fclose($fh);
-
-
-
-
-
-
 
 
 
