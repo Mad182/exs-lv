@@ -12,9 +12,9 @@ $fb_api_key = 'cbf65eee0645935797da97f33b6a77b1';
 $dr_api_id = 15005147;
 $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
-$site_admins = array(25599);
+$site_admins = array();
 
-$site_mods = array(28209);
+$site_mods = array();
 
 //koementāri (level 1) vienā foruma lapā
 $comments_per_page = 25;
@@ -35,3 +35,4 @@ $polls_cat = 951;
 $profile_views_limit = 20;
 
 $page_title = 'MTA:SA roleplay serveris';
+
