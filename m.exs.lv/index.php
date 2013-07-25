@@ -2,8 +2,6 @@
 
 require('../exs.lv/configdb.php');
 
-$debug = false;
-
 /* load cammon libraries */
 require(CORE_PATH . '/includes/class.mdb.php');
 require('includes/class.auth.php');
@@ -26,13 +24,6 @@ $m->connect($mc_host, $mc_port);
 header('Content-Type: text/html; charset=utf-8');
 
 $auth = new Auth();
-
-if ($debug) {
-	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
-	//$db->debug_all = true;
-	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
-}
 
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
@@ -200,25 +191,4 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 	}
 }
 
-if ($debug) {
-	echo '<div>Peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
-	echo ' | ielāde: ' . round(microtime(true) - $start_time, 5) . ' s';
-	echo ' | mysql: ' . $db->num_queries . ' q';
-	if (!empty($category->id)) {
-		echo ' | cat_id:' . $category->id . ' (textid:' . $category->textid . ', module:' . $category->module . ')';
-	}
-	echo '</div></div></div>';
-}
-
-$out = $tpl->getOutputContent();
-
-$out = str_replace('    ', ' ', $out);
-$out = str_replace('   ', ' ', $out);
-$out = str_replace('  ', ' ', $out);
-$out = str_replace('	', '', $out);;
-$out = str_replace("\r", "", $out);
-$out = str_replace("\n\n", "\n", $out);
-$out = str_replace("\n\n", "\n", $out);
-$out = str_replace("\n\n", "\n", $out);
-
-echo $out;
+$tpl->printToScreen();
