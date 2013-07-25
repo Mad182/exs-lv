@@ -255,7 +255,7 @@ if (!empty($inprofile)) {
   } */
 
 $load = sys_getloadavg();
-$mb_refresh_limit = '12000';
+$mb_refresh_limit = '8000';
 if ($load[0] > 5) {
 	$mb_refresh_limit = '180000';
 } elseif ($load[0] > 4) {
@@ -263,9 +263,9 @@ if ($load[0] > 5) {
 } elseif ($load[0] > 3) {
 	$mb_refresh_limit = '60000';
 } elseif ($load[0] > 2) {
-	$mb_refresh_limit = '40000';
+	$mb_refresh_limit = '30000';
 } elseif ($load[0] > 1) {
-	$mb_refresh_limit = '20000';
+	$mb_refresh_limit = '16000';
 }
 
 $today_date = date_lv('l, j. F', time());

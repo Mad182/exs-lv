@@ -168,25 +168,13 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 	if (isset($category) && $category->isblog != 0) {
 		$inprofile = get_user($category->isblog);
 	}
-	if ($inprofile) {
-		if ($inprofile->av_alt) {
-			$u_large_path = 'u_large';
-		} else {
-			$u_large_path = 'useravatar';
-		}
-		if ($inprofile->avatar == '') {
-			$inprofile->avatar = 'none.png';
-			$u_large_path = 'u_large';
-		}
-		if ($lang == 1) {
-			$isblog = get_blog_by_user($inprofile->id);
-			if ($isblog) {
-				$tpl->newBlock('profilebox-blog-link');
-				$tpl->assign(array(
-					'profile-blogid' => $isblog,
-					'profile-blogcount' => $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '" . $isblog . "'")
-				));
-			}
+
+	//blog link
+	if ($inprofile && $lang == 1) {
+		$isblog = get_blog_by_user($inprofile->id);
+		if ($isblog) {
+			$tpl->newBlock('profilebox-blog-link');
+			$tpl->assign('profile-blogid', $isblog);
 		}
 	}
 }
