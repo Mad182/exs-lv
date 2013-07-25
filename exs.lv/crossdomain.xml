@@ -1,0 +1,8 @@
+<cross-domain-policy>
+	<allow-access-from domain="exs.lv"/>
+	<allow-access-from domain="*.exs.lv"/>
+	<allow-access-from domain="coding.lv"/>
+	<allow-access-from domain="*.coding.lv"/>
+	<allow-access-from domain="googleads.g.doubleclick.net"/>
+</cross-domain-policy>
+
