@@ -12,7 +12,7 @@ $fb_api_key = 'cbf65eee0645935797da97f33b6a77b1';
 $dr_api_id = 15005147;
 $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
-$site_admins = array();
+$site_admins = array(29176);
 
 $site_mods = array();
 
