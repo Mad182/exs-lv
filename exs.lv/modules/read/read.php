@@ -1,36 +1,7 @@
 <?php
 
-function can_edit_page($article) {
-	global $lang, $auth, $min_page_edit, $category, $page_edit_time;
+require(CORE_PATH . '/modules/read/functions.read.php');
 
-	if (!$auth->ok || $lang != $article->lang) {
-		return false;
-	}
-
-	if (im_mod() || im_cat_mod()) {
-		return true;
-	}
-
-	if ($category->isblog == $auth->id) {
-		return true;
-	}
-
-	if ($auth->id == $article->author) {
-		if ($auth->level == 3) {
-			return true;
-		}
-		if ($auth->karma >= $min_page_edit) {
-			if ($page_edit_time == 0) {
-				return true;
-			}
-			if ($page_edit_time >= time() - strtotime($article->date)) {
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
 
 $strid = sanitize($_GET['var1']);
 $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' LIMIT 1");

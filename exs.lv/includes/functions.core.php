@@ -2462,31 +2462,6 @@ function lv_dsk($num = 0, $single = 'atbilde', $multi = 'atbildes') {
 	}
 }
 
-function get_page_categories($current = null, $force = false) {
-	global $db, $m, $lang, $debug;
-
-	if ($debug || $force || !($cats = $m->get('cat_list_' . $lang))) {
-		$cats = $db->get_results("SELECT `persona`,`isblog`,`isforum`,`id`,`title`,`status` FROM `cat` WHERE `module` IN('list','index','rshelp','movies') AND `lang` = '$lang' ORDER BY `title` ASC");
-		$m->set('cat_list_' . $lang, $cats, false, 900);
-	}
-
-	$return = array();
-	foreach ($cats as $cat) {
-		if ((im_mod() || im_cat_mod($cat->id) || $cat->id == $current || $current == 'all') && $cat->status == 'active') {
-			if ($cat->isforum) {
-				$return['Forums'][$cat->id] = $cat->title . ' forums';
-			} elseif ($cat->isblog) {
-				$return['Blogi'][$cat->id] = $cat->title;
-			} elseif ($cat->persona == 'runescape.jpg') {
-				$return['Runescape'][$cat->id] = $cat->title;
-			} else {
-				$return['Main'][$cat->id] = $cat->title;
-			}
-		}
-	}
-	return $return;
-}
-
 function get_friends($user_id, $force = false) {
 	global $db, $m;
 
