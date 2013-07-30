@@ -295,7 +295,7 @@
 			</div>
 			<!-- END BLOCK : user-top-->
 			
-			<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&amp;port=22003&amp;bgcolor=363636&amp;bordercolor=26A8FF&amp;fieldcolor=ffffff&amp;valuecolor=ededed&amp;oddrowscolor=4D4D4D&amp;showgraph=true&amp;showplayers=true&amp;graphvalues=ededed&amp;graphaxis=ffffff&amp;width=220&amp;graph_height=105&amp;plist_height=101" frameborder="0" scrolling="no" style="width: 220px; height: 371px"></iframe>
+			<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&port=22003&bgcolor=FFFFFF&bordercolor=FFFFFF&fieldcolor=3B3B3B&valuecolor=292828&oddrowscolor=E2E8F5&showgraph=true&showplayers=true&graphvalues=292828&graphaxis=3B3B3B&width=220&graph_height=105&plist_height=101&font_size=8" frameborder="0" scrolling="no" style="width: 220px; height: 371px"></iframe>
 
 			<!-- START BLOCK : poll-box-->
 			<h3>Aptauja</h3>
