@@ -295,7 +295,9 @@
 			</div>
 			<!-- END BLOCK : user-top-->
 			
-			<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&port=22003&bgcolor=FFFFFF&bordercolor=FFFFFF&fieldcolor=3B3B3B&valuecolor=292828&oddrowscolor=E2E8F5&showgraph=true&showplayers=true&graphvalues=292828&graphaxis=3B3B3B&width=220&graph_height=110&plist_height=160&font_size=8" frameborder="0" scrolling="no" style="width: 220px; height: 435px"></iframe>
+			<div class="box">
+				<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&port=22003&bgcolor=FFFFFF&bordercolor=FFFFFF&fieldcolor=3B3B3B&valuecolor=292828&oddrowscolor=E2E8F5&showgraph=true&showplayers=true&graphvalues=292828&graphaxis=3B3B3B&width=217&graph_height=110&plist_height=160&font_size=8" frameborder="0" scrolling="no" style="width: 217px; height: 435px"></iframe>
+			</div>
 
 			<!-- START BLOCK : poll-box-->
 			<h3>Aptauja</h3>
@@ -329,24 +331,6 @@
 				<!-- END BLOCK : poll-questions-->
 			</div>
 			<!-- END BLOCK : poll-box-->
-
-			<!-- START BLOCK : tags-list-side-->
-			<h3>Birkas</h3>
-			<div class="box">{out}</div>
-			<!-- END BLOCK : tags-list-side-->
-
-			<div id="fansBlock" style="width:200px;"></div>
-			<script type="text/javascript" src="http://www.draugiem.lv/api/api.js" charset="utf-8"></script>
-			<script type="text/javascript">
-				var fans = new DApi.BizFans({
-					name:'mta-exs',
-					showFans:1,
-					count:9,
-					showSay:0,
-					saycount:0
-				});
-				fans.append('fansBlock');
-			</script>
 
 		</div>
 		<!-- END BLOCK : main-layout-right-->
