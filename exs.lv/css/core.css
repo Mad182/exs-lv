@@ -178,7 +178,7 @@ html .banned {
 #wrapper {
 	position: relative;
 	background: #fff;
-	width: 990px;
+	width: 996px;
 	margin: 0 auto;
 	padding: 0 0 6px;
 	text-align: left;
@@ -459,7 +459,7 @@ html .banned {
 
 #right {
 	overflow: hidden;
-	width: 200px;
+	width: 206px;
 	z-index: 1;
 	float: right;
 }
@@ -474,9 +474,9 @@ html .banned {
 }
 
 #content.no-right {
-	width: 780px;
+	width: 786px;
 	float: right
-left: 0px;
+	left: 0px;
 }
 
 #content.no-left {
@@ -485,7 +485,7 @@ left: 0px;
 }
 
 .no-right #left {
-	left: -794px;
+	left: -800px;
 }
 
 #content.no-left-right {
