@@ -295,13 +295,7 @@
 			</div>
 			<!-- END BLOCK : user-top-->
 			
-			<div class="box monitor">
-				<ul class="tabs">
-					<li><a href="/cache/mta_monitor.html" class="active remember-mta ajax"><span class="game-mta">MTA:RP</span></a></li>
-				</ul>
-				<div id="mta-content" class="ajaxbox">{latest-mta}</div>
-				<div class="c"></div>
-			</div>
+			<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&amp;port=22003&amp;bgcolor=363636&amp;bordercolor=26A8FF&amp;fieldcolor=ffffff&amp;valuecolor=ededed&amp;oddrowscolor=4D4D4D&amp;showgraph=true&amp;showplayers=true&amp;graphvalues=ededed&amp;graphaxis=ffffff&amp;width=220&amp;graph_height=105&amp;plist_height=101" frameborder="0" scrolling="no" style="width: 220px; height: 371px"></iframe>
 
 			<!-- START BLOCK : poll-box-->
 			<h3>Aptauja</h3>
