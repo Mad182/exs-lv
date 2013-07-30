@@ -146,7 +146,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 if ($auth->ok && im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
 	$sid = (int) $_GET['single'];
 	if($sid > 0) {
-		$db->query("UPDATE miniblog SET closed = '0' WHERE id = '$sid' AND closed_by != '17077'");
+		$db->query("UPDATE miniblog SET closed = '0' WHERE id = '$sid' AND closed_by != '17077' AND `lang` = '$lang'");
 		$auth->log('Atvēra miniblogu', 'miniblog', $sid);
 		redirect('/?m=' . $inprofile->id . '&single=' . $sid);
 	}
@@ -183,7 +183,7 @@ if ($inprofile->id) {
 		$sid = (int) $_GET['single'];
 		if (isset($_POST['reason']) && !empty($_POST['reason'])) {
 			$reason = post2db($_POST['reason']);
-			$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '$auth->id' WHERE `id` = '$sid'");
+			$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '$auth->id' WHERE `id` = '$sid' AND `lang` = '$lang'");
 			$auth->log('Aizslēdza miniblogu ('.strip_tags($reason).')', 'miniblog', $sid);
 			redirect('/?m=' . $inprofile->id . '&single=' . $sid);
 		} else {
