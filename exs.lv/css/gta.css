@@ -276,7 +276,11 @@ p.core-pager {
 
 #right {
 	padding-left: 0;
-	width: 208px;
+	width: 220px;
+}
+
+#content.no-left {
+	745px;
 }
 
 #footer li {
