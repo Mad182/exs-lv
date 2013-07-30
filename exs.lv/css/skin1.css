@@ -1,25 +1,22 @@
 html, body {
-color: #ddd;
-background: #dde2e4 url(http://img.exs.lv/bildes/dark/body.jpg) repeat 0 0
+	color: #ddd;
+	background: #dde2e4 url(http://img.exs.lv/bildes/dark/body.jpg) repeat 0 0
 }
 #wrapper {
-background: #50504A url('http://img.exs.lv/bildes/dark/grain_dark.gif');
-border: 1px solid #333;
-border-bottom: 1px solid #111
-}
-#container {
-background: #3A3A3A;
+	background: #3A3A3A;
+	border: 1px solid #333;
+	border-bottom: 1px solid #111
 }
 #logo {
-height: 130px;
-position: relative;
-margin: 0;
+	height: 130px;
+	position: relative;
+	margin: 0
 }
 #header-stuff {
-bottom: 10px;
+	bottom: 10px
 }
 #header-overlay {
-background: transparent;
+	background: transparent
 }
 #tools-bar {
 background: transparent url('http://img.exs.lv/bildes/top-nav.png') repeat 0 0;
