@@ -837,6 +837,20 @@ function hide_spoilers($text) {
 
 function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 
+	/* repleisojam bieži pieminētu lietotāju vārdus, lai būtu mazāk kļūdu */
+	$underscore_names = array(
+		'@Avril Lavigne' => '@Avril_Lavigne',
+		'@Gāes Žīdus' => '@Gāes_Žīdus',
+		'@Hidden driver' => '@Hidden_driver',
+		'@Ice Cold' => '@Ice_Cold',
+		'@Jayden James' => '@Jayden_James',
+		'@S J' => '@S_J',
+		);
+
+	foreach($underscore_names as $key => $val) {
+		$text = str_ireplace($key, $val, $text);
+	}
+
 	$text = str_replace('eval(', 'ev<span>a</span>l(', $text);
 	$text = preg_replace('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uime', 'get_mentions("\\1","' . $url . '","' . $type . '","' . $uniq . '")', $text);
 
