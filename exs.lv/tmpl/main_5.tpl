@@ -213,19 +213,7 @@
 			<!-- START BLOCK : ads-google-wide-->
 			<!-- END BLOCK : ads-google-wide-->
 
-			<div class="content-block">
-				<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-					/* rp.exs.lv bottom */
-					google_ad_slot = "8147315637";
-					google_ad_width = 728;
-					google_ad_height = 90;
-					//-->
-				</script>
-				<script type="text/javascript"
-					src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-				</script>
-			</div>
+			{ad-728}
 
 			<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 			</div>
