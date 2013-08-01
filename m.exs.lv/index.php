@@ -125,10 +125,16 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 			if ($category->module != 'index') {
 				$pagepath = $category->title;
 			}
+
+			/* ielade moduļa funkcijas */
+			if(file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
+				require(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php');
+			}
+
 			if (file_exists('modules/' . $category->module . '/' . $category->module . '.php')) {
-				include('modules/' . $category->module . '/' . $category->module . '.php');
+				require('modules/' . $category->module . '/' . $category->module . '.php');
 			} else {
-				include(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+				require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
 			}
 
 		} else {
