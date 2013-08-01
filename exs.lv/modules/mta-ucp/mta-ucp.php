@@ -1,7 +1,5 @@
 <?php
 
-require(CORE_PATH . '/modules/mta-ucp/functions.mta-ucp.php');
-
 if(!empty($_POST['username']) && isset($_POST['oldpass']) && isset($_POST['newpass']) && isset($_POST['newpass2'])) {
 	$nick = sanitize($_POST['username']);
 

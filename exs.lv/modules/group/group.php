@@ -1,8 +1,5 @@
 <?php
 
-require(CORE_PATH . '/modules/group/functions.group.php');
-
-
 if(!empty($category->content)) {
 	$_GET['var5'] = esr($_GET['var4']);
 	$_GET['var4'] = esr($_GET['var3']);
