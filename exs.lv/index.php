@@ -186,12 +186,20 @@ if (isset($_GET['u'])) {
 
 		$pagepath = $category->title;
 
-		include(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+		/* ielade moduļa funkcijas */
+		if(file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
+			require(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php');
+		}
 
+		/* ielade moduli */
+		require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+
+		/* ajax pieprasijumus te ari izbeidzam */
 		if (isset($_GET['_'])) {
 			$tpl->printToScreen();
 			exit;
 		}
+
 	} else {
 		//404
 		set_flash('Pieprasītā lapa netika atrasta!', 'error');

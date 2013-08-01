@@ -1,8 +1,5 @@
 <?php
 
-require(CORE_PATH . '/modules/read/functions.read.php');
-
-
 $strid = sanitize($_GET['var1']);
 $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' LIMIT 1");
 
