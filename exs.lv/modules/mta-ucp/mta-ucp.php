@@ -1,6 +1,9 @@
 <?php
 
 if(!empty($_POST['username']) && isset($_POST['oldpass']) && isset($_POST['newpass']) && isset($_POST['newpass2'])) {
+
+	sleep(1);
+
 	$nick = sanitize($_POST['username']);
 
 	$oldpass = mta_hash($_POST['oldpass']);
@@ -19,8 +22,27 @@ if(!empty($_POST['username']) && isset($_POST['oldpass']) && isset($_POST['newpa
 		'password',
 		'parole',
 		'sanandreas',
+		'gtasanandreas',
 		'san andreas',
-		'qwerty'
+		'gta san andreas',
+		'qwerty',
+		'asdfgh',
+		'111111',
+		'aaaaaa',
+		'      ',
+		'******',
+		'mtaexslv',
+		'mta.exs.lv',
+		'rpexslv',
+		'rp.exs.lv',
+		'roleplay',
+		'jaunaparole',
+		'newpass',
+		'newpassword',
+		'test123',
+		'pass123',
+		'role play',
+		'mtaexs'
 	))) {
 		set_flash('Pārāk vienkārša parole!', 'error');
 		redirect('/' . $category->textid);
@@ -34,14 +56,13 @@ if(!empty($_POST['username']) && isset($_POST['oldpass']) && isset($_POST['newpa
 	$mtadb = new mdb('exs', 'gnzNhE3Q', 'rpdb', 'mta.exs.lv');
 
 	$account = $mtadb->get_row("SELECT * FROM `accounts` WHERE `username` = '$nick' AND `password` = '$oldpass' LIMIT 1");
-	sleep(1);
 
 	if(empty($account)) {
 		set_flash('Nepareiza parole/lietotājvārds!', 'error');
 		redirect('/' . $category->textid);
 	}
 
-	$mtadb->query("UPDATE `accounts` SET `password` = '$newpass' WHERE `id` = '$account->id'");
+	$mtadb->query("UPDATE `accounts` SET `password` = '$newpass', `loginhash` = NULL WHERE `id` = '$account->id' LIMIT 1");
 	set_flash('Parole veiksmīgi nomainīta!', 'success');
 	redirect('/' . $category->textid);
 
