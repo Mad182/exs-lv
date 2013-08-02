@@ -102,6 +102,11 @@ h3 {
 	-moz-border-radius-topright: 5px;
 	border-top-right-radius: 5px
 }
+#forum td {
+	border: 0;
+	border-top: 1px dashed #ddd;
+	padding: 5px 6px;
+}
 #top-menu-left {
 	padding-right: 0
 }
