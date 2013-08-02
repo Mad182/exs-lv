@@ -88,7 +88,9 @@ h3 {
 #forum th {
 	background: transparent url("http://img.exs.lv/bildes/mobile/top-bg.png") repeat-x 0 0;
 	color: #fff;
-	font-size: 12px
+	font-size: 14px;
+	padding: 8px 10px;
+	text-shadow: 1px 1px #236;
 }
 #forum th.first {
 	-webkit-border-top-left-radius: 5px;
