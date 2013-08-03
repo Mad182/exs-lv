@@ -344,14 +344,6 @@
 
 	<div class="box monitor">
 		<ul class="tabs">
-			<li><a rel="nofollow" href="/cache/csdm_monitor.html" class="active remember-csdm ajax"><span class="game-cs">CSDM</span></a></li>
-		</ul>
-		<div id="csdm-content" class="ajaxbox">{latest-csdm}</div>
-		<div class="c"></div>
-	</div>
-
-	<div class="box monitor">
-		<ul class="tabs">
 			<li><a rel="nofollow" href="/cache/mta_monitor.html" class="active remember-mta ajax"><span class="game-mta">MTA:RP</span></a></li>
 		</ul>
 		<div id="mta-content" class="ajaxbox">{latest-mta}</div>
