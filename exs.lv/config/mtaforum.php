@@ -36,3 +36,9 @@ $profile_views_limit = 20;
 
 $page_title = 'MTA:SA roleplay serveris';
 
+//MTA server mysql
+$mta_hostname = 'mta.exs.lv';
+$mta_username = 'exs';
+$mta_password = 'gnzNhE3Q';
+$mta_database = 'rpdb';
+

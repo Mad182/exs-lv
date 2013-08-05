@@ -53,7 +53,7 @@ if(!empty($_POST['username']) && isset($_POST['oldpass']) && isset($_POST['newpa
 		redirect('/' . $category->textid);
 	}
 
-	$mtadb = new mdb('exs', 'gnzNhE3Q', 'rpdb', 'mta.exs.lv');
+	$mtadb = new mdb($mta_username, $mta_password, $mta_database, $mta_hostname);
 
 	$account = $mtadb->get_row("SELECT * FROM `accounts` WHERE `username` = '$nick' AND `password` = '$oldpass' LIMIT 1");
 
