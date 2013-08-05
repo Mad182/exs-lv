@@ -1,9 +1,1 @@
-<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- exs 728 -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-9907860161851752"
-     data-ad-slot="7480626837"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<a href="http://www.simpsoni.lv/" rel="nofollow" title="Skaties Simpsonus Internetā!"><img src="http://img.exs.lv/m/a/maadinsh/simpsoni_728x90.gif" alt="" /></a>
