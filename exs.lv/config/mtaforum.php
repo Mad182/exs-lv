@@ -14,7 +14,7 @@ $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
 $site_admins = array(29176);
 
-$site_mods = array();
+$site_mods = array(24969);
 
 //koementāri (level 1) vienā foruma lapā
 $comments_per_page = 25;
