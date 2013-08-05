@@ -51,7 +51,7 @@ if($user) {
 			`about` = '',
 			`custom_title` = '',
 			`yt_name` = '',
-			`twitter` = ``,
+			`twitter` = '',
 			`last_action` = '',
 			`draugiem_id` = 0,
 			`facebook_id` = '0',
