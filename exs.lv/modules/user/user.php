@@ -364,7 +364,7 @@ if ($user) {
 
 			$slugnick = mkslug($_POST['new-nick']);
 
-			if (strlen(trim($_POST['new-nick'])) > 3 && strlen(trim($_POST['new-nick'])) <= 16 && !empty($slugnick)) {
+			if (strlen(trim($_POST['new-nick'])) >= 3 && strlen(trim($_POST['new-nick'])) <= 16 && !empty($slugnick)) {
 				$newnick = sanitize(trim($_POST['new-nick']));
 
 				if ($slugnick == 'page' || $slugnick == '' || $slugnick == '-') {
@@ -384,7 +384,7 @@ if ($user) {
 					redirect();
 				}
 			} else {
-				set_flash('Niks neatbilst atļautajam garumam (4-16 simboli)!', 'error');
+				set_flash('Niks neatbilst atļautajam garumam (3-16 simboli)!', 'error');
 			}
 		}
 
