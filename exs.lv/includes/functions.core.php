@@ -844,6 +844,7 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 		'@Hidden driver' => '@Hidden_driver',
 		'@Ice Cold' => '@Ice_Cold',
 		'@Jayden James' => '@Jayden_James',
+		'@Maadinsh' => '@mad',
 		'@S J' => '@S_J'
 		);
 
