@@ -3039,8 +3039,8 @@ function remake_thb($large, $thb) {
 	$thb = CORE_PATH . '/' . $thb;
 	$large = CORE_PATH . '/' . $large;
 	$thb_size = getimagesize($thb);
-	if ($thb_size[0] != 56) {
-		$c1 = `convert $large -resize '56x56^' -gravity center -crop 56x56+0+0 +repage -strip $thb`;
+	if ($thb_size[0] != 58) {
+		$c1 = `convert $large -resize '58x58^' -gravity center -crop 58x58+0+0 +repage -strip $thb`;
 	}
 }
 
