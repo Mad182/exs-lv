@@ -409,14 +409,14 @@
 		melnaistirgus: 0.45 LVL (sms)<br />
 		Offspring: 0.45 LVL (sms)<br />
 		Zebot: 0.45 LVL (sms)<br />
-		lemonwave: 0.15 LVL<br />
+		lemonwave: 0.30 LVL<br />
 		breikeris: 0.01 LVL
 	</p>
 
-	<p>Savākts: 40.02/45 Ls</p>
+	<p>Savākts: 40.17/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa">
-		<div style="width: 88.93%;height:20px;background: green"></div>
+		<div style="width: 89%;height:20px;background: green"></div>
 	</div>
 
 	<!-- START BLOCK : junk-info-->
