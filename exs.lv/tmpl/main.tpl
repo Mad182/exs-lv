@@ -397,13 +397,15 @@
 		LoneWolf': 0.45 LVL (sms)<br />
 		Worst: 0.45 LVL (sms)<br />
 		splateris: 0.45 LVL (sms)<br />
-		Cuddles: 0.45 LVL (sms)
+		Cuddles: 0.45 LVL (sms)<br />
+		Corona: 0.45<br />
+		breikeris: 0.01
 	</p>
 
-	<p>Savākts: 30.75/45 Ls</p>
+	<p>Savākts: 31.21/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa">
-		<div style="width: 68.33%;height:20px;background: green"></div>
+		<div style="width: 69.36%;height:20px;background: green"></div>
 	</div>
 
 	<!-- START BLOCK : junk-info-->
