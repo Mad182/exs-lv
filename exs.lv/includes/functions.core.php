@@ -1875,9 +1875,16 @@ function update_awards($user) {
 	  } */
 
 	//ghetto games floorball
-	if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
+	/*if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
 		$awards_list['ghetto-floorball'] = array(
 			'title' => 'Piedalījās Ghetto Games (florbolā)',
+			'state' => 'active'
+		);
+	}*/
+
+	if (in_array($user, array(13004,2101,23282,23678,1,273,7141,140,11525,12108,10578,26777,6890,25892,26070,28463))) {
+		$awards_list['riki-telts'] = array(
+			'title' => '<a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts" rel="nofollow">Ziedojums</a> @Riki teltij',
 			'state' => 'active'
 		);
 	}
