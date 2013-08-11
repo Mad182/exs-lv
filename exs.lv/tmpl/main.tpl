@@ -403,10 +403,11 @@
 		Corona: 0.45 LVL (sms)<br />
 		Deimonz: 0.45 LVL (sms)<br />
 		Earthquake: 0.45 LVL (sms)<br />
+		brushie: 0.45 LVL (sms)<br />
 		breikeris: 0.01 LVL
 	</p>
 
-	<p>Savākts: 34.23/45 Ls</p>
+	<p>Savākts: 34.68/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa">
 		<div style="width: 76.07%;height:20px;background: green"></div>
