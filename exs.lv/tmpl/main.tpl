@@ -382,7 +382,7 @@
 
 	<p><a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts">Kā ziedot?</a></p>
 
-	<p><strong>Ziedotāji:</strong><br />
+	<p style="font-size:90%;line-height: 1.1"><strong>Ziedotāji:</strong><br />
 		Static: 7.00 LVL<br />
 		Mauriņš: 6.00 LVL<br />
 		Andis: 5.30 LVL<br />
