@@ -378,6 +378,16 @@
 <!-- START BLOCK : main-layout-right-->
 <div id="right">
 
+	<h3>Ziedojumu akcija <span class="at-sign">@</span><span class="mods">Riki</span></a> teltij</h3>
+
+	<p><a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts">Kā ziedot?</a></p>
+
+	<p>Savākts: 0/45 Ls</p>
+
+	<div style="width: 100%;height: 20px;border: 1px solid #aaa;">
+		<div style="width: 0%;height:20px;background: green"></div>
+	</div>
+
 	<!-- START BLOCK : junk-info-->
 	<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
 	<!-- END BLOCK : junk-info-->
