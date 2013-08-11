@@ -380,43 +380,12 @@
 
 	<h3>Ziedojumu akcija <span class="at-sign">@</span><span class="mods">Riki</span></a> teltij</h3>
 
-	<p><a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts">Kā ziedot?</a></p>
+	<p><a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts">VISS SAVĀKTS :)</a></p>
 
-	<p style="font-size:95%;line-height: 1.1"><strong>Ziedotāji:</strong><br />
-		Static: 7.00 LVL<br />
-		Mauriņš: 6.00 LVL<br />
-		Andis: 5.30 LVL<br />
-		mad: 2.00 LVL<br />
-		winw: 2.00 LVL<br />
-		ričards: 2.00 LVL<br />
-		Stoned: 1.49 LVL<br />
-		Klibs: 1.11 LVL<br />
-		Niggah: 1.05 LVL<br />
-		Čeks: 1.00 LVL<br />
-		Shevijs: 1.00 LVL<br />
-		durvis: 1.00 LVL<br />
-		Ruffy: 0.63 LVL<br />
-		Mailija: 0.49 LVL<br />
-		pampox: 2.84 LVL<br />
-		LoneWolf': 0.45 LVL (sms)<br />
-		Worst: 0.45 LVL (sms)<br />
-		splateris: 0.45 LVL (sms)<br />
-		Cuddles: 0.45 LVL (sms)<br />
-		Corona: 0.45 LVL (sms)<br />
-		Deimonz: 0.45 LVL (sms)<br />
-		Earthquake: 0.45 LVL (sms)<br />
-		brushie: 0.45 LVL (sms)<br />
-		melnaistirgus: 0.45 LVL (sms)<br />
-		Offspring: 0.45 LVL (sms)<br />
-		Zebot: 0.45 LVL (sms)<br />
-		lemonwave: 0.30 LVL<br />
-		breikeris: 0.01 LVL
-	</p>
-
-	<p>Savākts: 40.17/45 Ls</p>
+	<p>Savākts: 48.47/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa">
-		<div style="width: 89%;height:20px;background: green"></div>
+		<div style="width: 107%;height:20px;background: green"></div>
 	</div>
 
 	<!-- START BLOCK : junk-info-->
