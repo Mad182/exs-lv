@@ -386,6 +386,7 @@
 		Static: 7.00 LVL<br />
 		Andis: 5.30 LVL<br />
 		mad: 2.00 LVL<br />
+		winw: 2.00 LVL<br />
 		ričards (?): 2.00 LVL<br />
 		Klibs: 1.11 LVL<br />
 		Niggah: 1.05 LVL<br />
@@ -394,12 +395,13 @@
 		LoneWolf': 0.45 LVL (sms)<br />
 		Worst: 0.45 LVL (sms)<br />
 		splateris: 0.45 LVL (sms)<br />
+		Cuddles: 0.45 LVL (sms)
 	</p>
 
-	<p>Savākts: 21.81/45 Ls</p>
+	<p>Savākts: 24.26/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa;">
-		<div style="width: 48.46%;height:20px;background: green"></div>
+		<div style="width: 53.91%;height:20px;background: green"></div>
 	</div>
 
 	<!-- START BLOCK : junk-info-->
