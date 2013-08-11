@@ -383,10 +383,14 @@
 	<p><a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts">Kā ziedot?</a></p>
 
 	<p><strong>Ziedotāji:</strong><br />
+		Static: 7.00 LVL<br />
+		Andis: 5.30 LVL<br />
 		mad: 2.00 LVL<br />
 		ričards (?): 2.00 LVL<br />
 		Klibs: 1.11 LVL<br />
+		Niggah: 1.05 LVL<br />
 		Čeks: 1.00 LVL<br />
+		Shevijs: 1.00 LVL<br />
 		LoneWolf': 0.45 LVL (sms)<br />
 		Worst: 0.45 LVL (sms)<br />
 		splateris: 0.45 LVL (sms)<br />
@@ -395,7 +399,7 @@
 	<p>Savākts: 7.46/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa;">
-		<div style="width: 16.57%;height:20px;background: green"></div>
+		<div style="width: 48.46%;height:20px;background: green"></div>
 	</div>
 
 	<!-- START BLOCK : junk-info-->
