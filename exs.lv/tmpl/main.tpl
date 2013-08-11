@@ -389,23 +389,27 @@
 		mad: 2.00 LVL<br />
 		winw: 2.00 LVL<br />
 		ričards: 2.00 LVL<br />
+		Stoned: 1.49 LVL<br />
 		Klibs: 1.11 LVL<br />
 		Niggah: 1.05 LVL<br />
 		Čeks: 1.00 LVL<br />
 		Shevijs: 1.00 LVL<br />
+		Ruffy: 0.63 LVL<br />
 		Mailija: 0.49 LVL<br />
 		LoneWolf': 0.45 LVL (sms)<br />
 		Worst: 0.45 LVL (sms)<br />
 		splateris: 0.45 LVL (sms)<br />
 		Cuddles: 0.45 LVL (sms)<br />
-		Corona: 0.45<br />
-		breikeris: 0.01
+		Corona: 0.45 LVL (sms)<br />
+		Deimonz: 0.45 LVL (sms)<br />
+		Earthquake: 0.45 LVL (sms)<br />
+		breikeris: 0.01 LVL
 	</p>
 
-	<p>Savākts: 31.21/45 Ls</p>
+	<p>Savākts: 34.23/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa">
-		<div style="width: 69.36%;height:20px;background: green"></div>
+		<div style="width: 76.07%;height:20px;background: green"></div>
 	</div>
 
 	<!-- START BLOCK : junk-info-->

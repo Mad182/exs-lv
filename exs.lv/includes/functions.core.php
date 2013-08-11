@@ -1882,7 +1882,7 @@ function update_awards($user) {
 		);
 	}*/
 
-	if (in_array($user, array(13004,2101,23282,23678,1,273,7141,140,11525,12108,10578,26777,6890,25892,26070,28463))) {
+	if (in_array($user, array(13004,2101,23282,23678,1,273,7141,140,11525,12108,10578,26777,6890,25892,26070,28463,13059,22518))) {
 		$awards_list['riki-telts'] = array(
 			'title' => '<a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts" rel="nofollow">Ziedojums</a> @Riki teltij',
 			'state' => 'active'
