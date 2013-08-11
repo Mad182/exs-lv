@@ -396,7 +396,7 @@
 		splateris: 0.45 LVL (sms)<br />
 	</p>
 
-	<p>Savākts: 7.46/45 Ls</p>
+	<p>Savākts: 21.81/45 Ls</p>
 
 	<div style="width: 100%;height: 20px;border: 1px solid #aaa;">
 		<div style="width: 48.46%;height:20px;background: green"></div>
