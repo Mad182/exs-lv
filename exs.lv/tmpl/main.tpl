@@ -388,7 +388,7 @@
 		Andis: 5.30 LVL<br />
 		mad: 2.00 LVL<br />
 		winw: 2.00 LVL<br />
-		ričards (?): 2.00 LVL<br />
+		ričards: 2.00 LVL<br />
 		Klibs: 1.11 LVL<br />
 		Niggah: 1.05 LVL<br />
 		Čeks: 1.00 LVL<br />
