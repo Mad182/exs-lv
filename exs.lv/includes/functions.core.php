@@ -1867,12 +1867,13 @@ function update_awards($user) {
 	  );
 	  } */
 
-	/* if (in_array($user, array(1))) {
-	  $awards_list['futzals-06-04-2013'] = array(
-	  'title' => 'Exs futzāla turnīrs 06.04.2013',
-	  'state' => 'active'
-	  );
-	  } */
+	/* exs party */
+	if (in_array($user, array(1,140,273,655,703,1216,1220,1621,2101,4432,5969,12108,13004,16261,16261,16817,21411,23282,23678,25709,27089,27552))) {
+		$awards_list['exs-sauleskalns-2013'] = array(
+			'title' => '<a href="http://exs.lv/read/exs-party-2013" rel="nofollow">Exs ballīte 2013</a>',
+			'state' => 'active'
+		);
+	}
 
 	//ghetto games floorball
 	/*if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
@@ -1881,13 +1882,6 @@ function update_awards($user) {
 			'state' => 'active'
 		);
 	}*/
-
-	if (in_array($user, array(13004,2101,23282,23678,1,273,7141,140,11525,12108,10578,26777,6890,25892,26070,28463,13059,22518,12696,19504,8427,4432,21805,20858,870,16395,115,10065,15403,5999,25035,25709,1520,9141,23617,4506,19162))) {
-		$awards_list['riki-telts'] = array(
-			'title' => '<a href="http://exs.lv/say/1/2925308-ziedojumu-akcija-riki-telts" rel="nofollow">Ziedojums</a> @Riki teltij',
-			'state' => 'active'
-		);
-	}
 
 	//ghetto games football
 	/*if (in_array($user, array(1822, 13004, 858, 23282, 23715, 21450))) {
