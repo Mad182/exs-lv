@@ -500,11 +500,11 @@ function youtube_title_callback($matches) {
 }
 
 function get_youtube_video_small($matches) {
-	global $db, $is_miniblog, $force_tag_update, $auth;
+	global $db, $auth;
 
 	$safe = mkslug($matches[4], false);
 	$video = get_youtube($safe);
-	if (!$video || !empty($force_tag_update)) {
+	if (!$video) {
 
 		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
 		if ($contents) {
@@ -519,30 +519,6 @@ function get_youtube_video_small($matches) {
 				$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted) VALUES ('$safe','$title','$description','$restricted')");
 			}
 
-			//automatiski pieliek tagus rakstam
-			$data = simplexml_load_string($contents);
-			if (!empty($is_miniblog)) {
-				include_once(CORE_PATH . '/includes/class.tags.php');
-				$tags = new tags;
-				$i = 0;
-				foreach ($data->category as $cat) {
-					if (strlen($cat['term']) < 30 && strlen($cat['term']) > 2 && $i < 6 && substr($cat['term'], 0, 3) != 'Yt:') {
-						$newtag = sanitize(mb_ucfirst(strtolower(trim($cat['term']))));
-						$nslug = mkslug($cat['term']);
-						if (!empty($newtag)) {
-							$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-							if ($tagid) {
-								$tags->add_tag($is_miniblog, $tagid, 2);
-							} else {
-								$db->query("INSERT INTO tags (name,slug) VALUES ('$newtag','$nslug')");
-								$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-								$tags->add_tag($is_miniblog, $tagid, 2);
-							}
-						}
-						$i++;
-					}
-				}
-			}
 		} else {
 			$title = 'Video';
 			if (!$video) {

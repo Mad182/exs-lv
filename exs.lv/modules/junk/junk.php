@@ -255,7 +255,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
  		`miniblog`.`groupid` AS `groupid`,
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`reply_to` AS `reply_to`,
-		`miniblog`.`force_tag_update` AS `force_tag_update`,
 		`miniblog`.`id` AS `id`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,

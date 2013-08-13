@@ -66,7 +66,6 @@ if ($resps) {
 	$m->connect($mc_host, $mc_port);
 	$auth = new Auth();
 
-	$is_miniblog = $mbid;
 	foreach ($resps as $resp) {
 
 		$json['id'] = $resp->id;

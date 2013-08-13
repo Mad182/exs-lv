@@ -58,7 +58,6 @@ if ($resps) {
 		die('login required');
 	}
 
-	$is_miniblog = $mbid;
 	foreach ($resps as $resp) {
 		if ($resp->avatar == '') {
 			$resp->avatar = 'none.png';

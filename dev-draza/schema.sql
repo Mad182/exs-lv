@@ -1049,7 +1049,6 @@ CREATE TABLE IF NOT EXISTS `miniblog` (
   `close_reason` text COLLATE utf8_unicode_ci NOT NULL,
   `twitterid` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `twitteruser` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `force_tag_update` tinyint(1) NOT NULL DEFAULT '1',
   `vote_value` smallint(4) NOT NULL DEFAULT '0',
   `vote_users` text COLLATE utf8_unicode_ci NOT NULL,
   `edit_time` int(10) NOT NULL DEFAULT '0',

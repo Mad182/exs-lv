@@ -216,8 +216,6 @@ if ($inprofile->id) {
 				$title = textlimit(youtube_title($record->text), 64, '...');
 				$url = '/say/' . $record->author . '/' . $record->id . '-' . mb_get_strid($record->text, $record->id);
 
-				$is_miniblog = $record->id;
-
 				if (isset($_GET['single'])) {
 
 					//pieliek tagus
@@ -249,10 +247,6 @@ if ($inprofile->id) {
 							redirect($url, true);
 						}
 
-						if ($record->force_tag_update) {
-							$force_tag_update = true;
-							$db->query("UPDATE `miniblog` SET `force_tag_update` = '0' WHERE `id` = '$record->id'");
-						}
 						if (!empty($title)) {
 							$page_title = $title . ' | ' . $inprofile->nick;
 						} else {
@@ -331,7 +325,6 @@ if ($inprofile->id) {
 		`miniblog`.`groupid` AS `groupid`,
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`reply_to` AS `reply_to`,
-		`miniblog`.`force_tag_update` AS `force_tag_update`,
 		`miniblog`.`id` AS `id`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,
