@@ -500,48 +500,15 @@ function youtube_title_callback($matches) {
 }
 
 function get_youtube_video_small($matches) {
-	global $db, $auth;
-
-	$safe = mkslug($matches[4], false);
-	$video = get_youtube($safe);
-	if (!$video) {
-
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
-		if ($contents) {
-			if (stristr($contents, "Syndication of this video was restricted by its owner")) {
-				$restricted = 1;
-			} else {
-				$restricted = 0;
-			}
-			$title = sanitize(stripslashes(get_between($contents, "<media:title type='plain'>", '</media:title>')));
-			$description = sanitize(stripslashes(str_replace(array('\\n', '\n'), ' ', get_between($contents, "<media:description type='plain'>", '</media:description>'))));
-			if (!$video) {
-				$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted) VALUES ('$safe','$title','$description','$restricted')");
-			}
-
-		} else {
-			$title = 'Video';
-			if (!$video) {
-				$db->query("INSERT INTO ytlocal (yt_id,yt_title) VALUES ('$safe','Youtube video')");
-			}
-		}
-	} else {
-		$title = $video->yt_title;
-		$description = $video->yt_description;
-		$restricted = $video->yt_restricted;
-	}
-	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(stripslashes($title), 100)));
-	$title = str_replace("&amp;amp;", "&amp;", $title);
-	if ($auth->ok === true) {
-		$videocode = htmlspecialchars('<div class="auto-embed" style="width:380px;"><iframe class="youtube-player" type="text/html" width="380" height="240" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div>');
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" rel="nofollow" title="Atskaņot ' . $title . '" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
-	} else {
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" rel="nofollow" title="Atskaņot ' . $title . '" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
-	}
+	return embed_youtube($matches, 0);
 }
 
 function get_youtube_video($matches) {
-	global $db, $article, $auth;
+	return embed_youtube($matches, 1);
+}
+
+function embed_youtube($matches, $wide = 0) {
+	global $db, $auth;
 
 	$safe = mkslug($matches[4], false);
 	$video = get_youtube($safe);
@@ -557,30 +524,6 @@ function get_youtube_video($matches) {
 			$description = sanitize(stripslashes(get_between($contents, "<media:description type='plain'>", '</media:description>')));
 			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted) VALUES ('$safe','$title','$description','$restricted')");
 
-			//automatiski pieliek tagus rakstam
-			$data = simplexml_load_string($contents);
-			if (!empty($article)) {
-				include_once(CORE_PATH . '/includes/class.tags.php');
-				$tags = new tags;
-				$i = 0;
-				foreach ($data->category as $cat) {
-					if (strlen($cat['term']) < 30 && strlen($cat['term']) > 2 && $i < 10 && substr($cat['term'], 0, 3) != 'Yt:') {
-						$newtag = sanitize(mb_ucfirst(strtolower(trim($cat['term']))));
-						$nslug = mkslug($cat['term']);
-						if (!empty($newtag)) {
-							$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-							if ($tagid) {
-								$tags->add_tag($article->id, $tagid);
-							} else {
-								$db->query("INSERT INTO tags (name,slug) VALUES ('$newtag','$nslug')");
-								$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-								$tags->add_tag($article->id, $tagid);
-							}
-						}
-						$i++;
-					}
-				}
-			}
 		} else {
 			$title = 'Video';
 		}
@@ -592,8 +535,15 @@ function get_youtube_video($matches) {
 	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(stripslashes($title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 
+	$width = 380;
+	$height = 240;
+	if($wide) {
+		$width = 520;
+		$height = 290;
+	}
+
 	if ($auth->ok === true) {
-		$videocode = htmlspecialchars('<div class="c"></div><div class="auto-embed" style="width:520px;"><iframe class="youtube-player" type="text/html" width="520" height="290" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div> ');
+		$videocode = htmlspecialchars('<div class="c"></div><div class="auto-embed" style="width:' . $width . 'px;"><iframe class="youtube-player" type="text/html" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div> ');
 		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
 	} else {
 		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
