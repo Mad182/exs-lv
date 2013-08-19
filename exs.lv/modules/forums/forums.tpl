@@ -52,7 +52,7 @@
 			</select>
 		</p>
 		<label for="new-topic-title">Teksts:</label><br />
-		<textarea name="new-topic-body" id="new-topic-body" style="width:100%;height:300px" rows="5" cols="50"></textarea>
+		<textarea name="new-topic-body" id="new-topic-body" style="width:100%;height:300px" rows="5" cols="50">{forum-content}</textarea>
 		<p><input type="submit" name="submit" value="Pievienot" class="button primary" /></p>
 	</fieldset>
 </form>

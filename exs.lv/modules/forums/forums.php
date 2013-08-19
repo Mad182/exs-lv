@@ -35,7 +35,13 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 		} else {
 			set_flash('Jāuzgaida vismaz 1 minūti, pirms vari pievienot jaunu tēmu!', 'error');
 		}
+
+	/* nepazaudē satura laukā ierakstīto ja nav aizpildīts nosaukums */
+	} elseif(!empty($body) && empty($title)) {
+		set_flash('Lūdzu norādi tēmas nosaukumu!', 'error');
+		$tpl->assignGlobal('forum-content', htmlspecialchars(trim($_POST['new-topic-body'])));
 	}
+
 }
 
 $tpl->newBlock('forum');
