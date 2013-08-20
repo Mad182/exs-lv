@@ -2885,9 +2885,9 @@ a.friend-right {
 #comments dt .username {
 	font-weight: 700;
 	display: block;
-	height: 18px;
+	line-height: 14px;
 	background: #ECEFF5;
-	padding: 1px 1px 1px 3px;
+	padding: 3px;
 	margin: 0 0 3px 0;
 	font-size: 12px;
 }
