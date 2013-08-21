@@ -24,7 +24,8 @@
 	var query_timeout = 60000;
 	var c_url = "{page-url}";
 </script>
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css,sitemap.css" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},sitemap.css,gta.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
@@ -99,9 +100,7 @@
 		<div id="header">
 			<div id="header-overlay">
 				<div id="logo">
-					<div id="header-stuff">
-						<img src="http://www.game-state.eu/92.240.80.63:22003/560x95_FFFFFF_FF9900_000000_000000.png" alt="mta.exs.lv" />
-					</div>
+					<div id="header-stuff">{ad-top}</div>
 					<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
@@ -110,7 +109,7 @@
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
 						</ul>
-						{current-date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">Serveris:</span> mta.exs.lv&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
+						<strong>EXS MTA RolePlay</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">Serveris:</span> mta.exs.lv&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
 					</div>
 				</div>
 				<div id="top-menu">
@@ -284,6 +283,10 @@
 				<div class="c"></div>
 			</div>
 			<!-- END BLOCK : user-top-->
+
+			<div class="box">
+				<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&port=22003&bgcolor=FFFFFF&bordercolor=EEEEEE&fieldcolor=3B3B3B&valuecolor=292828&oddrowscolor=E2E8F5&showgraph=true&showplayers=true&graphvalues=292828&graphaxis=3B3B3B&width=217&graph_height=110&plist_height=160&font_size=8" frameborder="0" scrolling="no" style="width: 217px; height: 435px"></iframe>
+			</div>
 
 			<!-- START BLOCK : poll-box-->
 			<h3>Aptauja</h3>
