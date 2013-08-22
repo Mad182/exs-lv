@@ -11,7 +11,7 @@ body {
 }
 
 #header {
-	background: url('http://img.exs.lv/m/i/mikla-vavere/mta-top-by-worst.png') no-repeat 0 20px;
+	background: url('http://img.exs.lv/m/i/mikla-vavere/mta-top-by-worst.png') no-repeat -20px 20px;
 	height: 198px;
 }
 
