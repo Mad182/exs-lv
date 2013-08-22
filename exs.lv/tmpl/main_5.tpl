@@ -25,7 +25,7 @@
 	var c_url = "{page-url}";
 </script>
 <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},sitemap.css,gta.css" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
@@ -109,7 +109,7 @@
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
 						</ul>
-						<strong>EXS MTA RolePlay</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">Serveris:</span> mta.exs.lv&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
+						<strong><a href="/">EXS MTA RolePlay</a></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">Serveris:</span> mta.exs.lv&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
 					</div>
 				</div>
 				<div id="top-menu">

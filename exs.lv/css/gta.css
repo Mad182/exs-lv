@@ -11,8 +11,8 @@ body {
 }
 
 #header {
-	background: url('http://img.exs.lv/m/i/mikla-vavere/gta.jpg') no-repeat 0 0;
-	height: 170px;
+	background: url('http://img.exs.lv/m/i/mikla-vavere/mta-top-by-worst.png') no-repeat 0 20px;
+	height: 198px;
 }
 
 #wrapper h1, #wrapper h2, #wrapper h3 {
@@ -66,6 +66,18 @@ body {
 	line-height: 22px;
 	height: 22px;
 }
+#tools-bar strong a{
+	color: rgb(213, 68, 0);
+	line-height: 22px;
+	height: 22px;
+	float: left;
+	padding: 0 8px;
+}
+#tools-bar strong a:hover{
+	background: rgb(213, 68, 0);
+	color: #fff;
+	text-decoration: none;
+}
 
 
 #site-links li a:hover {
@@ -89,16 +101,10 @@ body {
 #top-menu {
 	padding: 2px 10px 0;
 	margin: 0;
-	background: #bcb279 url('http://img.exs.lv/bildes/gta/navbar.png') repeat;
+	background: #353535 url('http://img.exs.lv/bildes/lfs/navbar.png') repeat;
 	height: 35px;
 	line-height: 35px;
 	border: 0;
-	-webkit-border-bottom-right-radius: 2px;
-	-webkit-border-bottom-left-radius: 2px;
-	-moz-border-radius-bottomright: 2px;
-	-moz-border-radius-bottomleft: 2px;
-	border-bottom-right-radius: 2px;
-	border-bottom-left-radius: 2px;
 }
  
 #top-menu ul {
@@ -117,18 +123,18 @@ body {
 }
 
 #top-menu li a {
-	color: #5E5939;
-	text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 1px;
+	color: #fafafa;
+	text-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px;
 	font-size: 12px;
 	font-weight: normal;
 	padding: 0 12px 0 14px;
 	margin: 0;
 	height: 35px;
 	line-height: 35px;
-	background: transparent url('http://img.exs.lv/bildes/gta/seperator.png') no-repeat 0 -2px;
+	background: transparent url('http://img.exs.lv/bildes/lfs/seperator.png') no-repeat 0 -2px;
 }
 #top-menu li a:hover {
-	color: #fff;
+	color: rgb(213, 68, 0);
 	text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px;
 }
 
@@ -137,9 +143,8 @@ body {
 }
 
 #top-menu .selected a {
-	text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px;
 	color: #eee;
-	background: #847e59;
+	background: #313131;
 	border-radius: 0;
 	-webkit-border-top-left-radius: 3px;
 	-webkit-border-top-right-radius: 3px;
@@ -180,13 +185,13 @@ body {
 }
 
 #logo {
-	height: 136px;
+	height: 195px;
 }
 
 #exs-logo {
-	background: transparent url('http://img.exs.lv/m/i/mikla-vavere/rp.png') no-repeat 16px 26px;
-	width: 300px;
-	height: 136px;
+	background: transparent;
+	width: 100%;
+	height: 175px;
 }
 
 
