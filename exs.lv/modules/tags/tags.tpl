@@ -10,7 +10,7 @@
 <h2>Raksti</h2>
 <ul class="taged blockhref mb-col" id="taged-articles">
 	<!-- START BLOCK : tags-articles-node-->
-	<li style=><a href="{url}"><img src="http://exs.lv/dati/bildes/topic-av/{id}.jpg" class="av" alt="" /><strong>{title}</strong><span>no {author}</span>{text}</a></li>
+	<li style="text-align:left;"><a href="{url}"><img src="http://exs.lv/dati/bildes/topic-av/{id}.jpg" class="av" alt="" /><strong>{title}</strong><span>no {author}</span><span style="color: #444;">{text}</span></a></li>
 	<!-- END BLOCK : tags-articles-node-->
 </ul>
 <!-- END BLOCK : tags-articles-->

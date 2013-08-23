@@ -30,7 +30,7 @@ if (isset($_GET['var1'])) {
 			$tpl->assign('description', $tag->description);
 		}
 		$page_title = $tag->name . ' | ' . $page_title;
-		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 0 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 25");
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 0 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 20");
 		if ($findtaged) {
 			$tpl->newBlock('tags-articles');
 			foreach ($findtaged as $taged) {
@@ -42,7 +42,7 @@ if (isset($_GET['var1'])) {
 						$tpl->newBlock('tags-articles-node');
 						$tpl->assign(array(
 							'url' => '/read/' . $article->strid,
-							'text' => textlimit($article->text, 140),
+							'text' => textlimit($article->text, 170),
 							'title' => $article->title,
 							'id' => $article->id,
 							'author' => $author->nick
