@@ -54,7 +54,7 @@ if (isset($_GET['var1'])) {
 				}
 			}
 		}
-		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 36");
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 27");
 		if ($findtaged) {
 			$tpl->newBlock('tags-images');
 			foreach ($findtaged as $taged) {
