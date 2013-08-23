@@ -18,11 +18,12 @@
 
 <!-- START BLOCK : tags-images-->
 <h3>Attēli</h3>
-<ul class="taged">
-	<!-- START BLOCK : tags-articles-node-img-->
-	<li><a href="/gallery/{articles-node-author-id}/{articles-node-id}">Attēls {articles-node-title}</a> no <a href="/user/{articles-node-author-id}">{articles-node-author}</a></li>
-	<!-- END BLOCK : tags-articles-node-img-->
-</ul>
+<p class="taged imgs">
+	<!-- START BLOCK : node-img-->
+	<a href="/gallery/{uid}/{id}"><img src="http://img.exs.lv/{thb}" alt="Attēls {title}" /></a>
+	<!-- END BLOCK : node-img-->
+</p>
+<div class="c"></div>
 <!-- END BLOCK : tags-images-->
 
 <!-- START BLOCK : tags-miniblogs-->

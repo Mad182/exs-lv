@@ -54,22 +54,19 @@ if (isset($_GET['var1'])) {
 				}
 			}
 		}
-		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 25");
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 36");
 		if ($findtaged) {
 			$tpl->newBlock('tags-images');
 			foreach ($findtaged as $taged) {
 				if ($taged->type == 1) {
-					$article = $db->get_row("SELECT * FROM images WHERE `id` = ('" . $taged->page_id . "')");
+					$article = $db->get_row("SELECT `id`, `text`, `thb`, `uid` FROM images WHERE `id` = " . $taged->page_id);
 					if ($article) {
-						$author = get_user($article->uid);
-						$tpl->newBlock('tags-articles-node-img');
+						$tpl->newBlock('node-img');
 						$tpl->assign(array(
-							'articles-node-id' => $article->id,
-							'articles-node-title' => ucfirst(htmlspecialchars(substr(strip_tags($article->text), 0, 128))),
-							'articles-node-date' => $article->date,
-							'articles-node-author' => usercolor($author->nick, $author->level),
-							'articles-node-author-id' => $article->uid,
-							'articles-node-posts' => $article->posts
+							'id' => $article->id,
+							'thb' => $article->thb,
+							'title' => ucfirst(htmlspecialchars(substr(strip_tags($article->text), 0, 256))),
+							'uid' => $article->uid
 						));
 					} else {
 						//clean database from broken tags
