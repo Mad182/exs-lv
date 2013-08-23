@@ -1,4 +1,3 @@
-<!-- START BLOCK : av-list-->
 <h1>Animētie avatari</h1>
 
 <form class="form" action="" method="post">
@@ -23,6 +22,7 @@
 <input type="submit" class="button primary" value="Nosūtīt" />
 <!-- END BLOCK : av-buy-->
 
+<!-- START BLOCK : av-credit-->
 <h4>Kā iegādāties 5 kredīta punktus?</h4>
 
 <div class="box">
@@ -38,8 +38,8 @@
 		Piedāvā fortumo.lv</p>
 	</div>
 </div>
+<!-- END BLOCK : av-credit-->
 
 </fieldset>
 </form>
 
-<!-- END BLOCK : av-list-->

@@ -34,7 +34,7 @@ function reverse_htmlentities($mixed) {
 $m = new Memcache;
 $m->connect($mc_host, $mc_port);
 
-
+$m->delete('blacklisted_sites');
 
 $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC");
 echo "start update_karma()\n";

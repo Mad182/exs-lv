@@ -37,7 +37,7 @@ if (!empty($user)) {
 	$db->query("INSERT INTO `sms` (time,message,sender,message_id,data) VALUES ('" . time() . "','" . sanitize($message) . "','" . sanitize($sender) . "','" . sanitize($message_id) . "','" . serialize($_GET) . "')");
 	$reply = 'Pasūtīti 5 expunkti lietotājam ' . $user->nick . '. Paldies!';
 } else {
-	$reply = 'Kļūda! Neizdevās atrast lietotāju. Sazinies ar info@exs.lv';
+	$reply = 'SMS saņemta!';
 }
 
 // print out the reply
