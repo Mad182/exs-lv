@@ -35,17 +35,17 @@ if (isset($_GET['var1'])) {
 			$tpl->newBlock('tags-articles');
 			foreach ($findtaged as $taged) {
 				if ($taged->type == 0) {
-					$article = $db->get_row("SELECT `title`,`strid`,`author`,`text` FROM `pages` WHERE `id` = '" . $taged->page_id . "' ORDER BY `date` DESC");
+					$article = $db->get_row("SELECT `id`,`title`,`strid`,`author`,`text` FROM `pages` WHERE `id` = '" . $taged->page_id . "' ORDER BY `date` DESC");
 					//pr($article->text);
 					if ($article) {
 						$author = get_user($article->author);
 						$tpl->newBlock('tags-articles-node');
 						$tpl->assign(array(
 							'url' => '/read/' . $article->strid,
-							'aurl' => mkurl('user', $article->author, $author->nick),
 							'text' => textlimit($article->text, 140),
 							'title' => $article->title,
-							'author' => usercolor($author->nick, $author->level),
+							'id' => $article->id,
+							'author' => $author->nick
 						));
 					} else {
 						//clean database from broken tags
@@ -143,14 +143,14 @@ if (!$cache_created || (time() - $cache_created) > 115200) {
 		  `tags`.`id`
 		ORDER BY
 			rand()
-		LIMIT 100"
+		LIMIT 80"
 	);
 	if ($tags) {
 		$out = '';
 		if ($lang == 1) {
-			$multiplier = 2.5;
+			$multiplier = 2.6;
 		} else {
-			$multiplier = 3.5;
+			$multiplier = 3.6;
 		}
 		foreach ($tags as $tag) {
 			$count = $db->get_var("SELECT count(*) FROM `taged` WHERE `tag_id` = '$tag->id' AND `lang` = '$lang'");

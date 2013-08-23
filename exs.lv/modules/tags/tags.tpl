@@ -7,18 +7,18 @@
 {ad-468}
 
 <!-- START BLOCK : tags-articles-->
-<h3>Raksti</h3>
-<ul class="taged" id="taged-articles">
+<h2>Raksti</h2>
+<ul class="taged blockhref mb-col" id="taged-articles">
 	<!-- START BLOCK : tags-articles-node-->
-	<li><strong><a href="{url}">{title}</a></strong> <small>no <a href="{aurl}">{author}</a></small><p style="font-size:90%;padding: 0 0 6px;margin:0">{text}</p></li>
+	<li style=><a href="{url}"><img src="http://exs.lv/dati/bildes/topic-av/{id}.jpg" class="av" alt="" /><strong>{title}</strong><span>no {author}</span>{text}</a></li>
 	<!-- END BLOCK : tags-articles-node-->
 </ul>
 <!-- END BLOCK : tags-articles-->
 
 
 <!-- START BLOCK : tags-images-->
-<h3>Attēli</h3>
-<p class="taged imgs">
+<h2>Attēli</h2>
+<p class="taged imgs" style="padding:10px">
 	<!-- START BLOCK : node-img-->
 	<a href="/gallery/{uid}/{id}"><img src="http://img.exs.lv/{thb}" alt="Attēls {title}" /></a>
 	<!-- END BLOCK : node-img-->
@@ -27,7 +27,7 @@
 <!-- END BLOCK : tags-images-->
 
 <!-- START BLOCK : tags-miniblogs-->
-<h3>Miniblogi</h3>
+<h2>Miniblogi</h2>
 <ul class="taged">
 	<!-- START BLOCK : tags-articles-node-mb-->
 	<li><a href="/say/{uid}/{id}-{url}">{text}</a></li>
@@ -36,7 +36,7 @@
 <!-- END BLOCK : tags-miniblogs-->
 
 <!-- START BLOCK : tags-groups-->
-<h3>Grupas</h3>
+<h2>Grupas</h2>
 <ul class="taged">
 	<!-- START BLOCK : tags-articles-node-group-->
 	<li><a href="/group/{id}">{title}</a></li>
