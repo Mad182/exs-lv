@@ -660,15 +660,15 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$dofollow_sites = get_dofollow_sites();
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
-			$replace = array(
+			$find = array(
 				' rel="nofollow" href="http://' . $site,
 				' rel="nofollow" href="http://www.' . $site
 			);
-			$txt = str_ireplace($replace, ' href="http://'.$site, $txt);
 			$replace = array(
-				' rel="nofollow" href="http://www.' . $site
+				' href="http://' . $site,
+				' href="http://www.' . $site
 			);
-			$txt = str_ireplace($replace, ' href="http://www.'.$site, $txt);
+			$txt = str_ireplace($find, $replace, $txt);
 		}
 	}
 
