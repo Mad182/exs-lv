@@ -665,6 +665,10 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 				' rel="nofollow" href="http://www.' . $site
 			);
 			$txt = str_ireplace($replace, ' href="http://'.$site, $txt);
+			$replace = array(
+				' rel="nofollow" href="http://www.' . $site
+			);
+			$txt = str_ireplace($replace, ' href="http://www.'.$site, $txt);
 		}
 	}
 
