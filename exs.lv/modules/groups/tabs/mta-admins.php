@@ -28,12 +28,12 @@ if(!empty($admins)) {
 		}
 
 		$module_content .= '<tr>';
-		$module_content .= '	<td>' . $admin->username . '</td>';
+		$module_content .= '	<td>' . htmlspecialchars($admin->username) . '</td>';
 		$module_content .= '	<td>' . $usr . '</td>';
-		$module_content .= '	<td>' . $admin->admin . '</td>';
-		$module_content .= '	<td>' . $admin->adminreports . '</td>';
-		$module_content .= '	<td>' . $admin->lastlogin . '</td>';
-		$module_content .= '	<td>' . $admin->responsibleFor . '</td>';
+		$module_content .= '	<td>' . (int) $admin->admin . '</td>';
+		$module_content .= '	<td>' . (int) $admin->adminreports . '</td>';
+		$module_content .= '	<td>pirms ' . time_ago(strtotime($admin->lastlogin)) . '</td>';
+		$module_content .= '	<td>' . htmlspecialchars($admin->responsibleFor) . '</td>';
 		$module_content .= '</tr>';
 	}
 	
