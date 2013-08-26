@@ -1797,10 +1797,10 @@ function update_awards($user) {
 	  );
 	  } */
 
-	/* exs party */
-	if (in_array($user, array(1,140,273,655,703,1216,1220,1621,2101,4432,5969,12108,13004,16261,16261,16817,21411,23282,23678,25709,27089,27552))) {
-		$awards_list['exs-sauleskalns-2013'] = array(
-			'title' => '<a href="http://exs.lv/read/exs-party-2013" rel="nofollow">Exs ballīte 2013</a>',
+	/* latgale party */
+	if (in_array($user, array(8070, 8531, 23282, 2145, 16027, 10345, 22051))) {
+		$awards_list['latgale-party-2013'] = array(
+			'title' => 'Exs Latgale party 2013',
 			'state' => 'active'
 		);
 	}
