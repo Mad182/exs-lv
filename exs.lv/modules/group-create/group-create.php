@@ -1,6 +1,6 @@
 <?php
 
-if($lang != 1) {
+if(!in_array($lang, array(1, 5))) {
 	set_Flash('Šobrīd nav pieejams!', 'error');
 	redirect('/grupas');
 }
