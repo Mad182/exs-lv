@@ -256,7 +256,7 @@ function get_site_access() {
 	$site_access_data = $db->get_results("SELECT `user_id`, `level` FROM `site_admins` WHERE `site_id` = '$lang'");
 	if(!empty($site_access_data)) {
 		foreach($site_access_data as $usr) {
-			$site_access[$usr->level][] = $usr->id;
+			$site_access[$usr->level][] = $usr->user_id;
 		}
 	}
 
