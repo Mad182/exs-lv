@@ -227,8 +227,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				'group-id' => $group->id,
 				'member-class' => $mclas,
 				'member-id' => $m_user->id,
-				'member-nick' => usercolor($m_user->nick, $m_user->level),
-				'avatar' => $avatar,
+				'member-nick' => usercolor($m_user->nick, $m_user->level, false, $m_user->id),
+				'avatar' => $avatar
 			));
 
 			//delete member from group
@@ -265,7 +265,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$page_title = $group->title . ' - biedri';
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod)) {
 	$drop = (int) $_GET['var3'];
-	$db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$drop'");
+	$db->query("DELETE FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$drop'");
 	update_members($group->id);
 	$auth->log('Izmeta biedru #' . $drop, 'clans', $group->id);
 	redirect($group_link . '/members');
