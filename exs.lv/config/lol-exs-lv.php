@@ -12,10 +12,6 @@ $fb_api_key = '383e184012b182ca5cba6b54c5387ee3';
 $dr_api_id = 15005147;
 $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
-//$site_admins = array(24968,24962);
-
-$site_mods = array(11722);
-
 //koementāri (level 1) vienā foruma lapā
 $comments_per_page = 25;
 

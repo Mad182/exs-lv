@@ -55,7 +55,7 @@ class Auth {
 	}
 
 	function check_session() {
-		global $db, $site_admins, $site_mods, $lang;
+		global $db, $site_access, $lang;
 
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id']);
@@ -65,11 +65,11 @@ class Auth {
 
 			$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
 
-			if (in_array($this->id, $site_admins)) {
+			if (in_array($this->id, $site_access[1])) {
 				$this->level = 1;
 			}
 
-			if (in_array($this->id, $site_mods)) {
+			if (in_array($this->id, $site_access[2])) {
 				$this->level = 2;
 			}
 
@@ -114,7 +114,7 @@ class Auth {
 	}
 
 	function login($username, $password, $xsrf = null) {
-		global $db, $site_admins, $site_mods, $lang;
+		global $db, $site_access, $lang;
 
 		if(!is_null($xsrf) && $xsrf != $this->xsrf) {
 			sleep(rand(2,4));
@@ -135,11 +135,11 @@ class Auth {
 
 			$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
 
-			if (in_array($this->id, $site_admins)) {
+			if (in_array($this->id, $site_access[1])) {
 				$this->level = 1;
 			}
 
-			if (in_array($this->id, $site_mods)) {
+			if (in_array($this->id, $site_access[2])) {
 				$this->level = 2;
 			}
 

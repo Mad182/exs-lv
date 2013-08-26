@@ -16,4 +16,3 @@ $polls_cat = 2;
 $profile_views_limit = 27;
 
 $robotstag[] = 'noodp';
-

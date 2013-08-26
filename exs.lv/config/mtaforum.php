@@ -12,12 +12,6 @@ $fb_api_key = 'cbf65eee0645935797da97f33b6a77b1';
 $dr_api_id = 15005147;
 $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
-$site_admins = array(29176);
-
-$site_mods = array(24969);
-
-$site_vips = array(273, 25420, 27721, 30781, 17391, 25008, 24956, 24316, 26213, 25359);
-
 //koementāri (level 1) vienā foruma lapā
 $comments_per_page = 25;
 
@@ -43,4 +37,3 @@ $mta_hostname = 'mta.exs.lv';
 $mta_username = 'exs';
 $mta_password = 'gnzNhE3Q';
 $mta_database = 'rpdb';
-

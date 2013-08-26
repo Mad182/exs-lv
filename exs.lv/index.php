@@ -40,6 +40,8 @@ if (isset($_GET['kategorija']) && isset($_GET['id'])) {
 	redirect('http://exs.lv/' . $category->textid, true);
 }
 
+$site_access = get_site_access();
+
 //izveido aktīvā lietotāja objektu
 $auth = new Auth();
 

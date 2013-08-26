@@ -2106,3 +2106,38 @@ INSERT INTO `dofollow_sites` (`id`, `url`) VALUES
 (10, 'openidea.lv'),
 (13, 'otrapuse.lv'),
 (8, 'rp.exs.lv');
+
+
+--
+-- Table structure for table `site_admins`
+--
+
+CREATE TABLE IF NOT EXISTS `site_admins` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(9) NOT NULL,
+  `site_id` smallint(6) NOT NULL,
+  `level` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Site specific user access level' AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `site_admins`
+--
+
+INSERT INTO `site_admins` (`id`, `user_id`, `site_id`, `level`) VALUES
+(1, 29176, 5, 1),
+(2, 24969, 5, 2),
+(3, 273, 5, 3),
+(4, 25420, 5, 3),
+(5, 11722, 7, 2),
+(6, 27721, 5, 3),
+(7, 30781, 5, 3),
+(8, 17391, 5, 3),
+(9, 25008, 5, 3),
+(10, 24956, 5, 3),
+(11, 24316, 5, 3),
+(12, 26213, 5, 3),
+(13, 25359, 5, 3);
+

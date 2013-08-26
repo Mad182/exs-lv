@@ -242,8 +242,31 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 	return $out;
 }
 
+
+/* apakšprojektam specifiskas lietotāju tiesības */
+function get_site_access() {
+	global $db, $m, $lang;
+
+	$site_access = array(
+			1 => array(),
+			2 => array(),
+			3 => array()
+		);
+
+	$site_access_data = $db->get_results("SELECT `user_id`, `level` FROM `site_admins` WHERE `site_id` = '$lang'");
+	if(!empty($site_access_data)) {
+		foreach($site_access_data as $usr) {
+			$site_access[$usr->level][] = $usr->id;
+		}
+	}
+
+	return $site_access;
+}
+
+
+/* atgriež niku ar tam atbilstošo krāsu pēc lietotāja tiesībām */
 function usercolor($nick, $level = 0, $online = false, $userid = 0) {
-	global $busers, $online_users, $site_admins, $site_mods, $site_vips, $auth, $cday_users;
+	global $busers, $online_users, $site_access, $auth, $cday_users;
 	$star = '';
 
 	if ($online !== 'disable') {
@@ -265,13 +288,13 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	$nick = $star . htmlspecialchars($nick);
 
-	if ($level == 1 || $userid != 0 && in_array($userid, $site_admins)) {
+	if ($level == 1 || $userid != 0 && in_array($userid, $site_access[1])) {
 		$nick = '<span class="admins">' . $nick . '</span>';
 	}
-	if ($level == 2 || $userid != 0 && in_array($userid, $site_mods)) {
+	if ($level == 2 || $userid != 0 && in_array($userid, $site_access[2])) {
 		$nick = '<span class="mods">' . $nick . '</span>';
 	}
-	if ($level == 3 || $userid != 0 && in_array($userid, $site_vips)) {
+	if ($level == 3 || $userid != 0 && in_array($userid, $site_access[3])) {
 		$nick = '<span class="rautors">' . $nick . '</span>';
 	}
 	if ($level == 5) {

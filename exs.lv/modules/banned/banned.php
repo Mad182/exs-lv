@@ -2,7 +2,7 @@
 
 $q_add = '';
 /* ja admins nav "globāls", tb norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu */
-if(in_array($auth->id, $site_mods) || in_array($auth->id, $site_admins)) {
+if(in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 	$q_add = " AND `lang` = '$lang'";
 }
 
