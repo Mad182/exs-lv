@@ -182,7 +182,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						'pending-uid' => $p_user->id,
 						'pending-date' => date('Y-m-d', $pending->date_added),
 						'avatar' => $avatar,
-						'pending-nick' => usercolor($p_user->nick, $p_user->level),
+						'pending-nick' => usercolor($p_user->nick, $p_user->level, false, $p_user->id)
 					));
 				}
 			}
@@ -200,7 +200,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		'group-id' => $group->id,
 		'member-class' => 'owner',
 		'member-id' => $m_owner->id,
-		'member-nick' => usercolor($m_owner->nick, $m_owner->level),
+		'member-nick' => usercolor($m_owner->nick, $m_owner->level, false, $m_owner->id),
 		'avatar' => $avatar
 	));
 
