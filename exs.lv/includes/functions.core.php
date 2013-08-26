@@ -243,7 +243,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 }
 
 function usercolor($nick, $level = 0, $online = false, $userid = 0) {
-	global $busers, $online_users, $site_admins, $site_mods, $auth, $cday_users;
+	global $busers, $online_users, $site_admins, $site_mods, $site_vips, $auth, $cday_users;
 	$star = '';
 
 	if ($online !== 'disable') {
@@ -271,7 +271,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	if ($level == 2 || $userid != 0 && in_array($userid, $site_mods)) {
 		$nick = '<span class="mods">' . $nick . '</span>';
 	}
-	if ($level == 3) {
+	if ($level == 3 || $userid != 0 && in_array($userid, $site_vips)) {
 		$nick = '<span class="rautors">' . $nick . '</span>';
 	}
 	if ($level == 5) {

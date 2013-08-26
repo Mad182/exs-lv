@@ -106,6 +106,7 @@ mb_regex_encoding('UTF-8');
 
 $site_admins = array();
 $site_mods = array();
+$site_vips = array();
 
 //karma no kuras sakot var labot savus postus
 $min_post_edit = 100;

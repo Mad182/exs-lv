@@ -16,6 +16,8 @@ $site_admins = array(29176);
 
 $site_mods = array(24969);
 
+$site_vips = array(273, 25420, 27721, 30781, 17391, 25008, 24956, 24316, 26213, 25359);
+
 //koementāri (level 1) vienā foruma lapā
 $comments_per_page = 25;
 
