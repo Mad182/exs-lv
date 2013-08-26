@@ -250,7 +250,9 @@ function get_site_access() {
 	$site_access = array(
 			1 => array(),
 			2 => array(),
-			3 => array()
+			3 => array(),
+			4 => array(),
+			5 => array()
 		);
 
 	$site_access_data = $db->get_results("SELECT `user_id`, `level` FROM `site_admins` WHERE `site_id` = '$lang'");
@@ -288,21 +290,12 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	$nick = $star . htmlspecialchars($nick);
 
-	if ($level == 1 || $userid != 0 && in_array($userid, $site_access[1])) {
-		$nick = '<span class="admins">' . $nick . '</span>';
-	}
-	if ($level == 2 || $userid != 0 && in_array($userid, $site_access[2])) {
-		$nick = '<span class="mods">' . $nick . '</span>';
-	}
-	if ($level == 3 || $userid != 0 && in_array($userid, $site_access[3])) {
-		$nick = '<span class="rautors">' . $nick . '</span>';
-	}
-	if ($level == 5) {
-		$nick = '<span class="bot">' . $nick . '</span>';
-	}
-	// SELĪNA :D
-	if ($userid == 24668 && $auth->id == 24668) {
-		$nick = '<span style="color:#ffc6f5;">S<span style="color:#ea89d9;">E</span>L<span style="color:#ea89d9;">Ī</span>N<span style="color:#ea89d9;">A</span></span>';
+	$user_classes = array(1 => 'admins', 2 => 'mods', 3 => 'rautors', 5 => 'bot');
+
+	foreach($user_classes as $key => $class) {
+		if ($level == $key || $userid != 0 && in_array($userid, $site_access[$key])) {
+			$nick = '<span class="' . $class . '">' . $nick . '</span>';
+		}
 	}
 
 	if ($online !== 'disable' && $userid && !empty($busers)) {
