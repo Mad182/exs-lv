@@ -34,7 +34,7 @@ $m->connect($mc_host, $mc_port);
 ########################## TOPA TĪRĪŠANA
 
 $daily_first = $db->get_var("SELECT id FROM users ORDER BY today DESC LIMIT 1");
-$db->query("UPDATE users SET daily_first = daily_first+1 WHERE id = '$daily_first'");
+$db->query("UPDATE `users` SET `daily_first` = `daily_first`+1, `credit` = `credit`+1 WHERE `id` = '$daily_first'");
 
 update_karma($daily_first, true);
 
