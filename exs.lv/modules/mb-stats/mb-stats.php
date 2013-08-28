@@ -41,8 +41,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
 
 	// Get the height and width of the final image
 
-	$width = 750;
-	$height = 160;
+	$width = 743;
+	$height = 200;
 
 	// Set the amount of space between each column
 
@@ -77,7 +77,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
 
 	// Max
 	imagettftext($im, 7, 0, 0, 8, $gray_dark, $font, $max);
-	imagettftext($im, 7, 0, 0, 160, $gray_dark, $font, 0);
+	imagettftext($im, 7, 0, 0, 200, $gray_dark, $font, 0);
 
 
 	// Now plot each column
@@ -105,7 +105,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
 
 	$average = round($total / $columns, 2);
 
-	imagettftext($im, 8, 0, 12, 178, $gray_dark, $font, 'Miniblogu postu skaits pēdējās 365 dienās | min: ' . $min . ' | max: ' . $max . ' | vidēji: ' . $average);
+	imagettftext($im, 8, 0, 12, 218, $gray_dark, $font, 'Miniblogu postu skaits pēdējās 365 dienās | min: ' . $min . ' | max: ' . $max . ' | vidēji: ' . $average . ' | šodien: ' . $val);
 
 	// Send the PNG header information. Replace for JPEG or GIF or whatever
 	header("Content-type: image/png");
