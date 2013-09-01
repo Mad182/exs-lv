@@ -49,58 +49,66 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			redirect('/gallery/' . $auth->id);
 		}
 
-		require(CORE_PATH . '/includes/class.upload.php');
+		if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 9) {
+			$_SESSION['antiflood'] = time();
 
-		ini_set('memory_limit', '160M');
+			require(CORE_PATH . '/includes/class.upload.php');
 
-		$description = post2db($_POST['new-image-description']);
+			ini_set('memory_limit', '160M');
 
-		//interešu kategorijas id. Ja mēģina nofeikot, tad 0
-		$interest_id = (int) $_POST['new-image-interest'];
-		if (!$db->get_var("SELECT count(*) FROM `interests` WHERE `id` = '$interest_id'")) {
-			$interest_id = 0;
-		}
+			$description = post2db($_POST['new-image-description']);
 
-		$text = date('dHis') . '_' . $auth->id;
-		$folder = 'dati/bildes/g' . date('Y') . '_' . date('m') . '/';
-		rmkdir($folder);
-		$foo = new Upload($_FILES['new-image']);
-		$foo->file_new_name_body = 'large_' . $text;
-		$foo->image_resize = true;
-		$foo->image_convert = 'jpg';
-		$foo->image_x = 560;
-		if ($lang == 7) {
-			$foo->image_x = 540;
-		}
-		$foo->image_y = 700;
-		$foo->allowed = array('image/*');
-		$foo->image_ratio_no_zoom_in = true;
-		$foo->jpeg_quality = 97;
-		$foo->process($folder);
+			//interešu kategorijas id. Ja mēģina nofeikot, tad 0
+			$interest_id = (int) $_POST['new-image-interest'];
+			if (!$db->get_var("SELECT count(*) FROM `interests` WHERE `id` = '$interest_id'")) {
+				$interest_id = 0;
+			}
 
-		if ($foo->processed) {
-			$foo->file_new_name_body = 'thb_' . $text;
+			$text = date('dHis') . '_' . $auth->id;
+			$folder = 'dati/bildes/g' . date('Y') . '_' . date('m') . '/';
+			rmkdir($folder);
+			$foo = new Upload($_FILES['new-image']);
+			$foo->file_new_name_body = 'large_' . $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';
-			$foo->image_x = 56;
-			$foo->image_y = 56;
+			$foo->image_x = 560;
+			if ($lang == 7) {
+				$foo->image_x = 540;
+			}
+			$foo->image_y = 700;
 			$foo->allowed = array('image/*');
-			$foo->image_ratio_crop = true;
+			$foo->image_ratio_no_zoom_in = true;
 			$foo->jpeg_quality = 97;
 			$foo->process($folder);
-			$foo->clean();
 
-			$file = $folder . 'large_' . $text . '.jpg';
-			$thb = $folder . 'thb_' . $text . '.jpg';
+			if ($foo->processed) {
+				$foo->file_new_name_body = 'thb_' . $text;
+				$foo->image_resize = true;
+				$foo->image_convert = 'jpg';
+				$foo->image_x = 56;
+				$foo->image_y = 56;
+				$foo->allowed = array('image/*');
+				$foo->image_ratio_crop = true;
+				$foo->jpeg_quality = 97;
+				$foo->process($folder);
+				$foo->clean();
 
-			if (file_exists($file)) {
-				$db->query("INSERT INTO images (`id`,`uid`,`url`,`thb`,`text`,`date`,`bump`, `ip`, `interest_id`, `lang`) VALUES (NULL,'$auth->id','$file','$thb','$description',NOW(),NOW(),'$auth->ip','$interest_id', '$lang')");
-				push('Pievienoja <a href="/gallery/' . $auth->id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit($description, 32, '...') . '</a>', 'http://img.exs.lv/' . $thb);
-				update_karma($auth->id, true);
+				$file = $folder . 'large_' . $text . '.jpg';
+				$thb = $folder . 'thb_' . $text . '.jpg';
+
+				if (file_exists($file)) {
+					$db->query("INSERT INTO images (`id`,`uid`,`url`,`thb`,`text`,`date`,`bump`, `ip`, `interest_id`, `lang`) VALUES (NULL,'$auth->id','$file','$thb','$description',NOW(),NOW(),'$auth->ip','$interest_id', '$lang')");
+					push('Pievienoja <a href="/gallery/' . $auth->id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit($description, 32, '...') . '</a>', 'http://img.exs.lv/' . $thb);
+					update_karma($auth->id, true);
+				}
+			} else {
+				set_flash('Attēlu neizdevās pievienot: ' . $foo->error, 'error');
 			}
+
 		} else {
-			set_flash('Attēlu neizdevās pievienot: ' . $foo->error, 'error');
+			set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu attēlu!');
 		}
+
 		redirect('/gallery/' . $auth->id);
 	}
 
