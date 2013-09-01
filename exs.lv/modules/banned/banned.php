@@ -80,4 +80,3 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
-
