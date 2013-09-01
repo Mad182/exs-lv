@@ -106,7 +106,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			}
 
 		} else {
-			set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu attēlu!');
+			set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu attēlu!', 'error');
 		}
 
 		redirect('/gallery/' . $auth->id);

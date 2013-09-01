@@ -170,7 +170,7 @@ if (!$auth->ok) {
 					redirect('/pm/sent');
 				}
 			} else {
-				set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms sūti jaunu vēstuli!');
+				set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms sūti jaunu vēstuli!', 'error');
 			}
 		}
 
