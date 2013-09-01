@@ -69,6 +69,16 @@ if (!$auth->ok) {
 				'anick' => htmlspecialchars($author->nick)
 			));
 
+			if ($banned->lang  == 0) {
+				$tpl->assign(array(
+					'where' => 'Globāls',
+				));
+			} else {
+				$tpl->assign(array(
+					'where' => $config_domains[$banned->lang]['domain'],
+				));
+			}
+
 			if ($banned->reason != 'perm (ban evading)') {
 				$tpl->newBlock('rmban');
 				$tpl->assign(array(

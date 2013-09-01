@@ -9,6 +9,7 @@
 	<tr>
 		<th>Lietotājs</th>
 		<th>Iemesls</th>
+		<th>Vieta</th>
 		<th>Datums</th>
 		<th>Del</th>
 	</tr>
@@ -16,6 +17,7 @@
 	<tr>
 		<td>{nick}<br />{banned-ip}[<a title="Noņemt IP banu" class="red" href="/?c={category-id}&amp;delete_ip={banned-id}"><img src="http://exs.lv/bildes/x.png" alt="x" /></a>]</td>
 		<td>{banned-reason} (<a href="/user/{banned-author}">{anick}</a>)</td>
+		<td>{where}</td>
 		<td style="text-align: right;width:126px">No:&nbsp;{banned-date}<br />Līdz:&nbsp;{banned-until}</td>
 		<td>
 <!-- START BLOCK : rmban-->
