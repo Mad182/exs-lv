@@ -14,7 +14,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		$tpl->newBlock('warns-mod');
 	} elseif ($auth->ok && (im_mod() || $auth->id == $inprofile->id)) {
 
-		$warns = $db->get_results("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' ORDER BY `active` DESC, `created` DESC");
+		$warns = $db->get_results("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `site_id` = '$lang' ORDER BY `active` DESC, `created` DESC");
 		//warnu saraksts
 		$warn_count = 0;
 		if (!empty($warns)) {
@@ -63,7 +63,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			get_user($inprofile->id, true);
 		}
 
-		$bans = $db->get_results("SELECT * FROM `banned` WHERE `user_id` = '$inprofile->id' ORDER BY `time` DESC");
+		$bans = $db->get_results("SELECT * FROM `banned` WHERE `user_id` = '$inprofile->id' AND (`lang` = '$lang' OR `lang` = '0') ORDER BY `time` DESC");
 
 		if (!empty($bans)) {
 			foreach ($bans as $ban) {
@@ -91,7 +91,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			//noņemt warnu
 			if (isset($_GET['var2']) && $_GET['var2'] == 'remove') {
 				$removable = (int) $_GET['var3'];
-				$remove = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$removable'");
+				$remove = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$removable' AND `site_id` = '$lang'");
 				if ($remove) {
 					$tpl->newBlock('warns-remove');
 					$tpl->assign('reason', add_smile($remove->reason));
@@ -111,7 +111,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				$edit = false;
 				if (isset($_GET['var2']) && $_GET['var2'] == 'edit') {
 					$editable = (int) $_GET['var3'];
-					$edit = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$editable'");
+					$edit = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$editable' AND `site_id` = '$lang'");
 				}
 
 				//labot esoso iemeslu
@@ -128,7 +128,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				} else {
 					if (isset($_POST['submit_warn']) && !empty($_POST['reason'])) {
 						$reason = post2db($_POST['reason']);
-						$db->query("INSERT INTO `warns` (user_id,created_by,created,modified,reason,active) VALUES ('$inprofile->id','$auth->id',NOW(),NOW(),'$reason',1)");
+						$db->query("INSERT INTO `warns` (user_id,created_by,created,modified,reason,active,`site_id`) VALUES ('$inprofile->id','$auth->id',NOW(),NOW(),'$reason',1,'$lang')");
 						notify($inprofile->id, 10);
 						$auth->log('Izteica brīdinājumu', 'users', $inprofile->id);
 						redirect('/' . $category->textid . '/' . $inprofile->id);

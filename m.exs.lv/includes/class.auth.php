@@ -55,7 +55,7 @@ class Auth {
 	}
 
 	function check_session() {
-		global $db;
+		global $db, $lang;
 
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id']);
@@ -75,12 +75,11 @@ class Auth {
 				$this->update_visits();
 			}
 
-			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' ORDER BY `time` DESC LIMIT 1")) {
+			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
 				$this->logout();
-				set_flash('Pieeja lapai ir liegta!');
+				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
-
 
 			return true;
 		} else {
@@ -104,7 +103,7 @@ class Auth {
 	}
 
 	function login($username, $password, $xsrf = null) {
-		global $db;
+		global $db, $lang;
 
 		if(!is_null($xsrf) && $xsrf != $this->xsrf) {
 			sleep(rand(2,4));
@@ -126,9 +125,9 @@ class Auth {
 			$_SESSION['auth_id'] = $userinfo->id;
 			$this->error = 0;
 
-			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' ORDER BY `time` DESC LIMIT 1")) {
+			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
 				$this->logout();
-				set_flash('Pieeja lapai ir liegta!');
+				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
