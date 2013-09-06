@@ -718,7 +718,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'4f200c32f12e7.jpg'
 			), 'ES_SPAMOJU_SUDUS', $txt);
 
-	$txt = str_ireplace('rgaming', 'dūdūpīpī', $txt);
+	$txt = str_ireplace(array('rgaming', 'forlife'), 'dūdūpīpī', $txt);
 
 	$txt = str_replace(array(
 		'/ref.php',
