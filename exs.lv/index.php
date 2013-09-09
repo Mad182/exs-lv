@@ -230,7 +230,7 @@ if ($skin === 'main') {
 		if (im_mod()) {
 			$tpl->newBlock('user-modlink');
 			$tpl->newBlock('user-approvelink');
-			$new_approve = $db->get_var("SELECT count(*) FROM `approve` WHERE `removed` = 0");
+			$new_approve = $db->get_var("SELECT count(*) FROM `approve` WHERE `removed` = 0 AND `lang` = '$lang'");
 			if ($new_approve) {
 				$new_ap_string = '&nbsp;(<span class="r">' . $new_approve . '</span>)';
 			}
