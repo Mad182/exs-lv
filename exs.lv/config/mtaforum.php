@@ -36,4 +36,4 @@ $page_title = 'MTA:SA roleplay serveris';
 $mta_hostname = 'mta.exs.lv';
 $mta_username = 'exs';
 $mta_password = 'gnzNhE3Q';
-$mta_database = 'rpdb';
+$mta_database = 'rpdb_new';
