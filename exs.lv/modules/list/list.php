@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_GET['viewcat']) || $_GET['viewcat'] !== $category->textid) {
+if ((!isset($_GET['viewcat']) || $_GET['viewcat'] !== $category->textid) && $category->textid != 'index') {
 	redirect('/' . $category->textid, true);
 }
 
