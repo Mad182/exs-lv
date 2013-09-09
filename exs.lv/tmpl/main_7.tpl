@@ -101,7 +101,7 @@
 			<div id="header-overlay">
 				<div id="logo">
 					<div id="header-stuff">{ad-top}</div>
-					<a id="exs-logo" href="/" title="League of Legends forums">lol.exs.lv</a>
+					<a id="exs-logo" href="/" title="League of Legends portāls">lol.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
 							<li><a href="http://exs.lv/">exs.lv community</a></li>
@@ -114,7 +114,8 @@
 				</div>
 				<div id="top-menu">
 					<ul id="top-menu-left">
-						<li{cat-sel-1122}><a class="first" href="/">Forums</a></li>
+						<li{cat-sel-1755}><a class="first" href="/">Sākumlapa</a></li>
+						<li{cat-sel-1122}><a href="/forums">Forums</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
