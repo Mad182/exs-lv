@@ -131,22 +131,14 @@
 						</li>
 						<!-- END BLOCK : user-modlink-->
 						<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+
 						<!-- START BLOCK : user-approvelink-->
-
-						<!--<li{cat-sel-319}><a href="/grupas">Grupas</a>
-							<!-- START BLOCK : mygroups-->
-							<ul id="user-group-menu">
-								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="http://exs.lv/dati/bildes/u_small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-								<!-- END BLOCK : myg-node-->
-							</ul>
-							<!-- END BLOCK : mygroups-->
-						</li>-->
-
+						<li{cat-sel-1756}><a href="/write/list">Raksti{new-approve}</a></li>
 						<!-- END BLOCK : user-approvelink-->
 						<!-- START BLOCK : user-write-->
-
+						<li{cat-sel-1756}><a href="/write">Raksti</a></li>
 						<!-- END BLOCK : user-write-->
+
 						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
 						<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
 						<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
