@@ -280,7 +280,7 @@ if (!$category->mods_only || im_mod()) {
 					'title' => $article->title,
 					'views' => $article->views,
 					'date' => $date,
-					'author' => usercolor($article->nick, $article->level),
+					'author' => usercolor($article->nick, $article->level, false, $article->author),
 					'posts' => $article->posts,
 					'level' => $article->level,
 					'gender' => $article->gender,
@@ -320,7 +320,7 @@ if (!$category->mods_only || im_mod()) {
 					'author-id' => $article->author,
 					'title' => $article->title,
 					'date' => $article->date,
-					'author' => usercolor($article->nick, $article->level),
+					'author' => usercolor($article->nick, $article->level, false, $article->author)
 				));
 			}
 		}
