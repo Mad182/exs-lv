@@ -3,8 +3,7 @@ body {
 }
 
 #header {
-	background: url('http://img.exs.lv/i/-/i-luv-u/Bilde2.png') repeat 100% 10px;
-	height: 192px;
+	height: 180px;
 }
 
 #wrapper h1, #wrapper h2, #wrapper h3 {
@@ -120,13 +119,13 @@ body {
 }
 
 #logo {
-	height: 158px;
+	height: 142px;
 }
 
 #exs-logo {
 	background: transparent;
 	width: 500px;
-	height: 152px;
+	height: 142px;
 }
 
 

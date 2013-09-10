@@ -23,8 +23,8 @@
 	var query_timeout = 60000;
 	var c_url = "{page-url}";
 </script>
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css" />
-<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css,pm.css" type="text/css" />
+<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
 <script type="text/javascript">
@@ -100,6 +100,8 @@
 		<div id="header">
 			<div id="header-overlay">
 				<div id="logo">
+
+
 					<div id="header-stuff">{ad-top}</div>
 					<a id="exs-logo" href="/" title="League of Legends portāls">lol.exs.lv</a>
 					<div id="tools-bar">
@@ -111,6 +113,16 @@
 						</ul>
 						{current-date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
 					</div>
+
+					<div class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="10000">
+						<img src="http://img.exs.lv/lol-headers/header-2.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-3.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-4.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-1.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-5.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-6.jpg" alt="" />
+					</div>
+
 				</div>
 				<div id="top-menu">
 					<ul id="top-menu-left">
