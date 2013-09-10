@@ -56,6 +56,7 @@
 
 	<script type="text/javascript">
 	$().ready(function() {
+		$("#images").scrollable();
 		/* parvietojam augsejo attelu navigaciju uz lapu kur atrodas bilde */
 		var api = $("#images").data("scrollable");
 		api.move({current-img-page});
