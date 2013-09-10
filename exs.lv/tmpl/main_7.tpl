@@ -113,13 +113,17 @@
 					</div>
 
 					<a href="/" title="League of Legends portāls">
-						<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="10000">
+						<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
 							<img src="http://img.exs.lv/lol-headers/header-2.jpg" alt="" />
 							<img src="http://img.exs.lv/lol-headers/header-3.jpg" alt="" />
 							<img src="http://img.exs.lv/lol-headers/header-4.jpg" alt="" />
 							<img src="http://img.exs.lv/lol-headers/header-1.jpg" alt="" />
 							<img src="http://img.exs.lv/lol-headers/header-5.jpg" alt="" />
 							<img src="http://img.exs.lv/lol-headers/header-6.jpg" alt="" />
+							<img src="http://img.exs.lv/lol-headers/header-7.jpg" alt="" />
+							<img src="http://img.exs.lv/lol-headers/header-8.jpg" alt="" />
+							<img src="http://img.exs.lv/lol-headers/header-9.jpg" alt="" />
+							<img src="http://img.exs.lv/lol-headers/header-10.jpg" alt="" />
 						</div>
 					</a>
 
