@@ -4,7 +4,6 @@ body {
 
 #header {
 	height: 180px;
-	overflow: hidden;
 }
 
 #wrapper h1, #wrapper h2, #wrapper h3 {
@@ -127,6 +126,7 @@ body {
 
 #logo {
 	height: 142px;
+	overflow: hidden;
 }
 
 #exs-logo {
