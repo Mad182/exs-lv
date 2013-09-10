@@ -24,6 +24,9 @@ if ($logs) {
 		if ($log->foreign_table == 'pages') {
 			$page = $db->get_row("SELECT `title`, `strid` FROM `pages` WHERE `id` = '$log->foreign_key'");
 			$place = '<a href="/read/' . $page->strid . '">' . $log->foreign_table . '-' . $log->foreign_key . '</a>';
+		} elseif ($log->foreign_table == 'users') {
+			$user = get_user($log->foreign_key);
+			$place = '<a href="/user/' . $user->id . '">' . $log->foreign_table . ': ' . $user->nick . '</a>';
 		} else {
 			$place = $log->foreign_table . '-' . $log->foreign_key;
 		}
