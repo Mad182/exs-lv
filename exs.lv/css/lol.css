@@ -4,6 +4,7 @@ body {
 
 #header {
 	height: 180px;
+	overflow: hidden;
 }
 
 #wrapper h1, #wrapper h2, #wrapper h3 {
@@ -24,12 +25,18 @@ body {
 	text-shadow: rgba(255,255,255,0.05) 0px 1px 0px;
 	font-size: 11px;
 	border-bottom: 1px solid #252319;
-	padding: 1px 10px 0;
+	padding: 1px 10px 0
 }
 
 #header-overlay {
 	background: transparent;
-	height: 192px;
+	height: 192px
+}
+
+#header-slider {
+	height: 120px;
+	width: 1000px;
+	overflow: hidden
 }
 
 #top-menu {
