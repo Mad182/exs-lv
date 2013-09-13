@@ -2,6 +2,13 @@
 
 if (!$auth->ok) {
 
+	/* pārbauda vai lietotājs neizmanto tor */
+	$tor = Tor::getInstance(); 
+	if($tor->setTarget($auth->ip)->isTorActive()) {
+		set_flash('Reģistrācija no tavas IP adreses šobrīd nav iespējama ;(', 'error');
+		redirect();
+	}
+
 	/* show registration form */
 	$tpl->newBlock('registration-form');
 
