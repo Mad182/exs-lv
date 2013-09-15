@@ -2788,11 +2788,15 @@ function get_latest_mbs($friends = false) {
 
 			if ($mb->groupid != 0) {
 				$spec = ' class="group"';
-				$group = $db->get_row("SELECT `title`,`avatar` FROM `clans` WHERE `id` = '$mb->groupid'");
+				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
 				if ($group->avatar) {
 					$avatar = 'http://img.exs.lv/userpic/small/' . $group->avatar;
 				}
-				$url = $domain . '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
+				if(!empty($group->strid)) {
+					$url = $domain . '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
+				} else {
+					$url = $domain . '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
+				}
 			} else {
 				$url = $domain . '/say/' . $mb->author . '/' . $mb->id . '-' . mb_get_strid($mb->text, $mb->id);
 			}
