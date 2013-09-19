@@ -72,7 +72,7 @@
 
 		<!-- START BLOCK : pm-list-inbox-empty-->
 		<tr class="message">
-			<td colspan="3">Tev nav nevienas saņemtās vēstules!</td>
+			<td colspan="4">Tev nav nevienas saņemtās vēstules!</td>
 		</tr>
 		<!-- START BLOCK : pm-list-inbox-empty-->
 	</table>
@@ -104,7 +104,7 @@
 
 		<!-- START BLOCK : pm-list-outbox-empty-->
 		<tr class="message">
-			<td colspan="3">Tu pagaidām neesi nosūtījis nevienu vēstuli!</td>
+			<td colspan="4">Tu pagaidām neesi nosūtījis nevienu vēstuli!</td>
 		</tr>
 		<!-- START BLOCK : pm-list-outbox-empty-->
 	</table>
