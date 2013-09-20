@@ -19,7 +19,8 @@ if (isset($_POST['new-image-id'])) {
 	$get_wp = new getWallpapers();
 
 	$temp = tmpfile();
-	$temp_filename = stream_get_meta_data($temp)['uri'];
+	$temp_filename = stream_get_meta_data($temp);
+	$temp_filename = $temp_filename['uri'];
 
 	$id = $_POST['new-image-id'];
 	$data = $get_wp->reddit();
