@@ -14,7 +14,6 @@ class getWallpapers {
 			} elseif (stristr($data->data->url, 'http://imgur.com/')) {
 				$addr = str_replace('http://imgur.com/', 'http://i.imgur.com/', $data->data->url);
 
-				// todo: file_get_contents is slow as hell
 				if (@fsockopen($addr . '.jpg', 80, $errno, $errstr, 5)) {
 					$file = $addr . '.jpg';
 				} elseif (@fsockopen($addr . '.png', 80, $errno, $errstr, 5)) {
