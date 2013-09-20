@@ -25,7 +25,16 @@ $m->connect($mc_host, $mc_port);
 //lapas settingu/datu glabāšana
 $ss = new SiteStorage;
 
-if ($debug) {
+$requested_json = substr($_SERVER['REQUEST_URI'], -strlen('.json')) === '.json';
+
+if ($requested_json) {
+	header("Content-Type: application/json");
+} else {
+	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
+	header('Content-Type: text/html; charset=UTF-8');
+}
+
+if ($debug && !$requested_json) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
 }
 
@@ -94,13 +103,9 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 	if (isset($_GET['loadindex'])) {
 		$data['index-events'] = get_index_events();
 	}
-	header("Content-Type: application/json");
 	echo json_encode($data);
 	exit;
 }
-
-//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
-header('Content-Type: text/html; charset=UTF-8');
 
 //banoto lietotāju saraksts
 $busers = get_banlist();

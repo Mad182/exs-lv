@@ -1462,11 +1462,23 @@ a.friend:hover {
 	height: 100px;
 }
 
-#wallpapers li {
+#wallpapers li, #wallpapers-external li {
 	background: transparent;
 	float: left;
 	margin: 0;
 	padding: 0;
+}
+
+#wallpapers-external {
+    clear: both;
+    padding: 0;
+}
+
+#wallpapers-external li {
+    float: none;
+    display: inline-block;
+    text-align: center;
+    margin: 0 10px 10px 0;
 }
 
 #wallpapers a {

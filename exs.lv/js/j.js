@@ -437,6 +437,28 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
+
+	/* wp admin */
+	$('[data-addwp-action="load-external"]').on('click', function (e) {
+		var target = $(this).data('target');
+		var resource = $(this).data('resource');
+
+		$.getJSON(resource, function (data) {
+			$(data).each(function (i, entity) {
+				$(target).append('<li><a href="' + entity['file'] + '" class="lightbox-added"><img src="' + entity['thumb'] + '"></a><br><input type="radio" name="new-image-id" value="' + i + '"></li>')
+			});
+
+			$('.lightbox-added').fancybox({
+				'titleShow': false
+			});
+		});
+
+		$(target).show();
+		$('#new-image').remove();
+		$(this).off('click').remove();
+		e.preventDefault();
+	});
+
 	setTimeout('msgrr()', query_timeout);
 
 });
