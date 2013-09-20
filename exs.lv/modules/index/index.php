@@ -49,7 +49,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', youtube_title($article->text))))), 680);
+			$article->text = textlimit(strip_tags(trim(str_replace(array('&nbsp;', '<br />', '<li>'), ' ', youtube_title($article->text)))), 680);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
@@ -67,7 +67,7 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 			'author' => usercolor($article->nick, $article->level, false, $article->author),
 			'posts' => $article->posts,
 			'level' => $article->level,
-			'intro' => textlimit($article->text, 270),
+			'intro' => textlimit($article->text, 330),
 			'avatar' => trim($article->sm_avatar)
 		));
 	}
