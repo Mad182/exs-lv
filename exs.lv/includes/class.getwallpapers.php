@@ -4,7 +4,7 @@ class getWallpapers {
 	function reddit() {
 		$data = file_get_contents('http://www.reddit.com/r/wallpaper+wallpapers/top/.json?sort=top&t=week');
 		$wallpapers = json_decode($data);
-		$files = [];
+		$files = array();
 
 		foreach ($wallpapers->data->children as $data) {
 			$file = false;
@@ -31,3 +31,4 @@ class getWallpapers {
 		return $files;
 	}
 }
+
