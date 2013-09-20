@@ -262,7 +262,7 @@
 	</div>
 	<!-- END BLOCK : notification-list-->
 
-	<h3>Jaunākais lapā</h3>
+	<h3>Jaunākais portālā</h3>
 	<div class="box">
 		<ul class="tabs">
 			<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>

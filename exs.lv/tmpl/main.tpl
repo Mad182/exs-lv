@@ -299,7 +299,7 @@
 	</div>
 	<!-- END BLOCK : notification-list-->
 
-	<h3>Jaunākais lapā</h3>
+	<h3>Jaunākais portālā</h3>
 	<div class="box">
 		<ul class="tabs">
 			<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
@@ -413,7 +413,7 @@
 	<!-- END BLOCK : group-box-->
 
 	<!-- START BLOCK : friendssay-box-->
-	<h3>Mini blogi{miniblog-add}</h3>
+	<h3>Miniblogi{miniblog-add}</h3>
 
 	<div class="box">
 

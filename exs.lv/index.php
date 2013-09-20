@@ -85,9 +85,6 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 	if (isset($_GET['loadcs'])) {
 		$data['cs-content'] = file_get_contents(CORE_PATH . '/cache/cs_monitor.html');
 	}
-	if (isset($_GET['loadmc'])) {
-		$data['mc-content'] = file_get_contents(CORE_PATH . '/cache/mc_monitor.html');
-	}
 	if (isset($_GET['loadmta'])) {
 		$data['mta-content'] = file_get_contents(CORE_PATH . '/cache/mta_monitor.html');
 	}
