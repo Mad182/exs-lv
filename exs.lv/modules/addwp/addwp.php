@@ -21,6 +21,7 @@ if (isset($_POST['new-image-id'])) {
 	$temp = tmpfile();
 	$temp_filename = stream_get_meta_data($temp);
 	$temp_filename = $temp_filename['uri'];
+	rename($temp_filename, $temp_filename.='.jpg'); 
 
 	$id = $_POST['new-image-id'];
 	$data = $get_wp->reddit();
