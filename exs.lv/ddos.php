@@ -29,7 +29,7 @@ foreach($lines as $line) {
 
 	preg_match('#([0-9]+) ([0-9]+.[0-9]+.[0-9]+.[0-9]+)#i', $line, $matches);
 
-	if($matches[1] > 300 && !in_array($matches[2], $whitelist)) {
+	if($matches[1] > 150 && !in_array($matches[2], $whitelist)) {
 		$com = "ufw insert 1 deny from ".$matches[2];
 		$block = `$com`;
 		$blocked[] = array('ip' => $matches[2], 'conn' => $matches[1]);
