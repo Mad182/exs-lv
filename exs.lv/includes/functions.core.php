@@ -631,7 +631,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			';(' => 'cray_mini2.gif',
 			':acute:' => 'acute_mini.gif',
 			':thumb:' => 'good_mini.gif',
-			':aggressive"' => 'aggressive_mini.gif',
+			':aggressive:' => 'aggressive_mini.gif',
 			':agresivs:' => 'aggressive_mini.gif',
 			':beee:' => 'beee_mini.gif',
 			':bomb:' => 'bomb_mini.gif',
