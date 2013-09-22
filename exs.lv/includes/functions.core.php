@@ -675,7 +675,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			':shout:' => 'shout_mini.gif',
 			':)' => 'smile_mini.gif',
 			':sorry:' => 'sorry_mini.gif',
-			':|' => 'connie_mini_huh',
+			':|' => 'connie_mini_huh.gif',
 			':stop:' => 'stop_mini.gif',
 			':dunno:' => 'unknw_mini.gif',
 			':unsure:' => 'unsure_mini.gif',
