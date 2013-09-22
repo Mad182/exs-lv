@@ -24,7 +24,7 @@ if (isset($_POST['new-image-id'])) {
 	rename($temp_filename, $temp_filename.='.jpg'); 
 
 	$id = $_POST['new-image-id'];
-	$data = $get_wp->reddit();
+	$data = array_merge_recursive($get_wp->reddit(), $get_wp->imgur());
 
 	file_put_contents($temp_filename, file_get_contents($data[$id]['file']));
 
@@ -80,7 +80,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'catsite.json') {
 	require(CORE_PATH . '/includes/class.getwallpapers.php');
 
 	$get_wp = new getWallpapers();
-	die(json_encode($get_wp->reddit()));
+	die(json_encode(array_merge_recursive($get_wp->reddit(), $get_wp->imgur())));
 } else {
 	$tpl->newBlock('add-wp-form');
 
