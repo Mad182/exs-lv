@@ -99,7 +99,7 @@
 <div id="header"{page-persona}>
 	 <div id="header-overlay">
 		<div id="logo">
-			<div id="header-stuff">{ad-top}</div>
+			<div id="header-stuff"><a href="http://failiem.lv/" rel="nofollow"><img src="http://exs.lv/bildes/failiem.jpg" alt="Failiem.lv" /></a></div>
 			<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 			<div id="tools-bar">
 			<ul id="site-links">
