@@ -5,7 +5,13 @@
 if(isset($_GET['site'])) {
 
 	if($_GET['site'] == 'mta') {
-		die('<html><body><script src=http://wos.lv/c.php?27967></script></body></html>');
+		die('
+			<html>
+				<body>
+					<script src=http://wos.lv/c.php?27967></script>
+					<script src="http://www.8d.lv/c.php?id=362"></script>
+				</body>
+			</html>');
 	}
 
 }
