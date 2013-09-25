@@ -368,7 +368,7 @@ function sanitize($input) {
 	return $output;
 }
 
-function mkslug($string, $lower = true) {
+function mkslug($string, $lower = true, $remove_dashes = true) {
 	$translit = array(
 		'/ä|æ|ǽ/' => 'ae',
 		'/ö|œ/' => 'oe',
@@ -445,10 +445,10 @@ function mkslug($string, $lower = true) {
 	$string = str_replace(array('----', '---', '--'), '-', str_replace(array('----', '---', '--'), '-', $string));
 	$string = str_replace(array('----', '---', '--'), '-', str_replace(array('----', '---', '--'), '-', $string));
 	$string = str_replace(array('----', '---', '--'), '-', str_replace(array('----', '---', '--'), '-', $string));
-	if (substr($string, -1) == '-') {
+	if (substr($string, -1) == '-' && $remove_dashes) {
 		$string = substr($string, 0, -1);
 	}
-	if (substr($string, 0, 1) == '-') {
+	if (substr($string, 0, 1) == '-' && $remove_dashes) {
 		$string = substr($string, 1);
 	}
 	$string = substr($string, 0, 100);
@@ -504,7 +504,7 @@ function youtube_title($text) {
 }
 
 function youtube_title_callback($matches) {
-	$safe = mkslug($matches[4], false);
+	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
 	if (!$video) {
 		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
@@ -526,7 +526,7 @@ function get_youtube_video($matches) {
 function embed_youtube($matches, $wide = 0) {
 	global $db, $auth;
 
-	$safe = mkslug($matches[4], false);
+	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
 	if (!$video) {
 		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
