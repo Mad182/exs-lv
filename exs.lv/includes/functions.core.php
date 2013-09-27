@@ -693,7 +693,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 		foreach ($smilies as $key => $val) {
 			if (strpos($txt, $key) !== false) { //speeds things up
-				$txt = str_replace($key, ' <img src="http://exs.lv/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
+				$txt = str_replace($key, ' <img src="http://img.exs.lv/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
 			}
 		}
 	}
