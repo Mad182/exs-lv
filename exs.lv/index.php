@@ -446,9 +446,9 @@ if ($skin === 'main') {
 	}
 
 	/* pec ielades izsauc lapu, kura ir wos counteri */
-	if(!$db->get_var("SELECT count(*) FROM `async_ip` WHERE `ip` = '$auth->ip'")) {
+	/*f(!$db->get_var("SELECT count(*) FROM `async_ip` WHERE `ip` = '$auth->ip'")) {
 		$tpl->newBlock('async-call');
-	}
+	}*/
 
 }
 
