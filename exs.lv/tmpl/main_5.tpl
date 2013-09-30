@@ -115,7 +115,8 @@
 				<div id="top-menu">
 					<ul id="top-menu-left">
 						<li{cat-sel-1194}><a class="first" href="/">Forums</a></li>
-						<li{cat-sel-924}><a class="first" href="/archive">Arhīvs</a></li>
+						<li><a href="http://mta.exs.lv/" class="external">UCP</a></li>
+						<li{cat-sel-924}><a href="/archive">Arhīvs</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
