@@ -1621,11 +1621,10 @@ a.friend:hover {
 }
 
 .form legend {
-	font-weight: 700;
+	font-weight: normal;
 	font-size: 13px;
-	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
+	font-family: Ubuntu, sans-serif;
 	color: #555;
-	text-shadow: 0 1px 1px #ddd;
 }
 
 .form input.text, .form input.title, .form textarea, .form select {
@@ -2513,10 +2512,6 @@ a.friend img, .comments-avatar {
 button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	padding: 0;
 	border: 0;
-}
-
-.form legend {
-	font-size: 13px;
 }
 
 .form fieldset {

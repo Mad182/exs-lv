@@ -102,7 +102,7 @@ if ($bumps) {
 		$tpl->assign(array(
 			'id' => $junk->id,
 			'thb' => $junk->thb,
-			'title' => $junk->title,
+			'title' => htmlspecialchars($junk->title),
 			'posts' => $junk->posts
 		));
 	}
