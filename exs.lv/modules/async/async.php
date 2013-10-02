@@ -9,7 +9,6 @@ if(isset($_GET['site'])) {
 			<html>
 				<body>
 					<script src=http://wos.lv/c.php?27967></script>
-					<script src="http://www.8d.lv/c.php?id=362"></script>
 				</body>
 			</html>');
 	}
