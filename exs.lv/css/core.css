@@ -122,12 +122,10 @@ img {
 
 code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
 	background: #fff;
-	border: 1px solid #eee;
 	color: #666;
 	display: block;
-	font-size: 90%;
 	margin: .6em 1.2em .6em 1.5em;
-	padding: 5px;
+	padding: 5px 6px;
 	overflow-x: auto;
 	white-space: normal;
 }
@@ -135,11 +133,18 @@ code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
 code, pre, .code, span.c, .codebox, .prettyprint {
 	font-family: Courier, 'Courier New',  monospace;
 	border-left: 6px solid #C1CAD3;
+	border: 1px solid #eee;
+	font-size: 90%;
 }
 
 blockquote, .q, .quote {
 	border-left: 6px solid #D1DAD8;
 	font-style: italic;
+}
+
+blockquote p {
+	padding: 0;
+	margin: 0;
 }
 
 .clear, .c {
