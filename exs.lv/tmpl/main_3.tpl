@@ -158,7 +158,7 @@
 							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
 							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
 							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15010793' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
-							
+
 							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
 						</fieldset>
@@ -210,7 +210,7 @@
 				<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 
 			</div>
-			
+
 		</div>
 		<!-- START BLOCK : main-layout-right-->
 		<div id="right">

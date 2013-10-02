@@ -575,7 +575,7 @@ $(document).ready(function() {
 				f();
 				delete _smartad.space;
 			}else{
-				if(window.addEventListener){ 
+				if(window.addEventListener){
 					window.addEventListener('load',f,false);
 				}else if(window.attachEvent){
 					window.attachEvent('onload',f);
