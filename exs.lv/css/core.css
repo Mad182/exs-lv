@@ -132,8 +132,8 @@ code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
 
 code, pre, .code, span.c, .codebox, .prettyprint {
 	font-family: Courier, 'Courier New',  monospace;
-	border-left: 6px solid #C1CAD3;
 	border: 1px solid #eee;
+	border-left: 6px solid #C1CAD3;
 	font-size: 90%;
 }
 
