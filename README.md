@@ -6,9 +6,8 @@ Exs.lv dev
 
 ### mysql imports:
 
-mysql -u exs -p exs < schema.sql
+mysql -u exs -p exs < schema.sql<br />
 mysql -u exs -p exs < cat.sql
-mysql -u exs -p exs < blacklisted_sites.sql
 
 
 ### mysql/smtp/memcache konfigurācija:
