@@ -33,7 +33,7 @@
 tinymce.init({
 		selector: "textarea",
 		plugins: [
-			"advlist autolink autosave link image lists charmap preview hr anchor",
+			"advlist autolink link image lists charmap preview hr anchor",
 			"searchreplace wordcount visualblocks visualchars code",
 			"table contextmenu paste"
 		],
