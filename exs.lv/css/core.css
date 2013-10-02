@@ -120,28 +120,26 @@ img {
 	border: 0;
 }
 
-code, pre, .code, span.c, .codebox {
-	background: #FFF;
-	border: 1px solid #EEE;
-	border-left: 6px solid #C1CAD3;
+code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
+	background: #fff;
+	border: 1px solid #eee;
 	color: #666;
 	display: block;
-	font-family: Courier, 'Courier New',  monospace;
-	font-size: 11px;
-	margin: .5em 1em;
+	font-size: 90%;
+	margin: .6em 1.2em .6em 1.5em;
 	padding: 5px;
+	overflow-x: auto;
 	white-space: normal;
 }
 
+code, pre, .code, span.c, .codebox, .prettyprint {
+	font-family: Courier, 'Courier New',  monospace;
+	border-left: 6px solid #C1CAD3;
+}
+
 blockquote, .q, .quote {
-	background: #f6f6f7 url('http://img.exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
-	color: #555;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	display: block;
-	margin: .5em 1.5em;
-	padding: 3px 8px 3px 25px;
+	border-left: 6px solid #D1DAD8;
+	font-style: italic;
 }
 
 .clear, .c {
