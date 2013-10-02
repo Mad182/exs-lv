@@ -503,32 +503,11 @@ border: 2px solid #fff
 border: 2px solid #000
 }
 h1, h2, h3, h4 {
-font-weight: 700;
-font-size: 12px;
-line-height: 15px;
-border-bottom: 4px solid #777;
+border-bottom: 3px solid #777;
 border-top: 1px solid #3A3A3A;
-font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
-text-shadow: 0 1px 1px #555;
 background: #222 url(http://img.exs.lv/bildes/dark/post_top.gif) repeat-x scroll left top;
-margin: 0 0 4px;
 padding: 3px 6px;
 color: #ccc;
-}
-#header h1 {
-border: 0;
-}
-h1 {
-font-size: 15px;
-}
-h2 {
-font-size: 15px;
-}
-h3 {
-font-size: 13px;
-}
-h4, #content h4 {
-font-size: 12px;
 }
 #forum h3 {
 padding: 0;
@@ -810,17 +789,11 @@ font-size: 90%;
 line-height: 15px
 }
 .index-list li h3, .index-list li h3 a {
-font-size: 12px;
-line-height: 16px;
-font-weight: 700;
-margin: 0;
-padding: 0
+background: transparent;
+border: 0;
+padding: 0;
 }
 .index-list li.sm h3, .index-list li.sm h3 a {
-font-size: 11px;
-line-height: 14px;
-font-weight: 400;
-margin: 0;
 padding: 0
 }
 body.mceContentBody {
@@ -1167,4 +1140,8 @@ border: 1px solid #333;
 /* virsrakstu prefix */
 .title-prefix {
 	margin: 1px 5px 4px 0;
+}
+
+.user-actions li {
+	border-bottom: 1px solid #444;
 }
