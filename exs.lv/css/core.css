@@ -41,11 +41,10 @@ html, body {
 h1, h2, h3, h4 {
 	color: #444;
 	font-weight: normal;
-	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
-	text-shadow: 0 1px 1px #ddd;
-	margin: 8px 0 4px;
-	padding: 3px 0;
-	line-height: 1.4em;
+	font-family: Ubuntu, sans-serif;
+	margin: .8em 0 .5em;
+	padding: 0;
+	line-height: 1.35em;
 }
 
 h1 {
@@ -60,12 +59,11 @@ h3 {
 	font-size: 14px;
 }
 
-h4, #content h4 {
+h4 {
 	font-size: 13px;
-	margin: 6px 0 2px;
 }
 
-h1 small, h2 small {
+h1 small, h2 small, h3 small {
 	font-size: 80%;
 	color: inherit;
 }
@@ -465,22 +463,22 @@ html .banned {
 }
 
 #content {
-	width: 564px;
+	width: 560px;
 	text-align: justify;
-	padding: 8px 7px;
+	padding: 9px;
 	z-index: 2;
 	position: relative;
 	left: 196px;
 }
 
 #content.no-right {
-	width: 786px;
+	width: 782px;
 	float: right
 	left: 0px;
 }
 
 #content.no-left {
-	width: 760px;
+	width: 754px;
 	left: 0px;
 }
 
@@ -1823,11 +1821,6 @@ a.friend:hover {
 	padding: 5px 0;
 }
 
-#latest-blogs h3 {
-	margin: 0;
-	padding: 5px 0;
-}
-
 #latest-blogs li div.author {
 	float: left;
 	width: 90px;
@@ -2041,18 +2034,6 @@ a.friend:hover {
 	line-height: 15px;
 }
 
-#wrapper .index-list li h3 {
-	font-size: 13px;
-	line-height: 17px;
-	margin: 5px 0 0;
-}
-
-#wrapper .index-list.main li h3 {
-	font-size: 14px;
-	line-height: 18px;
-	margin: 10px 0 0;
-}
-
 body.mceContentBody {
 	font: 400 8pt/13pt Verdana, Arial, sans-serif;
 	color: #000;
@@ -2255,7 +2236,7 @@ a.mb-api-twitter {
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	line-height: 19px;
 	display: block;
-	width: 18px;
+	width: 16px;
 	height: 20px;
 	float: left;
 	padding: 46px 2px;
@@ -2282,16 +2263,6 @@ a.left {
 	float: left;
 	margin: 0;
 	padding: 5px;
-}
-
-#exs-groups li h3 {
-	font-size: 14px;
-	margin: 0;
-	padding: 6px 0;
-}
-
-#exs-groups li h3 a {
-	font-size: 14px;
 }
 
 #exs-groups li p {
@@ -2823,8 +2794,6 @@ dl.list-attr dd {
 #friends-pending li h3 {
 	color: #bbb;
 	font-weight: normal;
-	padding: 2px 0 6px;
-	margin: 0;
 }
 
 ul#friend-list li {

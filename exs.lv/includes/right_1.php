@@ -23,7 +23,7 @@ if (!empty($inprofile)) {
 
 	if (!empty($inprofile->custom_title)) {
 		$tpl->assign(array(
-			'custom_title' => ' <span style="font-size:11px">(' . $inprofile->custom_title . ')</span>'
+			'custom_title' => ' <small>(' . $inprofile->custom_title . ')</small>'
 		));
 	}
 
