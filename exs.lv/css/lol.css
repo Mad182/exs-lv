@@ -6,10 +6,6 @@ body {
 	height: 180px;
 }
 
-#wrapper h1, #wrapper h2, #wrapper h3 {
-	font-family: "Trebuchet MS",tahoma,helvetica,arial,sans-serif;
-}
-
 #wrapper {
 	background:#fff;
 	-webkit-box-shadow:rgba(0,0,0,0.1) 0px 1px 5px;
@@ -155,16 +151,6 @@ body {
 #forum td {
 	border-right: none;
 	border-bottom: 1px solid #F3F3F3;
-}
-
-#forum td h3 {
-	padding: 5px 0;
-	text-shadow: 0;
-}
-
-#forum td h3, #forum h3 a {
-	font-size: 12px;
-	font-weight: bold;
 }
 
 a {
