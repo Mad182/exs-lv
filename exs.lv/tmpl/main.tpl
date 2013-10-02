@@ -501,14 +501,7 @@
 		});
 		fans.append('fansBlock');
 	</script>
-	<br />
 
-	<iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fexs.lv&amp;width=200&amp;colorscheme=light&amp;show_faces=true&amp;show_border=false&amp;stream=false&amp;header=true&amp;height=283" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:283px; width:200px;" allowTransparency="true"></iframe>
-
-	<!-- START BLOCK : tags-list-side-->
-	<h3>Birkas</h3>
-	<div class="box">{out}</div>
-	<!-- END BLOCK : tags-list-side-->
 </div>
 <!-- END BLOCK : main-layout-right-->
 <div class="c"></div>
