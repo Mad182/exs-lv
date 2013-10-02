@@ -353,11 +353,6 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-	$('.smiley-list a').live('click', function (e) {
-		tinyMCE.execCommand('mceInsertContent', false, ' ' + $(this).attr('href'));
-		e.preventDefault();
-	});
-
 	$('.movie-liker a').live('click', function (e) {
 		var elem = $(this).parent();
 		elem.fadeTo(250, 0.3);

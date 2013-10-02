@@ -92,7 +92,6 @@ $skin = 'main';
 $idb_count = '';
 $add_css = '';
 $users_cache = array();
-$tinymce_skin_variant = 'o2k7';
 $mention_counter = 0;
 $hashtag_counter = 0;
 $lang = 1;

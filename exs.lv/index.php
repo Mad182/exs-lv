@@ -286,14 +286,7 @@ if (!$auth->ok && $lang == 3) {
 	$auth->skin = 4;
 }
 
-if ($auth->skin == 0) {
-	$tinymce_skin_variant = 'silver';
-} elseif ($auth->skin == 1) {
-	$tinymce_skin_variant = 'black';
-}
-
 //reklāmas
-
 $ads_type = '_adsense';
 if(!empty($disable_adsense)) {
 	$ads_type = '';
@@ -332,7 +325,6 @@ $tpl->assignGlobal(array(
 	'footer-mb' => get_footer_mb(),
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
-	'tinymce_skin_variant' => $tinymce_skin_variant,
 	'ad-468' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'),
 	'ad-728' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'),
 	'ad-top' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'),
