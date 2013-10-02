@@ -27,59 +27,57 @@
 <link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
-<script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
+<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript">
-	$().ready(function() {
-		$('textarea').tinymce({
-			script_url : '/tiny_mce/tiny_mce.js',
-			theme : "advanced",
-			language : "lv",
-			skin : "o2k7",
-			skin_variant : "{tinymce_skin_variant}",
-			plugins : "autolink,lists,style,table,advimage,inlinepopups,paste,nonbreaking",
-			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect",
-			theme_advanced_buttons2 : "cut,copy,paste,pastetext,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image",
-			theme_advanced_buttons3 : "tablecontrols,|,removeformat,|,code,|,cleanup",
-			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
-			theme_advanced_statusbar_location : "none",
-			theme_advanced_resizing : true,
-			theme_advanced_blockformats : "p,h2,h3,h4,h5,code,blockquote",
-			content_css : "/css/style.css",
-			convert_fonts_to_spans : true,
-			relative_urls : false,
-			paste_remove_styles : true,
-			paste_auto_cleanup_on_paste : true,
-			nonbreaking_force_tab : true
-		});
-	});
-</script>
+tinymce.init({
+		selector: "textarea",
+		plugins: [
+			"advlist autolink autosave link image lists charmap preview hr anchor",
+			"searchreplace wordcount visualblocks visualchars code",
+			"table contextmenu paste"
+		],
+
+		toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect",
+		toolbar2: "cut copy paste | undo redo | bullist numlist | outdent indent blockquote | link unlink anchor image",
+		toolbar3: "table | hr removeformat | subscript superscript | charmap | searchreplace | visualchars visualblocks | code",
+		relative_urls: false,
+		remove_script_host: false,
+		menubar: false,
+		statusbar: false,
+		toolbar_items_size: 'small',
+		content_css : "{static-server}/css/style.css",
+
+		style_formats: [
+			{title: 'Sarkans', inline: 'span', classes: 'red'},
+			{title: 'Admins', inline: 'span', classes: 'admins'},
+			{title: 'Rakstu autors', inline: 'span', classes: 'rautors'},
+			{title: 'Mods', inline: 'span', classes: 'mods'},
+			{title: 'Lejupielāde', inline: 'a', classes: 'download'},
+			{title: 'Koda bloks', block: 'pre', classes: 'prettyprint'},
+			{title: 'Brīdinājuma teksts', block: 'p', classes: 'text-notice'}
+		]
+});</script>
 <!-- END BLOCK : tinymce-enabled-->
 <!-- START BLOCK : tinymce-simple-->
-<script type="text/javascript" src="/tiny_mce/jquery.tinymce.js"></script>
+<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 <script type="text/javascript">
-	$().ready(function() {
-		$('textarea').tinymce({
-			script_url : '/tiny_mce/tiny_mce.js',
-			theme : "advanced",
-			language : "lv",
-			skin : "o2k7",
-			skin_variant : "{tinymce_skin_variant}",
-			plugins : "autolink,lists,style,inlinepopups,paste,nonbreaking",
-			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,bullist,undo,redo,link,unlink,image,code,blockquote",
-			theme_advanced_buttons2 : "",
-			theme_advanced_buttons3 : "",
-			theme_advanced_toolbar_location : "bottom",
-			theme_advanced_toolbar_align : "center",
-			content_css : "/css/style.css",
-			convert_fonts_to_spans : true,
-			relative_urls : false,
-			paste_remove_styles : true,
-			nonbreaking_force_tab : true,
-			paste_auto_cleanup_on_paste : true
-		});
-	});
-</script>
+tinymce.init({
+		selector: "textarea",
+		plugins: [
+			"autolink lists paste image anchor code paste"
+		],
+
+		toolbar1: "bold italic underline strikethrough | undo redo | bullist numlist | link unlink image blockquote code",
+		toolbar2: "",
+		toolbar3: "",
+		relative_urls: false,
+		remove_script_host: false,
+		menubar: false,
+		statusbar: false,
+		toolbar_items_size: 'small',
+		content_css : "{static-server}/css/style.css"
+
+});</script>
 <!-- END BLOCK : tinymce-simple-->
 <!-- START BLOCK : mb-head-->
 <script type="text/javascript">

@@ -9,14 +9,6 @@
 <div class="tabMain">
 	<!-- START BLOCK : approve-new-->
 
-	<script type="text/javascript">
-
-		$(document).ready(function() {
-			var saveRefreshId = setInterval("autoSaveDraft()",12000);
-		});
-
-	</script>
-
 	<form action="{page-url}" id="new-article-approve" class="form" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Iesniegt jaunu rakstu</legend>
@@ -27,7 +19,7 @@
 			<p><label for="new-topic-title">Raksta nosaukums:</label><br /><input type="text" name="new-topic-title" id="new-topic-title" class="text" maxlength="64" value="{draft-title}" /></p>
 			<p>
 				<label for="new-topic-body">Teksts:</label><br />
-				<textarea name="new-topic-body" id="new-topic-body" cols="94" rows="40" style="width: 100%;height:500px">{draft-text}</textarea>
+				<textarea name="new-topic-body" id="new-topic-body" cols="94" rows="40" style="width: 100%;height:500px"></textarea>
 			</p>
 			<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
 			<p>

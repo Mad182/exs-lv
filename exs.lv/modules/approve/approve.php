@@ -1,25 +1,5 @@
 <?php
 
-if (isset($_GET['var1']) && $_GET['var1'] == 'autosave') {
-	$body = $_POST['new-topic-body'];
-	$title = $_POST['new-topic-title'];
-	$title = title2db($title);
-	$body = htmlpost2db($body);
-	$category_id = intval($_POST['new-topic-category']);
-	$draft_id = $db->get_var("SELECT id FROM drafts WHERE user_id = '$auth->id'");
-
-	if ($draft_id) {
-		if ($db->query("UPDATE drafts SET title = '$title', text = '$body', category_id = '$category_id', modified = NOW() WHERE id = '$draft_id'")) {
-			die('<p class="success">Melnraksts saglabāts ' . date('Y-m-d H:i:s') . '</p>');
-		}
-	} else {
-		if ($db->query("INSERT INTO drafts (user_id,title,text,category_id,modified) VALUES ('$auth->id','$title','$body','$category_id',NOW())")) {
-			die('<p class="success">Melnraksts izveidots ' . date('Y-m-d H:i:s') . '</p>');
-		}
-	}
-	die('<p class="error">Kļūda saglabājot melnrakstu!</p>');
-}
-
 if (isset($_POST['new-topic-body'])) {
 	$body = trim($_POST['new-topic-body']);
 	$title = trim($_POST['new-topic-title']);
@@ -43,10 +23,6 @@ if (isset($_POST['new-topic-body'])) {
 			$topicid = $db->insert_id;
 
 			update_stats($newcat);
-
-			if ($insert) {
-				$db->query("DELETE FROM drafts WHERE user_id = '$auth->id'");
-			}
 
 			if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
 				require_once('includes/class.upload.php');
@@ -89,10 +65,6 @@ if (isset($_POST['new-topic-body'])) {
 			$insert = $db->query("INSERT INTO approve (category,text,title,author,date,ip,lang)
 									VALUES ('$newcat','$body','$title','$auth->id','$date','$auth->ip','$lang')");
 			$topicid = $db->insert_id;
-
-			if ($insert) {
-				$db->query("DELETE FROM drafts WHERE user_id = '$auth->id'");
-			}
 
 			if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
 				require_once('includes/class.upload.php');
@@ -253,14 +225,6 @@ if ($auth->ok) {
 	} else {
 		$tpl->assign('new-active', 'active');
 		$tpl->newBlock('approve-new');
-
-		$draft = $db->get_row("SELECT * FROM drafts WHERE user_id = '$auth->id'");
-		if ($draft) {
-			$tpl->assign(array(
-				'draft-title' => $draft->title,
-				'draft-text' => $draft->text
-			));
-		}
 
 		$categorys = $db->get_results("SELECT id,title FROM `cat` WHERE `isforum` = '0' AND (module = 'list' OR module = 'movies' OR module = 'index' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
 		if ($categorys) {

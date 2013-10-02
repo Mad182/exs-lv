@@ -7,18 +7,6 @@ function prompt_why_delete(url) {
 	}
 }
 
-function autoSaveDraft() {
-	$.ajax({
-		type: "POST",
-		url: "/write/autosave?_=1",
-		data: $("#new-article-approve").serialize() + '&content=' + tinyMCE.activeEditor.getContent(),
-		success: function (data) {
-			$('#autosave-status').hide().html(data).fadeIn("slow");
-		}
-	});
-	return false;
-}
-
 function msgrr() {
 	query_timeout = query_timeout + 2000;
 	var query_string = '?query=true';
