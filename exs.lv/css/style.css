@@ -6,29 +6,34 @@ body.mce-content-body {
 	padding: 0;
 	margin: 3px;
 }
-code, pre, .code, span.c, .codebox {
-	background: #FFF;
-	border: 1px solid #EEE;
-	border-left: 6px solid #C1CAD3;
+code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
+	background: #fff;
 	color: #666;
 	display: block;
+	margin: .6em 1.2em .6em 1.5em;
+	padding: 5px 6px;
+	overflow-x: auto;
+	white-space: normal;
+}
+
+code, pre, .code, span.c, .codebox, .prettyprint {
 	font-family: Courier, 'Courier New',  monospace;
-	margin: .5em 1em;
-	padding: 5px;
-	white-space: pre
+	border-left: 6px solid #C1CAD3;
+	border: 1px solid #eee;
+	font-size: 90%;
+}
+
+blockquote, .q, .quote {
+	border-left: 6px solid #D1DAD8;
+	font-style: italic;
+}
+
+blockquote p {
+	padding: 0;
+	margin: 0;
 }
 .code-header {
 	display: none
-}
-blockquote, .q {
-	background: #f6f6f7 url('http://img.exs.lv/bildes/skins/0/quote.gif') no-repeat 4px 4px;
-	padding: 3px 8px 3px 25px;
-	color: #555;
-	margin: .5em 1.5em;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	display: block
 }
 .admins {
 color: #700
