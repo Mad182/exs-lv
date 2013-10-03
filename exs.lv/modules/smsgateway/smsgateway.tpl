@@ -1,6 +1,6 @@
 <!-- START BLOCK : fortumo-lv-->  
 <p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
-<p>Maksa (0,99 LVL) ir pievienota telefona rēķinam vai atrēķināta no priekšapmaksas kartes.<br />
+<p>Maksa (0.99 LVL / 1.41 EUR) ir pievienota telefona rēķinam vai atrēķināta no priekšapmaksas kartes.<br />
 Atbalsts: +37128690182 | info@openidea.lv<br />
 Piedāvā fortumo.lv</p>
 <!-- END BLOCK : fortumo-lv-->  

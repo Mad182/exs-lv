@@ -167,20 +167,21 @@
 			<p>Nika maiņa ir maksas pakalpojums. Katra nika mainīšanas reize maksā <strong>5</strong> exs.lv kredīta punktus. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti. Apdomā labi, un raksti uzmainīgi, jo par 5 punktiem niku varēsi mainīt tikai vienu reizi. Pēc nika maiņas būs jāielogojas atkārtoti. Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Minka"><span class="admins">Minka</span></a>.</p>
 
 			<h4>Kā iegādāties 5 kredīta punktus?</h4>
-
 			<div class="box">
 				<ul class="tabs">
-					<li><a href="/?c=313" class="active ajax"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-					<li><a href="/?c=313&lang=uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-					<li><a href="/?c=313&lang=ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+					<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+					<li><a href="/payment-info/uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+					<li><a href="/payment-info/ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 				</ul>
 				<div id="pay" class="ajaxbox">
-					<p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
-					<p>Maksa (0,99 LVL) ir pievienota telefona rēķinam vai atrēķināta no priekšapmaksas kartes.<br />
-					Atbalsts: +37128690182 | info@openidea.lv<br />
-					Piedāvā fortumo.lv</p>
 				</div>
 			</div>
+
+			<script type="text/javascript">
+				$( document ).ready(function() {
+					$('#default-payment-link').click();
+				});
+			</script>
 
 		</fieldset>
 	</form>
@@ -194,20 +195,21 @@
 	<p>Lietotāja nosaukums parādās zem profila attēliem. Brīvi izvēlētu nosaukumu var iegūt vai nu sasniedzot 500. karmas līmeni, vai nopērkot iespēju to mainīt par <strong>3</strong> exs.lv kredīta punktiem. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti.<br />Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Minka"><span class="admins">Minka</span></a>.</p>
 
 	<h4>Kā iegādāties 5 kredīta punktus?</h4>
-
 	<div class="box">
 		<ul class="tabs">
-			<li><a href="/?c=313" class="active ajax"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-			<li><a href="/?c=313&lang=uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-			<li><a href="/?c=313&lang=ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+			<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+			<li><a href="/payment-info/uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+			<li><a href="/payment-info/ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 		</ul>
 		<div id="pay" class="ajaxbox">
-			<p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
-			<p>Maksa (0,99 LVL) ir pievienota telefona rēķinam vai atrēķināta no priekšapmaksas kartes.<br />
-			Atbalsts: +37128690182 | info@openidea.lv<br />
-			Piedāvā fortumo.lv</p>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$('#default-payment-link').click();
+		});
+	</script>
 
 </div>
 <!-- END BLOCK : user-profile-buytitle-->

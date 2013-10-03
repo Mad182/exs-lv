@@ -30,27 +30,24 @@
 
 		<p>Iestāšanās šajā grupā maksā 3 exs kredītpunktus. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti.</p>
 		{pay}
+		
 		<h4>Kā iegādāties 5 kredīta punktus?</h4>
-
 		<div class="box">
-			<ul id="paytabs" class="shadetabs">
-				<li><a href="/?c=313" rel="pay"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-				<li><a href="/?c=313&lang=uk" rel="pay"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-				<li><a href="/?c=313&lang=ie" rel="pay"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+			<ul class="tabs">
+				<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+				<li><a href="/payment-info/uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+				<li><a href="/payment-info/ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 			</ul>
-
-			<div id="pay" class="ajaxbox"><noscript><p>Sūti īsziņu ar tekstu: <strong>TXT EXS {user-id}</strong> uz numuru 1897</p>
-					<p>
-					<p><small>Maksa (0,99 LVL) ir pievienota telefona rēķinam vai atrēķināta no priekšapmaksas kartes.<br />
-							Atbalsts: +37128690182 | info@openidea.lv<br />
-							Piedāvā fortumo.lv</small></p></noscript></div>
-			<script type="text/javascript">
-				var pay=new ddajaxtabs("paytabs", "pay")
-				pay.setpersist(true)
-				pay.setselectedClassTarget("link")
-				pay.init(9976000)
-			</script>
+			<div id="pay" class="ajaxbox">
+			</div>
 		</div>
+
+		<script type="text/javascript">
+			$( document ).ready(function() {
+				$('#default-payment-link').click();
+			});
+		</script>
+
 	</div>
 	<div style="float: right;width: 29%">
 
@@ -331,11 +328,6 @@
 		<p class="notice">Grupa ir arhivēta. Tajā vairs nevar pievienot jaunas tēmas.</p>
 	</div>
 	<!-- END BLOCK : archived-->
-
-
-
-
-
 
 
 	<!-- START BLOCK : close-reason-->
