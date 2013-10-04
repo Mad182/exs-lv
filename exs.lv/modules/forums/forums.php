@@ -153,15 +153,12 @@ if (!empty($cats)) {
 			}
 
 			if ($auth->level == 1) {
-				//foruma kategoriju kārtošana
+				//foruma kategoriju admin rīki
 				$tpl->assign(array(
-					'uplink' => ' <a href="?moveup=' . $forum->id . '">&#8593;</a> ',
-					'downlink' => ' <a href="?movedown=' . $forum->id . '">&#8595;</a> '
-				));
-
-				//foruma apakškategoriju pievienošana
-				$tpl->assign(array(
-					'addlink' => ' <a href="/forum-add/' . $forum->id . '">+pievienot</a> '
+					'uplink' => ' <a class="forum-admin-tool" href="?moveup=' . $forum->id . '">&#8593;</a> ',
+					'downlink' => ' <a class="forum-admin-tool" href="?movedown=' . $forum->id . '">&#8595;</a> ',
+					'addlink' => '<br /><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
+					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">edit</a> '
 				));
 			}
 
@@ -193,8 +190,8 @@ if (!empty($cats)) {
 								'id' => $subcat2->id,
 								'title' => '&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&nbsp;' . $subcat2->title
 							);
-							
-							
+
+
 							$subcats3 = $db->get_results("SELECT `id`, `title` FROM `cat` WHERE `parent` = '$subcat2->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
 							if (!empty($subcats3)) {
@@ -206,8 +203,8 @@ if (!empty($cats)) {
 									);
 								}
 							}
-							
-							
+
+
 						}
 					}
 				}
@@ -237,9 +234,9 @@ if ($auth->ok && $category->status == 'active') {
 			));
 		}
 	}
-	
+
 	$tpl->newBlock('forum-new');
-	
+
 } elseif($category->status == 'active') {
 	$tpl->newBlock('forum-addtopic-no');
 }

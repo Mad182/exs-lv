@@ -6,7 +6,7 @@
 		</th>
 	</tr>
 <!-- START BLOCK : listsubcats-node-->
-	<tr><td class="forum-avatar"><a href="/{textid}"><img width="48" height="48" src="http://exs.lv/{icon}" alt="" /></a></td><td><h3><a href="/{textid}">{title}</a></h3><p>{content}{addlink}{uplink}{downlink}</p>
+	<tr><td class="forum-avatar"><a href="/{textid}"><img width="48" height="48" src="http://exs.lv/{icon}" alt="" /></a></td><td><h3><a href="/{textid}">{title}</a></h3><p>{content}{addlink}{editlink}{uplink}{downlink}</p>
 	<!-- START BLOCK : subcats-->
 	<ul class="subcat-list">
 	<!-- START BLOCK : subcats-node-->

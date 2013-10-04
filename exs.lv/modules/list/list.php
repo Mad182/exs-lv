@@ -71,7 +71,7 @@ if($category->isforum) {
 					$mods[] = '<a href="/user/' . $minfo->id . '">' . usercolor($minfo->nick, $minfo->level, false, $minfo->id) . '</a>';
 				}
 				$add .= implode(', ', $mods);
-			}			
+			}
 
 			$tpl->assign(array(
 				'id' => $forum->id,
@@ -97,10 +97,10 @@ if($category->isforum) {
 
 
 			if ($auth->level == 1) {
-	
-				//foruma apakškategoriju pievienošana
+				//foruma apakškategoriju pievienošana/labošana
 				$tpl->assign(array(
-					'addlink' => ' <br /><a href="/forum-add/' . $forum->id . '">+pievienot</a> '
+					'addlink' => '<br /><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
+					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">+edit</a> '
 				));
 			}
 
