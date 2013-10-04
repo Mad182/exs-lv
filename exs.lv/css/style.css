@@ -64,10 +64,8 @@ table.main-table th, table.main-table td, table.infotable td {
 .main-table th, .main-table thead td, .infotable th {
 	background: #f3f3f3;
 	text-align: center;
-	font-weight: 500;
-	font-size: 11px;
 	padding: 2px 3px;
-	color: #555;
+	color: #444;
 }
 table.main-table tr.darker td, table.infotable tr.r2 td {
 	background: #fafafa
