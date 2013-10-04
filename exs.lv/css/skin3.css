@@ -22,16 +22,8 @@ body {
 	height: 160px;
 }
 #forum th {
-	border: 0;
-	font-weight: 400;
 	color: #eee;
-	text-align: left;
 	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 50% 0;
-	font-size: 11px;
-	line-height: 14px;
-	height: 14px;
-	font-family: Tahoma, Geneva, sans-serif;
-	padding: 7px 8px 9px
 }
 #forum th.first {
 	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat;
