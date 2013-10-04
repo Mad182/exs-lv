@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:8080>
         ServerAdmin info@exs.lv
         ServerName exs.lv
         ServerAlias www.exs.lv
@@ -8,6 +8,7 @@
 	ServerAlias www.coding.lv
 	ServerAlias ezgif.com
 	ServerAlias www.ezgif.com
+	ServerAlias lol.exs.lv
 	ServerAlias rp.exs.lv
 
 	DocumentRoot /home/www/exs.lv
@@ -40,14 +41,20 @@
 		AddOutputFilterByType DEFLATE application/x-httpd-fastphp
 	</Directory>
 
-	Alias /phpmyadmin /usr/share/phpmyadmin
-
 	ErrorLog /var/log/apache2/error.log
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
 	LogLevel warn
 
-	CustomLog /var/log/apache2/access.log combined
+
+	LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+	LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" proxy
+	SetEnvIf X-Forwarded-For "^.*\..*\..*\..*" forwarded
+	CustomLog "/var/log/apache2/access.log" combined env=!forwarded
+	CustomLog "/var/log/apache2/access.log" proxy env=forwarded
+
+
+	#CustomLog /var/log/apache2/access.log combined
 
 </VirtualHost>
