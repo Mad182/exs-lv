@@ -53,8 +53,6 @@ body {
 h1, h2, h3 {
 	font-weight: normal;
 	font-family: Georgia, "Times New Roman", Times, serif;
-	padding: .8em 0 .3em;
-	margin: 0
 }
 h1 {
 	font-size: 22px
@@ -70,9 +68,6 @@ h3 {
 }
 #forum td.last {
 	font-size: 11px
-}
-#wrapper .index-list li h3, .index-list li h3 a, #forum td h3, #forum td h3 a {
-	font-size: 16px;
 }
 #wrapper #pm-table th.date {
 	width: 120px
