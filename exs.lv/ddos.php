@@ -22,16 +22,17 @@ $list = `netstat -atun | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' |sort |
 
 $lines = explode("\n", $list);
 
-$whitelist = array('127.0.0.1', '127.0.0.2', '0.0.0.0');
+$whitelist = array('127.0.0.1', '127.0.0.2', '0.0.0.0', '92.240.69.183');
 $blocked = array();
 
 foreach($lines as $line) {
 
 	preg_match('#([0-9]+) ([0-9]+.[0-9]+.[0-9]+.[0-9]+)#i', $line, $matches);
 
-	if($matches[1] > 150 && !in_array($matches[2], $whitelist)) {
+	if(($matches[1] > 300 && !in_array($matches[2], $whitelist)) or substr($matches[2],0,10) == '220.255.1.') {
 		$com = "ufw insert 1 deny from ".$matches[2];
 		$block = `$com`;
+		echo $matches[2] . ': ' . $block . "\n";
 		$blocked[] = array('ip' => $matches[2], 'conn' => $matches[1]);
 	}
 
