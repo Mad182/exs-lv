@@ -1,5 +1,25 @@
 <?php
 
+$texts = array(
+	0 => 'atbilde komentāram',
+	1 => 'komentārs galerijā',
+	2 => 'komentārs rakstam',
+	3 => 'atbilde miniblogā',
+	4 => 'jauns biedrs tavā grupā',
+	5 => 'tevi aicina draudzēties',
+	6 => 'tev ir jauns draugs',
+	7 => 'tu saņēmi medaļu',
+	8 => 'tev atbildēja grupā',
+	9 => 'saņemta vēstule',
+	10 => 'brīdinājums!',
+	11 => 'noņemts brīdinājums',
+	12 => 'jaunumi no exs.lv',
+	13 => 'tevi pieminēja grupā',
+	14 => 'tevi pieminēja mb',
+	15 => 'tevi pieminēja',
+	16 => 'tevi pieminēja galerijā'
+);
+
 if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 	if (isset($_GET['var2'])) {
@@ -10,25 +30,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 			$user_id = intval($user->id);
 			$out = '';
-			$texts = array(
-				0 => 'atbilde komentāram',
-				1 => 'komentārs galerijā',
-				2 => 'komentārs rakstam',
-				3 => 'atbilde miniblogā',
-				4 => 'jauns biedrs tavā grupā',
-				5 => 'tevi aicina draudzēties',
-				6 => 'tev ir jauns draugs',
-				7 => 'tu saņēmi medaļu',
-				8 => 'tev atbildēja grupā',
-				9 => 'saņemta vēstule',
-				10 => 'brīdinājums!',
-				11 => 'noņemts brīdinājums',
-				12 => 'jaunumi no exs.lv',
-				13 => 'tevi pieminēja grupā',
-				14 => 'tevi pieminēja mb',
-				15 => 'tevi pieminēja',
-				16 => 'tevi pieminēja galerijā'
-			);
 			if (!empty($user_id)) {
 
 
@@ -111,25 +112,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 			$user_id = intval($user->id);
 			$out = '';
-			$texts = array(
-				0 => 'atbilde komentāram',
-				1 => 'komentārs galerijā',
-				2 => 'komentārs rakstam',
-				3 => 'atbilde miniblogā',
-				4 => 'jauns biedrs tavā grupā',
-				5 => 'tevi aicina draudzēties',
-				6 => 'tev ir jauns draugs',
-				7 => 'tu saņēmi medaļu',
-				8 => 'tev atbildēja grupā',
-				9 => 'saņemta vēstule',
-				10 => 'brīdinājums!',
-				11 => 'noņemts brīdinājums',
-				12 => 'jaunumi no exs.lv',
-				13 => 'tevi pieminēja grupā',
-				14 => 'tevi pieminēja mb',
-				15 => 'tevi pieminēja',
-				16 => 'tevi pieminēja galerijā'
-			);
 			if (!empty($user_id)) {
 
 				$data = array();
