@@ -27,6 +27,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 				13 => 'tevi pieminēja grupā',
 				14 => 'tevi pieminēja mb',
 				15 => 'tevi pieminēja',
+				16 => 'tevi pieminēja galerijā'
 			);
 			if (!empty($user_id)) {
 
@@ -127,6 +128,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 				13 => 'tevi pieminēja grupā',
 				14 => 'tevi pieminēja mb',
 				15 => 'tevi pieminēja',
+				16 => 'tevi pieminēja galerijā'
 			);
 			if (!empty($user_id)) {
 
