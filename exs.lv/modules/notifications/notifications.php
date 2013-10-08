@@ -157,6 +157,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 							'url' => $domain . $notify->url,
 							'title' => htmlspecialchars(mb_ucfirst($texts[$notify->type]) . $add),
 							'date' => $notify->bump,
+							'info' => $notify->info,
 							'type' => $notify->type
 						);
 					}
