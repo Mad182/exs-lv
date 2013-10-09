@@ -19,8 +19,8 @@
 	<!-- END BLOCK : user-profile-last_action-->
 	<p>Reģistrējās pirms {user-days} {user-days-text}, pēdējo reizi bija online pirms {user-lastseen}</p>
 	<dl id="profile-info" class="list-attr">
-	
-		
+
+
 		<!-- START BLOCK : info-node-->
 		<dt>{title}</dt>
 		<dd>{value}</dd>
@@ -294,9 +294,6 @@
 			</p>
 			<p>
 				<label for="edit-enablesig"><input type="checkbox" name="edit-enablesig" id="edit-enablesig"{edit-enablesig-mark} />rādīt lietotāju parakstus pie komentāriem</label>
-			</p>
-			<p>
-				<label for="edit-enablerte"><input type="checkbox" name="edit-enablerte" id="edit-enablerte"{edit-enablerte-mark} />vizuālais teksta redaktors komentāros</label>
 			</p>
 			<label for="edit-signature">Paraksts:</label><br />
 			<textarea rows="4" cols="20" name="edit-signature" id="edit-signature">{user-signature}</textarea>

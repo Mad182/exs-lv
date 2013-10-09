@@ -6,7 +6,6 @@ class Auth {
 	var $nick;
 	var $ok;
 	var $level = 0;
-	var $rte = 0;
 	var $avatar = 'none.png';
 	var $skin = 3;
 	var $custom_bg = '';
@@ -28,7 +27,6 @@ class Auth {
 		$this->custom_others = 0;
 		$this->vote_today = 0;
 		$this->block_cs = 0;
-		$this->rte = 0;
 		$this->showsig = 1;
 		$this->mobile = 1;
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -152,7 +150,6 @@ class Auth {
 		$this->username = "Guest";
 		$this->access = 0;
 		$this->skin = 0;
-		$this->rte = 0;
 		$this->vote_today = 0;
 		$this->block_cs = 0;
 		$this->showsig = 1;

@@ -6,7 +6,6 @@ class Auth {
 	var $nick;
 	var $ok;
 	var $level = 0;
-	var $rte = 0;
 	var $avatar = 'none.png';
 	var $skin = 3;
 	var $showsig = 1;
@@ -26,7 +25,6 @@ class Auth {
 		$this->karma = 0;
 		$this->vote_today = 0;
 		$this->block_cs = 0;
-		$this->rte = 0;
 		$this->transfer = '';
 		$this->showsig = 1;
 		$this->mobile = 0;
@@ -177,7 +175,6 @@ class Auth {
 			$this->nick = "Guest";
 			$this->level = 0;
 			$this->skin = 0;
-			$this->rte = 0;
 			$this->vote_today = 0;
 			$this->block_cs = 0;
 			$this->showsig = 1;

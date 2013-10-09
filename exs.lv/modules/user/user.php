@@ -29,7 +29,7 @@ if ($user) {
 		if (isset($_POST['block-reason'])) {
 			$reason = sanitize(htmlspecialchars($_POST['block-reason']));
 			$length = (int) $_POST['block-length'];
-			
+
 			$site = 0;
 			/* ja admins nav "globāls", tb norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu */
 			if(in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
@@ -96,13 +96,12 @@ if ($user) {
 			$user->show_lol = (bool) $_POST['edit-show_lol'];
 			$user->show_rp = (bool) $_POST['edit-show_rp'];
 			$user->showsig = (bool) $_POST['edit-enablesig'];
-			$user->rte = (bool) $_POST['edit-enablerte'];
 			$user->skin = (int) $_POST['edit-skin'];
 			$user->city = (int) $_POST['edit-city'];
 
 			//new avatar image
 			if (isset($_FILES['edit-avatar'])) {
-			
+
 				$rand = md5(microtime() . $auth->id);
 				$avatar_path = substr($rand, 0, 1) . '/' . substr($rand, 1, 1) . '/';
 
@@ -174,7 +173,6 @@ if ($user) {
 				'skin' => $user->skin,
 				'yt_name' => $user->yt_name,
 				'twitter' => $user->twitter,
-				'rte' => $user->rte,
 				'custom_title' => $user->custom_title
 			));
 
@@ -204,11 +202,6 @@ if ($user) {
 			$sigmark = ' checked="checked"';
 		} else {
 			$sigmark = '';
-		}
-		if ($user->rte) {
-			$rtemark = ' checked="checked"';
-		} else {
-			$rtemark = '';
 		}
 		if ($user->show_code) {
 			$show_codemark = ' checked="checked"';
@@ -243,8 +236,7 @@ if ($user) {
 			'edit-enablesig-mark' => $sigmark,
 			'edit-show_code-mark' => $show_codemark,
 			'edit-show_lol-mark' => $show_lolmark,
-			'edit-show_rp-mark' => $show_rpmark,
-			'edit-enablerte-mark' => $rtemark
+			'edit-show_rp-mark' => $show_rpmark
 		));
 
 		if ($user->karma >= 500 || im_mod() || $user->custom_title_paid) {
@@ -408,8 +400,8 @@ if ($user) {
 
 		$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
 
-		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND `removed` = 0") + 
-				$db->get_var("SELECT count(*) FROM galcom WHERE author = '$user->id' AND `removed` = 0") + 
+		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND `removed` = 0") +
+				$db->get_var("SELECT count(*) FROM galcom WHERE author = '$user->id' AND `removed` = 0") +
 				$db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $user->id . "' AND removed = '0'"));
 
 		if ($posts != $user->posts) {
@@ -472,8 +464,8 @@ if ($user) {
 				'user-about' => add_smile($user->about)
 			));
 		}
-		
-		
+
+
 		if(!empty($user->web)) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
@@ -481,7 +473,7 @@ if ($user) {
 				'value' => add_smile('<a href="'.htmlspecialchars($user->web).'" rel="nofollow">'.htmlspecialchars($user->web).'</a>', 0, 1, 1)
 			));
 		}
-		
+
 		if ($auth->ok && !empty($user->skype)) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
@@ -489,7 +481,7 @@ if ($user) {
 				'value' => '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script><a href="skype:'.htmlspecialchars($user->skype).'?chat"><img src="http://download.skype.com/share/skypebuttons/buttons/chat_green_transparent_97x23.png" style="border: none;" width="97" height="23" alt="Chat with me" /></a>'
 			));
 		}
-		
+
 		if ($auth->ok && $user->city) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
@@ -497,7 +489,7 @@ if ($user) {
 				'value' => $db->get_var("SELECT `title` FROM `city` WHERE `id` = '$user->city'")
 			));
 		}
-	
+
 		if ($user->lastseen > date("Y-m-d H:i:s", time() - 480) && $auth->id != $user->id && !empty($user->last_action)) {
 			$tpl->newBlock('user-profile-last_action');
 			$tpl->assign(array(
