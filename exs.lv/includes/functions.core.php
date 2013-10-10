@@ -1127,18 +1127,6 @@ function pr($data) {
 	}
 }
 
-function file_force_contents($dir, $contents) {
-	$parts = explode('/', $dir);
-	$file = array_pop($parts);
-	$dir = '';
-	foreach ($parts as $part) {
-		if (!is_dir($dir .= "$part/")) {
-			mkdir($dir);
-		}
-	}
-	file_put_contents("$dir/$file", $contents);
-}
-
 function strTime($s) {
 	$d = intval($s / 86400);
 	$s -= $d * 86400;
@@ -1949,7 +1937,7 @@ function get_user($user_id, $force = false) {
 		return $users_cache[$user_id];
 	}
 	if ($debug || $force === true || ($data = $m->get('u_' . $user_id)) === false) {
-		$data = $db->get_row("SELECT 
+		$data = $db->get_row("SELECT
 		`lastseen`,`mail`,`gender`,`persona`,`maximg`,`yt_name`,`twitter`,`show_code`,`show_lol`,
 		`show_rp`,`vote_today`,`showsig`,`id`,`nick`,`level`,`skin`,`posts`,
 		`karma`,`custom_title`,`signature`,`avatar`,`av_alt`,`vote_others`,`warn_count`,
@@ -2855,7 +2843,7 @@ function get_latest_mbs($friends = false) {
 			} else {
 				$mb->text = textlimit($mb->text, 98, '...');
 			}
-			
+
 			$mb->text = str_replace('.', ".<wbr />", $mb->text);
 			$mb->text = str_replace('-', "-<wbr />", $mb->text);
 
