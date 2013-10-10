@@ -876,51 +876,57 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 
 		if ($type == 'mb') {
 			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
+				$mb = $db->get_row("SELECT `text`, `id`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
 				$title = mb_get_title($mb->text);
 				$strid = mb_get_strid($title, $mb->id);
 				$url = '/say/' . $mb->author . '/' . $mb->id . '-' . $strid;
 				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 14, $mb->id, $url);
+					notify($usr->id, 14, $mb->id, $url, $title);
 				}
 			}
 		}
 
 		if ($type == 'group') {
 			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
+				$mb = $db->get_row("SELECT `id`, `groupid`, `text`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
+				$group = $db->get_row("SELECT `title`, `strid`, `id` FROM `clans` WHERE `id` = '$mb->groupid'");
 				$title = mb_get_title($mb->text);
-				$url = '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
+				if(!empty($group->strid)) {
+					$url = '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
+				} else {
+					$url = '/group/' . $group->id . '/forum/' . base_convert($mb->id, 10, 36);
+				}
 				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 13, $mb->id, $url);
+					notify($usr->id, 13, $mb->id, $url, $group->title . ': ' . $title);
 				}
 			}
 		}
 
 		if ($type == 'page') {
 			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT * FROM `pages` WHERE `id` = '" . intval($uniq) . "'");
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 15, $mb->id, $url);
+				$page = $db->get_row("SELECT `id`, `title`, `author` FROM `pages` WHERE `id` = '" . intval($uniq) . "'");
+				if ($page->author != $usr->id && $usr->id != $auth->id) {
+					notify($usr->id, 15, $page->id, $url, $page->title);
 				}
 			}
 		}
 
 		if ($type == 'image') {
 			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT * FROM `images` WHERE `id` = '" . intval($uniq) . "'");
-				$url = '/gallery/' . $mb->uid . '/' . $mb->id;
+				$image = $db->get_row("SELECT `id`, `uid`, `text` FROM `images` WHERE `id` = '" . intval($uniq) . "'");
+				$url = '/gallery/' . $image->uid . '/' . $image->id;
 				if ($usr->id != $auth->id) {
-					notify($usr->id, 16, $mb->id, $url);
+					notify($usr->id, 16, $image->id, $url, strip_tags($image->text));
 				}
 			}
 		}
 
 		if ($type == 'junk') {
 			if (!empty($uniq)) {
-				$url = '/junk/' . $uniq;
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 15, $uniq, $url);
+				$junk = $db->get_row("SELECT `id`, `uid`, `title` FROM `junk` WHERE `id` = '" . intval($uniq) . "'");
+				$url = '/junk/' . $junk->id;
+				if ($usr->id != $auth->id) {
+					notify($usr->id, 15, $junk->id, $url, strip_tags($junk->title));
 				}
 			}
 		}
