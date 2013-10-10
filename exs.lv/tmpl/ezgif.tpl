@@ -93,7 +93,8 @@
 
 	<div id="footer">
 		<p id="copyright">
-			© 2012 - 2013, ezgif.com
+			© 2012 - 2013, ezgif.com | 
+			{page-onlinetotal} users online
 		</p>
 		<p id="footer-links">
 			<a href="/help">Help / FAQ</a> | 

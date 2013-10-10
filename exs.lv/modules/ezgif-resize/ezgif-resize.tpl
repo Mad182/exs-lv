@@ -77,6 +77,7 @@
 <!-- END BLOCK : resize-upl-->
 
 <h3>Output:</h3>
+<p>(Please be patient, resizing may take some time, depending on file size and resize method)</p>
 <div id="crop-result"></div>
 
 <p>
