@@ -7,7 +7,7 @@
 <ol>
 	<!-- START BLOCK : page-history-node-->
 	<li>
-		<a href="/?c=252&page={id}" onclick="openhpopup('/?c=252&page={id}'); return false;"><strong>{title}</strong></a> ({bytes} baiti) @ {time} pēdējās izmaiņas no {user}
+		<a href="/?c=252&amp;page={id}" onclick="openhpopup('/?c=252&amp;page={id}'); return false;"><strong>{title}</strong></a> ({symbols} simboli) @ {time} pēdējās izmaiņas no {user}
 	</li>
 	<!-- END BLOCK : page-history-node-->
 </ol>

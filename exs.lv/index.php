@@ -262,9 +262,6 @@ if (!empty($inprofile)) {
 	$in_gender = $inprofile->gender;
 }
 
-/* if ((im_mod() || $auth->level == 3) && $auth->id != '8872') {
-  $idb_count = get_itemsdb_action();
-  } */
 
 $load = sys_getloadavg();
 $mb_refresh_limit = '8000';

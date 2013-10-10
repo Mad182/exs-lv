@@ -600,7 +600,7 @@ if ($article) {
 						'time' => date('Y-m-d H:i', $record->time),
 						'id' => $record->id,
 						'user' => $db->get_var("SELECT nick FROM users WHERE id = '$record->nextmod' LIMIT 1"),
-						'bytes' => strBytes($record->text)
+						'symbols' => strlen($record->text)
 					));
 				}
 			}

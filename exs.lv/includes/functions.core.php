@@ -682,7 +682,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	}
 
 
-	//pārveidot vecos avatatu linkus uz jaunajiem
+	//pārveidot vecos avataru linkus uz jaunajiem
 	$txt = str_replace('="/dati/bildes/useravatar/', '="http://img.exs.lv/userpic/medium/', $txt);
 	$txt = str_replace('="/dati/bildes/u_small/', '="http://img.exs.lv/userpic/small/', $txt);
 	$txt = str_replace('="/dati/bildes/u_large/', '="http://img.exs.lv/userpic/large/', $txt);
@@ -768,7 +768,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 }
 
 /* atgriež masīvu ar bloķētiem mājas lapu domēniem */
-
 function get_dofollow_sites() {
 	global $db, $m, $dofollow_sites;
 	if (empty($dofollow_sites)) {
@@ -941,42 +940,6 @@ function createPassword($length) {
 		$i++;
 	}
 	return $password;
-}
-
-function utf8_strtolower($string) {
-	$string = str_replace(array('Ā', 'Č', 'Ē', 'Ģ', 'Ī', 'Ķ', 'Ļ', 'Ņ', 'Õ', 'Š', 'Ū', 'Ž'), array('ā', 'č', 'ē', 'ģ', 'ī', 'ķ', 'ļ', 'ņ', 'õ', 'š', 'ū', 'ž'), $string);
-	return strtolower($string);
-}
-
-function strBytes($str) {
-	$strlen_var = strlen($str);
-	$d = 0;
-	for ($c = 0; $c < $strlen_var; ++$c) {
-		$ord_var_c = ord($str{$d});
-		switch (true) {
-			case (($ord_var_c >= 0x20) && ($ord_var_c <= 0x7F)):
-				$d++;
-				break;
-			case (($ord_var_c & 0xE0) == 0xC0):
-				$d+=2;
-				break;
-			case (($ord_var_c & 0xF0) == 0xE0):
-				$d+=3;
-				break;
-			case (($ord_var_c & 0xF8) == 0xF0):
-				$d+=4;
-				break;
-			case (($ord_var_c & 0xFC) == 0xF8):
-				$d+=5;
-				break;
-			case (($ord_var_c & 0xFE) == 0xFC):
-				$d+=6;
-				break;
-			default:
-				$d++;
-		}
-	}
-	return $d;
 }
 
 function get_between($text, $s1, $s2) {
@@ -1823,14 +1786,6 @@ function update_awards($user) {
 	  'state' => 'active'
 	  );
 	  } */
-
-	/* latgale party */
-	if (in_array($user, array(8070, 8531, 23282, 2145, 16027, 10345, 22051))) {
-		$awards_list['latgale-party-2013'] = array(
-			'title' => 'Exs Latgale party 2013',
-			'state' => 'active'
-		);
-	}
 
 	//ghetto games floorball
 	/*if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
@@ -2874,20 +2829,6 @@ function set_action($action = '') {
 	}
 }
 
-function get_itemsdb_action($force = false) {
-	global $db, $m;
-	$idb_count = '';
-	if ($force || ($idb_count = $m->get('itdb_coun')) === false) {
-		$queue = $db->get_var("SELECT count(*) FROM `items_db_queue` WHERE `action_by` = '0'");
-		$white = $db->get_var("SELECT count(*) FROM `items_db_whitelist` WHERE `action_by` = '0' AND `work_time` != '0000-00-00 00:00:00' AND `user` != '21018'");
-		if ($queue > 0 || $white > 0) {
-			$idb_count = '&nbsp;(<span class="r">' . ($queue + $white) . '</span>)';
-		}
-		$m->set('itdb_coun', "$idb_count", false, 25);
-	}
-	return $idb_count;
-}
-
 function update_stats($category_id) {
 	global $db;
 	$stats = $db->get_row("SELECT COUNT(`pages`.`id`) AS `topics`, SUM(`pages`.`posts`) AS `posts`, SUM(`pages`.`views`) AS `views` FROM `pages` WHERE `category` = '$category_id'");
@@ -3065,4 +3006,3 @@ function esr(&$val, $empty = '') {
 		return $empty;
 	}
 }
-
