@@ -308,7 +308,6 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 }
 
 /* parbauda vai aktīvais lietotājs ir moderators (vai admins) */
-
 function im_mod() {
 	global $auth;
 	if ($auth->ok === true && ($auth->level == 1 || $auth->level == 2)) {
@@ -319,7 +318,6 @@ function im_mod() {
 }
 
 /* parbauda vai aktīvais lietotājs ir atvērtās sadaļas moderators */
-
 function im_cat_mod($id = null) {
 	global $auth, $category;
 	if (!empty($id)) {
@@ -332,11 +330,6 @@ function im_cat_mod($id = null) {
 	} else {
 		return false;
 	}
-}
-
-function utf8_substr($str, $from, $len) {
-	return preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,' . $from . '}' .
-					'((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,' . $len . '}).*#s', '$1', $str);
 }
 
 function textlimit($string, $setlength, $replacer = '...') {
