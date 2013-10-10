@@ -47,16 +47,11 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 					echo '		<language>lv</language>', "\n";
 
 					foreach ($notify as $notify) {
-						$add = '';
-						$dom = '';
 
-						if ($notify->lang == 3) {
-							$domain = 'http://coding.lv';
-							$dom = ' (coding.lv)';
-							$site = '&nbsp;<span class="site-name">coding.lv</span>';
-						} else {
-							$domain = 'http://exs.lv';
-							$site = '&nbsp;<span class="site-name">exs.lv</span>';
+						$dom = '';
+						$domain = 'http://' . $config_domains[$notify->lang]['domain'];
+						if($notify->lang != $lang) {
+							$dom = ' (' . $config_domains[$notify->lang]['domain'] . ')';
 						}
 
 						if ($notify->type == 5 || $notify->type == 6) {
@@ -67,7 +62,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 						}
 						if ($notify->type == 9) {
 							$notify->url = '/pm';
-							$add = $new_msg_string;
 						}
 						if ($notify->type == 10 || $notify->type == 11) {
 							$notify->url = '/warns/' . $notify->user_id;
@@ -82,10 +76,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 						}
 
 						echo '		<item>', "\n";
-						echo '			<title>', htmlspecialchars(mb_ucfirst($texts[$notify->type]) . $add), '</title>', "\n";
+						echo '			<title>', htmlspecialchars(mb_ucfirst($texts[$notify->type])), '</title>', "\n";
 						echo '			<link>' . htmlspecialchars($domain . $notify->url) . '</link>' . "\n";
 						echo '			<guid>' . htmlspecialchars($domain . $notify->url . '?' . strtotime($notify->bump)) . '</guid>' . "\n";
-						echo '			<description>', htmlspecialchars(mb_ucfirst($texts[$notify->type]) . $add . $dom), '</description>', "\n";
+						echo '			<description>', htmlspecialchars(mb_ucfirst($texts[$notify->type]) . $dom), '</description>', "\n";
 						echo '			<pubDate>', gmdate('r', strtotime($notify->bump)), '</pubDate>', "\n";
 						echo '			<dc:creator>exs.lv</dc:creator>' . "\n";
 						echo '		</item>', "\n";
@@ -119,17 +113,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 				if ($notify = $db->get_results("SELECT * FROM `notify` WHERE `user_id` = '$user_id' ORDER BY `bump` DESC LIMIT 0,20")) {
 
 					foreach ($notify as $notify) {
-						$add = '';
-						$dom = '';
 
-						if ($notify->lang == 3) {
-							$domain = 'http://coding.lv';
-							$dom = ' (coding.lv)';
-							$site = '&nbsp;<span class="site-name">coding.lv</span>';
-						} else {
-							$domain = 'http://exs.lv';
-							$site = '&nbsp;<span class="site-name">exs.lv</span>';
-						}
+						$domain = 'http://' . $config_domains[$notify->lang]['domain'];
 
 						if ($notify->type == 5 || $notify->type == 6) {
 							$notify->url = '/friends/' . $notify->user_id;
@@ -139,7 +124,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 						}
 						if ($notify->type == 9) {
 							$notify->url = '/pm';
-							$add = $new_msg_string;
 						}
 						if ($notify->type == 10 || $notify->type == 11) {
 							$notify->url = '/warns/' . $notify->user_id;
@@ -155,7 +139,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 						$data[] = array(
 							'url' => $domain . $notify->url,
-							'title' => htmlspecialchars(mb_ucfirst($texts[$notify->type]) . $add),
+							'title' => htmlspecialchars(mb_ucfirst($texts[$notify->type])),
 							'date' => $notify->bump,
 							'info' => $notify->info,
 							'type' => $notify->type
