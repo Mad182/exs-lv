@@ -31,8 +31,7 @@ else {
 			caurskatīt pēdējos tulkojumus
 			update vārdnīcu
 	*/
-	
-	require('idb_functions.php');
+
 	$tpl->assignInclude('module-head', 'modules/' . $category->module . '/header.tpl');
 	$tpl->prepare();
 	$tpl->assign('skinid', (($auth->skin == 1) ? 1 : 0));
