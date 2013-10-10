@@ -211,7 +211,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
 
 				if (!empty($notify->info) && $notify->info != 'twitter') {
-					$out .= ' - <span class="info-content">' . htmlspecialchars(textlimit($notify->info, 45, '')) . '...</span>';
+					$out .= ' - <span class="info-content">' . strip_tags(textlimit($notify->info, 45, '')) . '...</span>';
 				}
 
 				$out .= '</a></li>';
