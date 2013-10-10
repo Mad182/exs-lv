@@ -25,7 +25,7 @@ $m->connect($mc_host, $mc_port);
 //lapas settingu/datu glabāšana
 $ss = new SiteStorage;
 
-$requested_json = substr($_SERVER['REQUEST_URI'], -strlen('.json')) === '.json';
+$requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_GET['var1']) && $_GET['var1'] == 'json'));
 
 if ($requested_json) {
 	header("Content-Type: application/json");
@@ -457,7 +457,7 @@ if (!empty($_SESSION['flash_message'])) {
 	$_SESSION['flash_message'] = '';
 }
 
-if ($debug) {
+if ($debug && !$requested_json) {
 	echo '<div><a id="debug-details-trigger" href="#" style="float:right;color: #ccf;">detaļas &raquo;</a>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | ielāde: ' . round(microtime(true) - $start_time, 5) . ' s';
