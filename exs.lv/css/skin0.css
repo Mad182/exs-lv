@@ -175,16 +175,6 @@ table#forum tr th.first {
 	font-weight: 700;
 	color: #333
 }
-.core-pager a {
-	border: 1px solid #eee;
-	margin: 0 -1px 0 0;
-	padding: 0 2px
-}
-.core-pager a.selected {
-	border: 1px solid #ddd;
-	background: #eee;
-	font-weight: 700
-}
 #comments {
 	margin: 10px 0;
 	padding: 0
@@ -243,89 +233,6 @@ p.comment-tools a {
 	-webkit-border-radius: 2px;
 	margin: 0 4px 0 0;
 	padding: 0 3px
-}
-a.friend-right, a.friend {
-	border: 1px solid #eee;
-	text-align: center;
-	width: 80px;
-	display: inline;
-	margin: 3px;
-	padding: 5px
-}
-a.friend img {
-	width: 75px;
-	height: 75px
-}
-#blog-edit fieldset {
-	border: 0;
-	padding: 0
-}
-a.friend-right:hover, a.friend:hover {
-	border: 1px solid #ddd
-}
-a.friend-right img, a.friend img {
-	display: block;
-	margin: 0 auto
-}
-.poll-answers li, #poll-questions li {
-	background: transparent;
-	margin: 0;
-	padding: 1px 0
-}
-.poll-answers li span {
-	position: absolute;
-	font-size: 9px;
-	line-height: 9px;
-	z-index: 10;
-	right: 1px;
-	top: -1px;
-	color: #fff
-}
-.poll-answers li div {
-	background: #337FC6 url(http://img.exs.lv/bildes/skins/1/bar.gif) no-repeat 0 0;
-	height: 8px;
-	font-size: 1px;
-	line-height: 1px;
-	position: relative;
-	margin: 0 0 2px;
-	padding: 0
-}
-.poll-answers li div div {
-	background: #5FA9F0;
-	height: 8px;
-	z-index: 1;
-	margin: 0;
-	padding: 0
-}
-.half-left {
-	width: 282px;
-	float: left
-}
-.half-right {
-	width: 282px;
-	float: right
-}
-.tabMain .half-left, .tabMain .half-right {
-	width: 265px
-}
-.bloglist li {
-	background: transparent;
-	margin: 0;
-	padding: 0
-}
-.mb-col li .av {
-	margin-top: 0;
-	width: 45px;
-	height: 45px;
-}
-.index-list .av {
-	width: 75px;
-	height: 75px;
-}
-.mb-col li .av {
-	width: 45px;
-	height: 45px;
-	margin-top: 3px
 }
 .blockhref li a {
 	display: block;
@@ -467,18 +374,6 @@ ul#sitemap li {
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 1px;
 }
-#wrapper h1 a.rss, #wrapper h2 a.rss {
-	float: right;
-	color: #DC6500;
-	padding: 0 2px 0 10px
-}
-#full-story h2, #full-story h1 {
-	background: transparent;
-	color: #000;
-	border: 0;
-	font-variant: normal;
-	padding: .6em 0 .4em
-}
 #search-form input.text {
 	height: 14px;
 	float: left;
@@ -510,72 +405,6 @@ ul#sitemap li {
 	left: 241px;
 	top: 29px
 }
-#listsub-list li {
-	padding: 2px 20px
-}
-#related-topics {
-	margin: 10px 0 0
-}
-#related-topics li {
-	background: url(http://img.exs.lv/bildes/arr_up.gif) no-repeat 0 50%
-}
-#latest-blogs li {
-	background: transparent;
-	border-bottom: 1px solid #E3E3E3;
-	margin: 0;
-	padding: 5px 0
-}
-#latest-blogs li h3 {
-	margin: 0;
-	padding: 5px 0
-}
-#latest-blogs li div.author {
-	float: left;
-	width: 90px;
-	height: 100px;
-	text-align: center;
-	line-height: 13px
-}
-#latest-blogs li div.author img {
-	width: 75px;
-	height: 75px;
-	display: inline;
-	float: none;
-	margin: 0;
-	padding: 0
-}
-.index-list li {
-	background: transparent;
-	margin: 0;
-	padding: 0 0 5px
-}
-.index-list li.sm {
-	background: transparent;
-	margin: 0;
-	padding: 0 0 0 30px
-}
-.index-list li p {
-	font-size: 90%;
-	line-height: 15px
-}
-.index-list li h3, .index-list li h3 a {
-	font-size: 12px;
-	line-height: 17px;
-	font-weight: 700;
-	margin: 0;
-	padding: 0
-}
-.index-list li.sm h3, .index-list li.sm h3 a {
-	font-size: 11px;
-	line-height: 14px;
-	font-weight: 400;
-	margin: 0;
-	padding: 0
-}
-.rater-block span {
-	line-height: 12px;
-	margin: -4px 0 0
-}
 img.attels_pa_labi {
 	float: right;
 	border: 1px solid #ccc;
@@ -602,30 +431,6 @@ a.thb-image img {
 	background: #eee;
 	margin: 6px 5px;
 	padding: 4px
-}
-#exs-groups li {
-	background: transparent;
-	height: 87px;
-	width: 32%;
-	float: left;
-	margin: 0;
-	padding: 5px
-}
-#exs-groups li h3 {
-	font-size: 14px;
-	margin: 0;
-	padding: 6px 0
-}
-#exs-groups li h3 a {
-	font-size: 14px
-}
-#exs-groups li p {
-	font-size: 90%;
-	color: #888;
-	line-height: 1.2
-}
-#miniblog-list, h4 {
-	padding: .5em 0
 }
 /* notifikacijas */
 #user-notify li a:hover {
