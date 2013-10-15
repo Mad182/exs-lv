@@ -26,7 +26,7 @@
 </script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans+Narrow&amp;subset=latin,latin-ext" type="text/css" />
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css" />
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css,fancy.css" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -117,7 +117,6 @@ tinymce.init({
 					<ul id="top-menu-left">
 						<li{cat-sel-1194}><a class="first" href="/">Forums</a></li>
 						<li><a href="http://mta.exs.lv/" class="external">UCP</a></li>
-						<li{cat-sel-924}><a href="/archive">Arhīvs</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
