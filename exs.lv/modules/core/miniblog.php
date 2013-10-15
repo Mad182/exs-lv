@@ -302,7 +302,7 @@ if ($inprofile->id) {
 
 					//linki ieraksta aizslēgšanai/atslēgšanai
 					if(im_mod()) {
-						if($reord->closed) {
+						if($record->closed) {
 							$tpl->newBlock('mb-edit-unclose');
 						} else {
 							$tpl->newBlock('mb-edit-close');
