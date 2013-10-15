@@ -300,6 +300,16 @@ if ($inprofile->id) {
 						));
 					}
 
+					//linki ieraksta aizslēgšanai/atslēgšanai
+					if(im_mod()) {
+						if($reord->closed) {
+							$tpl->newBlock('mb-edit-unclose');
+						} else {
+							$tpl->newBlock('mb-edit-close');
+						}
+						$tpl->assign('url', $url);
+					}
+
 					//lūdzu neņem nost laika ierobežojumu :/
 					if (im_mod() && strtotime($record->date) > time() - 600) {
 						$tpl->newBlock('mb-delete');
