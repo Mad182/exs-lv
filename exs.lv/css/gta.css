@@ -15,10 +15,6 @@ body {
 	height: 198px;
 }
 
-#wrapper h1, #wrapper h2, #wrapper h3 {
-	font-family: "Trebuchet MS",tahoma,helvetica,arial,sans-serif;
-}
-
 #wrapper {
 	background:#fff;
 	margin: 0 auto 20px;

@@ -24,8 +24,9 @@
 	var query_timeout = 60000;
 	var c_url = "{page-url}";
 </script>
-<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css" type="text/css" />
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans+Narrow&amp;subset=latin,latin-ext" type="text/css" />
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css,pm.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
