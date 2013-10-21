@@ -23,6 +23,8 @@ $m->connect($mc_host, $mc_port);
 
 header('Content-Type: text/html; charset=utf-8');
 
+$site_access = get_site_access();
+
 $auth = new Auth();
 
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
