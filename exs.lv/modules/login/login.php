@@ -5,7 +5,8 @@ if($auth->ok) {
 	$allowed_domains = array();
 	foreach($config_domains as $domain) {
 		if($domain['domain'] !== 'secure.exs.lv') {
-			$allowed_domains[] = $domain['domain'];	
+			$allowed_domains[] = $domain['domain'];
+			$allowed_domains[] = 'm.' . $domain['domain'];
 		}
 	}
 	
