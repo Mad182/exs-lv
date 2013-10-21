@@ -37,3 +37,10 @@ $mta_hostname = 'mta.exs.lv';
 $mta_username = 'exs';
 $mta_password = 'gnzNhE3Q';
 $mta_database = 'rpdb_new';
+
+//auto login visos subdomēnos
+if($_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== 'dev.exs.lv') {
+	ini_set("session.cookie_domain", ".exs.lv");
+	$secure_login = true;
+}
+

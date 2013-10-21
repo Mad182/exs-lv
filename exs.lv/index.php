@@ -299,9 +299,15 @@ if(strlen($page_title) < 55 && $lang != 4) {
 	$page_title .= ' - ' . $config_domains[$lang]['domain'];
 }
 
+$login_url = htmlspecialchars($_SERVER['REQUEST_URI']);
+if(!empty($secure_login)) {
+	$login_url = htmlspecialchars('https://secure.exs.lv/');
+}
+
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
+	'page-loginurl' => $login_url,
 	'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 	'page-domain' => $_SERVER['HTTP_HOST'],
 	'page-skinid' => $auth->skin,

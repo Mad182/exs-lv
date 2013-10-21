@@ -7,6 +7,9 @@ if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localho
 } elseif ($_SERVER['SERVER_NAME'] === 'coding.lv') {
 	require(CORE_PATH . '/config/coding-lv.php');
 
+} elseif ($_SERVER['SERVER_NAME'] === 'secure.exs.lv') {
+	require(CORE_PATH . '/config/secure-exs-lv.php');
+
 } elseif ($_SERVER['SERVER_NAME'] === 'rp.exs.lv') {
 	require(CORE_PATH . '/config/mtaforum.php');
 
@@ -53,5 +56,9 @@ $config_domains = array(
 	7 => array(
 		'domain' => 'lol.exs.lv',
 		'prefix' => 'lol'
+	),
+	8 => array(
+		'domain' => 'secure.exs.lv',
+		'prefix' => 'secure'
 	)
 );

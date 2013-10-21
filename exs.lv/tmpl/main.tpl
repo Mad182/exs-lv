@@ -174,7 +174,7 @@ tinymce.init({
 			</ul>
 			<!-- END BLOCK : user-menu-->
 			<!-- START BLOCK : login-form-->
-			<form id="login-form" action="{page-url}" method="post">
+			<form id="login-form" action="{page-loginurl}" method="post">
 				<fieldset>
 					<input type="hidden" name="xsrf_token" value="{xsrf}" />
 					<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>

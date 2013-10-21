@@ -162,7 +162,7 @@ tinymce.init({
 						<li><a class="red" href="/forgot-password">Aizmirsi paroli?</a></li>
 						<!-- END BLOCK : login-form-error1-->
 						<li>
-							<form id="login-form" action="{page-url}" method="post">
+							<form id="login-form" action="{page-loginurl}" method="post">
 								<fieldset>
 									<input type="hidden" name="xsrf_token" value="{xsrf}" />
 									<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>

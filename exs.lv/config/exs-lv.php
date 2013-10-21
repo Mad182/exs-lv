@@ -16,3 +16,10 @@ $polls_cat = 2;
 $profile_views_limit = 27;
 
 $robotstag[] = 'noodp';
+
+//auto login visos subdomēnos
+if($_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== 'dev.exs.lv') {
+	ini_set("session.cookie_domain", ".exs.lv");
+	$secure_login = true;
+}
+

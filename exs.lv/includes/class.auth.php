@@ -74,15 +74,18 @@ class Auth {
 			$this->ok = true;
 
 			if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 480) {
-				if (empty($_SESSION['admin_simulate'])) {
-					$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `seen_today` = 1 WHERE `id` = '$this->id'");
-				}
+				$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `seen_today` = 1 WHERE `id` = '$this->id'");
 				$_SESSION['lastseen'] = time();
 			}
 
-			if (empty($_SESSION['admin_simulate']) && (empty($_SESSION['updvisits']) || $_SESSION['updvisits'] < time() - 30)) {
+			if (empty($_SESSION['updvisits']) || $_SESSION['updvisits'] < time() - 30) {
 				$this->update_visits();
 				$_SESSION['updvisits'] = time();
+			}
+			
+			if($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+				$this->logout();
+				redirect();
 			}
 
 			if (!isset($_GET['_']) && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
@@ -144,6 +147,7 @@ class Auth {
 			$this->ok = true;
 			$_SESSION['auth_id'] = $userinfo->id;
 			$_SESSION['lastseen'] = time();
+			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			$this->error = 0;
 
 			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
@@ -168,27 +172,21 @@ class Auth {
 
 	function logout() {
 		global $db, $lang;
-		if (empty($_SESSION['admin_simulate'])) {
-			$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0 WHERE `id` = '$this->id' LIMIT 1");
-			$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
-			$this->id = 0;
-			$this->nick = "Guest";
-			$this->level = 0;
-			$this->skin = 0;
-			$this->vote_today = 0;
-			$this->block_cs = 0;
-			$this->showsig = 1;
-			$this->karma = 0;
-			$this->persona = '';
-			$this->transfer = '';
-			$this->ok = false;
-			$_SESSION['auth_id'] = '';
-			session_destroy();
-
-		} else {
-			$_SESSION['auth_id'] = $_SESSION['admin_simulate'];
-			$_SESSION['admin_simulate'] = '';
-		}
+		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0 WHERE `id` = '$this->id' LIMIT 1");
+		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
+		$this->id = 0;
+		$this->nick = "Guest";
+		$this->level = 0;
+		$this->skin = 0;
+		$this->vote_today = 0;
+		$this->block_cs = 0;
+		$this->showsig = 1;
+		$this->karma = 0;
+		$this->persona = '';
+		$this->transfer = '';
+		$this->ok = false;
+		$_SESSION['auth_id'] = '';
+		session_destroy();
 	}
 
 	function update_counter() {
