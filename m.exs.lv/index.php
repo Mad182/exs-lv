@@ -32,8 +32,15 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 	$tpl = new TemplatePower('tmpl/login.tpl');
 	$tpl->prepare();
+
+	$login_url = htmlspecialchars($_SERVER['REQUEST_URI']);
+	if(!empty($secure_login)) {
+		$login_url = htmlspecialchars('https://secure.exs.lv/');
+	}
+
 	$tpl->assignGlobal(array(
 		'server-name' => htmlspecialchars(str_replace('m.','',$_SERVER['SERVER_NAME'])),
+		'page-loginurl' => $login_url,
 		'page-title' => $page_title,
 		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 		'xsrf' => $auth->xsrf,
@@ -118,7 +125,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 				} else {
 					$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 				}
-				
+
 			}
 			$tpl->prepare();
 

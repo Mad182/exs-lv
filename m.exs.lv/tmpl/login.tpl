@@ -15,7 +15,7 @@
 	<a id="logo" href="/">{server-name}</a>
 	</div>
 	<div id="wrapper">
-	<form class="form" method="post" action="{page-url}">
+	<form class="form" method="post" action="{page-loginurl}">
 	<fieldset>
 	<legend>Ielogoties</legend>
 	<input type="hidden" name="xsrf_token" value="{xsrf}" />
