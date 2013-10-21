@@ -57,9 +57,15 @@ $auth = new Auth();
 //login
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
+
+	if ($auth->error === 1) {
+		set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
+	}
+
 	if ($auth->ok === true) {
 		update_karma($auth->id);
 	}
+
 }
 
 if ($auth->ok && $lang == 1 && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'interests') && empty($_POST) && !isset($_GET['_']) && !$db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")) {
@@ -222,10 +228,6 @@ if ($skin === 'main') {
 	if ($auth->ok !== true) {
 		$tpl->newBlock('login-form');
 		$tpl->assign('xsrf', $auth->xsrf);
-		if ($auth->error === 1) {
-			set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
-			$tpl->newBlock('login-form-error1');
-		}
 	} else {
 		$tpl->newBlock('user-menu');
 

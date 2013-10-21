@@ -149,9 +149,6 @@ tinymce.init({
 					<!-- START BLOCK : login-form-->
 					<ul id="top-menu-right">
 						<li{cat-sel-106}><a class="first" href="/register">Reģistrēties</a></li>
-						<!-- START BLOCK : login-form-error1-->
-						<li><a class="red" href="/forgot-password">Aizmirsi paroli?</a></li>
-						<!-- END BLOCK : login-form-error1-->
 						<li>
 							<form id="login-form" action="{page-loginurl}" method="post">
 								<fieldset>

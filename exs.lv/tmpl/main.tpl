@@ -178,9 +178,6 @@ tinymce.init({
 				<fieldset>
 					<input type="hidden" name="xsrf_token" value="{xsrf}" />
 					<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
-					<!-- START BLOCK : login-form-error1-->
-					<a class="red" href="/forgot-password">Aizmirsi paroli?</a>
-					<!-- END BLOCK : login-form-error1-->
 					<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
 					<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
 					<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
