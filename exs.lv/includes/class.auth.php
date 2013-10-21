@@ -82,7 +82,7 @@ class Auth {
 				$this->update_visits();
 				$_SESSION['updvisits'] = time();
 			}
-			
+
 			if($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 				$this->logout();
 				redirect();

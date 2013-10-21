@@ -211,6 +211,7 @@ if (!empty($me)) {
 			}
 
 			$_SESSION['auth_id'] = $userinfo->id;
+			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			update_karma($userinfo->id, true);
 			redirect();
 		}

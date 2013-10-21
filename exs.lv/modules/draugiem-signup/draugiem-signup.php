@@ -207,6 +207,7 @@ if ($session) {//Authentication successful
 			}
 		} else {
 			$_SESSION['auth_id'] = $userinfo->id;
+			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			update_karma($userinfo->id, true);
 			redirect();
 		}
@@ -216,4 +217,3 @@ if ($session) {//Authentication successful
 	$redirect = 'http://'.$_SERVER['SERVER_NAME'].'/draugiem-signup/'; //Where to redirect after authorization
 	$tpl->assign('button', $draugiem->getLoginButton($redirect)); //Show the button
 }
-
