@@ -94,6 +94,9 @@ class Auth {
 		global $db;
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id'], true);
+
+			session_regenerate_id(true);
+
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
 			}
@@ -107,6 +110,8 @@ class Auth {
 
 	function login($username, $password, $xsrf = null) {
 		global $db, $lang;
+
+		session_regenerate_id(true);
 
 		if(!is_null($xsrf) && $xsrf != $this->xsrf) {
 			sleep(rand(2,4));
@@ -164,6 +169,7 @@ class Auth {
 		$this->persona = '';
 		$this->ok = false;
 		$_SESSION['auth_id'] = '';
+		session_regenerate_id(true);
 		session_destroy();
 	}
 
