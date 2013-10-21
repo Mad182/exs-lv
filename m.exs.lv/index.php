@@ -31,7 +31,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
 }
 
-if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
+if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_GET['viewcat'] != 'forgot-password'))) {
 	$tpl = new TemplatePower('tmpl/login.tpl');
 	$tpl->prepare();
 
@@ -192,6 +192,16 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'mav')) {
 			$tpl->assign('profile-blogid', $isblog);
 		}
 	}
+}
+
+/* flash error or success message */
+if (!empty($_SESSION['flash_message'])) {
+	$tpl->newBlock('flash-message');
+	$tpl->assign(array(
+		'message' => add_smile($_SESSION['flash_message']['message']),
+		'class' => $_SESSION['flash_message']['class']
+	));
+	$_SESSION['flash_message'] = '';
 }
 
 $tpl->printToScreen();

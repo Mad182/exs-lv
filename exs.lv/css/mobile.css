@@ -1374,3 +1374,23 @@ blockquote, .q, .quote {
 	background: #dadada;
 	font-weight: 700;
 }
+
+/* flash message */
+#flash-message {
+	margin: 5px 5px 2px;
+}
+
+#flash-message p {
+	padding: 6px 10px;
+	margin: 2px 0;
+	line-height: 14px;
+	border-width: 1px;
+}
+
+#close-flash-message {
+	float: right;
+	width: 16px;
+	height: 16px;
+	border: 0;
+	outline: none;
+}
