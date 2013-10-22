@@ -1,6 +1,9 @@
-<VirtualHost *:80>
+<VirtualHost *:8080>
 	ServerAdmin info@exs.lv
 	ServerName img.exs.lv
+	ServerAlias img0.exs.lv
+	ServerAlias img1.exs.lv
+	ServerAlias img2.exs.lv
 
 	DocumentRoot /home/www/img.exs.lv/
 	<Directory />
