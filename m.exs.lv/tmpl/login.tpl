@@ -25,18 +25,18 @@
 	<!-- END BLOCK : flash-message-->
 	<form class="form" method="post" action="{page-loginurl}">
 	<fieldset>
-	<legend>Ielogoties</legend>
+	<legend>Autorizācija</legend>
 	<input type="hidden" name="xsrf_token" value="{xsrf}" />
 	<p>
-		Niks:<br />
-		<input class="text" name="niks" type="text" />
+		<label for="niks">Niks:<label><br />
+		<input class="text" name="niks" id="niks" type="text" />
 	</p>
 	<p>
-		Parole:<br />
-		<input class="text" name="parole" type="password" />
+		<label for="parole">Parole:<label><br />
+		<input class="text" name="parole" id="parole" type="password" />
 	</p>
 	<p>
-		<input class="button" name="submit" value="Log in" type="submit" />
+		<input class="button primary" name="submit" value="Ienākt" type="submit" />
 	</p>
 	</fieldset>
 	</form>
