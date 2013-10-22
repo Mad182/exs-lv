@@ -1,0 +1,65 @@
+<VirtualHost secure.exs.lv:443>
+        ServerAdmin info@exs.lv
+        ServerName secure.exs.lv
+
+	DocumentRoot /home/www/exs.lv
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride All
+	</Directory>
+	<Directory /home/www/exs.lv/>
+		Options FollowSymLinks
+		AllowOverride All
+		Order allow,deny
+		allow from all
+                ExpiresActive on
+                ExpiresByType image/png "access plus 1 month"
+                ExpiresByType image/gif "access plus 1 month"
+                ExpiresByType image/jpeg "access plus 1 month"
+                ExpiresByType image/jpg "access plus 1 month"
+
+		AddOutputFilterByType DEFLATE text/html
+		AddOutputFilterByType DEFLATE text/plain
+		AddOutputFilterByType DEFLATE text/xml
+		AddOutputFilterByType DEFLATE text/css
+		AddOutputFilterByType DEFLATE text/javascript
+		AddOutputFilterByType DEFLATE application/javascript
+		AddOutputFilterByType DEFLATE application/xhtml+xml
+		AddOutputFilterByType DEFLATE application/xml
+		AddOutputFilterByType DEFLATE application/rss+xml
+		AddOutputFilterByType DEFLATE application/x-javascript
+		AddOutputFilterByType DEFLATE application/x-httpd-php
+		AddOutputFilterByType DEFLATE application/x-httpd-fastphp
+	</Directory>
+
+
+	Alias /munin/ "/var/www/munin/"
+	<Directory "/var/www/munin/">
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	Alias /pmaexs /usr/share/phpmyadmin
+
+	ErrorLog /var/log/apache2/error.log
+
+	# Possible values include: debug, info, notice, warn, error, crit,
+	# alert, emerg.
+	LogLevel warn
+
+
+	LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+	LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" proxy
+	SetEnvIf X-Forwarded-For "^.*\..*\..*\..*" forwarded
+	CustomLog "/var/log/apache2/access.log" combined env=!forwarded
+	CustomLog "/var/log/apache2/access.log" proxy env=forwarded
+
+
+	#CustomLog /var/log/apache2/access.log combined
+
+	SSLEngine on
+SSLCertificateFile /etc/apache2/ssl/secure_exs_lv.crt
+SSLCertificateKeyFile /etc/apache2/ssl/exs.key
+SSLCACertificateFile /etc/apache2/ssl/ca.txt
+
+</VirtualHost>
