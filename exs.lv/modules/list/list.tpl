@@ -70,7 +70,12 @@
 	</tr>
 	<!-- START BLOCK : list-forum-node-->
 	<tr>
-		<td><img src="http://exs.lv/bildes/{timg}" alt="" /></td><td><h3><a href="{node-url}">{title}</a></h3></td><td><a href="/user/{author-id}">{author}</a></td><td class="center">{posts}</td><td class="center">{views}</td><td class="last">{date}</td>
+		<td><img width="19" height="18" src="http://exs.lv/bildes/{timg}" alt="" /></td>
+		<td><h3><a href="{node-url}">{title}</a></h3></td>
+		<td><a href="/user/{author-id}">{author}</a></td>
+		<td class="center">{posts}</td>
+		<td class="center">{views}</td>
+		<td class="last">{date}</td>
 	</tr>
 	<!-- END BLOCK : list-forum-node-->
 </table>
