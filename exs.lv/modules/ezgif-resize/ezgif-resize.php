@@ -8,6 +8,7 @@ if (isset($_POST['file'])) {
 	if (file_exists($fullPath)) {
 
 		$imsize = getimagesize($fullPath);
+		$fsize = filesize($fullPath);
 
 		$width = (int) $_POST['width'];
 		$height = (int) $_POST['height'];
@@ -33,6 +34,11 @@ if (isset($_POST['file'])) {
 		}
 
 		$out = 'gif_' . $width . 'x' . $height . '_' . substr(md5(time() . $auth->ip . rand(0, 9999)), 0, 6) . '.gif';
+
+		//only use gifsicle for files larer than 6mb
+		if($fsize > 6291456) {
+			$_POST['method'] = 'gifsicle';
+		}
 
 		switch ($_POST['method']) {
 			case 'im-coalesce':
@@ -126,6 +132,7 @@ if (isset($_POST['file'])) {
 	$fullPath = '/home/www/img.exs.lv/tmp/' . $file;
 	if (file_exists($fullPath)) {
 		$imsize = getimagesize($fullPath);
+		$fsize = filesize($fullPath);
 
 		$tpl->newBlock('resize');
 		$tpl->assign(array(
@@ -134,6 +141,12 @@ if (isset($_POST['file'])) {
 			'width' => $imsize[0],
 			'height' => $imsize[1]
 		));
+
+		//if file is larger than 250px or 2mb use gifsicle by default to save resources
+		if($imsize[0] > 240 or $imsize[1] > 240 or $fsize > 2097152) {
+			$tpl->assign('gifsicle', ' selected="selected"');
+		}
+
 	} else {
 		set_flash('File not found :(', 'error');
 		redirect('/resize');

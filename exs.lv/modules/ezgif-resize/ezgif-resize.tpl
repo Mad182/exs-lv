@@ -43,7 +43,7 @@
 	<label for="method">Resize method*:</label><br />
 	<select name="method" id="method">
 		<option value="im">ImageMagick</option>
-		<option value="gifsicle">Gifsicle</option>
+		<option value="gifsicle"{gifsicle}>Gifsicle</option>
 		<option value="im-coalesce">ImageMagick + coalesce</option>
 	</select>
 	</p>
