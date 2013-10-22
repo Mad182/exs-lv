@@ -50,7 +50,14 @@ body {
 	border-radius: 2px;
 }
 #forum th{
-border:0;font-weight:400;color:#eee;text-align:left;font-size:11px;line-height:14px;height:14px;font-family:Tahoma,Geneva,sans-serif;padding:7px 8px 9px;
+	border:0;
+	font-weight:400;
+	color:#eee;text-align:left;
+	font-size:11px;
+	line-height:14px;
+	height:14px;font-family:
+	Tahoma,Geneva,sans-serif;
+	padding:7px 8px 9px;
 	background: #222 url('http://img.exs.lv/maadinsh/texture_2.jpg') repeat;
 
 }
