@@ -47,7 +47,7 @@ $(document).ready(function() {
 	$('.confirm').live('click', function(){
 		return confirm("Vai tiešām vēlies veikt šo darbību?");
 	});
-	
+
 	$('.spoiler-title').live('click', function() {
 		$(this).siblings('.spoiler-content').toggle(200);
 		return false;
@@ -137,16 +137,22 @@ $(document).ready(function() {
 
 	$('.mb-icon').fadeTo(150, 0.45);
 
+	/* flash message (brīdinājum un paziņojumu) aizvēršana */
+	$('#close-flash-message').live('click', function (e) {
+		$('#flash-message').fadeOut(500);
+		e.preventDefault();
+	});
+
 	/* load page contents with ajax */
 	$('.ajax-module, .ajax-module-mobile').live('click', function (e) {
 
 		var href = $(this).attr("href");
 		var title = $(this).attr("title");
-	
+
 		if(typeof(title) == 'undefined') {
 			title = '';
 		}
-	
+
 		$('#current-module').fadeTo(120, 0.7);
 		$('#current-module').load(href, function() {
 			$('#current-module').fadeTo(150, 1);

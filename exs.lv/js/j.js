@@ -291,8 +291,6 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-
-
 	$('.mb-rater, .mb-icon').hover(
 		function () {
 			$(this).fadeTo(150, 1)
@@ -313,10 +311,12 @@ $(document).ready(function () {
 		}
 	);
 
+	/* pārbauda vai lietotājs eksistē, piemēram pie reģistrācijas vai nika maiņas */
 	$('.usercheck').live('change', function () {
 		$('.usercheck-response').load('/userexists/?user=' + encodeURIComponent($(this).val()));
 	});
 
+	/* flash message (brīdinājum un paziņojumu) aizvēršana */
 	$('#close-flash-message').live('click', function (e) {
 		$('#flash-message').fadeOut(500);
 		e.preventDefault();
