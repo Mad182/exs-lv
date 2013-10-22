@@ -7,6 +7,7 @@
 <meta name="googlebot" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
+<script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
 </head>
 
 <body>
