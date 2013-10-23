@@ -60,7 +60,7 @@ tinymce.init({
 tinymce.init({
 		selector: "textarea",
 		plugins: [
-			"autolink lists paste image anchor code paste"
+			"autolink lists paste image anchor code"
 		],
 
 		toolbar1: "bold italic underline strikethrough | undo redo | bullist numlist | link unlink image blockquote code",
