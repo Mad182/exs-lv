@@ -50,7 +50,7 @@
 		<a href="{url}/close" id="close-{id}" class="mb-icon mb-close"><img src="http://exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" /></a>
 		<!-- START BLOCK : mb-edit-close-->
 		<!-- START BLOCK : mb-edit-unclose-->
-		<a href="{url}/unclose" id="unclose-{id}" class="mb-icon mb-unclose"><img src="http://exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" /></a>
+		<a href="{url}/open" id="unclose-{id}" class="mb-icon mb-unclose"><img src="http://exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" /></a>
 		<!-- START BLOCK : mb-edit-unclose-->
 		<!-- START BLOCK : mb-delete-->
 		<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}"><img src="http://exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" /></a>
