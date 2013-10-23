@@ -49,8 +49,19 @@ body {
 	font-size: 13px;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #ddd;
+	margin: 8px -1px 0;
 }
-
 .mb-create {
 	font-size: 11px;
+}
+
+#wrapper .box {
+	border: 1px dotted #eaeaea;
+	padding: 5px;
+	margin: 0 -1px 8px;
+	border-top: 0;
+}
+
+#wrapper .box .core-pager {
+	margin: 6px 0 2px;
 }

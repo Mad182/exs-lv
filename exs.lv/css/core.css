@@ -583,12 +583,6 @@ table.players .blue td {
 .box .ajaxbox {
 	overflow: hidden;
 	z-index: 2;
-	padding: 2px 0 5px;
-}
-
-.monitor .ajaxbox {
-	padding: 5px 2px 2px;
-	font-size: 90%;
 }
 
 /* spelu monitori */
@@ -1127,8 +1121,8 @@ a.friend:hover {
 }
 
 #comments-ajax-list .av, .user-actions .av, #miniblog-list li li .av {
-	width: 45px;
-	height: 45px;
+	width: 40px;
+	height: 40px;
 }
 
 .user-actions {
@@ -1161,7 +1155,7 @@ a.friend:hover {
 }
 
 .event-content {
-	margin: 0 0 0 58px;
+	margin: 0 0 0 56px;
 	overflow: hidden;
 }
 
@@ -3006,10 +3000,6 @@ ul.taged {
 	outline: none;
 }
 
-#lat p {
-	margin: 0;
-	padding: 2px 0;
-}
 /* fancybox */
 #fancybox-loading {
 	position: fixed;

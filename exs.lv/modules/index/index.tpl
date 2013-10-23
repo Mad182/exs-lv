@@ -4,7 +4,7 @@
 
 <div class="half-right" style="width: 41%;text-align:left">
 	<h2>Pēdējās aktivitātes</h2>
-		<div class="box" id="last-action-list">
+		<div id="last-action-list">
 		{index-log}
 	</div>
 	{index-right}
