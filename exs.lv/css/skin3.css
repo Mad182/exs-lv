@@ -65,3 +65,7 @@ body {
 #wrapper .box .core-pager {
 	margin: 6px 0 2px;
 }
+
+.imgs a, .imgs a:hover {
+	border: 0;
+}
