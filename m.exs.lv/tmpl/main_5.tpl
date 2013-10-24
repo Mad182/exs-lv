@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>{page-title}</title>
-<meta http-equiv="content-language" content="lv">
 <meta name="googlebot" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
