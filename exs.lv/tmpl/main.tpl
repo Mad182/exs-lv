@@ -504,30 +504,41 @@ tinymce.init({
 <div class="c"></div>
 </div>
 <div id="footer">
-<div id="online-users">
-	<ul id="ucl"><li id="ucd"></li><li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li><li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li><li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li><li class="admin"><a href="/lietotaji/klase/1">Administrators</a></li></ul>
-	Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span id="online-list">{page-onlineusers}</span>
-</div>
-<div class="infoblock">
-	Jaunākie raksti: {footer-topics}
-</div>
-<div class="infoblock">
-	Jaunākais miniblogos: {footer-mb}
-</div>
-<div class="infoblock">
-	<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
-	<p>Juridiskā adrese: Sporta iela 7, Ikšķile, LV-5052<br />Reģ. nr. 40103293710</p>
-	<p>E-pasts: info@exs.lv<br />Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.</p>
-</div>
-<div class="infoblock">
-	<ul id="internal-links">
-		<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-		<li><a href="/sitemap">Lapas karte</a></li>
-		<li><a href="/reklama">Reklāma portālā</a></li>
-	</ul>
-	<p>Teamspeak 3:<br />ts.exs.lv</p>
-</div>
-<div class="c"></div>
+	<div id="online-users">
+		<ul id="ucl"><li id="ucd"></li><li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li><li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li><li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li><li class="admin"><a href="/lietotaji/klase/1">Administrators</a></li></ul>
+		Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span id="online-list">{page-onlineusers}</span>
+	</div>
+	<div class="infoblock">
+		<div class="inner">
+			Jaunākie raksti: {footer-topics}
+		</div>
+	</div>
+	<div class="infoblock">
+		<div class="inner">
+			Jaunākais miniblogos: {footer-mb}
+		</div>
+	</div>
+	<div class="infoblock">
+		<div class="inner">
+			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+			<p>
+				Juridiskā adrese: Sporta iela 7, Ikšķile, LV-5052<br />
+				Reģ. nr. 40103293710<br />E-pasts: info@exs.lv<br />
+				Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.
+			</p>
+		</div>
+	</div>
+	<div class="infoblock">
+		<div class="inner">
+			<ul id="internal-links">
+				<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+				<li><a href="/sitemap">Lapas karte</a></li>
+				<li><a href="/reklama">Reklāma portālā</a></li>
+			</ul>
+			<p>Teamspeak 3:<br />ts.exs.lv</p>
+		</div>
+	</div>
+	<div class="c"></div>
 </div>
 </div>
 

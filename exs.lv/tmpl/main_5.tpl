@@ -322,32 +322,40 @@ tinymce.init({
 			Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px;">{page-onlineusers}</span>
 		</div>
 		<div class="infoblock">
-			Jaunākie raksti: {footer-topics}
-		</div>
-		<div class="infoblock">
-			Jaunākais miniblogos: {footer-mb}
-		</div>
-		<div class="infoblock">
-			<div class="box">
-				Meklēt lapā ar <a href="/search/">google</a>:
-				<form method="get" action="/search/" id="search-form">
-					<fieldset>
-						<input type="hidden" name="cx" value="014557532850324448350:xba0xdikdkm" />
-						<input type="hidden" name="cof" value="FORID:11" />
-						<input type="hidden" name="ie" value="UTF-8" />
-						<input class="text" name="q" size="16" type="text" value="" />
-						<input value="Meklēt" class="submit button primary" type="submit" />
-					</fieldset>
-				</form>
+			<div class="inner">
+				Jaunākie raksti: {footer-topics}
 			</div>
-			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
 		</div>
 		<div class="infoblock">
-			<ul id="internal-links">
-				<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-				<li><a href="/sitemap">Lapas karte</a></li>
-				<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
-			</ul>
+			<div class="inner">
+				Jaunākais miniblogos: {footer-mb}
+			</div>
+		</div>
+		<div class="infoblock">
+			<div class="inner">
+				<div class="box">
+					Meklēt lapā ar <a href="/search/">google</a>:
+					<form method="get" action="/search/" id="search-form">
+						<fieldset>
+							<input type="hidden" name="cx" value="014557532850324448350:xba0xdikdkm" />
+							<input type="hidden" name="cof" value="FORID:11" />
+							<input type="hidden" name="ie" value="UTF-8" />
+							<input class="text" name="q" size="16" type="text" value="" />
+							<input value="Meklēt" class="submit button primary" type="submit" />
+						</fieldset>
+					</form>
+				</div>
+				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+			</div>
+		</div>
+		<div class="infoblock">
+			<div class="inner">
+				<ul id="internal-links">
+					<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+					<li><a href="/sitemap">Lapas karte</a></li>
+					<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+				</ul>
+			</div>
 		</div>
 		<div class="c"></div>
 	</div>

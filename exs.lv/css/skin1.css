@@ -416,17 +416,10 @@ border-bottom: 1px solid #1A1A1A;
 margin: 0;
 padding: 8px 0 0
 }
-#footer div.infoblock {
-width: 223px;
+#footer .infoblock .inner {
 color: #777;
-height: 130px;
-float: left;
-display: inline;
 background: #333;
 border: 1px solid #222;
-font-size: 11px;
-margin: 4px;
-padding: 6px
 }
 #footer div.infoblock ul {
 margin: 4px 0;

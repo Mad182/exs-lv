@@ -323,18 +323,21 @@ tinymce.init({
 			Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px;">{page-onlineusers}</span>
 		</div>
 		<div class="infoblock">
-			Jaunākie raksti: {footer-topics}
+			<div class="inner">
+				Jaunākie raksti: {footer-topics}
+			</div>
 		</div>
 		<div class="infoblock">
-			Jaunākais miniblogos: {footer-mb}
+			<div class="inner">
+				Jaunākais miniblogos: {footer-mb}
+			</div>
 		</div>
 		<div class="infoblock">
-			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
-			<p>Juridiskā adrese: Sporta iela 7, Ikšķile, LV-5052<br />Reģ. nr. 40103293710</p>
-			<p>E-pasts: info@exs.lv<br />Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.</p>
-		</div>
-		<div class="infoblock">
-
+			<div class="inner">
+				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+				<p>Juridiskā adrese: Sporta iela 7, Ikšķile, LV-5052<br />Reģ. nr. 40103293710</p>
+				<p>E-pasts: info@exs.lv<br />Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.</p>
+			</div>
 		</div>
 		<div class="c"></div>
 	</div>

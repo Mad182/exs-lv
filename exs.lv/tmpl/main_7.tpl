@@ -411,21 +411,29 @@ tinymce.init({
 			Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px;">{page-onlineusers}</span>
 		</div>
 		<div class="infoblock">
-			Jaunākie raksti: {footer-topics}
+			<div class="inner">
+				Jaunākie raksti: {footer-topics}
+			</div>
 		</div>
 		<div class="infoblock">
-			Jaunākais miniblogos: {footer-mb}
+			<div class="inner">
+				Jaunākais miniblogos: {footer-mb}
+			</div>
 		</div>
 		<div class="infoblock">
-			<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
-			<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
+			<div class="inner">
+				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+				<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
+			</div>
 		</div>
 		<div class="infoblock">
-			<ul id="internal-links">
-				<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-				<li><a href="/sitemap">Lapas karte</a></li>
-				<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
-			</ul>
+			<div class="inner">
+				<ul id="internal-links">
+					<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+					<li><a href="/sitemap">Lapas karte</a></li>
+					<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+				</ul>
+			</div>
 		</div>
 		<div class="c"></div>
 	</div>
