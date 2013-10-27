@@ -25,7 +25,7 @@
 	var c_url = "{page-url}";
 </script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css" />
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},skin{page-skinid}.css" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},skin{page-skinid}.css,pm.css" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -103,6 +103,7 @@ tinymce.init({
 		<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 		<div id="tools-bar">
 		<ul id="site-links">
+			<li><a href="/blogs">Blogi</a></li>
 			<li><a href="/img">Bilžu hostings</a></li>
 			<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 			<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
@@ -120,7 +121,6 @@ tinymce.init({
 		<ul id="top-menu-left">
 			<li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
 			<li{cat-sel-101}><a href="/forums">Forums</a></li>
-			<li{cat-sel-110}><a href="/blogs">Blogi</a></li>
 			<li{cat-sel-599}><a href="/runescape" title="RuneScape">RS{idb-count}</a></li>
 			<li{cat-sel-81}><a href="/speles">Spēles</a></li>
 			<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
@@ -151,8 +151,6 @@ tinymce.init({
 					<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
 					<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
 					<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
-					<li{cat-sel-539}><a href="/memcached">Cache</a></li>
-					<li{cat-sel-763}><a href="/serverinfo">Servera statuss</a></li>
 					<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
 					<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
 					<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
@@ -168,7 +166,7 @@ tinymce.init({
 			<!-- END BLOCK : user-write-->
 			<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
 			<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-			<li{cat-sel-585}><a href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+			<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
 			<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
 		</ul>
 		<!-- END BLOCK : user-menu-->
