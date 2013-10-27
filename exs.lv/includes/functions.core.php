@@ -2555,39 +2555,18 @@ function get_latest_posts() {
 function get_index_events() {
 	global $db, $lang;
 	$out = '';
-	$actions = $db->get_results("SELECT
-		`userlogs`.`action`,
-		`userlogs`.`time`,
-		`userlogs`.`avatar`,
-		`userlogs`.`id`,
-		`userlogs`.`user`,
-		`users`.`avatar` AS `uavatar`,
-		`users`.`av_alt`,
-		`users`.`nick`
-	FROM
-		`userlogs`,
-		`users`
-	WHERE
-		`users`.`id` = `userlogs`.`user` AND
-		`userlogs`.`lang` = '$lang'
-	ORDER BY
-		`userlogs`.`time` DESC
-	LIMIT 5");
+	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ORDER BY `time` DESC LIMIT 5");
 
 	if ($actions) {
 		$out .= '<ul class="user-actions">';
 		foreach ($actions as $action) {
+
+			$user = get_user($action->user);
 			if (!$action->avatar) {
-				if ($action->av_alt) {
-					$action->avatar = 'http://img.exs.lv/userpic/small/' . $action->uavatar;
-				} elseif ($action->uavatar) {
-					$action->avatar = 'http://img.exs.lv/userpic/medium/' . $action->uavatar;
-				} else {
-					$action->avatar = 'http://img.exs.lv/userpic/small/none.png';
-				}
+				$action->avatar = get_avatar($user, 's');
 			}
 
-			$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $action->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
+			$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
 		$out .= '</ul>';
 	}
