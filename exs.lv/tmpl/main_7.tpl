@@ -91,92 +91,89 @@ tinymce.init({
 <div id="wrapper">
 	<div id="container">
 		<div id="header">
-			<div id="header-overlay">
-				<div id="logo">
+			<div id="logo">
+				<div id="header-stuff">{ad-top}</div>
+				<div id="tools-bar">
+					<ul id="site-links">
+						<li><a href="http://exs.lv/">exs.lv community</a></li>
+						<li><a href="http://m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+						<li><a href="/img">Bilžu hostings</a></li>
+						<li><a href="/sitemap">Lapas karte</a></li>
+					</ul>
+					{current-date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
+				</div>
 
-					<div id="header-stuff">{ad-top}</div>
-					<div id="tools-bar">
-						<ul id="site-links">
-							<li><a href="http://exs.lv/">exs.lv community</a></li>
-							<li><a href="http://m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-							<li><a href="/img">Bilžu hostings</a></li>
-							<li><a href="/sitemap">Lapas karte</a></li>
-						</ul>
-						{current-date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
+				<a href="/" title="League of Legends portāls">
+					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
+						<img src="http://img.exs.lv/lol-headers/header-1.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-2.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-3.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-4.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-5.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-6.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-7.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-8.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-9.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-10.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-11.jpg" alt="" />
+						<img src="http://img.exs.lv/lol-headers/header-12.jpg" alt="" />
 					</div>
+				</a>
 
-					<a href="/" title="League of Legends portāls">
-						<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
-							<img src="http://img.exs.lv/lol-headers/header-1.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-2.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-3.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-4.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-5.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-6.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-7.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-8.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-9.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-10.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-11.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-12.jpg" alt="" />
-						</div>
-					</a>
+			</div>
+			<div id="top-menu">
+				<ul id="top-menu-left">
+					<li{cat-sel-1755}><a class="first" href="/">Sākumlapa</a></li>
+					<li{cat-sel-1122}><a href="/forums">Forums</a></li>
+				</ul>
+				<!-- START BLOCK : user-menu-->
+				<ul id="top-menu-right">
+					<li{profile-sel}><a class="first" href="/user/{currentuser-id}">Profils</a></li>
+					<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+					<!-- START BLOCK : user-modlink-->
+					<li{cat-sel-83}><a href="#">Mod</a>
+						<ul>
+							<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+							<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+							<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
+						</ul>
+					</li>
+					<!-- END BLOCK : user-modlink-->
+					<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
 
-				</div>
-				<div id="top-menu">
-					<ul id="top-menu-left">
-						<li{cat-sel-1755}><a class="first" href="/">Sākumlapa</a></li>
-						<li{cat-sel-1122}><a href="/forums">Forums</a></li>
-					</ul>
-					<!-- START BLOCK : user-menu-->
-					<ul id="top-menu-right">
-						<li{profile-sel}><a class="first" href="/user/{currentuser-id}">Profils</a></li>
-						<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
-						<!-- START BLOCK : user-modlink-->
-						<li{cat-sel-83}><a href="#">Mod</a>
-							<ul>
-								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-								<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
-							</ul>
-						</li>
-						<!-- END BLOCK : user-modlink-->
-						<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+					<!-- START BLOCK : user-approvelink-->
+					<li{cat-sel-1756}><a href="/write/list">Raksti{new-approve}</a></li>
+					<!-- END BLOCK : user-approvelink-->
+					<!-- START BLOCK : user-write-->
+					<li{cat-sel-1756}><a href="/write">Raksti</a></li>
+					<!-- END BLOCK : user-write-->
 
-						<!-- START BLOCK : user-approvelink-->
-						<li{cat-sel-1756}><a href="/write/list">Raksti{new-approve}</a></li>
-						<!-- END BLOCK : user-approvelink-->
-						<!-- START BLOCK : user-write-->
-						<li{cat-sel-1756}><a href="/write">Raksti</a></li>
-						<!-- END BLOCK : user-write-->
-
-						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
-						<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
-					</ul>
-					<!-- END BLOCK : user-menu-->
-					<!-- START BLOCK : login-form-->
-					<ul id="top-menu-right">
-						<li{cat-sel-106}><a class="first" href="/register">Reģistrēties</a></li>
-						<li>
-							<form id="login-form" action="{page-loginurl}" method="post">
-								<fieldset>
-									<input type="hidden" name="xsrf_token" value="{xsrf}" />
-									<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-									<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-									<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-								</fieldset>
-							</form>
-						</li>
-						<li>
-							<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=efe004fdc35396fe598032be2213fb34&amp;redirect=http%3A%2F%2Flol.exs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=efe004fdc35396fe598032be2213fb34&amp;redirect=http%3A%2F%2Flol.exs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
-						</li>
-						<li>
-							<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
-						</li>
-					</ul>
-					<!-- END BLOCK : login-form-->
-				</div>
+					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+					<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
+					<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+				</ul>
+				<!-- END BLOCK : user-menu-->
+				<!-- START BLOCK : login-form-->
+				<ul id="top-menu-right">
+					<li{cat-sel-106}><a class="first" href="/register">Reģistrēties</a></li>
+					<li>
+						<form id="login-form" action="{page-loginurl}" method="post">
+							<fieldset>
+								<input type="hidden" name="xsrf_token" value="{xsrf}" />
+								<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+								<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+								<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+							</fieldset>
+						</form>
+					</li>
+					<li>
+						<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=efe004fdc35396fe598032be2213fb34&amp;redirect=http%3A%2F%2Flol.exs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=efe004fdc35396fe598032be2213fb34&amp;redirect=http%3A%2F%2Flol.exs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+					</li>
+					<li>
+						<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+					</li>
+				</ul>
+				<!-- END BLOCK : login-form-->
 			</div>
 		</div>
 		<div class="c"></div>

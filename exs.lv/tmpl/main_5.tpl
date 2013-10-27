@@ -93,81 +93,79 @@ tinymce.init({
 <div id="wrapper">
 	<div id="container">
 		<div id="header">
-			<div id="header-overlay">
-				<div id="logo">
-					<div id="header-stuff">{ad-top}</div>
-					<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
-					<div id="tools-bar">
-						<ul id="site-links">
-							<li><a href="http://exs.lv/">exs.lv community</a></li>
-							<li><a href="http://m.rp.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-							<li><a href="/img">Bilžu hostings</a></li>
-							<li><a href="/sitemap">Lapas karte</a></li>
+			<div id="logo">
+				<div id="header-stuff">{ad-top}</div>
+				<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
+				<div id="tools-bar">
+					<ul id="site-links">
+						<li><a href="http://exs.lv/">exs.lv community</a></li>
+						<li><a href="http://m.rp.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+						<li><a href="/img">Bilžu hostings</a></li>
+						<li><a href="/sitemap">Lapas karte</a></li>
+					</ul>
+					<strong><a href="/">EXS MTA RolePlay</a></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">Serveris:</span> mta.exs.lv&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
+				</div>
+			</div>
+			<div id="top-menu">
+				<ul id="top-menu-left">
+					<li{cat-sel-1194}><a class="first" href="/">Forums</a></li>
+					<li><a href="http://mta.exs.lv/" class="external">UCP</a></li>
+				</ul>
+				<!-- START BLOCK : user-menu-->
+				<ul id="top-menu-right">
+					<li{profile-sel}><a class="first" href="/user/{currentuser-id}">Profils</a></li>
+					<!-- START BLOCK : user-modlink-->
+					<li{cat-sel-83}><a href="#">Mod</a>
+						<ul>
+							<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+							<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+							<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
 						</ul>
-						<strong><a href="/">EXS MTA RolePlay</a></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">Serveris:</span> mta.exs.lv&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">TeamSpeak:</span> ts.exs.lv
-					</div>
-				</div>
-				<div id="top-menu">
-					<ul id="top-menu-left">
-						<li{cat-sel-1194}><a class="first" href="/">Forums</a></li>
-						<li><a href="http://mta.exs.lv/" class="external">UCP</a></li>
-					</ul>
-					<!-- START BLOCK : user-menu-->
-					<ul id="top-menu-right">
-						<li{profile-sel}><a class="first" href="/user/{currentuser-id}">Profils</a></li>
-						<!-- START BLOCK : user-modlink-->
-						<li{cat-sel-83}><a href="#">Mod</a>
-							<ul>
-								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-								<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
-							</ul>
-						</li>
-						<!-- END BLOCK : user-modlink-->
-						<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-						<!-- START BLOCK : user-approvelink-->
+					</li>
+					<!-- END BLOCK : user-modlink-->
+					<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+					<!-- START BLOCK : user-approvelink-->
 
-						<li{cat-sel-319}><a href="/grupas">Grupas</a>
-							<!-- START BLOCK : mygroups-->
-							<ul id="user-group-menu">
-								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-								<!-- END BLOCK : myg-node-->
-							</ul>
-							<!-- END BLOCK : mygroups-->
-						</li>
+					<li{cat-sel-319}><a href="/grupas">Grupas</a>
+						<!-- START BLOCK : mygroups-->
+						<ul id="user-group-menu">
+							<!-- START BLOCK : myg-node-->
+							<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+							<!-- END BLOCK : myg-node-->
+						</ul>
+						<!-- END BLOCK : mygroups-->
+					</li>
 
-						<!-- END BLOCK : user-approvelink-->
-						<!-- START BLOCK : user-write-->
+					<!-- END BLOCK : user-approvelink-->
+					<!-- START BLOCK : user-write-->
 
-						<!-- END BLOCK : user-write-->
-						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
-						<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
-					</ul>
-					<!-- END BLOCK : user-menu-->
-					<!-- START BLOCK : login-form-->
-					<ul id="top-menu-right">
-						<li{cat-sel-106}><a class="first" href="/register">Reģistrēties</a></li>
-						<li>
-							<form id="login-form" action="{page-loginurl}" method="post">
-								<fieldset>
-									<input type="hidden" name="xsrf_token" value="{xsrf}" />
-									<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-									<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-									<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-								</fieldset>
-							</form>
-						</li>
-						<li>
-							<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=864de6756b2463e0abcca22ff1725c5d&amp;redirect=http%3A%2F%2Frp.exs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=864de6756b2463e0abcca22ff1725c5d&amp;redirect=http%3A%2F%2Frp.exs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
-						</li>
-						<li>
-							<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
-						</li>
-					</ul>
-					<!-- END BLOCK : login-form-->
-				</div>
+					<!-- END BLOCK : user-write-->
+					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+					<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
+					<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+				</ul>
+				<!-- END BLOCK : user-menu-->
+				<!-- START BLOCK : login-form-->
+				<ul id="top-menu-right">
+					<li{cat-sel-106}><a class="first" href="/register">Reģistrēties</a></li>
+					<li>
+						<form id="login-form" action="{page-loginurl}" method="post">
+							<fieldset>
+								<input type="hidden" name="xsrf_token" value="{xsrf}" />
+								<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+								<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+								<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+							</fieldset>
+						</form>
+					</li>
+					<li>
+						<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=864de6756b2463e0abcca22ff1725c5d&amp;redirect=http%3A%2F%2Frp.exs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=864de6756b2463e0abcca22ff1725c5d&amp;redirect=http%3A%2F%2Frp.exs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+					</li>
+					<li>
+						<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+					</li>
+				</ul>
+				<!-- END BLOCK : login-form-->
 			</div>
 		</div>
 		<div class="c"></div>

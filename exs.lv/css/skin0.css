@@ -19,10 +19,6 @@ html, body {
 	height: 128px;
 	position: relative
 }
-#header-overlay {
-	background: transparent;
-	height: 155px;
-}
 #header {
 	height: 155px;
 }

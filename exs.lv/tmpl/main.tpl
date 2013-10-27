@@ -98,97 +98,95 @@ tinymce.init({
 <div id="wrapper">
 <div id="container">
 <div id="header"{page-persona}>
-	 <div id="header-overlay">
-		<div id="logo">
-			<div id="header-stuff">{ad-top}</div>
-			<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
-			<div id="tools-bar">
-			<ul id="site-links">
-				<li><a href="/img">Bilžu hostings</a></li>
-				<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-				<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
-				<li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
-				<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
-				<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
-				<li><a href="/statistika" title="Statistika">Statistika</a></li>
-				<li><a href="/servers" title="Latvijas Counter Strike serveru saraksts">CS Serveri</a></li>
-				<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
-			</ul>
-			{current-date}
-			</div>
+	<div id="logo">
+		<div id="header-stuff">{ad-top}</div>
+		<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
+		<div id="tools-bar">
+		<ul id="site-links">
+			<li><a href="/img">Bilžu hostings</a></li>
+			<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+			<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
+			<li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
+			<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
+			<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
+			<li><a href="/statistika" title="Statistika">Statistika</a></li>
+			<li><a href="/servers" title="Latvijas Counter Strike serveru saraksts">CS Serveri</a></li>
+			<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
+		</ul>
+		{current-date}
 		</div>
-		<div id="top-menu">
-			<ul id="top-menu-left">
-				<li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
-				<li{cat-sel-101}><a href="/forums">Forums</a></li>
-				<li{cat-sel-110}><a href="/blogs">Blogi</a></li>
-				<li{cat-sel-599}><a href="/runescape" title="RuneScape">RS{idb-count}</a></li>
-				<li{cat-sel-81}><a href="/speles">Spēles</a></li>
-				<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
-				<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
-			</ul>
-			<!-- START BLOCK : user-menu-->
-			<ul id="top-menu-right">
-				<li{profile-sel}><a href="/user/{currentuser-id}">Profils</a></li>
-				<li{cat-sel-319}><a href="/grupas">Grupas</a>
-					<!-- START BLOCK : mygroups-->
-					<ul id="user-group-menu">
-						<!-- START BLOCK : myg-node-->
-						<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-						<!-- END BLOCK : myg-node-->
-					</ul>
-					<!-- END BLOCK : mygroups-->
-				</li>
-				<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
-				<!-- START BLOCK : user-modlink-->
-				<li{cat-sel-83}><a href="#">Mod</a>
-					<ul>
-						<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
-						<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-						<li{cat-sel-1132}><a href="/checkform">Lietotāju meklēšana</a></li>
-						<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
-						<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
-						<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-						<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
-						<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
-						<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
-						<li{cat-sel-539}><a href="/memcached">Cache</a></li>
-						<li{cat-sel-763}><a href="/serverinfo">Servera statuss</a></li>
-						<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
-						<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
-						<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
-					</ul>
-				</li>
-				<!-- END BLOCK : user-modlink-->
-				<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-				<!-- START BLOCK : user-approvelink-->
-				<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
-				<!-- END BLOCK : user-approvelink-->
-				<!-- START BLOCK : user-write-->
-				<li{cat-sel-116}><a href="/write">Raksti</a></li>
-				<!-- END BLOCK : user-write-->
-				<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
-				<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-				<li{cat-sel-585}><a href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
-				<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
-			</ul>
-			<!-- END BLOCK : user-menu-->
-			<!-- START BLOCK : login-form-->
-			<form id="login-form" action="{page-loginurl}" method="post">
-				<fieldset>
-					<input type="hidden" name="xsrf_token" value="{xsrf}" />
-					<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
-					<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-					<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-					<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-					<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+	</div>
+	<div id="top-menu">
+		<ul id="top-menu-left">
+			<li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
+			<li{cat-sel-101}><a href="/forums">Forums</a></li>
+			<li{cat-sel-110}><a href="/blogs">Blogi</a></li>
+			<li{cat-sel-599}><a href="/runescape" title="RuneScape">RS{idb-count}</a></li>
+			<li{cat-sel-81}><a href="/speles">Spēles</a></li>
+			<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
+			<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
+		</ul>
+		<!-- START BLOCK : user-menu-->
+		<ul id="top-menu-right">
+			<li{profile-sel}><a href="/user/{currentuser-id}">Profils</a></li>
+			<li{cat-sel-319}><a href="/grupas">Grupas</a>
+				<!-- START BLOCK : mygroups-->
+				<ul id="user-group-menu">
+					<!-- START BLOCK : myg-node-->
+					<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+					<!-- END BLOCK : myg-node-->
+				</ul>
+				<!-- END BLOCK : mygroups-->
+			</li>
+			<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+			<!-- START BLOCK : user-modlink-->
+			<li{cat-sel-83}><a href="#">Mod</a>
+				<ul>
+					<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
+					<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+					<li{cat-sel-1132}><a href="/checkform">Lietotāju meklēšana</a></li>
+					<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
+					<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
+					<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+					<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
+					<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
+					<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
+					<li{cat-sel-539}><a href="/memcached">Cache</a></li>
+					<li{cat-sel-763}><a href="/serverinfo">Servera statuss</a></li>
+					<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
+					<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
+					<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
+				</ul>
+			</li>
+			<!-- END BLOCK : user-modlink-->
+			<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+			<!-- START BLOCK : user-approvelink-->
+			<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
+			<!-- END BLOCK : user-approvelink-->
+			<!-- START BLOCK : user-write-->
+			<li{cat-sel-116}><a href="/write">Raksti</a></li>
+			<!-- END BLOCK : user-write-->
+			<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
+			<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+			<li{cat-sel-585}><a href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+			<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+		</ul>
+		<!-- END BLOCK : user-menu-->
+		<!-- START BLOCK : login-form-->
+		<form id="login-form" action="{page-loginurl}" method="post">
+			<fieldset>
+				<input type="hidden" name="xsrf_token" value="{xsrf}" />
+				<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
+				<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+				<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+				<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+				<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
-					<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+				<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
-				</fieldset>
-			</form>
-			<!-- END BLOCK : login-form-->
-		</div>
+			</fieldset>
+		</form>
+		<!-- END BLOCK : login-form-->
 	</div>
 </div>
 <div class="c"></div>

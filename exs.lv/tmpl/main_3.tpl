@@ -103,65 +103,63 @@ tinymce.init({
 <div id="wrapper">
 	<div id="container">
 		<div id="header"{page-persona}>
-			 <div id="header-overlay">
-				<div id="logo">
-					<a id="exs-logo" href="/" title="Uz sākumlapu">coding.lv</a>
-					<div id="tools-bar">
-						<ul id="site-links">
-							<li><a href="http://exs.lv/">exs.lv community</a></li>
-							<li><a href="http://m.coding.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-							<li><a href="/img">Bilžu hostings</a></li>
-							<li><a href="/sitemap">Lapas karte</a></li>
+			<div id="logo">
+				<a id="exs-logo" href="/" title="Uz sākumlapu">coding.lv</a>
+				<div id="tools-bar">
+					<ul id="site-links">
+						<li><a href="http://exs.lv/">exs.lv community</a></li>
+						<li><a href="http://m.coding.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+						<li><a href="/img">Bilžu hostings</a></li>
+						<li><a href="/sitemap">Lapas karte</a></li>
+					</ul>
+					{current-date}
+				</div>
+			</div>
+			<div id="top-menu">
+				<ul id="top-menu-left">
+					<li{cat-sel-796}><a href="/">Forums</a></li>
+					<li{cat-sel-234}><a href="/html-pamati">HTML</a></li>
+					<li{cat-sel-235}><a href="/css-pamati">CSS</a></li>
+				</ul>
+				<!-- START BLOCK : user-menu-->
+				<ul id="top-menu-right">
+					<li{profile-sel}><a href="/user/{currentuser-id}">Profils</a></li>
+					<!-- START BLOCK : user-modlink-->
+					<!--<li{cat-sel-83}><a href="#">Mod</a>
+						<ul>
+							<li{cat-sel-83}><a href="http://exs.lv/moderatoriem">Forums</a></li>
+							<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+							<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
 						</ul>
-						{current-date}
-					</div>
-				</div>
-				<div id="top-menu">
-					<ul id="top-menu-left">
-						<li{cat-sel-796}><a href="/">Forums</a></li>
-						<li{cat-sel-234}><a href="/html-pamati">HTML</a></li>
-						<li{cat-sel-235}><a href="/css-pamati">CSS</a></li>
-					</ul>
-					<!-- START BLOCK : user-menu-->
-					<ul id="top-menu-right">
-						<li{profile-sel}><a href="/user/{currentuser-id}">Profils</a></li>
-						<!-- START BLOCK : user-modlink-->
-						<!--<li{cat-sel-83}><a href="#">Mod</a>
-							<ul>
-								<li{cat-sel-83}><a href="http://exs.lv/moderatoriem">Forums</a></li>
-								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-							</ul>
-						</li>-->
-						<!-- END BLOCK : user-modlink-->
-						<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-						<!-- START BLOCK : user-approvelink-->
+					</li>-->
+					<!-- END BLOCK : user-modlink-->
+					<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+					<!-- START BLOCK : user-approvelink-->
 
-						<!-- END BLOCK : user-approvelink-->
-						<!-- START BLOCK : user-write-->
+					<!-- END BLOCK : user-approvelink-->
+					<!-- START BLOCK : user-write-->
 
-						<!-- END BLOCK : user-write-->
-						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a href="/piezimes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
-						<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
-					</ul>
-					<!-- END BLOCK : user-menu-->
-					<!-- START BLOCK : login-form-->
-					<form id="login-form" action="{page-url}" method="post">
-						<fieldset>
-							<input type="hidden" name="xsrf_token" value="{xsrf}" />
-							<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
-							<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15010793' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+					<!-- END BLOCK : user-write-->
+					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+					<li{cat-sel-585}><a href="/piezimes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
+					<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+				</ul>
+				<!-- END BLOCK : user-menu-->
+				<!-- START BLOCK : login-form-->
+				<form id="login-form" action="{page-url}" method="post">
+					<fieldset>
+						<input type="hidden" name="xsrf_token" value="{xsrf}" />
+						<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
+						<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+						<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+						<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+						<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('http://api.draugiem.lv/authorize/?app=15010793&amp;hash=3cc3f8ba788ea2a26791114823fa1f9e&amp;redirect=http%3A%2F%2Fcoding.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15010793' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
-							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+						<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
-						</fieldset>
-					</form>
-					<!-- END BLOCK : login-form-->
-				</div>
+					</fieldset>
+				</form>
+				<!-- END BLOCK : login-form-->
 			</div>
 		</div>
 		<div class="c"></div>

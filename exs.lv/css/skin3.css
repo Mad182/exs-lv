@@ -17,9 +17,14 @@ body {
 	height: 1100px;
 	min-height: 1100px;
 }
-#header-overlay {
-	background: url('http://img.exs.lv/bildes/overlay.png') no-repeat 0 0;
-	height: 160px;
+#logo {
+	border: 3px solid #fff;
+	border-top: 0;
+}
+#top-menu {
+	border: 3px solid #fff;
+	border-top: 2px solid #fff;
+	margin: 0;
 }
 #forum th {
 	color: #eee;
