@@ -461,7 +461,6 @@ html .banned {
 	margin: 0;
 	padding: 8px;
 	float: left;
-	display: inline;
 }
 
 #left {
@@ -903,6 +902,8 @@ a.link3 {
 	margin: 0;
 	z-index: 2;
 	padding: 10px 3px;
+	overflow: auto;
+	width: 100%
 }
 
 #wrapper .red, #wrapper .r {

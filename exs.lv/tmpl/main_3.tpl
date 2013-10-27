@@ -25,7 +25,7 @@
 	var c_url = "{page-url}";
 	window.google_analytics_uacct = "UA-4190387-9";
 </script>
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css" type="text/css">
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css,pm.css" type="text/css">
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -172,43 +172,6 @@ tinymce.init({
 		<div class="c"></div>
 		<!-- END BLOCK : flash-message-->
 
-		<div id="content" class="{layout-options}">
-
-			<div id="inner-content">
-
-				<!-- START BLOCK : page-path-->
-				<p id="breadcrumbs">{page-path}</p>
-				<!-- END BLOCK : page-path-->
-				<!-- START BLOCK : profile-menu-->
-				<h1>{user-nick}{user-menu-add}</h1>
-
-				<ul class="tabs">
-					<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-					<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-					<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
-					<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
-					<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
-				</ul>
-
-				<!-- END BLOCK : profile-menu-->
-				<!-- INCLUDE BLOCK : module-core-error -->
-				<div id="current-module">
-					<!-- INCLUDE BLOCK : module-currrent -->
-				</div>
-				{contentz}
-				<div class="c"></div>
-				<!-- START BLOCK : ads-google-->
-				<!-- END BLOCK : ads-google-->
-				<!-- START BLOCK : ads-google-wide-->
-				<!-- END BLOCK : ads-google-wide-->
-
-				<div class="content-block">{ad-728}</div>
-
-				<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
-
-			</div>
-
-		</div>
 		<!-- START BLOCK : main-layout-right-->
 		<div id="right">
 
@@ -309,6 +272,45 @@ tinymce.init({
 
 		</div>
 		<!-- END BLOCK : main-layout-right-->
+
+		<div id="content" class="{layout-options}">
+
+			<div id="inner-content">
+
+				<!-- START BLOCK : page-path-->
+				<p id="breadcrumbs">{page-path}</p>
+				<!-- END BLOCK : page-path-->
+				<!-- START BLOCK : profile-menu-->
+				<h1>{user-nick}{user-menu-add}</h1>
+
+				<ul class="tabs">
+					<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
+					<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
+					<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
+					<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
+					<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+				</ul>
+
+				<!-- END BLOCK : profile-menu-->
+				<!-- INCLUDE BLOCK : module-core-error -->
+				<div id="current-module">
+					<!-- INCLUDE BLOCK : module-currrent -->
+				</div>
+				{contentz}
+				<div class="c"></div>
+				<!-- START BLOCK : ads-google-->
+				<!-- END BLOCK : ads-google-->
+				<!-- START BLOCK : ads-google-wide-->
+				<!-- END BLOCK : ads-google-wide-->
+
+				<div class="content-block">{ad-728}</div>
+
+				<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
+
+			</div>
+
+		</div>
+
 		<div class="c"></div>
 	</div>
 	<div id="footer">
