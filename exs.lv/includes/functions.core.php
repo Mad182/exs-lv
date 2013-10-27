@@ -1890,14 +1890,15 @@ function get_youtube($videoid, $force = false) {
 			 * ja 2 sekunžu laikā neizdodas pieslēgties, metam mieru
 			 * iepriekš tas salauza exu */
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'http://gdata.youtube.com/feeds/api/videos/' . $safe);
+			curl_setopt($ch, CURLOPT_URL, 'http://gdata.youtube.com/feeds/api/videos/' . $videoid);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); 
 			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 			$contents = curl_exec($ch);
 			curl_close($ch);
 
 			if ($contents) {
-				$data->yt_restricted = (bool) stristr($contents, "Syndication of this video was restricted");
+				$data->yt_restricted = (bool) stristr($contents, "noembed");
 				$data->yt_title = stripslashes(get_between($contents, "<media:title type='plain'>", '</media:title>'));
 				$data->yt_description = stripslashes(get_between($contents, "<media:description type='plain'>", '</media:description>'));
 			} else {
