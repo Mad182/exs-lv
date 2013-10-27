@@ -489,13 +489,7 @@ function youtube_title($text) {
 function youtube_title_callback($matches) {
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
-	if (!$video) {
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
-		$title = get_between($contents, "<media:title type='plain'>", '</media:title>');
-	} else {
-		$title = $video->yt_title;
-	}
-	return ' Video: ' . $title . ' ';
+	return ' Video: ' . $video->yt_title . ' ';
 }
 
 function get_youtube_video_small($matches) {
@@ -511,27 +505,8 @@ function embed_youtube($matches, $wide = 0) {
 
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
-	if (!$video) {
-		$contents = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $safe);
-		if ($contents) {
-			if (stristr($contents, "Syndication of this video was restricted by its owner")) {
-				$restricted = 1;
-			} else {
-				$restricted = 0;
-			}
-			$title = sanitize(stripslashes(get_between($contents, "<media:title type='plain'>", '</media:title>')));
-			$description = sanitize(stripslashes(get_between($contents, "<media:description type='plain'>", '</media:description>')));
-			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted) VALUES ('$safe','$title','$description','$restricted')");
 
-		} else {
-			$title = 'Video';
-		}
-	} else {
-		$title = $video->yt_title;
-		$description = $video->yt_description;
-		$restricted = $video->yt_restricted;
-	}
-	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(stripslashes($title), 100)));
+	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(stripslashes($video->yt_title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 
 	$width = 380;
@@ -1906,9 +1881,38 @@ function get_youtube($videoid, $force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
 		$data = $db->get_row("SELECT * FROM `ytlocal` WHERE `yt_id` = '" . sanitize($videoid) . "'");
-		if (!empty($data)) {
-			$m->set('yt_' . $videoid, $data, false, 3600);
+
+		if(empty($data)) {
+
+			$data = new Stdclass;
+
+			/* iegūst datus no youtube API
+			 * ja 2 sekunžu laikā neizdodas pieslēgties, metam mieru
+			 * iepriekš tas salauza exu */
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'http://gdata.youtube.com/feeds/api/videos/' . $safe);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); 
+			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+			$contents = curl_exec($ch);
+			curl_close($ch);
+
+			if ($contents) {
+				$data->yt_restricted = (bool) stristr($contents, "Syndication of this video was restricted");
+				$data->yt_title = stripslashes(get_between($contents, "<media:title type='plain'>", '</media:title>'));
+				$data->yt_description = stripslashes(get_between($contents, "<media:description type='plain'>", '</media:description>'));
+			} else {
+				$data->yt_restricted = 0;
+				$data->yt_title = 'youtube.com';
+				$data->yt_description = '';
+			}
+
+			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted) VALUES ('" . sanitize($videoid) . "','".sanitize($data->yt_title)."','".sanitize($data->yt_description)."','".$data->yt_restricted."')");
+
 		}
+
+
+		$m->set('yt_' . $videoid, $data, false, 3600);
+
 	}
 	return $data;
 }
