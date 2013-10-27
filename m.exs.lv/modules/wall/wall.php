@@ -3,6 +3,12 @@
 set_action('mobilo versiju');
 
 $events = array();
+
+$mods_only = '';
+if (!im_mod()) {
+	$mods_only = " `cat`.`mods_only` = 0 AND ";
+}
+
 $articles = $db->get_results("
 		SELECT
 			`pages`.`id` AS `id`,
@@ -27,6 +33,7 @@ $articles = $db->get_results("
 			category != '83' AND category != '6' AND category != '403' AND
 			`users`.`id` = `pages`.`author` AND
 			`cat`.`id` = `pages`.`category` AND
+			".$mods_only."
 			`pages`.`bump` != '0000-00-00 00:00:00' AND
 			`pages`.`lang` = '$lang'
 		ORDER BY
