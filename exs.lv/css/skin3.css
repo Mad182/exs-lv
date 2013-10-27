@@ -97,6 +97,12 @@ body {
 #login-form input {
 	background: #EAEAEA url('http://img.exs.lv/bildes/login.png');
 }
+#login-form {
+	padding-top: 9px;
+}
+#login-form label {
+	font-weight: normal;
+}
 #tools-bar {
 	margin: 0;
 	background: transparent url('http://img.exs.lv/bildes/black_35.png') repeat
