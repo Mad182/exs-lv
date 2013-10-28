@@ -281,10 +281,6 @@ if ($load[0] > 5) {
 
 $today_date = date_lv('l, j. F', time());
 
-if (!$auth->ok && $lang == 3) {
-	$auth->skin = 4;
-}
-
 //reklāmas
 $ads_type = '_adsense';
 if(!empty($disable_adsense)) {
@@ -306,13 +302,16 @@ if(!empty($secure_login)) {
 	$login_url = htmlspecialchars('https://secure.exs.lv/');
 }
 
+if($auth->skin == 1 && $lang == 1) {
+	$add_css .= ',dark.css';
+}
+
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
 	'page-loginurl' => $login_url,
 	'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 	'page-domain' => $_SERVER['HTTP_HOST'],
-	'page-skinid' => $auth->skin,
 	'category-url' => $category->textid,
 	'currentuser-nick' => htmlspecialchars($auth->nick),
 	'inprofile-level' => $in_level,

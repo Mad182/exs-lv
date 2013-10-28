@@ -300,11 +300,8 @@
 			<p>
 				<label for="edit-skin">Tēma:</label><br />
 				<select name="edit-skin" id="edit-skin">
-					<option value="3"{user-skin-3}>Absolution (Dark Blue)</option>
-					<option value="4"{user-skin-4}>Light</option>
-					<option value="5"{user-skin-5}>MineCraft</option>
-					<option value="1"{user-skin-1}>Dark</option>
-					<option value="0"{user-skin-0}>Exs.lv old</option>
+					<option value="0"{user-skin-0}>Gaiša</option>
+					<option value="1"{user-skin-1}>Tumša</option>
 				</select> <a href="/augsa" target="_blank">Pielāgot augšu</a>
 			</p>
 			<textarea rows="4" cols="20" style="width:98%;height:300px" name="edit-about" id="edit-about">{user-about}</textarea>

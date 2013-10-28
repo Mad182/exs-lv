@@ -138,7 +138,7 @@ body {
 	background: transparent 
 }
 
-#top-menu .selected a {
+#top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
 	color: #eee;
 	background: #313131;
 	border-radius: 0;
@@ -148,6 +148,7 @@ body {
 	-moz-border-radius-topright: 3px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
+	text-shadow: 0;
 }
 
 #top-menu ul#top-menu-right li ul {

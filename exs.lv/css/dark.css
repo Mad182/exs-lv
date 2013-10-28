@@ -1,0 +1,118 @@
+body {
+	background: url('http://img.exs.lv/bildes/dark/body.jpg') repeat 0 0;
+	color: #eee;
+}
+
+#wrapper {
+	background: #444;
+}
+
+.av, .mb-av, #profile-image, .auto-embed-placeholder, .auto-embed, .video-thb img {
+	background:#555;
+	border:1px solid #333;
+	-moz-box-shadow:2px 2px 3px #363636;
+	-webkit-box-shadow:2px 2px 3px #363636;
+	box-shadow:2px 2px 3px #363636
+}
+
+a {
+	color: #ffc
+}
+
+a:hover {
+	color: #ffd
+}
+
+#left h3, #right h3, #forum th.first, #forum th, #forum th.last {
+	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	color: #eee;
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+}
+
+#wrapper .box, #forum td, .form fieldset, a.friend, #pm-read-footer, #comments dd, #comments dt, #movie-info {
+	border-color: #333;
+}
+
+#user-notify li, .user-actions li, .mb-col li, #latest-topics li, #miniblog-list li ul li, #footer .infoblock li a {
+	border-bottom: 1px dotted #3a3a3a;
+}
+
+#user-notify li a:hover, #latest-topics li a:hover, .blockhref li a:hover {
+	background-color: #3a3a3a;
+}
+
+.core-pager a, .usr-awards li {
+	background: #3a3a3a;
+	border: 1px solid #333;
+}
+
+.core-pager a.selected, #user-awards-inactive li {
+	background: #343434;
+	border: 1px solid #222;
+}
+
+#pm-table td {
+	background: #3a3a3a;
+	border-color: #333;
+}
+
+#pm-table tr:hover td {
+	background: #3f3f3f;
+	border-color: #333;
+}
+
+#pm-table tr.read-0 td {
+	background: #222;
+}
+
+.tabs {
+background: transparent;
+}
+.tabs li a {
+background: #555;
+border: 1px solid #333;
+text-shadow: 1px 1px 1px #222;
+border-bottom: 0;
+color: #bbb
+}
+
+.tabs li a:hover {
+color: #ccc;
+background: #444;
+border-color: #E6B800
+}
+.tabs li a.active, .tabs li a.selected, .tabs li a.active:hover {
+background: #444;
+color: #ddd;
+}
+
+.mbox {
+	background: #3f3f3f;
+}
+
+.form legend {
+	color: #aaa;
+}
+
+h1, h2, h3 h4, h5, h6 {
+	color: #fff;
+}
+
+#footer {
+	background: #333;
+	border-top: 1px solid #252525;
+}
+
+#footer .infoblock .inner, #online-users {
+	background: #3a3a3a;
+	border: 1px solid #444;
+}
+
+.inf, #comments dt .username {
+	background: #3f3f3f;
+	color: #aaa;
+}
+p.comment-tools {
+border-top: 1px dotted #333;
+}

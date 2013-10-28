@@ -21,6 +21,7 @@ body {
 	text-align: left;
 	color: #111;
 	line-height: 1.45;
+	background: #ebebeb
 }
 
 table {
@@ -42,6 +43,15 @@ dt, dd {
 
 fieldset, img {
 	border: none;
+}
+
+legend {
+	width: auto;
+	border: 0;
+}
+
+label {
+	margin: 0;
 }
 
 /* titles */
@@ -272,17 +282,12 @@ html .banned {
 }
 
 #top-menu {
-	height: 36px;
-	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 	font-size: 11px;
-	margin: 5px 0 0;
 }
 
 #top-menu-right, #top-menu-left {
 	float: right;
-	height: 20px;
 	margin: 0;
-	padding: 8px 12px;
 }
 
 #top-menu-left {
@@ -309,10 +314,6 @@ html .banned {
 
 #top-menu .selected a {
 	color: #7BBFE1;
-	background: transparent url('http://img.exs.lv/bildes/darkblue.png');
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
 }
 
 #top-menu li a:hover {
@@ -323,7 +324,6 @@ html .banned {
 #top-menu-right li ul {
 	position: absolute;
 	display: none;
-	background: transparent url('http://img.exs.lv/bildes/darkblue.png');
 	top: 15px;
 	z-index: 100;
 	border: 5px solid #071924;
@@ -507,14 +507,6 @@ html .banned {
 	left: 0px;
 	display: block;
 	clear: both;
-}
-
-#right .box {
-	padding: 0 1px 3px 5px;
-}
-
-#left .box {
-	padding: 0 5px 3px 1px;
 }
 
 .box p {
@@ -896,7 +888,6 @@ a.link3 {
 }
 
 #content div.tabMain {
-	background: #fff;
 	border: 0;
 	border-top: 0;
 	margin: 0;
@@ -2329,6 +2320,11 @@ table.players td.score, #forum td.stat {
 	padding: 0;
 }
 
+.article-info {
+	overflow: hidden;
+	width: 100%;
+}
+
 #walpaper {
 	text-align: center;
 }
@@ -3538,3 +3534,181 @@ ul.taged {
 	padding: 10px;
 	display: block;
 }
+
+#wrapper {
+	background:#fff;
+	margin: 0 auto 20px;
+	-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	-moz-box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	padding: 0 3px 5px;
+	height: auto !important;
+	height: 1100px;
+	min-height: 1100px;
+}
+#header {
+	margin-right: 3px;
+	margin-left: 3px;
+}
+#logo {
+	height: 125px;
+}
+#header-stuff {
+	bottom: 7px;
+}
+#top-menu {
+	margin: 0;
+	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	font-family: Ubuntu, sans-serif;
+	border-bottom: 2px solid #2090cc;
+	padding: 0;
+	height: 33px;
+}
+#top-menu-left {
+	padding: 0 0 0 8px;
+} 
+
+#top-menu-right {
+	padding: 0 8px 0 0;
+}
+
+#top-menu li a {
+	line-height: 33px;
+	height: 33px;
+	margin: 0;
+	padding: 0 11px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	text-shadow: 0 1px 0 #111;
+	color: #fff;
+}
+
+
+#top-menu li a:hover {
+	color: #4ab0d7;
+}
+
+#top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
+	background: #2090cc url('http://img.exs.lv/m/a/mad/blue.png') repeat 0 0;
+	color: #222;
+	margin: 0;
+	margin-top: -1px;
+	padding-top: 1px;
+	text-shadow: 0 1px 0 #59add2;
+}
+
+#top-menu li a.notes {
+	height: 16px;
+	line-height: 16px;
+	padding-top: 8px;
+	padding-bottom: 9px;
+}
+#top-menu li.selected a.notes, #header #top-menu li a.notes:hover {
+	padding-top: 9px;
+
+}
+
+#forum th {
+	color: #eee;
+	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 50% 0;
+}
+#forum th.first {
+	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat;
+	font-weight: 700;
+	color: #fff;
+	text-transform: uppercase;
+	padding: 7px 8px 9px 12px
+}
+#forum th.last {
+	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 100% 0
+}
+#login-form input {
+	background: #EAEAEA url('http://img.exs.lv/bildes/login.png');
+}
+#login-form {
+	padding-top: 9px;
+}
+#login-form label {
+	font-weight: normal;
+}
+#tools-bar {
+	margin: 0;
+	background: transparent url('http://img.exs.lv/bildes/black_35.png') repeat
+}
+
+#top-menu li ul {
+	background: #111;
+	border: 2px solid #2090cc;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	top: 33px;
+}
+#top-menu li ul li {
+	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	margin: 0 1px 1px 0;
+}
+
+#top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
+	background: transparent;
+	height: 30px;
+	margin: 0;
+	line-height: 30px;
+	text-shadow: 0 1px 0 #111;
+	color: #fff;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	-ms-border-radius:0;
+	-o-border-radius:0;
+	border-radius:0;
+}
+
+#top-menu li ul#user-group-menu li a {
+	line-height: 15px;
+}
+
+#top-menu li ul li:hover a {
+	color: #2ba7d7;
+}
+
+#left h3, #right h3 {
+	background: url('../bildes/h3.png') repeat-x 50% 50%;
+	padding: 4px 4px 4px 7px;
+	font-size: 13px;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #ddd;
+	margin: 8px -1px 0;
+}
+.mb-create {
+	font-size: 11px;
+}
+
+.box {
+	border: 1px dotted #eaeaea;
+	padding: 5px;
+	margin: 0 0 8px;
+	border-top: 0;
+}
+
+.box .core-pager {
+	margin: 6px 0 2px;
+}
+
+.imgs a, .imgs a:hover {
+	border: 0;
+}
+
