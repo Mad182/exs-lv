@@ -345,7 +345,6 @@ html .banned {
 	padding: 3px 4px;
 	margin: 0 1px 1px 0;
 	height: 28px;
-	background: transparent url('http://img.exs.lv/bildes/lightblue.png');
 }
 
 #top-menu-right li ul#user-group-menu li a {
@@ -379,7 +378,6 @@ html .banned {
 }
 
 #top-menu-right li li a {
-	background: transparent url('http://img.exs.lv/bildes/lightblue.png');
 	display: block;
 	height: auto;
 	width: 170px;
@@ -3681,7 +3679,7 @@ ul.taged {
 	line-height: 15px;
 }
 
-#top-menu li ul li:hover a {
+#wrapper #top-menu li ul li:hover a {
 	color: #2ba7d7;
 }
 
