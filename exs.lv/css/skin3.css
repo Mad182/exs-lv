@@ -58,9 +58,15 @@ body {
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	text-shadow: 0 1px 0 #111;
+	color: #fff;
 }
 
-#header #top-menu li.selected a {
+
+#header #top-menu li a:hover {
+	color: #4ab0d7;
+}
+
+#header #top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
 	background: #2090cc url('http://img.exs.lv/m/a/mad/blue.png') repeat 0 0;
 	color: #222;
 	margin: 0;
@@ -75,7 +81,7 @@ body {
 	padding-top: 8px;
 	padding-bottom: 9px;
 }
-#header #top-menu li.selected a.notes {
+#header #top-menu li.selected a.notes, #header #top-menu li a.notes:hover {
 	padding-top: 9px;
 
 }
@@ -106,6 +112,36 @@ body {
 #tools-bar {
 	margin: 0;
 	background: transparent url('http://img.exs.lv/bildes/black_35.png') repeat
+}
+
+#wrapper #top-menu li ul {
+	background: #111;
+	border: 2px solid #2090cc;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	top: 33px;
+}
+#wrapper #top-menu li ul li {
+	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	margin: 0 1px 1px 0;
+}
+
+#wrapper #top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
+	background: transparent;
+	text-shadow: 0 1px 0 #111;
+	color: #fff;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	-ms-border-radius:0;
+	-o-border-radius:0;
+	border-radius:0;
+}
+
+#wrapper #top-menu li ul li:hover a {
+	color: #2ba7d7;
 }
 
 #left h3, #right h3 {
