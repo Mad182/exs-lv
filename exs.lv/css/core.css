@@ -3675,8 +3675,8 @@ ul.taged {
 	border-radius:0;
 }
 
-#top-menu li ul#user-group-menu li a {
-	line-height: 15px;
+#header #top-menu li ul#user-group-menu li a {
+	line-height: 14px;
 }
 
 #wrapper #top-menu li ul li:hover a {
