@@ -131,6 +131,9 @@ body {
 
 #wrapper #top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
 	background: transparent;
+	height: 30px;
+	margin: 0;
+	line-height: 30px;
 	text-shadow: 0 1px 0 #111;
 	color: #fff;
 	-webkit-border-radius:0;
@@ -138,6 +141,10 @@ body {
 	-ms-border-radius:0;
 	-o-border-radius:0;
 	border-radius:0;
+}
+
+#wrapper #top-menu li ul#user-group-menu li a {
+	line-height: 15px;
 }
 
 #wrapper #top-menu li ul li:hover a {
