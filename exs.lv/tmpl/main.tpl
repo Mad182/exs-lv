@@ -111,7 +111,6 @@ tinymce.init({
 			<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
 			<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
 			<li><a href="/statistika" title="Statistika">Statistika</a></li>
-			<li><a href="/servers" title="Latvijas Counter Strike serveru saraksts">CS Serveri</a></li>
 			<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 		</ul>
 		{current-date}
