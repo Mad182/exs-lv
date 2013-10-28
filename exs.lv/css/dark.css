@@ -83,7 +83,7 @@ background: #444;
 border-color: #E6B800
 }
 .tabs li a.active, .tabs li a.selected, .tabs li a.active:hover {
-background: #444;
+background: #404040;
 color: #ddd;
 }
 
@@ -115,6 +115,10 @@ h1, h2, h3 h4, h5, h6 {
 }
 p.comment-tools {
 border-top: 1px dotted #333;
+}
+
+.tabMain {
+	background: #404040;
 }
 
 blockquote {
@@ -154,4 +158,8 @@ color: #000
 }
 html .banned {
 color: #000
+}
+
+dl.list-attr dt {
+	color: #bbb;
 }
