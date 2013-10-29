@@ -3,7 +3,13 @@
 
 <style type="text/css">
 	@import url(http://www.google.com/cse/api/branding.css);
+	
+	/* fluid layout fix */
+	.cse-branding-bottom:after, .cse-branding-right:after {
+		clear: none;
+	}
 </style>
+
 <div class="cse-branding-right" style="background-color:#FFFFFF;color:#000000">
 	<div class="cse-branding-form">
 		<form class="form" action="/search/" id="cse-search-box">
