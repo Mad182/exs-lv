@@ -676,10 +676,12 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		if (strpos($txt, $site) !== false) {
 			$find = array(
 				' rel="nofollow" href="http://' . $site,
+				' rel="nofollow" href="https://' . $site,
 				' rel="nofollow" href="http://www.' . $site
 			);
 			$replace = array(
 				' href="http://' . $site,
+				' href="https://' . $site,
 				' href="http://www.' . $site
 			);
 			$txt = str_ireplace($find, $replace, $txt);
@@ -704,12 +706,9 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'CoxFr2Kobuw',
 		'T_bn77at0zA',
 		'Vy1zWWGzL0Q',
-		'playpro.lv',
 		'MOBM1ODD',
 		's.exs.lv/63',
-		'MODAPPLICATIONRUNE.TK',
 		'?ref=',
-		'91.135.84.135',
 		'servics-',
 		'servces-',
 		'.org/lan.',
