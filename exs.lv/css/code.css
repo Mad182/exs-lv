@@ -168,8 +168,8 @@ h3 {
 }
 .comment-text {
 	height: auto !important;
-	height: 130px;
-	min-height: 130px
+	height: 140px;
+	min-height: 140px
 }
 #add-comment-form {
 	margin: 16px 10px 10px 110px
