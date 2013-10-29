@@ -122,20 +122,7 @@ function get_rss_mb($url, $exs_userid = 17077, $exs_groupid = 0) {
 
 $rand = file_get_contents('cache/cronupd.txt');
 if ($rand == 1) {
-	get_rss_mb('http://showrss.karmorra.info/feeds/24.rss', 20908, 45); //dexter
 	$get_img->xkcd();
-}
-if ($rand == 2) {
-	get_rss_mb('http://showrss.karmorra.info/feeds/62.rss', 20908, 88); //supernatural
-	get_rss_mb('http://showrss.karmorra.info/feeds/5.rss', 20908, 177); //big bang
-}
-if ($rand == 3) {
-	get_rss_mb('http://showrss.karmorra.info/feeds/68.rss', 20908, 24); //weeds
-	get_rss_mb('http://showrss.karmorra.info/feeds/37.rss', 20908, 188); //HIMYM
-}
-if ($rand == 4) {
-	get_rss_mb('http://showrss.karmorra.info/feeds/10.rss', 20908, 201); //Chuck
-	get_rss_mb('http://showrss.karmorra.info/feeds/63.rss', 20908, 250); // 2 1/2 men
 }
 if ($rand == 6 && rand(0, 5) == 1) {
 	get_rss_youtube('http://gdata.youtube.com/feeds/api/users/GoGeocaching/uploads', 20908, 91);
