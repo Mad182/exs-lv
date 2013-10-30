@@ -20,7 +20,7 @@ exs.lv specific styles, not loaded in sub-projects
 	width: 90%
 }
 
-.junk a span {
+.junk-box a span {
 	position: absolute;
 	left: 10px;
 	top: 10px;
