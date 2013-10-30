@@ -1,10 +1,10 @@
 <?php
 
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
-if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.exs.lv') {
+if ($_SERVER['SERVER_NAME'] === 'exs.lv') {
 	require(CORE_PATH . '/config/exs-lv.php');
 
-} elseif ($_SERVER['SERVER_NAME'] === 'coding.lv') {
+} elseif ($_SERVER['SERVER_NAME'] === 'coding.lv' || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.exs.lv') {
 	require(CORE_PATH . '/config/coding-lv.php');
 
 } elseif ($_SERVER['SERVER_NAME'] === 'secure.exs.lv') {

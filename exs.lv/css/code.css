@@ -41,7 +41,11 @@ body {
 	background: transparent url("http://img.exs.lv/bildes/mobile/top-bg-grad.png") repeat-x 0 100%;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
-	border-radius: 3px
+	border-radius: 3px;
+	border: 0;
+}
+#top-menu li a {
+	height: 33px;
 }
 #header {
 	height: 152px
@@ -77,16 +81,15 @@ h3 {
 }
 #top-menu li a {
 	font-size: 12px;
-	padding: 0 8px 2px;
-	margin: 0 1px;
 }
 #footer .infoblock {
 	width: 33.332%;
 }
-#forum th {
+#wrapper #forum th {
 	background: transparent url("http://img.exs.lv/bildes/mobile/top-bg.png") repeat-x 0 0;
 	color: #fff;
 	font-size: 14px;
+	font-weight: normal;
 	padding: 8px 10px;
 	text-shadow: 1px 1px #236;
 }
@@ -100,7 +103,7 @@ h3 {
 	-moz-border-radius-topright: 5px;
 	border-top-right-radius: 5px
 }
-#forum td {
+#wrapper #forum td {
 	border: 0;
 	border-top: 1px dashed #ddd;
 	padding: 5px 6px;

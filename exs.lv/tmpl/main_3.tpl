@@ -141,7 +141,7 @@ tinymce.init({
 
 					<!-- END BLOCK : user-write-->
 					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-					<li{cat-sel-585}><a href="/piezimes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
+					<li{cat-sel-585}><a class="notes" href="/piezimes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
 					<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
 				</ul>
 				<!-- END BLOCK : user-menu-->
