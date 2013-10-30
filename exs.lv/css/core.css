@@ -1524,57 +1524,6 @@ a.friend:hover {
 	border: 1px solid #fff;
 }
 
-#walpaper a img {
-	border: 1px solid #fff;
-	width: 120px;
-	height: 100px;
-}
-
-#wallpapers li, #wallpapers-external li {
-	background: transparent;
-	float: left;
-	margin: 0;
-	padding: 0;
-}
-
-#wallpapers-external {
-    clear: both;
-    padding: 0;
-}
-
-#wallpapers-external li {
-    float: none;
-    display: inline-block;
-    text-align: center;
-    margin: 0 10px 10px 0;
-}
-
-#wallpapers a {
-	display: inline;
-	float: left;
-	width: 110px;
-	height: 90px;
-	position: relative;
-	overflow: hidden;
-	text-decoration: none;
-	border: 1px solid #fff;
-	margin: 0;
-	padding: 0;
-}
-
-#wallpapers a span {
-	position: absolute;
-	bottom: 1px;
-	right: 1px;
-	height: 14px;
-	width: 68px;
-	background: #333;
-	font-size: 10px;
-	color: #888;
-	text-align: center;
-	display: block;
-}
-
 #wrapper h1 a.rss {
 	float: right;
 	color: #DC6500;
@@ -1881,30 +1830,6 @@ a.friend:hover {
 
 #related-topics li {
 	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 6px;
-}
-
-#latest-blogs li {
-	background: transparent;
-	border-bottom: 1px solid #E3E3E3;
-	margin: 0;
-	padding: 5px 0;
-}
-
-#latest-blogs li div.author {
-	float: left;
-	width: 90px;
-	height: 100px;
-	text-align: center;
-	line-height: 13px;
-}
-
-#latest-blogs .author img {
-	width: 75px;
-	height: 75px;
-	display: inline;
-	float: none;
-	margin: 0;
-	padding: 0;
 }
 
 .inliner-link {
@@ -3518,57 +3443,6 @@ ul.taged {
 	border: 2px dashed green;
 }
 
-
-/* filmu infobox */
-#movie-info {
-	margin: 5px 15px 15px;
-	padding: 8px 15px;
-	border: 1px solid #ddd;
-	float: right;
-	width: 330px;
-	font-size: 90%;
-	text-align: left;
-}
-
-#movie-info .title {
-	font-size: 115%;
-}
-
-#movie-info .icon {
-	width: 32px;
-	height: 32px;
-	float: left;
-	margin: 2px;
-	border: 0;
-	padding: 0;
-}
-
-/* filmu saraksts (thumbnail) */
-
-#movie-list {
-	list-style: none;
-	padding: 10px 0;
-	margin: 0
-}
-
-#movie-list li {
-	float: left;
-	width: 33%;
-	height: 262px;
-	text-align: center;
-	padding: 0;
-	margin: 0;
-	background: transparent
-}
-
-#movie-list strong {
-	display: block;
-	padding: 2px 10px 0;
-	font-family: Ubuntu, sans-serif;
-	font-weight: normal;
-	font-size: 14px;
-}
-
 /* virsrakstu prefix */
 .title-prefix {
 	float: left;
@@ -3704,4 +3578,3 @@ ul.taged {
 .imgs a, .imgs a:hover {
 	border: 0;
 }
-

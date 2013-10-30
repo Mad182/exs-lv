@@ -25,7 +25,7 @@
 	var c_url = "{page-url}";
 </script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css" />
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css}" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}" type="text/css" />
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -424,11 +424,11 @@ tinymce.init({
 
 	<!-- START BLOCK : side-junk-->
 	<h3>/junk</h3>
-	<div class="box">
+	<div class="box junk-box">
 		<!-- START BLOCK : side-junk-node-->
-		<a style="float: left;position:relative;width: 50%;padding:0;margin:0;text-align: center;" href="http://exs.lv/junk/{id}" title="{title}">
-			<img src="http://img.exs.lv{thb}" alt="" class="av" style="float: left;width: 90%;" />
-			<span style="position: absolute;left: 10px; top: 10px; color: #fff;background: #555;padding:1px 4px">{posts}</span>
+		<a href="http://exs.lv/junk/{id}" title="{title}">
+			<img src="http://img.exs.lv{thb}" alt="" class="av" />
+			<span style="">{posts}</span>
 		</a>
 		<!-- END BLOCK : side-junk-node-->
 		<div class="c"></div>
