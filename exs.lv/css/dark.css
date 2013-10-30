@@ -1,13 +1,13 @@
 body {
 	background: url('http://img.exs.lv/bildes/dark/body.jpg') repeat 0 0;
-	color: #eee;
+	color: #eee
 }
 
 #wrapper {
-	background: #444;
+	background: #444
 }
 
-.av, .mb-av, #profile-image, .auto-embed-placeholder, .auto-embed, .video-thb img {
+.av, .mb-av, #profile-image, .auto-embed-placeholder, .auto-embed, .video-thb img, img.attels_centrets, img.attels_pa_kreisi, img.attels_pa_labi {
 	background:#555;
 	border:1px solid #333;
 	-moz-box-shadow:2px 2px 3px #363636;
@@ -27,72 +27,72 @@ a:hover {
 	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
 	color: #eee;
 	border-top: 1px solid #333;
-	border-bottom: 1px solid #333;
+	border-bottom: 1px solid #333
 }
 
 #wrapper .box, #forum td, .form fieldset, a.friend, #pm-read-footer, #comments dd, #comments dt, #movie-info {
-	border-color: #333;
+	border-color: #333
 }
 
 #user-notify li, .user-actions li, .mb-col li, #latest-topics li, #miniblog-list li ul li, #footer .infoblock li a {
-	border-bottom: 1px dotted #3a3a3a;
+	border-bottom: 1px dotted #3a3a3a
 }
 
 #user-notify li a:hover, #latest-topics li a:hover, .blockhref li a:hover {
-	background-color: #3a3a3a;
+	background-color: #3a3a3a
 }
 
 .core-pager a, .usr-awards li {
 	background: #3a3a3a;
-	border: 1px solid #333;
+	border: 1px solid #333
 }
 
 .core-pager a.selected, #user-awards-inactive li {
 	background: #343434;
-	border: 1px solid #222;
+	border: 1px solid #222
 }
 
 #pm-table td {
 	background: #3a3a3a;
-	border-color: #333;
+	border-color: #333
 }
 
 #pm-table tr:hover td {
 	background: #3f3f3f;
-	border-color: #333;
+	border-color: #333
 }
 
 #pm-table tr.read-0 td {
-	background: #222;
+	background: #222
 }
 
 .tabs {
-background: transparent;
+	background: transparent
 }
 .tabs li a {
-background: #555;
-border: 1px solid #333;
-text-shadow: 1px 1px 1px #222;
-border-bottom: 0;
-color: #bbb
+	background: #555;
+	border: 1px solid #333;
+	text-shadow: 1px 1px 1px #222;
+	border-bottom: 0;
+	color: #bbb
 }
 
 .tabs li a:hover {
-color: #ccc;
-background: #444;
-border-color: #E6B800
+	color: #ccc;
+	background: #444;
+	border-color: #E6B800
 }
 .tabs li a.active, .tabs li a.selected, .tabs li a.active:hover {
-background: #404040;
-color: #ddd;
+	background: #404040;
+	color: #ddd
 }
 
 .mbox {
-	background: #3f3f3f;
+	background: #3f3f3f
 }
 
 .form legend {
-	color: #aaa;
+	color: #aaa
 }
 
 h1, h2, h3 h4, h5, h6 {
@@ -101,65 +101,52 @@ h1, h2, h3 h4, h5, h6 {
 
 #footer {
 	background: #333;
-	border-top: 1px solid #252525;
+	border-top: 1px solid #252525
 }
 
 #footer .infoblock .inner, #online-users {
 	background: #3a3a3a;
-	border: 1px solid #444;
+	border: 1px solid #444
 }
 
 .inf, #comments dt .username {
 	background: #3f3f3f;
-	color: #aaa;
+	color: #aaa
 }
 p.comment-tools {
-border-top: 1px dotted #333;
+border-top: 1px dotted #333
 }
 
 .tabMain {
-	background: #404040;
+	background: #404040
 }
 
-blockquote {
-border: 1px solid #333;
-color: #BBB;
-display: block;
-background: #4A4A4A url(http://img.exs.lv/bildes/dark/quote.gif) no-repeat left top;
-margin: 5px;
-padding: 6px 14px 6px 44px
-}
-code, pre, .code {
-background: #333;
-border: 1px solid #222;
-border-left: 6px solid #444;
-display: block;
-font-family: Tahoma, sans-serif;
-font-size: 11px;
-white-space: pre;
-margin: .5em 1em;
-padding: 4px
+code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
+	background: #555;
+	border-color: #666;
+	border-left-color: #666;
+	color: #ccc
 }
 .admins {
-color: #f32
+	color: #f32
 }
 .mods {
-color: #66f
+	color: #66f
 }
 .rautors {
-color: #6f6
+	color: #6f6
 }
 .bot {
-color: #777
+	color: #777
 }
 .banned {
-text-decoration: line-through;
-color: #000
+	text-decoration: line-through;
+	color: #000
 }
 html .banned {
-color: #000
+	color: #000
 }
 
 dl.list-attr dt {
-	color: #bbb;
+	color: #bbb
 }
