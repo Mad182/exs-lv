@@ -23,7 +23,7 @@ a:hover {
 	color: #ffd
 }
 
-#left h3, #right h3, #forum th.first, #forum th, #forum th.last {
+#left h3, #right h3 {
 	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
 	color: #eee;
 	border-top: 1px solid #333;

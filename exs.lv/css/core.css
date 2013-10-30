@@ -3524,20 +3524,6 @@ ul.taged {
 	bottom: 7px;
 }
 
-#forum th {
-	color: #eee;
-	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 50% 0;
-}
-#forum th.first {
-	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat;
-	font-weight: 700;
-	color: #fff;
-	text-transform: uppercase;
-	padding: 7px 8px 9px 12px
-}
-#forum th.last {
-	background: #1C597E url('http://img.exs.lv/bildes/forum.png') no-repeat 100% 0
-}
 #login-form input {
 	background: #EAEAEA url('http://img.exs.lv/bildes/login.png');
 }
