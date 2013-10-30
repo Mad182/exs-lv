@@ -44,6 +44,9 @@ if ($inprofile) {
 
 	$friends = $db->get_results("SELECT id,friend1,friend2 FROM friends WHERE (friend1 = ('" . $inprofile->id . "') OR friend2 = ('" . $inprofile->id . "')) AND confirmed = '1' ORDER BY date_confirmed DESC");
 	if ($friends) {
+
+		$tpl->newBlock('user-friend-list');
+
 		foreach ($friends as $friend) {
 			if ($friend->friend1 == $inprofile->id) {
 				$theother = $friend->friend2;
@@ -73,7 +76,9 @@ if ($inprofile) {
 	if ($auth->ok && $inprofile->id == $auth->id) {
 		$friendsp = $db->get_results("SELECT `id`,`friend1`,`friend2`,`date` FROM `friends` WHERE `friend2` = ('" . $inprofile->id . "') AND `confirmed` = '0' ORDER BY `date` DESC");
 		if ($friendsp) {
+
 			$tpl->newBlock('user-friend-pending');
+
 			foreach ($friendsp as $friend) {
 				$friendinfo = get_user($friend->friend1);
 

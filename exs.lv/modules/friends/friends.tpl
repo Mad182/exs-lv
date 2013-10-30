@@ -15,7 +15,7 @@
 	<div class="c"></div>
 	<!-- END BLOCK : user-friend-pending-->
 
-	<strong>Visi draugi</strong>
+	<!-- START BLOCK : user-friend-list-->
 	<ul id="friend-list">
 		<!-- START BLOCK : user-friend-node-->
 		<li><a class="profile-link" href="/user/{friend-id}"><img src="{friend-avatar}" alt="{friend-title}" /><br />{friend-nick}</a>
@@ -26,5 +26,6 @@
 		<!-- END BLOCK : user-friend-node-->
 	</ul>
 	<div class="c"></div>
+	<!-- END BLOCK : user-friend-list-->
 </div>
 <!-- END BLOCK : user-friends-->
