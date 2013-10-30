@@ -3543,6 +3543,32 @@ ul.taged {
 	padding: 0;
 }
 
+/* filmu saraksts (thumbnail) */
+
+#movie-list {
+	list-style: none;
+	padding: 10px 0;
+	margin: 0
+}
+
+#movie-list li {
+	float: left;
+	width: 33%;
+	height: 262px;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	background: transparent
+}
+
+#movie-list strong {
+	display: block;
+	padding: 2px 10px 0;
+	font-family: Ubuntu, sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+}
+
 /* virsrakstu prefix */
 .title-prefix {
 	float: left;

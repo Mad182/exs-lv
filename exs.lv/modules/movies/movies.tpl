@@ -12,7 +12,7 @@
 	</ul>
 	<div class="c"></div>
 	<!-- START BLOCK : list-avatar-->
-	<img class="av" src="http://img.exs.lv{node-avatar-image}" alt="{node-avatar-alt}" />
+	<img class="av" src="http://img.exs.lv{image}" alt="{alt}" />
 	<!-- END BLOCK : list-avatar-->
 	<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
 		{year}
@@ -32,11 +32,11 @@
 <!-- START BLOCK : list-search-->
 <h1><a class="rss" title="Seko līdzi jaunumiem šajā lapas sadaļā, izmantojot RSS!" href="/rss/{strid}" rel="feed">rss</a> {title}</h1>
 
-<ul id="movie-list" style="list-style:none;padding:10px 0;margin:0">
+<ul id="movie-list">
 	<!-- START BLOCK : movie-->
-	<li style="float:left;width:172px;height:256px;text-align:center;pading: 0;margin:0;background:transparent;">
-		<div><a href="{node-url}"><img src="http://img.exs.lv{node-avatar-image}" alt="{node-avatar-alt}" /></a></div>
-		<a href="{node-url}"><strong>{title}</strong></a>	
+	<li>
+		<div><a href="{node-url}"><img src="http://img.exs.lv{image}" alt="{alt}" /></a></div>
+		<a href="{node-url}"><strong>{title}</strong></a>
 	</li>
 	<!-- END BLOCK : movie-->
 </ul>

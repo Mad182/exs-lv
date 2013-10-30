@@ -90,7 +90,7 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'intro' => $article->text
 		));
 
-		
+
 		if($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
 			if(!empty($movie_data->title_lv)) {
 				$tpl->assign('title-lv', ' &nbsp;<small>'.$movie_data->title_lv.'</small>');
@@ -108,7 +108,7 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 				$tpl->assign('title-prefix', '<span class="title-prefix series">Seriāls</span> ');
 			}
 		}
-		
+
 
 		if($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
 			$gen = array();
@@ -122,8 +122,8 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		if($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
 			$tpl->newBlock('list-avatar');
 			$tpl->assign(array(
-				'node-avatar-image' => $avatar->thb,
-				'node-avatar-alt' => htmlspecialchars($avatar->title)
+				'image' => $avatar->thb,
+				'alt' => htmlspecialchars($avatar->title)
 			));
 		}
 	}
@@ -221,7 +221,7 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'gender' => $article->gender
 		));
 
-		
+
 		if($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
 
 		}
@@ -229,11 +229,10 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 		if($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
 			$tpl->assign(array(
-				'node-avatar-image' => $avatar->thb,
-				'node-avatar-alt' => htmlspecialchars($avatar->title)
+				'image' => $avatar->thb,
+				'alt' => htmlspecialchars($avatar->title)
 			));
 		}
 	}
 
 }
-
