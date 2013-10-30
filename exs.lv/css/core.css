@@ -282,7 +282,13 @@ html .banned {
 }
 
 #top-menu {
+	margin: 0;
+	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	font-family: Ubuntu, sans-serif;
 	font-size: 11px;
+	border-bottom: 2px solid #2090cc;
+	padding: 0;
+	height: 33px;
 }
 
 #top-menu-right, #top-menu-left {
@@ -291,7 +297,12 @@ html .banned {
 }
 
 #top-menu-left {
+	padding: 0 0 0 8px;
 	float: left;
+}
+
+#top-menu-right {
+	padding: 0 8px 0 0;
 }
 
 #top-menu li {
@@ -303,36 +314,44 @@ html .banned {
 }
 
 #top-menu li a {
-	color: #fff;
 	float: left;
-	height: 20px;
-	line-height: 20px;
-	text-shadow: 0 1px 0 #222;
-	padding: 0 5px 2px;
 	outline: none;
+	line-height: 33px;
+	height: 33px;
+	margin: 0;
+	padding: 0 11px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 2px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	text-shadow: 0 1px 0 #111;
+	color: #fff;
 }
 
-#top-menu .selected a {
-	color: #7BBFE1;
-}
-
-#top-menu li a:hover {
-	color: #7BBFE1;
-	text-decoration: none;
-}
-
-#top-menu-right li ul {
+#top-menu li ul {
 	position: absolute;
 	display: none;
-	top: 15px;
 	z-index: 100;
-	border: 5px solid #071924;
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	background: #111;
+	border: 2px solid #2090cc;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	top: 33px;
+}
+#top-menu li ul li {
+	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	margin: 0 1px 1px 0;
 }
 
 #top-menu-right li ul#user-group-menu {
@@ -347,15 +366,16 @@ html .banned {
 	height: 28px;
 }
 
-#top-menu-right li ul#user-group-menu li a {
+#header #top-menu-right li ul#user-group-menu li a {
 	background: transparent;
 	display: block;
 	padding: 0 3px 0 0;
 	margin: 0;
+	height: auto;
 	width: auto;
 	font-family: Arial;
 	font-size: 11px;
-	line-height: 1.3;
+	line-height: 14px;
 }
 
 #top-menu-right li ul#user-group-menu li img {
@@ -383,6 +403,49 @@ html .banned {
 	width: 170px;
 	margin: 1px 0 0;
 	padding: 1px 6px;
+}
+
+#top-menu li a:hover {
+	color: #4ab0d7;
+}
+
+#top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
+	background: #2090cc url('http://img.exs.lv/m/a/mad/blue.png') repeat 0 0;
+	color: #222;
+	text-decoration: none;
+	margin: 0;
+	margin-top: -1px;
+	padding-top: 1px;
+	text-shadow: 0 1px 0 #59add2;
+}
+
+#top-menu li a.notes {
+	height: 16px;
+	line-height: 16px;
+	padding-top: 8px;
+	padding-bottom: 9px;
+}
+#top-menu li.selected a.notes, #header #top-menu li a.notes:hover {
+	padding-top: 9px;
+
+}
+
+#top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
+	background: transparent;
+	height: 30px;
+	margin: 0;
+	line-height: 30px;
+	text-shadow: 0 1px 0 #111;
+	color: #fff;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	-ms-border-radius:0;
+	-o-border-radius:0;
+	border-radius:0;
+}
+
+#wrapper #top-menu li ul li:hover a {
+	color: #2ba7d7;
 }
 
 #login-form {
@@ -3560,64 +3623,6 @@ ul.taged {
 #header-stuff {
 	bottom: 7px;
 }
-#top-menu {
-	margin: 0;
-	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
-	font-family: Ubuntu, sans-serif;
-	border-bottom: 2px solid #2090cc;
-	padding: 0;
-	height: 33px;
-}
-#top-menu-left {
-	padding: 0 0 0 8px;
-} 
-
-#top-menu-right {
-	padding: 0 8px 0 0;
-}
-
-#top-menu li a {
-	line-height: 33px;
-	height: 33px;
-	margin: 0;
-	padding: 0 11px;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-	-webkit-border-top-left-radius: 2px;
-	-webkit-border-top-right-radius: 2px;
-	-moz-border-radius-topleft: 2px;
-	-moz-border-radius-topright: 2px;
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	text-shadow: 0 1px 0 #111;
-	color: #fff;
-}
-
-
-#top-menu li a:hover {
-	color: #4ab0d7;
-}
-
-#top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
-	background: #2090cc url('http://img.exs.lv/m/a/mad/blue.png') repeat 0 0;
-	color: #222;
-	margin: 0;
-	margin-top: -1px;
-	padding-top: 1px;
-	text-shadow: 0 1px 0 #59add2;
-}
-
-#top-menu li a.notes {
-	height: 16px;
-	line-height: 16px;
-	padding-top: 8px;
-	padding-bottom: 9px;
-}
-#top-menu li.selected a.notes, #header #top-menu li a.notes:hover {
-	padding-top: 9px;
-
-}
 
 #forum th {
 	color: #eee;
@@ -3645,43 +3650,6 @@ ul.taged {
 #tools-bar {
 	margin: 0;
 	background: transparent url('http://img.exs.lv/bildes/black_35.png') repeat
-}
-
-#top-menu li ul {
-	background: #111;
-	border: 2px solid #2090cc;
-	-webkit-border-radius:2px;
-	-moz-border-radius:2px;
-	-ms-border-radius:2px;
-	-o-border-radius:2px;
-	border-radius:2px;
-	top: 33px;
-}
-#top-menu li ul li {
-	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
-	margin: 0 1px 1px 0;
-}
-
-#top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
-	background: transparent;
-	height: 30px;
-	margin: 0;
-	line-height: 30px;
-	text-shadow: 0 1px 0 #111;
-	color: #fff;
-	-webkit-border-radius:0;
-	-moz-border-radius:0;
-	-ms-border-radius:0;
-	-o-border-radius:0;
-	border-radius:0;
-}
-
-#header #top-menu li ul#user-group-menu li a {
-	line-height: 14px;
-}
-
-#wrapper #top-menu li ul li:hover a {
-	color: #2ba7d7;
 }
 
 #left h3, #right h3 {
