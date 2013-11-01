@@ -4,7 +4,7 @@ class getImages {
 
 	function reddit() {
 		global $db;
-		$data = file_get_contents('http://www.reddit.com/r/comics+funny.json');
+		$data = curl_get('http://www.reddit.com/r/comics+funny.json');
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
@@ -32,7 +32,7 @@ class getImages {
 
 	function xkcd() {
 		global $db;
-		$data = file_get_contents('http://xkcd.com/info.0.json');
+		$data = curl_get('http://xkcd.com/info.0.json');
 		$junk = json_decode($data);
 
 		if ($this->can_add($junk->img)) {

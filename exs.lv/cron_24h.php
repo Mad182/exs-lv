@@ -81,7 +81,7 @@ $db->query("TRUNCATE TABLE `async_ip`");
 
 
 ############################ draugiem.lv sekotāji
-$str = file_get_contents('http://www.draugiem.lv/exs.lv/js/fans/?count=1000');
+$str = curl_get('http://www.draugiem.lv/exs.lv/js/fans/?count=1000');
 $str = explode('[',$str);
 $str = explode(']',$str[1]);
 $str = json_decode('['.$str[0].']');

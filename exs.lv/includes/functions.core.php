@@ -1876,6 +1876,20 @@ function get_latest_groups($force = false) {
 	return $data;
 }
 
+/* replacement for file_get_contents with timeout */
+function curl_get($url, $connect_timeout = 2, $timeout = 3) {
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
+	curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+	$contents = curl_exec($ch);
+	curl_close($ch);
+	return $contents;
+
+}
+
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
@@ -1885,27 +1899,12 @@ function get_youtube($videoid, $force = false) {
 
 			$data = new Stdclass;
 
-			/* iegūst datus no youtube API
-			 * ja 2 sekunžu laikā neizdodas pieslēgties, metam mieru
-			 * iepriekš tas salauza exu */
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'http://gdata.youtube.com/feeds/api/videos/' . $videoid);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); 
-			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-			$contents = curl_exec($ch);
-			curl_close($ch);
+			$contents = curl_get('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
 
 			if(!$contents) {
 
 				/* ja exs serverim atslēgts ārzemju traffiks, mēģina iegūt datus caur proxy */
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, 'http://ezgif.com/ytdata.php?id=' . $videoid);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); 
-				curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-				$contents = curl_exec($ch);
-				curl_close($ch);
+				$contents = curl_get('http://ezgif.com/ytdata.php?id=' . $videoid);
 
 			}
 

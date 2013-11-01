@@ -1,8 +1,9 @@
 <?php
 
 class getWallpapers {
+
 	function reddit() {
-		$data = file_get_contents('http://www.reddit.com/r/wallpaper+wallpapers/top/.json?sort=top&t=week');
+		$data = curl_get('http://www.reddit.com/r/wallpaper+wallpapers/top/.json?sort=top&t=week');
 		$wallpapers = json_decode($data);
 		$files = array();
 
@@ -57,6 +58,8 @@ class getWallpapers {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 
 		$response = curl_exec($ch);
@@ -75,6 +78,8 @@ class getWallpapers {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
 		$response = curl_exec($ch);
