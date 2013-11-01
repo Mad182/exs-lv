@@ -49,7 +49,7 @@ body {
 	line-height: 35px;
 	border: 0;
 }
- 
+
 #top-menu ul {
 	padding: 0;
 	margin: 0;
@@ -82,7 +82,7 @@ body {
 }
 
 #top-menu li .first {
-	background: transparent 
+	background: transparent
 }
 
 #top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
@@ -104,7 +104,7 @@ body {
 	background: #bcb279;
 	top: 30px;
 }
-	
+
 #top-menu ul#top-menu-right li ul li {
 	background: transparent;
 
@@ -201,7 +201,7 @@ p.core-pager {
 	margin: 0 0 0 120px;
 }
 
-#content .custom-title { 
+#content .custom-title {
 	color: #5a5a5a;
 	text-align: center;
 	font-size: 12px;
@@ -255,7 +255,7 @@ p.core-pager {
 	padding: 3px;
 }
 
-#lol-top-full th { 
+#lol-top-full th {
 	font-size :11px;
 }
 
