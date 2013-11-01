@@ -1,6 +1,6 @@
 $ttl 38400
 @	IN	SOA	ns.openidea.lv. root.ns.openidea.lv. (
-			1342114432
+			1342114443
 			10800
 			3600
 			604800
@@ -8,37 +8,33 @@ $ttl 38400
 
 
 exs.lv.	IN	MX	10	ASPMX.L.GOOGLE.COM.
-exs.lv.	IN	TXT	"v=spf1 mx ip4:85.31.102.92 +all"
+exs.lv.	IN	TXT	"v=spf1 mx ip4:92.240.69.184 all"
 mail.exs.lv.	IN	CNAME	ghs.google.com.
 tmp.exs.lv.	IN	A	80.233.240.101
-ts.exs.lv.	IN	A	87.110.140.172
-viesty.exs.lv.	IN	A	85.31.102.91
-svens.exs.lv.	IN	A	85.31.102.91
-party.exs.lv.	IN	A	78.46.52.115
-web.exs.lv.	IN	A	85.31.102.91
-s.exs.lv.	IN	A	85.31.102.91
-www.svens.exs.lv.	IN	A	85.31.102.91
-www.zvera.exs.lv.	IN	A	85.31.102.91
-zvera.exs.lv.	IN	A	85.31.102.91
-www.arnolds.exs.lv.	IN	A	91.203.70.104
-old.exs.lv.	IN	A	85.31.102.91
-www.albis.exs.lv.	IN	A	85.31.102.91
+viesty.exs.lv.	IN	A	92.240.69.183
+svens.exs.lv.	IN	A	92.240.69.183
+s.exs.lv.	IN	A	92.240.69.183
+reader.exs.lv.	IN	A	92.240.69.183
+www.zvera.exs.lv.	IN	A	92.240.69.183
+zvera.exs.lv.	IN	A	92.240.69.183
+www.arnolds.exs.lv.	IN	A	92.240.69.183
+old.exs.lv.	IN	A	92.240.69.183
+www.albis.exs.lv.	IN	A	92.240.69.183
 mta.exs.lv.	IN	A	92.240.80.63
 dev.exs.lv.	IN	A	127.0.0.1
-greenzephyr.exs.lv.	IN	A	85.31.102.91
-gugols.exs.lv.	IN	A	85.31.102.91
-cs.exs.lv.	IN	A	87.110.140.172
-exs.lv.	IN	A	85.31.102.92
+greenzephyr.exs.lv.	IN	A	92.240.69.183
+gugols.exs.lv.	IN	A	92.240.69.183
+exs.lv.	IN	A	92.240.69.184
 exs.lv.	IN	NS	ns.openidea.lv.
 exs.lv.	IN	NS	ns2.openidea.lv.
-albis.exs.lv.	IN	A	85.31.102.91
-arnolds.exs.lv.	IN	A	91.203.70.104
-mac.exs.lv.	IN	A	85.31.102.91
-martinsbeitans.exs.lv.	IN	A	85.31.102.91
+albis.exs.lv.	IN	A	92.240.69.183
+arnolds.exs.lv.	IN	A	92.240.69.188
+mac.exs.lv.	IN	A	92.240.69.183
 mc.exs.lv.	IN	A	87.110.140.172
-ksenija.exs.lv.	IN	A	85.31.102.91
-krasas.exs.lv.	IN	A	85.31.102.91
-ikonas.exs.lv.	IN	A	85.31.102.91
-kapteinis.exs.lv.	IN	A	91.203.70.104
-*.exs.lv.	IN	A	85.31.102.92
+games.exs.lv.	IN	A	87.110.140.172
+ts.exs.lv.	IN	A	87.110.140.172
+ksenija.exs.lv.	IN	A	92.240.69.183
+krasas.exs.lv.	IN	A	92.240.69.183
+ikonas.exs.lv.	IN	A	92.240.69.183
+*.exs.lv.	IN	A	92.240.69.184
 
