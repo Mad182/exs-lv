@@ -124,7 +124,7 @@ if ($session) {//Authentication successful
 
 						require(CORE_PATH . '/includes/class.upload.php');
 
-						file_put_contents($tmp_image, file_get_contents($draugiem->imageForSize($user['img'], 'large')));
+						file_put_contents($tmp_image, curl_get($draugiem->imageForSize($user['img'], 'large')));
 
 						//new avatar image
 						$text = time() . '_dr_' . $newid;
