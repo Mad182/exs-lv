@@ -435,15 +435,15 @@ function mkslug($string, $lower = true, $remove_dashes = true) {
 	$string = str_replace(array(' ', '.', ',', '"', '=', '`', ']', '[', '|', ':', '+', '&quot;', '!', '/', "\\"), '-', $string);
 	$allowed = "/[^a-z0-9\\-\\_\\\\]/i";
 	$string = preg_replace($allowed, '', $string);
-	$string = str_replace(array('----', '---', '--'), '-', str_replace(array('----', '---', '--'), '-', $string));
-	$string = str_replace(array('----', '---', '--'), '-', str_replace(array('----', '---', '--'), '-', $string));
-	$string = str_replace(array('----', '---', '--'), '-', str_replace(array('----', '---', '--'), '-', $string));
-	if (substr($string, -1) == '-' && $remove_dashes) {
-		$string = substr($string, 0, -1);
+
+	//remove repeated dashes
+	$string = preg_replace('/-+/', '-', $string);
+
+	//remove dashes from ends of string
+	if ($remove_dashes) {
+		$string = trim($string, '-');
 	}
-	if (substr($string, 0, 1) == '-' && $remove_dashes) {
-		$string = substr($string, 1);
-	}
+
 	$string = substr($string, 0, 100);
 	if (empty($string)) {
 		$string = 'page';
@@ -1261,10 +1261,6 @@ function list_awards() {
 			'title' => 'Uzvarēja 25 <a href="http://exs.lv/desas">desu</a> partijas',
 			'state' => 'inactive'
 		),
-		'mc-exs' => array(
-			'title' => '<a href="http://exs.lv/mc-award">mc.exs.lv spēlētājs</a>',
-			'state' => 'inactive'
-		),
 		'mta-user' => array(
 			'title' => '<a href="http://rp.exs.lv/">rp.exs.lv lietotājs</a>',
 			'state' => 'inactive'
@@ -1486,12 +1482,6 @@ function update_awards($user) {
 		if (!in_array('miniblog-r-100', $existing_awards) && $userr->posts > 5) {
 			if ($db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = '$user' AND `removed` = '0' AND `posts` >= 100")) {
 				$awards_list['miniblog-r-100']['state'] = 'active';
-			}
-		}
-
-		if (!in_array('mc-exs', $existing_awards)) {
-			if ($db->get_var("SELECT count(*) FROM `mc_users` WHERE `id` = '$user'")) {
-				$awards_list['mc-exs']['state'] = 'active';
 			}
 		}
 
@@ -1790,16 +1780,6 @@ function update_awards($user) {
 	  );
 	  } */
 
-	/* CS
-	  if(in_array($user,array(13004,8707,3906,4088,16395,10880,1322,23622,5547,17341,24437,
-	  24049,
-	  1280))) {
-	  $awards_list['counter-strike'] = array(
-	  'title' => '<a href="/group/150" title="Counter Strike">CS</a> mēneša top 15',
-	  'state' => 'active'
-	  );
-	  } */
-
 
 	/* if(in_array($user,array(19162,15394,19308,22469,5356,1306,18558,21649,10869,19203,18557,7808,4137,18702,3605,13004))) {
 	  $awards_list['nhl-stars'] = array(
@@ -1876,8 +1856,9 @@ function get_latest_groups($force = false) {
 	return $data;
 }
 
+
 /* replacement for file_get_contents with timeout */
-function curl_get($url, $connect_timeout = 2, $timeout = 3) {
+function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
@@ -1889,6 +1870,7 @@ function curl_get($url, $connect_timeout = 2, $timeout = 3) {
 	return $contents;
 
 }
+
 
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
