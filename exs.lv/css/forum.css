@@ -34,7 +34,7 @@ foruma tēmu un kategoriju saraksta stils
 	border-right: 0;
 	min-width: 120px;
 	font-size: 11px;
-	font-family: helvetica,arial,sans-serif;
+	font-family: helvetica,arial,sans-serif
 }
 
 #forum td h3 {
@@ -56,33 +56,32 @@ foruma tēmu un kategoriju saraksta stils
 	padding: 5px 10px;
 	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
 	color: #eee;
-	border-top: 1px solid #333;
-	border-bottom: 1px solid #333
+	border: 0
 }
 
 #forum th a {
-	color: inherit;
+	color: inherit
 }
 
 #forum td.forum-avatar {
-	width: 48px;
+	width: 48px
 }
 
 #forum td img {
-	max-width: inherit;
+	max-width: inherit
 }
 
 ul.subcat-list {
 	padding: 0 0 2px;
 	margin: 0;
-	list-style: none;
+	list-style: none
 }
 
 ul.subcat-list li {
 	padding: 0 10px 0 15px;
 	float: left;
 	margin: 0;
-	background: url('http://img.exs.lv/bildes/subforum.png') no-repeat 0 0;
+	background: url('http://img.exs.lv/bildes/subforum.png') no-repeat 0 0
 }
 
 .forum-admin-tool {
@@ -90,12 +89,12 @@ ul.subcat-list li {
 	filter: alpha(opacity=65);
 	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
-	opacity: 0.65;
+	opacity: 0.65
 }
 
 .forum-admin-tool:hover {
 	filter: alpha(opacity=100);
 	-khtml-opacity: 1;
 	-moz-opacity: 1;
-	opacity: 1;
+	opacity: 1
 }
