@@ -538,7 +538,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$url = $group_link . '/forum/' . base_convert($record->id, 10, 36);
 
 				if (isset($_GET['single'])) {
-					$page_title = $title . ' - forums';
+					$page_title = textlimit(youtube_title($record->text), 64, '...') . ' - forums';
 				}
 
 				$append = '';
