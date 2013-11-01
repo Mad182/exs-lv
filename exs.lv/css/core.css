@@ -2113,7 +2113,7 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 	background: #F7E7D6 url('http://img.exs.lv/bildes/notice.png') no-repeat 5px 5px;
 	border: 1px solid #FAAF56;
 	color: #1D211F;
-	font-size: 10px;
+	font-size: 90%;
 	height: auto!important;
 	min-height: 32px;
 	display: block;
