@@ -1,8 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/modules/checkform/{skinid}.css">
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
-<script type="text/javascript" src="http://static.exs.lv/js/jquery.cluetip.js"></script>
-
 <script type="text/javascript">
 	$('.get-user-info').live('click',function() {
 		var userid = $(this).attr('data-id');
@@ -31,5 +28,3 @@
 		$('a.clue').cluetip({showTitle: false});
 	});
 </script>
-
-<link rel="stylesheet" href="http://static.exs.lv/css/jquery.cluetip.css" type="text/css" />
