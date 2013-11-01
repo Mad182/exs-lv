@@ -1,38 +1,39 @@
 <!-- START BLOCK : mod-cpanel -->
 <h1>Profilu meklēšana un pārbaude</h1>
 <div id="checkform">
-	<form id="search-nick" action="" method="post">
+	<form id="search-nick" method="post">
 		<p><strong>Lietotājvārds:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="nick" value="{nick}" /> 
-			<input type="submit" name="submit" class="danger button" value="Meklēt" />
+			<input type="text" name="nick" value="{nick}"> 
+			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<form id="search-mail" action="" method="post">
+	<form id="search-mail" method="post">
 		<p><strong>E-pasts:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="mail" value="{mail}" /> 
-			<input type="submit" name="submit" class="danger button" value="Meklēt" />
+			<input type="text" name="mail" value="{mail}"> 
+			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<form id="search-ip" action="" method="post">
+	<form id="search-ip" method="post">
 		<p><strong>Pēdējā lietotā IP:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="ip" value="{ip}" />		
-			<input type="submit" name="submit" class="danger button" value="Meklēt" />
+			<input type="text" name="ip" value="{ip}">		
+			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<form id="search-vip" action="" method="post">
+	<form id="search-vip" method="post">
 		<p><strong>Vispār lietota IP:</strong></p>
 		<p class="form-input-box">
-			<input type="text" name="vip" value="{vip}" />		
-			<input type="submit" name="submit" class="danger button" value="Meklēt" />
+			<input type="text" name="vip" value="{vip}">		
+			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<!-- START BLOCK : search-results -->
+	
+	<!-- START BLOCK : search-results -->	
 	<!-- START BLOCK : search-ignored -->
 		<p><strong class="res-info">Rezultāti:</strong> {res-count} :: <strong class="res-info">Parādīti:</strong> {res-count-2}</p>
-	<!-- END BLOCK : search-ignored -->
+	<!-- END BLOCK : search-ignored -->	
 	<table id="user-results">
 		<tr>
 			<th style="text-align:left">Profils</th>
