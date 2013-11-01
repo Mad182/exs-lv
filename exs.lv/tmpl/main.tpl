@@ -96,7 +96,6 @@ tinymce.init({
 
 <body{onload} class="{layout-options}">
 <div id="wrapper">
-<div id="container">
 <div id="header"{page-persona}>
 	<div id="logo">
 		<div id="header-stuff">{ad-top}</div>
@@ -497,7 +496,6 @@ tinymce.init({
 </div>
 <!-- END BLOCK : main-layout-right-->
 <div class="c"></div>
-</div>
 <div id="footer">
 	<div id="online-users">
 		<ul id="ucl"><li id="ucd"></li><li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li><li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li><li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li><li class="admin"><a href="/lietotaji/klase/1">Administrators</a></li></ul>
@@ -535,6 +533,7 @@ tinymce.init({
 	</div>
 	<div class="c"></div>
 </div>
+
 </div>
 
 <!-- START BLOCK : async-call -->
