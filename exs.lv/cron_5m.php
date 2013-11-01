@@ -38,14 +38,13 @@ function get_rss_youtube($url, $exs_userid = 17077, $exs_groupid = 0) {
 	global $db;
 
 	$xml = simplexml_load_file($url);
-	//pr($xml);
 	if ($xml) {
 		$newtweets = array();
 		foreach ($xml->entry as $item) {
-			//pr($item);
+
 			$link = str_replace('&feature=youtube_gdata', '', $item->link['href']);
 			if (!$db->get_var("SELECT count(*) FROM miniblog WHERE twitterid = '" . md5($link) . "'")) {
-				//pr($link);
+
 				$newtweets[] = array(
 					sanitize('<p><strong>' . stripslashes($item->title) . '</strong><br /><a href="' . $link . '">' . $link . '</a><br />' . stripslashes($item->content) . '</p>'),
 					date('Y-m-d H:i:s', strtotime($item->published)),
@@ -55,8 +54,6 @@ function get_rss_youtube($url, $exs_userid = 17077, $exs_groupid = 0) {
 			}
 		}
 
-		// pr($newtweets);
-
 		if ($newtweets) {
 			$newtweets = array_reverse($newtweets);
 			foreach ($newtweets as $tw) {
@@ -79,80 +76,14 @@ function get_rss_youtube($url, $exs_userid = 17077, $exs_groupid = 0) {
 	sleep(1);
 }
 
-function get_rss_mb($url, $exs_userid = 17077, $exs_groupid = 0) {
-	global $db;
 
-	$xml = simplexml_load_file($url);
-	if ($xml) {
-		$newtweets = array();
-		foreach ($xml->channel->item as $item) {
-			if (!$db->get_var("SELECT count(*) FROM miniblog WHERE twitterid = '" . md5($item->link) . "'")) {
-				$newtweets[] = array(
-					sanitize('<p>Jaunākā sērija:<br /><a href="' . $item->link . '">' . $item->title . '</a></p>'),
-					date('Y-m-d H:i:s', strtotime($item->pubDate)),
-					md5($item->link),
-					strtotime($item->pubDate)
-				);
-			}
-		}
+get_rss_youtube('http://gdata.youtube.com/feeds/api/users/GoGeocaching/uploads', 20908, 91);
 
-		//pr($newtweets);
-
-		if ($newtweets) {
-			$newtweets = array_reverse($newtweets);
-			foreach ($newtweets as $tw) {
-
-				$exists = $db->get_var("SELECT id FROM miniblog WHERE groupid = '$exs_groupid' AND twitteruser = 'rssbot' AND `date` LIKE '" . date('Y-m-d') . "%' AND parent = '0' ORDER BY id DESC LIMIT 1");
-				if (!$exists) {
-					$db->query("INSERT INTO miniblog (author,groupid,date,text,ip,bump,twitterid,twitteruser) VALUES ('$exs_userid','$exs_groupid',NOW(),'" . $tw[0] . "','127.0.0.1','" . $tw[3] . "','" . $tw[2] . "','rssbot')");
-				} else {
-					$db->query("INSERT INTO miniblog (parent,author,groupid,date,text,ip,bump,twitterid,twitteruser) VALUES ('$exists','$exs_userid','$exs_groupid','" . $tw[1] . "','" . $tw[0] . "','127.0.0.1','" . $tw[3] . "','" . $tw[2] . "','rssbot')");
-					$db->query("UPDATE miniblog SET bump = '" . time() . "', posts = posts+1 WHERE id = '$exists'");
-				}
-			}
-			$db->query("UPDATE clans SET posts = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$exs_groupid'") . "' WHERE id = '$exs_groupid'");
-			update_karma($exs_userid);
-			$db->query("UPDATE `users` SET `lastseen` = NOW() WHERE `id` = '$exs_userid'");
-		}
-	}
-	echo $url . ' done. Waiting...
-';
-	sleep(1);
+$cats = $db->get_results("SELECT id FROM cat");
+foreach ($cats as $cat) {
+	update_stats($cat->id);
 }
 
-$rand = file_get_contents('cache/cronupd.txt');
-if ($rand == 1) {
-	$get_img->xkcd();
-}
-if ($rand == 6 && rand(0, 5) == 1) {
-	get_rss_youtube('http://gdata.youtube.com/feeds/api/users/GoGeocaching/uploads', 20908, 91);
-}
-$rand++;
-if ($rand > 7) {
-
-
-	$cats = $db->get_results("SELECT id FROM cat");
-	foreach ($cats as $cat) {
-		update_stats($cat->id);
-	}
-
-	$rand = 1;
-}
-file_put_contents('cache/cronupd.txt', $rand);
-
-
-$last = file_get_contents('cache/twitter.txt');
-if ($last == 1) {
-	$get_img->reddit();
-}
-if ($last == 4) {
-	$get_img->reddit();
-}
-
-$last++;
-if ($last > 5) {
-	$last = 1;
-}
-
-file_put_contents('cache/twitter.txt', $last);
+$get_img->xkcd();
+$get_img->reddit();
 

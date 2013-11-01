@@ -1896,6 +1896,19 @@ function get_youtube($videoid, $force = false) {
 			$contents = curl_exec($ch);
 			curl_close($ch);
 
+			if(!$contents) {
+
+				/* ja exs serverim atslēgts ārzemju traffiks, mēģina iegūt datus caur proxy */
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'http://ezgif.com/ytdata.php?id=' . $videoid);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); 
+				curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+				$contents = curl_exec($ch);
+				curl_close($ch);
+
+			}
+
 			if ($contents) {
 				$data->yt_restricted = (bool) stristr($contents, "noembed");
 				$data->yt_title = stripslashes(get_between($contents, "<media:title type='plain'>", '</media:title>'));
