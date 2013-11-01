@@ -97,12 +97,6 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 	} elseif (isset($_GET['loadposts'])) {
 		$data['in-tabs'] = get_latest_posts();
 	}
-	if (isset($_GET['loadcs'])) {
-		$data['cs-content'] = file_get_contents(CORE_PATH . '/cache/cs_monitor.html');
-	}
-	if (isset($_GET['loadmta'])) {
-		$data['mta-content'] = file_get_contents(CORE_PATH . '/cache/mta_monitor.html');
-	}
 	if (isset($_GET['loadmb'])) {
 		$data['mb-latest'] = get_latest_mbs(!empty($_GET['friendmb']));
 	}

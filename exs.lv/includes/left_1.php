@@ -19,11 +19,9 @@ if (!empty($_COOKIE['last-facts-tab']) && $_COOKIE['last-facts-tab'] == 'fact-rs
 $tpl->newBlock('main-layout-left');
 $tpl->assign(array(
 	'latest-noscript' => $out,
-	'latest-cs' => file_get_contents(CORE_PATH . '/cache/cs_monitor.html'),
-	'latest-mta' => file_get_contents(CORE_PATH . '/cache/mta_monitor.html'),
 	'random-fact' => $fact,
 	$sel . '-selected' => 'active ',
-	$fsel . '-selected' => 'active ',
+	$fsel . '-selected' => 'active '
 ));
 unset($out);
 

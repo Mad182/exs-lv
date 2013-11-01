@@ -13,15 +13,6 @@ function msgrr() {
 	if (current_user > 0) {
 		query_string = query_string + '&loadpm=true';
 	}
-	if ($('.remember-mc').hasClass('active')) {
-		query_string = query_string + '&loadmc=true';
-	}
-	if ($('.remember-mta').hasClass('active')) {
-		query_string = query_string + '&loadmta=true';
-	}
-	if ($('.remember-cs').hasClass('active')) {
-		query_string = query_string + '&loadcs=true';
-	}
 	if ($('.remember-pages').hasClass('active')) {
 		query_string = query_string + '&loadposts=true';
 	}
@@ -54,15 +45,6 @@ function msgrr() {
 			}
 			if (key == 'mb-latest') {
 				$('#miniblog-block').html(val);
-			}
-			if (key == 'cs-content') {
-				$('#cs-content').html(val);
-			}
-			if (key == 'mta-content') {
-				$('#mta-content').html(val);
-			}
-			if (key == 'mc-content') {
-				$('#mc-content').html(val);
 			}
 			if (key == 'index-events') {
 				$('#last-action-list').html(val);

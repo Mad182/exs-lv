@@ -3,8 +3,7 @@
 $out = get_latest_posts();
 $tpl->newBlock('main-layout-right');
 $tpl->assign(array(
-	'latest-noscript' => $out,
-	'latest-mta' => file_get_contents(CORE_PATH . '/cache/mta_monitor.html')
+	'latest-noscript' => $out
 ));
 unset($out);
 

@@ -325,22 +325,6 @@ tinymce.init({
 			</fieldset>
 		</form>
 	</div>
-	<!--<h3>Spēļu serveri</h3>
-	<div class="box monitor">
-		<ul class="tabs">
-			<li><a rel="nofollow" href="/cache/cs_monitor.html" class="active remember-cs ajax"><span class="game-cs">Counter Strike</span></a></li>
-		</ul>
-		<div id="cs-content" class="ajaxbox">{latest-cs}</div>
-		<div class="c"></div>
-	</div>
-
-	<div class="box monitor">
-		<ul class="tabs">
-			<li><a rel="nofollow" href="/cache/mta_monitor.html" class="active remember-mta ajax"><span class="game-mta">MTA:RP</span></a></li>
-		</ul>
-		<div id="mta-content" class="ajaxbox">{latest-mta}</div>
-		<div class="c"></div>
-	</div>-->
 
 	<!-- START BLOCK : user-top-->
 	<h3>Šodien aktīvākie</h3>
