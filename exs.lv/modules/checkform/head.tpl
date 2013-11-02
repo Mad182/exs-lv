@@ -24,7 +24,17 @@
 			$(this).text('rādīt mazāk');
 		} else $(this).text('rādīt vairāk');
 	});
-	$(document).ready(function() {
-		$('a.clue').cluetip({showTitle: false});
+	
+	$('#show_more_all').live('click', function() {
+		$('#all_ips .hidden-row').toggle('slow');
+		if ( $(this).children('.toggle-text').text() == 'vairāk' ) {
+			$(this).children('.toggle-text').text('mazāk');
+		} else $(this).children('.toggle-text').text('vairāk');
+	});
+	$('#show_more_unique').live('click', function() {
+		$('#unique_ips .hidden-row').toggle('slow');
+		if ( $(this).children('.toggle-text').text() == 'vairāk' ) {
+			$(this).children('.toggle-text').text('mazāk');
+		} else $(this).children('.toggle-text').text('vairāk');
 	});
 </script>

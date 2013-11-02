@@ -3,7 +3,7 @@
  *	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem.
  *
  *	Moduļa adrese: 		exs.lv/checkform
- *	Pēdējās izmaiņas: 	01.10.2013 (Edgars P.)
+ *	Pēdējās izmaiņas: 	02.10.2013 ( Edgars )
  */
 
 if ( !im_mod() ) {
@@ -12,7 +12,17 @@ if ( !im_mod() ) {
 	exit;
 }
 
-/*
+/**
+ *	globālie mainīgie
+ */
+ $limit_total_ips 		= 50;		// maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
+									// nospiežot "rādīt vairāk" pogu
+									
+ $limit_shown_ips 		= 10;		// IP skaits, cik parādīt pirms "rādīt vairāk" pogas
+ $limit_shown_profiles 	= 4;		// profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
+									// dažiem kadriem ir desmitiem fake profilu!
+
+
 if ( isset($_GET['email']) && is_numeric($_GET['email']) ) {
 	
 	$content = 'Nav norādīts!';
@@ -24,7 +34,7 @@ if ( isset($_GET['email']) && is_numeric($_GET['email']) ) {
 	
 	echo $content;
 	exit;
-}*/
+}
 
 /**
  *	jQuery pieprasījums, kas ielādē šādus datus:
@@ -46,6 +56,10 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 		exit;
 	}
 
+	
+	//$content = '<div><a class="clue" href="javascript:void()" rel="/checkform/?email=115" title="">115</a><div class="c"></div></div><div class="c"></div>';
+	
+	
 	// pārbauda, vai lietotājam ir aktīvs bans
 	$ban = $db->get_row("
 		SELECT 
@@ -65,25 +79,76 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 	}
 	
 	
+	
 	// atrod pēdējās x lietotās IP
-	$ips = $db->get_results("
-		SELECT 
-			`ip`, `lastseen` 
-		FROM `visits` 
+	$all_ips = $db->get_results("
+		SELECT `ip`, `lastseen` FROM `visits` 
 		WHERE 
 			`user_id` = '$user->id' 
 		ORDER BY 
 			`lastseen` DESC 
-		LIMIT 0,25
+		LIMIT 0, $limit_total_ips
 	");
-	if ( $ips ) {
-		$content .= '<p class="infop"><strong>Izmantotās IP:</strong><br />';
-		foreach ($ips as $ip) {
-			$content .= '<span style="margin-left:10px">'.$ip->ip.' (pirms '.time_ago(strtotime($ip->lastseen)).')</span><br />';
+	
+	$unique_ips = $db->get_results("
+		SELECT `visits`.`ip` FROM `visits`
+		WHERE 
+			`visits`.`user_id` = '$user->id'
+		GROUP BY `visits`.`ip`
+		LIMIT 0, $limit_total_ips
+	");
+	
+	if ( $all_ips || $unique_ips ) {
+	
+		$counter = 1;
+	
+		$content .= '<div id="ip_block">';
+		$content .= '<p class="infop"><strong>Izmantotās IP:</strong></p>';
+		
+		// visu atrasto IP stabiņš ar laiku, kad šī IP izmantota
+		if ( $all_ips ) {
+			$content .= '<table id="all_ips" class="ip-table">';
+			$content .= '<tr><td><strong>Pēdējās IP</strong></td></tr>';
+			foreach ($all_ips as $ip) {
+				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
+				$content .= '<tr'.$row_class.'><td>'.$ip->ip.' (pirms '.time_ago(strtotime($ip->lastseen)).')</td></tr>';
+				$counter++;
+			}
+			if ( $counter-1 > $limit_shown_ips ) {
+				$content .= '<tr><td>
+					<a id="show_more_all" href="javascript:void();">Rādīt <span class="toggle-text">vairāk</span></a>
+				</td></tr>';
+			}
+			$content .= '</table>';
 		}
-		$content .= '</p>';
+		
+		$row_class 	= '';
+		$counter 	= 1;
+		
+		// unikālo izmantoto IP stabiņš
+		if ( $unique_ips ) {
+			$content .= '<table id="unique_ips" class="ip-table">';
+			$content .= '<tr><td><strong>Unikālās IP</strong></td></tr>';
+			foreach ($unique_ips as $ip) {
+				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
+				$content .= '<tr'.$row_class.'><td>'.$ip->ip.'</td></tr>';
+				$counter++;
+			}
+			if ( $counter-1 > $limit_shown_ips ) {
+				$content .= '<tr><td>
+					<a id="show_more_unique" href="javascript:void();">Rādīt <span class="toggle-text">vairāk</span></a>
+				</td></tr>';
+			}
+			$content .= '</table>';
+		}
+
+		$content .= '</div>';
+	} 
+	else {
+		$content .= '<p class="infop"><strong>Izmantotās IP:</strong><br>Nav fiksētas!</p>';
 	}
 
+	
 	
 	// veic salīdzināšanu, vai paroles hash nesakrīt ar kāda cita profila hash
 	if (strlen($user->pwd) > 5 && !in_array($user->pwd, array('', ' '))) {
@@ -119,7 +184,7 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 			
 				// 	paslēps rindu, ja to profilu ar tādu pašu paroli ir daudz; 
 				//	varēs apskatīt ar jQuery
-				if ($counter > 4) $add_class = ' class="hide-rows"';	
+				if ($counter > $limit_shown_profiles) $add_class = ' class="hide-rows"';	
 				
 				// 	pārbauda, vai profilam ir aktīvs bans
 				$active_ban = $db->get_row("SELECT `time`,`length` FROM `banned` WHERE `user_id` = '".$pwd->id."' ORDER BY `time` DESC ");
@@ -145,7 +210,7 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 				$counter++;
 			}
 			
-			if ($counter > 5) {
+			if ($counter > $limit_shown_profiles + 1) {
 				$content .= '<tr><td colspan="4" class="toggle-rows"><a class="show-rows" href="javascript:void(0);">rādīt vairāk</a></td></tr>';
 			}
 			
@@ -156,6 +221,8 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 	} else {
 		$content .= '<p class="infop"><strong>Parole ne ar vienu lietotāju nesakrīt.</strong></p>';
 	}		
+	
+	
 	
 	// atrod vecos lietotājvārdus
 	$usernames = $db->get_results("
@@ -184,6 +251,8 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 	echo $content;
 	exit;
 }
+
+
 
 
 

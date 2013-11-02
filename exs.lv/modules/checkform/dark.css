@@ -74,3 +74,22 @@
 .infop strong{
 	color:rgb(255, 107, 107)
 }
+
+#ip_block {
+	clear:both;
+	margin-bottom:10px;
+	overflow:auto
+}
+.ip-table {
+	float:left;
+	margin-right:25px
+}
+.ip-table strong {
+	color:#C5C9CE
+}
+.hidden-row {
+	display:none
+}
+#show_more_all, #show_more_unique {
+	text-align:center
+}
