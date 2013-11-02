@@ -19,7 +19,7 @@ if ( !im_mod() ) {
 									// nospiežot "rādīt vairāk" pogu
 									
  $limit_shown_ips 		= 10;		// IP skaits, cik parādīt pirms "rādīt vairāk" pogas
- $limit_shown_profiles 	= 4;		// profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
+ $limit_shown_profiles 	= 10;		// profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
 									// dažiem kadriem ir desmitiem fake profilu!
 
 
