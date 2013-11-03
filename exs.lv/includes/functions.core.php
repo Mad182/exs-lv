@@ -734,8 +734,8 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		} else {
 			$fn = 'get_youtube_video_small';
 		}
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
 	}
 
 	return $txt;
