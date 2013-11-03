@@ -820,7 +820,7 @@ a.link3 {
 	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -260px;
 }
 
-#wrapper .friends {
+#wfrapper .friends {
 	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -286px;
 }
 
@@ -3561,6 +3561,6 @@ ul.taged {
 	margin: 6px 0 2px;
 }
 
-.imgs a, .imgs a:hover {
+#left .imgs a, #left .imgs a:hover {
 	border: 0;
 }
