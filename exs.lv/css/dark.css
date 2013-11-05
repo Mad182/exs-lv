@@ -150,3 +150,22 @@ html .banned {
 dl.list-attr dt {
 	color: #bbb
 }
+
+/* brīdinājumu saraksta sadaļas stils */
+#list_warns th {
+	color:#CAD9E7;
+	border-bottom:2px solid #979899
+}
+#list_warns td {
+	border-bottom:1px solid #595A5C
+}
+#list_warns .counter {
+	color: #CACBCE;
+}
+.removed_warn td {
+	background:#4B4949;
+	border-bottom:1px solid #55585C !important
+}
+.warn-users li .stronger {
+	color:#fff;
+}

@@ -3564,3 +3564,49 @@ ul.taged {
 #left .imgs a, #left .imgs a:hover {
 	border: 0;
 }
+
+/* brīdinājumu saraksta sadaļas stils */
+#list_warns {
+	margin:10px 20px
+}
+#list_warns th {
+	font-weight:bold;
+	padding:8px 12px;
+	font-size:12px;
+	text-align:left;
+	color:#284C6D;
+	border-bottom:2px solid #404449
+}
+#list_warns td {
+	padding:7px 12px;
+	border-bottom: 1px solid #EEF0F3;
+	font-size:11px
+}
+#list_warns .counter {
+	font-weight:bold;
+	color: #648CF3;
+	text-align:center;
+	padding:5px 0
+}
+.removed_warn td {
+	background:#E6E6E6;
+	border-bottom:1px solid #fff !important
+}
+.warn-users {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.warn-users li {
+	margin:3px 0 0 0;
+	padding:0;
+	background:transparent
+}
+.warn-users li .stronger {
+	color:#515152;
+	font-weight:bold;
+	margin-right:7px
+}
+li.view_more {
+	margin-top:5px
+}
