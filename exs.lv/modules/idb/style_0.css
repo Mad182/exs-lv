@@ -314,7 +314,8 @@ table.idb-small tr td{
 	font-size:13px;
 	padding-bottom:5px;
 	padding-left:20px;
-	background:url('/modules/idb/images/cancel.png') no-repeat left
+	/*background:url('/modules/idb/images/cancel.png') no-repeat left*/
+	background:url('/bildes/fugue-icons/cross-button.png') no-repeat left
 }
 
 /* idb help
