@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/modules/rsmod/{skinid}.css" />
+<link rel="stylesheet" type="text/css" href="/modules/rsmod/{skin-id}.css">
 <script type="text/javascript">
 $('.show-ph-links').live('click',function() {			
 	$(this).parent().parent().parent().siblings('.ph-links').toggle(300);

@@ -1,7 +1,27 @@
-<!-- START BLOCK : rsmod -->
- 
+<h1 class="rs_content_title title-margin">{page-content-title}</h1>
+
+<!-- START BLOCK : no-warns-found -->
+<p>Nav neviena izteikta brīdinājuma! Vai tā var būt?</p>
+<!-- END BLOCK : no-warns-found -->
+
+<!-- START BLOCK : warns-list -->
+<table id="list_warns" class="rslist">
+<tr class="listhead">
+	<td style="width:15%">Kam</td>
+	<td style="width:15%">No</td>
+	<td style="width:70%">Iemesls</td>
+</tr>
+<!-- START BLOCK : single-warn -->
+<tr> 
+  <td>{offender_nick}</td>
+  <td>{creator_nick}</td>
+  <td>{warn_reason}</td>
+</tr>
+<!-- END BLOCK : single-warn -->
+</table>
+<!-- END BLOCK : warns-list -->
+
 <!-- START BLOCK : rsmod-menu -->
-<h1 class="rs_content_title title-margin">runescape pamācību sadaļu administrēšana</h1>
 <div id="rsmod-menu">
 <ul class="tablist">
   <li class="spec-tab noborder">Quests</li>
@@ -10,7 +30,6 @@
   <li><a href="/rsmod/qskills">skills for quests</a></li>
   <li><a href="/rsmod/ph">placeholders</a></li>
 </ul>
-<br />
 <ul class="tablist">
   <li class="spec-tab noborder">lists</li>
   <li><a href="/rsmod/qedit">quests</a></li>
@@ -380,7 +399,6 @@
 <a href="/read/{strid}">{title}</a><br />
 <!-- END BLOCK : cat-listitem -->
 <!-- END BLOCK : cities-cat -->
-
 <h1 class="rs_content_title">Ceļvežu pārvaldīšana</h1>
 <table class="rslist">
 <tr class="listhead">
@@ -409,20 +427,3 @@
 <!-- END BLOCK : city -->
 </table>
 <!-- END BLOCK : rsmod-cities -->
-<!-- START BLOCK : rsmod-warns -->
-<table class="rslist" style="clear:both">
-<tr class="listhead">
-<td>kam</td>
-<td>no</td>
-<td>iemesls</td>
-</tr>
-<!-- START BLOCK : rsmod-warn -->
-<tr> 
-  <td>{user_id}</td>
-  <td>{created_by}</td>
-  <td>{reason}</td>
-</tr>
-<!-- END BLOCK : rsmod-warn -->
-</table>
-<!-- END BLOCK : rsmod-warns -->
-<!-- END BLOCK : rsmod -->

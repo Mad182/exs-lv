@@ -1,154 +1,99 @@
 <?php
+/**
+ *	RuneScape pamācību sadaļas administrācijas panelis.
+ *
+ *	Moduļa adrese: 		exs.lv/rsmod
+ *	Pēdējās izmaiņas: 	05.10.2013 ( Edgars )
+ *
+ *	Papildu aplūkojams saraksts ar pēdējiem liktajiem brīdinājumiem.
+ */
 
-/* ----------------------------------------------------------------------------------- */
-//	 RuneScape sadaļu administrēšanas stūrītis
-/* ---------------------------------------------------------------------------------- */
-if (in_array($auth->id, array(21018)) || im_mod()) {
+ 
+// ne-moderatorus sūtām prom
+if ( !im_mod() ) {
+	set_flash("Error 403: Permission denied!");
+	redirect();
+}
 
-	$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
-	$tpl->prepare();
-	$skinid = ($auth->skin == '1') ? 'dark' : 'light';
-	$tpl->assign('skinid', $skinid);
+// sadaļas dizains tiks pieskaņots lapas dizainam
+$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
+$tpl->prepare();
+$skinid = ($auth->skin == 1) ? 'dark' : 'light';
+$tpl->assign('skin-id', $skinid);
 
-	$tpl_options = 'no-right';
-	$tpl->newBlock('rsmod');
+$tpl_options = 'no-right';
 
-	if (!isset($_GET['var1']) || $_GET['var1'] != 'mod') {
-		$tpl->newBlock('rsmod-menu');
-	}	
-	
 
-// mod meklētājs
-if (isset($_GET['var1']) && $_GET['var1'] == 'mod') {
+// nekādas defaultīgās sadaļas, ko parādīt, nebūs;
+// pārvirza uz placeholder rakstu pārvaldības sadaļu
+if ( !isset($_GET['var1']) ) {
+	redirect('/rsmod/ph');
+}
 
-	//$search_fields = array('username','email','skype');
+/**
+ *	Pēdējo x brīdinājumu saraksts
+ */
+if ( $_GET['var1'] === 'crows' ) {
 
-	$tpl->newBlock('mod-cpanel');
-	$tpl_options = '';
+	$tpl->assign('page-content-title', 'Lietotāju brīdinājumi');
 
-	//$fields = array('nick','mail','skype');
-	if (isset($_POST['submit'])) {
-	
-		// meklēšana pēc lietotāja nika
-		if (isset($_POST['nick']) && strlen($_POST['nick']) > 2) {
-			$field 		= 'nick';
-			$criteria 	= '`nick` LIKE \'%'.sanitize($_POST['nick']).'%\'';
+	$warns = $db->get_results("
+		SELECT
+			`warns`.`reason`		AS `warn_reason`,
 			
-		// meklēšana pēc e-pasta
-		} else if (isset($_POST['mail']) && strlen($_POST['mail']) > 4) {
-			$field 		= 'mail';
-			$criteria 	= '`mail` LIKE \'%'.sanitize($_POST['mail']).'%\'';
+			`offender`.`id`			AS `offender_id`,
+			`offender`.`nick`		AS `offender_nick`,
+			`offender`.`level`		AS `offender_level`,
 			
-		// meklēšana pēc pēdējās lietotājs IP adreses
-		} else if (isset($_POST['ip']) && strlen($_POST['ip']) > 6) {
-			$field 		= 'ip';
-			$criteria 	= '`lastip` LIKE \'%'.sanitize($_POST['ip']).'%\'';
+			`warned_by`.`id`		AS `creator_id`,
+			`warned_by`.`nick`		AS `creator_nick`,
+			`warned_by`.`level`		AS `creator_level`
 			
-		// kļūdu gadījumā
-		} else {
-			$criteria 	= '1';
-			$field 		= '';
-		}
-
-		$results = $db->get_results("SELECT `id`,`nick`,`mail`,`lastip`,`karma`,`date` FROM `users` WHERE ".$criteria." ORDER BY ABS(`level`) DESC, `nick` ASC LIMIT 0,30");
-		if ($results) {
-			$tpl->newBlock('search-results');
-			foreach ($results as $res) {
-				
-				$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);
-				
-				// iekrāso formā ievadītos burtus
-				if ($field == 'nick') {
-					$res->nick = str_replace('<strong>'.$_POST['nick'].'</strong>',$_POST['nick'],$res->nick);
-				}				
-				if ($field == 'mail') {
-					$res->mail = str_replace($_POST['mail'],'<strong>'.$_POST['mail'].'</strong>',$res->mail);
-				}
-				if (isset($_POST['ip']) && !empty($_POST['ip'])) {
-					$res->lastip = str_replace($_POST['ip'],'<strong>'.$_POST['ip'].'</strong>',$res->lastip);
-				}
-				$tpl->newBlock('search-result');
-				$tpl->assignAll($res);
-			}
-		}
-	}
-	
-}	
-
-
-
-
-if (isset($_GET['var1']) && $_GET['var1'] == 'dev' && $auth->id == 115) {
-
-	$count_pages 	= $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '100' ");
-	$count_rshelp 	= $db->get_var("SELECT count(*) FROM `rs_help` WHERE `cat` = '100' ");
-	
-	echo $count_pages.' : '.$count_rshelp.'<br />';
-
-	$quests = $db->get_results("
-		SELECT 
-			`pages`.`id`,
-			`pages`.`strid`,
-			`pages`.`title`,
-			`pages`.`author`
-		FROM 
-			`pages`
-		WHERE 
-			`category` IN(100,102,99,193) 
-		ORDER BY `date` DESC 
-		LIMIT 0,20
+		FROM `warns`
+			JOIN `users` AS `offender` ON `warns`.`user_id` = `offender`.`id`
+			JOIN `users` AS `warned_by` ON `warns`.`created_by` = `warned_by`.`id`
+		ORDER BY 
+			`warns`.`created` DESC 
+		LIMIT 0,100
 	");
-	if ($quests) {
-		$counter = 1;
-		foreach ($quests as $quest) {
-			
-			$get = $db->get_row("SELECT `id` FROM `rs_help` WHERE `page_id` = '".$quest->id."' ");
-			if (!$get) {
+	if ( !$warns ) {
+		$tpl->newBlock('no-warns-found');
+	}
+	else {
+	
+		$tpl->newBlock('warns-list');
 		
-				echo '<strong>'.$counter.'.</strong> <a href="/read/'.$quest->strid.'">'.$quest->title.'</a><br />';
-				$counter++;
-			}
+		foreach ($warns as $warn) {
+		
+			$warn->offender_nick = usercolor($warn->offender_nick, $warn->offender_level);
+			$warn->offender_nick = '<a href="'.mkurl('user', $warn->offender_id, $warn->offender_nick).'">'.$warn->offender_nick.'</a>';
+	
+			$warn->creator_nick = usercolor($warn->creator_nick, $warn->creator_level);
+			$warn->creator_nick = '<a href="'.mkurl('user', $warn->creator_id, $warn->creator_nick).'">'.$warn->creator_nick.'</a>';
+			
+			$tpl->newBlock('single-warn');	
+			$tpl->assignAll($warn);
+			
 		}
-		echo '<br /><br />';
 	}
 
 }
-else if (isset($_GET['var1'])) {
+else {
 
-	if ($_GET['var1'] == 'ready' && $auth->id == 115) {
+	$tpl->assign('page-content-title', 'RuneScape sadaļu pārvaldība');
+	$tpl->newBlock('rsmod-menu');
 	
-		$q = $db->query("UPDATE `rs_help` SET `ready` = '0' ");
-		
-	} else if ($_GET['var1'] == 'questlist' && $auth->id == 115) {
-	
-		$pages = $db->get_results("SELECT `id`,`title`,`strid`,`author` FROM `pages` WHERE `category` in ('99','100') ORDER BY `title` ASC");
-		foreach ($pages as $page) {
-			echo $page->title . '<br />';
-		}
-		exit;
-		
-	} else if (isset($_GET['insert']) && $auth->id == 115) {
 
-		$pages = $db->get_results("SELECT `id`,`title`,`strid`,`author` FROM `pages` WHERE `category` = '195' ");
-		foreach ($pages as $page) {
-			$ins = $db->query("INSERT INTO `rs_help` (cat,page_id,title,strid,auth) VALUES (
-			  '195',
-			  '" . $page->id . "',
-			  '" . sanitize($page->title) . "',
-			  '" . sanitize($page->strid) . "',
-			  '" . (int) $page->author . "'
-			) ");
-		}
-	}
-	
 /* ----------------------------------------------------- */
 //	 Kvestu sēriju numerācija
 /* ---------------------------------------------------- */ 
-else if ($_GET['var1'] == 'st-order') {
+if ($_GET['var1'] == 'st-order') {
 
 	// sēriju numerācija un nosaukumi tiek atjaunoti
-	if (isset($_GET['var2']) && $_GET['var2'] == 'update') {
+	if ( isset($_GET['var2']) && $_GET['var2'] == 'update' ) {
+	
 		$get_cats = $db->get_results("SELECT `id` FROM `rs_classes` WHERE `cat` = 'series' ");
+		
 		if ($get_cats) {
 			foreach ($get_cats as $cat => $data) {
 				if (isset($_POST['order_' . $data->id]) && isset($_POST['title_' . $data->id])) {
@@ -158,7 +103,7 @@ else if ($_GET['var1'] == 'st-order') {
 				}
 			}
 		}
-		header("Location: /" . $_GET['viewcat'] . "/st-order");
+		redirect("/".$_GET['viewcat']."/st-order");
 	}
 	
 	// izvada visas kvestu sērijas ar to numerāciju
@@ -697,30 +642,8 @@ else if ($_GET['var1'] == 'update' && in_array($auth->id,array(115,140))) {
 		}
 	}
 }
-/* ------------------------------------------------- */
-if ($_GET['var1'] == 'warns' && $auth->id == 115) {
-	$warns = $db->get_results("SELECT `user_id`,`created_by`,`reason` FROM `warns` ORDER BY `id` DESC LIMIT 0,100");
-	if ($warns) {
-		$tpl->newBlock('rsmod-warns');
-		foreach ($warns as $warn) {
-			$tpl->newBlock('rsmod-warn');
-			if ($user = get_user($warn->user_id)) {
-				$warn->user_id = '<a style="font-size:11px;" href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
-			}
-			if ($user = get_user($warn->created_by)) {
-				$warn->created_by = '<a style="font-size:11px;" href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
-			}
-			$tpl->assignAll($warn);
-		}
-	}
-}
-
 
 	
-/* ------------------------------------------------- */
-} // end of if(isset($_GET['var1']))
-} // end of - lietotāju piekļuves pārbaude
-else {
-	redirect();
 }
+
 ?>
