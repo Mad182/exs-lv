@@ -3561,6 +3561,6 @@ ul.taged {
 	margin: 6px 0 2px;
 }
 
-.imgs a, .imgs a:hover {
+#left .imgs a, #left .imgs a:hover {
 	border: 0;
 }

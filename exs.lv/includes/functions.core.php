@@ -734,8 +734,8 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		} else {
 			$fn = 'get_youtube_video_small';
 		}
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
 	}
 
 	return $txt;
@@ -1748,6 +1748,14 @@ function update_awards($user) {
 	  $awards_list['exs-cup']['state'] = 'active';
 	  } */
 
+
+	//spēļu turnīri
+	if(in_array($user,array(1,128,265,273,325,1220,1385,1621,1822,2222,2357,3650,4027,4226,4845,5056,5965,6446,6963,10595,11807,12266,12293,12304,12382,13004,13419,15390,16809,16817,18057,18557,18817,18948,19604,20386,20858,21450,21704,22518,23282,23512,23678,24437,24943,25194,25299,25385,25709,25779,26091,29512,30915,31622))) {
+		$awards_list['floorball-2'] = array(
+			'title' => 'Exs 2. florbola turnīrs 02.11.2013',
+			'state' => 'active'
+		);
+	}
 
 	/* gada balva */
 	/* if (in_array($user, array(16433))) {
