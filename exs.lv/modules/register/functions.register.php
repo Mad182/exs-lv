@@ -37,7 +37,7 @@ class Tor
   private function __construct()
   {
     $this->target = implode('.', array_reverse(explode('.', $_SERVER['REMOTE_ADDR'])));
-    $this->exithost = implode('.', array_reverse(explode('.', '85.31.102.92')));
+    $this->exithost = implode('.', array_reverse(explode('.', $_SERVER['SERVER_ADDR'])));
     $this->port = $_SERVER["SERVER_PORT"];
   }
 

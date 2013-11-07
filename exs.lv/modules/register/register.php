@@ -3,7 +3,7 @@
 if (!$auth->ok) {
 
 	/* pārbauda vai lietotājs neizmanto tor */
-	$tor = Tor::getInstance(); 
+	$tor = Tor::getInstance();
 	if($tor->setTarget($auth->ip)->isTorActive()) {
 		set_flash('Reģistrācija no tavas IP adreses šobrīd nav iespējama ;(', 'error');
 		redirect();
@@ -80,7 +80,7 @@ if (!$auth->ok) {
 			$regdata['passok'] = true;
 		}
 
-		if (strtolower($_POST['password']) == '7' or strtolower($_POST['password']) == 'septiņi' or strtolower($_POST['password']) == 'septini') {
+		if (strtolower($_POST['password']) == '9' or strtolower($_POST['password']) == 'deviņi' or strtolower($_POST['password']) == 'devini') {
 			$regdata['botsok'] = true;
 		} else {
 			$tpl->newBlock('invalid-bots');

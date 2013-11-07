@@ -31,7 +31,7 @@
 		<!-- START BLOCK : invalid-bots-->
 		<p class="error">Tu nemāki skaitīt!</p>
 		<!-- END BLOCK : invalid-bots-->
-		
+
 		<!-- START BLOCK : invalid-agree-->
 		<p class="error">Ja vēlies reģistrēties, Tev jāpiekrīt noteikumiem!</p>
 		<!-- END BLOCK : invalid-agree-->
@@ -62,7 +62,7 @@
 			<input type="password" class="text" name="url" id="url" />
 		</p>
 		<p>
-			<label for="password">pieci plus divi ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />
+			<label for="password">desmit mīnus 1 ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />
 			<input type="text" class="text" name="password" id="password" />
 		</p>
 		<h2>Reģistrējoties tu piekrīti mājas lapas lietošanas noteikumiem:</h2>
