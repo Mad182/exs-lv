@@ -13,10 +13,7 @@ if ( !im_mod() ) {
 	redirect();
 }
 
-//$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
-//$tpl->prepare();
 $tpl_options = 'no-right';
-$tpl->assign('page-content-title', 'Lietotāju brīdinājumi');
 
 
 
