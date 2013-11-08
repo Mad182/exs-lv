@@ -15,16 +15,14 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 #
 
 # cleanup, backup
-30 3	* * *	root 	/home/madars/backups/ezgif.sh
-40 3    * * *   root    /home/madars/backups/backup.sh
+10 4    * * *   root    /home/madars/backups/backup.sh
+52 5	* * *	root	service apache2 restart
 
 # web
-*/5 *	* * *	exs	php /home/www/exs.lv/cron_5m.php
-0 0	* * * 	exs	php /home/www/exs.lv/cron_24h.php
-10 3	* * *	exs	php /home/www/exs.lv/cron_nightly.php
-*/1 *	* * *	exs	curl http://exs.lv/ut_stats/
+*/8 *	* * *	exs	php /home/www/exs.lv/cron_5m.php > /dev/null 2>&1
+0 0	* * * 	exs	php /home/www/exs.lv/cron_24h.php > /dev/null 2>&1
+20 3	* * *	exs	php /home/www/exs.lv/cron_nightly.php > /dev/null 2>&1
+2 */6	* * *   exs     php /home/www/exs.lv/cron_lol.php > /dev/null 2>&1
 
-
-
-
-
+# DDoS
+*/1 *   * * *   root     php /home/www/exs.lv/ddos.php > /dev/null 2>&1
