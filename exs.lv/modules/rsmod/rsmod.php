@@ -3,7 +3,7 @@
  *	RuneScape pamācību sadaļas administrācijas panelis.
  *
  *	Moduļa adrese: 		exs.lv/rsmod
- *	Pēdējās izmaiņas: 	05.10.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	08.10.2013 ( Edgars )
  *
  *	Papildu aplūkojams saraksts ar pēdējiem liktajiem brīdinājumiem.
  */
@@ -30,58 +30,9 @@ if ( !isset($_GET['var1']) ) {
 	redirect('/rsmod/ph');
 }
 
-/**
- *	Pēdējo x brīdinājumu saraksts
- */
-if ( $_GET['var1'] === 'crows' ) {
 
-	$tpl->assign('page-content-title', 'Lietotāju brīdinājumi');
-
-	$warns = $db->get_results("
-		SELECT
-			`warns`.`reason`		AS `warn_reason`,
-			
-			`offender`.`id`			AS `offender_id`,
-			`offender`.`nick`		AS `offender_nick`,
-			`offender`.`level`		AS `offender_level`,
-			
-			`warned_by`.`id`		AS `creator_id`,
-			`warned_by`.`nick`		AS `creator_nick`,
-			`warned_by`.`level`		AS `creator_level`
-			
-		FROM `warns`
-			JOIN `users` AS `offender` ON `warns`.`user_id` = `offender`.`id`
-			JOIN `users` AS `warned_by` ON `warns`.`created_by` = `warned_by`.`id`
-		ORDER BY 
-			`warns`.`created` DESC 
-		LIMIT 0,100
-	");
-	if ( !$warns ) {
-		$tpl->newBlock('no-warns-found');
-	}
-	else {
-	
-		$tpl->newBlock('warns-list');
-		
-		foreach ($warns as $warn) {
-		
-			$warn->offender_nick = usercolor($warn->offender_nick, $warn->offender_level);
-			$warn->offender_nick = '<a href="'.mkurl('user', $warn->offender_id, $warn->offender_nick).'">'.$warn->offender_nick.'</a>';
-	
-			$warn->creator_nick = usercolor($warn->creator_nick, $warn->creator_level);
-			$warn->creator_nick = '<a href="'.mkurl('user', $warn->creator_id, $warn->creator_nick).'">'.$warn->creator_nick.'</a>';
-			
-			$tpl->newBlock('single-warn');	
-			$tpl->assignAll($warn);
-			
-		}
-	}
-
-}
-else {
-
-	$tpl->assign('page-content-title', 'RuneScape sadaļu pārvaldība');
-	$tpl->newBlock('rsmod-menu');
+$tpl->assign('page-content-title', 'RuneScape sadaļu pārvaldība');
+$tpl->newBlock('rsmod-menu');
 	
 
 /* ----------------------------------------------------- */
@@ -642,8 +593,4 @@ else if ($_GET['var1'] == 'update' && in_array($auth->id,array(115,140))) {
 		}
 	}
 }
-
-	
-}
-
 ?>
