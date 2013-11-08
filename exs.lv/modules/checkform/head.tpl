@@ -1,6 +1,5 @@
-<link rel="stylesheet" type="text/css" href="/modules/checkform/{skinid}.css">
-
 <script type="text/javascript">
+
 	$('.get-user-info').live('click',function() {
 		var userid = $(this).attr('data-id');
 		if ($('#data-'+userid).parent().hasClass('hide-userdata')) {
@@ -18,6 +17,7 @@
 		}		
 		return false;
 	});
+	
 	$('.show-rows').live('click',function(){
 		$(this).parent().parent().siblings('.hide-rows').toggle('slow');
 		if ($(this).text() == 'rādīt vairāk') {
@@ -31,6 +31,7 @@
 			$(this).children('.toggle-text').text('mazāk');
 		} else $(this).children('.toggle-text').text('vairāk');
 	});
+	
 	$('#show_more_unique').live('click', function() {
 		$('#unique_ips .hidden-row').toggle('slow');
 		if ( $(this).children('.toggle-text').text() == 'vairāk' ) {

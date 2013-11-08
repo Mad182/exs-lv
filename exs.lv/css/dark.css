@@ -151,7 +151,7 @@ dl.list-attr dt {
 	color: #bbb
 }
 
-/* brīdinājumu saraksta sadaļas stils */
+/*(MOD) brīdinājumu saraksta sadaļas stils */
 #list_warns th {
 	color:#CAD9E7;
 	border-bottom:2px solid #979899
@@ -168,4 +168,42 @@ dl.list-attr dt {
 }
 .warn-users li .stronger {
 	color:#fff;
+}
+
+/* (MOD) lietotāju meklēšanas formas stils */
+#checkform {
+	border:1px solid rgb(86, 90, 94);
+}
+#checkform th {
+	border-bottom:2px solid rgb(128, 128, 128);
+	color:rgb(255, 162, 139)
+}
+.form-input-box {
+	border-bottom:2px solid rgb(127, 129, 134)
+}
+#checkform input[type=text] {
+	border: 1px solid #eee;
+	background: #ddd;
+	box-shadow:none
+}
+#user-results td {
+	border-bottom:1px dotted rgb(88, 83, 83);
+	border-top:none
+}
+#user-results th {
+	color:rgb(153, 156, 160);
+	border-bottom:1px solid rgb(128, 128, 128)
+}
+.res-info {
+	color:rgb(63, 67, 119)
+}
+.old-nicks {
+	background:none;
+	border-bottom:1px dotted #ddd;
+}
+.infop strong{
+	color:rgb(255, 107, 107)
+}
+.ip-table strong {
+	color:#C5C9CE
 }

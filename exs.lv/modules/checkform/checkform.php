@@ -3,7 +3,7 @@
  *	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem.
  *
  *	Moduļa adrese: 		exs.lv/checkform
- *	Pēdējās izmaiņas: 	02.10.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	08.10.2013 ( Edgars )
  */
 
 if ( !im_mod() ) {
@@ -262,8 +262,6 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 
 $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
-$skinid = ($auth->skin == 1) ? 'dark' : 'light';
-$tpl->assign('skinid', $skinid);
 
 $tpl->newBlock('mod-cpanel');
 

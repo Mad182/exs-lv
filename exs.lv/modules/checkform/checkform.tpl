@@ -30,27 +30,29 @@
 		</p>
 	</form>
 	
-	<!-- START BLOCK : search-results -->	
-	<!-- START BLOCK : search-ignored -->
-		<p><strong class="res-info">Rezultāti:</strong> {res-count} :: <strong class="res-info">Parādīti:</strong> {res-count-2}</p>
-	<!-- END BLOCK : search-ignored -->	
+	<!-- START BLOCK : search-results -->
+	<p class="infop data-explanation"><strong>Nospiežot uz atrasta lietotājvārda, aplūkojama plašāka informācija!</strong></p>
 	<table id="user-results">
 		<tr>
-			<th style="text-align:left">Profils</th>
-			<th>{ip-type}</th>
-			<th>E-pasts</th>
-			<th>Karma</th>
-			<th>Dienas</th>
+			<th style="text-align:left;width:120px">Profils</th>
+			<th style="width:120px">{ip-type}</th>
+			<th style="width:90px">E-pasts</th>
+			<th style="width:60px">Karma</th>
+			<th style="width:50px">Dienas</th>
 		</tr>
 		<!-- START BLOCK : search-result -->
 		<tr>
-			<td style="width:120px;" class="get-user-info" data-id="{id}"><a href="/user/{id}">{nick}</a></td>
-			<td class="centered-result" style="width:120px;">{lastip}</td>
-			<td class="centered-result" style="width:90px;">{mail}</td>
-			<td class="centered-result" style="width:60px;">{karma}</td>
-			<td class="centered-result" style="width:50px;">{date}</td>
+			<td class="get-user-info" data-id="{id}">
+				<a href="/user/{id}">{nick}</a>
+			</td>
+			<td class="centered-result">{lastip}</td>
+			<td class="centered-result">{mail}</td>
+			<td class="centered-result">{karma}</td>
+			<td class="centered-result">{date}</td>
 		</tr>
-		<tr class="hide-userdata"><td id="data-{id}" class="wider-row" colspan="5"></td></tr>
+		<tr class="hide-userdata">
+			<td id="data-{id}" class="wider-row" colspan="5"></td>
+		</tr>
 		<!-- END BLOCK : search-result -->
 	</table>
 	<!-- END BLOCK : search-results -->

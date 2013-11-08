@@ -3565,7 +3565,7 @@ ul.taged {
 	border: 0;
 }
 
-/* brīdinājumu saraksta sadaļas stils */
+/* (MOD) brīdinājumu saraksta sadaļas stils */
 #list_warns {
 	margin:10px 20px
 }
@@ -3609,4 +3609,109 @@ ul.taged {
 }
 li.view_more {
 	margin-top:5px
+}
+
+/* (MOD) lietotāju meklēšanas forma */
+#checkform {
+	padding:20px;
+	border:1px solid #ddd;
+	margin:20px auto 10px;
+	width:90%
+}
+#checkform th {
+	padding:5px 8px;
+	border-bottom:2px solid #ccc;
+	color:rgb(255, 112, 76)
+}
+.form-input-box {
+	border-bottom:2px solid #ddd;
+	padding-bottom:10px;
+	margin-bottom:7px;
+	display:block
+}
+#checkform input[type=text] {
+	width:250px;
+	padding:3px 5px;
+	border:1px solid #bbb;
+	box-shadow:1px 1px 6px #ddd;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+#user-results {
+	margin-top:10px
+}
+#user-results th, #user-results td {
+	padding:3px 12px;
+	border-bottom:1px solid #ddd;
+}
+#user-results td {
+	padding:4px 8px;
+	border-top:none
+}
+#user-results th {
+	color:rgb(73, 81, 90);
+	text-align:center
+}
+#user-results p a {
+	margin-left:10px
+}
+#user-results .centered-result {
+	text-align:center
+}
+#checkform .hide-rows {
+	display:none
+}
+#checkform .toggle-rows {
+	text-align:center;
+	font-weight:bold
+}
+#checkform .res-info {
+	color:rgb(63, 67, 119)
+}
+#checkform .old-nicks {
+	background:none;
+	margin-left:0;
+	padding:5px 7px;
+	border-bottom:1px dotted #ddd;
+}
+#checkform .data-explanation {
+	position: relative;
+	top: 7px;
+	left: 10px;
+}
+#user-results .hide-userdata {
+	display:none
+}
+#user-results .wider-row {
+	padding-left:30px !important
+}
+#user-results .wider-row p {
+	margin:5px 0
+}
+#ip_block {
+	clear:both;
+	margin-bottom:10px;
+	overflow:auto
+}
+.infop {
+	margin:0;
+	padding:0;
+	clear:left
+}
+.infop strong {
+	color:rgb(226, 62, 62)
+}
+.ip-table {
+	float:left;
+	margin-right:25px
+}
+.ip-table strong {
+	color:#45505C
+}
+#checkform .hidden-row {
+	display:none
+}
+#show_more_all, #show_more_unique {
+	text-align:center
 }
