@@ -273,9 +273,9 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : user-top-->
 
-		<div class="box">
+		<!--<div class="box">
 			<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&port=22003&bgcolor=FFFFFF&bordercolor=EEEEEE&fieldcolor=3B3B3B&valuecolor=292828&oddrowscolor=E2E8F5&showgraph=true&showplayers=true&graphvalues=292828&graphaxis=3B3B3B&width=217&graph_height=110&plist_height=160&font_size=8" frameborder="0" scrolling="no" style="width: 217px; height: 435px"></iframe>
-		</div>
+		</div>-->
 
 		<!-- START BLOCK : poll-box-->
 		<h3>Aptauja</h3>
