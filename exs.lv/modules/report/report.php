@@ -135,7 +135,7 @@ if ( isset($_POST['report-reason']) ) {
 		INSERT INTO `reports`
 			(type, entry_id, comment, created_by, created_at)
 		VALUES
-			('$entry_type_id', '$entry_id', '".sanitize($report_reason)."', '".$auth->id."', '".time()."')
+			('$entry_type_id', '$entry_id', '$report_reason', '".$auth->id."', '".time()."')
 	");
 	if ( $query_insert ) {
 		$state 		= 'success';
