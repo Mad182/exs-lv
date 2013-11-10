@@ -1394,3 +1394,60 @@ blockquote, .q, .quote {
 	border: 0;
 	outline: none;
 }
+
+/* comment rate */
+.c-rate {
+	height: 16px;
+	text-align: center;
+	float: right;
+}
+
+.c-rate a, .c-rate span {
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	float: left;
+	padding: 0;
+	margin: 0 1px;
+	outline: none;
+}
+
+.positive {
+	color: #4a4;
+}
+
+.negative {
+	color: #a44;
+}
+
+.plus {
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 0;
+	text-indent: -9999px;
+}
+
+.plus:hover {
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -64px;
+}
+
+.minus {
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -16px;
+	text-indent: -9999px;
+}
+
+.minus:hover {
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -80px;
+}
+
+.voted1 {
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -32px;
+}
+
+.voted2 {
+	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -48px;
+}
+
+.c-rate span.r-val {
+	line-height: 16px;
+	width: 30px;
+	text-align: right;
+}

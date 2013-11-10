@@ -163,4 +163,14 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
+	/* comment rate */
+	$('.plus, .minus').live('click', function (e) {
+		var elem = $(this).parent();
+		elem.fadeTo(250, 0.5);
+		elem.load($(this).attr('href'), function () {
+			elem.fadeTo(150, 1);
+		});
+		e.preventDefault();
+	});
+
 });
