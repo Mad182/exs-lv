@@ -2352,9 +2352,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {
 				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
 			}
-			if (!$auth->mobile) {
-				$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
-			}
+			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 			$out .= '<p class="post-info"><a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a> <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
 			if (!$auth->mobile && !$intro) {
 				$out .= ' <a href="#m' . $val->id . '" class="comment-permalink">#</a>';

@@ -89,11 +89,12 @@ if ($resps) {
 			$limit = 2;
 		}
 
+		$resp->date = strtotime($resp->date);
 		$out = '<a id="m' . $resp->id . '" href="' . mkurl('user', $resp->author, $resp->nick) . '"><img width="40" height="40" class="av" src="/av/' . $resp->avatar . '" alt="" /></a><div class="response-content">';
 		if ($auth->ok && $level < $limit) {
 			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
 		}
-		$resp->date = strtotime($resp->date);
+		$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
 		$out .= '</p><div class="post-content">' . add_smile($resp->text) . '</div>';
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
