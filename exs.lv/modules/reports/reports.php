@@ -115,10 +115,7 @@ if ( $active_tab == 'miniblogs' ) {
 			`parent_mb`.`id` 			AS `parentmb_id`,
 			`parent_mb`.`author` 		AS `parentmb_author`,
 			`parent_mb`.`text` 			AS `parentmb_text`,
-			`parent_mb`.`groupid`		AS `parentmb_groupid`,
-			
-			$includable_subquery
-			$includable_sel
+			`parent_mb`.`groupid`		AS `parentmb_groupid`
 
 		FROM `reports`	
 			JOIN `users` 	AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`
@@ -142,9 +139,7 @@ else if ( $active_tab == 'articles' ) {
 			`comments`.`text` 	AS `comment_text`,
 			`comments`.`id`		AS `comment_id`,			
 			`pages`.`strid`		AS `comment_page_strid`,
-			`pages`.`title`		AS `comment_page_title`,
-			$includable_subquery
-			$includable_sel
+			`pages`.`title`		AS `comment_page_title`
 
 		FROM `reports`	
 			JOIN `users` AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`
@@ -168,14 +163,15 @@ else if ( $active_tab == 'gallery-comments' ) {
 			`galcom`.`text` 			AS `galcom_text`,
 			`galcom`.`id`				AS `galcom_id`,
 			`galcom`.`author`			AS `galcom_author`,
-			
-			$includable_subquery
-			$includable_sel
+			`galcom`.`bid`				AS `galcom_bid`,
+			`gallery_author`.`id`		AS `gallery_author`
 
-		FROM `reports`	
-			JOIN `users` 	AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`
-			JOIN `galcom` 						ON `reports`.`entry_id` 	= `galcom`.`id`	
+		FROM `reports`
+			JOIN `galcom` 						ON `reports`.`entry_id` 	= `galcom`.`id`
+			JOIN `users` 	AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`				
 			JOIN `users` 	AS `rule_breaker` 	ON `galcom`.`author` 		= `rule_breaker`.`id`
+			JOIN `images`						ON `galcom`.`bid`			= `images`.`id`
+			JOIN `users`	AS `gallery_author`	ON `images`.`uid`			= `gallery_author`.`id`
 			$includable_join
 		WHERE
 			$query_where_field
@@ -244,7 +240,7 @@ else {
 			// galerijas komentārs
 			case 2:
 				$report_place = '<strong>Komentārs: </strong> ';
-				$report_place 	.= '<a href="/gallery/'.$report->rule_breaker_id.'#c'.$report->galcom_id.'">'.$report->galcom_id.'</a>';
+				$report_place 	.= '<a href="/gallery/'.$report->gallery_author.'/'.$report->galcom_bid.'#c'.$report->galcom_id.'">'.$report->galcom_id.'</a>';
 				break;
 			// galerijas attēls kā tāds
 			case 3:
