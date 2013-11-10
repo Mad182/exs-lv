@@ -88,8 +88,9 @@ if ($resps) {
 		} else {
 			$limit = 2;
 		}
-
-		$resp->date = strtotime($resp->date);
+		if($auth->ok && $auth->id != $resp->author) {
+			$resp->date = strtotime($resp->date);
+		}
 		$out = '<a id="m' . $resp->id . '" href="' . mkurl('user', $resp->author, $resp->nick) . '"><img width="40" height="40" class="av" src="/av/' . $resp->avatar . '" alt="" /></a><div class="response-content">';
 		if ($auth->ok && $level < $limit) {
 			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
