@@ -872,6 +872,8 @@ a.activeTab, a.activeTab:hover {
 	background: #f3f3f3;
 	padding: 6px 5px 0;
 	margin: 0 -4px;
+	width: 100%;
+	overflow: hidden;
 }
 
 .tabs li {
