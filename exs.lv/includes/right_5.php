@@ -104,3 +104,19 @@ if ($auth->ok === true) {
 
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
+
+//player online chart
+$chart_items = $db->get_results("SELECT `time`, `count` FROM `mta_chart` WHERE `time` > '".date('Y-m-d H:i:s', strtotime('-1 day'))."' ORDER BY `time` ASC");
+
+if($chart_items) {
+	$tpl->newBlock('google-chart');
+
+	$items = array();
+	foreach($chart_items as $item) {
+		$items[] = "['".substr($item->time,0,16)."', ".$item->count."]";
+	}
+
+	$tpl->assign('chart-items', implode(',', $items));
+}
+
+unset($chart_items);

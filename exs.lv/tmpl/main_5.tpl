@@ -87,6 +87,29 @@ tinymce.init({
 </script>
 <!-- END BLOCK : mb-head-->
 <!-- INCLUDE BLOCK : module-head -->
+
+
+<!-- START BLOCK : google-chart-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", { packages:["corechart"] });
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([['Time', 'Online'], {chart-items}]);
+
+        var options = {
+		chartArea: { width: 180, height: 110 },
+		legend: { position: 'none' },
+		vAxis: { minValue: 0 },
+		hAxis: { textPosition: 'none' },
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+<!-- END BLOCK : google-chart-->
+
 </head>
 <body class="{layout-options}">
 
@@ -273,7 +296,7 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : user-top-->
 
-		<h3>Servera monitors</h3>
+		<h3>mta.exs.lv:22003</h3>
 		<div class="box">
 			{mta-monitor}
 		</div>
