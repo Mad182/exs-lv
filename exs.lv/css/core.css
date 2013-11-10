@@ -3782,7 +3782,6 @@ li.view_more {
 .report-response-good {
 	color: #4FAC5A;
 	padding-left: 25px;
-	margin:0 0 5px 20px;
 	background: url('/bildes/fugue-icons/tick.png') no-repeat left;
 }
 
