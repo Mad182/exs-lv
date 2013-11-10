@@ -20,7 +20,7 @@
 </script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans+Narrow&amp;subset=latin,latin-ext" type="text/css">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},gta.css" type="text/css">
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},mta.css?monitor" type="text/css">
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -273,9 +273,10 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : user-top-->
 
-		<!--<div class="box">
-			<iframe src="http://www.game-state.eu/iframe.php?ip=92.240.80.63&port=22003&bgcolor=FFFFFF&bordercolor=EEEEEE&fieldcolor=3B3B3B&valuecolor=292828&oddrowscolor=E2E8F5&showgraph=true&showplayers=true&graphvalues=292828&graphaxis=3B3B3B&width=217&graph_height=110&plist_height=160&font_size=8" frameborder="0" scrolling="no" style="width: 217px; height: 435px"></iframe>
-		</div>-->
+		<h3>Servera monitors</h3>
+		<div class="box">
+			{mta-monitor}
+		</div>
 
 		<!-- START BLOCK : poll-box-->
 		<h3>Aptauja</h3>
