@@ -318,12 +318,11 @@ p.core-pager {
 
 #mta-monitor p {
 	margin: 0;
-	padding: 1px 0;
-	font-size: 13px;
+	padding: 1px 5px;
+	font-size: 12px;
 }
 
 #mta-monitor p.playerlist {
-	font-size: 12px;
 	padding: 5px;
 	background: #f5f2fc;
 }
