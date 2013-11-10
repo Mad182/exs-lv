@@ -90,24 +90,24 @@ tinymce.init({
 
 
 <!-- START BLOCK : google-chart-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", { packages:["corechart"] });
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([['Time', 'Online'], {chart-items}]);
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", { packages:["corechart"] });
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var data = google.visualization.arrayToDataTable([['Time', 'Online'], {chart-items}]);
 
-        var options = {
-		chartArea: { width: 180, height: 110 },
-		legend: { position: 'none' },
-		vAxis: { minValue: 0 },
-		hAxis: { textPosition: 'none' },
-        };
+		var options = {
+			chartArea: { width: 200, height: 110, left: 18 },
+			legend: { position: 'none' },
+			vAxis: { minValue: 0 },
+			hAxis: { textPosition: 'none' },
+		};
 
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
+		var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+		chart.draw(data, options);
+	}
+</script>
 <!-- END BLOCK : google-chart-->
 
 </head>
