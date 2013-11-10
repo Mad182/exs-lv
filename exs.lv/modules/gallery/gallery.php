@@ -572,6 +572,12 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					));
 
 					$comment_number++;
+					
+					/* podziņa ziņošanai par pārkāpumu */
+					if ( im_mod() && !$auth->mobile ) {
+						$tpl->newBlock('report-user');
+						$tpl->assign('comment-id', $comment->id);
+					}
 
 					if ($auth->ok && ($auth->level == 1 or $auth->level == 2)) {
 						$tpl->newBlock('comments-adm');

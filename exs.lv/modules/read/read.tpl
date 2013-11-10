@@ -311,8 +311,13 @@
 		<p class="inf">
 			<!-- START BLOCK : comments-vote-->
 			<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
-			<!-- END BLOCK : comments-vote-->
-			<strong><a href="#c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong>{comment-date}
+			<!-- END BLOCK : comments-vote-->			
+			<strong><a href="#c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong><span>{comment-date}</span>
+			<!-- START BLOCK : report-comment -->
+			<span class="report-button">
+				<a class="report-user" href="/report/article-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>
+			</span>
+			<!-- END BLOCK : report-comment -->
 			<!-- START BLOCK : comments-adm-->
 			| [<a href="{delete}" class="confirm red" title="Dzēst">x</a>]
 			| <a href="{edit}">labot</a>

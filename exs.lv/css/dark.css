@@ -151,26 +151,28 @@ dl.list-attr dt {
 	color: #bbb
 }
 
-/*(MOD) brīdinājumu saraksta sadaļas stils */
-#list_warns th {
+/* MOD sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
+#mod_list_table th {
 	color:#CAD9E7;
 	border-bottom:2px solid #979899
 }
-#list_warns td {
+#mod_list_table td {
 	border-bottom:1px solid #595A5C
 }
-#list_warns .counter {
+#mod_list_table .counter {
 	color: #CACBCE;
 }
+.mod-table-list li .stronger {
+	color:#CECECE;
+}
+
+/* MOD brīdinājumu saraksta sadaļas stils */
 .removed_warn td {
 	background:#4B4949;
 	border-bottom:1px solid #55585C !important
 }
-.warn-users li .stronger {
-	color:#fff;
-}
 
-/* (MOD) lietotāju meklēšanas formas stils */
+/* MOD lietotāju meklēšanas forma */
 #checkform {
 	border:1px solid rgb(86, 90, 94);
 }
@@ -206,4 +208,47 @@ dl.list-attr dt {
 }
 .ip-table strong {
 	color:#C5C9CE
+}
+
+/* sūdzību iesniegšanas fancybox stili */
+#report-title {
+	border-bottom:1px dotted #eee;
+	color:#FF6E5A
+}
+#form-block {
+	border:1px solid #eee
+}
+.report-item {
+	color:#3E5661
+}
+.report-content {
+	color:#6A6C70
+}
+.report-error {
+	color:orangered;
+}
+.report-response {
+	color: #FF3F3F
+}
+.report-response-good {
+	color: #4FAC5A
+}
+a.report-user {
+	color:#BEBEBA
+}
+
+/* MOD iesniegto sūdzību pārvaldības stili */
+.no-reports {
+	color: #4C507C;
+	border-bottom: 1px solid #eee
+}
+#report-tabs .red {
+	color:#ef6000
+}
+#archived_reports {
+	background: #575858;
+	border: 1px solid #636366;
+}
+#archived_reports a {
+	border-bottom:0
 }

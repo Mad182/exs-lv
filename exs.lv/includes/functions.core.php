@@ -2348,7 +2348,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			} else {
 				$out .= '<a class="mb-av" id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" width="40" height="40" src="' . get_avatar($val, 's') . '" alt="" /></a>';
 			}
-			$out .= '<div class="response-content">';
+			$out .= '<div class="response-content">';			
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {
 				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
 			}
@@ -2358,6 +2358,11 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			$out .= '<p class="post-info"><a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a> <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
 			if (!$auth->mobile && !$intro) {
 				$out .= ' <a href="#m' . $val->id . '" class="comment-permalink">#</a>';
+			}
+			// 	poga lietotāja pārkāpuma noziņošanai,
+			//	šobrīd redzama tikai moderatoriem
+			if ( im_mod() && !$auth->mobile ) {
+				$out .= ' <a class="report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">Ziņot</a>';
 			}
 			if (!$auth->mobile && !$intro && $auth->ok === true && ((!$closed && $auth->id == $val->author && $auth->level == 3) || im_mod()) && $val->date > time() - 600) {
 				$out .= ' [<a href="/delete/' . $val->id . '" class="confirm r">dzēst</a>]';

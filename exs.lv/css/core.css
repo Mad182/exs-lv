@@ -3565,11 +3565,11 @@ ul.taged {
 	border: 0;
 }
 
-/* (MOD) brīdinājumu saraksta sadaļas stils */
-#list_warns {
+/* MOD sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
+#mod_list_table {
 	margin:10px 20px
 }
-#list_warns th {
+#mod_list_table th {
 	font-weight:bold;
 	padding:8px 12px;
 	font-size:12px;
@@ -3577,41 +3577,43 @@ ul.taged {
 	color:#284C6D;
 	border-bottom:2px solid #404449
 }
-#list_warns td {
+#mod_list_table td {
 	padding:7px 12px;
 	border-bottom: 1px solid #EEF0F3;
 	font-size:11px
 }
-#list_warns .counter {
+#mod_list_table .counter {
 	font-weight:bold;
 	color: #648CF3;
 	text-align:center;
 	padding:5px 0
 }
-.removed_warn td {
-	background:#E6E6E6;
-	border-bottom:1px solid #fff !important
-}
-.warn-users {
+.mod-table-list {
 	margin:0;
 	padding:0;
 	list-style:none;
 }
-.warn-users li {
+.mod-table-list li {
 	margin:3px 0 0 0;
 	padding:0;
 	background:transparent
 }
-.warn-users li .stronger {
+.mod-table-list li .stronger {
 	color:#515152;
 	font-weight:bold;
 	margin-right:7px
+}
+
+/* MOD brīdinājumu saraksta sadaļas stils */
+.removed_warn td {
+	background:#E6E6E6;
+	border-bottom:1px solid #fff !important
 }
 li.view_more {
 	margin-top:5px
 }
 
-/* (MOD) lietotāju meklēšanas forma */
+/* MOD lietotāju meklēšanas forma */
 #checkform {
 	padding:20px;
 	border:1px solid #ddd;
@@ -3714,4 +3716,90 @@ li.view_more {
 }
 #show_more_all, #show_more_unique {
 	text-align:center
+}
+
+/* sūdzību iesniegšanas fancybox stili */
+.report-button {
+	margin: 0 3px;
+	/*margin: -2px 5px 0;
+	position:relative;
+	top:2px*/
+}
+.fancy-close {
+	padding:4px 10px 5px
+}
+#report-title {
+	font-size:14px;
+	font-weight:700;
+	padding:0 10px 3px;
+	border-bottom:1px dotted #eee;
+	margin:5px 20px 10px;
+	color:#FF6E5A
+}
+#form-block {
+	margin:15px;
+	padding:10px;
+	border:1px solid #eee;
+	width:400px;
+	overflow:auto
+}
+.report-item {
+	color:#3E5661
+}
+#report-txtarea {
+	width:400px;
+	height:120px;
+}
+.report-error, .report-response, .report-response-good {
+	font-weight:700;	
+	margin:10px 20px;
+	line-height:1.3
+}
+.report-error {
+	color:orangered;
+}
+.report-response {
+	color: #FF3F3F;
+	padding-left: 25px;
+	background: url('/bildes/fugue-icons/exclamation-red.png') no-repeat left;
+}
+.report-response-good {
+	color: #4FAC5A;
+	padding-left: 25px;
+	background: url('/bildes/fugue-icons/tick.png') no-repeat left;
+}
+
+/* MOD iesniegto sūdzību pārvaldības stili */
+.no-reports {
+	margin: 10px 20px;
+	padding: 0 10px 7px;
+	color: #4C507C;
+	display: block;
+	border-bottom: 1px solid #eee;
+}
+.report-addr {
+	display:block;
+	margin:3px 10px 3px 0
+}
+.report-mb {
+	position:relative;
+	top:2px
+}
+#report-tabs .red {
+	color:#ef6000;
+	padding:0;
+	float:none
+}
+#archived_reports {
+	margin: 5px 30px 0 20px;
+	background: #F3F4F6;
+	display: inline-block;
+	padding: 3px 11px;
+	border: 1px solid #E1E1E4;
+	border-radius: 3px;
+	font-size: 11px;
+	float:right
+}
+#archived_reports a {
+	border-bottom:0
 }

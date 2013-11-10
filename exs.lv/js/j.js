@@ -107,11 +107,54 @@ Tinycon.setOptions({
 });
 
 $(document).ready(function () {
-
+	
 	$.ajaxSetup({
 		cache: false
 	});
-
+	
+	/* 	tiek izsaukta, nospiežot uz lietotāja nosūdzēšanas podziņas;
+		atver fancybox ar pārkāpuma aprakstīšanas formu */
+	$('.report-user').live('click', function(e) {		
+		$.ajax({
+			dataType: "json",
+			url: $(this).attr('href') + '?_=1',
+			success: function (data) {
+				$.fancybox( data.content );				
+			}
+		});
+		e.preventDefault();		
+	});
+	
+	/* 	izmanto sūdzību iesūtīšanai; tiek izsaukta, 
+		nospiežot submit pogu fancybox logā */
+	$('#report-form').live('submit', function() {
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: $('#report-form').attr('action') + '?_=1',
+			data: $('#report-form').serialize(),
+			success: function (response) {
+			
+				$('.report-response').html("");
+				
+				if ( response.state == 'success' ) {
+					$('#outer-form-block').toggle('slow');
+					$('.report-response').attr('class', 'report-response-good').html( response.content );
+				}
+				else {
+					$('.report-response').html( response.content );
+				}
+			}
+		});
+		return false;
+	});
+	
+	/* aizver atvērto fancybox, nospiežot uz "Pārdomāju" podziņas */
+	$('.fancy-close').live('click',function() {
+		$.fancybox.close();
+		return false;
+	});	
+	
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);
 	}

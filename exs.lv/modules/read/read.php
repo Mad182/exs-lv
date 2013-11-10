@@ -345,7 +345,6 @@ if ($article) {
 
 					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod) VALUES ('$article->id','" . time() . "','" . sanitize($article->title) . "','" . sanitize($article->text) . "','$lastmodu')");
 
-					//if ($auth->id != 115 || $article->edit_user == 0) {
 					$db->query("UPDATE pages SET
 						text = ('$body'),
 						intro = (''),
@@ -357,18 +356,6 @@ if ($article) {
 						edit_user = ('$auth->id'),
 						edit_times = edit_times+1
 					WHERE id = '$topicid'");
-					/* } else {
-					  $db->query("UPDATE pages SET
-					  text = ('$body'),
-					  intro = (''),
-					  title = ('$title'),
-					  avatar = ('$article->avatar'),
-					  sm_avatar = ('$article->sm_avatar'),
-					  category = ('$topiccat'),
-					  edit_time = ('" . time() . "'),
-					  edit_times = edit_times+1
-					  WHERE id = '$topicid'");
-					  } */
 
 					build_latest();
 					update_stats($topiccat);
@@ -951,7 +938,8 @@ if ($article) {
 
 						$tpl->newBlock('comments-node');
 						$tpl->newBlock('comments-node-user');
-
+						
+						
 						if ($author[$comment->author]->avatar == '') {
 							$author[$comment->author]->avatar = 'none.png';
 						}
@@ -1079,6 +1067,12 @@ if ($article) {
 								'comment-id' => $comment->id,
 								'page-id' => $article->id
 							));
+						}
+						
+						//	Pārkāpuma ziņošanas podziņa komentāra labajā pusē.
+						if ( im_mod() && !$auth->mobile ) {
+							$tpl->newBlock('report-comment');
+							$tpl->assign('comment-id', $comment->id);
 						}
 
 						if ($comment->replies > 0) {

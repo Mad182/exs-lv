@@ -300,6 +300,9 @@ if($auth->skin == 1 && $lang == 1) {
 	$add_css .= ',dark.css';
 }
 
+$new_reports_count = $db->get_var("SELECT count(*) FROM `reports` WHERE `archived` = '0' ");
+$new_reports_count = ' (<span class="r">'.$new_reports_count.'</span>)';
+
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
@@ -313,6 +316,7 @@ $tpl->assignGlobal(array(
 	'new-messages' => $new_msg_html,
 	'new-messages-count' => (int) $new_msg_string,
 	'new-approve' => $new_ap_string,
+	'reports-count' => $new_reports_count,
 	'layout-options' => $tpl_options,
 	'currentuser-id' => $auth->id,
 	'current-date' => $today_date,

@@ -173,6 +173,9 @@
 			<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
 			<!-- END BLOCK : comments-vote-->
 			<strong><a href="#c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong>{comment-date}
+			<!-- START BLOCK : report-user -->
+			<a class="report-user" href="/report/gallery-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>
+			<!-- END BLOCK : report-user -->
 			<!-- START BLOCK : comments-adm-->
 			| <a href="{delete}" class="confirm red">dzēst</a>
 			| <a href="{edit}">labot</a>
