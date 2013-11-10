@@ -4,7 +4,7 @@
 	<li><a href="/reports/articles"{tab-articles}>Raksti{count-articles}</a></li>
 	<li><a href="/reports/gallery-comments"{tab-gallery-comments}>Bildes{count-gcomments}</a></li>
 </ul>
-<p id="archived_reports"><a href="{archive-addr}" title="Arhivētie ziņojumi">Sadaļas arhivētie ziņojumi</a></p>
+<p id="archived_reports" class="{archive-active}"><a href="{archive-addr}" title="Arhivētie ziņojumi">Sadaļas arhivētie ziņojumi</a></p>
 <!-- START BLOCK : list-reports -->
 <table id="mod_list_table" style="width:95%">
 <tr class="">

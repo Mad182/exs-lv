@@ -1,6 +1,6 @@
 <!-- START BLOCK : report-form -->
 <div id="outer-form-block">
-	<p id="report-title">Pārkāpuma ziņojums</p>
+	<p id="report-title" style="clear:both">Pārkāpuma ziņojums</p>
 	<div id="form-block">
 		<p><strong class="report-item">Pārkāpējs:</strong> {offender}</p>
 		<form id="report-form" method="post" action="{action}">
@@ -15,7 +15,17 @@
 				<a class="fancy-close button primary" href="javascript:void(0)">Pārdomāju!</a></p>
 		</form>
 	</div>
+	<div id="report-description">
+		<p style="color:orangered"><strong>Uzmanību!</strong></p>
+		<p>
+			Forma paredzēta, lai ziņotu par lietotāju, kurš tā vai citādi pārkāpis lapas noteikumus!<br><br>
+			Pamatojot pārkāpuma iemeslu, jānorāda noteikums, kas pārkāpts!<br><br>
+			Par neatbilstošu formas izmantošanu sūdzības iesniedzējs saņems brīdinājumu.
+		</p>
+		<p><a href="/read/lietosanas-noteikumi" target="_blank">Lapas noteikumi</a></p>
+	</div>
 </div>
+<div class="clearfix"></div>
 <div class="report-response"></div>
 <!-- END BLOCK : report-form -->
 <!-- START BLOCK : error-message -->

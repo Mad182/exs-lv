@@ -1069,8 +1069,8 @@ if ($article) {
 							));
 						}
 						
-						//	Pārkāpuma ziņošanas podziņa komentāra labajā pusē.
-						if ( im_mod() && !$auth->mobile ) {
+						//	pārkāpuma ziņošanas podziņa komentāra labajā pusē.
+						if ( $auth->ok && !$auth->mobile && $lang == 1 ) {
 							$tpl->newBlock('report-comment');
 							$tpl->assign('comment-id', $comment->id);
 						}

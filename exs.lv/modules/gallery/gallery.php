@@ -574,7 +574,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					$comment_number++;
 					
 					/* podziņa ziņošanai par pārkāpumu */
-					if ( im_mod() && !$auth->mobile ) {
+					if ( $auth->ok && !$auth->mobile && $lang == 1 ) {
 						$tpl->newBlock('report-user');
 						$tpl->assign('comment-id', $comment->id);
 					}

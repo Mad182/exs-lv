@@ -382,7 +382,11 @@
 			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}"><img src="http://img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" /></a>
 			<!-- END BLOCK : mb-delete-->
 			<div class="mb-rater">{rater}</div>
-			<p class="post-info"><a href="/user/{author-id}">{author}</a> <span class="date-time" title="{date-title}">{date}</span> teica:</p>
+			<p class="post-info"><a href="/user/{author-id}">{author}</a> <span class="date-time" title="{date-title}">{date}</span> teica:
+			<!-- START BLOCK : report-mb -->
+			 <a class="report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">Ziņot</a>
+			<!-- END BLOCK : report-mb -->
+			</p>
 			{text}
 			<div class="c"></div>
 			<!-- START BLOCK : mb-tags-wrapper-->

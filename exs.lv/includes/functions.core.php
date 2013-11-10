@@ -2324,7 +2324,7 @@ function return2mb($mb) {
 
 //atgriez visas minibloga atbildes html formā, rekursīvi
 function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3, $closed = 0) {
-	global $auth, $min_post_edit;
+	global $auth, $min_post_edit, $lang;
 	$out = '<ul class="responses-' . $key . ' level-' . $level . '">';
 	if (!empty($data[$key])) {
 		$level++;
@@ -2357,9 +2357,8 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			if (!$auth->mobile && !$intro) {
 				$out .= ' <a href="#m' . $val->id . '" class="comment-permalink">#</a>';
 			}
-			// 	poga lietotāja pārkāpuma noziņošanai,
-			//	šobrīd redzama tikai moderatoriem
-			if ( im_mod() && !$auth->mobile ) {
+			// 	podziņa lietotāja pārkāpuma noziņošanai
+			if ( $auth->ok && !$auth->mobile && $lang == 1) {
 				$out .= ' <a class="report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">Ziņot</a>';
 			}
 			if (!$auth->mobile && !$intro && $auth->ok === true && ((!$closed && $auth->id == $val->author && $auth->level == 3) || im_mod()) && $val->date > time() - 600) {

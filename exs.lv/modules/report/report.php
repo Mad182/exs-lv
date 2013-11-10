@@ -5,6 +5,7 @@
  *	Moduļa adrese: 		exs.lv/report
  *	Pēdējās izmaiņas: 	10.10.2013 ( Edgars )
  */
+ 
 /*
 	<span class="report-button">
 		<a class="report-user" href="/report/article-comment/{comment-id}">
@@ -13,16 +14,30 @@
 	</span>
 */
 
-// pa tiešo skatīt nevajadzētu varēt
+/**
+ *	0 - miniblogs (gan komentārs, gan pats mb; arī grupā)
+ *	1 - raksta komentārs (/read sadaļā)
+ *	2 - galerijas attēla komentārs
+ *
+ *	--- zemāk esošie vēl nav ieviesti
+ *	3 - galerijas attēls
+ *	4 - raksts kā tāds
+ *	5 - junk bilde
+ */
+ 
+//	pieļaujamie ieraksti, kādus ļauts nosūdzēt
+$allowed_report_types = array('miniblog', 'article-comment', 'gallery-comment');
+
+//	pēc idejas sadaļu skatīt var tikai caur jquery pieprasījumu
 if ( !isset($_GET['_']) ) {
 	set_flash('Pieeja liegta!');
 	redirect();
 	exit;
 }
 
-//	lai varētu ziņot par pārkāpumu, lietotājam jābūt autorizētam;
+//	lai varētu ziņot par pārkāpumu, lietotājam jābūt autorizētam exs.lv;
 //	no telefoniem šāda iespēja arī nav ļauta
-if ( !$auth->ok || $auth->mobile ) {
+if ( !$auth->ok || $auth->mobile || $lang != 1 ) {
 	echo json_encode( array('state' => 'error', 'content' => 'Darbība liegta!' ) );
 	exit;
 }
@@ -47,9 +62,6 @@ function send_error($e = 0) {
 
 
  
-//	pieļaujamie ieraksti, kādus ļauts nosūdzēt
-$allowed_report_types = array('article-comment', 'miniblog', 'gallery-comment');
-
 //	saturs uz fancybox tiks atgriezts no jauna template objekta
 $template = new TemplatePower(CORE_PATH . '/modules/report/report.tpl');
 $template->prepare();
@@ -75,17 +87,12 @@ switch ($_GET['var1']) {
 		$entry_type_id		= 2;
 		$entry_table		= 'galcom';
 		break;
-	// (vēl nav ieviests)
-	case 'gallery-picture':
-		$entry_type 		= 'gallery-picture';
-		$entry_type_id		= 3;
-		$entry_table		= '';
-		break;
+	// miniblogs
 	default:
 		$entry_type 		= 'miniblog';
 		$entry_type_id		= 0;
 		$entry_table		= 'miniblog';
-		break;	
+		break;
 };
 
 
@@ -104,7 +111,9 @@ if ( isset($_POST['report-reason']) ) {
 
 	//	iesniegt sūdzību ļauts reizi 20 sekundēs
 	if ( isset($_SESSION['timeout_reports']) && ($_SESSION['timeout_reports'] + 20) > time() ) {
-		echo json_encode( array('state' => 'error', 'content' => 'Tik bieži iesniegt sūdzību nav ļauts!') );
+		echo json_encode( 
+			array('state' => 'error', 'content' => 'Tik bieži iesniegt sūdzību nav ļauts! Lūdzu, nedaudz uzgaidi!') 
+		);
 		exit;
 	} else {
 		$_SESSION['timeout_reports'] = time();
@@ -145,39 +154,8 @@ if ( isset($_POST['report-reason']) ) {
 
 
 
-
-//	nosūdzēts tiek kāda raksta komentārs
-if ( $entry_type == 'article-comment' ) {
-
-	// pārbauda, vai norādītais komentāra ID datubāzē eksistē
-	$query_data = $db->get_row("
-		SELECT 
-			`comments`.`id`, 
-			`comments`.`author`,
-			`comments`.`text`,
-			
-			`users`.`id` AS `userid`,
-			`users`.`nick`,
-			`users`.`level`
-			
-		FROM `comments`
-			JOIN `users` ON `comments`.`author` = `users`.`id`
-		WHERE 
-			`comments`.`id` 		= '".(int)$_GET['var2']."' AND
-			`comments`.`removed` 	= '0'
-	");
-	
-	if ( !$query_data ) {
-		send_error(2);
-	}
-	
-	$entry_text = textlimit($query_data->text, 300);
-	
-	$offender 	= usercolor($query_data->nick, $query_data->level);
-	$offender 	= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
-}
 // nosūdzēts tiek minibloga ieraksts
-else if ( $entry_type == 'miniblog' ) {
+if ( $entry_type == 'miniblog' ) {
 	
 	// pārbauda, vai norādītais minibloga ID datubāzē eksistē
 	$query_data = $db->get_row("
@@ -206,6 +184,36 @@ else if ( $entry_type == 'miniblog' ) {
 	$offender 	= usercolor($query_data->nick, $query_data->level);
 	$offender 	= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
 	
+}
+//	nosūdzēts tiek kāda raksta komentārs
+else if ( $entry_type == 'article-comment' ) {
+
+	// pārbauda, vai norādītais komentāra ID datubāzē eksistē
+	$query_data = $db->get_row("
+		SELECT 
+			`comments`.`id`, 
+			`comments`.`author`,
+			`comments`.`text`,
+			
+			`users`.`id` AS `userid`,
+			`users`.`nick`,
+			`users`.`level`
+			
+		FROM `comments`
+			JOIN `users` ON `comments`.`author` = `users`.`id`
+		WHERE 
+			`comments`.`id` 		= '".(int)$_GET['var2']."' AND
+			`comments`.`removed` 	= '0'
+	");
+	
+	if ( !$query_data ) {
+		send_error(2);
+	}
+	
+	$entry_text = textlimit($query_data->text, 300);
+	
+	$offender 	= usercolor($query_data->nick, $query_data->level);
+	$offender 	= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
 }
 //	nosūdzēts tiek galerijas komentārs
 else if ( $entry_type == 'gallery-comment' ) {
@@ -243,8 +251,6 @@ else {
 }
 
 
-
-
 // atgriež HTML formu, kurā ļauts ievadīt pārkāpuma iemeslu
 $template->newBlock('report-form');
 $template->assign(array(
@@ -255,5 +261,4 @@ $template->assign(array(
 
 echo json_encode( array('state' => 'success', 'content' => $template->getOutputContent() ) );
 exit;
-
 

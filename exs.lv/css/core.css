@@ -3719,6 +3719,10 @@ li.view_more {
 }
 
 /* sūdzību iesniegšanas fancybox stili */
+.clearfix {
+	clear:both;
+	display:block
+}
 .report-button {
 	margin: 0 3px;
 	/*margin: -2px 5px 0;
@@ -3736,12 +3740,23 @@ li.view_more {
 	margin:5px 20px 10px;
 	color:#FF6E5A
 }
+#outer-form-block {
+	overflow:auto
+}
 #form-block {
 	margin:15px;
 	padding:10px;
 	border:1px solid #eee;
 	width:400px;
-	overflow:auto
+	overflow:auto;
+	float:left
+}
+#report-description {
+	width:250px;
+	float:left;
+	margin:15px 15px 0 20px;
+	border:1px solid #eee;
+	padding:10px
 }
 .report-item {
 	color:#3E5661
@@ -3761,11 +3776,13 @@ li.view_more {
 .report-response {
 	color: #FF3F3F;
 	padding-left: 25px;
+	margin:0 0 5px 20px;
 	background: url('/bildes/fugue-icons/exclamation-red.png') no-repeat left;
 }
 .report-response-good {
 	color: #4FAC5A;
 	padding-left: 25px;
+	margin:0 0 5px 20px;
 	background: url('/bildes/fugue-icons/tick.png') no-repeat left;
 }
 
@@ -3799,6 +3816,13 @@ li.view_more {
 	border-radius: 3px;
 	font-size: 11px;
 	float:right
+}
+#archived_reports:hover {
+	background:#EAECF0
+}
+#archived_reports.active {
+	background:#DAE5FC;
+	border:1px solid #AFC3EE
 }
 #archived_reports a {
 	border-bottom:0

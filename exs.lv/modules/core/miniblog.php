@@ -317,6 +317,12 @@ if ($inprofile->id) {
 							'id' => $record->id
 						));
 					}
+					
+					// podziņa mb pārkāpuma ziņošanai
+					if ( $auth->ok && !$auth->mobile && $lang == 1 ){
+						$tpl->newBlock('report-mb');
+						$tpl->assign('id', $record->id);
+					}
 
 					$limit = '';
 				} else {

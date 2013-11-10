@@ -117,6 +117,11 @@ if ($resps) {
 		$resp->date = strtotime($resp->date);
 		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
 		$out .= ' <a href="#m' . $resp->id . '" class="comment-permalink">#</a>';
+		
+		// 	poga lietotāja pārkāpuma noziņošanai
+		if ( $auth->ok && !$auth->mobile && $lang == 1 ) {
+			$out .= ' <a class="report-user" href="/report/miniblog/'.$resp->id.'" title="Ziņot par pārkāpumu">Ziņot</a>';
+		}
 		if ($auth->ok && (($auth->id == $resp->author && $auth->level == 3) || im_mod()) && $resp->date > time() - 600) {
 			$out .= ' [<a href="/delete/' . $resp->id . '" class="confirm red">dzēst</a>]';
 		}
