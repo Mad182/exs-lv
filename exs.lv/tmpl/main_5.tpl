@@ -20,7 +20,7 @@
 </script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans+Narrow&amp;subset=latin,latin-ext" type="text/css">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},mta.css" type="text/css">
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},mta.css?aa" type="text/css">
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -296,7 +296,7 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : user-top-->
 
-		<h3>mta.exs.lv:22003</h3>
+		<h3>Servera monitors</h3>
 		<div class="box">
 			{mta-monitor}
 		</div>

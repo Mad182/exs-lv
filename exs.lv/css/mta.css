@@ -316,6 +316,10 @@ p.core-pager {
 	line-height: 16px;
 }
 
+#mta-monitor {
+	padding: 3px 0;
+}
+
 #mta-monitor p {
 	margin: 0;
 	padding: 1px 5px;
@@ -327,8 +331,12 @@ p.core-pager {
 	background: #f5f2fc;
 }
 
-#mta-monitor p .player {
+#mta-monitor p.playerlist span {
 	display: block;
 	padding: 1px 8px;
 	font-size: 11px;
+}
+
+#mta-monitor p.playerlist span.odd {
+	background: #faf8ff;
 }
