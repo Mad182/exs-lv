@@ -34,10 +34,6 @@ if ($requested_json) {
 	header('Content-Type: text/html; charset=UTF-8');
 }
 
-if ($debug && !$requested_json) {
-	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
-}
-
 //redirektē vecos runescape.ex.lv linkus uz pareizu jauno linku
 if (isset($_GET['kategorija']) && isset($_GET['id'])) {
 	//raksti
@@ -462,7 +458,17 @@ if (!empty($_SESSION['flash_message'])) {
 	$_SESSION['flash_message'] = '';
 }
 
+//aizveram konekciju lai nekarājas, ja satura sūtīšana ieilgst
+$db->close();
+
+if (isset($_GET['vc'])) {
+	die('');
+}
+
+$tpl->printToScreen();
+
 if ($debug && !$requested_json) {
+	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
 	echo '<div><a id="debug-details-trigger" href="#" style="float:right;color: #ccf;">detaļas &raquo;</a>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | ielāde: ' . round(microtime(true) - $start_time, 5) . ' s';
@@ -475,18 +481,6 @@ if ($debug && !$requested_json) {
 	pr($_GET);
 	echo '<strong>$_POST</strong><br />';
 	pr($_POST);
-	echo '<strong>$auth</strong><br />';
-	pr($auth);
-	echo '<strong>$_SERVER</strong><br />';
-	pr($_SERVER);
 	echo '</div></div></div>';
 }
 
-//aizveram konekciju lai nekarājas, ja satura sūtīšana ieilgst
-$db->close();
-
-if (isset($_GET['vc'])) {
-	die('');
-}
-
-$tpl->printToScreen();
