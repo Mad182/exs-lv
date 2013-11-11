@@ -91,7 +91,7 @@ if ($resps) {
 		$resp->date = strtotime($resp->date);
 		$out = '<a id="m' . $resp->id . '" href="' . mkurl('user', $resp->author, $resp->nick) . '"><img width="40" height="40" class="av" src="/av/' . $resp->avatar . '" alt="" /></a><div class="response-content">';
 		if ($auth->ok && $level < $limit) {
-			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
+			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 		}
 		if($auth->ok && $auth->id != $resp->author && isset($_GET['url'])) {
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';

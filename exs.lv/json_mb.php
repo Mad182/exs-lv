@@ -109,7 +109,7 @@ if ($resps) {
 
 		$out .= '</div><div class="response-content">';
 		if ($auth->ok && $level < $limit) {
-			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
+			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 		}
 		if ($auth->ok && isset($_GET['url'])) {
 			$out .= '<div class="mb-rater">' . mb_rater($resp, htmlspecialchars(strip_tags($_GET['url']))) . '</div>';

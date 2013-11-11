@@ -2350,7 +2350,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 			$out .= '<div class="response-content">';			
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {
-				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbildēt</a>';
+				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 			}
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 			$out .= '<p class="post-info"><a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a> <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
