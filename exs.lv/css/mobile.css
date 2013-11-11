@@ -1083,8 +1083,8 @@ a.friend-right {
 	filter: alpha(opacity=45);
 	opacity: 0.45;
 	float: right;
-	padding: 4px 0;
-	margin: 0 1px;
+	padding: 3px 0;
+	margin: 0 2px;
 }
 
 .mb-icon {
