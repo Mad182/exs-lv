@@ -112,11 +112,20 @@ if($chart_items) {
 	$tpl->newBlock('google-chart');
 
 	$items = array();
+	$last = null;
 	foreach($chart_items as $item) {
-		$items[] = "['".substr($item->time,0,16)."', ".$item->count."]";
+	
+		if(empty($last)) {
+			$last = $item->count;
+		} else {
+			$items[] = "['".substr($item->time,0,16)."', ".ceil(($item->count+$last)/2)."]";
+			$last = null;
+		}
+	
 	}
 
 	$tpl->assign('chart-items', implode(',', $items));
 }
 
 unset($chart_items);
+unset($items);

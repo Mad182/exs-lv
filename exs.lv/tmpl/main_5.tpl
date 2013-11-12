@@ -101,7 +101,7 @@ tinymce.init({
 			chartArea: { width: 200, height: 110, left: 18 },
 			legend: { position: 'none' },
 			vAxis: { minValue: 0 },
-			hAxis: { textPosition: 'none' },
+			hAxis: { textPosition: 'none' }
 		};
 
 		var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
