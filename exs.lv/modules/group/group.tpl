@@ -297,6 +297,19 @@
 
 <div class="tabMain">
 
+	<!-- START BLOCK : close-reason-->
+	<form id="close-reason" class="form" action="{page-url}" method="post">
+	<fieldset>
+		<legend>Minibloga slēgšana</legend>
+		<p>
+			<label for="reason">Iemesls</label><br />
+			<input type="text" name="reason" id="reason" class="text" />
+		</p>
+		<input class="button danger" type="submit" name="submit-close" id="submit-close" value="Slēgt" />
+	</fieldset>
+	</form>
+	<!-- END BLOCK : close-reason-->
+
 	<!-- START BLOCK : noguestacc-->
 	<div class="form">
 		<p class="notice">Grupas sarunās var piedalīties tikai apstiprinātie biedri!</p>
@@ -329,19 +342,6 @@
 	</div>
 	<!-- END BLOCK : archived-->
 
-
-	<!-- START BLOCK : close-reason-->
-	<form id="close-reason" class="form" action="{page-url}" method="post">
-	<fieldset>
-		<legend>Minibloga slēgšana</legend>
-		<p>
-			<label for="reason">Iemesls</label><br />
-			<input type="text" name="reason" id="reason" class="text" />
-		</p>
-		<input class="button danger" type="submit" name="submit-close" id="submit-close" value="Slēgt" />
-	</fieldset>
-	</form>
-	<!-- END BLOCK : close-reason-->
 	<!-- START BLOCK : user-miniblog-form-->
 	<form id="addminiblog" class="form" action="{page-url}" method="post">
 	<fieldset>
@@ -371,15 +371,34 @@
 	<!-- START BLOCK : user-miniblog-list-node-->
 	<li>
 		<div class="mbox">
-			<div class="mb-av"><a id="m{id}" href="/user/{author-id}"><img src="{avatar}" alt="{author-nick}" width="45" height="45" /></a>{add_deco}</div>
+			<div class="mb-av">
+				<a id="m{id}" href="/user/{author-id}">
+					<img src="{avatar}" alt="{author-nick}" width="45" height="45" />
+				</a>
+				{add_deco}
+			</div>
 			<!-- START BLOCK : mb-reply-main-->
 			<a href="#" class="mb-reply-main mb-icon">Atbildēt</a>
 			<!-- END BLOCK : mb-reply-main-->
 			<!-- START BLOCK : mb-edit-main-->
-			<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit"><img src="http://img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" /></a>
+			<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit">
+				<img src="http://img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" />
+			</a>
 			<!-- START BLOCK : mb-edit-main-->
+			<!-- START BLOCK : mb-edit-close-->
+			<a href="{url}/close" id="close-{id}" class="mb-icon mb-close">
+				<img src="http://exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" />
+			</a>
+			<!-- START BLOCK : mb-edit-close-->
+			<!-- START BLOCK : mb-edit-unclose-->
+			<a href="{url}/open" id="unclose-{id}" class="mb-icon mb-unclose">
+				<img src="http://exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" />
+			</a>
+			<!-- START BLOCK : mb-edit-unclose-->
 			<!-- START BLOCK : mb-delete-->
-			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}"><img src="http://img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" /></a>
+			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}">
+				<img src="http://img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
+			</a>
 			<!-- END BLOCK : mb-delete-->
 			<div class="mb-rater">{rater}</div>
 			<p class="post-info"><a href="/user/{author-id}">{author}</a> <span class="date-time" title="{date-title}">{date}</span> teica:

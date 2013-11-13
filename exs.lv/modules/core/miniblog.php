@@ -209,7 +209,6 @@ if ($inprofile->id) {
 		foreach ($records as $record) {
 
 			if(!$record->private || $auth->ok === true) {
-			
 
 				$tpl->newBlock('user-miniblog-list-node');
 
@@ -317,7 +316,7 @@ if ($inprofile->id) {
 							'id' => $record->id
 						));
 					}
-					
+
 					// podziņa mb pārkāpuma ziņošanai
 					if ( $auth->ok && !$auth->mobile && $lang == 1 ){
 						$tpl->newBlock('report-mb');

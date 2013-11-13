@@ -499,15 +499,22 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 
-		if (im_mod() && isset($_GET['close']) && isset($_GET['single'])) {
+
+		if (im_mod() && isset($_GET['var4']) && $_GET['var4'] === 'close' && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
-			$db->query("UPDATE `miniblog` SET `closed` = '1', `closed_by` = '$auth->id' WHERE `id` = '$sid'");
-			redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
+			if (isset($_POST['reason']) && !empty($_POST['reason'])) {
+				$reason = post2db($_POST['reason']);
+				$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '$auth->id' WHERE `id` = '$sid' AND `lang` = '$lang' AND `groupid` = '$group->id'");
+				$auth->log('Aizslēdza miniblogu ('.strip_tags($reason).')', 'miniblog', $sid);
+				redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
+			} else {
+				$tpl->newBlock('close-reason');
+			}
 		}
 
-		if (im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
+		if (im_mod() && isset($_GET['var4']) && $_GET['var4'] === 'open' && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
-			$db->query("UPDATE `miniblog` SET `closed` = '0', `closed_by` = '0' WHERE `id` = '$sid'");
+			$db->query("UPDATE `miniblog` SET `closed` = '0', `closed_by` = '0' WHERE `id` = '$sid' AND `groupid` = '$group->id'");
 			redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
 		}
 
@@ -591,6 +598,16 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						));
 					}
 
+					//linki ieraksta aizslēgšanai/atslēgšanai
+					if(im_mod()) {
+						if($record->closed) {
+							$tpl->newBlock('mb-edit-unclose');
+						} else {
+							$tpl->newBlock('mb-edit-close');
+						}
+						$tpl->assign('url', $url);
+					}
+
 					//lūdzu neņem nost laika ierobežojumu :/
 					if (im_mod() && strtotime($record->date) > time() - 600) {
 						$tpl->newBlock('mb-delete');
@@ -598,7 +615,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 							'id' => $record->id
 						));
 					}
-					
+
 					// podziņa mb pārkāpuma ziņošanai
 					if ( $auth->ok && !$auth->mobile && $lang == 1 ){
 						$tpl->newBlock('report-mb');
