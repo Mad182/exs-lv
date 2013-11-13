@@ -253,13 +253,14 @@
 <div class="tabMain">
 
 	<!-- START BLOCK : pending-->
-	<strong>Pieteikumi dalībai grupā</strong>
+	<h3>Pieteikumi dalībai grupā</h3>
 	<ul id="friends-pending">
 		<!-- START BLOCK : pending-node-->
 		<li>
 			<a class="image" href="/user/{pending-uid}"><img src="{avatar}" alt="" /></a>
 			<h3><a href="/user/{pending-uid}">{pending-nick}</a> <span>{pending-date}</span></h3>
-			<a href="{group-link}/confirm/{pending-id}">Apstiprināt</a>
+			<a class="group-member-confirm" href="{group-link}/confirm/{pending-id}">Apstiprināt</a> |
+			<a class="group-member-deny" href="{group-link}/deny/{pending-id}">Noraidīt</a>
 			<div class="c"></div>
 		</li>
 		<!-- END BLOCK : pending-node-->
@@ -268,7 +269,6 @@
 	<!-- END BLOCK : pending-->
 
 	<!-- START BLOCK : members-->
-	<strong>Visi biedri</strong>
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<ul id="friend-list">
 		<!-- START BLOCK : members-node-->

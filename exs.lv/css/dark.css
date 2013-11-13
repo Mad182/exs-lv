@@ -30,7 +30,7 @@ a:hover {
 	border-bottom: 1px solid #333
 }
 
-#wrapper .box, #forum td, .form fieldset, a.friend, #pm-read-footer, #comments dd, #comments dt, #movie-info {
+#wrapper .box, #forum td, .form fieldset, a.friend, #pm-read-footer, #comments dd, #comments dt, #movie-info, #friends-pending li {
 	border-color: #333
 }
 
