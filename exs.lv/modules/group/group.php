@@ -386,12 +386,17 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 	}
+
+
+/* leave group */
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
 		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
 	}
 	redirect($group_link);
+
+
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
 
 	$tpl->assignGlobal('active-tab-community', 'active');
@@ -927,6 +932,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	}
 
 	$page_title = $group->title . ' - rīki';
+
+
+/* search */
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
 	$tpl->assignGlobal('active-tab-search', 'active');
@@ -971,7 +979,10 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		$tpl->newBlock('noguestacc-search');
 	}
 
-	$page_title = $group->title . ' - mklēšana';
+	$page_title = $group->title . ' - meklēšana';
+
+
+/* group index */
 } else {
 
 	$tpl->assignGlobal('active-tab-info', 'active');
@@ -1138,7 +1149,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 				$url = $group_link . '/forum/' . base_convert($mb->id, 10, 36);
 
-				$mb->text = wordwrap($mb->text, 12, "\n", 1);
+				$mb->text = wordwrap($mb->text, 15, "\n", 1);
 				$mb->text = textlimit($mb->text, 48, '...');
 				$time = time_ago($mb->bump);
 				$tpl->assign(array(
