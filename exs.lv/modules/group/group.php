@@ -58,6 +58,11 @@ if ($auth->ok && ($auth->id == $group->owner || $auth->level == 1)) {
 	$is_member = true;
 }
 
+/* pending member count */
+if(($is_admin || $is_mod) && !$group->public && $pending_count = $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = $group->id AND `approve` = 0")) {
+	$tpl->assignGlobal('pending_count', '&nbsp;(<span class="red">' . $pending_count . '</span>)');
+}
+
 $ingroup = $group;
 $group_tabs = $db->get_results("SELECT `id`,`title`,`slug` FROM `clans_tabs` WHERE `clan_id` = '$group->id'");
 
