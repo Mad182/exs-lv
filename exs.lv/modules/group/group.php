@@ -500,7 +500,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 
 
-		if (im_mod() && isset($_GET['var4']) && $_GET['var4'] === 'close' && isset($_GET['single'])) {
+		if ((im_mod() || $is_mod || $is_admin) && isset($_GET['var4']) && $_GET['var4'] === 'close' && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
 			if (isset($_POST['reason']) && !empty($_POST['reason'])) {
 				$reason = post2db($_POST['reason']);
@@ -512,7 +512,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 
-		if (im_mod() && isset($_GET['var4']) && $_GET['var4'] === 'open' && isset($_GET['single'])) {
+		if ((im_mod() || $is_mod || $is_admin) && isset($_GET['var4']) && $_GET['var4'] === 'open' && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
 			$db->query("UPDATE `miniblog` SET `closed` = '0', `closed_by` = '0' WHERE `id` = '$sid' AND `groupid` = '$group->id'");
 			redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
@@ -599,7 +599,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					}
 
 					//linki ieraksta aizslēgšanai/atslēgšanai
-					if(im_mod()) {
+					if(im_mod() || $is_mod || $is_admin) {
 						if($record->closed) {
 							$tpl->newBlock('mb-edit-unclose');
 						} else {
