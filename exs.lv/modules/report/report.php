@@ -162,6 +162,7 @@ if ( $entry_type == 'miniblog' ) {
 		SELECT 
 			`miniblog`.`id`, 
 			`miniblog`.`author`,
+			`miniblog`.`groupid`,
 			`miniblog`.`text`,
 			
 			`users`.`id` AS `userid`,
@@ -174,6 +175,18 @@ if ( $entry_type == 'miniblog' ) {
 			`miniblog`.`id` 		= '".(int)$_GET['var2']."' AND
 			`miniblog`.`removed` 	= '0'
 	");
+
+	if(!empty($query_data->groupid)) {
+		$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '$query_data->groupid'");
+
+		if(!$group->public && $group->owner !== $auth->id) {
+			$is_member = $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$query_data->groupid' AND `user` = '$auth->id' AND `approve` = 1");
+
+			if(!$is_member) {
+				die('Nav pieejas!');
+			}
+		}
+	}
 	
 	if ( !$query_data ) {
 		send_error(4);
