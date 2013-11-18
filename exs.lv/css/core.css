@@ -3826,3 +3826,16 @@ li.view_more {
 #archived_reports a {
 	border-bottom:0
 }
+.report-outer-block {
+	float:left;
+	width:300px;
+	border:1px solid #eee;
+	padding:0 10px 10px 10px;
+	margin-right:10px
+}
+.reported-content {
+	padding: 0 0 5px 12px;
+	border-bottom: 1px solid #F3F2F2;
+	color: #1F2F38;
+	margin: 7px 0;
+}

@@ -125,6 +125,14 @@ $(document).ready(function () {
 		e.preventDefault();		
 	});
 	
+	/*	izmanto moderatoru sadaļā, lai apskatītu iesniegtās sūdzības saturu */
+	$('.get-report-content').live('click', function(e) {
+		$.getJSON( ($(this).attr('href') + '?_=1'), function(response) {
+		  $.fancybox( response.message );
+		});
+		e.preventDefault();	
+	});
+	
 	/* 	izmanto sūdzību iesūtīšanai; tiek izsaukta, 
 		nospiežot submit pogu fancybox logā */
 	$('#report-form').live('submit', function() {

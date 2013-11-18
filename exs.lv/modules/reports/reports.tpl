@@ -4,7 +4,9 @@
 	<li><a href="/reports/articles"{tab-articles}>Raksti{count-articles}</a></li>
 	<li><a href="/reports/gallery-comments"{tab-gallery-comments}>Bildes{count-gcomments}</a></li>
 </ul>
+<!-- START BLOCK : view-archived-reports -->
 <p id="archived_reports" class="{archive-active}"><a href="{archive-addr}" title="Arhivētie ziņojumi">Sadaļas arhivētie ziņojumi</a></p>
+<!-- END BLOCK : view-archived-reports -->
 <!-- START BLOCK : list-reports -->
 <table id="mod_list_table" style="width:95%">
 <tr class="">
@@ -19,14 +21,14 @@
 		<ul class="mod-table-list">
 			<li><span class="stronger">Iesniedzis:</span>{reporter_nick}</li>
 			<li><span class="stronger">Pārkāpējs:</span>{rule_breaker_nick}</li>
+			<!-- START BLOCK : archived-by -->
+			<li><span class="stronger" style="padding-left:7px">Arhivējis:</span>{archivator_nick}</li>
+			<!-- END BLOCK : archived-by -->
 		</ul>
 	</td>
 	<td>
 		{report_comment}
-		<span class="report-addr">{report-place}</span>
-		<!-- START BLOCK : archived-by -->
-		<span class="report-addr"><strong>Arhivējis:</strong> {archived-by}</span>
-		<!-- END BLOCK : archived-by -->
+		<span class="report-addr">{report-place} (<a class="get-report-content" href="/reports/show_content/{report_id}">#</a>)</span>
 	</td>
 	<td>
 		<ul class="mod-table-list">
@@ -47,5 +49,5 @@
 </table>	
 <!-- END BLOCK : list-reports -->
 <!-- START BLOCK : no-reports-found -->
-<p class="no-reports"><strong>Nav nevienas iesniegtas sūdzības!</strong></p>
+<p class="no-reports"><strong>Nav nevienas {report-type}!</strong></p>
 <!-- END BLOCK : no-reports-found -->

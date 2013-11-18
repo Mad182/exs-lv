@@ -3,7 +3,7 @@
  *	Fancybox saturs, kādu lietotāji redz, nospiežot nosūdzēšanas podziņu.
  *
  *	Moduļa adrese: 		exs.lv/report
- *	Pēdējās izmaiņas: 	10.10.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	19.10.2013 ( Edgars )
  */
  
 /*
@@ -38,7 +38,9 @@ if ( !isset($_GET['_']) ) {
 //	lai varētu ziņot par pārkāpumu, lietotājam jābūt autorizētam exs.lv;
 //	no telefoniem šāda iespēja arī nav ļauta
 if ( !$auth->ok || $auth->mobile || $lang != 1 ) {
-	echo json_encode( array('state' => 'error', 'content' => 'Darbība liegta!' ) );
+	set_flash('Darbība liegta!');
+	redirect();
+	//echo json_encode( array('state' => 'error', 'content' => 'Darbība liegta!' ) );
 	exit;
 }
  
@@ -104,7 +106,7 @@ switch ($_GET['var1']) {
 if ( isset($_POST['report-reason']) ) {
 
 	//	satura laukam jāsastāv vismaz no 10 simboliem
-	if ( strlen($_POST['report-reason']) < 10 ) {
+	if ( mb_strlen($_POST['report-reason']) < 10 ) {
 		echo json_encode( array('state' => 'error', 'content' => 'Pārkāpuma pamatojums par īsu!') );
 		exit;
 	}
@@ -123,19 +125,23 @@ if ( isset($_POST['report-reason']) ) {
 	//	atgrieztā paragrāfā, tāpēc izsaukt send_error() nav vajadzīgs
 
 	$report_reason	= post2db($_POST['report-reason']);
-	
-	//	pārbauda, vai ieraksts ar tādu ID eksistē
-	$query_check = $db->get_var("SELECT count(*) FROM `$entry_table` WHERE `id` = '$entry_id' AND `removed` = '0' ");
-	if ( $query_check == 0 ) {
+	$report_content	= '';
+	 
+	//	pārbauda, vai ieraksts ar tādu ID eksistē, un atgriež saturu
+	$query_check = $db->get_row("SELECT `text` FROM `$entry_table` WHERE `id` = '$entry_id' AND `removed` = '0' ");
+	if ( ! $query_check ) {
 		echo json_encode( array('state' => 'error', 'content' => 'Kļūdaini iesniegti dati!') );
 		exit;
+	} else {
+		// nav jāsanitizo, jo vienreiz jau apstrādāts
+		$report_content = $query_check->text;
 	}
 		
 	$query_insert = $db->query("
 		INSERT INTO `reports`
-			(type, entry_id, comment, created_by, created_at)
+			(type, entry_id, comment, reported_content, created_by, created_at)
 		VALUES
-			('$entry_type_id', '$entry_id', '$report_reason', '".$auth->id."', '".time()."')
+			('$entry_type_id', '$entry_id', '$report_reason', '$report_content', '".$auth->id."', '".time()."')
 	");
 	if ( $query_insert ) {
 		$state 		= 'success';
@@ -175,22 +181,27 @@ if ( $entry_type == 'miniblog' ) {
 			`miniblog`.`id` 		= '".(int)$_GET['var2']."' AND
 			`miniblog`.`removed` 	= '0'
 	");
-
-	if(!empty($query_data->groupid)) {
-		$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '$query_data->groupid'");
-
-		if(!$group->public && $group->owner !== $auth->id) {
-			$is_member = $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$query_data->groupid' AND `user` = '$auth->id' AND `approve` = 1");
-
-			if(!$is_member) {
-				die('Nav pieejas!');
-			}
-		}
-	}
 	
 	if ( !$query_data ) {
 		send_error(4);
 	}
+	
+	// liedz nosūdzēt komentāru, ja tas atradies grupā,
+	// kurai lietotājam nav piekļuves
+	if( !empty($query_data->groupid) ) {
+	
+		$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '$query_data->groupid' ");
+
+		if( !$group->public && $group->owner !== $auth->id ) {
+		
+			$is_member = $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$query_data->groupid' AND `user` = '$auth->id' AND `approve` = 1");
+
+			if( !$is_member ) {
+				die('Nav pieejas!');
+			}
+		}
+	}
+
 	
 	$entry_text = textlimit($query_data->text, 300);
 	
