@@ -106,7 +106,7 @@ if ( isset($_GET['var1']) && ($_GET['var1'] == 'remove' || $_GET['var1'] == 'act
 	$query_update = $db->query("UPDATE `reports` SET `archived` = '$swap_to', `deleted_by` = '".$auth->id."', `deleted_at` = '".time()."' WHERE `id` = '".(int)$_GET['var2']."' LIMIT 1");
 	
 	if ( !$query_update ) {
-		echo json_encode(array('state' => 'error'));
+		echo json_encode(array('state' => 'error', 'response' => ''));
 	}
 	else {
 		// atkarībā no tā, kāds statuss ziņojumam tika pielikts, atgriež atbilstošo pogu
@@ -341,7 +341,7 @@ else {
 			default:
 			
 				// junk komentārs
-				if ($report->type == 'junk' && $report->parent != 0) {
+				if ($report->miniblog_type == 'junk' && $report->parent != 0) {
 					$report_place 	 = '<strong>Junk komentārs: </strong>';
 					$report_place	.= '<a href="/junk/'.$report->parent.'#m'.$report->miniblog_id.'">#m'.$report->miniblog_id.'</a>';
 				}

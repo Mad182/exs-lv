@@ -1152,6 +1152,12 @@ if ($article) {
 											'delete' => '?delanon=' . $reply->id
 										));
 									}
+									
+									// komentāra atbildes ziņošanas podziņa
+									if ( !$auth->mobile && $auth->ok && $lang == 1 ) {
+										$tpl->newBlock('report-reply');
+										$tpl->assign('comment-id', $reply->id);
+									}
 								}
 							}
 						}

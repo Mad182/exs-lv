@@ -340,6 +340,11 @@
 				<a name="c{rpl-id}" href="{rpl-aurl}"><img class="rpl-avatar" src="{rpl-avatar}" alt="" /></a>
 				<div class="response-content">
 				<p class="comment-author"><a href="{rpl-aurl}">{rpl-author}</a> @ {rpl-date} atbildēja:
+			<!-- START BLOCK : report-reply -->
+			<span class="report-button">
+				<a class="report-user" href="/report/article-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>
+			</span>
+			<!-- END BLOCK : report-reply -->
 			<!-- START BLOCK : reply-adm-->
 				[<a href="{delete}" class="confirm red" title="Dzēst">x</a>] | 
 				 <a href="{edit}">labot</a>
