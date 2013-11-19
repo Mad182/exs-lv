@@ -179,6 +179,7 @@ if ( $active_tab == 'miniblogs' ) {
 			`miniblog`.`text` 			AS `miniblog_text`,
 			`miniblog`.`parent`			AS `miniblog_parent`,
 			`miniblog`.`groupid`		AS `miniblog_groupid`,
+			`miniblog`.`type`			AS `miniblog_type`,
 			
 			`parent_mb`.`id` 			AS `parentmb_id`,
 			`parent_mb`.`author` 		AS `parentmb_author`,
@@ -339,8 +340,13 @@ else {
 			// miniblogs (var būt arī grupā)
 			default:
 			
+				// junk komentārs
+				if ($report->type == 'junk' && $report->parent != 0) {
+					$report_place 	 = '<strong>Junk komentārs: </strong>';
+					$report_place	.= '<a href="/junk/'.$report->parent.'#m'.$report->miniblog_id.'">#m'.$report->miniblog_id.'</a>';
+				}
 				// minibloga komentārs
-				if ( $report->miniblog_parent != '0' ) {
+				else if ( $report->miniblog_parent != '0' ) {
 				
 					$mb_strid = mb_get_strid($report->parentmb_text,$report->parentmb_id);			
 				

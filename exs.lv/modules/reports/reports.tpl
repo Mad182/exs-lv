@@ -22,7 +22,7 @@
 			<li><span class="stronger">Iesniedzis:</span>{reporter_nick}</li>
 			<li><span class="stronger">Pārkāpējs:</span>{rule_breaker_nick}</li>
 			<!-- START BLOCK : archived-by -->
-			<li><span class="stronger" style="padding-left:7px">Arhivējis:</span>{archivator_nick}</li>
+			<li><span class="stronger" style="padding-left:7px">Arhivēja:</span>{archivator_nick}</li>
 			<!-- END BLOCK : archived-by -->
 		</ul>
 	</td>
