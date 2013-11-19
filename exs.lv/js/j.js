@@ -161,7 +161,19 @@ $(document).ready(function () {
 	$('.fancy-close').live('click',function() {
 		$.fancybox.close();
 		return false;
-	});	
+	});
+	
+	/* sūdzību aktualizēšanas/arhivēšanas poga;
+		veic darbību bez lapas pārlādes */
+	$('.report-archive').on('click', function(e) {		
+		var element = $(this);
+		$.getJSON( $(this).attr('href') + '?_=1', function(response) {
+			if (response.state == 'success') {
+				$(element).parent().html(response.response);
+			}
+		});	
+		e.preventDefault();
+	});
 	
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);

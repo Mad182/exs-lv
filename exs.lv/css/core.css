@@ -3829,13 +3829,20 @@ li.view_more {
 .report-outer-block {
 	float:left;
 	width:300px;
+	min-height:150px;
 	border:1px solid #eee;
 	padding:0 10px 10px 10px;
-	margin-right:10px
+	margin-right:10px;
+	font-size:11px
 }
 .reported-content {
-	padding: 0 0 5px 12px;
 	border-bottom: 1px solid #F3F2F2;
-	color: #1F2F38;
+	color: #FF4737;
 	margin: 7px 0;
+	font-size:12px
+}
+.report-notice {
+	padding:0 0 0 7px;
+	margin-bottom:5px;
+	border-left:3px solid #6C7592
 }

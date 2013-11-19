@@ -38,10 +38,10 @@
 	</td>
 	<td>
 		<!-- START BLOCK : archive-button -->
-		<a href="/reports/remove/{report_id}?url={addr}" class="button primary">Arhivēt</a>
+		<a href="/reports/remove/{report_id}?url={addr}" class="button primary report-archive">Arhivēt</a>
 		<!-- END BLOCK : archive-button -->
 		<!-- START BLOCK : activation-button -->
-		<a href="/reports/activate/{report_id}?url={addr}" class="button danger">Aktualizēt</a>
+		<a href="/reports/activate/{report_id}?url={addr}" class="button danger report-archive">Aktualizēt</a>
 		<!-- END BLOCK : activation-button -->
 	</td>
 </tr>

@@ -52,7 +52,7 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 	}
 	else {
 	
-		$data->reported_content = ( empty($data->reported_content) ) ? 'Nav saglabāts!' : $data->reported_content;
+		$data->reported_content = ( empty($data->reported_content) ) ? '<p class="report-notice"><strong>Nav saglabāts!</strong></p>' : $data->reported_content;
 	
 		$templ = new TemplatePower(CORE_PATH . '/modules/reports/reported-content.tpl');
 		$templ->prepare();
@@ -64,18 +64,24 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 		
 		// rakstu komentāri
 		if ($data->type == 1) {
-			$original_data = $db->get_row("SELECT `text`, `edit_time` FROM `comments` WHERE `id` = '".(int)$data->entry_id."' AND `removed` = 0 ");
+			$original_data = $db->get_row("SELECT `text`, `edit_time`, `removed` FROM `comments` WHERE `id` = '".(int)$data->entry_id."' ");
 		}
 		// galeriju komentāri
 		else if ($data->type == 2) {
-			$original_data = $db->get_row("SELECT `text`, `edit_time` FROM `galcom` WHERE `id` = '".(int)$data->entry_id."' AND `removed` = 0 ");
+			$original_data = $db->get_row("SELECT `text`, `edit_time`, `removed` FROM `galcom` WHERE `id` = '".(int)$data->entry_id."' ");
 		}
 		// miniblogi
 		else {
-			$original_data = $db->get_row("SELECT `text`, `edit_time` FROM `miniblog` WHERE `id` = '".(int)$data->entry_id."' AND `removed` = 0 ");
+			$original_data = $db->get_row("SELECT `text`, `edit_time`, `removed` FROM `miniblog` WHERE `id` = '".(int)$data->entry_id."' ");
 		}
 		
 		if ( $original_data ) {
+			
+			// nosūdzētis ieraksts var būt dzēsts un lapā vairs nebūt redzams;
+			// to moderatoram pieklātos redzēt
+			if ($original_data->removed == 1) {
+				$original_data->text = '<p class="report-notice"><strong>Ieraksts ir dzēsts!</strong></p>' . $original_data->text;
+			}
 			$templ->assign('original-post',$original_data->text);
 			/*if ($original_data->edit_time != 0) {
 				$templ->newBlock('edit-time');
@@ -90,35 +96,32 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 
 
 
-//	esošas sūdzības arhivēšana/aktualizēšana
+// šo bloku izsauc jquery getJSON; pārvalda ziņojumu arhivēšanu/aktualizēšanu
+// pieprasītā adrese ir formā /reports/{remove|activate}/{report-id}?_=1
 if ( isset($_GET['var1']) && ($_GET['var1'] == 'remove' || $_GET['var1'] == 'activate') && 
-	 isset($_GET['var2']) && is_numeric($_GET['var2']) ) {
+	 isset($_GET['var2']) && is_numeric($_GET['var2']) && isset($_GET['_']) ) {
 
 	$swap_to = ($_GET['var1'] == 'remove') ? 1 : 0;		
 	
 	$query_update = $db->query("UPDATE `reports` SET `archived` = '$swap_to', `deleted_by` = '".$auth->id."', `deleted_at` = '".time()."' WHERE `id` = '".(int)$_GET['var2']."' LIMIT 1");
 	
 	if ( !$query_update ) {
-		if ($swap_to == 1)
-			set_flash('Sūdzību neizdevās arhivēt!');
-		else
-			set_flash('Sūdzību neizdevās aktualizēt!');
+		echo json_encode(array('state' => 'error'));
 	}
 	else {
-		if ($swap_to == 1)
-			set_flash('Iesniegtā sūdzība arhivēta!');
-		else
-			set_flash('Iesniegtā sūdzība aktualizēta!');
+		// atkarībā no tā, kāds statuss ziņojumam tika pielikts, atgriež atbilstošo pogu
+		if ($swap_to == 1) {
+			$response_link = '<a href="/reports/activate/'.(int)$_GET['var2'].'" class="button danger report-archive">Aktualizēt</a>';
+		}
+		else {
+			$response_link = '<a href="/reports/remove/'.(int)$_GET['var2'].'" class="button primary report-archive">Arhivēt</a>';
+		}
+		echo json_encode(array('state' => 'success', 'response' => $response_link));
 	}
-	
-	//	"url" parametrs nebūs padots vienīgi tad,
-	//	ja kāds to speciāli adresē nodzēsīs
-	if ( isset($_GET['url']) )
-		redirect('/reports/'.$_GET['url']);
-	else
-		redirect('/reports');
 	exit;
 }
+
+
 
 
 // aktīvās cilnes izcelšana
