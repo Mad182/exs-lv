@@ -28,7 +28,7 @@ if (!$auth->ok) {
 	if (isset($_GET['delete'])) {
 		$delete = (int) $_GET['delete'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
-		$db->query("DELETE FROM banned WHERE id = '$delete' LIMIT 1");
+		$db->query("DELETE FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
 		$auth->log('Atbloķēja lietotāju', 'users', $unbanned);
 		get_banlist(true);
 		set_flash('Bans noņemts!', 'success');
@@ -38,7 +38,7 @@ if (!$auth->ok) {
 	if (isset($_GET['delete_ip'])) {
 		$delete = (int) $_GET['delete_ip'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
-		$db->query("UPDATE `banned` SET `ip` = '--' WHERE `id` = '$delete' LIMIT 1");
+		$db->query("UPDATE `banned` SET `ip` = '--' WHERE `id` = '$delete' " . $q_add . " LIMIT 1");
 		$auth->log('Atbloķēja IP adresi', 'users', $unbanned);
 		get_banlist(true);
 		set_flash('IP bans noņemts!', 'success');
@@ -90,3 +90,4 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
+
