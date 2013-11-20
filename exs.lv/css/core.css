@@ -541,7 +541,7 @@ html .banned {
 
 #content {
 	width: 560px;
-	padding: 9px;
+	padding: 15px 9px;
 	z-index: 2;
 	position: relative;
 	left: 196px;
