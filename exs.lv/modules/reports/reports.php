@@ -341,7 +341,7 @@ else {
 			default:
 			
 				// junk komentārs
-				if ($report->miniblog_type == 'junk' && $report->parent != 0) {
+				if ($report->miniblog_type == 'junk' && $report->miniblog_parent != 0) {
 					$report_place 	 = '<strong>Junk komentārs: </strong>';
 					$report_place	.= '<a href="/junk/'.$report->parent.'#m'.$report->miniblog_id.'">#m'.$report->miniblog_id.'</a>';
 				}
