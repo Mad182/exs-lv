@@ -1209,6 +1209,14 @@ function list_awards() {
 			'title' => '5 raksti <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		),
+		'history-pages-1' => array(
+			'title' => 'Uzrakstīja rakstu vēstures sadaļā',
+			'state' => 'inactive'
+		),
+		'history-pages-5' => array(
+			'title' => 'Uzrakstīja 5 rakstus vēstures sadaļā',
+			'state' => 'inactive'
+		),
 		'news-1' => array(
 			'title' => 'Uzrakstīja vienu jaunumu rakstu',
 			'state' => 'inactive'
@@ -1571,43 +1579,25 @@ function update_awards($user) {
 			}
 		}
 
-		if (!in_array('game-pages-5', $existing_awards) && $userr->posts > 5) {
-			$game_pages = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user' AND (`category` = 81 OR `category` = 603)");
-			if ($game_pages >= 1) {
-				$awards_list['game-pages-1']['state'] = 'active';
-			}
-			if ($game_pages >= 5) {
-				$awards_list['game-pages-5']['state'] = 'active';
-			}
-		}
+		//medaļas par noteiktu rakstu skaitu kādā kategorijā
+		// 'award title' => array(CATEGORY IDS)
+		$topic_awards = array(
+			'game' => array(81, 603),
+			'music' => array(323),
+			'film' => array(80),
+			'history' => array(565),
+			'rs' => array(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793),
+		);
 
-		if (!in_array('music-pages-5', $existing_awards) && $userr->posts > 5) {
-			$music_pages = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user' AND category = '323'");
-			if ($music_pages >= 1) {
-				$awards_list['music-pages-1']['state'] = 'active';
-			}
-			if ($music_pages >= 5) {
-				$awards_list['music-pages-5']['state'] = 'active';
-			}
-		}
-
-		if (!in_array('film-pages-5', $existing_awards) && $userr->posts > 5) {
-			$film_pages = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user' AND category = '80'");
-			if ($film_pages >= 1) {
-				$awards_list['film-pages-1']['state'] = 'active';
-			}
-			if ($film_pages >= 5) {
-				$awards_list['film-pages-5']['state'] = 'active';
-			}
-		}
-
-		if (!in_array('rs-pages-5', $existing_awards) && $userr->posts > 5) {
-			$rs_pages = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user' AND `category` IN(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793)");
-			if ($rs_pages >= 1) {
-				$awards_list['rs-pages-1']['state'] = 'active';
-			}
-			if ($rs_pages >= 5) {
-				$awards_list['rs-pages-5']['state'] = 'active';
+		foreach($topic_awards as $key => $val) {
+			if (!in_array($key.'-pages-5', $existing_awards) && $userr->posts > 5) {
+				$game_pages = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user' AND `category` IN(".implode(',', $val).")");
+				if ($game_pages > 0) {
+					$awards_list[$key.'-pages-1']['state'] = 'active';
+				}
+				if ($game_pages >= 5) {
+					$awards_list[$key.'-pages-5']['state'] = 'active';
+				}
 			}
 		}
 
