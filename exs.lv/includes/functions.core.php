@@ -1737,7 +1737,10 @@ function update_awards($user) {
 
 		//desas
 		if (!in_array('desas', $existing_awards)) {
-			if ($db->get_var("SELECT count(*) FROM desas WHERE (user_1 = '$user' AND winner = '1') OR (user_2 = '$user' AND winner = '2')") >= 25) {
+
+			$cnt = $db->get_var("SELECT count(*) FROM `desas` WHERE `user_1` = '$user' AND `winner` = '1'")
+					+ $db->get_var("SELECT count(*) FROM `desas` WHERE `user_2` = '$user' AND `winner` = '2'");
+			if ($cnt >= 25) {
 				$awards_list['desas']['state'] = 'active';
 			}
 		}
@@ -1774,15 +1777,6 @@ function update_awards($user) {
 			'state' => 'active'
 		);
 	}
-
-	//geocaching
-	if(in_array($user,array(1, 5343, 24706, 273, 13004, 1822, 3650, 23282))) {
-		$awards_list['gc-2013'] = array(
-			'title' => 'Exs geocaching vasara - 2013',
-			'state' => 'active'
-		);
-	}
-
 
 	/* gada balva */
 	/* if (in_array($user, array(16433))) {
@@ -1827,7 +1821,7 @@ function update_awards($user) {
 		if ($val['state'] === 'active') {
 			//ja lietotājam jau ir šāds awards, neko nedaram
 			if (!in_array($key, $existing_awards)) {
-				$db->query("INSERT INTO autoawards (user_id,award,title,created) VALUES ('$user','$key','" . $val['title'] . "',NOW())");
+				$db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('$user','$key','" . $val['title'] . "',NOW())");
 				$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
 				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', 'http://img.exs.lv/dati/bildes/awards/' . $key . '.png');
 				notify($user, 7);
