@@ -1565,7 +1565,7 @@ function update_awards($user) {
 			}
 		}
 
-		if (!in_array('gallery', $existing_awards) && $userr->posts > 0) {
+		if (!in_array('gallery', $existing_awards)) {
 			$gallery = $db->get_var("SELECT count(*) FROM images WHERE uid = '$user'");
 			if ($gallery) {
 				$awards_list['gallery']['state'] = 'active';
@@ -1606,7 +1606,7 @@ function update_awards($user) {
 			'music' => array(323),
 			'film' => array(80),
 			'history' => array(565),
-			'rs' => array(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793),
+			'rs' => array(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793)
 		);
 
 		$topic_award_levels = array(1,5,10);
@@ -1614,7 +1614,7 @@ function update_awards($user) {
 		foreach($topic_awards as $key => $val) {
 			if (!in_array($key.'-pages-10', $existing_awards) && $userr->posts > 3) {
 				$game_pages = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user' AND `category` IN(".implode(',', $val).")");
-				foreach($topic_award_levels  as $level) {
+				foreach($topic_award_levels as $level) {
 					if ($game_pages >= $level) {
 						$awards_list[$key.'-pages-'.$level]['state'] = 'active';
 					}
