@@ -1635,12 +1635,18 @@ function update_awards($user) {
 		}
 
 		if (!in_array('plus', $existing_awards) && $userr->posts > 1) {
-			$pcom = $db->get_var("SELECT `id` FROM `comments` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
-			$gcom = $db->get_var("SELECT `id` FROM `galcom` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
-			$mbvt = $db->get_var("SELECT `id` FROM `miniblog` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
-			if ($pcom || $gcom || $mbvt) {
+
+			$plus = $db->get_var("SELECT `id` FROM `miniblog` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
+			if(!$plus) {
+				$plus = $db->get_var("SELECT `id` FROM `comments` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
+			}
+			if(!$plus) {
+				$plus = $db->get_var("SELECT `id` FROM `galcom` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
+			}
+			if ($plus) {
 				$awards_list['plus']['state'] = 'active';
 			}
+
 		}
 
 		if ($userr->days_in_row >= 7 || ($userr->days_in_row >= 6 && $userr->seen_today == 1)) {
@@ -1705,7 +1711,7 @@ function update_awards($user) {
 
 		//50 aptaujas
 		if (!in_array('polls-50', $existing_awards)) {
-			if ($db->get_var("SELECT count(*) FROM responses WHERE user_id = '$user'") >= 50) {
+			if ($db->get_var("SELECT count(*) FROM `responses` WHERE `user_id` = '$user'") >= 50) {
 				$awards_list['polls-50']['state'] = 'active';
 			}
 		}
