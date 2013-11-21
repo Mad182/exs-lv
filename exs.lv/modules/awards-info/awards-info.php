@@ -37,23 +37,34 @@ if (!empty($user)) {
 
 		case 'game-pages-1':
 		case 'game-pages-5':
+		case 'game-pages-10':
 			$cnt = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '81'");
 			$out = 'Tev ir ' . $cnt . ' spēļu ' . lv_dsk($cnt, 'apskats', 'apskati');
 			break;
 
 		case 'music-pages-1':
 		case 'music-pages-5':
+		case 'music-pages-10':
 			$out = 'Tev ir ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '323'") . ' rakstus mūzikas sadaļā';
 			break;
 
 		case 'film-pages-1':
 		case 'film-pages-5':
-			$cnt = $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '80'");
+		case 'film-pages-10':
+			$cnt = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user->id' AND `category` = '80'");
 			$out = 'Tev ir ' . $cnt . ' filmu ' . lv_dsk($cnt, 'apskats', 'apskati');
+			break;
+
+		case 'history-pages-1':
+		case 'history-pages-5':
+		case 'history-pages-10':
+			$cnt = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user->id' AND `category` = '565'");
+			$out = 'Tev ir ' . $cnt . ' ' . lv_dsk($cnt, 'raksts', 'raksti') . ' vēstures sadaļā';
 			break;
 
 		case 'rs-pages-1':
 		case 'rs-pages-5':
+		case 'rs-pages-10':
 			$out = 'Tu esi uzrakstījis ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category IN(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793)") . ' rakstus runescape sadaļā';
 			break;
 
