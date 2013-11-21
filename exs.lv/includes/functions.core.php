@@ -1556,7 +1556,8 @@ function update_awards($user) {
 
 		//draugi
 		if (!in_array('friends-50', $existing_awards)) {
-			$fcount = $db->get_var("SELECT count(*) FROM friends WHERE (friend1 = '$user' OR friend2 = '$user') AND confirmed = 1");
+			$fcount = $db->get_var("SELECT count(*) FROM `friends` WHERE `friend1` = '$user' AND `confirmed` = 1")
+							+ $db->get_var("SELECT count(*) FROM `friends` WHERE `friend2` = '$user' AND `confirmed` = 1");
 			if ($fcount >= 20) {
 				$awards_list['friends-20']['state'] = 'active';
 			}
@@ -1749,7 +1750,7 @@ function update_awards($user) {
 		}
 
 		$user_age = user_age($userr->date);
-		for ($i = 1; $i < 8; $i++) {
+		for ($i = 1; $i < 10; $i++) {
 			if ($user_age >= $i) {
 				$awards_list['cake-' . $i] = array(
 					'title' => $i . ' ' . lv_dsk($i, 'gads', 'gadi') . ' exā ;)',
