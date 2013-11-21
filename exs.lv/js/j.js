@@ -168,8 +168,14 @@ $(document).ready(function () {
 	$('.report-archive').on('click', function(e) {		
 		var element = $(this);
 		$.getJSON( $(this).attr('href') + '?_=1', function(response) {
-			if (response.state == 'success') {
-				$(element).parent().html(response.response);
+			if (response.state == 'success') {				
+				$(element).attr('href', response.href).text(response.text);
+				if ( $(element).hasClass('danger') ) {
+					$(element).removeClass('danger').addClass('primary');
+				}
+				else {
+					$(element).removeClass('primary').addClass('danger');
+				}
 			}
 		});	
 		e.preventDefault();
