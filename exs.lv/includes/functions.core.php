@@ -1185,12 +1185,20 @@ function list_awards() {
 			'title' => 'Uzrakstīja 5 spēļu apskatus',
 			'state' => 'inactive'
 		),
+		'game-pages-10' => array(
+			'title' => 'Uzrakstīja 10 spēļu apskatus',
+			'state' => 'inactive'
+		),
 		'rs-pages-1' => array(
 			'title' => 'Uzrakstīja 1 rakstu <a href="http://exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'rs-pages-5' => array(
 			'title' => 'Uzrakstīja 5 rakstus <a href="http://exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'state' => 'inactive'
+		),
+		'rs-pages-10' => array(
+			'title' => 'Uzrakstīja 10 rakstus <a href="http://exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'film-pages-1' => array(
@@ -1201,6 +1209,10 @@ function list_awards() {
 			'title' => 'Uzrakstīja 5 filmu apskatus',
 			'state' => 'inactive'
 		),
+		'film-pages-10' => array(
+			'title' => 'Uzrakstīja 10 filmu apskatus',
+			'state' => 'inactive'
+		),
 		'music-pages-1' => array(
 			'title' => 'Raksts <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
@@ -1209,12 +1221,20 @@ function list_awards() {
 			'title' => '5 raksti <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		),
+		'music-pages-10' => array(
+			'title' => '10 raksti <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
+			'state' => 'inactive'
+		),
 		'history-pages-1' => array(
 			'title' => 'Uzrakstīja rakstu vēstures sadaļā',
 			'state' => 'inactive'
 		),
 		'history-pages-5' => array(
 			'title' => 'Uzrakstīja 5 rakstus vēstures sadaļā',
+			'state' => 'inactive'
+		),
+		'history-pages-10' => array(
+			'title' => 'Uzrakstīja 10 rakstus vēstures sadaļā',
 			'state' => 'inactive'
 		),
 		'news-1' => array(
@@ -1589,14 +1609,15 @@ function update_awards($user) {
 			'rs' => array(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793),
 		);
 
+		$topic_award_levels = array(1,5,10);
+
 		foreach($topic_awards as $key => $val) {
-			if (!in_array($key.'-pages-5', $existing_awards) && $userr->posts > 5) {
+			if (!in_array($key.'-pages-10', $existing_awards) && $userr->posts > 3) {
 				$game_pages = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user' AND `category` IN(".implode(',', $val).")");
-				if ($game_pages > 0) {
-					$awards_list[$key.'-pages-1']['state'] = 'active';
-				}
-				if ($game_pages >= 5) {
-					$awards_list[$key.'-pages-5']['state'] = 'active';
+				foreach($topic_award_levels  as $level) {
+					if ($game_pages >= $level) {
+						$awards_list[$key.'-pages-'.$level]['state'] = 'active';
+					}
 				}
 			}
 		}
