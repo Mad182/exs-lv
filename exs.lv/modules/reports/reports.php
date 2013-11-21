@@ -106,17 +106,18 @@ if ( isset($_GET['var1']) && ($_GET['var1'] == 'remove' || $_GET['var1'] == 'act
 	$query_update = $db->query("UPDATE `reports` SET `archived` = '$swap_to', `deleted_by` = '".$auth->id."', `deleted_at` = '".time()."' WHERE `id` = '".(int)$_GET['var2']."' LIMIT 1");
 	
 	if ( !$query_update ) {
-		echo json_encode(array('state' => 'error', 'response' => ''));
+		echo json_encode(array('state' => 'error', 'href' => '', 'text' => ''));
 	}
 	else {
 		// atkarībā no tā, kāds statuss ziņojumam tika pielikts, atgriež atbilstošo pogu
 		if ($swap_to == 1) {
-			$response_link = '<a href="/reports/activate/'.(int)$_GET['var2'].'" class="button danger report-archive">Aktualizēt</a>';
+			
+			echo json_encode(array('state' => 'success', 'href' => '/reports/activate/'.(int)$_GET['var2'], 'text' => 'Aktualizēt'));
 		}
 		else {
-			$response_link = '<a href="/reports/remove/'.(int)$_GET['var2'].'" class="button primary report-archive">Arhivēt</a>';
+			
+			echo json_encode(array('state' => 'success', 'href' => '/reports/remove/'.(int)$_GET['var2'], 'text' => 'Arhivēt'));
 		}
-		echo json_encode(array('state' => 'success', 'response' => $response_link));
 	}
 	exit;
 }
