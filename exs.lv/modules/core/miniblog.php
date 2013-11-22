@@ -270,6 +270,12 @@ if ($inprofile->id) {
 						}
 					}
 				}
+				
+				if(!$inprofile->deleted) {
+					$author = '<a href="/user/'.$inprofile->id.'">'.usercolor($inprofile->nick, $inprofile->level, false, $inprofile->id).'</a>';
+				} else {
+					$author = '<em>dzēsts</em>';
+				}
 
 				$tpl->assign(array(
 					'url' => $url,
@@ -277,7 +283,7 @@ if ($inprofile->id) {
 					'add_deco' => $add_deco,
 					'date' => display_time_simple(strtotime($record->date)),
 					'date-title' => date('Y-m-d H:i:s', strtotime($record->date)),
-					'author' => usercolor($inprofile->nick, $inprofile->level, false, $inprofile->id),
+					'author' => $author,
 					'author-id' => $record->author,
 					'avatar' => get_avatar($inprofile, 's'),
 					'author-nick' => $inprofile->nick,
@@ -345,7 +351,8 @@ if ($inprofile->id) {
 		`users`.`decos` AS `decos`,
 		`users`.`avatar` AS `avatar`,
 		`users`.`av_alt` AS `av_alt`,
-		`users`.`level` AS `level`
+		`users`.`level` AS `level`,
+		`users`.`deleted` AS `user_deleted`
 	FROM
 		`miniblog`,
 		`users`

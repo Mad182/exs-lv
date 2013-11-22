@@ -1,7 +1,7 @@
 <?php
 exit;
-$folder = 'florbols-02-11-2013';
-$user_id = 32068;
+$folder = 'streetball-16-11-2013';
+$user_id = 32246;
 
 
 if ($handle = opendir('dati/bildes/'.$folder.'/large/')) {
@@ -10,13 +10,13 @@ if ($handle = opendir('dati/bildes/'.$folder.'/large/')) {
 			
 			$image = sanitize('dati/bildes/'.$folder.'/large/'.$file);	
 			$thb = sanitize('dati/bildes/'.$folder.'/thb/'.$file);	
-			$text = sanitize('<p>'.str_replace('.jpg','',$file).' - exs.lv 2. florbola turnīrs. 02.11.2013</p>');
+			$text = sanitize('<p>'.strtolower(str_replace(array('.JPG', '.jpg'),'',$file)).' - exs.lv Streetball turnīrs. 16.11.2013</p>');
 
 			remake_thb($image, $thb);
 
 			$sql = "
 
-			INSERT INTO `images` (uid,url,thb,text,date,bump,ip,lang,interest_id) VALUES
+			INSERT INTO `images` (`uid`,`url`,`thb`,`text`,`date`,`bump`,`ip`,`lang`,`interest_id`) VALUES
 
 				('$user_id','$image','$thb','$text',NOW(),NOW(),'127.0.0.1',1,8)
 			";
@@ -29,5 +29,6 @@ if ($handle = opendir('dati/bildes/'.$folder.'/large/')) {
 		}
 	}
 	closedir($handle);
+	update_karma($user_id, true);
 	update_karma($user_id, true);
 }
