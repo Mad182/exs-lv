@@ -221,10 +221,6 @@ tinymce.init({
 		</div>
 		{contentz}
 		<div class="c"></div>
-		<!-- START BLOCK : ads-google-->
-		<!-- END BLOCK : ads-google-->
-		<!-- START BLOCK : ads-google-wide-->
-		<!-- END BLOCK : ads-google-wide-->
 
 		{ad-728}
 

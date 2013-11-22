@@ -363,11 +363,6 @@ if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
 }
 
 if ($skin === 'main') {
-	if (empty($tpl_options)) {
-		$tpl->newBlock('ads-google');
-	} elseif (empty($disable_f_ad)) {
-		$tpl->newBlock('ads-google-wide');
-	}
 
 	if ($auth->ok === true) {
 

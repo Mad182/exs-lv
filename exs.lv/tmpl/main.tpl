@@ -223,12 +223,6 @@ tinymce.init({
 	</div>
 	{contentz}
 	<div class="c"></div>
-	<!-- START BLOCK : ads-google-->
-	{ad-468}
-	<!-- END BLOCK : ads-google-->
-	<!-- START BLOCK : ads-google-wide-->
-	{ad-728}
-	<!-- END BLOCK : ads-google-wide-->
 	<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 </div>
 
@@ -482,6 +476,9 @@ tinymce.init({
 </div>
 <!-- END BLOCK : main-layout-right-->
 <div class="c"></div>
+
+{ad-728}
+
 <div id="footer">
 	<div id="online-users">
 		<ul id="ucl"><li id="ucd"></li><li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li><li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li><li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li><li class="admin"><a href="/lietotaji/klase/1">Administrators</a></li></ul>
