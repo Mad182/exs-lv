@@ -460,19 +460,6 @@ tinymce.init({
 	</div>
 	<!-- END BLOCK : daily-wallpaper-->
 
-	<div id="fansBlock" style="width:205px"></div>
-	<script type="text/javascript" src="http://www.draugiem.lv/api/api.js" charset="utf-8"></script>
-	<script type="text/javascript">
-		var fans = new DApi.BizFans({
-			name:'exs.lv',
-			showFans:1,
-			count:9,
-			showSay:0,
-			saycount:0
-		});
-		fans.append('fansBlock');
-	</script>
-
 </div>
 <!-- END BLOCK : main-layout-right-->
 <div class="c"></div>
