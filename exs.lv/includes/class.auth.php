@@ -131,7 +131,7 @@ class Auth {
 		$pwd = pwd($password);
 		$login = sanitize($username);
 
-		$found = $db->get_var("SELECT `id` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `pwd` = '$pwd' LIMIT 1");
+		$found = $db->get_var("SELECT `id` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `pwd` = '$pwd' AND `deleted` = 0 LIMIT 1");
 
 		if ($found) {
 			$userinfo = get_user($found, true);

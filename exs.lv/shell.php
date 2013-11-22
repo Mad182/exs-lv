@@ -47,7 +47,7 @@ foreach ($users as $val) {
 	if ($i > 99) {
 		echo $tot . " updated...\n";
 		$i = 0;
-		sleep(1);
+		//sleep(1);
 	}
 }
 echo "end update_karma()\n";

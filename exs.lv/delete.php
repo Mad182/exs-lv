@@ -54,8 +54,12 @@ if($user) {
 			`twitter` = '',
 			`last_action` = '',
 			`draugiem_id` = 0,
+			`rating` = 0,
 			`facebook_id` = '0',
-			`persona` = '' 
+			`persona` = '',
+			`token` = '',
+			`reset_token` = '',
+			`deleted` = 1
 			WHERE id = '$user'");
 
 	$db->query("DELETE FROM `clans_members` WHERE `user` = '$user'");

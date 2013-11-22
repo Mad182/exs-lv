@@ -1869,7 +1869,7 @@ function get_user($user_id, $force = false) {
 		`show_rp`,`vote_today`,`showsig`,`id`,`nick`,`level`,`skin`,`posts`,
 		`karma`,`custom_title`,`signature`,`avatar`,`av_alt`,`vote_others`,`warn_count`,
 		`date`,`mobile_seen`,`decos`,`draugiem_id`,`days_in_row`,`seen_today`,
-		`token`,`year_first`,`rating` FROM `users` WHERE `id` = '$user_id'");
+		`token`,`year_first`,`rating`,`deleted` FROM `users` WHERE `id` = '$user_id'");
 		$m->set('u_' . $user_id, $data, false, 3600);
 	}
 	$users_cache[$user_id] = $data;

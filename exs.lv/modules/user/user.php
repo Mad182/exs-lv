@@ -513,7 +513,7 @@ if ($user) {
 			$tpl->newBlock('user-profile-lol');
 		}
 
-		if(substr($user->nick, 0, 9) != 'Dzēsts #') {
+		if(!$user->deleted) {
 			$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $user->id . " ORDER BY `date` DESC");
 			if ($awards) {
 				$tpl->newBlock('user-profile-awards');
