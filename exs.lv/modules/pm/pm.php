@@ -303,7 +303,8 @@ if (!$auth->ok) {
 				$pms = $db->get_results("SELECT
 					`pm`.*,
 					`users`.`nick`,
-					`users`.`level`
+					`users`.`level`,
+					`users`.`deleted` AS `user_deleted`
 				FROM
 					`pm`,
 					`users`
@@ -331,6 +332,11 @@ if (!$auth->ok) {
 							}
 							$type = 'email';
 						}
+						
+						if(!empty($pm->user_deleted)) {
+							$from = '<em>dzēsts</em>';
+						}
+						
 						$tpl->assign(array(
 							'pm-title' => strip_tags($pm->title),
 							'pm-id' => $pm->id,
@@ -469,7 +475,8 @@ if (!$auth->ok) {
 				$pms = $db->get_results("SELECT
 						`pm`.*,
 						`users`.`nick`,
-						`users`.`level`
+						`users`.`level`,
+						`users`.`deleted` AS `user_deleted`
 					FROM
 						`pm`,
 						`users`
@@ -497,6 +504,11 @@ if (!$auth->ok) {
 							}
 							$type = 'email';
 						}
+
+						if(!empty($pm->user_deleted)) {
+							$from = '<em>dzēsts</em>';
+						}
+						
 						$tpl->assign(array(
 							'pm-title' => wordwrap(textlimit(strip_tags($pm->title), 48, '...'), 20, "\n", 1),
 							'pm-id' => $pm->id,
