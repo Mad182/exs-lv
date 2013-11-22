@@ -5,7 +5,7 @@ if (isset($_GET['var1']) && !in_array($_GET['var1'], array('edit', 'buytitle', '
 } else {
 	$userid = $auth->id;
 }
-$user = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "'");
+$user = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
 
 if ($user) {
 
@@ -513,154 +513,152 @@ if ($user) {
 			$tpl->newBlock('user-profile-lol');
 		}
 
-		if(!$user->deleted) {
-			$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $user->id . " ORDER BY `date` DESC");
-			if ($awards) {
-				$tpl->newBlock('user-profile-awards');
-				foreach ($awards as $award) {
-					$tpl->newBlock('user-profile-awards-node');
-					$tpl->assign(array(
-						'award-title' => $award->title,
-						'award-icon' => $award->icon,
-						'award-link' => $award->link
-					));
-				}
+		$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $user->id . " ORDER BY `date` DESC");
+		if ($awards) {
+			$tpl->newBlock('user-profile-awards');
+			foreach ($awards as $award) {
+				$tpl->newBlock('user-profile-awards-node');
+				$tpl->assign(array(
+					'award-title' => $award->title,
+					'award-icon' => $award->icon,
+					'award-link' => $award->link
+				));
 			}
+		}
 
-			$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `author` = '$user->id' AND `category` != '83' AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 10");
-			if ($articles) {
-				$tpl->newBlock('user-profile-lastpage');
-				foreach ($articles as $article) {
-					$tpl->newBlock('user-profile-lastpage-node');
-					$tpl->assign(array(
-						'node-url' => '/read/' . $article->strid,
-						'lastpage-title' => textlimit($article->title, 42, '..')
-					));
-				}
+		$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `author` = '$user->id' AND `category` != '83' AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 10");
+		if ($articles) {
+			$tpl->newBlock('user-profile-lastpage');
+			foreach ($articles as $article) {
+				$tpl->newBlock('user-profile-lastpage-node');
+				$tpl->assign(array(
+					'node-url' => '/read/' . $article->strid,
+					'lastpage-title' => textlimit($article->title, 42, '..')
+				));
 			}
+		}
 
-			$articles = $db->get_results("
-			SELECT
-				`bookmarks`.`pageid` AS `pageid`,
-				`pages`.`title` AS `title`,
-				`pages`.`strid` AS `strid`
-			FROM
-				`bookmarks`,
-				`pages`
-			WHERE
-				`bookmarks`.`userid` = '" . $user->id . "' AND
-				`pages`.`id` = `bookmarks`.`pageid` AND
-				`pages`.`lang` = '$lang'
-			ORDER BY
-				`bookmarks`.`id`
-			DESC LIMIT 10");
-			if ($articles) {
-				$tpl->newBlock('user-profile-lastbookmark');
-				foreach ($articles as $article) {
-					$tpl->newBlock('user-profile-lastbookmark-node');
-					$tpl->assign(array(
-						'node-url' => '/read/' . $article->strid,
-						'bookmark-title' => textlimit($article->title, 42, '..')
-					));
-				}
-			}
-
-			if(!empty($auth->mobile)) {
-				$profile_views_limit = 10;
-			}
-
-			$views = $db->get_results("
+		$articles = $db->get_results("
 		SELECT
-			`viewprofile`.`viewer` AS `viewer`,
-			`viewprofile`.`time` AS `time`,
-			`users`.`nick` AS `nick`,
-			`users`.`avatar` AS `avatar`,
-			`users`.`av_alt` AS `av_alt`
+			`bookmarks`.`pageid` AS `pageid`,
+			`pages`.`title` AS `title`,
+			`pages`.`strid` AS `strid`
 		FROM
-			viewprofile,
-			users
+			`bookmarks`,
+			`pages`
 		WHERE
-			`viewprofile`.`profile` = '$user->id' AND
-			`users`.`id` = `viewprofile`.`viewer`
+			`bookmarks`.`userid` = '" . $user->id . "' AND
+			`pages`.`id` = `bookmarks`.`pageid` AND
+			`pages`.`lang` = '$lang'
 		ORDER BY
-			`viewprofile`.`time`
-		DESC LIMIT ".$profile_views_limit);
+			`bookmarks`.`id`
+		DESC LIMIT 10");
+		if ($articles) {
+			$tpl->newBlock('user-profile-lastbookmark');
+			foreach ($articles as $article) {
+				$tpl->newBlock('user-profile-lastbookmark-node');
+				$tpl->assign(array(
+					'node-url' => '/read/' . $article->strid,
+					'bookmark-title' => textlimit($article->title, 42, '..')
+				));
+			}
+		}
 
-			if ($views) {
-				$tpl->newBlock('user-profile-views');
-				foreach ($views as $view) {
-					$avatar = get_avatar($view, 's');
-					$tpl->newBlock('user-profile-views-node');
-					$tpl->assign(array(
-						'id' => $view->viewer,
-						'date' => date('d.m.Y. H:i', $view->time),
-						'nick' => htmlspecialchars($view->nick),
-						'avatar' => $avatar
-					));
-				}
-			}
+		if(!empty($auth->mobile)) {
+			$profile_views_limit = 10;
+		}
 
-			$tpl->newBlock('user-actions');
-			$end = 10;
-			$out = '';
-			if (isset($_GET['actions'])) {
-				$skip = (int) $_GET['actions'] * $end;
-			} else {
-				$skip = 0;
-			}
-			$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$user->id' AND `lang` = '$lang' ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
-			if ($actions) {
-				$out .= '<ul class="user-actions" id="profile-user-actions">';
-				foreach ($actions as $action) {
-					if (!$action->avatar) {
-						$action->avatar = get_avatar($user, 's');
-					} else {
-						$action->avatar = $action->avatar;
-					}
-					if(substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
-						$action->avatar = 'http://exs.lv' . $action->avatar;
-					}
-					if(substr($action->avatar, 0, 8) == '/bildes/') {
-						$action->avatar = 'http://img.exs.lv' . $action->avatar;
-					}
-					$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
-				}
-				$out .= '</ul>';
-			}
+		$views = $db->get_results("
+	SELECT
+		`viewprofile`.`viewer` AS `viewer`,
+		`viewprofile`.`time` AS `time`,
+		`users`.`nick` AS `nick`,
+		`users`.`avatar` AS `avatar`,
+		`users`.`av_alt` AS `av_alt`
+	FROM
+		viewprofile,
+		users
+	WHERE
+		`viewprofile`.`profile` = '$user->id' AND
+		`users`.`id` = `viewprofile`.`viewer`
+	ORDER BY
+		`viewprofile`.`time`
+	DESC LIMIT ".$profile_views_limit);
 
-			$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$user->id' AND `lang` = '$lang' LIMIT 60");
-			if ($total > 60) {
-				$total = 60;
+		if ($views) {
+			$tpl->newBlock('user-profile-views');
+			foreach ($views as $view) {
+				$avatar = get_avatar($view, 's');
+				$tpl->newBlock('user-profile-views-node');
+				$tpl->assign(array(
+					'id' => $view->viewer,
+					'date' => date('d.m.Y. H:i', $view->time),
+					'nick' => htmlspecialchars($view->nick),
+					'avatar' => $avatar
+				));
 			}
-			if ($total > $end) {
-				if ($skip > 0) {
-					if ($skip > $end) {
-						$iepriekseja = $skip - $end;
-					} else {
-						$iepriekseja = 0;
-					}
-					$pager_next = '<a class="pager-next" title="Iepriekšējā lapa" href="/user/' . $user->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
+		}
+
+		$tpl->newBlock('user-actions');
+		$end = 10;
+		$out = '';
+		if (isset($_GET['actions'])) {
+			$skip = (int) $_GET['actions'] * $end;
+		} else {
+			$skip = 0;
+		}
+		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$user->id' AND `lang` = '$lang' ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
+		if ($actions) {
+			$out .= '<ul class="user-actions" id="profile-user-actions">';
+			foreach ($actions as $action) {
+				if (!$action->avatar) {
+					$action->avatar = get_avatar($user, 's');
 				} else {
-					$pager_next = '';
+					$action->avatar = $action->avatar;
 				}
-				$pager_prev = '';
-				if ($total > $skip + $end) {
-					$pager_prev = '<span>-</span> <a class="pager-prev" title="Nākamā lapa" href="/user/' . $user->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
+				if(substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
+					$action->avatar = 'http://exs.lv' . $action->avatar;
 				}
-				$startnext = 0;
-				$page_number = 0;
-				$pager_numeric = '';
-				while ($total - $startnext > 0) {
-					$page_number++;
-					$class = '';
-					if ($skip == $startnext) {
-						$class = ' class="selected"';
-					}
-					$pager_numeric .= '<span>-</span> <a href="/user/' . $user->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
-					$startnext = $startnext + $end;
+				if(substr($action->avatar, 0, 8) == '/bildes/') {
+					$action->avatar = 'http://img.exs.lv' . $action->avatar;
 				}
-				$out .= '<p class="core-pager ajax-pager">' . $pager_next . ' ' . $pager_numeric . ' ' . $pager_prev . '</p>';
+				$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
 			}
+			$out .= '</ul>';
+		}
+
+		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$user->id' AND `lang` = '$lang' LIMIT 60");
+		if ($total > 60) {
+			$total = 60;
+		}
+		if ($total > $end) {
+			if ($skip > 0) {
+				if ($skip > $end) {
+					$iepriekseja = $skip - $end;
+				} else {
+					$iepriekseja = 0;
+				}
+				$pager_next = '<a class="pager-next" title="Iepriekšējā lapa" href="/user/' . $user->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
+			} else {
+				$pager_next = '';
+			}
+			$pager_prev = '';
+			if ($total > $skip + $end) {
+				$pager_prev = '<span>-</span> <a class="pager-prev" title="Nākamā lapa" href="/user/' . $user->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
+			}
+			$startnext = 0;
+			$page_number = 0;
+			$pager_numeric = '';
+			while ($total - $startnext > 0) {
+				$page_number++;
+				$class = '';
+				if ($skip == $startnext) {
+					$class = ' class="selected"';
+				}
+				$pager_numeric .= '<span>-</span> <a href="/user/' . $user->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
+				$startnext = $startnext + $end;
+			}
+			$out .= '<p class="core-pager ajax-pager">' . $pager_next . ' ' . $pager_numeric . ' ' . $pager_prev . '</p>';
 		}
 
 		if (isset($_GET['_']) && isset($_GET['actions'])) {
