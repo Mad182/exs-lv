@@ -57,6 +57,11 @@ class Auth {
 
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id']);
+			
+			if($userinfo->deleted) {
+				return $this->logout();
+			}
+			
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
 			}
@@ -135,6 +140,7 @@ class Auth {
 
 		if ($found) {
 			$userinfo = get_user($found, true);
+			
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
 			}
