@@ -115,7 +115,7 @@ if($chart_items) {
 	$last = null;
 	foreach($chart_items as $item) {
 	
-		if(empty($last)) {
+		if($last === null) {
 			$last = $item->count;
 		} else {
 			$items[] = "['".substr($item->time,0,16)."', ".ceil(($item->count+$last)/2)."]";
