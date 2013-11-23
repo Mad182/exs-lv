@@ -260,7 +260,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		`users`.`decos` AS `decos`,
 		`users`.`avatar` AS `avatar`,
 		`users`.`av_alt` AS `av_alt`,
-		`users`.`level` AS `level`
+		`users`.`level` AS `level`,
+		`users`.`deleted` AS `user_deleted`
 	FROM
 		`miniblog`,
 		`users`

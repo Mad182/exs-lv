@@ -16,7 +16,7 @@ if (isset($_GET['var1'])) {
 	$inprofile = get_user($auth->id);
 }
 
-if ($inprofile) {
+if (!empty($inprofile) && empty($inprofile->deleted)) {
 
 	if ($auth->ok) {
 		set_action($inprofile->nick . ' rakstus');
@@ -60,9 +60,10 @@ if ($inprofile) {
 			'pager-numeric' => $pager['pages']
 		));
 	}
+	$pagepath = '';
 } else {
 	set_flash('Šāds lietotājs netika atrasts, iespējams kļūdains links!', 'error');
 	redirect();
 }
 
-$pagepath = '';
+

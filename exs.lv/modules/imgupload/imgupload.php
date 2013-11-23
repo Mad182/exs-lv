@@ -1,5 +1,11 @@
 <?php
 
+//max upload file size
+$max_size = '2.6M';
+if(im_mod()) {
+	$max_size = '10M';
+}
+
 function e404() {
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	header("Status: 404 Not Found");
@@ -29,7 +35,7 @@ if (empty($_GET['var1']) || empty($_GET['viewcat'])) {
 			$foo = new Upload($_FILES['new-image']);
 			$foo->mime_check = true;
 			$foo->no_script = true;
-			$foo->file_max_size = '2.6M';
+			$foo->file_max_size = $max_size;
 			$foo->allowed = array('image/*');
 
 			if ($foo->image_src_type == 'bmp') {

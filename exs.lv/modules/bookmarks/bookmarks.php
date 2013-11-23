@@ -2,16 +2,22 @@
 
 $robotstag[] = 'noindex';
 
-$tpl->newBlock('profile-menu');
-$tpl->assign('user-menu-add', ' grāmatzīmes');
-
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
-} else {
-	$userid = $auth->id;
+	$inprofile = get_user($userid);
+} elseif ($auth->ok) {
+	$inprofile = get_user($auth->id);
 }
 
-if ($inprofile = get_user($userid)) {
+if (!empty($inprofile) && empty($inprofile->deleted)) {
+
+	if ($auth->ok) {
+		set_action($inprofile->nick . ' grāmatzīmes');
+	}
+
+	$tpl->newBlock('profile-menu');
+	$tpl->assign('user-menu-add', ' grāmatzīmes');
+
 
 	$page_title = $inprofile->nick . ' grāmatzīmes';
 	$tpl->assignGlobal(array(
