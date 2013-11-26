@@ -403,7 +403,7 @@
 			<div class="mb-rater">{rater}</div>
 			<p class="post-info">{author} <span class="date-time" title="{date-title}">{date}</span> teica:
 			<!-- START BLOCK : report-mb -->
-			 <a class="report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">Ziņot</a>
+			 <a class="post-button report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">ziņot</a>
 			<!-- END BLOCK : report-mb -->
 			</p>
 			{text}

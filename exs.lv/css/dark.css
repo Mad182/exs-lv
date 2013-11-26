@@ -236,9 +236,6 @@ dl.list-attr dt {
 .report-response-good {
 	color: #4FAC5A
 }
-a.report-user {
-	color:#BEBEBA
-}
 
 /* MOD iesniegto sūdzību pārvaldības stili */
 .no-reports {
@@ -261,4 +258,15 @@ a.report-user {
 }
 #archived_reports a {
 	border-bottom:0
+}
+
+/* mb postu pogas */
+.post-button {
+	background: #444;
+	color: #b4b4b7;
+	border-color: #373737;
+}
+
+.post-delete {
+	color: #933;
 }

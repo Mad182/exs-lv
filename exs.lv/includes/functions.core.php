@@ -2369,7 +2369,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			} else {
 				$out .= '<a class="mb-av" id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" width="40" height="40" src="' . get_avatar($val, 's') . '" alt="" /></a>';
 			}
-			$out .= '<div class="response-content">';			
+			$out .= '<div class="response-content">';
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {
 				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 			}
@@ -2381,21 +2381,28 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= '<em>dzēsts</em>';
 			}
 			$out .= ' <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
+
+			//permalink
 			if (!$auth->mobile && !$intro) {
-				$out .= ' <a href="#m' . $val->id . '" class="comment-permalink">#</a>';
+				$out .= ' <a href="#m' . $val->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
 			}
-			// 	podziņa lietotāja pārkāpuma noziņošanai
+
+			//podziņa lietotāja pārkāpuma noziņošanai
 			if ( $auth->ok && !$auth->mobile && $lang == 1) {
-				$out .= ' <a class="report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">Ziņot</a>';
+				$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
 			}
-			if (!$auth->mobile && !$intro && $auth->ok === true && ((!$closed && $auth->id == $val->author && $auth->level == 3) || im_mod()) && $val->date > time() - 600) {
-				$out .= ' [<a href="/delete/' . $val->id . '" class="confirm r">dzēst</a>]';
-			}
-			if (
-					!$auth->mobile && !$intro && ($val->date > time() - 1800 || $auth->level == 1) &&
+
+			//labot
+			if (!$auth->mobile && !$intro && ($val->date > time() - 1800 || $auth->level == 1) &&
 					(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))) {
-				$out .= ' [<a href="/edit/' . $val->id . '">labot</a>]';
+				$out .= ' <a href="/edit/' . $val->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 			}
+
+			//dzēst
+			if (!$auth->mobile && !$intro && $auth->ok === true && ((!$closed && $auth->id == $val->author && $auth->level == 3) || im_mod()) && $val->date > time() - 600) {
+				$out .= ' <a href="/delete/' . $val->id . '" class="post-button post-delete confirm" title="Dzēst komentāru">dzēst</a>';
+			}
+
 			$out .= '</p><div class="post-content">' . add_smile($val->text) . '</div>';
 			if ($auth->ok === true || $val->posts) {
 				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit);

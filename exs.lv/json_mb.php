@@ -116,20 +116,25 @@ if ($resps) {
 		}
 		$resp->date = strtotime($resp->date);
 		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
-		$out .= ' <a href="#m' . $resp->id . '" class="comment-permalink">#</a>';
-		
-		// 	poga lietotāja pārkāpuma noziņošanai
+
+		//permalink
+		$out .= ' <a href="#m' . $resp->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
+
+		//poga lietotāja pārkāpuma noziņošanai
 		if ( $auth->ok && !$auth->mobile && $lang == 1 ) {
-			$out .= ' <a class="report-user" href="/report/miniblog/'.$resp->id.'" title="Ziņot par pārkāpumu">Ziņot</a>';
+			$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$resp->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
 		}
+
+		//labot
+		if ($auth->ok && $resp->date > time() - 3600 && (im_mod() || ($auth->karma > 99 && $resp->author == $auth->id))) {
+			$out .= ' <a href="/edit/' . $resp->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
+		}
+
+		//dzēst
 		if ($auth->ok && (($auth->id == $resp->author && $auth->level == 3) || im_mod()) && $resp->date > time() - 600) {
-			$out .= ' [<a href="/delete/' . $resp->id . '" class="confirm red">dzēst</a>]';
+			$out .= ' <a href="/delete/' . $resp->id . '" class="post-button post-delete confirm" title="Dzēst komentāru">dzēst</a>';
 		}
-		if (
-				$auth->ok && $resp->date > time() - 3600 &&
-				(im_mod() || ($auth->karma > 99 && $resp->author == $auth->id))) {
-			$out .= ' [<a href="/edit/' . $resp->id . '">labot</a>]';
-		}
+
 		$out .= '</p><div class="post-content">' . add_smile($resp->text) . '</div>';
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';

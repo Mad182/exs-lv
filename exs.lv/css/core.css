@@ -3846,3 +3846,22 @@ li.view_more {
 	margin-bottom:5px;
 	border-left:3px solid #6C7592
 }
+
+/* zinot/labot/dzest pogas miniblogos */
+.post-button {
+	display: inline-block;
+	padding: 0 5px;
+	margin: 0 0 0 1px;
+	background: #efefef;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 11px;
+	line-height: 12px;
+	color: #777;
+	border: 1px solid #dfdfdf;
+}
+
+.post-delete {
+	color: #933;
+}
