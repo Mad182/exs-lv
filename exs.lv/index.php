@@ -271,12 +271,6 @@ if ($load[0] > 5) {
 
 $today_date = date_lv('l, j. F', time());
 
-//reklāmas
-$ads_type = '_adsense';
-if(!empty($disable_adsense)) {
-	$ads_type = '';
-}
-
 if ($auth->hosts_online > $ss->get('most_online')) {
 	$ss->set('most_online', $auth->hosts_online);
 	$ss->set('most_online_time', time());
@@ -323,12 +317,26 @@ $tpl->assignGlobal(array(
 	'footer-mb' => get_footer_mb(),
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
-	'ad-468' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'),
-	'ad-728' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'),
-	'ad-top' => file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'),
 	'static-server' => $static_server
 ));
-// 'idb-count' => $idb_count,
+
+
+//reklāmas
+$ads_type = '_adsense';
+if(!empty($disable_adsense)) { $ads_type = ''; }
+if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl')) {
+	$tpl->assignGlobal('ad-468', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'));
+}
+if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl')) {
+	$tpl->assignGlobal('ad-728', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'));
+}
+if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl')) {
+	$tpl->assignGlobal('ad-top', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'));
+}
+if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl')) {
+	$tpl->assignGlobal('ad-bottom', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl'));
+}
+
 
 if (!empty($pagepath) && $skin === 'main') {
 	$tpl->newBlock('page-path');

@@ -1,17 +1,18 @@
 <!-- START BLOCK : pm-menu-->
 <h1>{pm-top-title}</h1>
 
+{ad-468}
+
 <ul class="tabs">
-	<li><a title="Saņemtās vēstules" href="/pm" class="ajax-module {inbox-active}"><span class="inbox">Saņemtās</span></a></li>
-	<li><a title="Sūtītās vēstules" href="/pm/sent" class="ajax-module {outbox-active}"><span class="outbox">Sūtītās</span></a></li>
+	<li><a title="Saņemtās vēstules" href="/pm" class="{inbox-active}"><span class="inbox">Saņemtās</span></a></li>
+	<li><a title="Sūtītās vēstules" href="/pm/sent" class="{outbox-active}"><span class="outbox">Sūtītās</span></a></li>
 	<li><a title="Rakstīt vēstuli" href="/pm/write" class="ajax-module-mobile {compose-active}"><span class="compose">Rakstīt</span></a></li>
-	<li><a title="Meklēt vēstuli" href="/pm/search" class="ajax-module {search-active}"><span class="mail-search">Meklēt</span></a></li>
+	<li><a title="Meklēt vēstuli" href="/pm/search" class="{search-active}"><span class="mail-search">Meklēt</span></a></li>
 </ul>
 
 <div class="c"></div>
 
 <div class="tabMain">
-	{ad-468}
 
 	<!-- START BLOCK : pm-read-inbox-->
 	<!-- START BLOCK : pm-read-from-->

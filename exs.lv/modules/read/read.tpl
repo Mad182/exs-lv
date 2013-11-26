@@ -123,6 +123,14 @@
 </form>
 <!-- END BLOCK : edit-article-->
 
+<!-- START BLOCK : read-article-->
+
+<h1>{article-title}
+<!-- START BLOCK : title-lv-->
+ <span class="slash">/</span> <small>{title}</small>
+<!-- END BLOCK : title-lv-->
+</h1>
+
 <!-- START BLOCK : page-ad-google-->
 {ad-468}
 <!-- END BLOCK : page-ad-google-->
@@ -133,162 +141,154 @@
 </div>
 <!-- END BLOCK : page-ad-dateks-->
 
-<!-- START BLOCK : read-article-->
-<article>
-	<h1>{article-title}
-	<!-- START BLOCK : title-lv-->
-	 <span class="slash">/</span> <small>{title}</small>
-	<!-- END BLOCK : title-lv-->
-	</h1>
+<!-- START BLOCK : article-avatar-box-->
+<img class="av" src="http://exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
+<!-- END BLOCK : article-avatar-box-->
 
-	<!-- START BLOCK : article-avatar-box-->
-	<img class="av" src="http://exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
-	<!-- END BLOCK : article-avatar-box-->
+<!-- START BLOCK : movie-avatar-->
+<a href="http://img.exs.lv{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="http://img.exs.lv{thb}" alt="{title}" /></a>
+<!-- END BLOCK : movie-avatar-->
 
-	<!-- START BLOCK : movie-avatar-->
-	<a href="http://img.exs.lv{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="http://img.exs.lv{thb}" alt="{title}" /></a>
-	<!-- END BLOCK : movie-avatar-->
+<div id="full-story">
+<!-- START BLOCK : movie-info-->
+<div id="movie-info">
 
-	<div id="full-story">
-	<!-- START BLOCK : movie-info-->
-	<div id="movie-info">
+	<!-- START BLOCK : movie-info-type-->
+	<p class="title"><strong>{type} &quot;{title}&quot;</strong></p>
+	<!-- END BLOCK : movie-info-type-->
 
-		<!-- START BLOCK : movie-info-type-->
-		<p class="title"><strong>{type} &quot;{title}&quot;</strong></p>
-		<!-- END BLOCK : movie-info-type-->
+	<!-- START BLOCK : movie-info-year-->
+	<p><strong>Gads:</strong> {year}</p>
+	<!-- END BLOCK : movie-info-year-->
 
-		<!-- START BLOCK : movie-info-year-->
-		<p><strong>Gads:</strong> {year}</p>
-		<!-- END BLOCK : movie-info-year-->
+	<!-- START BLOCK : movie-info-genres-->
+	<p><strong>Žanrs:</strong> {genres}</p>
+	<!-- END BLOCK : movie-info-genres-->
 
-		<!-- START BLOCK : movie-info-genres-->
-		<p><strong>Žanrs:</strong> {genres}</p>
-		<!-- END BLOCK : movie-info-genres-->
+	<!-- START BLOCK : movie-info-rating-->
+	<p><strong>IMDB vērtējums:</strong> {rating}</p>
+	<!-- END BLOCK : movie-info-rating-->
 
-		<!-- START BLOCK : movie-info-rating-->
-		<p><strong>IMDB vērtējums:</strong> {rating}</p>
-		<!-- END BLOCK : movie-info-rating-->
+	<!-- START BLOCK : movie-info-runtime-->
+	<p><strong>Garums:</strong> {runtime} minūtes</p>
+	<!-- END BLOCK : movie-info-runtime-->
 
-		<!-- START BLOCK : movie-info-runtime-->
-		<p><strong>Garums:</strong> {runtime} minūtes</p>
-		<!-- END BLOCK : movie-info-runtime-->
+	<!-- START BLOCK : movie-like-->
+	{like}
+	<!-- END BLOCK : movie-like-->
 
-		<!-- START BLOCK : movie-like-->
-		{like}
-		<!-- END BLOCK : movie-like-->
+	<!-- START BLOCK : movie-likes-->
+	<p>
+		<strong>Iesaka:</strong><br />
+		<!-- START BLOCK : movie-likes-user-->
+		<img src="{avatar}" class="icon" alt="{nick}" title="{nick}" />
+		<!-- END BLOCK : movie-likes-user-->
+		<br style="clear:both"/>{rest}
+	</p>
+	<!-- END BLOCK : movie-likes-->
 
-		<!-- START BLOCK : movie-likes-->
-		<p>
-			<strong>Iesaka:</strong><br />
-			<!-- START BLOCK : movie-likes-user-->
-			<img src="{avatar}" class="icon" alt="{nick}" title="{nick}" />
-			<!-- END BLOCK : movie-likes-user-->
-			<br style="clear:both"/>{rest}
-		</p>
-		<!-- END BLOCK : movie-likes-->
-
-	</div>
-	<div class="c"></div>
-	<p>&nbsp;</p>
-	<!-- END BLOCK : movie-info-->
-		{article-text}
-	</div>
-	<!-- START BLOCK : post-stags-->
-	<div class="c"></div>
-	<div id="related-topics">
-		<div class="mbox">
-		<h4>Saistītie raksti:</h4>
-		<ul>
-			<!-- START BLOCK : post-stags-node-->
-			<li><a href="{url}">{title}</a></li>
-			<!-- END BLOCK : post-stags-node-->
-		</ul>
-		</div>
-	</div>
-	<!-- END BLOCK : post-stags-->
-	<div class="c"></div>
-	<div class="mbox" style="margin: 5px 0" id="like-rate-box">
-		<div id="post-rating">Lasītāju vērtējums: <span class="current-rating">{rating}</span> ({rating_count} balsis)</div>
-		<div id="star"></div>
-
-		<div style="padding: 5px;">
-			<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-			<div style="float: left; margin: 0 12px 0 0" id="draugiemLike"></div>
-			<script type="text/javascript">
-			var p = {
-				titlePrefix:"{page-domain}",
-				name:"{page-domain}"
-			};
-			new DApi.Like(p).append('draugiemLike');
-			</script>
-
-			<div style="width: 90px;float: left; margin: 0"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-			<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script></div>
-
-			<div id="fb-root"></div>
-			<script>(function(d, s, id) {
-			  var js, fjs = d.getElementsByTagName(s)[0];
-			  if (d.getElementById(id)) return;
-			  js = d.createElement(s); js.id = id;
-			  js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1";
-			  fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));</script>
-
-			<div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
-
-			<div class="c"></div>
-		</div>
-
-	</div>
-	<div class="c"></div>
-	<ul class="article-info">
-		<li class="date">{article-date}</li>
-		<li class="profile user-level-{level} user-gender-{gender}"><a href="{aurl}" rel="author">{article-author}</a></li>
-		<li class="comments">{article-posts}x</li>
-		<li class="views">{article-views}x</li>
-		<!-- START BLOCK : add-bookmark-->
-		<li class="attach">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
-		<!-- END BLOCK : add-bookmark-->
+</div>
+<div class="c"></div>
+<p>&nbsp;</p>
+<!-- END BLOCK : movie-info-->
+	{article-text}
+</div>
+<!-- START BLOCK : post-stags-->
+<div class="c"></div>
+<div id="related-topics">
+	<div class="mbox">
+	<h4>Saistītie raksti:</h4>
+	<ul>
+		<!-- START BLOCK : post-stags-node-->
+		<li><a href="{url}">{title}</a></li>
+		<!-- END BLOCK : post-stags-node-->
 	</ul>
-	<div class="c"></div>
-	<!-- START BLOCK : post-tags-->
-	<div id="post-tags-wrapper">
-		<!-- START BLOCK : post-tags-ul-->
-		<ul id="article-tags" class="list-tags">
-			<!-- START BLOCK : post-tags-node-->
-			<li><a href="/tag/{slug}" rel="tag">{tag-title}</a><!--{tag-remove}--></li>
-			<!-- END BLOCK : post-tags-node-->
-		</ul>
-		<!-- END BLOCK : post-tags-ul-->
 	</div>
-	<!-- START BLOCK : post-newtags-->
-	<div class="c"></div>
-	<form action="{page-url}" id="new-tags" class="form" method="post" style="padding: 12px 0 4px">
-		<fieldset>
-			<legend>Tagi, atdalīti ar komatu</legend>
-			<input style="width:340px" type="text" class="text" name="newtags" id="post-tags-input" /> <input class="button" type="submit" value="Pielikt" />
-		</fieldset>
-	</form>
-	<!-- END BLOCK : post-newtags-->
-	<div class="c"></div>
-	<!-- END BLOCK : post-tags-->
-	<!-- START BLOCK : post-tools-->
-	<form class="simple-form" action="" method="post">
-		<fieldset>
-			<label><input type="checkbox" name="close" class="ajax-checkbox"{edit-page-closed}{edit-page-disable-closing} />Slēgt komentārus</label>
-			<input type="hidden" name="close-do" value="1" />
-		</fieldset>
-	</form>
-	<!-- START BLOCK : post-disableclose-->
-	<form class="simple-form" action="" method="post">
-		<fieldset>
-			<label><input type="checkbox" name="disable-close" class="ajax-checkbox"{edit-page-disabled} />Neļaut autoram atslēgt/aizslēgt rakstu</label>
-			<input type="hidden" name="disable-close-do" value="1" />
-		</fieldset>
-	</form>
-	<!-- END BLOCK : post-disableclose-->
-	<!-- END BLOCK : post-tools-->
-</article>
+</div>
+<!-- END BLOCK : post-stags-->
+<div class="c"></div>
+<div class="mbox" style="margin: 5px 0" id="like-rate-box">
+	<div id="post-rating">Lasītāju vērtējums: <span class="current-rating">{rating}</span> ({rating_count} balsis)</div>
+	<div id="star"></div>
+
+	<div style="padding: 5px;">
+		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+		<div style="float: left; margin: 0 12px 0 0" id="draugiemLike"></div>
+		<script type="text/javascript">
+		var p = {
+			titlePrefix:"{page-domain}",
+			name:"{page-domain}"
+		};
+		new DApi.Like(p).append('draugiemLike');
+		</script>
+
+		<div style="width: 90px;float: left; margin: 0"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+		<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script></div>
+
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
+		<div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+
+		<div class="c"></div>
+	</div>
+
+</div>
+<div class="c"></div>
+<ul class="article-info">
+	<li class="date">{article-date}</li>
+	<li class="profile user-level-{level} user-gender-{gender}"><a href="{aurl}" rel="author">{article-author}</a></li>
+	<li class="comments">{article-posts}x</li>
+	<li class="views">{article-views}x</li>
+	<!-- START BLOCK : add-bookmark-->
+	<li class="attach">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
+	<!-- END BLOCK : add-bookmark-->
+</ul>
+<div class="c"></div>
+<!-- START BLOCK : post-tags-->
+<div id="post-tags-wrapper">
+	<!-- START BLOCK : post-tags-ul-->
+	<ul id="article-tags" class="list-tags">
+		<!-- START BLOCK : post-tags-node-->
+		<li><a href="/tag/{slug}" rel="tag">{tag-title}</a><!--{tag-remove}--></li>
+		<!-- END BLOCK : post-tags-node-->
+	</ul>
+	<!-- END BLOCK : post-tags-ul-->
+</div>
+<!-- START BLOCK : post-newtags-->
+<div class="c"></div>
+<form action="{page-url}" id="new-tags" class="form" method="post" style="padding: 12px 0 4px">
+	<fieldset>
+		<legend>Tagi, atdalīti ar komatu</legend>
+		<input style="width:340px" type="text" class="text" name="newtags" id="post-tags-input" /> <input class="button" type="submit" value="Pielikt" />
+	</fieldset>
+</form>
+<!-- END BLOCK : post-newtags-->
+<div class="c"></div>
+<!-- END BLOCK : post-tags-->
+<!-- START BLOCK : post-tools-->
+<form class="simple-form" action="" method="post">
+	<fieldset>
+		<label><input type="checkbox" name="close" class="ajax-checkbox"{edit-page-closed}{edit-page-disable-closing} />Slēgt komentārus</label>
+		<input type="hidden" name="close-do" value="1" />
+	</fieldset>
+</form>
+<!-- START BLOCK : post-disableclose-->
+<form class="simple-form" action="" method="post">
+	<fieldset>
+		<label><input type="checkbox" name="disable-close" class="ajax-checkbox"{edit-page-disabled} />Neļaut autoram atslēgt/aizslēgt rakstu</label>
+		<input type="hidden" name="disable-close-do" value="1" />
+	</fieldset>
+</form>
+<!-- END BLOCK : post-disableclose-->
+<!-- END BLOCK : post-tools-->
+
 <!-- END BLOCK : read-article-->
 
 <!-- START BLOCK : comments-block-->

@@ -98,7 +98,7 @@ tinymce.init({
 		var data = google.visualization.arrayToDataTable([['Time', 'Online'], {chart-items}]);
 
 		var options = {
-			chartArea: { width: 200, height: 110, left: 18 },
+			chartArea: { width: 200, height: 110, left: 25 },
 			legend: { position: 'none' },
 			vAxis: { minValue: 0 },
 			hAxis: { textPosition: 'none' }

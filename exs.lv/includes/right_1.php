@@ -7,7 +7,7 @@ if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 	$inprofile = get_user($category->isblog);
 }
 
-if (!empty($inprofile)) {
+if (!empty($inprofile) && !$inprofile->deleted) {
 
 	$avatar = get_avatar($inprofile, 'l');
 
@@ -143,3 +143,8 @@ if (im_mod()) {
 if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
+
+if($auth->skin == 1) {
+	$tpl->assignGlobal('twitter-theme',' data-theme="dark"');
+}
+

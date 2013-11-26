@@ -2374,7 +2374,13 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 			}
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
-			$out .= '<p class="post-info"><a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a> <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
+			$out .= '<p class="post-info">';
+			if(!$val->user_deleted) {
+				$out .= '<a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a>';
+			} else {
+				$out .= '<em>dzēsts</em>';
+			}
+			$out .= ' <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
 			if (!$auth->mobile && !$intro) {
 				$out .= ' <a href="#m' . $val->id . '" class="comment-permalink">#</a>';
 			}

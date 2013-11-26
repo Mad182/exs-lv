@@ -460,11 +460,17 @@ tinymce.init({
 	</div>
 	<!-- END BLOCK : daily-wallpaper-->
 
+
+<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="3"{twitter-theme}>Tweets by @exs_lv</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document,"script","twitter-wjs");</script>
+
+
+
 </div>
 <!-- END BLOCK : main-layout-right-->
 <div class="c"></div>
 
-{ad-728}
+{ad-bottom}
 
 <div id="footer">
 	<div id="online-users">
