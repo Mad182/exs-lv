@@ -396,7 +396,7 @@ tinymce.init({
 	<!-- END BLOCK : main-layout-right-->
 	<div class="c"></div>
 
-	{ad-728}
+	{ad-bottom}
 
 	<div id="footer">
 		<div id="online-users">
