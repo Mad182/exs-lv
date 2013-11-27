@@ -8,6 +8,8 @@ function update_members($group) {
 
 /* uploado avataru, atgriež faila nosaukumu */
 function upload_user_avatar($post, $old_filename, $text) {
+	global $group;
+
 	$return = $old_filename;
 
 	if (isset($post)) {
