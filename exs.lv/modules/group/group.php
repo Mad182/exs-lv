@@ -415,7 +415,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 		$end = 6;
 
-		if ($auth->ok && isset($_POST['newminiblog']) && !$group->archived) {
+		if ($auth->ok && isset($_POST['newminiblog']) && !empty($_POST['newminiblog']) && !$group->archived) {
 
 			$body = post2db($_POST['newminiblog']);
 
