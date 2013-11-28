@@ -88,7 +88,7 @@ class Auth {
 				$_SESSION['updvisits'] = time();
 			}
 
-			if($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			if($_SESSION['fingerprint'] !== $this->fingerprint()) {
 				$this->logout();
 				redirect();
 			}
@@ -158,7 +158,7 @@ class Auth {
 			$this->ok = true;
 			$_SESSION['auth_id'] = $userinfo->id;
 			$_SESSION['lastseen'] = time();
-			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+			$_SESSION['fingerprint'] = $this->fingerprint();
 			$this->error = 0;
 
 			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE (`user_id` = '$this->id' OR `ip` = '$this->ip') AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
@@ -220,6 +220,26 @@ class Auth {
 	function log($action, $foreign_table = '', $foreign_key = 0) {
 		global $db;
 		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
+	}
+
+	function fingerprint() {
+
+		$vars = array(
+			'HTTP_USER_AGENT',
+			'HTTP_ACCEPT',
+			'HTTP_ACCEPT_ENCODING',
+			'HTTP_ACCEPT_LANGUAGE',
+			'HTTP_ALEXATOOLBAR_ALX_NS_PH'
+		);
+
+		$out = 'CanIHazBrowser';
+		foreach($vars as $var) {
+			if(!empty($_SERVER[$var])) {
+				$out .= $_SERVER[$var];
+			}
+		}
+		
+		return md5($out);
 	}
 
 }
