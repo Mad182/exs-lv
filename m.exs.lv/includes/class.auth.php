@@ -203,7 +203,6 @@ class Auth {
 
 		$vars = array(
 			'HTTP_USER_AGENT',
-			'HTTP_ACCEPT',
 			'HTTP_ACCEPT_ENCODING',
 			'HTTP_ACCEPT_LANGUAGE',
 			'HTTP_ALEXATOOLBAR_ALX_NS_PH'
