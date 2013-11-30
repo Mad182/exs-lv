@@ -21,7 +21,6 @@ LIB_PATH uz libs folderi.
 ### kas vajadzīgs, lai lapa būtu palaižama:
 php-gd<br />
 php-memcache<br />
-php-gd<br />
 php-curl<br />
 memcached<br />
 mysql<br />
