@@ -106,7 +106,7 @@ tinymce.init({
 			<a id="exs-logo" href="/" title="Uz sākumlapu">coding.lv</a>
 			<div id="tools-bar">
 				<ul id="site-links">
-					<li><a href="http://exs.lv/">exs.lv community</a></li>
+					<li><a href="http://exs.lv/" rel="nofollow">exs.lv community</a></li>
 					<li><a href="http://m.coding.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 					<li><a href="/img">Bilžu hostings</a></li>
 					<li><a href="/sitemap">Lapas karte</a></li>
