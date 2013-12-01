@@ -21,16 +21,16 @@ LIB_PATH uz libs folderi.
 ### kas vajadzīgs, lai lapa būtu palaižama:
 php-gd<br />
 php-memcache<br />
+php-curl<br />
 memcached<br />
 mysql<br />
 apache2 ar mod_rewrite un .htaccess atbalstu
 
-### lai darbotos ezgif.com un img.exs.lv:
+### lai darbotos img.exs.lv:
 imagemagick<br />
 advancecomp<br />
 pngcrush<br />
 optipng<br />
-gifsicle<br />
 jpegoptim<br />
 <br />
 uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt<br />
