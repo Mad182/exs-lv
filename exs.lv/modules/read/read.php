@@ -1000,7 +1000,7 @@ if ($article) {
 							if (im_mod() && $author[$comment->author]->level != 1) {
 								$signature .= '[<a onclick="prompt_why_delete(\'?remove_signature=' . $comment->author . '\');" href="#"><span class="red">dzēst parakstu</span></a>]';
 							}
-							$tpl->assign('comment-author-signature', $signature);
+							$tpl->assign('signature', add_smile($signature));
 						}
 
 						$pluslnk = '<span class="voted1"></span>';

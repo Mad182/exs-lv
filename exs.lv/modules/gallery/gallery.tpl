@@ -1,4 +1,4 @@
-<div id="gallery-content">
+si<div id="gallery-content">
 
 <!-- START BLOCK : user-gallery-->
 <div class="tabMain">
@@ -195,7 +195,8 @@
 				<!-- END BLOCK : com-reply-->
 			</ul>
 			<!-- END BLOCK : com-replies-->
-		</div>{comment-author-signature}<p class="comment-tools"><a href="{aurl}">profils</a>
+		</div>
+			<p class="comment-tools"><a href="{aurl}">profils</a>
 			<!-- END BLOCK : comments-pm-->
 			<a href="/pm/write/?to={comment-author-id}">vēstule</a>
 			<!-- END BLOCK : comments-pm-->

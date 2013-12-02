@@ -355,17 +355,17 @@
 			</ul>
 			<!-- END BLOCK : com-replies-->
 		</div>
-		{comment-author-signature}
+		{signature}
 
-			<!-- START BLOCK : comment-tools-->
-			<p class="comment-tools">
-				<a href="/user/{id}">profils</a>
-				<!-- START BLOCK : comments-pm-->
-				<a href="/pm/write/?to={id}">vēstule</a>
-				<!-- END BLOCK : comments-pm-->
-				<a href="/gallery/{id}">galerija</a>
-			</p>
-			<!-- END BLOCK : comment-tools-->
+		<!-- START BLOCK : comment-tools-->
+		<p class="comment-tools">
+			<a href="/user/{id}">profils</a>
+			<!-- START BLOCK : comments-pm-->
+			<a href="/pm/write/?to={id}">vēstule</a>
+			<!-- END BLOCK : comments-pm-->
+			<a href="/gallery/{id}">galerija</a>
+		</p>
+		<!-- END BLOCK : comment-tools-->
 
 		<div class="c"></div></dd>
 	<!-- END BLOCK : comments-node-user-->
