@@ -1,4 +1,4 @@
-si<div id="gallery-content">
+<div id="gallery-content">
 
 <!-- START BLOCK : user-gallery-->
 <div class="tabMain">
