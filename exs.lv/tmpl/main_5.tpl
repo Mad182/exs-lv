@@ -20,7 +20,7 @@
 </script>
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=PT+Sans+Narrow&amp;subset=latin,latin-ext" type="text/css">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},mta.css?aa" type="text/css">
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},mta.css" type="text/css">
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -116,7 +116,6 @@ tinymce.init({
 <div id="wrapper">
 	<div id="header">
 		<div id="logo">
-			<div id="header-stuff">{ad-top}</div>
 			<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
 			<div id="tools-bar">
 				<ul id="site-links">
