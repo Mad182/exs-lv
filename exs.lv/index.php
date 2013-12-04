@@ -244,7 +244,7 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 } elseif ($lang == 3) {
 	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gear.png\') repeat-x 0 0"';
 } else {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/christmas.jpg\') repeat-x 0 0"';
 }
 
 $in_level = 0;
