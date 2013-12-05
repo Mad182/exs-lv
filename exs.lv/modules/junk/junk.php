@@ -256,6 +256,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`reply_to` AS `reply_to`,
 		`miniblog`.`id` AS `id`,
+		`miniblog`.`removed` AS `mb_removed`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,
 		`users`.`avatar` AS `avatar`,
@@ -267,7 +268,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		`users`
 	WHERE
 		`miniblog`.`parent` = '" . $pic->id . "' AND
-		`miniblog`.`removed` = '0' AND
 		`miniblog`.`type` = 'junk' AND
 		`users`.`id` = `miniblog`.`author`
 	ORDER BY
