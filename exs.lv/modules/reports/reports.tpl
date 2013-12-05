@@ -27,8 +27,12 @@
 		</ul>
 	</td>
 	<td>
-		{report_comment}
-		<span class="report-addr">{report-place} (<a class="get-report-content" href="/reports/show_content/{report_id}">#</a>)</span>
+		{report_comment}		
+		<span class="report-addr">{report-place} 
+		<!-- START BLOCK : display-original-content -->
+		(<a class="get-report-content" href="/reports/show_content/{report_id}" title="Apskatīt ieraksta saturu">#</a>)
+		<!-- END BLOCK : display-original-content -->
+		</span>
 	</td>
 	<td>
 		<ul class="mod-table-list">

@@ -2385,23 +2385,27 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= ' <a href="#m' . $val->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
 			}
 
-			//podziņa lietotāja pārkāpuma noziņošanai
-			if ( $auth->ok && !$auth->mobile && $lang == 1) {
+			//podziņa lietotāja pārkāpuma noziņošanai (exs.lv; lol.exs.lv) (ja ieraksts jau nav dzēsts)
+			if ( $val->mb_removed == 0 && $auth->ok && !$auth->mobile && ($lang == 1 || $lang == 7) ) {
 				$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
 			}
 
-			//labot
-			if (!$auth->mobile && !$intro && ($val->date > time() - 1800 || $auth->level == 1) &&
+			//labot (ja ieraksts jau nav dzēsts)
+			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && ($val->date > time() - 1800 || $auth->level == 1) &&
 					(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))) {
 				$out .= ' <a href="/edit/' . $val->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 			}
 
-			//dzēst
-			if (!$auth->mobile && !$intro && $auth->ok === true && ((!$closed && $auth->id == $val->author && $auth->level == 3) || im_mod()) && $val->date > time() - 600) {
+			//dzēst (ja ieraksts jau nav dzēsts)
+			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) ) ) {
 				$out .= ' <a href="/delete/' . $val->id . '" class="post-button post-delete confirm" title="Dzēst komentāru">dzēst</a>';
 			}
-
-			$out .= '</p><div class="post-content">' . add_smile($val->text) . '</div>';
+			$out .= '</p>';
+			if ($val->mb_removed == 1) {
+				$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+			} else {
+				$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+			}
 			if ($auth->ok === true || $val->posts) {
 				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit);
 				$out .= '<div class="c"></div>';

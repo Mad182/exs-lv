@@ -270,3 +270,8 @@ dl.list-attr dt {
 .post-delete {
 	color: #933;
 }
+
+.deleted-entry {
+	color: #E6E4E4;
+	background: #313131;
+}

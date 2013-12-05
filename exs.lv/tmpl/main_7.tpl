@@ -133,6 +133,7 @@ tinymce.init({
 				<li{cat-sel-83}><a href="#">Mod</a>
 					<ul>
 						<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+						<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
 						<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
 						<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
 					</ul>

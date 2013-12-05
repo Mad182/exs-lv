@@ -3,10 +3,12 @@
  *	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem.
  *
  *	Moduļa adrese: 		exs.lv/checkform
- *	Pēdējās izmaiņas: 	08.10.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
  */
 
-if ( !im_mod() ) {
+// ne-moderatorus sūtām prom
+// sadaļa šobrīd pieejama tikai caur galveno exs.lv
+if ( !im_mod() || $lang != 1) {
 	set_flash('Pieeja liegta!');
 	redirect();
 	exit;
@@ -15,14 +17,14 @@ if ( !im_mod() ) {
 /**
  *	globālie mainīgie
  */
- $limit_total_ips 		= 50;		// maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
+$limit_total_ips 		= 50;		// maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
 									// nospiežot "rādīt vairāk" pogu
-									
- $limit_shown_ips 		= 10;		// IP skaits, cik parādīt pirms "rādīt vairāk" pogas
- $limit_shown_profiles 	= 10;		// profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
+
+$limit_shown_ips 		= 10;		// IP skaits, cik parādīt pirms "rādīt vairāk" pogas
+$limit_shown_profiles 	= 10;		// profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
 									// dažiem kadriem ir desmitiem fake profilu!
 
-
+									
 if ( isset($_GET['email']) && is_numeric($_GET['email']) ) {
 	
 	$content = 'Nav norādīts!';
@@ -82,19 +84,22 @@ if ( isset($_GET['display']) && is_numeric($_GET['display']) ) {
 	
 	// atrod pēdējās x lietotās IP
 	$all_ips = $db->get_results("
-		SELECT `ip`, `lastseen` FROM `visits` 
+		SELECT `visits`.`ip`, `visits`.`lastseen` FROM `visits` 
 		WHERE 
-			`user_id` = '$user->id' 
+			`visits`.`user_id` 	= '$user->id' AND
+			`visits`.`ip`		!= ''
 		ORDER BY 
-			`lastseen` DESC 
+			`visits`.`lastseen` DESC 
 		LIMIT 0, $limit_total_ips
 	");
 	
 	$unique_ips = $db->get_results("
-		SELECT `visits`.`ip` FROM `visits`
+		SELECT `visits`.`ip`, MAX(`visits`.`lastseen`) AS `lasttime` FROM `visits`
 		WHERE 
-			`visits`.`user_id` = '$user->id'
+			`visits`.`user_id` 	= '$user->id' AND
+			`visits`.`ip` 		!= ''
 		GROUP BY `visits`.`ip`
+		ORDER BY `lasttime` DESC
 		LIMIT 0, $limit_total_ips
 	");
 	

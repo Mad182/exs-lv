@@ -22,6 +22,10 @@ $mbid = (int) $_GET['mbid'];
 $lastid = (int) $_GET['lastid'];
 $lastedit = (int) $_GET['et'];
 
+// apakšprojekti, kuriem rādīt ziņošanas podziņu
+$allowed_sites	= array(1, 7);	// exs.lv; lol.exs.lv
+
+
 if (isset($_GET['type']) && $_GET['type'] == 'junk') {
 	$type = 'junk';
 } else {
@@ -40,6 +44,7 @@ $resps = $db->get_results("SELECT
 		`miniblog`.`id` AS `id`,
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`reply_to` AS `reply_to`,
+		`miniblog`.`removed` AS `mb_removed`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,
 		`users`.`avatar` AS `avatar`,
@@ -49,7 +54,6 @@ $resps = $db->get_results("SELECT
 		`miniblog`, `users`
 	WHERE
 		`miniblog`.`parent` = '" . $mbid . "' AND
-		`miniblog`.`removed` = '0' AND
 		`miniblog`.`type` = '" . $type . "' AND
 		`miniblog`.`id` > '" . $lastid . "' AND
 		`users`.`id` = `miniblog`.`author`
@@ -120,22 +124,27 @@ if ($resps) {
 		//permalink
 		$out .= ' <a href="#m' . $resp->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
 
-		//poga lietotāja pārkāpuma noziņošanai
-		if ( $auth->ok && !$auth->mobile && $lang == 1 ) {
+		//poga lietotāja pārkāpuma noziņošanai (ja ieraksts jau nav dzēsts)
+		if ( $resp->mb_removed == 0 && $auth->ok && !$auth->mobile && in_array($lang, $allowed_sites) ) {
 			$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$resp->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
 		}
 
-		//labot
-		if ($auth->ok && $resp->date > time() - 3600 && (im_mod() || ($auth->karma > 99 && $resp->author == $auth->id))) {
+		//labot (ja ieraksts jau nav dzēsts)
+		if ($resp->mb_removed == 0 && $auth->ok && $resp->date > time() - 3600 && (im_mod() || ($auth->karma > 99 && $resp->author == $auth->id))) {
 			$out .= ' <a href="/edit/' . $resp->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 		}
 
-		//dzēst
-		if ($auth->ok && (($auth->id == $resp->author && $auth->level == 3) || im_mod()) && $resp->date > time() - 600) {
+		//dzēst (ja ieraksts jau nav dzēsts)
+		if ($resp->mb_removed == 0 && $auth->ok && ( ($auth->id == $resp->author && $auth->level == 3 && $resp->date > time() - 1800) || (im_mod() && $resp->date > time() - 86400) ) ) {
 			$out .= ' <a href="/delete/' . $resp->id . '" class="post-button post-delete confirm" title="Dzēst komentāru">dzēst</a>';
 		}
-
-		$out .= '</p><div class="post-content">' . add_smile($resp->text) . '</div>';
+		$out .= '</p>';
+		if ($resp->mb_removed == 1) {
+			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+		} else {
+			$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+		}
+		
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';
 		$json['comment'][$resp->reply_to][] = $out;

@@ -24,9 +24,23 @@ if ($user) {
 
 	$tpl->newBlock('profile-menu');
 
+	/**
+	 *	Lietotāja bloķēšana
+	 */
 	if (isset($_GET['var2']) && $_GET['var2'] == 'block' && im_mod() && $user->level != 1 && ($user->level != 2 or $auth->level == 1)) {
+	
+		// nosaka lietotāja aktīvo brīdinājumu skaitu
+		$warn_count = $db->get_var("
+			SELECT count(*) FROM `warns`
+			WHERE 
+				`warns`.`user_id` 	= '$user->id'	AND
+				`warns`.`active` 	= 1				AND
+				`warns`.`site_id`	= $lang
+		");
 
+		// iesniegti bloķēšanas dati
 		if (isset($_POST['block-reason'])) {
+		
 			$reason = sanitize(htmlspecialchars($_POST['block-reason']));
 			$length = (int) $_POST['block-length'];
 
@@ -39,18 +53,71 @@ if ($user) {
 			$db->query("INSERT INTO `banned` (`user_id`,`reason`,`time`,`length`,`author`,`ip`,`lang`)
 				VALUES ('$user->id','$reason','" . time() . "','$length','$auth->id','$user->lastip', '$site')");
 			get_banlist(true);
+			
+			// pārbauda, vai nav nepieciešams noņemt aktīvos brīdinājumus
+			if ( isset($_POST['warn-removal-reason']) && isset($_POST['warn-removal']) ) {
+
+				$removal_reason 	= sanitize(htmlspecialchars($_POST['warn-removal-reason']));
+				$remove_count		= (int)$_POST['warn-removal'];
+				$remove_count 		= ($remove_count > $warn_count || $remove_count < 0) ? 0 : $remove_count;
+				
+				// norādīts, ka vismaz viens brīdinājums jānoņem
+				if ($remove_count > 0) {
+					
+					// atlasa visu noņemamo brīdinājumu ids
+					$get_ids = $db->get_results("
+						SELECT `id` FROM `warns` 
+						WHERE `user_id` = '$user->id' AND `active` = 1 AND `site_id` = $lang 
+						ORDER BY `created` ASC 
+						LIMIT $remove_count
+					");
+					if ($get_ids) {
+						foreach ($get_ids as $single_id) {
+							$ids[] = $single_id->id;
+						}
+						// noņem visus norādītos brīdinājumus
+						if ( !empty($ids) ) {
+							$db->query("
+								UPDATE `warns` 
+								SET 
+									`warns`.`active` 		= 0, 
+									`warns`.`removed` 		= NOW(), 
+									`warns`.`removed_by` 	= $auth->id, 
+									`warns`.`remove_reason` = '$removal_reason' 
+								WHERE `warns`.`id` IN(" . implode(',', $ids) . ") 
+							");
+						}
+					}
+				}
+			}			
 			redirect('/banned');
 		}
 
 		$tpl->newBlock('user-profile-block');
+		
+		// izdrukā (vai neizdrukā) izvēlni ar brīdinājumu skaitu
+		if ( !$warn_count ) {
+			$tpl->newBlock('no-active-warns');
+		}
+		else {
+			$tpl->newBlock('warn-removal');
+			for ($i = 0; $i < $warn_count; $i++) {
+				$tpl->newBlock('warn-removal-option');
+				$tpl->assign('x', $i + 1);
+			}
+		}
 
 		$tpl->assignGlobal(array(
-			'user-id' => $user->id,
-			'user-nick' => htmlspecialchars($user->nick),
-			'active-tab-profile' => 'active'
+			'user-id' 				=> $user->id,
+			'user-nick' 			=> htmlspecialchars($user->nick),
+			'active-tab-profile' 	=> 'active'
 		));
-		$page_title = 'Bloķet lietotāju &quot;' . $user->nick . '&quot;';
-	} elseif ($auth->id == $user->id && isset($_GET['var1']) && $_GET['var1'] == 'edit') {
+		$page_title = 'Bloķēt lietotāju &quot;' . $user->nick . '&quot;';
+	} 
+	/**
+	 *	lietotāja profila informācijas rediģēšana
+	 */
+	elseif ($auth->id == $user->id && isset($_GET['var1']) && $_GET['var1'] == 'edit') {
 
 		if ($user->avatar == '') {
 			$user->avatar = 'none.png';

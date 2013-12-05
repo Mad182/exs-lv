@@ -17,11 +17,19 @@
 	</div>
 	<div id="report-description">
 		<p style="color:orangered"><strong>Uzmanību!</strong></p>
+		<!-- START BLOCK : main-exs-report-info -->
 		<p>
 			Forma paredzēta, lai ziņotu par lietotāju, kurš tā vai citādi pārkāpis lapas noteikumus!<br><br>
 			Pamatojot pārkāpuma iemeslu, jānorāda noteikums, kas pārkāpts!<br><br>
 			Par neatbilstošu formas izmantošanu sūdzības iesniedzējs saņems brīdinājumu.
 		</p>
+		<!-- END BLOCK : main-exs-report-info -->
+		<!-- START BLOCK : sub-exs-report-info -->
+		<p>
+			Forma paredzēta, lai ziņotu par lietotāju, kurš tā vai citādi pārkāpis lapas noteikumus!<br><br>
+			Par neatbilstošu formas izmantošanu sūdzības iesniedzējs var tikt sodīts!
+		</p>
+		<!-- END BLOCK : sub-exs-report-info -->
 		<p><a href="/read/lietosanas-noteikumi" target="_blank">Lapas noteikumi</a></p>
 	</div>
 </div>

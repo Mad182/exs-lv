@@ -4,11 +4,11 @@
  *	un ar tiem saistīta informācija.
  *
  *	Moduļa adrese: 		exs.lv/crows
- *	Pēdējās izmaiņas: 	05.10.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
  */
 
 // ne-moderatorus sūtām prom
-if ( !im_mod() ) {
+if ( !im_mod() || $lang != 1 ) {
 	set_flash('Error 403: Permission denied!');
 	redirect();
 }
@@ -75,12 +75,16 @@ else {
 		}
 		else $warn->removed_nick = '';
 		
+		// pārveido iemeslos norādītās adreses, ja tās nāk no rp apakšprojekta
+		if ( strpos($warn->warn_reason, 'http://rp.exs.lv') !== false ) {
+			$warn->warn_reason = str_replace('href="/', 'href="http://rp.exs.lv/', $warn->warn_reason);
+		}
 		
 		$tpl->newBlock('single-warn');	
 		$tpl->assignAll($warn);
 		$tpl->assign('row_counter', $counter);
 		
-		// ja brīdinājums ticis noņemts...
+		// ja brīdinājums ticis noņemts... parāda noņēmēju un noņemšanas iemeslu
 		if ( $warn->removed_id != '0' ) {
 		
 			$warn->warn_removal_reason = '<strong>Noņemšanas iemesls:</strong> ( '.$warn->removed_nick.' ) '.$warn->warn_removal_reason;
