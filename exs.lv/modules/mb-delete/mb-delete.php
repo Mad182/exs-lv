@@ -9,14 +9,14 @@ if ($auth->ok && isset($_GET['var1'])) {
 		//level 2
 		if ($mb->parent != 0 && $mb->reply_to != 0) {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
-			$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
-			$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->reply_to' LIMIT 1");
+			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
+			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->reply_to' LIMIT 1");
 			return2mb($mb);
 
 			//level 1
 		} elseif ($mb->parent != 0) {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
-			$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
+			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
 			return2mb($mb);
 
 			//main
