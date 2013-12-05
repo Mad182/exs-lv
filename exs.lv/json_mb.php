@@ -138,8 +138,13 @@ if ($resps) {
 		if ($resp->mb_removed == 0 && $auth->ok && ( ($auth->id == $resp->author && $auth->level == 3 && $resp->date > time() - 1800) || (im_mod() && $resp->date > time() - 86400) ) ) {
 			$out .= ' <a href="/delete/' . $resp->id . '" class="post-button post-delete confirm" title="Dzēst komentāru">dzēst</a>';
 		}
-
-		$out .= '</p><div class="post-content">' . add_smile($resp->text) . '</div>';
+		$out .= '</p>';
+		if ($resp->mb_removed == 1) {
+			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+		} else {
+			$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+		}
+		
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';
 		$json['comment'][$resp->reply_to][] = $out;
