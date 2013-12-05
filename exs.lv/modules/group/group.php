@@ -733,7 +733,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'usrid' => $user->id,
 					'edit_time' => time(),
 					'type' => 'miniblog',
-					'lastid' => (int) $db->get_var("SELECT id FROM miniblog WHERE parent = '$record->id' AND removed = '0' ORDER BY id DESC LIMIT 1")
+					'lastid' => (int) $db->get_var("SELECT id FROM miniblog WHERE parent = '$record->id' ORDER BY id DESC LIMIT 1")
 				));
 			} elseif ($record->closed) {
 				$tpl->newBlock('user-miniblog-closed');
