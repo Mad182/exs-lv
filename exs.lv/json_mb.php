@@ -142,7 +142,7 @@ if ($resps) {
 		if ($resp->mb_removed == 1) {
 			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
 		} else {
-			$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+			$out .= '<div class="post-content">' . add_smile($resp->text) . '</div>';
 		}
 		
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
