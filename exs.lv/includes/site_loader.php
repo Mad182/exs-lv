@@ -10,10 +10,10 @@ if ($_SERVER['SERVER_NAME'] === 'exs.lv' || $_SERVER['SERVER_NAME'] === 'localho
 } elseif ($_SERVER['SERVER_NAME'] === 'secure.exs.lv') {
 	require(CORE_PATH . '/config/secure-exs-lv.php');
 
-} elseif ($_SERVER['SERVER_NAME'] === 'rp.exs.lv') {
+} elseif ($_SERVER['SERVER_NAME'] === 'rp.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.rp.exs.lv') {
 	require(CORE_PATH . '/config/mtaforum.php');
 
-} elseif ($_SERVER['SERVER_NAME'] === 'lol.exs.lv') {
+} elseif ($_SERVER['SERVER_NAME'] === 'lol.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.lol.exs.lv') {
 	require(CORE_PATH . '/config/lol-exs-lv.php');
 
 } elseif ($_SERVER['SERVER_NAME'] === 'www.code.exs.lv' || $_SERVER['SERVER_NAME'] === 'code.exs.lv' || $_SERVER['SERVER_NAME'] === 'www.coding.lv') {
