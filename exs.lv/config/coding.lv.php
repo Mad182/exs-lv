@@ -1,7 +1,5 @@
 <?php
 
-$lang = 3;
-
 $tpl_options = 'no-left';
 
 //facebok login

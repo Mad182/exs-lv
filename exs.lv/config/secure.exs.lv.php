@@ -1,7 +1,5 @@
 <?php
 
-$lang = 8;
-
 $robotstag[] = 'noodp noindex nofollow';
 
 //auto login visos subdomēnos

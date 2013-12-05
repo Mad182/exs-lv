@@ -1,7 +1,5 @@
 <?php
 
-$lang = 7;
-
 $tpl_options = '';
 
 //facebok login
