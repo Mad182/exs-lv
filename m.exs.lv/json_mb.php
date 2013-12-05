@@ -30,6 +30,7 @@ $resps = $db->get_results("SELECT
 		`miniblog`.`id` AS `id`,
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`reply_to` AS `reply_to`,
+		`miniblog`.`removed` AS `mb_removed`,
 		`users`.`nick` AS `nick`,
 		`users`.`avatar` AS `avatar`,
 		`users`.`level` AS `level`
@@ -39,7 +40,6 @@ $resps = $db->get_results("SELECT
 		`miniblog`.`parent` = '" . $mbid . "' AND
 		`miniblog`.`id` > '" . $lastid . "' AND
 		`miniblog`.`lang` = '$lang' AND
-		`miniblog`.`removed` = '0' AND
 		`users`.`id` = `miniblog`.`author`
 	ORDER BY `miniblog`.`id` ASC LIMIT 20");
 
@@ -97,7 +97,14 @@ if ($resps) {
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 		}
 		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
-		$out .= '</p><div class="post-content">' . add_smile($resp->text) . '</div>';
+		
+		$out .= '</p>';
+		if ($val->mb_removed == 1) {
+			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+		} else {
+			$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+		}
+		
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';
 		$json['comment'][$resp->reply_to][] = $out;
