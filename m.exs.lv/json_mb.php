@@ -99,7 +99,7 @@ if ($resps) {
 		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
 		
 		$out .= '</p>';
-		if ($val->mb_removed == 1) {
+		if ($resp->mb_removed == 1) {
 			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
 		} else {
 			$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
