@@ -28,7 +28,7 @@ $found = false;
 foreach($config_domains as $lang => $site) {
 
 	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
-		require(CORE_PATH . '/config/'.str_replace('m.','',$site['domain'].'.php');
+		require(CORE_PATH . '/config/'.str_replace('m.','',$site['domain']).'.php');
 		$found = true;
 		break;
 	} elseif($_SERVER['SERVER_NAME'] === 'www.'.$site['domain']) {
