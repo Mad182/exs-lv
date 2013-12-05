@@ -1,46 +1,40 @@
 <?php
 /**	
- *	Fancybox saturs, kādu lietotāji redz, nospiežot nosūdzēšanas podziņu.
+ *	Atgriež fancybox saturu, kādu lietotāji redz, nospiežot nosūdzēšanas podziņu,
+ *	un apstrādā iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/report
- *	Pēdējās izmaiņas: 	19.10.2013 ( Edgars )
- */
- 
-/*
-	<span class="report-button">
-		<a class="report-user" href="/report/article-comment/{comment-id}">
-			<img src="/bildes/fugue-icons/blue-document-horizontal-text.png" title="Ziņot par pārkāpumu!" alt="">
-		</a>
-	</span>
-*/
-
-/**
- *	0 - miniblogs (gan komentārs, gan pats mb; arī grupā)
- *	1 - raksta komentārs (/read sadaļā)
- *	2 - galerijas attēla komentārs
+ *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
  *
- *	--- zemāk esošie vēl nav ieviesti
- *	3 - galerijas attēls
- *	4 - raksts kā tāds
- *	5 - junk bilde
+ *
+ *	0 - miniblogs (pats mb, mb komentārs, junk komentārs, ieraksti grupā)
+ *	1 - raksta komentārs (arī komentāru atbildes; /read sadaļā)
+ *	2 - galerijas attēla komentārs
  */
  
 //	pieļaujamie ieraksti, kādus ļauts nosūdzēt
 $allowed_report_types = array('miniblog', 'article-comment', 'gallery-comment');
 
-//	pēc idejas sadaļu skatīt var tikai caur jquery pieprasījumu
+
+// pieļaujamie projekti/apakšprojekti, kuros iespējotas sūdzības
+//	1 - exs.lv; 
+//	7 - lol.exs.lv
+$allowed_sites = array(1, 7);
+
+
+//	pēc idejas sadaļu skatīt var tikai caur jquery pieprasījumu;
 if ( !isset($_GET['_']) ) {
 	set_flash('Pieeja liegta!');
 	redirect();
 	exit;
 }
 
-//	lai varētu ziņot par pārkāpumu, lietotājam jābūt autorizētam exs.lv;
+
+//	lai varētu ziņot par pārkāpumu, lietotājam jābūt autorizētam projektā;
 //	no telefoniem šāda iespēja arī nav ļauta
-if ( !$auth->ok || $auth->mobile || $lang != 1 ) {
+if ( !$auth->ok || $auth->mobile || !in_array($lang, $allowed_sites) ) {
 	set_flash('Darbība liegta!');
 	redirect();
-	//echo json_encode( array('state' => 'error', 'content' => 'Darbība liegta!' ) );
 	exit;
 }
  
@@ -127,7 +121,9 @@ if ( isset($_POST['report-reason']) ) {
 	$report_reason	= post2db($_POST['report-reason']);
 	$report_content	= '';
 	 
-	//	pārbauda, vai ieraksts ar tādu ID eksistē, un atgriež saturu
+	//	pārbauda, vai ieraksts ar tādu ID eksistē, un atgriež saturu;
+	//	netiek fiksēts, vai lietotājs vispār šādu ierakstu spēj fiziski skatīt,
+	//	bet tam nav nozīmes, jo neapskatāma ieraksta iesūdzēšana neko ļaunu nedara
 	$query_check = $db->get_row("SELECT `text` FROM `$entry_table` WHERE `id` = '$entry_id' AND `removed` = '0' ");
 	if ( ! $query_check ) {
 		echo json_encode( array('state' => 'error', 'content' => 'Kļūdaini iesniegti dati!') );
@@ -139,9 +135,9 @@ if ( isset($_POST['report-reason']) ) {
 		
 	$query_insert = $db->query("
 		INSERT INTO `reports`
-			(type, entry_id, comment, reported_content, created_by, created_at)
+			(type, entry_id, comment, reported_content, created_by, created_at, site_id)
 		VALUES
-			('$entry_type_id', '$entry_id', '$report_reason', '$report_content', '".$auth->id."', '".time()."')
+			('$entry_type_id', '$entry_id', '$report_reason', '$report_content', '".$auth->id."', '".time()."', $lang)
 	");
 	if ( $query_insert ) {
 		$state 		= 'success';
@@ -160,10 +156,10 @@ if ( isset($_POST['report-reason']) ) {
 
 
 
-// nosūdzēts tiek minibloga ieraksts
+// lietotājs vēlas nosūdzēt mb, mb komentāru, junk komentāru vai ierakstu grupā
 if ( $entry_type == 'miniblog' ) {
 	
-	// pārbauda, vai norādītais minibloga ID datubāzē eksistē
+	// pārbauda, vai norādītais mb ID datubāzē skatītajā apakšprojektā eksistē
 	$query_data = $db->get_row("
 		SELECT 
 			`miniblog`.`id`, 
@@ -178,8 +174,9 @@ if ( $entry_type == 'miniblog' ) {
 		FROM `miniblog`
 			JOIN `users` ON `miniblog`.`author` = `users`.`id`
 		WHERE 
-			`miniblog`.`id` 		= '".(int)$_GET['var2']."' AND
-			`miniblog`.`removed` 	= '0'
+			`miniblog`.`id` 		= '".(int)$_GET['var2']."' 	AND
+			`miniblog`.`removed` 	= '0'						AND
+			`miniblog`.`lang`		= $lang
 	");
 	
 	if ( !$query_data ) {
@@ -201,18 +198,11 @@ if ( $entry_type == 'miniblog' ) {
 			}
 		}
 	}
-
-	
-	$entry_text = textlimit($query_data->text, 300);
-	
-	$offender 	= usercolor($query_data->nick, $query_data->level);
-	$offender 	= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
-	
 }
-//	nosūdzēts tiek kāda raksta komentārs
+// lietotājs vēlas nosūdzēt kāda raksta komentāru
 else if ( $entry_type == 'article-comment' ) {
 
-	// pārbauda, vai norādītais komentāra ID datubāzē eksistē
+	// pārbauda, vai norādītais komentāra ID datubāzē skatītajā apakšprojektā eksistē
 	$query_data = $db->get_row("
 		SELECT 
 			`comments`.`id`, 
@@ -233,16 +223,11 @@ else if ( $entry_type == 'article-comment' ) {
 	if ( !$query_data ) {
 		send_error(2);
 	}
-	
-	$entry_text = textlimit($query_data->text, 300);
-	
-	$offender 	= usercolor($query_data->nick, $query_data->level);
-	$offender 	= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
 }
-//	nosūdzēts tiek galerijas komentārs
+// lietotājs vēlas nosūdzēt kādu galerijas komentāru
 else if ( $entry_type == 'gallery-comment' ) {
 	
-	// pārbauda, vai norādītā galerijas komentāra ID datubāzē eksistē
+	// pārbauda, vai norādītais galerijas komentāra ID datubāzē skatītajā apakšprojektā eksistē
 	$query_data = $db->get_row("
 		SELECT 
 			`galcom`.`id`, 
@@ -263,17 +248,14 @@ else if ( $entry_type == 'gallery-comment' ) {
 	if ( !$query_data ) {
 		send_error(5);
 	}
-	
-	$entry_text = textlimit($query_data->text, 300);
-	
-	$offender 	= usercolor($query_data->nick, $query_data->level);
-	$offender 	= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
-	
 }
 else {
 	send_error(3);
 }
 
+$entry_text 	= add_smile(textlimit($query_data->text, 300));	
+$offender 		= usercolor($query_data->nick, $query_data->level);
+$offender 		= '<a href="'.mkurl('user', $query_data->userid, $query_data->nick).'">'.$offender.'</a>';
 
 // atgriež HTML formu, kurā ļauts ievadīt pārkāpuma iemeslu
 $template->newBlock('report-form');

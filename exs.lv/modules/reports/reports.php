@@ -4,25 +4,26 @@
  *	visas lietotāju iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/reports
- *	Pēdējās izmaiņas: 	19.10.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
  */
 
+ 
 /**
- *	0 - miniblogs (gan komentārs, gan pats mb; arī grupā)
- *	1 - raksta komentārs (/read sadaļā)
+ *	0 - miniblogs (pats mb, mb komentārs, junk komentārs, ieraksti grupā)
+ *	1 - raksta komentārs (arī komentāru atbildes; /read sadaļā)
  *	2 - galerijas attēla komentārs
- *
- *	--- zemāk esošie vēl nav ieviesti
- *	3 - galerijas attēls
- *	4 - raksts kā tāds
- *	5 - junk bilde
  */
 $allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
 
+
+//	1 - exs.lv; 
+//	7 - lol.exs.lv
+$allowed_sites = array(1, 7);
+
  
 //	ne-moderatorus sūtām prom;
-//	sadaļai piekļuve ļauta tikai exs.lv lietotājiem
-if ( !im_mod() || $lang != 1 ) {
+//	sadaļai piekļuve ļauta tikai exs.lv/lol.exs.lv lietotājiem
+if ( !im_mod() || !in_array($lang, $allowed_sites) ) {
 	set_flash('Pieeja liegta!');
 	redirect();
 	exit;
@@ -34,7 +35,15 @@ $tpl_options = 'no-right';
 //	atvērs fancybox, kurā tiks parādīts nosūdzētā komentāra saturs;
 //	adreses forma: /reports/show_content/{entry_id}?_=1
 if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var2']) &&  isset($_GET['_']) ) {
+
+	// citos apakšprojektos šāda iespēja nebūs, jo nav slēgto grupu,
+	// tāpēc visu var apskatīt tāpat
+	if ( $lang != 1 ) {
+		redirect('/reports');
+		exit;
+	}
 	
+	// pēc padotā ID meklē datubāzē ierakstu no konkrētā apakšprojekta
 	$data = $db->get_row("
 		SELECT 
 			`reports`.`reported_content`,
@@ -43,17 +52,19 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 		FROM `reports` 
 		WHERE 
 			`reports`.`removed` = 0 AND
-			`reports`.`id` = '".(int)$_GET['var2']."'
+			`reports`.`site_id` = ".$lang." AND
+			`reports`.`id` 		= '".(int)$_GET['var2']."'
 	");
 	
 	if ( !$data ) {
-		echo json_encode(array('state' => 'error', 'message' => 'Kļūdaini iesniegti dati!'));
+		echo json_encode(array('state' => 'error', 'message' => 'Kļūdaini iesniegts pieprasījums!'));
 		exit;
 	}
 	else {
 	
 		$data->reported_content = ( empty($data->reported_content) ) ? '<p class="report-notice"><strong>Nav saglabāts!</strong></p>' : $data->reported_content;
-	
+		$data->reported_content = add_smile($data->reported_content);
+		
 		$templ = new TemplatePower(CORE_PATH . '/modules/reports/reported-content.tpl');
 		$templ->prepare();
 		$templ->newBlock('reported-content');
@@ -82,11 +93,7 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 			if ($original_data->removed == 1) {
 				$original_data->text = '<p class="report-notice"><strong>Ieraksts ir dzēsts!</strong></p>' . $original_data->text;
 			}
-			$templ->assign('original-post',$original_data->text);
-			/*if ($original_data->edit_time != 0) {
-				$templ->newBlock('edit-time');
-				$templ->assign('edit_time', display_time_simple($original_data->edit_time) );
-			}*/
+			$templ->assign('original-post', add_smile($original_data->text));
 		}
 
 		echo json_encode(array('state' => 'success', 'message' => $templ->getOutputContent()) );
@@ -96,14 +103,15 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 
 
 
-// šo bloku izsauc jquery getJSON; pārvalda ziņojumu arhivēšanu/aktualizēšanu
+// šo bloku izsauc jquery getJSON, kad nospiesta arhivēšanas/aktualizēšanas poga;
 // pieprasītā adrese ir formā /reports/{remove|activate}/{report-id}?_=1
 if ( isset($_GET['var1']) && ($_GET['var1'] == 'remove' || $_GET['var1'] == 'activate') && 
 	 isset($_GET['var2']) && is_numeric($_GET['var2']) && isset($_GET['_']) ) {
 
 	$swap_to = ($_GET['var1'] == 'remove') ? 1 : 0;		
 	
-	$query_update = $db->query("UPDATE `reports` SET `archived` = '$swap_to', `deleted_by` = '".$auth->id."', `deleted_at` = '".time()."' WHERE `id` = '".(int)$_GET['var2']."' LIMIT 1");
+	// drošības labad arhivēt/aktualizēt ļauts tikai attiecīgā apakšprojekta ierakstus
+	$query_update = $db->query("UPDATE `reports` SET `archived` = '$swap_to', `deleted_by` = '".$auth->id."', `deleted_at` = '".time()."' WHERE `id` = '".(int)$_GET['var2']."' AND `site_id` = ".$lang." LIMIT 1");
 	
 	if ( !$query_update ) {
 		echo json_encode(array('state' => 'error', 'href' => '', 'text' => ''));
@@ -112,11 +120,19 @@ if ( isset($_GET['var1']) && ($_GET['var1'] == 'remove' || $_GET['var1'] == 'act
 		// atkarībā no tā, kāds statuss ziņojumam tika pielikts, atgriež atbilstošo pogu
 		if ($swap_to == 1) {
 			
-			echo json_encode(array('state' => 'success', 'href' => '/reports/activate/'.(int)$_GET['var2'], 'text' => 'Aktualizēt'));
+			echo json_encode( array(
+				'state' => 'success', 
+				'href' 	=> '/reports/activate/'.(int)$_GET['var2'], 
+				'text' 	=> 'Aktualizēt'
+			) );
 		}
 		else {
 			
-			echo json_encode(array('state' => 'success', 'href' => '/reports/remove/'.(int)$_GET['var2'], 'text' => 'Arhivēt'));
+			echo json_encode( array(
+				'state' => 'success', 
+				'href' 	=> '/reports/remove/'.(int)$_GET['var2'], 
+				'text' 	=> 'Arhivēt'
+			) );
 		}
 	}
 	exit;
@@ -164,8 +180,9 @@ if ( isset($_GET['archive']) ) {
 	';
 	$includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
 }
+// uzskaita tikai konkrētā apakšprojekta brīdinājumus
 $includable_subquery = " 
-	(SELECT count(*) FROM `warns` WHERE `user_id` = `rule_breaker`.`id` AND `active` = '1' AND `site_id` = '1') AS `warn_count`
+	(SELECT count(*) FROM `warns` WHERE `user_id` = `rule_breaker`.`id` AND `active` = '1' AND `site_id` = $lang) AS `warn_count`
 ";
 
 // miniblogi
@@ -199,7 +216,8 @@ if ( $active_tab == 'miniblogs' ) {
 		WHERE
 			`reports`.`archived` 	= '$get_archived' 	AND
 			`reports`.`type` 		= '0'				AND
-			`reports`.`removed` 	= '0'
+			`reports`.`removed` 	= '0'				AND
+			`reports`.`site_id`		= $lang
 		ORDER BY 
 			`reports`.`created_at` DESC
 		$query_limit
@@ -226,7 +244,8 @@ else if ( $active_tab == 'articles' ) {
 		WHERE	
 			`reports`.`archived` 	= '$get_archived' 	AND
 			`reports`.`type` 		= '1'				AND
-			`reports`.`removed` 	= '0'		
+			`reports`.`removed` 	= '0'				AND
+			`reports`.`site_id`		= '$lang'
 		ORDER BY 
 			`reports`.`created_at` DESC
 	");
@@ -254,7 +273,8 @@ else if ( $active_tab == 'gallery-comments' ) {
 		WHERE
 			`reports`.`archived` 	= '$get_archived' 	AND
 			`reports`.`type` 		= '2'				AND
-			`reports`.`removed` 	= '0'	
+			`reports`.`removed` 	= '0'				AND
+			`reports`.`site_id`		= '$lang'
 		ORDER BY 
 			`reports`.`created_at` DESC
 		$query_limit
@@ -265,10 +285,11 @@ else {
 }
 
 
-// vēl neskatītu iesniegumu skaits, kas tiek norādīts cilnēs
-$new_mblogs		= $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = '0' AND `archived` = '0' AND `removed` = '0' ");
-$new_articles	= $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = '1' AND `archived` = '0' AND `removed` = '0' ");
-$new_gcomments	= $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = '2' AND `archived` = '0' AND `removed` = '0' ");
+// vēl neskatītu iesniegumu skaits, kas tiek norādīts cilnēs;
+// atlasa tikai aktīvā apakšprojekta ziņojumu skaitu
+$new_mblogs		= $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = '0' AND `archived` = '0' AND `removed` = '0' AND `site_id` = $lang ");
+$new_articles	= $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = '1' AND `archived` = '0' AND `removed` = '0' AND `site_id` = $lang ");
+$new_gcomments	= $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = '2' AND `archived` = '0' AND `removed` = '0' AND `site_id` = $lang ");
 
 $tpl->assign(array(
 	'count-mblogs' 		=> ' (<span class="red">'.$new_mblogs.'</span>)',
@@ -291,6 +312,7 @@ if ( !isset($_GET['archive']) ) {
 }
 
 
+// jauni ziņojumi nav atrasti
 if ( !$query_reports ){
 	$tpl->newBlock('no-reports-found');
 	if (isset($_GET['archive'])) {
@@ -299,6 +321,7 @@ if ( !$query_reports ){
 		$tpl->assign('report-type', 'iesniegtas sūdzības');
 	}
 }
+// atrasti jauni ziņojumi
 else {
 	
 	$tpl->newBlock('list-reports');
@@ -326,7 +349,7 @@ else {
 		//	tiek norādīta tabulā pie katra ieraksta
 		switch ($report->report_type) {
 		
-			// raksta komentārs
+			// raksta komentārs (vai komentāra atbilde)
 			case 1:
 				$report_place 	 = '<strong>Komentārs: </strong>';
 				$report_place 	.= '<a href="/read/'.$report->comment_page_strid.'#c'.$report->comment_id.'">'.$report->comment_page_title.'</a>';
@@ -338,7 +361,7 @@ else {
 				$report_place 	.= '<a href="/gallery/'.$report->gallery_author.'/'.$report->galcom_bid.'#c'.$report->galcom_id.'">'.$report->galcom_id.'</a>';
 				break;
 
-			// miniblogs (var būt arī grupā)
+			// minibloga tipa ieraksts (var būt arī grupā)
 			default:
 			
 				// junk komentārs
@@ -380,11 +403,18 @@ else {
 				}
 				break;
 		};
-	
-		// izvade lapā
+		
+		// izvade lapā		
 		$tpl->newBlock('single-report');
 		$tpl->assignAll($report);
 		$tpl->assign('report-place', $report_place);
+		
+		// tikai main exs.lv būs iespēja skatīt ieraksta saturu, neatverot attiecīgo lapu;
+		// lol.exs.lv nav slēgto grupu, tāpēc visu var apskatīt tāpat
+		if ($lang == 1) {
+			$tpl->newBlock('display-original-content');
+			$tpl->assign('report_id', $report->report_id);
+		}
 		
 		// arhivēšanas/aktualizēšanas poga
 		if ( !isset($_GET['archive']) ) {
