@@ -265,6 +265,13 @@ $template->assign(array(
 	'entry-text'	=> $entry_text
 ));
 
+if ( $lang == 1 ) {
+	$template->newBlock('main-exs-report-info');
+}
+else {
+	$template->newBlock('sub-exs-report-info');
+}
+
 echo json_encode( array('state' => 'success', 'content' => $template->getOutputContent() ) );
 exit;
 

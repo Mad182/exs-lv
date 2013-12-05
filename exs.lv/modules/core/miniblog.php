@@ -324,7 +324,7 @@ if ($inprofile->id) {
 					}
 
 					// podziņa mb pārkāpuma ziņošanai
-					if ( $auth->ok && !$auth->mobile && $lang == 1 ){
+					if ( $auth->ok && !$auth->mobile && ($lang == 1 || $lang == 7) ){
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
 					}
@@ -347,6 +347,7 @@ if ($inprofile->id) {
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`reply_to` AS `reply_to`,
 		`miniblog`.`id` AS `id`,
+		`miniblog`.`removed` AS `mb_removed`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,
 		`users`.`avatar` AS `avatar`,
@@ -358,7 +359,6 @@ if ($inprofile->id) {
 		`users`
 	WHERE
 		`miniblog`.`parent` = '" . $record->id . "' AND
-		`miniblog`.`removed` = '0' AND
 		`miniblog`.`type` = 'miniblog' AND
 		`users`.`id` = `miniblog`.`author`
 	ORDER BY

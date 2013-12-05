@@ -3730,9 +3730,6 @@ li.view_more {
 }
 .report-button {
 	margin: 0 3px;
-	/*margin: -2px 5px 0;
-	position:relative;
-	top:2px*/
 }
 .fancy-close {
 	padding:4px 10px 5px
@@ -3864,4 +3861,12 @@ li.view_more {
 
 .post-delete {
 	color: #933;
+}
+
+.deleted-entry {
+	padding: 5px 15px;
+	font-size: 11px;
+	margin-top: 3px;
+	color: #962d2d;
+	background: #F5F3F3
 }

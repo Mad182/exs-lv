@@ -652,7 +652,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						));
 					}
 
-					// podziņa mb pārkāpuma ziņošanai
+					// podziņa parent mb pārkāpuma ziņošanai
 					if ( $auth->ok && !$auth->mobile && $lang == 1 ){
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
@@ -676,6 +676,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	 					`miniblog`.`id` AS `id`,
 						`miniblog`.`posts` AS `posts`,
 						`miniblog`.`reply_to` AS `reply_to`,
+						`miniblog`.`removed` AS `mb_removed`,
 	 					`users`.`nick` AS `nick`,
 						`users`.`decos` AS `decos`,
 	 					`users`.`avatar` AS `avatar`,
@@ -687,7 +688,6 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						users
 					WHERE
 						`miniblog`.`parent` = '" . $record->id . "' AND
-						`miniblog`.`removed` = '0' AND
 						`users`.`id` = `miniblog`.`author`
 					ORDER BY
 						`miniblog`.`id`
