@@ -1,6 +1,6 @@
 $ttl 38400
 @	IN	SOA	ns.openidea.lv. root.ns.openidea.lv. (
-			1342114445
+			1342114446
 			10800
 			3600
 			604800
@@ -24,6 +24,9 @@ mta.exs.lv.	IN	A	92.240.80.63
 dev.exs.lv.	IN	A	127.0.0.1
 dev.rp.exs.lv.	IN	A	127.0.0.1
 dev.lol.exs.lv.	IN	A	127.0.0.1
+dev.m.exs.lv.	IN	A	127.0.0.1
+dev.m.rp.exs.lv.	IN	A	127.0.0.1
+dev.m.lol.exs.lv.	IN	A	127.0.0.1
 greenzephyr.exs.lv.	IN	A	92.240.69.183
 gugols.exs.lv.	IN	A	92.240.69.183
 exs.lv.	IN	A	92.240.69.184
@@ -40,4 +43,3 @@ krasas.exs.lv.	IN	A	92.240.69.183
 ikonas.exs.lv.	IN	A	92.240.69.183
 *.exs.lv.	IN	A	92.240.69.184
 autoconfig.zvera.exs.lv.	IN	A	92.240.69.183
-

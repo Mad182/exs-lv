@@ -1,22 +1,5 @@
 <?php
 
-/* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
-if ($_SERVER['SERVER_NAME'] === 'm.exs.lv') {
-	require(CORE_PATH . '/config/exs-lv.php');
-} elseif ($_SERVER['SERVER_NAME'] === 'm.coding.lv') {
-	require(CORE_PATH . '/config/coding-lv.php');
-} elseif ($_SERVER['SERVER_NAME'] === 'm.rp.exs.lv') {
-	require(CORE_PATH . '/config/mtaforum.php');
-} elseif ($_SERVER['SERVER_NAME'] === 'm.lol.exs.lv') {
-	require(CORE_PATH . '/config/lol-exs-lv.php');
-} else {
-	redirect('http://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
-}
-
-
-if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
-	redirect('/', true);
-}
 
 /**
  * Info par domēniem, kuri atbilst katram $lang (lai veidotu linkus starp projektiem u.c.)
@@ -39,3 +22,27 @@ $config_domains = array(
 		'prefix' => 'lol'
 	)
 );
+
+
+$found = false;
+foreach($config_domains as $lang => $site) {
+
+	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+		require(CORE_PATH . '/config/'.str_replace('m.','',$site['domain'].'.php');
+		$found = true;
+		break;
+	} elseif($_SERVER['SERVER_NAME'] === 'www.'.$site['domain']) {
+		redirect('http://' . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+	}
+
+}
+
+//domain not found, redirect to exs.lv
+if(!$found) {
+	redirect('http://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
+}
+
+//remove index.php from urls
+if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
+	redirect('/', true);
+}
