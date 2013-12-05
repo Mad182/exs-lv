@@ -704,8 +704,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$txt = str_replace(array(
 		'.space.lv',
 		'CoxFr2Kobuw',
-		'T_bn77at0zA',
-		'Vy1zWWGzL0Q',
 		'MOBM1ODD',
 		's.exs.lv/63',
 		'?ref=',
@@ -714,8 +712,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'.org/lan.',
 		'4f200c32f12e7.jpg'
 			), 'ES_SPAMOJU_SUDUS', $txt);
-
-	$txt = str_ireplace(array('rgaming', 'forlife'), 'dūdūpīpī', $txt);
 
 	$txt = str_replace(array(
 		'/ref.php',
@@ -741,7 +737,8 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	return $txt;
 }
 
-/* atgriež masīvu ar bloķētiem mājas lapu domēniem */
+
+/* adreses, kurām nelikt nofollow tagu */
 function get_dofollow_sites() {
 	global $db, $m, $dofollow_sites;
 	if (empty($dofollow_sites)) {
@@ -753,12 +750,13 @@ function get_dofollow_sites() {
 	return $dofollow_sites;
 }
 
+/* atgriež masīvu ar bloķētiem mājas lapu domēniem */
 function get_blacklisted_sites() {
 	global $db, $m, $blacklisted_sites;
 	if (empty($blacklisted_sites)) {
-		if (($blacklisted_sites = $m->get('blacklisted_sites')) === false) {
+		if (($blacklisted_sites = $m->get('bl_sites')) === false) {
 			$blacklisted_sites = $db->get_col("SELECT `url` FROM `blacklisted_sites`");
-			$m->set('blacklisted_sites', $blacklisted_sites, false, 1200);
+			$m->set('bl_sites', $blacklisted_sites, false, 1200);
 		}
 	}
 	return $blacklisted_sites;
