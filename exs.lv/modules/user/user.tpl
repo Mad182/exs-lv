@@ -337,6 +337,24 @@
 			<p>
 				<select name="block-length"><option value="21600">6 stundas</option><option value="86400" selected="selected">1 diena</option><option value="259200">3 dienas</option><option value="604800">1 nedēļa</option><option value="1209600">2 nedēļas</option><option value="2629743">1 mēnesis</option><option value="7889231">3 mēneši</option><option value="31556926">1 gads</option></select>
 			</p>
+			<p>				
+				<!-- START BLOCK : warn-removal -->
+				<strong>Cik senākos brīdinājumus noņemt?</strong><br>
+				<select name="warn-removal">
+					<option value="0">Nevienu</option>
+					<!-- START BLOCK : warn-removal-option -->
+					<option value="{x}">{x}</option>
+					<!-- END BLOCK : warn-removal-option -->
+				</select>
+				</p>
+				<p>
+					<label for="warn-reason">Brīdinājumu noņemšanas iemesls:</label><br />
+					<input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" />
+				<!-- END BLOCK : warn-removal -->
+				<!-- START BLOCK : no-active-warns -->
+				Šim lietotājam šobrīd nav aktīvu, noņemamu brīdinājumu.
+				<!-- END BLOCK : no-active-warns -->
+			</p>
 			<p>
 				<input class="button primary" type="submit" name="submit" value="OK" />
 			</p>
