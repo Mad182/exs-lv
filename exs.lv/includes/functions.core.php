@@ -1058,6 +1058,7 @@ function strTime($s) {
 	$s -= $h * 3600;
 	$m = intval($s / 60);
 	$s -= $m * 60;
+	$str = '';
 	if ($d)
 		$str = $d . 'd ';
 	if ($h)
