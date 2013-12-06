@@ -3870,3 +3870,10 @@ li.view_more {
 	color: #962d2d;
 	background: #F5F3F3
 }
+.deleted-mb-content {
+	padding: 7px 15px;
+	width: 450px;
+	border: 1px solid #F0EDED;
+	font-size:11px;
+	min-height:70px;
+}

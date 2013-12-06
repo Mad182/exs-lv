@@ -2387,7 +2387,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			//podziņa lietotāja pārkāpuma noziņošanai (exs.lv; lol.exs.lv) (ja ieraksts jau nav dzēsts)
-			if ( $val->mb_removed == 0 && $auth->ok && !$auth->mobile && ($lang == 1 || $lang == 7) ) {
+			if ($val->mb_removed == 0 && $auth->ok && !$auth->mobile && ($lang == 1 || $lang == 7) ) {
 				$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
 			}
 
@@ -2403,7 +2403,12 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 			$out .= '</p>';
 			if ($val->mb_removed == 1) {
-				$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+				$out .= '<p class="deleted-entry">Saturs dzēsts!';
+				// moderatoriem apskatāms dzēstā ieraksta saturs
+				if (im_mod() && !$auth->mobile && $lang == 1) {
+					$out .= '<a style="float:right" class="deleted-content" href="/mbview/'.$val->id.'">skatīt saturu</a>';
+				}
+				$out .= '</p>';
 			} else {
 				$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
 			}

@@ -181,6 +181,14 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 	
+	/* ļauj apskatīt dzēsto miniblogu ierakstu bijušo saturu */
+	$('.deleted-content').live('click', function(e) {
+		$.get( ($(this).attr('href') ), function(response) {
+		  $.fancybox( response );
+		});
+		e.preventDefault();	
+	});
+	
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);
 	}

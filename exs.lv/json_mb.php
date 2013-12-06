@@ -140,7 +140,12 @@ if ($resps) {
 		}
 		$out .= '</p>';
 		if ($resp->mb_removed == 1) {
-			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+			$out .= '<p class="deleted-entry">Saturs dzēsts!';
+			// moderatoriem apskatāms dzēstā ieraksta saturs
+			if (im_mod() && !$auth->mobile && $lang == 1) {
+				$out .= '<a style="float:right" class="deleted-content" href="/mbview/'.$resp->id.'">skatīt saturu</a>';
+			}
+			$out .= '</p>';
 		} else {
 			$out .= '<div class="post-content">' . add_smile($resp->text) . '</div>';
 		}
