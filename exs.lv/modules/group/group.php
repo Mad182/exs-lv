@@ -645,7 +645,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					}
 
 					//lūdzu neņem nost laika ierobežojumu :/
-					if (im_mod() && strtotime($record->date) > time() - 600) {
+					if (im_mod() && strtotime($record->date) > time() - 86400) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign(array(
 							'id' => $record->id

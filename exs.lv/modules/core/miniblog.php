@@ -316,7 +316,7 @@ if ($inprofile->id) {
 					}
 
 					//lūdzu neņem nost laika ierobežojumu :/
-					if (im_mod() && strtotime($record->date) > time() - 600) {
+					if (im_mod() && strtotime($record->date) > time() - 86400) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign(array(
 							'id' => $record->id
