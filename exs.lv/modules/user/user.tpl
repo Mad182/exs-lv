@@ -335,7 +335,18 @@
 				<label for="block-reason">Iemesls:</label><br />
 				<input type="text" class="text" name="block-reason" id="block-reason" value="" maxlength="256" /></p>
 			<p>
-				<select name="block-length"><option value="21600">6 stundas</option><option value="86400" selected="selected">1 diena</option><option value="259200">3 dienas</option><option value="604800">1 nedēļa</option><option value="1209600">2 nedēļas</option><option value="2629743">1 mēnesis</option><option value="7889231">3 mēneši</option><option value="31556926">1 gads</option></select>
+				<select name="block-length">
+					<option value="21600">6 stundas</option>
+					<option value="86400" selected="selected">1 diena</option>
+					<option value="259200">3 dienas</option>
+					<option value="604800">1 nedēļa</option>
+					<option value="1209600">2 nedēļas</option>
+					<option value="2629743">1 mēnesis</option>
+					<option value="5184000">2 mēneši</option>
+					<option value="7889231">3 mēneši</option>
+					<option value="15552000">6 mēneši</option>
+					<option value="31556926">1 gads</option>
+				</select>
 			</p>
 			<p>				
 				<!-- START BLOCK : warn-removal -->
