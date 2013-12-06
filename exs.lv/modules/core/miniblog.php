@@ -447,7 +447,7 @@ if ($inprofile->id) {
 				'usrid' => $inprofile->id,
 				'edit_time' => time(),
 				'type' => 'miniblog',
-				'lastid' => (int) $db->get_var("SELECT `id` FROM `miniblog` WHERE `parent` = '$record->id' AND `removed` = '0' AND `type` = 'miniblog' ORDER BY `id` DESC LIMIT 1")
+				'lastid' => (int) $db->get_var("SELECT `id` FROM `miniblog` WHERE `parent` = '$record->id' AND `type` = 'miniblog' ORDER BY `id` DESC LIMIT 1")
 			));
 		} elseif ($record->closed) {
 			$tpl->newBlock('user-miniblog-closed');
