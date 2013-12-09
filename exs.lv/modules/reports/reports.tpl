@@ -27,12 +27,17 @@
 		</ul>
 	</td>
 	<td>
-		{report_comment}		
-		<span class="report-addr">{report-place} 
-		<!-- START BLOCK : display-original-content -->
-		(<a class="get-report-content" href="/reports/show_content/{report_id}" title="Apskatīt ieraksta saturu">#</a>)
-		<!-- END BLOCK : display-original-content -->
+		{report-comment}
+		<!-- START BLOCK : show-full-content -->
+			<br><a href="#" class="report-full">Sūdzība ir saīsināta! Skatīt sūdzību pilnā apjomā.</a>
+		<!-- END BLOCK : show-full-content -->
+		<span class="report-addr">
+			{report-place} 			
+			<!-- START BLOCK : display-original-content -->
+			(<a class="get-report-content" href="/reports/show_content/{report_id}" title="Apskatīt ieraksta saturu">#</a>)
+			<!-- END BLOCK : display-original-content -->
 		</span>
+		<div class="report-full-content" style="display:none">{full-content}</div>
 	</td>
 	<td>
 		<ul class="mod-table-list">

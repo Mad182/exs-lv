@@ -4,7 +4,7 @@
  *	visas lietotāju iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/reports
- *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	09.12.2013 ( Edgars )
  */
 
  
@@ -402,12 +402,21 @@ else {
 					}
 				}
 				break;
-		};
+		};	
 		
 		// izvade lapā		
 		$tpl->newBlock('single-report');
 		$tpl->assignAll($report);
-		$tpl->assign('report-place', $report_place);
+		$tpl->assign(array(
+			'report-place' => $report_place,
+			'report-comment' => textlimit($report->report_comment, 600),
+			'full-content' => $report->report_comment
+		));
+		
+		// parādīs podziņu, kas ļaus apskatīt pilno ziņojuma saturu
+		if (mb_strlen($report->report_comment) > 600) {
+			$tpl->newBlock('show-full-content');
+		}
 		
 		// tikai main exs.lv būs iespēja skatīt ieraksta saturu, neatverot attiecīgo lapu;
 		// lol.exs.lv nav slēgto grupu, tāpēc visu var apskatīt tāpat

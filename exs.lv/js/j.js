@@ -189,6 +189,13 @@ $(document).ready(function () {
 		e.preventDefault();	
 	});
 	
+	/* paslēpj/parāda iesniegto sūdzību paziņojumu pilno saturu */
+	$('.report-full').live('click', function(e) {
+		$content = $(this).siblings('.report-full-content').html();
+		$(this).parent().html( $content );
+		e.preventDefault();
+	});
+	
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);
 	}
