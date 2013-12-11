@@ -57,7 +57,7 @@ if ($user) {
 			// pārbauda, vai nav nepieciešams noņemt aktīvos brīdinājumus
 			if ( isset($_POST['warn-removal-reason']) && isset($_POST['warn-removal']) ) {
 
-				$removal_reason 	= sanitize(htmlspecialchars($_POST['warn-removal-reason']));
+				$removal_reason 	= post2db($_POST['warn-removal-reason']);
 				$remove_count		= (int)$_POST['warn-removal'];
 				$remove_count 		= ($remove_count > $warn_count || $remove_count < 0) ? 0 : $remove_count;
 				
