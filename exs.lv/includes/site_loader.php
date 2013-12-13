@@ -24,6 +24,10 @@ $config_domains = array(
 	8 => array(
 		'domain' => 'secure.exs.lv',
 		'prefix' => 'secure'
+	),
+	9 => array(
+		'domain' => 'runescape.exs.lv',
+		'prefix' => 'runescape'
 	)
 );
 
