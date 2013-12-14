@@ -4,7 +4,7 @@
  *	visas lietotāju iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/reports
- *	Pēdējās izmaiņas: 	09.12.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	14.12.2013 ( Edgars )
  */
 
  
@@ -26,7 +26,6 @@ $allowed_sites = array(1, 7);
 if ( !im_mod() || !in_array($lang, $allowed_sites) ) {
 	set_flash('Pieeja liegta!');
 	redirect();
-	exit;
 }
 $tpl_options = 'no-right';
 

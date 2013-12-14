@@ -10,23 +10,23 @@
 <!-- START BLOCK : list-reports -->
 <table id="mod_list_table" style="width:95%">
 <tr class="">
-	<th style="width:18%">Iesaistītie</th>
-	<th style="width:49%">Pārkāpuma pamatojums</th>
-	<th style="width:23%">Iesniegšanas laiks</th>
-	<th style="width:10%">&nbsp;</th>
+	<th style="width:25%">Iesaistītie</th>
+	<th style="width:50%">Pārkāpuma pamatojums</th>
+	<th style="width:18%;padding-left:2px;text-align:left">Iesniegšanas laiks</th>
+	<th style="width:7%">&nbsp;</th>
 </tr>
 <!-- START BLOCK : single-report -->
 <tr>
-	<td>
+	<td style="padding:7px 10px 7px 2px">
 		<ul class="mod-table-list">
 			<li><span class="stronger">Iesniedzis:</span>{reporter_nick}</li>
 			<li><span class="stronger">Pārkāpējs:</span>{rule_breaker_nick}</li>
 			<!-- START BLOCK : archived-by -->
-			<li><span class="stronger" style="padding-left:7px">Arhivēja:</span>{archivator_nick}</li>
+			<li><span class="stronger" style="padding-left:9px">Arhivēja:</span>{archivator_nick}</li>
 			<!-- END BLOCK : archived-by -->
 		</ul>
 	</td>
-	<td>
+	<td style="padding:7px 10px 7px 2px">
 		{report-comment}
 		<!-- START BLOCK : show-full-content -->
 			<br><a href="#" class="report-full">Sūdzība ir saīsināta! Skatīt sūdzību pilnā apjomā.</a>
@@ -39,13 +39,13 @@
 		</span>
 		<div class="report-full-content" style="display:none">{full-content}</div>
 	</td>
-	<td>
+	<td style="padding:7px 0 2px">
 		<ul class="mod-table-list">
 			<li>{report_created_at}</li>
 			<li class="view_more"><a href="/warns/{rule_breaker_id}">Skatīt brīdinājumus ({warn_count})</a></li>
 		</ul>
 	</td>
-	<td>
+	<td style="padding:7px 0">
 		<!-- START BLOCK : archive-button -->
 		<a href="/reports/remove/{report_id}" class="button primary report-archive">Arhivēt</a>
 		<!-- END BLOCK : archive-button -->
