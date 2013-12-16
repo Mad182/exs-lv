@@ -669,6 +669,9 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$txt = str_replace('="/upload/', '="http://exs.lv/upload/', $txt);
 	$txt = str_replace('="/bildes', '="http://exs.lv/bildes', $txt);
 
+	//pievieno nofollow linkiem
+	$txt = str_replace(' rel="nofollow"', '', $txt);
+	$txt = str_replace(' href="http', ' rel="nofollow" href="http', $txt);
 
 	//draudzīgās uz atbalstāmās lapas no ` dofollow_sites`, noņemam nofollow
 	$dofollow_sites = get_dofollow_sites();
@@ -677,12 +680,14 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			$find = array(
 				' rel="nofollow" href="http://' . $site,
 				' rel="nofollow" href="https://' . $site,
-				' rel="nofollow" href="http://www.' . $site
+				' rel="nofollow" href="http://www.' . $site,
+				' rel="nofollow" href="https://www.' . $site
 			);
 			$replace = array(
 				' href="http://' . $site,
 				' href="https://' . $site,
-				' href="http://www.' . $site
+				' href="http://www.' . $site,
+				' href="https://www.' . $site
 			);
 			$txt = str_ireplace($find, $replace, $txt);
 		}
