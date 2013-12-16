@@ -3576,20 +3576,20 @@ ul.taged {
 }
 #mod_list_table th {
 	font-weight:bold;
-	padding:8px 12px;
+	padding:8px 10px 8px 2px;
 	font-size:12px;
 	text-align:left;
 	color:#284C6D;
 	border-bottom:2px solid #404449
 }
 #mod_list_table td {
-	padding:7px 12px;
+	padding:7px 10px;
 	border-bottom: 1px solid #EEF0F3;
 	font-size:11px
 }
 #mod_list_table .counter {
 	font-weight:bold;
-	color: #648CF3;
+	color: #235A96;
 	text-align:center;
 	padding:5px 0
 }

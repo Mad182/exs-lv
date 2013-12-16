@@ -15,7 +15,7 @@ if (!$auth->ok) {
 	$field_mail = md5($auth->xsrf . '-' . 'mail');
 	$field_nick = md5($auth->xsrf . '-' . 'nick');
 
-	$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 32137"));
+	$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 57753"));
 
 	$regdata = array();
 	$regdata['mail'] = '';
