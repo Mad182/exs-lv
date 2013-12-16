@@ -6,6 +6,10 @@ exs.lv specific styles, not loaded in sub-projects
 
 */
 
+body {
+	background: #ffffff url('http://img.exs.lv/bildes/winter-body.jpg') repeat-x fixed 50% 0;
+}
+
 /* junk box in sidebar */
 .junk-box a {
 	float: left;
