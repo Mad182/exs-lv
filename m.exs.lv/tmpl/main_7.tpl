@@ -48,7 +48,6 @@
 <li><a href="/pm">PM{new-messages}</a></li>
 <li><a href="/say/{currentuser-id}">M-blogs</a></li>
 <!-- END BLOCK : user-menu-->          
-<li><a href="/grupas">Grupas</a></li>
 </ul>
 </div>
 <div id="wrapper">

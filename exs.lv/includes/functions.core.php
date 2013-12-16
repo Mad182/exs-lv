@@ -754,9 +754,9 @@ function get_dofollow_sites() {
 function get_blacklisted_sites() {
 	global $db, $m, $blacklisted_sites;
 	if (empty($blacklisted_sites)) {
-		if (($blacklisted_sites = $m->get('bl_sites')) === false) {
+		if (($blacklisted_sites = $m->get('blacklisted_sites')) === false) {
 			$blacklisted_sites = $db->get_col("SELECT `url` FROM `blacklisted_sites`");
-			$m->set('bl_sites', $blacklisted_sites, false, 1200);
+			$m->set('blacklisted_sites', $blacklisted_sites, false, 1200);
 		}
 	}
 	return $blacklisted_sites;
@@ -2010,9 +2010,9 @@ function get_blog_latest($category_id, $force = false) {
 
 function get_footer_mb($force = false) {
 	global $db, $m, $lang;
-	if ($force || !($html = $m->get('footer_mb_' . $lang))) {
+	if ($force || !($html = $m->get('f_mb_' . $lang))) {
 		$html = '';
-		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `date` > '".date('Y-m-d H:i:s', time() - 1209600)."' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang ORDER BY `id` DESC LIMIT 6");
+		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `date` > '".date('Y-m-d H:i:s', time() - 1209600)."' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang ORDER BY `id` DESC LIMIT 5");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
@@ -2022,7 +2022,7 @@ function get_footer_mb($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('footer_mb_' . $lang, $html, false, 120);
+		$m->set('f_mb_' . $lang, $html, false, 120);
 	}
 	return $html;
 }
@@ -2034,7 +2034,7 @@ function get_footer_topics($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($html = $m->get('f_topics_' . $lang))) {
 		$html = '';
-		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 6");
+		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 5");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
@@ -2283,15 +2283,13 @@ function htmlpost2db($text) {
 	$text = $purifier->purify($text);
 	$text = str_replace('href="http://' . $_SERVER['SERVER_NAME'] . '/', 'href="/', $text);
 	$text = str_replace(' rel="nofollow"', '', $text);
-	$text = str_replace(' href="http://', ' rel="nofollow" href="http://', $text);
-	$text = str_replace(' href="https://', ' rel="nofollow" href="https://', $text);
-	$text = str_replace(' href="ftp://', ' rel="nofollow" href="ftp://', $text);
 	$text = str_replace(' dateks.lv ', ' <a href="http://www.dateks.lv/ref/view.html">dateks.lv</a> ', $text);
 	$text = str_replace(' dateks ', ' <a href="http://www.dateks.lv/ref/view.html">Dateks</a> ', $text);
 	$text = str_replace(' dateksā ', ' <a href="http://www.dateks.lv/ref/view.html">dateksā</a> ', $text);
 	$text = str_replace(' dateksaa ', ' <a href="http://www.dateks.lv/ref/view.html">dateksā</a> ', $text);
 	$text = str_replace('dateks.lv/cenas', 'dateks.lv/p/view/cenas', $text);
 	$text = str_replace('<code>', '<code class="prettyprint">', $text);
+	$text = str_replace('<pre>', '<pre class="prettyprint">', $text);
 	return sanitize($text);
 }
 
