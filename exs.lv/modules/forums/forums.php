@@ -2,6 +2,11 @@
 
 $add_css .= ',forum.css';
 
+$columns = 4;
+if($auth->mobile) {
+	$columns = 2;
+}
+
 //add
 if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-body'])) {
 	$body = trim($_POST['new-topic-body']);
@@ -75,11 +80,12 @@ if (!empty($cats)) {
 		$tpl->newBlock('forum-list');
 		$tpl->assign(array(
 			'title' => $cat->title,
-			'textid' => $cat->textid
+			'textid' => $cat->textid,
+			'columns' => $columns
 		));
 
 		//foruma kategoriju pievienošana
-		if ($auth->level == 1) {
+		if ($auth->level == 1 && !$auth->mobile) {
 			$tpl->newBlock('forum-list-add');
 			$tpl->assign(array(
 				'id' => $cat->id
@@ -126,22 +132,11 @@ if (!empty($cats)) {
 
 			$tpl->newBlock('forum-item');
 
-			if (empty($forum->icon)) {
-				$forum->icon = $generic_f_icon;
-			}
-
 			$tpl->assign(array(
 				'title' => $forum->title,
 				'textid' => $forum->textid,
-				'icon' => $forum->icon,
 				'content' => $forum->content . $add,
-				'posts' => $forum->stat_com,
-				'topics' => $forum->stat_topics,
-				'txt-posts' => lv_dsk($forum->stat_com, 'posts', 'posti'),
-				'txt-topics' => lv_dsk($forum->stat_topics, 'tēma', 'tēmas')
 			));
-
-
 
 			if (!empty($topic)) {
 				$author = get_user($topic->author);
@@ -152,7 +147,7 @@ if (!empty($cats)) {
 				));
 			}
 
-			if ($auth->level == 1) {
+			if ($auth->level == 1 && !$auth->mobile) {
 				//foruma kategoriju admin rīki
 				$tpl->assign(array(
 					'uplink' => ' <a class="forum-admin-tool" href="?moveup=' . $forum->id . '">&#8593;</a> ',
@@ -161,6 +156,28 @@ if (!empty($cats)) {
 					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">edit</a> '
 				));
 			}
+
+			if($columns == 4) {
+
+				//category icon
+				if (empty($forum->icon)) {
+					$forum->icon = $generic_f_icon;
+				}
+				$tpl->newBlock('forum-item-avatar');
+				$tpl->assign(array(
+					'icon' => $forum->icon
+				));
+
+				//category stats
+				$tpl->newBlock('forum-item-stats');
+				$tpl->assign(array(
+					'posts' => $forum->stat_com,
+					'topics' => $forum->stat_topics,
+					'txt-posts' => lv_dsk($forum->stat_com, 'posts', 'posti'),
+					'txt-topics' => lv_dsk($forum->stat_topics, 'tēma', 'tēmas')
+				));
+			}
+
 
 			$add = '';
 			if (!im_mod()) {
@@ -248,7 +265,7 @@ if ($category->parent) {
 	$page_title = $page_title . ' | ' . $category2->title;
 }
 
-if($category->textid == 'index' && !empty($category->content)) {
+if($category->textid == 'index' && !empty($category->content) && !$auth->mobile) {
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', htmlspecialchars($category->content));
 }
