@@ -45,7 +45,7 @@ function get_data($url) {
 }
 
 
-$players = $db->get_results("SELECT `id`, `url`, `lol_nick` FROM `lol_players` WHERE `active` = 1 AND `errors` < 3 ORDER BY rand()");
+$players = $db->get_results("SELECT `id`, `url`, `lol_nick` FROM `lol_players` WHERE `active` = 1 AND `errors` < 4 ORDER BY rand()");
 
 $date = date('Y-m-d');
 
@@ -57,7 +57,7 @@ foreach($players as $player) {
 
 	if($source) {
 
-		$needle = '<div style="display: inline-block; margin-left: -8px; vertical-align: middle; font: bold 24px/32px &quot;Trebuchet MS&quot;;">';
+		$needle = '<div style="display: inline-block; vertical-align: middle; font: bold 20px/32px &quot;Trebuchet MS&quot;; margin-left: 0px;">';
 		$sakums = strpos($source, $needle);
 		$sakums = $sakums +126;
 		$strikis = substr($source, $sakums, 4);
@@ -83,7 +83,7 @@ foreach($players as $player) {
 
 	}
 
-	sleep(rand(2,4));
+	sleep(rand(1,3));
 
 }
 
