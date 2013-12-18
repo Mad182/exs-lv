@@ -40,7 +40,7 @@
 	</div>
 	<a id="logo" href="/">lol.exs.lv</a>
 </div>
-<div id="buttons">
+<div id="buttons" class="quad">
 <ul>
 <li><a href="/">Siena</a></li>
 <li><a href="/index">Forums</a></li>

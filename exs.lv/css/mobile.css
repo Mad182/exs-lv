@@ -77,9 +77,9 @@ html .banned {
 #user-tools {
 	display: block;
 	float: right;
-	padding: 2px;
+	padding: 3px;
 	color: #fff;
-	width: 50%;
+	width: 46%;
 	text-align: right;
 }
 
@@ -89,7 +89,7 @@ html .banned {
 
 #logo {
 	float: left;
-	font-size: 27px;
+	font-size: 26px;
 	text-transform: uppercase;
 	color: #fff;
 	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
@@ -633,7 +633,7 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 }
 
 #buttons {
-	padding: 2px;
+	padding: 5px 4px;
 	width: auto;
 	height: 56px;
 }
@@ -645,7 +645,9 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	margin: 0;
 	list-style: none;
 }
-
+#buttons.quad ul, #buttons.quad {
+	height: 32px;
+}
 #buttons li {
 	float: left;
 	width: 33%;
@@ -656,6 +658,10 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	overflow: hidden;
 }
 
+#buttons.quad li {
+	width: 25%;
+	height: 32px;
+}
 #buttons li a {
 	display: block;
 	outline: none;
@@ -681,6 +687,11 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	background: -webkit-gradient(linear,left top,left bottom,from(#fff), to(#ededed));
 	background: -moz-linear-gradient(top,#fff,#ededed);
 	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#ededed');
+}
+
+#buttons.quad li a {
+	line-height: 27px;
+	height: 27px;
 }
 
 #buttons li a:hover {

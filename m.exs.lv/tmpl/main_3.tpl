@@ -40,15 +40,14 @@
 	</div>
 	<a id="logo" href="/">coding.lv</a>
 </div>
-<div id="buttons">
+<div id="buttons" class="quad">
 <ul>
 <li><a href="/">Siena</a></li>
 <li><a href="/index">Forums</a></li>
 <!-- START BLOCK : user-menu-->
 <li><a href="/pm">PM{new-messages}</a></li>
 <li><a href="/say/{currentuser-id}">M-blogs</a></li>
-<!-- END BLOCK : user-menu-->          
-<li><a href="/grupas">Grupas</a></li>
+<!-- END BLOCK : user-menu-->
 </ul>
 </div>
 <div id="wrapper">
