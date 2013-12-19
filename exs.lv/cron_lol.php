@@ -59,10 +59,10 @@ foreach($players as $player) {
 
 		$needle = '<div style="display: inline-block; vertical-align: middle; font: bold 20px/32px &quot;Trebuchet MS&quot;; margin-left: 0px;">';
 		$sakums = strpos($source, $needle);
-		$sakums = $sakums +126;
+		$sakums = $sakums +125;
 		$strikis = substr($source, $sakums, 4);
 		$rez = strpos($source, $needle, $sakums + strlen($needle));
-		$rez = $rez + 126;
+		$rez = $rez + 125;
 		$strikis2 = substr($source, $rez, 4);
 		$lks = (int)preg_replace('/</', '', $strikis2);
 	
