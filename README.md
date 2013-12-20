@@ -59,3 +59,28 @@ https://github.com/facebook/facebook-php-sdk
     git submodule init && git submodule update
 
 Turpināt ar db/Apache2 iestatījumiem (vienkāršākais - LIB_PATH, CORE_PATH iekš httpd.conf ar SetEnv)
+
+
+## OSX
+Install homebrew <br />
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"<br />
+<br />
+Install mysql<br />
+brew install mariadb<br />
+unset TMPDIR<br />
+mysql_install_db --user=`whoami` --basedir="$(brew --prefix mariadb)" --datadir=/usr/local/var/mysql --tmpdir=/tmp<br />
+ln -sfv /usr/local/opt/mariadb/*.plist ~/Library/LaunchAgents<br />
+mysql.server start<br />
+<br />
+Install php<br />
+brew tap homebrew/dupes<br />
+brew tap josegonzalez/homebrew-php<br />
+brew install php54<br />
+<br />
+Install memcached<br />
+brew install memcached<br />
+brew install libmemcached<br />
+brew install php54-memcached<br />
+add extension=/usr/local/Cellar/php54-memcached/2.1.0/memcached.so to /etc/php.ini<br />
+<br />
+add LoadModule php5_module /usr/local/Cellar/php54/5.4.23/libexec/apache2/libphp5.so to /etc/apache2/httpd.conf
