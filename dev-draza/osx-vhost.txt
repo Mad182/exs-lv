@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    ServerAdmin mad182@gmail.com
+    DocumentRoot "/Users/mad182/Web/exs/exs.lv/"
+    ServerName dev.exs.lv
+    ServerAlias dev.rp.exs.lv
+    ServerAlias dev.lol.exs.lv
+    ServerAlias dev.coding.lv
+
+
+   <Directory "/Users/mad182/Web/exs/exs.lv">
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+   </Directory>
+
+</VirtualHost>
