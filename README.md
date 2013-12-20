@@ -80,7 +80,7 @@ brew install php54<br />
 Install memcached<br />
 brew install memcached<br />
 brew install libmemcached<br />
-brew install php54-memcached<br />
+brew install php54-memcache<br />
 add extension=/usr/local/Cellar/php54-memcached/2.1.0/memcached.so to /etc/php.ini<br />
 <br />
 add LoadModule php5_module /usr/local/Cellar/php54/5.4.23/libexec/apache2/libphp5.so to /etc/apache2/httpd.conf
