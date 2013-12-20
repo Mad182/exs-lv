@@ -4,7 +4,7 @@
 	<div id="form-block">
 		<p><strong class="report-item">Pārkāpējs:</strong> {offender}</p>
 		<form id="report-form" method="post" action="{action}">
-		
+            <input type="hidden" name="anti-xsrf" value="{xsrf}">
 			<p class="report-content"><strong class="report-item">Saturs:</strong><br>{entry-text}</p>
 			
 			<p class="report-item"><strong>Iemesls sūdzībai:</strong></p>

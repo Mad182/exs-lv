@@ -4,7 +4,7 @@
  *	un apstrādā iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/report
- *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	20.12.2013 ( Edgars )
  *
  *
  *	0 - miniblogs (pats mb, mb komentārs, junk komentārs, ieraksti grupā)
@@ -98,6 +98,12 @@ switch ($_GET['var1']) {
  *	kas sūdzības veidā tiek ierakstīti datubāzē.
  */
 if ( isset($_POST['report-reason']) ) {
+
+    //	anti-xsrf pārbaude
+	if ( !isset($_POST['anti-xsrf']) || $_POST['anti-xsrf'] != $auth->xsrf ) {
+		echo json_encode( array('state' => 'error', 'content' => 'Kļūdaini iesniegti dati!') );
+		exit;
+	}
 
 	//	satura laukam jāsastāv vismaz no 10 simboliem
 	if ( mb_strlen($_POST['report-reason']) < 10 ) {
@@ -262,7 +268,8 @@ $template->newBlock('report-form');
 $template->assign(array(
 	'offender' 		=> $offender,
 	'action'		=> '/report/'.$entry_type.'/'.$entry_id,
-	'entry-text'	=> $entry_text
+	'entry-text'	=> $entry_text,
+    'xsrf'          => $auth->xsrf
 ));
 
 if ( $lang == 1 ) {
