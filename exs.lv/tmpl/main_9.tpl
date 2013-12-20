@@ -18,7 +18,7 @@
 	var c_url = "{page-url}";
 </script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css">
+<link rel="stylesheet" href="{static-server}/css/core.css{add-css},runescape.css" type="text/css">
 <script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,j.js"></script>
 <!-- START BLOCK : tinymce-enabled-->
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -95,7 +95,7 @@ tinymce.init({
 			<div id="tools-bar">
 				<ul id="site-links">
 					<li><a href="http://exs.lv/">exs.lv community</a></li>
-					<li><a href="http://m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+					<li><a href="http://m.runescape.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 					<li><a href="/img">Bilžu hostings</a></li>
 					<li><a href="/sitemap">Lapas karte</a></li>
 				</ul>

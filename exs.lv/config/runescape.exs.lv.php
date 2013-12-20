@@ -1,5 +1,8 @@
 <?php
 
+$tpl_options    = '';
+$page_title     = 'RuneScape lapele';
+
 //facebook login
 $fb_api_id = '';
 $fb_api_key = '';
