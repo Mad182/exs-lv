@@ -163,8 +163,7 @@ $(document).ready(function () {
 		return false;
 	});
 	
-	/* sūdzību aktualizēšanas/arhivēšanas poga;
-		veic darbību bez lapas pārlādes */
+	/* sūdzību aktualizēšanas/arhivēšanas poga */
 	$('.report-archive').on('click', function(e) {		
 		var element = $(this);
 		$.getJSON( $(this).attr('href') + '?_=1', function(response) {
@@ -195,6 +194,24 @@ $(document).ready(function () {
 		$(this).parent().html( $content );
 		e.preventDefault();
 	});
+    
+    /* dzēš minibloga ierakstu bez lapas pārlādes */
+    $('.delete-fast').live('click', function(e) {
+        if ( confirm("Vai tiešām vēlies veikt šo darbību?") ) {
+            var link_element    = $(this);
+            var content_element = $(this).parent().siblings('.post-content');
+            $.getJSON( $(this).attr('href') + '?_=1', function(response) {
+                if (response.state == 'success') {        
+                    $(link_element).parent().after(response.message).show('slow');
+                    $(link_element).siblings('.post-button:not(.comment-permalink)').andSelf().hide();
+                    $(content_element).hide();
+                } else {
+                    alert('Darbība neizdevās!');
+                }
+            });
+        }
+        e.preventDefault();
+    });
 	
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);

@@ -2395,14 +2395,14 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			//labot (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && ($val->date > time() - 1800 || $auth->level == 1) &&
+			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && ($val->date > time() - 1800 || ($auth->level == 2 && $val->author == $auth->id && $val->date > time() - 86400) || $auth->level == 1) &&
 					(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))) {
 				$out .= ' <a href="/edit/' . $val->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 			}
 
 			//dzēst (ja ieraksts jau nav dzēsts)
 			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) ) ) {
-				$out .= ' <a href="/delete/' . $val->id . '" class="post-button post-delete confirm" title="Dzēst komentāru">dzēst</a>';
+				$out .= ' <a href="/delete/' . $val->id . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 			$out .= '</p>';
 			if ($val->mb_removed == 1) {

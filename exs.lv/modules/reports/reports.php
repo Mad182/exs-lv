@@ -4,25 +4,35 @@
  *	visas lietotāju iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/reports
- *	Pēdējās izmaiņas: 	14.12.2013 ( Edgars )
+ *	Pēdējās izmaiņas: 	20.12.2013 ( Edgars )
  */
 
- 
+$allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
+
 /**
+ *  Projekti un apakšprojekti, kuros sūdzības ir iespējotas:
+ *    1 - exs.lv; 
+ *    7 - lol.exs.lv
+ *
+ *  Zemāk kodā vēl jāfiksē, kuriem apakšprojektiem pie iesniegtajām sūdzībām
+ *  ļaut skatīt ieraksta saturu, jo, tā kā ne visos apakšprojektos ir grupas (slēgtās),
+ *  ne visur šāda iespēja ir nepieciešama.
+ *
+ *  Tāpat citi apakšprojekti jāpieraksta klāt katrā vietā, 
+ *  kur ziņošanas podziņa tiek vispār izdrukāta lapā.
+ */
+$allowed_sites = array(1, 7);
+
+/** 
+ *  Turpmāk izmantotie apzīmējumi:
+ *
  *	0 - miniblogs (pats mb, mb komentārs, junk komentārs, ieraksti grupā)
  *	1 - raksta komentārs (arī komentāru atbildes; /read sadaļā)
  *	2 - galerijas attēla komentārs
  */
-$allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
-
-
-//	1 - exs.lv; 
-//	7 - lol.exs.lv
-$allowed_sites = array(1, 7);
 
  
-//	ne-moderatorus sūtām prom;
-//	sadaļai piekļuve ļauta tikai exs.lv/lol.exs.lv lietotājiem
+//	sūtām prom ne-moderatorus un tos, kas sadaļu atver caur neiespējotiem projektiem
 if ( !im_mod() || !in_array($lang, $allowed_sites) ) {
 	set_flash('Pieeja liegta!');
 	redirect();
@@ -70,7 +80,9 @@ if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var
 		$templ->assignAll($data);
 		
 		// lai varētu salīdzināt nosūdzēto ierakstu ar tagadējo, ja tas labots,
-		// atlasa no datubāzes esošo saturu
+		// atlasa no datubāzes esošo saturu;
+        // šeit nepārbauda, vai, piemēram, moderatoram ir pieeja ierakstam, kas atrodas
+        // slēgtā grupā, jo no moderatora ierakstus slēpt nav jēgas
 		
 		// rakstu komentāri
 		if ($data->type == 1) {
