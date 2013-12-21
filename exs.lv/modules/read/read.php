@@ -627,6 +627,12 @@ if ($article) {
 				$article_text .= '<iframe src="//infogr.am/exs_lv-9431592631" width="499" height="12542" scrolling="no" frameborder="0" style="border:none;margin: 0 auto;width:499px;display:block;"></iframe><div style="width:499px;border-top:1px solid #acacac;padding-top:3px;font-family:Arial;font-size:10px;text-align:center;"><a target="_blank" href="http://infogr.am/exs_lv-9431592631" style="color:#acacac;text-decoration:none;">VĒSTURESTATISTIKA</a> | <a style="color:#acacac;text-decoration:none;" href="http://infogr.am" target="_blank">Create infographics</a></div>';
 			}
 
+			if(!$author->deleted) {
+				$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
+			} else {
+				$author_link = '<em>dzēsts</em>';
+			}
+
 			$tpl->newBlock('read-article');
 			$tpl->assign(array(
 				'article-title' => $article->title,
@@ -634,10 +640,9 @@ if ($article) {
 				'article-id' => $article->id,
 				'article-views' => $article->views + 1,
 				'article-date' => $date,
-				'article-author' => usercolor($author->nick, $author->level, false, $article->author),
+				'author' => $author_link,
 				'level' => $author->level,
 				'gender' => $author->gender,
-				'aurl' => '/user/' . $article->author,
 				'article-posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count

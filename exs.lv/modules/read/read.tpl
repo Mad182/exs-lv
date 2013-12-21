@@ -243,7 +243,7 @@
 <div class="c"></div>
 <ul class="article-info">
 	<li class="date">{article-date}</li>
-	<li class="profile user-level-{level} user-gender-{gender}"><a href="{aurl}" rel="author">{article-author}</a></li>
+	<li class="profile user-level-{level} user-gender-{gender}">{author}</li>
 	<li class="comments">{article-posts}x</li>
 	<li class="views">{article-views}x</li>
 	<!-- START BLOCK : add-bookmark-->
