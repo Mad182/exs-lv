@@ -42,7 +42,7 @@ function reload_playlist() {
 
 				like = '<a class="player-resubmit" href="/player/add/'+val.id+'?_=1">+1 balss</a>';
 
-				$("#player-playlist").append('<div><span class="player-likes">+'+val.likes+'</span><img class="player-avatar" src="https://i4.ytimg.com/vi/'+val.id+'/2.jpg" alt="" /><h3>'+val.title+'</h3>'+like+'<br />'+val.likers+'</div>');
+				$("#player-playlist").append('<div><span class="player-likes">+'+val.likes+'</span><img class="player-avatar" src="https://i4.ytimg.com/vi/'+val.id+'/2.jpg" alt="" /><h3>'+val.title+'</h3>'+like+'<br />'+val.likers+'<div class="clear" style="height:0;min-height:0;"></div></div>');
 			});
 		} else {
 			alert('Neizdevās pievienot dziesmu :(');
