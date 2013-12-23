@@ -20,7 +20,7 @@ function player_get_list() {
 				player_likes.video_id
 			ORDER BY
 				likes DESC
-			LIMIT 10
+			LIMIT 5
 		");
 
 	$return = array();
@@ -71,7 +71,7 @@ function player_get_list() {
 				player_likes.video_id
 			ORDER BY
 				RAND()
-			LIMIT 15
+			LIMIT 20
 		");
 
 	if(!empty($list)) {
