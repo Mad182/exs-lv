@@ -3,7 +3,7 @@
 function player_get_list() {
 	global $db;
 
-
+	//top
 	$list = $db->get_results("
 			SELECT
 				COUNT(player_likes.id) as likes,
@@ -20,13 +20,15 @@ function player_get_list() {
 				player_likes.video_id
 			ORDER BY
 				likes DESC
-			LIMIT 25
+			LIMIT 10
 		");
 
 	$return = array();
+	$ids = array();
 
 	foreach($list as $item) {
 
+		$ids[] = "".$item->id."'";
 
 		$out['likes'] = intval($item->likes);
 		$out['title'] = htmlspecialchars($item->title);
@@ -49,6 +51,55 @@ function player_get_list() {
 
 		$return[] = $out;
 
+	}
+
+	//random > 0
+	$list = $db->get_results("
+			SELECT
+				COUNT(player_likes.id) as likes,
+				ytlocal.yt_title as title,
+				ytlocal.yt_time as duration,
+				ytlocal.yt_id as id
+			FROM
+				player_likes,
+				ytlocal
+			WHERE
+				player_likes.video_id = ytlocal.yt_id AND
+				player_likes.archived = 0 AND
+				player_likes.video_id NOT IN(".implode(',',$ids).")
+			GROUP BY
+				player_likes.video_id
+			ORDER BY
+				RAND()
+			LIMIT 15
+		");
+
+	if(!empty($list)) {
+
+		foreach($list as $item) {
+
+			$out['likes'] = intval($item->likes);
+			$out['title'] = htmlspecialchars($item->title);
+			$out['duration'] = $item->duration;
+			$out['id'] = $item->id;
+
+			$out['likers'] = '';
+
+
+			$likers = $db->get_results("SELECT user_id FROM player_likes WHERE video_id = '$item->id' AND archived = 0");
+			if(!empty($likers)) {
+
+				foreach($likers as $liker) {
+					$user = get_user($liker->user_id);
+					$avatar = get_avatar($user, 's');
+					$out['likers'] .= '<a style="float:left;margin: 0 3px 0 0;width:26px;height:26px;" title="'.htmlspecialchars($user->nick).'" href="/user/'.$user->id.'" target="_blank"><img src="'.$avatar.'" alt="" /></a>';
+				}
+
+			}
+
+			$return[] = $out;
+
+		}
 	}
 	return $return;
 
