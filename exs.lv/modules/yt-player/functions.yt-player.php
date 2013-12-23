@@ -60,7 +60,7 @@ function player_get_mylist($user = 0) {
 		$ids = array();
 
 		foreach($list as $item) {
-			$ids[] = "'".$item->id."'";
+			$ids[] = "".$item->id."'";
 		}
 
 		$list2 = $db->get_results("
@@ -106,7 +106,7 @@ function player_now_playing() {
 
 	if(empty($playing_song) || $playing_started < time()-$duration) {
 
-		$new_song = $db->get_row("SELECT COUNT(id) AS likes, video_id FROM player_likes WHERE archived = 0 ORDER BY likes DESC limit 1");
+		$new_song = $db->get_row("SELECT COUNT(id) AS likes, video_id FROM player_likes WHERE archived = 0 GROUP BY video_id ORDER BY likes DESC limit 1");
 
 		if(empty($new_song)) {
 			$new_song = $db->get_row("SELECT video_id FROM player_likes ORDER BY rand() LIMIT 1");
