@@ -108,7 +108,7 @@ $(document).ready(function () {
 				reload_playlist();
 				reload_mylist();
 				if(response.like == 'error') {
-					alert("Jau nobalsots!");
+					$(this).html("Jau nobalsots!");
 				}
 			} else {
 				alert('Neizdevās pievienot dziesmu :(');

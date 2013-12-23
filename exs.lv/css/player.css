@@ -22,9 +22,7 @@
 #player-mylist div, #player-playlist div {
 	padding: 8px;
 	margin: 0;
-	border: 1px dotted #ddd;
 	border-top: 0;
-	background: #eee;
 	height: auto !important;
 	height: 80px;
 	min-height: 80px;

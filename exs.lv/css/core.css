@@ -3877,3 +3877,8 @@ li.view_more {
 	font-size:11px;
 	min-height:70px;
 }
+
+#player-mylist div, #player-playlist div {
+	border: 1px dotted #ddd;
+	background: #eee;
+}

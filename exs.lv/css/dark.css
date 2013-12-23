@@ -30,7 +30,7 @@ a:hover {
 	border-bottom: 1px solid #333
 }
 
-#wrapper .box, #forum td, .form fieldset, a.friend, #pm-read-footer, #comments dd, #comments dt, #movie-info, #friends-pending li {
+#player-mylist div, #player-playlist div, #wrapper .box, #forum td, .form fieldset, a.friend, #pm-read-footer, #comments dd, #comments dt, #movie-info, #friends-pending li {
 	border-color: #333
 }
 
@@ -38,7 +38,7 @@ a:hover {
 	border-bottom: 1px dotted #3a3a3a
 }
 
-#user-notify li a:hover, #latest-topics li a:hover, .blockhref li a:hover {
+#player-mylist div, #player-playlist div, #user-notify li a:hover, #latest-topics li a:hover, .blockhref li a:hover {
 	background-color: #3a3a3a
 }
 
