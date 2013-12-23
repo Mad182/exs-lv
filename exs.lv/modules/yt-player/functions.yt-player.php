@@ -74,26 +74,6 @@ function player_get_list() {
 			LIMIT 15
 		");
 
-	echo "
-			SELECT
-				COUNT(player_likes.id) as likes,
-				ytlocal.yt_title as title,
-				ytlocal.yt_time as duration,
-				ytlocal.yt_id as id
-			FROM
-				player_likes,
-				ytlocal
-			WHERE
-				player_likes.video_id = ytlocal.yt_id AND
-				player_likes.archived = 0 AND
-				player_likes.video_id NOT IN(".implode(',',$ids).")
-			GROUP BY
-				player_likes.video_id
-			ORDER BY
-				RAND()
-			LIMIT 15
-		";
-
 	if(!empty($list)) {
 
 		foreach($list as $item) {
@@ -158,7 +138,7 @@ function player_get_mylist($user = 0) {
 		$ids = array();
 
 		foreach($list as $item) {
-			$ids[] = "'".$item->id."'";
+			$ids[] = "".$item->id."'";
 		}
 
 		$list2 = $db->get_results("
