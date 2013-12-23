@@ -42,7 +42,7 @@ function reload_playlist() {
 
 				like = '<a class="player-resubmit" href="/player/add/'+val.id+'?_=1">+1 balss</a>';
 
-				$("#player-playlist").append('<div><span class="player-likes">+'+val.likes+'</span><img class="player-avatar" src="https://i4.ytimg.com/vi/'+val.id+'/2.jpg" alt="" /><h3>'+val.title+'</h3>'+like+'</div>');
+				$("#player-playlist").append('<div><span class="player-likes">+'+val.likes+'</span><img class="player-avatar" src="https://i4.ytimg.com/vi/'+val.id+'/2.jpg" alt="" /><h3>'+val.title+'</h3>'+like+'<br />'+val.likers+'</div>');
 			});
 		} else {
 			alert('Neizdevās pievienot dziesmu :(');
@@ -131,7 +131,7 @@ $(document).ready(function () {
 	<div class="player-column" id="player-column-1">
 		<div id="player-embed">
 			<iframe width="560" height="315" src="//www.youtube.com/embed/{player-now-id}?start={player-now-position}&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
-			<a style="float:right;" class="player-resubmit" href="/player/add/{player-now-id}?_=1">+1 balss</a>
+			<a style="float:right;" class="player-resubmit" href="/player/add/{player-now-id}?_=1">+1 pievienot sarakstam</a>
 			<div class="clear"></div>
 		</div>
 

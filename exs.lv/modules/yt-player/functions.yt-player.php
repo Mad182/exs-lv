@@ -23,7 +23,34 @@ function player_get_list() {
 			LIMIT 20
 		");
 
-	return $list;
+	$return = array();
+
+	foreach($list as $item) {
+
+
+		$out['likes'] = intval($item->likes);
+		$out['title'] = htmlspecialchars($item->title);
+		$out['duration'] = $item->duration;
+		$out['id'] = $item->id;
+
+		$out['likers'] = '';
+
+
+		$likers = $db->get_results("SELECT user_id FROM player_likes WHERE video_id = '$item->id' AND archived = 0");
+		if(!empty($likers)) {
+
+			foreach($likers as $liker) {
+				$user = get_user($liker->user_id);
+				$avatar = get_avatar($user, 's');
+				$out['likers'] .= '<a style="float:left;margin: 0 3px 0 0;width:26px;height:26px;" title="'.htmlspecialchars($user->nick).'" href="/user/'.$user->id.'" target="_blank"><img src="'.$avatar.'" alt="" /></a>';
+			}
+
+		}
+
+		$return[] = $out;
+
+	}
+	return $return;
 
 }
 
