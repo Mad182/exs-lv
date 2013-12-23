@@ -138,7 +138,8 @@ if (!$category->mods_only || im_mod()) {
 		`pages`.`intro` AS `intro`,
 		`users`.`nick` AS `nick`,
 		`users`.`level` AS `level`,
-		`users`.`gender` AS `gender`
+		`users`.`gender` AS `gender`,
+		`users`.`deleted` AS `author_deleted`
 	FROM
 		`pages`,
 		`users`
@@ -163,7 +164,8 @@ if (!$category->mods_only || im_mod()) {
 		`pages`.`readby` AS `readby`,
 		`pages`.`posts` AS `posts`,
 		`users`.`nick` AS `nick`,
-		`users`.`level` AS `level`
+		`users`.`level` AS `level`,
+		`users`.`deleted` AS `author_deleted`
 	FROM
 		`pages`,
 		`users`
@@ -228,15 +230,19 @@ if (!$category->mods_only || im_mod()) {
 				}
 				$timg = $type . $read . $closed . '.gif';
 
+				if(!$article->author_deleted) {
+					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+				} else {
+					$author_link = '<em>dzēsts</em>';
+				}
+
 				$tpl->assign(array(
 					'id' => $article->id,
 					'node-url' => '/read/' . $article->strid,
-					'author-id' => $article->author,
 					'title' => $article->title,
-					'views' => $article->views,
 					'timg' => $timg,
 					'date' => $date,
-					'author' => usercolor($article->nick, $article->level, false, $article->author),
+					'author' => $author_link,
 					'posts' => $article->posts,
 				));
 			}

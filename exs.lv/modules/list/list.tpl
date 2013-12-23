@@ -63,19 +63,15 @@
 <table id="forum">
 	<tr>
 		<th colspan="2" class="first">Tēmas</th>
-		<th>Autors</th>
 		<th>Atbildes</th>
-		<th>Skatīts</th>
 		<th class="last">Datums</th>
 	</tr>
 	<!-- START BLOCK : list-forum-node-->
 	<tr>
-		<td><img width="19" height="18" src="http://exs.lv/bildes/{timg}" alt="" /></td>
+		<td><img width="19" height="18" src="http://img.exs.lv/bildes/{timg}" alt="" /></td>
 		<td><h3><a href="{node-url}">{title}</a></h3></td>
-		<td><a href="/user/{author-id}">{author}</a></td>
 		<td class="center">{posts}</td>
-		<td class="center">{views}</td>
-		<td class="last">{date}</td>
+		<td class="last">{date}<br />no:&nbsp;{author}</td>
 	</tr>
 	<!-- END BLOCK : list-forum-node-->
 </table>
