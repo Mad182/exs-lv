@@ -1,5 +1,10 @@
 <?php
 
+if(!$auth->ok) {
+	set_flash("Pagaidām tikai reģistrētajiem lietotājiem!");
+	redirect();
+}
+
 $pagepath = '';
 $add_css = ',player.css';
 
