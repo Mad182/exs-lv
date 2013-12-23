@@ -20,7 +20,7 @@ function player_get_list() {
 				player_likes.video_id
 			ORDER BY
 				likes DESC
-			LIMIT 20
+			LIMIT 25
 		");
 
 	$return = array();
@@ -77,7 +77,7 @@ function player_get_mylist($user = 0) {
 				player_likes.video_id
 			ORDER BY
 				likes DESC
-			LIMIT 50
+			LIMIT 60
 		");
 
 	$active = count($list);
