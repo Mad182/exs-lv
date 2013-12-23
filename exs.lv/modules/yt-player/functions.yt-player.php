@@ -85,6 +85,13 @@ function player_get_mylist($user = 0) {
 					likes DESC
 				LIMIT ".(50-$active));
 
+		if(empty($list)) {
+			$list = array();
+		}
+		if(empty($list2)) {
+			$list2 = array();
+		}
+
 		$list = array_merge($list, $list2);
 
 	}

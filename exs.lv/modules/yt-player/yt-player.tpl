@@ -131,6 +131,8 @@ $(document).ready(function () {
 	<div class="player-column" id="player-column-1">
 		<div id="player-embed">
 			<iframe width="560" height="315" src="//www.youtube.com/embed/{player-now-id}?start={player-now-position}&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
+			<a style="float:right;" class="player-resubmit" href="/player/add/{player-now-id}?_=1">+1 balss</a>
+			<div class="clear"></div>
 		</div>
 
 		<h2>Nākamais sarakstā</h2>
