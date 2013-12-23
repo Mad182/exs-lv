@@ -13,3 +13,6 @@
 [submodule "libs/imdb-grabber"]
 	path = libs/imdb-grabber
 	url = https://github.com/FabianBeiner/PHP-IMDB-Grabber.git
+[submodule "libs/youtube"]
+	path = libs/youtube
+	url = https://github.com/vitorhsb/youtube-public-php-api.git

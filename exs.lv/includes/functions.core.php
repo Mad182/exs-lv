@@ -1905,6 +1905,7 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 }
 
 
+/* get youtube video data by id */
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
@@ -1912,37 +1913,26 @@ function get_youtube($videoid, $force = false) {
 
 		if(empty($data)) {
 
+			require_once(LIB_PATH . '/youtube/youtube.lib.php');
+			$yt = new Youtube(array('user' => 'google', 'limit' => 5));
+			$video = $yt->getSingleVideo($videoid);
+
 			$data = new Stdclass;
+			$data->yt_title = esr($video['title'], 'youtube.com');
+			$data->yt_description = esr($video['description'], '');
+			$data->yt_time = esr($video['duration'], '0:00');
+			$data->yt_restricted = 0;
 
-			$contents = curl_get('http://gdata.youtube.com/feeds/api/videos/' . $videoid);
-
-			if(!$contents) {
-
-				/* ja exs serverim atslēgts ārzemju traffiks, mēģina iegūt datus caur proxy */
-				$contents = curl_get('http://ezgif.com/ytdata.php?id=' . $videoid);
-
-			}
-
-			if ($contents) {
-				$data->yt_restricted = (bool) stristr($contents, "noembed");
-				$data->yt_title = stripslashes(get_between($contents, "<media:title type='plain'>", '</media:title>'));
-				$data->yt_description = stripslashes(get_between($contents, "<media:description type='plain'>", '</media:description>'));
-			} else {
-				$data->yt_restricted = 0;
-				$data->yt_title = 'youtube.com';
-				$data->yt_description = '';
-			}
-
-			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted) VALUES ('" . sanitize($videoid) . "','".sanitize($data->yt_title)."','".sanitize($data->yt_description)."','".$data->yt_restricted."')");
+			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted,yt_time) VALUES ('" . sanitize($videoid) . "','".sanitize($data->yt_title)."','".sanitize($data->yt_description)."','".$data->yt_restricted."','".sanitize($data->yt_time)."')");
 
 		}
-
 
 		$m->set('yt_' . $videoid, $data, false, 3600);
 
 	}
 	return $data;
 }
+
 
 function get_cat($id, $force = false) {
 	global $db, $m, $debug, $lang;
