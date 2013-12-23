@@ -1,0 +1,141 @@
+<?php
+
+function player_get_list() {
+	global $db;
+
+
+	$list = $db->get_results("
+			SELECT
+				COUNT(player_likes.id) as likes,
+				ytlocal.yt_title as title,
+				ytlocal.yt_time as duration,
+				ytlocal.yt_id as id
+			FROM
+				player_likes,
+				ytlocal
+			WHERE
+				player_likes.video_id = ytlocal.yt_id AND
+				player_likes.archived = 0
+			GROUP BY
+				player_likes.video_id
+			ORDER BY
+				likes DESC
+			LIMIT 20
+		");
+
+	return $list;
+
+}
+
+
+function player_get_mylist($user = 0) {
+	global $db;
+
+	$list = $db->get_results("
+			SELECT
+				COUNT(player_likes.id) as likes,
+				player_likes.archived as archived,
+				ytlocal.yt_title as title,
+				ytlocal.yt_time as duration,
+				ytlocal.yt_id as id
+			FROM
+				player_likes,
+				ytlocal
+			WHERE
+				player_likes.video_id = ytlocal.yt_id AND
+				player_likes.user_id = ".intval($user)." AND
+				player_likes.archived = 0
+
+			GROUP BY
+				player_likes.video_id
+			ORDER BY
+				likes DESC
+			LIMIT 50
+		");
+
+	$active = count($list);
+
+	if($active < 50) {
+
+		$ids = array();
+
+		foreach($list as $item) {
+			$ids[] = "'".$item->id."'";
+		}
+
+		$list2 = $db->get_results("
+				SELECT
+					COUNT(player_likes.id) as likes,
+					player_likes.archived as archived,
+					ytlocal.yt_title as title,
+					ytlocal.yt_time as duration,
+					ytlocal.yt_id as id
+				FROM
+					player_likes,
+					ytlocal
+				WHERE
+					player_likes.video_id = ytlocal.yt_id AND
+					player_likes.user_id = ".intval($user)." AND
+					player_likes.archived = 1 AND
+					player_likes.video_id NOT IN(".implode(',',$ids).")
+
+				GROUP BY
+					player_likes.video_id
+				ORDER BY
+					likes DESC
+				LIMIT ".(50-$active));
+
+		$list = array_merge($list, $list2);
+
+	}
+
+
+	return $list;
+
+}
+
+
+function player_now_playing() {
+	global $ss, $db;
+
+	$playing_song = $ss->get('player_songid');
+	$playing_started = $ss->get('player_started');
+	$video = get_youtube($playing_song);
+
+	$duration = yt_time_to_seconds($video->yt_time);
+
+	if(empty($playing_song) || $playing_started < time()-$duration) {
+
+		$new_song = $db->get_row("SELECT COUNT(id) AS likes, video_id FROM player_likes WHERE archived = 0 ORDER BY likes DESC limit 1");
+
+		if(empty($new_song)) {
+			$new_song = $db->get_row("SELECT video_id FROM player_likes ORDER BY rand() LIMIT 1");
+		}
+
+		$playing_song = $new_song->video_id;
+		$playing_started = time();
+
+		$db->query("UPDATE player_likes SET archived = 1 WHERE video_id = '$playing_song'");
+
+		$new_song = get_youtube($playing_song);
+
+		$duration = yt_time_to_seconds($new_song->yt_time);
+
+		$ss->set('player_songid', $playing_song);
+		$ss->set('player_started', $playing_started);
+
+	}
+
+	return array(
+		'id' => $playing_song,
+		'position' => time()-$playing_started,
+		'duration' => $duration
+		);
+
+}
+
+
+function yt_time_to_seconds($str_time) {
+	sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+	return isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+}

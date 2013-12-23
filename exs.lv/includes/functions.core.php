@@ -1922,6 +1922,7 @@ function get_youtube($videoid, $force = false) {
 			$data->yt_description = esr($video['description'], '');
 			$data->yt_time = esr($video['duration'], '0:00');
 			$data->yt_restricted = 0;
+			$data->yt_id = $videoid;
 
 			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted,yt_time) VALUES ('" . sanitize($videoid) . "','".sanitize($data->yt_title)."','".sanitize($data->yt_description)."','".$data->yt_restricted."','".sanitize($data->yt_time)."')");
 

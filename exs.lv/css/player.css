@@ -1,0 +1,54 @@
+#player-wrapper {
+	width: 100%;
+	overflow: hidden;
+}
+
+.player-column {
+	float: left;
+	width: 370px;
+	min-height: 100px;
+	padding: 10px;
+}
+
+#player-column-1 {
+	width: 560px;
+}
+
+#player-embed {
+	height: 315px;
+	width: 560px;
+}
+
+#player-mylist div, #player-playlist div {
+	padding: 8px;
+	margin: 0;
+	border: 1px dotted #ddd;
+	border-top: 0;
+	background: #eee;
+	height: auto !important;
+	height: 80px;
+	min-height: 80px;
+}
+
+#player-mylist div {
+	height: 50px;
+	min-height: 50px;
+}
+
+img.player-avatar {
+	float: left;
+	margin: 0 10px 0 0;
+	height: 80px;
+}
+
+#player-mylist img.player-avatar {
+	float: left;
+	margin: 0 10px 0 0;
+	height: 50px;
+}
+
+.player-likes {
+	float: right;
+	font-size:16px;
+	color: green;
+}
