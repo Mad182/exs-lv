@@ -57,11 +57,11 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'add') {
 	if(!empty($video->yt_time) && $video->yt_time != '0:00' && yt_time_to_seconds($video->yt_time) < 480) {
 
 		$check_like = $db->get_var("SELECT count(*) FROM player_likes WHERE video_id = '".sanitize($video->yt_id)."'
-			AND user_id = '$auth->id' AND archived = 0");
+			AND playlist = $category->id AND user_id = '$auth->id' AND archived = 0");
 
 		if(empty($check_like)) {
-			$db->query("INSERT INTO player_likes (video_id, user_id, archived, created) 
-						VALUES ('".sanitize($video->yt_id)."', '$auth->id', 0, NOW())");
+			$db->query("INSERT INTO player_likes (video_id, user_id, archived, created, playlist) 
+						VALUES ('".sanitize($video->yt_id)."', '$auth->id', 0, NOW(), '$category->id')");
 			$like = 'ok';
 		} else {
 			$like = 'error';
