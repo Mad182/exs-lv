@@ -36,18 +36,4 @@ if ( isset($_GET['_']) ) {
     exit;
 }
 
-$all_facts = $db->get_results("SELECT `id`,`text` FROM `facts_rs` WHERE `is_short` = 1 ORDER BY `id` ASC");
-$counter = 1;
-foreach ($all_facts as $fact) {
-    
-    echo $counter . '. '.$fact->text.'<br>';
-    $counter++;
-    
-    /*if ( mb_strlen(strip_tags(trim($fact->text))) <= 140) {
-        echo $counter . '. '.$fact->text.'<br>';
-        $counter++;
-        $db->update('facts_rs', $fact->id, array('is_short' => 1));
-    }*/
-}
-
 exit;
