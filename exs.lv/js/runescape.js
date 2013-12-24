@@ -1,6 +1,6 @@
 /* ik pēc noteikta laika atjauno runescape faktu */
 function refresh_fact() {    
-    $.get('/rsfact?_=1', function(response) {
+    $.get('/rsfacts?_=1', function(response) {
       $('#random-fact').html('<span>RS fakts:</span> ' + response);
     });
 }
