@@ -6,10 +6,12 @@
         ServerAlias www.code.exs.lv
 	ServerAlias coding.lv
 	ServerAlias www.coding.lv
-	ServerAlias ezgif.com
-	ServerAlias www.ezgif.com
 	ServerAlias lol.exs.lv
+	ServerAlias www.lol.exs.lv
 	ServerAlias rp.exs.lv
+	ServerAlias www.rp.exs.lv
+	ServerAlias runescape.exs.lv
+	ServerAlias www.runescape.exs.lv
 
 	DocumentRoot /home/www/exs.lv
 	<Directory />

@@ -1,18 +1,14 @@
 <VirtualHost *:8080>
-	ServerAdmin info@exs.lv
-	ServerName m.exs.lv
-	ServerAlias www.m.exs.lv
-	ServerAlias m.rp.exs.lv
-	ServerAlias m.coding.lv
-	ServerAlias m.lol.exs.lv
-	ServerAlias m.runescape.exs.lv
+	ServerAdmin diytechy.com@gmail.com
+	ServerName diytechy.com
+	ServerAlias www.diytechy.com
 
-	DocumentRoot /home/www/m.exs.lv
+	DocumentRoot /home/diytechy/app/webroot
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride All
 	</Directory>
-	<Directory /home/www/m.exs.lv/>
+	<Directory /home/diytechy/app/webroot/>
 		Options FollowSymLinks
 		AllowOverride All
 		Order allow,deny
