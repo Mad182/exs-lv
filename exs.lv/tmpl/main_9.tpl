@@ -95,7 +95,7 @@ tinymce.init({
                 <li><a href="http://exs.lv" target="_blank">exs.lv</a></li>
                 <li><a href="http://lol.exs.lv" target="_blank">lol.exs.lv</a></li>
                 <li><a href="http://rp.exs.lv" target="_blank">rp.exs.lv</a></li>
-                <li><a href="http://coding.lv" target="_blank">coding.lv</a></li>
+                <li><a rel="nofollow" href="http://coding.lv" target="_blank">coding.lv</a></li>
                 <li>&nbsp;</li>
             </ul>
         </li>
@@ -167,8 +167,8 @@ tinymce.init({
         <p id="random-fact"></p>
         <ul class="nav-right">
             <li><a href="/img">eXs bilžu hostings</a>&middot;</li>
-            <li><a href="http://runescape.com" target="_blank">runescape.com</a>&middot;</li>
-            <li><a href="http://oldschool.runescape.com/" target="_blank">oldschool rs</a></li>
+            <li><a rel="nofollow" href="http://runescape.com" target="_blank">runescape.com</a>&middot;</li>
+            <li><a rel="nofollow" href="http://oldschool.runescape.com/" target="_blank">oldschool rs</a></li>
         </ul>
     </div>
 	<div id="header">
@@ -211,12 +211,12 @@ tinymce.init({
             <!-- START BLOCK : user-modlink-->
             <!-- END BLOCK : user-modlink-->
             <!-- START BLOCK : user-approvelink-->
-            <li{cat-sel-1756}><a href="/write/list">Raksti{new-approve}</a></li>
+            <li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
             <!-- END BLOCK : user-approvelink-->
             <!-- START BLOCK : user-write-->
-            <li{cat-sel-1756}><a href="/write">Raksti</a></li>
+            <li{cat-sel-116}><a href="/write">Raksti</a></li>
             <!-- END BLOCK : user-write-->
-            <li{cat-sel-1864}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+            <li{cat-sel-1867}><a href="/gallery/{currentuser-id}">Galerija</a></li>
             <li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
         </ul>
         <!-- END BLOCK : user-menu-->        
