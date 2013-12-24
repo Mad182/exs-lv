@@ -6,7 +6,7 @@ var time_wait = {player-now-duration}-{player-now-position};
 
 function reload_video() {
 
-	$.getJSON('/player/getnext/?_=1', function(response) {
+	$.getJSON('/{category-url}/getnext/?_=1', function(response) {
 		console.log(response);
 		if (response.state == 'success') {
 			position = response.position;
@@ -35,12 +35,12 @@ function youtube_parser(url){
 
 function reload_playlist() {
 
-	$.getJSON('/player/list/?_=1', function(response) {
+	$.getJSON('/{category-url}/list/?_=1', function(response) {
 		if (response.state == 'success') {
 			$("#player-playlist").html("");    
 			$.each(response.songs, function(key, val) {
 
-				like = '<a class="player-resubmit" href="/player/add/'+val.id+'?_=1">+1 balss</a>';
+				like = '<a class="player-resubmit" href="/{category-url}/add/'+val.id+'?_=1">+1 balss</a>';
 
 				$("#player-playlist").append('<div><span class="player-likes">+'+val.likes+'</span><img class="player-avatar" src="https://i4.ytimg.com/vi/'+val.id+'/2.jpg" alt="" /><h3>'+val.title+'</h3>'+like+'<br />'+val.likers+'<div class="clear" style="padding:0;margin:0;border:0;height:0;min-height:0;"></div></div>');
 			});
@@ -52,14 +52,14 @@ function reload_playlist() {
 
 function reload_mylist() {
 
-	$.getJSON('/player/mylist/?_=1', function(response) {
+	$.getJSON('/{category-url}/mylist/?_=1', function(response) {
 		if (response.state == 'success') {
 			$("#player-mylist").html("");    
 			$.each(response.songs, function(key, val) {
 
 				var like = "";
 				if(val.archived == 1) {
-					like = '<a class="player-resubmit" href="/player/add/'+val.id+'?_=1">&laquo; ievietot sarakstā</a>';
+					like = '<a class="player-resubmit" href="/{category-url}/add/'+val.id+'?_=1">&laquo; ievietot sarakstā</a>';
 				}
 
 				$("#player-mylist").append('<div><img class="player-avatar" src="https://i4.ytimg.com/vi/'+val.id+'/2.jpg" alt="" /><h3>'+val.title+'</h3>'+like+'</div>')
@@ -81,7 +81,7 @@ $(document).ready(function () {
 		$('#mbresponse-submit').hide();
 		$('#mbresponse-waiting').show();
 
-		$.getJSON('/player/add/'+id+'?_=1', function(response) {
+		$.getJSON('/{category-url}/add/'+id+'?_=1', function(response) {
 			if (response.state == 'success') {        
 				$('#video-url').val("");
 				reload_playlist();
@@ -131,7 +131,7 @@ $(document).ready(function () {
 	<div class="player-column" id="player-column-1">
 		<div id="player-embed">
 			<iframe width="560" height="315" src="//www.youtube.com/embed/{player-now-id}?start={player-now-position}&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
-			<a style="float:right;" class="player-resubmit" href="/player/add/{player-now-id}?_=1">+1 pievienot sarakstam</a>
+			<a style="float:right;" class="player-resubmit" href="/{category-url}/add/{player-now-id}?_=1">+1 pievienot sarakstam</a>
 			<div class="clear"></div>
 		</div>
 

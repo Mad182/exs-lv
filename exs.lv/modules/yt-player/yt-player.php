@@ -42,7 +42,7 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'getnext') {
 		'state' => 'success',
 		'position' => $now_playing['position'],
 		'duration' => $now_playing['duration'],
-		'html' => '<iframe width="560" height="315" src="//www.youtube.com/embed/'.$now_playing['id'].'?start='.$now_playing['position'].'&amp;autoplay=1" frameborder="0" allowfullscreen></iframe><a style="float:right;" class="player-resubmit" href="/player/add/'.$now_playing['id'].'?_=1">+1 pievienot sarakstam</a><div class="clear"></div>'
+		'html' => '<iframe width="560" height="315" src="//www.youtube.com/embed/'.$now_playing['id'].'?start='.$now_playing['position'].'&amp;autoplay=1" frameborder="0" allowfullscreen></iframe><a style="float:right;" class="player-resubmit" href="/'.$category->textid.'/add/'.$now_playing['id'].'?_=1">+1 pievienot sarakstam</a><div class="clear"></div>'
 	);
 
 	die(json_encode($song));
