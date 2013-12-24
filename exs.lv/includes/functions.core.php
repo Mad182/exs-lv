@@ -1870,7 +1870,7 @@ function get_user($user_id, $force = false) {
 	if ($debug || $force === true || ($data = $m->get('u_' . $user_id)) === false) {
 		$data = $db->get_row("SELECT
 		`lastseen`,`mail`,`gender`,`persona`,`maximg`,`yt_name`,`twitter`,`show_code`,`show_lol`,
-		`show_rp`,`vote_today`,`showsig`,`id`,`nick`,`level`,`skin`,`posts`,
+		`show_rp`,`show_rs`,`vote_today`,`showsig`,`id`,`nick`,`level`,`skin`,`posts`,
 		`karma`,`custom_title`,`signature`,`avatar`,`av_alt`,`vote_others`,`warn_count`,
 		`date`,`mobile_seen`,`decos`,`draugiem_id`,`days_in_row`,`seen_today`,
 		`token`,`year_first`,`rating`,`deleted` FROM `users` WHERE `id` = '$user_id'");
@@ -2491,6 +2491,9 @@ function get_latest_posts() {
 		if (!empty($auth->show_lol)) {
 			$add_langs[] = "`pages`.`lang` = '7'";
 		}
+		if (!empty($auth->show_rs)) {
+			$add_langs[] = "`pages`.`lang` = '9'";
+		}
 		$conditions[] = '(' . implode(' OR ', $add_langs) . ')';
 	} else {
 		$conditions[] = "`pages`.`lang` = '$lang'";
@@ -2725,6 +2728,9 @@ function get_latest_mbs($friends = false) {
 		}
 		if (!empty($auth->show_lol)) {
 			$add_langs[] = "`miniblog`.`lang` = '7'";
+		}
+		if (!empty($auth->show_rs)) {
+			$add_langs[] = "`miniblog`.`lang` = '9'";
 		}
 		$addlang = '(' . implode(' OR ', $add_langs) . ')';
 	} else {
