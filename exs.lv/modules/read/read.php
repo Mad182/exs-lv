@@ -6,7 +6,7 @@ $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' 
 if ($article) {
 
 	//redirektē uz pareizo adresi, ja kaut kādā veidā atvērts derīgs strid, bet nepareizā domēnā
-	if ($article->lang != $lang) {
+	if ($article->lang != $lang && $lang != 9) {
 		redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
 	}
 
