@@ -1,1 +1,401 @@
- 
+body {
+    background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
+}
+#scroll-up {
+    padding:10px;
+    width:24px;
+    height:24px;
+    background:rgba(0, 0, 0, 0.5) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+    position:fixed;
+    right:50px;
+    bottom:-100px;
+    border: 1px solid #67717A;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    opacity:0.6;
+    filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+    #scroll-up:hover {
+        cursor:pointer;
+        border:1px solid #8896A2;
+        opacity:1.0;
+        filter:alpha(opacity=100); /* For IE8 and earlier */
+    }
+    
+/* pārrakstītie core.css elementi */
+#wrapper {
+    position:relative;
+    margin-top:31px;
+    padding:0 0 10px 0;
+    background:#CECFCF url('/bildes/runescape/pattern-1.png');    
+    box-shadow: 0 9px 0 0 transparent, 0 -9px 0 0 transparent, 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 15px -4px rgba(31, 73, 125, 0.8);
+    -moz-box-shadow: 0 9px 0 0 transparent, 0 -9px 0 0 transparent, 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 15px -4px rgba(31, 73, 125, 0.8);
+    -webkit-box-shadow: 0 9px 0 0 transparent, 0 -9px 0 0 transparent, 12px 0 15px -4px rgba(6, 6, 14, 0.8), -12px 0 15px -4px rgba(6, 6, 14, 0.8);
+}
+#left, #content, #right {
+    float:left;
+    left:0
+}
+#left {
+    margin-left:0
+}
+#content {
+    margin-left:10px;
+    width:550px
+}
+#content.no-left-right {
+    width:95%
+}
+#content.no-right {
+    width:772px
+}
+#content.no-left {
+    width:744px
+}
+#top-menu li:hover ul {
+	display: block;
+}
+#top-menu ul ul li {
+    width:150px
+}
+#login-block {
+    margin:0 10px 0 0;
+    padding:0;
+    float:right
+}
+#login-block li {
+    margin:0
+}
+#login-block .less-padding a {
+    padding:4px 0;
+    margin: 2px 5px;
+}
+#login-form {
+    padding-top:0
+}    
+    #login-form input {
+        background:#293446;
+        border:1px solid #373A53;
+        color:#CEDDEC;
+        font-size:11px;
+        padding:2px 7px;
+        margin-top:6px;
+        width:90px;
+        font-family:verdana, tahoma, arial;
+    }
+    #login-form input:focus {
+        outline:0;
+        border:1px solid #484C74
+    }
+    #login-form input.login-submit {
+        margin-top:6px
+    }
+    #login-block a.external-fb span {
+        background: url("http://img.exs.lv/bildes/login.png") no-repeat scroll 0px -58px transparent;
+        width: 55px;
+    }
+    #login-block a.external-login span {
+        height: 18px;
+        float: left;
+        text-indent: -9999px;
+        outline: 0px none;
+        line-height: 18px;
+    }
+    #login-block a.external-dr span {
+        background: url("http://img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
+        width: 76px;
+    }
+#header-stuff {
+    top:7px
+}
+#top-menu {
+    background:url('/bildes/runescape/pattern-navig.png') repeat-x;
+    border-top: 1px solid #363535;
+    border-bottom: 1px solid #363535;
+    z-index:100;
+    width:inherit;
+    font-family:verdana,ubuntu,tahoma,arial;
+}
+#top-menu li.selected a, #top-menu li a:hover, #top-menu li:hover a {
+	background: #2090cc url('http://img.exs.lv/m/a/mad/blue.png') repeat 0 0;
+	color: #222;
+	text-decoration: none;
+	margin: 0;
+	margin-top: -1px;
+	padding-top: 1px;
+	text-shadow: 0 1px 0 #59add2;
+}
+#tools-bar {
+    background:#111010;
+    padding:0 8px
+}
+
+
+/* jaunie lapas pamatbloki */
+.top-navig {
+    background:#000 url('/bildes/runescape/nav-pattern-blue.png') repeat-x;
+    border-bottom:2px solid #000;
+    color:#6D93A5;
+    height:30px;
+    width:100%;
+    position:fixed;
+    top:0;
+    z-index:300
+}
+.top-navig nav {
+   width:996px;
+   margin:0 auto;
+   padding:0;
+   border-left:1px solid #2D2E2E;
+   border-right:1px solid #2D2E2E;
+   font-size: 11px;   
+}
+    .top-navig ul, .top-navig li {
+        margin:0;
+        padding:0;        
+        float:left;
+        background-image:none
+    }
+    .top-navig ul a {
+        color:#A5BCCE;
+        font-family:verdana, tahoma, arial;
+        padding:7px 14px;
+        display:inline-block;
+    }
+    .top-navig ul a:hover {
+        color:#8DB2EB;
+        text-decoration:none        
+    }
+    .top-navig ul li:hover {
+        background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+    }
+ul.nav-right {
+    float:right      
+}
+#header-navig {
+    overflow:hidden;
+    padding:0 0 0 20px;
+    border-bottom:1px solid #424346;
+    font-size:11px;
+    background:#0E0F0F;
+    color:#6D93A5;
+}
+    #header-navig ul {
+       margin:0;
+       padding:0
+    }
+    #header-navig li {
+        margin:0;
+        float:left;
+        background:none;
+        padding:0
+    }
+    #header-navig a {
+        color:#9AADBB;
+        padding:6px;
+        display:inline-block
+    }
+    #header-navig a:hover {
+        color:#96C7EB;
+        text-decoration:none
+    }
+    #random-fact {
+        float:left;
+        margin:4px 5px 0 0;
+        color:#6E8296
+    }
+    #random-fact span {
+        color:#95A6CA
+    }
+#header {
+    margin:0;
+    padding:0;
+    height:auto;
+    position:relative
+}
+    #rs-logos {
+        margin:0 10px;
+        position:relative;
+        z-index:100
+    }
+    .rs-logo {
+        max-height:65px;
+        position:absolute;
+        bottom:0;
+    }    
+
+/* dropdown izvēlnes */
+.droplist li {
+    position:relative
+}
+    /* visi līmeņi, ieskaitot pirmo */
+    .droplist ul {
+        display:none;
+        position:absolute;
+        top:100%;
+        left:-20%
+    }
+        .droplist ul li {
+            background: #212B3C;
+            border-bottom: 1px solid #2E3853;
+        }
+        .droplist ul li:hover {
+            background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+        }
+        .droplist ul a, .droplist ul a:hover {
+            width:150px;
+            padding:7px 14px 7px 35px;
+            background:url('/bildes/fugue-icons/blue-document-resize.png') no-repeat 5px 60%
+        }
+    /* dziļāki līmeņi, neskaitot pirmo; novietojas labajā pusē */
+    .droplist ul ul {
+        position: absolute; 
+        left: 100%; 
+        top:0;
+    }        
+        .droplist ul ul li {
+            border-left:1px solid #2e3853
+        }     
+        .droplist ul ul a, .droplist ul ul a:hover {
+            background:url('/bildes/fugue-icons/at-sign.png') no-repeat 5px 60%
+        }
+        /* novietojums pretējā pusē (kreisajā) */
+        .droplist ul ul.flip-side {
+            left:-100%
+        }
+        .droplist ul ul.flip-side li {
+            border-right:1px solid #2e3853;
+            border-left:0
+        }
+    .droplist li:hover > ul {
+        display:block
+    }
+    .droplist ul li:last-child {
+        width:199px;
+        height:5px;
+        background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+    }
+    .droplist ul ul li:first-child {
+        border-top:1px solid #2e3853;
+        margin-top:-1px
+    }
+    .droplist a.dropdown {
+        padding-right:20px
+    }
+    .dropdown.active-page {
+        background:#2D455F
+    }
+    .droplist .arrow-down {
+        background:url('/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
+        position:absolute;
+        right:8px;
+        top:25%;
+        width:16px;
+        height:16px
+    }
+    .droplist .arrow-right {
+        background:url('/bildes/fugue-icons/control-arrow-right.png') no-repeat right 50%;
+        position:absolute;
+        right:5px;
+        top:25%;
+        width:16px;
+        height:16px
+    }
+
+/* RuneScape jaunumi, sākumlapa */
+.rs-article {
+    background:#fff;
+    border:1px solid #EEEFF0;
+    border-top:3px solid #EEEFF0;
+    border-bottom:3px solid #EEEFF0;
+    margin:20px 20px 0 10px;
+    padding:0;
+    font-size: 11px;
+}
+.rs-article-title {
+    margin:5px 0 5px 10px;
+    font-weight:700;
+    font-size:14px;
+}
+    .rs-article-title a {
+        color:#343E47
+    }
+.rs-article-logo {
+    float:right;
+    height:88px;
+    margin:40px 8px 5px 7px
+}
+.rs-article-text {
+    padding:0 12px 7px 12px;
+    text-indent:10px
+}
+.rs-article-info {
+    clear:both;
+    display:block;
+    overflow:auto;
+    margin:0;
+    padding:2px 7px;
+    border-top:1px solid #EEEFF0
+}
+    .rs-article-info li {
+        float:left;
+        margin-right:7px;
+        padding-left:20px;
+        height:16px;
+        background:none
+    }
+    
+/* lappušu saraksta stili */
+ul.pagelist {
+    display:block;
+    clear:both;
+    margin:15px 0 20px 10px;
+    height:20px;
+    list-style:none;	
+}
+ul.pagelist li {	
+    background:#F9FDFF;
+    float:left;
+    margin:0 5px 10px 0;
+    padding:0;
+    border:1px solid #D7DFE2;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+}
+    ul.pagelist li:hover {
+        border:1px solid #b5bdbf;
+        background:#eceded
+    }
+    ul.pagelist li a {
+        padding:4px 10px;
+        color:#5876A2;
+        font-weight:bold
+    }
+    ul.pagelist li a:hover {
+        text-decoration:none;
+        color:#6c7889
+    }
+    ul.pagelist .current-page a {
+        color: #F07237 !important;
+    }
+ul.pagelist li.end a, ul.pagelist li.end a:active, ul.pagelist li.start a, ul.pagelist li.start a:active {
+    color:#4e8dd4;
+}
+ul.pagelist li.active {
+    padding:0px 10px;
+    font-weight:bold;
+    color:#468cdc
+}
+ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
+    color:#64757a
+}
+
+/* runescape pamācību sadaļas */
+.skill-block {
+    width:333px !important
+}
+.skill-pages {
+    width:144px
+}

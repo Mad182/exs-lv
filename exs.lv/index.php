@@ -207,6 +207,12 @@ if (isset($_GET['u'])) {
 	}
 }
 
+// RuneScape apakšprojekts ielādē papildu failu,
+// kas veic vēl atsevišķas pārbaudes
+if ($lang == 9) {
+    include('./modules/core/runescape.php');
+}
+
 //izdomā, ko darīt ar templeita opšeniem (rādīt vai nerādīt kreiso un labo kolonnu)
 //noklusēti katrai kategorijai tas ir norādīts db vai lapas konfigā, bet var manuāli pārrakstīt modulī ar $tpl_options
 if (empty($tpl_options) && isset($category) && !empty($category->options)) {
