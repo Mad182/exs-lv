@@ -3,18 +3,22 @@
  *	Pārskatāms pēdējo likto brīdinājumu saraksts
  *	un ar tiem saistīta informācija.
  *
- *	Moduļa adrese: 		exs.lv/crows
- *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
+ *	Moduļa adrese: 	exs.lv/crows
  */
 
 // ne-moderatorus sūtām prom
-if ( !im_mod() || $lang != 1 ) {
+if ( !im_mod() ) {
 	set_flash('Error 403: Permission denied!');
 	redirect();
 }
 
 $tpl_options = 'no-right';
 
+// ārpus galvenā exa sarakstā rādīsies tikai atvērtā apakšprojekta brīdinājumi
+$where = '';
+if ( $lang != 1 ) {
+    $where = " WHERE `warns`.`site_id` = $lang ";
+}
 
 
 $warns = $db->get_results("
@@ -41,6 +45,7 @@ $warns = $db->get_results("
 		JOIN `users` AS `offender` 			ON `warns`.`user_id` 	= `offender`.`id`
 		JOIN `users` AS `warned_by` 		ON `warns`.`created_by` = `warned_by`.`id`
 		LEFT JOIN `users` AS `removed_by` 	ON `warns`.`removed_by` = `removed_by`.`id`
+    $where
 	ORDER BY 
 		`warns`.`created` DESC 
 	LIMIT 0,100
@@ -56,7 +61,6 @@ else {
 	
 	foreach ($warns as $warn) {
 	
-		//$warn->warn_created_at = date('d.m H:i', strtotime($warn->warn_created_at) );
 		$warn->warn_created_at = display_time_simple( strtotime($warn->warn_created_at) );
 	
 		// sodītais lietotājs

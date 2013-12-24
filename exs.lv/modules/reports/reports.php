@@ -4,7 +4,6 @@
  *	visas lietotāju iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/reports
- *	Pēdējās izmaiņas: 	20.12.2013 ( Edgars )
  */
 
 $allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
@@ -13,6 +12,7 @@ $allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
  *  Projekti un apakšprojekti, kuros sūdzības ir iespējotas:
  *    1 - exs.lv; 
  *    7 - lol.exs.lv
+ *    9 - runescape.exs.lv
  *
  *  Zemāk kodā vēl jāfiksē, kuriem apakšprojektiem pie iesniegtajām sūdzībām
  *  ļaut skatīt ieraksta saturu, jo, tā kā ne visos apakšprojektos ir grupas (slēgtās),
@@ -21,7 +21,7 @@ $allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
  *  Tāpat citi apakšprojekti jāpieraksta klāt katrā vietā, 
  *  kur ziņošanas podziņa tiek vispār izdrukāta lapā.
  */
-$allowed_sites = array(1, 7);
+$allowed_sites = array(1, 7, 9);
 
 /** 
  *  Turpmāk izmantotie apzīmējumi:
@@ -429,9 +429,10 @@ else {
 			$tpl->newBlock('show-full-content');
 		}
 		
-		// tikai main exs.lv būs iespēja skatīt ieraksta saturu, neatverot attiecīgo lapu;
-		// lol.exs.lv nav slēgto grupu, tāpēc visu var apskatīt tāpat
-		if ($lang == 1) {
+		// tikai main exs.lv un rs.exs.lv būs iespēja skatīt ieraksta saturu, 
+        // neatverot attiecīgo lapu; citur nav slēgto grupu, 
+        // tāpēc visu var apskatīt tāpat
+		if ($lang == 1 || $lang == 9) {
 			$tpl->newBlock('display-original-content');
 			$tpl->assign('report_id', $report->report_id);
 		}

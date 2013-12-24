@@ -3,15 +3,12 @@
  *	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem.
  *
  *	Moduļa adrese: 		exs.lv/checkform
- *	Pēdējās izmaiņas: 	05.12.2013 ( Edgars )
  */
 
 // ne-moderatorus sūtām prom
-// sadaļa šobrīd pieejama tikai caur galveno exs.lv
-if ( !im_mod() || $lang != 1) {
+if ( !im_mod() ) {
 	set_flash('Pieeja liegta!');
 	redirect();
-	exit;
 }
 
 /**
