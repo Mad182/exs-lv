@@ -29,9 +29,9 @@ body {
     margin-top:31px;
     padding:0 0 10px 0;
     background:#CECFCF url('/bildes/runescape/pattern-1.png');    
-    box-shadow: 0 9px 0 0 transparent, 0 -9px 0 0 transparent, 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 15px -4px rgba(31, 73, 125, 0.8);
-    -moz-box-shadow: 0 9px 0 0 transparent, 0 -9px 0 0 transparent, 12px 0 15px -4px rgba(31, 73, 125, 0.8), -12px 0 15px -4px rgba(31, 73, 125, 0.8);
-    -webkit-box-shadow: 0 9px 0 0 transparent, 0 -9px 0 0 transparent, 12px 0 15px -4px rgba(6, 6, 14, 0.8), -12px 0 15px -4px rgba(6, 6, 14, 0.8);
+    box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+    -moz-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+    -webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
 }
 #left, #content, #right {
     float:left;
