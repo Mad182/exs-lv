@@ -173,9 +173,9 @@ tinymce.init({
         <div id="header-stuff">{ad-top}</div>
         <a href="/">                
             <div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
-                <img src="/bildes/runescape/banners/banner-2.png" alt="">
-                <img src="/bildes/runescape/banners/banner-1.png" alt="">
-                <img src="/bildes/runescape/banners/banner-3.png" alt="">
+                <img src="/bildes/runescape/banners/banner-2.jpg" alt="">
+                <img src="/bildes/runescape/banners/banner-1.jpg" alt="">
+                <img src="/bildes/runescape/banners/banner-3.jpg" alt="">
             </div>
         </a>
         <div id="rs-logos">
