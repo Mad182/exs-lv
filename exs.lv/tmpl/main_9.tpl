@@ -208,7 +208,7 @@ tinymce.init({
         </ul>
         <!-- START BLOCK : user-menu-->
         <ul id="top-menu-right">
-            <li{cat-sel-104}><a href="/pm">Vēstules</a></li>
+            <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
             <!-- START BLOCK : user-modlink-->
             <!-- END BLOCK : user-modlink-->
             <!-- START BLOCK : user-approvelink-->
