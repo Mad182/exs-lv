@@ -223,6 +223,7 @@ ul.nav-right {
         max-height:65px;      
         position:absolute;
         bottom:0;
+        z-index:100
     }
     .rs-logo.right-logo {
         right:10px

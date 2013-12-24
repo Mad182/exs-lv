@@ -180,10 +180,8 @@ tinymce.init({
                 <img src="/bildes/runescape/banners/banner-3.jpg" alt="">
             </div>
         </a>
-        <div id="rs-logos">
-            <img class="rs-logo" src="/bildes/runescape/rs3-logo-sm.png">
-            <img class="rs-logo right-logo" src="/bildes/runescape/osrs-logo-sm.png">
-        </div>
+        <img class="rs-logo" src="/bildes/runescape/rs3-logo-sm.png">
+        <img class="rs-logo right-logo" src="/bildes/runescape/osrs-logo-sm.png">
 	</div>
     <div id="top-menu">
         <ul id="top-menu-left">
