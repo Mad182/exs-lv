@@ -72,7 +72,9 @@ body {
     margin: 2px 5px;
 }
 #login-form {
-    padding-top:0
+    padding-top:0;
+    height:auto;
+    padding-bottom:2px
 }    
     #login-form input {
         background:#293446;
