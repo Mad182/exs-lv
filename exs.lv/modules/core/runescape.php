@@ -53,7 +53,8 @@ $other_cats = array(
     787,  // briesmoņu medīšana
     790,  // nauda pelnīšana
     5,    // citi padomi
-    346   // RS rakstu arhīvs
+    346,  // RS rakstu arhīvs
+    1087  // Oldschool RuneScape pamācības
     //536  // Priekšmetu datubāze
 );
 
