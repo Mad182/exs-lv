@@ -9,8 +9,8 @@ function refresh_fact() {
 
 $(document).ready(function () {
     
-    refresh_fact();
-    setInterval("refresh_fact()", 7000);
+    //refresh_fact();
+    //setInterval("refresh_fact()", 7000);
 
     /* scrollošanas uz augšu podziņa */
     $(window).scroll(function() {
