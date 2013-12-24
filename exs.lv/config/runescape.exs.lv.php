@@ -4,8 +4,8 @@ $tpl_options    = '';
 $page_title     = 'RuneScape lapele';
 
 //facebook login
-$fb_api_id = '';
-$fb_api_key = '';
+$fb_api_id = '382758518536064';
+$fb_api_key = 'e91d56558adbab5e25c97d3eb46cf2bb';
 
 //draugiem pase
 $dr_api_id = '';
