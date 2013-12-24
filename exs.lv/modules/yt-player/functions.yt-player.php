@@ -39,7 +39,7 @@ function player_get_list() {
 		$out['likers'] = '';
 
 
-		$likers = $db->get_results("SELECT user_id FROM player_likes WHERE video_id = '$item->id' AND archived = 0");
+		$likers = $db->get_results("SELECT user_id FROM player_likes WHERE video_id = '$item->id' AND archived = 0 AND playlist = ".$category->id);
 		if(!empty($likers)) {
 
 			foreach($likers as $liker) {
@@ -88,7 +88,7 @@ function player_get_list() {
 			$out['likers'] = '';
 
 
-			$likers = $db->get_results("SELECT user_id FROM player_likes WHERE video_id = '$item->id' AND archived = 0");
+			$likers = $db->get_results("SELECT user_id FROM player_likes WHERE video_id = '$item->id' AND archived = 0 AND playlist = ".$category->id);
 			if(!empty($likers)) {
 
 				foreach($likers as $liker) {
@@ -197,7 +197,7 @@ function player_now_playing() {
 		$new_song = $db->get_row("SELECT COUNT(id) AS likes, video_id FROM player_likes WHERE archived = 0 AND playlist = $category->id GROUP BY video_id ORDER BY likes DESC limit 1");
 
 		if(empty($new_song)) {
-			$new_song = $db->get_row("SELECT video_id FROM player_likes WHERE playlist =$category->id ORDER BY rand() LIMIT 1");
+			$new_song = $db->get_row("SELECT video_id FROM player_likes WHERE playlist = $category->id ORDER BY rand() LIMIT 1");
 		}
 
 		$playing_song = $new_song->video_id;
