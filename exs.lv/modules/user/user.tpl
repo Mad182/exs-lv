@@ -289,6 +289,9 @@
 				<label for="edit-show_rp"><input type="checkbox" name="edit-show_rp" id="edit-show_rp"{edit-show_rp-mark} />rādīt jaunākās tēmas no rp.exs.lv</label>
 			</p>
 			<p>
+				<label for="edit-show_rs"><input type="checkbox" name="edit-show_rs" id="edit-show_rs"{edit-show_rs-mark} />rādīt jaunākās tēmas no runescape.exs.lv</label>
+			</p>
+			<p>
 				<label for="edit-avatar">Profila attēls (avatars): (<a href="/animacijas">Vēlies kustīgu?</a>)</label><br />
 				<input type="file" class="text" name="edit-avatar" id="edit-avatar" />
 			</p>
