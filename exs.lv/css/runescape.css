@@ -132,7 +132,7 @@ body {
     background:#111010;
     padding:0 8px
 }
-#pm-table .pmdate {
+#wrapper #pm-table th.pmdate {
     width:25%
 }
 
