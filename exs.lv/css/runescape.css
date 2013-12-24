@@ -135,6 +135,9 @@ body {
 #wrapper #pm-table th.pmdate {
     width:25%
 }
+div pre {
+    font-size:11px
+}
 
 
 /* jaunie lapas pamatbloki */
