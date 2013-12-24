@@ -226,9 +226,13 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 	unset($image);
 
-	$image = $db->get_row("SELECT * FROM `images` WHERE `id` = '" . $image_id . "' AND `uid` = '$inprofile->id' AND `lang` = '$lang'");
+	$image = $db->get_row("SELECT * FROM `images` WHERE `id` = '" . $image_id . "' AND `uid` = '$inprofile->id'");
 	if ($image) {
 
+		//redirektē uz pareizo adresi, ja bilde pārvietota uz citu apakšprojektu
+		if ($image->lang != $lang) {
+			redirect('http://' . $config_domains[$article->lang]['domain'] . '/gallery/' . $image->uid . '/' . $image->id, true);
+		}
 
 		$rating_users = unserialize($image->rating_users);
 
