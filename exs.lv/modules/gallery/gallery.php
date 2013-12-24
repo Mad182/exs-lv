@@ -346,12 +346,12 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$newerstr = '';
 			$olderstr = '';
 
-			$newer = $db->get_row("SELECT id FROM images WHERE id > '" . $image->id . "' AND uid = '" . $image->uid . "' AND groupid = 0 ORDER BY id ASC LIMIT 1");
+			$newer = $db->get_row("SELECT id FROM images WHERE id > '" . $image->id . "' AND uid = '" . $image->uid . "' AND `lang` = '$lang' ORDER BY id ASC LIMIT 1");
 			//$db->debug();
 			if ($newer) {
 				$newerstr = '<a href="/gallery/' . $inprofile->id . '/' . $newer->id . '#images" class="img-newer ajax-gallery" title="Jaunāka bilde">&laquo; Jaunāka</a>';
 			}
-			$older = $db->get_row("SELECT id FROM images WHERE id < '" . $image->id . "' AND uid = '" . $image->uid . "' AND groupid = 0 ORDER BY id DESC LIMIT 1");
+			$older = $db->get_row("SELECT id FROM images WHERE id < '" . $image->id . "' AND uid = '" . $image->uid . "' AND `lang` = '$lang' ORDER BY id DESC LIMIT 1");
 			if ($older) {
 				$olderstr = '<a href="/gallery/' . $inprofile->id . '/' . $older->id . '#images" class="img-older ajax-gallery" title="Vecāka bilde">Vecāka &raquo;</a>';
 			}
