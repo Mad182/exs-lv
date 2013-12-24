@@ -3035,3 +3035,61 @@ function esr(&$val, $empty = '') {
 		return $empty;
 	}
 }
+
+/**
+ *  RuneScape apakšprojektam specifiska funkcija lappušu saraksta atgriešanai.
+ *
+ *  Atgriež sarakstu ar lapām tādā veidā, ka atvērtā lapa ir pa vidu, bet
+ *  katrā pusē tai ir norādītais skaits iepriekšējo/nākamo lappušu.
+ *
+ *  Atkarībā no tā, kura lappuse ir atvērta, izdrukā arī bultiņas un pirmo/pēdējo lapu.
+ *
+ *  @param  int     kopējais lappušu skaits
+ *  @param  int     atvērtās lappuses numurs
+ *  @param  string  teksts, kāds adresē rakstāms pirms lappuses numura
+ *  @param  int     skaits, cik lappuses rādīt atvērtās lapas kreisajā pusē
+ *  @param  int     skaits, cik lappuses rādīt atvērtās lapas labajā pusē
+ *  @param  string  teksts, kāds adresē rakstāms aiz lappuses numura
+ */
+function pagelist($page_count = 1, $current_page = 1, $addr_prefix = '', $page_left = 0, $page_right = 0, $addr_postfix = '') {
+
+    // cik daudz lappušu rādīt katrā pašreizējās lappuses sānā
+	$max_left 	= ((int)$page_left < 1) ? 3 : (int)$page_left;
+	$max_right 	= ((int)$page_right < 1) ? 3 : (int)$page_right;
+	
+	$pages_to_left  = ($current_page - $max_left < 1) ? 1 : $current_page - $max_left;
+	$pages_to_right = ($current_page + $max_right > $page_count) ? $page_count : $current_page + $max_right;
+
+    $view = '<ul class="pagelist">';
+    
+	// saraksts tiek atgriezts tikai tad, ja esošās lapas nr ir lapu skaita robežās;
+    // pretējā gadījumā tikai pirmā lappuse
+	if ($current_page <= $page_count && $current_page > 0) {
+		
+		// pirmā lappuse
+		if ($current_page > $max_left + 1)
+			$view .= '<li><a href="'.$addr_prefix.'1'.$addr_postfix.'">1</a></li>';
+        // bultiņa pa kreisi
+		if ($current_page > 1)
+			$view .= '<li class="arrows">
+				<a href="'.$addr_prefix.($current_page - 1).$addr_postfix. '">&laquo;</a>
+			</li>';
+        // vidusdaļa ar kreisās puses lappusēm, atvērto lapu, labās puses lappusēm
+		for ($i = $pages_to_left; $i <= $pages_to_right; $i++) {
+			$view .= ($i == $current_page) ? 
+				'<li class="current-page"><a href="javascript:return false;">'.$i.'</a></li>' : 
+				'<li><a href="'.$addr_prefix.$i.$addr_postfix.'">'.$i.'</a></li>';
+		}
+		// bultiņa pa labi
+		if ( $current_page < $page_count )
+			$view .= '<li class="arrows">
+				<a href="'.$addr_prefix.($current_page + 1).$addr_postfix.'">&raquo;</a>
+			</li>';	
+        // pēdējā lappuse
+		if ( $current_page < $page_count - $max_right )
+			$view .= '<li><a href="'.$addr_prefix.$page_count.$addr_postfix.'">'.$page_count.'</a></li>';
+		
+		return $view . '</ul>';		
+	}	
+	return $view . '<li><a href="/?page=1">1</a></li></ul>';
+}
