@@ -102,6 +102,7 @@ tinymce.init({
     </ul>
     <ul class="droplist nav-right">
         <!-- START BLOCK : mod-nav -->
+        <!-- START BLOCK : rsmod-nav -->
         <li><a href="#" class="dropdown{active-rsmod}">RS Mod</a>
             <span class="arrow-down"></span>
             <ul>
@@ -120,6 +121,7 @@ tinymce.init({
                 <li>&nbsp;</li>
             </ul>
         </li>
+        <!-- END BLOCK : rsmod-nav -->
         <li><a href="#" class="dropdown{active-mod}">Mod</a>
             <span class="arrow-down"></span>
             <ul>

@@ -4,7 +4,7 @@
  *  kuras vieglākai rediģēšanai iznestas ārpus index.php faila.
  */
  
-$flash_phrases = array(
+/*$flash_phrases = array(
     'Blood, pain, and hate!',
     'You throw in the orb of light... A slight shudder runs down your back.',
     'Iban will save us all!',
@@ -15,7 +15,7 @@ $flash_phrases = array(
 if ( !im_mod() ) {
     set_flash( $flash_phrases[rand(0, count($flash_phrases) - 1)] . ' (Sadaļa būs pieejama nedaudz vēlāk!)');
     redirect('http://exs.lv');
-}
+}*/
 
  
 /**
@@ -29,16 +29,20 @@ if ( $auth->ok ) {
     
     // moderatoriem būs redzamas administrēšanas sadaļas (Mod, RS Mod)
     if ( im_mod() ) {
-        $tpl->newBlock('mod-nav');
-        
-        // RS Mod izvēlnes iezīmēšana
-        if ( in_array($category->textid, array('gildes')) ) {
-            $tpl->assign('active-rsmod', ' active-page');
-        }
+    
         // Mod izvēlnes iezīmēšana
+        $tpl->newBlock('mod-nav');
         if ( in_array($category->textid, array('banned', 'crows', 'reports', 'checkform', 'log')) ) {
             $tpl->assign('active-mod', ' active-page');
         }
+        
+        // RS Mod izvēlnes iezīmēšana
+        if ( $auth->id == 115 ) {
+            $tpl->newBlock('rsmod-nav');            
+            if ( in_array($category->textid, array('gildes')) ) {
+                $tpl->assign('active-rsmod', ' active-page');
+            }
+        }        
     }
 }
 
