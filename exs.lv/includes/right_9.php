@@ -61,7 +61,7 @@ if (!empty($inprofile)) {
 	}
 }
 
-include(CORE_PATH . '/modules/core/poll.php');
+//include(CORE_PATH . '/modules/core/poll.php');
 
 $tpl->newBlock('friendssay-box');
 $sel = 'all';
@@ -85,27 +85,3 @@ if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
 
-$top_players = $db->get_results("
-	SELECT
-		DISTINCT(`lol_tracking`.`player_id`) as `player_id`,
-		`lol_players`.`lol_nick` as `lol_nick`,
-		`lol_players`.`server` as `server`,
-		`lol_tracking`.`lks` as `lks`
-	FROM
-		`lol_players`,
-		`lol_tracking`
-	WHERE
-		`lol_players`.`id` = `lol_tracking`.`player_id` AND
-		`lol_tracking`.`date` = (SELECT MAX(`date`) FROM `lol_tracking`)
-	ORDER BY
-		`lol_tracking`.`lks` DESC
-	LIMIT 10
-");
-
-if(!empty($top_players)) {
-	$tpl->newBlock('lol-top');
-	foreach($top_players as $plr) {
-		$tpl->newBlock('lol-top-node');
-		$tpl->assignAll($plr);
-	}
-}
