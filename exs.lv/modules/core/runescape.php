@@ -5,7 +5,6 @@
  */
  
 $flash_phrases = array(
-    'You attempt to cross the remaining bridge... But you slip and tumble into the darkness.',
     'Blood, pain, and hate!',
     'You throw in the orb of light... A slight shudder runs down your back.',
     'Iban will save us all!',
@@ -13,8 +12,8 @@ $flash_phrases = array(
 );
 
 // sākotnēji lapu nevienam nav jāredz
-if ( !$auth->ok || $auth->id != 115) {
-    set_flash( $flash_phrases[rand(0, count($flash_phrases) - 1)] );
+if ( !im_mod() ) {
+    set_flash( $flash_phrases[rand(0, count($flash_phrases) - 1)] . ' (Sadaļa būs pieejama nedaudz vēlāk!)');
     redirect('http://exs.lv');
 }
 

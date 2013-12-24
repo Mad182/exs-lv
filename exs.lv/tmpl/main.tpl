@@ -14,7 +14,7 @@
 <!-- END BLOCK : opengraph-->
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
-<!-- START BLOCK : robots-->
+<!-- END BLOCK : robots-->
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes" />
 <script type="text/javascript">
@@ -119,7 +119,7 @@ tinymce.init({
 		<ul id="top-menu-left">
 			<li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
 			<li{cat-sel-101}><a href="/forums">Forums</a></li>
-			<li{cat-sel-599}><a href="/runescape" title="RuneScape">RS{idb-count}</a></li>
+			<li{cat-sel-599}><a href="http://runescape.exs.lv" title="RuneScape">RS{idb-count}</a></li>
 			<li{cat-sel-81}><a href="/speles">Spēles</a></li>
 			<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
 			<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
