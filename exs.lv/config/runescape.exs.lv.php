@@ -8,8 +8,8 @@ $fb_api_id = '382758518536064';
 $fb_api_key = 'e91d56558adbab5e25c97d3eb46cf2bb';
 
 //draugiem pase
-$dr_api_id = '';
-$dr_api_key = '';
+$dr_api_id = 15005147;
+$dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
 $robotstag[] = 'noodp';
 
