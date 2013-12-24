@@ -231,7 +231,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 		//redirektē uz pareizo adresi, ja bilde pārvietota uz citu apakšprojektu
 		if ($image->lang != $lang) {
-			redirect('http://' . $config_domains[$article->lang]['domain'] . '/gallery/' . $image->uid . '/' . $image->id, true);
+			redirect('http://' . $config_domains[$image->lang]['domain'] . '/gallery/' . $image->uid . '/' . $image->id, true);
 		}
 
 		$rating_users = unserialize($image->rating_users);
