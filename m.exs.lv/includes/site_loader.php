@@ -20,6 +20,10 @@ $config_domains = array(
 	7 => array(
 		'domain' => 'm.lol.exs.lv',
 		'prefix' => 'lol'
+	),
+	9 => array(
+		'domain' => 'm.runescape.exs.lv',
+		'prefix' => 'runescape'
 	)
 );
 
