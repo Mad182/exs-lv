@@ -70,7 +70,23 @@ if ($mbs) {
 		));
 	}
 
-	$pager = pager(100000, $skip, $end, '/say/?skip=');
+	if($lang == 1) {
+		$total = 100000;
+	} else {
+		$total = $db->get_var("
+			SELECT
+				COUNT(*)
+			FROM
+				`miniblog`
+			WHERE
+				`miniblog`.`parent` = '0' AND
+				`miniblog`.`groupid` = '0' AND
+				`miniblog`.`removed` = '0' AND
+				`miniblog`.`lang` = '$lang'
+		");
+	}
+
+	$pager = pager($total, $skip, $end, '/say/?skip=');
 	$tpl->assignGlobal(array(
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
