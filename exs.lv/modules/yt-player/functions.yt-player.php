@@ -138,7 +138,7 @@ function player_get_mylist($user = 0) {
 		$ids = array();
 
 		foreach($list as $item) {
-			$ids[] = "".$item->id."'";
+			$ids[] = "'".$item->id."'";
 		}
 
 		$list2 = $db->get_results("
