@@ -187,7 +187,7 @@ function player_now_playing() {
 	global $ss, $db, $category;
 
 	$playing_song = $ss->get('player_songid_'.$category->id);
-	$playing_started = $ss->get('player_started_'.$category->id));
+	$playing_started = $ss->get('player_started_'.$category->id);
 	$video = get_youtube($playing_song);
 
 	$duration = yt_time_to_seconds($video->yt_time);
@@ -209,8 +209,8 @@ function player_now_playing() {
 
 		$duration = yt_time_to_seconds($new_song->yt_time);
 
-		$ss->set('player_songid_'.$category->id), $playing_song);
-		$ss->set('player_started_'.$category->id), $playing_started);
+		$ss->set('player_songid_'.$category->id, $playing_song);
+		$ss->set('player_started_'.$category->id, $playing_started);
 
 	}
 
