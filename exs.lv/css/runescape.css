@@ -220,11 +220,13 @@ ul.nav-right {
         z-index:100
     }
     .rs-logo {
-        max-height:65px;
+        max-height:65px;      
         position:absolute;
         bottom:0;
-    }    
-
+    }
+    .rs-logo.right-logo {
+        right:10px
+    }
 /* dropdown izvēlnes */
 .droplist li {
     position:relative
