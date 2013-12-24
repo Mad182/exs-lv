@@ -19,7 +19,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'kvestu-pamacibas') {
 		array(21, 20, '<a href="/read/legends-quest-2">Legends\' Quest</a>')
 	);
 	
-	$tpl_options = 'no-right';	
+	$tpl_options = 'no-left';	
 	$tpl->newBlock('quests-intro');
 		$tpl->assign('intro-image', '/bildes/rs/intro/khazard.png');	
 	$tpl->newBlock('quests-additional');
@@ -108,7 +108,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'kvestu-pamacibas') {
 /*/
 else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'p2p-kvesti') {
 
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$tpl->newBlock('quests-intro');
 	$tpl->assign('intro-image', '/bildes/rs/intro/vampyre-juvinate.png');
 
@@ -189,7 +189,7 @@ else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'p2p-kvesti') {
 /*/ 
 else if (isset($_GET['viewcat']) && ($_GET['viewcat'] == 'f2p-kvesti' || $_GET['viewcat'] == 'mini-kvesti')) {
 
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$tpl->newBlock('quests-intro');
 	$intro_img = ($_GET['viewcat'] == 'mini-kvesti') ? 'citharede-sister.png' : 'hazelmere.png';
 	$tpl->assign('intro-image', '/bildes/rs/intro/' . $intro_img);
@@ -286,7 +286,7 @@ else if (isset($_GET['viewcat']) && ($_GET['viewcat'] == 'minispeles' || $_GET['
 	$type = ($catid == 160) ? 'minispēļu' : 'Distractions & Diversions';
 	$type2 = ($catid == 160) ? 'minispēles' : 'Distractions & Diversions';
 
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$tpl->newBlock('minigames');
 	$tpl->assign('type-top', $type2);
 	if ($catid == 160) {
@@ -341,7 +341,7 @@ else if (isset($_GET['viewcat']) && ($_GET['viewcat'] == 'minispeles' || $_GET['
  *		RuneScape prasmes
 /*/ 
 else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'prasmes'/* && $auth->id == '115' */) {
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$skills = $db->get_results("SELECT `id`,`title` FROM `cat` WHERE `parent` = '4' ORDER BY `title` ASC");
 	if ($skills) {
 		$skaits = 0;
@@ -446,7 +446,7 @@ else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'padomi') {
 //	 Tasks/achievement diaries
 /* --------------------------------------- */ 
 else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'achievement-diary'/* && in_array($auth->id,array(115,140,21018)) */) {
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$tpl->newBlock('tasks');
 	$skaits = 0;
 	$diaries = $db->get_results("SELECT `id`,`title`,`img` FROM `rs_classes` WHERE `cat` = 'tasks' ORDER BY `order` ASC");
@@ -490,7 +490,7 @@ else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'achievement-diary'/* &&
 //	 Ģildes
 /* --------------------------------------- */ 
 else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'gildes'/* && in_array($auth->id,array(115,140,21018)) */) {
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$guilds = $db->get_results("SELECT `id`,`strid`,`title`,`author` FROM `pages` WHERE `category` = '791' ORDER BY `title` ASC");
 	if ($guilds) {
 		$tpl->newBlock('guilds');
@@ -525,7 +525,7 @@ else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'gildes'/* && in_array($
 //	 Ceļveži
 /* --------------------------------------- */
 else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'celvezi'/* && in_array($auth->id,array(115,140)) */) {
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$tpl->newBlock('areas');
 
 	// pēc kategorijām
@@ -607,7 +607,7 @@ else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'celvezi'/* && in_array(
 /* --------------------------------------- */ 
 else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'runescape'/* && in_array($auth->id,array(21018,115)) */) {
 
-	$tpl_options = 'no-right';
+	$tpl_options = 'no-left';
 	$tpl->newBlock('runescape-mainpage');
 
 	$total = $db->get_var("SELECT count(*) FROM `pages` WHERE category = ('" . $category->id . "')");
