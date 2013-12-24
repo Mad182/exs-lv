@@ -14,7 +14,7 @@
 <!-- END BLOCK : opengraph-->
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
-<!-- START BLOCK : robots-->
+<!-- END BLOCK : robots-->
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 <link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="http://feeds.feedburner.com/codinglv">
 <script type="text/javascript">

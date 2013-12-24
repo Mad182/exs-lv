@@ -8,7 +8,7 @@
 <!-- END BLOCK : meta-description-->
 <!-- START BLOCK : robots-->
 <meta name="robots" content="{value}">
-<!-- START BLOCK : robots-->
+<!-- END BLOCK : robots-->
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 <script type="text/javascript">
 	var mb_refresh_limit = {mb-refresh-limit};
