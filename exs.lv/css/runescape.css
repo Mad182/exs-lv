@@ -132,6 +132,9 @@ body {
     background:#111010;
     padding:0 8px
 }
+#wrapper #pm-table th.pmdate {
+    width:25%
+}
 
 
 /* jaunie lapas pamatbloki */
