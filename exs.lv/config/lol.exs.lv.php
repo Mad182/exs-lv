@@ -31,7 +31,7 @@ $profile_views_limit = 20;
 $page_title = 'League of Legends forums';
 
 //auto login visos subdomēnos
-if($_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== 'dev.exs.lv' && $_SERVER['SERVER_NAME'] !== 'dev.lol.exs.lv') {
+if($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
 	ini_set("session.cookie_domain", ".exs.lv");
 	$secure_login = true;
 }
@@ -40,4 +40,3 @@ if($_SERVER['SERVER_NAME'] !== 'localhost' && $_SERVER['SERVER_NAME'] !== 'dev.e
 if(!empty($_SERVER['HTTPS'])) {
     redirect("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], true);
 }
-

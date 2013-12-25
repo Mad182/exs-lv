@@ -1,45 +1,43 @@
 $ttl 38400
 @	IN	SOA	ns.openidea.lv. root.ns.openidea.lv. (
-			1342114446
+			1342114458
 			10800
 			3600
 			604800
 			38400 )
 
 
+exs.lv.	IN	NS	ns.openidea.lv.
+exs.lv.	IN	NS	ns2.openidea.lv.
 exs.lv.	IN	MX	10	ASPMX.L.GOOGLE.COM.
 exs.lv.	IN	TXT	"v=spf1 mx ip4:92.240.69.184 all"
 mail.exs.lv.	IN	CNAME	ghs.google.com.
 tmp.exs.lv.	IN	A	80.233.240.101
 viesty.exs.lv.	IN	A	92.240.69.183
-svens.exs.lv.	IN	A	92.240.69.183
 s.exs.lv.	IN	A	92.240.69.183
-reader.exs.lv.	IN	A	92.240.69.183
-www.zvera.exs.lv.	IN	A	92.240.69.183
-zvera.exs.lv.	IN	A	92.240.69.183
-www.arnolds.exs.lv.	IN	A	92.240.69.183
-old.exs.lv.	IN	A	92.240.69.183
-www.albis.exs.lv.	IN	A	92.240.69.183
 mta.exs.lv.	IN	A	92.240.80.63
-dev.exs.lv.	IN	A	127.0.0.1
-dev.rp.exs.lv.	IN	A	127.0.0.1
-dev.lol.exs.lv.	IN	A	127.0.0.1
-dev.m.exs.lv.	IN	A	127.0.0.1
-dev.m.rp.exs.lv.	IN	A	127.0.0.1
-dev.m.lol.exs.lv.	IN	A	127.0.0.1
 greenzephyr.exs.lv.	IN	A	92.240.69.183
 gugols.exs.lv.	IN	A	92.240.69.183
-exs.lv.	IN	A	92.240.69.184
-exs.lv.	IN	NS	ns.openidea.lv.
-exs.lv.	IN	NS	ns2.openidea.lv.
+ts.exs.lv.	IN	A	87.110.140.172
 albis.exs.lv.	IN	A	92.240.69.183
 arnolds.exs.lv.	IN	A	92.240.69.188
 mac.exs.lv.	IN	A	92.240.69.183
-mc.exs.lv.	IN	A	87.110.140.172
-games.exs.lv.	IN	A	87.110.140.172
-ts.exs.lv.	IN	A	87.110.140.172
 ksenija.exs.lv.	IN	A	92.240.69.183
 krasas.exs.lv.	IN	A	92.240.69.183
-ikonas.exs.lv.	IN	A	92.240.69.183
+old.exs.lv.	IN	A	92.240.69.183
+exs.lv.	IN	A	92.240.69.184
 *.exs.lv.	IN	A	92.240.69.184
-autoconfig.zvera.exs.lv.	IN	A	92.240.69.183
+rp.exs.lv.	IN	A	92.240.69.184
+m.exs.lv.	IN	A	92.240.69.184
+m.rp.exs.lv.	IN	A	92.240.69.184
+lol.exs.lv.	IN	A	92.240.69.184
+runescape.exs.lv.	IN	A	92.240.69.184
+m.lol.exs.lv.	IN	A	92.240.69.184
+dev.exs.lv.	IN	A	127.0.0.1
+dev.rp.exs.lv.	IN	A	127.0.0.1
+dev.lol.exs.lv.	IN	A	127.0.0.1
+dev.runescape.exs.lv.	IN	A	127.0.0.1
+dev.m.exs.lv.	IN	A	127.0.0.1
+dev.m.rp.exs.lv.	IN	A	127.0.0.1
+dev.m.lol.exs.lv.	IN	A	127.0.0.1
+dev.m.runescape.exs.lv.	IN	A	127.0.0.1

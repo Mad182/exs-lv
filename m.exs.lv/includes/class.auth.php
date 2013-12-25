@@ -116,8 +116,6 @@ class Auth {
 	function login($username, $password, $xsrf = null) {
 		global $db, $lang;
 
-		session_regenerate_id(true);
-
 		if(!is_null($xsrf) && $xsrf != $this->xsrf) {
 			sleep(rand(2,4));
 			$this->error = 2;
@@ -136,6 +134,7 @@ class Auth {
 			}
 			$this->ok = true;
 			$_SESSION['auth_id'] = $userinfo->id;
+			$_SESSION['lastseen'] = time();
 			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			$this->error = 0;
 

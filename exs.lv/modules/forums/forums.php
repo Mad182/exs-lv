@@ -233,7 +233,9 @@ if (!empty($cats)) {
 //form
 if ($auth->ok && $category->status == 'active') {
 
-	$tpl->newBlock('tinymce-enabled');
+	if(!$auth->mobile) {
+		$tpl->newBlock('tinymce-enabled');
+	}
 	$tpl->newBlock('forum-addtopic');
 	$tpl->assign('forum-check', md5($category->title . $remote_salt . $auth->id));
 

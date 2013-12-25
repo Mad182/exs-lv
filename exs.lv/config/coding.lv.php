@@ -34,4 +34,3 @@ $polls_cat = 803;
 if(!empty($_SERVER['HTTPS'])) {
     redirect("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], true);
 }
-

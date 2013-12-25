@@ -4,6 +4,7 @@
     ServerName dev.exs.lv
     ServerAlias dev.rp.exs.lv
     ServerAlias dev.lol.exs.lv
+    ServerAlias dev.runescape.exs.lv
     ServerAlias dev.coding.lv
 
 

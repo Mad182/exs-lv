@@ -10,7 +10,9 @@ require(CORE_PATH . '/includes/class.templatepower.php');
 
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require('includes/site_loader.php');
+
 session_start();
+
 $cat = 'wall';
 
 //mysql konekcija
