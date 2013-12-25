@@ -11,7 +11,7 @@ if (isset($_GET['order']) && $_GET['order'] == 'posts') {
 //  šādi ar pārbaudēm neies cauri visām pārējām kategorijām
 $where = '';
 if ($lang == 9) {
-    $where = ' WHERE `category_id` == 9 ';
+    $where = ' WHERE `id` = 4 ';
 }
 $categories = $db->get_results("SELECT title,id FROM clans_categories $where ORDER BY importance DESC");
 
