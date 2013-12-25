@@ -135,6 +135,7 @@ tinymce.init({
         </li>
         <!-- END BLOCK : mod-nav -->
         <!-- START BLOCK : auth-nav -->
+        <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
         <li><a href="/user/{currentuser-id}">Profils</a></li>
         <li><a href="/logout">Iziet ({currentuser-nick})</a></li>
         <!-- END BLOCK : auth-nav -->
@@ -208,7 +209,6 @@ tinymce.init({
         </ul>
         <!-- START BLOCK : user-menu-->
         <ul id="top-menu-right">
-            <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
             <!-- START BLOCK : user-modlink-->
             <!-- END BLOCK : user-modlink-->
             <!-- START BLOCK : user-approvelink-->

@@ -54,7 +54,8 @@ $other_cats = array(
     790,  // nauda pelnīšana
     5,    // citi padomi
     346,  // RS rakstu arhīvs
-    1087  // Oldschool RuneScape pamācības
+    1087 // Oldschool RuneScape pamācības
+    //789   // RS stāsti & vēsture 
     //536  // Priekšmetu datubāze
 );
 
