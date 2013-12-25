@@ -31,7 +31,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$closed = (bool) $_POST['edit-image-disablecomments'];
 			$editim = (int) $_POST['edit-image-id'];
 			//interešu kategorijas id. Ja mēģina nofeikot, tad 0
-			$interest_id = (int) $_POST['image-interest'];
+			$interest_id = (isset($_POST['image-interest'])) ? (int) $_POST['image-interest'] : 0;
 			if (!$db->get_var("SELECT count(*) FROM `interests` WHERE `id` = '$interest_id'")) {
 				$interest_id = 0;
 			}
@@ -59,7 +59,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$description = post2db($_POST['new-image-description']);
 
 			//interešu kategorijas id. Ja mēģina nofeikot, tad 0
-			$interest_id = (int) $_POST['new-image-interest'];
+			$interest_id = (isset($_POST['new-image-interest'])) ? (int) $_POST['new-image-interest'] : 0;
 			if (!$db->get_var("SELECT count(*) FROM `interests` WHERE `id` = '$interest_id'")) {
 				$interest_id = 0;
 			}
@@ -171,6 +171,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$tpl->assign('gallery-check', md5($remote_salt . $auth->id));
 
 			if ($lang == 1) {
+                $tpl->newBlock('new-image-interest');
 				$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
 				foreach ($interests as $interest) {
 					$tpl->newBlock('select-new-interest');
@@ -453,6 +454,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				));
 
 				if ($lang == 1) {
+                    $tpl->newBlock('edit-image-interest');
 					$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
 					foreach ($interests as $interest) {
 						$tpl->newBlock('select-interest');

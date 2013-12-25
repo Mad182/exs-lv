@@ -20,6 +20,7 @@
 				<label for="new-image">Attēls:</label><br />
 				<input type="file" class="text" name="new-image" id="new-image" />
 			</p>
+            <!-- START BLOCK : new-image-interest -->
 			<p>
 				<label for="new-image-interest">Attēla kategorija:</label><br />
 				<select name="new-image-interest">
@@ -29,6 +30,7 @@
 					<!-- END BLOCK : select-new-interest-->
 				</select>
 			</p>
+            <!-- END BLOCK : new-image-interest -->
 			<p>
 				<label for="new-image-description">Komentārs:</label><br />
 				<input type="text" class="text" name="new-image-description" id="new-image-description" />
@@ -117,6 +119,7 @@
 			<label for="edit-image-disablecomments">
 				<input class="ajax-checkbox" type="checkbox" name="edit-image-disablecomments" id="edit-image-disablecomments"{edit-image-closed} />Slēgt komentārus
 			</label>	
+            <!-- START BLOCK : edit-image-interest -->
 			<p>
 				<label for="image-interest">Attēla kategorija:</label>
 				<select class="ajax-checkbox" name="image-interest">
@@ -126,6 +129,7 @@
 					<!-- END BLOCK : select-interest-->
 				</select>
 			</p>
+            <!-- END BLOCK : edit-image-interest -->
 			[<a title="Dzēst attēlu un tā komentārus" href="/gallery/{user-id}/{edit-image-id}?mode=delete" class="confirm"><span class="red">dzēst</span></a>]
 		</fieldset>
 	</form>
