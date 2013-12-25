@@ -15,8 +15,9 @@ $tpl->assign(array(
 ));
 unset($out);
 
-//top users
-$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
+// top users
+// nebūs šeit spameru saiets
+/*$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
 if ($tusers) {
 	$tpl->newBlock('user-top');
 	foreach ($tusers as $tuser) {
@@ -29,7 +30,8 @@ if ($tusers) {
 		));
 	}
 }
-unset($tusers);
+unset($tusers);*/
+
 
 //lietotāja notifikācijas
 if ($auth->ok === true) {

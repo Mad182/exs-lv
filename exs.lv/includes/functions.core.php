@@ -1884,7 +1884,7 @@ function get_user($user_id, $force = false) {
 function get_latest_groups($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($data = $m->get('latest_groups_' . $lang))) {
-		$data = $db->get_results("SELECT `id`,`title`,`strid` FROM `clans` WHERE `list` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 5");
+		$data = $db->get_results("SELECT `id`,`title`,`strid`,`avatar` FROM `clans` WHERE `list` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 5");
 		$m->set('latest_groups_' . $lang, $data, false, 3600);
 	}
 	return $data;

@@ -81,6 +81,32 @@ if($auth->ok) {
 	));
 }
 
+
+//  jaunāko izveidoto RuneScape grupu saraksts
+if ($groups = get_latest_groups(true) ) {
+
+	$tpl->newBlock('groups-l-list');
+    
+	foreach ($groups as $group) {
+    
+		$tpl->newBlock('groups-l-node');
+
+		if(!empty($group->strid)) {
+			$group->link = '/'.$group->strid;
+		} else {
+			$group->link = '/group/'.$group->id;
+		}
+
+		$tpl->assign(array(
+			'title'     => $group->title,
+			'link'      => $group->link,
+            'avatar'    => $group->avatar
+		));
+	}
+	unset($groups);
+}
+
+
 if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }

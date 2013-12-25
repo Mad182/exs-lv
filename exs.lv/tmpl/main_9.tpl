@@ -345,6 +345,19 @@ tinymce.init({
 			<!-- END BLOCK : poll-questions-->
 		</div>
 		<!-- END BLOCK : poll-box-->
+        
+        <!-- START BLOCK : groups-l-list-->
+		<h3>Jaunākās grupas</h3>
+		<div class="box new-groups">
+            <!-- START BLOCK : groups-l-node-->
+			<p>				
+                <img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
+				<a href="{link}">{title}</a>				
+			</p>
+            <!-- END BLOCK : groups-l-node-->
+			<a href="/grupas">Visas grupas &raquo;</a>
+		</div>
+		<!-- END BLOCK : groups-l-list-->
 	</div>
 	<!-- END BLOCK : main-layout-right-->
 
@@ -385,17 +398,6 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : notification-list-->
 
-		<!-- START BLOCK : groups-l-list-->
-		<h3>Jaunākās grupas</h3>
-		<div class="box">
-			<p>
-				<!-- START BLOCK : groups-l-node-->
-				<a href="/group/{id}">{title}</a><br />
-				<!-- END BLOCK : groups-l-node-->
-			</p>
-			<a href="/grupas">Visas grupas &raquo;</a>
-		</div>
-		<!-- END BLOCK : groups-l-list-->
 		<!-- START BLOCK : google-search -->
         <h3>Meklētājs</h3>
 		<div class="box">
