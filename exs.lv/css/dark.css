@@ -37,6 +37,9 @@ a:hover {
 #user-notify li, .user-actions li, .mb-col li, #latest-topics li, #miniblog-list li ul li, #footer .infoblock li a {
 	border-bottom: 1px dotted #3a3a3a
 }
+.mb-col li.rs-linkcode {
+    border-bottom: 1px solid #F1868A;
+}
 
 #player-mylist div, #player-playlist div, #user-notify li a:hover, #latest-topics li a:hover, .blockhref li a:hover {
 	background-color: #3a3a3a

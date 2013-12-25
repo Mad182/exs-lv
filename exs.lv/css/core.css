@@ -1264,6 +1264,9 @@ a.friend:hover {
 .mb-col li.linkcode {
 	border-bottom: 1px solid #99e600;
 }
+.mb-col li.rs-linkcode {
+    border-bottom: 1px solid #F1686D;
+}
 
 #miniblog-list li ul {
 	padding: 4px 6px 4px 26px;

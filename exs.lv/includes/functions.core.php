@@ -2785,7 +2785,10 @@ function get_latest_mbs($friends = false) {
 			$prefix = '';
 			if ($mb->lang != $lang) {
 				$domain = 'http://' . $config_domains[$mb->lang]['domain'];
-				$spec = ' class="linkcode"';
+                $spec = ' class="linkcode"';
+                if ($mb->lang == 9) {
+                    $spec = ' class="rs-linkcode"';
+                }
 			}
 
 			if ($mb->groupid != 0) {
