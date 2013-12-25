@@ -357,14 +357,7 @@ tinymce.init({
 			</li>
 			<!-- END BLOCK : menu-node-->
 		</ul>
-		<!-- END BLOCK : menu-list-->
-
-		<!-- START BLOCK : notification-list-->
-		<h3>Tavi notikumi</h3>
-		<div class="box">
-			{out}
-		</div>
-		<!-- END BLOCK : notification-list-->
+		<!-- END BLOCK : menu-list-->		
 
 		<h3>Jaunākais portālā</h3>
 		<div class="box">
@@ -375,6 +368,13 @@ tinymce.init({
 			<div class="c"></div>
 			<div id="lat" class="ajaxbox">{latest-noscript}</div>
 		</div>
+        
+        <!-- START BLOCK : notification-list-->
+		<h3>Tavi notikumi</h3>
+		<div class="box">
+			{out}
+		</div>
+		<!-- END BLOCK : notification-list-->
 
 		<!-- START BLOCK : groups-l-list-->
 		<h3>Jaunākās grupas</h3>
