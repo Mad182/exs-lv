@@ -293,7 +293,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	$user_classes = array(1 => 'admins', 2 => 'mods', 3 => 'rautors', 5 => 'bot');
 
 	foreach($user_classes as $key => $class) {
-		if (!empty($site_access[$key]) && ($level == $key || $userid != 0 && in_array($userid, $site_access[$key]))) {
+		if ($level == $key || ($userid != 0 && !empty($site_access[$key]) && in_array($userid, $site_access[$key]))) {
 			$nick = '<span class="' . $class . '">' . $nick . '</span>';
 		}
 	}
