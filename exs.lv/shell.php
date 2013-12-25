@@ -54,17 +54,14 @@ echo "end update_karma()\n";
 
 
 
-if ( $auth->id == 115 && isset($_GET['update-groups'])) {
-
-    $rsclans = $db->get_results("SELECT `id`,`strid` FROM `clans` WHERE `category_id` = 4");
-    if ($rsclans) {
-        foreach ($rsclans as $clan) {
-            $upd = $db->query("UPDATE `clans` SET `lang` = 9 WHERE `id` = '".(int)$clan->id."' ");
-            $upd = $db->query("UPDATE `cat` SET `lang` = 9 WHERE `textid` = '".sanitize($clan->strid)."' ");
-            $upd = $db->query("UPDATE `miniblog` SET `lang` = 9 WHERE `groupid` = '".(int)$clan->id."' ");
-        }
-        echo $clan->strid . " done...\n";
+$rsclans = $db->get_results("SELECT `id`,`strid` FROM `clans` WHERE `category_id` = 4");
+if ($rsclans) {
+    foreach ($rsclans as $clan) {
+        $upd = $db->query("UPDATE `clans` SET `lang` = 9 WHERE `id` = '".(int)$clan->id."' ");
+        $upd = $db->query("UPDATE `cat` SET `lang` = 9 WHERE `textid` = '".sanitize($clan->strid)."' ");
+        $upd = $db->query("UPDATE `miniblog` SET `lang` = 9 WHERE `groupid` = '".(int)$clan->id."' ");
     }
+    echo $clan->strid . " done...\n";
 }
 
 
