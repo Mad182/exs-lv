@@ -43,6 +43,10 @@ $dev_ips = array(
 //testējot lapu uz sava lokālā servera var aizvietot ar tukšumu
 $static_server = 'http://static.exs.lv';
 
+//domēns, no kura ielādēt attēlus
+//uz lokālā servera var aizvietot ar tukšumu
+$img_server = 'http://img.exs.lv';
+
 /**
  * Pareizas klienta IP adreses noteikšana ir somewhat tricky,
  * jo dažām lapām tiek lietots cloudflare un varnish,

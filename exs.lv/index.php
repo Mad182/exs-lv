@@ -323,7 +323,8 @@ $tpl->assignGlobal(array(
 	'footer-mb' => get_footer_mb(),
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
-	'static-server' => $static_server
+	'static-server' => $static_server,
+	'img-server' => $img_server
 ));
 
 
