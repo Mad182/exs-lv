@@ -22,6 +22,8 @@ $db = new mdb($username, $password, $database, $hostname);
 $m = new Memcache;
 $m->connect($mc_host, $mc_port);
 
+$site_access = get_site_access();
+
 header('Content-Type: text/html; charset=utf-8');
 
 $auth = new Auth();
