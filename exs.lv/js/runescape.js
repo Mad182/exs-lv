@@ -1,44 +1,54 @@
 /* ik pēc noteikta laika atjauno runescape faktu */
-function refresh_fact() {    
+function refresh_fact(elem) {    
     $.get('/rsfacts?_=1', function(response) {
       if (response.length < 300) {
-        $('#random-fact').html('<span>RS fakts:</span> ' + response);
+        elem.html('<span>RS fakts:</span> ' + response);
       }
     });
 }
 
 $(document).ready(function () {
     
-    refresh_fact();
-    setInterval("refresh_fact()", 7000);
-
-    /* scrollošanas uz augšu podziņa */
+    /* atjauno runescape random faktu */
+    var $rsfact = $('#random-fact');
+    refresh_fact($rsfact);
+    setInterval(function() {
+        refresh_fact($rsfact);
+    }, 7000);
+    
+    /* podziņa ātrai scrollošanai uz augšu */
+    var $elem = $('#scroll-up');
     $(window).scroll(function() {
         if( $(this).scrollTop() > 100)
-            $('#scroll-up').stop().animate({bottom: '40px'}, 500);
+            $elem.stop().animate({bottom: '40px', opacity: 0.6}, 500);
         else
-            $('#scroll-up').stop().animate({bottom: '-100px'}, 500);
+            $elem.stop().animate({bottom: '200px', opacity: 0}, 200, function() {
+                $(this).css({bottom:'-100px'});
+            });
     });
-    $('#scroll-up').click(function() {
+    $elem.click(function() {
         $('html, body').stop().animate({scrollTop: 0}, 500, function() {
-           $('#scroll-up').stop().animate({bottom: '-100px'}, 500);
+           $elem.stop().animate({bottom: '500px', opacity: 0}, 200, function() {
+                $(this).css({bottom:'-100px'});
+           });
         });
     });
     
     /* runescape augšējās navigācijas pielīmēšana */
     jQuery(function($) {
     
-        var $topmenu    = $('#top-menu');  
-        var $height     = $topmenu.offset().top - 32;
+        var $topmenu    = $('#top-menu');
+        var $header     = $('#header');
+        var height      = $topmenu.offset().top - 32;
         
         function fixDiv() {                  
-          if ($(window).scrollTop() >= $height ) {
+          if ($(window).scrollTop() >= height ) {
             $topmenu.css({'position': 'fixed', 'top': '32px'});
-            $('#header').css({'margin-bottom': '35px'});
+            $header.css({'margin-bottom': '35px'});
           }
           else {
             $topmenu.css({'position': 'relative', 'top': 'auto'});
-            $('#header').css({'margin-bottom': 'auto'});
+            $header.css({'margin-bottom': 'auto'});
           }
         }
         $(window).scroll(fixDiv);
