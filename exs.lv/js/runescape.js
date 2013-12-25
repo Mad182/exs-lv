@@ -1,8 +1,8 @@
 /* ik pēc noteikta laika atjauno runescape faktu */
 function refresh_fact(elem) {    
-    $.get('/rsfacts?_=1', function(response) {
-      if (response.length < 300) {
-        elem.html('<span>RS fakts:</span> ' + response);
+    $.getJSON('/rsfacts?_=1', function(response) {
+      if (response.state == 'success') {
+        elem.html('<span>RS fakts:</span> ' + response.content);
       }
     });
 }
@@ -27,11 +27,10 @@ $(document).ready(function () {
             });
     });
     $elem.click(function() {
-        $('html, body').stop().animate({scrollTop: 0}, 500, function() {
-           $elem.stop().animate({bottom: '500px', opacity: 0}, 200, function() {
-                $(this).css({bottom:'-100px'});
-           });
-        });
+        $('html, body').stop().animate({scrollTop: 0}, {duration: 500, queue: false});
+        $elem.stop().animate({bottom: '500px', opacity: 0}, 200, function() {
+            $(this).css({bottom:'-100px'});
+       });
     });
     
     /* runescape augšējās navigācijas pielīmēšana */
