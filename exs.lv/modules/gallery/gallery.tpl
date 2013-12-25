@@ -90,7 +90,7 @@
 		<div id="post-rating">Lietotāju vērtējums: <span class="current-rating">{rating}</span> ({rating_count} balsis)</div>
 		<div id="star"></div>
 		<div class="c"></div>
-		<ul class="article-info"><li class="date">{image-date}</li><li class="komentari">{image-posts} komentāri</li><li class="views">skatīts {image-views}x</li></ul><div class="c"></div>
+		<ul class="article-info"><li class="date">{image-date}</li><li class="comments">{image-posts} komentāri</li><li class="views">skatīts {image-views}x</li></ul><div class="c"></div>
 	</div>
 
 	<div class="c"></div>
