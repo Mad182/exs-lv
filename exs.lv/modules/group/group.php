@@ -28,7 +28,7 @@ if ($group->id == 65) {
 }
 //rediretk uz pareizo apakšprojektu ja grupa pārvietota (padariju šo universālu)
 else if ($group->lang != $lang) {
-	redirect('http://' . $config_domains[$article->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
+	redirect('http://' . $config_domains[$group->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
 }
 
 if (empty($group->avatar)) {
