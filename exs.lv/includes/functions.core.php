@@ -2,7 +2,7 @@
 
 /**
  * functions.core.php
- * satur pmata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
+ * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
  * */
 if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 

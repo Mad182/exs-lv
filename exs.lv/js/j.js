@@ -399,7 +399,7 @@ $(document).ready(function () {
 		$('.usercheck-response').load('/userexists/?user=' + encodeURIComponent($(this).val()));
 	});
 
-	/* flash message (brīdinājum un paziņojumu) aizvēršana */
+	/* flash message (brīdinājumu un paziņojumu) aizvēršana */
 	$('#close-flash-message').live('click', function (e) {
 		$('#flash-message').fadeOut(500);
 		e.preventDefault();
