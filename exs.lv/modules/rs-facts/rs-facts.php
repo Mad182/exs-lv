@@ -3,11 +3,9 @@
  *  RuneScape random faktu pārvaldība.
  *
  *	Moduļa adrese: 		exs.lv/rsfacts
- *	Pēdējās izmaiņas: 	24.12.2013 ( Edgars )
  */
 
 if ( $lang != 9 ) {
-    redirect('http://exs.lv');
     die();
 }
 
@@ -23,17 +21,15 @@ if ( isset($_GET['_']) ) {
         $single_fact = $db->get_row("SELECT `text` FROM `facts_rs` WHERE `is_short` = 1 LIMIT $rand, 1");
         
         if ( $single_fact ) {
-        
-            echo strip_tags($single_fact->text);
+            echo json_encode(array('state' => 'success', 'content' => strip_tags($single_fact->text) ));
         }
         else {
-            echo 'Neizdevās atlasīt nevienu RuneScape faktu! ;(';
+            echo json_encode(array('state' => 'error', 'content' => 'Neizdevās atlasīt nevienu RuneScape faktu! ;('));
         }
     }
     else {
-        echo 'Neizdevās atlasīt nevienu RuneScape faktu! ;(';
+        echo json_encode(array('state' => 'error', 'content' => 'Neizdevās atlasīt nevienu RuneScape faktu! ;('));
     }
-    exit;
 }
 
 exit;
