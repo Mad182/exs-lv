@@ -27,14 +27,17 @@ $(document).ready(function () {
     
     /* runescape augšējās navigācijas pielīmēšana */
     jQuery(function($) {
-        function fixDiv() {
-          var $cache = $('#top-menu');
-          if ($(window).scrollTop() > 188) {
-            $cache.css({'position': 'fixed', 'top': '32px'});
+    
+        var $topmenu    = $('#top-menu');  
+        var $height     = $topmenu.offset().top - 32;
+        
+        function fixDiv() {                  
+          if ($(window).scrollTop() >= $height ) {
+            $topmenu.css({'position': 'fixed', 'top': '32px'});
             $('#header').css({'margin-bottom': '35px'});
           }
           else {
-            $cache.css({'position': 'relative', 'top': 'auto'});
+            $topmenu.css({'position': 'relative', 'top': 'auto'});
             $('#header').css({'margin-bottom': 'auto'});
           }
         }
