@@ -83,7 +83,7 @@ if($auth->ok) {
 
 
 //  jaunāko izveidoto RuneScape grupu saraksts
-if ($groups = get_latest_groups(true) ) {
+if ($groups = get_latest_groups() ) {
 
 	$tpl->newBlock('groups-l-list');
     
