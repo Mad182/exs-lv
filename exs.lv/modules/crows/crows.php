@@ -13,6 +13,9 @@ if ( !im_mod() ) {
 }
 
 $tpl_options = 'no-right';
+if ( $lang == 9 ) {
+    $tpl_options = 'no-left';
+}
 
 // ārpus galvenā exa sarakstā rādīsies tikai atvērtā apakšprojekta brīdinājumi
 $where = '';
