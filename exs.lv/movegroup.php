@@ -46,7 +46,7 @@ if (!empty($clan)) {
 		$upd = $db->query("UPDATE `cat` SET `lang` = 0 WHERE `textid` = '".sanitize($clan->strid)."' ");
 	}
 	$upd = $db->query("UPDATE `miniblog` SET `lang` = $destionation WHERE `groupid` = '".(int)$clan->id."' ");
-	die($clan->title . " moved...\n";
+	die($clan->title . " moved...\n");
 } else {
 	die("Error: group not found!\n");
 }
