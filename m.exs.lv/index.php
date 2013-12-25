@@ -64,6 +64,9 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	//online lietotāji
 	$online_users = get_online();
 
+	//"cake day"
+	$cday_users = get_cakeday();
+
 	if (isset($_GET['p'])) {
 		$id = (int) $_GET['p'];
 		$article = $db->get_row("SELECT * FROM `pages` WHERE `id` = " . $id . "");

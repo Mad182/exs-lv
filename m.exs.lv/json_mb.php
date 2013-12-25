@@ -47,12 +47,18 @@ if ($resps) {
 
 	session_start();
 
-	require(CORE_PATH . '/includes/class.auth.php');
+	require('./includes/class.auth.php');
 
 	//memcached konekcija
 	$m = new Memcache;
 	$m->connect($mc_host, $mc_port);
+
+	$site_access = get_site_access();
+
 	$auth = new Auth();
+
+	//"cake day"
+	$cday_users = get_cakeday();
 
 	if(!$auth->ok) {
 		die('login required');

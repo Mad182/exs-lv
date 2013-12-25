@@ -68,7 +68,13 @@ if ($resps) {
 	//memcached konekcija
 	$m = new Memcache;
 	$m->connect($mc_host, $mc_port);
+
+	$site_access = get_site_access();
+
 	$auth = new Auth();
+
+	//"cake day"
+	$cday_users = get_cakeday();
 
 	foreach ($resps as $resp) {
 
