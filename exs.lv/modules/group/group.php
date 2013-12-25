@@ -26,6 +26,10 @@ set_action('grupas');
 if ($group->id == 65) {
 	redirect('http://lol.exs.lv/', true);
 }
+//  runescape grupas būs pieejamas tikai runescape apakšprojektā
+else if ($group->lang == 9 && $lang != 9) {
+    redirect('http://runescape.exs.lv/' . $group_link, true);
+}
 
 if (empty($group->avatar)) {
 	$group->avatar = 'none.png';

@@ -138,6 +138,29 @@ body {
 div pre {
     font-size:11px
 }
+#exs-groups li {
+    width:30%
+}
+#user-group-menu li {
+    font-size:10px
+}
+#top-menu-right li ul#user-group-menu li {
+    width:150px;
+    padding-left:0
+}
+#top-menu-right li li a {
+    padding-left:2px
+}
+#top-menu-right li ul#user-group-menu {
+    left:-157px;
+    width:465px
+}
+#top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
+    /*width:146px*/
+}
+#exs-groups h3 {
+    margin: 5px 0 2px;
+}
 
 
 /* jaunie lapas pamatbloki */

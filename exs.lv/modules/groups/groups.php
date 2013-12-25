@@ -7,7 +7,13 @@ if (isset($_GET['order']) && $_GET['order'] == 'posts') {
 	$order = 'ORDER BY title ASC';
 }
 
-$categories = $db->get_results("SELECT title,id FROM clans_categories ORDER BY importance DESC");
+//  runescape apakšprojektā redzamas būs tikai rs grupas;
+//  šādi ar pārbaudēm neies cauri visām pārējām kategorijām
+$where = '';
+if ($lang == 9) {
+    $where = ' WHERE `category_id` == 9 ';
+}
+$categories = $db->get_results("SELECT title,id FROM clans_categories $where ORDER BY importance DESC");
 
 foreach ($categories as $group_category) {
 

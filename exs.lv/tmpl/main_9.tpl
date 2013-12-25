@@ -209,6 +209,15 @@ tinymce.init({
         </ul>
         <!-- START BLOCK : user-menu-->
         <ul id="top-menu-right">
+            <li{cat-sel-319}><a href="/grupas">Grupas</a>
+				<!-- START BLOCK : mygroups-->
+				<ul id="user-group-menu">
+					<!-- START BLOCK : myg-node-->
+					<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+					<!-- END BLOCK : myg-node-->
+				</ul>
+				<!-- END BLOCK : mygroups-->
+			</li>
             <!-- START BLOCK : user-modlink-->
             <!-- END BLOCK : user-modlink-->
             <!-- START BLOCK : user-approvelink-->
