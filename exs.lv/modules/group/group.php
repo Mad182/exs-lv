@@ -44,9 +44,13 @@ if(!$auth->mobile) {
 	if(!empty($group->top_ad)) {
 		$tpl->assignGlobal('top-group-ad', $group->top_ad);
 	} elseif(empty($disable_adsense)) {
-		$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl'));
+		if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl')) {
+			$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl'));
+		}
 	} else {
-		$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728.tpl'));
+		if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl')) {
+			$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728.tpl'));
+		}
 	}
 }
 
