@@ -268,7 +268,7 @@ function get_site_access() {
 
 /* atgriež niku ar tam atbilstošo krāsu pēc lietotāja tiesībām */
 function usercolor($nick, $level = 0, $online = false, $userid = 0) {
-	global $busers, $online_users, $site_access, $auth, $cday_users;
+	global $busers, $online_users, $site_access, $auth, $cday_users, $img_server;
 	$star = '';
 
 	if ($online !== 'disable') {
@@ -284,7 +284,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	$cakeday = '';
 	if (!empty($cday_users)) {
 		if (!empty($cday_users[$userid]) || in_array($nick, $cday_users)) {
-			$cakeday = '<img src="http://exs.lv/bildes/cakeday.png" alt="" title="Cake Day!" style="display:inline-block;width:16px;height:16px;" />';
+			$cakeday = '<img src="' . $img_server . '/bildes/cakeday.png" alt="" title="Cake Day!" style="display:inline-block;width:16px;height:16px;" />';
 		}
 	}
 
@@ -525,6 +525,7 @@ function embed_youtube($matches, $wide = 0) {
 }
 
 function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
+	global $img_server;
 
 	if (!$disable_emotions) {
 		$smilies = array(
@@ -651,7 +652,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 		foreach ($smilies as $key => $val) {
 			if (strpos($txt, $key) !== false) { //speeds things up
-				$txt = str_replace($key, ' <img src="http://img.exs.lv/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
+				$txt = str_replace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
 			}
 		}
 	}
@@ -1095,7 +1096,7 @@ function mb_get_strid($title = 'Bez nosaukuma', $id = null) {
 }
 
 function get_top_awards($user) {
-	global $db, $m;
+	global $db, $m, $img_server;
 	$user = (int) $user;
 	if (($data = $m->get('aw_' . $user)) === false) {
 		$data = '';
@@ -1103,7 +1104,7 @@ function get_top_awards($user) {
 		if ($res) {
 			$data .= '<p style="margin:0;padding:4px 0 10px">';
 			foreach ($res as $award) {
-				$data .= '<img width="32" height="32" src="http://img.exs.lv/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . htmlspecialchars(strip_tags($award->title)) . '" />&nbsp;';
+				$data .= '<img width="32" height="32" src="' . $img_server . '/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . htmlspecialchars(strip_tags($award->title)) . '" />&nbsp;';
 			}
 			$total = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user'");
 			if ($total > 4) {
@@ -2687,7 +2688,7 @@ function get_latest_images() {
 }
 
 function get_latest_mbs($friends = false) {
-	global $auth, $db, $lang, $config_domains;
+	global $auth, $db, $lang, $config_domains, $img_server;
 
 	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
 
@@ -2791,7 +2792,7 @@ function get_latest_mbs($friends = false) {
 				$spec = ' class="group"';
 				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
 				if ($group->avatar) {
-					$avatar = 'http://img.exs.lv/userpic/small/' . $group->avatar;
+					$avatar = $img_server . '/userpic/small/' . $group->avatar;
 				}
 				if(!empty($group->strid)) {
 					$url = $domain . '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
@@ -2953,7 +2954,7 @@ function human_filesize($bytes, $decimals = 2) {
 }
 
 function get_avatar($user, $size = 'm') {
-	global $auth;
+	global $auth, $img_server;
 	if (empty($auth->mobile)) {
 		$path = 'medium';
 		if (($user->av_alt || !$user->avatar) && $size == 's') {
@@ -2964,7 +2965,7 @@ function get_avatar($user, $size = 'm') {
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
 		}
-		return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
+		return $img_server . '/userpic/' . $path . '/' . $user->avatar;
 	} else {
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
