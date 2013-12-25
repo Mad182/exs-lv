@@ -34,8 +34,7 @@ function reverse_htmlentities($mixed) {
 $m = new Memcache;
 $m->connect($mc_host, $mc_port);
 
-
-/*$users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC");
+$users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC");
 echo "start update_karma()\n";
 $i = 0;
 $tot = 0;
@@ -50,19 +49,5 @@ foreach ($users as $val) {
 	}
 }
 echo "end update_karma()\n";
-*/
-
-
-
-$rsclans = $db->get_results("SELECT `id`,`strid` FROM `clans` WHERE `category_id` = 4");
-if ($rsclans) {
-    foreach ($rsclans as $clan) {
-        $upd = $db->query("UPDATE `clans` SET `lang` = 9 WHERE `id` = '".(int)$clan->id."' ");
-        $upd = $db->query("UPDATE `cat` SET `lang` = 9 WHERE `textid` = '".sanitize($clan->strid)."' ");
-        $upd = $db->query("UPDATE `miniblog` SET `lang` = 9 WHERE `groupid` = '".(int)$clan->id."' ");
-    }
-    echo $clan->strid . " done...\n";
-}
-
 
 echo "\ndone!\n";

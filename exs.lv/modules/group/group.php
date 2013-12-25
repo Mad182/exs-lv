@@ -13,7 +13,7 @@ if(!empty($category->content)) {
 
 $tpl->assignGlobal('group-link', $group_link);
 
-if (!isset($_GET['var1']) || !$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '" . intval($_GET['var1']) . "' AND `lang` = '$lang'")) {
+if (!isset($_GET['var1']) || !$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '" . intval($_GET['var1']) . "'")) {
 	redirect('/grupas');
 }
 
