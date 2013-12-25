@@ -161,6 +161,9 @@ div pre {
 #exs-groups h3 {
     margin: 5px 0 2px;
 }
+#online-users span {
+    font-size:11px !important
+}
 
 
 /* jaunie lapas pamatbloki */
