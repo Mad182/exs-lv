@@ -2954,7 +2954,7 @@ function human_filesize($bytes, $decimals = 2) {
 }
 
 function get_avatar($user, $size = 'm') {
-	global $auth, $img_server;
+	global $auth;
 	if (empty($auth->mobile)) {
 		$path = 'medium';
 		if (($user->av_alt || !$user->avatar) && $size == 's') {
@@ -2965,7 +2965,7 @@ function get_avatar($user, $size = 'm') {
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
 		}
-		return $img_server . '/userpic/' . $path . '/' . $user->avatar;
+		return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
 	} else {
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';

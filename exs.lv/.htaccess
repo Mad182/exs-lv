@@ -65,3 +65,5 @@ RewriteRule ^([0-9a-z\-_]+)/?$ index.php?viewcat=$1 [NC,L,QSA]
 
 RewriteRule ^ES_SPAMOJU_SUDUS/(.*)?$ index.php?viewcat=ES_SPAMOJU_SUDUS [NC,L]
 
+RewriteRule ^userpic/small/(.*)$ dati/bildes/u_small/$1 [NC,L]
+
