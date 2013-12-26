@@ -139,7 +139,7 @@ tinymce.init({
         <li><a href="/user/{currentuser-id}" class="dropdown">Profils</a>
 			<span class="arrow-down"></span>
 			<ul>
-				<li><a href="/user/edit">Publiskā profila informācija</a></li>
+				<li><a href="/user/edit">Profila informācija</a></li>
 				<li><a href="/user/avatar">Mans avatars</a></li>
 				<li><a href="/user/settings">Mani iestatījumi</a></li>
 				<li><a href="/user/security">Parole un e-pasts</a></li>
