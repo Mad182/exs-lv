@@ -99,6 +99,7 @@ tinymce.init({
                 <li>&nbsp;</li>
             </ul>
         </li>
+        <li{cat-sel-661}><a href="/rs">Forums</a></li>
     </ul>
     <ul class="droplist nav-right">
         <!-- START BLOCK : mod-nav -->
