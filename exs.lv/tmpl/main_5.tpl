@@ -137,7 +137,7 @@ tinymce.init({
 				<li{profile-sel}>
 					<a class="first" href="/user/{currentuser-id}">Profils</a>
 					<ul>
-						<li><a href="/user/edit">Publiskā profila informāciju</a></li>
+						<li><a href="/user/edit">Publiskā profila informācija</a></li>
 						<li><a href="/user/avatar">Mans avatars</a></li>
 						<li><a href="/user/settings">Mani iestatījumi</a></li>
 						<li><a href="/user/security">Parole un e-pasts</a></li>
