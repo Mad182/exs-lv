@@ -82,9 +82,12 @@ else {
 		}
 		else $warn->removed_nick = '';
 		
-		// pārveido iemeslos norādītās adreses, ja tās nāk no rp apakšprojekta
+		// pārveido iemeslos norādītās adreses, ja tās nāk no apakšprojekta
 		if ( strpos($warn->warn_reason, 'http://rp.exs.lv') !== false ) {
 			$warn->warn_reason = str_replace('href="/', 'href="http://rp.exs.lv/', $warn->warn_reason);
+		}
+		else if ( strpos($warn->warn_reason, 'http://runescape.exs.lv') !== false ) {
+			$warn->warn_reason = str_replace('href="/', 'href="http://runescape.exs.lv/', $warn->warn_reason);
 		}
 		
 		$tpl->newBlock('single-warn');	
