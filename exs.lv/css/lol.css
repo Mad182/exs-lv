@@ -98,22 +98,11 @@ body {
 	text-shadow: 0;
 }
 
-#top-menu ul#top-menu-right li ul {
+#top-menu li ul {
 	height: auto;
-	border: 1px solid #847e59;
-	background: #bcb279;
-	top: 30px;
+	border: 1px solid #222;
 }
 
-#top-menu ul#top-menu-right li ul li {
-	background: transparent;
-
-}
-#top-menu ul#top-menu-right li ul li a {
-	color: #6E6949;
-	background: transparent;
-
-}
 #login-form label {
 	float: none;
 	display: inline;

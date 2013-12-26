@@ -136,7 +136,17 @@ tinymce.init({
         <!-- END BLOCK : mod-nav -->
         <!-- START BLOCK : auth-nav -->
         <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-        <li><a href="/user/{currentuser-id}">Profils</a></li>
+        <li><a href="/user/{currentuser-id}">Profils</a>
+			<span class="arrow-down"></span>
+			<ul>
+				<li><a href="/user/edit">Publiskā profila informācija</a></li>
+				<li><a href="/user/avatar">Mans avatars</a></li>
+				<li><a href="/user/settings">Mani iestatījumi</a></li>
+				<li><a href="/user/security">Parole un e-pasts</a></li>
+				<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
+                <li>&nbsp;</li>
+			</ul> 
+        </li>
         <li><a href="/logout">Iziet ({currentuser-nick})</a></li>
         <!-- END BLOCK : auth-nav -->
     </ul>
