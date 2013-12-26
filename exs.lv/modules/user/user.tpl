@@ -216,29 +216,9 @@
 
 <!-- START BLOCK : user-profile-edit-->
 <div class="tabMain">
-	<p><a href="/user/changenick">Mainīt niku</a></p>
-	<form id="edit-profile" class="form" action="{page-url}" method="post" enctype="multipart/form-data">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
-			<legend>Tava profila iestatījumi</legend>
-			<!-- START BLOCK : invalid-mail-->
-			<p class="error">Nekorekti norādīta e-pasta adrese!</p>
-			<!-- END BLOCK : invalid-mail-->
-
-			<!-- START BLOCK : invalid-pwd-->
-			<p class="error">Parole nav pareiza!</p>
-			<!-- END BLOCK : invalid-pwd-->
-
-			<!-- START BLOCK : invalid-pwdlen-->
-			<p class="error">Jaunajai parolei jābūt vismaz 6 simbolus garai!</p>
-			<!-- END BLOCK : invalid-pwdlen-->
-
-			<!-- START BLOCK : save-suc-->
-			<p class="success">Izmaiņas tika saglabātas!</p>
-			<!-- END BLOCK : save-suc-->
-
-			<!-- START BLOCK : save-pwd-->
-			<p class="success">Parole tika nomainīta!</p>
-			<!-- END BLOCK : save-pwd-->
+			<legend>Publiskā profila informācija</legend>
 
 			<!-- START BLOCK : custom_title-->
 			<p>
@@ -250,20 +230,17 @@
 			<!-- START BLOCK : custom_title_buy-->
 			<p><a href="/user/buytitle"><strong>Vēlies nomainīt lietotāja nosaukumu?</strong></a></p>
 			<!-- END BLOCK : custom_title_buy-->
-			<p>
-				<label for="edit-mail">E-pasta adrese:</label><br />
-				<input type="text" class="text" name="edit-mail" id="edit-mail" value="{user-mail}" maxlength="64" />
-			</p>
+
 			<p>
 				<label for="edit-skype">Skype niks:</label><br />
 				<input type="text" class="text" name="edit-skype" id="edit-skype" value="{user-skype}" maxlength="32" />
 			</p>
 			<p>
-				<label for="edit-yt_name">YouTube lietotājvārds:</label><br />
+				<label for="edit-yt_name">YouTube:</label><br />
 				<input type="text" class="text" name="edit-yt_name" id="edit-yt_name" value="{user-yt_name}" maxlength="32" />
 			</p>
 			<p>
-				<label for="edit-twitter">Twitter lietotājvārds:</label><br />
+				<label for="edit-twitter">Twitter:</label><br />
 				<input type="text" class="text" name="edit-twitter" id="edit-twitter" value="{user-twitter}" maxlength="64" />
 			</p>
 			<p>
@@ -279,35 +256,32 @@
 					<!-- END BLOCK : user-profile-edit-city-->
 				</select>
 			</p>
-			<p>
-				<label for="edit-show_code"><input type="checkbox" name="edit-show_code" id="edit-show_code"{edit-show_code-mark} />rādīt jaunākās tēmas no coding.lv</label>
-			</p>
-			<p>
-				<label for="edit-show_lol"><input type="checkbox" name="edit-show_lol" id="edit-show_lol"{edit-show_lol-mark} />rādīt jaunākās tēmas no lol.exs.lv</label>
-			</p>
-			<p>
-				<label for="edit-show_rp"><input type="checkbox" name="edit-show_rp" id="edit-show_rp"{edit-show_rp-mark} />rādīt jaunākās tēmas no rp.exs.lv</label>
-			</p>
-			<p>
-				<label for="edit-show_rs"><input type="checkbox" name="edit-show_rs" id="edit-show_rs"{edit-show_rs-mark} />rādīt jaunākās tēmas no runescape.exs.lv</label>
-			</p>
-			<p>
-				<label for="edit-avatar">Profila attēls (avatars): (<a href="/animacijas">Vēlies kustīgu?</a>)</label><br />
-				<input type="file" class="text" name="edit-avatar" id="edit-avatar" />
-			</p>
-			<p>
-				<label for="edit-enablesig"><input type="checkbox" name="edit-enablesig" id="edit-enablesig"{edit-enablesig-mark} />rādīt lietotāju parakstus pie komentāriem</label>
-			</p>
-			<label for="edit-signature">Paraksts:</label><br />
+
+			<label for="edit-signature">Paraksts:<br /><span class="description">(parādās zem komentāriem)</span></label><br />
 			<textarea rows="4" cols="20" name="edit-signature" id="edit-signature">{user-signature}</textarea>
-			<p>
-				<label for="edit-skin">Tēma:</label><br />
-				<select name="edit-skin" id="edit-skin">
-					<option value="0"{user-skin-0}>Gaiša</option>
-					<option value="1"{user-skin-1}>Tumša</option>
-				</select> <a href="/augsa" target="_blank">Pielāgot augšu</a>
-			</p>
+
+			<br />
+
+			<label for="edit-signature">Par mani<br /><span class="description">(redzams citiem atverot Tavu profilu)</span></label><br />
 			<textarea rows="4" cols="20" style="width:98%;height:300px" name="edit-about" id="edit-about">{user-about}</textarea>
+			<p>
+				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-edit-->
+
+<!-- START BLOCK : user-profile-security-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
+		<fieldset>
+			<legend>Profila drošības iestatījumi</legend>
+			<p>
+				<label for="edit-mail">E-pasta adrese:</label><br />
+				<input type="text" class="text" name="edit-mail" id="edit-mail" value="{user-mail}" maxlength="64" />
+			</p>
+
 			<h4>Paroles maiņa:</h4>
 			<p>
 				<label for="password-old">Vecā parole:</label><br />
@@ -327,7 +301,63 @@
 		</fieldset>
 	</form>
 </div>
-<!-- END BLOCK : user-profile-edit-->
+<!-- END BLOCK : user-profile-security-->
+
+
+<!-- START BLOCK : user-profile-avatar-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post" enctype="multipart/form-data">
+		<fieldset>
+			<legend>Avatara maiņa</legend>
+			<p>
+				<label for="edit-avatar">Profila attēls: (<a href="/animacijas">Vēlies kustīgu?</a>)</label><br />
+				<input type="file" class="text" name="edit-avatar" id="edit-avatar" />
+			</p>
+			<p>
+				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-avatar-->
+
+
+<!-- START BLOCK : user-profile-settings-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
+		<fieldset>
+			<legend>Tavi lapas iestatījumi</legend>
+			<p>
+				<label for="edit-show_code"><input type="checkbox" name="edit-show_code" id="edit-show_code"{edit-show_code-mark} />rādīt jaunākās tēmas no coding.lv</label>
+			</p>
+			<p>
+				<label for="edit-show_lol"><input type="checkbox" name="edit-show_lol" id="edit-show_lol"{edit-show_lol-mark} />rādīt jaunākās tēmas no lol.exs.lv</label>
+			</p>
+			<p>
+				<label for="edit-show_rp"><input type="checkbox" name="edit-show_rp" id="edit-show_rp"{edit-show_rp-mark} />rādīt jaunākās tēmas no rp.exs.lv</label>
+			</p>
+			<p>
+				<label for="edit-show_rs"><input type="checkbox" name="edit-show_rs" id="edit-show_rs"{edit-show_rs-mark} />rādīt jaunākās tēmas no runescape.exs.lv</label>
+			</p>
+			<p>
+				<label for="edit-enablesig"><input type="checkbox" name="edit-enablesig" id="edit-enablesig"{edit-enablesig-mark} />rādīt lietotāju parakstus pie komentāriem</label>
+			</p>
+			<p>
+				<label for="edit-skin">Tēma:</label><br />
+				<select name="edit-skin" id="edit-skin">
+					<option value="0"{user-skin-0}>Gaiša</option>
+					<option value="1"{user-skin-1}>Tumša</option>
+				</select> <a href="/augsa" target="_blank">Pielāgot augšu</a>
+			</p>
+			<p>
+				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-settings-->
+
+
 
 <!-- START BLOCK : user-profile-block-->
 <div class="tabMain">

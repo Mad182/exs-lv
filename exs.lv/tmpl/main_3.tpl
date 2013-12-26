@@ -122,7 +122,16 @@ tinymce.init({
 			</ul>
 			<!-- START BLOCK : user-menu-->
 			<ul id="top-menu-right">
-				<li{profile-sel}><a href="/user/{currentuser-id}">Profils</a></li>
+				<li{profile-sel}>
+					<a href="/user/{currentuser-id}">Profils</a>
+					<ul>
+						<li><a href="/user/edit">Publiskā profila informāciju</a></li>
+						<li><a href="/user/avatar">Mans avatars</a></li>
+						<li><a href="/user/settings">Mani iestatījumi</a></li>
+						<li><a href="/user/security">Parole un e-pasts</a></li>
+						<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
+					</ul>
+				</li>
 				<!-- START BLOCK : user-modlink-->
 				<!--<li{cat-sel-83}><a href="#">Mod</a>
 					<ul>
