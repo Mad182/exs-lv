@@ -257,6 +257,7 @@ ul.nav-right {
     .rs-logo.right-logo {
         right:10px
     }
+    
 /* dropdown izvēlnes */
 .droplist li {
     position:relative
@@ -277,8 +278,8 @@ ul.nav-right {
         }
         .droplist ul a, .droplist ul a:hover {
             width:150px;
-            padding:7px 14px 7px 35px;
-            background:url('/bildes/fugue-icons/blue-document-resize.png') no-repeat 5px 60%
+            padding:7px 14px 7px 30px;
+            background:url('/bildes/fugue-icons/blue-document-hf-select-footer.png') no-repeat 5px 60%
         }
     /* dziļāki līmeņi, neskaitot pirmo; novietojas labajā pusē */
     .droplist ul ul {
@@ -290,7 +291,7 @@ ul.nav-right {
             border-left:1px solid #2e3853
         }     
         .droplist ul ul a, .droplist ul ul a:hover {
-            background:url('/bildes/fugue-icons/at-sign.png') no-repeat 5px 60%
+            background:url('/bildes/fugue-icons/flask.png') no-repeat 5px 60%
         }
         /* novietojums pretējā pusē (kreisajā) */
         .droplist ul ul.flip-side {
