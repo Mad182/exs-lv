@@ -3,19 +3,6 @@
  *  Ar runescape.exs.lv saistītas pārbaudes, 
  *  kuras vieglākai rediģēšanai iznestas ārpus index.php faila.
  */
- 
-/*$flash_phrases = array(
-    'Blood, pain, and hate!',
-    'You throw in the orb of light... A slight shudder runs down your back.',
-    'Iban will save us all!',
-    'Oh dear! You are dead...'
-);
-
-// sākotnēji lapu nevienam nav jāredz
-if ( !im_mod() ) {
-    set_flash( $flash_phrases[rand(0, count($flash_phrases) - 1)] . ' (Sadaļa būs pieejama nedaudz vēlāk!)');
-    redirect('http://exs.lv');
-}*/
 
  
 /**
@@ -26,6 +13,9 @@ if ( !im_mod() ) {
 
 if ( $auth->ok ) {
     $tpl->newBlock('auth-nav');
+    if ($category->textid == 'user') {
+        $tpl->assign('active-profile', ' active-page');
+    }
     
     // moderatoriem būs redzamas administrēšanas sadaļas (Mod, RS Mod)
     if ( im_mod() ) {
@@ -54,7 +44,7 @@ $other_cats = array(
     790,  // nauda pelnīšana
     5,    // citi padomi
     346,  // RS rakstu arhīvs
-    1087 // Oldschool RuneScape pamācības
+    1087  // Oldschool RuneScape pamācības
     //789   // RS stāsti & vēsture 
     //536  // Priekšmetu datubāze
 );

@@ -136,7 +136,7 @@ tinymce.init({
         <!-- END BLOCK : mod-nav -->
         <!-- START BLOCK : auth-nav -->
         <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-        <li><a href="/user/{currentuser-id}" class="dropdown">Profils</a>
+        <li><a href="/user/{currentuser-id}" class="dropdown{active-profile}">Profils</a>
 			<span class="arrow-down"></span>
 			<ul>
 				<li><a href="/user/edit">Profila informācija</a></li>
