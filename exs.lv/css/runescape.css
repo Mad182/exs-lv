@@ -305,7 +305,7 @@ ul.nav-right {
         display:block
     }
     .droplist ul li:last-child {
-        width:199px;
+        width:194px;
         height:5px;
         background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
     }
