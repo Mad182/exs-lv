@@ -328,27 +328,33 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Tavi lapas iestatījumi</legend>
+
+			<h3>Sekot līdzi jaunākajām tēmām</h3>
 			<p>
-				<label for="edit-show_code"><input type="checkbox" name="edit-show_code" id="edit-show_code"{edit-show_code-mark} />rādīt jaunākās tēmas no coding.lv</label>
+				<label for="edit-show_code"><input type="checkbox" name="edit-show_code" id="edit-show_code"{edit-show_code-mark} />coding.lv</label>
 			</p>
 			<p>
-				<label for="edit-show_lol"><input type="checkbox" name="edit-show_lol" id="edit-show_lol"{edit-show_lol-mark} />rādīt jaunākās tēmas no lol.exs.lv</label>
+				<label for="edit-show_lol"><input type="checkbox" name="edit-show_lol" id="edit-show_lol"{edit-show_lol-mark} />lol.exs.lv</label>
 			</p>
 			<p>
-				<label for="edit-show_rp"><input type="checkbox" name="edit-show_rp" id="edit-show_rp"{edit-show_rp-mark} />rādīt jaunākās tēmas no rp.exs.lv</label>
+				<label for="edit-show_rp"><input type="checkbox" name="edit-show_rp" id="edit-show_rp"{edit-show_rp-mark} />rp.exs.lv</label>
 			</p>
 			<p>
-				<label for="edit-show_rs"><input type="checkbox" name="edit-show_rs" id="edit-show_rs"{edit-show_rs-mark} />rādīt jaunākās tēmas no runescape.exs.lv</label>
+				<label for="edit-show_rs"><input type="checkbox" name="edit-show_rs" id="edit-show_rs"{edit-show_rs-mark} />runescape.exs.lv</label>
 			</p>
+
+			<h3>Lapas izskats</h3>
 			<p>
 				<label for="edit-enablesig"><input type="checkbox" name="edit-enablesig" id="edit-enablesig"{edit-enablesig-mark} />rādīt lietotāju parakstus pie komentāriem</label>
 			</p>
 			<p>
-				<label for="edit-skin">Tēma:</label><br />
+				<label for="edit-skin">Tēma:</label>
 				<select name="edit-skin" id="edit-skin">
 					<option value="0"{user-skin-0}>Gaiša</option>
 					<option value="1"{user-skin-1}>Tumša</option>
-				</select> <a href="/augsa" target="_blank">Pielāgot augšu</a>
+				</select>
+				<br />
+				<a href="/augsa" target="_blank">Pielāgot augšu</a>
 			</p>
 			<p>
 				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
