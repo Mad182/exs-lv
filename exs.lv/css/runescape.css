@@ -274,7 +274,7 @@ ul.nav-right {
             border-bottom: 1px solid #2E3853;
         }
         .droplist ul li:hover {
-            background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+            background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat
         }
         .droplist ul a, .droplist ul a:hover {
             width:150px;
