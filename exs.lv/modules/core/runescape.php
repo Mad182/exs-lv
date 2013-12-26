@@ -13,9 +13,6 @@
 
 if ( $auth->ok ) {
     $tpl->newBlock('auth-nav');
-    if ($category->textid == 'user') {
-        $tpl->assign('active-profile', ' active-page');
-    }
     
     // moderatoriem būs redzamas administrēšanas sadaļas (Mod, RS Mod)
     if ( im_mod() ) {
@@ -23,14 +20,14 @@ if ( $auth->ok ) {
         // Mod izvēlnes iezīmēšana
         $tpl->newBlock('mod-nav');
         if ( in_array($category->textid, array('banned', 'crows', 'reports', 'checkform', 'log')) ) {
-            $tpl->assign('active-mod', ' active-page');
+            $tpl->assign('active-mod', ' class="selected"');
         }
         
         // RS Mod izvēlnes iezīmēšana
         if ( $auth->id == 115 ) {
             $tpl->newBlock('rsmod-nav');            
             if ( in_array($category->textid, array('gildes')) ) {
-                $tpl->assign('active-rsmod', ' active-page');
+                $tpl->assign('active-rsmod', ' class="selected"');
             }
         }        
     }

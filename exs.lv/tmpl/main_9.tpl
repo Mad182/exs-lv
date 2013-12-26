@@ -103,7 +103,8 @@ tinymce.init({
     <ul class="droplist nav-right">
         <!-- START BLOCK : mod-nav -->
         <!-- START BLOCK : rsmod-nav -->
-        <li><a href="#" class="dropdown{active-rsmod}">RS Mod</a>
+        <li{active-rsmod}>
+            <a href="#" class="dropdown">RS Mod</a>
             <span class="arrow-down"></span>
             <ul>
                 <li><a href="/facts_admin/?type=rs">RuneScape fakti</a></li>
@@ -122,7 +123,8 @@ tinymce.init({
             </ul>
         </li>
         <!-- END BLOCK : rsmod-nav -->
-        <li><a href="#" class="dropdown{active-mod}">Mod</a>
+        <li{active-mod}>
+            <a href="#" class="dropdown">Mod</a>
             <span class="arrow-down"></span>
             <ul>
                 <li><a href="/banned">Bloķētie lietotāji</a></li>
@@ -136,7 +138,8 @@ tinymce.init({
         <!-- END BLOCK : mod-nav -->
         <!-- START BLOCK : auth-nav -->
         <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-        <li><a href="/user/{currentuser-id}" class="dropdown{active-profile}">Profils</a>
+        <li{cat-sel-646}>
+            <a href="/user/{currentuser-id}" class="dropdown">Profils</a>
 			<span class="arrow-down"></span>
 			<ul>
 				<li><a href="/user/edit">Profila informācija</a></li>

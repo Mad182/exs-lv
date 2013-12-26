@@ -316,7 +316,7 @@ ul.nav-right {
     .droplist a.dropdown {
         padding-right:20px
     }
-    .dropdown.active-page {
+    .dropdown.active-page, .droplist li.selected {
         background:#2D455F
     }
     .droplist .arrow-down {
