@@ -17,12 +17,6 @@ if (isset($_POST['submit'])) {
 		$user->custom_title = input2db($_POST['edit-custom_title'], 32);
 	}
 
-	if (filter_var($_POST['edit-mail'], FILTER_VALIDATE_EMAIL)) {
-		$user->mail = email2db($_POST['edit-mail']);
-	} else {
-		$tpl->newBlock('invalid-mail');
-	}
-
 	$user->web = '';
 	if (!empty($_POST['edit-web'])) {
 		if (substr($_POST['edit-web'], 0, 4) == 'www.') {
@@ -38,18 +32,15 @@ if (isset($_POST['submit'])) {
 	$user->signature = htmlpost2db($_POST['edit-signature']);
 	$user->about = htmlpost2db($_POST['edit-about']);
 
-	$user->skin = (int) $_POST['edit-skin'];
 	$user->city = (int) $_POST['edit-city'];
 
 	$db->update('users', $auth->id, array(
 		'web' => $user->web,
 		'city' => $user->city,
 		'skype' => $user->skype,
-		'mail' => $user->mail,
 		'rs_nick' => $user->rs_nick,
 		'signature' => $user->signature,
 		'about' => $user->about,
-		'skin' => $user->skin,
 		'yt_name' => $user->yt_name,
 		'twitter' => $user->twitter,
 		'custom_title' => $user->custom_title
@@ -57,23 +48,6 @@ if (isset($_POST['submit'])) {
 
 	$auth->reset();
 	update_karma($auth->id, true);
-
-	if (!empty($_POST['password-1']) && !empty($_POST['password-2']) && $_POST['password-1'] === $_POST['password-2']) {
-		if (pwd($_POST['password-old']) == $user->pwd || ($user->pwd == '' && (!empty($user->draugiem_id) || !empty($user->facebook_id)))) {
-			if (strlen($_POST['password-1']) > 5) {
-
-				$db->update('users', $auth->id, array('pwd' => pwd($_POST['password-1'])));
-
-				$auth->login($user->nick, $_POST['password-1']);
-
-				$tpl->newBlock('save-pwd');
-			} else {
-				$tpl->newBlock('invalid-pwdlen');
-			}
-		} else {
-			$tpl->newBlock('invalid-pwd');
-		}
-	}
 
 	set_flash('Izmaiņas saglabātas!', 'success');
 	redirect('/user/edit');
@@ -83,11 +57,9 @@ if (isset($_POST['submit'])) {
 $tpl->gotoBlock('user-profile-edit');
 $tpl->assign(array(
 	'user-nick' => $user->nick,
-	'user-mail' => $user->mail,
 	'user-skype' => $user->skype,
 	'user-yt_name' => $user->yt_name,
 	'user-twitter' => $user->twitter,
-	'user-skin-' . $user->skin => ' selected="selected"',
 	'user-web' => htmlspecialchars($user->web),
 	'user-signature' => htmlspecialchars($user->signature),
 	'user-date' => $user->date,

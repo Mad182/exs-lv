@@ -20,7 +20,6 @@
 	<p>Reģistrējās pirms {user-days} {user-days-text}, pēdējo reizi bija online pirms {user-lastseen}</p>
 	<dl id="profile-info" class="list-attr">
 
-
 		<!-- START BLOCK : info-node-->
 		<dt>{title}</dt>
 		<dd>{value}</dd>
@@ -264,6 +263,9 @@
 
 			<label for="edit-signature">Par mani<br /><span class="description">(redzams citiem atverot Tavu profilu)</span></label><br />
 			<textarea rows="4" cols="20" style="width:98%;height:300px" name="edit-about" id="edit-about">{user-about}</textarea>
+
+			<br />
+
 			<p>
 				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
 			</p>
@@ -302,7 +304,6 @@
 	</form>
 </div>
 <!-- END BLOCK : user-profile-security-->
-
 
 <!-- START BLOCK : user-profile-avatar-->
 <div class="tabMain">
@@ -423,4 +424,3 @@
 	</form>
 </div>
 <!-- END BLOCK : user-profile-give-->
-
