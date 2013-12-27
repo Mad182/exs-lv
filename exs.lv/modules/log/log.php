@@ -10,7 +10,43 @@ if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
 }
 
-$logs = $db->get_results("SELECT * FROM `logs` ORDER BY `created` DESC LIMIT $skip, $end");
+// meklētājs
+$query_where = '';
+if ( isset($_POST['criteria']) && isset($_POST['value']) ) {
+
+    $value = htmlspecialchars(strip_tags(trim($_POST['value'])));
+
+    switch ((int)$_POST['criteria']) {        
+        // vieta
+        case 1:
+            $query_where = " WHERE `foreign_key` = '".(int)$value."' ";
+            break;
+        // darbība
+        case 2:
+            $query_where = " WHERE `action` LIKE '%".sanitize($value)."%' ";
+            break;
+        // IP adrese; laukā drīkst rakstīt % zīmi
+        case 3:
+            if (substr($value, 0, 1) == '%') {
+                $value = substr($value, 1);
+            }
+            $query_where = " WHERE `ip` LIKE '".sanitize($value)."' ";
+            break;
+        // lietotāja ID
+        default:
+            $query_where = " WHERE `user_id` = '".(int)$value."' ";
+            break;
+    };
+    $skip = 0;
+    $limit = 200;
+    
+    $tpl->assign(array(
+        'selected-'.(int)$_POST['criteria'] => ' selected="selected"',
+        'field-value' => $value
+    ));
+}
+
+$logs = $db->get_results("SELECT * FROM `logs` $query_where ORDER BY `created` DESC LIMIT $skip, $end");
 if ($logs) {
 	foreach ($logs as $log) {
 		$tpl->newBlock('logs-list-node');
@@ -19,13 +55,13 @@ if ($logs) {
 			$log->user_id = '<a href="/user/' . $who->id . '">' . usercolor($who->nick, $who->level, false, $who->id) . '</a>';
 		}
 
-		$place = '';
-
-		if ($log->foreign_table == 'pages') {
-			$page = $db->get_row("SELECT `title`, `strid` FROM `pages` WHERE `id` = '$log->foreign_key'");
+        $place = '';
+        
+        // pieprasījumi nepieciešami if'ā, lai arī lokāli vienmēr strādātu,
+        // nevis vienmēr jāatjauno gan rakstu un lietotāju, gan logu tabula
+		if ($log->foreign_table == 'pages' && ($page = $db->get_row("SELECT `title`, `strid` FROM `pages` WHERE `id` = '$log->foreign_key'")) ) {
 			$place = '<a href="/read/' . $page->strid . '">' . $log->foreign_table . '-' . $log->foreign_key . '</a>';
-		} elseif ($log->foreign_table == 'users') {
-			$user = get_user($log->foreign_key);
+		} elseif ($log->foreign_table == 'users' && ($user = get_user($log->foreign_key)) ) {
 			$place = '<a href="/user/' . $user->id . '">' . $log->foreign_table . ': ' . $user->nick . '</a>';
 		} else {
 			$place = $log->foreign_table . '-' . $log->foreign_key;
@@ -42,10 +78,12 @@ if ($logs) {
 	}
 }
 
-$pager = pager($db->get_var("SELECT count(*) FROM `logs`"), $skip, $end, '/' . $category->textid . '/?skip=');
-$tpl->assignGlobal(array(
-	'pager-next' => $pager['next'],
-	'pager-prev' => $pager['prev'],
-	'pager-numeric' => $pager['pages']
-));
+if (empty($_POST)) {
+    $pager = pager($db->get_var("SELECT count(*) FROM `logs`"), $skip, $end, '/' . $category->textid . '/?skip=');
+    $tpl->assignGlobal(array(
+        'pager-next' => $pager['next'],
+        'pager-prev' => $pager['prev'],
+        'pager-numeric' => $pager['pages']
+    ));
+}
 
