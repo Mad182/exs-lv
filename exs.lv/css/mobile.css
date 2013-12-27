@@ -1485,3 +1485,11 @@ blockquote, .q, .quote {
 	width: 30px;
 	text-align: right;
 }
+
+.deleted-entry {
+    padding: 5px 15px;
+    font-size: 11px;
+    margin: 7px 0 5px 40px;
+    color: #962d2d;
+    background: #f5f3f3;
+}
