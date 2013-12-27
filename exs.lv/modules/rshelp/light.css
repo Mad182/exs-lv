@@ -778,8 +778,7 @@
     background:#e3e4e5  
   }
   .area:hover a, .area-left:hover a, .area-right:hover a {
-    text-decoration:none;
-	/*background:red*/
+    text-decoration:none
   }
 .area-left img, .area-right img  {
   height:85px;
@@ -802,16 +801,8 @@
 	left:5px;
 	max-height:20px;
 	max-width:20px;
-	/*margin-top:-6px !important;*/
-	border:0px !important;
-	/*overflow:hidden*/
+	border:0px !important
 }
-/*.area-left img.area-large, .area-right img.area-large {
-  clear:both;
-  margin-left:-30px;
-  /*margin-top:5px;
-  
-} */
 
 
 /* runescape mainpage */
@@ -843,14 +834,9 @@
     margin:/*14px*/45px 0 0 0;
     border-bottom:2px solid #bbb;
   }
-  #center-col {
-    /*width:400px*/  
+  #center-col img {
+    width:400px;
   }
-    #center-col img {
-      /*border:1px solid orange;*/
-      width:400px;
-      /*padding:1px*/
-    }
 .bannertitle {
   position:absolute;
   text-align:center;
@@ -884,35 +870,6 @@
   #areas-banner:hover {
     background-image:url('/bildes/rs/intro/crucible.png');
   }
-/*
-#rsmenu {
-  margin:auto;
-  clear:both;
-  padding:0;
-  margin-top:-2px;
-  margin-left:250px
-}
-#rsmenu li {
-  background:transparent url('/bildes/rs/intro/menu-border-bottom-2.png') bottom repeat-x;
-  padding:3px 7px 6px;
-  float:left;
-  color:#fff;
-  font-size:11px;
-  letter-spacing:1px  
-}
-  #rsmenu li#left-border {
-    background:transparent url('/bildes/rs/intro/menu-border-left.png') repeat-y;
-    padding:0px !important;
-    width:5px;
-    height:25px;
-    clear:left
-  }
-  #rsmenu li#right-border {
-    background:transparent url('/bildes/rs/intro/menu-border-right.png') repeat-y;
-    padding:0px !important;
-    width:5px;
-    height:25px
-  } */
 #rsarticles {
   margin:0;
   padding:0 ;

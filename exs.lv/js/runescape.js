@@ -57,4 +57,35 @@ $(document).ready(function () {
         fixDiv();
     });
     
+    /* prasmju sadaļas pārvietošanās pa lapām */
+    $('a.skill-pager').live('click', function() {
+        var elem = $(this).parent().parent();
+        elem.fadeTo(250, 0.5);
+        elem.load($(this).attr('href'), function() {
+            elem.fadeTo(250, 1);
+        });
+        return false;
+    });
+    
+    /* prasmju sadaļas faktu parādīšana */
+    $('#show-facts').live('click',function() {			
+        $(this).siblings('#hidden-facts').toggle(800);
+        $(this).replaceWith('');
+        return false;
+    });
+    
+    /* prasmju sadaļas tabulas rindu parādīšana */
+    $('#show-rows').live('click',function() {			
+        $('.hidden-row').toggle(1000);
+        $(this).replaceWith('');
+        return false;
+    });
+    
+    
+    $('.showph').live('click',function() {			
+        $(this).parent().siblings('.ph-hidden').toggle(200);
+        $(this).parent().css('display','none');
+        return false;
+    });
+    
 });

@@ -2,8 +2,6 @@
 
 $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/rshelp-head.tpl');
 $tpl->prepare();
-$skinid = ($auth->skin == '1') ? 'dark' : 'light';
-$tpl->assign('skinid', $skinid);
 
 
 /* ----------------------------------------------
