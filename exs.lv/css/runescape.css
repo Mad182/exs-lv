@@ -53,11 +53,23 @@ body {
 #content.no-left {
     width:744px
 }
-#top-menu li:hover ul {
-	display: block;
+#top-menu #top-menu-right li ul#user-group-menu {
+    width:330px;
+    left:-100px
 }
-#top-menu ul ul li {
-    width:150px
+#top-menu #top-menu-right li ul#user-group-menu li {
+    width:160px
+}
+#top-menu #top-menu-right li ul#user-group-menu li a {
+	background: transparent;
+	display: block;
+	padding: 0 3px 0 0;
+	margin: 0;
+	height: auto;
+	width: auto;
+	font-family: Arial;
+	font-size: 11px;
+	line-height: 14px;
 }
 #login-block {
     margin:0 10px 0 0;
