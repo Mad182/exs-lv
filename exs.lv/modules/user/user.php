@@ -4,7 +4,7 @@
  * Lietotāja profila apskatīšanas un labošanas modulis
  */
 
-$submodules = array('edit', 'avatar', 'settings', 'security', 'buytitle', 'give', 'changenick');
+$submodules = array('edit', 'avatar', 'settings', 'security', 'buytitle', 'changenick');
 
 if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 	$userid = (int) $_GET['var1'];
@@ -120,13 +120,21 @@ if ($user) {
 		));
 		$page_title = 'Bloķēt lietotāju &quot;' . $user->nick . '&quot;';
 	}
-
+    
 	/**
 	 *	Ielādē submoduli pēc GET[var1]
 	 */
 	elseif ($auth->ok && $auth->id == $user->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
 
 		require(CORE_PATH . '/modules/user/submodules/' .mkslug($_GET['var1']) . '.php');
+
+    }
+    /**
+	 *	expts dāvināšana citam lietotājam
+	 */
+	elseif ($auth->ok && $auth->id != $user->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
+
+		require(CORE_PATH . '/modules/user/submodules/give.php');
 
 	//view profile
 	} else {
