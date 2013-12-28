@@ -2400,7 +2400,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			if ($val->mb_removed == 1) {
 				$out .= '<p class="deleted-entry">Saturs dzēsts!';
 				// moderatoriem apskatāms dzēstā ieraksta saturs
-				if (im_mod() && !$auth->mobile && $lang == 1) {
+				if (im_mod() && !$auth->mobile) {
 					$out .= '<a style="float:right" class="deleted-content" href="/mbview/'.$val->id.'">skatīt saturu</a>';
 				}
 				$out .= '</p>';
