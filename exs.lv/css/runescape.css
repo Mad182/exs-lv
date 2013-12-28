@@ -176,6 +176,12 @@ div pre {
 #online-users span {
     font-size:11px !important
 }
+.top-navig .red, .top-navig .r {
+	color: #ef6000;
+}
+.top-navig .green, .top-navig .g {
+	color: #60ef00;
+}
 
 
 /* jaunie lapas pamatbloki */
@@ -269,6 +275,24 @@ ul.nav-right {
     .rs-logo.right-logo {
         right:10px
     }
+.new-groups p {
+    display: block;
+    clear: both;
+    overflow: auto;
+    border-bottom: 1px solid #F3EEEE;
+    padding: 2px 5px 2px 0;
+}
+.new-groups img {
+    float:left;
+    margin:0 5px 0 0;
+    max-width:40px;
+    max-height:40px
+}
+.new-groups a {
+    margin-top: 11px;
+    margin-left:5px;
+    display: inline-block
+}
     
 /* dropdown izvēlnes */
 .droplist li {
@@ -443,24 +467,4 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
 }
 .skill-pages {
     width:144px
-}
-
-/* cits */
-.new-groups p {
-    display: block;
-    clear: both;
-    overflow: auto;
-    border-bottom: 1px solid #F3EEEE;
-    padding: 2px 5px 2px 0;
-}
-.new-groups img {
-    float:left;
-    margin:0 5px 0 0;
-    max-width:40px;
-    max-height:40px
-}
-.new-groups a {
-    margin-top: 11px;
-    margin-left:5px;
-    display: inline-block
 }
