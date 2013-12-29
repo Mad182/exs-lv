@@ -1,11 +1,14 @@
 <?php
 /**
- *	
+ *	RuneScape aktivitāšu pārvaldība.
  *
- *	Moduļa adrese: runescape.exs.lv/
+ *  
+ *
+ *	Moduļa adrese: runescape.exs.lv/series
  */
  
 if ( !isset($sub_include) ) {
+    set_flash('No hacking, pls.');
     redirect();
 }
 

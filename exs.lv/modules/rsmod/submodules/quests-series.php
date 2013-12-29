@@ -1,11 +1,15 @@
 <?php
 /**
- *	RuneScape questu sēriju pārvaldība
+ *	RuneScape questu sēriju pārvaldība.
+ *
+ *  Jaunu sēriju pievienošana sistēmai, esošo izmaiņas;
+ *  sēriju secība kvestu sadaļā, kvestu secība sērijā.
  *
  *	Moduļa adrese: runescape.exs.lv/series
  */
  
 if ( !isset($sub_include) ) {
+    set_flash('No hacking, pls.');
     redirect();
 }
 

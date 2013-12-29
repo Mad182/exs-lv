@@ -1,11 +1,14 @@
 <?php
 /**
- *	
+ *	RuneScape pamācību placeholderu pārvaldība.
  *
- *	Moduļa adrese: runescape.exs.lv/
+ *  Ļauj RS pamācību sadaļām pievienot placeholderus iztrūkstošajiem rakstiem.
+ *
+ *	Moduļa adrese: runescape.exs.lv/rsph
  */
  
 if ( !isset($sub_include) ) {
+    set_flash('No hacking, pls.');
     redirect();
 }
 

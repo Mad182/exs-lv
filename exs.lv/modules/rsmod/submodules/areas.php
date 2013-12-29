@@ -1,11 +1,14 @@
 <?php
 /**
- *	
+ *	RuneScape ceļvežu pārvaldība.
  *
- *	Moduļa adrese: runescape.exs.lv/
+ *  Ceļvežu raksti tiek sakārtoti specifiskā sarakstā ar attēliem.
+ *
+ *	Moduļa adrese: runescape.exs.lv/areas
  */
  
 if ( !isset($sub_include) ) {
+    set_flash('No hacking, pls.');
     redirect();
 }
 

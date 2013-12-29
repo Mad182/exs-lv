@@ -1,11 +1,15 @@
 <?php
 /**
- *	
+ *	RuneScape kvestiem nepieciešamo prasmju pārvaldība.
  *
- *	Moduļa adrese: runescape.exs.lv/
+ *  Ļauj norādīt, kādi līmeņi nepieciešami, lai spēlētājs
+ *  varētu izpildīt visus RuneScape kvestus.
+ *
+ *	Moduļa adrese: runescape.exs.lv/qskills
  */
  
 if ( !isset($sub_include) ) {
+    set_flash('No hacking, pls.');
     redirect();
 }
 
