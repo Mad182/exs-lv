@@ -1197,6 +1197,8 @@ a.friend:hover {
 	font-size: 11px;
 	line-height: 14px;
 	border-bottom: 1px solid #eee;
+	width: auto;
+	overflow: hidden;
 }
 
 .user-actions li span {
