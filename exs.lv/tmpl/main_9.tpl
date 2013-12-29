@@ -112,14 +112,14 @@ tinymce.init({
                 <li><a href="#">Quests</a>
                     <span class="arrow-right"></span>
                     <ul class="flip-side">
-                        <li><a href="#">Storylines</a></li>
-                        <li><a href="#">Sēriju kvestu secība</a></li>
+                        <li><a href="/series">Sērijas, secība</a></li>
                         <li><a href="#">Nepieciešamie līmeņi</a></li>
                         <li>&nbsp;</li>
                     </ul>
                 </li>
-                <li><a href="#">OSRS</a></li>
                 <li><a href="#">Placeholders</a></li>
+                <li><a href="#">Ceļveži</a></li>
+                <li><a href="#">Aktivitātes</a></li>
                 <li>&nbsp;</li>
             </ul>
         </li>

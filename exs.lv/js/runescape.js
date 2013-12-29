@@ -79,12 +79,17 @@ $(document).ready(function () {
         $('.hidden-row').toggle(1000);
         $(this).replaceWith('');
         return false;
-    });
-    
+    });    
     
     $('.showph').live('click',function() {			
         $(this).parent().siblings('.ph-hidden').toggle(200);
         $(this).parent().css('display','none');
+        return false;
+    });
+    
+    $('.show-ph-links').live('click',function() {			
+        $(this).parent().parent().parent().siblings('.ph-links').toggle(300);
+        $(this).parent().parent().siblings('.ph-title').css('color','red');
         return false;
     });
     
