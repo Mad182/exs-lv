@@ -19,34 +19,33 @@ LIB_PATH uz libs folderi.
 
 
 ### kas vajadzīgs, lai lapa būtu palaižama:
-php-gd<br />
-php-memcache<br />
-php-curl<br />
-memcached<br />
-mysql<br />
+
+php-gd
+php-memcache
+php-curl
+memcached
+mysql
 apache2 ar mod_rewrite un .htaccess atbalstu
 
 ### lai darbotos img.exs.lv:
-imagemagick<br />
-advancecomp<br />
-pngcrush<br />
-optipng<br />
-jpegoptim<br />
-<br />
-uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt<br />
-<br />
-<br />
-nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt., <br />
-ip adreses un viss pārējais tiek redirektēts uz exs.lv<br />
-es ieteiktu uztaisīt virtualhostu, un hosts failā norādīt 127.0.0.1 dev.exs.lv<br />
 
+imagemagick
+advancecomp
+pngcrush
+optipng
+jpegoptim
+
+uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
+
+nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt.,
+ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
 libs mapē vajadzīgi:
 (instalējas kā submoduļi)
 
-https://github.com/ezyang/htmlpurifier<br />
-https://github.com/swiftmailer/swiftmailer<br />
-https://github.com/Austinb/GameQ<br />
+https://github.com/ezyang/htmlpurifier
+https://github.com/swiftmailer/swiftmailer
+https://github.com/Austinb/GameQ
 https://github.com/facebook/facebook-php-sdk
 
 
