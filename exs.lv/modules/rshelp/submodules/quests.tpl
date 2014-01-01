@@ -36,7 +36,7 @@
 <!-- END BLOCK : quests-series -->
 
 <!-- START BLOCK : quests-outro -->
-<h1 class="content-title">RuneScape kvestu statistika</h1>
+<h1 class="content-title" style="border-bottom:none">RuneScape kvestu statistika</h1>
 <div id="quests-outro">
 	<div style="float:left;width:60%">
     
@@ -146,7 +146,7 @@
             <a href="/read/{page_strid}">{page_image}</a>
         </td>
         <td style="position:relative">
-            <p class="mq-title facts-title">
+            <p class="mq-title">
                 <a href="/read/{strid}">{page_title}</a> @ {page_date} no {page_author} {warning}
             </p>
             <p style="font-size: 11px;">{rspage_description}</p>

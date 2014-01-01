@@ -583,7 +583,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
         border-right:1px solid #ddd
     }
     #quests-tabs li a {
-        padding:3px 12px;
+        padding:2px 12px;
         display:block
     }
     #quests-tabs .nohover {
@@ -591,7 +591,9 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
         padding:2px 12px;
     }
     #quests-tabs li a:hover {
-        background:lavender
+        background: #EEF3F3;
+        color: #585C66;
+        text-decoration: none;
     }
     #quests-tabs .nohover:hover {
         background:none
@@ -705,6 +707,9 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     .skill-level .left, .skill-level .right {
         color:#33353a
     }
+    #quests-skills table td {
+        font-size: 11px
+    }
     
 /* freeplay & miniquests */
 .other-quests {
@@ -736,14 +741,14 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
         color:#7e888a
     }
     .other-quests .warning {
-        vertical-align:middle;
-        margin-bottom:-2px;
+        position: absolute;
+        margin-left: 5px;
         max-height:16px;
         max-width:16px
     }
-    .other-quests .warning_small {
+    .warning_small {
         position:absolute;
-        bottom:2px;
+        bottom:4px;
         right:2px;
         max-height:16px;
         max-width:16px
@@ -881,7 +886,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
         vertical-align:middle
     } 
 #skills_facts {
-    margin:10px 70px 10px 0;
+    margin:10px 70px 10px 15px;
     clear:both;
     position:relative
 }
@@ -986,22 +991,24 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     .tasks-block ul li {
         overflow:auto;
         background:transparent;
-        padding:0
+        padding:0;
+        margin:0
     }
     .tasks-block ul li a.page {
-        padding:3px 5px 3px 10px;
-        border-bottom:0px solid #d9e4f4;
+        padding:4px 5px 4px 10px;
+        border-bottom:0 solid #d9e4f4;
         border-top:1px solid #dadada;
         margin:0;
         display:block
     }
   .tasks-block li:hover {
     background:lavender;
-    border-left:3px solid #b4b5b5;
+    border-left:3px solid #778DA5;
   }
   .tasks-block li:hover a.page {
     padding-left:7px;
-    text-decoration:none
+    text-decoration:none;
+    color:#0059A7
   }
 /* ceļveži */
 .area {
