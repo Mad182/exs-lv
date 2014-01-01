@@ -22,7 +22,12 @@ body {
         opacity:1.0;
         filter:alpha(opacity=100); /* For IE8 and earlier */
     }
-    
+.clearfix {
+    margin:0;
+    padding:0;
+    clear:both
+}    
+
 /* pārrakstītie core.css elementi */
 #wrapper {
     position:relative;
@@ -168,7 +173,10 @@ div pre {
     width:465px
 }
 #top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
-    /*width:146px*/
+    width:150px
+}
+#top-menu li:hover ul {
+    display: block
 }
 #exs-groups h3 {
     margin: 5px 0 2px;
@@ -461,38 +469,17 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     color:#64757a
 }
 
-/* runescape pamācību sadaļas */
-.skill-block {
-    width:333px !important
-}
-.skill-pages {
-    width:144px
-}
-
-/* rsmod */
-.title-margin {
-	position:relative;
-	top:-20px
-}
-.rs_content_title {
-  clear:both;
+/* runescape pamācību sadaļu vispārīgie stili */
+.content-title {
   margin:10px 0 10px 20px;
+  position:relative;
   color:#33353a;
   padding-bottom:3px;
-  border-bottom:1px dotted #ccc
+  border-bottom:1px dotted #ccc  
 }
-.fleft { float:left; }
-.fright { float:right; }
-
-#list_warns {
-	margin:10px auto;
-	display:inline-block;
-	clear:both;
-	overflow:auto
-}
-	#list_warns td {
-		font-size:11px
-	}
+    .content-title.no-margin {
+        top:-20px
+    }
 .rslist {
   font-size:11px;
   margin:10px auto
@@ -504,8 +491,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
 .rslist .listhead {
   border-bottom:2px solid #ddd;
   font-weight:bold;
-  text-align:center;
-  background:transparent url('/bildes/rs/header.png') repeat-x top;
+  background:transparent url('/bildes/runescape/table-bg.png') repeat-x top;
   color:#374a55
 } 
 .rslist tr td {
@@ -516,7 +502,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     background-color:rgb(253, 253, 253)
   }  
   .rslist tr.listhead:hover td {
-    background:transparent url('bildes/rs/header.png') repeat-x top
+    background:transparent url('bildes/runescape/table-bg.png') repeat-x top
   }  
   .rslist tr td.center, .rslist-center td {
     text-align:center
@@ -536,10 +522,9 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
   }
   .rslist .level, .rslist .quest {
     font-size:12px;
-    border:0px;
+    border:0;
     height:25px;
     font-family:tahoma,verdana,arial;
-    font-size:11px;
     padding:3px 
   }
   .rslist .level {
@@ -553,32 +538,557 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
 .rslist .transp {
   font-family:tahoma,verdana,arial;
   font-size:11px;
-  border:0px;
+  border:0;
   background:transparent;
   padding:3px 5px
 }
+.skill-block {
+    width:333px !important
+}
+.skill-pages {
+    width:144px
+}
+.rs-intro {
+    margin:10px 20px 0 20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-bottom:2px solid #bbb;
+    border-top:2px solid #bbb;
+    position:relative
+}
+.rs-intro p {
+    text-indent:10px;
+    font-size:11px
+}
 
-.dg {
-  color:#33353a
+/* runescape kvestu sēriju sadaļa */
+#intro-quests img {
+    max-height:120px;
+    float:left;
+    margin:0 10px 5px 0
 }
-.cab {
-  font-weight:bold;
-  color:#355575
+#quests-tabs {
+    margin:0 0 20px 40px;
+    padding:0;
+    border:1px solid #bbb;
+    border-top:0;
+    float:left;
+    font-size:11px
 }
-#rs_info_block {
+    #quests-tabs li {
+        float:left;
+        background:transparent;
+        margin:0;
+        padding:0;
+        border-right:1px solid #ddd
+    }
+    #quests-tabs li a {
+        padding:3px 12px;
+        display:block
+    }
+    #quests-tabs .nohover {
+        font-weight:bold;
+        padding:2px 12px;
+    }
+    #quests-tabs li a:hover {
+        background:lavender
+    }
+    #quests-tabs .nohover:hover {
+        background:none
+    }
+    #quests-tabs li img {
+        padding:0;
+        margin-top:0;
+        position:relative;
+        top:2px
+    }
+#quests-series {
+    margin-left:20px
+}
+    .series {
+        float:left;
+        width:160px;
+        min-height:150px;
+        padding:5px 5px 8px 5px;
+        margin:0 7px 20px 0;
+        background:#f4f3f3;
+        border:1px solid #ddd;      
+        font-size:11px
+    }
+    .series .series-title {
+        margin:0 auto 5px;
+        padding:0 0 3px 0;
+        font-weight:bold;
+        color:#2d3031;
+        border-bottom:1px dotted #ccc
+    }
+    .series img {
+        margin:3px auto 10px;
+        border:3px solid #ddd;
+        max-width:150px
+    }      
+    .series a {
+        margin:0;
+        padding-left:17px;
+        display:block;
+        overflow:auto;
+        background:url('/bildes/runescape/li.png') no-repeat;
+    }
+#quests-outro {
+    position:relative;
+    border-top:2px solid #bbb
+}
+    .facts-title {
+        color:#33353a;
+        clear:both;
+        padding: 5px 0 3px 10px
+    }
+    #quests-outro p {
+        border-bottom: 1px dotted #ddd;
+    }
+.stats-left, .stats-right {
+    margin:10px 0 0 0;
+}
+    .stats-left {
+        float:left
+    }
+    .stats-right {
+        float:right
+    }
+    .stats-left tr td, .stats-right tr td {
+        padding:0 0 5px 5px;
+        color:#374e5b
+    }
+    .stats-left td.left, .stats-right td.left {
+        text-align:right;
+        color:#000000   
+    }
+    .stats-left tr.space td, .stats-right tr.space td {
+        padding-top:17px
+    }
+    #balance {
+        position:relative;
+        border-bottom:1px solid #ccc;
+        left:25px;
+        bottom:40px;
+        max-height:220px;
+        padding-bottom:5px
+    }
+#quests-facts {
+    position:relative;
+    left:-20px;
+    clear:both;
+    padding-top:10px
+}
+    #quests-facts li {
+        padding-bottom:2px;
+        margin:0 0 5px 0;
+        border-bottom:1px solid #ccc;
+        font-size:11px;
+        width:350px;
+    }
+    #quests-facts li, #quests-skills li {
+        padding-left:17px;
+        background:url('/bildes/runescape/li.png') no-repeat;
+    }
+#quests-skills {
+    float:left;
+    margin-left:20px;
+    width:35%
+}
+    .skill-level {
+        margin:10px 0 0 0
+    }
+    .skill-level .center {
+        color:#495d90
+    }
+    .skill-level .left, .skill-level .right {
+        color:#33353a
+    }
+    
+/* freeplay & miniquests */
+.other-quests {
+    margin:20px 50px 20px 20px;
+    font-size:11px;
+    clear:both;
+    width:730px
+}
+    .other-quests tr td {
+        padding:5px;
+        border:1px solid #ccc;
+        min-height:15px;
+        position:relative
+    }
+    .other-quests .quest-image {
+        padding:2px 2px 0;
+        vertical-align:middle
+    }
+        .quest-image img {
+            max-width:150px;
+            max-height:80px
+        }
+    .other-quests p {
+        margin:0 0 0 7px
+    }
+    .other-quests .mq-title {
+        margin:-2px 0 0 7px;
+        padding:0;
+        color:#7e888a
+    }
+    .other-quests .warning {
+        vertical-align:middle;
+        margin-bottom:-2px;
+        max-height:16px;
+        max-width:16px
+    }
+    .other-quests .warning_small {
+        position:absolute;
+        bottom:2px;
+        right:2px;
+        max-height:16px;
+        max-width:16px
+    }
+    .other-quests .exists-not {
+        padding:2px;
+        width:150px
+    }
+/* minigames & D&D */
+.mg-logo {
+  float:left;
+  position:relative;
+  max-height:105px;
+  bottom:12px
+}
+.dd-logo {
+  float:left;
+  max-height:140px;
+  position:relative;
+  bottom: 15px;
+}
+.rslist .mg-avatar {
+  width:80px
+}
+.rslist .mg-title {
+	font-weight:bold;
+	color:#153f54;
+	text-transform:uppercase
+}
+.rslist .mg-info {
+   position:relative;
+   width:150px
+}
+.rslist .mg-av {
+  max-width:80px;
+	max-height:80px;
+	margin:3px;
+	border:2px solid #ccc
+}
+.rslist .mg-old {
+  float:right;
+  position:absolute;
+  top:2px;
+  right:0
+}
+.mglist tr td {
+    font-size:11px
+}
+
+/* prasmju stilizējumi */
+.rs_info {
   padding:3px 7px;
   border:1px solid #bbb;
   border-left:4px solid #bbb;
-  margin:7px 0;
+  margin:7px 20px;
   font-size:11px
 }
-#rs_info_block img {
-  float:left;
-  margin-right:5px;
-  vertical-align:middle
+    .rs_info img {
+      float:left;
+      margin-right:5px;
+      vertical-align:middle
+    }
+#sage {
+    float:left;
+    margin:5px;
+    position:relative;
+    left:-15px;
+    max-height:170px
 }
-/* -- */
-
+    #wagtail {
+        position:absolute;
+        right:-22px;
+        top:-12px;
+        max-height:90px
+    }    
+.skill-block, .skill-block-2 {
+    border:1px solid #ddd;
+    border-bottom:2px solid #a4aeb9;
+    width:345px;
+    height:190px;
+    float:left;
+    margin:10px 15px 10px 0;
+    font-size:11px
+}
+    .skill-block-2 {
+        height:210px
+    }
+    .skill-name {
+        font-weight:bold;
+        color:#3e5265;
+        font-size:13px
+    }
+    .skill-info {
+        padding:5px;
+        float:left;
+        width:60%;
+        display:inline;
+    }
+    .skill-links, .skill-links-2 {
+        padding-top:5px;
+        width:15%;
+        float:left;
+        height:185px;
+        position:relative;
+        border-left:1px solid #ddd;
+    }
+    .skill-links-2 { /* linux */
+        height:205px
+    }
+    .skill-links p {
+        font-weight:bold;
+        color:#5b6b7b;
+        padding-left:7px
+    }
+    .skill-links a {
+        border-bottom:1px dotted #bbb;
+        padding:0 5px 3px 8px;
+        margin:2px 0 0 8px;
+        display:inline-block
+    }
+    .skill-pages {
+        background:#e1e3e4;
+        border-top:1px solid #c9cacc;
+        position:absolute;
+        bottom:0;
+        display:block;
+        padding:0 6px
+    }
+    .skill-pages, .skill-pages a, .skill-pages a:visited, .skill-pages a:active, .skill-pages a:focus {
+        border-bottom:0
+    }
+    .skill-icon {
+        margin:5px;
+        float:left;
+        vertical-align:middle
+    } 
+#skills_facts {
+    margin:10px 70px 10px 0;
+    clear:both;
+    position:relative
+}
+    #xenia {
+        position:absolute;
+        max-height:120px;
+        right:-15px;
+    }
+    #skills_facts ul {
+        margin:0;
+        padding:0
+    }
+    #skills_facts ul li {
+        background:transparent url('/bildes/runescape/li.png') no-repeat;
+        font-size:11px;
+        padding-left:20px
+    }
+.xp-table tr td {
+    font-size:11px
+}
+.xp-table .number-2 {
+    color:#274d73;
+    font-weight:bold;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc
+}
+.rslist-center {
+    margin-left:15px
+}
+/* tasks/achievement diaries un ģildes */
+#trollis {
+    max-height:100px;
+    float:left;
+    margin:0 10px 5px 0
+}
+    #montai {
+        max-height:80px;
+        float:left;
+        margin:0 10px 5px 0
+    }
+    #wise-old-man {
+        max-height:90px;
+        float:left;
+        margin:0 10px 5px 0
+    }
+.tasks-block {
+    float:left;  
+    padding:5px 0 0;
+    margin:0 7px 20px 10px;
+    border:1px solid #cccdcd;
+    border-bottom:1px solid #b3b8bc;
+    background:#f4f3f3;      
+    font-size:11px;
+    position:relative;
+    width:218px
+}
+    .newline {
+        clear:left
+    }
+    .border-gray {
+        border:1px solid #cccdcd;
+        border-bottom:1px solid #b3b8bc
+    }
+    .border-orange {
+        border:1px solid #95a5c2;
+        border-bottom:1px solid #677898
+    }  
+.tasks-block .tasks-title {
+    margin:0 auto 5px;
+    padding:0 5px 3px 7px;
+    font-weight:bold;
+    color:#374e5b;
+    display:block;
+    border-bottom:1px dotted #ccc
+} 
+  .tasks-block .guild-icon {     
+    vertical-align:middle;
+    border:0 !important;
+    margin:-4px 3px 0 5px
+  }
+  .tasks-block .old {    
+    float:right;
+    position:absolute;
+    top:-3px;
+    right:-2px;
+    border:0 !important;
+  }
+.tasks-block img {
+    margin:3px 5px 10px;
+    border:3px solid #ddd;
+    max-width:200px
+} 
+.tasks-block p {
+    margin:0 7px 3px 7px;
+    padding:0;
+    line-height:1.3
+}  
+.tasks-block ul {
+    padding:0;
+    margin:0
+}               
+    .tasks-block ul li {
+        overflow:auto;
+        background:transparent;
+        padding:0
+    }
+    .tasks-block ul li a.page {
+        padding:3px 5px 3px 10px;
+        border-bottom:0px solid #d9e4f4;
+        border-top:1px solid #dadada;
+        margin:0;
+        display:block
+    }
+  .tasks-block li:hover {
+    background:lavender;
+    border-left:3px solid #b4b5b5;
+  }
+  .tasks-block li:hover a.page {
+    padding-left:7px;
+    text-decoration:none
+  }
+/* ceļveži */
+.area {
+    border:2px solid #e0e1e1;
+    outline:1px solid #bbbcbc;  
+    width:170px;  
+    margin:0 20px 10px 5px;
+    position:relative;
+    background-color:#f1f2f2;  
+    font-size:11px;
+    float:left;
+    height:30px;
+    padding:0 5px 0 35px;
+}
+	.area-empty {
+		opacity:0.6;
+		filter:alpha(opacity=60);
+	}
+	.area-empty:hover {
+		outline:1px solid #737374
+	}
+    .area a {
+        clear:both;
+        display:block;
+        padding: 7px 7px 7px 5px
+    }
+    .area:hover {
+        background:#e3e4e5  
+    }
+    .area:hover a {
+        text-decoration:none
+    }
+.area .area-ico {
+    position:absolute;
+    top:1px;
+    left:3px;
+    max-height:40px;
+    max-width:30px;
+    border:0 !important;
+    overflow:hidden
+}
+.area .cross {
+	position:absolute;
+	top:6px;
+	left:5px;
+	max-height:20px;
+	max-width:20px;
+	border:0 !important
+}
+/* ģildes */
+.guild-strong {
+    font-weight:bold;
+    color:#355575
+}
+.guild-old {    
+    float:right;
+    border:0 !important;
+    position:absolute;
+    right:0;
+    top:0
+}
+/* padomi */
+.rshelp-ghost {
+  background:url('/bildes/runescape/guides/ghost.png') no-repeat;
+  background-position:center;
+}
+.rshelp-money {
+  background:url('/bildes/runescape/guides/money.png') no-repeat;
+  background-position:center;
+}
+.rshelp-info {
+  background:url('/bildes/runescape/guides/Home.png') no-repeat;
+  background-position:center;
+}
+.rshelp-armour {
+  background:url('/bildes/runescape/guides/boots.png') no-repeat;
+  background-position:center;
+}
+.rshelp-training {
+  background:url('/bildes/runescape/guides/sword.png') no-repeat;
+  background-position:center;
+}
+.rshelp-legend {
+  background:url('/bildes/runescape/guides/feather.png') no-repeat;
+  background-position:center;
+}
+/*
 .qorder {
   float:left;
   margin:0 0 30px 15px
@@ -605,4 +1115,4 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     margin:0;
     padding:0;
     color:#738b9b
-  }
+  }*/
