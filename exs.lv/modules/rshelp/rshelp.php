@@ -20,7 +20,7 @@ if ($auth->id == 115 && isset($_GET['force'])) {
 } 
 elseif ($auth->id == 115 && isset($_GET['refresh']) ) {
     // atjauno iekešotās daļas
-    $stats = get_quests_stats();
+    $stats = get_quests_stats(true);
     echo '<pre>'.var_dump($stats, false).'</pre>';
     exit;
 }
