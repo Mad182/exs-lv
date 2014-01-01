@@ -9,119 +9,130 @@
  */
  
 if ( !isset($sub_include) ) {
-    set_flash('No hacking, pls.');
-    redirect();
+    die('No hacking, pls.');
 }
+$tpl->assign('content-title', 'Kvestu sēriju pārvaldība');
 
-$tpl->assign('page-content-title', 'Sēriju kvestu secība');
-$tpl->newBlock('rsmod-menu');
 
-// sēriju numerācija un nosaukumi tiek atjaunoti
-if ( isset($_GET['var1']) && $_GET['var1'] == 'update' ) {
+// iesniegti sēriju secības atjaunošanas dati
+if ( isset($_POST['submit']) ) {
 
-    $get_cats = $db->get_results("SELECT `id` FROM `rs_classes` WHERE `cat` = 'series' ");
+    $series = $db->get_results("SELECT `id` FROM `rs_classes` WHERE `category` = 'series' ");
     
-    if ($get_cats) {
-        foreach ($get_cats as $cat => $data) {
-            if (isset($_POST['order_' . $data->id]) && isset($_POST['title_' . $data->id])) {
-                $order = (int) $_POST['order_' . $data->id];
-                $title = sanitize($_POST['title_' . $data->id]);
-                $update = $db->query("UPDATE `rs_classes` SET `order` = '$order', `title` = '$title' WHERE `id` = '$data->id' LIMIT 1");
+    if ($series) {
+        foreach ($series as $single) {
+            if ( isset($_POST['order_' . $single->id]) && isset($_POST['title_' . $single->id]) ) {
+            
+                $order  = (int) $_POST['order_' . $single->id];                
+                $title  = strip_tags( trim($_POST['title_' . $single->id]) );
+                $title  = sanitize( substr($title, 0, 50) );
+                
+                $db->query("UPDATE `rs_classes` SET `ordered` = '$order', `title` = '$title' WHERE `id` = '$single->id' LIMIT 1");
             }
         }
     }
-    //redirect("/".$_GET['viewcat']."/st-order");
+    set_flash('Sēriju secība un nosaukumi veiksmīgi atjaunoti!');
+    redirect('/' . $_GET['viewcat']);
 }
 
-// izvada visas kvestu sērijas ar to numerāciju
+// formu drukāšana lapā
 else {
-
-    $all_cats = $db->get_results("SELECT `id`,`title`,`order` FROM `rs_classes` WHERE `cat` = 'series' ORDER BY `order` ASC ");
-    if ($all_cats) {
-        $skaits = 0;
-        $tpl->newBlock('rsmod-series');
-        $tpl->newBlock('rsmod-series-col');
-        foreach ($all_cats as $cat => $data) {
-            $tpl->newBlock('series-single');
-            $tpl->assignAll($data);
-
-            $tpl->newBlock('single-ordering');
-            $tpl->assign('id', $data->id);
-
-            for ($a = 0; $a < sizeof($all_cats); $a++) {
-                $selected = (($a + 1) == $data->order) ? ' selected="selected"' : '';
-                $tpl->newBlock('single-order');
+    
+    /**
+     *  izdrukās visas pievienotās storylines
+     *  ar iespēju mainīt to secību kvestu pamācību sadaļā
+     */    
+    $series = $db->get_results("
+        SELECT `id`, `title`, `ordered` FROM `rs_classes` 
+        WHERE `category` = 'series' ORDER BY `ordered` ASC 
+    ");
+    if ($series) {
+    
+        $counter        = 0;
+        $series_count   = count($series);
+        
+        // skaits, aiz kura sarakstu pārdalīt uz pusēm
+        $col_split      = floor($series_count / 2);
+        
+        $tpl->newBlock('series-form');        
+        
+        foreach ($series as $single) {
+        
+            // izveido jaunu saraksta kolonnu
+            if ($counter == 0 || $counter == $col_split) {
+                $tpl->newBlock('series-column');
+            }
+        
+            $tpl->newBlock('single-series');
+            $tpl->assignAll($single);
+            
+            // katrai sērijai ir izvēlne ar kārtas numuriem
+            for ($i = 1; $i <= $series_count; $i++) {
+                $selected = ($i == $single->ordered) ? ' selected="selected"' : '';
+                $tpl->newBlock('selection-option');
                 $tpl->assign(array(
-                    'order' => ($a + 1),
-                    'selected' => $selected
+                    'order'     => $i,
+                    'selected'  => $selected
                 ));
             }
-            $skaits++;
-            if ($skaits == 10) {
-                $tpl->newBlock('rsmod-series-col');
-            }
+            $counter++;
         }
     }
+    
+    $tpl->gotoBlock('_ROOT');
+    /**
+     *  izdrukās visas pievienotās storylines
+     *  un katrai sērijai piesaistītos rakstus un to secību
+     */
+    /*$series = $db->get_results("
+        SELECT 
+            `rs_classes`.`id` AS `story_id`, 
+            `rs_classes`.`title`, 
+            `rs_classes`.`ordered`,
+            IFNULL(`rs_help`.`title`, 0) AS `help_title`,
+            IFNULL(`pages`.`title`, 0) AS `pages_title`,
+            IFNULL(`pages`.`strid`, 0) AS `pages_strid`
+        FROM `rs_classes`
+            LEFT JOIN `rs_help` ON `rs_classes`.`id` = `rs_help`.`storyline`
+            LEFT JOIN `pages` ON `rs_help`.`page_id` = `pages`.`id`
+        WHERE 
+            `rs_classes`.`category` = 'series' 
+        ORDER BY 
+            `rs_classes`.`ordered` ASC 
+    ");
+    if ($series) {
+        echo '<br><br><br><br>1';
+        $counter    = 0;
+        $story_id   = 0;
+        
+        foreach ($series as $single) {
+            echo 2;
+            //
+            if ($single->pages_title != '0') {
+            
+                // izveido jaunu storyline
+                if ($single->story_id != $story_id) {
+                    $tpl->newBlock('rsmod-quests-order');
+                    $tpl->assign(array(
+                        'title' => $single->page_title,
+                        'story' => $single->id
+                    ));
+                    if ($counter % 4 == 0) {
+                        $tpl->assign('clearleft', 'clear:left');
+                    }
+                    $story_id = $single->story_id;
+                }
+            
+                $tpl->newBlock('order-quest');
+                $tpl->assign(array(
+                    'quest-title' => $single->pages_title,
+                    'strid' => $single->pages_strid,
+                    'qid' => 0
+                ));
+                $counter++;
+            }                
+        }
+    }*/
+    
+    
 }
-
-/*
-    if ($_GET['var1'] == 'order') {
-    exit;
-
-	// numerācija tiek atjaunota
-	if (isset($_GET['var2'])) {
-		$id = (int) $_GET['var2'];
-		if ($story = $db->get_row("SELECT `id` FROM `rs_classes` WHERE `id` = '" . $id . "' LIMIT 1")) {
-			$quests = $db->get_results("SELECT `id` FROM `rs_help` WHERE `storyline` = '" . $story->id . "' ");
-			if ($quests) {
-				foreach ($quests as $quest) {
-					if (isset($_POST[$quest->id . '_order'])) {
-						$db->query("UPDATE `rs_help` SET `order` = '" . (int) $_POST[$quest->id . '_order'] . "' WHERE `id` = '" . $quest->id . "' ");
-					}
-				}
-			}
-		}
-		header("Location: /" . $_GET['viewcat'] . "/order");
-	}
-	// izvada sarakstu ar visām sērijām un tajos esošo questu numerāciju
-	else {
-		$all_series = $db->get_results("SELECT * FROM `rs_classes` WHERE `cat` = 'series' ORDER BY `order` ASC");
-		if ($all_series) {
-			$sk = 0;
-			foreach ($all_series as $single) {
-				$get_quests = $db->get_results("SELECT * FROM `rs_help` WHERE `storyline` = '" . $single->id . "' ORDER BY `order` ASC");
-				if ($get_quests && count($get_quests) > 1) {
-					$tpl->newBlock('rsmod-quests-order');
-					$tpl->assign(array(
-						'title' => $single->title,
-						'story' => $single->id
-					));
-					if ($sk % 4 == 0) {
-						$tpl->assign('clearleft', 'clear:left');
-					}
-					foreach ($get_quests as $quest) {
-						$title = $db->get_row("SELECT `title`,`strid` FROM `pages` WHERE `id` = '" . $quest->page_id . "' AND `category` IN ('99','100') LIMIT 1");
-						if ($title) {
-							$tpl->newBlock('order-quest');
-							$tpl->assign(array(
-								'quest-title' => $title->title,
-								'strid' => $title->strid,
-								'qid' => $quest->id
-							));
-							for ($a = 0; $a < count($get_quests); $a++) {
-								$selected = ($a + 1 == $quest->order) ? ' selected="selected"' : '';
-								$tpl->newBlock('order-nr');
-								$tpl->assign(array(
-									'nr' => $a + 1,
-									'selected' => $selected
-								));
-							}
-						}
-					}
-					$sk++;
-				}
-			}
-		}
-	}
-}
-*/

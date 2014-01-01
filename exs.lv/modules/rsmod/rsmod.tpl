@@ -1,35 +1,32 @@
-<h1 class="rs_content_title title-margin">{page-content-title}</h1>
+<h1 class="rs-content-title">{content-title}</h1>
 
-<!-- START BLOCK : rsmod-series -->
-<h1 class="rs_content_title">Sēriju secības un nosaukumu izmaiņas</h1>
-<form class="form" action="/rsmod/st-order/update" method="POST">
-<!-- START BLOCK : rsmod-series-col -->
-<table class="rslist col-list">
-<tr class="listhead">
-  <td style="width:20px"></td>
-  <td style="width:250px;">nosaukums</td>
-  <td style="width:70px;">secība</td>
-</tr>
-<!-- START BLOCK : series-single -->
-<tr>
-  <td><img src="/bildes/fugue-icons/blue-folder-open-document-text.png" /></td>
-  <td><input class="transp" style="width:220px" name="title_{id}" value="{title}" /></td>
-  <td class="center">
-  <!-- START BLOCK : single-ordering -->
-  <select name="order_{id}">
-    <!-- START BLOCK : single-order -->
-    <option value="{order}"{selected}>{order}</option>
-    <!-- END BLOCK : single-order -->
-  </select>
-  <!-- END BLOCK : single-ordering -->
-  </td>
-</tr>
-<!-- END BLOCK : series-single -->
-</table>
-<!-- END BLOCK : rsmod-series-col -->
-  <input class="button primary" type="submit" value="mainīt datus" />
+<!-- START BLOCK : series-form -->
+<form class="form" action="/series/update" method="post">
+    <!-- START BLOCK : series-column -->
+    <table class="rslist col-list">
+    <tr class="listhead">
+        <td style="width:20px"></td>
+        <td style="width:250px">Nosaukums</td>
+        <td style="width:70px">Secība</td>
+    </tr>
+    <!-- START BLOCK : single-series -->
+    <tr>
+        <td><img src="/bildes/fugue-icons/blue-folder-open-document-text.png" alt=""></td>
+        <td><input class="transp" style="width:220px" name="title_{id}" value="{title}"></td>
+        <td class="center">
+            <select name="order_{id}">
+                <!-- START BLOCK : selection-option -->
+                <option value="{order}"{selected}>{order}</option>
+                <!-- END BLOCK : selection-option -->
+            </select>
+        </td>
+    </tr>
+    <!-- END BLOCK : single-series -->
+    </table>
+    <!-- END BLOCK : series-column -->
+  <input class="button primary" type="submit" name="submit" value="Mainīt secību">
 <form>
-<!-- END BLOCK : rsmod-series -->
+<!-- END BLOCK : series-form -->
 
 <!-- START BLOCK : rsmod-quests-order -->
 <div class="qorder" style="{clearleft}">
