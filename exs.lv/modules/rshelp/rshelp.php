@@ -8,7 +8,7 @@ $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module .
 $tpl->prepare();
 
 
-// dev tool
+// dev tools
 if ($auth->id == 115 && isset($_GET['force'])) {
     if ($_GET['force'] == 'true') {
         update_rspages(true, true); // updeito, drukā
@@ -16,6 +16,12 @@ if ($auth->id == 115 && isset($_GET['force'])) {
     else {
         update_rspages(false, true);  // neupdeito, drukā
     }
+    exit;
+} 
+elseif ($auth->id == 115 && isset($_GET['refresh']) ) {
+    // atjauno iekešotās daļas
+    $stats = get_quests_stats();
+    echo '<pre>'.var_dump($stats, false).'</pre>';
     exit;
 }
 
