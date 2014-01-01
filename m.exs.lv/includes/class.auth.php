@@ -1,5 +1,7 @@
 <?php
 
+require(LIB_PATH . '/bcrypt/lib/password.php');
+
 class Auth {
 
 	var $id;
@@ -122,10 +124,35 @@ class Auth {
 			return false;
 		}
 
-		$pwd = pwd($password);
 		$login = sanitize($username);
 
-		$found = $db->get_var("SELECT `id` FROM `users` WHERE (`nick` = '".$login."' OR `mail` = '".$login."') AND `pwd` = '$pwd' AND `deleted` = 0 LIMIT 1");
+		$tmp = $db->get_row("SELECT `id`, `password`, `pwd` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
+
+		$found = false;
+		if(!empty($tmp)) {
+
+			//log in using old SHA password
+			if(empty($tmp->password) && !empty($tmp->pwd)) {
+
+				if($tmp->pwd === pwd($password)) {
+					$found = $tmp->id;
+
+					//create new bcrypt hash and delete old one
+					$hash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 14));
+					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
+
+				}
+
+			//using bcrypt
+			} elseif(!empty($tmp->password)) {
+
+				if (password_verify($password, $tmp->password)) {
+					$found = $tmp->id;
+				}
+
+			}
+
+		}
 
 		if ($found) {
 			$userinfo = get_user($found, true);
@@ -150,7 +177,7 @@ class Auth {
 			update_karma($this->id, true);
 			return true;
 		} else {
-			sleep(rand(2,4));
+			sleep(rand(1,3));
 			$this->error = 1;
 			return false;
 		}
