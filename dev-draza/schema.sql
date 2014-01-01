@@ -1794,6 +1794,7 @@ CREATE TABLE IF NOT EXISTS `userlogs` (
 CREATE TABLE IF NOT EXISTS `users` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `nick` varchar(26) CHARACTER SET utf8 COLLATE utf8_latvian_ci NOT NULL,
+  `password` char(60) COLLATE utf8_unicode_ci NOT NULL,
   `pwd` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `mail` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
@@ -1869,7 +1870,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `source_site` (`source_site`),
   KEY `pwd` (`pwd`),
   KEY `token` (`token`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT AUTO_INCREMENT=32817 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT AUTO_INCREMENT=32938 ;
 
 -- --------------------------------------------------------
 

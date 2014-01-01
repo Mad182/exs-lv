@@ -16,3 +16,6 @@
 [submodule "libs/youtube"]
 	path = libs/youtube
 	url = https://github.com/vitorhsb/youtube-public-php-api.git
+[submodule "libs/bcrypt"]
+	path = libs/bcrypt
+	url = https://github.com/ircmaxell/password_compat.git
