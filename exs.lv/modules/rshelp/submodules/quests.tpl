@@ -112,7 +112,7 @@
     <!-- START BLOCK : p2p-quest -->
       <tr{border}>
           <td class="letter">{letter}</td>  
-          <td><a href="/read/{strid}">{page_title}</a></td>
+          <td><a href="/read/{page_strid}">{page_title}</a></td>
           <td class="center">{page-author}</td>
           <td style="position:relative">{warning}</td>
       </tr>
@@ -129,7 +129,7 @@
     <!-- START BLOCK : quest-ph -->
         <tr>
             <td>&nbsp;</td>  
-            <td><a href="#">{title}</a></td>
+            <td><a href="#">{page_title}</a></td>
             <td>Šāda pamācība lapā iztrūkst. Lai tādu izveidotu, dodies uz <a href="/write">šo lapu</a>.</td>
         </tr>
     <!-- END BLOCK : quest-ph -->
@@ -147,7 +147,7 @@
         </td>
         <td style="position:relative">
             <p class="mq-title">
-                <a href="/read/{strid}">{page_title}</a> @ {page_date} no {page_author} {warning}
+                <a href="/read/{page_strid}">{page_title}</a> @ {page_date} no {page_author} {warning}
             </p>
             <p style="font-size: 11px;">{rspage_description}</p>
         </td>
