@@ -16,13 +16,14 @@ if (isset($_GET['var1'])) {
 		if($lang == 3) {
 			$db->query("UPDATE `users` SET `show_code` = '1' WHERE `id` = '$newid'");
 		}
-
+		if($lang == 5) {
+			$db->query("UPDATE `users` SET `show_rp` = '1' WHERE `id` = '$newid'");
+		}
 		if($lang == 7) {
 			$db->query("UPDATE `users` SET `show_lol` = '1' WHERE `id` = '$newid'");
 		}
-
-		if($lang == 5) {
-			$db->query("UPDATE `users` SET `show_rp` = '1' WHERE `id` = '$newid'");
+		if($lang == 9) {
+			$db->query("UPDATE `users` SET `show_rs` = '1' WHERE `id` = '$newid'");
 		}
 
 		$db->query("INSERT INTO visits (user_id,site_id,ip,lastseen) VALUES ('$newid','$lang','$auth->ip',NOW())");
@@ -38,6 +39,7 @@ if (isset($_GET['var1'])) {
 
 		//log-in new user
 		$_SESSION['auth_id'] = $newid;
+		$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 
 		update_karma($newid);
 
@@ -50,3 +52,4 @@ if (isset($_GET['var1'])) {
 }
 
 $tpl->newBlock('err');
+
