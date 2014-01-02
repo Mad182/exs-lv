@@ -177,6 +177,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		'page-title' => $page_title,
 		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 		'currentuser-nick' => htmlspecialchars($auth->nick),
+		'current-year' => date('Y'),
 		'new-messages' => $new_msg_string,
 		'currentuser-id' => $auth->id,
 		'currentuser-avatar' => $auth->avatar,

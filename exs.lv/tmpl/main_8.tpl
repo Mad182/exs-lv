@@ -29,7 +29,7 @@
 			<!-- INCLUDE BLOCK : module-currrent -->
 		</div>
 	</div>
-	<div id="footer">&copy; exs.lv, 2013</div>
+	<div id="footer">&copy; exs.lv, {current-year}</div>
 </div>
 
 </body>

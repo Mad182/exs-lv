@@ -424,7 +424,7 @@ tinymce.init({
 		</div>
 		<div class="infoblock">
 			<div class="inner">
-				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2013-{current-year}</p>
 				<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
 			</div>
 		</div>

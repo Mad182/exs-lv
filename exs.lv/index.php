@@ -319,6 +319,7 @@ $tpl->assignGlobal(array(
 	'page-onlinetotal' => $auth->hosts_online,
 	'page-persona' => $persona,
 	'page-onlineusers' => get_online_list(),
+	'current-year' => date('Y'),
 	'mb-refresh-limit' => $mb_refresh_limit,
 	'footer-mb' => get_footer_mb(),
 	'footer-topics' => get_footer_topics(),

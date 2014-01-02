@@ -106,7 +106,7 @@
 	</div>
 	<!-- END BLOCK : mod-box-->
 </div>
-<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; exs.lv, 2013 | <a href="/?do=logout">Iziet</a></div>
+<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; exs.lv, {current-year} | <a href="/?do=logout">Iziet</a></div>
 </div>
 <script type="text/javascript">
 

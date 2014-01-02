@@ -40,7 +40,7 @@
 	</fieldset>
 	</form>
 	</div>
-	<div id="footer">&copy; {server-name}, 2013</div>
+	<div id="footer">&copy; {server-name}, {current-year}</div>
 </div>
 
 <script type="text/javascript">

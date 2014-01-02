@@ -370,7 +370,7 @@ tinymce.init({
 						</fieldset>
 					</form>
 				</div>
-				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2013</p>
+				<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2012-{current-year}</p>
 			</div>
 		</div>
 		<div class="infoblock">

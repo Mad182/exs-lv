@@ -97,7 +97,7 @@
 </div>
 <!-- END BLOCK : mod-box-->
 </div>
-<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; runescape.exs.lv, 2013 | <a href="/?do=logout">Iziet</a></div>
+<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; runescape.exs.lv, {current-year} | <a href="/?do=logout">Iziet</a></div>
 </div>
 
 <!-- START BLOCK : sharethis-->
