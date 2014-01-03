@@ -1776,20 +1776,20 @@ function update_awards($user) {
 
 
 	//spēļu turnīri
-	if(in_array($user,array(3512,11807,2222,4027,6001,901,25194,23678,8954,13004,19604,21450,12407,22518,15390,27431,10345,20858,18948,4845,31560,7844,1385,4137,24437,140,12108,23282,1,25093,1293,415,16261,6031,3650))) {
+	/*if(in_array($user,array(3512,11807,2222,4027,6001,901,25194,23678,8954,13004,19604,21450,12407,22518,15390,27431,10345,20858,18948,4845,31560,7844,1385,4137,24437,140,12108,23282,1,25093,1293,415,16261,6031,3650))) {
 		$awards_list['basketball'] = array(
 			'title' => 'Exs Streetball turnīrs 16.11.2013',
 			'state' => 'active'
 		);
-	}
+	}*/
 
 	/* gada balva */
-	/* if (in_array($user, array(16433))) {
-	  $awards_list['gada-balva-2012'] = array(
-	  'title' => 'Exs gada balva 2012',
-	  'state' => 'active'
-	  );
-	  } */
+	if (in_array($user, array(1,27431,2145,18865,1822,29176,2222,13411,21450,17953,22051,4506,25709,8872,2145,703,6214,31617,8531,10345))) {
+		$awards_list['gada-balva-2013'] = array(
+			'title' => 'Exs <a href="http://exs.lv/read/exs-lv-gada-nominacijas-2013-rezultati">gada balva 2013</a>',
+			'state' => 'active'
+		);
+	} 
 
 	//ghetto games floorball
 	/*if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
