@@ -1,5 +1,7 @@
 <?php
 
+/* list all users */
+
 $end = 400;
 
 if (isset($_GET['skip'])) {
@@ -12,6 +14,10 @@ $sfilter = '';
 if (isset($_GET['var1']) && $_GET['var1'] == 'klase') {
 	$showclass = (int) $_GET['var2'];
 	$sfilter = " WHERE level = '" . $showclass . "' ";
+
+	if(!empty($site_access[$showclass])) {
+		$sfilter .= " OR `id` IN(".implode(',', $site_access[$showclass]).")";
+	}
 }
 
 $users = $db->get_results("SELECT nick,level,id FROM users " . $sfilter . " ORDER BY id ASC LIMIT $skip,$end");
@@ -34,3 +40,4 @@ if ($users) {
 		'pager-numeric' => $pager['pages']
 	));
 }
+
