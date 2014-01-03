@@ -8,7 +8,7 @@ if (isset($_GET['var1'])) {
 
 	if ($user) {
 
-		$db->query("INSERT INTO users (id,nick,pwd,mail,date,lastseen,lastip,skin,user_agent,source_site)
+		$db->query("INSERT INTO users (`id`,`nick`,`password`,`mail`,`date`,`lastseen`,`lastip`,`skin`,`user_agent`,`source_site`)
 		VALUES (NULL,'" . sanitize($user->nick) . "','" . $user->password . "','" . $user->mail . "','" . $user->created . "',NOW(),'" . sanitize($auth->ip) . "','3','" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', '$lang')");
 
 		$newid = $db->insert_id;

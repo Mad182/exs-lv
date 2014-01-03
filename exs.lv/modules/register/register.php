@@ -76,7 +76,7 @@ if (!$auth->ok) {
 		} elseif ($_POST['omnomnom'] !== $_POST['url']) {
 			$tpl->newBlock('invalid-pass-mach');
 		} else {
-			$regdata['pass'] = pwd($_POST['omnomnom']);
+			$regdata['pass'] = password_hash($_POST['omnomnom'], PASSWORD_BCRYPT, array("cost" => 14));
 			$regdata['passok'] = true;
 		}
 
