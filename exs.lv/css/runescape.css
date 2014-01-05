@@ -7,6 +7,7 @@ body {
     height:24px;
     background:rgba(0, 0, 0, 0.5) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
     position:fixed;
+    z-index: 50;
     right:50px;
     bottom:-100px;
     border: 1px solid #67717A;
