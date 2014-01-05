@@ -89,6 +89,9 @@ else {
 		else if ( strpos($warn->warn_reason, 'http://runescape.exs.lv') !== false ) {
 			$warn->warn_reason = str_replace('href="/', 'href="http://runescape.exs.lv/', $warn->warn_reason);
 		}
+        else if ( strpos($warn->warn_reason, 'http://lol.exs.lv') !== false ) {
+			$warn->warn_reason = str_replace('href="/', 'href="http://lol.exs.lv/', $warn->warn_reason);
+		}
 		
 		$tpl->newBlock('single-warn');	
 		$tpl->assignAll($warn);
