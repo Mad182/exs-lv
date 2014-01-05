@@ -2757,6 +2757,7 @@ function get_latest_mbs($friends = false) {
 		`miniblog`.`groupid` AS `groupid`,
 		`miniblog`.`twitterid` AS `twitterid`,
 		`users`.`avatar` AS `avatar`,
+		`users`.`deleted` AS `deleted`,
 		`users`.`av_alt` AS `av_alt`,
 		`users`.`nick` AS `nick`
 	FROM
@@ -2832,6 +2833,10 @@ function get_latest_mbs($friends = false) {
 			$tw = '';
 			if (!empty($mb->twitterid)) {
 				$tw = '<span style="background: url(\'http://exs.lv/bildes/i.png\') no-repeat 0 -280px;width:16px;height:16px;position:absolute;right:2px;bottom:3px"></span>';
+			}
+
+			if(!empty($mb->deleted)) {
+				$mb->nick = 'dzēsts';
 			}
 
 			$out .= '<li' . $spec . '><a href="' . $url . '"><span class="av"><img width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" />' . $tw . '</span><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span>pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
