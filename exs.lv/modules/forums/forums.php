@@ -165,7 +165,8 @@ if (!empty($cats)) {
 				}
 				$tpl->newBlock('forum-item-avatar');
 				$tpl->assign(array(
-					'icon' => $forum->icon
+					'icon' => $forum->icon,
+					'textid' => $forum->textid
 				));
 
 				//category stats
