@@ -11,8 +11,8 @@
 <table id="mod_list_table" style="width:95%">
 <tr class="">
 	<th style="width:25%">Iesaistītie</th>
-	<th style="width:50%">Pārkāpuma pamatojums</th>
-	<th style="width:18%;padding-left:2px;text-align:left">Iesniegšanas laiks</th>
+	<th style="width:48%">Pārkāpuma pamatojums</th>
+	<th style="width:20%;padding-left:2px;text-align:left">Iesniegšanas laiks</th>
 	<th style="width:7%">&nbsp;</th>
 </tr>
 <!-- START BLOCK : single-report -->
