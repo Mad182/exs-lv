@@ -6,7 +6,7 @@
  *	Moduļa adrese: 		exs.lv/mbview
  *	Pēdējās izmaiņas: 	06.12.2013 ( Edgars )
  */
-if ( !$auth->ok || !im_mod() || $auth->mobile || !in_array($lang, array(1)) ) {
+if (!im_mod() || $auth->mobile) {
 	die('<div class="deleted-mb-content"><strong>Error 403: Permission denied!</strong></div>');
 	exit;
 }
@@ -52,3 +52,4 @@ else {
 
 echo $content;
 exit;
+
