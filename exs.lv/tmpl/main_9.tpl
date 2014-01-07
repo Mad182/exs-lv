@@ -89,7 +89,7 @@ tinymce.init({
 <div class="top-navig">
 <nav>
     <ul class="droplist">
-        <li><a href="#" class="dropdown">runescape.exs.lv</a>
+        <li><a href="http://runescape.exs.lv" class="dropdown">runescape.exs.lv</a>
             <span class="arrow-down"></span>
             <ul>
                 <li><a href="http://exs.lv" target="_blank">exs.lv</a></li>
