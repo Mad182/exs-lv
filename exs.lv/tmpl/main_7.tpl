@@ -159,7 +159,7 @@ tinymce.init({
 
 				<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
 				<li{cat-sel-585}><a class="notes" href="/piezimes">Piezīmes</a></li>
-				<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+				<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 			</ul>
 			<!-- END BLOCK : user-menu-->
 			<!-- START BLOCK : login-form-->

@@ -325,7 +325,8 @@ $tpl->assignGlobal(array(
 	'footer-topics' => get_footer_topics(),
 	'add-css' => $add_css,
 	'static-server' => $static_server,
-	'img-server' => $img_server
+	'img-server' => $img_server,
+	'logout-hash' => $auth->logout_hash
 ));
 
 

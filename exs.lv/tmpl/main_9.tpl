@@ -151,7 +151,7 @@ tinymce.init({
                 <li>&nbsp;</li>
 			</ul> 
         </li>
-        <li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+        <li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
         <!-- END BLOCK : auth-nav -->
     </ul>
     <!-- START BLOCK : login-form-->

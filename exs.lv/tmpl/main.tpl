@@ -176,7 +176,7 @@ tinymce.init({
 			<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
 			<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
 			<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
-			<li><a href="/logout">Iziet ({currentuser-nick})</a></li>
+			<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 		</ul>
 		<!-- END BLOCK : user-menu-->
 		<!-- START BLOCK : login-form-->

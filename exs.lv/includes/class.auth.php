@@ -41,6 +41,7 @@ class Auth {
 		}
 		$this->check_session();
 		$this->update_counter();
+		$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
 		return $this->ok;
 	}
 

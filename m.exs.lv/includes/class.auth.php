@@ -41,6 +41,7 @@ class Auth {
 			$_SESSION['xsrf'] = $this->xsrf;
 		}
 		$this->check_session();
+		$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
 		return $this->ok;
 	}
 

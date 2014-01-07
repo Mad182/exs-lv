@@ -98,7 +98,7 @@
 </div>
 <!-- END BLOCK : mod-box-->
 </div>
-<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; coding.lv, {current-year} | <a href="/?do=logout">Iziet</a></div>
+<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; coding.lv, {current-year} | <a href="/logout/{logout-hash}">Iziet</a></div>
 </div>
 
 </body>

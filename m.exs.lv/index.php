@@ -182,7 +182,8 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		'currentuser-id' => $auth->id,
 		'currentuser-avatar' => $auth->avatar,
 		'timestamp' => time(),
-		'static-server' => $static_server
+		'static-server' => $static_server,
+		'logout-hash' => $auth->logout_hash
 	));
 
 	//profile box
