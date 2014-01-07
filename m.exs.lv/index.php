@@ -53,11 +53,6 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 
 } else {
 
-	if (isset($_GET['do']) && $_GET['do'] == 'logout') {
-		$auth->logout();
-		redirect('/');
-	}
-
 	//banoto lietotāju saraksts
 	$busers = get_banlist();
 
