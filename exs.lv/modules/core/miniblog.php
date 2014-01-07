@@ -324,7 +324,7 @@ if ($inprofile->id) {
 					}
 
 					// podziņa mb pārkāpuma ziņošanai
-					if ( $auth->ok && !$auth->mobile && ($lang == 1 || $lang == 7) ){
+					if ( $auth->ok && !$auth->mobile && in_array($lang, array(1,7,9) ) ){
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
 					}

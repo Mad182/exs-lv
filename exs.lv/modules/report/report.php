@@ -4,7 +4,6 @@
  *	un apstrādā iesniegtās sūdzības.
  *
  *	Moduļa adrese: 		exs.lv/report
- *	Pēdējās izmaiņas: 	20.12.2013 ( Edgars )
  *
  *
  *	0 - miniblogs (pats mb, mb komentārs, junk komentārs, ieraksti grupā)
@@ -19,7 +18,8 @@ $allowed_report_types = array('miniblog', 'article-comment', 'gallery-comment');
 // pieļaujamie projekti/apakšprojekti, kuros iespējotas sūdzības
 //	1 - exs.lv; 
 //	7 - lol.exs.lv
-$allowed_sites = array(1, 7);
+//  9 - runescape.exs.lv
+$allowed_sites = array(1, 7, 9);
 
 
 //	pēc idejas sadaļu skatīt var tikai caur jquery pieprasījumu;

@@ -661,7 +661,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					}
 
 					// podziņa parent mb pārkāpuma ziņošanai
-					if ( $auth->ok && !$auth->mobile && $lang == 1 ){
+					if ( $auth->ok && !$auth->mobile && in_array($lang, array(1,9)) ){
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
 					}

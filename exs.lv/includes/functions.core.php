@@ -2381,8 +2381,8 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= ' <a href="#m' . $val->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
 			}
 
-			//podziņa lietotāja pārkāpuma noziņošanai (exs.lv; lol.exs.lv) (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && $auth->ok && !$auth->mobile && ($lang == 1 || $lang == 7) ) {
+			//podziņa lietotāja pārkāpuma noziņošanai (exs.lv; lol.exs.lv; rs.exs.lv) (ja ieraksts jau nav dzēsts)
+			if ($val->mb_removed == 0 && $auth->ok && !$auth->mobile && in_array($lang, array(1,7,9)) ) {
 				$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
 			}
 

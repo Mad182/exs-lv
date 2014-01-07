@@ -23,7 +23,7 @@ $lastid = (int) $_GET['lastid'];
 $lastedit = (int) $_GET['et'];
 
 // apakšprojekti, kuriem rādīt ziņošanas podziņu
-$allowed_sites	= array(1, 7);	// exs.lv; lol.exs.lv
+$allowed_sites	= array(1, 7, 9);	// exs.lv; lol.exs.lv; runescape.exs.lv
 
 
 if (isset($_GET['type']) && $_GET['type'] == 'junk') {
