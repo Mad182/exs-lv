@@ -2984,6 +2984,14 @@ ul.taged {
 	margin: 5px 5px 2px;
 }
 
+#flash-message.success {
+	border: 1px solid #57a957;
+}
+
+#flash-message.error {
+	border: 1px solid #c43c35;
+}
+
 #flash-message p {
 	font-size: 11px;
 	padding: 5px;
@@ -3887,3 +3895,4 @@ li.view_more {
 	border: 1px dotted #ddd;
 	background: #eee;
 }
+
