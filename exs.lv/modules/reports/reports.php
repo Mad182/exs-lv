@@ -3,9 +3,8 @@
  *	Moderatoru sadaļa, kurā aplūkojamas un pārvaldāmas
  *	visas lietotāju iesniegtās sūdzības.
  *
- *	Moduļa adrese: 		exs.lv/reports
+ *	Moduļa adrese: 	exs.lv/reports
  */
-
 $allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
 
 /**
@@ -14,14 +13,16 @@ $allowed_reports = array('miniblogs', 'articles', 'gallery-comments');
  *    7 - lol.exs.lv
  *    9 - runescape.exs.lv
  *
- *  Zemāk kodā vēl jāfiksē, kuriem apakšprojektiem pie iesniegtajām sūdzībām
- *  ļaut skatīt ieraksta saturu, jo, tā kā ne visos apakšprojektos ir grupas (slēgtās),
- *  ne visur šāda iespēja ir nepieciešama.
- *
- *  Tāpat citi apakšprojekti jāpieraksta klāt katrā vietā, 
+ *  Citi apakšprojekti jāpieraksta klāt katrā vietā, 
  *  kur ziņošanas podziņa tiek vispār izdrukāta lapā.
  */
-$allowed_sites = array(1, 7, 9);
+$allowed_sites  = array(1, 7, 9);
+
+
+// apakšprojekti, kuros ir slēgtās grupas;
+// citos projektos nav nepieciešams atsevišķi aplūkot nosūdzētā ieraksta saturu
+$has_groups     = array(1, 9);
+
 
 /** 
  *  Turpmāk izmantotie apzīmējumi:
@@ -48,9 +49,9 @@ if ( $lang == 9 ) {
 //	adreses forma: /reports/show_content/{entry_id}?_=1
 if ( isset($_GET['var1']) && $_GET['var1'] == 'show_content' && isset($_GET['var2']) &&  isset($_GET['_']) ) {
 
-	// citos apakšprojektos šāda iespēja nebūs, jo nav slēgto grupu,
-	// tāpēc visu var apskatīt tāpat
-	if ( $lang != 1 ) {
+    // šāda iespēja nepieciešama tikai tajos apakšprojektos,
+    // kuros ir slēgtās grupas un kur kāds komentārs var nebūt redzams
+	if ( !in_array($lang, $has_groups) ) {
 		redirect('/reports');
 		exit;
 	}
@@ -432,10 +433,9 @@ else {
 			$tpl->newBlock('show-full-content');
 		}
 		
-		// tikai main exs.lv un rs.exs.lv būs iespēja skatīt ieraksta saturu, 
-        // neatverot attiecīgo lapu; citur nav slēgto grupu, 
-        // tāpēc visu var apskatīt tāpat
-		if ($lang == 1 || $lang == 9) {
+        // skatīt saturu nepieciešams tikai tajos apakšprojektos,
+        // kuros nav slēgto grupu
+		if ( in_array($lang, $has_groups) ) {
 			$tpl->newBlock('display-original-content');
 			$tpl->assign('report_id', $report->report_id);
 		}
