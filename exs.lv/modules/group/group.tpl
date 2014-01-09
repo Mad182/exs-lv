@@ -423,7 +423,7 @@
 				<div class="c"></div>
 				<form action="{page-url}" id="new-tags-mb" class="form" method="post" style="float:right;padding:0;margin:-4px 0 0">
 					<input style="width:140px;font-size:10px;padding:3px 1px 2px" type="text" class="text" name="newtags" id="post-tags-input" />
-					<input style="10px;padding:1px" class="button" type="submit" value="Tag" />
+					<input style="padding:1px" class="button" type="submit" value="Tag" />
 				</form>
 				<div class="c"></div>
 				<!-- END BLOCK : mb-newtags-->
