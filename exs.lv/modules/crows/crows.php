@@ -6,16 +6,13 @@
  *
  * 	Moduļa adrese: 	exs.lv/crows
  */
+ 
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
 	set_flash('Error 403: Permission denied!');
 	redirect();
 }
 
-$tpl_options = 'no-right';
-if ($lang == 9) {
-	$tpl_options = 'no-left';
-}
 
 // ārpus galvenā exa sarakstā rādīsies tikai atvērtā apakšprojekta brīdinājumi
 $where = '';

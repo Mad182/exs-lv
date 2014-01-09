@@ -37,10 +37,6 @@ if (!im_mod() || !in_array($lang, $allowed_sites)) {
 	set_flash('Pieeja liegta!');
 	redirect();
 }
-$tpl_options = 'no-right';
-if ($lang == 9) {
-	$tpl_options = 'no-left';
-}
 
 
 
