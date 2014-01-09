@@ -25,7 +25,7 @@ if ($actions) {
 		if (empty($action->action_avatar)) {
 			$action->action_avatar = get_avatar($action, 's');
 		}
-	
+
 		$tpl->newBlock('user-actions-node');
 		$tpl->assign(array(
 			'action' => $action->action,

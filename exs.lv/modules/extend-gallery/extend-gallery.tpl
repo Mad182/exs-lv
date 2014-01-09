@@ -17,7 +17,7 @@
 </div>
 
 <script type="text/javascript">
-	$( document ).ready(function() {
+	$(document).ready(function() {
 		$('#default-payment-link').click();
 	});
 </script>

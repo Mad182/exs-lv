@@ -4,12 +4,12 @@
 	<div id="form-block">
 		<p><strong class="report-item">Pārkāpējs:</strong> {offender}</p>
 		<form id="report-form" method="post" action="{action}">
-            <input type="hidden" name="anti-xsrf" value="{xsrf}">
+			<input type="hidden" name="anti-xsrf" value="{xsrf}">
 			<p class="report-content"><strong class="report-item">Saturs:</strong><br>{entry-text}</p>
-			
+
 			<p class="report-item"><strong>Iemesls sūdzībai:</strong></p>
 			<p><textarea id="report-txtarea" name="report-reason"></textarea></p>
-			
+
 			<p>
 				<input class="danger button" type="submit" name="submit" value="Ziņot">
 				<a class="fancy-close button primary" href="javascript:void(0)">Pārdomāju!</a></p>

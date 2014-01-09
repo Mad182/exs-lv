@@ -6,7 +6,7 @@
 
 <div>
 	<div class="half-left">
-	  <h3>Izveidot profilu</h3>
+		<h3>Izveidot profilu</h3>
 		<form id="edit-profile" class="form" action="" method="post">
 			<fieldset style="border: 0;padding: 0;margin: 10px 10px 10px 0">
 				<!-- START BLOCK : invalid-nick-len-->
@@ -19,35 +19,35 @@
 					<img src="{avatar}" class="av" style="float:none;" alt="" />
 				</p>
 				<p>
-			  	<label for="nick">Niks:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
-			  	<input style="width: 120px;" type="text" class="text usercheck" name="nick" id="nick" value="{nick}" maxlength="20" /> <span class="usercheck-response" id="userexists"></span>
-			  </p>
-			  <p>
-			  	<input class="button primary" type="submit" name="submit" id="submit" value="Taisam jaunu" />
-			  </p>
+					<label for="nick">Niks:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
+					<input style="width: 120px;" type="text" class="text usercheck" name="nick" id="nick" value="{nick}" maxlength="20" /> <span class="usercheck-response" id="userexists"></span>
+				</p>
+				<p>
+					<input class="button primary" type="submit" name="submit" id="submit" value="Taisam jaunu" />
+				</p>
 			</fieldset>
 		</form>
 	</div>
 
 	<div class="half-right">
-	  <h3>Jau esmu reģistējies</h3>
-	  
+		<h3>Jau esmu reģistējies</h3>
+
 		<form id="login-profile" class="form" action="" method="post">
 			<fieldset style="border: 0;padding: 0;margin: 10px 10px 10px 0">
 				<!-- START BLOCK : invalid-->
 				<p class="error">Nepareizs lietotājvārds un/vai parole!</p>
 				<!-- END BLOCK : invalid-->
 				<p>
-			  	<label for="existing-nick">Niks:</label><br />
-			  	<input style="width: 180px;" type="text" class="text" name="existing-nick" id="existing-nick" maxlength="14" />
-			  </p>
+					<label for="existing-nick">Niks:</label><br />
+					<input style="width: 180px;" type="text" class="text" name="existing-nick" id="existing-nick" maxlength="14" />
+				</p>
 				<p>
-			  	<label for="existing-password">Parole:</label><br />
-			  	<input style="width: 180px;" type="password" class="text" name="existing-password" id="existing-password" />
-			  </p>
-			  <p>
-			  	<input class="button primary" type="submit" name="submit" id="submit" value="Ienākt" />
-			  </p>
+					<label for="existing-password">Parole:</label><br />
+					<input style="width: 180px;" type="password" class="text" name="existing-password" id="existing-password" />
+				</p>
+				<p>
+					<input class="button primary" type="submit" name="submit" id="submit" value="Ienākt" />
+				</p>
 			</fieldset>
 		</form>
 	</div>

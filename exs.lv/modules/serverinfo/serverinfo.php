@@ -1,6 +1,6 @@
 <?php
 
-if(!im_mod()) {
+if (!im_mod()) {
 	redirect();
 }
 

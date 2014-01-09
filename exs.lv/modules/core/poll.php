@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Aptaujas lapas malā
+ */
 if (isset($_POST['vote']) && isset($_POST['questions'])) {
 	$voted = $db->get_var("SELECT
 			count(*)

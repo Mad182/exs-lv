@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Aizmirstas paroles atjaunošana
+ */
 if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `ip` = '$auth->ip' AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
 	$auth->logout();
 	set_flash('Pieeja lapai ir liegta!', 'error');
@@ -8,13 +11,13 @@ if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `ip` = '$auth->ip' AND 
 
 if (!$auth->ok) {
 
-	if(isset($_GET['var1']) && strlen($_GET['var1']) == 64) {
+	if (isset($_GET['var1']) && strlen($_GET['var1']) == 64) {
 
 		$userdata = $db->get_row("SELECT * FROM `users` WHERE 
-					`reset_token` = '".sanitize($_GET['var1'])."' AND 
-					`reset_time` > '".date('Y-m-d H:i:s', strtotime('-6 hours'))."' LIMIT 1");
+					`reset_token` = '" . sanitize($_GET['var1']) . "' AND 
+					`reset_time` > '" . date('Y-m-d H:i:s', strtotime('-6 hours')) . "' LIMIT 1");
 
-		if(!empty($userdata)) {
+		if (!empty($userdata)) {
 			$newpass = createPassword(8);
 			$newhash = password_hash($newpass, PASSWORD_BCRYPT, array("cost" => 14));
 
@@ -40,10 +43,8 @@ if (!$auth->ok) {
 				$auth->log('Neveiksmīga paroles maiņa (neizdevās nosūtīt e-pastu)', 'users', $userdata->id);
 				set_flash('Paroles nosūtīšana uz e-pastu neizdevās. Nezināma kļūda :(', 'error');
 			}
-
 		}
 		redirect();
-
 	}
 
 	$tpl->newBlock('passreset-form');
@@ -62,7 +63,7 @@ if (!$auth->ok) {
 
 			$mailer = Swift_Mailer::newInstance($transport);
 			$message = Swift_Message::newInstance();
-			$message->setSubject('Paroles maiņa '.$_SERVER['HTTP_HOST']);
+			$message->setSubject('Paroles maiņa ' . $_SERVER['HTTP_HOST']);
 			$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
 			$message->setTo($userdata->mail);
 			$message->setBody('
@@ -72,7 +73,7 @@ if (!$auth->ok) {
 				</p>
 				<p>
 					Lai apstiprinātu paroles maiņu, nospied uz zemāk redzamās saites, vai iekopē to pārlūkprogrammas adreses joslā:<br />
-					<a href="http://' . $_SERVER['HTTP_HOST'] . '/forgot-password/'.$pwd_token.'">http://' . $_SERVER['HTTP_HOST'] . '/forgot-password/'.$pwd_token.'</a><br />
+					<a href="http://' . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">http://' . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a><br />
 					<br />
 				</p>
 				<p>

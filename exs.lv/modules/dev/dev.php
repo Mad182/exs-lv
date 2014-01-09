@@ -1,16 +1,17 @@
 <?php
+
 exit;
 $folder = 'streetball-16-11-2013';
 $user_id = 32246;
 
 
-if ($handle = opendir('dati/bildes/'.$folder.'/large/')) {
+if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 	while (false !== ($file = readdir($handle))) {
 		if ($file != "." && $file != "..") {
-			
-			$image = sanitize('dati/bildes/'.$folder.'/large/'.$file);	
-			$thb = sanitize('dati/bildes/'.$folder.'/thb/'.$file);	
-			$text = sanitize('<p>'.strtolower(str_replace(array('.JPG', '.jpg'),'',$file)).' - exs.lv Streetball turnīrs. 16.11.2013</p>');
+
+			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
+			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
+			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . ' - exs.lv Streetball turnīrs. 16.11.2013</p>');
 
 			remake_thb($image, $thb);
 
@@ -23,7 +24,7 @@ if ($handle = opendir('dati/bildes/'.$folder.'/large/')) {
 
 			$db->query($sql);
 
-			userlog($user_id,'Pievienoja <a href="/gallery/' .$user_id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit(strip_tags($text), 32, '...') . '</a>', '/' . $thb);
+			userlog($user_id, 'Pievienoja <a href="/gallery/' . $user_id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit(strip_tags($text), 32, '...') . '</a>', '/' . $thb);
 
 			echo $sql . '<br />';
 		}

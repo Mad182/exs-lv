@@ -3,9 +3,9 @@
   {pager-next} {pager-numeric} {pager-prev}
 </p>
 <ul id="wallpapers">
-<!-- START BLOCK : wallpaper-->
-<li><a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}"><img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" /><span{style}>{wallpaper-date}</span></a></li>
-<!-- END BLOCK : wallpaper-->
+	<!-- START BLOCK : wallpaper-->
+	<li><a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}"><img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" /><span{style}>{wallpaper-date}</span></a></li>
+	<!-- END BLOCK : wallpaper-->
 </ul>
 <div class="c"></div>
 <p class="core-pager">

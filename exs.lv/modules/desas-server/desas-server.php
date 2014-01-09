@@ -1,10 +1,9 @@
 <?php
 
-/*
-  "tic tac toe" json serveris
-  (c) madars anziķis, 2011
+/**
+ * "tic tac toe" json serveris
+ * (c) madars anziķis, 2011
  */
-
 if (!$auth->ok) {
 	die('auth required');
 }

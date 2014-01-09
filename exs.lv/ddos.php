@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Nelietos antiddos skripts
+ */
 if (PHP_SAPI !== 'cli') {
 	echo 'CLI only!';
 	exit;
@@ -25,29 +28,28 @@ $lines = explode("\n", $list);
 $whitelist = array('127.0.0.1', '127.0.0.2', '0.0.0.0', '92.240.69.183');
 $blocked = array();
 
-foreach($lines as $line) {
+foreach ($lines as $line) {
 
 	preg_match('#([0-9]+) ([0-9]+.[0-9]+.[0-9]+.[0-9]+)#i', $line, $matches);
 
-	if(($matches[1] > 300 && !in_array($matches[2], $whitelist)) or substr($matches[2],0,10) == '220.255.1.') {
-		$com = "ufw insert 1 deny from ".$matches[2];
+	if (($matches[1] > 300 && !in_array($matches[2], $whitelist)) or substr($matches[2], 0, 10) == '220.255.1.') {
+		$com = "ufw insert 1 deny from " . $matches[2];
 		$block = `$com`;
 		echo $matches[2] . ': ' . $block . "\n";
 		$blocked[] = array('ip' => $matches[2], 'conn' => $matches[1]);
 	}
-
 }
 
-if(!empty($blocked)) {
+if (!empty($blocked)) {
 	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
 	$text = '<p>Bloķētas adreses:</p><p>';
 
-	foreach($blocked as $addr) {
-		$text .= $addr['ip'] . ' ('.$addr['conn'].')<br />';
+	foreach ($blocked as $addr) {
+		$text .= $addr['ip'] . ' (' . $addr['conn'] . ')<br />';
 	}
 
-	$text .= '</p><p>Laiks: '.date('Y-m-d H:i:s').'</p>';
+	$text .= '</p><p>Laiks: ' . date('Y-m-d H:i:s') . '</p>';
 
 	$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
 
@@ -59,6 +61,5 @@ if(!empty($blocked)) {
 	$message->setBody($text);
 	$message->setContentType("text/html");
 	$mailer->send($message);
-
 }
 

@@ -13,13 +13,13 @@
 
 
 		$('#target').Jcrop({
-			onChange:   showCoords,
-			onSelect:   showCoords,
-			onRelease:  clearCoords,
+			onChange: showCoords,
+			onSelect: showCoords,
+			onRelease: clearCoords,
 			aspectRatio: 1
-		},function(){
-		    jcrop_api = this;
-		  });
+		}, function() {
+			jcrop_api = this;
+		});
 
 
 		$('#coords').live('submit', function() {
@@ -27,7 +27,7 @@
 			$('#crop-result').html('<img src="/bildes/ezgif/loading.gif" alt="Loading..." />');
 			$.ajax({
 				type: "POST",
-				url: $(this).attr('action')+'?_=1',
+				url: $(this).attr('action') + '?_=1',
 				data: $(this).serialize(),
 				success: function(data) {
 					$('#crop-result').html(data);
@@ -41,10 +41,10 @@
 
 			var r_x1 = Math.floor($('#x1').val());
 			var r_y1 = Math.floor($('#y1').val());
-			var r_x2 = r_x1+Math.floor($('#w').val());
-			var r_y2 = r_y1+Math.floor($('#h').val());
+			var r_x2 = r_x1 + Math.floor($('#w').val());
+			var r_y2 = r_y1 + Math.floor($('#h').val());
 
-			jcrop_api.setSelect([r_x1,r_y1,r_x2,r_y2]);
+			jcrop_api.setSelect([r_x1, r_y1, r_x2, r_y2]);
 
 			return false;
 		});
@@ -58,11 +58,13 @@
 		$('#y2').val(Math.floor(c.y2));
 		$('#w').val(Math.floor(c.w));
 		$('#h').val(Math.floor(c.h));
-	};
+	}
+	;
 
 	function clearCoords() {
 		//$('#coords input').val('');
-	};
+	}
+	;
 
 </script>
 
@@ -85,11 +87,11 @@
 		</p>
 
 		<p>
-		<label for="method">Crop with*:</label><br />
-		<select name="method" id="method">
-			<option value="im">ImageMagick</option>
-			<option value="gifsicle">Gifsicle</option>
-		</select>
+			<label for="method">Crop with*:</label><br />
+			<select name="method" id="method">
+				<option value="im">ImageMagick</option>
+				<option value="gifsicle">Gifsicle</option>
+			</select>
 		</p>
 
 		<input type="submit" class="button primary" value="Magic!" name="crop" />

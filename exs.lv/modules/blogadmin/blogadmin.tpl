@@ -21,7 +21,7 @@
 </div>
 
 <script type="text/javascript">
-	$( document ).ready(function() {
+	$(document).ready(function() {
 		$('#default-payment-link').click();
 	});
 </script>
@@ -68,7 +68,7 @@
 	<!-- END BLOCK : blogadmin-new-->
 	<!-- START BLOCK : blogadmin-links-->
 	<!-- START BLOCK : user-sidelinks-list-->
-    <table class="main-table">
+	<table class="main-table">
 		<tr>
 			<th>Nosaukums</th>
 			<th>Saite</th>

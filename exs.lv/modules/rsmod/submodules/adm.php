@@ -1,12 +1,12 @@
 <?php
+
 /**
- *	
+ * 	
  *
- *	Moduļa adrese: runescape.exs.lv/
+ * 	Moduļa adrese: runescape.exs.lv/
  */
- 
-if ( !isset($sub_include) ) {
-    redirect();
+if (!isset($sub_include)) {
+	redirect();
 }
 
 /* ----------------------------------------------------------------------- */

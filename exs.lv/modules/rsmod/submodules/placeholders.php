@@ -1,33 +1,33 @@
 <?php
+
 /**
- *	RuneScape pamācību placeholderu pārvaldība.
+ * 	RuneScape pamācību placeholderu pārvaldība.
  *
  *  Ļauj RS pamācību sadaļām pievienot placeholderus iztrūkstošajiem rakstiem.
  *
- *	Moduļa adrese: runescape.exs.lv/rsph
+ * 	Moduļa adrese: runescape.exs.lv/rsph
  */
- 
-if ( !isset($sub_include) ) {
-    set_flash('No hacking, pls.');
-    redirect();
+if (!isset($sub_include)) {
+	set_flash('No hacking, pls.');
+	redirect();
 }
 
 if ($_GET['var1'] == 'ph') {
-    exit;
-    
-		$cat_ids = array(99, 100, 160, 193, 792, 80, 95, 96, 97, 101);
-		$cats = array(
-			array(99, 'F2P kvesti'),
-			array(100, 'P2P kvesti'),
-			array(193, 'Minikvesti'),
-			array(160, 'Minispēles'),
-			array(792, 'Distractions & Diversions'),
-			array(80, 'Ceļveži: Citas vietas'),
-			array(95, 'Ceļveži: Wilderness'),
-			array(96, 'Ceļveži: Pilsētas'),
-			array(97, 'Ceļveži: Salas'),
-			array(101, 'Ceļveži: Pazemes')
-		);
+	exit;
+
+	$cat_ids = array(99, 100, 160, 193, 792, 80, 95, 96, 97, 101);
+	$cats = array(
+		array(99, 'F2P kvesti'),
+		array(100, 'P2P kvesti'),
+		array(193, 'Minikvesti'),
+		array(160, 'Minispēles'),
+		array(792, 'Distractions & Diversions'),
+		array(80, 'Ceļveži: Citas vietas'),
+		array(95, 'Ceļveži: Wilderness'),
+		array(96, 'Ceļveži: Pilsētas'),
+		array(97, 'Ceļveži: Salas'),
+		array(101, 'Ceļveži: Pazemes')
+	);
 
 	// ievieto datubāzē jaunu placeholder
 	if (isset($_POST['submit'])) {

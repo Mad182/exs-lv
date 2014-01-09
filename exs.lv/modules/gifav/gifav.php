@@ -32,7 +32,7 @@ if ($auth->ok && $user->credit >= 5) {
 			set_flash('Izvēlētais avatars jau ir aizņemts!', 'error');
 		}
 	}
-} elseif($auth->ok) {
+} elseif ($auth->ok) {
 	$tpl->newBlock('av-credit');
 }
 

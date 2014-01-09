@@ -42,22 +42,22 @@ if ($category->parent) {
 }
 
 //list sub cats
-if($category->isforum) {
+if ($category->isforum) {
 	$add = '';
 	if (!im_mod()) {
 		$add = ' AND `mods_only` = 0';
 	}
 	$subcats = $db->get_results("SELECT * FROM `cat` WHERE `parent` = '$category->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
-	if(!empty($subcats)) {
+	if (!empty($subcats)) {
 		$tpl->newBlock('listsubcats');
-		foreach($subcats as $forum) {
+		foreach ($subcats as $forum) {
 
 			$tpl->newBlock('listsubcats-node');
 
 			$subcats2 = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `parent` = '$forum->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
-			if(empty($forum->icon)) {
+			if (empty($forum->icon)) {
 				$forum->icon = $generic_f_icon;
 			}
 
@@ -104,9 +104,9 @@ if($category->isforum) {
 				));
 			}
 
-			if(!empty($subcats2)) {
+			if (!empty($subcats2)) {
 				$tpl->newBlock('subcats');
-				foreach($subcats2 as $subcat2) {
+				foreach ($subcats2 as $subcat2) {
 					$tpl->newBlock('subcats-node');
 					$tpl->assign(array(
 						'title' => $subcat2->title,
@@ -114,7 +114,6 @@ if($category->isforum) {
 					));
 				}
 			}
-
 		}
 	}
 }
@@ -230,7 +229,7 @@ if (!$category->mods_only || im_mod()) {
 				}
 				$timg = $type . $read . $closed . '.gif';
 
-				if(!$article->author_deleted) {
+				if (!$article->author_deleted) {
 					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
 				} else {
 					$author_link = '<em>dzēsts</em>';
@@ -296,11 +295,10 @@ if (!$category->mods_only || im_mod()) {
 				if ($article->avatar) {
 					$tpl->newBlock('list-avatar');
 					$tpl->assign(array(
-						'node-avatar-image' => 'http://exs.lv/'.trim($article->avatar),
+						'node-avatar-image' => 'http://exs.lv/' . trim($article->avatar),
 						'node-avatar-alt' => trim(htmlspecialchars($article->title))
 					));
 				}
-
 			}
 		} else {
 

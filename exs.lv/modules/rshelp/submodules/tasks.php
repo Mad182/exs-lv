@@ -1,6 +1,7 @@
 <?php
+
 /**
- *	RuneScape tasks/achievement diaries
+ * 	RuneScape tasks/achievement diaries
  */
 !isset($sub_include) and die('No hacking, pls.');
 
@@ -29,40 +30,40 @@ $tasks = $db->get_results("
 ");
 
 if ($tasks) {
-    $counter = 0;
-    $page_id = 0;
-    
-    foreach ($tasks as $page) {
-    
-        if ($page->class_id != $page_id) {
-        
-            $page_id = $page->class_id;
-        
-            // teritorijai ir vismaz viens raksts
-            if ($page->page_id != '0') {
-                $tpl->newBlock('tasks-block');
-                $tpl->assignAll($page);
-            }
-            // teritorijām, kurām nav rakstu, izveido jaunu bloku
-            // zem pārējām teritorijām
-            else {
-                $tpl->newBlock('tasks-not');
-                $tpl->assignAll($page);
-            }
-            
-            if ($counter % 3 == 0) {
-                $tpl->assign('newline', ' newline');
-            }  // pārmet blokus jaunā rindā
-            $counter++;
-        }
-        
-        // pārbaude novērš situācijas, kad tiek pievienotas teritorijas,
-        // kurām nav rakstu
-        if ($page->page_id != '0') {
-            $tpl->newBlock('task');
-            $tpl->assignAll($page);
-        }
-    }
+	$counter = 0;
+	$page_id = 0;
+
+	foreach ($tasks as $page) {
+
+		if ($page->class_id != $page_id) {
+
+			$page_id = $page->class_id;
+
+			// teritorijai ir vismaz viens raksts
+			if ($page->page_id != '0') {
+				$tpl->newBlock('tasks-block');
+				$tpl->assignAll($page);
+			}
+			// teritorijām, kurām nav rakstu, izveido jaunu bloku
+			// zem pārējām teritorijām
+			else {
+				$tpl->newBlock('tasks-not');
+				$tpl->assignAll($page);
+			}
+
+			if ($counter % 3 == 0) {
+				$tpl->assign('newline', ' newline');
+			}  // pārmet blokus jaunā rindā
+			$counter++;
+		}
+
+		// pārbaude novērš situācijas, kad tiek pievienotas teritorijas,
+		// kurām nav rakstu
+		if ($page->page_id != '0') {
+			$tpl->newBlock('task');
+			$tpl->assignAll($page);
+		}
+	}
 }
 
 // pa teritorijām nekategorizētie raksti
@@ -77,18 +78,17 @@ $others = $db->get_results("
     ORDER BY 
         `title` ASC
 ");
-    
+
 if ($others) {
 
-    $tpl->newBlock('tasks-block');
-    $tpl->assign(array(
-        'class_img'   => 'uncategorised.png',
-        'class_title' => 'Nekategorizēti raksti'
-    ));
-    
-    foreach ($others as $other) {
-        $tpl->newBlock('task');
-        $tpl->assignAll($other);
-    }
-    
+	$tpl->newBlock('tasks-block');
+	$tpl->assign(array(
+		'class_img' => 'uncategorised.png',
+		'class_title' => 'Nekategorizēti raksti'
+	));
+
+	foreach ($others as $other) {
+		$tpl->newBlock('task');
+		$tpl->assignAll($other);
+	}
 }

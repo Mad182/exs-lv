@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Lietotāja dzēšana no komandrindas
+ */
 if (PHP_SAPI !== 'cli') {
 	echo 'CLI only!';
 	exit;
@@ -36,9 +39,9 @@ $m->connect($mc_host, $mc_port);
 
 $user = (int) $argv[1];
 
-if($user) {
+if ($user) {
 	$db->query("UPDATE users SET 
-			`nick` = 'Dzēsts #".$user."',
+			`nick` = 'Dzēsts #" . $user . "',
 			`pwd` = '',
 			`mail` = '',
 			`lastseen` = `date`,
@@ -71,8 +74,7 @@ if($user) {
 	$db->query("DELETE FROM `friends` WHERE `friend2` = '$user'");
 	$db->query("DELETE FROM `bookmarks` WHERE `userid` = '$user'");
 	$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$user'");
-	
-	echo 'user #' . $user . " deleted\n\n";
 
+	echo 'user #' . $user . " deleted\n\n";
 }
 

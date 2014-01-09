@@ -18,13 +18,13 @@ function itemsdb_replace($item, $field = 0, $found = 1, $uses = 1, $notes = 1) {
 
 	$friendly_fields = array();
 	if ($found == 1) {
-		$friendly_fields[] = $lv.'location';
+		$friendly_fields[] = $lv . 'location';
 	}
 	if ($uses == 1) {
-		$friendly_fields[] = $lv.'uses';
+		$friendly_fields[] = $lv . 'uses';
 	}
 	if ($notes == 1) {
-		$friendly_fields[] = $lv.'notes';
+		$friendly_fields[] = $lv . 'notes';
 	}
 
 	foreach ($friendly_fields as $single_field) {
@@ -38,18 +38,18 @@ function itemsdb_replace($item, $field = 0, $found = 1, $uses = 1, $notes = 1) {
 			foreach ($matches as $match => $match_val) {
 				foreach ($match_val as $name) {
 
-					$item_name 	= substr($name, 2, -2);   // priekšmeta nosaukums bez kantainajām iekavām
-					$parts 		= explode('|', $item_name);
-					$item_name 	= trim($parts[0]);
-					$name_slug 	= mkslug_itemsdb($item_name);
-					$display 	= (count($parts) == 2) ? $parts[1] : $item_name;
+					$item_name = substr($name, 2, -2);   // priekšmeta nosaukums bez kantainajām iekavām
+					$parts = explode('|', $item_name);
+					$item_name = trim($parts[0]);
+					$name_slug = mkslug_itemsdb($item_name);
+					$display = (count($parts) == 2) ? $parts[1] : $item_name;
 
 					// pārmeklē starp citiem priekšmetiem
-					if ($entry = $db->get_row("SELECT `strid` FROM `idb` WHERE `strid` = '".$name_slug."' LIMIT 1")) {
+					if ($entry = $db->get_row("SELECT `strid` FROM `idb` WHERE `strid` = '" . $name_slug . "' LIMIT 1")) {
 						$prefix = '<a href="/db/' . $entry->strid . '">';
 					}
 					//pārmeklē starp kvestiem un minikvestiem, un minispēlēm
-					else if ($entry = $db->get_row("SELECT `id`,`strid` FROM `pages` WHERE `category` IN('100','99','160')  AND `title` = '". sanitize($item_name) ."'") ) {
+					else if ($entry = $db->get_row("SELECT `id`,`strid` FROM `pages` WHERE `category` IN('100','99','160')  AND `title` = '" . sanitize($item_name) . "'")) {
 						$prefix = "<a href=\"/page/" . $entry->id . "-" . $entry->strid . "\">";
 					}
 
@@ -70,35 +70,35 @@ function itemsdb_replace($item, $field = 0, $found = 1, $uses = 1, $notes = 1) {
 function update_weekly($usr) {
 	global $db;
 
-	if ($user = $db->get_row("SELECT `user` FROM `idb_users` WHERE `user` = '".(int)$usr."' ")) {
+	if ($user = $db->get_row("SELECT `user` FROM `idb_users` WHERE `user` = '" . (int) $usr . "' ")) {
 
-		$week_start 		= date("Y-m-d 00:00:00",strtotime('this week',time()));
-		$week_end 			= date("Y-m-d 23:59:59",strtotime('this week',time())+86400*6);
-		$last_week_start 	= date("Y-m-d 00:00:00",strtotime('last week',time()));
-		$last_week_end 		= date("Y-m-d 23:59:59",strtotime('last week',time())+86400*6);
+		$week_start = date("Y-m-d 00:00:00", strtotime('this week', time()));
+		$week_end = date("Y-m-d 23:59:59", strtotime('this week', time()) + 86400 * 6);
+		$last_week_start = date("Y-m-d 00:00:00", strtotime('last week', time()));
+		$last_week_end = date("Y-m-d 23:59:59", strtotime('last week', time()) + 86400 * 6);
 
 
-		$icount = $db->get_var("SELECT count(*) FROM `idb` WHERE `auser` = '".$user->user."' AND `oldrs` = '0' AND `asg` = '0'");
-		$tcount = $db->get_var("SELECT count(*) FROM `idb` WHERE `auser` = '".$user->user."' AND `atime` < '".sanitize($week_end)."' AND `atime` > '".sanitize($week_start)."' AND `oldrs` = '0' AND `asg` = '0' ");
-		$lcount = $db->get_var("SELECT count(*) FROM `idb` WHERE `auser` = '".$user->user."' AND `atime` < '".sanitize($last_week_end)."' AND `atime` > '".sanitize($last_week_start)."' AND `oldrs` = '0' AND `asg` = '0' ");
+		$icount = $db->get_var("SELECT count(*) FROM `idb` WHERE `auser` = '" . $user->user . "' AND `oldrs` = '0' AND `asg` = '0'");
+		$tcount = $db->get_var("SELECT count(*) FROM `idb` WHERE `auser` = '" . $user->user . "' AND `atime` < '" . sanitize($week_end) . "' AND `atime` > '" . sanitize($week_start) . "' AND `oldrs` = '0' AND `asg` = '0' ");
+		$lcount = $db->get_var("SELECT count(*) FROM `idb` WHERE `auser` = '" . $user->user . "' AND `atime` < '" . sanitize($last_week_end) . "' AND `atime` > '" . sanitize($last_week_start) . "' AND `oldrs` = '0' AND `asg` = '0' ");
 
-		$upd = $db->query("UPDATE `idb_users` SET `items` = '".(int)$icount."', `tcount` = '".(int)$tcount."', `lcount` = '".(int)$lcount."' WHERE `user` = '".$user->user."' ");
+		$upd = $db->query("UPDATE `idb_users` SET `items` = '" . (int) $icount . "', `tcount` = '" . (int) $tcount . "', `lcount` = '" . (int) $lcount . "' WHERE `user` = '" . $user->user . "' ");
 	}
 }
 
 // monstru sarakstam aizvāc - -
 function strip_monsters($string) {
 	if (preg_match_all("/ -[a-zA-Z0-9- \+\.\%\!\'\:\|\/]{1,}-/i", $string, $matches)) {
-	//if (preg_match_all("/-[0-9-\+\.\%\!\'\:\|\/]{1,}-/i", $string, $matches)) {
+		//if (preg_match_all("/-[0-9-\+\.\%\!\'\:\|\/]{1,}-/i", $string, $matches)) {
 		foreach ($matches as $match => $value) {
 			foreach ($value as $val) {
 
-				$nval 		= substr(trim($val), 1, -1); // nostripo - -
-				$nval 		= (is_numeric($nval)) ? '' : ' ('.$nval.')'; // ciparus aizvāc, vārdus ieliek iekavās
-				$string		= str_replace($val,$nval,$string);
-				$values 	= explode(", ",$string);
-				$res 		= array_unique($values); // atstāj unique vērtības (aizvācot ciparus, paliek duplicates)
-				$string 	= implode(', ',$res);
+				$nval = substr(trim($val), 1, -1); // nostripo - -
+				$nval = (is_numeric($nval)) ? '' : ' (' . $nval . ')'; // ciparus aizvāc, vārdus ieliek iekavās
+				$string = str_replace($val, $nval, $string);
+				$values = explode(", ", $string);
+				$res = array_unique($values); // atstāj unique vērtības (aizvācot ciparus, paliek duplicates)
+				$string = implode(', ', $res);
 			}
 		}
 	}
@@ -111,9 +111,9 @@ function strip_item($string) {
 		foreach ($matches as $match => $value) {
 			foreach ($value as $val) {
 
-				$nval 		= substr(trim($val), 1, -1); // nostripo - -
-				$nval 		= (is_numeric($nval)) ? '' : ' ('.$nval.')'; // ciparus aizvāc, vārdus ieliek iekavās
-				$string		= str_replace($val,$nval,$string);
+				$nval = substr(trim($val), 1, -1); // nostripo - -
+				$nval = (is_numeric($nval)) ? '' : ' (' . $nval . ')'; // ciparus aizvāc, vārdus ieliek iekavās
+				$string = str_replace($val, $nval, $string);
 				//$values 	= explode(", ",$string);
 				//$res 		= array_unique($values); // atstāj unique vērtības (aizvācot ciparus, paliek duplicates)
 				//$string 	= implode(', ',$res);
@@ -146,25 +146,23 @@ function display_pages($current_page = 1, $page_count = 1, $sl = '', $get = '', 
 		}
 		// »» ««
 		$all_pages = '';
-		/*if ($current_page > 3 && $page_count > 5) {
-			$all_pages .= '<li class="start"><a class="'.$aclass.'" href="'.$sl.'/1'.$get.'">1</a></li>';
-		}*/
+		/* if ($current_page > 3 && $page_count > 5) {
+		  $all_pages .= '<li class="start"><a class="'.$aclass.'" href="'.$sl.'/1'.$get.'">1</a></li>';
+		  } */
 		if ($current_page > 1) {
-			$all_pages .= '<li class="arrows"><a class="'.$aclass.'" href="'.$sl.'/' . ($current_page - 1) .$get. '"><img src="/modules/idb/images/arr-left.png" /></a></li>';
+			$all_pages .= '<li class="arrows"><a class="' . $aclass . '" href="' . $sl . '/' . ($current_page - 1) . $get . '"><img src="/modules/idb/images/arr-left.png" /></a></li>';
 		}
 		for ($a = ($current_page + $toLeft); $a <= ($current_page + $toRight); $a++) {
-			$all_pages .= ($a == $current_page) ? '<li class="page-active">' . $a . '</li>' : '<li><a class="'.$aclass.'" href="'.$sl.'/' . $a .$get. '">' . $a . '</a></li>';
+			$all_pages .= ($a == $current_page) ? '<li class="page-active">' . $a . '</li>' : '<li><a class="' . $aclass . '" href="' . $sl . '/' . $a . $get . '">' . $a . '</a></li>';
 		}
 		if ($current_page < $page_count) {
-			$all_pages .= '<li class="arrows"><a class="'.$aclass.'" href="'.$sl.'/' . ($current_page + 1) . $get.'"><img src="/modules/idb/images/arr-right.png" /></a></li>';
+			$all_pages .= '<li class="arrows"><a class="' . $aclass . '" href="' . $sl . '/' . ($current_page + 1) . $get . '"><img src="/modules/idb/images/arr-right.png" /></a></li>';
 		}
-		/*if ($current_page < $page_count - 2 && $page_count > 5) {
-			$all_pages .= '<li class="end"><a class="'.$aclass.'" href="'.$sl.'/' . $page_count . $get.'">' . $page_count . '</a></li>';
-		}*/
+		/* if ($current_page < $page_count - 2 && $page_count > 5) {
+		  $all_pages .= '<li class="end"><a class="'.$aclass.'" href="'.$sl.'/' . $page_count . $get.'">' . $page_count . '</a></li>';
+		  } */
 		return $all_pages;
-
 	} else {
 		return '';
 	}
 }
-

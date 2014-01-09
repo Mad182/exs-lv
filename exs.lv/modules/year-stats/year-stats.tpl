@@ -25,7 +25,7 @@
 		</div>
 	</div>
 
-<!-- START BLOCK : week-->
+	<!-- START BLOCK : week-->
 
 	<div style="width: 10px;float: left;">
 		<!-- START BLOCK : day-->
@@ -35,7 +35,7 @@
 		<!-- END BLOCK : day-->
 	</div>
 
-<!-- END BLOCK : week-->
+	<!-- END BLOCK : week-->
 
 </div>
 <p>&nbsp;</p>

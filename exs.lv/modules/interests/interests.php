@@ -38,27 +38,27 @@ if ($db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")
 				$db->query("INSERT INTO `user_interests` (`user_id`, `interest_id`) VALUES ('$auth->id', '$interest')");
 
 
-				/*$groups = $db->get_results("SELECT * FROM `clans` WHERE `interest_id` = '$interest'");
+				/* $groups = $db->get_results("SELECT * FROM `clans` WHERE `interest_id` = '$interest'");
 
-				if ($groups) {
+				  if ($groups) {
 
-					foreach ($groups as $group) {
+				  foreach ($groups as $group) {
 
-						if (!$db->get_var("SELECT count(*) FROM `clans_members` WHERE `user` = '$auth->id' AND `clan` = '$group->id'")) {
+				  if (!$db->get_var("SELECT count(*) FROM `clans_members` WHERE `user` = '$auth->id' AND `clan` = '$group->id'")) {
 
 
-							$db->query("INSERT INTO `clans_members` (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
-							$db->query("UPDATE `clans` SET `members` = '" . $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND approve = '1'") . "' WHERE id = '$group->id'");
-							$url = '/group/' . $group->id;
+				  $db->query("INSERT INTO `clans_members` (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
+				  $db->query("UPDATE `clans` SET `members` = '" . $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND approve = '1'") . "' WHERE id = '$group->id'");
+				  $url = '/group/' . $group->id;
 
-							//notify($group->owner, 4, $group->id, $url . '/members', $group->title);
+				  //notify($group->owner, 4, $group->id, $url . '/members', $group->title);
 
-							if ($group->id == 53 || $group->id == 89) {
-								$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
-							}
-						}
-					}
-				}*/
+				  if ($group->id == 53 || $group->id == 89) {
+				  $db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
+				  }
+				  }
+				  }
+				  } */
 			}
 		}
 		$db->query("UPDATE `users` SET `interest_quiz` = 1 WHERE `id` = '$auth->id'");

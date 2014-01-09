@@ -1,86 +1,81 @@
 <?php
-/**
- *	RuneScape pamācību sadaļas
- */
 
+/**
+ * 	RuneScape pamācību sadaļas
+ */
 $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/rshelp-head.tpl');
 $tpl->prepare();
 
 
 // dev tools
 if ($auth->id == 115 && isset($_GET['force'])) {
-    if ($_GET['force'] == 'true') {
-        update_rspages(true, true); // updeito, drukā
-    }
-    else {
-        update_rspages(false, true);  // neupdeito, drukā
-    }
-    exit;
-} 
-elseif ($auth->id == 115 && isset($_GET['refresh']) ) {
-    // atjauno iekešotās daļas
-    $stats = get_quests_stats(true);
-    echo '<pre>'.var_dump($stats, false).'</pre>';
-    exit;
+	if ($_GET['force'] == 'true') {
+		update_rspages(true, true); // updeito, drukā
+	} else {
+		update_rspages(false, true);  // neupdeito, drukā
+	}
+	exit;
+} elseif ($auth->id == 115 && isset($_GET['refresh'])) {
+	// atjauno iekešotās daļas
+	$stats = get_quests_stats(true);
+	echo '<pre>' . var_dump($stats, false) . '</pre>';
+	exit;
 }
 
 
 
 $tpl_options = 'no-left';
 $sub_include = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
-
-
 // submoduļu indeksi ir kategoriju strid no datubāzes
 $submodules = array(
-    'kvestu-pamacibas'  => array('quests.php', 'quests.tpl'),
-        'f2p-kvesti'    => array('quests.php', 'quests.tpl'),
-        'p2p-kvesti'    => array('quests.php', 'quests.tpl'),
-        'mini-kvesti'   => array('quests.php', 'quests.tpl'),
-    'minispeles'        => array('minigames.php', 'minigames.tpl'),
-    'distractions-diversions' => array('minigames.php', 'minigames.tpl'),
-    'prasmes'           => array('skills.php', 'skills.tpl'),
-    'padomi'            => 'padomi.php',
-    'tasks'             => 'tasks.php',
-    'celvezi'           => 'areas.php',
-    'gildes'            => 'guilds.php'
+	'kvestu-pamacibas' => array('quests.php', 'quests.tpl'),
+	'f2p-kvesti' => array('quests.php', 'quests.tpl'),
+	'p2p-kvesti' => array('quests.php', 'quests.tpl'),
+	'mini-kvesti' => array('quests.php', 'quests.tpl'),
+	'minispeles' => array('minigames.php', 'minigames.tpl'),
+	'distractions-diversions' => array('minigames.php', 'minigames.tpl'),
+	'prasmes' => array('skills.php', 'skills.tpl'),
+	'padomi' => 'padomi.php',
+	'tasks' => 'tasks.php',
+	'celvezi' => 'areas.php',
+	'gildes' => 'guilds.php'
 );
 
 
 
 // iekļauj lapā pareizo apakšmoduli
-if ( isset($submodules[$category->textid]) ) {
+if (isset($submodules[$category->textid])) {
 
-    if (is_array($submodules[$category->textid])) {
-        $cat        = $submodules[$category->textid][0];
-        $sub_tpl    = $submodules[$category->textid][1];
-    } else {
-        $cat        = $submodules[$category->textid];
-        $sub_tpl    = false;
-    }
-    
-    // sub-template
-    if ($sub_tpl !== false) {
-        $tpl->assignInclude('sub-template', CORE_PATH.'/modules/rshelp/submodules/'.$sub_tpl);
-        $tpl->prepare();
-    }
-    
-    // sub-file
-    if ( file_exists(CORE_PATH.'/modules/rshelp/submodules/'.$cat) ) {
-        include(CORE_PATH.'/modules/rshelp/submodules/'.$cat);        
-    }
-    else {
-        set_flash('Kļūdaini norādīta adrese!');
-        redirect();
-    }
+	if (is_array($submodules[$category->textid])) {
+		$cat = $submodules[$category->textid][0];
+		$sub_tpl = $submodules[$category->textid][1];
+	} else {
+		$cat = $submodules[$category->textid];
+		$sub_tpl = false;
+	}
+
+	// sub-template
+	if ($sub_tpl !== false) {
+		$tpl->assignInclude('sub-template', CORE_PATH . '/modules/rshelp/submodules/' . $sub_tpl);
+		$tpl->prepare();
+	}
+
+	// sub-file
+	if (file_exists(CORE_PATH . '/modules/rshelp/submodules/' . $cat)) {
+		include(CORE_PATH . '/modules/rshelp/submodules/' . $cat);
+	} else {
+		set_flash('Kļūdaini norādīta adrese!');
+		redirect();
+	}
 }
 
 
 
 // pārējās RuneScape pamācību sadaļās raksti tiks izdrukāti parastā tabulas formā
 else {
-    
-    // redzamas būs visas trīs lapas kolonnas
-    $tpl_options = '';
+
+	// redzamas būs visas trīs lapas kolonnas
+	$tpl_options = '';
 
 	$all_items = $db->get_results("SELECT `strid`,`title`,`author` FROM `pages` WHERE `category` = '" . $category->id . "' ORDER BY `title` ASC LIMIT 0, 150");
 	if ($all_items) {
@@ -93,9 +88,8 @@ else {
 			$tpl->newBlock('rshelp-listitem');
 			$tpl->assignAll($data);
 		}
+	} else {
+		set_flash('Kļūdaini norādīta adrese!');
+		redirect();
 	}
-    else {
-        set_flash('Kļūdaini norādīta adrese!');
-        redirect();
-    }
 }

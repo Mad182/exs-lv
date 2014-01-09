@@ -6,9 +6,9 @@
 		<legend>Pievienot jaunu attēlu</legend>
 		<p>
 			<label for="new-image">Bilde:</label><br />
-			<ul id="wallpapers-external" style="display: none;"></ul>
-			<small><a href="#" data-addwp-action="load-external" data-target="#wallpapers-external" data-resource="/wallpaper_admin/catsite.json">Ielādēt ārējo resursu attēlus</a></small>
-			<input type="file" name="new-image" id="new-image" />
+		<ul id="wallpapers-external" style="display: none;"></ul>
+		<small><a href="#" data-addwp-action="load-external" data-target="#wallpapers-external" data-resource="/wallpaper_admin/catsite.json">Ielādēt ārējo resursu attēlus</a></small>
+		<input type="file" name="new-image" id="new-image" />
 		</p>
 		<p>
 			<input type="submit" name="submit" id="submit" value="Pievienot" />

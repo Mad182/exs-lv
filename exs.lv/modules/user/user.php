@@ -1,9 +1,8 @@
 <?php
 
-/*
+/**
  * Lietotāja profila apskatīšanas un labošanas modulis
  */
-
 $submodules = array('edit', 'avatar', 'settings', 'security', 'buytitle', 'changenick');
 
 if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
@@ -31,10 +30,10 @@ if ($user) {
 	$tpl->newBlock('profile-menu');
 
 	/**
-	 *	Lietotāja bloķēšana
+	 * 	Lietotāja bloķēšana
 	 */
 	if (isset($_GET['var2']) && $_GET['var2'] == 'block' && im_mod() && $user->level != 1 && ($user->level != 2 or $auth->level == 1)) {
-	
+
 		// nosaka lietotāja aktīvo brīdinājumu skaitu
 		$warn_count = $db->get_var("
 			SELECT count(*) FROM `warns`
@@ -46,30 +45,30 @@ if ($user) {
 
 		// iesniegti bloķēšanas dati
 		if (isset($_POST['block-reason'])) {
-		
+
 			$reason = sanitize(htmlspecialchars($_POST['block-reason']));
 			$length = (int) $_POST['block-length'];
 
 			$site = 0;
 			/* ja admins nav "globāls", tb norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu */
-			if(in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
+			if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 				$site = $lang;
 			}
 
 			$db->query("INSERT INTO `banned` (`user_id`,`reason`,`time`,`length`,`author`,`ip`,`lang`)
 				VALUES ('$user->id','$reason','" . time() . "','$length','$auth->id','$user->lastip', '$site')");
 			get_banlist(true);
-			
-			// pārbauda, vai nav nepieciešams noņemt aktīvos brīdinājumus
-			if ( isset($_POST['warn-removal-reason']) && isset($_POST['warn-removal']) ) {
 
-				$removal_reason 	= post2db($_POST['warn-removal-reason']);
-				$remove_count		= (int)$_POST['warn-removal'];
-				$remove_count 		= ($remove_count > $warn_count || $remove_count < 0) ? 0 : $remove_count;
-				
+			// pārbauda, vai nav nepieciešams noņemt aktīvos brīdinājumus
+			if (isset($_POST['warn-removal-reason']) && isset($_POST['warn-removal'])) {
+
+				$removal_reason = post2db($_POST['warn-removal-reason']);
+				$remove_count = (int) $_POST['warn-removal'];
+				$remove_count = ($remove_count > $warn_count || $remove_count < 0) ? 0 : $remove_count;
+
 				// norādīts, ka vismaz viens brīdinājums jānoņem
 				if ($remove_count > 0) {
-					
+
 					// atlasa visu noņemamo brīdinājumu ids
 					$get_ids = $db->get_results("
 						SELECT `id` FROM `warns` 
@@ -82,7 +81,7 @@ if ($user) {
 							$ids[] = $single_id->id;
 						}
 						// noņem visus norādītos brīdinājumus
-						if ( !empty($ids) ) {
+						if (!empty($ids)) {
 							$db->query("
 								UPDATE `warns` 
 								SET 
@@ -95,17 +94,16 @@ if ($user) {
 						}
 					}
 				}
-			}			
+			}
 			redirect('/banned');
 		}
 
 		$tpl->newBlock('user-profile-block');
-		
+
 		// izdrukā (vai neizdrukā) izvēlni ar brīdinājumu skaitu
-		if ( !$warn_count ) {
+		if (!$warn_count) {
 			$tpl->newBlock('no-active-warns');
-		}
-		else {
+		} else {
 			$tpl->newBlock('warn-removal');
 			for ($i = 0; $i < $warn_count; $i++) {
 				$tpl->newBlock('warn-removal-option');
@@ -114,29 +112,26 @@ if ($user) {
 		}
 
 		$tpl->assignGlobal(array(
-			'user-id' 				=> $user->id,
-			'user-nick' 			=> htmlspecialchars($user->nick),
-			'active-tab-profile' 	=> 'active'
+			'user-id' => $user->id,
+			'user-nick' => htmlspecialchars($user->nick),
+			'active-tab-profile' => 'active'
 		));
 		$page_title = 'Bloķēt lietotāju &quot;' . $user->nick . '&quot;';
 	}
-    
+
 	/**
-	 *	Ielādē submoduli pēc GET[var1]
-	 */
-	elseif ($auth->ok && $auth->id == $user->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
+	 * 	Ielādē submoduli pēc GET[var1]
+	 */ elseif ($auth->ok && $auth->id == $user->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
 
-		require(CORE_PATH . '/modules/user/submodules/' .mkslug($_GET['var1']) . '.php');
-
-    }
-    /**
-	 *	expts dāvināšana citam lietotājam
-	 */
-	elseif ($auth->ok && $auth->id != $user->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
+		require(CORE_PATH . '/modules/user/submodules/' . mkslug($_GET['var1']) . '.php');
+	}
+	/**
+	 * 	expts dāvināšana citam lietotājam
+	 */ elseif ($auth->ok && $auth->id != $user->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
 
 		require(CORE_PATH . '/modules/user/submodules/give.php');
 
-	//view profile
+		//view profile
 	} else {
 		$tpl->newBlock('user-profile');
 
@@ -152,8 +147,7 @@ if ($user) {
 
 		$time = time_ago(strtotime($user->lastseen));
 
-		$voteval =
-				$db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id'") +
+		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id'") +
 				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$user->id'") +
 				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$user->id'");
 
@@ -208,11 +202,11 @@ if ($user) {
 		}
 
 
-		if(!empty($user->web)) {
+		if (!empty($user->web)) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Mājaslapa',
-				'value' => add_smile('<a href="'.htmlspecialchars($user->web).'" rel="nofollow">'.htmlspecialchars($user->web).'</a>', 0, 1, 1)
+				'value' => add_smile('<a href="' . htmlspecialchars($user->web) . '" rel="nofollow">' . htmlspecialchars($user->web) . '</a>', 0, 1, 1)
 			));
 		}
 
@@ -220,7 +214,7 @@ if ($user) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Skype',
-				'value' => '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script><a href="skype:'.htmlspecialchars($user->skype).'?chat"><img src="http://download.skype.com/share/skypebuttons/buttons/chat_green_transparent_97x23.png" style="border: none;" width="97" height="23" alt="Chat with me" /></a>'
+				'value' => '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script><a href="skype:' . htmlspecialchars($user->skype) . '?chat"><img src="http://download.skype.com/share/skypebuttons/buttons/chat_green_transparent_97x23.png" style="border: none;" width="97" height="23" alt="Chat with me" /></a>'
 			));
 		}
 
@@ -251,7 +245,7 @@ if ($user) {
 			$tpl->newBlock('user-profile-ban');
 		}
 
-		if($auth->id == 1 && $lang == 7) {
+		if ($auth->id == 1 && $lang == 7) {
 			$tpl->newBlock('user-profile-lol');
 		}
 
@@ -306,7 +300,7 @@ if ($user) {
 			}
 		}
 
-		if(!empty($auth->mobile)) {
+		if (!empty($auth->mobile)) {
 			$profile_views_limit = 10;
 		}
 
@@ -325,7 +319,7 @@ if ($user) {
 		`users`.`id` = `viewprofile`.`viewer`
 	ORDER BY
 		`viewprofile`.`time`
-	DESC LIMIT ".$profile_views_limit);
+	DESC LIMIT " . $profile_views_limit);
 
 		if ($views) {
 			$tpl->newBlock('user-profile-views');
@@ -358,10 +352,10 @@ if ($user) {
 				} else {
 					$action->avatar = $action->avatar;
 				}
-				if(substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
+				if (substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
 					$action->avatar = 'http://exs.lv' . $action->avatar;
 				}
-				if(substr($action->avatar, 0, 8) == '/bildes/') {
+				if (substr($action->avatar, 0, 8) == '/bildes/') {
 					$action->avatar = 'http://img.exs.lv' . $action->avatar;
 				}
 				$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';

@@ -1,10 +1,9 @@
 <?php
 
-/*
+/**
  * Lietotāja profila drošības iestatījumi -
  * paroles un e-pasta adreses maiņa
  */
-
 $tpl->newBlock('user-profile-security');
 
 //write changes
@@ -30,10 +29,9 @@ if (isset($_POST['submit'])) {
 
 				$newpass = password_hash($_POST['password-1'], PASSWORD_BCRYPT, array("cost" => 14));
 
-				$db->update('users', $auth->id, array('pwd' => '', 'password'=> $newpass));
+				$db->update('users', $auth->id, array('pwd' => '', 'password' => $newpass));
 
 				$auth->login($user->nick, $_POST['password-1']);
-
 			} else {
 				set_flash('Ievadītā parole ir pārāk īsa!', 'error');
 				redirect('/user/security');

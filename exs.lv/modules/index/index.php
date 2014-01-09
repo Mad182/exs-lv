@@ -126,8 +126,8 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 			}
 
 			$av = '';
-			if(!empty($article->avatar)) {
-				$av = '<a href="/read/' . $article->strid . '" class="av"><img width="75" height="75" src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+			if (!empty($article->avatar)) {
+				$av = '<a href="/read/' . $article->strid . '" class="av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 			}
 
 			$tpl_cachable->assign(array(
@@ -138,14 +138,14 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 				'av' => $av
 			));
 		}
-		
+
 		$list_cats = array(
 			'games' => 81,
 			'movies' => 80,
 			'music' => 323
 		);
 
-		foreach($list_cats as $cat_type => $cat_id) {
+		foreach ($list_cats as $cat_type => $cat_id) {
 
 			$articles = $db->get_results("
 				SELECT
@@ -179,8 +179,8 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 				}
 
 				$av = '';
-				if(!empty($article->avatar)) {
-					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img width="75" height="75" src="http://img.exs.lv/'.$article->avatar.'" alt="'.htmlspecialchars($article->title).'" /></a>';
+				if (!empty($article->avatar)) {
+					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 				}
 
 				$tpl_cachable->assign(array(
@@ -191,7 +191,6 @@ if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
 					'av' => $av
 				));
 			}
-			
 		}
 
 		file_put_contents('cache/index/right.html', $tpl_cachable->getOutputContent());

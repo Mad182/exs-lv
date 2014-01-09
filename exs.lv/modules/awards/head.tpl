@@ -3,19 +3,19 @@
 <script type="text/javascript">
 
 	function savePosition(arr) {
-		$.post("{page-url}", { position: arr},
-		function(data){
-			//
-		});
+		$.post("{page-url}", {position: arr},
+						function(data) {
+							//
+						});
 	}
 
 	$(document).ready(function() {
 
 		$("#user-awards-current").disableSelection();
 		$("#user-awards-current").sortable({
-		   update: function(event, ui) {
-		      savePosition($('#user-awards-current').sortable('toArray'));
-		   }
+			update: function(event, ui) {
+				savePosition($('#user-awards-current').sortable('toArray'));
+			}
 		});
 
 

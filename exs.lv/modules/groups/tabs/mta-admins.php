@@ -5,7 +5,7 @@ $mtadb->query("SET NAMES utf8");
 
 $admins = $mtadb->get_results("SELECT `exs_id`, `username`, `admin`, `adminreports`, `lastlogin`, `responsibleFor` FROM `accounts` WHERE `admin` != 0 ORDER BY `admin` DESC");
 
-if(!empty($admins)) {
+if (!empty($admins)) {
 
 	$module_content = '
 
@@ -20,10 +20,10 @@ if(!empty($admins)) {
 		</tr>
 	';
 
-	foreach($admins as $admin) {
+	foreach ($admins as $admin) {
 
 		$usr = '';
-		if($exs = get_user($admin->exs_id)) {
+		if ($exs = get_user($admin->exs_id)) {
 			$usr = '<a href="/user/' . $exs->id . '">' . usercolor($exs->nick, $exs->level, false, $exs->id) . '</a>';
 		}
 
@@ -36,9 +36,8 @@ if(!empty($admins)) {
 		$module_content .= '	<td>' . htmlspecialchars($admin->responsibleFor) . '</td>';
 		$module_content .= '</tr>';
 	}
-	
-	$module_content .= '</table>';
 
+	$module_content .= '</table>';
 } else {
 	$module_content = '<div class="form"><p class="error"><strong>Kļūda!</strong><br />Nevar savienoties ar MTA serveri...</p></div>';
 }

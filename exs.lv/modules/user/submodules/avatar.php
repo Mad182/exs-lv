@@ -1,9 +1,8 @@
 <?php
 
-/*
+/**
  * Avatara attēla maiņa
  */
-
 if ($user->avatar == '') {
 	$user->avatar = 'none.png';
 }
@@ -32,7 +31,7 @@ if (isset($_POST['submit'])) {
 		$foo->jpeg_quality = 97;
 		$foo->file_auto_rename = false;
 		$foo->file_overwrite = true;
-		$foo->process(CORE_PATH . '/dati/bildes/useravatar/'.$avatar_path);
+		$foo->process(CORE_PATH . '/dati/bildes/useravatar/' . $avatar_path);
 		if ($foo->processed) {
 
 			$foo->file_new_name_body = $text;
@@ -45,7 +44,7 @@ if (isset($_POST['submit'])) {
 			$foo->jpeg_quality = 97;
 			$foo->file_auto_rename = false;
 			$foo->file_overwrite = true;
-			$foo->process(CORE_PATH . '/dati/bildes/u_small/'.$avatar_path);
+			$foo->process(CORE_PATH . '/dati/bildes/u_small/' . $avatar_path);
 
 			$foo->file_new_name_body = $text;
 			$foo->image_resize = true;
@@ -58,7 +57,7 @@ if (isset($_POST['submit'])) {
 			$foo->jpeg_quality = 97;
 			$foo->file_auto_rename = false;
 			$foo->file_overwrite = true;
-			$foo->process(CORE_PATH . '/dati/bildes/u_large/'.$avatar_path);
+			$foo->process(CORE_PATH . '/dati/bildes/u_large/' . $avatar_path);
 
 			if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $avatar_path . $text . '.jpg')) {
 				if ($user->avatar != 'none.png' && !empty($user->avatar) && !empty($user->av_alt)) {

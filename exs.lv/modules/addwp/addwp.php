@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Wallpaper pievienošana (moderatoriem)
+ */
 if (!im_mod()) {
 	redirect();
 }
@@ -21,7 +24,7 @@ if (isset($_POST['new-image-id'])) {
 	$temp = tmpfile();
 	$temp_filename = stream_get_meta_data($temp);
 	$temp_filename = $temp_filename['uri'];
-	rename($temp_filename, $temp_filename.='.jpg'); 
+	rename($temp_filename, $temp_filename.='.jpg');
 
 	$id = $_POST['new-image-id'];
 	$data = array_merge_recursive($get_wp->reddit(), $get_wp->imgur());

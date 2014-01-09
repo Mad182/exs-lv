@@ -1,12 +1,14 @@
 <?php
 
 /* updato grupas apstiprināto lietotāju skaitu grupu tabulā */
+
 function update_members($group) {
 	global $db;
 	return $db->query("UPDATE `clans` SET `members` = (SELECT count(*) FROM `clans_members` WHERE `clan` = " . intval($group) . " AND `approve` = 1) WHERE `id` = " . intval($group));
 }
 
 /* uploado avataru, atgriež faila nosaukumu */
+
 function upload_user_avatar($post, $old_filename, $text) {
 	global $group;
 

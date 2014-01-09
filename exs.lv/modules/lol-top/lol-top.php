@@ -17,16 +17,16 @@ $top_players = $db->get_results("
 		`lol_tracking`.`lks` DESC
 ");
 
-if(!empty($top_players)) {
+if (!empty($top_players)) {
 	$tpl->newBlock('lol-top-full');
 	$i = 1;
-	foreach($top_players as $plr) {
-	
+	foreach ($top_players as $plr) {
+
 		$usr = get_user($plr->user_id);
 		$plr->nick = usercolor($usr->nick, $usr->level, false, $usr->id);
 		$plr->id = $usr->id;
 		$plr->i = $i++;
-	
+
 		$tpl->newBlock('lol-top-full-node');
 		$tpl->assignAll($plr);
 	}

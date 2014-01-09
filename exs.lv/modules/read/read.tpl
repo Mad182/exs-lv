@@ -7,7 +7,8 @@
 <ol>
 	<!-- START BLOCK : page-history-node-->
 	<li>
-		<a href="/?c=252&amp;page={id}" onclick="openhpopup('/?c=252&amp;page={id}'); return false;"><strong>{title}</strong></a> ({symbols} simboli) @ {time} pēdējās izmaiņas no {user}
+		<a href="/?c=252&amp;page={id}" onclick="openhpopup('/?c=252&amp;page={id}');
+				return false;"><strong>{title}</strong></a> ({symbols} simboli) @ {time} pēdējās izmaiņas no {user}
 	</li>
 	<!-- END BLOCK : page-history-node-->
 </ol>
@@ -40,19 +41,19 @@
 		<img src="http://img.exs.lv{url}" />
 		<div class="c"></div>
 		<!-- END BLOCK : edit-movie-avatar-->
-<script type="text/javascript">
-	$(document).ready(function() {
+		<script type="text/javascript">
+			$(document).ready(function() {
 
-		$('.imgselect').live('click', function() {
-			$('.imgselect').removeClass('clicked');
-			$(this).addClass('clicked');
-			$('#avatar-url').val($(this).attr('href'));
-			
-			return false;
-		});
+				$('.imgselect').live('click', function() {
+					$('.imgselect').removeClass('clicked');
+					$(this).addClass('clicked');
+					$('#avatar-url').val($(this).attr('href'));
 
-	});
-</script>
+					return false;
+				});
+
+			});
+		</script>
 
 
 		<p><input type="submit" name="search-avatar" value="Meklēt automātiski" class="button primary" /></p>
@@ -75,7 +76,7 @@
 		<legend>Labot rakstu</legend>
 		<p><label for="edit-topic-title">Nosaukums:</label><br /><input type="text" name="edit-topic-title" id="edit-topic-title" class="title" value="{article-title}" maxlength="64" /></p>
 
-<!-- START BLOCK : edit-movie-data-->
+		<!-- START BLOCK : edit-movie-data-->
 
 		<p>
 			<label for="movie-titlelv">Nosaukums latviski:</label><br />
@@ -100,7 +101,7 @@
 			</select>
 		</p>
 
-<!-- END BLOCK : edit-movie-data-->
+		<!-- END BLOCK : edit-movie-data-->
 
 		<label for="edit-topic-body">Teksts:</label><br />
 		<textarea name="edit-topic-body" id="edit-topic-body" cols="94" rows="40" style="width: 100%; height: 500px;">{article-text}</textarea>
@@ -126,9 +127,9 @@
 <!-- START BLOCK : read-article-->
 
 <h1>{article-title}
-<!-- START BLOCK : title-lv-->
- <span class="slash">/</span> <small>{title}</small>
-<!-- END BLOCK : title-lv-->
+	<!-- START BLOCK : title-lv-->
+	<span class="slash">/</span> <small>{title}</small>
+	<!-- END BLOCK : title-lv-->
 </h1>
 
 <!-- START BLOCK : page-ad-google-->
@@ -150,59 +151,59 @@
 <!-- END BLOCK : movie-avatar-->
 
 <div id="full-story">
-<!-- START BLOCK : movie-info-->
-<div id="movie-info">
+	<!-- START BLOCK : movie-info-->
+	<div id="movie-info">
 
-	<!-- START BLOCK : movie-info-type-->
-	<p class="title"><strong>{type} &quot;{title}&quot;</strong></p>
-	<!-- END BLOCK : movie-info-type-->
+		<!-- START BLOCK : movie-info-type-->
+		<p class="title"><strong>{type} &quot;{title}&quot;</strong></p>
+		<!-- END BLOCK : movie-info-type-->
 
-	<!-- START BLOCK : movie-info-year-->
-	<p><strong>Gads:</strong> {year}</p>
-	<!-- END BLOCK : movie-info-year-->
+		<!-- START BLOCK : movie-info-year-->
+		<p><strong>Gads:</strong> {year}</p>
+		<!-- END BLOCK : movie-info-year-->
 
-	<!-- START BLOCK : movie-info-genres-->
-	<p><strong>Žanrs:</strong> {genres}</p>
-	<!-- END BLOCK : movie-info-genres-->
+		<!-- START BLOCK : movie-info-genres-->
+		<p><strong>Žanrs:</strong> {genres}</p>
+		<!-- END BLOCK : movie-info-genres-->
 
-	<!-- START BLOCK : movie-info-rating-->
-	<p><strong>IMDB vērtējums:</strong> {rating}</p>
-	<!-- END BLOCK : movie-info-rating-->
+		<!-- START BLOCK : movie-info-rating-->
+		<p><strong>IMDB vērtējums:</strong> {rating}</p>
+		<!-- END BLOCK : movie-info-rating-->
 
-	<!-- START BLOCK : movie-info-runtime-->
-	<p><strong>Garums:</strong> {runtime} minūtes</p>
-	<!-- END BLOCK : movie-info-runtime-->
+		<!-- START BLOCK : movie-info-runtime-->
+		<p><strong>Garums:</strong> {runtime} minūtes</p>
+		<!-- END BLOCK : movie-info-runtime-->
 
-	<!-- START BLOCK : movie-like-->
-	{like}
-	<!-- END BLOCK : movie-like-->
+		<!-- START BLOCK : movie-like-->
+		{like}
+		<!-- END BLOCK : movie-like-->
 
-	<!-- START BLOCK : movie-likes-->
-	<p>
-		<strong>Iesaka:</strong><br />
-		<!-- START BLOCK : movie-likes-user-->
-		<img src="{avatar}" class="icon" alt="{nick}" title="{nick}" />
-		<!-- END BLOCK : movie-likes-user-->
-		<br style="clear:both"/>{rest}
-	</p>
-	<!-- END BLOCK : movie-likes-->
+		<!-- START BLOCK : movie-likes-->
+		<p>
+			<strong>Iesaka:</strong><br />
+			<!-- START BLOCK : movie-likes-user-->
+			<img src="{avatar}" class="icon" alt="{nick}" title="{nick}" />
+			<!-- END BLOCK : movie-likes-user-->
+			<br style="clear:both"/>{rest}
+		</p>
+		<!-- END BLOCK : movie-likes-->
 
-</div>
-<div class="c"></div>
-<p>&nbsp;</p>
-<!-- END BLOCK : movie-info-->
+	</div>
+	<div class="c"></div>
+	<p>&nbsp;</p>
+	<!-- END BLOCK : movie-info-->
 	{article-text}
 </div>
 <!-- START BLOCK : post-stags-->
 <div class="c"></div>
 <div id="related-topics">
 	<div class="mbox">
-	<h4>Saistītie raksti:</h4>
-	<ul>
-		<!-- START BLOCK : post-stags-node-->
-		<li><a href="{url}">{title}</a></li>
-		<!-- END BLOCK : post-stags-node-->
-	</ul>
+		<h4>Saistītie raksti:</h4>
+		<ul>
+			<!-- START BLOCK : post-stags-node-->
+			<li><a href="{url}">{title}</a></li>
+			<!-- END BLOCK : post-stags-node-->
+		</ul>
 	</div>
 </div>
 <!-- END BLOCK : post-stags-->
@@ -215,24 +216,34 @@
 		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 		<div style="float: left; margin: 0 12px 0 0" id="draugiemLike"></div>
 		<script type="text/javascript">
-		var p = {
-			titlePrefix:"{page-domain}",
-			name:"{page-domain}"
-		};
-		new DApi.Like(p).append('draugiemLike');
+			var p = {
+				titlePrefix: "{page-domain}",
+				name: "{page-domain}"
+			};
+			new DApi.Like(p).append('draugiemLike');
 		</script>
 
 		<div style="width: 90px;float: left; margin: 0"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-		<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script></div>
+			<script>!function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (!d.getElementById(id)) {
+						js = d.createElement(s);
+						js.id = id;
+						js.src = "//platform.twitter.com/widgets.js";
+						fjs.parentNode.insertBefore(js, fjs);
+					}
+				}(document, "script", "twitter-wjs");</script></div>
 
 		<div id="fb-root"></div>
 		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id))
+					return;
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
 
 		<div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
 
@@ -297,15 +308,15 @@
 	<!-- START BLOCK : comments-node-->
 	<!-- START BLOCK : comments-node-user-->
 	<dt>
-		<a class="username" id="c{comment-id}" href="{aurl}">{comment-author}</a>
-		<a href="{aurl}">
-			<img class="comments-avatar" src="{avatar}" alt="{comment-author-title}" />
-		</a>
-		<span class="custom-title">{comment-author-custom_title}</span>
-		<span class="author-info">
-			{group}
-			<span class="title">Karma:</span> <span>{comment-author-karma}</span>
-		</span>
+	<a class="username" id="c{comment-id}" href="{aurl}">{comment-author}</a>
+	<a href="{aurl}">
+		<img class="comments-avatar" src="{avatar}" alt="{comment-author-title}" />
+	</a>
+	<span class="custom-title">{comment-author-custom_title}</span>
+	<span class="author-info">
+		{group}
+		<span class="title">Karma:</span> <span>{comment-author-karma}</span>
+	</span>
 	</dt>
 	<dd>
 		<p class="inf">
@@ -334,23 +345,23 @@
 			<ul class="rpl-list mbox">
 				<!-- START BLOCK : com-reply-->
 				<li>
-				<!-- START BLOCK : reply-vote-->
-				<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
-				<!-- END BLOCK : reply-vote-->
-				<a name="c{rpl-id}" href="{rpl-aurl}"><img class="rpl-avatar" src="{rpl-avatar}" alt="" /></a>
-				<div class="response-content">
-				<p class="comment-author"><a href="{rpl-aurl}">{rpl-author}</a> @ {rpl-date} atbildēja:
-			<!-- START BLOCK : report-reply -->
-			<span class="report-button">
-				<a class="report-user" href="/report/article-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>
-			</span>
-			<!-- END BLOCK : report-reply -->
-			<!-- START BLOCK : reply-adm-->
-				[<a href="{delete}" class="confirm red" title="Dzēst">x</a>] | 
-				 <a href="{edit}">labot</a>
-			<!-- END BLOCK : reply-adm-->
+					<!-- START BLOCK : reply-vote-->
+					<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
+					<!-- END BLOCK : reply-vote-->
+					<a name="c{rpl-id}" href="{rpl-aurl}"><img class="rpl-avatar" src="{rpl-avatar}" alt="" /></a>
+					<div class="response-content">
+						<p class="comment-author"><a href="{rpl-aurl}">{rpl-author}</a> @ {rpl-date} atbildēja:
+							<!-- START BLOCK : report-reply -->
+							<span class="report-button">
+								<a class="report-user" href="/report/article-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>
+							</span>
+							<!-- END BLOCK : report-reply -->
+							<!-- START BLOCK : reply-adm-->
+							[<a href="{delete}" class="confirm red" title="Dzēst">x</a>] | 
+							<a href="{edit}">labot</a>
+							<!-- END BLOCK : reply-adm-->
 
-				</p>{rpl-text}</div></li>
+						</p>{rpl-text}</div></li>
 				<!-- END BLOCK : com-reply-->
 			</ul>
 			<!-- END BLOCK : com-replies-->
@@ -371,10 +382,10 @@
 	<!-- END BLOCK : comments-node-user-->
 	<!-- START BLOCK : comments-node-anon-->
 	<dt>
-		<span class="username">{comment-anon_nick}</span>
-		<img class="comments-avatar" src="{comment-avatar}" alt="{comment-anon_nick}" />
-		<br />
-		<span class="author-info"><span class="title">Grupa:</span> <span>Viesi</span></span>
+	<span class="username">{comment-anon_nick}</span>
+	<img class="comments-avatar" src="{comment-avatar}" alt="{comment-anon_nick}" />
+	<br />
+	<span class="author-info"><span class="title">Grupa:</span> <span>Viesi</span></span>
 	</dt>
 	<dd>
 		<p class="inf">
@@ -415,9 +426,9 @@
 		<legend>Pievienot komentāru</legend>
 		<input type="hidden" name="comment-pid" value="{comment-pid}" />
 		<input type="hidden" name="checksrc" value="{comment-pid-check}" />
-	<!-- START BLOCK : resp-tools-->
-				<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br />
-	<!-- END BLOCK : resp-tools-->
+		<!-- START BLOCK : resp-tools-->
+		<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br />
+		<!-- END BLOCK : resp-tools-->
 		<textarea style="height:150px;width:100%" cols="45" rows="5" name="commenttext" ></textarea>
 		<p>
 			<input type="submit" class="button primary" value="Pievienot" />

@@ -1,7 +1,6 @@
 <?php
 
-
-if(isset($_GET['var1']) && $_GET['var1'] == $auth->logout_hash) {
+if (isset($_GET['var1']) && $_GET['var1'] == $auth->logout_hash) {
 
 	$auth->logout();
 	if ($_SERVER['HTTP_REFERER'] == "") {
@@ -10,10 +9,8 @@ if(isset($_GET['var1']) && $_GET['var1'] == $auth->logout_hash) {
 		$urla = $_SERVER['HTTP_REFERER'];
 	}
 	redirect($urla);
-
 } else {
 
 	set_flash('Kļūda izlogojoties!', 'error');
 	redirect();
-
 }

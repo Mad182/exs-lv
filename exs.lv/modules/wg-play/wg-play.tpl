@@ -2,15 +2,15 @@
 
 <script type="text/javascript">
 
-  $(document).ready(function() {
-  	$('#hm-game-alphabet a').live('click', function() {
-  		$('#hm-game-answer').fadeTo(200, 0.6);
-  		$('#hm-game-container').load($(this).attr('href'), function() {
-  			$(this).fadeTo(300, 1);
-  		});
-  		return false;
-  	});
-  });
+	$(document).ready(function() {
+		$('#hm-game-alphabet a').live('click', function() {
+			$('#hm-game-answer').fadeTo(200, 0.6);
+			$('#hm-game-container').load($(this).attr('href'), function() {
+				$(this).fadeTo(300, 1);
+			});
+			return false;
+		});
+	});
 
 </script>
 

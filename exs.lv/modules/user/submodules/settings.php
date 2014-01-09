@@ -1,10 +1,8 @@
 <?php
 
-/*
+/**
  * Lietotāja personalizētie lapas iestatījumi
  */
-
-//write changes
 if (isset($_POST['submit'])) {
 
 	$user->show_code = (bool) $_POST['edit-show_code'];
@@ -28,7 +26,6 @@ if (isset($_POST['submit'])) {
 
 	set_flash('Izmaiņas saglabātas!', 'success');
 	redirect('/user/settings');
-
 }
 
 if ($user->showsig) {

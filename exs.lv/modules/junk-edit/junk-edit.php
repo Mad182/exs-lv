@@ -19,7 +19,7 @@ if (im_mod() && isset($_GET['var1'])) {
 
 			$auth->log('Laboja junk', 'junk', $mb->id);
 
-			redirect('/junk/'.$mb->id);
+			redirect('/junk/' . $mb->id);
 		}
 
 		$tpl->newBlock('mb-edit');

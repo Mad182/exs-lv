@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Saņemto medaļu tops -
+ * lietotāji ar visvairāk medaļām
+ */
 $awards = $db->get_results("SELECT COUNT(user_id) AS c, user_id FROM autoawards GROUP BY user_id ORDER BY c DESC LIMIT 200");
 
 $i = 1;

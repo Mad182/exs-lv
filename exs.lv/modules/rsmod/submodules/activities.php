@@ -1,20 +1,20 @@
 <?php
+
 /**
- *	RuneScape aktivitāšu pārvaldība.
+ * 	RuneScape aktivitāšu pārvaldība.
  *
  *  
  *
- *	Moduļa adrese: runescape.exs.lv/series
+ * 	Moduļa adrese: runescape.exs.lv/series
  */
- 
-if ( !isset($sub_include) ) {
-    set_flash('No hacking, pls.');
-    redirect();
+if (!isset($sub_include)) {
+	set_flash('No hacking, pls.');
+	redirect();
 }
 
 if ($_GET['var1'] == 'aedit' && $auth->id == 115) {
 
-    exit;
+	exit;
 	// update
 	if (isset($_GET['update'])) {
 		$id = (int) $_GET['update'];

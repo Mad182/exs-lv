@@ -5,11 +5,11 @@
 <h3>{title}</h3>
 <!-- START BLOCK : list-groups-node-->
 <ul id="exs-groups">
-<li>
-<a href="{link}"><img {style} class="av" src="http://img.exs.lv/userpic/medium/{avatar}" alt="" /></a>
-<h3><a href="{link}">{title}</a>{add}</h3>
-<p>Biedri: {members}<br />Posti: {posts}<br />Admins: {admin}</p>
-</li>
+	<li>
+		<a href="{link}"><img {style} class="av" src="http://img.exs.lv/userpic/medium/{avatar}" alt="" /></a>
+		<h3><a href="{link}">{title}</a>{add}</h3>
+		<p>Biedri: {members}<br />Posti: {posts}<br />Admins: {admin}</p>
+	</li>
 </ul>
 <!-- END BLOCK : list-groups-node-->
 <div class="c"></div>

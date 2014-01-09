@@ -8,9 +8,9 @@
 </ul>
 
 <div class="tabMain">
-<ul>
-	<!-- START BLOCK : aw-top-->
-	<li>{num}. {nick} - {c}</li>
-	<!-- END BLOCK : aw-top-->
-</ul>
+	<ul>
+		<!-- START BLOCK : aw-top-->
+		<li>{num}. {nick} - {c}</li>
+		<!-- END BLOCK : aw-top-->
+	</ul>
 </div>

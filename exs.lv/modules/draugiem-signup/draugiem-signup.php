@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Ielogoties/reģistrēties ar draugiem.lv pasi
+ */
 if ($auth->ok) {
 	redirect();
 }
@@ -16,12 +19,11 @@ if ($session && !empty($_GET['dr_auth_code'])) {//New session, check if we are n
 		<script type="text/javascript">
 			window.opener.location.href = 'http://<?php echo htmlspecialchars($_SERVER['SERVER_NAME']); ?>/draugiem-signup';
 			window.opener.focus();
-			if(window.opener!=window){
+			if (window.opener != window) {
 				window.close();
 			}
 		</script>
 		<?php
-
 	} else {//No popup, simply reload current window
 		redirect('/draugiem-signup');
 	}
@@ -43,7 +45,7 @@ if ($session) {//Authentication successful
 					if ($exuser->draugiem_id == 0) {
 
 						$gender = 0;
-						if($user['sex'] == 'F') {
+						if ($user['sex'] == 'F') {
 							$gender = 1;
 						}
 
@@ -53,26 +55,21 @@ if ($session) {//Authentication successful
 						//draugiem.lv friends
 						if ($users = $draugiem->getUserFriends(1, 100)) {
 							foreach ($users as $friend) {
-								$existing = $db->get_row("SELECT * FROM users WHERE draugiem_id = '".$friend['uid']."'");
-								if($existing) {
+								$existing = $db->get_row("SELECT * FROM users WHERE draugiem_id = '" . $friend['uid'] . "'");
+								if ($existing) {
 									$c1 = $db->get_var("SELECT count(*) FROM friends WHERE friend1 = '$auth->id' AND friend2 = '$existing->id'");
 									$c2 = $db->get_var("SELECT count(*) FROM friends WHERE friend2 = '$auth->id' AND friend1 = '$existing->id'");
-									if(!$c1 && !$c2) {
+									if (!$c1 && !$c2) {
 
 										$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
 											VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
 										update_karma($existing->id, true);
 										notify($existing->id, 6);
 										notify($auth->id, 6);
-
-
 									}
 								}
 							}
 						}
-
-
-
 					}
 					update_karma($auth->id, true);
 					redirect();
@@ -93,7 +90,7 @@ if ($session) {//Authentication successful
 						//additional info
 
 						$gender = 0;
-						if($user['sex'] == 'F') {
+						if ($user['sex'] == 'F') {
 							$gender = 1;
 						}
 
@@ -111,8 +108,8 @@ if ($session) {//Authentication successful
 						//draugiem.lv friends
 						if ($users = $draugiem->getUserFriends(1, 100)) {
 							foreach ($users as $friend) {
-								$existing = $db->get_row("SELECT * FROM users WHERE draugiem_id = '".$friend['uid']."'");
-								if($existing) {
+								$existing = $db->get_row("SELECT * FROM users WHERE draugiem_id = '" . $friend['uid'] . "'");
+								if ($existing) {
 									$db->query("INSERT INTO `friends` (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
 										VALUES ('$newid', '$existing->id', NOW(), NOW(), 1)");
 
@@ -214,6 +211,6 @@ if ($session) {//Authentication successful
 	}
 } else { //User not logged in, show login button
 	$tpl->newBlock('draugiem-login');
-	$redirect = 'http://'.$_SERVER['SERVER_NAME'].'/draugiem-signup/'; //Where to redirect after authorization
+	$redirect = 'http://' . $_SERVER['SERVER_NAME'] . '/draugiem-signup/'; //Where to redirect after authorization
 	$tpl->assign('button', $draugiem->getLoginButton($redirect)); //Show the button
 }

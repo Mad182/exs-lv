@@ -1,25 +1,25 @@
 <?php
 
-$page = intval(str_replace('','',$_GET['img']));
+$page = intval(str_replace('', '', $_GET['img']));
 
 $pinfo = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$page'");
 
 $original = null;
 
-if($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
-	$original = '/home/www/img.exs.lv'.$avatar->image;
-} elseif(!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
+if ($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
+	$original = '/home/www/img.exs.lv' . $avatar->image;
+} elseif (!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
 	$original = $pinfo->avatar;
 } else {
 	$uinfo = get_user($pinfo->author);
 
-	if(!empty($uinfo->avatar) && file_exists('dati/bildes/useravatar/'.$uinfo->avatar)) {
-		$original = 'dati/bildes/useravatar/'.$uinfo->avatar;
+	if (!empty($uinfo->avatar) && file_exists('dati/bildes/useravatar/' . $uinfo->avatar)) {
+		$original = 'dati/bildes/useravatar/' . $uinfo->avatar;
 	} else {
 
 		$category = get_cat($pinfo->category);
 
-		if(!empty($category->icon) && file_exists($category->icon)) {
+		if (!empty($category->icon) && file_exists($category->icon)) {
 			$original = $category->icon;
 		}
 	}
@@ -41,7 +41,7 @@ if ($original != null && file_exists($original)) {
 	$foo->image_convert = 'jpg';
 	$foo->process('dati/bildes/topic-av/');
 	header("Content-Type: image/jpg");
-	echo file_get_contents('dati/bildes/topic-av/' . $page .'.jpg');
+	echo file_get_contents('dati/bildes/topic-av/' . $page . '.jpg');
 } else {
 	$expires = 900;
 	header('Pragma: public');

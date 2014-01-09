@@ -1,6 +1,7 @@
 <?php
+
 /**
- *	RuneScape ģildes
+ * 	RuneScape ģildes
  */
 !isset($sub_include) and die('No hacking, pls.');
 
@@ -34,33 +35,32 @@ $guilds = $db->get_results("
 
 if ($guilds) {
 
-    $tpl->newBlock('guilds');
-    $tpl->newBlock('guilds-not');
-    
-    foreach ($guilds as $page) {
-        
-        // pārbauda, vai pieprasījumā izdevās atlasīt papildinformāciju
-        if ($page->rspage_id != '0') {
-            $page->rspage_is_old = ($page->rspage_is_old == 1) ?
-                '<img class="guild-old" src="/bildes/runescape/info_yellow_sm.png" title="Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!" alt="">' : 
-                '<img class="guild-old" src="/bildes/runescape/info_red_sm.png" title="Pamācību nepieciešams atjaunināt!" alt="">';
-            $page->rspage_members_only = ($page->rspage_members_only == 1) ? 
-                '<img class="guild-icon" src="/bildes/runescape/p2p_small.png" title="Maksājošo spēlētāju ģilde" alt="">' : '';
-        } 
-        else {
-            $page->rspage_is_old        = '';
-            $page->rspage_members_only  = '';
-        }
+	$tpl->newBlock('guilds');
+	$tpl->newBlock('guilds-not');
 
-        // ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
-        if ($page->rspage_img != '') {         
-            $tpl->newBlock('guild');
-            $tpl->assignAll($page);
-        } 
-        // pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
-        else {
-            $tpl->newBlock('guild-page');
-            $tpl->assignAll($page);
-        }
-    }
+	foreach ($guilds as $page) {
+
+		// pārbauda, vai pieprasījumā izdevās atlasīt papildinformāciju
+		if ($page->rspage_id != '0') {
+			$page->rspage_is_old = ($page->rspage_is_old == 1) ?
+					'<img class="guild-old" src="/bildes/runescape/info_yellow_sm.png" title="Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!" alt="">' :
+					'<img class="guild-old" src="/bildes/runescape/info_red_sm.png" title="Pamācību nepieciešams atjaunināt!" alt="">';
+			$page->rspage_members_only = ($page->rspage_members_only == 1) ?
+					'<img class="guild-icon" src="/bildes/runescape/p2p_small.png" title="Maksājošo spēlētāju ģilde" alt="">' : '';
+		} else {
+			$page->rspage_is_old = '';
+			$page->rspage_members_only = '';
+		}
+
+		// ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
+		if ($page->rspage_img != '') {
+			$tpl->newBlock('guild');
+			$tpl->assignAll($page);
+		}
+		// pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
+		else {
+			$tpl->newBlock('guild-page');
+			$tpl->assignAll($page);
+		}
+	}
 }

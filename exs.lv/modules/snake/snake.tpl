@@ -39,13 +39,13 @@
 		<th>Punkti</th>
 		<th>Datums</th>
   </tr>
-<!-- START BLOCK : score-tr-->
+	<!-- START BLOCK : score-tr-->
 	<tr>
 		<td>{place}</td>
 		<td><a href="{user-url}">{user}</a></td>
 		<td>{score}</td>
 		<td>{date}</td>
 	</tr>
-<!-- END BLOCK : score-tr-->
+	<!-- END BLOCK : score-tr-->
 
 </table>

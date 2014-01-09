@@ -6,8 +6,8 @@ if ($auth->level > 0) {
 
 	$lostmaps = $db->get_results("SELECT * FROM `lostmaps` WHERE `game` = 'cs' ORDER BY `hits` DESC LIMIT 100");
 	$out = '<h3>Visvairāk vajadzīgās kartes</h3><table class="main-table"><tr><th>Karte</th><th>Neveiksmīgi pieprasījumi</th></tr>';
-	foreach($lostmaps as $lostmap) {
-		$out .= '<tr><td>'.$lostmap->title.'</td><td>'.$lostmap->hits.'</td></tr>';
+	foreach ($lostmaps as $lostmap) {
+		$out .= '<tr><td>' . $lostmap->title . '</td><td>' . $lostmap->hits . '</td></tr>';
 	}
 	$out .= '</table>';
 	$tpl->assign('lost', $out);
@@ -30,9 +30,8 @@ if ($auth->level > 0) {
 		if ($foo->processed) {
 			$title = str_replace('.jpg', '', $foo->file_dst_name);
 			$db->query("DELETE FROM `lostmaps` WHERE `title` = '" . sanitize($title) . "'");
-			set_flash('Karte "'.$foo->file_dst_name.'" veiksmīgi pievienota', 'success');
-			redirect('/'.$category->textid);
+			set_flash('Karte "' . $foo->file_dst_name . '" veiksmīgi pievienota', 'success');
+			redirect('/' . $category->textid);
 		}
 	}
-
 }

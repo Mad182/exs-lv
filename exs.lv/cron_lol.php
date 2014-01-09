@@ -1,10 +1,9 @@
 <?php
 
-/*
-  cron_lol.php
-  League of Legends tops
+/**
+ * cron_lol.php
+ * League of Legends tops
  */
-
 if (PHP_SAPI !== 'cli') {
 	echo 'CLI only!';
 	exit;
@@ -44,30 +43,29 @@ function get_data($url) {
 	return $data;
 }
 
-
 $players = $db->get_results("SELECT `id`, `url`, `lol_nick` FROM `lol_players` WHERE `active` = 1 AND `errors` < 4 ORDER BY rand()");
 
 $date = date('Y-m-d');
 
-foreach($players as $player) {
+foreach ($players as $player) {
 
 	echo $player->lol_nick . "... ";
 
 	$source = get_data($player->url);
 
-	if($source) {
+	if ($source) {
 
 		$needle = '<div style="display: inline-block; vertical-align: middle; font: bold 20px/32px &quot;Trebuchet MS&quot;; margin-left: 0px;">';
 		$sakums = strpos($source, $needle);
-		$sakums = $sakums +125;
+		$sakums = $sakums + 125;
 		$strikis = substr($source, $sakums, 4);
 		$rez = strpos($source, $needle, $sakums + strlen($needle));
 		$rez = $rez + 125;
 		$strikis2 = substr($source, $rez, 4);
-		$lks = (int)preg_replace('/</', '', $strikis2);
-	
-		if($lks > 0) {
-			if($db->get_var("SELECT count(*) FROM `lol_tracking` WHERE `player_id` = '$player->id' AND `date` = '$date'")) {
+		$lks = (int) preg_replace('/</', '', $strikis2);
+
+		if ($lks > 0) {
+			if ($db->get_var("SELECT count(*) FROM `lol_tracking` WHERE `player_id` = '$player->id' AND `date` = '$date'")) {
 				$db->query("UPDATE `lol_tracking` SET `lks` = '$lks' WHERE `player_id` = '$player->id' AND `date` = '$date'");
 				echo 'record updated';
 			} else {
@@ -77,14 +75,12 @@ foreach($players as $player) {
 			$db->query("UPDATE `lol_players` SET `updated` = NOW() WHERE `id` = '$player->id'");
 		} else {
 			$db->query("UPDATE `lol_players` SET `updated` = NOW(), `errors` = `errors`+1 WHERE `id` = '$player->id'");
-			echo '(!) error (!)';	
+			echo '(!) error (!)';
 		}
 		echo "\n";
-
 	}
 
-	sleep(rand(1,3));
-
+	sleep(rand(1, 3));
 }
 
 echo "\nDone!\n";

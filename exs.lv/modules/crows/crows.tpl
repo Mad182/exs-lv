@@ -1,30 +1,30 @@
 <h1 style="position:relative;top:-15px">Pēdējās brīvībā palaistās vārnas...</h1>
 <!-- START BLOCK : warns-list -->
 <table id="mod_list_table">
-<tr class="">
-	<th style="width:3%">&nbsp;</td>
-	<th style="width:18%">Iesaistītie</th>
-	<th style="width:63%">Iemesls</th>
-	<th style="width:16%">Laiks</th>
-</tr>
-<!-- START BLOCK : single-warn -->
-<tr{removed-warn}>
-	<td class="counter">{row_counter}</td>
-	<td>
-		<ul class="mod-table-list">
-			<li><span class="stronger" style="margin-left:11px">No:</span>{creator_nick}</li>
-			<li><span class="stronger">Kam:</span>{offender_nick}</li>
-		</ul>
-	</td>
-	<td>{warn_reason} {removal-reason}</td>
-	<td style="padding-left:0;padding-right:0">
-		<ul class="mod-table-list">
-			<li>{warn_created_at}</li>
-			<li class="view_more"><a href="/warns/{offender_id}">Skatīt vairāk</a></li>
-		</ul>
-	</td>
-</tr>
-<!-- END BLOCK : single-warn -->
+	<tr class="">
+		<th style="width:3%">&nbsp;</td>
+		<th style="width:18%">Iesaistītie</th>
+		<th style="width:63%">Iemesls</th>
+		<th style="width:16%">Laiks</th>
+	</tr>
+	<!-- START BLOCK : single-warn -->
+	<tr{removed-warn}>
+		<td class="counter">{row_counter}</td>
+		<td>
+			<ul class="mod-table-list">
+				<li><span class="stronger" style="margin-left:11px">No:</span>{creator_nick}</li>
+				<li><span class="stronger">Kam:</span>{offender_nick}</li>
+			</ul>
+		</td>
+		<td>{warn_reason} {removal-reason}</td>
+		<td style="padding-left:0;padding-right:0">
+			<ul class="mod-table-list">
+				<li>{warn_created_at}</li>
+				<li class="view_more"><a href="/warns/{offender_id}">Skatīt vairāk</a></li>
+			</ul>
+		</td>
+	</tr>
+	<!-- END BLOCK : single-warn -->
 </table>
 <!-- END BLOCK : warns-list -->
 

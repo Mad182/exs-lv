@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Blogu ierakstu statistika
+ */
 $blogs = $db->get_results("SELECT * FROM cat WHERE isblog != '0'");
 
 foreach ($blogs as $blog) {

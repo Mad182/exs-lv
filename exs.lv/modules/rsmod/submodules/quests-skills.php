@@ -1,21 +1,21 @@
 <?php
+
 /**
- *	RuneScape kvestiem nepieciešamo prasmju pārvaldība.
+ * 	RuneScape kvestiem nepieciešamo prasmju pārvaldība.
  *
  *  Ļauj norādīt, kādi līmeņi nepieciešami, lai spēlētājs
  *  varētu izpildīt visus RuneScape kvestus.
  *
- *	Moduļa adrese: runescape.exs.lv/qskills
+ * 	Moduļa adrese: runescape.exs.lv/qskills
  */
- 
-if ( !isset($sub_include) ) {
-    set_flash('No hacking, pls.');
-    redirect();
+if (!isset($sub_include)) {
+	set_flash('No hacking, pls.');
+	redirect();
 }
 
 if ($_GET['var1'] == 'qskills') {
-    exit;
-    
+	exit;
+
 	$tpl->newBlock('rsmod-quests-skills');
 	if (isset($_POST['submit'])) {
 		$get = $db->get_results("SELECT `id` FROM `rs_qskills`");

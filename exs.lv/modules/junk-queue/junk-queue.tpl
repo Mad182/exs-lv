@@ -1,7 +1,7 @@
 <h1>Bilžu apstiprināšana</h1>
 <!-- START BLOCK : junk-queue-->
 <ul id="junk-queue-list">
-<!-- START BLOCK : junk-queue-item-->
+	<!-- START BLOCK : junk-queue-item-->
 	<li>
 		<a href="{image}" class="lightbox"><img src="{image}" alt="" style="width: 200px;float: left;margin: 0 10px 10px 0;" class="av" /></a>
 
@@ -13,6 +13,6 @@
 
 		<div class="c"></div>
 	</li>
-<!-- END BLOCK : junk-queue-item-->
+	<!-- END BLOCK : junk-queue-item-->
 </ul>
 <!-- END BLOCK : junk-queue-->

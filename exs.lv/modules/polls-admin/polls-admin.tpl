@@ -57,22 +57,22 @@
 				<label for="new-poll-q">8. atbilde</label><br />
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
-                        <p>
-                                <label for="new-poll-q">9. atbilde</label><br />
-                                <input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
-                        </p>
-                        <p>
-                                <label for="new-poll-q">10. atbilde</label><br />
-                                <input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
-                        </p>
-                        <p>
-                                <label for="new-poll-q">11. atbilde</label><br />
-                                <input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
-                        </p>
-                        <p>
-                                <label for="new-poll-q">12. atbilde</label><br />
-                                <input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
-                        </p>
+			<p>
+				<label for="new-poll-q">9. atbilde</label><br />
+				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
+			</p>
+			<p>
+				<label for="new-poll-q">10. atbilde</label><br />
+				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
+			</p>
+			<p>
+				<label for="new-poll-q">11. atbilde</label><br />
+				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
+			</p>
+			<p>
+				<label for="new-poll-q">12. atbilde</label><br />
+				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
+			</p>
 
 			<p>
 				<input class="button" type="submit" value="Nosūtīt" />
@@ -86,7 +86,7 @@
 		<tr>
 			<th class="title">Jautājums</th>
 			<th>Tēma</th>
-        </tr>
+		</tr>
 		<!-- START BLOCK : polls_admin-list-node-->
 		<tr>
 			<td>{question}</td>

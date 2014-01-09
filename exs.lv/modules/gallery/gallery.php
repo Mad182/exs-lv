@@ -104,7 +104,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			} else {
 				set_flash('Attēlu neizdevās pievienot: ' . $foo->error, 'error');
 			}
-
 		} else {
 			set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu attēlu!', 'error');
 		}
@@ -171,7 +170,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$tpl->assign('gallery-check', md5($remote_salt . $auth->id));
 
 			if ($lang == 1) {
-                $tpl->newBlock('new-image-interest');
+				$tpl->newBlock('new-image-interest');
 				$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
 				foreach ($interests as $interest) {
 					$tpl->newBlock('select-new-interest');
@@ -454,7 +453,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				));
 
 				if ($lang == 1) {
-                    $tpl->newBlock('edit-image-interest');
+					$tpl->newBlock('edit-image-interest');
 					$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
 					foreach ($interests as $interest) {
 						$tpl->newBlock('select-interest');
@@ -578,9 +577,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					));
 
 					$comment_number++;
-					
+
 					/* podziņa ziņošanai par pārkāpumu */
-					if ( $auth->ok && !$auth->mobile && in_array($lang, array(1,7,9)) ) {
+					if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
 						$tpl->newBlock('report-user');
 						$tpl->assign('comment-id', $comment->id);
 					}

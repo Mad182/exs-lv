@@ -11,7 +11,7 @@ if (isset($_GET['order']) && $_GET['order'] == 'posts') {
 //  šādi ar pārbaudēm neies cauri visām pārējām kategorijām
 $where = '';
 if ($lang == 9) {
-    $where = ' WHERE `id` = 4 ';
+	$where = ' WHERE `id` = 4 ';
 }
 $categories = $db->get_results("SELECT title,id FROM clans_categories $where ORDER BY importance DESC");
 
@@ -38,13 +38,13 @@ foreach ($categories as $group_category) {
 				$group->avatar = 'none.png';
 			}
 			$tpl->newBlock('list-groups-node');
-			
-			if(!empty($group->strid)) {
-				$group->link = '/'.$group->strid;
+
+			if (!empty($group->strid)) {
+				$group->link = '/' . $group->strid;
 			} else {
-				$group->link = '/group/'.$group->id;
+				$group->link = '/group/' . $group->id;
 			}
-			
+
 			$tpl->assign(array(
 				'title' => $group->title,
 				'link' => $group->link,

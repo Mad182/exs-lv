@@ -32,7 +32,6 @@ function can_edit_page($article) {
 	return false;
 }
 
-
 function get_page_categories($current = null, $force = false) {
 	global $db, $m, $lang, $debug;
 

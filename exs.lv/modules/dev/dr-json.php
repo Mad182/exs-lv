@@ -24,11 +24,10 @@ $twfollowers = file_get_contents('https://api.twitter.com/1/followers/ids.json?c
 $twfollowers = json_decode($twfollowers);
 
 
-foreach($twfollowers->ids as $id) {
+foreach ($twfollowers->ids as $id) {
 	if (!$db->get_var("SELECT count(*) FROM twitter_followers WHERE id = '$id'")) {
 		$db->query("INSERT INTO twitter_followers (id) VALUES ('$id')");
 	}
-
 }
 
 

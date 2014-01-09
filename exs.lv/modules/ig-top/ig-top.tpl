@@ -11,19 +11,19 @@
 <div class="tabMain">
 	<table class="main-table">
 		<tr>
-		  <th>Vieta</th>
-		  <th>Niks</th>
-		  <th>Atbildēti jautājumi</th>
-		  <th>Iegūtie punkti</th>
+			<th>Vieta</th>
+			<th>Niks</th>
+			<th>Atbildēti jautājumi</th>
+			<th>Iegūtie punkti</th>
 		</tr>
-	<!-- START BLOCK : top-node-->
+		<!-- START BLOCK : top-node-->
 		<tr>
-		  <td{user-special}>{user-place}</td>
-		  <td{user-special}><a href="/?u={user-id}">{user-nick}</td>
-		  <td{user-special}>{user-ig_done}</td>
-		  <td{user-special}>{user-ig_points}</td>
+			<td{user-special}>{user-place}</td>
+			<td{user-special}><a href="/?u={user-id}">{user-nick}</td>
+			<td{user-special}>{user-ig_done}</td>
+			<td{user-special}>{user-ig_points}</td>
 		</tr>
-	<!-- END BLOCK : top-node-->
+		<!-- END BLOCK : top-node-->
 	</table>
 	<p><a href="/?c=201">Visas spēles</a></p>
 </div>

@@ -1,54 +1,53 @@
 <?php
+
 /**
  *  Dzēšana notiek divos veidos:
  *
  *  1. Izmantojot jQuery, atgriež atpakaļ dzēsta komentāra paziņojumu.
  *  2. Bez jQuery (dzēšot galveno mb vai atslēdzot javascriptu) - novirza uz sākumlapu.
  */
-
 if ($auth->ok && isset($_GET['var1'])) {
 
 	$mbid = intval($_GET['var1']);
 	$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mbid' AND `lang` = '$lang'");
-    
-	if (!empty($mbid) && !empty($mb) && $mb->removed == 0 && ( (im_mod() && strtotime($mb->date) > time() - 86400) || ($mb->author == $auth->id && $auth->level == 3 && strtotime($mb->date) > time() - 1800) ) ) {
+
+	if (!empty($mbid) && !empty($mb) && $mb->removed == 0 && ( (im_mod() && strtotime($mb->date) > time() - 86400) || ($mb->author == $auth->id && $auth->level == 3 && strtotime($mb->date) > time() - 1800) )) {
 
 		//level 2
 		if ($mb->parent != 0 && $mb->reply_to != 0) {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
 			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
 			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->reply_to' LIMIT 1");
-            
-            if (!isset($_GET['_'])) {
-                return2mb($mb);
-            } else {
-                $message = '<p class="deleted-entry">Saturs dzēsts!';
-                // moderatoriem apskatāms dzēstā ieraksta saturs
-                if (im_mod() && !$auth->mobile && $lang == 1) {
-                    $message .= '<a style="float:right" class="deleted-content" href="/mbview/'.$mb->id.'">skatīt saturu</a>';
-                }
-                $message .= '</p>';
-                echo json_encode(array('state' => 'success', 'message' => $message));
-                exit;
-            }
+
+			if (!isset($_GET['_'])) {
+				return2mb($mb);
+			} else {
+				$message = '<p class="deleted-entry">Saturs dzēsts!';
+				// moderatoriem apskatāms dzēstā ieraksta saturs
+				if (im_mod() && !$auth->mobile && $lang == 1) {
+					$message .= '<a style="float:right" class="deleted-content" href="/mbview/' . $mb->id . '">skatīt saturu</a>';
+				}
+				$message .= '</p>';
+				echo json_encode(array('state' => 'success', 'message' => $message));
+				exit;
+			}
 
 			//level 1
 		} elseif ($mb->parent != 0) {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
 			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
 			if (!isset($_GET['_'])) {
-                return2mb($mb);
-            }
-            else {
-                $message = '<p class="deleted-entry">Saturs dzēsts!';
-                // moderatoriem apskatāms dzēstā ieraksta saturs
-                if (im_mod() && !$auth->mobile && $lang == 1) {
-                    $message .= '<a style="float:right" class="deleted-content" href="/mbview/'.$mb->id.'">skatīt saturu</a>';
-                }
-                $message .= '</p>';
-                echo json_encode(array('state' => 'success', 'message' => $message));
-                exit;
-            }
+				return2mb($mb);
+			} else {
+				$message = '<p class="deleted-entry">Saturs dzēsts!';
+				// moderatoriem apskatāms dzēstā ieraksta saturs
+				if (im_mod() && !$auth->mobile && $lang == 1) {
+					$message .= '<a style="float:right" class="deleted-content" href="/mbview/' . $mb->id . '">skatīt saturu</a>';
+				}
+				$message .= '</p>';
+				echo json_encode(array('state' => 'success', 'message' => $message));
+				exit;
+			}
 
 			//main
 		} else {

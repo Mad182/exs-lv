@@ -1,26 +1,26 @@
 <?php
-/**	
- *	Pārskatāms pēdējo likto brīdinājumu saraksts
- *	un ar tiem saistīta informācija.
- *
- *	Moduļa adrese: 	exs.lv/crows
- */
 
+/** 	
+ * 	Pārskatāms pēdējo likto brīdinājumu saraksts
+ * 	un ar tiem saistīta informācija.
+ *
+ * 	Moduļa adrese: 	exs.lv/crows
+ */
 // ne-moderatorus sūtām prom
-if ( !im_mod() ) {
+if (!im_mod()) {
 	set_flash('Error 403: Permission denied!');
 	redirect();
 }
 
 $tpl_options = 'no-right';
-if ( $lang == 9 ) {
-    $tpl_options = 'no-left';
+if ($lang == 9) {
+	$tpl_options = 'no-left';
 }
 
 // ārpus galvenā exa sarakstā rādīsies tikai atvērtā apakšprojekta brīdinājumi
 $where = '';
-if ( $lang != 1 ) {
-    $where = " WHERE `warns`.`site_id` = $lang ";
+if ($lang != 1) {
+	$where = " WHERE `warns`.`site_id` = $lang ";
 }
 
 
@@ -53,59 +53,56 @@ $warns = $db->get_results("
 		`warns`.`created` DESC 
 	LIMIT 0,100
 ");
-if ( !$warns ) {
+if (!$warns) {
 	$tpl->newBlock('no-warns-found');
-}
-else {
+} else {
 
 	$counter = 1;
 
 	$tpl->newBlock('warns-list');
-	
+
 	foreach ($warns as $warn) {
-	
-		$warn->warn_created_at = display_time_simple( strtotime($warn->warn_created_at) );
-	
+
+		$warn->warn_created_at = display_time_simple(strtotime($warn->warn_created_at));
+
 		// sodītais lietotājs
 		$warn->offender_nick = usercolor($warn->offender_nick, $warn->offender_level);
-		$warn->offender_nick = '<a href="'.mkurl('user', $warn->offender_id, $warn->offender_nick).'">'.$warn->offender_nick.'</a>';
+		$warn->offender_nick = '<a href="' . mkurl('user', $warn->offender_id, $warn->offender_nick) . '">' . $warn->offender_nick . '</a>';
 
 		// soda uzlicējs
 		$warn->creator_nick = usercolor($warn->creator_nick, $warn->creator_level);
-		$warn->creator_nick = '<a href="'.mkurl('user', $warn->creator_id, $warn->creator_nick).'">'.$warn->creator_nick.'</a>';
-		
+		$warn->creator_nick = '<a href="' . mkurl('user', $warn->creator_id, $warn->creator_nick) . '">' . $warn->creator_nick . '</a>';
+
 		// ja kāds brīdinājumu noņēmis, 
 		// tiek apstrādāts noņēmēja niks
-		if ( $warn->removed_id != '0' ) {
+		if ($warn->removed_id != '0') {
 			$warn->removed_nick = usercolor($warn->removed_nick, $warn->removed_level);
-			$warn->removed_nick = '<a href="'.mkurl('user', $warn->removed_id, $warn->removed_nick).'">'.$warn->removed_nick.'</a>';
-		}
-		else $warn->removed_nick = '';
-		
+			$warn->removed_nick = '<a href="' . mkurl('user', $warn->removed_id, $warn->removed_nick) . '">' . $warn->removed_nick . '</a>';
+		} else
+			$warn->removed_nick = '';
+
 		// pārveido iemeslos norādītās adreses, ja tās nāk no apakšprojekta
-		if ( strpos($warn->warn_reason, 'http://rp.exs.lv') !== false ) {
+		if (strpos($warn->warn_reason, 'http://rp.exs.lv') !== false) {
 			$warn->warn_reason = str_replace('href="/', 'href="http://rp.exs.lv/', $warn->warn_reason);
-		}
-		else if ( strpos($warn->warn_reason, 'http://runescape.exs.lv') !== false ) {
+		} else if (strpos($warn->warn_reason, 'http://runescape.exs.lv') !== false) {
 			$warn->warn_reason = str_replace('href="/', 'href="http://runescape.exs.lv/', $warn->warn_reason);
-		}
-        else if ( strpos($warn->warn_reason, 'http://lol.exs.lv') !== false ) {
+		} else if (strpos($warn->warn_reason, 'http://lol.exs.lv') !== false) {
 			$warn->warn_reason = str_replace('href="/', 'href="http://lol.exs.lv/', $warn->warn_reason);
 		}
-		
-		$tpl->newBlock('single-warn');	
+
+		$tpl->newBlock('single-warn');
 		$tpl->assignAll($warn);
 		$tpl->assign('row_counter', $counter);
-		
+
 		// ja brīdinājums ticis noņemts... parāda noņēmēju un noņemšanas iemeslu
-		if ( $warn->removed_id != '0' ) {
-		
-			$warn->warn_removal_reason = '<strong>Noņemšanas iemesls:</strong> ( '.$warn->removed_nick.' ) '.$warn->warn_removal_reason;
-		
+		if ($warn->removed_id != '0') {
+
+			$warn->warn_removal_reason = '<strong>Noņemšanas iemesls:</strong> ( ' . $warn->removed_nick . ' ) ' . $warn->warn_removal_reason;
+
 			$tpl->assign('removal-reason', $warn->warn_removal_reason);
 			$tpl->assign('removed-warn', ' class="removed_warn" title="Brīdinājums noņemts!"');
 		}
-		
-		$counter++;		
+
+		$counter++;
 	}
 }

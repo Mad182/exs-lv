@@ -6,13 +6,13 @@
 <script language="javascript" src="/modules/flip-text/flip-text.js"></script>
 
 <form class="form" name="f" id="f">
-<fieldset>
-<legend>Teksta apgāzējs</legend>
-<textarea rows="5" cols="50" name="original" style="width:468px;height:100px;"></textarea><br>
-<br>
-<input type="button" value="Apgriezt tekstu" onClick="flip()"><br>
-<br>
+	<fieldset>
+		<legend>Teksta apgāzējs</legend>
+		<textarea rows="5" cols="50" name="original" style="width:468px;height:100px;"></textarea><br>
+		<br>
+		<input type="button" value="Apgriezt tekstu" onClick="flip()"><br>
+		<br>
 
-<textarea rows="5" cols="50" name="flipped" style="width:468px;height:100px;"></textarea>
-</fieldset>
+		<textarea rows="5" cols="50" name="flipped" style="width:468px;height:100px;"></textarea>
+	</fieldset>
 </form>

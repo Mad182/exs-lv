@@ -145,8 +145,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		$tpl->newBlock('junk-view');
 		$add = '';
-		if(im_mod()) {
-			$add = ' [<a href="/junk-edit/'.$pic->id.'">labot</a>]';
+		if (im_mod()) {
+			$add = ' [<a href="/junk-edit/' . $pic->id . '">labot</a>]';
 		}
 		$tpl->assign(array(
 			'voter' => junk_vote($pic->id, $auth->id),
@@ -215,7 +215,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 					'parent' => $pic->id,
 					'type' => 'junk',
 					'reply_to' => $reply_to_id
-						));
+				));
 
 				push('Komentēja attēlu <a href="' . $url . '#m' . $newid . '">&quot;' . textlimit($pic->title, 32, '...') . '&quot;</a>', '', 'junk-answ-' . $id);
 

@@ -2,7 +2,7 @@
 
 //max upload file size
 $max_size = '2.6M';
-if(im_mod()) {
+if (im_mod()) {
 	$max_size = '10M';
 }
 
@@ -22,15 +22,21 @@ if (empty($_GET['var1']) || empty($_GET['viewcat'])) {
 		if (isset($_FILES['new-image'])) {
 
 			$slug = mkslug($auth->nick);
-			if(strlen($slug) < 3) {$slug .= '0';}
-			if(strlen($slug) < 3) {$slug .= '0';}
-			if(strlen($slug) < 3) {$slug .= '0';}
+			if (strlen($slug) < 3) {
+				$slug .= '0';
+			}
+			if (strlen($slug) < 3) {
+				$slug .= '0';
+			}
+			if (strlen($slug) < 3) {
+				$slug .= '0';
+			}
 
-			$path = substr($slug,0,1) . '/' . substr($slug,1,1) . '/' . $slug;
+			$path = substr($slug, 0, 1) . '/' . substr($slug, 1, 1) . '/' . $slug;
 
 			rmkdir('/home/www/img.exs.lv/' . $path);
 
-			ini_set('memory_limit','160M');
+			ini_set('memory_limit', '160M');
 			require(CORE_PATH . '/includes/class.upload.php');
 			$foo = new Upload($_FILES['new-image']);
 			$foo->mime_check = true;
@@ -82,9 +88,9 @@ if (empty($_GET['var1']) || empty($_GET['viewcat'])) {
 				$db->query("INSERT INTO `imgupload` (path,user_id,ip,created,file) VALUES ('$path','$auth->id','" . sanitize($auth->ip) . "',NOW(),'" . sanitize($foo->file_dst_name) . "')");
 
 				//optimize png images
-				if($foo->image_src_type == 'png') {
-					$str = "optipng '/home/www/img.exs.lv/".$path."/".$foo->file_dst_name."'";
-					$str2 = "optipng '/home/www/img.exs.lv/".$path."/small/".$foo->file_dst_name."'";
+				if ($foo->image_src_type == 'png') {
+					$str = "optipng '/home/www/img.exs.lv/" . $path . "/" . $foo->file_dst_name . "'";
+					$str2 = "optipng '/home/www/img.exs.lv/" . $path . "/small/" . $foo->file_dst_name . "'";
 					$test = `$str`;
 					$test2 = `$str2`;
 				}

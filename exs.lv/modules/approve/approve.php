@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Rakstu iesniegšana un iesniegto rakstu apstiprināšana
+ */
 if (isset($_POST['new-topic-body'])) {
 	$body = trim($_POST['new-topic-body']);
 	$title = trim($_POST['new-topic-title']);

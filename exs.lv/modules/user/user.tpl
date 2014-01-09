@@ -150,9 +150,9 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<script type="text/javascript">
 			function UserExists() {
-			nick = document.getElementById('new-nick').value;
-			load("/?c=250&user="+nick, 'userexists');
-		}
+				nick = document.getElementById('new-nick').value;
+				load("/?c=250&user=" + nick, 'userexists');
+			}
 		</script>
 		<fieldset>
 			<legend>Exs.lv nika maiņa</legend>
@@ -177,7 +177,7 @@
 			</div>
 
 			<script type="text/javascript">
-				$( document ).ready(function() {
+				$(document).ready(function() {
 					$('#default-payment-link').click();
 				});
 			</script>
@@ -205,7 +205,7 @@
 	</div>
 
 	<script type="text/javascript">
-		$( document ).ready(function() {
+		$(document).ready(function() {
 			$('#default-payment-link').click();
 		});
 	</script>
@@ -397,10 +397,10 @@
 					<option value="{x}">{x}</option>
 					<!-- END BLOCK : warn-removal-option -->
 				</select>
-				</p>
-				<p>
-					<label for="warn-reason">Brīdinājumu noņemšanas iemesls:</label><br />
-					<input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" />
+			</p>
+			<p>
+				<label for="warn-reason">Brīdinājumu noņemšanas iemesls:</label><br />
+				<input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" />
 				<!-- END BLOCK : warn-removal -->
 				<!-- START BLOCK : no-active-warns -->
 				Šim lietotājam šobrīd nav aktīvu, noņemamu brīdinājumu.
@@ -419,11 +419,11 @@
 		<fieldset>
 			<legend>Dāvināt exs kredītu</legend>
 			<p>
-			<select name="exs-amount">
-				<!-- START BLOCK : give-am-->
-				<option value="{value}">{value}</option>
-				<!-- END BLOCK : give-am-->
-			</select>
+				<select name="exs-amount">
+					<!-- START BLOCK : give-am-->
+					<option value="{value}">{value}</option>
+					<!-- END BLOCK : give-am-->
+				</select>
 			</p>
 			<p><input class="button danger confirm" type="submit" name="submit" id="submit" value="OK" /></p>
 		</fieldset>

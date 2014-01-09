@@ -1,28 +1,28 @@
 <?php
+
 exit;
 /* SQL connection */
 $hostname = "localhost"; //hosts
 $username = "auto"; //lietotājs
 $password = "rand0m"; //parole
 $database = "auto"; //datubāze
-
 //connect to database
-$adb = new ezSQL_mysql($username,$password,$database,$hostname);
+$adb = new ezSQL_mysql($username, $password, $database, $hostname);
 $adb->query("set names utf8");
 
 $pages = $adb->get_results("SELECT * FROM muzika_pages WHERE id > 65 ORDER BY id ASC");
 
-foreach($pages as $page) {
+foreach ($pages as $page) {
 	echo $page->title . '<br />';
 
 	$strid = mkslug_newpage($page->title);
-	$textid = 'a-ex-'.$page->id;
+	$textid = 'a-ex-' . $page->id;
 	$text = htmlpost2db($page->text);
 	$title = title2db($page->title);
 
 	$avatar = '';
-	if(!empty($page->avatar)) {
-		$avatar = 'dati/bildes/auto.exs.lv/'.$page->avatar;
+	if (!empty($page->avatar)) {
+		$avatar = 'dati/bildes/auto.exs.lv/' . $page->avatar;
 	}
 
 	$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,avatar,views) VALUES
@@ -31,20 +31,17 @@ foreach($pages as $page) {
 	$ins = $db->insert_id;
 
 	$comments = $adb->get_results("SELECT * FROM muzika_comments ORDER BY id ASC");
-	if($comments) {
-	  foreach($comments as $comment) {
-	    $usr = $adb->get_row("SELECT * FROM muzika_users WHERE id = '$comment->author'");
+	if ($comments) {
+		foreach ($comments as $comment) {
+			$usr = $adb->get_row("SELECT * FROM muzika_users WHERE id = '$comment->author'");
 			$text = htmlpost2db($comment->text);
 			$db->query("INSERT INTO commets (pid,text,date,ip,mail,anon_nick) VALUES
         ('$ins','$text','$comment->date','$comment->ip','$usr->mail','$usr->nick')
 			");
 		}
-
 	}
-
 }
 //usr 21668
 //cat 611
 exit;
-
 ?>

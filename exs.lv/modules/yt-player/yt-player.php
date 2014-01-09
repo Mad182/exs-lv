@@ -1,6 +1,6 @@
 <?php
 
-if(!$auth->ok) {
+if (!$auth->ok) {
 	set_flash("Pagaidām tikai reģistrētajiem lietotājiem!");
 	redirect();
 }
@@ -10,7 +10,7 @@ $add_css = ',player.css';
 
 
 //get shared playlist in json format
-if(isset($_GET['var1']) && $_GET['var1'] === 'list') {
+if (isset($_GET['var1']) && $_GET['var1'] === 'list') {
 
 	$list = array(
 		'state' => 'success',
@@ -22,7 +22,7 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'list') {
 
 
 //get active users playlist in json format
-if(isset($_GET['var1']) && $_GET['var1'] === 'mylist') {
+if (isset($_GET['var1']) && $_GET['var1'] === 'mylist') {
 
 	$list = array(
 		'state' => 'success',
@@ -34,7 +34,7 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'mylist') {
 
 
 //get next song
-if(isset($_GET['var1']) && $_GET['var1'] === 'getnext') {
+if (isset($_GET['var1']) && $_GET['var1'] === 'getnext') {
 
 	$now_playing = player_now_playing();
 
@@ -42,7 +42,7 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'getnext') {
 		'state' => 'success',
 		'position' => $now_playing['position'],
 		'duration' => $now_playing['duration'],
-		'html' => '<iframe width="560" height="315" src="//www.youtube.com/embed/'.$now_playing['id'].'?start='.$now_playing['position'].'&amp;autoplay=1" frameborder="0" allowfullscreen></iframe><a style="float:right;" class="player-resubmit" href="/'.$category->textid.'/add/'.$now_playing['id'].'?_=1">+1 pievienot sarakstam</a><div class="clear"></div>'
+		'html' => '<iframe width="560" height="315" src="//www.youtube.com/embed/' . $now_playing['id'] . '?start=' . $now_playing['position'] . '&amp;autoplay=1" frameborder="0" allowfullscreen></iframe><a style="float:right;" class="player-resubmit" href="/' . $category->textid . '/add/' . $now_playing['id'] . '?_=1">+1 pievienot sarakstam</a><div class="clear"></div>'
 	);
 
 	die(json_encode($song));
@@ -50,18 +50,18 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'getnext') {
 
 
 //add song
-if(isset($_GET['var1']) && $_GET['var1'] === 'add') {
+if (isset($_GET['var1']) && $_GET['var1'] === 'add') {
 
 	$video = get_youtube($_GET['var2']);
 
-	if(!empty($video->yt_time) && $video->yt_time != '0:00' && yt_time_to_seconds($video->yt_time) < 480) {
+	if (!empty($video->yt_time) && $video->yt_time != '0:00' && yt_time_to_seconds($video->yt_time) < 480) {
 
-		$check_like = $db->get_var("SELECT count(*) FROM player_likes WHERE video_id = '".sanitize($video->yt_id)."'
+		$check_like = $db->get_var("SELECT count(*) FROM player_likes WHERE video_id = '" . sanitize($video->yt_id) . "'
 			AND playlist = $category->id AND user_id = '$auth->id' AND archived = 0");
 
-		if(empty($check_like)) {
+		if (empty($check_like)) {
 			$db->query("INSERT INTO player_likes (video_id, user_id, archived, created, playlist) 
-						VALUES ('".sanitize($video->yt_id)."', '$auth->id', 0, NOW(), '".$category->id."')");
+						VALUES ('" . sanitize($video->yt_id) . "', '$auth->id', 0, NOW(), '" . $category->id . "')");
 			$like = 'ok';
 		} else {
 			$like = 'error';
@@ -72,9 +72,8 @@ if(isset($_GET['var1']) && $_GET['var1'] === 'add') {
 			'id' => $video->yt_id,
 			'duration' => $video->yt_time,
 			'state' => 'success',
-			'like' => $like 
+			'like' => $like
 		);
-
 	} else {
 
 		$return = array('error' => '1', 'state' => 'failure');

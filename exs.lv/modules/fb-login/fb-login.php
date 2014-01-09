@@ -17,8 +17,8 @@ require(LIB_PATH . '/facebook-php-sdk/src/base_facebook.php');
 require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
 
 $facebook = new Facebook(array(
-			'appId' => $fb_api_id,
-			'secret' => $fb_api_key
+	'appId' => $fb_api_id,
+	'secret' => $fb_api_key
 		));
 
 $user = $facebook->getUser();
@@ -31,10 +31,9 @@ if ($user) {
 
 		// noskaidro vai lietotajs ir uzspiedis "like"
 		$likes = $facebook->api("/me/likes/160566810630384");
-		if(!empty($likes['data'])) {
+		if (!empty($likes['data'])) {
 			$fb_like = true;
 		}
-
 	} catch (FacebookApiException $e) {
 		error_log($e);
 		$user = null;
@@ -65,23 +64,21 @@ if (!empty($me)) {
 						//draugiem.lv friends
 						if ($friends = $facebook->api('/me/friends')) {
 							foreach ($friends['data'] as $friend) {
-								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '".$friend['id']."'");
-								if($existing && $friend['id'] > 0) {
+								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . $friend['id'] . "'");
+								if ($existing && $friend['id'] > 0) {
 									$c1 = $db->get_var("SELECT count(*) FROM friends WHERE friend1 = '$auth->id' AND friend2 = '$existing->id'");
 									$c2 = $db->get_var("SELECT count(*) FROM friends WHERE friend2 = '$auth->id' AND friend1 = '$existing->id'");
-									if(!$c1 && !$c2) {
+									if (!$c1 && !$c2) {
 
 										$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
 											VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
 										update_karma($existing->id, true);
-
 									}
 								}
 							}
 						}
-
 					}
-					if($fb_like) {
+					if ($fb_like) {
 						fb_award($auth->id);
 					}
 					update_karma($auth->id);
@@ -118,8 +115,8 @@ if (!empty($me)) {
 						//facebook friends
 						if ($friends = $facebook->api('/me/friends')) {
 							foreach ($friends['data'] as $friend) {
-								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '".$friend['id']."'");
-								if($existing && $friend['id'] > 0) {
+								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . $friend['id'] . "'");
+								if ($existing && $friend['id'] > 0) {
 									$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
 										VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
 									update_karma($existing->id, true);
@@ -206,7 +203,7 @@ if (!empty($me)) {
 			));
 		} else {
 
-			if($fb_like) {
+			if ($fb_like) {
 				fb_award($userinfo->id);
 			}
 
@@ -217,7 +214,7 @@ if (!empty($me)) {
 		}
 	}
 } else {
-	redirect($facebook->getLoginUrl(array('redirect_uri' => 'http://'.$_SERVER['SERVER_NAME'].'/fb-login/', 'scope' => 'user_likes')));
+	redirect($facebook->getLoginUrl(array('redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/fb-login/', 'scope' => 'user_likes')));
 	/* $loginUrl = $facebook->getLoginUrl();
 	  $tpl->newBlock('fb-login');
 	  $tpl->assign('link', $loginUrl); //Show the button */

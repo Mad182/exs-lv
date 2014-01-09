@@ -6,12 +6,12 @@
 
 <form class="form" action="" method="post">
 	<fieldset>
-<!-- START BLOCK : interest-->
+		<!-- START BLOCK : interest-->
 		<p>
 			<label><input type="checkbox" name="interests[]" value="{id}"{sel} /> {title_long}</label>
 		</p>
-	
-<!-- END BLOCK : interest-->
+
+		<!-- END BLOCK : interest-->
 
 		<p><input type="submit" class="button primary" value="OK" name="submit-interests" /></p>
 	</fieldset>

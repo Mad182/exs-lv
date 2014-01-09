@@ -3,7 +3,7 @@
 $add_css .= ',forum.css';
 
 $columns = 4;
-if($auth->mobile) {
+if ($auth->mobile) {
 	$columns = 2;
 }
 
@@ -30,7 +30,7 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 
 			//write to database
 			$db->query("INSERT INTO `pages` (`strid`, `textid`, `category`, `text`, `title`, `author`, `date`, `bump`, `ip`, `lang`, `disable_emotions`)
-							VALUES ('$strid', '$textid', '$newcat', '$body', '$title', '$auth->id', NOW(), NOW(), '$auth->ip', '$lang', '".intval($disable_emotions)."')");
+							VALUES ('$strid', '$textid', '$newcat', '$body', '$title', '$auth->id', NOW(), NOW(), '$auth->ip', '$lang', '" . intval($disable_emotions) . "')");
 
 			update_stats($newcat);
 			userlog($auth->id, 'Aizsāka foruma tēmu <a href="/read/' . $strid . '">' . $title . '</a>');
@@ -41,12 +41,11 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 			set_flash('Jāuzgaida vismaz 1 minūti, pirms vari pievienot jaunu tēmu!', 'error');
 		}
 
-	/* nepazaudē satura laukā ierakstīto ja nav aizpildīts nosaukums */
-	} elseif(!empty($body) && empty($title)) {
+		/* nepazaudē satura laukā ierakstīto ja nav aizpildīts nosaukums */
+	} elseif (!empty($body) && empty($title)) {
 		set_flash('Lūdzu norādi tēmas nosaukumu!', 'error');
 		$tpl->assignGlobal('forum-content', htmlspecialchars(trim($_POST['new-topic-body'])));
 	}
-
 }
 
 $tpl->newBlock('forum');
@@ -157,7 +156,7 @@ if (!empty($cats)) {
 				));
 			}
 
-			if($columns == 4) {
+			if ($columns == 4) {
 
 				//category icon
 				if (empty($forum->icon)) {
@@ -221,8 +220,6 @@ if (!empty($cats)) {
 									);
 								}
 							}
-
-
 						}
 					}
 				}
@@ -234,7 +231,7 @@ if (!empty($cats)) {
 //form
 if ($auth->ok && $category->status == 'active') {
 
-	if(!$auth->mobile) {
+	if (!$auth->mobile) {
 		$tpl->newBlock('tinymce-enabled');
 	}
 	$tpl->newBlock('forum-addtopic');
@@ -256,8 +253,7 @@ if ($auth->ok && $category->status == 'active') {
 	}
 
 	$tpl->newBlock('forum-new');
-
-} elseif($category->status == 'active') {
+} elseif ($category->status == 'active') {
 	$tpl->newBlock('forum-addtopic-no');
 }
 
@@ -268,7 +264,7 @@ if ($category->parent) {
 	$page_title = $page_title . ' | ' . $category2->title;
 }
 
-if($category->textid == 'index' && !empty($category->content) && !$auth->mobile) {
+if ($category->textid == 'index' && !empty($category->content) && !$auth->mobile) {
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', htmlspecialchars($category->content));
 }

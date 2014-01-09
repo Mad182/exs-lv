@@ -415,7 +415,6 @@ if ($article) {
 								$auth->log('Atjaunoja IMDB datus', 'pages', $topicid);
 							} else {
 								set_flash("Neizdevās iegūt IMDB datus, lūdzu ievadi derīgu linku vai nosaukumu!", "error");
-
 							}
 						}
 					}
@@ -627,7 +626,7 @@ if ($article) {
 				$article_text .= '<iframe src="//infogr.am/exs_lv-9431592631" width="499" height="12542" scrolling="no" frameborder="0" style="border:none;margin: 0 auto;width:499px;display:block;"></iframe><div style="width:499px;border-top:1px solid #acacac;padding-top:3px;font-family:Arial;font-size:10px;text-align:center;"><a target="_blank" href="http://infogr.am/exs_lv-9431592631" style="color:#acacac;text-decoration:none;">VĒSTURESTATISTIKA</a> | <a style="color:#acacac;text-decoration:none;" href="http://infogr.am" target="_blank">Create infographics</a></div>';
 			}
 
-			if(!$author->deleted) {
+			if (!$author->deleted) {
 				$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
 			} else {
 				$author_link = '<em>dzēsts</em>';
@@ -726,7 +725,7 @@ if ($article) {
 						$tpl->assign('genres', implode(' / ', $gen));
 					}
 
-					if($like_count = $db->get_var("SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = 1")) {
+					if ($like_count = $db->get_var("SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = 1")) {
 
 						$likes = $db->get_results("
 							SELECT
@@ -748,21 +747,20 @@ if ($article) {
 
 						$tpl->newBlock('movie-likes');
 
-						$rest = $like_count-count($likes);
-						if($rest > 0) {
+						$rest = $like_count - count($likes);
+						if ($rest > 0) {
 							$tpl->assign(array(
-									'rest' => ' un ' . $rest . ' citi...'
-								));
+								'rest' => ' un ' . $rest . ' citi...'
+							));
 						}
 
-						foreach($likes as $user_like) {
+						foreach ($likes as $user_like) {
 							$tpl->newBlock('movie-likes-user');
 							$tpl->assign(array(
-									'avatar' => get_avatar($user_like, 's'),
-									'nick' => $user_like->nick
-								));
+								'avatar' => get_avatar($user_like, 's'),
+								'nick' => $user_like->nick
+							));
 						}
-
 					}
 
 					/* vertejuma pievienošana */
@@ -784,8 +782,8 @@ if ($article) {
 									`exs_dislikes` = (SELECT count(*) FROM `movie_ratings` WHERE `page_id` = $article->id AND `rating` = '-1')
 								WHERE
 									`page_id` = $article->id");
-							
-							if($rating == 1 && !empty($types[$movie_data->type])) {
+
+							if ($rating == 1 && !empty($types[$movie_data->type])) {
 								push('Patīk ' . strtolower($types[$movie_data->type]) . ' &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
 							}
 
@@ -803,11 +801,10 @@ if ($article) {
 						$like .= '<strong>Tavs vērtējums:</strong> <span style="padding: 20px 0 0" class="movie-liker"><a href="?movie=' . $article->id . '&amp;check=' . $token . '&amp;like" class="button success small">Man patīk</a> ';
 						$like .= '<a href="?movie=' . $article->id . '&amp;check=' . $token . '&amp;dislike" class="button danger small">Man nepatīk</a></span>';
 					}
-					if(!empty($like)) {
+					if (!empty($like)) {
 						$tpl->newBlock('movie-like');
 						$tpl->assign('like', $like);
 					}
-
 				}
 			} elseif ($article->avatar) {
 
@@ -943,8 +940,8 @@ if ($article) {
 
 						$tpl->newBlock('comments-node');
 						$tpl->newBlock('comments-node-user');
-						
-						
+
+
 						if ($author[$comment->author]->avatar == '') {
 							$author[$comment->author]->avatar = 'none.png';
 						}
@@ -1073,9 +1070,9 @@ if ($article) {
 								'page-id' => $article->id
 							));
 						}
-						
+
 						//	pārkāpuma ziņošanas podziņa komentāra labajā pusē
-						if ( $auth->ok && !$auth->mobile && in_array($lang, array(1,7,9)) ) {
+						if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
 							$tpl->newBlock('report-comment');
 							$tpl->assign('comment-id', $comment->id);
 						}
@@ -1157,9 +1154,9 @@ if ($article) {
 											'delete' => '?delanon=' . $reply->id
 										));
 									}
-									
+
 									// komentāra atbildes ziņošanas podziņa
-									if ( !$auth->mobile && $auth->ok && $lang == 1 ) {
+									if (!$auth->mobile && $auth->ok && $lang == 1) {
 										$tpl->newBlock('report-reply');
 										$tpl->assign('comment-id', $reply->id);
 									}

@@ -29,7 +29,7 @@
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	
+
 	<!-- START BLOCK : search-results -->
 	<p class="infop data-explanation"><strong>Nospiežot uz atrasta lietotājvārda, aplūkojama plašāka informācija!</strong></p>
 	<table id="user-results">

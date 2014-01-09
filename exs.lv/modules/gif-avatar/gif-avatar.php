@@ -1,6 +1,6 @@
 <?php
 
-if(!im_mod()) {
+if (!im_mod()) {
 	redirect();
 }
 
@@ -29,20 +29,20 @@ if (isset($_POST['file'])) {
 
 			$str = "convert '/home/www/img.exs.lv/tmp/" . $file . "' -crop " . $w . "x" . $h . "+" . $x . "+" . $y . " +repage '/home/www/img.exs.lv/tmp/" . $out . "'";
 			$test = `$str`;
-			
+
 			$sizes = array(45, 90, 150);
 			$colors = array(128, 90, 60, 31);
-			
-			foreach($sizes as $size) {
-			
-				$str = "convert -size ".$w."x".$h." '/home/www/img.exs.lv/tmp/" . $out . "' -resize ".$size."x".$size." '/home/www/img.exs.lv/tmp/" . $outfile . "_".$size."x".$size.".gif'";
+
+			foreach ($sizes as $size) {
+
+				$str = "convert -size " . $w . "x" . $h . " '/home/www/img.exs.lv/tmp/" . $out . "' -resize " . $size . "x" . $size . " '/home/www/img.exs.lv/tmp/" . $outfile . "_" . $size . "x" . $size . ".gif'";
 				$test = `$str`;
 
 				foreach ($colors as $color) {
-	
-					$out2 = 'gif_' . $color . '_' . $outfile . "_".$size."x".$size.".gif";
+
+					$out2 = 'gif_' . $color . '_' . $outfile . "_" . $size . "x" . $size . ".gif";
 					if (!file_exists('/home/www/img.exs.lv/tmp/' . $out2)) {
-						$str = "convert '/home/www/img.exs.lv/tmp/" . $outfile . "_".$size."x".$size.".gif' +dither -colors " . $color . " '/home/www/img.exs.lv/tmp/" . $out2 . "'";
+						$str = "convert '/home/www/img.exs.lv/tmp/" . $outfile . "_" . $size . "x" . $size . ".gif' +dither -colors " . $color . " '/home/www/img.exs.lv/tmp/" . $out2 . "'";
 						$test = `$str`;
 					}
 
@@ -50,12 +50,10 @@ if (isset($_POST['file'])) {
 					echo '<p><img src="http://img.exs.lv/tmp/' . $out2 . '" alt="" /> ';
 					echo 'Colors: ' . $color . ', File size: ' . human_filesize($fs) . '</p>';
 				}
-
 			}
-			
-			
-		break;
-			
+
+
+			break;
 	}
 
 	echo '<p>Please do not hotlink, but save the image when finished.<br />Files are not stored here indefinitely.<br />You can host images at <a href="http://imgur.com/" target="_blank">http://imgur.com/</a></p>';

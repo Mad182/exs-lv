@@ -3,13 +3,12 @@
 if ($auth->ok) {
 
 	/** neļauj vienā sekundē pievienot vairāk kā vienu vērtējumu
-	  * pagaiu variants lai izsargātos no plusiņu flooda
-	  *
-	  * TODO: vajadzetu uztaisīt inteliģentāku sistemu, kas saprot,
-	  * ka pēc kārtas pievienoti piemēram 5 vērtējumi pārāk īsā laikā,
-	  * un vairs neļauj no šī profila un/vai ip vērtēt šajā dienā
-	  */
-	  
+	 * pagaiu variants lai izsargātos no plusiņu flooda
+	 *
+	 * TODO: vajadzetu uztaisīt inteliģentāku sistemu, kas saprot,
+	 * ka pēc kārtas pievienoti piemēram 5 vērtējumi pārāk īsā laikā,
+	 * un vairs neļauj no šī profila un/vai ip vērtēt šajā dienā
+	 */
 	if (isset($_SESSION['antiflood_rate']) && microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
 		$_SESSION["antiflood_rate"] = microtime(true);
 		$db->query("UPDATE `users` SET `vote_today` = `vote_today`+3 WHERE `id` = '$auth->id'");

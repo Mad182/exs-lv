@@ -16,8 +16,8 @@
 <h4>HTML (sīkbilde ar linku)</h4>
 <div class="box">
 	<code>&lt;a href=&quot;http://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox post-url thb-image&quot;&gt;
-&lt;img src=&quot;http://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;
-&lt;/a&gt;</code>
+		&lt;img src=&quot;http://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;
+		&lt;/a&gt;</code>
 </div>
 <h4>Tiešais links</h4>
 <div class="box">
@@ -46,20 +46,20 @@
 <div style="padding:5px;">
   <a class="lightbox" href="http://img.exs.lv/{path}/{file}"><img class="av" src="http://img.exs.lv/{path}/small/{file}" alt="" width="100" /></a>
 
-<div style="font-size:80%;">
+	<div style="font-size:80%;">
 
-	<pre style="margin-left: 120px">http://img.exs.lv/{path}/{file}</pre>
+		<pre style="margin-left: 120px">http://img.exs.lv/{path}/{file}</pre>
 
-	<pre style="margin-left: 120px">[img]http://img.exs.lv/{path}/{file}[/img]</pre>
+		<pre style="margin-left: 120px">[img]http://img.exs.lv/{path}/{file}[/img]</pre>
 
-	<pre style="margin-left: 120px">[url=&quot;http://img.exs.lv/{path}/{file}&quot;][img]http://img.exs.lv/{path}/small/{file}[/img][/url]</pre>
+		<pre style="margin-left: 120px">[url=&quot;http://img.exs.lv/{path}/{file}&quot;][img]http://img.exs.lv/{path}/small/{file}[/img][/url]</pre>
 
-	<pre>&lt;img src=&quot;http://img.exs.lv/{path}/{file}&quot; alt=&quot;{file}&quot; /&gt;</pre>
+		<pre>&lt;img src=&quot;http://img.exs.lv/{path}/{file}&quot; alt=&quot;{file}&quot; /&gt;</pre>
 
-	<pre>&lt;a href=&quot;http://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox thb-image&quot;&gt;&lt;img src=&quot;http://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;&lt;/a&gt;</pre>
+		<pre>&lt;a href=&quot;http://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox thb-image&quot;&gt;&lt;img src=&quot;http://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;&lt;/a&gt;</pre>
 
-</div>
-	
+	</div>
+
 	<p style="font-size:10px;color:#777;padding:2px 0;margin: 6px 0 3px 115px;">
 	</p>
 </div>

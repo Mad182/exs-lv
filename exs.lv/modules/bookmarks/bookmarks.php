@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Lietotāja grāmatzīmes (raksti)
+ */
 $robotstag[] = 'noindex';
 
 if (isset($_GET['var1'])) {
@@ -62,4 +65,3 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 	set_flash('Kļūda: profils nav atrasts!');
 	redirect();
 }
-

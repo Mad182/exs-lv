@@ -1,16 +1,15 @@
 <?php
+
 /**
  *  Kādreizējā sākumlapa
  */
- 
-if ( !isset($sub_include) ) {
-    die('No hacking, pls.');
+if (!isset($sub_include)) {
+	die('No hacking, pls.');
 }
 
 /* --------------------------------------- */
 //	 Sākumlapa
-/* --------------------------------------- */ 
-else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'runescape'/* && in_array($auth->id,array(21018,115)) */) {
+/* --------------------------------------- */ else if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'runescape'/* && in_array($auth->id,array(21018,115)) */) {
 
 	$tpl_options = 'no-left';
 	$tpl->newBlock('runescape-mainpage');

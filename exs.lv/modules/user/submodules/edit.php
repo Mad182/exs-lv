@@ -1,9 +1,8 @@
 <?php
 
-/*
+/**
  * Lietotāja personīgā informācija
  */
-
 $tpl->newBlock('user-profile-edit');
 
 //write changes

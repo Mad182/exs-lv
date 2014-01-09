@@ -1,10 +1,10 @@
 <script type="text/javascript">
-$(document).ready(function() {
+	$(document).ready(function() {
 
-	$('#desas a, #desas-drop').live('click', function() {
-		load_desas($(this).attr('href'));
-		return false;
+		$('#desas a, #desas-drop').live('click', function() {
+			load_desas($(this).attr('href'));
+			return false;
+		});
+
 	});
-
-});
 </script>

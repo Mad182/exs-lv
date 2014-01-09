@@ -20,15 +20,15 @@
 		<div id="autosave-status"></div>
 		<!-- START BLOCK : notepad-title-->
 		<p>
-		  <label>Nosaukums:</label><br />
-		  <input type="text" name="title" value="" class="text" />
+			<label>Nosaukums:</label><br />
+			<input type="text" name="title" value="" class="text" />
 		</p>
 		<!-- END BLOCK : notepad-title-->
 		<p>
 			<textarea name="note-text" id="note-text" cols="94" rows="40" style="width: 100%;height:700px">{content}</textarea>
 		</p>
 		<p>
-		  <input type="submit" name="submit" value="Saglabāt" class="button" />
+			<input type="submit" name="submit" value="Saglabāt" class="button" />
 		</p>
 	</form>
 	<!-- END BLOCK : notepad-edit-->

@@ -154,7 +154,7 @@
 				<label for="compose-title">Tēma:</label><br />
 				<input type="text" name="compose-title" id="compose-title" class="text" value="{compose-title}" maxlength="64" />
 			</p>
-		  	<textarea cols="80" rows="3" style="width:100%;height:300px" name="compose-body"></textarea>
+			<textarea cols="80" rows="3" style="width:100%;height:300px" name="compose-body"></textarea>
 			<p>
 				<input type="submit" name="submit" class="button primary" value="Nosūtīt!" />
 			</p>

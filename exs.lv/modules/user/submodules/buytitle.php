@@ -1,10 +1,8 @@
 <?php
 
-/*
+/**
  * Nopirkt iespēju izmantot custom title
  */
-
-//write changes
 if (isset($_GET['buytitle_pay']) && $_GET['buytitle_pay'] == 'true') {
 
 	if ($user->credit < 3) {

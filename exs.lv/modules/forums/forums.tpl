@@ -7,50 +7,50 @@
 </h1>
 
 <table id="forum">
-<!-- START BLOCK : forum-list-->
+	<!-- START BLOCK : forum-list-->
 	<tr>
 		<th class="first" colspan="{columns}">
 			<a href="/{textid}">{title}</a>
 			<!-- START BLOCK : forum-list-add-->
-				<span style="float:right;font-size:9px;"><a href="/forum-add/{id}">+pievienot</a></span>
+			<span style="float:right;font-size:9px;"><a href="/forum-add/{id}">+pievienot</a></span>
 			<!-- END BLOCK : forum-list-add-->
 
 		</th>
 	</tr>
-<!-- START BLOCK : forum-item-->
+	<!-- START BLOCK : forum-item-->
 	<tr>
-<!-- START BLOCK : forum-item-avatar-->
+		<!-- START BLOCK : forum-item-avatar-->
 		<td class="forum-avatar">
 			<a href="/{textid}"><img width="48" height="48" src="http://exs.lv/{icon}" alt="" /></a>
 		</td>
-<!-- END BLOCK : forum-item-avatar-->
+		<!-- END BLOCK : forum-item-avatar-->
 		<td>
 			<h3><a href="/{textid}">{title}</a></h3>
 			<p>{content}{addlink}{editlink}{uplink}{downlink}</p>
 
 			<!-- START BLOCK : subcats-->
 			<ul class="subcat-list">
-			<!-- START BLOCK : subcats-node-->
+				<!-- START BLOCK : subcats-node-->
 				<li><a href="/{textid}">{title}</a></li>
-			<!-- END BLOCK : subcats-node-->
+				<!-- END BLOCK : subcats-node-->
 			</ul>
 			<!-- END BLOCK : subcats-->
 
 		</td>
-<!-- START BLOCK : forum-item-stats-->
+		<!-- START BLOCK : forum-item-stats-->
 		<td class="stat">
 			{topics}&nbsp;{txt-topics}<br />
 			{posts}&nbsp;{txt-posts}
 		</td>
-<!-- END BLOCK : forum-item-stats-->
+		<!-- END BLOCK : forum-item-stats-->
 		<td class="last">
 			{topic}<br />
 			{date}<br />
 			no: {author}
 		</td>
 	</tr>
-<!-- END BLOCK : forum-item-->
-<!-- END BLOCK : forum-list-->
+	<!-- END BLOCK : forum-item-->
+	<!-- END BLOCK : forum-list-->
 </table>
 
 <!-- START BLOCK : forum-addtopic-->

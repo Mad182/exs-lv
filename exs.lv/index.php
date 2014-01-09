@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * 
+ * index.php
+ * 
+ * Ielādē kopīgos failus, sagatavo globālos mainīgos, ielādē moduli
+ * 
+ */
 require('configdb.php');
 
 /* ielādē kopīgos failus */
@@ -61,7 +68,6 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	if ($auth->ok === true) {
 		update_karma($auth->id);
 	}
-
 }
 
 if ($auth->ok && $lang == 1 && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'interests') && empty($_POST) && !isset($_GET['_']) && !$db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")) {
@@ -162,7 +168,6 @@ if (isset($_GET['u'])) {
 	include(CORE_PATH . '/modules/core/miniblog.php');
 } elseif (isset($_GET['y'])) {
 	include(CORE_PATH . '/modules/core/youtube.php');
-
 } else {
 	//"jauno" moduļu ielāde
 	if (!empty($category->module)) {
@@ -172,7 +177,7 @@ if (isset($_GET['u'])) {
 			$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			$tpl->prepare();
 		} else {
-		
+
 			$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
 			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
@@ -187,7 +192,7 @@ if (isset($_GET['u'])) {
 		$pagepath = $category->title;
 
 		/* ielade moduļa funkcijas */
-		if(file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
+		if (file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
 			require(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php');
 		}
 
@@ -199,7 +204,6 @@ if (isset($_GET['u'])) {
 			$tpl->printToScreen();
 			exit;
 		}
-
 	} else {
 		//404
 		set_flash('Pieprasītā lapa netika atrasta!', 'error');
@@ -210,7 +214,7 @@ if (isset($_GET['u'])) {
 // RuneScape apakšprojekts ielādē papildu failu,
 // kas veic vēl atsevišķas pārbaudes
 if ($lang == 9) {
-    include('./modules/core/runescape.php');
+	include('./modules/core/runescape.php');
 }
 
 //izdomā, ko darīt ar templeita opšeniem (rādīt vai nerādīt kreiso un labo kolonnu)
@@ -283,21 +287,21 @@ if ($auth->hosts_online > $ss->get('most_online')) {
 }
 
 $page_title = hide_spoilers($page_title);
-if(strlen($page_title) < 55 && $lang != 4) {
+if (strlen($page_title) < 55 && $lang != 4) {
 	$page_title .= ' - ' . $config_domains[$lang]['domain'];
 }
 
 $login_url = htmlspecialchars($_SERVER['REQUEST_URI']);
-if(!empty($secure_login)) {
+if (!empty($secure_login)) {
 	$login_url = htmlspecialchars('https://secure.exs.lv/');
 }
 
-if($auth->skin == 1 && $lang == 1) {
+if ($auth->skin == 1 && $lang == 1) {
 	$add_css .= ',dark.css';
 }
 
 $new_reports_count = $db->get_var("SELECT count(*) FROM `reports` WHERE `archived` = '0' AND `site_id` = $lang ");
-$new_reports_count = ' (<span class="r">'.$new_reports_count.'</span>)';
+$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
 
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
@@ -332,17 +336,19 @@ $tpl->assignGlobal(array(
 
 //reklāmas
 $ads_type = '_adsense';
-if(!empty($disable_adsense)) { $ads_type = ''; }
-if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl')) {
+if (!empty($disable_adsense)) {
+	$ads_type = '';
+}
+if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl')) {
 	$tpl->assignGlobal('ad-468', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'));
 }
-if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl')) {
+if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl')) {
 	$tpl->assignGlobal('ad-728', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'));
 }
-if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl')) {
+if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl')) {
 	$tpl->assignGlobal('ad-top', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'));
 }
-if(file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl')) {
+if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl')) {
 	$tpl->assignGlobal('ad-bottom', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl'));
 }
 
@@ -446,18 +452,12 @@ if ($skin === 'main') {
 			}
 		}
 	}
-
-	/* pec ielades izsauc lapu, kura ir wos counteri */
-	/*if(!$db->get_var("SELECT count(*) FROM `async_ip` WHERE `ip` = '$auth->ip'")) {
-		$tpl->newBlock('async-call');
-	}*/
-
 }
 
 /* robots meta taga pievienošana */
-if(!empty($robotstag)) {
+if (!empty($robotstag)) {
 	$tpl->newBlock('robots');
-	$tpl->assign('value', implode(',',$robotstag));
+	$tpl->assign('value', implode(',', $robotstag));
 }
 
 /* flash error or success message */
@@ -495,4 +495,3 @@ if ($debug && !$requested_json) {
 	pr($_POST);
 	echo '</div></div></div>';
 }
-

@@ -5,4 +5,3 @@ function ezgif_filename($file) {
 	$file = htmlspecialchars($file);
 	return $file;
 }
-

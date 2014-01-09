@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Info par medaļu (ielādē uz mouseover)
+ */
 $out = 'Par šo medaļu informācija nav pieejama!';
 $user = null;
 

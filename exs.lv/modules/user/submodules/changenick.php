@@ -1,10 +1,8 @@
 <?php
 
-/*
+/**
  * Nika maiņa
  */
-
-//write changes
 if (isset($_POST['new-nick'])) {
 
 	if ($user->credit < 5) {

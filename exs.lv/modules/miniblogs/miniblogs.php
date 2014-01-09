@@ -70,7 +70,7 @@ if ($mbs) {
 		));
 	}
 
-	if($lang == 1) {
+	if ($lang == 1) {
 		$total = 100000;
 	} else {
 		$total = $db->get_var("

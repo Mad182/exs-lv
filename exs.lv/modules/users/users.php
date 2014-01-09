@@ -1,7 +1,8 @@
 <?php
 
-/* list all users */
-
+/**
+ * List all users
+ */
 $end = 400;
 
 if (isset($_GET['skip'])) {
@@ -15,8 +16,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'klase') {
 	$showclass = (int) $_GET['var2'];
 	$sfilter = " WHERE level = '" . $showclass . "' ";
 
-	if(!empty($site_access[$showclass])) {
-		$sfilter .= " OR `id` IN(".implode(',', $site_access[$showclass]).")";
+	if (!empty($site_access[$showclass])) {
+		$sfilter .= " OR `id` IN(" . implode(',', $site_access[$showclass]) . ")";
 	}
 }
 
@@ -40,4 +41,3 @@ if ($users) {
 		'pager-numeric' => $pager['pages']
 	));
 }
-

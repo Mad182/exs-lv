@@ -1,4 +1,5 @@
 <?php
+
 $add_css .= ',ajax-comments.css';
 
 require_once(CORE_PATH . '/includes/ajax_comments.php');

@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Bloķētie lietotaji
+ * 
+ * adminiem rāda sarakstu,
+ * bet bloķētajam lietotājam viņa bloķēšanas iemeslu
+ */
 $q_add = '';
 /* ja admins nav "globāls", tb norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu */
-if(in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
+if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 	$q_add = " AND `lang` = '$lang'";
 }
 
@@ -69,7 +75,7 @@ if (!$auth->ok) {
 				'anick' => htmlspecialchars($author->nick)
 			));
 
-			if ($banned->lang  == 0) {
+			if ($banned->lang == 0) {
 				$tpl->assign(array(
 					'where' => 'Globāls',
 				));

@@ -1,9 +1,8 @@
 <?php
 
-/*
-  Miniblogu ajax update
+/**
+ * Miniblogu ajax update
  */
-
 if (!isset($_GET['mbid']) || !isset($_GET['lastid'])) {
 	die('err');
 }
@@ -23,7 +22,7 @@ $lastid = (int) $_GET['lastid'];
 $lastedit = (int) $_GET['et'];
 
 // apakšprojekti, kuriem rādīt ziņošanas podziņu
-$allowed_sites	= array(1, 7, 9);	// exs.lv; lol.exs.lv; runescape.exs.lv
+$allowed_sites = array(1, 7, 9); // exs.lv; lol.exs.lv; runescape.exs.lv
 
 
 if (isset($_GET['type']) && $_GET['type'] == 'junk') {
@@ -87,19 +86,17 @@ if ($resps) {
 
 
 			$group = $db->get_row("SELECT `id`, `public`, `owner`  FROM `clans` WHERE `id` = '$resp->groupid'");
-			if(!$group->public) {
-				if(!$auth->ok) {
+			if (!$group->public) {
+				if (!$auth->ok) {
 					continue;
 				}
-				if(
-					$auth->id != $group->owner &&
-					$auth->id != 1 &&
-					!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
+				if (
+						$auth->id != $group->owner &&
+						$auth->id != 1 &&
+						!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
 					continue;
-
 				}
 			}
-
 		} else {
 			$limit = 2;
 		}
@@ -131,8 +128,8 @@ if ($resps) {
 		$out .= ' <a href="#m' . $resp->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
 
 		//poga lietotāja pārkāpuma noziņošanai (ja ieraksts jau nav dzēsts)
-		if ( $resp->mb_removed == 0 && $auth->ok && !$auth->mobile && in_array($lang, $allowed_sites) ) {
-			$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$resp->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
+		if ($resp->mb_removed == 0 && $auth->ok && !$auth->mobile && in_array($lang, $allowed_sites)) {
+			$out .= ' <a class="post-button report-user" href="/report/miniblog/' . $resp->id . '" title="Ziņot par pārkāpumu">ziņot</a>';
 		}
 
 		//labot (ja ieraksts jau nav dzēsts)
@@ -141,7 +138,7 @@ if ($resps) {
 		}
 
 		//dzēst (ja ieraksts jau nav dzēsts)
-		if ($resp->mb_removed == 0 && $auth->ok && ( ($auth->id == $resp->author && $auth->level == 3 && $resp->date > time() - 1800) || (im_mod() && $resp->date > time() - 86400) ) ) {
+		if ($resp->mb_removed == 0 && $auth->ok && ( ($auth->id == $resp->author && $auth->level == 3 && $resp->date > time() - 1800) || (im_mod() && $resp->date > time() - 86400) )) {
 			$out .= ' <a href="/delete/' . $resp->id . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 		}
 		$out .= '</p>';
@@ -149,13 +146,13 @@ if ($resps) {
 			$out .= '<p class="deleted-entry">Saturs dzēsts!';
 			// moderatoriem apskatāms dzēstā ieraksta saturs
 			if (im_mod() && !$auth->mobile) {
-				$out .= '<a style="float:right" class="deleted-content" href="/mbview/'.$resp->id.'">skatīt saturu</a>';
+				$out .= '<a style="float:right" class="deleted-content" href="/mbview/' . $resp->id . '">skatīt saturu</a>';
 			}
 			$out .= '</p>';
 		} else {
 			$out .= '<div class="post-content">' . add_smile($resp->text) . '</div>';
 		}
-		
+
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';
 		$json['comment'][$resp->reply_to][] = $out;

@@ -49,7 +49,7 @@
 		<p>
 			<label for="{field_mail}">E-pasta adrese:<br />
 				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts<br />
-				reģistrācijas apstiprinājuma e-pasts.</span>
+					reģistrācijas apstiprinājuma e-pasts.</span>
 			</label><br />
 			<input type="text" class="text" name="{field_mail}" id="{field_mail}" value="{new-mail}" maxlength="64" />
 		</p>
@@ -68,7 +68,7 @@
 		<h2>Reģistrējoties tu piekrīti mājas lapas lietošanas noteikumiem:</h2>
 		<div class="box">{rules}</div>
 		<p>
-		  <label><input type="checkbox" name="agree" /> ar noteikumiem iepazinos un piekrītu tos ievērot</label>
+			<label><input type="checkbox" name="agree" /> ar noteikumiem iepazinos un piekrītu tos ievērot</label>
 		</p>
 		<p>
 			<input class="button" type="submit" name="submit" id="submit" value="Reģistrēties" />

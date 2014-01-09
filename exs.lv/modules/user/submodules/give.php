@@ -1,9 +1,8 @@
 <?php
 
-/*
+/**
  * Uzdāvināt exs kredītu citam lietotājam
  */
-
 $credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 if ($credit) {
 

@@ -1,9 +1,8 @@
 <?php
 
-/*
-  Jaunākie posti lapas malā (TIKAI ajax pieprasījumam, kad lietotājs manuāli klikšķina uz taba)
+/**
+ * Jaunākie posti lapas malā (TIKAI ajax pieprasījumam, kad lietotājs manuāli klikšķina uz taba)
  */
-
 require('configdb.php');
 
 require(CORE_PATH . '/includes/class.mdb.php');

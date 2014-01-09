@@ -5,18 +5,18 @@
 			Apakšsadaļas
 		</th>
 	</tr>
-<!-- START BLOCK : listsubcats-node-->
+	<!-- START BLOCK : listsubcats-node-->
 	<tr><td class="forum-avatar"><a href="/{textid}"><img width="48" height="48" src="http://exs.lv/{icon}" alt="" /></a></td><td><h3><a href="/{textid}">{title}</a></h3><p>{content}{addlink}{editlink}{uplink}{downlink}</p>
-	<!-- START BLOCK : subcats-->
-	<ul class="subcat-list">
-	<!-- START BLOCK : subcats-node-->
-		<li><a href="/{textid}">{title}</a></li>
-	<!-- END BLOCK : subcats-node-->
-	</ul>
-	<!-- END BLOCK : subcats-->
+			<!-- START BLOCK : subcats-->
+			<ul class="subcat-list">
+				<!-- START BLOCK : subcats-node-->
+				<li><a href="/{textid}">{title}</a></li>
+				<!-- END BLOCK : subcats-node-->
+			</ul>
+			<!-- END BLOCK : subcats-->
 
-</td><td class="stat">{topics}&nbsp;{txt-topics}<br />{posts}&nbsp;{txt-posts}</td><td class="last">{topic}<br />{date}<br />no: {author}</td></tr>
-<!-- END BLOCK : listsubcats-node-->
+		</td><td class="stat">{topics}&nbsp;{txt-topics}<br />{posts}&nbsp;{txt-posts}</td><td class="last">{topic}<br />{date}<br />no: {author}</td></tr>
+	<!-- END BLOCK : listsubcats-node-->
 </table>
 <!-- END BLOCK : listsubcats-->
 
@@ -27,18 +27,18 @@
 <ul id="mainlist">
 	<!-- START BLOCK : list-->
 	<li>
-	<h2><a href="{node-url}">{title}</a></h2>
-	<ul class="article-info">
-		<li class="date">{date}</li>
-		<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
-		<li class="profile user-level-{level} user-gender-{gender}"><a href="/user/{author-id}">{author}</a></li>
-	</ul>
-	<div class="c"></div>
-	<!-- START BLOCK : list-avatar-->
-	<img class="av" src="{node-avatar-image}" alt="{node-avatar-alt}" />
-	<!-- END BLOCK : list-avatar-->
-	<p>{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
-	<div class="c"></div>
+		<h2><a href="{node-url}">{title}</a></h2>
+		<ul class="article-info">
+			<li class="date">{date}</li>
+			<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
+			<li class="profile user-level-{level} user-gender-{gender}"><a href="/user/{author-id}">{author}</a></li>
+		</ul>
+		<div class="c"></div>
+		<!-- START BLOCK : list-avatar-->
+		<img class="av" src="{node-avatar-image}" alt="{node-avatar-alt}" />
+		<!-- END BLOCK : list-avatar-->
+		<p>{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
+		<div class="c"></div>
 	</li>
 	<!-- END BLOCK : list-->
 </ul>

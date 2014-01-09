@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Jaunākie ieraksti blogos
+ */
 $tpl->newBlock('blogs-body');
 
 $articles = $db->get_results(

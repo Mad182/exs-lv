@@ -50,7 +50,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 						$dom = '';
 						$domain = 'http://' . $config_domains[$notify->lang]['domain'];
-						if($notify->lang != $lang) {
+						if ($notify->lang != $lang) {
 							$dom = ' (' . $config_domains[$notify->lang]['domain'] . ')';
 						}
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Lietotājam piešķirto medaļu skats
+ */
 $robotstag[] = 'noindex';
 
 if (isset($_GET['var1'])) {
@@ -87,7 +90,7 @@ if ($inprofile) {
 				'title' => $val['title']
 			));
 			if ($auth->id == $inprofile->id) {
-				$tpl->assign('add', '&nbsp;<a class="clue" href="javascript:void();" rel="/award-info/' . $key . '?_='.time().'">(?)</a>');
+				$tpl->assign('add', '&nbsp;<a class="clue" href="javascript:void();" rel="/award-info/' . $key . '?_=' . time() . '">(?)</a>');
 			}
 		}
 	}

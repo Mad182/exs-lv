@@ -25,7 +25,7 @@ if (im_mod()) {
 			$strid = mkslug_newpage($title);
 
 			$db->query("INSERT INTO `pages` (strid,textid,category,text,title,author,date,bump,ip,lang)
-									VALUES ('$strid','" . time() . "','".$polls_cat."','<p>" . $new_q . "</p>','$title','$auth->id',NOW(),NOW(),'$auth->ip','$lang')");
+									VALUES ('$strid','" . time() . "','" . $polls_cat . "','<p>" . $new_q . "</p>','$title','$auth->id',NOW(),NOW(),'$auth->ip','$lang')");
 
 			$poll_page_id = $db->insert_id;
 

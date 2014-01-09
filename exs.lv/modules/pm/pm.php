@@ -286,7 +286,7 @@ if (!$auth->ok) {
 						'pm-to-title' => htmlspecialchars($to->nick),
 						'pm-read' => $pm->is_read,
 					));
-					
+
 					$page_title = $pm->title . ' - lasīt vēstuli';
 				} else {
 					$tpl->newBlock('pm-read-error');
@@ -332,11 +332,11 @@ if (!$auth->ok) {
 							}
 							$type = 'email';
 						}
-						
-						if(!empty($pm->user_deleted)) {
+
+						if (!empty($pm->user_deleted)) {
 							$from = '<em>dzēsts</em>';
 						}
-						
+
 						$tpl->assign(array(
 							'pm-title' => strip_tags($pm->title),
 							'pm-id' => $pm->id,
@@ -358,8 +358,6 @@ if (!$auth->ok) {
 					$tpl->newBlock('pm-list-outbox-empty');
 				}
 			}
-
-
 		} elseif (isset($_GET['var1']) && $_GET['var1'] == 'search') {
 			$tpl->newBlock('pm-menu');
 			$tpl->assign('search-active', 'active');
@@ -390,10 +388,10 @@ if (!$auth->ok) {
 						foreach ($q_strings as $str) {
 							$result->title = str_replace($str, '<strong>' . htmlspecialchars($str) . '</strong>', $result->title);
 						}
-						if($result->to_uid == $auth->id) {
-							$link = '/'. $category->textid . '/inbox/' . $result->id;
+						if ($result->to_uid == $auth->id) {
+							$link = '/' . $category->textid . '/inbox/' . $result->id;
 						} else {
-							$link = '/'. $category->textid . '/sent/' . $result->id;
+							$link = '/' . $category->textid . '/sent/' . $result->id;
 						}
 						$tpl->assign(array(
 							'text' => $result->text,
@@ -403,8 +401,6 @@ if (!$auth->ok) {
 					}
 				}
 			}
-
-
 		} else {
 			$tpl->newBlock('pm-menu');
 			$tpl->assign('inbox-active', 'active');
@@ -505,10 +501,10 @@ if (!$auth->ok) {
 							$type = 'email';
 						}
 
-						if(!empty($pm->user_deleted)) {
+						if (!empty($pm->user_deleted)) {
 							$from = '<em>dzēsts</em>';
 						}
-						
+
 						$tpl->assign(array(
 							'pm-title' => wordwrap(textlimit(strip_tags($pm->title), 48, '...'), 20, "\n", 1),
 							'pm-id' => $pm->id,

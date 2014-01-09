@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Flash spēles augšupielāde
+ */
 if ($auth->id != 1) {
 	redirect();
 }

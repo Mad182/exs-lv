@@ -118,20 +118,19 @@ $str = "			':sweat:' => 'smiley-sweat.png',
 			':buck:' => 'connie_mini_buck.gif',
 			':bump:' => 'connie_mini_bump.gif'";
 
-$aa = explode("\n",$str);
+$aa = explode("\n", $str);
 
 $out = '<table class="main-table">';
-foreach($aa as $a) {
+foreach ($aa as $a) {
 	$out .= '<tr>';
 	$bb = explode(' => ', $a);
 	$bb[0] = trim(str_replace("'", '', $bb[0]));
 
-	$out .= '<td>'.$bb[0].'</td>';
-	$out .= '<td>'.add_smile($bb[0]).'</td>';
+	$out .= '<td>' . $bb[0] . '</td>';
+	$out .= '<td>' . add_smile($bb[0]) . '</td>';
 
-	
+
 	$out .= '</tr>';
-
 }
 
 $out .= '</table>';

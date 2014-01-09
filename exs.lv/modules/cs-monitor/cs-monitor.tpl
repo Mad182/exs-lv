@@ -5,7 +5,7 @@
 	<fieldset>
 		<legend>Izveidot monitoru</legend>
 		<p style="float: right">
-			<a href='http://host-tracker.com/' onMouseOver='this.href="http://host-tracker.com/website-monitoring-stats/5597722/ff/";'>
+			<a href='http://host-tracker.com/' onMouseOver='this.href = "http://host-tracker.com/website-monitoring-stats/5597722/ff/";'>
 				<img width='80' height='15' border='0' alt='speedtest' src="http://ext.host-tracker.com/uptime-img/?s=15&amp;t=5597722&amp;m=0.59&amp;p=Total&amp;src=ff" />
 			</a>
 		</p>

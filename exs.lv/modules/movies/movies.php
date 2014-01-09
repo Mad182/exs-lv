@@ -4,7 +4,7 @@ if (!isset($_GET['viewcat']) || $_GET['viewcat'] !== $category->textid) {
 	redirect('/' . $category->textid, true);
 }
 
-if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
+if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 	$skip = 0;
 	if (isset($_GET['skip'])) {
@@ -91,35 +91,35 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		));
 
 
-		if($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
-			if(!empty($movie_data->title_lv)) {
-				$tpl->assign('title-lv', ' &nbsp;<small>'.$movie_data->title_lv.'</small>');
+		if ($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
+			if (!empty($movie_data->title_lv)) {
+				$tpl->assign('title-lv', ' &nbsp;<small>' . $movie_data->title_lv . '</small>');
 			}
 
-			if(!empty($movie_data->year)) {
+			if (!empty($movie_data->year)) {
 				$tpl->assign('year', '<strong>Gads:</strong> ' . $movie_data->year . '<br />');
 			}
 
-			if(!empty($movie_data->runtime)) {
+			if (!empty($movie_data->runtime)) {
 				$tpl->assign('runtime', '<strong>Garums:</strong> ' . $movie_data->runtime . ' minūtes<br />');
 			}
 
-			if(!empty($movie_data->type) && $movie_data->type == 'series') {
+			if (!empty($movie_data->type) && $movie_data->type == 'series') {
 				$tpl->assign('title-prefix', '<span class="title-prefix series">Seriāls</span> ');
 			}
 		}
 
 
-		if($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
+		if ($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
 			$gen = array();
-			foreach($genres as $genre) {
-				$gen[] = '<a href="/filmas/search?genre='.$genre.'">'.translate_genres($genre).'</a>';
+			foreach ($genres as $genre) {
+				$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
 			}
 			$tpl->assign('genres', '<strong>Žanrs:</strong> ' . implode(' / ', $gen) . '<br />');
 		}
 
 
-		if($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
+		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
 			$tpl->newBlock('list-avatar');
 			$tpl->assign(array(
 				'image' => $avatar->thb,
@@ -135,7 +135,6 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
 	));
-
 } else {
 
 	$sortby = "`pages`.`date` DESC";
@@ -146,21 +145,21 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 	$page_title = 'Filmu meklētājs';
 
-	if(isset($_GET['genre'])) {
+	if (isset($_GET['genre'])) {
 		$_GET['genres'] = array($_GET['genre']);
 
-		if(translate_genres($_GET['genre']) != $_GET['genre']) {
+		if (translate_genres($_GET['genre']) != $_GET['genre']) {
 			$page_title = translate_genres($_GET['genre']) . ' - filmu meklēšana';
 		}
 	}
 
-	if(!empty($_GET['genres'])) {
+	if (!empty($_GET['genres'])) {
 		$genres = array();
-		foreach($_GET['genres'] as $genre) {
-			$genres[] = "'".sanitize(htmlspecialchars(trim($genre)))."'";
+		foreach ($_GET['genres'] as $genre) {
+			$genres[] = "'" . sanitize(htmlspecialchars(trim($genre))) . "'";
 		}
-		$pages = $db->get_col("SELECT DISTINCT(`page_id`) FROM `movie_genres` WHERE `genre` IN(".implode(',',$genres).")");
-		$genreq = " AND `pages`.`id` IN(".implode(',',$pages).") ";
+		$pages = $db->get_col("SELECT DISTINCT(`page_id`) FROM `movie_genres` WHERE `genre` IN(" . implode(',', $genres) . ")");
+		$genreq = " AND `pages`.`id` IN(" . implode(',', $pages) . ") ";
 	}
 
 
@@ -222,17 +221,16 @@ if(!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		));
 
 
-		if($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
-
+		if ($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
+			
 		}
 
 
-		if($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
+		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
 			$tpl->assign(array(
 				'image' => $avatar->thb,
 				'alt' => htmlspecialchars($avatar->title)
 			));
 		}
 	}
-
 }

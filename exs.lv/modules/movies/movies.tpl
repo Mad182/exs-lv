@@ -4,23 +4,23 @@
 <ul id="mainlist">
 	<!-- START BLOCK : list-->
 	<li>
-	<h2><a href="{node-url}">{title-prefix}{title}{title-lv}</a></h2>
-	<ul class="article-info">
-		<li class="date">{date}</li>
-		<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
-		<li class="profile user-level-{level} user-gender-{gender}"><a href="/user/{author-id}">{author}</a></li>
-	</ul>
-	<div class="c"></div>
-	<!-- START BLOCK : list-avatar-->
-	<img class="av" src="http://img.exs.lv{image}" alt="{alt}" />
-	<!-- END BLOCK : list-avatar-->
-	<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
-		{year}
-		{genres}
-		{runtime}
-	</p>
-	<p style="text-align:left;">{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
-	<div class="c"></div>
+		<h2><a href="{node-url}">{title-prefix}{title}{title-lv}</a></h2>
+		<ul class="article-info">
+			<li class="date">{date}</li>
+			<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
+			<li class="profile user-level-{level} user-gender-{gender}"><a href="/user/{author-id}">{author}</a></li>
+		</ul>
+		<div class="c"></div>
+		<!-- START BLOCK : list-avatar-->
+		<img class="av" src="http://img.exs.lv{image}" alt="{alt}" />
+		<!-- END BLOCK : list-avatar-->
+		<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
+			{year}
+			{genres}
+			{runtime}
+		</p>
+		<p style="text-align:left;">{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
+		<div class="c"></div>
 	</li>
 	<!-- END BLOCK : list-->
 </ul>

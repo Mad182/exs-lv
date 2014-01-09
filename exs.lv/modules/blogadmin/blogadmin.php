@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Lietotāja bloga pārvaldība
+ */
 if (!$auth->ok) {
 	$tpl->newBlock('error-nologin');
 } elseif (!get_blog_by_user($auth->id)) {
@@ -24,7 +27,7 @@ if (!$auth->ok) {
 			$db->query("INSERT INTO cat (textid,title,isblog,parent) VALUES ('" . strtolower(mkslug($auth->nick)) . "','$nick blogs','$auth->id','110')");
 			push('Izveidoja sev <a href="/' . mkslug($auth->nick) . '">blogu</a>');
 			$m->delete('isb_' . $auth->id);
-			redirect('/'.$category->textid);
+			redirect('/' . $category->textid);
 		}
 
 		$pay = '<p><a href="/?c=111&amp;act=submitpay"><strong>Izveidot blogu</strong></a></p>';
@@ -119,7 +122,6 @@ if (!$auth->ok) {
 
 			build_latest();
 			redirect('/read/' . $strid);
-
 		}
 	}
 
@@ -143,7 +145,7 @@ if (!$auth->ok) {
 		if (isset($_GET['delete'])) {
 			$delete = (int) $_GET['delete'];
 			$db->query("DELETE FROM sidelinks WHERE id = ('$delete') AND category = ('" . get_blog_by_user($auth->id) . "') LIMIT 1");
-			redirect('/'.$category->textid.'/?act=links');
+			redirect('/' . $category->textid . '/?act=links');
 		}
 
 		if (!isset($_GET['edit'])) {

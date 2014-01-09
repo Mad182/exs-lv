@@ -56,17 +56,17 @@
 	}
 </style>
 <script type="text/javascript">
-	$(document).ready(function(){	
-		$('.form').on('submit',function(){		
+	$(document).ready(function() {
+		$('.form').on('submit', function() {
 			$un = $('#user-name').val();
-			$ua = $('#user-age').val();			
-			if ($un.length < 3) {			
-				$('#user-name-error').html('Kļūda! Nav ievadīts korekts vārds!');				
-				return false;					
+			$ua = $('#user-age').val();
+			if ($un.length < 3) {
+				$('#user-name-error').html('Kļūda! Nav ievadīts korekts vārds!');
+				return false;
 			} else if ($ua === "" || !$.isNumeric($ua)) {
 				$('#user-age-error').html('Kļūda! Nav ievadīts korekts vecums!');
 				return false;
 			}
-		});	
+		});
 	});
 </script>

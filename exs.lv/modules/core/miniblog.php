@@ -1,13 +1,16 @@
 <?php
 
-if(!$inprofile = get_user(intval($_GET['m']))) {
+/**
+ * Miniblogi (saraksts, atvērums, komentēšana...)
+ */
+if (!$inprofile = get_user(intval($_GET['m']))) {
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	header("Status: 404 Not Found");
 	redirect();
 }
 
-if ($_SERVER['REQUEST_URI'] == '/?m='.$inprofile->id) {
-	redirect('/say/'.$inprofile->id, true);
+if ($_SERVER['REQUEST_URI'] == '/?m=' . $inprofile->id) {
+	redirect('/say/' . $inprofile->id, true);
 }
 
 //paginator fīčas
@@ -32,7 +35,7 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 
 		$lastins = post_mb(array(
 			'text' => $body
-				));
+		));
 
 		$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$lastins'");
 
@@ -90,7 +93,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				'text' => $body,
 				'parent' => $mainid,
 				'reply_to' => $reply_to_id
-					));
+			));
 
 			if ($check == $auth->id) {
 				$str = 'savā';
@@ -103,7 +106,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 			$strid = mb_get_strid($title, $mainid);
 			$url = '/say/' . $check . '/' . $mainid . '-' . $strid;
 
-			if(!isset($_POST['no-bump'])) {
+			if (!isset($_POST['no-bump'])) {
 				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid);
 
 				$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
@@ -145,7 +148,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 
 if ($auth->ok && im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
 	$sid = (int) $_GET['single'];
-	if($sid > 0) {
+	if ($sid > 0) {
 		$db->query("UPDATE miniblog SET closed = '0' WHERE id = '$sid' AND closed_by != '17077' AND `lang` = '$lang'");
 		$auth->log('Atvēra miniblogu', 'miniblog', $sid);
 		redirect('/?m=' . $inprofile->id . '&single=' . $sid);
@@ -184,7 +187,7 @@ if ($inprofile->id) {
 		if (isset($_POST['reason']) && !empty($_POST['reason'])) {
 			$reason = post2db($_POST['reason']);
 			$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '$auth->id' WHERE `id` = '$sid' AND `lang` = '$lang'");
-			$auth->log('Aizslēdza miniblogu ('.strip_tags($reason).')', 'miniblog', $sid);
+			$auth->log('Aizslēdza miniblogu (' . strip_tags($reason) . ')', 'miniblog', $sid);
 			redirect('/?m=' . $inprofile->id . '&single=' . $sid);
 		} else {
 			$tpl->newBlock('close-reason');
@@ -208,7 +211,7 @@ if ($inprofile->id) {
 		$tpl->newBlock('user-miniblog-list');
 		foreach ($records as $record) {
 
-			if(!$record->private || $auth->ok === true) {
+			if (!$record->private || $auth->ok === true) {
 
 				$tpl->newBlock('user-miniblog-list-node');
 
@@ -270,9 +273,9 @@ if ($inprofile->id) {
 						}
 					}
 				}
-				
-				if(!$inprofile->deleted) {
-					$author = '<a href="/user/'.$inprofile->id.'">'.usercolor($inprofile->nick, $inprofile->level, false, $inprofile->id).'</a>';
+
+				if (!$inprofile->deleted) {
+					$author = '<a href="/user/' . $inprofile->id . '">' . usercolor($inprofile->nick, $inprofile->level, false, $inprofile->id) . '</a>';
 				} else {
 					$author = '<em>dzēsts</em>';
 				}
@@ -306,8 +309,8 @@ if ($inprofile->id) {
 					}
 
 					//linki ieraksta aizslēgšanai/atslēgšanai
-					if(im_mod()) {
-						if($record->closed) {
+					if (im_mod()) {
+						if ($record->closed) {
 							$tpl->newBlock('mb-edit-unclose');
 						} else {
 							$tpl->newBlock('mb-edit-close');
@@ -324,7 +327,7 @@ if ($inprofile->id) {
 					}
 
 					// podziņa mb pārkāpuma ziņošanai
-					if ( $auth->ok && !$auth->mobile && in_array($lang, array(1,7,9) ) ){
+					if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
 					}
@@ -336,7 +339,7 @@ if ($inprofile->id) {
 
 				if ($record->posts) {
 
-				$responses = $db->get_results("
+					$responses = $db->get_results("
 	SELECT
 		`miniblog`.`text` AS `text`,
 		`miniblog`.`vote_value` AS `vote_value`,
@@ -421,12 +424,10 @@ if ($inprofile->id) {
 						$tpl->newBlock('mb-newtags');
 					}
 				}
-
 			} else {
 
 				$tpl->newBlock('user-miniblog-list-private');
 			}
-
 		}
 
 		//close
@@ -437,7 +438,7 @@ if ($inprofile->id) {
 				'token' => md5('mb' . $record->id . $remote_salt . $auth->nick)
 			));
 
-			if($auth->id == 1) {
+			if ($auth->id == 1) {
 				$tpl->newBlock('resp-tools');
 			}
 

@@ -18,12 +18,11 @@
 		<td>{banned-reason} (<a href="/user/{banned-author}">{anick}</a>)</td>
 		<td style="text-align:right;width:126px;font-size:11px">Vieta:&nbsp;{where}<br />No:&nbsp;{banned-date}<br />Līdz:&nbsp;{banned-until}</td>
 		<td>
-<!-- START BLOCK : rmban-->
-		[<a title="Noņemt liegumu" class="red" href="/?c={category-id}&amp;delete={banned-id}"><img src="http://exs.lv/bildes/x.png" alt="x" /></a>]
-<!-- END BLOCK : rmban-->
+			<!-- START BLOCK : rmban-->
+			[<a title="Noņemt liegumu" class="red" href="/?c={category-id}&amp;delete={banned-id}"><img src="http://exs.lv/bildes/x.png" alt="x" /></a>]
+			<!-- END BLOCK : rmban-->
 		</td>
 	</tr>
 	<!-- END BLOCK : banned-admin-node-->
 </table>
 <!-- END BLOCK : banned-admin-->
-

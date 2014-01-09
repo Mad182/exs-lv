@@ -27,10 +27,10 @@ function flipChar(c) {
 		return 'q'
 	}
 	else if (c == 'c') {
-		return '\u0254'  
+		return '\u0254'
 	}
 	else if (c == 'č') {
-		return '\u0254'  
+		return '\u0254'
 	}
 	else if (c == 'd') {
 		return 'p'
@@ -42,7 +42,7 @@ function flipChar(c) {
 		return '\u01DD'
 	}
 	else if (c == 'f') {
-		return '\u025F' 
+		return '\u025F'
 	}
 	else if (c == 'g') {
 		return 'b'
@@ -150,7 +150,7 @@ function flipChar(c) {
 		return '{'
 	}
 	else if (c == '?') {
-		return '\u00BF'  
+		return '\u00BF'
 	}
 	else if (c == '\u00BF') {
 		return '?'

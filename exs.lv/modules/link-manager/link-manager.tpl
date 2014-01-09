@@ -11,7 +11,7 @@
 		<legend>Pievienot jaunu domēnu</legend>
 		<p>
 			<label for="domain">Domēns:</label><br/ >
-			<input type="text" class="text" name="domain" id="domain" />
+				<input type="text" class="text" name="domain" id="domain" />
 		</p>
 		<p>
 			<input type="submit" class="button primary" name="submit-domain" value="Pievienot" />
