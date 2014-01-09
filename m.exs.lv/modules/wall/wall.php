@@ -1,4 +1,7 @@
 <?php
+/**
+ * Mobilās versijas sākumlapa ("siena")
+ */
 
 set_action('mobilo versiju');
 
@@ -33,7 +36,7 @@ $articles = $db->get_results("
 			category != '83' AND category != '6' AND category != '403' AND
 			`users`.`id` = `pages`.`author` AND
 			`cat`.`id` = `pages`.`category` AND
-			".$mods_only."
+			" . $mods_only . "
 			`pages`.`bump` != '0000-00-00 00:00:00' AND
 			`pages`.`lang` = '$lang'
 		ORDER BY

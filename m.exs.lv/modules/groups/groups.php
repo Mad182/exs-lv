@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Grupu saraksts
+ */
 $end = 50;
 
 if (isset($_GET['skip'])) {
@@ -17,7 +20,7 @@ foreach ($groups as $group) {
 
 	$i++;
 
-	if($i < $skip || $i > $skip+$end) {
+	if ($i < $skip || $i > $skip + $end) {
 		continue;
 	}
 

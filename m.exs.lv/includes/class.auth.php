@@ -34,7 +34,7 @@ class Auth {
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->nick = "Guest";
 		$this->ok = false;
-		if(!empty($_SESSION['xsrf'])) {
+		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
 			$this->xsrf = md5($this->ip . $remote_salt . microtime(true));
@@ -48,7 +48,7 @@ class Auth {
 	function update_visits() {
 		global $db, $lang;
 		$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = $this->id AND `ip` = '$this->ip' AND `site_id` = $lang");
-		if($exists) {
+		if ($exists) {
 			$db->query("UPDATE `visits` SET `lastseen` = NOW() WHERE `id` = $exists");
 		} else {
 			$db->query("INSERT INTO `visits` (`user_id`, `site_id`, `ip`, `lastseen`) VALUES ($this->id, $lang, '$this->ip', NOW())");
@@ -60,11 +60,11 @@ class Auth {
 
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id']);
-			
-			if($userinfo->deleted) {
+
+			if ($userinfo->deleted) {
 				return $this->logout();
 			}
-			
+
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
 			}
@@ -81,7 +81,7 @@ class Auth {
 				$this->update_visits();
 			}
 
-			if($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			if ($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 				$this->logout();
 				redirect();
 			}
@@ -119,8 +119,8 @@ class Auth {
 	function login($username, $password, $xsrf = null) {
 		global $db, $lang;
 
-		if(!is_null($xsrf) && $xsrf != $this->xsrf) {
-			sleep(rand(2,4));
+		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
+			sleep(rand(2, 4));
 			$this->error = 2;
 			return false;
 		}
@@ -130,29 +130,26 @@ class Auth {
 		$tmp = $db->get_row("SELECT `id`, `password`, `pwd` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
 
 		$found = false;
-		if(!empty($tmp)) {
+		if (!empty($tmp)) {
 
 			//log in using old SHA password
-			if(empty($tmp->password) && !empty($tmp->pwd)) {
+			if (empty($tmp->password) && !empty($tmp->pwd)) {
 
-				if($tmp->pwd === pwd($password)) {
+				if ($tmp->pwd === pwd($password)) {
 					$found = $tmp->id;
 
 					//create new bcrypt hash and delete old one
 					$hash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 14));
 					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
-
 				}
 
-			//using bcrypt
-			} elseif(!empty($tmp->password)) {
+				//using bcrypt
+			} elseif (!empty($tmp->password)) {
 
 				if (password_verify($password, $tmp->password)) {
 					$found = $tmp->id;
 				}
-
 			}
-
 		}
 
 		if ($found) {
@@ -178,7 +175,7 @@ class Auth {
 			update_karma($this->id, true);
 			return true;
 		} else {
-			sleep(rand(1,3));
+			sleep(rand(1, 3));
 			$this->error = 1;
 			return false;
 		}
@@ -214,16 +211,16 @@ class Auth {
 			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, $lang)");
 		}
 
-		if (!($this->hosts_online = $m->get('online_count_'.$lang))) {
+		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
 			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
 			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = $lang");
-			$m->set('online_count_'.$lang, "$this->hosts_online", false, 10);
+			$m->set('online_count_' . $lang, "$this->hosts_online", false, 10);
 		}
 	}
 
 	function log($action, $foreign_table = '', $foreign_key = 0) {
 		global $db;
-		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','".sanitize($action)."',NOW(),'$this->ip','".sanitize($foreign_table)."','".intval($foreign_key)."')");
+		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
 
 }

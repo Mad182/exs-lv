@@ -1,15 +1,5 @@
 ErrorDocument 404 /index.php?c=240
 
-# gads
-#<FilesMatch "\.(ico)$">
-#Header set Cache-Control "max-age=29030400, public"
-#</FilesMatch>
-
-# nedela
-#<FilesMatch "\.(jpg|png|gif|swf|js|css)$">
-#Header set Cache-Control "max-age=604800, public"
-#</FilesMatch>
-
 Options +FollowSymlinks
 RewriteEngine on
 RewriteBase /
@@ -17,11 +7,8 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteCond %{HTTP_HOST} ^www\.exs\.lv$ [NC]
-RewriteRule ^(.*)$ http://exs.lv/$1 [L,R=301]
-
 RewriteCond %{REQUEST_URI} ^(.*)//$
-RewriteRule . http://exs.lv%1/ [R=301]
+RewriteRule . http://m.exs.lv%1/ [R=301]
 
 RewriteCond %{HTTP_HOST} ^m.rp.exs.lv$
 RewriteRule ^favicon\.ico$ /dati/bildes/gta/favicon.ico

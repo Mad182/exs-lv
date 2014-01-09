@@ -1,8 +1,13 @@
 <?php
+
+/**
+ * Ģenerē lietotāju un grupu avatarus mobilajai versijai
+ * (mazāks failu izmērs un animētie padarīti nekustīgi)
+ */
 $original = CORE_PATH . '/dati/bildes/useravatar/' . $_GET['img'];
 
 $path = '';
-if(substr($_GET['img'],1,1) == '/' && substr($_GET['img'],3,1) == '/') {
+if (substr($_GET['img'], 1, 1) == '/' && substr($_GET['img'], 3, 1) == '/') {
 	$path = substr($_GET['img'], 0, 4);
 }
 

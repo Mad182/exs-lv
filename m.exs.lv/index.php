@@ -38,19 +38,18 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	$tpl->prepare();
 
 	$login_url = htmlspecialchars($_SERVER['REQUEST_URI']);
-	if(!empty($secure_login)) {
+	if (!empty($secure_login)) {
 		$login_url = htmlspecialchars('https://secure.exs.lv/');
 	}
 
 	$tpl->assignGlobal(array(
-		'server-name' => htmlspecialchars(str_replace('m.','',$_SERVER['SERVER_NAME'])),
+		'server-name' => htmlspecialchars(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
 		'page-loginurl' => $login_url,
 		'page-title' => $page_title,
 		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 		'xsrf' => $auth->xsrf,
 		'static-server' => $static_server
 	));
-
 } else {
 
 	//banoto lietotāju saraksts
@@ -119,7 +118,6 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 				} else {
 					$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 				}
-
 			} else {
 
 				if (file_exists('modules/' . $category->module . '/' . $category->module . '.php')) {
@@ -127,7 +125,6 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 				} else {
 					$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 				}
-
 			}
 			$tpl->prepare();
 
@@ -136,7 +133,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 			}
 
 			/* ielade moduļa funkcijas */
-			if(file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
+			if (file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
 				require(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php');
 			}
 
@@ -145,7 +142,6 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 			} else {
 				require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
 			}
-
 		} else {
 			$tpl->newBlock('error-nocat');
 			$page_title = 'Kļūda: kategorija nav atrasta!';
@@ -168,7 +164,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 
 	$tpl->assignGlobal(array(
-		'server-name' => htmlspecialchars(str_replace('m.','',$_SERVER['SERVER_NAME'])),
+		'server-name' => htmlspecialchars(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
 		'page-title' => $page_title,
 		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 		'currentuser-nick' => htmlspecialchars($auth->nick),

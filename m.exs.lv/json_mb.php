@@ -60,7 +60,7 @@ if ($resps) {
 	//"cake day"
 	$cday_users = get_cakeday();
 
-	if(!$auth->ok) {
+	if (!$auth->ok) {
 		die('login required');
 	}
 
@@ -77,20 +77,17 @@ if ($resps) {
 
 
 			$group = $db->get_row("SELECT `id`, `public`, `owner`  FROM `clans` WHERE `id` = '$resp->groupid'");
-			if(!$group->public) {
-				if(!$auth->ok) {
+			if (!$group->public) {
+				if (!$auth->ok) {
 					continue;
 				}
-				if(
-					$auth->id != $group->owner &&
-					$auth->id != 1 &&
-					!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
+				if (
+						$auth->id != $group->owner &&
+						$auth->id != 1 &&
+						!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
 					continue;
-
 				}
 			}
-
-
 		} else {
 			$limit = 2;
 		}
@@ -99,18 +96,18 @@ if ($resps) {
 		if ($auth->ok && $level < $limit) {
 			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 		}
-		if($auth->ok && $auth->id != $resp->author && isset($_GET['url'])) {
+		if ($auth->ok && $auth->id != $resp->author && isset($_GET['url'])) {
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 		}
 		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
-		
+
 		$out .= '</p>';
 		if ($resp->mb_removed == 1) {
 			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
 		} else {
 			$out .= '<div class="post-content">' . add_smile($resp->text) . '</div>';
 		}
-		
+
 		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';
 		$json['comment'][$resp->reply_to][] = $out;
