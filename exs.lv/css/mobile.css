@@ -1,3 +1,11 @@
+/**
+ * mobile.css
+ *
+ * Mobīlās versijas (m.exs.lv) stils
+ * Šis fails tiek ielādēts tikai mobilajā versijā
+ * un ir vienīgais css fails tur
+ */
+
 body, html {
 	min-width: 230px;
 	padding: 0;
@@ -346,7 +354,7 @@ table.main-table, table.infotable {
 table.main-table th, table.main-table td, table.infotable td {
 	border: 1px solid #ccc;
 	padding: 2px 4px;
-	font-size: 90%;
+	font-size: 90%
 }
 
 table.main-table th, table.main-table thead td, table.infotable th {
@@ -354,11 +362,12 @@ table.main-table th, table.main-table thead td, table.infotable th {
 	text-align: center;
 	font-weight: 700;
 	font-size: 90%;
-	padding: 1px 3px color: #555;
+	padding: 1px 3px;
+	color: #555
 }
 
 table.main-table tr.darker td, table.infotable tr.r2 td {
-	background: #fafafa;
+	background: #fafafa
 }
 
 table.infotable tr.hirank td {
@@ -463,7 +472,6 @@ tr.read-0 td a {
 	background-image: -webkit-linear-gradient(top,#ee5f5b,#c43c35);
 	background-image: -o-linear-gradient(top,#ee5f5b,#c43c35);
 	background-image: linear-gradient(top,#ee5f5b,#c43c35);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#FFEE5F5B',endColorstr='#FFC43C35',GradientType=0);
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #c43c35 #c43c35 #882a25;
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
@@ -479,7 +487,6 @@ tr.read-0 td a {
 	background-image: -webkit-linear-gradient(top,#62c462,#57a957);
 	background-image: -o-linear-gradient(top,#62c462,#57a957);
 	background-image: linear-gradient(top,#62c462,#57a957);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#FF62C462',endColorstr='#FF57A957',GradientType=0);
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #57a957 #57a957 #3d773d;
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
@@ -495,7 +502,6 @@ tr.read-0 td a {
 	background-image: -webkit-linear-gradient(top,#5bc0de,#339bb9);
 	background-image: -o-linear-gradient(top,#5bc0de,#339bb9);
 	background-image: linear-gradient(top,#5bc0de,#339bb9);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#FF5BC0DE',endColorstr='#FF339BB9',GradientType=0);
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #339bb9 #339bb9 #22697d;
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
@@ -513,7 +519,6 @@ tr.read-0 td a {
 	background-image: -ms-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	background-image: -o-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	background-image: linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFE',endColorstr='#FFE6E6E6',GradientType=0);
 	padding: 5px 13px 5px;
 	text-shadow: 0 1px 1px #ccc;
 	color: #333;
@@ -555,7 +560,6 @@ tr.read-0 td a {
 	background-image: -webkit-linear-gradient(top,#049cdb,#0064cd);
 	background-image: -o-linear-gradient(top,#049cdb,#0064cd);
 	background-image: linear-gradient(top,#049cdb,#0064cd);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#FF049CDB',endColorstr='#FF0064CD',GradientType=0);
 	text-shadow: 0 -1px 0 #444;
 	border-color: #0064cd #0064cd #003f81;
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
@@ -570,7 +574,6 @@ tr.read-0 td a {
 .button.disabled {
 	cursor: default;
 	background-image: none;
-	filter: progid: DXImageTransform.Microsoft.gradient(enabled = false);
 	filter: alpha(opacity=65);
 	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
@@ -583,8 +586,6 @@ tr.read-0 td a {
 .button[disabled] {
 	cursor: default;
 	background-image: none;
-	filter: progid: DXImageTransform.Microsoft.gradient(enabled = false);
-	filter: alpha(opacity=65);
 	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
 	opacity: 0.65;
@@ -686,7 +687,6 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	background: #fff;
 	background: -webkit-gradient(linear,left top,left bottom,from(#fff), to(#ededed));
 	background: -moz-linear-gradient(top,#fff,#ededed);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#ededed');
 }
 
 #buttons.quad li a {
@@ -698,14 +698,12 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	background: #ededed;
 	background: -webkit-gradient(linear,left top,left bottom,from(#fff), to(#dcdcdc));
 	background: -moz-linear-gradient(top,#fff,#dcdcdc);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#dcdcdc');
 }
 
 #buttons li a:active {
 	color: #999;
 	background: -webkit-gradient(linear,left top,left bottom,from(#ededed), to(#fff));
 	background: -moz-linear-gradient(top,#ededed,#fff);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ededed',endColorstr='#ffffff');
 }
 
 .auto-embed-placeholder {
@@ -903,7 +901,6 @@ a.activeTab, a.activeTab:hover {
 	background-image: -ms-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	background-image: -o-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	background-image: linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
-	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFE',endColorstr='#FFE6E6E6',GradientType=0);
 	border: 1px solid #E4E4E4;
 	border-bottom: 0;
 	text-decoration: none;

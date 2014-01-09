@@ -1,17 +1,15 @@
-/*
-mta.css
-(c) 2012-2013 exs.lv
-
-rp.exs.lv specifiskie stili
-
-*/
+/**
+ * mta.css
+ * (c) 2012-2014 exs.lv
+ *
+ * rp.exs.lv specifiskie stili
+ */
 
 body {
 	background: #ebebeb;
 }
 
 #header {
-	/*background: url('http://img.exs.lv/m/i/mikla-vavere/mta-top-by-worst.png') no-repeat -20px 20px;*/
 	background: url('http://img.exs.lv/bildes/gta/mta-header-christmas.png') no-repeat 0 20px;
 	height: 198px;
 }
@@ -103,7 +101,7 @@ body {
 	line-height: 35px;
 	border: 0;
 }
- 
+
 #top-menu ul {
 	padding: 0;
 	margin: 0;

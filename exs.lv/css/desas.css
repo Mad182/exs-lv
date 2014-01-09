@@ -1,3 +1,9 @@
+/**
+ * desas.css
+ *
+ * Desus spēles CSS
+ */
+
 #desas {
 	width: 171px;
 	height: 171px;
@@ -39,8 +45,8 @@
 	padding: 30px 20px 10px;
 	top: 9px;
 	right: 9px;
-  opacity:0.7;
-  filter:alpha(opacity=70);
+	opacity:0.7;
+	filter:alpha(opacity=70);
 	border: 1px solid #000066;
 	background: #333388;
 	color: #fff;
@@ -58,8 +64,8 @@
 	padding: 3px 9px;
 	border: 1px solid #660000;
 	background: #883333;
-  opacity:0.4;
-  filter:alpha(opacity=40);
+	opacity:0.4;
+	filter:alpha(opacity=40);
 }
 #start-desas {
 	display: block;

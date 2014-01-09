@@ -36,13 +36,13 @@ blockquote p {
 	display: none
 }
 .admins {
-color: #700
+	color: #700
 }
 .mods {
-color: #00b
+	color: #00b
 }
 .rautors {
-color: #070
+	color: #070
 }
 p {
 	margin: 0;
@@ -148,56 +148,56 @@ pre.prettyprint, code.prettyprint {
 	display: block;
 }
 hr {
-color: #ccc;
-background: #ccc;
-height: 1px;
-border: none;
-margin: 6px 100px;
-padding: 0
+	color: #ccc;
+	background: #ccc;
+	height: 1px;
+	border: none;
+	margin: 6px 100px;
+	padding: 0
 }
 
 h1, h2, h3, h4 {
-color: #444;
-font-weight: normal;
-font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
-text-shadow: 0 1px 1px #ddd;
-margin: 8px 0 4px;
-padding: 3px 0
+	color: #444;
+	font-weight: normal;
+	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
+	text-shadow: 0 1px 1px #ddd;
+	margin: 8px 0 4px;
+	padding: 3px 0
 }
 h1 {
-font-size: 18px
+	font-size: 18px
 }
 h2 {
-font-size: 16px
+	font-size: 16px
 }
 h3 {
-font-size: 14px
+	font-size: 14px
 }
 h4, #content h4 {
-font-size: 13px;
-margin: 6px 0 2px
+	font-size: 13px;
+	margin: 6px 0 2px
 }
 a {
-text-decoration: none;
-color: #0A4E81
+	text-decoration: none;
+	color: #0A4E81
 }
 a:hover {
-color: #000;
-text-decoration: underline
+	color: #000;
+	text-decoration: underline
 }
 a:focus {
-color: #c00
+	color: #c00
 }
 ul, ol {
-padding: 3px 0 3px 24px;
-margin: 8px
+	padding: 3px 0 3px 24px;
+	margin: 8px
 }
 ul {
-list-style: none
+	list-style: none
 }
 ul li {
-background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -542px;
-padding: 0 0 0 14px
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -542px;
+	padding: 0 0 0 14px
 }
 .red {
 	color: #ef6000;

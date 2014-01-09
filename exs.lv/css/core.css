@@ -1,11 +1,9 @@
-/*
-core.css
-(c) 2005-2013 exs.lv
-
-saja faila definejas visas pamatlietas,
-tas tiek ieladets kopa ar jebkuru skinu, ari apsksprojektos
-
-*/
+/**
+ * core.css
+ * (c) 2005-2014 exs.lv
+ *
+ * Kopīgais fails, tiek ielādēts ar jebkuru skinu, arī apakšprojektos
+ */
 
 /* vispareji */
 html, body, form, fieldset, table, tr, td, th, #exs-groups {
@@ -550,7 +548,6 @@ html .banned {
 #content.no-right {
 	width: 782px;
 	float: right
-	left: 0px;
 }
 
 #content.no-left {
@@ -1006,7 +1003,6 @@ a.link3 {
 
 .comment-signature img {
 	max-width: 460px;
-	width: expression(this.width>460?460: true);
 }
 
 #add-comment-form {
@@ -3895,4 +3891,3 @@ li.view_more {
 	border: 1px dotted #ddd;
 	background: #eee;
 }
-

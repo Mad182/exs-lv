@@ -1,10 +1,10 @@
-/*
-core.css
-(c) 2005-2013 exs.lv
-
-foruma tēmu un kategoriju saraksta stils
-
-*/
+/**
+ * forum.css
+ * (c) 2005-2014 exs.lv
+ *
+ * foruma tēmu un kategoriju saraksti
+ *
+ */
 
 #forum {
 	width: 100%;

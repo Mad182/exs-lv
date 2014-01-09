@@ -1,3 +1,10 @@
+/**
+ * dark.css
+ * 
+ * Tumšais skins. Overraido core.css krāsas
+ * Izmantot TIKAI krāsām, layouts/izmēri definējas core.css
+ */
+
 body {
 	background: url('http://img.exs.lv/bildes/dark/body.jpg') repeat 0 0;
 	color: #eee
@@ -117,7 +124,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #aaa
 }
 p.comment-tools {
-border-top: 1px dotted #333
+	border-top: 1px dotted #333
 }
 
 .tabMain {

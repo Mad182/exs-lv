@@ -1,10 +1,9 @@
-/*
-exs.css
-(c) 2013 exs.lv
-
-exs.lv specific styles, not loaded in sub-projects
-
-*/
+/**
+ * exs.css
+ * (c) 2013 exs.lv
+ *
+ * exs.lv specific styles, not loaded in sub-projects
+ */
 
 body {
 	background: #ffffff url('http://img.exs.lv/bildes/winter-body.jpg') repeat-x fixed 50% 0;
