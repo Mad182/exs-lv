@@ -4,7 +4,7 @@
 	<fieldset>
 		<ul style="padding:0;margin:0">
 			<!-- START BLOCK : av-node-->
-			<li style="background:transparent;float:left;width:100px;height:120px;text-align:center;padding:3px">
+			<li style="background:transparent;float:left;width:80px;padding:8px;margin:3px;height:110px;text-align:center;{owned}">
 				<label for="av-{id}">
 					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" />
 				</label>
@@ -45,4 +45,3 @@
 
 	</fieldset>
 </form>
-
