@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Satura tagošana
+ */
 class tags {
 
 	var $tag_id;

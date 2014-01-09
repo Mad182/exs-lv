@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * coding.lv labais sidebar
+ */
 $out = get_latest_posts();
 $tpl->newBlock('main-layout-right');
 $tpl->assign(array(
@@ -13,7 +16,7 @@ if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 }
 
 if (!empty($inprofile)) {
-	
+
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
@@ -31,10 +34,7 @@ if (!empty($inprofile)) {
 	}
 
 	//warnu links un skaits
-	if ($auth->ok === true
-			&& ($auth->id == $inprofile->id
-			|| im_mod())
-			&& !in_array($inprofile->level, array(1, 2))) {
+	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1, 2))) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
 			$tpl->assign(array(

@@ -1,8 +1,8 @@
 <?php
 
-
 /**
- * Info par domēniem, kuri atbilst katram $lang (lai veidotu linkus starp projektiem u.c.)
+ * Info par domēniem, kuri atbilst katram $lang 
+ * (lai veidotu linkus starp projektiem u.c.)
  */
 $config_domains = array(
 	1 => array(
@@ -33,20 +33,19 @@ $config_domains = array(
 
 
 $found = false;
-foreach($config_domains as $lang => $site) {
+foreach ($config_domains as $lang => $site) {
 
 	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
-		require(CORE_PATH . '/config/'.$site['domain'].'.php');
+		require(CORE_PATH . '/config/' . $site['domain'] . '.php');
 		$found = true;
 		break;
-	} elseif($_SERVER['SERVER_NAME'] === 'www.'.$site['domain']) {
+	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
 		redirect('http://' . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
 	}
-
 }
 
 //domain not found, redirect to exs.lv
-if(!$found) {
+if (!$found) {
 	redirect('http://exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 

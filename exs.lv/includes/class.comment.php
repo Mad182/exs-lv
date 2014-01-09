@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Rakstu/attēlu komentāru pievienošana
+ */
 class Comment {
 
 	function check_page($page_id, $place = 0) {
@@ -51,7 +54,7 @@ class Comment {
 
 				if ($place == 0) {
 
-					if(!isset($_POST['no-bump'])) {
+					if (!isset($_POST['no-bump'])) {
 						$db->query("UPDATE `pages` SET `bump` = NOW(), `posts` = posts+1, `readby` = '' WHERE `id` = '$page_id'");
 					} else {
 						$db->query("UPDATE `pages` SET `posts` = posts+1, `readby` = '' WHERE `id` = '$page_id'");
@@ -68,12 +71,11 @@ class Comment {
 					$newpost->text = mention($newpost->text, $url, 'page', $page_id);
 					$db->query("UPDATE `comments` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
-					if(!isset($_POST['no-bump'])) {
+					if (!isset($_POST['no-bump'])) {
 
-						push('Komentēja rakstu &quot;<a href="' . $url . '#c' . $newid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/'.$article->id.'.jpg');
+						push('Komentēja rakstu &quot;<a href="' . $url . '#c' . $newid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
 						notify($article->author, 2, $article->id, $url, textlimit(hide_spoilers($article->title), 64));
 						build_latest();
-
 					}
 				} else {
 					$db->query("INSERT INTO galcom (id,bid,author,text,date,ip) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip')");
@@ -83,7 +85,6 @@ class Comment {
 					$newpost = $db->get_row("SELECT * FROM `galcom` WHERE `id` = '$newid'");
 					$newpost->text = mention($newpost->text, '#', 'image', $page_id);
 					$db->query("UPDATE `galcom` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
-
 				}
 				update_karma($user_id);
 			} else {

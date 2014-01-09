@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * exs.lv labais sidebar
+ */
 $tpl->newBlock('main-layout-right');
 
 //profile box
@@ -32,10 +35,7 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 	}
 
 	//warnu links un skaits
-	if ($auth->ok === true
-			&& ($auth->id == $inprofile->id
-			|| im_mod())
-			&& !in_array($inprofile->level, array(1, 2))) {
+	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1, 2))) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
 			$tpl->assign(array(
@@ -144,7 +144,7 @@ if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
 
-if($auth->skin == 1) {
-	$tpl->assignGlobal('twitter-theme',' data-theme="dark"');
+if ($auth->skin == 1) {
+	$tpl->assignGlobal('twitter-theme', ' data-theme="dark"');
 }
 

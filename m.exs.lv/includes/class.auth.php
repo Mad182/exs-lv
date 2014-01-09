@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Lietotāja autorizācija un globāls aktīvā lietotāja objekts ($auth)
+ * 
+ * MOBILĀ VERSIJA (atzīmē ka lietotājs ir ielogojies m. versijā)
+ * 
+ * paroles tiek glabātas izmantojot bcrypt
+ */
 require(LIB_PATH . '/bcrypt/lib/password.php');
 
 class Auth {

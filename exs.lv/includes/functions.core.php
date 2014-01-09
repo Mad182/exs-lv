@@ -4,6 +4,9 @@
  * functions.core.php
  * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
  * */
+
+/* utf-8 ucfirst */
+
 if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
 	function mb_ucfirst($string) {
@@ -30,8 +33,7 @@ function update_karma($userid, $force_award = false) {
 		$miniblog = $db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $user->id . "' AND removed = '0'");
 		$awards = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user->id'");
 		$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
-		$voteval =
-				$db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id' AND removed = '0'") +
+		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id' AND removed = '0'") +
 				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$user->id' AND removed = '0'") +
 				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$user->id'");
 		$rating = ceil(($tvotes->avg - 3) * $tvotes->count / 10) + ceil(($ivotes->avg - 3) * $ivotes->count / 20);
@@ -125,7 +127,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	if (!empty($user_id)) {
 		if ($id = $db->get_var("SELECT `id` FROM `notify` WHERE `user_id` = '$user_id' AND `type` = '$type' AND `foreign_key` = '$place' AND `lang` = '$nlang'")) {
 			$db->update('notify', $id, array('bump' => 'NOW()'));
-			if(!empty($info)) {
+			if (!empty($info)) {
 				$db->update('notify', $id, array('info' => $info));
 			}
 			return 2;
@@ -242,22 +244,22 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 	return $out;
 }
 
-
 /* apakšprojektam specifiskas lietotāju tiesības */
+
 function get_site_access() {
 	global $db, $m, $lang;
 
 	$site_access = array(
-			1 => array(),
-			2 => array(),
-			3 => array(),
-			4 => array(),
-			5 => array()
-		);
+		1 => array(),
+		2 => array(),
+		3 => array(),
+		4 => array(),
+		5 => array()
+	);
 
 	$site_access_data = $db->get_results("SELECT `user_id`, `level` FROM `site_admins` WHERE `site_id` = '$lang'");
-	if(!empty($site_access_data)) {
-		foreach($site_access_data as $usr) {
+	if (!empty($site_access_data)) {
+		foreach ($site_access_data as $usr) {
 			$site_access[$usr->level][] = $usr->user_id;
 		}
 	}
@@ -265,8 +267,8 @@ function get_site_access() {
 	return $site_access;
 }
 
-
 /* atgriež niku ar tam atbilstošo krāsu pēc lietotāja tiesībām */
+
 function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	global $busers, $online_users, $site_access, $auth, $cday_users, $img_server;
 	$star = '';
@@ -292,7 +294,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	$user_classes = array(1 => 'admins', 2 => 'mods', 3 => 'rautors', 5 => 'bot');
 
-	foreach($user_classes as $key => $class) {
+	foreach ($user_classes as $key => $class) {
 		if ($level == $key || ($userid != 0 && !empty($site_access[$key]) && in_array($userid, $site_access[$key]))) {
 			$nick = '<span class="' . $class . '">' . $nick . '</span>';
 		}
@@ -308,6 +310,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 }
 
 /* parbauda vai aktīvais lietotājs ir moderators (vai admins) */
+
 function im_mod() {
 	global $auth;
 	if ($auth->ok === true && ($auth->level == 1 || $auth->level == 2)) {
@@ -318,6 +321,7 @@ function im_mod() {
 }
 
 /* parbauda vai aktīvais lietotājs ir atvērtās sadaļas moderators */
+
 function im_cat_mod($id = null) {
 	global $auth, $category;
 	if (!empty($id)) {
@@ -344,7 +348,7 @@ function textlimit($string, $setlength, $replacer = '...') {
 			return substr($string, 0, $setlength);
 		else
 			return substr($string, 0, $length) . $replacer;
-	}else
+	} else
 		return $string;
 }
 
@@ -448,7 +452,7 @@ function mkslug($string, $lower = true, $remove_dashes = true) {
 	if (empty($string)) {
 		$string = 'page';
 	}
-	if($lower) {
+	if ($lower) {
 		$string = strtolower($string);
 	}
 	return $string;
@@ -478,8 +482,9 @@ function mkurl($type, $id, $title, $add = '') {
 }
 
 /* removes from text youtube links and replaces with video titles */
+
 function youtube_title($text) {
-	if(strpos($text, 'youtu') !== false) {
+	if (strpos($text, 'youtu') !== false) {
 		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
 		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
 	}
@@ -511,7 +516,7 @@ function embed_youtube($matches, $wide = 0) {
 
 	$width = 380;
 	$height = 240;
-	if($wide) {
+	if ($wide) {
 		$width = 520;
 		$height = 290;
 	}
@@ -579,7 +584,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			':ban:' => 'ban.gif',
 			':mjau:' => 'mjau.gif',
 			':rock:' => 'rock.gif',
-
 			//kolobok
 			':drink:' => 'drink_mini.gif',
 			':lol:' => 'lol_mini.gif',
@@ -641,6 +645,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			':vava:' => 'vava_mini.gif',
 			':wacko:' => 'wacko_mini.gif',
 			';)' => 'wink_mini.gif',
+			':wink:' => 'wink_mini.gif',
 			':yahoo:' => 'yahoo_mini.gif',
 			':yes:' => 'yes_mini.gif',
 			':yell:' => 'shout_mini.gif',
@@ -730,7 +735,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	}
 
 	/* auto embed youtube videos */
-	if(!$disable_embed && strpos($txt, 'youtu') !== false) {
+	if (!$disable_embed && strpos($txt, 'youtu') !== false) {
 		if ($wide) {
 			$fn = 'get_youtube_video';
 		} else {
@@ -743,8 +748,8 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	return $txt;
 }
 
-
 /* adreses, kurām nelikt nofollow tagu */
+
 function get_dofollow_sites() {
 	global $db, $m, $dofollow_sites;
 	if (empty($dofollow_sites)) {
@@ -757,6 +762,7 @@ function get_dofollow_sites() {
 }
 
 /* atgriež masīvu ar bloķētiem mājas lapu domēniem */
+
 function get_blacklisted_sites() {
 	global $db, $m, $blacklisted_sites;
 	if (empty($blacklisted_sites)) {
@@ -792,9 +798,9 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 		'@Jayden James' => '@Jayden_James',
 		'@Maadinsh' => '@mad',
 		'@S J' => '@S_J'
-		);
+	);
 
-	foreach($underscore_names as $key => $val) {
+	foreach ($underscore_names as $key => $val) {
 		$text = str_ireplace($key, $val, $text);
 	}
 
@@ -869,7 +875,7 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 				$mb = $db->get_row("SELECT `id`, `groupid`, `text`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
 				$group = $db->get_row("SELECT `title`, `strid`, `id` FROM `clans` WHERE `id` = '$mb->groupid'");
 				$title = mb_get_title($mb->text);
-				if(!empty($group->strid)) {
+				if (!empty($group->strid)) {
 					$url = '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
 				} else {
 					$url = '/group/' . $group->id . '/forum/' . base_convert($mb->id, 10, 36);
@@ -1040,8 +1046,7 @@ function destroy_cdir($dir = 'cache/index/') {
 				chdir('.');
 				destroy($dir . $file . '/');
 				rmdir($dir . $file) or DIE("couldn't delete $dir$file<br />");
-			}
-			else
+			} else
 				unlink($dir . $file) or DIE("couldn't delete $dir$file<br />");
 		}
 	}
@@ -1561,8 +1566,7 @@ function update_awards($user) {
 
 		//draugi
 		if (!in_array('friends-50', $existing_awards)) {
-			$fcount = $db->get_var("SELECT count(*) FROM `friends` WHERE `friend1` = '$user' AND `confirmed` = 1")
-							+ $db->get_var("SELECT count(*) FROM `friends` WHERE `friend2` = '$user' AND `confirmed` = 1");
+			$fcount = $db->get_var("SELECT count(*) FROM `friends` WHERE `friend1` = '$user' AND `confirmed` = 1") + $db->get_var("SELECT count(*) FROM `friends` WHERE `friend2` = '$user' AND `confirmed` = 1");
 			if ($fcount >= 20) {
 				$awards_list['friends-20']['state'] = 'active';
 			}
@@ -1612,17 +1616,17 @@ function update_awards($user) {
 			'music' => array(323),
 			'film' => array(80),
 			'history' => array(565),
-			'rs' => array(599,4,5,99,100,102,160,193,195,194,792,787,788,789,790,791,793)
+			'rs' => array(599, 4, 5, 99, 100, 102, 160, 193, 195, 194, 792, 787, 788, 789, 790, 791, 793)
 		);
 
-		$topic_award_levels = array(1,5,10);
+		$topic_award_levels = array(1, 5, 10);
 
-		foreach($topic_awards as $key => $val) {
-			if (!in_array($key.'-pages-10', $existing_awards) && $userr->posts > 3) {
-				$game_pages = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user' AND `category` IN(".implode(',', $val).")");
-				foreach($topic_award_levels as $level) {
+		foreach ($topic_awards as $key => $val) {
+			if (!in_array($key . '-pages-10', $existing_awards) && $userr->posts > 3) {
+				$game_pages = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user' AND `category` IN(" . implode(',', $val) . ")");
+				foreach ($topic_award_levels as $level) {
 					if ($game_pages >= $level) {
-						$awards_list[$key.'-pages-'.$level]['state'] = 'active';
+						$awards_list[$key . '-pages-' . $level]['state'] = 'active';
 					}
 				}
 			}
@@ -1643,16 +1647,15 @@ function update_awards($user) {
 		if (!in_array('plus', $existing_awards) && $userr->posts > 1) {
 
 			$plus = $db->get_var("SELECT `id` FROM `miniblog` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
-			if(!$plus) {
+			if (!$plus) {
 				$plus = $db->get_var("SELECT `id` FROM `comments` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
 			}
-			if(!$plus) {
+			if (!$plus) {
 				$plus = $db->get_var("SELECT `id` FROM `galcom` WHERE `author` = '$user' AND `vote_value` >= 10 LIMIT 1");
 			}
 			if ($plus) {
 				$awards_list['plus']['state'] = 'active';
 			}
-
 		}
 
 		if ($userr->days_in_row >= 7 || ($userr->days_in_row >= 6 && $userr->seen_today == 1)) {
@@ -1667,7 +1670,6 @@ function update_awards($user) {
 					if ($userr->days_in_row >= 365 || ($userr->days_in_row >= 364 && $userr->seen_today == 1)) {
 						$awards_list['online-year']['state'] = 'active';
 					}
-
 				}
 			}
 		}
@@ -1743,8 +1745,7 @@ function update_awards($user) {
 		//desas
 		if (!in_array('desas', $existing_awards)) {
 
-			$cnt = $db->get_var("SELECT count(*) FROM `desas` WHERE `user_1` = '$user' AND `winner` = '1'")
-					+ $db->get_var("SELECT count(*) FROM `desas` WHERE `user_2` = '$user' AND `winner` = '2'");
+			$cnt = $db->get_var("SELECT count(*) FROM `desas` WHERE `user_1` = '$user' AND `winner` = '1'") + $db->get_var("SELECT count(*) FROM `desas` WHERE `user_2` = '$user' AND `winner` = '2'");
 			if ($cnt >= 25) {
 				$awards_list['desas']['state'] = 'active';
 			}
@@ -1776,36 +1777,36 @@ function update_awards($user) {
 
 
 	//spēļu turnīri
-	/*if(in_array($user,array(3512,11807,2222,4027,6001,901,25194,23678,8954,13004,19604,21450,12407,22518,15390,27431,10345,20858,18948,4845,31560,7844,1385,4137,24437,140,12108,23282,1,25093,1293,415,16261,6031,3650))) {
-		$awards_list['basketball'] = array(
-			'title' => 'Exs Streetball turnīrs 16.11.2013',
-			'state' => 'active'
-		);
-	}*/
+	/* if(in_array($user,array(3512,11807,2222,4027,6001,901,25194,23678,8954,13004,19604,21450,12407,22518,15390,27431,10345,20858,18948,4845,31560,7844,1385,4137,24437,140,12108,23282,1,25093,1293,415,16261,6031,3650))) {
+	  $awards_list['basketball'] = array(
+	  'title' => 'Exs Streetball turnīrs 16.11.2013',
+	  'state' => 'active'
+	  );
+	  } */
 
 	/* gada balva */
-	if (in_array($user, array(1,27431,2145,18865,1822,29176,2222,13411,21450,17953,22051,4506,25709,8872,2145,703,6214,31617,8531,10345))) {
+	if (in_array($user, array(1, 27431, 2145, 18865, 1822, 29176, 2222, 13411, 21450, 17953, 22051, 4506, 25709, 8872, 2145, 703, 6214, 31617, 8531, 10345))) {
 		$awards_list['gada-balva-2013'] = array(
 			'title' => 'Exs <a href="http://exs.lv/read/exs-lv-gada-nominacijas-2013-rezultati">gada balva 2013</a>',
 			'state' => 'active'
 		);
-	} 
+	}
 
 	//ghetto games floorball
-	/*if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
-		$awards_list['ghetto-floorball'] = array(
-			'title' => 'Piedalījās Ghetto Games (florbolā)',
-			'state' => 'active'
-		);
-	}*/
+	/* if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
+	  $awards_list['ghetto-floorball'] = array(
+	  'title' => 'Piedalījās Ghetto Games (florbolā)',
+	  'state' => 'active'
+	  );
+	  } */
 
 	//ghetto games football
-	/*if (in_array($user, array(1822, 13004, 858, 23282, 23715, 21450))) {
-		$awards_list['ghetto-football'] = array(
-			'title' => 'Piedalījās Ghetto Games (futbolā)',
-			'state' => 'active'
-		);
-	}*/
+	/* if (in_array($user, array(1822, 13004, 858, 23282, 23715, 21450))) {
+	  $awards_list['ghetto-football'] = array(
+	  'title' => 'Piedalījās Ghetto Games (futbolā)',
+	  'state' => 'active'
+	  );
+	  } */
 
 	/* 	if(in_array($user,array(13004))) {
 	  $awards_list['db-1'] = array(
@@ -1890,8 +1891,8 @@ function get_latest_groups($force = false) {
 	return $data;
 }
 
-
 /* replacement for file_get_contents with timeout */
+
 function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 
 	$ch = curl_init();
@@ -1902,17 +1903,16 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 	$contents = curl_exec($ch);
 	curl_close($ch);
 	return $contents;
-
 }
 
-
 /* get youtube video data by id */
+
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
 		$data = $db->get_row("SELECT * FROM `ytlocal` WHERE `yt_id` = '" . sanitize($videoid) . "'");
 
-		if(empty($data)) {
+		if (empty($data)) {
 
 			require_once(LIB_PATH . '/youtube/youtube.lib.php');
 			$yt = new Youtube(array('user' => 'google', 'limit' => 5));
@@ -1925,16 +1925,13 @@ function get_youtube($videoid, $force = false) {
 			$data->yt_restricted = 0;
 			$data->yt_id = $videoid;
 
-			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted,yt_time) VALUES ('" . sanitize($videoid) . "','".sanitize($data->yt_title)."','".sanitize($data->yt_description)."','".$data->yt_restricted."','".sanitize($data->yt_time)."')");
-
+			$db->query("INSERT INTO ytlocal (yt_id,yt_title,yt_description,yt_restricted,yt_time) VALUES ('" . sanitize($videoid) . "','" . sanitize($data->yt_title) . "','" . sanitize($data->yt_description) . "','" . $data->yt_restricted . "','" . sanitize($data->yt_time) . "')");
 		}
 
 		$m->set('yt_' . $videoid, $data, false, 3600);
-
 	}
 	return $data;
 }
-
 
 function get_cat($id, $force = false) {
 	global $db, $m, $debug, $lang;
@@ -2009,7 +2006,7 @@ function get_footer_mb($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($html = $m->get('f_mb_' . $lang))) {
 		$html = '';
-		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `date` > '".date('Y-m-d H:i:s', time() - 1209600)."' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang ORDER BY `id` DESC LIMIT 5");
+		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1209600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang ORDER BY `id` DESC LIMIT 5");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
@@ -2369,7 +2366,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 			$out .= '<p class="post-info">';
-			if(!$val->user_deleted) {
+			if (!$val->user_deleted) {
 				$out .= '<a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a>';
 			} else {
 				$out .= '<em>dzēsts</em>';
@@ -2382,8 +2379,8 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			//podziņa lietotāja pārkāpuma noziņošanai (exs.lv; lol.exs.lv; rs.exs.lv) (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && $auth->ok && !$auth->mobile && in_array($lang, array(1,7,9)) ) {
-				$out .= ' <a class="post-button report-user" href="/report/miniblog/'.$val->id.'" title="Ziņot par pārkāpumu">ziņot</a>';
+			if ($val->mb_removed == 0 && $auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
+				$out .= ' <a class="post-button report-user" href="/report/miniblog/' . $val->id . '" title="Ziņot par pārkāpumu">ziņot</a>';
 			}
 
 			//labot (ja ieraksts jau nav dzēsts)
@@ -2393,7 +2390,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			//dzēst (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) ) ) {
+			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
 				$out .= ' <a href="/delete/' . $val->id . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 			$out .= '</p>';
@@ -2401,7 +2398,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= '<p class="deleted-entry">Saturs dzēsts!';
 				// moderatoriem apskatāms dzēstā ieraksta saturs
 				if (im_mod() && !$auth->mobile) {
-					$out .= '<a style="float:right" class="deleted-content" href="/mbview/'.$val->id.'">skatīt saturu</a>';
+					$out .= '<a style="float:right" class="deleted-content" href="/mbview/' . $val->id . '">skatīt saturu</a>';
 				}
 				$out .= '</p>';
 			} else {
@@ -2655,7 +2652,7 @@ function get_latest_images() {
 	if ($latest) {
 		foreach ($latest as $late) {
 
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="'.$img_server.'/' . $late->thb . '" alt="" />';
+			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img_server . '/' . $late->thb . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
@@ -2786,10 +2783,10 @@ function get_latest_mbs($friends = false) {
 			$prefix = '';
 			if ($mb->lang != $lang) {
 				$domain = 'http://' . $config_domains[$mb->lang]['domain'];
-                $spec = ' class="linkcode"';
-                if ($mb->lang == 9) {
-                    $spec = ' class="rs-linkcode"';
-                }
+				$spec = ' class="linkcode"';
+				if ($mb->lang == 9) {
+					$spec = ' class="rs-linkcode"';
+				}
 			}
 
 			if ($mb->groupid != 0) {
@@ -2798,7 +2795,7 @@ function get_latest_mbs($friends = false) {
 				if ($group->avatar) {
 					$avatar = $img_server . '/userpic/small/' . $group->avatar;
 				}
-				if(!empty($group->strid)) {
+				if (!empty($group->strid)) {
 					$url = $domain . '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
 				} else {
 					$url = $domain . '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
@@ -2835,7 +2832,7 @@ function get_latest_mbs($friends = false) {
 				$tw = '<span style="background: url(\'http://exs.lv/bildes/i.png\') no-repeat 0 -280px;width:16px;height:16px;position:absolute;right:2px;bottom:3px"></span>';
 			}
 
-			if(!empty($mb->deleted)) {
+			if (!empty($mb->deleted)) {
 				$mb->nick = 'dzēsts';
 			}
 
@@ -3042,11 +3039,11 @@ function get_cakeday() {
 }
 
 /* atgriež vērtību vai tukšumu, ja $val nav definēts */
+
 function esr(&$val, $empty = '') {
-	if(!empty($val)) {
+	if (!empty($val)) {
 		return $val;
-	}
-	else {
+	} else {
 		return $empty;
 	}
 }
@@ -3068,43 +3065,43 @@ function esr(&$val, $empty = '') {
  */
 function pagelist($page_count = 1, $current_page = 1, $addr_prefix = '', $page_left = 0, $page_right = 0, $addr_postfix = '') {
 
-    // cik daudz lappušu rādīt katrā pašreizējās lappuses sānā
-	$max_left 	= ((int)$page_left < 1) ? 3 : (int)$page_left;
-	$max_right 	= ((int)$page_right < 1) ? 3 : (int)$page_right;
-	
-	$pages_to_left  = ($current_page - $max_left < 1) ? 1 : $current_page - $max_left;
+	// cik daudz lappušu rādīt katrā pašreizējās lappuses sānā
+	$max_left = ((int) $page_left < 1) ? 3 : (int) $page_left;
+	$max_right = ((int) $page_right < 1) ? 3 : (int) $page_right;
+
+	$pages_to_left = ($current_page - $max_left < 1) ? 1 : $current_page - $max_left;
 	$pages_to_right = ($current_page + $max_right > $page_count) ? $page_count : $current_page + $max_right;
 
-    $view = '<ul class="pagelist">';
-    
+	$view = '<ul class="pagelist">';
+
 	// saraksts tiek atgriezts tikai tad, ja esošās lapas nr ir lapu skaita robežās;
-    // pretējā gadījumā tikai pirmā lappuse
+	// pretējā gadījumā tikai pirmā lappuse
 	if ($current_page <= $page_count && $current_page > 0) {
-		
+
 		// pirmā lappuse
 		if ($current_page > $max_left + 1)
-			$view .= '<li><a href="'.$addr_prefix.'1'.$addr_postfix.'">1</a></li>';
-        // bultiņa pa kreisi
+			$view .= '<li><a href="' . $addr_prefix . '1' . $addr_postfix . '">1</a></li>';
+		// bultiņa pa kreisi
 		if ($current_page > 1)
 			$view .= '<li class="arrows">
-				<a href="'.$addr_prefix.($current_page - 1).$addr_postfix. '">&laquo;</a>
+				<a href="' . $addr_prefix . ($current_page - 1) . $addr_postfix . '">&laquo;</a>
 			</li>';
-        // vidusdaļa ar kreisās puses lappusēm, atvērto lapu, labās puses lappusēm
+		// vidusdaļa ar kreisās puses lappusēm, atvērto lapu, labās puses lappusēm
 		for ($i = $pages_to_left; $i <= $pages_to_right; $i++) {
-			$view .= ($i == $current_page) ? 
-				'<li class="current-page"><a href="javascript:return false;">'.$i.'</a></li>' : 
-				'<li><a href="'.$addr_prefix.$i.$addr_postfix.'">'.$i.'</a></li>';
+			$view .= ($i == $current_page) ?
+					'<li class="current-page"><a href="javascript:return false;">' . $i . '</a></li>' :
+					'<li><a href="' . $addr_prefix . $i . $addr_postfix . '">' . $i . '</a></li>';
 		}
 		// bultiņa pa labi
-		if ( $current_page < $page_count )
+		if ($current_page < $page_count)
 			$view .= '<li class="arrows">
-				<a href="'.$addr_prefix.($current_page + 1).$addr_postfix.'">&raquo;</a>
-			</li>';	
-        // pēdējā lappuse
-		if ( $current_page < $page_count - $max_right )
-			$view .= '<li><a href="'.$addr_prefix.$page_count.$addr_postfix.'">'.$page_count.'</a></li>';
-		
-		return $view . '</ul>';		
-	}	
+				<a href="' . $addr_prefix . ($current_page + 1) . $addr_postfix . '">&raquo;</a>
+			</li>';
+		// pēdējā lappuse
+		if ($current_page < $page_count - $max_right)
+			$view .= '<li><a href="' . $addr_prefix . $page_count . $addr_postfix . '">' . $page_count . '</a></li>';
+
+		return $view . '</ul>';
+	}
 	return $view . '<li><a href="/?page=1">1</a></li></ul>';
 }

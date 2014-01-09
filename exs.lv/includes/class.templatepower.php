@@ -1,30 +1,32 @@
 <?php
 
+/**
+ * http://templatepower.codocad.com/manual/index.php
+ * (modificēts)
+ */
+
+//aizvāc whitespace
 function file_strip($url) {
-	//return file($url);
 	$out = array();
 	$data = file($url);
-	if(!$data) {
+	if (!$data) {
 		return false;
 	}
-	foreach($data as $line) {
+	foreach ($data as $line) {
 
 		$line = str_replace('    ', ' ', $line);
 		$line = str_replace('   ', ' ', $line);
 		$line = str_replace('  ', ' ', $line);
-		$line = str_replace('	', '', $line);;
+		$line = str_replace('	', '', $line);
 		$line = str_replace("\r", "", $line);
 		$line = str_replace("\n\n", "\n", $line);
 		$line = str_replace("\n\n", "\n", $line);
 		$line = str_replace("\n\n", "\n", $line);
 		$line = str_replace("\n\n", "\n", $line);
 		$out[] = $line;
-
 	}
 	return $out;
-
 }
-
 
 define("T_BYFILE", 0);
 define("T_BYVAR", 1);

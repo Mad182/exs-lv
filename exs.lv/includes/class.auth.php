@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Lietotāja autorizācija un globāls aktīvā lietotāja objekts ($auth)
+ * 
+ * paroles tiek glabātas izmantojot bcrypt
+ */
 require(LIB_PATH . '/bcrypt/lib/password.php');
 
 class Auth {
@@ -33,7 +38,7 @@ class Auth {
 		$this->nick = "Viesis";
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->ok = false;
-		if(!empty($_SESSION['xsrf'])) {
+		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
 			$this->xsrf = md5($this->ip . $remote_salt . microtime(true));
@@ -60,11 +65,11 @@ class Auth {
 
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id']);
-			
-			if($userinfo->deleted) {
+
+			if ($userinfo->deleted) {
 				return $this->logout();
 			}
-			
+
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
 			}
@@ -91,7 +96,7 @@ class Auth {
 				$_SESSION['updvisits'] = time();
 			}
 
-			if($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			if ($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 				$this->logout();
 				redirect();
 			}
@@ -130,8 +135,8 @@ class Auth {
 
 		session_regenerate_id(true);
 
-		if(!is_null($xsrf) && $xsrf != $this->xsrf) {
-			sleep(rand(2,4));
+		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
+			sleep(rand(2, 4));
 			$this->error = 2;
 			return false;
 		}
@@ -141,34 +146,31 @@ class Auth {
 		$tmp = $db->get_row("SELECT `id`, `password`, `pwd` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
 
 		$found = false;
-		if(!empty($tmp)) {
+		if (!empty($tmp)) {
 
 			//log in using old SHA password
-			if(empty($tmp->password) && !empty($tmp->pwd)) {
+			if (empty($tmp->password) && !empty($tmp->pwd)) {
 
-				if($tmp->pwd === pwd($password)) {
+				if ($tmp->pwd === pwd($password)) {
 					$found = $tmp->id;
 
 					//create new bcrypt hash and delete old one
 					$hash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 14));
 					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
-
 				}
 
-			//using bcrypt
-			} elseif(!empty($tmp->password)) {
+				//using bcrypt
+			} elseif (!empty($tmp->password)) {
 
 				if (password_verify($password, $tmp->password)) {
 					$found = $tmp->id;
 				}
-
 			}
-
 		}
 
 		if ($found) {
 			$userinfo = get_user($found, true);
-			
+
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
 			}
@@ -202,7 +204,7 @@ class Auth {
 			return true;
 		} else {
 			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
-			sleep(rand(1,3));
+			sleep(rand(1, 3));
 			$this->error = 1;
 			return false;
 		}

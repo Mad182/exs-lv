@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Modificēts phpBB 2 bbkoda parseris
+ * 
+ * Tiek izmantots miniblogiem
+ */
 define('BBCODE_UID_LEN', 10);
 define('BBCODE_NOSMILIES_START', '<!-- no smilies start -->');
 define('BBCODE_NOSMILIES_END', '<!-- no smilies end -->');

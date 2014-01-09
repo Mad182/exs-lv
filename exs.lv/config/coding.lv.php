@@ -31,6 +31,6 @@ $disable_emotions = 1;
 $polls_cat = 803;
 
 //redirect https links
-if(!empty($_SERVER['HTTPS'])) {
-    redirect("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], true);
+if (!empty($_SERVER['HTTPS'])) {
+	redirect("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 }

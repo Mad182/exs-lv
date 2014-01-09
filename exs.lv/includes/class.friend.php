@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Pievieno draugu lietotājam, pārbauda esošās draudzīás statusu
+ */
 class Friend {
 
 	var $user_id;

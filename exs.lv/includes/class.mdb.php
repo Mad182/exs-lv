@@ -1,16 +1,19 @@
 <?php
 
-/*
+/**
  * Primitīvs "drop in" aizvietotājs ezSQL
  * balstīts uz php iebūvēto mysqli klasi
  */
-
 class mdb extends mysqli {
 
 	var $num_queries = 0;
 
 	function __construct($username, $password, $database, $hostname = 'localhost') {
 		parent::__construct($hostname, $username, $password, $database);
+		/** 
+		 * atkomentē šo rindu ja tiek darbināts uz servera
+		 * kur mysql nav utf-8 savienojums pēc noklusējuma
+		 */
 		//$this->query("set names utf8");
 	}
 

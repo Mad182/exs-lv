@@ -26,8 +26,8 @@ class getWallpapers {
 			}
 			if (strpos($thumb, 'http') === 0 && $file) {
 				$files[] = array(
-					'thumb'=>$thumb,
-					'file'=>$file
+					'thumb' => $thumb,
+					'file' => $file
 				);
 			}
 		}
@@ -47,8 +47,7 @@ class getWallpapers {
 		);
 
 		$auth = '';
-		foreach($params as $k => $v)
-		{
+		foreach ($params as $k => $v) {
 			$auth .= $k . '=' . urlencode($v) . '&';
 		}
 
@@ -95,14 +94,12 @@ class getWallpapers {
 			}
 
 			$files[] = array(
-				'thumb'=>'http://i.imgur.com/' . $wallpaper->id . 's.jpg',
-				'file'=>$wallpaper->link
+				'thumb' => 'http://i.imgur.com/' . $wallpaper->id . 's.jpg',
+				'file' => $wallpaper->link
 			);
-
 		}
 
 		return $files;
 	}
+
 }
-
-

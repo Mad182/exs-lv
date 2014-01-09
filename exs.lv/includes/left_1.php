@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * exs.lv kreisais sidebar
+ */
 $sel = 'pages';
 if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
 	$out = get_latest_images();
@@ -112,10 +115,10 @@ if ($groups = get_latest_groups()) {
 	foreach ($groups as $group) {
 		$tpl->newBlock('groups-l-node');
 
-		if(!empty($group->strid)) {
-			$group->link = '/'.$group->strid;
+		if (!empty($group->strid)) {
+			$group->link = '/' . $group->strid;
 		} else {
-			$group->link = '/group/'.$group->id;
+			$group->link = '/group/' . $group->id;
 		}
 
 		$tpl->assign(array(

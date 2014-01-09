@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Atvelk bildes noārējiem avotiem,
+ * lai tās pēc tam at apstiprinājumi ievietotu /junk
+ */
 class getImages {
 
 	function reddit() {
