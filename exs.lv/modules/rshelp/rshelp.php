@@ -2,7 +2,6 @@
 /**
  *	RuneScape pamācību sadaļas
  */
-require('rs.functions.php'); 
 
 $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/rshelp-head.tpl');
 $tpl->prepare();
