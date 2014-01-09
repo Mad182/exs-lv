@@ -84,7 +84,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 
 	$tpl = new TemplatePower('tmpl/main_' . $lang . '.tpl');
-	$tpl->assignInclude('module-core-error', 'modules/core/error.tpl');
+	$tpl->assignInclude('module-core-error', CORE_PATH . '/modules/core/error.tpl');
 	$tpl->prepare();
 
 	if (isset($_GET['p'])) {
@@ -95,14 +95,6 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		}
 	} elseif (isset($_GET['u'])) {
 		include(CORE_PATH . '/modules/core/user.php');
-	} elseif (isset($_GET['f'])) {
-		include('modules/core/friends.php');
-	} elseif (isset($_GET['r'])) {
-		include('modules/core/usertopics.php');
-	} elseif (isset($_GET['b'])) {
-		include('modules/core/bookmarks.php');
-	} elseif (isset($_GET['g'])) {
-		include('modules/core/gallery.php');
 	} elseif (isset($_GET['m'])) {
 		include(CORE_PATH . '/modules/core/miniblog.php');
 	} elseif (isset($_GET['y'])) {
