@@ -4,11 +4,29 @@
  *  Ar runescape.exs.lv saistītas pārbaudes, 
  *  kuras vieglākai rediģēšanai iznestas ārpus index.php faila.
  */
-/**
- *  index.php failā jau pēc noklusējuma neautorizēta statusa
- *  gadījumā lapā tiek iekļauts bloks ar login formu,
- *  tāpēc šajā navigācijā tas netiek pārbaudīts, jo strādā tāpat
- */
+ 
+
+// ja datubāzē pie kategorijas kā projekts/valoda norādīta 0, tad rs apakšprojektā
+// kolonnas jārāda otrādi, nekā norādīts "options" laukā;
+// tieši rs projekta sadaļām jau būs norādīts pareizais izvietojums
+if ($category->lang != $lang) {
+    if ($category->options == 'no-left') {
+        $category->options = 'no-right';
+    }
+    elseif ($category->options == 'no-right') {
+        $category->options = 'no-left';
+    }
+}
+if ($category->module == 'group') {
+    $category->options = 'no-right';
+}
+
+
+
+// index.php failā jau pēc noklusējuma neautorizēta statusa
+// gadījumā lapā tiek iekļauts bloks ar login formu,
+// tāpēc šajā navigācijā tas netiek pārbaudīts, jo strādā tāpat
+
 if ($auth->ok) {
 	$tpl->newBlock('auth-nav');
 
@@ -21,6 +39,7 @@ if ($auth->ok) {
 			$tpl->assign('active-mod', ' class="selected"');
 		}
 
+
 		// RS Mod izvēlnes iezīmēšana
 		if ($auth->id == 115) {
 			$tpl->newBlock('rsmod-nav');
@@ -31,17 +50,19 @@ if ($auth->ok) {
 	}
 }
 
+
+
 // iekrāso atvērto navigācijas cilni ("Cits"), ja atvērta kāda no tās apakšsadaļām
 $other_cats = array(
-	793, // pamatinformācija
-	788, // trenēšanās
-	787, // briesmoņu medīšana
-	790, // nauda pelnīšana
-	5, // citi padomi
-	346, // RS rakstu arhīvs
-	1087  // Oldschool RuneScape pamācības
-		//789   // RS stāsti & vēsture 
-		//536  // Priekšmetu datubāze
+	793,    // pamatinformācija
+	788,    // trenēšanās
+	787,    // briesmoņu medīšana
+	790,    // nauda pelnīšana
+	5,      // citi padomi
+	346,    // RS rakstu arhīvs
+	1087    // Oldschool RuneScape pamācības
+    //789   // RS stāsti & vēsture 
+	//536  // Priekšmetu datubāze
 );
 
 if (in_array($category->id, $other_cats)) {

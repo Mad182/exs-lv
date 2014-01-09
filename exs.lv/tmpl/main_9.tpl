@@ -284,8 +284,8 @@ tinymce.init({
 		</div>
 	</div>
 
-    <!-- START BLOCK : main-layout-right-->
-	<div id="right">
+    <!-- START BLOCK : main-layout-left-->
+	<div id="left">
 
 		<!-- START BLOCK : profile-box-->
 		<h3>{profile-nick}</h3>
@@ -373,10 +373,10 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : groups-l-list-->
 	</div>
-	<!-- END BLOCK : main-layout-right-->
-
-	<!-- START BLOCK : main-layout-left-->
-	<div id="left">
+	<!-- END BLOCK : main-layout-left-->
+    
+    <!-- START BLOCK : main-layout-right-->
+	<div id="right">
 
 		<!-- START BLOCK : menu-list-->
 		<h3>{title}</h3>
@@ -441,7 +441,7 @@ tinymce.init({
 		<!-- END BLOCK : user-top-->
 
 	</div>
-	<!-- END BLOCK : main-layout-left-->
+	<!-- END BLOCK : main-layout-right-->
     
 	<div class="c"></div>
 

@@ -24,21 +24,23 @@ if ($auth->id == 115 && isset($_GET['force'])) {
 
 
 
-$tpl_options = 'no-left';
-$sub_include = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
+$tpl_options = 'no-right';  // attieksies uzreiz uz visiem apakšmoduļiem
+$sub_include = true;        // submoduļos ir pārbaude, vai šāds mainīgais definēts
+
+
 // submoduļu indeksi ir kategoriju strid no datubāzes
 $submodules = array(
-	'kvestu-pamacibas' => array('quests.php', 'quests.tpl'),
-	'f2p-kvesti' => array('quests.php', 'quests.tpl'),
-	'p2p-kvesti' => array('quests.php', 'quests.tpl'),
-	'mini-kvesti' => array('quests.php', 'quests.tpl'),
-	'minispeles' => array('minigames.php', 'minigames.tpl'),
-	'distractions-diversions' => array('minigames.php', 'minigames.tpl'),
-	'prasmes' => array('skills.php', 'skills.tpl'),
-	'padomi' => 'padomi.php',
-	'tasks' => 'tasks.php',
-	'celvezi' => 'areas.php',
-	'gildes' => 'guilds.php'
+	'kvestu-pamacibas'          => array('quests.php', 'quests.tpl'),
+	'f2p-kvesti'                => array('quests.php', 'quests.tpl'),
+	'p2p-kvesti'                => array('quests.php', 'quests.tpl'),
+	'mini-kvesti'               => array('quests.php', 'quests.tpl'),
+	'minispeles'                => array('minigames.php', 'minigames.tpl'),
+	'distractions-diversions'   => array('minigames.php', 'minigames.tpl'),
+	'prasmes'   => array('skills.php', 'skills.tpl'),
+	'padomi'    => 'padomi.php',
+	'tasks'     => 'tasks.php',
+	'celvezi'   => 'areas.php',
+	'gildes'    => 'guilds.php'
 );
 
 
@@ -78,9 +80,12 @@ else {
 	$tpl_options = '';
 
 	$all_items = $db->get_results("SELECT `strid`,`title`,`author` FROM `pages` WHERE `category` = '" . $category->id . "' ORDER BY `title` ASC LIMIT 0, 150");
+    
 	if ($all_items) {
+    
 		$tpl->newBlock('rshelp-list');
 		$tpl->assign('category-title', $category->title);
+        
 		foreach ($all_items as $item => $data) {
 			if ($user = get_user($data->author)) {
 				$data->author = '<a style="font-size:11px;" href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';

@@ -44,7 +44,11 @@ body {
     left:0
 }
 #left {
-    margin-left:0
+    margin-left:0;
+    width:206px
+}
+#right {
+    width:180px
 }
 #content {
     margin-left:10px;
@@ -53,11 +57,14 @@ body {
 #content.no-left-right {
     width:95%
 }
-#content.no-right {
+#content.no-left {
     width:772px
 }
-#content.no-left {
+#content.no-right {
     width:744px
+}
+.no-right #left {
+    left:0 !important
 }
 #top-menu #top-menu-right li ul#user-group-menu {
     width:330px;
