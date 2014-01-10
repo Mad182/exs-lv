@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Apskatīt raksta iepriekšējās versijas
+ */
 if ($auth->ok) {
 	if (isset($_GET['page'])) {
 		$hpid = (int) $_GET['page'];
