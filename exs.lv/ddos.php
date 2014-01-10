@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Nelietos antiddos skripts
+ * Nelietos antiddos skripts,
+ * bloķē ip adreses no kurām nāk pārāk daudz konekciju
  */
 if (PHP_SAPI !== 'cli') {
 	echo 'CLI only!';
@@ -32,7 +33,7 @@ foreach ($lines as $line) {
 
 	preg_match('#([0-9]+) ([0-9]+.[0-9]+.[0-9]+.[0-9]+)#i', $line, $matches);
 
-	if (($matches[1] > 300 && !in_array($matches[2], $whitelist)) or substr($matches[2], 0, 10) == '220.255.1.') {
+	if (($matches[1] > 500 && !in_array($matches[2], $whitelist))) {
 		$com = "ufw insert 1 deny from " . $matches[2];
 		$block = `$com`;
 		echo $matches[2] . ': ' . $block . "\n";
@@ -62,4 +63,3 @@ if (!empty($blocked)) {
 	$message->setContentType("text/html");
 	$mailer->send($message);
 }
-
