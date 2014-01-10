@@ -18,12 +18,12 @@
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="http://feeds.feedburner.com/codinglv">
 		<script type="text/javascript">
-	var mb_refresh_limit = {mb-refresh-limit};
-	var current_user = {currentuser-id};
-	var new_msg_count = {new-messages-count};
-	var query_timeout = 60000;
-	var c_url = "{page-url}";
-	window.google_analytics_uacct = "UA-4190387-9";
+			var mb_refresh_limit = {mb-refresh-limit};
+			var current_user = {currentuser-id};
+			var new_msg_count = {new-messages-count};
+			var query_timeout = 60000;
+			var c_url = "{page-url}";
+			window.google_analytics_uacct = "UA-4190387-9";
 		</script>
 		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css,pm.css" type="text/css">
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
@@ -79,13 +79,13 @@
 		<!-- END BLOCK : tinymce-simple-->
 		<!-- START BLOCK : mb-head-->
 		<script type="text/javascript">
-	var lastid = {lastid};
-	var mbid = {mbid};
-	var usrid = {usrid};
-	var edit_time = {edit_time};
-	var refreshlim = mb_refresh_limit;
-	var mbtype = "{type}";
-	var mbRefreshId = setInterval("update_mb()", refreshlim);
+			var lastid = {lastid};
+			var mbid = {mbid};
+			var usrid = {usrid};
+			var edit_time = {edit_time};
+			var refreshlim = mb_refresh_limit;
+			var mbtype = "{type}";
+			var mbRefreshId = setInterval("update_mb()", refreshlim);
 		</script>
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
@@ -178,100 +178,104 @@
 			<!-- START BLOCK : main-layout-right-->
 			<div id="right">
 
-				<!-- START BLOCK : profile-box-->
-				<h3>{profile-nick}</h3>
-				<div class="box">
-					<a href="{url}"><img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" /></a><br />
-						{profile-top-awards}
-					<!-- START BLOCK : profilebox-pm-link-->
-					<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
-					<!-- END BLOCK : profilebox-pm-link-->
-					<!-- START BLOCK : profilebox-warn-->
-					<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
-					<!-- END BLOCK : profilebox-warn-->
-					<!-- START BLOCK : profilebox-blog-link-->
-					<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
-					<!-- END BLOCK : profilebox-blog-link-->
-					<!-- START BLOCK : profilebox-twitter-link-->
-					<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
-					<!-- END BLOCK : profilebox-twitter-link-->
-					<!-- START BLOCK : profilebox-yt-link-->
-					<!-- END BLOCK : profilebox-yt-link-->
-					<div class="c"></div>
+				<div id="inner-sidebar">
+
+					<!-- START BLOCK : profile-box-->
+					<h3>{profile-nick}</h3>
+					<div class="box">
+						<a href="{url}"><img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" /></a><br />
+							{profile-top-awards}
+						<!-- START BLOCK : profilebox-pm-link-->
+						<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
+						<!-- END BLOCK : profilebox-pm-link-->
+						<!-- START BLOCK : profilebox-warn-->
+						<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
+						<!-- END BLOCK : profilebox-warn-->
+						<!-- START BLOCK : profilebox-blog-link-->
+						<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
+						<!-- END BLOCK : profilebox-blog-link-->
+						<!-- START BLOCK : profilebox-twitter-link-->
+						<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+						<!-- END BLOCK : profilebox-twitter-link-->
+						<!-- START BLOCK : profilebox-yt-link-->
+						<!-- END BLOCK : profilebox-yt-link-->
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : profile-box-->
+
+					<!-- START BLOCK : friendssay-box-->
+					<h3>Mini blogi{miniblog-add}</h3>
+					<div class="box"><div id="miniblog-block">{out}</div></div>
+					<!-- END BLOCK : friendssay-box-->
+
+					<h3>Jaunākais forumā</h3>
+					<div class="box">
+						<ul class="tabs">
+							<li><a href="/latest.php" class="active remember-pages ajax"><span class="comments">Raksti</span></a></li>
+						</ul>
+						<div id="lat" class="ajaxbox">{latest-noscript}</div>
+					</div>
+
+					<!-- START BLOCK : poll-box-->
+					<h3>Aptauja</h3>
+					<div class="box">
+						<p><strong>{poll-title}</strong></p>
+						<!-- START BLOCK : poll-answers-->
+						<ol class="poll-answers">
+							<!-- START BLOCK : poll-answers-node-->
+							<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+							<!-- END BLOCK : poll-answers-node-->
+						</ol>
+						Balsojuši: {poll-totalvotes}<br />
+						<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+						<!-- END BLOCK : poll-answers-->
+						<!-- START BLOCK : poll-questions-->
+						<form name="poll" method="post" action="">
+							<fieldset>
+								<!-- START BLOCK : poll-error-->
+								<p>{poll-error}</p>
+								<!-- END BLOCK : poll-error-->
+								<!-- START BLOCK : poll-options-->
+								<ol id="poll-questions">
+									<!-- START BLOCK : poll-options-node-->
+									<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+									<!-- END BLOCK : poll-options-node-->
+								</ol>
+								<input type="submit" name="vote" value="Balsot!" class="button primary" />
+								<!-- END BLOCK : poll-options-->
+							</fieldset>
+						</form>
+						<!-- END BLOCK : poll-questions-->
+					</div>
+					<!-- END BLOCK : poll-box-->
+
+					<!-- START BLOCK : notification-list-->
+					<h3>Tavi notikumi</h3>
+					<div class="box">
+						{out}
+					</div>
+					<!-- END BLOCK : notification-list-->
+
+					<h3>Meklētājs</h3>
+					<div class="box">
+						Meklēt lapā ar <a href="/search/">google</a>:
+						<form method="get" action="/search/" id="search-form">
+							<fieldset>
+								<input type="hidden" name="cx" value="014557532850324448350:t8sc9--qlce" />
+								<input type="hidden" name="cof" value="FORID:11" />
+								<input type="hidden" name="ie" value="UTF-8" />
+								<input class="text" name="q" size="16" type="text" value="" />
+								<input value="Meklēt" class="submit button primary" type="submit" />
+							</fieldset>
+						</form>
+					</div>
+
+					<!-- START BLOCK : tags-list-side-->
+					<h3>Birkas</h3>
+					<div class="box">{out}</div>
+					<!-- END BLOCK : tags-list-side-->
+
 				</div>
-				<!-- END BLOCK : profile-box-->
-
-				<!-- START BLOCK : friendssay-box-->
-				<h3>Mini blogi{miniblog-add}</h3>
-				<div class="box"><div id="miniblog-block">{out}</div></div>
-				<!-- END BLOCK : friendssay-box-->
-
-				<h3>Jaunākais forumā</h3>
-				<div class="box">
-					<ul class="tabs">
-						<li><a href="/latest.php" class="active remember-pages ajax"><span class="comments">Raksti</span></a></li>
-					</ul>
-					<div id="lat" class="ajaxbox">{latest-noscript}</div>
-				</div>
-
-				<!-- START BLOCK : poll-box-->
-				<h3>Aptauja</h3>
-				<div class="box">
-					<p><strong>{poll-title}</strong></p>
-					<!-- START BLOCK : poll-answers-->
-					<ol class="poll-answers">
-						<!-- START BLOCK : poll-answers-node-->
-						<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-						<!-- END BLOCK : poll-answers-node-->
-					</ol>
-					Balsojuši: {poll-totalvotes}<br />
-					<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
-					<!-- END BLOCK : poll-answers-->
-					<!-- START BLOCK : poll-questions-->
-					<form name="poll" method="post" action="">
-						<fieldset>
-							<!-- START BLOCK : poll-error-->
-							<p>{poll-error}</p>
-							<!-- END BLOCK : poll-error-->
-							<!-- START BLOCK : poll-options-->
-							<ol id="poll-questions">
-								<!-- START BLOCK : poll-options-node-->
-								<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-								<!-- END BLOCK : poll-options-node-->
-							</ol>
-							<input type="submit" name="vote" value="Balsot!" class="button primary" />
-							<!-- END BLOCK : poll-options-->
-						</fieldset>
-					</form>
-					<!-- END BLOCK : poll-questions-->
-				</div>
-				<!-- END BLOCK : poll-box-->
-
-				<!-- START BLOCK : notification-list-->
-				<h3>Tavi notikumi</h3>
-				<div class="box">
-					{out}
-				</div>
-				<!-- END BLOCK : notification-list-->
-
-				<h3>Meklētājs</h3>
-				<div class="box">
-					Meklēt lapā ar <a href="/search/">google</a>:
-					<form method="get" action="/search/" id="search-form">
-						<fieldset>
-							<input type="hidden" name="cx" value="014557532850324448350:t8sc9--qlce" />
-							<input type="hidden" name="cof" value="FORID:11" />
-							<input type="hidden" name="ie" value="UTF-8" />
-							<input class="text" name="q" size="16" type="text" value="" />
-							<input value="Meklēt" class="submit button primary" type="submit" />
-						</fieldset>
-					</form>
-				</div>
-
-				<!-- START BLOCK : tags-list-side-->
-				<h3>Birkas</h3>
-				<div class="box">{out}</div>
-				<!-- END BLOCK : tags-list-side-->
 
 			</div>
 			<!-- END BLOCK : main-layout-right-->
@@ -343,22 +347,23 @@
 		</div>
 
 		<script>
-									(function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+								(function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date()
-									; a = s.createElement(o),
-													m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-									})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-													ga('create', 'UA-4190387-9', 'coding.lv');
-									ga('send', 'pageview');
+												;
+								a = s.createElement(o),
+												m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+								})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+												ga('create', 'UA-4190387-9', 'coding.lv');
+								ga('send', 'pageview');
 
 		</script>
 
 		<!-- START BLOCK : async-call -->
 		<div id="async-placeholder"></div>
 		<script>
-				$(document).ready(function() {
-					$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
-				});
+			$(document).ready(function() {
+				$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
+			});
 		</script>
 		<!-- END BLOCK : async-call -->
 	</body>

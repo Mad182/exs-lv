@@ -56,6 +56,10 @@ body {
 	padding: 5px 10px;
 	text-align: left;
 }
+#inner-content, #inner-sidebar {
+	padding: 5px 10px;
+	text-align: left;
+}
 h1, h2, h3 {
 	font-weight: normal;
 	font-family: Georgia, "Times New Roman", Times, serif;
@@ -178,19 +182,17 @@ h3 {
 }
 
 #content, #content.no-left, #wrapper-content {
-	float: none;
-	width: auto;
-	margin: 10px 240px 10px 0;
+	float: left;
+	width: 74%;
+	margin: 0;
+	padding: 0
 }
 
 #right {
 	float: right;
-	width: 220px;
-	margin: 10px;
-}
-
-#content .c, #content .clear {
-	clear: none;
+	width: 24%;
+	margin: 0;
+	padding: 0
 }
 
 .list-tags {
