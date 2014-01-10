@@ -217,7 +217,6 @@ tinymce.init({
 			<div id="current-module">
 				<!-- INCLUDE BLOCK : module-currrent -->
 			</div>
-			{contentz}
 			<div class="c"></div>
 
 			<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>

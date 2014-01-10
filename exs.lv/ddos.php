@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Nelietos antiddos skripts,
+ * Neliels antiddos skripts,
  * bloķē ip adreses no kurām nāk pārāk daudz konekciju
  */
 if (PHP_SAPI !== 'cli') {

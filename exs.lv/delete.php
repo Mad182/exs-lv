@@ -77,4 +77,3 @@ if ($user) {
 
 	echo 'user #' . $user . " deleted\n\n";
 }
-

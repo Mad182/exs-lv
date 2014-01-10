@@ -302,7 +302,6 @@ tinymce.init({
 			<div id="current-module">
 				<!-- INCLUDE BLOCK : module-currrent -->
 			</div>
-			{contentz}
 			<div class="c"></div>
 
 			<div class="content-block">{ad-728}</div>
