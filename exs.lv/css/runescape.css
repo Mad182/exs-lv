@@ -45,10 +45,10 @@ body {
 }
 #left {
     margin-left:0;
-    width:206px
+    width:200px
 }
 #right {
-    width:180px
+    width:186px
 }
 #content {
     margin-left:10px;
@@ -197,6 +197,9 @@ div pre {
 }
 .top-navig .green, .top-navig .g {
 	color: #60ef00;
+}
+#flash-message.error {
+    border: 1px solid #C5C3C3
 }
 
 
