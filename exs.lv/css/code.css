@@ -74,10 +74,10 @@ h3 {
 	font-size: 18px
 }
 #forum td, .user-actions, .blockhref li a, #user-notify li a, table td, table th {
-	font-size: 11px
+	font-size: 13px
 }
-#forum td.last {
-	font-size: 11px
+#forum td.last, #forum td.stat {
+	font-size: 12px
 }
 #wrapper #pm-table th.date {
 	width: 120px
