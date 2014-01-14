@@ -257,8 +257,19 @@ if ($article) {
 					$auth->log('Atbloķēja autora komentāru atvēršanu', 'pages', $article->id);
 				}
 				die('ok');
-				exit;
 			}
+
+			if (isset($_POST['attach-do']) && $category->isforum) {
+				$attach = (bool) $_POST['attach'];
+				$db->query("UPDATE `pages` SET `attach` = '$attach' WHERE `id` = '$article->id'");
+				if ($attach) {
+					$auth->log('Piesprauda rakstu', 'pages', $article->id);
+				} else {
+					$auth->log('Atsprauda rakstu', 'pages', $article->id);
+				}
+				die('ok');
+			}
+
 		}
 
 		$author = get_user($article->author);
@@ -895,21 +906,30 @@ if ($article) {
 				}
 				$tpl->assign('edit-page-closed', $closemark);
 				if ($auth->id == $article->author && !im_mod() && !im_cat_mod()) {
+					$disablemark = '';
 					if ($article->disable_close) {
 						$disablemark = ' disabled="disabled"';
-					} else {
-						$disablemark = '';
 					}
 					$tpl->assign('edit-page-disable-closing', $disablemark);
 				}
 				if (im_mod() || im_cat_mod()) {
 					$tpl->newBlock('post-disableclose');
+					$closemark = '';
 					if ($article->disable_close) {
 						$closemark = ' checked="checked"';
-					} else {
-						$closemark = '';
 					}
 					$tpl->assign('edit-page-disabled', $closemark);
+
+					//attach page in forum view
+					if($category->isforum) {
+						$tpl->newBlock('post-attach');
+						$atachmark = '';
+						if ($article->attach) {
+							$atachmark = ' checked="checked"';
+						}
+						$tpl->assign('edit-page-attached', $atachmark);			
+					}
+
 				}
 			}
 

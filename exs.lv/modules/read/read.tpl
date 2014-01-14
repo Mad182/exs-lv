@@ -297,6 +297,14 @@
 	</fieldset>
 </form>
 <!-- END BLOCK : post-disableclose-->
+<!-- START BLOCK : post-attach-->
+<form class="simple-form" action="" method="post">
+	<fieldset>
+		<label><input type="checkbox" name="attach" class="ajax-checkbox"{edit-page-attached} />Piespraust rakstu</label>
+		<input type="hidden" name="attach-do" value="1" />
+	</fieldset>
+</form>
+<!-- END BLOCK : post-attach-->
 <!-- END BLOCK : post-tools-->
 
 <!-- END BLOCK : read-article-->
