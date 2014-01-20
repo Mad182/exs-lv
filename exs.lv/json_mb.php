@@ -133,7 +133,8 @@ if ($resps) {
 		}
 
 		//labot (ja ieraksts jau nav dzēsts)
-		if ($resp->mb_removed == 0 && $auth->ok && $resp->date > time() - 3600 && (im_mod() || ($auth->karma > 99 && $resp->author == $auth->id))) {
+		if ($resp->mb_removed == 0 && !$auth->mobile && !$intro && ($resp->date > time() - 1800 || ($auth->level == 2 && $resp->author == $auth->id && $resp->date > time() - 86400) || $auth->level == 1) &&
+					(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $resp->author == $auth->id))) {
 			$out .= ' <a href="/edit/' . $resp->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 		}
 
@@ -141,6 +142,7 @@ if ($resps) {
 		if ($resp->mb_removed == 0 && $auth->ok && ( ($auth->id == $resp->author && $auth->level == 3 && $resp->date > time() - 1800) || (im_mod() && $resp->date > time() - 86400) )) {
 			$out .= ' <a href="/delete/' . $resp->id . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 		}
+
 		$out .= '</p>';
 		if ($resp->mb_removed == 1) {
 			$out .= '<p class="deleted-entry">Saturs dzēsts!';
