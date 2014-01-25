@@ -97,6 +97,8 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		include(CORE_PATH . '/modules/core/user.php');
 	} elseif (isset($_GET['m'])) {
 		include(CORE_PATH . '/modules/core/miniblog.php');
+	} elseif (isset($_GET['r'])) {
+		include(CORE_PATH . '/modules/core/usertopics.php');
 	} elseif (isset($_GET['y'])) {
 		include('modules/core/youtube.php');
 	} else {

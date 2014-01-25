@@ -27,7 +27,7 @@
 
 		<dt>Karma</dt><dd>{user-karma}</dd>
 		<dt>Posti</dt><dd>{user-posts} (vidēji {user-postsday} dienā)</dd>
-		<dt>Raksti</dt><dd><a href="/?r={user-id}">{user-pages}</a></dd>
+		<dt>Raksti</dt><dd><a href="/topics/{user-id}">{user-pages}</a></dd>
 		<dt>Vērtējums</dt><dd>{user-votes}</dd>
 		<dt>Vērtēja citus</dt><dd>{user-vote_total}x ({user-vote_others})</dd>
 		<!-- START BLOCK : user-modinfo-->
