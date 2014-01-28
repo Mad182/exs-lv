@@ -66,3 +66,63 @@ if (in_array($category->id, $other_cats)) {
 		'cat-sel-other' => ' class="selected"'
 	));
 }
+
+
+
+// ja sadaļā redzamas abas šaurās kolonnas,
+// tad virs tām izvada vēl papildblokus
+/*if ($category->options == '' && $category->module != 'rshelp' && $category->module != 'rsmod') {
+
+    $tpl->newBlock('main-layout-column-top');
+    
+    if (isset($_GET['pg'])) {
+		$skip = 6 * intval($_GET['pg']);
+	} else {
+		$skip = 0;
+	}
+    
+	$latest = $db->get_results("
+        SELECT
+            `images`.`uid`      AS `uid`,
+            `images`.`id`       AS `id`,
+            `images`.`posts`    AS `posts`,
+            `images`.`thb`      AS `thb`,
+            `images`.`url`      AS `url`,
+            `images`.`readby`   AS `readby`,
+            `users`.`nick`      AS `nick`
+        FROM
+            `images`
+        LEFT JOIN
+            `users` ON  `images`.`uid` =  `users`.`id`
+        WHERE 
+            `images`.`lang` = '$lang'
+        ORDER BY
+            `images`.`bump`
+        DESC LIMIT $skip, 12
+    ");
+
+	if ($latest) {
+    
+        $counter = 0;
+        
+		foreach ($latest as $late) {
+
+            $tpl->newBlock('single-gallery-image');
+            $tpl->assign(array(
+                'nick'  => htmlspecialchars($late->nick),
+                'uid'   => $late->uid,
+                'id'    => $late->id,
+                'thb'   => $late->thb,
+                'posts' => $late->posts
+            ));
+
+			if (empty($late->readby) || !in_array($auth->id, unserialize($late->readby))) {
+                $tpl->assign('r', ' class="r"');
+			}
+            if ($counter == 6) {
+                $tpl->assign('break-row', ' style="clear:left"');
+            }
+            $counter++;
+		}
+	}
+}*/
