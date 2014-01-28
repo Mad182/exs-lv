@@ -1,20 +1,31 @@
 /* ik pēc noteikta laika atjauno runescape faktu */
-function refresh_fact(elem) {    
-    $.getJSON('/rsfacts?_=1', function(response) {
-      if (response.state == 'success') {
-        elem.html('<span>RS fakts:</span> ' + response.content);
-      }
-    });
+function refresh_fact(elem, status) {   
+    if (status == false) {
+        $.getJSON('/rsfacts?_=1', function(response) {
+          if (response.state == 'success') {
+            elem.html('<span>RS fakts:</span> ' + response.content);
+          }
+        });
+    }
 }
 
 $(document).ready(function () {
     
     /* atjauno runescape random faktu */
+    var facts_stopped = false;
     var $rsfact = $('#random-fact');
-    refresh_fact($rsfact);
+    var $fact_container = $('.facts-box');
+    
+    refresh_fact($rsfact, facts_stopped);
     setInterval(function() {
-        refresh_fact($rsfact);
+        refresh_fact($rsfact, facts_stopped);
     }, 7000);
+    
+    $fact_container.live('mouseover', function() {
+        facts_stopped = true;
+    }).live('mouseout', function() {
+        facts_stopped = false;
+    });
     
     /* podziņa ātrai scrollošanai uz augšu */
     var $elem = $('#scroll-up');
@@ -67,19 +78,16 @@ $(document).ready(function () {
         return false;
     });
     
-    /* prasmju sadaļas faktu parādīšana */
-    $('#show-facts').live('click',function() {			
-        $(this).siblings('#hidden-facts').toggle(800);
-        $(this).replaceWith('');
-        return false;
-    });
-    
-    /* prasmju sadaļas tabulas rindu parādīšana */
-    $('#show-rows').live('click',function() {			
-        $('.hidden-row').toggle(1000);
-        $(this).replaceWith('');
-        return false;
-    });    
+    /* rakstu saraksta atjaunošana sākumlapā */
+    /*$('.news-col-newest li').on('click', 'a', function(e) {
+        $pagelist = $(this).parent().parent().parent();
+        $.getJSON('/?type=newest&page=3&_=1', function(response) {                
+            if (response.status == 'success') {
+                $pagelist.wrap('<span>').parent().html(response.content);
+            }
+        });
+        e.preventDefault();
+    });*/
     
     $('.showph').live('click',function() {			
         $(this).parent().siblings('.ph-hidden').toggle(200);

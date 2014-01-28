@@ -1,3 +1,13 @@
+/**
+ *  Satura rādītājs. (CTRL + F = {nr.}) (Vēl top :D)
+ *
+ *  1. Šis un tas. 
+ *  2. Pārrakstītie core.css elementi
+ *  3. Jaunie lapas pamatbloki
+ *  4.
+ *  5. 
+ *  x. Here be dragons!
+ */
 body {
     background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
 }
@@ -26,10 +36,11 @@ body {
 .clearfix {
     margin:0;
     padding:0;
-    clear:both
+    clear:both;
+    display:block
 }    
 
-/* pārrakstītie core.css elementi */
+/* 2. Pārrakstītie core.css elementi */
 #wrapper {
     position:relative;
     margin-top:31px;
@@ -203,7 +214,7 @@ div pre {
 }
 
 
-/* jaunie lapas pamatbloki */
+/* 3. Jaunie lapas pamatbloki */
 .top-navig {
     background:#000 url('/bildes/runescape/nav-pattern-blue.png') repeat-x;
     border-bottom:2px solid #000;
@@ -241,6 +252,10 @@ div pre {
     .top-navig ul li:hover {
         background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
     }
+
+ul.nav-left {
+    float:left      
+}
 ul.nav-right {
     float:right      
 }
@@ -270,14 +285,6 @@ ul.nav-right {
     #header-navig a:hover {
         color:#96C7EB;
         text-decoration:none
-    }
-    #random-fact {
-        float:left;
-        margin:4px 5px 0 0;
-        color:#6E8296
-    }
-    #random-fact span {
-        color:#95A6CA
     }
 #header {
     margin:0;
@@ -311,6 +318,35 @@ ul.nav-right {
     margin-top: 11px;
     margin-left:5px;
     display: inline-block
+}
+
+/* lapas šaurās kolonnas */
+#rs_columns {
+    overflow:auto;
+    background-image:url('/bildes/runescape/squairy_light.png');
+}
+.box {
+    background:#FCFCFD
+}
+.col-box {
+    clear:both;
+    overflow:auto;
+    padding: 5px;
+    margin:0 0 5px;
+    background-color:rgba(253, 253, 253, 0.7);
+    border: 2px solid #D3D0D0;
+    font-size: 11px;
+}
+.col-box-title {
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #C8CED5;
+    padding: 3px 12px;
+    background: #232527;
+    border-bottom: 1px solid #C7C7C7;
 }
     
 /* dropdown izvēlnes */
@@ -392,82 +428,154 @@ ul.nav-right {
     }
 
 /* RuneScape jaunumi, sākumlapa */
-.rs-article {
-    background:#fff;
-    border:1px solid #EEEFF0;
-    border-top:3px solid #EEEFF0;
-    border-bottom:3px solid #EEEFF0;
-    margin:20px 20px 0 10px;
-    padding:0;
-    font-size: 11px;
+.official-news {
+    margin:5px 0 20px 0;
+    font-size:11px;
+    padding:0
 }
-.rs-article-title {
-    margin:5px 0 5px 10px;
-    font-weight:700;
-    font-size:14px;
-}
-    .rs-article-title a {
-        color:#343E47
+    .official-news:after {
+        content:"";
+        display:table
     }
-.rs-article-logo {
-    float:right;
-    height:88px;
-    margin:40px 8px 5px 7px
-}
-.rs-article-text {
-    padding:0 12px 7px 12px;
-    text-indent:10px
-}
-.rs-article-info {
-    clear:both;
-    display:block;
-    overflow:auto;
-    margin:0;
-    padding:2px 7px;
-    border-top:1px solid #EEEFF0
-}
-    .rs-article-info li {
+    .official-news li {
+        background:#fff;
+        border-bottom:2px solid rgb(235, 232, 232);        
+        padding:0;
+        margin:10px 0 0;
+        overflow:auto
+    }
+    .official-news .news-image {
         float:left;
-        margin-right:7px;
-        padding-left:20px;
-        height:16px;
-        background:none
+        margin-right:12px
     }
+    .official-news img {
+        max-width:125px;
+        max-height:88px
+    }
+    .official-news p {
+        float:left;
+        width:70%;
+        line-height:1.8;
+        padding-top:0
+    }
+    .official-news .news-title {
+        display:block;
+        font-weight:700;
+        float:none
+    }
+    .official-news .news-date {
+        display:block;
+        color:#2385B3;
+    }
+    .official-news .news-link {
+        margin-top:0
+    }
+    .official-news .news-link a {
+        padding:5px 10px;
+        float:right;
+    }
+    .official-news .goto-mb {
+        float: right;
+        width: 20px;
+        display: table;
+        padding:0
+    }
+    .official-news .goto-mb a {
+        vertical-align: middle;
+        display: table-cell;
+        width: 20px;
+        height: 68px;
+        background: #E5EBFA;
+        padding-left: 5px;
+    }
+    .official-news .goto-mb a:hover {
+        background:#C0D7E6
+    }
+    /* specifisko miniblogu stils */
+    .rsmb-title {
+        color:#38405A;
+        font-weight:bold;
+        padding-bottom:0;
+        font-size:15px
+    }
+    .rsmb-text {
+        margin:9px 5px 0 0
+    }
+    .rsmb-fade {
+        color:#98AACF
+    }
+.article-column {
+    float:left;
+    width:48%
+}
+    .article-column ul {
+        margin-bottom:5px
+    }
+    .article-column li {
+        margin:0;
+        border-left:1px solid rgb(235, 232, 232);
+        border-right:1px solid rgb(235, 232, 232);
+    }
+    .article-column img {
+        max-width:50px;
+        max-height:50px
+    }
+    .article-column p.news-p {
+        width:97%;
+		margin:2px 0 0;
+        line-height:1.5
+    }
+    .article-column .news-date {
+        color:#637B91
+    }
+    .article-column .news-title {
+        margin-top: 4px;
+    }
+    .article-column .official-news li:first-child {
+        border-top:3px solid rgb(235, 232, 232)
+    }
+    .article-column .official-news li:last-child {
+        border-bottom:3px solid rgb(235, 232, 232)
+    }
+	.article-column .official-news {
+		margin-top:0
+	}
     
 /* lappušu saraksta stili */
 ul.pagelist {
     display:block;
     clear:both;
-    margin:15px 0 20px 10px;
+    margin:0;
+    padding:0;
     height:20px;
     list-style:none;	
 }
-ul.pagelist li {	
-    background:#F9FDFF;
+ul.pagelist li {    
+    background:#F5F8FC;
     float:left;
-    margin:0 5px 10px 0;
+    margin:0 0 10px 0;
     padding:0;
-    border:1px solid #D7DFE2;
-    -moz-border-radius:2px;
-    -webkit-border-radius:2px;
-    border-radius:2px;
+    border:1px solid #BECAD6;
 }
     ul.pagelist li:hover {
-        border:1px solid #b5bdbf;
+        border:1px solid #5F8AD5;
         background:#eceded
     }
     ul.pagelist li a {
         padding:4px 10px;
-        color:#5876A2;
+        color:#1A4E70;
         font-weight:bold
     }
     ul.pagelist li a:hover {
         text-decoration:none;
-        color:#6c7889
+        color:#287FFA
+    }
+    ul.pagelist .current-page {
+        border:1px solid #5F8AD5
     }
     ul.pagelist .current-page a {
-        color: #F07237 !important;
-    }
+        color:#0D5AFF !important;
+    }    
 ul.pagelist li.end a, ul.pagelist li.end a:active, ul.pagelist li.start a, ul.pagelist li.start a:active {
     color:#4e8dd4;
 }
@@ -478,6 +586,25 @@ ul.pagelist li.active {
 }
 ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     color:#64757a
+}
+
+/* dažādi sīkumi */
+.facts-box {
+    min-height:100px;
+    padding:5px 10px
+}
+#random-fact {
+    font-size:11px;
+    line-height:1.5
+}
+#random-fact span {
+    color:#4294DF
+}
+#wrapper .comments {
+    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+}
+#wrapper .friends {
+    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
 }
 
 /* runescape pamācību sadaļu vispārīgie stili */
