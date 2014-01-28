@@ -6,4 +6,4 @@
 /exs.lv/bildes/runescape/news/*
 .idea
 .gitignore
-
+.DS_Store
