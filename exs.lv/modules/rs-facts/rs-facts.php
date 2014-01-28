@@ -1,9 +1,10 @@
 <?php
 
 /**
- *  RuneScape random faktu pārvaldība.
+ *  RuneScape random fakti;
+ *  Šo izsauc jquery.
  *
- * 	Moduļa adrese: 		exs.lv/rsfacts
+ * 	Moduļa adrese: exs.lv/rsfacts
  */
 if ($lang != 9) {
 	die();
@@ -14,11 +15,11 @@ if ($lang != 9) {
 // fakts tiek izdrukāts virs lapas banera
 if (isset($_GET['_'])) {
 
-	$facts_count = $db->get_var("SELECT count(*) FROM `facts_rs` WHERE `is_short` = 1 ");
+	$facts_count = $db->get_var("SELECT count(*) FROM `facts_rs` ");
 	if ($facts_count > 0) {
 
 		$rand = rand(0, $facts_count - 1);
-		$single_fact = $db->get_row("SELECT `text` FROM `facts_rs` WHERE `is_short` = 1 LIMIT $rand, 1");
+		$single_fact = $db->get_row("SELECT `text` FROM `facts_rs` LIMIT $rand, 1");
 
 		if ($single_fact) {
 			echo json_encode(array('state' => 'success', 'content' => strip_tags($single_fact->text)));
