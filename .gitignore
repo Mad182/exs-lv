@@ -3,6 +3,7 @@
 /exs.lv/upload/*
 /exs.lv/dati/bildes/g*
 /exs.lv/configdb.php
+/exs.lv/bildes/runescape/news/*
 .idea
 .gitignore
 
