@@ -15,6 +15,9 @@ require(CORE_PATH . '/includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
 require(CORE_PATH . '/includes/class.templatepower.php');
 require(CORE_PATH . '/includes/class.site_storage.php');
+if ($lang == 9) {
+    require_once(CORE_PATH . '/includes/functions.runescape.php');
+}
 
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
