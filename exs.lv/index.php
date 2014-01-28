@@ -19,10 +19,6 @@ require(CORE_PATH . '/includes/class.site_storage.php');
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
 
-if ($lang == 9) {
-    require(CORE_PATH . '/includes/functions.runescape.php');
-}
-
 session_start();
 
 //mysql konekcija
