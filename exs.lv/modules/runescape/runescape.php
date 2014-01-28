@@ -1,81 +1,161 @@
 <?php
-
 /** 	
- * 	runescape apakšprojekta sākumlapas modulis
+ * 	RuneScape apakšprojekta sākumlapas modulis
  */
 if ($auth->ok) {
 	set_action('sākumlapu');
 }
 
 // vērtības lappušu saraksta veidošanai
-$pages_limit = 10; // rakstu skaits vienā lappusē
-$pages_count = ceil($db->get_var("SELECT count(*) FROM `pages` WHERE `pages`.`category`  = 599 AND `lang` = $lang") / $pages_limit);
+$pages_limit 	= 8; // rakstu skaits vienā lappusē
+$pages_count 	= ceil($db->get_var("SELECT count(*) FROM `pages` WHERE `pages`.`category` = 599 AND `lang` = $lang") / $pages_limit);
 
-$current_page = ( isset($_GET['page']) ) ? (int) $_GET['page'] : 0;
-$current_page = ( $current_page > $pages_count || $current_page < 1 ) ? 1 : $current_page;
-$pages_start = ( $current_page - 1 ) * $pages_limit;
-
-
-$tpl_options = '';
-$tpl->assign('page-content-title', 'RuneScape jaunumi');
+$current_page 	= (isset($_GET['page'])) ? (int)$_GET['page'] : 0;
+$current_page 	= ($current_page > $pages_count || $current_page < 1) ? 1 : $current_page;
+$pages_start 	= ($current_page - 1) * $pages_limit;
 
 
-// izdrukā lapā svaigākos RuneScape jaunumu rakstus
-$articles = $db->get_results("
-    SELECT
-        `pages`.*,    
-        `users`.`id`      AS `user_id`,
-        `users`.`nick`    AS `user_nick`,
-        `users`.`level`   AS `user_level`
-  	FROM `pages`
-        JOIN `users` ON `pages`.`author` = `users`.`id`
-    WHERE 
-        `pages`.`category`  = 599       AND
-        `pages`.`lang`      = '$lang'
-    ORDER BY `pages`.`date` DESC 
-    LIMIT $pages_start , $pages_limit 
-");
 
-if ($articles) {
+// runescape oficiālo jaunumu virsraksti no RSS feed
+$tpl->assign('runescape-news', get_runescape_news());
+$tpl->newBlock('main-runescape-header');
+    
 
-	$counter = 0;
-	$tpl->newBlock('rs-articles');
+if (!isset($_GET['_']) || !isset($_GET['type']) || $_GET['type'] == 'newest') {
+    // izdrukā lapā svaigākos RuneScape jaunumu rakstus
+    $newest_pages = $db->get_results("
+        SELECT
+            `pages`.*,    
+            `users`.`id`      AS `user_id`,
+            `users`.`nick`    AS `user_nick`,
+            `users`.`level`   AS `user_level`,
+            `cat`.`title`     AS `cat_title`
+        FROM `pages`
+            JOIN `users` ON `pages`.`author` = `users`.`id`
+            JOIN `cat` ON `pages`.`category` = `cat`.`id`
+        WHERE
+            `pages`.`lang`      = '$lang' AND
+            `cat`.`isforum`     = 0 AND
+            `cat`.`isblog`      = 0
+        ORDER BY `pages`.`date` DESC 
+        LIMIT $pages_start , $pages_limit 
+    ");
 
-	foreach ($articles as $article) {
+    if ($newest_pages) {
+    
+        /*
+            $tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
+            $templ->prepare();
+        */
+    
+        $article_counter = 1;
+        
+        $tpl->newBlock('recent-page-list');
+        $tpl->assign(array(
+            'list-title' => 'Jaunākie raksti lapā',
+            'column-style' => ' style="margin-right:20px"'
+        ));
 
-		//  ja rakstam nav norādīts intro, to izveido
-		if (!empty($article->intro)) {
-			$article->text = $article->intro;
-		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace(array('&nbsp;', '<br />', '<li>'), ' ', youtube_title($article->text)))), 680);
-			$article->intro = sanitize($article->text);
-			$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
-		}
-		$article->text = textlimit($article->text, 500);
+        foreach ($newest_pages as $article) {
+        
+            $article->title 	= str_replace(array('[RuneScape] ','[RS] '),'',$article->title);
+            $article->author 	= usercolor($article->user_nick, $article->user_level);
+            $article->author 	= '<a href="'.mkurl('user', $article->user_id, $article->user_nick).'">'.$article->author.'</a>';
+            
+            $tpl->newBlock('list-page');
+            $tpl->assignAll($article);
+            
+            $additional_info  = $article->author . ' &middot; pirms ' . time_ago(strtotime($article->date));       
+            $tpl->assign('additional-info', $additional_info);
+                    
+            $article_counter++;
+        }
 
-		if ($article->sm_avatar == '') {
-			$article->sm_avatar = '/dati/bildes/useravatar/none.png';
-		} else {
-			$article->sm_avatar = 'http://img.exs.lv/' . trim($article->sm_avatar);
-		}
+        //  atvērtajai lappusei katrā pusē būs vēl trīs iepriekšējās/nākamās lappuses
+        $page_view = pagelist(ceil($pages_count), $current_page, '/?type=newest&amp;page=', 'news-col-newest', 1, 1);
+        $tpl->gotoBlock('recent-page-list');
+        $tpl->assign('pages', $page_view);
+        
+        /*if (isset($_GET['_']) && isset($_GET['type']) && $_GET['type'] == 'newest') {
+            $templ->newBlock('pagelist-runtime-bind');
+            echo json_encode(array('status' => 'success', 'content' => $templ->getOutputContent()));
+            exit;
+        }
+        else {*/
+            //$tpl->newBlock('recent-page-list-default');
+           // $tpl->assign('content', $tpl->getOutputContent());
+        //}
+    }
+}
 
-		$article->title = str_replace(array('[RuneScape] ', '[Runescape] ', '[rs] ', '[RS] ', '[runescape] '), '', $article->title);
-		$article->date = display_time(strtotime($article->date));
+if (!isset($_GET['_']) || !isset($_GET['type']) || $_GET['type'] == 'recent') {
+    // izdrukā lapā svaigākos RuneScape jaunumu rakstus
+    $recent_pages = $db->get_results("
+        SELECT
+            `pages`.*,    
+            `users`.`id`      AS `user_id`,
+            `users`.`nick`    AS `user_nick`,
+            `users`.`level`   AS `user_level`,
+            `cat`.`title`     AS `cat_title`
+        FROM `pages`
+            JOIN `users` ON `pages`.`author` = `users`.`id`
+            JOIN `cat` ON `pages`.`category` = `cat`.`id`
+        WHERE
+            `pages`.`lang`      = '$lang' AND
+            `cat`.`isforum`     = 0 AND
+            `cat`.`isblog`      = 0
+        ORDER BY `pages`.`bump` DESC
+        LIMIT $pages_start , $pages_limit 
+    ");
 
-		$article->user_nick = usercolor($article->user_nick, $article->user_level);
-		$article->user_nick = '<a href="' . mkurl('user', $article->user_id, $article->user_nick) . '">' . $article->user_nick . '</a>';
+    if ($recent_pages) {
+    
+        /*
+            $tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
+            $templ->prepare();
+        */
 
-		$tpl->newBlock('rs-article');
-		$tpl->assignAll($article);
+        $article_counter = 1;
+        
+        $tpl->newBlock('recent-page-list');
+        $tpl->assign('list-title', 'Pēdējie komentētie raksti');
 
-		$tpl->newBlock('article-image');
-		$tpl->assign('sm_avatar', $article->sm_avatar);
+        foreach ($recent_pages as $article) {
+        
+            $article->title 	= str_replace(array('[RuneScape] ','[RS] '),'',$article->title);
+            $article->author 	= usercolor($article->user_nick, $article->user_level);
+            $article->author 	= '<a href="'.mkurl('user', $article->user_id, $article->user_nick).'">'.$article->author.'</a>';
 
-		$counter++;
-	}
+            $tpl->newBlock('list-page');
+            $tpl->assignAll($article);
 
-	//  atvērtajai lappusei katrā pusē būs vēl trīs iepriekšējās/nākamās lappuses
-	$page_view = pagelist(ceil($pages_count), $current_page, '/?page=', 3, 3);
-	$tpl->gotoBlock('rs-articles');
-	$tpl->assign('pages', $page_view);
+            $additional_info = 'pirms ' . time_ago(strtotime($article->bump));
+            
+            if (!empty($article->readby) && in_array($auth->id, unserialize($article->readby))) {
+                $additional_info .= ' &middot; (' . $article->posts . ')';
+            } else {
+                $additional_info .= ' &middot; (<span class="r">' . $article->posts . '</span>)';
+            }
+            
+            $additional_info .= ' &middot; ' . $article->cat_title;
+            
+            $tpl->assign('additional-info', $additional_info);
+                    
+            $article_counter++;
+        }
+        
+        //  atvērtajai lappusei katrā pusē būs vēl trīs iepriekšējās/nākamās lappuses
+        $page_view = pagelist(ceil($pages_count), $current_page, '/?page=', 'news-col-recent', 1, 1);
+        $tpl->gotoBlock('recent-page-list');
+        $tpl->assign('pages', $page_view);
+        
+        /*if (isset($_GET['_']) && isset($_GET['type']) && $_GET['type'] == 'newest') {
+            echo json_encode(array('status' => 'success', 'content' => $templ->getOutputContent()));
+            exit;
+        }
+        else {
+            $tpl->newBlock('recent-page-list-default');
+            $tpl->assign('content', $templ->getOutputContent());
+        }*/
+    }
 }
