@@ -27,10 +27,10 @@ function get_runescape_news($force = false) {
     // citādi tiek izmantots .html cache fails
     if ($force || $m->get('runescape-news') === false) {
     
-        // atjaunosies reizi 20 minūtēs;
+        // atjaunosies reizi 10 minūtēs;
         // jāuzstāda uzreiz, lai, ieilgstot parsēšanai,
         // vairāki lietotāji neizsauktu atjaunošanos vienlaicīgi
-        $m->set('runescape-news', time(), false, 1200);
+        $m->set('runescape-news', time(), false, 600);
 
         // nolasa jaunākās ziņas no runescape.com
         $news_addr = 'http://services.runescape.com/m=news/latest_news.rss';    
