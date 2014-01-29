@@ -607,6 +607,12 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
 #wrapper .friends {
     background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
 }
+.recent-page-separator {
+    height:7px;
+    width:70%;
+    margin:5px auto;
+    background:rgb(195, 208, 228)
+}
 
 /* runescape pamācību sadaļu vispārīgie stili */
 .content-title {
