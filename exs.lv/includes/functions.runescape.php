@@ -273,38 +273,9 @@ function translate_category($string = '') {
 
 
 /**
- *  Pārbaude, vai sadaļai veidot jaunu mb ierakstu.
- *
- *  (Tiek izsaukta get_runescape_news() funkcijā.)
- *  
- *  @param  string  kategorija, kurai jāveic pārbaude
- */
-function is_mb_category($string = '') {
-
-    $cats = array('Game Update News', 'Behind the Scenes News');
-    
-    if ( !empty($string) && in_array($string, $cats)) {
-        return true;
-    }    
-    return false;
-}
-
-
-
-/**
- *  Atgriež sarakstu ar jaunākajiem RuneScape apakšprojekta rakstiem
- */
-function get_newest_pages($force = false) {
-    global $auth, $db;
-    
-}
-
-
-
-/**
  *  Funkcija lappušu saraksta atgriešanai.
  *
- *  (Tiek izsaukta sākumlapā pie jaunāko rakstu saraksta veidošanas.)
+ *  (Šobrīd nav izmantota.)
  *
  *  Atgriež sarakstu ar lapām tādā veidā, ka atvērtā lapa ir pa vidu, bet
  *  katrā pusē tai ir norādītais skaits iepriekšējo/nākamo lappušu.
