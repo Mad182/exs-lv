@@ -461,7 +461,8 @@ ul.nav-right {
     .official-news .news-title {
         display:block;
         font-weight:700;
-        float:none
+        float:none;
+        margin-top:5px
     }
     .official-news .news-date {
         display:block;
@@ -502,7 +503,7 @@ ul.nav-right {
         margin:9px 5px 0 0
     }
     .rsmb-fade {
-        color:#98AACF
+        color:#65779C
     }
 .article-column {
     float:left;
