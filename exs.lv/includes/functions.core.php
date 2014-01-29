@@ -772,6 +772,7 @@ function embed_twitter($params) {
 				$tweet_html = $tweet->html;
 			}
 		}
+		$m->set('tweet_' . $params[5], $tweet_html, false, 1800);
 	}
 
 	return $tweet_html;
