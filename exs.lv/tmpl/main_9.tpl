@@ -332,10 +332,8 @@ tinymce.init({
 		<!-- END BLOCK : profile-box-->
 
 		<!-- START BLOCK : friendssay-box-->
-		<h3>Mini blogi{miniblog-add}</h3>
-
+		<h3>Miniblogi{miniblog-add}</h3>
 		<div class="box">
-
 			<!-- START BLOCK : friendssay-tabs-->
 			<ul class="tabs">
 				<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Ārpusē</span></a></li>
@@ -345,86 +343,17 @@ tinymce.init({
 			<!-- END BLOCK : friendssay-tabs-->
 			<div id="miniblog-block" class="ajaxbox">{out}</div>
 		</div>
-
 		<!-- END BLOCK : friendssay-box-->
-
-		<!-- START BLOCK : poll-box-->
-		<h3>Aptauja</h3>
-		<div class="box">
-			<p><strong>{poll-title}</strong></p>
-			<!-- START BLOCK : poll-answers-->
-			<ol class="poll-answers">
-				<!-- START BLOCK : poll-answers-node-->
-				<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-				<!-- END BLOCK : poll-answers-node-->
-			</ol>
-			Balsojuši: {poll-totalvotes}<br />
-			<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
-			<!-- END BLOCK : poll-answers-->
-			<!-- START BLOCK : poll-questions-->
-			<form name="poll" method="post" action="">
-				<fieldset>
-					<!-- START BLOCK : poll-error-->
-					<p>{poll-error}</p>
-					<!-- END BLOCK : poll-error-->
-					<!-- START BLOCK : poll-options-->
-					<ol id="poll-questions">
-						<!-- START BLOCK : poll-options-node-->
-						<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-						<!-- END BLOCK : poll-options-node-->
-					</ol>
-					<input type="submit" name="vote" value="Balsot!" class="button primary" />
-					<!-- END BLOCK : poll-options-->
-				</fieldset>
-			</form>
-			<!-- END BLOCK : poll-questions-->
-		</div>
-		<!-- END BLOCK : poll-box-->
+        
 	</div>
 	<!-- END BLOCK : main-layout-left-->
     
     <!-- START BLOCK : main-layout-right-->
 	<div id="right">
-
 		<h3>Jaunākais galerijās</h3>
 		<div class="box">
 			<div id="lat" class="ajaxbox">{latest-noscript}</div>
 		</div>
-        
-        <!-- START BLOCK : notification-list-->
-		<h3>Tavi notikumi</h3>
-		<div class="box">
-			{out}
-		</div>
-		<!-- END BLOCK : notification-list-->
-
-		<!-- START BLOCK : google-search -->
-        <h3>Meklētājs</h3>
-		<div class="box">
-			Meklēt lapā ar <a href="/search/">google</a>:
-			<form method="get" action="/search/" id="search-form">
-				<fieldset>
-					<input type="hidden" name="cx" value="014557532850324448350:00ymkcfoxlo" />
-					<input type="hidden" name="cof" value="FORID:11" />
-					<input type="hidden" name="ie" value="UTF-8" />
-					<input class="text" name="q" size="16" type="text" value="" />
-					<input value="Meklēt" class="submit button primary" type="submit" />
-				</fieldset>
-			</form>
-		</div>
-        <!-- END BLOCK : google-search -->
-
-		<!-- START BLOCK : user-top-->
-		<h3>Šodien aktīvākie</h3>
-		<div class="box">
-			<ul id="today-top">
-				<!-- START BLOCK : user-top-node-->
-				<li><a href="{url}"><img class="av" src="{avatar}" alt="" />{user}</a><span class="count">({today})</span></li>
-				<!-- END BLOCK : user-top-node-->
-			</ul>
-			<div class="c"></div>
-		</div>
-		<!-- END BLOCK : user-top-->
         
         <!-- START BLOCK : groups-l-list-->
 		<h3>Jaunākās grupas</h3>
