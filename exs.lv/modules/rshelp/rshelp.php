@@ -79,7 +79,13 @@ else {
 	// redzamas būs visas trīs lapas kolonnas
 	$tpl_options = '';
 
-	$all_items = $db->get_results("SELECT `strid`,`title`,`author` FROM `pages` WHERE `category` = '" . $category->id . "' ORDER BY `title` ASC LIMIT 0, 150");
+	$all_items = $db->get_results("
+        SELECT `strid`,`title`,`author` 
+        FROM `pages` 
+        WHERE `category` = '" . $category->id . "' 
+        ORDER BY `title` ASC 
+        LIMIT 0, 150
+    ");
     
 	if ($all_items) {
     
@@ -87,9 +93,13 @@ else {
 		$tpl->assign('category-title', $category->title);
         
 		foreach ($all_items as $item => $data) {
+        
 			if ($user = get_user($data->author)) {
-				$data->author = '<a style="font-size:11px;" href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
+				$data->author  = '<a style="font-size:11px;"';
+                $data->author .= ' href="'.mkurl('user', $user->id, $user->nick).'">';
+                $data->author .= usercolor($user->nick, $user->level) . '</a>';
 			}
+            
 			$tpl->newBlock('rshelp-listitem');
 			$tpl->assignAll($data);
 		}
