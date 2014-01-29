@@ -497,7 +497,13 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 					$title = mb_get_title(stripslashes($body));
 					$url = $group_link . '/forum/' . base_convert($mainid, 10, 36);
-					push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $group->title . ' grupā &quot;' . textlimit($title, 32, '...') . '&quot;</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g-' . $mainid);
+
+					//ja grupas ieraksti ir slēpti, ievieto userlogā tikai nosaukumu
+					if (!$group->hide_intro) {
+						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $group->title . ' grupā &quot;' . textlimit($title, 32, '...') . '&quot;</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g-' . $mainid);
+					} else {
+						push('Atbildēja ' . $group->title . ' grupā', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g-' . $mainid);
+					}
 
 					$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
 					$newpost->text = mention($newpost->text, $url, 'group', $mainid);
