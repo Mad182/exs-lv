@@ -755,7 +755,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 /**
  * preg_replace callback function for Tweet embedding
- * Uses mecache to store cached HTML
+ * Uses memcache to store cached HTML
  *
  * @param array $params
  * @return string Embeddable HTML tweet
@@ -765,7 +765,7 @@ function embed_twitter($params) {
 
 	if (($tweet_html = $m->get('tweet_' . $params[5])) === false) {
 		$tweet_html = $params[0];
-		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id='.$params[5].'&align=center');
+		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id='.$params[5].'&align=center&maxwidth=400');
 		if(!empty($response)) {
 			$tweet = json_decode($response);
 			if(empty($tweet->error) && !empty($tweet->html)) {
