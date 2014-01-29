@@ -4,7 +4,6 @@
  * functions.core.php
  * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
  * */
-
 /* utf-8 ucfirst */
 
 if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
@@ -1863,6 +1862,13 @@ function get_top_rec($id, $depth = 0) {
 	return $id;
 }
 
+/**
+ * Returns all user data as object by id
+ *
+ * @param int $user_id
+ * @param bool $force
+ * @return object
+ */
 function get_user($user_id, $force = false) {
 	global $db, $m, $users_cache, $debug;
 	$user_id = (int) $user_id;
@@ -1870,18 +1876,19 @@ function get_user($user_id, $force = false) {
 		return $users_cache[$user_id];
 	}
 	if ($debug || $force === true || ($data = $m->get('u_' . $user_id)) === false) {
-		$data = $db->get_row("SELECT
-		`lastseen`,`mail`,`gender`,`persona`,`maximg`,`yt_name`,`twitter`,`show_code`,`show_lol`,
-		`show_rp`,`show_rs`,`vote_today`,`showsig`,`id`,`nick`,`level`,`skin`,`posts`,
-		`karma`,`custom_title`,`signature`,`avatar`,`av_alt`,`vote_others`,`warn_count`,
-		`date`,`mobile_seen`,`decos`,`draugiem_id`,`days_in_row`,`seen_today`,
-		`token`,`year_first`,`rating`,`deleted` FROM `users` WHERE `id` = '$user_id'");
+		$data = $db->get_row("SELECT * FROM `users` WHERE `id` = '$user_id'");
 		$m->set('u_' . $user_id, $data, false, 3600);
 	}
 	$users_cache[$user_id] = $data;
 	return $data;
 }
 
+/**
+ * Returns 5 newest groups in current domain
+ *
+ * @param bool $force
+ * @return array
+ */
 function get_latest_groups($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($data = $m->get('latest_groups_' . $lang))) {
@@ -1891,8 +1898,9 @@ function get_latest_groups($force = false) {
 	return $data;
 }
 
-/* replacement for file_get_contents with timeout */
-
+/**
+ * Replacement for file_get_contents with timeout
+ */
 function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 
 	$ch = curl_init();
@@ -1905,8 +1913,9 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 	return $contents;
 }
 
-/* get youtube video data by id */
-
+/**
+ * Get youtube video data by id
+ */
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
@@ -1933,6 +1942,9 @@ function get_youtube($videoid, $force = false) {
 	return $data;
 }
 
+/**
+ * Returns category object by either id or strid
+ */
 function get_cat($id, $force = false) {
 	global $db, $m, $debug, $lang;
 	if ($debug || $force || !($data = $m->get('cat_' . $lang . '_' . $id))) {
@@ -1952,6 +1964,9 @@ function get_cat($id, $force = false) {
 	return $data;
 }
 
+/**
+ * Find page id by strid
+ */
 function get_page_strid($id = null) {
 	global $db, $m;
 	if (($data = $m->get('strid_' . $id)) === false) {
@@ -2041,6 +2056,9 @@ function get_footer_topics($force = false) {
 	return $html;
 }
 
+/**
+ * Creates online users array
+ */
 function get_online($force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('onlineusers'))) {
@@ -2073,6 +2091,9 @@ function get_online($force = false) {
 	return $data;
 }
 
+/**
+ * Creates online users list in HTML
+ */
 function get_online_list($force = false) {
 	global $db, $m, $lang;
 	$data = '';
@@ -2100,6 +2121,9 @@ function get_online_list($force = false) {
 	return $data;
 }
 
+/**
+ * Find category marked as given users blog
+ */
 function get_blog_by_user($user_id, $force = false) {
 	global $db, $m;
 	if ($force || !($data = $m->get('isb_' . $user_id))) {
@@ -2116,6 +2140,11 @@ function get_blog_by_user($user_id, $force = false) {
 	}
 }
 
+/**
+ * Recursive mkdir
+ *
+ * @return boolean
+ */
 function rmkdir($path, $mode = 0777) {
 	$path = rtrim(preg_replace(array("/\\\\/", "/\/{2,}/"), "/", $path), "/");
 	$e = explode("/", ltrim($path, "/"));
@@ -2246,9 +2275,6 @@ function filterb4db($text) {
 	$text = str_replace('??????', '???', $text);
 	$text = str_replace('?????', '???', $text);
 	$text = str_replace('????', '???', $text);
-	$text = str_replace('......', '...', $text);
-	$text = str_replace('.....', '...', $text);
-	$text = str_replace('....', '...', $text);
 	$text = str_replace('!!!!!!', '!!!', $text);
 	$text = str_replace('!!!!!', '!!!', $text);
 	$text = str_replace('!!!!', '!!!', $text);
@@ -2314,11 +2340,21 @@ function input2db($text, $len = 30) {
 	return sanitize($text);
 }
 
+/**
+ * Returns safe and valid email address for storing in mysql
+ *
+ * @param string $email
+ * @return string
+ */
 function email2db($email) {
 	return sanitize(filter_var($email, FILTER_SANITIZE_EMAIL));
 }
 
-//redirect back to miniblog
+/**
+ * Redirect user to given miniblog/group post/junk image
+ *
+ * @param object $mb
+ */
 function return2mb($mb) {
 	global $db;
 	if ($mb->type == 'junk') {
@@ -2737,14 +2773,13 @@ function get_latest_mbs($friends = false) {
 	}
 
 	$friendsquery = '';
-    if ($lang == 9) { // rs projektā cilnes sadalās: mb ārpus grupām un grupās
-        if ($friends) {
-            $friendsquery = 'AND `miniblog`.`groupid` != 0';
-        } else {
-            $friendsquery = 'AND `miniblog`.`groupid` = 0';
-        }
-    }
-	else if ($auth->ok && $friends) {
+	if ($lang == 9) { // rs projektā cilnes sadalās: mb ārpus grupām un grupās
+		if ($friends) {
+			$friendsquery = 'AND `miniblog`.`groupid` != 0';
+		} else {
+			$friendsquery = 'AND `miniblog`.`groupid` = 0';
+		}
+	} else if ($auth->ok && $friends) {
 		$myfriends = get_friends($auth->id);
 		$myfriends[] = $auth->id;
 		$friendsquery = 'AND `miniblog`.`author` IN(' . implode(',', $myfriends) . ')';
