@@ -304,9 +304,6 @@ tinymce.init({
 	</div>
     
     <div id="rs_columns">
-    
-    <!-- START BLOCK : main-layout-column-top -->    
-    <!-- END BLOCK : main-layout-column-top -->
 
     <!-- START BLOCK : main-layout-left-->
 	<div id="left">

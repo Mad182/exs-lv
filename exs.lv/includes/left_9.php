@@ -1,23 +1,28 @@
 <?php
+/**
+ *  RuneScape apakšprojekta kreisā kolonna.
+ *  Redzama gandrīz katrā sadaļā, satur jaunākos miniblogus.
+ */
 $tpl->newBlock('main-layout-left');
 
-//profile box
+
+// kriesajā kolonnā redzama informācija par lietotāju, 
+// ar kuru saistīta skatāmā informācija
 if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 	$inprofile = get_user($category->isblog);
 }
-
 if (!empty($inprofile)) {
 
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
-		'url' => '/user/' . $inprofile->id,
-		'profile-nick' => htmlspecialchars($inprofile->nick),
-		'profile-slug' => mkslug($inprofile->nick),
-		'profile-id' => $inprofile->id,
-		'avatar' => $avatar,
-		'profile-top-awards' => get_top_awards($inprofile->id)
+		'url'                   => '/user/' . $inprofile->id,
+		'profile-nick'          => htmlspecialchars($inprofile->nick),
+		'profile-slug'          => mkslug($inprofile->nick),
+		'profile-id'            => $inprofile->id,
+		'avatar'                => $avatar,
+		'profile-top-awards'    => get_top_awards($inprofile->id)
 	));
 
 	if (!empty($inprofile->custom_title)) {
@@ -26,11 +31,12 @@ if (!empty($inprofile)) {
 		));
 	}
 
+    // autorizētiem lietotājiem redzama iespēja nosūtīt lietotājam vēstuli
 	if ($auth->ok === true && $auth->id != $inprofile->id) {
 		$tpl->newBlock('profilebox-pm-link');
 	}
 
-	//warnu links un skaits
+	// administrācijai un pašam lietotājam redzams brīdinājumu skaits
 	if ($auth->ok === true
 			&& ($auth->id == $inprofile->id
 			|| im_mod())
@@ -44,6 +50,7 @@ if (!empty($inprofile)) {
 		}
 	}
 
+    // adrese uz twitter profilu
 	if (!empty($inprofile->twitter)) {
 		$tpl->newBlock('profilebox-twitter-link');
 		$tpl->assign(array(
@@ -51,6 +58,7 @@ if (!empty($inprofile)) {
 		));
 	}
 
+    // adrese uz youtube profilu
 	if (!empty($inprofile->yt_name)) {
 		$tpl->newBlock('profilebox-yt-link');
 		$tpl->assign(array(
@@ -60,8 +68,12 @@ if (!empty($inprofile)) {
 	}
 }
 
-//include(CORE_PATH . '/modules/core/poll.php');
 
+
+
+// saraksts ar jaunākajiem miniblogiem;
+// atkarībā no tā, kura cilne norādīta, redzami grupu vai ārpus tām esošie ieraksti;
+// friends šajā gadījumā nozīmē, ka skatīti tiek grupu ieraksti
 $tpl->newBlock('friendssay-box');
 $sel = 'all';
 if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] == 'friends') {
@@ -70,9 +82,10 @@ if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] ==
 } else {
 	$mbs = get_latest_mbs();
 }
-
 $tpl->assign('out', $mbs);
 
+// ciļņu izvēlne redzama tikai autorizētiem lietotājiem;
+// neautorizēts lietotājs vienkārši grupās nav
 if($auth->ok) {
 	$tpl->newBlock('friendssay-tabs');
 	$tpl->assign(array(
@@ -80,7 +93,7 @@ if($auth->ok) {
 	));
 }
 
-
+// poga uz jauna ieraksta pievienošanu
 if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
