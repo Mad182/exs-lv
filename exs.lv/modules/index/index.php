@@ -38,10 +38,9 @@ $articles = $db->get_results("
 			`users`
 		WHERE
 			`pages`.`category` = '1' AND
-			`pages`.`lang` = '$lang' AND
 			`users`.`id` = `pages`.`author`
 		ORDER BY
-			`pages`.`date` DESC
+			`pages`.`id` DESC
 		LIMIT
 			$skip,$end");
 
@@ -81,12 +80,9 @@ $tpl->assignGlobal(array(
 	'pager-numeric' => $pager['pages']
 ));
 
-
-
 /**
  * Labā kolonna
  */
-
 $tpl->newBlock('cindex-right');
 
 $articles = $db->get_results("
