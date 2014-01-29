@@ -60,7 +60,6 @@ if (isset($_POST['new-topic-body'])) {
 				}
 			}
 
-			build_latest();
 			update_karma($auth->id);
 			redirect('/read/' . $strid);
 		} else {
@@ -148,7 +147,7 @@ if ($auth->ok) {
 				}
 
 				$db->query("UPDATE `approve` SET `removed` = 1 WHERE `id` = '$edit'");
-				build_latest();
+
 				update_karma($author, true);
 				redirect('/read/' . $strid);
 			}

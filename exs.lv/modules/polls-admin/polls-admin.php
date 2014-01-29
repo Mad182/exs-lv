@@ -47,7 +47,6 @@ if (im_mod()) {
 
 			$db->query("UPDATE `pages` SET `text` = '$new_text' WHERE `id` = '$poll_page_id'");
 
-			build_latest();
 			update_karma($auth->id);
 
 			$tpl->newBlock('polls_admin-success');

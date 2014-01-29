@@ -75,7 +75,6 @@ class Comment {
 
 						push('Komentēja rakstu &quot;<a href="' . $url . '#c' . $newid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
 						notify($article->author, 2, $article->id, $url, textlimit(hide_spoilers($article->title), 64));
-						build_latest();
 					}
 				} else {
 					$db->query("INSERT INTO galcom (id,bid,author,text,date,ip) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip')");

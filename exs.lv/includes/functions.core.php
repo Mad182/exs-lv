@@ -3,9 +3,11 @@
 /**
  * functions.core.php
  * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
- * */
-/* utf-8 ucfirst */
-
+ * 
+ * 
+ * 
+ * utf-8 ucfirst 
+ */
 if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
 	function mb_ucfirst($string) {
@@ -15,8 +17,12 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
 }
 
-/* aprekina un updato lietotja karmu */
-
+/**
+ * Aprekina un updato lietotja karmu
+ * 
+ * @param int $userid
+ * @param bool $force_award
+ */
 function update_karma($userid, $force_award = false) {
 	global $db; //I feel your pain
 	$userid = intval($userid);
@@ -65,12 +71,9 @@ function update_karma($userid, $force_award = false) {
 	}
 }
 
-function build_latest() {
-	@unlink(CORE_PATH . '/cache/blogs.html');
-	destroy_cdir(CORE_PATH . '/cache/index/');
-}
-
-//saīsinājums prieks userlog aktuālajam lietotājam
+/**
+ * Saīsinājums prieks userlog aktuālajam lietotājam
+ */
 function push($action, $avatar = '', $multi = '') {
 	global $auth;
 	if ($auth->ok === true) {
@@ -80,7 +83,9 @@ function push($action, $avatar = '', $multi = '') {
 	}
 }
 
-//veic ierakstu leitotāja pēdējās darbībās
+/**
+ * Veic ierakstu leitotāja pēdējās darbībās
+ */
 function userlog($user, $action, $avatar = '', $multi = '') {
 	global $db, $lang;
 	if (!empty($multi)) {
@@ -90,6 +95,16 @@ function userlog($user, $action, $avatar = '', $multi = '') {
 	return true;
 }
 
+/**
+ * Pievieno lietotāja notifikāciju
+ * 
+ * @param int $user_id
+ * @param int $type
+ * @param int $place
+ * @param string $url
+ * @param string $info
+ * @return int Status
+ */
 function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	global $db, $lang;
 	/*
@@ -138,6 +153,9 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	return 0;
 }
 
+/**
+ * Atgriež lietotāja notifikāciju HTML sarakstu
+ */
 function get_notify($user_id, $base = '/events-pager?events-page=') {
 	global $db, $lang, $new_msg_html, $auth, $config_domains; //man kauns :(
 	$user_id = intval($user_id);

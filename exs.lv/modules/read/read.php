@@ -133,7 +133,6 @@ if ($article) {
 				$db->query("UPDATE `users` SET `posts` = `posts`-1 WHERE `id` = '$comment->author'");
 			}
 
-			build_latest();
 			$auth->log('Izdzēsa komentāru', 'comments', $comment->id);
 			redirect('/read/' . $article->strid);
 		}
@@ -368,7 +367,6 @@ if ($article) {
 						edit_times = edit_times+1
 					WHERE id = '$topicid'");
 
-					build_latest();
 					update_stats($topiccat);
 
 					if ($category->textid == 'filmas' && im_mod()) {
@@ -927,7 +925,7 @@ if ($article) {
 						if ($article->attach) {
 							$atachmark = ' checked="checked"';
 						}
-						$tpl->assign('edit-page-attached', $atachmark);			
+						$tpl->assign('edit-page-attached', $atachmark);
 					}
 
 				}

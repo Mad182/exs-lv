@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * Exs.lv sākumlapa
+ */
 if ($auth->ok) {
 	set_action('sākumlapu');
 }
 
+/**
+ * Sākumlapas jaunumi
+ */
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
 } else {
@@ -12,193 +18,178 @@ if (isset($_GET['skip'])) {
 
 $end = 10;
 
-if (!file_exists('cache/index/' . $lang . '_' . $skip . '.html')) {
+$tpl->newBlock('cindex-list');
 
-	$tpl_cachable = new TemplatePower('modules/index/index-cachable.tpl');
-	$tpl_cachable->prepare();
+$articles = $db->get_results("
+		SELECT
+			`pages`.`id` AS `id`,
+			`pages`.`title` AS `title`,
+			`pages`.`date` AS `date`,
+			`pages`.`author` AS `author`,
+			`pages`.`strid` AS `strid`,
+			`pages`.`posts` AS `posts`,
+			`pages`.`text` AS `text`,
+			`pages`.`sm_avatar` AS `sm_avatar`,
+			`pages`.`intro` AS `intro`,
+			`users`.`nick` AS `nick`,
+			`users`.`level` AS `level`
+		FROM
+			`pages`,
+			`users`
+		WHERE
+			`pages`.`category` = '1' AND
+			`pages`.`lang` = '$lang' AND
+			`users`.`id` = `pages`.`author`
+		ORDER BY
+			`pages`.`date` DESC
+		LIMIT
+			$skip,$end");
 
-	$tpl_cachable->newBlock('cindex-list');
+foreach ($articles as $article) {
+	$tpl->newBlock('index-news-node');
+	if (!empty($article->intro)) {
+		$article->text = $article->intro;
+	} else {
+		$article->text = textlimit(strip_tags(trim(str_replace(array('&nbsp;', '<br />', '<li>'), ' ', youtube_title($article->text)))), 680);
+		$article->intro = sanitize($article->text);
+		$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
+	}
+
+	if ($article->sm_avatar == '') {
+		$article->sm_avatar = '/dati/bildes/useravatar/none.png';
+	}
+
+	$date = display_time(strtotime($article->date));
+	$tpl->assign(array(
+		'node-url' => '/read/' . $article->strid,
+		'aurl' => '/user/' . $article->author,
+		'title' => $article->title,
+		'date' => $date,
+		'author' => usercolor($article->nick, $article->level, false, $article->author),
+		'posts' => $article->posts,
+		'level' => $article->level,
+		'intro' => textlimit($article->text, 330),
+		'avatar' => trim($article->sm_avatar)
+	));
+}
+
+//pager
+$pager = pager($category->stat_topics, $skip, $end, '/?skip=');
+$tpl->assignGlobal(array(
+	'pager-next' => $pager['next'],
+	'pager-prev' => $pager['prev'],
+	'pager-numeric' => $pager['pages']
+));
+
+
+
+/**
+ * Labā kolonna
+ */
+
+$tpl->newBlock('cindex-right');
+
+$articles = $db->get_results("
+	SELECT
+		`pages`.`id` AS `id`,
+		`pages`.`title` AS `title`,
+		`pages`.`text` AS `text`,
+		`pages`.`intro` AS `intro`,
+		`pages`.`strid` AS `strid`,
+		`pages`.`sm_avatar` AS `avatar`,
+		`users`.`nick` AS `nick`,
+		`users`.`level` AS `level`
+	FROM
+		`cat`,
+		`pages`,
+		`users`
+	WHERE
+		`pages`.`category` = `cat`.`id` AND
+		`cat`.`isblog`!='0' AND
+		`users`.`id` = `pages`.`author`
+	ORDER BY
+		`pages`.`id` DESC
+	LIMIT
+		0,3");
+
+foreach ($articles as $article) {
+
+	$tpl->newBlock('index-blogs-node');
+
+	if (!empty($article->intro)) {
+		$article->text = $article->intro;
+	} else {
+		$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+	}
+
+	$av = '';
+	if (!empty($article->avatar)) {
+		$av = '<a href="/read/' . $article->strid . '" class="av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+	}
+
+	$tpl->assign(array(
+		'node-url' => '/read/' . $article->strid,
+		'title' => textlimit($article->title, 26, '...'),
+		'date' => $date,
+		'intro' => textlimit(strip_tags(trim(str_replace('&nbsp;', ' ', $article->text))), 90),
+		'av' => $av
+	));
+}
+
+$list_cats = array(
+	'games' => 81,
+	'movies' => 80,
+	'music' => 323
+);
+
+foreach ($list_cats as $cat_type => $cat_id) {
 
 	$articles = $db->get_results("
-			SELECT
-				`pages`.`id` AS `id`,
-				`pages`.`title` AS `title`,
-				`pages`.`date` AS `date`,
-				`pages`.`author` AS `author`,
-				`pages`.`strid` AS `strid`,
-				`pages`.`posts` AS `posts`,
-				`pages`.`text` AS `text`,
-				`pages`.`sm_avatar` AS `sm_avatar`,
-				`pages`.`intro` AS `intro`,
-				`users`.`nick` AS `nick`,
-				`users`.`level` AS `level`
-			FROM
-				`pages`,
-				`users`
-			WHERE
-				`pages`.`category` = '1' AND
-				`pages`.`lang` = '$lang' AND
-				`users`.`id` = `pages`.`author`
-			ORDER BY
-				`pages`.`date` DESC
-			LIMIT
-				$skip,$end");
+		SELECT
+			`pages`.`id` AS `id`,
+			`pages`.`title` AS `title`,
+			`pages`.`sm_avatar` AS `avatar`,
+			`pages`.`text` AS `text`,
+			`pages`.`strid` AS `strid`,
+			`pages`.`intro` AS `intro`,
+			`users`.`nick` AS `nick`,
+			`users`.`level` AS `level`
+		FROM
+			`pages`,
+			`users`
+		WHERE
+			`pages`.`category` = " . $cat_id . " AND
+			`users`.`id` = `pages`.`author`
+		ORDER BY
+			`pages`.`id` DESC
+		LIMIT
+			0,3");
 
 	foreach ($articles as $article) {
-		$tpl_cachable->newBlock('index-news-node');
+
+		$tpl->newBlock('index-' . $cat_type . '-node');
+
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace(array('&nbsp;', '<br />', '<li>'), ' ', youtube_title($article->text)))), 680);
-			$article->intro = sanitize($article->text);
-			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
 		}
 
-		if ($article->sm_avatar == '') {
-			$article->sm_avatar = '/dati/bildes/useravatar/none.png';
+		$av = '';
+		if (!empty($article->avatar)) {
+			$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 		}
 
-		$date = display_time(strtotime($article->date));
-		$tpl_cachable->assign(array(
+		$tpl->assign(array(
 			'node-url' => '/read/' . $article->strid,
-			'aurl' => '/user/' . $article->author,
 			'title' => $article->title,
 			'date' => $date,
-			'author' => usercolor($article->nick, $article->level, false, $article->author),
-			'posts' => $article->posts,
-			'level' => $article->level,
-			'intro' => textlimit($article->text, 330),
-			'avatar' => trim($article->sm_avatar)
+			'intro' => textlimit(strip_tags(trim(str_replace(array('Spēles nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
+			'av' => $av
 		));
-	}
-
-	//pager
-	$pager = pager($category->stat_topics, $skip, $end, '/?skip=');
-	$tpl_cachable->assignGlobal(array(
-		'pager-next' => $pager['next'],
-		'pager-prev' => $pager['prev'],
-		'pager-numeric' => $pager['pages']
-	));
-
-	$cache_handle = fopen('cache/index/' . $lang . '_' . $skip . '.html', 'wb');
-	fwrite($cache_handle, $tpl_cachable->getOutputContent());
-	fclose($cache_handle);
-
-	if (!file_exists('cache/index/right.html')) {
-
-		$tpl_cachable = new TemplatePower('modules/index/index-side.tpl');
-		$tpl_cachable->prepare();
-
-		$tpl_cachable->newBlock('cindex-right');
-
-
-		$articles = $db->get_results("
-			SELECT
-				`pages`.`id` AS `id`,
-				`pages`.`title` AS `title`,
-				`pages`.`text` AS `text`,
-				`pages`.`intro` AS `intro`,
-				`pages`.`strid` AS `strid`,
-				`pages`.`sm_avatar` AS `avatar`,
-				`users`.`nick` AS `nick`,
-				`users`.`level` AS `level`
-			FROM
-				`cat`,
-				`pages`,
-				`users`
-			WHERE
-				`pages`.`category` = `cat`.`id` AND
-				`cat`.`isblog`!='0' AND
-				`users`.`id` = `pages`.`author`
-			ORDER BY
-				`pages`.`id` DESC
-			LIMIT
-				0,3");
-
-		foreach ($articles as $article) {
-
-			$tpl_cachable->newBlock('index-blogs-node');
-
-			if (!empty($article->intro)) {
-				$article->text = $article->intro;
-			} else {
-				$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
-			}
-
-			$av = '';
-			if (!empty($article->avatar)) {
-				$av = '<a href="/read/' . $article->strid . '" class="av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
-			}
-
-			$tpl_cachable->assign(array(
-				'node-url' => '/read/' . $article->strid,
-				'title' => textlimit($article->title, 26, '...'),
-				'date' => $date,
-				'intro' => textlimit(strip_tags(trim(str_replace('&nbsp;', ' ', $article->text))), 90),
-				'av' => $av
-			));
-		}
-
-		$list_cats = array(
-			'games' => 81,
-			'movies' => 80,
-			'music' => 323
-		);
-
-		foreach ($list_cats as $cat_type => $cat_id) {
-
-			$articles = $db->get_results("
-				SELECT
-					`pages`.`id` AS `id`,
-					`pages`.`title` AS `title`,
-					`pages`.`sm_avatar` AS `avatar`,
-					`pages`.`text` AS `text`,
-					`pages`.`strid` AS `strid`,
-					`pages`.`intro` AS `intro`,
-					`users`.`nick` AS `nick`,
-					`users`.`level` AS `level`
-				FROM
-					`pages`,
-					`users`
-				WHERE
-					`pages`.`category` = " . $cat_id . " AND
-					`users`.`id` = `pages`.`author`
-				ORDER BY
-					`pages`.`id` DESC
-				LIMIT
-					0,3");
-
-			foreach ($articles as $article) {
-
-				$tpl_cachable->newBlock('index-' . $cat_type . '-node');
-
-				if (!empty($article->intro)) {
-					$article->text = $article->intro;
-				} else {
-					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
-				}
-
-				$av = '';
-				if (!empty($article->avatar)) {
-					$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
-				}
-
-				$tpl_cachable->assign(array(
-					'node-url' => '/read/' . $article->strid,
-					'title' => $article->title,
-					'date' => $date,
-					'intro' => textlimit(strip_tags(trim(str_replace(array('Spēles nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
-					'av' => $av
-				));
-			}
-		}
-
-		file_put_contents('cache/index/right.html', $tpl_cachable->getOutputContent());
 	}
 }
 
-$tpl->assignGlobal('index-cachable', file_get_contents('cache/index/' . $lang . '_' . $skip . '.html'));
-$tpl->assignGlobal('index-right', file_get_contents('cache/index/right.html'));
 $tpl->assignGlobal('index-log', get_index_events());
 
 $tpl->newBlock('meta-description');

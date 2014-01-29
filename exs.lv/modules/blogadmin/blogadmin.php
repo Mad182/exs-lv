@@ -120,7 +120,6 @@ if (!$auth->ok) {
 				}
 			}
 
-			build_latest();
 			redirect('/read/' . $strid);
 		}
 	}
