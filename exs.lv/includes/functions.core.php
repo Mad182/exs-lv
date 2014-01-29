@@ -761,18 +761,26 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
  * @return string Embeddable HTML tweet
  */
 function embed_twitter($params) {
-	global $m;
+	global $m, $tpl_options;
 
-	if (($tweet_html = $m->get('tweet_' . $params[5])) === false) {
+	//embedded tweet width
+	$maxwidth = 400;
+	if ($tpl_options === 'no-left') {
+		$maxwidth = 520;
+	}
+
+	//read from cache, get from api if not in there
+	if (($tweet_html = $m->get('tweet_' . $params[5] . '_' . $maxwidth)) === false) {
 		$tweet_html = $params[0];
-		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id='.$params[5].'&align=center&maxwidth=400');
-		if(!empty($response)) {
+
+		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id=' . $params[5] . '&align=center&maxwidth=' . $maxwidth);
+		if (!empty($response)) {
 			$tweet = json_decode($response);
-			if(empty($tweet->error) && !empty($tweet->html)) {
+			if (empty($tweet->error) && !empty($tweet->html)) {
 				$tweet_html = $tweet->html;
 			}
 		}
-		$m->set('tweet_' . $params[5], $tweet_html, false, 1800);
+		$m->set('tweet_' . $params[5] . '_' . $maxwidth, $tweet_html, false, 1800);
 	}
 
 	return $tweet_html;
