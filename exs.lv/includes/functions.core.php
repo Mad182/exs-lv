@@ -744,11 +744,42 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
 	}
 
+	/* auto embed twitter posts */
+	if (!$disable_embed && strpos($txt, 'twitter') !== false) {
+
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt);
+	}
+
 	return $txt;
 }
 
-/* adreses, kurām nelikt nofollow tagu */
+/**
+ * preg_replace callback function for Tweet embedding
+ * Uses mecache to store cached HTML
+ *
+ * @param array $params
+ * @return string Embeddable HTML tweet
+ */
+function embed_twitter($params) {
+	global $m;
 
+	if (($tweet_html = $m->get('tweet_' . $params[5])) === false) {
+		$tweet_html = $params[0];
+		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id='.$params[5].'&align=center');
+		if(!empty($response)) {
+			$tweet = json_decode($response);
+			if(empty($tweet->error) && !empty($tweet->html)) {
+				$tweet_html = $tweet->html;
+			}
+		}
+	}
+
+	return $tweet_html;
+}
+
+/**
+ * adreses, kurām nelikt nofollow tagu
+ */
 function get_dofollow_sites() {
 	global $db, $m, $dofollow_sites;
 	if (empty($dofollow_sites)) {
