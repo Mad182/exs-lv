@@ -2,9 +2,9 @@
 
 /**
  * Lietotāja autorizācija un globāls aktīvā lietotāja objekts ($auth)
- * 
+ *
  * MOBILĀ VERSIJA (atzīmē ka lietotājs ir ielogojies m. versijā)
- * 
+ *
  * paroles tiek glabātas izmantojot bcrypt
  */
 require(LIB_PATH . '/bcrypt/lib/password.php');
@@ -37,7 +37,6 @@ class Auth {
 		$this->vote_today = 0;
 		$this->block_cs = 0;
 		$this->showsig = 1;
-		$this->mobile = 1;
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->nick = "Guest";
 		$this->ok = false;
@@ -49,6 +48,7 @@ class Auth {
 		}
 		$this->check_session();
 		$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
+		$this->mobile = 1;
 		return $this->ok;
 	}
 
