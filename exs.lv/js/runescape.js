@@ -76,29 +76,5 @@ $(document).ready(function () {
             elem.fadeTo(250, 1);
         });
         return false;
-    });
-    
-    /* rakstu saraksta atjaunošana sākumlapā */
-    /*$('.news-col-newest li').on('click', 'a', function(e) {
-        $pagelist = $(this).parent().parent().parent();
-        $.getJSON('/?type=newest&page=3&_=1', function(response) {                
-            if (response.status == 'success') {
-                $pagelist.wrap('<span>').parent().html(response.content);
-            }
-        });
-        e.preventDefault();
-    });*/
-    
-    $('.showph').live('click',function() {			
-        $(this).parent().siblings('.ph-hidden').toggle(200);
-        $(this).parent().css('display','none');
-        return false;
-    });
-    
-    $('.show-ph-links').live('click',function() {			
-        $(this).parent().parent().parent().siblings('.ph-links').toggle(300);
-        $(this).parent().parent().siblings('.ph-title').css('color','red');
-        return false;
-    });
-    
+    });    
 });
