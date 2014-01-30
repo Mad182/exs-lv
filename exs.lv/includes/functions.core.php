@@ -3,10 +3,10 @@
 /**
  * functions.core.php
  * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
- * 
- * 
- * 
- * utf-8 ucfirst 
+ *
+ *
+ *
+ * utf-8 ucfirst
  */
 if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
@@ -19,7 +19,7 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
 /**
  * Aprekina un updato lietotja karmu
- * 
+ *
  * @param int $userid
  * @param bool $force_award
  */
@@ -97,7 +97,7 @@ function userlog($user, $action, $avatar = '', $multi = '') {
 
 /**
  * Pievieno lietotāja notifikāciju
- * 
+ *
  * @param int $user_id
  * @param int $type
  * @param int $place
@@ -751,7 +751,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		$txt = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/iseU', 'replace_spoiler("\\1")', $txt);
 	}
 
-	/* auto embed youtube videos */
+	// auto embed youtube videos
 	if (!$disable_embed && strpos($txt, 'youtu') !== false) {
 		if ($wide) {
 			$fn = 'get_youtube_video';
@@ -762,10 +762,14 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
 	}
 
-	/* auto embed twitter posts */
+	// auto embed twitter posts
 	if (!$disable_embed && strpos($txt, 'twitter') !== false) {
-
 		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt);
+	}
+
+	// auto embed spotify
+	if (!$disable_embed && strpos($txt, 'spotify') !== false) {
+		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_spotify', $txt);
 	}
 
 	return $txt;
@@ -802,6 +806,33 @@ function embed_twitter($params) {
 	}
 
 	return $tweet_html;
+}
+
+/**
+ * preg_replace callback function for Spotify
+ * Uses memcache to store cached HTML
+ *
+ * @param array $params
+ * @return string Embeddable HTML
+ */
+function embed_spotify($params) {
+	global $m;
+
+	//read from cache, get from api if not in there
+	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
+		$spotify_html = $params[0];
+
+		$response = curl_get('http://api.embed.ly/1/oembed?url='.urlencode(strip_tags($params[0])));
+		if (!empty($response)) {
+			$spotify = json_decode($response);
+			if (empty($spotify->error) && !empty($spotify->html)) {
+				$spotify_html = $spotify->html;
+			}
+		}
+		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 1800);
+	}
+
+	return $spotify_html;
 }
 
 /**
