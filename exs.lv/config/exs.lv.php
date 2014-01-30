@@ -25,3 +25,8 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0
 if (!empty($_SERVER['HTTPS'])) {
 	redirect("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 }
+
+/*
+ * exs.lv specific functions
+ */
+require(CORE_PATH . '/includes/functions.exs.php');
