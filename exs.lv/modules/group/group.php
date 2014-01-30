@@ -618,7 +618,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'url' => $url,
 					'text' => add_smile($record->text) . $append,
 					'add_deco' => $add_deco,
-					'date' => display_time_simple(strtotime($record->date)),
+					'date' => display_time(strtotime($record->date)),
 					'date-title' => date('d.m.Y. H:i', strtotime($record->date)),
 					'author' => $author,
 					'author-id' => $record->author,

@@ -284,7 +284,7 @@ if ($inprofile->id) {
 					'url' => $url,
 					'text' => add_smile($record->text) . $append,
 					'add_deco' => $add_deco,
-					'date' => display_time_simple(strtotime($record->date)),
+					'date' => display_time(strtotime($record->date)),
 					'date-title' => date('Y-m-d H:i:s', strtotime($record->date)),
 					'author' => $author,
 					'author-id' => $record->author,

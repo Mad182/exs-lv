@@ -339,7 +339,6 @@ if ($article) {
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process('dati/bildes/av_sm/');
-							destroy_cdir(CORE_PATH . '/dati/bildes/cache/');
 							unlink('dati/bildes/topic-av/' . $topicid . '.jpg');
 							$foo->clean();
 							$article->avatar = 'dati/bildes/avatari/' . $topicid . '.jpg';

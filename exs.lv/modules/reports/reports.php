@@ -333,7 +333,7 @@ else {
 
 	foreach ($query_reports as $report) {
 
-		$report->report_created_at = display_time_simple($report->report_created_at);
+		$report->report_created_at = display_time($report->report_created_at);
 
 		// sūdzības iesūtītājs
 		$report->reporter_nick = usercolor($report->reporter_nick, $report->reporter_level);

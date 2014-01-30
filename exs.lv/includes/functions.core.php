@@ -1068,17 +1068,6 @@ function date_lv($date, $time = '') {
 }
 
 function display_time($time) {
-	if ($time >= strtotime('today')) {
-		$out = 'Šodien, ' . date('G:i', $time);
-	} elseif ($time >= strtotime('yesterday')) {
-		$out = 'Vakar, ' . date('G:i', $time);
-	} else {
-		$out = date_lv('j. F, Y G:i', $time);
-	}
-	return $out;
-}
-
-function display_time_simple($time) {
 	if (!$time) {
 		$out = '';
 	} elseif ($time >= strtotime('today')) {
@@ -1112,22 +1101,6 @@ function alternator() {
 	}
 	$args = func_get_args();
 	return $args[($i++ % count($args))];
-}
-
-function destroy_cdir($dir = 'cache/index/') {
-	$mydir = opendir($dir);
-	while (false !== ($file = readdir($mydir))) {
-		if ($file != "." && $file != "..") {
-			chmod($dir . $file, 0777);
-			if (is_dir($dir . $file)) {
-				chdir('.');
-				destroy($dir . $file . '/');
-				rmdir($dir . $file) or DIE("couldn't delete $dir$file<br />");
-			} else
-				unlink($dir . $file) or DIE("couldn't delete $dir$file<br />");
-		}
-	}
-	closedir($mydir);
 }
 
 function pr($data) {
@@ -1861,14 +1834,6 @@ function update_awards($user) {
 	  );
 	  } */
 
-	/* gada balva */
-	if (in_array($user, array(1, 27431, 2145, 18865, 1822, 29176, 2222, 13411, 21450, 17953, 22051, 4506, 25709, 8872, 2145, 703, 6214, 31617, 8531, 10345))) {
-		$awards_list['gada-balva-2013'] = array(
-			'title' => 'Exs <a href="http://exs.lv/read/exs-lv-gada-nominacijas-2013-rezultati">gada balva 2013</a>',
-			'state' => 'active'
-		);
-	}
-
 	//ghetto games floorball
 	/* if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
 	  $awards_list['ghetto-floorball'] = array(
@@ -1888,14 +1853,6 @@ function update_awards($user) {
 	/* 	if(in_array($user,array(13004))) {
 	  $awards_list['db-1'] = array(
 	  'title' => 'aktīva dalība datubāzes tulkošanā',
-	  'state' => 'active'
-	  );
-	  } */
-
-
-	/* if(in_array($user,array(19162,15394,19308,22469,5356,1306,18558,21649,10869,19203,18557,7808,4137,18702,3605,13004))) {
-	  $awards_list['nhl-stars'] = array(
-	  'title' => 'Zvaigžņu spēles NHL turnīrā',
 	  'state' => 'active'
 	  );
 	  } */
@@ -2462,7 +2419,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			} else {
 				$out .= '<em>dzēsts</em>';
 			}
-			$out .= ' <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time_simple($val->date) . '</span>';
+			$out .= ' <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time($val->date) . '</span>';
 
 			//permalink
 			if (!$auth->mobile && !$intro) {

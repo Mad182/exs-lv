@@ -60,7 +60,7 @@ if (!$warns) {
 
 	foreach ($warns as $warn) {
 
-		$warn->warn_created_at = display_time_simple(strtotime($warn->warn_created_at));
+		$warn->warn_created_at = display_time(strtotime($warn->warn_created_at));
 
 		// sodītais lietotājs
 		$warn->offender_nick = usercolor($warn->offender_nick, $warn->offender_level);

@@ -99,7 +99,7 @@ if ($resps) {
 		if ($auth->ok && $auth->id != $resp->author && isset($_GET['url'])) {
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 		}
-		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time_simple($resp->date);
+		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time($resp->date);
 
 		$out .= '</p>';
 		if ($resp->mb_removed == 1) {

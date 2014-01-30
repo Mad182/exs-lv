@@ -340,7 +340,7 @@ if (!$auth->ok) {
 						$tpl->assign(array(
 							'pm-title' => strip_tags($pm->title),
 							'pm-id' => $pm->id,
-							'pm-date' => display_time_simple(strtotime($pm->date)),
+							'pm-date' => display_time(strtotime($pm->date)),
 							'to' => $from,
 							'pm-read' => $pm->is_read,
 							'type' => $type
@@ -508,7 +508,7 @@ if (!$auth->ok) {
 						$tpl->assign(array(
 							'pm-title' => wordwrap(textlimit(strip_tags($pm->title), 48, '...'), 20, "\n", 1),
 							'pm-id' => $pm->id,
-							'pm-date' => display_time_simple(strtotime($pm->date)),
+							'pm-date' => display_time(strtotime($pm->date)),
 							'from' => $from,
 							'pm-read' => $pm->is_read,
 							'type' => $type

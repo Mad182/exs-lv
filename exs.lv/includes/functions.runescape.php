@@ -145,7 +145,7 @@ function get_runescape_news($force = false) {
 
                 }
                 
-                $news_date      = display_time_simple(strtotime($single->pubDate));
+                $news_date      = display_time(strtotime($single->pubDate));
                 $news_category  = translate_category((string)$single->category);
                 
                 // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes

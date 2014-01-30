@@ -33,7 +33,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					$remove = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/remove/' . $warn->id . '">noņemt</a>]';
 				}
 				$tpl->assign(array(
-					'date' => display_time_simple(strtotime($warn->created)),
+					'date' => display_time(strtotime($warn->created)),
 					'reason' => add_smile($warn->reason),
 					'remove_reason' => add_smile($warn->remove_reason),
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
@@ -77,7 +77,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
 					'aurl' => mkurl('user', $from->id, $from->nick),
 					'reason' => add_smile($ban->reason),
-					'date' => display_time_simple($ban->time),
+					'date' => display_time($ban->time),
 					'length' => strTime($ban->length),
 				));
 			}

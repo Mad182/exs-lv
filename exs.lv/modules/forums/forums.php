@@ -140,7 +140,7 @@ if (!empty($cats)) {
 			if (!empty($topic)) {
 				$author = get_user($topic->author);
 				$tpl->assign(array(
-					'date' => display_time_simple(strtotime($topic->bump)),
+					'date' => display_time(strtotime($topic->bump)),
 					'topic' => '<a href="/read/' . $topic->strid . '" title="' . htmlspecialchars($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
 					'author' => '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>'
 				));

@@ -49,7 +49,7 @@ function comments_block($parent = 'null', $ajax = false) {
 					'nick' => $comment->nick,
 					'text' => add_smile($comment->text),
 					'avatar' => $avatar,
-					'date' => display_time_simple($comment->time),
+					'date' => display_time($comment->time),
 				));
 			}
 		} else {
@@ -87,7 +87,7 @@ function comments_block($parent = 'null', $ajax = false) {
 
 				$avatar = get_avatar($comment, 's');
 
-				$json['comment'][] = '<img src="' . $avatar . '" class="av" /><p class="comment-author"><strong>' . $comment->nick . '</strong> ' . display_time_simple($comment->time) . '</p>' . add_smile($comment->text);
+				$json['comment'][] = '<img src="' . $avatar . '" class="av" /><p class="comment-author"><strong>' . $comment->nick . '</strong> ' . display_time($comment->time) . '</p>' . add_smile($comment->text);
 			}
 			$json['id'] = $comment->id;
 		}
