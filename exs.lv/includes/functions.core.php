@@ -97,13 +97,6 @@ function userlog($user, $action, $avatar = '', $multi = '') {
 
 /**
  * Pievieno lietotāja notifikāciju
- *
- * @param int $user_id
- * @param int $type
- * @param int $place
- * @param string $url
- * @param string $info
- * @return int Status
  */
 function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	global $db, $lang;
@@ -498,8 +491,9 @@ function mkurl($type, $id, $title, $add = '') {
 	return '/' . $type . '/' . $id . '-' . mkslug($title) . $add;
 }
 
-/* removes from text youtube links and replaces with video titles */
-
+/**
+ * Removes from text youtube links and replaces with video titles
+ */
 function youtube_title($text) {
 	if (strpos($text, 'youtu') !== false) {
 		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
@@ -833,7 +827,7 @@ function embed_spotify($params) {
 }
 
 /**
- * adreses, kurām nelikt nofollow tagu
+ * Adreses, kurām nelikt nofollow tagu
  */
 function get_dofollow_sites() {
 	global $db, $m, $dofollow_sites;
@@ -846,8 +840,9 @@ function get_dofollow_sites() {
 	return $dofollow_sites;
 }
 
-/* atgriež masīvu ar bloķētiem mājas lapu domēniem */
-
+/**
+ * Atgriež masīvu ar bloķētiem mājas lapu domēniem
+ */
 function get_blacklisted_sites() {
 	global $db, $m, $blacklisted_sites;
 	if (empty($blacklisted_sites)) {
@@ -877,10 +872,7 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 	/* repleisojam bieži pieminētu lietotāju vārdus, lai būtu mazāk kļūdu */
 	$underscore_names = array(
 		'@Avril Lavigne' => '@Avril_Lavigne',
-		'@Gāes Žīdus' => '@Gāes_Žīdus',
 		'@Hidden driver' => '@Hidden_driver',
-		'@Ice Cold' => '@Ice_Cold',
-		'@Jayden James' => '@Jayden_James',
 		'@Maadinsh' => '@mad',
 		'@S J' => '@S_J'
 	);
@@ -3148,6 +3140,10 @@ function translate_genres($en) {
 	return $en;
 }
 
+/**
+ * Masīvs ar lietotājiem, kuriem sodien ir cakeday
+ * id => nick
+ */
 function get_cakeday() {
 	global $db, $m;
 
@@ -3167,8 +3163,9 @@ function get_cakeday() {
 	return $out;
 }
 
-/* atgriež vērtību vai tukšumu, ja $val nav definēts */
-
+/**
+ * Atgriež vērtību vai tukšumu, ja $val nav definēts
+ */
 function esr(&$val, $empty = '') {
 	if (!empty($val)) {
 		return $val;
