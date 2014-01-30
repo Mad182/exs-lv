@@ -538,12 +538,9 @@ function embed_youtube($matches, $wide = 0) {
 		$height = 290;
 	}
 
-	if ($auth->ok === true) {
-		$videocode = htmlspecialchars('<div class="c"></div><div class="auto-embed" style="width:' . $width . 'px;"><iframe class="youtube-player" type="text/html" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div> ');
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
-	} else {
-		return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
-	}
+	$videocode = htmlspecialchars('<div class="c"></div><div class="auto-embed" style="width:' . $width . 'px;"><iframe class="youtube-player" type="text/html" width="' . $width . '" height="' . $height . '" src="http://www.youtube.com/embed/' . $safe . '?wmode=transparent&autoplay=1&origin=' . urlencode('http://exs.lv') . '" frameborder="0"></iframe><br /><a title="Atvērt video mājas lapā" href="http://www.youtube.com/watch?v=' . $safe . '" target="_blank" rel="nofollow">YouTube video</a> <strong>' . $title . '</strong><div class="c"></div></div> ');
+
+	return '<div><div class="auto-embed-placeholder"><img width="240" height="180" src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" alt="' . $title . '" /><a class="play-button" onclick="$(this).parent().parent().html(\'' . $videocode . '\');return false;" title="Atskaņot ' . $title . '" rel="nofollow" href="http://www.youtube.com/watch?v=' . $safe . '"><span><span>' . $title . '</span></span></a></div></div>';
 }
 
 function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
@@ -822,7 +819,7 @@ function embed_spotify($params) {
 	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
 		$spotify_html = $params[0];
 
-		$response = curl_get('http://api.embed.ly/1/oembed?url='.urlencode(strip_tags($params[0])));
+		$response = curl_get('http://api.embed.ly/1/oembed?url=' . urlencode(strip_tags($params[0])));
 		if (!empty($response)) {
 			$spotify = json_decode($response);
 			if (empty($spotify->error) && !empty($spotify->html)) {
