@@ -33,14 +33,7 @@ function get_runescape_news($force = false) {
         $m->set('runescape-news', time(), false, 600);
 
         // nolasa jaunākās ziņas no runescape.com
-        $news_addr = 'http://services.runescape.com/m=news/latest_news.rss';    
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $news_addr);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 3);
-        $news = curl_exec($curl);
-        curl_close($curl);
+        $news = curl_get('http://services.runescape.com/m=news/latest_news.rss');
         
         // cache failā esošo informāciju pārraksta tikai tad,
         // ja no runescape.com tādu izdevās atlasīt;
@@ -240,7 +233,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
 
 
 /**
- *  Atgriež iztulkotu/pārveidotu RuneScape jaunumu kategorijas nosaukumu.
+ *  Iztulko jaunumu kategoriju.
  *
  *  (Tiek izsaukta get_runescape_news() funkcijā.)
  *
