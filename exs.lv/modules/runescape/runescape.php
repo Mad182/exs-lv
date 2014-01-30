@@ -15,7 +15,6 @@ $types_of_pages = array('date', 'bump');
 
 foreach ($types_of_pages as $type) {
 
-    // izdrukā lapā jaunākos RuneScape rakstus
     $runescape_pages = $db->get_results("
         SELECT
             `pages`.*,    

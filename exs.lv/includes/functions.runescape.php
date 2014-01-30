@@ -70,7 +70,7 @@ function get_runescape_news($force = false) {
                     $mb_text .= '<p class="rsmb-text">'.$single->description.'<br>';
                     $mb_text .= 'Oriģinālraksts: <a href="'.$single->link.'" rel="nofollow" target="_blank">';
                     $mb_text .= $single->link.'</a></p>';
-                    $mb_text .= '<p class="rsmb-fade">Šis ieraksts ir uzģenerēts automātiski šī jaunuma apspriešanai.</p>';
+                    $mb_text .= '<p class="rsmb-fade">Šis ieraksts ir izveidots automātiski šī jaunuma apspriešanai.</p>';
                     
                     // izveido jaunu miniblogu
                     $insert = $db->query("INSERT INTO `miniblog`
