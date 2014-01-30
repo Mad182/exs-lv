@@ -33,3 +33,37 @@ function get_blog_latest($category_id, $force = false) {
 	}
 	return $html;
 }
+
+/**
+ * Movie genres
+ */
+function translate_genres($en) {
+	$genres = array(
+		'Action' => 'Asa sižeta',
+		'Adventure' => 'Piedzīvojumi',
+		'Animation' => 'Animācijas',
+		'Biography' => 'Biogrāfija',
+		'Comedy' => 'Komēdija',
+		'Crime' => 'Noziegumu',
+		'Drama' => 'Drāma',
+		'Documentary' => 'Dokumentāla',
+		'Family' => 'Ģimenes',
+		'Fantasy' => 'Fantāzija',
+		'History' => 'Vēsturiskas',
+		'Horror' => 'Šausmu',
+		'Music' => 'Muzikāla',
+		'Mystery' => 'Mistērija',
+		'Reality-TV' => 'Realitātes TV',
+		'Romance' => 'Romantika',
+		'Sci-Fi' => 'Zinātniskā fantastika',
+		'Sport' => 'Sports',
+		'Thriller' => 'Trilleris',
+		'War' => 'Karš',
+		'Western' => 'Vesterns'
+	);
+
+	if (!empty($genres[$en])) {
+		return $genres[$en];
+	}
+	return $en;
+}

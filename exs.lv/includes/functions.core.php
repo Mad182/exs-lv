@@ -258,8 +258,9 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 	return $out;
 }
 
-/* apakšprojektam specifiskas lietotāju tiesības */
-
+/**
+ * Apakšprojektam specifiskas lietotāju tiesības
+ */
 function get_site_access() {
 	global $db, $m, $lang;
 
@@ -281,8 +282,9 @@ function get_site_access() {
 	return $site_access;
 }
 
-/* atgriež niku ar tam atbilstošo krāsu pēc lietotāja tiesībām */
-
+/**
+ * Atgriež niku ar tam atbilstošo krāsu pēc lietotāja tiesībām
+ */
 function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	global $busers, $online_users, $site_access, $auth, $cday_users, $img_server;
 	$star = '';
@@ -323,8 +325,9 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	return $nick . $cakeday;
 }
 
-/* parbauda vai aktīvais lietotājs ir moderators (vai admins) */
-
+/**
+ * Parbauda vai aktīvais lietotājs ir moderators (vai admins)
+ */
 function im_mod() {
 	global $auth;
 	if ($auth->ok === true && ($auth->level == 1 || $auth->level == 2)) {
@@ -334,8 +337,9 @@ function im_mod() {
 	}
 }
 
-/* parbauda vai aktīvais lietotājs ir atvērtās sadaļas moderators */
-
+/**
+ * Parbauda vai aktīvais lietotājs ir atvērtās sadaļas moderators
+ */
 function im_cat_mod($id = null) {
 	global $auth, $category;
 	if (!empty($id)) {
@@ -1760,7 +1764,9 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 	return $out;
 }
 
-//rekursivi atrod minibloga atbildes limeni, pec id
+/**
+ * Rekursīvi atrod minibloga atbildes limeni, pec id
+ */
 function get_mb_level($mbid, $level = 0) {
 	global $db;
 	$mb = $db->get_var("SELECT `reply_to` FROM `miniblog` WHERE `id` = '" . intval($mbid) . "'");
@@ -1771,6 +1777,9 @@ function get_mb_level($mbid, $level = 0) {
 	return $level;
 }
 
+/**
+ * Vienskaitļa/daudzskaitļa vārdi latviešu valodā
+ */
 function lv_dsk($num = 0, $single = 'atbilde', $multi = 'atbildes') {
 	if ($num == 1 || (substr($num, -1) == '1' && substr($num, -2) != '11')) {
 		return $single;
@@ -1792,6 +1801,12 @@ function get_friends($user_id, $force = false) {
 	return $friends;
 }
 
+/**
+ * Uzlēcošais paziņojums, parādās lietotājam vienu reizi
+ *
+ * @param string $message
+ * @param string $class (success/error)
+ */
 function set_flash($message, $class = 'error') {
 	$_SESSION['flash_message'] = array(
 		'message' => $message,
@@ -2325,6 +2340,10 @@ function get_avatar($user, $size = 'm') {
 	}
 }
 
+/**
+ * Ja galerijas thumbnail izmērs ir nepareizs,
+ * uzģenerē jaunu no lielā attēla
+ */
 function remake_thb($large, $thb) {
 	$thb = CORE_PATH . '/' . $thb;
 	$large = CORE_PATH . '/' . $large;
@@ -2332,37 +2351,6 @@ function remake_thb($large, $thb) {
 	if ($thb_size[0] != 58) {
 		$c1 = `convert $large -resize '58x58^' -gravity center -crop 58x58+0+0 +repage -strip $thb`;
 	}
-}
-
-function translate_genres($en) {
-	$genres = array(
-		'Action' => 'Asa sižeta',
-		'Adventure' => 'Piedzīvojumi',
-		'Animation' => 'Animācijas',
-		'Biography' => 'Biogrāfija',
-		'Comedy' => 'Komēdija',
-		'Crime' => 'Noziegumu',
-		'Drama' => 'Drāma',
-		'Documentary' => 'Dokumentāla',
-		'Family' => 'Ģimenes',
-		'Fantasy' => 'Fantāzija',
-		'History' => 'Vēsturiskas',
-		'Horror' => 'Šausmu',
-		'Music' => 'Muzikāla',
-		'Mystery' => 'Mistērija',
-		'Reality-TV' => 'Realitātes TV',
-		'Romance' => 'Romantika',
-		'Sci-Fi' => 'Zinātniskā fantastika',
-		'Sport' => 'Sports',
-		'Thriller' => 'Trilleris',
-		'War' => 'Karš',
-		'Western' => 'Vesterns'
-	);
-
-	if (!empty($genres[$en])) {
-		return $genres[$en];
-	}
-	return $en;
 }
 
 /**
