@@ -1067,6 +1067,12 @@ function date_lv($date, $time = '') {
 	return $date;
 }
 
+/**
+ * Datuma attēlošanas funkcija
+ *
+ * @param int $time Unix timestamp
+ * @return string Human readable datetime
+ */
 function display_time($time) {
 	if (!$time) {
 		$out = '';
@@ -1076,19 +1082,6 @@ function display_time($time) {
 		$out = 'Vakar, ' . date('G:i', $time);
 	} else {
 		$out = date('d.m.Y. H:i', $time);
-	}
-	return $out;
-}
-
-function display_date_simple($time) {
-	if (!$time) {
-		$out = '';
-	} elseif ($time >= strtotime('today')) {
-		$out = 'Šodien';
-	} elseif ($time >= strtotime('yesterday')) {
-		$out = 'Vakar';
-	} else {
-		$out = date('d.m.Y.', $time);
 	}
 	return $out;
 }
