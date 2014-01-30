@@ -3774,6 +3774,7 @@ li.view_more {
 #report-txtarea {
 	width:400px;
 	height:120px;
+    border:1px solid #DFD6D6
 }
 .report-error, .report-response, .report-response-good {
 	font-weight:700;	
