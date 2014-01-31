@@ -108,7 +108,7 @@ tinymce.init({
             <a href="#" class="dropdown">RS Mod</a>
             <span class="arrow-down"></span>
             <ul>
-                <li><a href="/facts_admin/?type=rs">RuneScape fakti</a></li>
+                <li><a href="/rsfacts">RuneScape fakti</a></li>
                 <li><a href="#">Quests</a>
                     <span class="arrow-right"></span>
                     <ul class="flip-side">

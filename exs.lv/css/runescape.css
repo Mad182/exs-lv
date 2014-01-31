@@ -542,6 +542,30 @@ ul.nav-right {
 		margin-top:0
 	}
     
+/* faktu pārvaldība */
+table.facts-table th, table.facts-table td {
+    padding:5px 10px;
+}
+table.facts-table th {
+    font-weight:bold
+}
+table.facts-table td {
+    font-size:11px;
+    background:#fff
+}
+table.facts-table .row-center {
+    text-align:center
+}
+table.facts-table .row-center img {
+    position: relative;
+    top: 3px;
+}
+table.facts-table .row-counter {
+    padding:5px;
+    font-weight:bold;
+    text-align:center
+}
+
 /* lappušu saraksta stili */
 ul.pagelist {
     display:block;
