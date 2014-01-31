@@ -45,7 +45,7 @@ body {
     position:relative;
     margin-top:31px;
     padding:0 0 10px 0;
-    background:#CECFCF url('/bildes/runescape/pattern-1.png');    
+    background:#CECFCF url('/bildes/runescape/pattern-wrapper.png');    
     box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
     -moz-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
     -webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
@@ -323,7 +323,7 @@ ul.nav-right {
 /* lapas šaurās kolonnas */
 #rs_columns {
     overflow:auto;
-    background-image:url('/bildes/runescape/squairy_light.png');
+    background-image:url('/bildes/runescape/pattern-cols.png');
 }
 .box {
     background:#FCFCFD
