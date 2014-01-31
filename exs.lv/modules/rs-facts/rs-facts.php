@@ -10,11 +10,6 @@ if ($lang != 9) {
     set_flash('Pieeja sadaļai liegta!');
 	redirect();
 }
-// 3217 - Mahjarrat
-if (!im_mod() && !in_array($auth->id, array(3217))) {
-    set_flash('Pieeja sadaļai liegta!');
-	redirect();
-}
 
 
 
@@ -23,26 +18,34 @@ if (!im_mod() && !in_array($auth->id, array(3217))) {
  */
 if (isset($_GET['_'])) {
 
-	$facts_count = $db->get_var("SELECT count(*) FROM `rs_facts` WHERE `deleted_by` = 0 ");
-    
-	if ($facts_count > 0) {
+    $facts_count = $db->get_var("SELECT count(*) FROM `rs_facts` WHERE `deleted_by` = 0 ");
+ 
+    if ($facts_count > 0) {
 
-		$rand = rand(0, $facts_count - 1);
-		$single_fact = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 LIMIT $rand, 1");
+        $rand = rand(0, $facts_count - 1);
+        $single_fact = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 LIMIT $rand, 1");
 
-		if ($single_fact) {
-			echo json_encode(array('state' => 'success', 'content' => $single_fact->text));
+        if ($single_fact) {
+            echo json_encode(array('state' => 'success', 'content' => $single_fact->text));
             exit;
-		}
-	}
-    echo json_encode(array('state' => 'error', 'content' => 'Piedod, neatradu nevienu RuneScape faktu! ;('));
+        }
+    }
+    
+    echo json_encode(array('state' => 'success', 'content' => 'Piedod, neatradu nevienu RuneScape faktu! ;('));
     exit;
+}
+
+
+// 3217 - Mahjarrat
+if (!im_mod() && !in_array($auth->id, array(3217))) {
+    set_flash('Pieeja sadaļai liegta!');
+	redirect();
 }
 
 
 
 // fakta dzēšana
-else if (isset($_GET['var1']) && $_GET['var1'] == 'delete' && 
+if (isset($_GET['var1']) && $_GET['var1'] == 'delete' && 
          isset($_GET['var2']) && is_numeric($_GET['var2'])) {
          
     if (!isset($_GET['val']) || $_GET['val'] != $auth->xsrf) {

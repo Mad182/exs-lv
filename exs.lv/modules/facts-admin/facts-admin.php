@@ -13,10 +13,13 @@ $tpl->newBlock('facts_admin-tabs');
 
 // faktiem ir divi veidi: rs un gaming; laicīgi jāfiksē, kurš veids tiek skatīts, 
 // lai varētu izmantot pareizo datubāzes tabulu
-$fact_type = (isset($_GET['type']) && $_GET['type'] == 'rs') ? 'facts_rs' : 'facts';
-$fact_link = (isset($_GET['type']) && $_GET['type'] == 'rs') ? '?type=rs' : '?type=gaming';
+$fact_type = 'facts';
+$fact_link = '?type=gaming';
 
-
+if (isset($_GET['type']) && $_GET['type'] == 'rs') {
+    redirect('http://runescape.exs.lv/rsfacts');
+    exit;
+}
 
 // pievienotā fakta dzēšana
 if (isset($_GET['delete']) && isset($_GET['type'])) {
