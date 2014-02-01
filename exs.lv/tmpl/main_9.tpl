@@ -109,6 +109,7 @@ tinymce.init({
             <span class="arrow-down"></span>
             <ul>
                 <li><a href="/rsfacts">RuneScape fakti</a></li>
+                <li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
                 <!-- START BLOCK : hidden-rs-menu -->
                 <li><a href="#">Quests</a>
                     <span class="arrow-right"></span>
