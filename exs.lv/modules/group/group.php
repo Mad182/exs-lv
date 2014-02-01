@@ -369,7 +369,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$tpl->assign('pay', '<p><a href="' . $group_link . '/submitpay">Pieteikties grupā</a></p>');
 		}
 
-		$members = $db->get_col("SELECT user FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
+		$members = $db->get_col("SELECT user, moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
 		if (count($members) < 16) {
 			$members[] = $group->owner;
 		}
