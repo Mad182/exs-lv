@@ -109,6 +109,7 @@ tinymce.init({
             <span class="arrow-down"></span>
             <ul>
                 <li><a href="/rsfacts">RuneScape fakti</a></li>
+                <!-- START BLOCK : hidden-rs-menu -->
                 <li><a href="#">Quests</a>
                     <span class="arrow-right"></span>
                     <ul class="flip-side">
@@ -120,6 +121,7 @@ tinymce.init({
                 <li><a href="#">Placeholders</a></li>
                 <li><a href="#">Ceļveži</a></li>
                 <li><a href="#">Aktivitātes</a></li>
+                <!-- END BLOCK : hidden-rs-menu -->
                 <li>&nbsp;</li>
             </ul>
         </li>

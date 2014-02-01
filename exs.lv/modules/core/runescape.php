@@ -39,8 +39,9 @@ if ($auth->ok) {
 			$tpl->assign('active-mod', ' class="selected"');
 		}
 
-		// RS Mod izvēlnes iezīmēšana
-		if ($auth->id == 115) {
+		// RS Mod izvēlnes iezīmēšana;
+        // 3217 - Mahjarrat
+		if ($auth->id == 115 || $auth->id == 3217) {
 			$tpl->newBlock('rsmod-nav');
 		}
 	}
