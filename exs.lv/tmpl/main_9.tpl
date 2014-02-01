@@ -102,7 +102,6 @@ tinymce.init({
         <li{cat-sel-661}><a href="/rs">Forums</a></li>
     </ul>
     <ul class="droplist nav-right">
-        <!-- START BLOCK : mod-nav -->
         <!-- START BLOCK : rsmod-nav -->
         <li{active-rsmod}>
             <a href="#" class="dropdown">RS Mod</a>
@@ -127,6 +126,7 @@ tinymce.init({
             </ul>
         </li>
         <!-- END BLOCK : rsmod-nav -->
+        <!-- START BLOCK : mod-nav -->
         <li{active-mod}>
             <a href="#" class="dropdown">Mod</a>
             <span class="arrow-down"></span>

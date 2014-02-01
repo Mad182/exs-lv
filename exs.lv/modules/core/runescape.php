@@ -29,20 +29,19 @@ if ($category->module == 'group') {
 
 if ($auth->ok) {
 	$tpl->newBlock('auth-nav');
+    
+    // RS Mod izvēlne
+    // 3217 - Mahjarrat
+    if (im_mod() || $auth->id == 3217) {
+        $tpl->newBlock('rsmod-nav');
+    }
 
-	// moderatoriem būs redzamas administrēšanas sadaļas (Mod, RS Mod)
 	if (im_mod()) {
 
-		// Mod izvēlnes iezīmēšana
+		// Mod izvēlne
 		$tpl->newBlock('mod-nav');
 		if (in_array($category->textid, array('banned', 'crows', 'reports', 'checkform', 'log'))) {
 			$tpl->assign('active-mod', ' class="selected"');
-		}
-
-		// RS Mod izvēlnes iezīmēšana;
-        // 3217 - Mahjarrat
-		if ($auth->id == 115 || $auth->id == 3217) {
-			$tpl->newBlock('rsmod-nav');
 		}
 	}
 }
