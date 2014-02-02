@@ -163,18 +163,13 @@ $(document).ready(function () {
 		return false;
 	});
 	
-	/* sūdzību aktualizēšanas/arhivēšanas poga */
+	/* sūdzību arhivēšanas poga */
 	$('.report-archive').on('click', function(e) {		
 		var element = $(this);
 		$.getJSON( $(this).attr('href') + '?_=1', function(response) {
 			if (response.state == 'success') {				
-				$(element).attr('href', response.href).text(response.text);
-				if ( $(element).hasClass('danger') ) {
-					$(element).removeClass('danger').addClass('primary');
-				}
-				else {
-					$(element).removeClass('primary').addClass('danger');
-				}
+				$(element).attr('href', '#').text(response.text);
+                $(element).removeClass('primary').removeClass('report-archive').addClass('danger');
 			}
 		});	
 		e.preventDefault();

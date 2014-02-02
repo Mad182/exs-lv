@@ -4,16 +4,19 @@
 	<li><a href="/reports/articles"{tab-articles}>Raksti{count-articles}</a></li>
 	<li><a href="/reports/gallery-comments"{tab-gallery-comments}>Bildes{count-gcomments}</a></li>
 </ul>
-<!-- START BLOCK : view-archived-reports -->
-<p id="archived_reports" class="{archive-active}"><a href="{archive-addr}" title="Arhivētie ziņojumi">Sadaļas arhivētie ziņojumi</a></p>
-<!-- END BLOCK : view-archived-reports -->
+
+<!-- START BLOCK : report-list-container -->
+
 <!-- START BLOCK : list-reports -->
-<table id="mod_list_table" style="width:95%">
+<h2>{report-title}</h2>
+<table id="mod_list_table" style="width:95%;margin-bottom:40px">
 	<tr class="">
 		<th style="width:25%">Iesaistītie</th>
 		<th style="width:48%">Pārkāpuma pamatojums</th>
 		<th style="width:20%;padding-left:2px;text-align:left">Iesniegšanas laiks</th>
+        <!-- START BLOCK : archive-button-header -->
 		<th style="width:7%">&nbsp;</th>
+        <!-- END BLOCK : archive-button-header -->
 	</tr>
 	<!-- START BLOCK : single-report -->
 	<tr>
@@ -45,18 +48,18 @@
 				<li class="view_more"><a href="/warns/{rule_breaker_id}">Skatīt brīdinājumus ({warn_count})</a></li>
 			</ul>
 		</td>
-		<td style="padding:7px 0">
-			<!-- START BLOCK : archive-button -->
+        <!-- START BLOCK : archive-button -->
+		<td style="padding:7px 0">			
 			<a href="/reports/remove/{report_id}" class="button primary report-archive">Arhivēt</a>
-			<!-- END BLOCK : archive-button -->
-			<!-- START BLOCK : activation-button -->
-			<a href="/reports/activate/{report_id}" class="button danger report-archive">Aktualizēt</a>
-			<!-- END BLOCK : activation-button -->
 		</td>
+        <!-- END BLOCK : archive-button -->
 	</tr>
 	<!-- END BLOCK : single-report -->
 </table>	
 <!-- END BLOCK : list-reports -->
+
 <!-- START BLOCK : no-reports-found -->
 <p class="no-reports"><strong>Nav nevienas {report-type}!</strong></p>
 <!-- END BLOCK : no-reports-found -->
+
+<!-- END BLOCK : report-list-container -->

@@ -3812,26 +3812,6 @@ li.view_more {
 	position:relative;
 	top:2px
 }
-#archived_reports {
-	margin: 5px 30px 0 20px;
-	background: #F3F4F6;
-	display: inline-block;
-	padding: 3px 11px;
-	border: 1px solid #E1E1E4;
-	border-radius: 3px;
-	font-size: 11px;
-	float:right
-}
-#archived_reports:hover {
-	background:#EAECF0
-}
-#archived_reports.active {
-	background:#DAE5FC;
-	border:1px solid #AFC3EE
-}
-#archived_reports a {
-	border-bottom:0
-}
 .report-outer-block {
 	float:left;
 	width:300px;
