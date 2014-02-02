@@ -42,7 +42,14 @@ if ($auth->ok && ($user->credit >= 5 || $owned)) {
 			$db->query("UPDATE `users` SET credit = credit-5, av_alt = '1', avatar = '$avrow->image' WHERE id = '$auth->id'");
 			redirect('/user/' . $auth->id);
 		} elseif ($avrow->user_id == $auth->id) {
-			$db->query("UPDATE `users` SET `av_alt` = '1', `avatar` = '$avrow->image' WHERE `id` = '$auth->id'");
+
+			// support for old avatars with one size
+			$av_alt = 0;
+			if (file_exists(CORE_PATH . '/dati/bildes/u_large/' . $avrow->image)) {
+				$av_alt = 1;
+			}
+
+			$db->query("UPDATE `users` SET `av_alt` = '$av_alt', `avatar` = '$avrow->image' WHERE `id` = '$auth->id'");
 			redirect('/user/' . $auth->id);
 		} else {
 			set_flash('Izvēlētais avatars jau ir aizņemts vai nepietiek exs kredīta!', 'error');
