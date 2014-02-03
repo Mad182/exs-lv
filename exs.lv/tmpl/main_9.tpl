@@ -92,10 +92,10 @@ tinymce.init({
         <li><a href="http://runescape.exs.lv" class="dropdown">runescape.exs.lv</a>
             <span class="arrow-down"></span>
             <ul>
-                <li><a href="http://exs.lv" target="_blank">exs.lv</a></li>
-                <li><a href="http://lol.exs.lv" target="_blank">lol.exs.lv</a></li>
-                <li><a href="http://rp.exs.lv" target="_blank">rp.exs.lv</a></li>
-                <li><a rel="nofollow" href="http://coding.lv" target="_blank">coding.lv</a></li>
+                <li><a href="http://exs.lv">exs.lv</a></li>
+                <li><a href="http://lol.exs.lv">lol.exs.lv</a></li>
+                <li><a href="http://rp.exs.lv">rp.exs.lv</a></li>
+                <li><a rel="nofollow" href="http://coding.lv">coding.lv</a></li>
                 <li>&nbsp;</li>
             </ul>
         </li>
@@ -357,6 +357,39 @@ tinymce.init({
 		<div class="box">
 			<div id="lat" class="ajaxbox">{latest-noscript}</div>
 		</div>
+        
+        <!-- START BLOCK : poll-box-->
+        <h3>Aptauja</h3>
+        <div class="box">
+            <p><strong>{poll-title}</strong></p>
+            <!-- START BLOCK : poll-answers-->
+            <ol class="poll-answers">
+                <!-- START BLOCK : poll-answers-node-->
+                <li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+                <!-- END BLOCK : poll-answers-node-->
+            </ol>
+            Balsojuši: {poll-totalvotes}<br />
+            <a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+            <!-- END BLOCK : poll-answers-->
+            <!-- START BLOCK : poll-questions-->
+            <form name="poll" method="post" action="">
+                <fieldset>
+                    <!-- START BLOCK : poll-error-->
+                    <p>{poll-error}</p>
+                    <!-- END BLOCK : poll-error-->
+                    <!-- START BLOCK : poll-options-->
+                    <ol id="poll-questions">
+                        <!-- START BLOCK : poll-options-node-->
+                        <li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+                        <!-- END BLOCK : poll-options-node-->
+                    </ol>
+                    <input type="submit" name="vote" value="Balsot!" class="button primary" />
+                    <!-- END BLOCK : poll-options-->
+                </fieldset>
+            </form>
+            <!-- END BLOCK : poll-questions-->
+        </div>
+        <!-- END BLOCK : poll-box-->
         
         <!-- START BLOCK : groups-l-list-->
 		<h3>Jaunākās grupas</h3>
