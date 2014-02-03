@@ -3579,10 +3579,10 @@ ul.taged {
 }
 
 /* MOD sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
-#mod_list_table {
+.mod-list-table {
 	margin:10px 20px
 }
-#mod_list_table th {
+.mod-list-table th {
 	font-weight:bold;
 	padding:8px 10px 8px 2px;
 	font-size:12px;
@@ -3590,28 +3590,30 @@ ul.taged {
 	color:#284C6D;
 	border-bottom:2px solid #404449
 }
-#mod_list_table td {
+.mod-list-table td {
 	padding:7px 10px;
 	border-bottom: 1px solid #EEF0F3;
 	font-size:11px
 }
-#mod_list_table .counter {
+.mod-list-table .counter {
 	font-weight:bold;
 	color: #235A96;
 	text-align:center;
 	padding:5px 0
 }
-.mod-table-list {
+
+
+.list-table {
 	margin:0;
 	padding:0;
 	list-style:none;
 }
-.mod-table-list li {
+.list-table li {
 	margin:3px 0 0 0;
 	padding:0;
 	background:transparent
 }
-.mod-table-list li .stronger {
+.list-table li .stronger {
 	color:#515152;
 	font-weight:bold;
 	margin-right:7px

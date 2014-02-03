@@ -9,7 +9,7 @@
 
 <!-- START BLOCK : list-reports -->
 <h2>{report-title}</h2>
-<table id="mod_list_table" style="width:95%;margin-bottom:40px">
+<table class="mod-list-table" style="width:95%;margin-bottom:40px">
 	<tr class="">
 		<th style="width:25%">Iesaistītie</th>
 		<th style="width:48%">Pārkāpuma pamatojums</th>
@@ -21,7 +21,7 @@
 	<!-- START BLOCK : single-report -->
 	<tr>
 		<td style="padding:7px 10px 7px 2px">
-			<ul class="mod-table-list">
+			<ul class="list-table">
 				<li><span class="stronger">Iesniedzis:</span>{reporter_nick}</li>
 				<li><span class="stronger">Pārkāpējs:</span>{rule_breaker_nick}</li>
 				<!-- START BLOCK : archived-by -->
@@ -43,7 +43,7 @@
 			<div class="report-full-content" style="display:none">{full-content}</div>
 		</td>
 		<td style="padding:7px 0 2px">
-			<ul class="mod-table-list">
+			<ul class="list-table">
 				<li>{report_created_at}</li>
 				<li class="view_more"><a href="/warns/{rule_breaker_id}">Skatīt brīdinājumus ({warn_count})</a></li>
 			</ul>
