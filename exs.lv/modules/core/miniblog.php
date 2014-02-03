@@ -426,7 +426,7 @@ if ($inprofile->id) {
 				}
 			} else {
 
-				$tpl->newBlock('user-miniblog-list-private');
+				//$tpl->newBlock('user-miniblog-list-private');
 			}
 		}
 
@@ -464,7 +464,13 @@ if ($inprofile->id) {
 		}
 
 		if (!isset($_GET['single'])) {
-			$total = $db->get_var("SELECT count(*) FROM `miniblog` USE INDEX (`count_pager`) WHERE `author` = " . $inprofile->id . " AND `groupid` = 0 AND `removed` = '0' AND `parent` = 0 AND `lang` = '$lang'");
+		
+			$private = '';
+			if(!$auth->ok) {
+				$private = ' AND `private` = 0';
+			}
+		
+			$total = $db->get_var("SELECT count(*) FROM `miniblog` USE INDEX (`count_pager`) WHERE `author` = " . $inprofile->id . " AND `groupid` = 0 AND `removed` = '0' AND `parent` = 0 AND `lang` = '$lang'" . $private);
 			$pager = pager($total, $skip, $end, '/say/' . $inprofile->id . '/skip-');
 			$tpl->newBlock('mb-pager');
 			$tpl->assign(array(
