@@ -137,7 +137,7 @@ tinymce.init({
                 <li><a href="/checkform">Lietotāju meklēšana</a></li>
                 <li><a href="/log">Administrācijas darbības</a></li>
                 <li>&nbsp;</li>
-            </ul>            
+            </ul>
         </li>
         <!-- END BLOCK : mod-nav -->
         <!-- START BLOCK : auth-nav -->
@@ -152,7 +152,7 @@ tinymce.init({
 				<li><a href="/user/security">Parole un e-pasts</a></li>
 				<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
                 <li>&nbsp;</li>
-			</ul> 
+			</ul>
         </li>
         <li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
         <!-- END BLOCK : auth-nav -->
@@ -186,18 +186,18 @@ tinymce.init({
             <li>
                 <a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>
                 &middot;
-            </li>        
+            </li>
             <li>
                 <a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a>
                 &middot;
-            </li>        
+            </li>
             <li>
                 <a href="http://www.rs07tracker.com/" rel="nofollow" target="_blank">RS07 Trakeris</a>
                 &middot;
-            </li>        
+            </li>
             <li>
                 <a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a>
-            </li>        
+            </li>
         </ul>
         <ul class="nav-right">
             <li><a href="/img">eXs bilžu hostings</a>&middot;</li>
@@ -207,7 +207,7 @@ tinymce.init({
     </div>
 	<div id="header">
         <div id="header-stuff">{ad-top}</div>
-        <a href="/">                
+        <a href="/">
             <div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
                 <img src="/bildes/runescape/banners/banner-2.jpg" alt="">
                 <img src="/bildes/runescape/banners/banner-3.jpg" alt="">
@@ -224,7 +224,7 @@ tinymce.init({
             <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
             <li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
             <li{cat-sel-194}><a href="/tasks">Tasks</a></li>
-            <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>            
+            <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
             <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
             <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
             <li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
@@ -262,7 +262,7 @@ tinymce.init({
             <li{cat-sel-1867}><a href="/gallery/{currentuser-id}">Galerija</a></li>
             <li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
         </ul>
-        <!-- END BLOCK : user-menu-->        
+        <!-- END BLOCK : user-menu-->
     </div>
 	<div id="space" class="c"></div>
 	<!-- START BLOCK : flash-message-->
@@ -305,7 +305,7 @@ tinymce.init({
 			<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 		</div>
 	</div>
-    
+
     <div id="rs_columns">
 
     <!-- START BLOCK : main-layout-left-->
@@ -347,17 +347,17 @@ tinymce.init({
 			<div id="miniblog-block" class="ajaxbox">{out}</div>
 		</div>
 		<!-- END BLOCK : friendssay-box-->
-        
+
 	</div>
 	<!-- END BLOCK : main-layout-left-->
-    
+
     <!-- START BLOCK : main-layout-right-->
 	<div id="right">
 		<h3>Jaunākais galerijās</h3>
 		<div class="box">
 			<div id="lat" class="ajaxbox">{latest-noscript}</div>
 		</div>
-        
+
         <!-- START BLOCK : poll-box-->
         <h3>Aptauja</h3>
         <div class="box">
@@ -390,20 +390,20 @@ tinymce.init({
             <!-- END BLOCK : poll-questions-->
         </div>
         <!-- END BLOCK : poll-box-->
-        
+
         <!-- START BLOCK : groups-l-list-->
 		<h3>Jaunākās grupas</h3>
 		<div class="box new-groups">
             <!-- START BLOCK : groups-l-node-->
-			<p>				
+			<p>
                 <img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
-				<a href="{link}">{title}</a>				
+				<a href="{link}">{title}</a>
 			</p>
             <!-- END BLOCK : groups-l-node-->
 			<a href="/grupas">Visas grupas &raquo;</a>
 		</div>
 		<!-- END BLOCK : groups-l-list-->
-        
+
 		<h3>RuneScape fakts</h3>
 		<div class="box facts-box">
 			<p id="random-fact"></p>
@@ -448,15 +448,6 @@ tinymce.init({
 		<div class="c"></div>
 	</div>
 </div>
-
-<!-- START BLOCK : async-call -->
-<div id="async-placeholder"></div>
-<script>
-$(document).ready(function() {
-	$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
-});
-</script>
-<!-- END BLOCK : async-call -->
 
 <script>
   (function(i,s,o,g,r,a,m){

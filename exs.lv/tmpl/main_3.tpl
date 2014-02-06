@@ -338,7 +338,6 @@
 				<div class="infoblock">
 					<div class="inner">
 						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2012-{current-year}</p>
-						<p>Juridiskā adrese: Sporta iela 7, Ikšķile, LV-5052<br />Reģ. nr. 40103293710</p>
 						<p>E-pasts: info@exs.lv<br />Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.</p>
 					</div>
 				</div>
@@ -358,13 +357,5 @@
 
 		</script>
 
-		<!-- START BLOCK : async-call -->
-		<div id="async-placeholder"></div>
-		<script>
-			$(document).ready(function() {
-				$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
-			});
-		</script>
-		<!-- END BLOCK : async-call -->
 	</body>
 </html>

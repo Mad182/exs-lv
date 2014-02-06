@@ -465,12 +465,9 @@
 				</div>
 				<!-- END BLOCK : daily-wallpaper-->
 
-
 				<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
 				<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
 								;</script>
-
-
 
 			</div>
 			<!-- END BLOCK : main-layout-right-->
@@ -517,15 +514,6 @@
 			</div>
 
 		</div>
-
-		<!-- START BLOCK : async-call -->
-		<div id="async-placeholder"></div>
-		<script>
-			$(document).ready(function() {
-				$('#async-placeholder').html('<iframe width="1" height="1" scrolling="no" border="0" allowTransparency="true" frameborder="0" src="/async" style="padding:0;margin:0;border:0;overflow:hidden"></iframe>');
-			});
-		</script>
-		<!-- END BLOCK : async-call -->
 
 		<!-- sekomums.lv -->
 		<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
