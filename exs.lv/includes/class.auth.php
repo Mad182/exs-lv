@@ -9,32 +9,27 @@ require(LIB_PATH . '/bcrypt/lib/password.php');
 
 class Auth {
 
-	var $id;
-	var $nick;
-	var $ok;
-	var $level = 0;
-	var $avatar = 'none.png';
-	var $skin = 3;
-	var $showsig = 1;
-	var $block_cs = 0;
 	var $error = 0;
-	var $persona = '';
-	var $mobile = 0;
 
+	/**
+	 * Inicializē lietotāja objektu
+	 */
 	function Auth() {
 		global $remote_salt;
 
 		$this->id = 0;
-		$this->avatar = 0;
+		$this->avatar = 'none.png';
 		$this->error = 0;
 		$this->level = 0;
 		$this->persona = '';
 		$this->karma = 0;
+		$this->mobile = 0;
+		$this->skin = 3;
 		$this->vote_today = 0;
-		$this->block_cs = 0;
 		$this->transfer = '';
 		$this->showsig = 1;
 		$this->nick = "Viesis";
+		$this->flood = 8;
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->ok = false;
 		if (!empty($_SESSION['xsrf'])) {
@@ -82,6 +77,10 @@ class Auth {
 
 			if (in_array($this->id, $site_access[2])) {
 				$this->level = 2;
+			}
+
+			if($auth->level == 1 || $auth->level == 2) {
+				$this->flood = 3;
 			}
 
 			$this->ok = true;
@@ -220,7 +219,6 @@ class Auth {
 		$this->level = 0;
 		$this->skin = 0;
 		$this->vote_today = 0;
-		$this->block_cs = 0;
 		$this->showsig = 1;
 		$this->karma = 0;
 		$this->persona = '';

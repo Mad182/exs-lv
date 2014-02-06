@@ -49,7 +49,7 @@ class Comment {
 
 			$text = htmlpost2db($text);
 
-			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 10) {
+			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - $auth->flood) {
 				$_SESSION["antiflood"] = time();
 
 				if ($place == 0) {

@@ -49,7 +49,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			redirect('/gallery/' . $auth->id);
 		}
 
-		if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 9) {
+		if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - $auth->flood) {
 			$_SESSION['antiflood'] = time();
 
 			require(CORE_PATH . '/includes/class.upload.php');
