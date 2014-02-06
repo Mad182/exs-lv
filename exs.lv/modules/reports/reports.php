@@ -121,9 +121,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 			// nosūdzētis ieraksts var būt dzēsts un lapā vairs nebūt redzams;
 			// to moderatoram pieklātos redzēt
 			if ($original_data->removed == 1) {
+                $original = $original_data->text;
 				$original_data->text  = '<p class="report-notice"><strong>';
                 $original_data->text .= 'Ieraksts ir dzēsts!</strong></p>';
-                $original_data->text .= $original_data->text;
+                $original_data->text .= $original;
 			}
 			$templ->assign('original-post', add_smile($original_data->text));
 		}
