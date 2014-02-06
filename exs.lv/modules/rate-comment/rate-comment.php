@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Komentāru vērtēšana (+/-)
+ */
 if ($auth->ok) {
 
 	/** neļauj vienā sekundē pievienot vairāk kā vienu vērtējumu
@@ -50,7 +53,13 @@ if ($auth->ok) {
 			$voters[] = $auth->id;
 			$comment->vote_users = serialize($voters);
 
-			if ($auth->vote_today >= (4 + $auth->karma / 30)) {
+			// balsojumu limits
+			$limit = (5 + $auth->karma / 30);
+			if(im_mod()) {
+				$limit += 50;
+			}
+
+			if ($auth->vote_today >= $limit) {
 				die('Sasniegts dienas limits');
 			} elseif ($_GET['action'] == 'plus') {
 				$db->query("UPDATE `" . $table . "` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
