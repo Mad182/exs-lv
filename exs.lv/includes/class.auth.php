@@ -79,7 +79,7 @@ class Auth {
 				$this->level = 2;
 			}
 
-			if($auth->level == 1 || $auth->level == 2) {
+			if($this->level == 1 || $this->level == 2) {
 				$this->flood = 3;
 			}
 
