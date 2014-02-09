@@ -1,12 +1,28 @@
 /**
- *  Satura rādītājs. (CTRL + F = {nr.}) (Vēl top :D)
+ *  RuneScape apakšprojekta CSS stili
+ *
+ *  Satura rādītājs. (CTRL + F = {nr.})
  *
  *  1. Šis un tas. 
  *  2. Pārrakstītie core.css elementi
  *  3. Jaunie lapas pamatbloki
- *  4.
- *  5. 
- *  x. Here be dragons!
+ *  4. Lapas šaurās kolonnas
+ *  5. Dropdown izvēlnes
+ *  6. Lappušu saraksta stili
+ *  7. RuneScape jaunumi, sākumlapa
+ *  8. RuneScape faktu pārvaldība
+ *
+ *  9.0 RuneScape pamācību sadaļu stili
+    9.1 RuneScape kvestu sēriju sadaļa
+    9.2 freeplay & miniquests
+    9.3 minigames & D&D
+    9.4 prasmju stilizējumi
+    9.5 tasks/achievement diaries un ģildes
+    9.6 Ceļveži
+    9.7 Ģildes
+    9.8 Padomi
+ *
+ *  10. Here be dragons!
  */
 body {
     background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
@@ -212,6 +228,12 @@ div pre {
 #flash-message.error {
     border: 1px solid #C5C3C3
 }
+#wrapper .comments {
+    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+}
+#wrapper .friends {
+    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
+}
 
 
 /* 3. Jaunie lapas pamatbloki */
@@ -320,7 +342,7 @@ ul.nav-right {
     display: inline-block
 }
 
-/* lapas šaurās kolonnas */
+/* 4. Lapas šaurās kolonnas */
 #rs_columns {
     overflow:auto;
     background-image:url('/bildes/runescape/pattern-cols.png');
@@ -348,8 +370,17 @@ ul.nav-right {
     background: #232527;
     border-bottom: 1px solid #C7C7C7;
 }
+/* random fact box  */
+.facts-box {
+    min-height:100px;
+    padding:5px 10px
+}
+#random-fact {
+    font-size:11px;
+    line-height:1.5
+}
     
-/* dropdown izvēlnes */
+/* 5. dropdown izvēlnes */
 .droplist li {
     position:relative
 }
@@ -427,7 +458,54 @@ ul.nav-right {
         height:16px
     }
 
-/* RuneScape jaunumi, sākumlapa */
+/* 6. Lappušu saraksta stili */
+ul.pagelist {
+    display:block;
+    clear:both;
+    margin:0;
+    padding:0;
+    height:20px;
+    list-style:none;	
+}
+ul.pagelist li {    
+    background:#F5F8FC;
+    float:left;
+    margin:0 0 10px 0;
+    padding:0;
+    border:1px solid #BECAD6;
+}
+    ul.pagelist li:hover {
+        border:1px solid #5F8AD5;
+        background:#eceded
+    }
+    ul.pagelist li a {
+        padding:4px 10px;
+        color:#1A4E70;
+        font-weight:bold
+    }
+    ul.pagelist li a:hover {
+        text-decoration:none;
+        color:#287FFA
+    }
+    ul.pagelist .current-page {
+        border:1px solid #5F8AD5
+    }
+    ul.pagelist .current-page a {
+        color:#0D5AFF !important;
+    }    
+ul.pagelist li.end a, ul.pagelist li.end a:active, ul.pagelist li.start a, ul.pagelist li.start a:active {
+    color:#4e8dd4;
+}
+ul.pagelist li.active {
+    padding:0px 10px;
+    font-weight:bold;
+    color:#468cdc
+}
+ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
+    color:#64757a
+}
+
+/* 7. RuneScape jaunumi, sākumlapa */
 .official-news {
     margin:5px 0 20px 0;
     font-size:11px;
@@ -541,8 +619,14 @@ ul.nav-right {
 	.article-column .official-news {
 		margin-top:0
 	}
+.recent-page-separator {
+    height:7px;
+    width:70%;
+    margin:5px auto;
+    background:rgb(195, 208, 228)
+}
     
-/* faktu pārvaldība */
+/* 8. RuneScape faktu pārvaldība */
 table.facts-table th, table.facts-table td {
     padding:5px 10px;
 }
@@ -566,79 +650,7 @@ table.facts-table .row-counter {
     text-align:center
 }
 
-/* lappušu saraksta stili */
-ul.pagelist {
-    display:block;
-    clear:both;
-    margin:0;
-    padding:0;
-    height:20px;
-    list-style:none;	
-}
-ul.pagelist li {    
-    background:#F5F8FC;
-    float:left;
-    margin:0 0 10px 0;
-    padding:0;
-    border:1px solid #BECAD6;
-}
-    ul.pagelist li:hover {
-        border:1px solid #5F8AD5;
-        background:#eceded
-    }
-    ul.pagelist li a {
-        padding:4px 10px;
-        color:#1A4E70;
-        font-weight:bold
-    }
-    ul.pagelist li a:hover {
-        text-decoration:none;
-        color:#287FFA
-    }
-    ul.pagelist .current-page {
-        border:1px solid #5F8AD5
-    }
-    ul.pagelist .current-page a {
-        color:#0D5AFF !important;
-    }    
-ul.pagelist li.end a, ul.pagelist li.end a:active, ul.pagelist li.start a, ul.pagelist li.start a:active {
-    color:#4e8dd4;
-}
-ul.pagelist li.active {
-    padding:0px 10px;
-    font-weight:bold;
-    color:#468cdc
-}
-ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
-    color:#64757a
-}
-
-/* dažādi sīkumi */
-.facts-box {
-    min-height:100px;
-    padding:5px 10px
-}
-#random-fact {
-    font-size:11px;
-    line-height:1.5
-}
-#random-fact span {
-    color:#4294DF
-}
-#wrapper .comments {
-    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
-}
-#wrapper .friends {
-    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
-}
-.recent-page-separator {
-    height:7px;
-    width:70%;
-    margin:5px auto;
-    background:rgb(195, 208, 228)
-}
-
-/* runescape pamācību sadaļu vispārīgie stili */
+/* 9. RuneScape pamācību sadaļu stili */
 .content-title {
   margin:10px 0 10px 20px;
   position:relative;
@@ -730,7 +742,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     font-size:11px
 }
 
-/* runescape kvestu sēriju sadaļa */
+/* 9.1 RuneScape kvestu sēriju sadaļa */
 #intro-quests img {
     max-height:120px;
     float:left;
@@ -880,7 +892,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
         font-size: 11px
     }
     
-/* freeplay & miniquests */
+/* 9.2 freeplay & miniquests */
 .other-quests {
     margin:20px 50px 20px 20px;
     font-size:11px;
@@ -926,7 +938,8 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
         padding:2px;
         width:150px
     }
-/* minigames & D&D */
+    
+/* 9.3 minigames & D&D */
 .mg-logo {
   float:left;
   position:relative;
@@ -967,7 +980,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     font-size:11px
 }
 
-/* prasmju stilizējumi */
+/* 9.4 prasmju stilizējumi */
 .rs_info {
   padding:3px 7px;
   border:1px solid #bbb;
@@ -1085,7 +1098,8 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
 .rslist-center {
     margin-left:15px
 }
-/* tasks/achievement diaries un ģildes */
+
+/* 9.5 tasks/achievement diaries un ģildes */
 #trollis {
     max-height:100px;
     float:left;
@@ -1179,7 +1193,8 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     text-decoration:none;
     color:#0059A7
   }
-/* ceļveži */
+  
+/* 9.6 Ceļveži */
 .area {
     border:2px solid #e0e1e1;
     outline:1px solid #bbbcbc;  
@@ -1227,7 +1242,8 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
 	max-width:20px;
 	border:0 !important
 }
-/* ģildes */
+
+/* 9.7 Ģildes */
 .guild-strong {
     font-weight:bold;
     color:#355575
@@ -1239,7 +1255,8 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     right:0;
     top:0
 }
-/* padomi */
+
+/* 9.8 Padomi */
 .rshelp-ghost {
   background:url('/bildes/runescape/guides/ghost.png') no-repeat;
   background-position:center;
@@ -1264,31 +1281,3 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
   background:url('/bildes/runescape/guides/feather.png') no-repeat;
   background-position:center;
 }
-/*
-.qorder {
-  float:left;
-  margin:0 0 30px 15px
-}
-#quest-form {
-  margin:40px 0 0 80px
-}
-  #quest-form p {
-    margin:3px 0;
-    font-weight:bold;
-    color:#52545a
-  }
-  #quest-form .text {
-    width:500px;
-    height:60px;
-    font-size:10px;
-    display:block
-  }
-  #quest-form fieldset {
-    width:520px
-  } 
-  #quest-form .info {
-    font-size:10px;
-    margin:0;
-    padding:0;
-    color:#738b9b
-  }*/
