@@ -1,30 +1,17 @@
-/* ik pēc noteikta laika atjauno runescape faktu */
-function refresh_fact(elem, status) {   
-    if (status == false) {
-        $.getJSON('/rsfacts?_=1', function(response) {
-          if (response.state == 'success') {
-            elem.html('<span>RS fakts:</span> ' + response.content);
-          }
-        });
-    }
-}
-
 $(document).ready(function () {
     
-    /* atjauno runescape random faktu */
-    var facts_stopped = false;
-    var $rsfact = $('#random-fact');
-    var $fact_container = $('.facts-box');
-    
-    refresh_fact($rsfact, facts_stopped);
-    setInterval(function() {
-        refresh_fact($rsfact, facts_stopped);
-    }, 7000);
-    
-    $fact_container.live('mouseover', function() {
-        facts_stopped = true;
-    }).live('mouseout', function() {
-        facts_stopped = false;
+    /* atjauno runescape random faktu */    
+    var $fact_box = $('.facts-box');
+    $('.fetch-new-fact').live('click', function(e) {
+        
+        $fact_box.children('p').fadeTo(150, 0.5);
+        
+        $.getJSON('/rsfacts?_=1', function(response) {
+            if (response.state) {
+                $fact_box.html('<p>' + response.content + '</p>');
+            }
+        });        
+        e.preventDefault();
     });
     
     /* podziņa ātrai scrollošanai uz augšu */

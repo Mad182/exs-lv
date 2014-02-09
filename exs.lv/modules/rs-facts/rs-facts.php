@@ -3,6 +3,7 @@
  *  RuneScape faktu pārvaldība.
  *
  *  Iespēja apskatīt esošos un pievienot jaunus faktus.
+ *  Atbild arī jquery pieprasījumam un atgriež vienu nejaušu faktu.
  *
  * 	@addr   exs.lv/rsfacts
  */
@@ -18,20 +19,14 @@ if ($lang != 9) {
  */
 if (isset($_GET['_'])) {
 
-    $facts_count = $db->get_var("SELECT count(*) FROM `rs_facts` WHERE `deleted_by` = 0 ");
- 
-    if ($facts_count > 0) {
+    $single_fact = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 ORDER BY RAND() LIMIT 1");
 
-        $rand = rand(0, $facts_count - 1);
-        $single_fact = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 LIMIT $rand, 1");
-
-        if ($single_fact) {
-            echo json_encode(array('state' => 'success', 'content' => $single_fact->text));
-            exit;
-        }
+    if ($single_fact) {
+        echo json_encode(array('state' => 'success', 'content' => $single_fact->text));
+        exit;
     }
-    
-    echo json_encode(array('state' => 'success', 'content' => 'Piedod, neatradu nevienu RuneScape faktu! ;('));
+        
+    echo json_encode(array('state' => 'error', 'content' => 'Piedod, neatradu nevienu RuneScape faktu! ;('));
     exit;
 }
 

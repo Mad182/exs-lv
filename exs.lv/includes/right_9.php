@@ -11,6 +11,7 @@ $tpl->assign(array(
 	'pages-selected'    => 'active ',
 ));
 
+//include(CORE_PATH . '/modules/core/poll.php');
 
 //  jaunāko izveidoto RuneScape grupu saraksts
 if ($groups = get_latest_groups()) {
@@ -34,4 +35,10 @@ if ($groups = get_latest_groups()) {
 		));
 	}
 	unset($groups);
+}
+
+// nejauši atlasīts RuneScape fakts;
+$tpl->newBlock('runescape-facts-box');
+if ($rsfacts = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 ORDER BY RAND() LIMIT 1")) {
+    $tpl->assign('random-fact', $rsfacts->text);
 }

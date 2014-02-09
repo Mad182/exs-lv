@@ -375,9 +375,20 @@ ul.nav-right {
     min-height:100px;
     padding:5px 10px
 }
-#random-fact {
-    font-size:11px;
-    line-height:1.5
+    .facts-box, .facts-box p {
+        line-height: 1.5;
+        font-size: 11px;
+        text-indent: 10px;
+    }
+.fetch-new-fact {
+    background:url('/bildes/fugue-icons/arrow-circle-225.png') no-repeat center center;
+    float:right;
+    height:16px;
+    width:16px;
+    padding:2px
+}
+.fetch-new-fact:hover {
+    background-color:#C8D9EC
 }
     
 /* 5. dropdown izvēlnes */

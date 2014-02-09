@@ -404,10 +404,10 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : groups-l-list-->
 
-		<h3>RuneScape fakts</h3>
-		<div class="box facts-box">
-			<p id="random-fact"></p>
-		</div>
+        <!-- START BLOCK : runescape-facts-box -->
+		<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
+		<div class="box facts-box">{random-fact}</div>
+        <!-- END BLOCK : runescape-facts-box -->
 
 	</div>
 	<!-- END BLOCK : main-layout-right-->
