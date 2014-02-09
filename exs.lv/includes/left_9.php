@@ -98,3 +98,9 @@ if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
 
+
+// nejauši atlasīts RuneScape fakts;
+$tpl->newBlock('runescape-facts-box');
+if ($rsfacts = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 ORDER BY RAND() LIMIT 1")) {
+    $tpl->assign('random-fact', $rsfacts->text);
+}

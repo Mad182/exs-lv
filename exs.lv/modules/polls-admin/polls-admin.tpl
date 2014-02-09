@@ -2,8 +2,8 @@
 <h1>{page-title}</h1>
 
 <ul class="tabs">
-	<li><a href="/?c=255" class="{exist-active}">Pievienot jaunu</a></li>
-	<li><a href="/?c=255&amp;act=list" class="{list-active}">Esošās aptaujas</a></li>
+	<li><a href="/polladmin" class="{exist-active}">Pievienot jaunu</a></li>
+	<li><a href="/polladmin?act=list" class="{list-active}">Esošās aptaujas</a></li>
 </ul>
 
 <div class="tabMain">

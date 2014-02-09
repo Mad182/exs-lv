@@ -135,6 +135,7 @@ tinymce.init({
                 <li><a href="/crows">Atbrīvotās vārnas</a></li>
                 <li><a href="/reports">Iesniegtās sūdzības {reports-count}</a></li>
                 <li><a href="/log">Administrācijas darbības</a></li>
+                <li><a href="/polladmin">Aptaujas</a></li>
                 <li>&nbsp;</li>
             </ul>
         </li>
@@ -352,6 +353,11 @@ tinymce.init({
 			<div id="miniblog-block" class="ajaxbox">{out}</div>
 		</div>
 		<!-- END BLOCK : friendssay-box-->
+        
+        <!-- START BLOCK : runescape-facts-box -->
+		<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
+		<div class="box facts-box">{random-fact}</div>
+        <!-- END BLOCK : runescape-facts-box -->
 
 	</div>
 	<!-- END BLOCK : main-layout-left-->
@@ -364,8 +370,8 @@ tinymce.init({
 		</div>
 
         <!-- START BLOCK : poll-box-->
-        <h3>Aptauja</h3>
-        <div class="box">
+        <h3><img class="poll-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja"> Jaunākā aptauja</h3>
+        <div class="box poll-box">
             <p><strong>{poll-title}</strong></p>
             <!-- START BLOCK : poll-answers-->
             <ol class="poll-answers">
@@ -373,8 +379,10 @@ tinymce.init({
                 <li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
                 <!-- END BLOCK : poll-answers-node-->
             </ol>
-            Balsojuši: {poll-totalvotes}<br />
-            <a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+            <span class="poll-text">
+                Balsojuši: {poll-totalvotes}<br />
+                <a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
+            </span>
             <!-- END BLOCK : poll-answers-->
             <!-- START BLOCK : poll-questions-->
             <form name="poll" method="post" action="">
@@ -408,11 +416,6 @@ tinymce.init({
 			<a href="/grupas">Visas grupas &raquo;</a>
 		</div>
 		<!-- END BLOCK : groups-l-list-->
-
-        <!-- START BLOCK : runescape-facts-box -->
-		<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
-		<div class="box facts-box">{random-fact}</div>
-        <!-- END BLOCK : runescape-facts-box -->
 
 	</div>
 	<!-- END BLOCK : main-layout-right-->

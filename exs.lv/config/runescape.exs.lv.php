@@ -13,6 +13,12 @@ $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
 $robotstag[] = 'noodp';
 
+// aptauju sadaļas id (nav, jo aptaujas ieraksta miniblogos)
+$polls_cat = 0;
+
+// bot user id 
+$rsbot_id = 33342;
+
 //auto login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
 	ini_set("session.cookie_domain", ".exs.lv");

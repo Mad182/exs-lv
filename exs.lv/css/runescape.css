@@ -10,7 +10,8 @@
  *  5. Dropdown izvēlnes
  *  6. Lappušu saraksta stili
  *  7. RuneScape jaunumi, sākumlapa
- *  8. RuneScape faktu pārvaldība
+    8.0 RuneScape faktu pārvaldība
+    8.1 ...
  *
  *  9.0 RuneScape pamācību sadaļu stili
     9.1 RuneScape kvestu sēriju sadaļa
@@ -22,7 +23,8 @@
     9.7 Ģildes
     9.8 Padomi
  *
- *  10. Here be dragons!
+ *  10. Aptaujas
+ *  11. Here be dragons!
  */
 body {
     background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
@@ -637,7 +639,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     background:rgb(195, 208, 228)
 }
     
-/* 8. RuneScape faktu pārvaldība */
+/* 8.0 RuneScape faktu pārvaldība */
 table.facts-table th, table.facts-table td {
     padding:5px 10px;
 }
@@ -1291,4 +1293,71 @@ table.facts-table .row-counter {
 .rshelp-legend {
   background:url('/bildes/runescape/guides/feather.png') no-repeat;
   background-position:center;
+}
+
+/* 10. Aptaujas */
+.poll-box strong {
+    color:#344669
+}
+.poll-box input[type=submit] {
+    margin: 5px 0 0 10px
+}
+.poll-icon {
+    position:relative;
+    top:2px;
+    margin-right:7px
+}
+#poll-questions li {
+    border-bottom:1px solid #F2F4FD;
+    padding:2px
+}
+#poll-questions li:hover {
+    background: #F0F2F5
+}
+#poll-questions li:hover label {
+    color:#4577E2;
+    cursor:pointer
+}
+#poll-questions input[type=radio] {
+    position: relative;
+    top: 2px;
+}
+#poll-questions label {
+    color:#2A486F;
+    display:block
+}
+.poll-answers li {
+    color:#2A486F;
+    border-bottom:1px solid #F2F4FD;
+    padding-left:3px
+}
+.poll-answers li div div {
+    background:#A8CBEC
+}
+.poll-answers li span {
+    color:#477EAA
+}
+.poll-text {
+    font-size:12px
+}
+.poll-text a {
+    color:#3B729B
+}
+/* aptaujas -  */
+#miniblog-list li .mb-poll-question {
+    color:#294268
+}
+#miniblog-list li .mb-poll-li {
+    padding-left:56px
+}
+#miniblog-list li .mb-poll-li li {
+    min-height: 15px;
+    border-bottom: 1px solid #D3D7DD;
+    color: #2A486F;
+    padding: 3px 7px;
+    width:75%
+}
+#miniblog-list li .mb-poll-vote {
+    color:#1F4FA3;
+    margin-left:20px
 }

@@ -32,7 +32,7 @@ if (isset($_GET['_'])) {
 
 
 // 3217 - Mahjarrat
-if (!im_mod() && !in_array($auth->id, array(3217))) {
+if ( ! im_mod() ) {
     set_flash('Pieeja sadaļai liegta!');
 	redirect();
 }

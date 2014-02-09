@@ -18,10 +18,9 @@
  *  @param  bool    norāde, vai atjaunot cache
  */
 function get_runescape_news($force = false) {
-    global $m, $db, $auth;
+    global $m, $db, $auth, $rsbot_id;
     
     $list_news  = 6;     // rakstu skaits, cik rādīt sarakstā
-    $rsbot_id   = 33342;
 
     // memcache glabā tikai laiku, kad jaunumi pēdējoreiz saglabāti,
     // citādi tiek izmantots .html cache fails

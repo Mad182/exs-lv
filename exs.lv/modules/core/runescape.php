@@ -32,7 +32,7 @@ if ($auth->ok) {
     
     // RS Mod izvēlne
     // 3217 - Mahjarrat
-    if (im_mod() || $auth->id == 3217) {
+    if (im_mod()) {
         $tpl->newBlock('rsmod-nav');
     }
 
