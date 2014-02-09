@@ -134,7 +134,6 @@ tinymce.init({
                 <li><a href="/banned">Bloķētie lietotāji</a></li>
                 <li><a href="/crows">Atbrīvotās vārnas</a></li>
                 <li><a href="/reports">Iesniegtās sūdzības {reports-count}</a></li>
-                <li><a href="/checkform">Lietotāju meklēšana</a></li>
                 <li><a href="/log">Administrācijas darbības</a></li>
                 <li>&nbsp;</li>
             </ul>
@@ -220,7 +219,13 @@ tinymce.init({
     <div id="top-menu">
         <ul id="top-menu-left">
             <li{cat-sel-1863}><a class="first" href="/">Lobby</a></li>
-            <li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a></li>
+            <li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a>
+                <ul>
+                    <li><a href="/p2p-kvesti">P2P kvesti</a></li>
+                    <li><a href="/f2p-kvesti">F2P kvesti</a></li>
+                    <li><a href="/mini-kvesti">minikvesti</a></li>
+                </ul>
+            </li>
             <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
             <li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
             <li{cat-sel-194}><a href="/tasks">Tasks</a></li>
