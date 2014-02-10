@@ -3,8 +3,8 @@
 /**
  * Avatara attēla maiņa
  */
-if ($user->avatar == '') {
-	$user->avatar = 'none.png';
+if ($inprofile->avatar == '') {
+	$inprofile->avatar = 'none.png';
 }
 
 //write changes
@@ -60,11 +60,11 @@ if (isset($_POST['submit'])) {
 			$foo->process(CORE_PATH . '/dati/bildes/u_large/' . $avatar_path);
 
 			if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $avatar_path . $text . '.jpg')) {
-				if ($user->avatar != 'none.png' && !empty($user->avatar) && !empty($user->av_alt)) {
-					$db->query("INSERT INTO `avatar_history` (user_id,avatar,changed) VALUES ('$user->id','$user->avatar',NOW())");
+				if ($inprofile->avatar != 'none.png' && !empty($inprofile->avatar) && !empty($inprofile->av_alt)) {
+					$db->query("INSERT INTO `avatar_history` (user_id,avatar,changed) VALUES ('$inprofile->id','$inprofile->avatar',NOW())");
 				}
-				$user->avatar = $avatar_path . $text . '.jpg';
-				$user->av_alt = 1;
+				$inprofile->avatar = $avatar_path . $text . '.jpg';
+				$inprofile->av_alt = 1;
 			}
 			$foo->clean();
 		} else {
@@ -74,20 +74,20 @@ if (isset($_POST['submit'])) {
 	}
 
 	$db->update('users', $auth->id, array(
-		'avatar' => $user->avatar,
-		'av_alt' => $user->av_alt
+		'avatar' => $inprofile->avatar,
+		'av_alt' => $inprofile->av_alt
 	));
 
 	$auth->reset();
 	update_karma($auth->id, true);
 
 	if (!empty($_POST['password-1']) && !empty($_POST['password-2']) && $_POST['password-1'] === $_POST['password-2']) {
-		if (pwd($_POST['password-old']) == $user->pwd || ($user->pwd == '' && (!empty($user->draugiem_id) || !empty($user->facebook_id)))) {
+		if (pwd($_POST['password-old']) == $inprofile->pwd || ($inprofile->pwd == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id)))) {
 			if (strlen($_POST['password-1']) > 5) {
 
 				$db->update('users', $auth->id, array('pwd' => pwd($_POST['password-1'])));
 
-				$auth->login($user->nick, $_POST['password-1']);
+				$auth->login($inprofile->nick, $_POST['password-1']);
 
 				$tpl->newBlock('save-pwd');
 			} else {
@@ -105,8 +105,8 @@ if (isset($_POST['submit'])) {
 $tpl->newBlock('user-profile-avatar');
 
 $tpl->assignGlobal(array(
-	'user-id' => $user->id,
-	'user-nick' => htmlspecialchars($user->nick),
+	'user-id' => $inprofile->id,
+	'user-nick' => htmlspecialchars($inprofile->nick),
 	'active-tab-profile' => 'active',
 	'profile-sel' => ' class="selected"'
 ));

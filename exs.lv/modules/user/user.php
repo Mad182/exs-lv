@@ -10,21 +10,12 @@ if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 } else {
 	$userid = $auth->id;
 }
-$user = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
+$inprofile = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
 
-if ($user) {
+if ($inprofile) {
 
 	if ($auth->ok) {
-		set_action('<a href="/user/' . $user->id . '">' . sanitize($user->nick) . '</a> profilu');
-	}
-
-	$inprofile = $user;
-
-	include(CORE_PATH . '/includes/class.friend.php');
-	$friend = new Friend();
-
-	if (isset($_GET['addfriend']) && $auth->level != 5) {
-		$friend->add_friend($auth->id, $user->id);
+		set_action('<a href="/user/' . $inprofile->id . '">' . sanitize($inprofile->nick) . '</a> profilu');
 	}
 
 	$tpl->newBlock('profile-menu');
@@ -32,16 +23,15 @@ if ($user) {
 	/**
 	 * 	Lietotāja bloķēšana
 	 */
-	if (isset($_GET['var2']) && $_GET['var2'] == 'block' && im_mod() && $user->level != 1 && ($user->level != 2 or $auth->level == 1)) {
+	if (isset($_GET['var2']) && $_GET['var2'] == 'block' && im_mod() && $inprofile->level != 1 && ($inprofile->level != 2 or $auth->level == 1)) {
 
 		// nosaka lietotāja aktīvo brīdinājumu skaitu
 		$warn_count = $db->get_var("
 			SELECT count(*) FROM `warns`
 			WHERE
-				`warns`.`user_id` 	= '$user->id'	AND
-				`warns`.`active` 	= 1				AND
-				`warns`.`site_id`	= $lang
-		");
+				`warns`.`user_id` 	= " . $inprofile->id . " AND
+				`warns`.`active` 	= 1	AND
+				`warns`.`site_id`	= " . $lang);
 
 		// iesniegti bloķēšanas dati
 		if (isset($_POST['block-reason'])) {
@@ -60,7 +50,7 @@ if ($user) {
 			}
 
 			$db->query("INSERT INTO `banned` (`user_id`,`reason`,`time`,`length`,`author`,`ip`,`lang`)
-				VALUES ('$user->id','$reason','" . time() . "','$length','$auth->id','$user->lastip', '$site')");
+				VALUES ('$inprofile->id','$reason','" . time() . "','$length','$auth->id','$inprofile->lastip', '$site')");
 			get_banlist(true);
 
 			// pārbauda, vai nav nepieciešams noņemt aktīvos brīdinājumus
@@ -76,7 +66,7 @@ if ($user) {
 					// atlasa visu noņemamo brīdinājumu ids
 					$get_ids = $db->get_results("
 						SELECT `id` FROM `warns`
-						WHERE `user_id` = '$user->id' AND `active` = 1 AND `site_id` = $lang
+						WHERE `user_id` = '$inprofile->id' AND `active` = 1 AND `site_id` = $lang
 						ORDER BY `created` ASC
 						LIMIT $remove_count
 					");
@@ -109,9 +99,9 @@ if ($user) {
 			$tpl->newBlock('no-active-warns');
 		} else {
 			$tpl->newBlock('warn-removal');
-			for ($i = 0; $i < $warn_count; $i++) {
+			for ($i = 1; $i <= $warn_count; $i++) {
 				$tpl->newBlock('warn-removal-option');
-				$tpl->assign('x', $i + 1);
+				$tpl->assign('x', $i);
 			}
 		}
 
@@ -124,73 +114,81 @@ if ($user) {
 					$tpl->newBlock('block-domain-node');
 					$tpl->assign(array(
 						'id' => $key,
-						'domain' => $domain['domain'],
+						'domain' => $domain['domain']
 					));
 				}
 			}
 		}
 
 		$tpl->assignGlobal(array(
-			'user-id' => $user->id,
-			'user-nick' => htmlspecialchars($user->nick),
+			'user-id' => $inprofile->id,
+			'user-nick' => htmlspecialchars($inprofile->nick),
 			'active-tab-profile' => 'active'
 		));
-		$page_title = 'Bloķēt lietotāju &quot;' . $user->nick . '&quot;';
+		$page_title = 'Bloķēt lietotāju &quot;' . $inprofile->nick . '&quot;';
 	}
 
 	/**
 	 * 	Ielādē submoduli pēc GET[var1]
-	 */ elseif ($auth->ok && $auth->id == $user->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
+	 */ elseif ($auth->ok && $auth->id == $inprofile->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
 
-		require(CORE_PATH . '/modules/user/submodules/' . mkslug($_GET['var1']) . '.php');
+		require CORE_PATH . '/modules/user/submodules/' . mkslug($_GET['var1']) . '.php';
 	}
 	/**
 	 * 	expts dāvināšana citam lietotājam
-	 */ elseif ($auth->ok && $auth->id != $user->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
+	 */ elseif ($auth->ok && $auth->id != $inprofile->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
 
-		require(CORE_PATH . '/modules/user/submodules/give.php');
+		require CORE_PATH . '/modules/user/submodules/give.php';
 
 		//view profile
 	} else {
-		$tpl->newBlock('user-profile');
 
-		$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
+		include CORE_PATH . '/includes/class.friend.php';
+		$friend = new Friend();
 
-		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND `removed` = 0") +
-				$db->get_var("SELECT count(*) FROM galcom WHERE author = '$user->id' AND `removed` = 0") +
-				$db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $user->id . "' AND removed = '0'"));
-
-		if ($posts != $user->posts) {
-			$db->update('users', $user->id, array('posts' => $posts));
+		if (isset($_GET['addfriend']) && $auth->level != 5) {
+			$friend->add_friend($auth->id, $inprofile->id);
 		}
 
-		$time = time_ago(strtotime($user->lastseen));
+		$tpl->newBlock('user-profile');
 
-		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id'") +
-				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$user->id'") +
-				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$user->id'");
+		$days = ceil((time() - strtotime($inprofile->date)) / 60 / 60 / 24);
+
+		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$inprofile->id' AND `removed` = 0") +
+				$db->get_var("SELECT count(*) FROM galcom WHERE author = '$inprofile->id' AND `removed` = 0") +
+				$db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $inprofile->id . "' AND removed = '0'"));
+
+		if ($posts != $inprofile->posts) {
+			$db->update('users', $inprofile->id, array('posts' => $posts));
+		}
+
+		$time = time_ago(strtotime($inprofile->lastseen));
+
+		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$inprofile->id'") +
+				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$inprofile->id'") +
+				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$inprofile->id'");
 
 		$tpl->assign(array(
-			'user-nick' => htmlspecialchars($user->nick),
-			'user-date' => $user->date,
+			'user-nick' => htmlspecialchars($inprofile->nick),
+			'user-date' => $inprofile->date,
 			'user-days' => round($days),
 			'user-days-text' => lv_dsk($days, 'dienas', 'dienām'),
-			'user-web' => htmlspecialchars($user->web),
+			'user-web' => htmlspecialchars($inprofile->web),
 			'user-lastseen' => $time,
-			'user-pages' => $db->get_var("SELECT count(*) FROM pages WHERE author = ('" . $user->id . "') AND `lang` = '$lang'"),
+			'user-pages' => $db->get_var("SELECT count(*) FROM pages WHERE author = ('" . $inprofile->id . "') AND `lang` = '$lang'"),
 			'user-posts' => $posts,
-			'user-karma' => $user->karma,
-			'user-postsday' => round($user->posts / $days, 2),
-			'user-vote_others' => $user->vote_others,
-			'user-vote_total' => $user->vote_total,
+			'user-karma' => $inprofile->karma,
+			'user-postsday' => round($inprofile->posts / $days, 2),
+			'user-vote_others' => $inprofile->vote_others,
+			'user-vote_total' => $inprofile->vote_total,
 			'user-votes' => $voteval
 		));
 		$tpl->assignGlobal(array(
-			'user-id' => $user->id,
-			'user-nick' => htmlspecialchars($user->nick),
+			'user-id' => $inprofile->id,
+			'user-nick' => htmlspecialchars($inprofile->nick),
 			'active-tab-profile' => 'active'
 		));
-		if ($auth->ok && $auth->id == $user->id) {
+		if ($auth->ok && $auth->id == $inprofile->id) {
 			$tpl->assign(array(
 				'edit' => '<p>[<a href="/user/edit">labot profilu</a>]
 								[<a href="/user/changenick">mainīt niku</a>]
@@ -198,69 +196,69 @@ if ($user) {
 								[<a href="/interests">interešu kategorijas</a>]</p>',
 			));
 		}
-		if ($auth->level != 5 && $user->level != 5 && $auth->ok && $auth->id != $user->id && !$friend->pending_friendship($auth->id, $user->id) && !$friend->get_friendship_id($auth->id, $user->id)) {
+		if ($auth->level != 5 && $inprofile->level != 5 && $auth->ok && $auth->id != $inprofile->id && !$friend->pending_friendship($auth->id, $inprofile->id) && !$friend->get_friendship_id($auth->id, $inprofile->id)) {
 			$tpl->assign(array(
-				'friend-link' => '<a class="button primary" href="/user/' . $user->id . '/?addfriend=true">Draudzēties</a><br />'
+				'friend-link' => '<a class="button primary" href="/user/' . $inprofile->id . '/?addfriend=true">Draudzēties</a><br />'
 			));
 		}
-		if ($auth->ok && $auth->id != $user->id && $auth->level != 5) {
+		if ($auth->ok && $auth->id != $inprofile->id && $auth->level != 5) {
 			$tpl->newBlock('user-profile-pm');
 			$date = time();
-			$viewed = $db->get_var("SELECT id FROM viewprofile WHERE profile = '$user->id' AND viewer = '$auth->id' AND time > '" . ($date - 3600) . "'");
+			$viewed = $db->get_var("SELECT id FROM viewprofile WHERE profile = '$inprofile->id' AND viewer = '$auth->id' AND time > '" . ($date - 3600) . "'");
 			if (!$viewed) {
-				$db->query("INSERT INTO viewprofile (profile,viewer,time) VALUES ('$user->id','$auth->id','$date')");
+				$db->query("INSERT INTO viewprofile (profile,viewer,time) VALUES ('$inprofile->id','$auth->id','$date')");
 			} else {
 				$db->update('viewprofile', $viewed, array('time' => $date));
 			}
 		}
-		if ($user->about) {
+		if ($inprofile->about) {
 			$tpl->newBlock('user-profile-about');
 			$tpl->assign(array(
-				'user-about' => add_smile($user->about)
+				'user-about' => add_smile($inprofile->about)
 			));
 		}
 
 
-		if (!empty($user->web)) {
+		if (!empty($inprofile->web)) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Mājaslapa',
-				'value' => add_smile('<a href="' . htmlspecialchars($user->web) . '" rel="nofollow">' . htmlspecialchars($user->web) . '</a>', 0, 1, 1)
+				'value' => add_smile('<a href="' . htmlspecialchars($inprofile->web) . '" rel="nofollow">' . htmlspecialchars($inprofile->web) . '</a>', 0, 1, 1)
 			));
 		}
 
-		if ($auth->ok && !empty($user->skype)) {
+		if ($auth->ok && !empty($inprofile->skype)) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Skype',
-				'value' => '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script><a href="skype:' . htmlspecialchars($user->skype) . '?chat"><img src="http://download.skype.com/share/skypebuttons/buttons/chat_green_transparent_97x23.png" style="border: none;" width="97" height="23" alt="Chat with me" /></a>'
+				'value' => '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script><a href="skype:' . htmlspecialchars($inprofile->skype) . '?chat"><img src="http://download.skype.com/share/skypebuttons/buttons/chat_green_transparent_97x23.png" style="border: none;" width="97" height="23" alt="Chat with me" /></a>'
 			));
 		}
 
-		if ($auth->ok && $user->city) {
+		if ($auth->ok && $inprofile->city) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Pilsēta',
-				'value' => $db->get_var("SELECT `title` FROM `city` WHERE `id` = '$user->city'")
+				'value' => $db->get_var("SELECT `title` FROM `city` WHERE `id` = '$inprofile->city'")
 			));
 		}
 
-		if ($user->lastseen > date("Y-m-d H:i:s", time() - 480) && $auth->id != $user->id && !empty($user->last_action)) {
+		if ($inprofile->lastseen > date("Y-m-d H:i:s", time() - 480) && $auth->id != $inprofile->id && !empty($inprofile->last_action)) {
 			$tpl->newBlock('user-profile-last_action');
 			$tpl->assign(array(
-				'user-last_action' => $user->last_action,
+				'user-last_action' => $inprofile->last_action,
 			));
 		}
 
 		if (im_mod()) {
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
-				'lastip' => $user->lastip,
-				'mail' => $user->mail
+				'lastip' => $inprofile->lastip,
+				'mail' => $inprofile->mail
 			));
 		}
 
-		if (im_mod() && $user->level != 1 && $user->level != 2) {
+		if (im_mod() && $inprofile->level != 1 && $inprofile->level != 2) {
 			$tpl->newBlock('user-profile-ban');
 		}
 
@@ -268,7 +266,7 @@ if ($user) {
 			$tpl->newBlock('user-profile-lol');
 		}
 
-		$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $user->id . " ORDER BY `date` DESC");
+		$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $inprofile->id . " ORDER BY `date` DESC");
 		if ($awards) {
 			$tpl->newBlock('user-profile-awards');
 			foreach ($awards as $award) {
@@ -281,7 +279,7 @@ if ($user) {
 			}
 		}
 
-		$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `author` = '$user->id' AND `category` != '83' AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 10");
+		$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `author` = '$inprofile->id' AND `category` != '83' AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 10");
 		if ($articles) {
 			$tpl->newBlock('user-profile-lastpage');
 			foreach ($articles as $article) {
@@ -302,7 +300,7 @@ if ($user) {
 			`bookmarks`,
 			`pages`
 		WHERE
-			`bookmarks`.`userid` = '" . $user->id . "' AND
+			`bookmarks`.`userid` = '" . $inprofile->id . "' AND
 			`pages`.`id` = `bookmarks`.`pageid` AND
 			`pages`.`lang` = '$lang'
 		ORDER BY
@@ -334,7 +332,7 @@ if ($user) {
 		viewprofile,
 		users
 	WHERE
-		`viewprofile`.`profile` = '$user->id' AND
+		`viewprofile`.`profile` = '$inprofile->id' AND
 		`users`.`id` = `viewprofile`.`viewer`
 	ORDER BY
 		`viewprofile`.`time`
@@ -362,12 +360,12 @@ if ($user) {
 		} else {
 			$skip = 0;
 		}
-		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$user->id' AND `lang` = '$lang' ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
+		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
 		if ($actions) {
 			$out .= '<ul class="user-actions" id="profile-user-actions">';
 			foreach ($actions as $action) {
 				if (!$action->avatar) {
-					$action->avatar = get_avatar($user, 's');
+					$action->avatar = get_avatar($inprofile, 's');
 				} else {
 					$action->avatar = $action->avatar;
 				}
@@ -382,7 +380,7 @@ if ($user) {
 			$out .= '</ul>';
 		}
 
-		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$user->id' AND `lang` = '$lang' LIMIT 60");
+		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' LIMIT 60");
 		if ($total > 60) {
 			$total = 60;
 		}
@@ -393,13 +391,13 @@ if ($user) {
 				} else {
 					$iepriekseja = 0;
 				}
-				$pager_next = '<a class="pager-next" title="Iepriekšējā lapa" href="/user/' . $user->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
+				$pager_next = '<a class="pager-next" title="Iepriekšējā lapa" href="/user/' . $inprofile->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
 			} else {
 				$pager_next = '';
 			}
 			$pager_prev = '';
 			if ($total > $skip + $end) {
-				$pager_prev = '<span>-</span> <a class="pager-prev" title="Nākamā lapa" href="/user/' . $user->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
+				$pager_prev = '<span>-</span> <a class="pager-prev" title="Nākamā lapa" href="/user/' . $inprofile->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
 			}
 			$startnext = 0;
 			$page_number = 0;
@@ -410,7 +408,7 @@ if ($user) {
 				if ($skip == $startnext) {
 					$class = ' class="selected"';
 				}
-				$pager_numeric .= '<span>-</span> <a href="/user/' . $user->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
+				$pager_numeric .= '<span>-</span> <a href="/user/' . $inprofile->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 				$startnext = $startnext + $end;
 			}
 			$out .= '<p class="core-pager ajax-pager">' . $pager_next . ' ' . $pager_numeric . ' ' . $pager_prev . '</p>';
@@ -425,8 +423,8 @@ if ($user) {
 		));
 
 		if ($lang == 1) {
-			$g_owners = $db->get_results("SELECT title,id FROM clans WHERE owner = '$user->id' ORDER BY title ASC");
-			$g_members = $db->get_results("SELECT `clans_members`.`clan` AS `clan`,`clans_members`.`moderator` AS `moderator`,`clans`.`title` AS `title` FROM `clans_members`,`clans` WHERE `clans_members`.`user` = '$user->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
+			$g_owners = $db->get_results("SELECT title,id FROM clans WHERE owner = '$inprofile->id' ORDER BY title ASC");
+			$g_members = $db->get_results("SELECT `clans_members`.`clan` AS `clan`,`clans_members`.`moderator` AS `moderator`,`clans`.`title` AS `title` FROM `clans_members`,`clans` WHERE `clans_members`.`user` = '$inprofile->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
 			if ($g_owners or $g_members) {
 				$tpl->newBlock('grouplist');
 				if ($g_owners) {
@@ -468,7 +466,7 @@ if ($user) {
 			`comments`,
 			pages
 		WHERE
-			`comments`.`author` = ('" . $user->id . "') AND
+			`comments`.`author` = ('" . $inprofile->id . "') AND
 			`pages`.`id` = `comments`.`pid` AND
 			`pages`.`category` != '83' AND
 			`pages`.`lang` = '$lang'
@@ -498,7 +496,7 @@ if ($user) {
 				`galcom`,
 				images
 			WHERE
-				`galcom`.`author` = ('" . $user->id . "') AND
+				`galcom`.`author` = ('" . $inprofile->id . "') AND
 				`images`.`id` = `galcom`.`bid`
 			ORDER BY
 				`galcom`.`date`
@@ -518,11 +516,11 @@ if ($user) {
 			}
 		}
 
-		if ($auth->ok && $auth->id == $user->id) {
+		if ($auth->ok && $auth->id == $inprofile->id) {
 			$tpl->assignGlobal('profile-sel', ' class="selected"');
 			$page_title = 'Tavs profils';
 		} else {
-			$page_title = $user->nick . ' | Profils';
+			$page_title = $inprofile->nick . ' | Profils';
 		}
 	}
 } else {

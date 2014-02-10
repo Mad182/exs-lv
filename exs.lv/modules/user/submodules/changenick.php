@@ -5,7 +5,7 @@
  */
 if (isset($_POST['new-nick'])) {
 
-	if ($user->credit < 5) {
+	if ($inprofile->credit < 5) {
 		set_flash('Nepietiek exs.lv kredīta!', 'error');
 		redirect('/user/changenick');
 	}
@@ -38,13 +38,13 @@ if (isset($_POST['new-nick'])) {
 
 $tpl->newBlock('user-profile-changenick');
 $tpl->assign(array(
-	'user-credit' => $user->credit
+	'user-credit' => $inprofile->credit
 ));
 
 
 $tpl->assignGlobal(array(
-	'user-id' => $user->id,
-	'user-nick' => htmlspecialchars($user->nick),
+	'user-id' => $inprofile->id,
+	'user-nick' => htmlspecialchars($inprofile->nick),
 	'active-tab-profile' => 'active',
 	'profile-sel' => ' class="selected"'
 ));

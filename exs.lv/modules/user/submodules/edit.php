@@ -8,15 +8,15 @@ $tpl->newBlock('user-profile-edit');
 //write changes
 if (isset($_POST['submit'])) {
 
-	$user->skype = input2db($_POST['edit-skype'], 20);
-	$user->yt_name = input2db($_POST['edit-yt_name'], 20);
-	$user->twitter = input2db($_POST['edit-twitter'], 30);
+	$inprofile->skype = input2db($_POST['edit-skype'], 20);
+	$inprofile->yt_name = input2db($_POST['edit-yt_name'], 20);
+	$inprofile->twitter = input2db($_POST['edit-twitter'], 30);
 
-	if ($user->karma >= 500 || im_mod() || $user->custom_title_paid) {
-		$user->custom_title = input2db($_POST['edit-custom_title'], 32);
+	if ($inprofile->karma >= 500 || im_mod() || $inprofile->custom_title_paid) {
+		$inprofile->custom_title = input2db($_POST['edit-custom_title'], 32);
 	}
 
-	$user->web = '';
+	$inprofile->web = '';
 	if (!empty($_POST['edit-web'])) {
 		if (substr($_POST['edit-web'], 0, 4) == 'www.') {
 			$web = 'http://' . $_POST['edit-web'];
@@ -24,25 +24,25 @@ if (isset($_POST['submit'])) {
 			$web = $_POST['edit-web'];
 		}
 		if (filter_var($web, FILTER_VALIDATE_URL)) {
-			$user->web = sanitize(filter_var($web, FILTER_SANITIZE_URL));
+			$inprofile->web = sanitize(filter_var($web, FILTER_SANITIZE_URL));
 		}
 	}
 
-	$user->signature = htmlpost2db($_POST['edit-signature']);
-	$user->about = htmlpost2db($_POST['edit-about']);
+	$inprofile->signature = htmlpost2db($_POST['edit-signature']);
+	$inprofile->about = htmlpost2db($_POST['edit-about']);
 
-	$user->city = (int) $_POST['edit-city'];
+	$inprofile->city = (int) $_POST['edit-city'];
 
 	$db->update('users', $auth->id, array(
-		'web' => $user->web,
-		'city' => $user->city,
-		'skype' => $user->skype,
-		'rs_nick' => $user->rs_nick,
-		'signature' => $user->signature,
-		'about' => $user->about,
-		'yt_name' => $user->yt_name,
-		'twitter' => $user->twitter,
-		'custom_title' => $user->custom_title
+		'web' => $inprofile->web,
+		'city' => $inprofile->city,
+		'skype' => $inprofile->skype,
+		'rs_nick' => $inprofile->rs_nick,
+		'signature' => $inprofile->signature,
+		'about' => $inprofile->about,
+		'yt_name' => $inprofile->yt_name,
+		'twitter' => $inprofile->twitter,
+		'custom_title' => $inprofile->custom_title
 	));
 
 	$auth->reset();
@@ -55,20 +55,20 @@ if (isset($_POST['submit'])) {
 //show form
 $tpl->gotoBlock('user-profile-edit');
 $tpl->assign(array(
-	'user-nick' => $user->nick,
-	'user-skype' => $user->skype,
-	'user-yt_name' => $user->yt_name,
-	'user-twitter' => $user->twitter,
-	'user-web' => htmlspecialchars($user->web),
-	'user-signature' => htmlspecialchars($user->signature),
-	'user-date' => $user->date,
-	'user-about' => htmlspecialchars($user->about)
+	'user-nick' => $inprofile->nick,
+	'user-skype' => $inprofile->skype,
+	'user-yt_name' => $inprofile->yt_name,
+	'user-twitter' => $inprofile->twitter,
+	'user-web' => htmlspecialchars($inprofile->web),
+	'user-signature' => htmlspecialchars($inprofile->signature),
+	'user-date' => $inprofile->date,
+	'user-about' => htmlspecialchars($inprofile->about)
 ));
 
-if ($user->karma >= 500 || im_mod() || $user->custom_title_paid) {
+if ($inprofile->karma >= 500 || im_mod() || $inprofile->custom_title_paid) {
 	$tpl->newBlock('custom_title');
 	$tpl->assign(array(
-		'user-custom_title' => $user->custom_title,
+		'user-custom_title' => $inprofile->custom_title,
 	));
 } else {
 	$tpl->newBlock('custom_title_buy');
@@ -78,7 +78,7 @@ $citys = $db->get_results("SELECT * FROM `city` ORDER BY `id` ASC");
 
 foreach ($citys as $city) {
 	$tpl->newBlock('user-profile-edit-city');
-	if ($user->city == $city->id) {
+	if ($inprofile->city == $city->id) {
 		$sel = ' selected="selected"';
 	} else {
 		$sel = '';
@@ -91,8 +91,8 @@ foreach ($citys as $city) {
 }
 
 $tpl->assignGlobal(array(
-	'user-id' => $user->id,
-	'user-nick' => htmlspecialchars($user->nick),
+	'user-id' => $inprofile->id,
+	'user-nick' => htmlspecialchars($inprofile->nick),
 	'active-tab-profile' => 'active',
 	'profile-sel' => ' class="selected"'
 ));

@@ -11,11 +11,11 @@ if ($credit) {
 	if (isset($_POST['submit']) && isset($_POST['exs-amount']) && !empty($_POST['exs-amount'])) {
 		$amount = intval($_POST['exs-amount']);
 		if ($credit >= $amount && $amount > 0) {
-			$db->query("UPDATE users SET credit = credit+'" . $amount . "' WHERE id = ('" . $user->id . "')");
+			$db->query("UPDATE users SET credit = credit+'" . $amount . "' WHERE id = ('" . $inprofile->id . "')");
 			$db->query("UPDATE users SET credit = credit-'" . $amount . "' WHERE id = ('" . $auth->id . "')");
 
-			userlog($auth->id, 'Uzdāvināja ' . $amount . ' expunktus ' . $user->nick, '/dati/bildes/useravatar/' . $user->avatar);
-			userlog($user->id, 'Saņēma ' . $amount . ' expunktus no ' . $auth->nick, '/dati/bildes/useravatar/' . $auth->avatar);
+			userlog($auth->id, 'Uzdāvināja ' . $amount . ' expunktus ' . $inprofile->nick, '/dati/bildes/useravatar/' . $inprofile->avatar);
+			userlog($inprofile->id, 'Saņēma ' . $amount . ' expunktus no ' . $auth->nick, '/dati/bildes/useravatar/' . $auth->avatar);
 
 			$credit = $credit - $amount;
 			set_flash('Pārskaitījums veikts!', 'success');
@@ -33,8 +33,8 @@ if ($credit) {
 }
 
 $tpl->assignGlobal(array(
-	'user-id' => $user->id,
-	'user-nick' => htmlspecialchars($user->nick),
+	'user-id' => $inprofile->id,
+	'user-nick' => htmlspecialchars($inprofile->nick),
 	'active-tab-profile' => 'active',
 	'profile-sel' => ' class="selected"'
 ));

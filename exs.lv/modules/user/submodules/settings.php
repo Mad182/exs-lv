@@ -5,20 +5,20 @@
  */
 if (isset($_POST['submit'])) {
 
-	$user->show_code = (bool) $_POST['edit-show_code'];
-	$user->show_lol = (bool) $_POST['edit-show_lol'];
-	$user->show_rp = (bool) $_POST['edit-show_rp'];
-	$user->show_rs = (bool) $_POST['edit-show_rs'];
-	$user->showsig = (bool) $_POST['edit-enablesig'];
-	$user->skin = (int) $_POST['edit-skin'];
+	$inprofile->show_code = (bool) $_POST['edit-show_code'];
+	$inprofile->show_lol = (bool) $_POST['edit-show_lol'];
+	$inprofile->show_rp = (bool) $_POST['edit-show_rp'];
+	$inprofile->show_rs = (bool) $_POST['edit-show_rs'];
+	$inprofile->showsig = (bool) $_POST['edit-enablesig'];
+	$inprofile->skin = (int) $_POST['edit-skin'];
 
 	$db->update('users', $auth->id, array(
-		'show_code' => $user->show_code,
-		'show_lol' => $user->show_lol,
-		'show_rp' => $user->show_rp,
-		'show_rs' => $user->show_rs,
-		'showsig' => $user->showsig,
-		'skin' => $user->skin,
+		'show_code' => $inprofile->show_code,
+		'show_lol' => $inprofile->show_lol,
+		'show_rp' => $inprofile->show_rp,
+		'show_rs' => $inprofile->show_rs,
+		'showsig' => $inprofile->showsig,
+		'skin' => $inprofile->skin,
 	));
 
 	$auth->reset();
@@ -28,30 +28,28 @@ if (isset($_POST['submit'])) {
 	redirect('/user/settings');
 }
 
-if ($user->showsig) {
+$sigmark = '';
+if ($inprofile->showsig) {
 	$sigmark = ' checked="checked"';
-} else {
-	$sigmark = '';
 }
-if ($user->show_code) {
+
+$show_codemark = '';
+if ($inprofile->show_code) {
 	$show_codemark = ' checked="checked"';
-} else {
-	$show_codemark = '';
 }
-if ($user->show_lol) {
+$show_lolmark = '';
+if ($inprofile->show_lol) {
 	$show_lolmark = ' checked="checked"';
-} else {
-	$show_lolmark = '';
 }
-if ($user->show_rp) {
+
+$show_rpmark = '';
+if ($inprofile->show_rp) {
 	$show_rpmark = ' checked="checked"';
-} else {
-	$show_rpmark = '';
 }
-if ($user->show_rs) {
+
+$show_rsmark = '';
+if ($inprofile->show_rs) {
 	$show_rsmark = ' checked="checked"';
-} else {
-	$show_rsmark = '';
 }
 
 $tpl->newBlock('user-profile-settings');
@@ -63,12 +61,12 @@ $tpl->assign(array(
 	'edit-show_lol-mark' => $show_lolmark,
 	'edit-show_rp-mark' => $show_rpmark,
 	'edit-show_rs-mark' => $show_rsmark,
-	'user-skin-' . $user->skin => ' selected="selected"',
+	'user-skin-' . $inprofile->skin => ' selected="selected"',
 ));
 
 $tpl->assignGlobal(array(
-	'user-id' => $user->id,
-	'user-nick' => htmlspecialchars($user->nick),
+	'user-id' => $inprofile->id,
+	'user-nick' => htmlspecialchars($inprofile->nick),
 	'active-tab-profile' => 'active',
 	'profile-sel' => ' class="selected"'
 ));
