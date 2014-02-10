@@ -43,16 +43,16 @@
   </fieldset>
 </form>
 <!-- START BLOCK : img-upload-item-->
-<div style="padding:5px;">
+<div style="padding:5px">
   <a class="lightbox" href="http://img.exs.lv/{path}/{file}"><img class="av" src="http://img.exs.lv/{path}/small/{file}" alt="" width="100" /></a>
 
-	<div style="font-size:80%;">
+	<div style="font-size:80%">
 
-		<pre style="margin-left: 120px">http://img.exs.lv/{path}/{file}</pre>
+		<pre style="margin-left:120px">http://img.exs.lv/{path}/{file}</pre>
 
-		<pre style="margin-left: 120px">[img]http://img.exs.lv/{path}/{file}[/img]</pre>
+		<pre style="margin-left:120px">[img]http://img.exs.lv/{path}/{file}[/img]</pre>
 
-		<pre style="margin-left: 120px">[url=&quot;http://img.exs.lv/{path}/{file}&quot;][img]http://img.exs.lv/{path}/small/{file}[/img][/url]</pre>
+		<pre style="margin-left:120px">[url=&quot;http://img.exs.lv/{path}/{file}&quot;][img]http://img.exs.lv/{path}/small/{file}[/img][/url]</pre>
 
 		<pre>&lt;img src=&quot;http://img.exs.lv/{path}/{file}&quot; alt=&quot;{file}&quot; /&gt;</pre>
 
@@ -60,14 +60,10 @@
 
 	</div>
 
-	<p style="font-size:10px;color:#777;padding:2px 0;margin: 6px 0 3px 115px;">
-	</p>
+	<div class="c"></div>
+
 </div>
 <div class="c"></div>
 <!-- END BLOCK : img-upload-item-->
-<p class="core-pager">
-  {pager-next}
-  {pager-numeric}
-  {pager-prev}
-</p>
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev} </p>
 <!-- END BLOCK : iimg-upload-->
