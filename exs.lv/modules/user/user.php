@@ -120,8 +120,8 @@ if ($user) {
 			$tpl->newBlock('block-domain');
 
 			foreach ($config_domains as $key => $domain) {
-				$tpl->newBlock('block-domain-node');
 				if ($domain['domain'] !== 'secure.exs.lv') {
+					$tpl->newBlock('block-domain-node');
 					$tpl->assign(array(
 						'id' => $key,
 						'domain' => $domain['domain'],
