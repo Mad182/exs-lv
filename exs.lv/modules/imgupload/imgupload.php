@@ -6,9 +6,12 @@
 if ($auth->ok) {
 
 	//max upload file size
-	$max_size = '3M';
 	if (im_mod()) {
 		$max_size = '12M';
+		ini_set('memory_limit', '200M');
+	} else {
+		$max_size = '3M';
+		ini_set('memory_limit', '150M');
 	}
 
 	$tpl->newBlock('img-upload');
@@ -28,10 +31,9 @@ if ($auth->ok) {
 
 		$path = substr($slug, 0, 1) . '/' . substr($slug, 1, 1) . '/' . $slug;
 
-		rmkdir('/home/www/img.exs.lv/' . $path);
+		rmkdir(IMG_PATH . '/' . $path);
 
-		ini_set('memory_limit', '160M');
-		require(CORE_PATH . '/includes/class.upload.php');
+		require_once CORE_PATH . '/includes/class.upload.php';
 		$foo = new Upload($_FILES['new-image']);
 		$foo->mime_check = true;
 		$foo->no_script = true;
@@ -58,7 +60,7 @@ if ($auth->ok) {
 			$foo->jpeg_quality = 97;
 		}
 
-		$foo->process('/home/www/img.exs.lv/' . $path . '/');
+		$foo->process(IMG_PATH . '/' . $path . '/');
 
 		if ($foo->processed) {
 
@@ -77,14 +79,14 @@ if ($auth->ok) {
 				$foo->jpeg_quality = 96;
 			}
 
-			$foo->process('/home/www/img.exs.lv/' . $path . '/small/');
+			$foo->process(IMG_PATH . '/' . $path . '/small/');
 
 			$db->query("INSERT INTO `imgupload` (path,user_id,ip,created,file) VALUES ('$path','$auth->id','" . sanitize($auth->ip) . "',NOW(),'" . sanitize($foo->file_dst_name) . "')");
 
 			//optimize png images
 			if ($foo->image_src_type == 'png') {
-				$str = "optipng '/home/www/img.exs.lv/" . $path . "/" . $foo->file_dst_name . "'";
-				$str2 = "optipng '/home/www/img.exs.lv/" . $path . "/small/" . $foo->file_dst_name . "'";
+				$str = "optipng '" . IMG_PATH . "/" . $path . "/" . $foo->file_dst_name . "'";
+				$str2 = "optipng '" . IMG_PATH . "/" . $path . "/small/" . $foo->file_dst_name . "'";
 				$test = `$str`;
 				$test2 = `$str2`;
 			}
@@ -114,13 +116,12 @@ if ($auth->ok) {
 			$tpl->assign(array(
 				'file' => $image->file,
 				'path' => $image->path,
-				'accessed' => $image->accessed,
 				'created' => $image->created,
 			));
 		}
 	}
 
-	$pager = pager($total, $skip, $end, 'http://exs.lv/img/?skip=');
+	$pager = pager($total, $skip, $end, '/img/?skip=');
 	$tpl->assignGlobal(array(
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
