@@ -2,7 +2,6 @@
 {bmsg}
 <!-- END BLOCK : banned-public-->
 
-
 <!-- START BLOCK : banned-admin-->
 <h2>Bloķētie lietotāji</h2>
 <table class="main-table" style="margin: 0 auto;font-size:80%">

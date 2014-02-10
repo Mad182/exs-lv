@@ -373,9 +373,11 @@
 			<legend>Bloķēt pieeju lapai</legend>
 			<p>
 				<label for="block-reason">Iemesls:</label><br />
-				<input type="text" class="text" name="block-reason" id="block-reason" value="" maxlength="256" /></p>
+				<input type="text" class="text" name="block-reason" id="block-reason" value="" maxlength="256" />
+			</p>
 			<p>
-				<select name="block-length">
+				<label for="block-length">Termiņš:</label><br />
+				<select name="block-length" id="block-length">
 					<option value="21600">6 stundas</option>
 					<option value="86400" selected="selected">1 diena</option>
 					<option value="259200">3 dienas</option>
@@ -388,10 +390,21 @@
 					<option value="31556926">1 gads</option>
 				</select>
 			</p>
-			<p>				
+			<!-- START BLOCK : block-domain -->
+			<p>
+				<label for="block-domain">Vieta:</label><br />
+				<select name="block-domain" id="block-domain">
+					<option value="0" selected="selected">Visos domēnos</option>
+					<!-- START BLOCK : block-domain-node -->
+					<option value="{id}">{domain}</option>
+					<!-- START BLOCK : block-domain-node -->
+				</select>
+			</p>
+			<!-- END BLOCK : block-domain -->
+			<p>
 				<!-- START BLOCK : warn-removal -->
-				<strong>Cik senākos brīdinājumus noņemt?</strong><br>
-				<select name="warn-removal">
+				<label for="warn-removal">Cik senākos brīdinājumus noņemt?</label><br />
+				<select name="warn-removal" id="warn-removal">
 					<option value="0">Nevienu</option>
 					<!-- START BLOCK : warn-removal-option -->
 					<option value="{x}">{x}</option>

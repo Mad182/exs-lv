@@ -37,7 +37,7 @@ if ($user) {
 		// nosaka lietotāja aktīvo brīdinājumu skaitu
 		$warn_count = $db->get_var("
 			SELECT count(*) FROM `warns`
-			WHERE 
+			WHERE
 				`warns`.`user_id` 	= '$user->id'	AND
 				`warns`.`active` 	= 1				AND
 				`warns`.`site_id`	= $lang
@@ -49,10 +49,14 @@ if ($user) {
 			$reason = sanitize(htmlspecialchars($_POST['block-reason']));
 			$length = (int) $_POST['block-length'];
 
-			$site = 0;
-			/* ja admins nav "globāls", tb norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu */
+			/**
+			 * Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu
+			 * Globālie admini var izvēlēties domēnu, vai visus domēnus (0)
+			 */
 			if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 				$site = $lang;
+			} else {
+				$site = (int) $_POST['block-domain'];
 			}
 
 			$db->query("INSERT INTO `banned` (`user_id`,`reason`,`time`,`length`,`author`,`ip`,`lang`)
@@ -71,9 +75,9 @@ if ($user) {
 
 					// atlasa visu noņemamo brīdinājumu ids
 					$get_ids = $db->get_results("
-						SELECT `id` FROM `warns` 
-						WHERE `user_id` = '$user->id' AND `active` = 1 AND `site_id` = $lang 
-						ORDER BY `created` ASC 
+						SELECT `id` FROM `warns`
+						WHERE `user_id` = '$user->id' AND `active` = 1 AND `site_id` = $lang
+						ORDER BY `created` ASC
 						LIMIT $remove_count
 					");
 					if ($get_ids) {
@@ -83,13 +87,13 @@ if ($user) {
 						// noņem visus norādītos brīdinājumus
 						if (!empty($ids)) {
 							$db->query("
-								UPDATE `warns` 
-								SET 
-									`warns`.`active` 		= 0, 
-									`warns`.`removed` 		= NOW(), 
-									`warns`.`removed_by` 	= $auth->id, 
-									`warns`.`remove_reason` = '$removal_reason' 
-								WHERE `warns`.`id` IN(" . implode(',', $ids) . ") 
+								UPDATE `warns`
+								SET
+									`warns`.`active` 		= 0,
+									`warns`.`removed` 		= NOW(),
+									`warns`.`removed_by` 	= $auth->id,
+									`warns`.`remove_reason` = '$removal_reason'
+								WHERE `warns`.`id` IN(" . implode(',', $ids) . ")
 							");
 						}
 					}
@@ -108,6 +112,21 @@ if ($user) {
 			for ($i = 0; $i < $warn_count; $i++) {
 				$tpl->newBlock('warn-removal-option');
 				$tpl->assign('x', $i + 1);
+			}
+		}
+
+		// globālajiem modiem rāda domēnu izvēli
+		if (!in_array($auth->id, $site_access[1]) && !in_array($auth->id, $site_access[2])) {
+			$tpl->newBlock('block-domain');
+
+			foreach ($config_domains as $key => $domain) {
+				$tpl->newBlock('block-domain-node');
+				if ($domain['domain'] !== 'secure.exs.lv') {
+					$tpl->assign(array(
+						'id' => $key,
+						'domain' => $domain['domain'],
+					));
+				}
 			}
 		}
 
