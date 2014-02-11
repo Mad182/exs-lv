@@ -243,6 +243,7 @@ function translate_category($string = '') {
     /*
         'Community'                 => 'Community',
         'Squeal Of Fortune'         => 'Squeal Of Fortune',
+        'Treasure Hunter'           => 'Treasure Hunter',
         'Solomon&apos;s Store'      => 'Solomon&apos;s Store',
     */
     $categories = array(
@@ -252,8 +253,9 @@ function translate_category($string = '') {
         'Your Feedback'             => 'Spēlētāju ieteikumi',
         'Website News'              => 'Mājaslapas jaunumi',
         'Events'                    => 'Pasākumi',
-        'Technical'                 => 'Tehniskie jaunumi',
-        'Support'                   => 'Atbalsts'
+        'Technical News'            => 'Tehniskie jaunumi',
+        'Support'                   => 'Atbalsts',
+        'Customer Support News'     => 'Klientu atbalsta ziņas'
     );
     
     if ($string != '' && array_key_exists($string, $categories)) {
