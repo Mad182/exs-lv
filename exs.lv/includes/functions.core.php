@@ -992,7 +992,7 @@ function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
 
 		if ($type == 'junk') {
 			if (!empty($uniq)) {
-				$junk = $db->get_row("SELECT `id`, `uid`, `title` FROM `junk` WHERE `id` = '" . intval($uniq) . "'");
+				$junk = $db->get_row("SELECT `id`, `title` FROM `junk` WHERE `id` = '" . intval($uniq) . "'");
 				$url = '/junk/' . $junk->id;
 				if ($usr->id != $auth->id) {
 					notify($usr->id, 15, $junk->id, $url, strip_tags($junk->title));
