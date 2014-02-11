@@ -61,6 +61,7 @@ if (!$warns) {
 	foreach ($warns as $warn) {
 
 		$warn->warn_created_at = display_time(strtotime($warn->warn_created_at));
+        $warn->warn_reason = add_smile($warn->warn_reason);
 
 		// sodītais lietotājs
 		$warn->offender_nick = usercolor($warn->offender_nick, $warn->offender_level);
