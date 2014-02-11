@@ -184,16 +184,13 @@ tinymce.init({
     <div id="header-navig">
         <ul class="nav-left">
             <li>
-                <a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>
-                &middot;
+                <a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>&middot;
             </li>
             <li>
-                <a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a>
-                &middot;
+                <a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a>&middot;
             </li>
             <li>
-                <a href="http://www.rs07tracker.com/" rel="nofollow" target="_blank">RS07 Trakeris</a>
-                &middot;
+                <a href="http://www.rs07tracker.com/" rel="nofollow" target="_blank">RS07 Trakeris</a>&middot;
             </li>
             <li>
                 <a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a>
@@ -202,7 +199,7 @@ tinymce.init({
         <ul class="nav-right">
             <li><a href="/img">eXs bilžu hostings</a>&middot;</li>
             <li><a rel="nofollow" href="http://runescape.com" target="_blank">runescape.com</a>&middot;</li>
-            <li><a rel="nofollow" href="http://oldschool.runescape.com/" target="_blank">oldschool rs</a></li>
+            <li><a rel="nofollow" href="http://oldschool.runescape.com" target="_blank">oldschool rs</a></li>
         </ul>
     </div>
 	<div id="header">
@@ -364,13 +361,13 @@ tinymce.init({
 
     <!-- START BLOCK : main-layout-right-->
 	<div id="right">
-		<h3>Jaunākais galerijās</h3>
+		<h3><img class="box-icon" src="/bildes/fugue-icons/images-flickr.png" alt="Aptauja">Jaunākais galerijās</h3>
 		<div class="box">
 			<div id="lat" class="ajaxbox">{latest-noscript}</div>
 		</div>
 
         <!-- START BLOCK : poll-box-->
-        <h3><img class="poll-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja"> Jaunākā aptauja</h3>
+        <h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
         <div class="box poll-box">
             <p><strong>{poll-title}</strong></p>
             <!-- START BLOCK : poll-answers-->
@@ -405,7 +402,7 @@ tinymce.init({
         <!-- END BLOCK : poll-box-->
 
         <!-- START BLOCK : groups-l-list-->
-		<h3>Jaunākās grupas</h3>
+		<h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>
 		<div class="box new-groups">
             <!-- START BLOCK : groups-l-node-->
 			<p>

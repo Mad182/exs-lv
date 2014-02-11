@@ -230,12 +230,6 @@ div pre {
 #flash-message.error {
     border: 1px solid #C5C3C3
 }
-#wrapper .comments {
-    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
-}
-#wrapper .friends {
-    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
-}
 
 
 /* 3. Jaunie lapas pamatbloki */
@@ -371,6 +365,17 @@ ul.nav-right {
     padding: 3px 12px;
     background: #232527;
     border-bottom: 1px solid #C7C7C7;
+}
+#left .comments {
+    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+}
+#left .friends {
+    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
+}
+.box-icon {
+    position:relative;
+    top:3px;
+    margin-right:7px
 }
 /* random fact box  */
 .facts-box {
@@ -1301,11 +1306,6 @@ table.facts-table .row-counter {
 }
 .poll-box input[type=submit] {
     margin: 5px 0 0 10px
-}
-.poll-icon {
-    position:relative;
-    top:2px;
-    margin-right:7px
 }
 #poll-questions li {
     border-bottom:1px solid #F2F4FD;
