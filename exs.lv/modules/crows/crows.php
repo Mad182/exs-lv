@@ -28,6 +28,7 @@ $warns = $db->get_results("
 		`warns`.`remove_reason`	AS `warn_removal_reason`,
 		`warns`.`removed_by`	AS `warn_removed_by`,
 		`warns`.`created`		AS `warn_created_at`,
+        `warns`.`site_id`       AS `lang`,
 		
 		`offender`.`id`			AS `offender_id`,
 		`offender`.`nick`		AS `offender_nick`,
@@ -100,6 +101,18 @@ if (!$warns) {
 			$tpl->assign('removal-reason', $warn->warn_removal_reason);
 			$tpl->assign('removed-warn', ' class="removed_warn" title="Brīdinājums noņemts!"');
 		}
+        
+        // īstajā exā pie brīdinājumiem rādīs apakšprojektu,
+        // kurā brīdinājums piešķirts;
+        // apakšprojektos nav jēgas rādīt, jo atlasīti tiks tā brīdinājumi
+        if ($lang == 1) {
+            $tpl->newBlock('warn-site');
+            if ($warn->lang == 0) {
+				$tpl->assign('site', 'Globāls');
+			} else {
+				$tpl->assign('site', $config_domains[$warn->lang]['domain']);
+			}
+        }
 
 		$counter++;
 	}

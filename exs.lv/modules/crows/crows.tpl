@@ -14,6 +14,9 @@
 			<ul class="list-table">
 				<li><span class="stronger" style="margin-left:11px">No:</span>{creator_nick}</li>
 				<li><span class="stronger">Kam:</span>{offender_nick}</li>
+                <!-- START BLOCK : warn-site -->
+				<li><span class="stronger">Vieta:</span>{site}</li>
+                <!-- END BLOCK : warn-site -->
 			</ul>
 		</td>
 		<td>{warn_reason} {removal-reason}</td>
