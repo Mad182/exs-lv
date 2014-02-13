@@ -2007,7 +2007,12 @@ function get_latest_images() {
 	if ($latest) {
 		foreach ($latest as $late) {
 
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img_server . '/' . $late->thb . '" alt="" />';
+            if (is_local()) {
+                $out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="/' . $late->thb . '" alt="" />';
+            }
+            else {
+                $out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img_server . '/' . $late->thb . '" alt="" />';
+            }    	
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
@@ -2377,7 +2382,7 @@ function get_cakeday() {
 }
 
 /**
- * Atgriež vērtību vai tukšumu, ja $val nav definēts
+ * Atgriež vērtību vai $empty, ja $val nav definēts
  */
 function esr(&$val, $empty = '') {
 	if (!empty($val)) {
@@ -2385,4 +2390,17 @@ function esr(&$val, $empty = '') {
 	} else {
 		return $empty;
 	}
+}
+
+
+/**
+ *  Pārbaude, vai lapa tiek skatīta lokālā režīmā.
+ */
+function is_local() {
+    
+    if ($_SERVER['SERVER_NAME'] === 'localhost' || 
+        substr($_SERVER['SERVER_NAME'], 0, 4) === 'dev.') {
+        return true;
+    }    
+    return false;
 }
