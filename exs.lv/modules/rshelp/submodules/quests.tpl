@@ -71,9 +71,9 @@
 		<ul id="quests-facts">
 			<li>Pirms EoC visu kvestu izpildīšanai bija nepieciešams vismaz 85. combat līmenis, bet, izejot tos, spēlētāja Combat pieauga līdz 105. līmenim.</li>
 			<li>Spēlētāji, kuri ir izgājuši visus kvestus, no Wise Old Man par 99,000gp var nopirkt Quest Point Cape - vienu no Capes of Accomplishment.</li>
-			<li>50. kvests - <a href="/read/legends-quest-2">Legends' Quest</a>, 100. kvests - <a href="/read/recipe-for-disaster-3">Recipe for Disaster</a>, 150. kvests - <a href="/read/chosen-commander-the">The Chosen Commander</a>.</li>
+			<li>50. kvests - <a href="/read/legends-quest-2">Legends' Quest</a>, 100. kvests - <a href="/read/recipe-for-disaster-3">Recipe for Disaster</a>, 150. kvests - <a href="/read/chosen-commander-the">The Chosen Commander</a>, 200. kvests - Priffdinas?</li>
 			<li><a href="/read/recipe-for-disaster-3">Recipe for Disaster</a> patiesībā sastāv no daudziem apakškvestiem.</li>
-			<li>Laika gaitā daži kvesti tikuši mainīti. Piemēram, Unstable Foundations un Learning the Ropes no spēles ir izņemti, Romeo & Juliet aizstāts ar <a href="/read/gunnar-s-ground">Gunnar's Ground</a>, bet <a href="/read/sheep-shearer">Sheep Shearer</a> atstāts kā minikvests.</li>
+			<li>Laika gaitā daži kvesti tikuši mainīti. Piemēram, Unstable Foundations un Learning the Ropes no spēles ir izņemti, Romeo & Juliet aizstāts ar <a href="/read/gunnar-s-ground">Gunnar's Ground</a>, bet <a href="/read/sheep-shearer">Sheep Shearer</a> atstāts kā minikvests.</li> 
 			<li>Jagex apgalvo, ka <a href="/read/cook-s-assistant">Cook's Assistant</a> ir pats pirmais kvests, kuru viņi bija sākuši izstrādāt.</li>
 		</ul>
 		<!-- END BLOCK : quests-facts -->

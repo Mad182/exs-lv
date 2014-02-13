@@ -128,7 +128,8 @@ if ($category->textid == 'kvestu-pamacibas') {
 
 /**
  *  Pay-to-play kvesti
- */ elseif ($category->textid == 'p2p-kvesti') {
+ */ 
+elseif ($category->textid == 'p2p-kvesti') {
 
 	// izdrukā lapā ievadtekstu par kvestiem kā tādiem
 	$tpl->newBlock('quests-intro');
@@ -214,8 +215,8 @@ if ($category->textid == 'kvestu-pamacibas') {
 
 /**
  *  Free-to-play- vai mini-kvesti
- */ elseif ($category->textid == 'f2p-kvesti' || $category->textid == 'mini-kvesti') {
-
+ */
+elseif ($category->textid == 'f2p-kvesti' || $category->textid == 'mini-kvesti') {
 
 	// izdrukā lapā ievadtekstu par kvestiem kā tādiem
 	$tpl->newBlock('quests-intro');

@@ -13,7 +13,7 @@
 		un nāvīgi maģisku virumu brūvēšanai. Pārpasaulīgu būtņu izsaukšana vai nešķīsteņu ieradumu pārzināšana, 
 		šajā zemē izaicinājumi gaida ikvienu domājošu radību.</p>  
 
-  <p>RuneScape pavisam pieejamas 25 prasmes. Attīstot šīs prasmes, spēlētājs gūst piekļuvi daudzām iepriekš nepieejamām vietām 
+  <p>RuneScape pavisam pieejamas 26 prasmes. Attīstot šīs prasmes, spēlētājs gūst piekļuvi daudzām iepriekš nepieejamām vietām 
 		un neiedomātām iespējām. Daudzas no prasmēm ir viena ar otru cieši saistītas, tāpēc vienas attīstīšana var lieti noderēt kādai citai. 
 		Malkas ciršana un cirvja vicināšana ir tikai sākums; spējīgākos spēlētājus gaida nopietnāki darbi.</p>
 </div>
@@ -54,16 +54,16 @@
 		<li>Visas prasmes iespējams uztrenēt līdz 200,000,000 pieredzes punktiem.</li>
 		<li>Dungeoneering ir vienīgā prasme, kurā spēlētājs var uztrenēt 120. līmeni. Citās prasmēs iespējams sasniegt<br /> tādu pašu 
 			pieredzes punktu apjomu, saglabājot 99. līmeni.</li>
-		<li>Pašreiz augstākais iegūstamais Total līmenis ir 2496. RuneScape Classic tas bija 1782.</li>
+		<li>Pašreiz augstākais iegūstamais Total līmenis ir 2595. RuneScape Classic tas bija 1782.</li>
 		<li>Sasniedzot 99. līmeni, spēlētājs pie prasmes skolotāja par 99,000gp var iegādāties attiecīgās prasmes apmetni.</li>
 		<li>120. līmenim nepieciešamais pieredzes punktu daudzums ir 8 reizes lielāks nekā 99. līmenim.</li>
 		<li>Sasniedzot 99. līmeni vairāk nekā vienā prasmē, visi iegūtie prasmju apmetņi iegūst apzeltītas maliņas.</li>
-		<li>Apzeltītam apmetnim ir 'boost' opcija, ar kuru uz neilgu laiku attiecīgā prasme tiek palielināa līdz 100. līmenim.</li>
+		<li>Apzeltītam apmetnim ir "boost" opcija, ar kuru uz neilgu laiku attiecīgā prasme tiek palielināa līdz 100. līmenim.</li>
 		<li>Spēlētājam kādā prasmē sasniedzot 99. līmeni, par to uzzina visi spēlētāji, kuri atrodas tajā pašā spēles serverī.</li>
 		<li>Sasniedzot 120. Dungeoneering līmeni, 99. līmeni visās prasmēs vai iegūstot spēju valkāt Completionist Cape, paziņojums par to parādās visos RuneScape serveros.</li> 
-		<li>Ir iespējams, ka kādam spēlētājam ir mazāk nekā 10. Constitution līmenis. 
+		<li>Dažiem spēlētājiem Constitution līmenis ir mazāks par 10. 
 			RuneScape Classic pirmssākumos noteikumu pārkāpējus<br> sodīja ar prasmju līmeņu samazināšanu, kas nozīmē, ka arī to Hitpoints prasme, 
-			Constitution priekšgājēja, tika samazināta. Šādi RuneScape konti tagad ir ļoti reti.</li>
+			Constitution priekšgājēja, tika samazināta. Šādi RuneScape profili tagad ir ļoti reti.</li>
 	</ul>
 </div>
 <!-- END BLOCK : skills-facts -->
