@@ -41,13 +41,13 @@ if ($original != null && file_exists($original)) {
 	$foo->image_convert = 'jpg';
 	$foo->process(CORE_PATH . '/dati/bildes/topic-av/');
 	header("Content-Type: image/jpg");
-	echo file_get_contents(CORE_PATH . 'dati/bildes/topic-av/' . $page . '.jpg');
+	echo file_get_contents(CORE_PATH . '/dati/bildes/topic-av/' . $page . '.jpg');
 } else {
 	$expires = 900;
 	header('Pragma: public');
 	header('Cache-Control: max-age=' . $expires);
 	header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 	header("Content-Type: image/png");
-	echo file_get_contents(CORE_PATH . 'dati/bildes/topic-av/none.png');
+	echo file_get_contents(CORE_PATH . '/dati/bildes/topic-av/none.png');
 }
 exit;
