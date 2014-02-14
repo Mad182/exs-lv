@@ -1,6 +1,6 @@
 <?php
 
-/** 	
+/**
  * 	Atgriež fancybox saturu, kādu lietotāji redz, nospiežot nosūdzēšanas podziņu,
  * 	un apstrādā iesniegtās sūdzības.
  *
@@ -16,7 +16,7 @@ $allowed_report_types = array('miniblog', 'article-comment', 'gallery-comment');
 
 
 // pieļaujamie projekti/apakšprojekti, kuros iespējotas sūdzības
-//	1 - exs.lv; 
+//	1 - exs.lv;
 //	7 - lol.exs.lv
 //  9 - runescape.exs.lv
 $allowed_sites = array(1, 7, 9);
@@ -41,7 +41,7 @@ if (!$auth->ok || $auth->mobile || !in_array($lang, $allowed_sites)) {
 /**
  * 	Vairākās vietās izmantota funkcija kļūdas paziņojuma atgriešanai.
  *
- * 	@param - norāda kļūdas numuru, lai noteiktu, 
+ * 	@param - norāda kļūdas numuru, lai noteiktu,
  * 			 kurš koda bloks to atgrieza.
  */
 function send_error($e = 0) {
@@ -164,19 +164,19 @@ if ($entry_type == 'miniblog') {
 
 	// pārbauda, vai norādītais mb ID datubāzē skatītajā apakšprojektā eksistē
 	$query_data = $db->get_row("
-		SELECT 
-			`miniblog`.`id`, 
+		SELECT
+			`miniblog`.`id`,
 			`miniblog`.`author`,
 			`miniblog`.`groupid`,
 			`miniblog`.`text`,
-			
+
 			`users`.`id` AS `userid`,
 			`users`.`nick`,
 			`users`.`level`
-			
+
 		FROM `miniblog`
 			JOIN `users` ON `miniblog`.`author` = `users`.`id`
-		WHERE 
+		WHERE
 			`miniblog`.`id` 		= '" . (int) $_GET['var2'] . "' 	AND
 			`miniblog`.`removed` 	= '0'						AND
 			`miniblog`.`lang`		= $lang
@@ -207,18 +207,18 @@ else if ($entry_type == 'article-comment') {
 
 	// pārbauda, vai norādītais komentāra ID datubāzē skatītajā apakšprojektā eksistē
 	$query_data = $db->get_row("
-		SELECT 
-			`comments`.`id`, 
+		SELECT
+			`comments`.`id`,
 			`comments`.`author`,
 			`comments`.`text`,
-			
+
 			`users`.`id` AS `userid`,
 			`users`.`nick`,
 			`users`.`level`
-			
+
 		FROM `comments`
 			JOIN `users` ON `comments`.`author` = `users`.`id`
-		WHERE 
+		WHERE
 			`comments`.`id` 		= '" . (int) $_GET['var2'] . "' AND
 			`comments`.`removed` 	= '0'
 	");
@@ -232,18 +232,18 @@ else if ($entry_type == 'gallery-comment') {
 
 	// pārbauda, vai norādītais galerijas komentāra ID datubāzē skatītajā apakšprojektā eksistē
 	$query_data = $db->get_row("
-		SELECT 
-			`galcom`.`id`, 
+		SELECT
+			`galcom`.`id`,
 			`galcom`.`author`,
 			`galcom`.`text`,
-			
+
 			`users`.`id` AS `userid`,
 			`users`.`nick`,
 			`users`.`level`
-			
+
 		FROM `galcom`
 			JOIN `users` ON `galcom`.`author` = `users`.`id`
-		WHERE 
+		WHERE
 			`galcom`.`id` 		= '" . (int) $_GET['var2'] . "' AND
 			`galcom`.`removed` 	= '0'
 	");
@@ -257,7 +257,7 @@ else if ($entry_type == 'gallery-comment') {
 
 $entry_text = add_smile(textlimit($query_data->text, 300));
 $offender = usercolor($query_data->nick, $query_data->level);
-$offender = '<a href="' . mkurl('user', $query_data->userid, $query_data->nick) . '">' . $offender . '</a>';
+$offender = '<a href="/user/' . $query_data->userid . '">' . $offender . '</a>';
 
 // atgriež HTML formu, kurā ļauts ievadīt pārkāpuma iemeslu
 $template->newBlock('report-form');

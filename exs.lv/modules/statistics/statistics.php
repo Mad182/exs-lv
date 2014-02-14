@@ -17,7 +17,7 @@ if ($spamers) {
 		$tpl->newBlock('spamerlist-node');
 		$tpl->assign(array(
 			'spamer-nick' => usercolor($spamer->nick, $spamer->level),
-			'url' => mkurl('user', $spamer->id, $spamer->nick),
+			'url' => '/user/' . $spamer->id,
 			'spamer-posts' => $spamer->posts
 		));
 	}
@@ -29,7 +29,7 @@ if ($spamers) {
 		$tpl->newBlock('karma-node');
 		$tpl->assign(array(
 			'spamer-nick' => usercolor($spamer->nick, $spamer->level),
-			'url' => mkurl('user', $spamer->id, $spamer->nick),
+			'url' => '/user/' . $spamer->id,
 			'karma' => $spamer->karma
 		));
 	}
@@ -43,7 +43,7 @@ if ($tusers) {
 		$tpl->newBlock('usertop-node');
 		$tpl->assign(array(
 			'user' => usercolor($tuser->nick, $tuser->level, false, $tuser->id),
-			'url' => mkurl('user', $tuser->id, $tuser->nick),
+			'url' => '/user/' . $tuser->id,
 			'today' => $tuser->today
 		));
 		if ($tuser->id == $auth->id) {

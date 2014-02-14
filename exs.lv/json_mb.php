@@ -101,7 +101,7 @@ if ($resps) {
 			$limit = 2;
 		}
 
-		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="' . mkurl('user', $resp->author, $resp->nick) . '"><img width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
+		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
 
 		if (!empty($resp->decos)) {
 			$decos = unserialize($resp->decos);
@@ -122,7 +122,7 @@ if ($resps) {
 			$out .= '<div class="mb-rater">' . mb_rater($resp, htmlspecialchars(strip_tags($_GET['url']))) . '</div>';
 		}
 		$resp->date = strtotime($resp->date);
-		$out .= '<p class="post-info"><a href="' . mkurl('user', $resp->author, $resp->nick) . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time($resp->date);
+		$out .= '<p class="post-info"><a href="/user/' . $resp->author . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time($resp->date);
 
 		//permalink
 		$out .= ' <a href="#m' . $resp->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';
@@ -134,7 +134,7 @@ if ($resps) {
 
 		//labot (ja ieraksts jau nav dzēsts)
 		if ($resp->mb_removed == 0 && !$auth->mobile && !$intro && ($resp->date > time() - 1800 || ($auth->level == 2 && $resp->author == $auth->id && $resp->date > time() - 86400) || $auth->level == 1) &&
-					(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $resp->author == $auth->id))) {
+				(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $resp->author == $auth->id))) {
 			$out .= ' <a href="/edit/' . $resp->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 		}
 

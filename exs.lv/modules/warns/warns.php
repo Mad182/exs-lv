@@ -37,7 +37,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					'reason' => add_smile($warn->reason),
 					'remove_reason' => add_smile($warn->remove_reason),
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
-					'aurl' => mkurl('user', $from->id, $from->nick),
+					'aurl' => '/user/' . $from->id,
 					'edit' => $edit,
 					'remove' => $remove,
 				));
@@ -75,7 +75,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				}
 				$tpl->assign(array(
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
-					'aurl' => mkurl('user', $from->id, $from->nick),
+					'aurl' => '/user/' . $from->id,
 					'reason' => add_smile($ban->reason),
 					'date' => display_time($ban->time),
 					'length' => strTime($ban->length),

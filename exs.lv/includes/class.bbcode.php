@@ -2,7 +2,7 @@
 
 /**
  * Modificēts phpBB 2 bbkoda parseris
- * 
+ *
  * Tiek izmantots miniblogiem
  */
 define('BBCODE_UID_LEN', 10);
@@ -1073,7 +1073,7 @@ class BBCode {
 			} elseif (isset($item['params']['user'])) {
 				$user = htmlspecialchars($item['params']['user']);
 				if (isset($item['params']['userid']) && intval($item['params']['userid'])) {
-					$user = '<a href="' . mkurl('user', intval($item['params']['userid']), $user) . '">' . $user . '</a>';
+					$user = '<a href="/user/' . intval($item['params']['userid']) . '">' . $user . '</a>';
 				}
 			}
 			// generate html
@@ -1089,7 +1089,7 @@ class BBCode {
 				} else {
 					$userid = $db->get_var("SELECT id FROM users WHERE nick = ('" . sanitize(trim($user)) . "') LIMIT 1");
 					if ($userid) {
-						$html .= '<div class="quote-user"><a class="profile-url" href="' . mkurl('user', $userid, $user) . '" title="' . $user . '">' . $user . '</a>&nbsp;' . rakstīja . ':&nbsp;' . $post_rev . '</div>';
+						$html .= '<div class="quote-user"><a class="profile-url" href="/user/' . $userid . '" title="' . $user . '">' . $user . '</a>&nbsp;' . rakstīja . ':&nbsp;' . $post_rev . '</div>';
 					} else {
 						$html .= '<div class="quote-user">' . $user . '&nbsp;' . rakstīja . ':&nbsp;' . $post_rev . '</div>';
 					}

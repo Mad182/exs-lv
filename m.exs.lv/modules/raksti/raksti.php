@@ -26,7 +26,8 @@ if (!$category->mods_only or ($auth->ok && ($auth->level == 1 or $auth->level ==
 	$articles = $db->get_results("
 		SELECT
 			`pages`.`id` AS `id`,
-			`pages`.`title` AS `title`,
+			`pages`.`title` AS `title`,`,
+			`pages`.`strid` AS `strid`,
 			`pages`.`date` AS `date`,
 			`pages`.`author` AS `author`,
 			`pages`.`posts` AS `posts`,
@@ -95,8 +96,8 @@ if (!$category->mods_only or ($auth->ok && ($auth->level == 1 or $auth->level ==
 			$tpl->assign(array(
 				'cat' => $cat,
 				'articles-node-id' => $article->id,
-				'node-url' => mkurl('page', $article->id, $article->title),
-				'aurl' => mkurl('user', $article->author, $article->nick),
+				'node-url' => '/read/' . $article->strid,
+				'aurl' => '/user/' . $article->author,
 				'articles-node-title' => $article->title,
 				'articles-node-views' => $article->views,
 				'articles-node-date' => $date,

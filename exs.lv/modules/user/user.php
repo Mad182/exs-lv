@@ -461,7 +461,8 @@ if ($inprofile) {
 			`comments`.`pid` AS `pid`,
 			`comments`.`id` AS `id`,
 			`comments`.`text` AS `text`,
-			`pages`.`title` AS `title`
+			`pages`.`title` AS `title`,
+			`pages`.`strid` AS `strid`
 		FROM
 			`comments`,
 			pages
@@ -480,7 +481,7 @@ if ($inprofile) {
 				foreach ($comments as $comment) {
 					$tpl->newBlock('user-profile-lastcom-node');
 					$tpl->assign(array(
-						'url' => mkurl('page', $comment->pid, $comment->title, '#c' . $comment->id),
+						'url' => '/read/' . $comment->strid . '#c' . $comment->id,
 						'comments-text' => textlimit($comment->text, 42, '..')
 					));
 				}

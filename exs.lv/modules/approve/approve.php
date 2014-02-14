@@ -166,7 +166,7 @@ if ($auth->ok) {
 			'article-ip' => $article->ip,
 			'article-author' => $article->author,
 			'article-author-nick' => usercolor($author->nick, $author->level, false, $article->author),
-			'aurl' => mkurl('user', $article->author, $author->nick),
+			'aurl' => '/user/' . $article->author,
 			'article-date' => $article->date,
 		));
 
@@ -244,3 +244,4 @@ if ($auth->ok) {
 } else {
 	$tpl->newBlock('error-nologin');
 }
+

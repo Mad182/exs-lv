@@ -1,6 +1,6 @@
 <?php
 
-/** 	
+/**
  * 	Moderatoru sadaļa, kurā aplūkojamas un pārvaldāmas
  * 	visas lietotāju iesniegtās sūdzības.
  *
@@ -8,12 +8,12 @@
  *
  *
  *  Projekti un apakšprojekti, kuros sūdzības ir iespējotas:
- *    1 - exs.lv; 
+ *    1 - exs.lv;
  *    7 - lol.exs.lv
  *    9 - runescape.exs.lv
  *
  *
- *  Citi apakšprojekti jāpieraksta klāt katrā vietā, 
+ *  Citi apakšprojekti jāpieraksta klāt katrā vietā,
  *  kur ziņošanas podziņa tiek vispār izdrukāta lapā.
  *  Tie ir visu veidu miniblogi, rakstu komentāri un galeriju komentāri.
  */
@@ -44,10 +44,9 @@ if (!im_mod() || !in_array($lang, $allowed_sites)) {
 /**
  *  < Fancybox ar nosūdzētā komentāra saturu >
  */
-
 //	adreses forma: /reports/show_content/{entry_id}?_=1
-if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' && 
-    isset($_GET['var2']) && isset($_GET['_'])) {
+if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
+		isset($_GET['var2']) && isset($_GET['_'])) {
 
 	// šāda iespēja nepieciešama tikai tajos apakšprojektos,
 	// kuros ir slēgtās grupas un kur kāds komentārs var nebūt redzams
@@ -58,12 +57,12 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 
 	// pēc padotā ID meklē datubāzē ierakstu no konkrētā apakšprojekta
 	$data = $db->get_row("
-		SELECT 
+		SELECT
 			`reports`.`reported_content`,
 			`reports`.`type`,
 			`reports`.`entry_id`
-		FROM `reports` 
-		WHERE 
+		FROM `reports`
+		WHERE
 			`reports`.`removed` = 0 AND
 			`reports`.`site_id` = " . $lang . " AND
 			`reports`.`id` 		= '" . (int) $_GET['var2'] . "'
@@ -71,15 +70,15 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 
 	if (!$data) {
 		echo json_encode(array(
-            'state' => 'error', 
-            'message' => 'Kļūdaini iesniegts pieprasījums!'
-        ));
+			'state' => 'error',
+			'message' => 'Kļūdaini iesniegts pieprasījums!'
+		));
 		exit;
 	} else {
 
-		$data->reported_content = ( empty($data->reported_content) ) ? 
-            '<p class="report-notice"><strong>Nav saglabāts!</strong></p>' : 
-            $data->reported_content;
+		$data->reported_content = ( empty($data->reported_content) ) ?
+				'<p class="report-notice"><strong>Nav saglabāts!</strong></p>' :
+				$data->reported_content;
 		$data->reported_content = add_smile($data->reported_content);
 
 		$templ = new TemplatePower(CORE_PATH . '/modules/reports/reported-content.tpl');
@@ -94,25 +93,25 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 		// rakstu komentāri
 		if ($data->type == 1) {
 			$original_data = $db->get_row("
-                SELECT `text`, `edit_time`, `removed` 
-                FROM `comments` 
-                WHERE `id` = '" . (int) $data->entry_id . "' 
+                SELECT `text`, `edit_time`, `removed`
+                FROM `comments`
+                WHERE `id` = '" . (int) $data->entry_id . "'
             ");
 		}
 		// galeriju komentāri
 		else if ($data->type == 2) {
 			$original_data = $db->get_row("
-                SELECT `text`, `edit_time`, `removed` 
-                FROM `galcom` 
-                WHERE `id` = '" . (int) $data->entry_id . "' 
+                SELECT `text`, `edit_time`, `removed`
+                FROM `galcom`
+                WHERE `id` = '" . (int) $data->entry_id . "'
             ");
 		}
 		// miniblogi
 		else {
 			$original_data = $db->get_row("
-                SELECT `text`, `edit_time`, `removed` 
-                FROM `miniblog` 
-                WHERE `id` = '" . (int) $data->entry_id . "' 
+                SELECT `text`, `edit_time`, `removed`
+                FROM `miniblog`
+                WHERE `id` = '" . (int) $data->entry_id . "'
             ");
 		}
 
@@ -121,18 +120,18 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 			// nosūdzētis ieraksts var būt dzēsts un lapā vairs nebūt redzams;
 			// to moderatoram pieklātos redzēt
 			if ($original_data->removed == 1) {
-                $original = $original_data->text;
-				$original_data->text  = '<p class="report-notice"><strong>';
-                $original_data->text .= 'Ieraksts ir dzēsts!</strong></p>';
-                $original_data->text .= $original;
+				$original = $original_data->text;
+				$original_data->text = '<p class="report-notice"><strong>';
+				$original_data->text .= 'Ieraksts ir dzēsts!</strong></p>';
+				$original_data->text .= $original;
 			}
 			$templ->assign('original-post', add_smile($original_data->text));
 		}
 
 		echo json_encode(array(
-            'state' => 'success', 
-            'message' => $templ->getOutputContent()
-        ));
+			'state' => 'success',
+			'message' => $templ->getOutputContent()
+		));
 	}
 	exit;
 }
@@ -144,33 +143,32 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 /**
  *  < Sūdzības arhivēšana >
  */
- 
 // šo bloku izsauc jquery getJSON, kad nospiesta arhivēšanas/aktualizēšanas poga;
 // pieprasītā adrese ir formā /reports/remove/{report-id}?_=1
 if (isset($_GET['var1']) && $_GET['var1'] == 'remove' &&
-    isset($_GET['var2']) && is_numeric($_GET['var2']) && isset($_GET['_'])) {
+		isset($_GET['var2']) && is_numeric($_GET['var2']) && isset($_GET['_'])) {
 
 	// drošības labad arhivēt ļauts tikai attiecīgā apakšprojekta ierakstus
 	$query_update = $db->query("
-        UPDATE `reports` 
-        SET 
-            `archived`   = 1, 
-            `deleted_by` = '".$auth->id."', 
-            `deleted_at` = '".time()."' 
-        WHERE 
-            `id` = '".(int) $_GET['var2']."' AND
-            `site_id` = ".$lang." 
+        UPDATE `reports`
+        SET
+            `archived`   = 1,
+            `deleted_by` = '" . $auth->id . "',
+            `deleted_at` = '" . time() . "'
+        WHERE
+            `id` = '" . (int) $_GET['var2'] . "' AND
+            `site_id` = " . $lang . "
         LIMIT 1
     ");
 
 	if (!$query_update) {
 		echo json_encode(array('state' => 'error', 'text' => ''));
 	} else {
-    
-        echo json_encode(array(
-            'state' => 'success',
-            'text'  => 'Arhivēts'
-        ));
+
+		echo json_encode(array(
+			'state' => 'success',
+			'text' => 'Arhivēts'
+		));
 	}
 	exit;
 }
@@ -183,7 +181,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'remove' &&
 /**
  *  < Saraksts ar iesniegtajām sūdzībām >
  */
-
 // aktīvās cilnes izcelšana
 $active_tab = 'miniblogs';
 if (isset($_GET['var1']) && in_array($_GET['var1'], array('miniblogs', 'articles', 'gallery-comments'))) {
@@ -198,7 +195,6 @@ $tpl->assign('tab-' . $active_tab, ' class="active"');
  *
  *  Atkarīgi no tā, kura cilne tiek skatīta.
  */
-
 // SELECT lauki, kas izmantoti visos pieprasījumos
 $includable_selects = '
 	`reports`.`id` 				AS `report_id`,
@@ -208,11 +204,11 @@ $includable_selects = '
 	`reports`.`reported_content` AS `reported_content`,
 	`reports`.`created_at`		AS `report_created_at`,
 	`reports`.`archived`		AS `report_archived`,
-	
+
 	`reporter`.`id`				AS `reporter_id`,
 	`reporter`.`nick`			AS `reporter_nick`,
 	`reporter`.`level`			AS `reporter_level`,
-	
+
 	`rule_breaker`.`id`			AS `rule_breaker_id`,
 	`rule_breaker`.`nick`		AS `rule_breaker_nick`,
 	`rule_breaker`.`level`		AS `rule_breaker_level`
@@ -220,8 +216,8 @@ $includable_selects = '
 
 // uzskaita tikai konkrētā apakšprojekta brīdinājumus
 $includable_subquery = "(
-    SELECT count(*) FROM `warns` 
-    WHERE 
+    SELECT count(*) FROM `warns`
+    WHERE
         `user_id`   = `rule_breaker`.`id` AND
         `active`    = 1 AND
         `site_id`   = $lang
@@ -231,51 +227,51 @@ $includable_subquery = "(
 // nosūdzēto miniblogu pieprasījums
 if ($active_tab == 'miniblogs') {
 
-    $report_types       = array(0, 1);
-    $query_reports_0    = false;
-    $query_reports_1    = false;
-    
-    foreach ($report_types as $get_archive) {
-    
-        // arhivētajiem ierakstiem klāt nāk lietotājs-arhivētājs,
-        // kā arī atgriežamo sūdzību skaits ir ierobežots;
-        // iesniegto sūdzību nav tik daudz, lai vajadzētu limitēt
-        $includable_join    = '';
-        $query_limit        = '';
-        
-        if ($get_archive == 1) {
-            $includable_selects .= ',
+	$report_types = array(0, 1);
+	$query_reports_0 = false;
+	$query_reports_1 = false;
+
+	foreach ($report_types as $get_archive) {
+
+		// arhivētajiem ierakstiem klāt nāk lietotājs-arhivētājs,
+		// kā arī atgriežamo sūdzību skaits ir ierobežots;
+		// iesniegto sūdzību nav tik daudz, lai vajadzētu limitēt
+		$includable_join = '';
+		$query_limit = '';
+
+		if ($get_archive == 1) {
+			$includable_selects .= ',
                 `archived_by`.`id`		AS `archivator_id`,
                 `archived_by`.`nick`	AS `archivator_nick`,
                 `archived_by`.`level`	AS `archivator_level`
             ';
-            $includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
-            $query_limit = 'LIMIT 0, 30';
-        }
-    
-        $query_reports_{$get_archive} = $db->get_results("
-            SELECT			
+			$includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
+			$query_limit = 'LIMIT 0, 30';
+		}
+
+		$query_reports_{$get_archive} = $db->get_results("
+            SELECT
                 $includable_selects,
                 $includable_subquery,
-                
-                `miniblog`.`id`				AS `miniblog_id`,			
+
+                `miniblog`.`id`				AS `miniblog_id`,
                 `miniblog`.`author`			AS `miniblog_author`,
                 `miniblog`.`text` 			AS `miniblog_text`,
                 `miniblog`.`parent`			AS `miniblog_parent`,
                 `miniblog`.`groupid`		AS `miniblog_groupid`,
                 `miniblog`.`type`			AS `miniblog_type`,
-                
+
                 `parent_mb`.`id` 			AS `parentmb_id`,
                 `parent_mb`.`author` 		AS `parentmb_author`,
                 `parent_mb`.`text` 			AS `parentmb_text`,
                 `parent_mb`.`groupid`		AS `parentmb_groupid`,
-                
+
                 `clans`.`title`				AS `group_title`
 
-            FROM `reports` 
-                $includable_join 
+            FROM `reports`
+                $includable_join
                 JOIN `miniblog` 							ON `reports`.`entry_id` 	= `miniblog`.`id`
-                JOIN `users` 			AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`				
+                JOIN `users` 			AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`
                 JOIN `users` 			AS `rule_breaker` 	ON `miniblog`.`author` 		= `rule_breaker`.`id`
                 LEFT JOIN `miniblog` 	AS `parent_mb` 		ON `miniblog`.`parent` 		= `parent_mb`.`id`
                 LEFT JOIN `clans`							ON `miniblog`.`groupid`		= `clans`.`id`
@@ -284,96 +280,96 @@ if ($active_tab == 'miniblogs') {
                 `reports`.`type` 		= 0				AND
                 `reports`.`removed` 	= 0				AND
                 `reports`.`site_id`		= $lang
-            ORDER BY 
+            ORDER BY
                 `reports`.`created_at` DESC
             $query_limit
         ");
-    }
+	}
 }
 
 // nosūdzēto rakstu komentāru pieprasījums
 else if ($active_tab == 'articles') {
-    
-    $report_types       = array(0, 1);
-    $query_reports_0    = false;
-    $query_reports_1    = false;
-    
-    foreach ($report_types as $get_archive) {
-    
-        // arhivētajiem ierakstiem klāt nāk lietotājs-arhivētājs,
-        // kā arī atgriežamo sūdzību skaits ir ierobežots;
-        // iesniegto sūdzību nav tik daudz, lai vajadzētu limitēt
-        $includable_join    = '';
-        $query_limit        = '';
-        
-        if ($get_archive == 1) {
-            $includable_selects .= ',
+
+	$report_types = array(0, 1);
+	$query_reports_0 = false;
+	$query_reports_1 = false;
+
+	foreach ($report_types as $get_archive) {
+
+		// arhivētajiem ierakstiem klāt nāk lietotājs-arhivētājs,
+		// kā arī atgriežamo sūdzību skaits ir ierobežots;
+		// iesniegto sūdzību nav tik daudz, lai vajadzētu limitēt
+		$includable_join = '';
+		$query_limit = '';
+
+		if ($get_archive == 1) {
+			$includable_selects .= ',
                 `archived_by`.`id`		AS `archivator_id`,
                 `archived_by`.`nick`	AS `archivator_nick`,
                 `archived_by`.`level`	AS `archivator_level`
             ';
-            $includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
-            $query_limit = 'LIMIT 0, 30';
-        }
-        
-        $query_reports_{$get_archive} = $db->get_results("
-            SELECT			
+			$includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
+			$query_limit = 'LIMIT 0, 30';
+		}
+
+		$query_reports_{$get_archive} = $db->get_results("
+            SELECT
                 $includable_selects,
                 $includable_subquery,
-                
+
                 `comments`.`text` 	AS `comment_text`,
-                `comments`.`id`		AS `comment_id`,			
+                `comments`.`id`		AS `comment_id`,
                 `pages`.`strid`		AS `comment_page_strid`,
                 `pages`.`title`		AS `comment_page_title`
 
-            FROM `reports`	
-                $includable_join 
+            FROM `reports`
+                $includable_join
                 JOIN `users` AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`
                 JOIN `comments` 				ON `reports`.`entry_id` 	= `comments`.`id`
                 JOIN `users` AS `rule_breaker` 	ON `comments`.`author` 		= `rule_breaker`.`id`
                 JOIN `pages` 					ON `comments`.`pid` 		= `pages`.`id`
-            WHERE	
+            WHERE
                 `reports`.`archived` 	= $get_archive 	AND
                 `reports`.`type` 		= 1				AND
                 `reports`.`removed` 	= 0				AND
                 `reports`.`site_id`		= $lang
-            ORDER BY 
+            ORDER BY
                 `reports`.`created_at` DESC
             $query_limit
         ");
-    }
+	}
 }
 
 // nosūdzēto galeriju komentāru pieprasījums
 else if ($active_tab == 'gallery-comments') {
 
-    $report_types       = array(0, 1);
-    $query_reports_0    = false;
-    $query_reports_1    = false;
-    
-    foreach ($report_types as $get_archive) {
-    
-        // arhivētajiem ierakstiem klāt nāk lietotājs-arhivētājs,
-        // kā arī atgriežamo sūdzību skaits ir ierobežots;
-        // iesniegto sūdzību nav tik daudz, lai vajadzētu limitēt
-        $includable_join    = '';
-        $query_limit        = '';
-        
-        if ($get_archive == 1) {
-            $includable_selects .= ',
+	$report_types = array(0, 1);
+	$query_reports_0 = false;
+	$query_reports_1 = false;
+
+	foreach ($report_types as $get_archive) {
+
+		// arhivētajiem ierakstiem klāt nāk lietotājs-arhivētājs,
+		// kā arī atgriežamo sūdzību skaits ir ierobežots;
+		// iesniegto sūdzību nav tik daudz, lai vajadzētu limitēt
+		$includable_join = '';
+		$query_limit = '';
+
+		if ($get_archive == 1) {
+			$includable_selects .= ',
                 `archived_by`.`id`		AS `archivator_id`,
                 `archived_by`.`nick`	AS `archivator_nick`,
                 `archived_by`.`level`	AS `archivator_level`
             ';
-            $includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
-            $query_limit = 'LIMIT 0, 30';
-        }
-    
-        $query_reports_{$get_archive} = $db->get_results("
-            SELECT			
+			$includable_join = " JOIN `users` AS `archived_by` ON `reports`.`deleted_by` = `archived_by`.`id` ";
+			$query_limit = 'LIMIT 0, 30';
+		}
+
+		$query_reports_{$get_archive} = $db->get_results("
+            SELECT
                 $includable_selects,
                 $includable_subquery,
-                
+
                 `galcom`.`text` 			AS `galcom_text`,
                 `galcom`.`id`				AS `galcom_id`,
                 `galcom`.`author`			AS `galcom_author`,
@@ -381,9 +377,9 @@ else if ($active_tab == 'gallery-comments') {
                 `gallery_author`.`id`		AS `gallery_author`
 
             FROM `reports`
-                $includable_join 
+                $includable_join
                 JOIN `galcom` 						ON `reports`.`entry_id` 	= `galcom`.`id`
-                JOIN `users` 	AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`				
+                JOIN `users` 	AS `reporter` 		ON `reports`.`created_by` 	= `reporter`.`id`
                 JOIN `users` 	AS `rule_breaker` 	ON `galcom`.`author` 		= `rule_breaker`.`id`
                 JOIN `images`						ON `galcom`.`bid`			= `images`.`id`
                 JOIN `users`	AS `gallery_author`	ON `images`.`uid`			= `gallery_author`.`id`
@@ -392,11 +388,11 @@ else if ($active_tab == 'gallery-comments') {
                 `reports`.`type` 		= 2				AND
                 `reports`.`removed` 	= 0				AND
                 `reports`.`site_id`		= $lang
-            ORDER BY 
+            ORDER BY
                 `reports`.`created_at` DESC
             $query_limit
         ");
-    }
+	}
 } else {
 	redirect('/reports');
 }
@@ -410,9 +406,9 @@ $new_articles = $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = 1 AN
 $new_gcomments = $db->get_var("SELECT count(*) FROM `reports` WHERE `type` = 2 AND `archived` = 0 AND `removed` = 0 AND `site_id` = $lang ");
 
 $tpl->assign(array(
-	'count-mblogs'      => ' (<span class="red">' . $new_mblogs . '</span>)',
-	'count-articles'    => ' (<span class="red">' . $new_articles . '</span>)',
-	'count-gcomments'   => ' (<span class="red">' . $new_gcomments . '</span>)'
+	'count-mblogs' => ' (<span class="red">' . $new_mblogs . '</span>)',
+	'count-articles' => ' (<span class="red">' . $new_articles . '</span>)',
+	'count-gcomments' => ' (<span class="red">' . $new_gcomments . '</span>)'
 ));
 
 
@@ -425,144 +421,142 @@ $report_types = array(0, 1);
 
 foreach ($report_types as $report_type) {
 
-    $tpl->newBlock('report-list-container');
+	$tpl->newBlock('report-list-container');
 
-    // ja konkrētā veida sūdzības nav atrastas...
-    if ( !$query_reports_{$report_type} ) {
-        $tpl->newBlock('no-reports-found');
-        if ($report_type == 1) {
-            $tpl->assign('report-type', 'arhivētas sūdzības');
-        } else {
-            $tpl->assign('report-type', 'jaunas sūdzības');
-        }
-    }
-    
-    // konkrētā veida sūdzības atrastas
-    else {
-        
-        // tabulas virsraksts
-        $tpl->newBlock('list-reports');
-        if ($report_type == 0) {
-            $tpl->assign('report-title', 'Jaunākās sūdzības');
-            $tpl->newBlock('archive-button-header');
-        }
-        else {
-            $tpl->assign('report-title', 'Sūdzību arhīvs');
-        }
-        
-        // saraksts ar sūdzībām
-        foreach ($query_reports_{$report_type} as $report) {
+	// ja konkrētā veida sūdzības nav atrastas...
+	if (!$query_reports_{$report_type}) {
+		$tpl->newBlock('no-reports-found');
+		if ($report_type == 1) {
+			$tpl->assign('report-type', 'arhivētas sūdzības');
+		} else {
+			$tpl->assign('report-type', 'jaunas sūdzības');
+		}
+	}
 
-            $report->report_created_at = display_time($report->report_created_at);
+	// konkrētā veida sūdzības atrastas
+	else {
 
-            // sūdzības iesūtītājs
-            $report->reporter_nick = usercolor($report->reporter_nick, $report->reporter_level);
-            $report->reporter_nick = '<a href="' . mkurl('user', $report->reporter_id, $report->reporter_nick) . '">' . $report->reporter_nick . '</a>';
+		// tabulas virsraksts
+		$tpl->newBlock('list-reports');
+		if ($report_type == 0) {
+			$tpl->assign('report-title', 'Jaunākās sūdzības');
+			$tpl->newBlock('archive-button-header');
+		} else {
+			$tpl->assign('report-title', 'Sūdzību arhīvs');
+		}
 
-            // pārkāpuma veicējs
-            $report->rule_breaker_nick = usercolor($report->rule_breaker_nick, $report->rule_breaker_level);
-            $report->rule_breaker_nick = '<a href="' . mkurl('user', $report->rule_breaker_id, $report->rule_breaker_nick) . '">' . $report->rule_breaker_nick . '</a>';
+		// saraksts ar sūdzībām
+		foreach ($query_reports_{$report_type} as $report) {
 
-            // ziņojuma arhivētājs
-            if ($report_type == 1) {
-                $report->archivator_nick = usercolor($report->archivator_nick, $report->archivator_level);
-                $report->archivator_nick = '<a href="' . mkurl('user', $report->archivator_id, $report->archivator_nick) . '">' . $report->archivator_nick . '</a>';
-            }
+			$report->report_created_at = display_time($report->report_created_at);
+
+			// sūdzības iesūtītājs
+			$report->reporter_nick = usercolor($report->reporter_nick, $report->reporter_level);
+			$report->reporter_nick = '<a href="/user/' . $report->reporter_id . '">' . $report->reporter_nick . '</a>';
+
+			// pārkāpuma veicējs
+			$report->rule_breaker_nick = usercolor($report->rule_breaker_nick, $report->rule_breaker_level);
+			$report->rule_breaker_nick = '<a href="/user/' . $report->rule_breaker_id . '">' . $report->rule_breaker_nick . '</a>';
+
+			// ziņojuma arhivētājs
+			if ($report_type == 1) {
+				$report->archivator_nick = usercolor($report->archivator_nick, $report->archivator_level);
+				$report->archivator_nick = '<a href="/user/' . $report->archivator_id . '">' . $report->archivator_nick . '</a>';
+			}
 
 
-            //	adrese uz pārkāpuma izdarīšanas vietu;
-            //	tiek norādīta tabulā pie katra ieraksta
-            switch ($report->report_type) {
+			//	adrese uz pārkāpuma izdarīšanas vietu;
+			//	tiek norādīta tabulā pie katra ieraksta
+			switch ($report->report_type) {
 
-                // raksta komentārs (vai komentāra atbilde)
-                case 1:
-                    $report_place = '<strong>Komentārs: </strong>';
-                    $report_place .= '<a href="/read/' . $report->comment_page_strid . '#c' . $report->comment_id . '">' . $report->comment_page_title . '</a>';
-                    break;
+				// raksta komentārs (vai komentāra atbilde)
+				case 1:
+					$report_place = '<strong>Komentārs: </strong>';
+					$report_place .= '<a href="/read/' . $report->comment_page_strid . '#c' . $report->comment_id . '">' . $report->comment_page_title . '</a>';
+					break;
 
-                // galerijas komentārs
-                case 2:
-                    $report_place = '<strong>Komentārs: </strong> ';
-                    $report_place .= '<a href="/gallery/' . $report->gallery_author . '/' . $report->galcom_bid . '#c' . $report->galcom_id . '">' . $report->galcom_id . '</a>';
-                    break;
+				// galerijas komentārs
+				case 2:
+					$report_place = '<strong>Komentārs: </strong> ';
+					$report_place .= '<a href="/gallery/' . $report->gallery_author . '/' . $report->galcom_bid . '#c' . $report->galcom_id . '">' . $report->galcom_id . '</a>';
+					break;
 
-                // minibloga tipa ieraksts (var būt arī grupā)
-                default:
+				// minibloga tipa ieraksts (var būt arī grupā)
+				default:
 
-                    // junk komentārs
-                    if ($report->miniblog_type == 'junk' && $report->miniblog_parent != 0) {
-                        $report_place = '<strong>Junk komentārs: </strong>';
-                        $report_place .= '<a href="/junk/' . $report->miniblog_parent . '#m' . $report->miniblog_id . '">#m' . $report->miniblog_id . '</a>';
-                    }
-                    // minibloga komentārs
-                    else if ($report->miniblog_parent != '0') {
+					// junk komentārs
+					if ($report->miniblog_type == 'junk' && $report->miniblog_parent != 0) {
+						$report_place = '<strong>Junk komentārs: </strong>';
+						$report_place .= '<a href="/junk/' . $report->miniblog_parent . '#m' . $report->miniblog_id . '">#m' . $report->miniblog_id . '</a>';
+					}
+					// minibloga komentārs
+					else if ($report->miniblog_parent != '0') {
 
-                        $mb_strid = mb_get_strid($report->parentmb_text, $report->parentmb_id);
+						$mb_strid = mb_get_strid($report->parentmb_text, $report->parentmb_id);
 
-                        // grupā esošs komentārs
-                        if ($report->miniblog_groupid != '0') {
-                            $report_place = '<strong>Grupas mb komentārs: </strong>';
-                            $report_place .= '<a href="/group/' . $report->parentmb_groupid . '/forum/' . base_convert($report->parentmb_id, 10, 36) . '#m' . $report->miniblog_id . '">' . $report->group_title . '</a>';
-                        }
-                        // ārpus grupām esošs komentārs
-                        else {
-                            $report_place = '<strong>Minibloga komentārs: </strong>';
-                            $report_place .= '<a href="/say/' . $report->parentmb_author . '/' . $report->parentmb_id . '-' . $mb_strid . '#m' . $report->miniblog_id . '">' . $mb_strid . '</a>';
-                        }
-                    }
-                    // pats miniblogs
-                    else {
+						// grupā esošs komentārs
+						if ($report->miniblog_groupid != '0') {
+							$report_place = '<strong>Grupas mb komentārs: </strong>';
+							$report_place .= '<a href="/group/' . $report->parentmb_groupid . '/forum/' . base_convert($report->parentmb_id, 10, 36) . '#m' . $report->miniblog_id . '">' . $report->group_title . '</a>';
+						}
+						// ārpus grupām esošs komentārs
+						else {
+							$report_place = '<strong>Minibloga komentārs: </strong>';
+							$report_place .= '<a href="/say/' . $report->parentmb_author . '/' . $report->parentmb_id . '-' . $mb_strid . '#m' . $report->miniblog_id . '">' . $mb_strid . '</a>';
+						}
+					}
+					// pats miniblogs
+					else {
 
-                        $mb_strid = mb_get_strid($report->miniblog_text, $report->miniblog_id);
+						$mb_strid = mb_get_strid($report->miniblog_text, $report->miniblog_id);
 
-                        // grupā esošs miniblogs
-                        if ($report->miniblog_groupid != '0') {
-                            $report_place = '<strong>Grupas miniblogs: </strong>';
-                            $report_place .= '<a href="/group/' . $report->miniblog_groupid . '/forum/' . base_convert($report->miniblog_id, 10, 36) . '">' . $report->group_title . '</a>';
-                        }
-                        // ārpus grupām esošs miniblogs
-                        else {
-                            $report_place = '<strong>Miniblogs: </strong>';
-                            $report_place .= '<a href="/say/' . $report->miniblog_author . '/' . $report->miniblog_id . '-' . $mb_strid . '">' . $mb_strid . '</a>';
-                        }
-                    }
-                    break;
-            };
+						// grupā esošs miniblogs
+						if ($report->miniblog_groupid != '0') {
+							$report_place = '<strong>Grupas miniblogs: </strong>';
+							$report_place .= '<a href="/group/' . $report->miniblog_groupid . '/forum/' . base_convert($report->miniblog_id, 10, 36) . '">' . $report->group_title . '</a>';
+						}
+						// ārpus grupām esošs miniblogs
+						else {
+							$report_place = '<strong>Miniblogs: </strong>';
+							$report_place .= '<a href="/say/' . $report->miniblog_author . '/' . $report->miniblog_id . '-' . $mb_strid . '">' . $mb_strid . '</a>';
+						}
+					}
+					break;
+			};
 
-            // izvade lapā		
-            $tpl->newBlock('single-report');
-            $tpl->assignAll($report);
-            $tpl->assign(array(
-                'report-place' => $report_place,
-                'report-comment' => textlimit($report->report_comment, 600),
-                'full-content' => $report->report_comment
-            ));
+			// izvade lapā
+			$tpl->newBlock('single-report');
+			$tpl->assignAll($report);
+			$tpl->assign(array(
+				'report-place' => $report_place,
+				'report-comment' => textlimit($report->report_comment, 600),
+				'full-content' => $report->report_comment
+			));
 
-            // parādīs podziņu, kas ļaus apskatīt pilno ziņojuma saturu
-            if (mb_strlen($report->report_comment) > 600) {
-                $tpl->newBlock('show-full-content');
-            }
+			// parādīs podziņu, kas ļaus apskatīt pilno ziņojuma saturu
+			if (mb_strlen($report->report_comment) > 600) {
+				$tpl->newBlock('show-full-content');
+			}
 
-            // skatīt saturu nepieciešams tikai tajos apakšprojektos,
-            // kuros nav slēgto grupu
-            if (in_array($lang, $has_groups)) {
-                $tpl->newBlock('display-original-content');
-                $tpl->assign('report_id', $report->report_id);
-            }
+			// skatīt saturu nepieciešams tikai tajos apakšprojektos,
+			// kuros nav slēgto grupu
+			if (in_array($lang, $has_groups)) {
+				$tpl->newBlock('display-original-content');
+				$tpl->assign('report_id', $report->report_id);
+			}
 
-            // arhivēšanas poga
-            if ($report_type == 0) {
-                $tpl->newBlock('archive-button');
-            }
-            
-            $tpl->assign('report_id', $report->report_id);
+			// arhivēšanas poga
+			if ($report_type == 0) {
+				$tpl->newBlock('archive-button');
+			}
 
-            // ziņojumu arhīva tabulā parādīs lietotāju, kurš ziņojumu arhivējis
-            if ($report_type == 1) {
-                $tpl->newBlock('archived-by');
-                $tpl->assign('archivator_nick', $report->archivator_nick);
-            }
-        }
-    }
+			$tpl->assign('report_id', $report->report_id);
 
+			// ziņojumu arhīva tabulā parādīs lietotāju, kurš ziņojumu arhivējis
+			if ($report_type == 1) {
+				$tpl->newBlock('archived-by');
+				$tpl->assign('archivator_nick', $report->archivator_nick);
+			}
+		}
+	}
 }
