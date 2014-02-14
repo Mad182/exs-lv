@@ -268,7 +268,6 @@ if ($article) {
 				}
 				die('ok');
 			}
-
 		}
 
 		$author = get_user($article->author);
@@ -487,8 +486,8 @@ if ($article) {
 							$dir2 = 0;
 						}
 						$path = $dir1 . '/' . $dir2;
-						rmkdir('/home/www/img.exs.lv/movies/large/' . $path . '/');
-						rmkdir('/home/www/img.exs.lv/movies/thb/' . $path . '/');
+						rmkdir(IMG_PATH . '/movies/large/' . $path . '/');
+						rmkdir(IMG_PATH . '/movies/thb/' . $path . '/');
 
 						$tmpname = '/tmp/' . uniqid() . '.' . $ext;
 						file_put_contents($tmpname, $data);
@@ -508,7 +507,7 @@ if ($article) {
 						$foo->jpeg_quality = 96;
 						$foo->file_overwrite = true;
 						$foo->image_convert = 'jpg';
-						$foo->process('/home/www/img.exs.lv/movies/thb/' . $path . '/');
+						$foo->process(IMG_PATH . '/movies/thb/' . $path . '/');
 						if ($foo->processed) {
 
 							$foo->file_new_name_body = $file_title;
@@ -522,7 +521,7 @@ if ($article) {
 							$foo->jpeg_quality = 96;
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
-							$foo->process('/home/www/img.exs.lv/movies/large/' . $path . '/');
+							$foo->process(IMG_PATH . '/movies/large/' . $path . '/');
 
 							$db->query("DELETE FROM `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id'");
 							$db->query("INSERT INTO `movie_images` (`page_id`, `main`, `image`, `thb`, `title`, `created`, `created_by`)
@@ -672,7 +671,7 @@ if ($article) {
 							'title' => htmlspecialchars($article->title),
 							'type' => 'video.movie',
 							'url' => 'http://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
-							'image' => 'http://img.exs.lv' . $avatar->thb
+							'image' => $img_server . $avatar->thb
 						));
 					}
 				}
@@ -918,7 +917,7 @@ if ($article) {
 					$tpl->assign('edit-page-disabled', $closemark);
 
 					//attach page in forum view
-					if($category->isforum) {
+					if ($category->isforum) {
 						$tpl->newBlock('post-attach');
 						$atachmark = '';
 						if ($article->attach) {
@@ -926,7 +925,6 @@ if ($article) {
 						}
 						$tpl->assign('edit-page-attached', $atachmark);
 					}
-
 				}
 			}
 

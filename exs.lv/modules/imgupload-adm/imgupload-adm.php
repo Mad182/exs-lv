@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * img.exs.lv jaunāko attēlu apskate un dzēšana
+ */
 if ($auth->id != 1) {
 	redirect();
 }
@@ -12,12 +15,12 @@ if (!empty($images)) {
 		if (isset($_GET['delete'])) {
 			if ($img->id == $_GET['delete']) {
 				$db->query("DELETE FROM `imgupload` WHERE `id` = '$img->id' LIMIT 1");
-				unlink('/home/www/img.exs.lv/' . $img->path . '/' . $img->file);
-				unlink('/home/www/img.exs.lv/' . $img->path . '/small/' . $img->file);
+				unlink(IMG_PATH . '/' . $img->path . '/' . $img->file);
+				unlink(IMG_PATH . '/' . $img->path . '/small/' . $img->file);
 				continue;
 			}
 		}
-		$out .= '<a href="?delete=' . $img->id . '"><img style="width: 50px;" src="http://img.exs.lv/' . $img->path . '/small/' . $img->file . '" alt="" /></a> ';
+		$out .= '<a href="?delete=' . $img->id . '"><img style="width: 50px;" src="' . $img_server . '/' . $img->path . '/small/' . $img->file . '" alt="" /></a> ';
 	}
 }
 
