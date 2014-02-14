@@ -34,9 +34,10 @@ foreach ($categories as $group_category) {
 			} else {
 				$add = '';
 			}
-			if ($group->avatar == '') {
-				$group->avatar = 'none.png';
-			}
+
+			$group->av_alt = 1;
+			$avatar = get_avatar($group, 'm');
+
 			$tpl->newBlock('list-groups-node');
 
 			if (!empty($group->strid)) {
@@ -48,7 +49,7 @@ foreach ($categories as $group_category) {
 			$tpl->assign(array(
 				'title' => $group->title,
 				'link' => $group->link,
-				'avatar' => $group->avatar,
+				'avatar' => $avatar,
 				'posts' => $group->posts,
 				'members' => $group->members + 1,
 				'admin' => $db->get_var("SELECT nick FROM users WHERE id = '$group->owner'"),

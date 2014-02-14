@@ -2166,9 +2166,12 @@ function get_latest_mbs($friends = false) {
 			if ($mb->groupid != 0) {
 				$spec = ' class="group"';
 				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
+
 				if ($group->avatar) {
-					$avatar = $img_server . '/userpic/small/' . $group->avatar;
+					$group->av_alt = 1;
+					$avatar = get_avatar($group, 's');
 				}
+
 				if (!empty($group->strid)) {
 					$url = $domain . '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
 				} else {
