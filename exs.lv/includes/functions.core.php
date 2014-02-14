@@ -2338,9 +2338,9 @@ function human_filesize($bytes, $decimals = 2) {
 /**
  * Atgriež lietotāja avataru pēc pieprasītā izmēra
  */
-function get_avatar($user, $size = 'm') {
+function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 	global $auth, $img_server;
-	if (empty($auth->mobile)) {
+	if (empty($auth->mobile) || $ignore_mobile) {
 		$path = 'medium';
 		$real_path = 'useravatar';
 		if (($user->av_alt || !$user->avatar) && $size == 's') {
