@@ -2017,7 +2017,7 @@ function get_latest_images() {
 					$img = 'http://img.exs.lv/' . $late->thb;
 				}
 			} else {
-				$img . '/' . $late->thb;
+				$img = '/' . $late->thb;
 			}
 
 			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img . '" alt="" />';
