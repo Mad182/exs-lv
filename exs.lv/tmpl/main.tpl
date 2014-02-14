@@ -385,7 +385,7 @@
 				<!-- START BLOCK : group-box-->
 				<h3>{group-title}</h3>
 				<div class="box">
-					<a href="/group/{group-id}"><img id="profile-image" src="http://img.exs.lv/userpic/large/{group-av}" alt="{group-alt}" /></a>
+					<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
 				</div>
 				<!-- END BLOCK : group-box-->
 

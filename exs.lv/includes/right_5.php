@@ -75,13 +75,9 @@ if (!empty($inprofile)) {
 		));
 	}
 } elseif (!empty($ingroup)) {
-
 	$tpl->newBlock('group-box');
-	if ($ingroup->avatar) {
-		$av = $ingroup->avatar;
-	} else {
-		$av = 'none.png';
-	}
+	$ingroup->av_alt = 1;
+	$av = get_avatar($ingroup, 'l');
 	$tpl->assign(array(
 		'group-id' => $ingroup->id,
 		'group-title' => $ingroup->title,
@@ -114,14 +110,14 @@ if($chart_items) {
 	$items = array();
 	$last = null;
 	foreach($chart_items as $item) {
-	
+
 		if($last === null) {
 			$last = $item->count;
 		} else {
 			$items[] = "['".substr($item->time,0,16)."', ".ceil(($item->count+$last)/2)."]";
 			$last = null;
 		}
-	
+
 	}
 
 	$tpl->assign('chart-items', implode(',', $items));

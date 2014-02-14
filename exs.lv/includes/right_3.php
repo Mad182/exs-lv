@@ -58,20 +58,6 @@ if (!empty($inprofile)) {
 			'yt-slug' => mkslug($inprofile->yt_name)
 		));
 	}
-} elseif (!empty($ingroup)) {
-
-	$tpl->newBlock('group-box');
-	if ($ingroup->avatar) {
-		$av = $ingroup->avatar;
-	} else {
-		$av = 'none.png';
-	}
-	$tpl->assign(array(
-		'group-id' => $ingroup->id,
-		'group-title' => $ingroup->title,
-		'group-av' => $av,
-		'av-path' => 'u_large',
-	));
 }
 
 include(CORE_PATH . '/modules/core/poll.php');

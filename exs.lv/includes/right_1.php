@@ -74,13 +74,9 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 		$tpl->assign('html', get_blog_latest($isblog));
 	}
 } elseif (!empty($ingroup)) {
-
 	$tpl->newBlock('group-box');
-	if ($ingroup->avatar) {
-		$av = $ingroup->avatar;
-	} else {
-		$av = 'none.png';
-	}
+	$ingroup->av_alt = 1;
+	$av = get_avatar($ingroup, 'l');
 	$tpl->assign(array(
 		'group-id' => $ingroup->id,
 		'group-title' => $ingroup->title,
