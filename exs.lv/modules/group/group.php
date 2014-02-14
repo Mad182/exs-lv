@@ -34,6 +34,7 @@ else if ($group->lang != $lang) {
 	redirect('http://' . $config_domains[$group->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
 }
 
+$group->av_alt = 1;
 if (empty($group->avatar)) {
 	$group->avatar = 'none.png';
 }
@@ -306,7 +307,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
 	update_members($group->id);
 
-	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
+	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's'), 'gsign' . $group->id);
+
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
 
@@ -325,7 +327,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
-		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'gsign' . $group->id);
+
+		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's'), 'gsign' . $group->id);
 		notify($group->owner, 4, $group->id, $group_link . '/members', $group->title);
 		if ($group->id == 53 || $group->id == 89) {
 			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
@@ -345,7 +348,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		$db->query("INSERT INTO clans_paid (clan_id,user_id,time) VALUES ('$group->id','$auth->id','" . time() . "')");
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','1','" . time() . "')");
 		update_members($group->id);
-		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
+		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's'));
 		redirect($group_link);
 	}
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid) {
@@ -401,7 +404,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
-		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', 'http://img.exs.lv/userpic/small/' . $group->avatar);
+		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's'));
 	}
 	redirect($group_link);
 } elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
@@ -434,7 +437,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'text' => $body
 				));
 
-				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g' . $ins);
+				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', get_avatar($group, 's'), 'g' . $ins);
 				$db->query("UPDATE clans SET posts = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "' WHERE id = '$group->id'");
 
 				$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$ins'");
@@ -500,9 +503,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 					//ja grupas ieraksti ir slēpti, ievieto userlogā tikai nosaukumu
 					if (!$group->hide_intro) {
-						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $group->title . ' grupā &quot;' . textlimit($title, 32, '...') . '&quot;</a>', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g-' . $mainid);
+						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $group->title . ' grupā &quot;' . textlimit($title, 32, '...') . '&quot;</a>', get_avatar($group, 's'), 'g-' . $mainid);
 					} else {
-						push('Atbildēja ' . $group->title . ' grupā', 'http://img.exs.lv/userpic/small/' . $group->avatar, 'g-' . $mainid);
+						push('Atbildēja ' . $group->title . ' grupā', get_avatar($group, 's'), 'g-' . $mainid);
 					}
 
 					$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");

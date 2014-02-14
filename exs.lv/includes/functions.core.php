@@ -1962,7 +1962,7 @@ function get_index_events() {
 				$action->avatar = get_avatar($user, 's');
 			}
 
-			$action->avatar = str_replace('http://img.exs.lv', $img_server, $action->avatar);
+			$action->avatar = str_replace('http://img.exs.lv/dati', $img_server . '/dati', $action->avatar);
 
 			$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
