@@ -217,8 +217,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				'image-list-posts' => $image->posts,
 				'image-list-sel' => $sel,
 				'image-list-linkid' => $linkid,
-				'imgblock-seperator' => $block,
-                'img_server' => ( !is_local() ? $img_server : '' )
+				'imgblock-seperator' => $block
 			));
 			$linkid++;
 			$i++;
@@ -392,8 +391,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					'image-url' => $image->url,
 					'image-title' => $image_title,
 					'newer' => $newerstr,
-					'older' => $olderstr,
-                    'img_server' => ( !is_local() ? $img_server : '' )
+					'older' => $olderstr
 				));
 			} else {
 				$tpl->newBlock('image-view-video');

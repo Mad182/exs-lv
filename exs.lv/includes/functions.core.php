@@ -1949,7 +1949,7 @@ function get_latest_posts() {
 }
 
 function get_index_events() {
-	global $db, $lang;
+	global $db, $lang, $img_server;
 	$out = '';
 	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ORDER BY `time` DESC LIMIT 5");
 
@@ -1961,6 +1961,8 @@ function get_index_events() {
 			if (!$action->avatar) {
 				$action->avatar = get_avatar($user, 's');
 			}
+
+			$action->avatar = str_replace('http://img.exs.lv', $img_server, $action->avatar);
 
 			$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
@@ -2007,12 +2009,18 @@ function get_latest_images() {
 	if ($latest) {
 		foreach ($latest as $late) {
 
-            if (is_local()) {
-                $out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="/' . $late->thb . '" alt="" />';
-            }
-            else {
-                $out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img_server . '/' . $late->thb . '" alt="" />';
-            }    	
+			//fix for localhost
+			if (empty($img_server)) {
+				if (file_exists(CORE_PATH . '/' . $late->thb)) {
+					$img = '/' . $late->thb;
+				} else {
+					$img = 'http://img.exs.lv/' . $late->thb;
+				}
+			} else {
+				$img . '/' . $late->thb;
+			}
+
+			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
@@ -2324,19 +2332,38 @@ function human_filesize($bytes, $decimals = 2) {
 	return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
 }
 
+/**
+ * Atgriež lietotāja avataru pēc pieprasītā izmēra
+ */
 function get_avatar($user, $size = 'm') {
-	global $auth;
+	global $auth, $img_server;
 	if (empty($auth->mobile)) {
 		$path = 'medium';
+		$real_path = 'useravatar';
 		if (($user->av_alt || !$user->avatar) && $size == 's') {
 			$path = 'small';
+			$real_path = 'u_small';
 		} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
 			$path = 'large';
+			$real_path = 'u_large';
 		}
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
 		}
-		return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
+
+		//fix for avatars on localhost
+		if (empty($img_server)) {
+
+			if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $user->avatar)) {
+				//local avatar
+				return '/dati/bildes/' . $real_path . '/' . $user->avatar;
+			} else {
+				//try to load from img.exs.lv anyway
+				return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
+			}
+		} else {
+			return $img_server . '/userpic/' . $path . '/' . $user->avatar;
+		}
 	} else {
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
@@ -2390,17 +2417,4 @@ function esr(&$val, $empty = '') {
 	} else {
 		return $empty;
 	}
-}
-
-
-/**
- *  Pārbaude, vai lapa tiek skatīta lokālā režīmā.
- */
-function is_local() {
-    
-    if ($_SERVER['SERVER_NAME'] === 'localhost' || 
-        substr($_SERVER['SERVER_NAME'], 0, 4) === 'dev.') {
-        return true;
-    }    
-    return false;
 }

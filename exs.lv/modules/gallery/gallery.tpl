@@ -48,7 +48,7 @@
 			<div class="items">
 				<div>
 					<!-- START BLOCK : image-list-node-->
-					{imgblock-seperator}<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img_server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
+					{imgblock-seperator}<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
 					<!-- START BLOCK : image-list-node-->
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 		<!-- START BLOCK : image-view-->
 		<div id="gal-large" style="width:{width}px;height:{height}px" class="prew-next">
 			<!-- START BLOCK : image-view-img-->
-			<img width="{width}" height="{height}" src="{img_server}/{image-url}" alt="attēls" title="{image-title}" />
+			<img width="{width}" height="{height}" src="{img-server}/{image-url}" alt="attēls" title="{image-title}" />
 			{newer}
 			{older}
 			<!-- END BLOCK : image-view-img-->
@@ -118,7 +118,7 @@
 				<input type="hidden" value="{edit-image-id}" name="edit-image-id" />
 				<label for="edit-image-disablecomments">
 					<input class="ajax-checkbox" type="checkbox" name="edit-image-disablecomments" id="edit-image-disablecomments"{edit-image-closed} />Slēgt komentārus
-				</label>	
+				</label>
 				<!-- START BLOCK : edit-image-interest -->
 				<p>
 					<label for="image-interest">Attēla kategorija:</label>
