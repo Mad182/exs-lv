@@ -351,7 +351,12 @@ if ($article) {
 						$lastmodu = $article->author;
 					}
 
-					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod) VALUES ('$article->id','" . time() . "','" . sanitize($article->title) . "','" . sanitize($article->text) . "','$lastmodu')");
+					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category) "
+							. "VALUES ('$article->id','" . time() . "','"
+							. sanitize($article->title) . "','"
+							. sanitize($article->text) . "','"
+							. $lastmodu . "','"
+							. $article->category . "')");
 
 					$db->query("UPDATE pages SET
 						text = ('$body'),
