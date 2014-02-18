@@ -1,42 +1,9 @@
 <?php
 
+/**
+ * exs.lv/junk sadaļas apskate un attēlu iesniegšana
+ */
 $add_css .= ',junk.css';
-
-function junk_vote($pic, $user) {
-	global $auth, $db, $remote_salt;
-	$out = '<div id="junk-voter">';
-
-	$voted = $db->get_row("SELECT * FROM `junk_votes` WHERE	`junk_id` = $pic AND `user_id` = $user");
-	$votes = $db->get_row("SELECT count(*) AS `count`, SUM(`value`) AS `sum` FROM `junk_votes` WHERE `junk_id` = $pic");
-
-	if ($auth->ok) {
-		if ($voted) {
-			$out .= '<span class="value">' . (int) $votes->sum . '<small>/' . (int) $votes->count . '</small></span>';
-			$out .= '<span class="uplink';
-			if ($voted->value == 1) {
-				$out .= ' active';
-			}
-			$out .= '"></span>';
-			$out .= '<span class="downlink';
-			if ($voted->value == -1) {
-				$out .= ' active';
-			}
-			$out .= '"></span>';
-		} else {
-			$out .= '<span class="value">' . (int) $votes->sum . '<small>/' . (int) $votes->count . '</small></span>';
-			$out .= '<a class="uplink" href="/junk/' . $pic . '/upvote/?check=' . substr(md5($remote_salt . '-' . $user . '-' . $pic), 0, 6) . '"></a>';
-			$out .= '<a class="downlink" href="/junk/' . $pic . '/downvote/?check=' . substr(md5($remote_salt . '-' . $user . '-' . $pic), 0, 6) . '"></a>';
-		}
-	} else {
-		$out .= '<span class="value">' . (int) $votes->sum . '<small>/' . (int) $votes->count . '</small></span>';
-		$out .= '<span class="uplink"></span>';
-		$out .= '<span class="downlink"></span>';
-	}
-
-
-	$out .= '</div>';
-	return $out;
-}
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 	echo 'top';
@@ -47,21 +14,28 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		if (isset($_FILES['new-image'])) {
 
+			ini_set('memory_limit', '200M');
+
 			$title = sanitize(nl2br(htmlspecialchars($_POST['title'])));
 			require_once(CORE_PATH . '/includes/class.upload.php');
+
 			$foo = new Upload($_FILES['new-image']);
 			$foo->mime_check = true;
 			$foo->no_script = true;
-			$foo->file_max_size = '2M';
+			$foo->file_max_size = '8M';
 			$foo->allowed = array('image/*');
-			$foo->image_resize = true;
-			$foo->image_ratio = true;
-			$foo->image_y = 1200;
-			$foo->image_x = 1200;
-			$foo->image_ratio_no_zoom_in = true;
 
 			if ($foo->image_src_type == 'bmp') {
 				$foo->image_convert = 'png';
+			}
+
+			//saglabā gifus kustīgus
+			if ($foo->image_src_type != 'gif') {
+				$foo->image_resize = true;
+				$foo->image_ratio = true;
+				$foo->image_y = 1800;
+				$foo->image_x = 900;
+				$foo->image_ratio_no_zoom_in = true;
 			}
 
 			$foo->process('/home/www/exs.lv/tmp/');
@@ -346,3 +320,4 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 }
 
 $pagepath = '';
+
