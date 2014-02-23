@@ -3,9 +3,6 @@
 /**
  * 	RuneScape pamācību sadaļas
  */
-$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/rshelp-head.tpl');
-$tpl->prepare();
-
 
 // dev tools
 if ($auth->id == 115 && isset($_GET['force'])) {

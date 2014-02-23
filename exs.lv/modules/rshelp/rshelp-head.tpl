@@ -1,1 +1,0 @@
-<link rel="stylesheet" type="text/css" href="/modules/rshelp/light.css">
