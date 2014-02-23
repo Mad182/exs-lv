@@ -11,7 +11,7 @@
  *  6. Lappušu saraksta stili
  *  7. RuneScape jaunumi, sākumlapa
     8.0 RuneScape faktu pārvaldība
-    8.1 ...
+    8.1 Kvestu pārvaldība
  *
  *  9.0 RuneScape pamācību sadaļu stili
     9.1 RuneScape kvestu sēriju sadaļa
@@ -406,8 +406,7 @@ ul.nav-right {
     .droplist ul {
         display:none;
         position:absolute;
-        top:100%;
-        left:-20%
+        top:100%
     }
         .droplist ul li {
             background: #212B3C;
@@ -668,6 +667,71 @@ table.facts-table .row-counter {
     text-align:center
 }
 
+/* 8.1 RuneScape kvestu pārvaldība */
+.show-related-quests {
+
+}
+.show-related-quests:hover {
+    cursor:pointer
+}
+.transp-input {
+  font-family:tahoma, verdana, arial;
+  font-size:11px;
+  border:2px solid #fff;
+  background:transparent;
+  padding:3px 5px
+}
+    .transp-input:hover {
+        border:2px solid #BAD2E9
+    }
+.series-hidden {
+    display:none
+}
+    .series-hidden input[type=submit] {
+        margin: 0 0 7px 20px;
+    }
+.related-quests {
+    padding-left:0;
+    font-size:11px;
+    margin:0
+}
+    .related-quests select {
+        margin:0 8px 0 0
+    }
+    .related-quests li {
+        background:transparent;
+        border-bottom:1px solid #eee;
+        padding:3px 20px
+    }
+.open-quest-list {
+    float: right;
+    margin-top: -30px;
+}
+.fancy-questlist {
+    width:750px;
+    max-height:400px;    
+    font-size:11px;
+    overflow-y:visible;
+    overflow-x:hidden
+}
+    .fancy-questlist ul {
+        padding-left:0;
+        column-count:4;
+        -moz-column-count:4; /* Firefox */
+        -webkit-column-count:4; /* Safari and Chrome */
+    }
+    .fancy-questlist ul li {
+        background: transparent;
+        border-bottom: 1px solid #E4F1F8;
+        padding: 3px
+    }
+    .fancy-questlist .mark-added {
+        background:rgb(154, 231, 148)
+    }
+    .fancy-questlist .mark-removed {
+        background:rgb(250, 207, 214)
+    }
+
 /* 9. RuneScape pamācību sadaļu stili */
 .content-title {
   margin:10px 0 10px 20px;
@@ -734,13 +798,6 @@ table.facts-table .row-counter {
   .rslist .quest {
     width:160px;  
   }
-.rslist .transp {
-  font-family:tahoma,verdana,arial;
-  font-size:11px;
-  border:0;
-  background:transparent;
-  padding:3px 5px
-}
 .skill-block {
     width:333px !important
 }

@@ -93,6 +93,7 @@ tinymce.init({
             <span class="arrow-down"></span>
             <ul>
                 <li><a href="http://exs.lv">exs.lv</a></li>
+                <li><a rel="nofollow" href="http://old.exs.lv/">old.exs.lv</a></li>
                 <li><a href="http://lol.exs.lv">lol.exs.lv</a></li>
                 <li><a href="http://rp.exs.lv">rp.exs.lv</a></li>
                 <li><a rel="nofollow" href="http://coding.lv">coding.lv</a></li>
