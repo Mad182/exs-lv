@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 	RuneScape pamācību sadaļas administrācijas panelis.
+ * 	RuneScape rakstu sadaļu administrācijas panelis.
  *
  * 	Moduļa adrese: runescape.exs.lv/[..]
  */
@@ -11,16 +11,20 @@ if (!im_mod()) {
 	redirect();
 }
 
+
 $tpl_options = 'no-left';
 $sub_include = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
 
+
+
+// array_keys ir lapas textid
 $submodules = array(
-	'series' => 'quests-series.php', // secības sakārtošana kvestu sērijām
-	'qskills' => 'quests-skills.php', // kvestiem nepieciešamās prasmes, to līmeņi
-	'rsph' => 'placeholders.php', // pamācību placeholderi
-	'areas' => 'areas.php', // ceļveži
-	'rsactivities' => 'activities.php'   // aktivitātes
+	'series'        => 'quests-series.php', // kvestu info pārvaldība
+	'rsph'          => 'placeholders.php',  // pamācību placeholderi
+	'areas'         => 'areas.php',         // ceļveži
+	'rsactivities'  => 'activities.php'     // aktivitātes
 );
+
 
 // iekļauj lapā pareizo apakšmoduli
 if (isset($submodules[$category->textid])) {

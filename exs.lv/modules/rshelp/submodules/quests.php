@@ -44,6 +44,7 @@ if ($category->textid == 'kvestu-pamacibas') {
             `rs_classes`.`category` = 'series'
         ORDER BY
             ABS(`rs_classes`.`ordered`) ASC,
+            ABS(`rs_classes`.`id`) ASC,
             `rs_pages`.`ordered` ASC
     ");
 	if ($series) {
@@ -70,6 +71,7 @@ if ($category->textid == 'kvestu-pamacibas') {
 
 			// pievieno sērijai visus tai piesaistītos kvestus,
 			// ja tādi ir atrasti
+            
 			// eksistējošs raksts `pages` tabulā
 			if ($single->category_id != '0') {
 

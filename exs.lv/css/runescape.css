@@ -668,9 +668,6 @@ table.facts-table .row-counter {
 }
 
 /* 8.1 RuneScape kvestu pārvaldība */
-.show-related-quests {
-
-}
 .show-related-quests:hover {
     cursor:pointer
 }
@@ -712,8 +709,12 @@ table.facts-table .row-counter {
     max-height:400px;    
     font-size:11px;
     overflow-y:visible;
-    overflow-x:hidden
+    overflow-x:hidden;
+    margin:15px
 }
+    .fancy-questlist h2 {
+        margin-top:0
+    }
     .fancy-questlist ul {
         padding-left:0;
         column-count:4;
@@ -723,14 +724,42 @@ table.facts-table .row-counter {
     .fancy-questlist ul li {
         background: transparent;
         border-bottom: 1px solid #E4F1F8;
-        padding: 3px
+        padding: 3px;
+        position:relative
     }
     .fancy-questlist .mark-added {
-        background:rgb(154, 231, 148)
+        background:#9CE597
     }
     .fancy-questlist .mark-removed {
         background:rgb(250, 207, 214)
     }
+    .fancy-questlist .related-quest {
+        position:absolute;
+        right:3px
+    }
+table.quests-skill-table {
+    float:left;
+    width:47%;
+    margin-left:10px;
+    background:#fff
+}
+.quests-skill-table tr td {
+    font-size:11px
+}
+    .level-input, .quest-input {
+    border:1px solid #E4E4E4;
+    height:20px;
+    font-family:tahoma,verdana,arial;
+    font-size:11px;
+    padding:3px 7px
+  }
+  .level-input {
+    width:25px;  
+    text-align:center
+  }
+  .quest-input {
+    width:160px;  
+  }
 
 /* 9. RuneScape pamācību sadaļu stili */
 .content-title {
@@ -747,10 +776,10 @@ table.facts-table .row-counter {
   font-size:11px;
   margin:10px auto
 }
-  .col-list {
+.col-list {
     float:left;
     margin-left:10px
-  }
+}
 .rslist .listhead {
   border-bottom:2px solid #ddd;
   font-weight:bold;
@@ -782,21 +811,6 @@ table.facts-table .row-counter {
   }
   .rslist .border {
     border-top:2px solid #bbb
-  }
-  .rslist .level, .rslist .quest {
-    font-size:12px;
-    border:0;
-    height:25px;
-    font-family:tahoma,verdana,arial;
-    padding:3px 
-  }
-  .rslist .level {
-    width:25px;  
-    text-align:center;
-    color:orangered
-  }
-  .rslist .quest {
-    width:160px;  
   }
 .skill-block {
     width:333px !important
@@ -1400,7 +1414,7 @@ table.facts-table .row-counter {
 .poll-text a {
     color:#3B729B
 }
-/* aptaujas -  */
+/* aptaujas - mb */
 #miniblog-list li .mb-poll-question {
     color:#294268
 }
