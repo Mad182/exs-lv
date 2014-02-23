@@ -31,7 +31,6 @@ if ($auth->ok) {
 	$tpl->newBlock('auth-nav');
     
     // RS Mod izvēlne
-    // 3217 - Mahjarrat
     if (im_mod()) {
         $tpl->newBlock('rsmod-nav');
     }

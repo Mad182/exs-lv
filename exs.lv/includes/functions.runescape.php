@@ -75,10 +75,10 @@ function get_runescape_news($force = false) {
                     $insert = $db->query("INSERT INTO `miniblog`
                         (author, date, text, lang, bump)
                         VALUES (
-                            '$rsbot_id',
+                            ".(int)$rsbot_id.",
                             '".date("Y-m-d H:i:s", time())."',
                             '".sanitize($mb_text)."',
-                            9,
+                            ".(int)$lang.",
                             '".time()."'
                         ) 
                     ");
@@ -137,17 +137,20 @@ function get_runescape_news($force = false) {
 
                 }
                 
-                $news_date      = display_time(strtotime($single->pubDate));
-                $news_category  = translate_category((string)$single->category);
+                $news_date          = date("d.m.Y", strtotime($single->pubDate));
+                $news_category      = translate_category((string)$single->category);
+                $news_description   = (empty($image) ? textlimit($single->description, 95, '...') : 
+                                      textlimit($single->description, 75, '...'));
                 
                 // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
-                $news_style = (empty($image) ? ' style="padding:0 10px 5px"' : '');
+                $news_style = (empty($image) ? ' style="padding:0 10px 5px;width:90%"' : '');
             
                 $out .= '<li>';
                 $out .= '<a class="news-image" href="'.$single->link.'" rel="nofollow" target="_blank">'.$image.'</a>';
                 $out .= '<p'.$news_style.'>';
                 $out .= '<a class="news-title" href="'.$single->link.'" rel="nofollow" target="_blank">'.$single->title.'</a>';
-                $out .= $single->description;
+                //$out .= 
+                $out .= $news_description;
                 $out .= '<span class="news-date">'.$news_date.' &middot; '.$news_category.'</span>';
                 $out .= '</p>' . $mb_arrow . '</li>';
                 
