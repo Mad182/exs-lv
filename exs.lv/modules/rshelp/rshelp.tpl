@@ -53,7 +53,7 @@
 <!-- START BLOCK : guild -->
 <div class="tasks-block{newline}">
 	<div class="tasks-title">{page_title}{rspage_members_only}{rspage_is_old}</div>
-	<a href="/read/{strid}"><img src="/bildes/runescape/guilds/{rspage_img}" title="{page_title}" alt=""></a>
+	<a href="/read/{page_strid}"><img src="/bildes/runescape/guilds/{rspage_img}" title="{page_title}" alt=""></a>
 	<p><span class="guild-strong">Koordinātas:</span> {rspage_location}</p>
 	<p style="padding-bottom:5px"><span class="guild-strong">Prasības:</span> {rspage_extra}</p>
 </div>
