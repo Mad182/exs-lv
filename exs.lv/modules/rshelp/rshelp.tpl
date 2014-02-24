@@ -72,26 +72,6 @@
 <!-- END BLOCK : guilds-not -->
 <!-- END BLOCK : guilds -->                                                            
 
-<!-- START BLOCK : rshelp-blocklist-outer -->
-<h1 class="content-title">RuneScape pamācības</h1>
-<!-- START BLOCK : rshelp-blocklist -->
-<table class="rslist">
-	<tr class="listhead">
-		<td style="width:20px"></td>
-		<td style="width:330px">{blocklist-title}</td>
-		<td style="width:200px">Pamācības autors</td>
-	</tr>
-	<!-- START BLOCK : rshelp-blocklistitem -->
-	<tr>
-		<td{rshelp-class}></td>
-		<td><a href="/read/{guide-strid}">{guide-title}</a></td>
-		<td class="center">{guide-author}</td>
-	</tr>
-	<!-- END BLOCK : rshelp-blocklistitem -->
-</table><br />
-<!-- END BLOCK : rshelp-blocklist -->
-<!-- END BLOCK : rshelp-blocklist-outer -->
-
 <!-- START BLOCK : rshelp-list -->
 <h1 class="rs_content_title title-margin">{category-title}</h1>
 <table class="rslist">

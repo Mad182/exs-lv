@@ -228,8 +228,7 @@ tinymce.init({
                    <li{cat-sel-788}><a href="/trenesanas">Trenēšanās</a></li>
                    <li{cat-sel-787}><a href="/briesmonu-medisana">Biresmoņu medīšana</a></li>
                    <li{cat-sel-790}><a href="/naudas-pelnisana">Naudas pelnīšana</a></li>
-                   <li{cat-sel-5}><a href="/padomi">Citi padomi</a></li>
-                   <li{cat-sel-346}><a href="/prasmju_arhivs">RS rakstu arhīvs</a></li>
+                   <li{cat-sel-5}><a href="/padomi">Dažādi raksti</a></li>
                    <li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
                 </ul>
             </li>

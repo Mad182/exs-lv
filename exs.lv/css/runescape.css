@@ -19,8 +19,7 @@
     9.3 minigames & D&D
     9.4 prasmju stilizējumi
     9.5 tasks/achievement diaries un ģildes
-    9.7 Ģildes
-    9.8 Padomi
+    9.6 Ģildes
  *
  *  10. Aptaujas
  *  11. Here be dragons!
@@ -1282,7 +1281,7 @@ table.quests-skill-table {
     color:#0059A7
   }
 
-/* 9.7 Ģildes */
+/* 9.6 Ģildes */
 .guild-strong {
     font-weight:bold;
     color:#355575
@@ -1293,32 +1292,6 @@ table.quests-skill-table {
     position:absolute;
     right:0;
     top:0
-}
-
-/* 9.8 Padomi */
-.rshelp-ghost {
-  background:url('/bildes/runescape/guides/ghost.png') no-repeat;
-  background-position:center;
-}
-.rshelp-money {
-  background:url('/bildes/runescape/guides/money.png') no-repeat;
-  background-position:center;
-}
-.rshelp-info {
-  background:url('/bildes/runescape/guides/Home.png') no-repeat;
-  background-position:center;
-}
-.rshelp-armour {
-  background:url('/bildes/runescape/guides/boots.png') no-repeat;
-  background-position:center;
-}
-.rshelp-training {
-  background:url('/bildes/runescape/guides/sword.png') no-repeat;
-  background-position:center;
-}
-.rshelp-legend {
-  background:url('/bildes/runescape/guides/feather.png') no-repeat;
-  background-position:center;
 }
 
 /* 10. Aptaujas */
