@@ -41,42 +41,6 @@
 </div>
 <!-- END BLOCK : tasks -->
 
-<!-- START BLOCK : areas -->
-<h1 class="content-title">Ceļveži</h1>
-<div class="rs-intro">
-	<img id="montai" src="/bildes/runescape/intro/commander-montai.png" title="Commander Montai" alt="">
-	<p style="margin-top:5px">Gīlinora ir milzīga zeme ar daudzām krāšņām un noslēpumainām pilsētām un vietām, kurās dēkaiņi var nokļūt savos piedzīvojumu meklējumos. Katrai pilsētai un ciemam ir sevi raksturojošas iezīmes un iespējas, tai skaitā sarežģīti kvesti, mazi veikaliņi un aizdomīgi iemītnieki. Vairums no tām ir pasargātas no agresīviem briesmoņiem un mošķiem, tomēr Gīlinoras tālākajos nostūros mīt arī asinskāri un apsēsti nezvēri, kuriem pret svešiniekiem ir liels naids...</p>
-</div>
-<!-- START BLOCK : areas-category -->
-<h1 class="content-title">{class_title}</h1>
-<div style="margin-left:10px">
-	<!-- START BLOCK : area-choice -->
-	<!-- START BLOCK : area -->
-	<div class="area">
-		{rspage_img}
-		<a href="/read/{page_strid}">{page_title}</a>
-	</div>
-	<!-- END BLOCK : area -->
-	<!-- START BLOCK : area-placeholder -->
-	{placeholder-start}
-	<div class="area area-empty" style="{area-break}" title="Raksts iztrūkst!">
-		<img class="cross" src="bildes/runescape/cross.png" />
-		<a href="/write">{title}</a>
-	</div>
-	{placeholder-end}
-	<!-- END BLOCK : area-placeholder -->
-	<!-- START BLOCK : area-more -->
-	<div class="area area-empty" title="Parādīt vairāk neuzrakstīto rakstu...">
-		<img class="cross" src="/bildes/runescape/cross.png" />
-		<a class="showph" href="#">Rādīt trūkstošos</a>
-	</div>
-	<!-- END BLOCK : area-more -->
-	<!-- END BLOCK : area-choice -->
-</div>
-<div class="clearfix"></div>
-<!-- END BLOCK : areas-category -->
-<!-- END BLOCK : areas --> 
-
 <!-- START BLOCK : guilds -->
 <h1 class="content-title">RuneScape Ģildes</h1>
 <div class="rs-intro" style="margin-bottom:20px">
