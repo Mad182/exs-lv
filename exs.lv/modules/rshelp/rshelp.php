@@ -36,7 +36,6 @@ $submodules = array(
 	'prasmes'   => array('skills.php', 'skills.tpl'),
 	'padomi'    => 'padomi.php',
 	'tasks'     => 'tasks.php',
-	'celvezi'   => 'areas.php',
 	'gildes'    => 'guilds.php'
 );
 
