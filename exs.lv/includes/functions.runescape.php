@@ -2,14 +2,14 @@
 /**
  *  RuneScape apakšprojektā izmantotās funkcijas
  */
- 
+
 
 /**
  *  RuneScape.com RSS feed lasītājs
  *
  *  (Tiek izsaukta RuneScape apakšprojekta sākumlapā.)
  *
- *  Nolasa jaunāko ziņu virsrakstus un no tiem izveido HTML, 
+ *  Nolasa jaunāko ziņu virsrakstus un no tiem izveido HTML,
  *  kuru saglabā cache failā un vēlāk izvada kā saturu sākumlapā.
  *
  *  Ja rakstiem ir pievienota arī logo adrese,
@@ -18,14 +18,14 @@
  *  @param  bool    norāde, vai atjaunot cache
  */
 function get_runescape_news($force = false) {
-    global $m, $db, $auth, $rsbot_id;
-    
+    global $m, $db, $auth, $rsbot_id, $lang;
+
     $list_news  = 6;     // rakstu skaits, cik rādīt sarakstā
 
     // memcache glabā tikai laiku, kad jaunumi pēdējoreiz saglabāti,
     // citādi tiek izmantots .html cache fails
     if ($force || $m->get('runescape-news') === false) {
-    
+
         // atjaunosies reizi 10 minūtēs;
         // jāuzstāda uzreiz, lai, ieilgstot parsēšanai,
         // vairāki lietotāji neizsauktu atjaunošanos vienlaicīgi
@@ -33,22 +33,22 @@ function get_runescape_news($force = false) {
 
         // nolasa jaunākās ziņas no runescape.com
         $news = curl_get('http://services.runescape.com/m=news/latest_news.rss');
-        
+
         // cache failā esošo informāciju pārraksta tikai tad,
         // ja no runescape.com tādu izdevās atlasīt;
         // citādi atstāj vecās ziņas, lai lapā ir, ko izvadīt
         if ($news !== false) {
             $data = new SimpleXmlElement($news);
-            
+
             // skaita rakstus, jo lapā jārāda tikai pirmie x, nevis visi
-            $article_counter = 0;                        
-            
+            $article_counter = 0;
+
             $out = '<ul class="official-news">';
             foreach ($data->channel->item as $single) {
 
                 $mb_arrow = ''; // bultiņa uz miniblogu jaunuma sānā
                 $image = '';
-                
+
                 // pārbaude, vai datubāzē šāds jaunums jau neeksistē
                 $hash_val = sanitize(md5($single->pubDate.$single->title));
                 $val = $db->get_row("
@@ -63,14 +63,14 @@ function get_runescape_news($force = false) {
                 ");
                 // ieraksta datubāzē vēl nav; tāds tiek izveidots
                 if (!$val) {
-                
+
                     // minibloga saturs
                     $mb_text  = '<p class="rsmb-title">'.$single->title.'</p>';
                     $mb_text .= '<p class="rsmb-text">'.$single->description.'<br>';
                     $mb_text .= 'Oriģinālraksts: <a href="'.$single->link.'" rel="nofollow" target="_blank">';
                     $mb_text .= $single->link.'</a></p>';
                     $mb_text .= '<p class="rsmb-fade">Šis ieraksts ir izveidots automātiski šī jaunuma apspriešanai.</p>';
-                    
+
                     // izveido jaunu miniblogu
                     $insert = $db->query("INSERT INTO `miniblog`
                         (author, date, text, lang, bump)
@@ -80,94 +80,94 @@ function get_runescape_news($force = false) {
                             '".sanitize($mb_text)."',
                             ".(int)$lang.",
                             '".time()."'
-                        ) 
+                        )
                     ");
-                    
+
                     // runescape jaunumos arī ievieto jaunu ierakstu
                     if ($insert) {
-                    
+
                         $mb_id = $db->insert_id;
                         $has_image = (isset($single->enclosure['url'])) ? 1 : 0;
-                    
+
                         // ne visiem rakstiem ir pieejams logo
-                        if ($has_image) {   
-                        
+                        if ($has_image) {
+
                             // attēls tiek saglabāts uz lokālā servera
-                            $img_path = CORE_PATH.'/bildes/runescape/news/';                  
+                            $img_path = CORE_PATH.'/bildes/runescape/news/';
                             $save = save_rs_image(
                                 $single->enclosure['url'], // source_path
                                 $img_path, // target_path
                                 'news-'.$mb_id.'.jpg' // img_title
-                            ); 
+                            );
 
                             // attēlu rāda tikai tad, ja to izdevās saglabāt lokāli
                             if ($save !== false) {
                                 $image = '<img src="/bildes/runescape/news/thumb-news-'.$mb_id.'.jpg" title="'.$single->title.'" alt="Logo">';
                             }
-                        } 
-                        
-                        $news_insert = $db->query("INSERT INTO `rs_news` 
-                            (hash_value, mb_id, has_image, created_by, created_at) 
+                        }
+
+                        $news_insert = $db->query("INSERT INTO `rs_news`
+                            (hash_value, mb_id, has_image, created_by, created_at)
                             VALUES (
                                 '".sanitize($hash_val)."',
                                 '".$mb_id."',
                                 $has_image,
                                 $rsbot_id,
                                 '".time()."'
-                            ) 
+                            )
                         ");
-                        
-                        // bultiņa sānā uz miniblogu                           
+
+                        // bultiņa sānā uz miniblogu
                         $mb_arrow  = '<p class="goto-mb">';
                         $mb_arrow .= '<a href="/say/'.$rsbot_id.'/'.$mb_id.'-'.mb_get_strid($mb_text, $mb_id). '">';
                         $mb_arrow .= '&rsaquo;&rsaquo;</a></p>';
                     }
                 // ieraksts datubāzē jau eksistē
                 } else {
-                
+
                     // bultiņa sānā uz miniblogu
                     $mb_arrow  = '<p class="goto-mb">';
                     $mb_arrow .= '<a href="/say/'.$rsbot_id.'/'.$val->mb_id.'-'.mb_get_strid($val->text, $val->mb_id). '">';
                     $mb_arrow .= '&rsaquo;&rsaquo;</a></p>';
-                    
+
                     // attēls
                     if ($val->has_image) {
                         $image = '<img src="/bildes/runescape/news/thumb-news-'.$val->mb_id.'.jpg" title="'.$single->title.'" alt="Logo">';
                     }
 
                 }
-                
+
                 $news_date          = date("d.m.Y", strtotime($single->pubDate));
                 $news_category      = translate_category((string)$single->category);
-                $news_description   = (empty($image) ? textlimit($single->description, 95, '...') : 
+                $news_description   = (empty($image) ? textlimit($single->description, 95, '...') :
                                       textlimit($single->description, 75, '...'));
-                
+
                 // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
                 $news_style = (empty($image) ? ' style="padding:0 10px 5px;width:90%"' : '');
-            
+
                 $out .= '<li>';
                 $out .= '<a class="news-image" href="'.$single->link.'" rel="nofollow" target="_blank">'.$image.'</a>';
                 $out .= '<p'.$news_style.'>';
                 $out .= '<a class="news-title" href="'.$single->link.'" rel="nofollow" target="_blank">'.$single->title.'</a>';
-                //$out .= 
+                //$out .=
                 $out .= $news_description;
                 $out .= '<span class="news-date">'.$news_date.' &middot; '.$news_category.'</span>';
                 $out .= '</p>' . $mb_arrow . '</li>';
-                
+
                 // redzami tikai jaunākie x raksti
                 if (++$article_counter >= $list_news)
                     break;
             }
             $out .= '<li class="news-link"><a href="http://services.runescape.com/m=news/" rel="nofollow" target="_blank">Skatīt senākus rakstus</a></li>';
             $out .= '</ul>';
-            
+
             // izveido cache failu
             $cache_file = fopen(CORE_PATH . '/cache/runescape/official-news.html', 'w');
             fwrite($cache_file, $out);
             fclose($cache_file);
         }
     }
-    
+
     // nolasa runescape ziņas no cache faila
     $output_file = fopen(CORE_PATH . '/cache/runescape/official-news.html', 'r');
     if ($output_file === false) {
@@ -177,7 +177,7 @@ function get_runescape_news($force = false) {
         $output = fread($output_file, filesize(CORE_PATH . '/cache/runescape/official-news.html'));
     }
     fclose($output_file);
-  
+
     return $output;
 }
 
@@ -200,7 +200,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
     // lejuplādē attēlu un saglabā lokāli
     $curl = curl_init($source_path);
     $file = fopen($target_path.$target_name, 'wb');
-    
+
     curl_setopt($curl, CURLOPT_FILE, $file);
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
@@ -208,24 +208,24 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
     $exec = curl_exec($curl);
     curl_close($curl);
     fclose($file);
-    
+
     // pārveido attēlu uz thumbnail izmēru
     require_once(CORE_PATH . '/includes/class.upload.php');
-    
+
     $foo = new Upload($target_path.$target_name);
-    if ($foo->uploaded) {    
+    if ($foo->uploaded) {
         $foo->file_new_name_body = 'thumb-'.str_replace(array('.png','.gif','.jpg'), '', $target_name);
         $foo->image_resize = true;
         $foo->image_convert = 'jpg';
         $foo->image_x = 125;
         $foo->image_ratio_y = true;
         $foo->allowed = array('image/*');
-        $foo->Process(CORE_PATH . '/bildes/runescape/news/');        
+        $foo->Process(CORE_PATH . '/bildes/runescape/news/');
     }
     if ($foo->processed) {
         $foo->Clean();
     }
-    
+
     if ($exec === false) {
         return false;
     }
@@ -242,7 +242,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
  *  @param  string  pārtulkojamās kategorijas nosaukums
  */
 function translate_category($string = '') {
-    
+
     /*
         'Community'                 => 'Community',
         'Squeal Of Fortune'         => 'Squeal Of Fortune',
@@ -260,7 +260,7 @@ function translate_category($string = '') {
         'Support'                   => 'Atbalsts',
         'Customer Support News'     => 'Klientu atbalsta ziņas'
     );
-    
+
     if ($string != '' && array_key_exists($string, $categories)) {
         return $categories[$string];
     }
@@ -277,7 +277,7 @@ function translate_category($string = '') {
  *  Atgriež sarakstu ar lapām tādā veidā, ka atvērtā lapa ir pa vidu, bet
  *  katrā pusē tai ir norādītais skaits iepriekšējo/nākamo lappušu.
  *
- *  Atkarībā no tā, kura lappuse ir atvērta, 
+ *  Atkarībā no tā, kura lappuse ir atvērta,
  *  izdrukā arī bultiņas un pirmo/pēdējo lapu.
  *
  *  @param  int     kopējais lappušu skaits
@@ -297,7 +297,7 @@ function pagelist($page_count = 1, $current_page = 1, $addr_prefix = '', $spec_c
 	$pages_to_right = ($current_page + $max_right > $page_count) ? $page_count : $current_page + $max_right;
 
 	$view = '<ul class="pagelist '.$spec_class.'">';
-    
+
 	// saraksts tiek atgriezts tikai tad, ja esošās lapas nr ir lapu skaita robežās;
 	// pretējā gadījumā tikai pirmā lappuse
 	if ($current_page <= $page_count && $current_page > 0) {
@@ -423,7 +423,7 @@ function update_rspages($update = true, $print = false) {
             `pages`.`category`      AS `pages_catid`,
             `pages`.`strid`         AS `pages_strid`,
             `pages`.`title`         AS `pages_title`,
-            IFNULL(`rs_pages`.`id`, 0)  AS `rspages_id`,            
+            IFNULL(`rs_pages`.`id`, 0)  AS `rspages_id`,
             `rs_pages`.`category_id`    AS `rspages_catid`,
             `cat`.`parent`              AS `category_parent`
         FROM `pages`
