@@ -1,0 +1,123 @@
+/** 
+ *  Visādi ar RuneScape apakšprojektu saistīti pieraksti
+ */
+
+
+
+
+\\  RS kategoriju hierarhija
+   (id, textid, module, description)
+
+
+1863 index 			(module = runescape)	- RuneScape apakšprojekta index lapa
+
+    1903 rs-arhivs              (module = rshelp)
+        5    padomi				(module = rshelp)
+        195  celvezi			(module = rshelp)
+        787  briesmonu-medisana	(module = rshelp)
+        788  trenesanas			(module = rshelp)
+        789  stasti-un-vesture	(module = rshelp)
+        790  naudas-pelnisana	(module = rshelp)
+        793  basics				(module = rshelp)
+        1087 oss-guides			(module = rshelp)
+    
+    
+	4 prasmes					(module = rshelp)
+		169 farming
+		170 melee				(module = list)
+		171 thieving			(module = ...)
+		172 firemaking
+		173 fishing
+		174 mining
+		175 cooking
+		176 prayer
+		177 slayer
+		178 woodcutting
+		179 magic
+		180 crafting
+		181 summoning
+		182 construction
+		183 ranged
+		185 agility
+		186 herblore
+		187 hunter
+		188 fletching
+		189 smithing
+		190 runecrafting
+		191 hitpoints	
+		287 dungeoneering
+
+        
+	102 kvestu-pamacibas		(module = rshelp)
+		99  f2p-kvesti			(module = rshelp)
+		100 p2p-kvesti			(module = rshelp)
+		193 mini-kvesti			(module = rshelp)
+
+        
+    194 tasks					(module = rshelp)
+	160 minispeles				(module = rshelp)		
+	536 db 						(module = idb)		- priekšmetu datubāze
+	599 runescape 				(module = rshelp)	- jaunumu rakstu sadaļa
+	791 gildes					(module = rshelp)
+	792 distractions-diversions	(module = rshelp)	
+	
+1871 games 			(module = forum)			- RuneScape forums
+	661 rs 			(module = list)				- foruma vienīgā sadaļa
+
+765 rsmod			(module = rsmod)			- pamācību sadaļu pārvaldības apakšsadaļas
+	1875 series
+	1876 qskills
+	1877 rsph
+	1878 areas
+	1879 rsactivities
+
+786  rs-skills 		(module = rsmod-skills)		- prasmju pamācību lappuses
+1866 rsfacts 		(module = rs-facts)			- runescape fakti
+1867 gallery		(module = gallery)			- runescape projekta galerijas
+1869 checkform		(module = checkform)		- lietotāju meklēšanas forma
+
+1885 facts_admin 	(module = facts-admin)		- parastie lapas fakti
+1897 mbview 		(module = mb-view)			- dzēsto mb ierakstu apskatīšana modiem
+1901 aptaujas 		(module = polls)			- bijušo aptauju uzskaitījums
+
+
+
+
+
+\\  redirects
+
+	84 runescape-jautajumi 	(lang=1, redirect=/rs)
+	85 runescape-tirgus 	(lang=1, redirect=/rs)
+	86 runescape-events 	(lang=1, redirect=/rs)
+	88 runescape-general 	(lang=1, redirect=/rs)
+    346  prasmju_arhivs 	(lang=9, redirect=http://runescape.exs.lv/padomi)
+	1873 rs 				(lang=1, redirect=http://runescape.exs.lv)
+	1874 runescape 			(lang=1, redirect=http://runescape.exs.lv)
+
+
+
+
+
+
+\\  database queries
+
+	* visu prasmju sadaļu atlasīšanai	
+
+		4, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 287
+        
+		WHERE `parent` = 4 OR `id` = 4
+
+    
+    
+
+\\  ceļvežu intro teksts
+
+    Gīlinora ir milzīga zeme ar daudzām krāšņām un noslēpumainām pilsētām un vietām, kurās dēkaiņi var nokļūt savos piedzīvojumu meklējumos. Katrai pilsētai un ciemam ir sevi raksturojošas iezīmes un iespējas, tai skaitā sarežģīti kvesti, mazi veikaliņi un aizdomīgi iemītnieki. Vairums no tām ir pasargātas no agresīviem briesmoņiem un mošķiem, tomēr Gīlinoras tālākajos nostūros mīt arī asinskāri un apsēsti nezvēri, kuriem pret svešiniekiem ir liels naids...
+    
+
+    
+
+\\ TODO:
+    http://runescape.exs.lv/read/catherby-2 - bilde par platu satura kolonnai
+    http://runescape.exs.lv/read/faladora - tas pats
+    

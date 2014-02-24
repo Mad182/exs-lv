@@ -212,7 +212,7 @@ tinymce.init({
                 <ul>
                     <li><a href="/p2p-kvesti">P2P kvesti</a></li>
                     <li><a href="/f2p-kvesti">F2P kvesti</a></li>
-                    <li><a href="/mini-kvesti">minikvesti</a></li>
+                    <li><a href="/mini-kvesti">Minikvesti</a></li>
                 </ul>
             </li>
             <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
