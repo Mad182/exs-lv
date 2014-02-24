@@ -113,19 +113,6 @@ tinymce.init({
                 <!-- START BLOCK : quest-management-link -->
                 <li><a href="/series">quests' series</a></li>
                 <!-- END BLOCK : quest-management-link -->
-                <!-- START BLOCK : hidden-rs-menu -->
-                <li><a href="#">Quests</a>
-                    <span class="arrow-right"></span>
-                    <ul class="flip-side">
-                        <li><a href="/series">Sērijas, secība</a></li>
-                        <li><a href="#">Nepieciešamie līmeņi</a></li>
-                        <li>&nbsp;</li>
-                    </ul>
-                </li>
-                <li><a href="#">Placeholders</a></li>
-                <li><a href="#">Ceļveži</a></li>
-                <li><a href="#">Aktivitātes</a></li>
-                <!-- END BLOCK : hidden-rs-menu -->
                 <li>&nbsp;</li>
             </ul>
         </li>
@@ -231,19 +218,19 @@ tinymce.init({
             <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
             <li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
             <li{cat-sel-194}><a href="/tasks">Tasks</a></li>
-            <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
-            <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
-            <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
-            <li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
-            <li{cat-sel-other}><a href="#">Cits</a>
+            <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>            
+            <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>            
+            <li{cat-sel-1903}><a href="#">Arhīvs</a>
                 <ul>
                    <li{cat-sel-1087}><a href="/oss-guides">OSRS</a></li>
+                   <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
                    <li{cat-sel-793}><a href="/basics">Pamatinformācija</a></li>
                    <li{cat-sel-788}><a href="/trenesanas">Trenēšanās</a></li>
                    <li{cat-sel-787}><a href="/briesmonu-medisana">Biresmoņu medīšana</a></li>
                    <li{cat-sel-790}><a href="/naudas-pelnisana">Naudas pelnīšana</a></li>
                    <li{cat-sel-5}><a href="/padomi">Citi padomi</a></li>
                    <li{cat-sel-346}><a href="/prasmju_arhivs">RS rakstu arhīvs</a></li>
+                   <li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
                 </ul>
             </li>
         </ul>
