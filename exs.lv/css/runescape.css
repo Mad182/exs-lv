@@ -28,26 +28,12 @@ body {
     background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
 }
 #scroll-up {
-    padding:10px;
-    width:24px;
-    height:24px;
-    background:rgba(0, 0, 0, 0.5) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-    position:fixed;
-    z-index: 50;
-    right:50px;
-    bottom:-100px;
-    border: 1px solid #67717A;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    opacity:0.6;
-    filter:alpha(opacity=60); /* For IE8 and earlier */
+    background:rgba(86, 105, 136, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+    border: 2px solid #000
 }
     #scroll-up:hover {
-        cursor:pointer;
-        border:1px solid #8896A2;
-        opacity:1.0;
-        filter:alpha(opacity=100); /* For IE8 and earlier */
+        border:2px solid #1B1C1D;
+        background:rgba(94, 130, 189, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;        
     }
 .clearfix {
     margin:0;

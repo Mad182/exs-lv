@@ -14,26 +14,6 @@ $(document).ready(function () {
         e.preventDefault();
     });
     
-    /* podziņa ātrai scrollošanai uz augšu */
-    var $elem = $('#scroll-up');
-    $(window).scroll(function() {
-        if( $(this).scrollTop() > 100) {
-            $elem.stop().animate({bottom: '40px', opacity: 0.6}, 500);
-        }
-        else {
-            $elem.stop().animate({bottom: '200px', opacity: 0}, 200, function() {
-                $(this).css({bottom:'-100px'});
-            });
-        }
-    });
-    $elem.click(function() {
-        $('html, body').stop().animate({scrollTop: 0}, 500, function() {
-            $elem.stop().animate({bottom: '500px', opacity: 0}, 200, function() {
-                $(this).css({bottom:'-100px'});
-            });
-        });        
-    });
-    
     /* runescape augšējās navigācijas pielīmēšana */
     jQuery(function($) {
     

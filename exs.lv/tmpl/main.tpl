@@ -92,6 +92,7 @@
 	</head>
 
 	<body{onload} class="{layout-options}">
+        <div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
 			<div id="header"{page-persona}>
 				<div id="logo">
