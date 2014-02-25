@@ -229,7 +229,6 @@
 					<!-- INCLUDE BLOCK : module-currrent -->
 				</div>
 				<div class="c"></div>
-				<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 			</div>
 
 			<!-- START BLOCK : main-layout-left-->
