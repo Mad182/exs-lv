@@ -14,11 +14,9 @@
     1903 rs-arhivs              (module = rshelp)
         5    padomi				(module = rshelp)
         195  celvezi			(module = rshelp)
-        787  briesmonu-medisana	(module = rshelp)
-        788  trenesanas			(module = rshelp)
-        789  stasti-un-vesture	(module = rshelp)
-        790  naudas-pelnisana	(module = rshelp)
-        793  basics				(module = rshelp)
+        787  briesmonu-medisana	(module = rshelp)        
+        789  stasti-un-vesture	(module = rshelp)        
+        
         1087 oss-guides			(module = rshelp)
     
     1904 atkritne               (module = list) - miskastē iemestie raksti
@@ -92,6 +90,9 @@
 	86 runescape-events 	(lang=1, redirect=/rs)
 	88 runescape-general 	(lang=1, redirect=/rs)
     346  prasmju_arhivs 	(lang=9, redirect=http://runescape.exs.lv/padomi)
+    788  trenesanas			(lang=9, redirect=http://runescape.exs.lv/padomi)
+    790  naudas-pelnisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
+    793  basics				(lang=9, redirect=http://runescape.exs.lv/padomi)
 	1873 rs 				(lang=1, redirect=http://runescape.exs.lv)
 	1874 runescape 			(lang=1, redirect=http://runescape.exs.lv)
 

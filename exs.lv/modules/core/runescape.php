@@ -21,6 +21,12 @@ if ($category->module == 'group') {
     $category->options = 'no-right';
 }
 
+// "Lobby" cilne iekrāsosies tikai tad, ja tieši index sadaļa būs atvērta;
+// ignorēs tās reizes, kad atvērta apakškategorija
+if ($category->id == 1863) {
+    $tpl->assignGlobal('cat_sel_1863', ' class="selected"');
+}
+
 
 
 // index.php failā jau pēc noklusējuma neautorizēta statusa
@@ -52,12 +58,8 @@ if ($auth->ok) {
 
 // iekrāso atvērto navigācijas cilni ("Cits"), ja atvērta kāda no tās apakšsadaļām
 $other_cats = array(
-	793,    // pamatinformācija
-	788,    // trenēšanās
 	787,    // briesmoņu medīšana
-	790,    // nauda pelnīšana
 	5,      // citi padomi
-	346,    // RS rakstu arhīvs
 	1087    // Oldschool RuneScape pamācības
     //789   // RS stāsti & vēsture 
 	//536   // Priekšmetu datubāze

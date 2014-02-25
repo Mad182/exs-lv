@@ -78,7 +78,7 @@
 	<tr class="listhead">
 		<td style="width:20px">&nbsp;</td>
 		<td style="width:370px">Raksts</td>
-		<td style="width:200px">Raksta autors</td>
+		<td style="width:200px;text-align:center">Raksta autors</td>
 	</tr>
 	<!-- START BLOCK : rshelp-listitem -->
 	<tr>                 
@@ -191,10 +191,3 @@
 <div class="c"></div>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : rs-list-articles-->
-
-<!-- START BLOCK : category-error -->
-<div>
-  Atvaino, šī lapa uz kādu laiku nebūs pieejama. Paldies par sapratni!
-</div>
-<!-- END BLOCK : category-error -->
-

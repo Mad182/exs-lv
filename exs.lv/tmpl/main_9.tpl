@@ -111,7 +111,8 @@ tinymce.init({
                 <li><a href="/rsfacts">RuneScape fakti</a></li>
                 <li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
                 <!-- START BLOCK : quest-management-link -->
-                <li><a href="/series">quests' series</a></li>
+                <li><a href="/series">Quests' series</a></li>
+                <li><a href="/atkritne">Dzēstie raksti</a></li>
                 <!-- END BLOCK : quest-management-link -->
                 <li>&nbsp;</li>
             </ul>
@@ -207,7 +208,7 @@ tinymce.init({
 	</div>
     <div id="top-menu">
         <ul id="top-menu-left">
-            <li{cat-sel-1863}><a class="first" href="/">Lobby</a></li>
+            <li{cat_sel_1863}><a class="first" href="/">Lobby</a></li>
             <li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a>
                 <ul>
                     <li><a href="/p2p-kvesti">P2P kvesti</a></li>
@@ -224,10 +225,7 @@ tinymce.init({
                 <ul>
                    <li{cat-sel-1087}><a href="/oss-guides">OSRS</a></li>
                    <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
-                   <li{cat-sel-793}><a href="/basics">Pamatinformācija</a></li>
-                   <li{cat-sel-788}><a href="/trenesanas">Trenēšanās</a></li>
-                   <li{cat-sel-787}><a href="/briesmonu-medisana">Biresmoņu medīšana</a></li>
-                   <li{cat-sel-790}><a href="/naudas-pelnisana">Naudas pelnīšana</a></li>
+                   <li{cat-sel-787}><a href="/briesmonu-medisana">Briesmoņu medīšana</a></li>
                    <li{cat-sel-5}><a href="/padomi">Dažādi raksti</a></li>
                    <li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
                 </ul>
