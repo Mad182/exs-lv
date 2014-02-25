@@ -15,11 +15,10 @@
         5    padomi				(module = rshelp)
         195  celvezi			(module = rshelp)
         787  briesmonu-medisana	(module = rshelp)        
-        789  stasti-un-vesture	(module = rshelp)        
-        
+        789  stasti-un-vesture	(module = rshelp)       
         1087 oss-guides			(module = rshelp)
     
-    1904 atkritne               (module = list) - miskastē iemestie raksti
+    1904 atkritne               (module = rshelp) - miskastē iemestie raksti
     
 	4 prasmes					(module = rshelp)
 		169 farming

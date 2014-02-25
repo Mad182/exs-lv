@@ -21,11 +21,14 @@ if ($category->module == 'group') {
     $category->options = 'no-right';
 }
 
+
+
 // "Lobby" cilne iekrāsosies tikai tad, ja tieši index sadaļa būs atvērta;
 // ignorēs tās reizes, kad atvērta apakškategorija
 if ($category->id == 1863) {
     $tpl->assignGlobal('cat_sel_1863', ' class="selected"');
 }
+
 
 
 
@@ -52,21 +55,4 @@ if ($auth->ok) {
 			$tpl->assign('active-mod', ' class="selected"');
 		}
 	}
-}
-
-
-
-// iekrāso atvērto navigācijas cilni ("Cits"), ja atvērta kāda no tās apakšsadaļām
-$other_cats = array(
-	787,    // briesmoņu medīšana
-	5,      // citi padomi
-	1087    // Oldschool RuneScape pamācības
-    //789   // RS stāsti & vēsture 
-	//536   // Priekšmetu datubāze
-);
-
-if (in_array($category->id, $other_cats)) {
-	$tpl->assignGlobal(array(
-		'cat-sel-other' => ' class="selected"'
-	));
 }
