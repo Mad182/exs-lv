@@ -1438,7 +1438,7 @@ function get_blog_by_user($user_id, $force = false) {
 		if (!$data) {
 			$data = 'no';
 		}
-		$m->set('isb_' . $user_id, $data, false, 7200);
+		$m->set('isb_' . $user_id . '_' . $lang, $data, false, 7200);
 	}
 	if ($data > 0 && $data != 'no') {
 		return $data;

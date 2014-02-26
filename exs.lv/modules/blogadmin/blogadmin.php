@@ -11,7 +11,7 @@ if (!$auth->ok) {
 		$nick = sanitize($auth->nick);
 		$db->query("INSERT INTO `cat` (textid,title,isblog,parent,lang) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$auth->id','110','$lang')");
 		push('Ieguva <a href="/' . strtolower(mkslug($nick)) . '">blogu</a> exā');
-		$m->delete('isb_' . $auth->id);
+		$m->delete('isb_' . $auth->id . '_' . $lang);
 		update_karma($auth->id, true);
 		$db->query("UPDATE `cat` SET `ordered` = `id` WHERE `ordered` = 0");
 		header('Location: /' . strtolower(mkslug($nick)));
@@ -26,7 +26,7 @@ if (!$auth->ok) {
 			$db->query("UPDATE users SET credit = credit-'5' WHERE id = '$auth->id'");
 			$db->query("INSERT INTO cat (textid,title,isblog,parent) VALUES ('" . strtolower(mkslug($auth->nick)) . "','$nick blogs','$auth->id','110')");
 			push('Izveidoja sev <a href="/' . mkslug($auth->nick) . '">blogu</a>');
-			$m->delete('isb_' . $auth->id);
+			$m->delete('isb_' . $auth->id . '_' . $lang);
 			redirect('/' . $category->textid);
 		}
 
