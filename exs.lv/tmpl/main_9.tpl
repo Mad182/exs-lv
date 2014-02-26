@@ -225,7 +225,6 @@ tinymce.init({
                 <ul>
                    <li{cat-sel-1087}><a href="/oss-guides">OSRS</a></li>
                    <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
-                   <li{cat-sel-787}><a href="/briesmonu-medisana">Briesmoņu medīšana</a></li>
                    <li{cat-sel-5}><a href="/padomi">Dažādi raksti</a></li>
                    <li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
                 </ul>

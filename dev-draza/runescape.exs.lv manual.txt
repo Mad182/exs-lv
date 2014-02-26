@@ -3,8 +3,6 @@
  */
 
 
-
-
 \\  RS kategoriju hierarhija
    (id, textid, module, description)
 
@@ -13,8 +11,7 @@
 
     1903 rs-arhivs              (module = rshelp)
         5    padomi				(module = rshelp)
-        195  celvezi			(module = rshelp)
-        787  briesmonu-medisana	(module = rshelp)        
+        195  celvezi			(module = rshelp)              
         789  stasti-un-vesture	(module = rshelp)       
         1087 oss-guides			(module = rshelp)
     
@@ -89,6 +86,7 @@
 	86 runescape-events 	(lang=1, redirect=/rs)
 	88 runescape-general 	(lang=1, redirect=/rs)
     346  prasmju_arhivs 	(lang=9, redirect=http://runescape.exs.lv/padomi)
+    787  briesmonu-medisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
     788  trenesanas			(lang=9, redirect=http://runescape.exs.lv/padomi)
     790  naudas-pelnisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
     793  basics				(lang=9, redirect=http://runescape.exs.lv/padomi)
