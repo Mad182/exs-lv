@@ -15,6 +15,10 @@ $types_of_pages = array('date', 'bump');
 
 foreach ($types_of_pages as $type) {
 
+    $about_blogs = ($type == 'date') ? 
+        '`cat`.`parent` IN(1903,4,102,194,160,599,791,791)' :
+        '`cat`.`isblog` != 0';
+
     $runescape_pages = $db->get_results("
         SELECT
             `pages`.*,    
@@ -28,16 +32,22 @@ foreach ($types_of_pages as $type) {
         WHERE
             `pages`.`lang`      = '$lang' AND
             `cat`.`isforum`     = 0 AND
-            `cat`.`isblog`      = 0
-        ORDER BY `pages`.`".$type."` DESC 
+            ".$about_blogs."
+        ORDER BY `pages`.`bump` DESC 
         LIMIT 8
     ");
 
     if ($runescape_pages) {
         
         $tpl->newBlock('recent-page-list');        
-        if ($type == 'date')
-            $tpl->assign('column-style', ' style="margin-right:20px"');
+        if ($type == 'date') {
+            $tpl->assign(array(
+                'column-style' => ' style="margin-right:20px"',
+                'column-title' => 'Pēdējie komentētie raksti'
+            ));
+        } else {
+            $tpl->assign('column-title', 'Jaunākais blogos');
+        }
 
         $article_counter = 1;
         foreach ($runescape_pages as $article) {

@@ -9,7 +9,7 @@ if (!$auth->ok) {
 
 	if ($auth->karma >= 200) {
 		$nick = sanitize($auth->nick);
-		$db->query("INSERT INTO `cat` (textid,title,isblog,parent) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$auth->id','110')");
+		$db->query("INSERT INTO `cat` (textid,title,isblog,parent,lang) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$auth->id','110','$lang')");
 		push('Ieguva <a href="/' . strtolower(mkslug($nick)) . '">blogu</a> exā');
 		$m->delete('isb_' . $auth->id);
 		update_karma($auth->id, true);

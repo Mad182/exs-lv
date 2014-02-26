@@ -63,7 +63,7 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 	$isblog = get_blog_by_user($inprofile->id);
 	if ($isblog) {
 		$blog = get_cat($isblog);
-		$count = $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '" . $isblog . "'");
+		$count = $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '" . $isblog . "' AND `lang` = '".(int)$lang."' ");
 		$tpl->newBlock('profilebox-blog-link');
 		$tpl->assign(array(
 			'url' => '/' . $blog->textid,

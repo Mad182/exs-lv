@@ -2,10 +2,9 @@
 
 {runescape-news}
 
-<h2><strong>Jaunākie / pēdējie komentētie raksti</strong></h2>
-
 <!-- START BLOCK : recent-page-list -->
 <div class="article-column"{column-style}>
+    <h2><strong>{column-title}</strong></h2>
     <div class="recent-page-separator"></div>
     <ul class="official-news">
     <!-- START BLOCK : list-page -->

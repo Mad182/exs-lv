@@ -251,6 +251,7 @@ tinymce.init({
             <li{cat-sel-116}><a href="/write">Raksti</a></li>
             <!-- END BLOCK : user-write-->
             <li{cat-sel-1867}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+            <li{cat-sel-1905}><a href="/myblog">Blogs</a></li>
             <li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
         </ul>
         <!-- END BLOCK : user-menu-->
@@ -304,19 +305,19 @@ tinymce.init({
 		<!-- START BLOCK : profile-box-->
 		<h3>{profile-nick}</h3>
 		<div class="box">
-			<a href="{url}"><img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" /></a><br />
+			<a href="{url}"><img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" /></a><br>
 			{profile-top-awards}
 			<!-- START BLOCK : profilebox-pm-link-->
-			<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
+			<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br>
 			<!-- END BLOCK : profilebox-pm-link-->
 			<!-- START BLOCK : profilebox-warn-->
-			<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
+			<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br>
 			<!-- END BLOCK : profilebox-warn-->
 			<!-- START BLOCK : profilebox-blog-link-->
-			<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
+			<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br>
 			<!-- END BLOCK : profilebox-blog-link-->
 			<!-- START BLOCK : profilebox-twitter-link-->
-			<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+			<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br>
 			<!-- END BLOCK : profilebox-twitter-link-->
 			<!-- START BLOCK : profilebox-yt-link-->
 			<!-- END BLOCK : profilebox-yt-link-->
