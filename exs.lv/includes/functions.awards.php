@@ -219,6 +219,10 @@ function list_awards() {
 			'title' => '<a href="http://lol.exs.lv/">lol.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		),
+        'runescape-exs-lv' => array(
+			'title' => '<a href="http://runescape.exs.lv/">runescape.exs.lv lietotājs</a>',
+			'state' => 'inactive'
+		),
 		'mobile' => array(
 			'title' => 'Apmeklēja m.exs.lv',
 			'state' => 'inactive'
@@ -445,6 +449,12 @@ function update_awards($user) {
 				$awards_list['coding-user']['state'] = 'active';
 			}
 		}
+        
+        if (!in_array('runescape-exs-lv', $existing_awards)) {
+			if ($db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$user' AND `lang` = 9") >= 10) {
+				$awards_list['runescape-exs-lv']['state'] = 'active';
+			}
+		}
 
 		if (!in_array('group-created', $existing_awards)) {
 			$group_created = $db->get_var("SELECT count(*) FROM clans WHERE owner = '$user'");
@@ -521,8 +531,8 @@ function update_awards($user) {
 			'music' => array(323),
 			'film' => array(80),
 			'history' => array(565),
-			'rs' => array(599, 4, 5, 99, 100, 102, 160, 193, 195, 194, 792, 787, 788, 789, 790, 791, 793)
-		);
+			'rs' => array(4, 5, 99, 100, 160, 193, 194, 195, 599, 789, 791, 792)
+		); // prasmes,padomi,f2p,p2p,minisp,minikv,tasks,celvezi,rs-zinas,stasti&vesture,gildes,d&d
 
 		$topic_award_levels = array(1, 5, 10);
 
