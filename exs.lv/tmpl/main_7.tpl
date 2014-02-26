@@ -83,6 +83,7 @@
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
 	</head>
+
 	<body class="{layout-options}">
 
 		<div id="wrapper">
@@ -435,21 +436,34 @@
 			</div>
 		</div>
 
-		<script>
-								(function(i, s, o, g, r, a, m) {
-									i['GoogleAnalyticsObject'] = r;
-									i[r] = i[r] || function() {
-										(i[r].q = i[r].q || []).push(arguments)
-									}, i[r].l = 1 * new Date();
-									a = s.createElement(o),
-													m = s.getElementsByTagName(o)[0];
-									a.async = 1;
-									a.src = g;
-									m.parentNode.insertBefore(a, m)
-								})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+		<!-- sekomums.lv -->
+		<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+		<script type="text/javascript">
+								function r(f) {
+									/in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
+								}
+								r(function() {
+									new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
+								});
+		</script>
 
-								ga('create', 'UA-4190387-13', 'exs.lv');
-								ga('send', 'pageview');
+		<!-- google analytics -->
+		<script>
+			(function(i, s, o, g, r, a, m) {
+				i['GoogleAnalyticsObject'] = r;
+				i[r] = i[r] || function() {
+					(i[r].q = i[r].q || []).push(arguments)
+				}, i[r].l = 1 * new Date();
+				a = s.createElement(o),
+								m = s.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = g;
+				m.parentNode.insertBefore(a, m)
+			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+			ga('create', 'UA-4190387-13', 'exs.lv');
+			ga('send', 'pageview');
 
 		</script>
 
