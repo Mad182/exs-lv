@@ -1433,7 +1433,7 @@ function get_online_list($force = false) {
  */
 function get_blog_by_user($user_id, $force = false) {
 	global $db, $m, $lang;
-	if ($force || !($data = $m->get('isb_' . $user_id))) {
+	if ($force || !($data = $m->get('isb_' . $user_id . '_' . $lang))) {
 		$data = $db->get_var("SELECT `id` FROM `cat` WHERE `isblog` = '$user_id' AND `lang` = '$lang' LIMIT 1");
 		if (!$data) {
 			$data = 'no';
