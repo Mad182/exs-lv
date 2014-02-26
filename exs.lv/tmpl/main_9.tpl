@@ -219,8 +219,8 @@ tinymce.init({
             <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
             <li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
             <li{cat-sel-194}><a href="/tasks">Tasks</a></li>
-            <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>            
-            <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>            
+            <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
+            <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
             <li{cat-sel-1903}><a href="#">Arhīvs</a>
                 <ul>
                    <li{cat-sel-1087}><a href="/oss-guides">OSRS</a></li>
@@ -293,7 +293,6 @@ tinymce.init({
 			</div>
 			<div class="c"></div>
 
-			<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 		</div>
 	</div>
 
@@ -338,7 +337,7 @@ tinymce.init({
 			<div id="miniblog-block" class="ajaxbox">{out}</div>
 		</div>
 		<!-- END BLOCK : friendssay-box-->
-        
+
         <!-- START BLOCK : runescape-facts-box -->
 		<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
 		<div class="box facts-box">{random-fact}</div>
