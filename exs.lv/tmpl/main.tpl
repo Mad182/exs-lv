@@ -263,27 +263,6 @@
 					<!-- END BLOCK : menu-node-->
 				</ul>
 				<!-- END BLOCK : menu-list-->
-				<!-- START BLOCK : rs-menu-list-->
-				<h3>RuneScape</h3>
-				<ul class="menu">
-					<li{sel-102}><a href="/{strid-102}">{title-102}</a></li>
-					<li{sel-160}><a href="/{strid-160}">{title-160}</a></li>
-					<li{sel-4}><a href="/{strid-4}">{title-4}</a></li>
-					<li{sel-194}><a href="/{strid-194}">{title-194}</a></li>
-					<li{sel-792}><a href="/{strid-792}">{title-792}</a></li>
-					<li{sel-195}><a style="margin-top:12px;" href="/{strid-195}">{title-195}</a></li>
-					<li{sel-791}><a href="/{strid-791}">{title-791}</a></li>
-					<li{sel-789}><a href="/{strid-789}">{title-789}</a></li>
-					<li{sel-793}><a href="/{strid-793}">{title-793}</a></li>
-					<li{sel-788}><a style="margin-top:12px;" href="/{strid-788}">{title-788}</a></li>
-					<li{sel-787}><a href="/{strid-787}">{title-787}</a></li>
-					<li{sel-790}><a href="/{strid-790}">{title-790}</a></li>
-					<li{sel-5}><a style="margin-top:12px;" href="/{strid-5}">{title-5}</a></li>
-					<li{sel-1087}><a href="/{strid-1087}">{title-1087}</a></li>
-					<li{sel-346}><a href="/{strid-346}">{title-346}</a></li>
-					<li{sel-536}><a href="/{strid-536}">{title-536}</a></li>
-				</ul>
-				<!-- END BLOCK : rs-menu-list-->
 
 				<!-- START BLOCK : notification-list-->
 				<h3>Tavi notikumi</h3>

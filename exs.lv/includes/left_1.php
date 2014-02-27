@@ -33,23 +33,7 @@ $parent_id = get_top($category->id);
 if ($parent_id != 0) {
 	$menuitems = $db->get_results("SELECT `id`,`title`,`textid`,`parent` FROM `cat` WHERE `parent` = '" . $parent_id . "' AND `parent` != '110' AND `parent` != '101' AND `mods_only` = '0' ORDER BY `title` ASC");
 
-	/* RuneScape uzlabotais menu */
-	if ($parent_id == '599' && $menuitems/* && $auth->id == '115' */) {
-		$tpl->newBlock('rs-menu-list');
-		foreach ($menuitems as $menuitem) {
-			$sel = '';
-			if (!empty($category)) {
-				if ($category->id == $menuitem->id || $category->parent == $menuitem->id) {
-					$sel = ' class="active"';
-				}
-			}
-			$tpl->assign(array(
-				'strid-' . $menuitem->id => $menuitem->textid,
-				'title-' . $menuitem->id => $menuitem->title,
-				'sel-' . $menuitem->id => $sel
-			));
-		}
-	} else if ($menuitems) {
+    if ($menuitems) {
 		$tpl->newBlock('menu-list');
 		$tpl->assign(array(
 			'topid' => $parent_id,
@@ -70,7 +54,7 @@ if ($parent_id != 0) {
 				'id' => $menuitem->id,
 			));
 
-			if (in_array($menuitem->id, array(79, 102)) && !empty($sel)) {
+			if (in_array($menuitem->id, array(79)) && !empty($sel)) {
 				$children = $db->get_results("SELECT `textid`,`id`,`title` FROM `cat` WHERE `parent` = '$menuitem->id' ORDER BY `id` ASC");
 				if ($children) {
 					$tpl->newBlock('menu-list-sub');
