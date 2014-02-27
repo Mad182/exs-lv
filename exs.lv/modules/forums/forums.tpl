@@ -5,6 +5,7 @@
 	<!-- END BLOCK : forum-new-->
 	{title}
 </h1>
+<div class="clear"></div>
 
 <table id="forum">
 	<!-- START BLOCK : forum-list-->
