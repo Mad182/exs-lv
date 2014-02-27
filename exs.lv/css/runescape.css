@@ -214,6 +214,9 @@ div pre {
 #flash-message.error {
     border: 1px solid #C5C3C3
 }
+#full-story img {
+    max-width:550px
+}
 
 
 /* 3. Jaunie lapas pamatbloki */
