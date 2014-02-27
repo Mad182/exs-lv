@@ -11,9 +11,11 @@ $tpl->assign('runescape-news', get_runescape_news());
     
 // sākumlapā 2 kolonnās parāda jaunākos un pēdējos komentētos rakstus;
 // pēc tā arī attiecīgi SQL pieprasījumā rakstus atlasa
-$types_of_pages = array('date', 'bump');
+//$types_of_pages = array('date', 'bump');
+$types_of_pages = array();
 
-foreach ($types_of_pages as $type) {
+
+/*foreach ($types_of_pages as $type) {
 
     $about_blogs = ($type == 'date') ? 
         '`cat`.`parent` IN(1903,4,102,194,160,599,791,791)' :
@@ -77,4 +79,4 @@ foreach ($types_of_pages as $type) {
             $article_counter++;
         }
     }
-}
+}*/

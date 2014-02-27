@@ -20,7 +20,7 @@
 function get_runescape_news($force = false) {
     global $m, $db, $auth, $rsbot_id, $lang;
 
-    $list_news  = 6;     // rakstu skaits, cik rādīt sarakstā
+    $list_news  = 12;     // rakstu skaits, cik rādīt sarakstā
 
     // memcache glabā tikai laiku, kad jaunumi pēdējoreiz saglabāti,
     // citādi tiek izmantots .html cache fails
@@ -362,7 +362,7 @@ function update_rspages($update = true, $print = false) {
         WHERE
             `rs_pages`.`deleted_by` = 0 AND
             (`pages`.`id` IS NULL OR
-            `cat`.`parent` NOT IN(599, 102) OR
+            `cat`.`parent` NOT IN(4, 102, 1863) OR
             `rs_pages`.`category_id` != `pages`.`category`)
         ORDER BY `pages`.`title` ASC
     ");
@@ -385,7 +385,7 @@ function update_rspages($update = true, $print = false) {
 			}
 			// raksts `pages` tabulā vairs nav derīgā kategorijā
 			// (piemēram, ir dzēsts)
-			elseif ($old->category_parent != 599 && $old->category_parent != 102) {
+			elseif ( !in_array($old->category_parent, array(4, 102, 1863)) ) {
 				if ($print) {
 					$msg = $counter . '. Raksts nelāgā kategorijā! (pages.id: ' . $old->pages_id . '';
 					$msg .= ', pages.cat: ' . $old->pages_catid . ') - ' . $old->pages_title . '<br>';
@@ -434,7 +434,7 @@ function update_rspages($update = true, $print = false) {
                 `rs_pages`.`deleted_by` = 0
             )
         WHERE
-            `cat`.`parent` IN(599, 102) AND
+            `cat`.`parent` IN(4, 102, 1863) AND
             `rs_pages`.`id` IS NULL
         ORDER BY `pages`.`title` ASC
     ");
@@ -445,7 +445,7 @@ function update_rspages($update = true, $print = false) {
 		foreach ($select_new as $old) {
 
 			// šeit vairs nav jēgas pārbaudīt, vai `rs_pages` sadaļā ir mainīta kategorija vai kas tāds,
-			// kategoriju salīdzināšana jau notikusi iepriekšējā pieprasījumā
+			// kategoriju salīdzināšana jau notikusi iepriekšējā pieprasījumā;
 			// raksts `rs_pages` tabulā neeksistē
 			if ($old->rspages_id == '0') {
 				if ($print) {

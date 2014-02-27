@@ -6,10 +6,18 @@
 $tpl->newBlock('main-layout-right');
 
 // jaunākais galerijās
+$sel = 'pages';
+if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
+	$out = get_latest_images();
+	$sel = 'gallery';
+} else {
+	$out = get_latest_posts();
+}
 $tpl->assign(array(
-	'latest-noscript'   => get_latest_images(),
-	'pages-selected'    => 'active ',
+	'latest-noscript'   => $out,
+	$sel . '-selected'  => 'active '
 ));
+unset($out);
 
 
 // aptaujas

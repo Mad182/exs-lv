@@ -345,11 +345,15 @@ tinymce.init({
 
 	</div>
 	<!-- END BLOCK : main-layout-left-->
-
+    
     <!-- START BLOCK : main-layout-right-->
 	<div id="right">
-		<h3><img class="box-icon" src="/bildes/fugue-icons/images-flickr.png" alt="Aptauja">Jaunākais galerijās</h3>
+		<h3>Jaunākais lapā</h3>
 		<div class="box">
+            <ul class="tabs">
+                <li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+                <li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+            </ul>
 			<div id="lat" class="ajaxbox">{latest-noscript}</div>
 		</div>
 
