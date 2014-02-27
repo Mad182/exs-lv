@@ -12,7 +12,7 @@
 		</ul>
 		<div class="c"></div>
 		<!-- START BLOCK : list-articles-node-avatar-->
-		<img class="av" src="/{node-avatar-image}" alt="{node-avatar-alt}" />
+		<img class="av" src="{img-server}/{node-avatar-image}" alt="{node-avatar-alt}" />
 		<!-- END BLOCK : list-articles-node-avatar-->
 		<div style="padding: 5px 0">{articles-node-intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></div>
 		<div class="c"></div></li>
@@ -21,3 +21,4 @@
 <div class="c"></div>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-->
+

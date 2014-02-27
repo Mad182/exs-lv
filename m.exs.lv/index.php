@@ -168,6 +168,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		'currentuser-avatar' => $auth->avatar,
 		'timestamp' => time(),
 		'static-server' => $static_server,
+		'img-server' => $img_server,
 		'logout-hash' => $auth->logout_hash
 	));
 
