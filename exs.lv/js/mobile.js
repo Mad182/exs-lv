@@ -3,29 +3,29 @@ var processing = false;
 function update_mb() {
 	clearInterval(mbRefreshId);
 	mbRefreshId = '';
-	if(processing == false) {
+	if (processing == false) {
 		processing = true;
-		$.getJSON('/json_mb.php?mbid='+mbid+'&lastid='+lastid+'&url='+encodeURIComponent(c_url)+'&et='+edit_time, function(data) {
+		$.getJSON('/json_mb.php?mbid=' + mbid + '&lastid=' + lastid + '&url=' + encodeURIComponent(c_url) + '&et=' + edit_time, function(data) {
 			var items = [];
 			$.each(data, function(key, val) {
-				if(key == 'id' && val != lastid) {
+				if (key == 'id' && val != lastid) {
 					lastid = val;
 				}
-				if(key == 'et' && val != lastid) {
+				if (key == 'et' && val != lastid) {
 					edit_time = val;
 				}
-				if(key == 'comment') {
+				if (key == 'comment') {
 					refreshlim = mb_refresh_limit;
 					$.each(val, function(ckey, cval) {
 						$.each(cval, function(rkey, rval) {
-							$('<li>'+rval+'</li>').hide().appendTo('ul.responses-'+ckey).fadeIn('slow');
+							$('<li>' + rval + '</li>').hide().appendTo('ul.responses-' + ckey).fadeIn('slow');
 						});
 					});
 				}
-				if(key == 'edits') {
+				if (key == 'edits') {
 					refreshlim = mb_refresh_limit;
 					$.each(val, function(ckey, cval) {
-						$('#m'+ckey).siblings('.response-content').children('.post-content').html(cval);
+						$('#m' + ckey).siblings('.response-content').children('.post-content').html(cval);
 					});
 				}
 			});
@@ -34,27 +34,27 @@ function update_mb() {
 	} else {
 		refreshlim = mb_refresh_limit;
 	}
-	refreshlim = refreshlim+1500;
-	mbRefreshId = setInterval("update_mb()",refreshlim);
+	refreshlim = refreshlim + 1500;
+	mbRefreshId = setInterval("update_mb()", refreshlim);
 }
 
 $(document).ready(function() {
 
-	$.ajaxSetup ({
+	$.ajaxSetup({
 		cache: false
 	});
 
-	$('.confirm').live('click', function(){
+	$("body").on("click", ".confirm", function() {
 		return confirm("Vai tiešām vēlies veikt šo darbību?");
 	});
 
-	$('.spoiler-title').live('click', function() {
+	$("body").on("click", ".spoiler-title", function() {
 		$(this).siblings('.spoiler-content').toggle(200);
 		return false;
 	});
 
 	//lapu slēgšana
-	$('.ajax-checkbox').live('change', function() {
+	$("body").on("change", ".ajax-checkbox", function() {
 		$.ajax({
 			type: "POST",
 			url: $(this).parent().parent().parent().attr('action'),
@@ -64,14 +64,15 @@ $(document).ready(function() {
 	});
 
 	//mb komentara forma
-	$('#addresponse').live('submit', function() {
+	$("body").on("submit", "#addresponse", function() {
+
 		clearInterval(mbRefreshId);
 		mbRefreshId = '';
 		$('#mbresponse-submit').hide();
 		$('#mbresponse-waiting').show();
 		$.ajax({
 			type: "POST",
-			url: $(this).attr('action')+'?postcomment=true',
+			url: $(this).attr('action') + '?postcomment=true',
 			data: $(this).serialize(),
 			success: function(data) {
 				$('#responseminiblog').val("");
@@ -82,13 +83,13 @@ $(document).ready(function() {
 			}
 		});
 		refreshlim = mb_refresh_limit;
-		mbRefreshId = setInterval("update_mb()",refreshlim);
+		mbRefreshId = setInterval("update_mb()", refreshlim);
 		return false;
 	});
 
 	//atbildet uz minibloga komentaru
-	$('.mb-reply-to').live('click', function() {
-		if($(this).siblings('.reply-ph').html() != '') {
+	$("body").on("click", ".mb-reply-to", function() {
+		if ($(this).siblings('.reply-ph').html() != '') {
 			return false;
 		}
 		$('.reply-ph').fadeOut(0);
@@ -100,8 +101,8 @@ $(document).ready(function() {
 	});
 
 	//atpakaļ uz atbildēšanu galvenajam mb
-	$('.mb-reply-main').live('click', function() {
-		if($('.reply-ph-default').html() != '') {
+	$("body").on("click", ".mb-reply-main", function() {
+		if ($('.reply-ph-default').html() != '') {
 			return false;
 		}
 		$('.reply-ph').fadeOut(0);
@@ -112,12 +113,12 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#addpic').live('click', function() {
+	$("body").on("click", "#addpic", function() {
 		$('#newpic').toggle(200);
 		return false;
 	});
 
-	$('.ajax-pager a').live('click', function() {
+	$("body").on("click", ".ajax-pager a", function() {
 		var elem = $(this).parent().parent();
 		elem.fadeTo(250, 0.5);
 		elem.load($(this).attr('href'), function() {
@@ -127,29 +128,29 @@ $(document).ready(function() {
 	});
 
 	$('.mb-icon').hover(
-		function () {
-			$(this).fadeTo(150, 1)
-		},
-		function () {
-			$(this).fadeTo(150, 0.45)
-		}
+					function() {
+						$(this).fadeTo(150, 1)
+					},
+					function() {
+						$(this).fadeTo(150, 0.45)
+					}
 	);
 
 	$('.mb-icon').fadeTo(150, 0.45);
 
 	/* flash message (brīdinājum un paziņojumu) aizvēršana */
-	$('#close-flash-message').live('click', function (e) {
+	$("body").on("click", "#close-flash-message", function(e) {
 		$('#flash-message').fadeOut(500);
 		e.preventDefault();
 	});
 
 	/* load page contents with ajax */
-	$('.ajax-module, .ajax-module-mobile').live('click', function (e) {
+	$("body").on("click", ".ajax-module, .ajax-module-mobile", function(e) {
 
 		var href = $(this).attr("href");
 		var title = $(this).attr("title");
 
-		if(typeof(title) == 'undefined') {
+		if (typeof (title) == 'undefined') {
 			title = '';
 		}
 
@@ -164,10 +165,10 @@ $(document).ready(function() {
 	});
 
 	/* comment rate */
-	$('.plus, .minus').live('click', function (e) {
+	$("body").on("click", '.plus, .minus', function(e) {
 		var elem = $(this).parent();
 		elem.fadeTo(250, 0.5);
-		elem.load($(this).attr('href'), function () {
+		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(150, 1);
 		});
 		e.preventDefault();
