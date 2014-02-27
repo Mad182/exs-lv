@@ -35,7 +35,7 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 	}
 
 	//warnu links un skaits
-	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1, 2))) {
+	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1))) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
 			$tpl->assign(array(

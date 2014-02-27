@@ -10,9 +10,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 	$page_title = $inprofile->nick . ' brīdinājumi';
 
-	if (in_array($inprofile->level, $mod_levels)) {
+	/*if (in_array($inprofile->level, $mod_levels)) {
 		$tpl->newBlock('warns-mod');
-	} elseif ($auth->ok && (im_mod() || $auth->id == $inprofile->id)) {
+	} else*/if ($auth->ok && (im_mod() || $auth->id == $inprofile->id)) {
 
 		$warns = $db->get_results("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `site_id` = '$lang' ORDER BY `active` DESC, `created` DESC");
 		//warnu saraksts
