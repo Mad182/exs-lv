@@ -14,8 +14,9 @@
 		<!-- START BLOCK : list-articles-node-avatar-->
 		<img class="av" src="{img-server}/{node-avatar-image}" alt="{node-avatar-alt}" />
 		<!-- END BLOCK : list-articles-node-avatar-->
-		<div style="padding: 5px 0">{articles-node-intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></div>
-		<div class="c"></div></li>
+		<div style="padding: 5px 0 10px">{articles-node-intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></div>
+		<div class="c"></div>
+	</li>
 	<!-- END BLOCK : list-articles-node-->
 </ul>
 <div class="c"></div>
