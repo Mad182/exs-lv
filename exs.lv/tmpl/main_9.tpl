@@ -223,6 +223,7 @@ tinymce.init({
             <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
             <li{cat-sel-1903}><a href="#">Arhīvs</a>
                 <ul>
+                   <li{cat-sel-599}><a href="/runescape">RuneScape ziņas</a></li>
                    <li{cat-sel-1087}><a href="/oss-guides">OSRS</a></li>
                    <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
                    <li{cat-sel-5}><a href="/padomi">Dažādi raksti</a></li>

@@ -9,7 +9,7 @@
 
 1863 index 			(module = runescape)	- RuneScape apakšprojekta index lapa
 
-    1903 rs-arhivs              (module = rshelp)
+    1903 rs-arhivs              (module = redirect, lang = 9, content = http://runescape.exs.lv/padomi)
         5    padomi				(module = rshelp)
         195  celvezi			(module = rshelp)              
         789  stasti-un-vesture	(module = rshelp)       
@@ -41,6 +41,7 @@
 		190 runecrafting
 		191 hitpoints	
 		287 dungeoneering
+        1912 divination
 
         
 	102 kvestu-pamacibas		(module = rshelp)
@@ -56,24 +57,29 @@
 	791 gildes					(module = rshelp)
 	792 distractions-diversions	(module = rshelp)	
 	
-1871 games 			(module = forum)			- RuneScape forums
-	661 rs 			(module = list)				- foruma vienīgā sadaļa
+    
+    // forums
+    1871 games 			(module = forum)			- RuneScape forums
+        661 rs 			(module = list)				- foruma vienīgā sadaļa
 
-765 rsmod			(module = rsmod)			- pamācību sadaļu pārvaldības apakšsadaļas
-	1875 series
-	1876 qskills
-	1877 rsph
-	1878 areas
-	1879 rsactivities
+        
+    // runescpape pamācību sadaļu administrēšanas apakšsadaļas
+    765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
+        1875 series
+        1876 qskills
+        1877 rsph
+        1878 areas
+        1879 rsactivities
 
-786  rs-skills 		(module = rsmod-skills)		- prasmju pamācību lappuses
-1866 rsfacts 		(module = rs-facts)			- runescape fakti
-1867 gallery		(module = gallery)			- runescape projekta galerijas
-1869 checkform		(module = checkform)		- lietotāju meklēšanas forma
+        
+    786  rs-skills 		(module = rsmod-skills)		- prasmju pamācību lappuses
+    1866 rsfacts 		(module = rs-facts)			- runescape faktu pārvaldība
+    1867 gallery		(module = gallery)			- runescape projekta galerijas
+    1869 checkform		(module = checkform)		- lietotāju meklēšanas forma
 
-1885 facts_admin 	(module = facts-admin)		- parastie lapas fakti
-1897 mbview 		(module = mb-view)			- dzēsto mb ierakstu apskatīšana modiem
-1901 aptaujas 		(module = polls)			- bijušo aptauju uzskaitījums
+    1897 mbview 		(module = mb-view)			- dzēsto mb ierakstu apskatīšana modiem
+    1901 aptaujas 		(module = polls)			- bijušo aptauju uzskaitījums
+    1905 myblog         (module = blogadmin)        - bloga administrēšanas sadaļa
 
 
 
@@ -97,7 +103,6 @@
 
 
 
-
 \\  database queries
 
 	* visu prasmju sadaļu atlasīšanai	
@@ -106,14 +111,51 @@
         
 		WHERE `parent` = 4 OR `id` = 4
 
-    
-    
+        
+        
+        
+        
+        
+\\  Faili, kuriem ir saistība ar runescape.exs.lv apakšprojektu:
+    (saraksts vēl nav gluži pilnīgs)
 
-\\  ceļvežu intro teksts
-
-    Gīlinora ir milzīga zeme ar daudzām krāšņām un noslēpumainām pilsētām un vietām, kurās dēkaiņi var nokļūt savos piedzīvojumu meklējumos. Katrai pilsētai un ciemam ir sevi raksturojošas iezīmes un iespējas, tai skaitā sarežģīti kvesti, mazi veikaliņi un aizdomīgi iemītnieki. Vairums no tām ir pasargātas no agresīviem briesmoņiem un mošķiem, tomēr Gīlinoras tālākajos nostūros mīt arī asinskāri un apsēsti nezvēri, kuriem pret svešiniekiem ir liels naids...
     
-
+    /config/runescape.exs.lv.php
+    /includes/site_loader.php    
+    /includes/functions.runescape.php
+    
+    /includes/left_9.php
+    /includes/right_9.php
+    /tmpl/main_9.tpl
+    
+    /cache/runescape
+    /css/runescape.css    
+    /js/runescape.js
+    /bildes/runescape/*
+    
+    /modules/facts-admin
+    /modules/idb
+    /modules/rs-events
+    /modules/rs-facts
+    /modules/rshelp
+    /modules/rsmod
+    /modules/rsmod-skills
+    /modules/runescape
+    /modules/core/runescape    
+    
+    /index.php
+    /json_mb.php                         - ziņošanas podziņa
+    visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)
+    
+    functions.awards.php
+        list_awards() - medaļas saistībā ar RS
+        update_awards() - saraksts ar sadaļām, kurās jābūt aktivitātei, lai piešķirtu medaļu
+        
+    functions.core.php  
+        get_latest_posts() - ->show_rs
+        get_latest_mbs() - ->show_rs
+        
+        
     
 
 \\ TODO:

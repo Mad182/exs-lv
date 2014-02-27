@@ -73,6 +73,11 @@ else {
 
 	// redzamas būs visas trīs lapas kolonnas
 	$tpl_options = '';
+    
+    $order_by = 'ORDER BY `title` ASC ';
+    if ($category->id == 599) { // rs jaunumu raksti
+        $order_by = 'ORDER BY `date` DESC ';
+    }
 
 	$all_items = $db->get_results("
         SELECT `strid`,`title`,`author` 

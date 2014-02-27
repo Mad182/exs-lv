@@ -37,7 +37,9 @@
 				<!-- START BLOCK : skill-link -->
 				<a title="{page_title}" href="/read/{page_strid}">{page_title}</a><br>
 				<!-- END BLOCK : skill-link -->
+                <!-- START BLOCK : skill-pages -->   
 				<div class="skill-pages">{next}</div>
+                <!-- END BLOCK : skill-pages -->
 			</div>        
 		</div>
 	</div>

@@ -64,6 +64,8 @@ if ($pages) {
 				$tpl->gotoBlock('skill');
 				$addr = '<a class="skill-pager" href="/rs-skills/?skill=' . $skill_id . '&amp;page=2">';
 				$addr .= 'Tālāk &rsaquo;&rsaquo;</a>';
+                
+                $tpl->newBlock('skill-pages');
 				$tpl->assign('next', $addr);
 			}
 
