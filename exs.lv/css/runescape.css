@@ -528,11 +528,13 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     }
     .official-news .news-image {
         float:left;
-        margin-right:12px
+        margin-right:12px;
+        line-height:6em
     }
     .official-news img {
         max-width:125px;
-        max-height:88px
+        max-height:88px;
+        vertical-align:middle
     }
     .official-news p {
         float:left;
@@ -584,8 +586,11 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     .rsmb-text {
         margin:9px 5px 0 0
     }
+        .rsmb-text a {
+            margin-top:7px
+        }
     .rsmb-fade {
-        color:#65779C
+        color: #1f4fa3
     }
 .article-column {
     float:left;
