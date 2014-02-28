@@ -8,6 +8,13 @@
 
 <div class="tabMain">
 	<!-- START BLOCK : approve-new-->
+    
+    <!-- START BLOCK : goto-wide-page -->
+    <p style="margin-left:20px"><a href="/write?wide=1">Atvērt platā skata režīmu (notiks lapas pārlāde!)</a></p>
+    <!-- END BLOCK : goto-wide-page -->
+    <!-- START BLOCK : goto-narrow-page -->
+    <p style="margin-left:20px"><a href="/write">Atvērt šaurā skata režīmu (notiks lapas pārlāde!)</a></p>
+    <!-- END BLOCK : goto-narrow-page -->
 
 	<form action="{page-url}" id="new-article-approve" class="form" method="post" enctype="multipart/form-data">
 		<fieldset>
@@ -61,6 +68,7 @@
 			<input type="hidden" name="ap-topic-author" value="{article-author}" />
 			<input type="hidden" name="ap-topic-date" value="{article-date}" />
 			<input type="hidden" name="ap-topic-ip" value="{article-ip}" />
+			<input type="hidden" name="ap-topic-wide" value="{article-wide}" />
 			<input type="submit" name="submit" value="Pievienot" class="button" />
 			<br />
 			<p style="text-align:right">[<a class="red" href="/write/delete/{article-id}">Dzēst</a>]</p>

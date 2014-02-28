@@ -9,6 +9,12 @@ if ($article) {
 	if ($article->lang != $lang) {
 		redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
 	}
+    
+    // runescape apakšprojektā eksistē raksti ar platām tabulām,
+    // tāpēc tādiem vienu kolonnu aizvācam
+    if ($article->is_wide && $lang == 9) {
+        $tpl_options = 'no-left';
+    }
 
 	$category = get_cat($article->category);
 
@@ -23,11 +29,13 @@ if ($article) {
 	}
 	$skip = $skip * $end;
 
+    // pārvietošanās pa komentāru lapām
 	if (isset($_GET['skip'])) {
 		$skip = (int) $_GET['skip'];
 		redirect('/read/' . $article->strid . '/com_page/' . $skip / $comments_per_page);
 	}
 
+    // raksta "pielīmēšana"
 	if ((im_mod() || im_cat_mod()) && isset($_GET['attach'])) {
 		$db->query("UPDATE pages SET attach = '1' WHERE id = '$article->id'");
 		redirect('/read/' . $article->strid);
@@ -38,6 +46,7 @@ if ($article) {
 		redirect('/read/' . $article->strid);
 	}
 
+    // komentāra pievienošana
 	if (!$article->closed && isset($_POST['comment-pid']) && !empty($_POST['commenttext']) && $auth->ok && $_POST['comment-pid'] == $article->id) {
 		if (!isset($_POST['checksrc']) or $_POST['checksrc'] != substr(md5($article->id . $remote_salt . $auth->id), 0, 8)) {
 			redirect();
@@ -62,6 +71,7 @@ if ($article) {
 	}
 
 
+    // atbildes komentāram pievienošana
 	if (!$article->closed && isset($_POST['rpl-comment']) && !empty($_POST['rpl-txt']) && $auth->ok && $_POST['rpl-page'] == $article->id) {
 		$comment = (int) $_POST['rpl-comment'];
 		$comment = $db->get_row("SELECT * FROM `comments` WHERE `id` = '$comment' AND `pid` = '$article->id' AND `parent` = 0");
@@ -91,6 +101,7 @@ if ($article) {
 		}
 	}
 
+    // komentāra rediģēšana
 	if ($auth->ok && isset($_POST['edit-comment-id'])) {
 		$edit_comment_id = (int) $_POST['edit-comment-id'];
 		$edit_comment_text = htmlpost2db($_POST['edit-comment-text']);
@@ -111,6 +122,7 @@ if ($article) {
 		redirect('/read/' . $article->strid);
 	}
 
+    // komentāra dzēšana
 	if (im_mod() && isset($_GET['delanon'])) {
 		$del = (int) $_GET['delanon'];
 		$comment = $db->get_row("SELECT * FROM comments WHERE id = '$del' AND `removed` = 0");
@@ -162,6 +174,7 @@ if ($article) {
 		exit;
 	}
 
+    // lietotāja paraksta dzēšana
 	if (im_mod()) {
 		if (isset($_GET['remove_signature'])) {
 			$remove_signature = (int) $_GET['remove_signature'];
@@ -173,6 +186,7 @@ if ($article) {
 		}
 	}
 
+    // redirekts
 	if (!empty($article->redirect)) {
 		header("HTTP/1.1 301 Moved Permanently");
 		redirect($article->redirect);
@@ -182,6 +196,7 @@ if ($article) {
 		$rating_users = array();
 	}
 
+    // raksta vērtēšana
 	if (isset($_POST['vote']) && !isset($_POST['questions'])) {
 
 		if (isset($_POST['vote']) && $auth->ok) {
@@ -213,6 +228,7 @@ if ($article) {
 		die('Jāielogojas lai balsotu');
 	}
 
+    // atsvaidzina raksta datus
 	if ($auth->ok) {
 		set_action('rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;');
 	}
@@ -231,8 +247,10 @@ if ($article) {
 		}
 	}
 
+    // priviliģēto līmeņu iespējas
 	if (!$category->mods_only || im_mod() || $auth->level == 5) {
 
+        // komentāru slēgšana/atslēgšana
 		if ($auth->ok && (($auth->id == $article->author && !$article->disable_close) || im_mod() || im_cat_mod())) {
 			if (isset($_POST['close-do'])) {
 				$closed = (bool) $_POST['close'];
@@ -246,6 +264,7 @@ if ($article) {
 			}
 		}
 
+        // autora komentāru atvēršanas bloķēšana
 		if ($auth->ok && (im_mod() || im_cat_mod())) {
 			if (isset($_POST['disable-close-do'])) {
 				$closed = (bool) $_POST['disable-close'];
@@ -279,6 +298,7 @@ if ($article) {
 			));
 		}
 
+        // komentāra rediģēšanas forma
 		if ($auth->ok && isset($_GET['editcom'])) {
 			$editcom = (int) $_GET['editcom'];
 			$comment = $db->get_row("SELECT text,id,author FROM comments WHERE id = '$editcom' AND pid = '$article->id' AND removed = 0 LIMIT 1");
@@ -300,13 +320,22 @@ if ($article) {
 
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana rakstam: &quot;' . $article->title . '&quot; | ' . $category->title;
+            
+        // raksta rediģēšanas forma
 		} elseif (isset($_GET['mode']) && $_GET['mode'] == 'edit' && can_edit_page($article)) {
+        
+            // runescape apakšprojektā iespējami platie raksti bez kreisās kolonnas
+            if ($article->is_wide && $lang == 9) {
+                $tpl_options = 'no-left';
+            }
 
+            // iesniegti $_POST dati
 			if (isset($_POST['edit-topic-title']) && isset($_POST['edit-topic-body']) && isset($_POST['edit-topic-id'])) {
 				$body = trim($_POST['edit-topic-body']);
 				$title = trim($_POST['edit-topic-title']);
 				$topicid = (int) $_POST['edit-topic-id'];
 				$topiccat = (int) $_POST['edit-category'];
+                $topicwide = (isset($_POST['edit-topic-wide'])) ? 1 : 0;
 				if ($body && $title && $topicid) {
 
 					$title = title2db($title);
@@ -351,12 +380,15 @@ if ($article) {
 						$lastmodu = $article->author;
 					}
 
-					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category) "
-							. "VALUES ('$article->id','" . time() . "','"
-							. sanitize($article->title) . "','"
-							. sanitize($article->text) . "','"
-							. $lastmodu . "','"
-							. $article->category . "')");
+					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category,is_wide) VALUES (
+                        '$article->id',
+                        '" . time() . "',
+                        '" . sanitize($article->title) . "',
+                        '" . sanitize($article->text) . "',
+                        '" . $lastmodu . "',
+                        '" . $article->category . "',
+                        '" . (int)$article->is_wide . "'
+                    )");
 
 					$db->query("UPDATE pages SET
 						text = ('$body'),
@@ -367,7 +399,8 @@ if ($article) {
 						category = ('$topiccat'),
 						edit_time = ('" . time() . "'),
 						edit_user = ('$auth->id'),
-						edit_times = edit_times+1
+						edit_times = edit_times+1,
+                        is_wide = $topicwide
 					WHERE id = '$topicid'");
 
 					update_stats($topiccat);
@@ -436,6 +469,7 @@ if ($article) {
 				}
 			}
 
+            // raksta rediģēšanas forma ar datiem
 			$tpl->newBlock('edit-article');
 			$tpl->assign(array(
 				'article-showtitle' => $article->title,
@@ -471,6 +505,12 @@ if ($article) {
 				));
 			}
 
+            if ($lang == 9) {
+                $tpl->newBlock('wide-page');
+                if ($article->is_wide) {
+                    $tpl->assign('wide-checked', ' checked="checked"');
+                }
+            }
 
 			if ($category->textid == 'filmas' && im_mod()) {
 
@@ -581,6 +621,8 @@ if ($article) {
 
 
 			$tpl->newBlock('tinymce-enabled');
+            
+        // raksta iepriekšējo versiju saraksts
 		} elseif (isset($_GET['mode']) && $_GET['mode'] == 'history' && can_edit_page($article)) {
 
 			$tpl->newBlock('page-history');
@@ -657,12 +699,14 @@ if ($article) {
 				'article-posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count
-			));
+			));            
 
 
 
 			$page_title = $article->title . ' - ' . $category->title;
 
+            
+            // filmu rakstiem specifiska informācija
 			if ($category->textid == 'filmas') {
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
 				if (!empty($avatar)) {

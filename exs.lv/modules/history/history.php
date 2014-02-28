@@ -10,6 +10,13 @@ if ($auth->ok) {
 		if ($record) {
 			$tpl->assignGlobal('htext', add_smile($record->text, 1));
 			$page_title = $record->title . ' - Arhīvs';
+            
+            // runescape apakšprojektā eksistē raksti ar platām tabulām,
+            // tāpēc tādiem vienu kolonnu aizvācam
+            if ($record->is_wide && $lang == 9) {
+                $tpl_options = 'no-left';
+            }
+    
 		} else {
 			die('Kļūdains pieprasījums!');
 		}

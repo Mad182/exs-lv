@@ -143,6 +143,13 @@
     /modules/runescape
     /modules/core/runescape    
     
+    /modules/read/read.php/.tpl
+        - iespējoti platie raksti
+    /modules/approve/approve.php/.tpl
+        - iespējota plato rakstu pievienošana
+    /modules/history/history.php
+        - platie raksti
+    
     /index.php
     /json_mb.php                         - ziņošanas podziņa
     visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)

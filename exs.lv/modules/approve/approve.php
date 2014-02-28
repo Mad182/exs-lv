@@ -3,14 +3,23 @@
 /**
  * Rakstu iesniegšana un iesniegto rakstu apstiprināšana
  */
+ 
+// raksta pievienošana datubāzē
 if (isset($_POST['new-topic-body'])) {
+
 	$body = trim($_POST['new-topic-body']);
 	$title = trim($_POST['new-topic-title']);
+    
 	if (empty($title)) {
 		$title = 'Nosaukums nav norādīts';
 	}
+    
 	$newcat = (int) $_POST['new-topic-category'];
+    
 	if ($body && $title) {
+    
+        // runescape apakšprojektā var pievienot platus rakstus bez kreisās kolonnas
+        $is_wide = (isset($_GET['wide']) && $lang == 9) ? 1 : 0;
 
 		$title = title2db($title);
 		$body = htmlpost2db($body);
@@ -20,8 +29,9 @@ if (isset($_POST['new-topic-body'])) {
 		$strid = mkslug_newpage($title);
 
 		if ($auth->ok && ($auth->level == 3 or $auth->level == 2 or $auth->level == 1)) {
-			$insert = $db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang)
-									VALUES ('$strid','$textid','$newcat','$body','$title','$auth->id','$date','$date','$auth->ip','$lang')");
+        
+			$insert = $db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang,is_wide)
+									VALUES ('$strid','$textid','$newcat','$body','$title','$auth->id','$date','$date','$auth->ip','$lang',$is_wide)");
 
 			$topicid = $db->insert_id;
 
@@ -62,10 +72,11 @@ if (isset($_POST['new-topic-body'])) {
 
 			update_karma($auth->id);
 			redirect('/read/' . $strid);
+            
 		} else {
 
-			$insert = $db->query("INSERT INTO approve (category,text,title,author,date,ip,lang)
-									VALUES ('$newcat','$body','$title','$auth->id','$date','$auth->ip','$lang')");
+			$insert = $db->query("INSERT INTO approve (category,text,title,author,date,ip,lang,is_wide)
+									VALUES ('$newcat','$body','$title','$auth->id','$date','$auth->ip','$lang',$is_wide)");
 			$topicid = $db->insert_id;
 
 			if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
@@ -105,6 +116,7 @@ if (isset($_POST['new-topic-body'])) {
 
 if ($auth->ok) {
 
+    // raksta dzēšana
 	if (im_mod() && isset($_GET['var1']) && $_GET['var1'] == 'delete') {
 		$delete = (int) $_GET['var2'];
 		$db->query("UPDATE `approve` SET `removed` = 1 WHERE `id` = '$delete'");
@@ -113,8 +125,9 @@ if ($auth->ok) {
 		redirect('/write/list');
 	}
 
+    // raksta apstiprināšanas forma
 	$tpl->newBlock('approve-body');
-	if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && ($auth->level == 1 or $auth->level == 2 || $auth->id == '115')) {
+	if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && ($auth->level == 1 or $auth->level == 2)) {
 
 		$tpl->assign('edit-active', 'active');
 
@@ -134,7 +147,8 @@ if ($auth->ok) {
 				$date = date('Y-m-d H:i:s');
 				$textid = date('YmdHis');
 				$strid = mkslug_newpage($title);
-				$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang) VALUES ('$strid','$textid','$category','$body','$title','$author','$added','$date','$ip','$lang')");
+                $make_wide = (isset($_POST['ap-topic-wide']) && (int)$_POST['ap-topic-wide'] == 1) ? 1 : 0;
+				$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang,is_wide) VALUES ('$strid','$textid','$category','$body','$title','$author','$added','$date','$ip','$lang',$make_wide)");
 				$topicid = $db->insert_id;
 				update_stats($category);
 
@@ -155,6 +169,12 @@ if ($auth->ok) {
 
 		$article = $db->get_row("SELECT * FROM approve WHERE id = '$edit' AND `removed` = 0");
 		$author = get_user($article->author);
+        
+        // runescape apakšprojektā eksistē raksti ar platām tabulām,
+        // tāpēc tādiem vienu kolonnu aizvācam
+        if ($article->is_wide && $lang == 9) {
+            $tpl_options = 'no-left';
+        }
 
 		$tpl->newBlock('approve-edit');
 
@@ -168,6 +188,7 @@ if ($auth->ok) {
 			'article-author-nick' => usercolor($author->nick, $author->level, false, $article->author),
 			'aurl' => '/user/' . $article->author,
 			'article-date' => $article->date,
+            'article-wide' => $article->is_wide
 		));
 
 		if (file_exists('modules/approve/av_l/' . $article->id . '.jpg')) {
@@ -193,6 +214,8 @@ if ($auth->ok) {
 		}
 
 		$tpl->newBlock('tinymce-enabled');
+        
+    // iesniegto rakstu saraksts
 	} elseif (isset($_GET['var1']) && $_GET['var1'] == 'list') {
 
 		$tpl->assign('edit-active', 'active');
@@ -224,9 +247,24 @@ if ($auth->ok) {
 				}
 			}
 		}
-	} else {
+        
+    // raksta pievienošanas forma
+	} else {       
+    
 		$tpl->assign('new-active', 'active');
 		$tpl->newBlock('approve-new');
+        
+        // runescape apakšprojektā eksistē platie raksti,
+        // kuriem nav kreisās kolonnas
+        if (isset($_GET['wide']) && $lang == 9) {
+            $tpl_options = 'no-left';
+        }
+        // izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
+        if (!isset($_GET['wide']) && $lang == 9) {
+            $tpl->newBlock('goto-wide-page');
+        } else if ($lang == 9) {
+            $tpl->newBlock('goto-narrow-page');
+        }
 
 		$categorys = $db->get_results("SELECT id,title FROM `cat` WHERE `isforum` = '0' AND (module = 'list' OR module = 'movies' OR module = 'index' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
 		if ($categorys) {

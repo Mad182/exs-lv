@@ -118,6 +118,9 @@
 				</optgroup>
 				<!-- END BLOCK : catgroup-->
 			</select></p>
+        <!-- START BLOCK : wide-page -->
+        <p><input type="checkbox" name="edit-topic-wide" {wide-checked} /> Vai raksts būs plats?</p>
+        <!-- END BLOCK : wide-page -->
 		<p><input type="hidden" name="edit-topic-id" value="{article-id}" /><input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" /></p>
 	</fieldset>
 </form>
