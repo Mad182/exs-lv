@@ -214,8 +214,26 @@ div pre {
 #flash-message.error {
     border: 1px solid #C5C3C3
 }
+/* raksta saturs */
 #full-story img {
     max-width:550px
+}
+#full-story ul li {
+    padding:2px 0 2px 20px
+}
+#full-story tr th {
+    border: 1px solid #999797;
+    padding: 3px 7px;
+    font-weight: bold;
+    text-align: center;
+    font-family: tahoma,verdana,Ubuntu,arial;
+}
+#full-story tr td {
+    border: 1px solid #C3C8CA;
+    border-collapse: collapse;
+    padding: 3px 7px;
+    vertical-align: middle;
+    text-align:center
 }
 
 
