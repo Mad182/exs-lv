@@ -18,45 +18,51 @@ if ($category->textid == 'kvestu-pamacibas') {
 	// jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
 	$tpl->assign('intro-image', '/bildes/runescape/intro/khazard.png');
 
-	// no datubāzes atlasa visas pievienotās kvestu sērijas un
-	// katrai no tām piesaistītos rakstus;
-	// pieprasījumā 99 un 100 ir attiecīgi kvestu kategoriju id
-	$series = $db->get_results("
-        SELECT
-            `rs_classes`.`id`           AS `series_id`,
-            `rs_classes`.`title`        AS `series_title`,
-            `rs_classes`.`img`          AS `series_img`,
-            IFNULL(`pages`.`category`, 0) AS `category_id`,
-            `pages`.`title`             AS `page_title`,
-            `pages`.`strid`             AS `page_strid`,
-            `rs_pages`.`is_placeholder` AS `is_placeholder`
-        FROM `rs_classes`
+	// pieprasījumā 99 un 100 ir attiecīgi kvestu kategoriju id    
+    $series = $db->get_results("
+        SELECT            
+            `pages`.`category`              AS `pages_category`,
+            `pages`.`title`                 AS `pages_title`,
+            `pages`.`strid`                 AS `pages_strid`,
+            
+            IFNULL(`rs_pages`.`id`, 0)      AS `rspages_id`,
+            `rs_pages`.`is_placeholder`     AS `rspages_placeholder`,
+            
+            IFNULL(`rs_classes`.`id`, 0)    AS `series_id`,
+            `rs_classes`.`title`            AS `series_title`,
+            `rs_classes`.`img`              AS `series_img`
+        FROM `pages`
             LEFT JOIN `rs_pages` ON (
-                `rs_classes`.`id`       = `rs_pages`.`class_id` AND
-                `rs_pages`.`deleted_by` = 0               
+                `pages`.`id`                = `rs_pages`.`page_id` AND
+                `rs_pages`.`deleted_by`     = 0 AND
+                `rs_pages`.`is_placeholder` = 0
             )
-            LEFT JOIN `pages` ON (
-                `rs_pages`.`is_placeholder` = 0 AND
-                `rs_pages`.`page_id`        = `pages`.`id` AND
-                `pages`.`category` IN (99, 100)
+            LEFT JOIN `rs_classes` ON (
+                `rs_pages`.`class_id`       = `rs_classes`.`id` AND
+                `rs_classes`.`category`     = 'series'
             )
         WHERE
-            `rs_classes`.`category` = 'series'
+            `pages`.`category` IN(99, 100) AND
+            `pages`.`lang` = '".(int)$lang."'
         ORDER BY
             ABS(`rs_classes`.`ordered`) ASC,
             ABS(`rs_classes`.`id`) ASC,
-            `rs_pages`.`ordered` ASC
+            `rs_pages`.`ordered` ASC,
+            `pages`.`title` ASC
     ");
+    
 	if ($series) {
 
 		$tpl->newBlock('quests-series');
-		$temp_series = 0; // ciklā fiksē ejošo sērijas id
-		$series_count = 0;
+        
+		$temp_series    = 0; // ciklā fiksē ejošo sērijas id
+		$series_count   = 0;
 
 		foreach ($series as $single) {
 
 			// izveido jaunu sēriju, ja nesakrīt pieglabātais id
 			if ($single->series_id != $temp_series) {
+            
 				$tpl->newBlock('single-series');
 				$tpl->assignAll($single);
 
@@ -73,14 +79,16 @@ if ($category->textid == 'kvestu-pamacibas') {
 			// ja tādi ir atrasti
             
 			// eksistējošs raksts `pages` tabulā
-			if ($single->category_id != '0') {
+			/*if ($single->category_id != '0') {
 
 				$quest_addr = '<a href="/read/' . $single->page_strid . '" title="' . $single->page_title . '">' . $single->page_title . '</a>';
 			}
 			// raksts vēl neeksistē, bet tam ir izveidots placeholderis @ `rs_pages`
 			elseif ($single->is_placeholder == 1) {
 				$quest_addr = '<a href="#">' . $single->page_title . '</a>';
-			}
+			}*/
+            
+            $quest_addr = '<a href="#">' . $single->pages_title . '</a>';
 
 			$tpl->newBlock('series-quest');
 			$tpl->assign('page_title', $quest_addr);
