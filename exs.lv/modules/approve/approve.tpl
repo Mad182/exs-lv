@@ -31,11 +31,25 @@
 			<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
 			<p>
 				<label for="new-topic-category">Lapas sadaļa:</label><br />
+                <!-- START BLOCK : rs-cat-selection -->
 				<select name="new-topic-category">
-					<!-- START BLOCK : select-category-->
-					<option value="{category-id}">{category-title}</option>
-					<!-- END BLOCK : select-category-->
+                    <!-- START BLOCK : rs-catgroup-->
+                    <optgroup label="{title}">
+                        <!-- START BLOCK : rs-category-->
+                        <option value="{category-id}">{category-title}</option>
+                        <!-- END BLOCK : rs-category-->
+                    </optgroup>
+                    <!-- END BLOCK : rs-catgroup-->
 				</select>
+                <!-- END BLOCK : rs-cat-selection -->
+                
+                <!-- START BLOCK : cat-selection -->
+				<select name="new-topic-category">
+                    <!-- START BLOCK : select-category-->
+                    <option value="{category-id}">{category-title}</option>
+                    <!-- END BLOCK : select-category-->
+				</select>
+                <!-- END BLOCK : cat-selection -->
 			</p>
 			<input type="submit" name="submit" value="Pievienot" class="button" />
 		</fieldset>
@@ -59,11 +73,26 @@
 			</p>
 			<p>
 				<label for="ap-topic-category">Sadaļa:</label><br />
+                
+                <!-- START BLOCK : rs-cat-app-selection -->
 				<select name="ap-topic-category">
-					<!-- START BLOCK : select-apcategory-->
-					<option value="{category-id}"{category-sel}>{category-title}</option>
-					<!-- END BLOCK : select-apcategory-->
+                    <!-- START BLOCK : rs-app-catgroup-->
+                    <optgroup label="{title}">
+                        <!-- START BLOCK : rs-app-category-->
+                        <option value="{category-id}"{category-sel}>{category-title}</option>
+                        <!-- END BLOCK : rs-app-category-->
+                    </optgroup>
+                    <!-- END BLOCK : rs-app-catgroup-->
 				</select>
+                <!-- END BLOCK : rs-cat-app-selection -->
+                
+                <!-- START BLOCK : cat-app-selection -->
+				<select name="ap-topic-category">
+                    <!-- START BLOCK : select-app-category-->
+                    <option value="{category-id}"{category-sel}>{category-title}</option>
+                    <!-- END BLOCK : select-app-category-->
+				</select>
+                <!-- END BLOCK : cat-app-selection -->
 			</p>
 			<input type="hidden" name="ap-topic-author" value="{article-author}" />
 			<input type="hidden" name="ap-topic-date" value="{article-date}" />

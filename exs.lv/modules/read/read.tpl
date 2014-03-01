@@ -117,6 +117,7 @@
 		<p><a class="thb-image"><img src="http://exs.lv/{img}" alt="Avatars" /></a></p>
 		<!-- END BLOCK : edit-article-av-->
 		<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
+        <!-- START BLOCK : edit-article-category -->
 		<p><label for="edit-category">Lapas sadaļa:</label><br />
 			<select name="edit-category">
 				<!-- START BLOCK : catgroup-->
@@ -127,6 +128,7 @@
 				</optgroup>
 				<!-- END BLOCK : catgroup-->
 			</select></p>
+        <!-- END BLOCK : edit-article-category -->
 		<p><input type="hidden" name="edit-topic-id" value="{article-id}" /><input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" /></p>
 	</fieldset>
 </form>

@@ -507,3 +507,49 @@ function get_quests_stats($force = false) {
 
 	return $stats;
 }
+
+
+/**
+ *  RuneScape kategoriju saraksts
+ *
+ *  Funkcija tiek izsaukta sadaļās, kurās iespējams mainīt raksta kategoriju.
+ *  (read, write, blogadmin)
+ */
+function get_rs_page_categories($current = null, $force = false) {
+	global $db, $m, $lang, $debug;
+
+	if ($debug || $force || !($cats = $m->get('cat_list_' . $lang))) {
+		$cats = $db->get_results("SELECT `lang`,`parent`,`module`,`persona`,`isblog`,`isforum`,`id`,`title`,`status` FROM `cat` WHERE `module` IN('list','index','rshelp') AND `lang` = '$lang' ORDER BY `title` ASC");
+		$m->set('cat_list_' . $lang, $cats, false, 900);
+	}
+
+	$return = array();
+	foreach ($cats as $cat) {
+
+        if ( in_array($cat->id, array(102, 4)) ) { // kvestu parent, prasmju parent
+            continue;
+        }
+ 
+        // pāris sadaļu kategorijas redzamas vienmēr
+        if ($cat->parent == 4) {
+            $return['Prasmes'][$cat->id] = $cat->title;
+        } elseif ($cat->parent == 1903) {
+            $return['Arhīvs'][$cat->id] = $cat->title;
+        } elseif ($cat->parent == 102) {
+            $return['Kvesti'][$cat->id] = $cat->title;
+        } elseif ($cat->module == 'rshelp') {
+            $return['Runescape'][$cat->id] = $cat->title;
+        } 
+        // blogi, atkritne un vēl atsevišķas sadaļas redzamas tikai moderatoriem
+        else if ( im_mod() || im_cat_mod($cat->id) ) {
+            if (!$cat->isblog && $cat->isforum) {
+                $return['Main'][$cat->id] = $cat->title . ' forums';
+            } elseif ($cat->isblog) {
+                $return['Blogi'][$cat->id] = $cat->title;
+            } else {
+                $return['Main'][$cat->id] = $cat->title;
+            }
+        }
+	}
+	return $return;
+}

@@ -332,7 +332,13 @@ if ($article) {
 				$body = trim($_POST['edit-topic-body']);
 				$title = trim($_POST['edit-topic-title']);
 				$topicid = (int) $_POST['edit-topic-id'];
-				$topiccat = (int) $_POST['edit-category'];
+                
+                // rs apakšprojektā mainīt sadaļu iespējams tikai moderatoriem
+                if (im_mod() || $lang != 9) {
+                    $topiccat = (int) $_POST['edit-category'];
+                } else {
+                    $topiccat = $article->category;
+                }
                 
                 
                 $topicwide = (isset($_GET['wide']) || $article->is_wide && !isset($_GET['narrow'])) ? 1 : 0;
@@ -480,7 +486,7 @@ if ($article) {
 			));
             
             // izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
-            if ( (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow'])) && $lang == 9) {
+            if ( $lang == 9 && (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow'])) ) {
                 $tpl->newBlock('goto-wide-page');
                 $tpl->assign('wide-page-url', str_replace(array('wide=1','narrow=1','\&','&amp;'),'',htmlspecialchars($_SERVER['REQUEST_URI'])));
             } else if ($lang == 9) {
@@ -488,25 +494,38 @@ if ($article) {
                 $tpl->assign('wide-page-url', str_replace(array('wide=1','narrow=1','\&','&amp;'),'',htmlspecialchars($_SERVER['REQUEST_URI'])));
             }
 
-			$cats = get_page_categories($article->category);
-			foreach ($cats as $ctitle => $catgroup) {
-				$tpl->newBlock('catgroup');
-				$tpl->assign(array(
-					'title' => $ctitle,
-				));
-				foreach ($catgroup as $key => $val) {
-					$tpl->newBlock('catitem');
-					$sel = '';
-					if ($key == $article->category) {
-						$sel = ' selected="selected"';
-					}
-					$tpl->assign(array(
-						'title' => $val,
-						'id' => $key,
-						'sel' => $sel,
-					));
-				}
-			}
+
+            // runescape projektā pie rediģēšanas sadaļu saraksts redzams tikai modiem
+            if (im_mod() || $lang != 9) {
+            
+                // atgriež sarakstu ar formā izvadāmajām kategorijām
+                if ($lang == 9) {
+                    $cats = get_rs_page_categories($article->category);
+                } else {
+                    $cats = get_page_categories($article->category);
+                }
+            
+                $tpl->newBlock('edit-article-category');
+            
+                foreach ($cats as $ctitle => $catgroup) {
+                
+                    $tpl->newBlock('catgroup');
+                    $tpl->assign('title', $ctitle);
+                    
+                    foreach ($catgroup as $key => $val) {
+                        $tpl->newBlock('catitem');
+                        $sel = '';
+                        if ($key == $article->category) {
+                            $sel = ' selected="selected"';
+                        }
+                        $tpl->assign(array(
+                            'title' => $val,
+                            'id' => $key,
+                            'sel' => $sel,
+                        ));
+                    }
+                }            
+            }
 
 			if ($article->avatar && $category->textid != 'filmas') {
 				$tpl->newBlock('edit-article-av');

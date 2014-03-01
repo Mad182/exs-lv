@@ -197,21 +197,51 @@ if ($auth->ok) {
 			));
 		}
 
-		$categorys = $db->get_results("SELECT id,title FROM `cat` WHERE (module = 'list' OR module = 'movies' OR module = 'index' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
-		if ($categorys) {
-			foreach ($categorys as $category_l) {
-				$tpl->newBlock('select-apcategory');
-				$sel = '';
-				if ($category_l->id == $article->category) {
-					$sel = ' selected="selected"';
-				}
-				$tpl->assign(array(
-					'category-title' => $category_l->title,
-					'category-id' => $category_l->id,
-					'category-sel' => $sel,
-				));
-			}
-		}
+        // runescape apakšprojekta kategoriju sadalījums
+        if ($lang == 9) {
+        
+            $rscats = get_rs_page_categories();
+            $tpl->newBlock('rs-cat-app-selection');
+            
+            foreach ($rscats as $ctitle => $catgroup) {
+            
+                $tpl->newBlock('rs-app-catgroup');
+                $tpl->assign('title', $ctitle);
+                
+                foreach ($catgroup as $key => $val) {
+                
+                    $category_sel = ($key == $article->category) ? ' selected="selected"' : '';
+                
+                    $tpl->newBlock('rs-app-category');  
+                    $tpl->assign(array(
+                        'category-title' => $val,
+                        'category-id'    => $key,
+                        'category-sel'   => $category_sel
+                    ));
+                }
+            }
+        }
+        // citu apakšprojektu kategoriju sadalījums
+        else {
+            $categorys = $db->get_results("SELECT id,title FROM `cat` WHERE (module = 'list' OR module = 'movies' OR module = 'index' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
+            if ($categorys) {
+                
+                $tpl->newBlock('cat-app-selection');
+            
+                foreach ($categorys as $category_l) {
+                    $tpl->newBlock('select-app-category');
+                    $sel = '';
+                    if ($category_l->id == $article->category) {
+                        $sel = ' selected="selected"';
+                    }
+                    $tpl->assign(array(
+                        'category-title' => $category_l->title,
+                        'category-id' => $category_l->id,
+                        'category-sel' => $sel
+                    ));
+                }
+            }
+        }
 
 		$tpl->newBlock('tinymce-enabled');
         
@@ -265,17 +295,42 @@ if ($auth->ok) {
         } else if ($lang == 9) {
             $tpl->newBlock('goto-narrow-page');
         }
+        
+        // runescape apakšprojekta kategoriju sadalījums
+        if ($lang == 9) {
+        
+            $rscats = get_rs_page_categories();
 
-		$categorys = $db->get_results("SELECT id,title FROM `cat` WHERE `isforum` = '0' AND (module = 'list' OR module = 'movies' OR module = 'index' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
-		if ($categorys) {
-			foreach ($categorys as $category_l) {
-				$tpl->newBlock('select-category');
-				$tpl->assign(array(
-					'category-title' => $category_l->title,
-					'category-id' => $category_l->id,
-				));
-			}
-		}
+            $tpl->newBlock('rs-cat-selection');
+            
+            foreach ($rscats as $ctitle => $catgroup) {
+            
+                $tpl->newBlock('rs-catgroup');
+                $tpl->assign('title', $ctitle);
+                
+                foreach ($catgroup as $key => $val) {
+                
+                    $tpl->newBlock('rs-category');  
+                    $tpl->assign(array(
+                        'category-title' => $val,
+                        'category-id'    => $key
+                    ));
+                }
+            }
+        }
+        else {
+            $categorys = $db->get_results("SELECT id,title FROM `cat` WHERE `isforum` = '0' AND (module = 'list' OR module = 'movies' OR module = 'index' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
+            if ($categorys) {
+                $tpl->newBlock('cat-selection');
+                foreach ($categorys as $category_l) {
+                    $tpl->newBlock('select-category');
+                    $tpl->assign(array(
+                        'category-title' => $category_l->title,
+                        'category-id' => $category_l->id,
+                    ));
+                }
+            }
+        }
 
 		$tpl->newBlock('tinymce-enabled');
 	}

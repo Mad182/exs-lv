@@ -144,6 +144,7 @@
     /modules/core/runescape    
     
     // plato rakstu iespēja
+    // rs kategoriju izvēlne
         /modules/read/read.php/.tpl
         /modules/approve/approve.php/.tpl
         /modules/history/history.php
