@@ -20,7 +20,7 @@
 function get_runescape_news($force = false) {
     global $m, $db, $auth, $rsbot_id, $lang;
 
-    $list_news  = 13;     // rakstu skaits, cik rādīt sarakstā
+    $list_news  = 12;     // rakstu skaits, cik rādīt sarakstā
 
     // memcache glabā tikai laiku, kad jaunumi pēdējoreiz saglabāti,
     // citādi tiek izmantots .html cache fails

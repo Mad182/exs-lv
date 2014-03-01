@@ -339,10 +339,18 @@ tinymce.init({
 		</div>
 		<!-- END BLOCK : friendssay-box-->
 
-        <!-- START BLOCK : runescape-facts-box -->
-		<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
-		<div class="box facts-box">{random-fact}</div>
-        <!-- END BLOCK : runescape-facts-box -->
+        <!-- START BLOCK : groups-l-list-->
+		<h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>
+		<div class="box new-groups">
+            <!-- START BLOCK : groups-l-node-->
+			<p>
+                <img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
+				<a href="{link}">{title}</a>
+			</p>
+            <!-- END BLOCK : groups-l-node-->
+			<a href="/grupas">Visas grupas &raquo;</a>
+		</div>
+		<!-- END BLOCK : groups-l-list-->
 
 	</div>
 	<!-- END BLOCK : main-layout-left-->
@@ -392,20 +400,12 @@ tinymce.init({
             <!-- END BLOCK : poll-questions-->
         </div>
         <!-- END BLOCK : poll-box-->
-
-        <!-- START BLOCK : groups-l-list-->
-		<h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>
-		<div class="box new-groups">
-            <!-- START BLOCK : groups-l-node-->
-			<p>
-                <img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
-				<a href="{link}">{title}</a>
-			</p>
-            <!-- END BLOCK : groups-l-node-->
-			<a href="/grupas">Visas grupas &raquo;</a>
-		</div>
-		<!-- END BLOCK : groups-l-list-->
-
+        
+        <!-- START BLOCK : runescape-facts-box -->
+		<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
+		<div class="box facts-box">{random-fact}</div>
+        <!-- END BLOCK : runescape-facts-box -->
+        
 	</div>
 	<!-- END BLOCK : main-layout-right-->
     </div>
