@@ -285,3 +285,7 @@ dl.list-attr dt {
 	color: #E6E4E4;
 	background: #313131;
 }
+
+#noindex-phone {
+	background: url('/bildes/number-dark.gif') no-repeat 0 0;
+}
