@@ -49,6 +49,15 @@
 	<form action="{page-url}" id="blog-edit" class="form" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Jauns raksts</legend>
+            
+            <!-- START BLOCK : goto-wide-page -->
+            <p style="margin-left:20px"><a href="/myblog?wide=1">Atvērt platā skata režīmu (notiks lapas pārlāde!)</a></p>
+            <!-- END BLOCK : goto-wide-page -->
+            
+            <!-- START BLOCK : goto-narrow-page -->
+            <p style="margin-left:20px"><a href="/myblog">Atvērt šaurā skata režīmu (notiks lapas pārlāde!)</a></p>
+            <!-- END BLOCK : goto-narrow-page -->
+            
 			<input type="hidden" name="token" value="{blog-check}" />
 			<p>
 				<label for="new-topic-title">Nosaukums:</label><br />
@@ -62,7 +71,7 @@
 			</p>
 			<p>
 				<input type="submit" name="submit" value="Pievienot" class="button primary" />
-			</p>
+			</p>            
 		</fieldset>
 	</form>
 	<!-- END BLOCK : blogadmin-new-->

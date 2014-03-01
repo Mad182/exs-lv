@@ -73,6 +73,15 @@
 <form action="{page-url}" class="form" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Labot rakstu</legend>
+        
+        <!-- START BLOCK : goto-wide-page -->
+        <p style="margin-left:20px"><a href="{wide-page-url}&amp;wide=1">Atvērt platā skata režīmu (notiks lapas pārlāde!)</a></p>
+        <!-- END BLOCK : goto-wide-page -->
+        
+        <!-- START BLOCK : goto-narrow-page -->
+        <p style="margin-left:20px"><a href="{wide-page-url}&amp;narrow=1">Atvērt šaurā skata režīmu (notiks lapas pārlāde!)</a></p>
+        <!-- END BLOCK : goto-narrow-page -->
+        
 		<p><label for="edit-topic-title">Nosaukums:</label><br /><input type="text" name="edit-topic-title" id="edit-topic-title" class="title" value="{article-title}" maxlength="64" /></p>
 
 		<!-- START BLOCK : edit-movie-data-->
@@ -118,9 +127,6 @@
 				</optgroup>
 				<!-- END BLOCK : catgroup-->
 			</select></p>
-        <!-- START BLOCK : wide-page -->
-        <p><input type="checkbox" name="edit-topic-wide" {wide-checked} /> Vai raksts būs plats?</p>
-        <!-- END BLOCK : wide-page -->
 		<p><input type="hidden" name="edit-topic-id" value="{article-id}" /><input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" /></p>
 	</fieldset>
 </form>

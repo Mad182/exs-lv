@@ -12,7 +12,7 @@ if ($article) {
     
     // runescape apakšprojektā eksistē raksti ar platām tabulām,
     // tāpēc tādiem vienu kolonnu aizvācam
-    if ($article->is_wide && $lang == 9) {
+    if ($lang == 9 && ($article->is_wide && !isset($_GET['narrow']) || isset($_GET['wide'])) ) {
         $tpl_options = 'no-left';
     }
 
@@ -321,13 +321,11 @@ if ($article) {
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana rakstam: &quot;' . $article->title . '&quot; | ' . $category->title;
             
-        // raksta rediģēšanas forma
-		} elseif (isset($_GET['mode']) && $_GET['mode'] == 'edit' && can_edit_page($article)) {
         
-            // runescape apakšprojektā iespējami platie raksti bez kreisās kolonnas
-            if ($article->is_wide && $lang == 9) {
-                $tpl_options = 'no-left';
-            }
+		} 
+        
+        // raksta rediģēšanas forma
+        elseif (isset($_GET['mode']) && $_GET['mode'] == 'edit' && can_edit_page($article)) {
 
             // iesniegti $_POST dati
 			if (isset($_POST['edit-topic-title']) && isset($_POST['edit-topic-body']) && isset($_POST['edit-topic-id'])) {
@@ -335,7 +333,10 @@ if ($article) {
 				$title = trim($_POST['edit-topic-title']);
 				$topicid = (int) $_POST['edit-topic-id'];
 				$topiccat = (int) $_POST['edit-category'];
-                $topicwide = (isset($_POST['edit-topic-wide'])) ? 1 : 0;
+                
+                
+                $topicwide = (isset($_GET['wide']) || $article->is_wide && !isset($_GET['narrow'])) ? 1 : 0;
+                
 				if ($body && $title && $topicid) {
 
 					$title = title2db($title);
@@ -477,6 +478,15 @@ if ($article) {
 				'article-text' => htmlspecialchars($article->text),
 				'article-id' => $article->id
 			));
+            
+            // izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
+            if ( (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow'])) && $lang == 9) {
+                $tpl->newBlock('goto-wide-page');
+                $tpl->assign('wide-page-url', str_replace(array('wide=1','narrow=1','\&','&amp;'),'',htmlspecialchars($_SERVER['REQUEST_URI'])));
+            } else if ($lang == 9) {
+                $tpl->newBlock('goto-narrow-page');
+                $tpl->assign('wide-page-url', str_replace(array('wide=1','narrow=1','\&','&amp;'),'',htmlspecialchars($_SERVER['REQUEST_URI'])));
+            }
 
 			$cats = get_page_categories($article->category);
 			foreach ($cats as $ctitle => $catgroup) {
@@ -504,13 +514,6 @@ if ($article) {
 					'img' => $article->avatar
 				));
 			}
-
-            if ($lang == 9) {
-                $tpl->newBlock('wide-page');
-                if ($article->is_wide) {
-                    $tpl->assign('wide-checked', ' checked="checked"');
-                }
-            }
 
 			if ($category->textid == 'filmas' && im_mod()) {
 

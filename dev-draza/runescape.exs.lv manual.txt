@@ -143,12 +143,11 @@
     /modules/runescape
     /modules/core/runescape    
     
-    /modules/read/read.php/.tpl
-        - iespējoti platie raksti
-    /modules/approve/approve.php/.tpl
-        - iespējota plato rakstu pievienošana
-    /modules/history/history.php
-        - platie raksti
+    // plato rakstu iespēja
+        /modules/read/read.php/.tpl
+        /modules/approve/approve.php/.tpl
+        /modules/history/history.php
+        /modules/blogadmin/blogadmin.php/.tpl
     
     /index.php
     /json_mb.php                         - ziņošanas podziņa

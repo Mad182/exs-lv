@@ -5,8 +5,12 @@
  */
 if (!$auth->ok) {
 	$tpl->newBlock('error-nologin');
-} elseif (!get_blog_by_user($auth->id)) {
+} 
 
+// pārbauda un, iespējams, piešķir lietotājam blogu
+elseif (!get_blog_by_user($auth->id)) {
+
+    // pārbaude pēc lietotāja karmas
 	if ($auth->karma >= 200) {
 		$nick = sanitize($auth->nick);
 		$db->query("INSERT INTO `cat` (textid,title,isblog,parent,lang) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$auth->id','110','$lang')");
@@ -17,6 +21,7 @@ if (!$auth->ok) {
 		header('Location: /' . strtolower(mkslug($nick)));
 	}
 
+    // lietotājs iegādājies blogu par exspunktiem
 	$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 	$pay = '';
 	if ($credit >= 5) {
@@ -32,16 +37,22 @@ if (!$auth->ok) {
 
 		$pay = '<p><a href="/?c=111&amp;act=submitpay"><strong>Izveidot blogu</strong></a></p>';
 	}
+    
+    
 	$tpl->newBlock('blogadmin-setup');
 	$tpl->assign(array(
 		'credit' => $credit,
 		'user-id' => $auth->id,
 		'pay' => $pay
 	));
-} else {
+} 
+
+// bloga administrēšanas forma
+else {
 	$inprofile = get_user($auth->id);
 	$tpl->newBlock('blogadmin-body');
 
+    // izveidots jauns raksts un saņemti $_POST dati
 	if (isset($_POST['new-topic-title']) && isset($_POST['new-topic-body'])) {
 
 		if (!isset($_POST['token']) or $_POST['token'] != md5('lol' . $category->title . $remote_salt . $auth->id)) {
@@ -51,6 +62,10 @@ if (!$auth->ok) {
 
 		$body = trim($_POST['new-topic-body']);
 		$title = trim($_POST['new-topic-title']);
+        
+        // pārbaude, vai raksts tika pievienots platā skata režīmā 
+        $topicwide = (isset($_GET['wide']) && $lang == 9) ? 1 : 0;
+        
 		if ($body && $title) {
 
 			$title = title2db($title);
@@ -59,7 +74,7 @@ if (!$auth->ok) {
 			$textid = date('YmdHis');
 			$strid = mkslug_newpage($title);
 
-			$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang) VALUES ('$strid','$textid','$blogid','$body','$title','$auth->id',NOW(),NOW(),'$auth->ip','$lang')");
+			$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang,is_wide) VALUES ('$strid','$textid','$blogid','$body','$title','$auth->id',NOW(),NOW(),'$auth->ip','$lang',$topicwide)");
 			$ins = $db->insert_id;
 			userlog($auth->id, 'Izveidoja rakstu blogā &quot;<a href="/read/' . $strid . '">' . $title . '</a>&quot;');
 			update_stats($blogid);
@@ -124,6 +139,7 @@ if (!$auth->ok) {
 		}
 	}
 
+    // saraksts ar lietotāja paša bloga rakstiem un iespēju tos labot
 	if (isset($_GET['act']) && $_GET['act'] == 'edit') {
 		$tpl->assign('edit-active', ' active');
 		$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `category` = '" . get_blog_by_user($auth->id) . "' ORDER BY date DESC");
@@ -137,10 +153,15 @@ if (!$auth->ok) {
 				));
 			}
 		}
-	} elseif (isset($_GET['act']) && $_GET['act'] == 'links') {
+	} 
+    
+    // atvērta saišu cilne
+    elseif (isset($_GET['act']) && $_GET['act'] == 'links') {
+    
 		$tpl->assign('links-active', ' active');
 		$tpl->newBlock('blogadmin-links');
 
+        // saites dzēšana
 		if (isset($_GET['delete'])) {
 			$delete = (int) $_GET['delete'];
 			$db->query("DELETE FROM sidelinks WHERE id = ('$delete') AND category = ('" . get_blog_by_user($auth->id) . "') LIMIT 1");
@@ -205,10 +226,25 @@ if (!$auth->ok) {
 				$tpl->newBlock('error-noedit');
 			}
 		}
-	} else {
+	} 
+    
+    // jauna bloga pievienošanas forma
+    else {
 		$tpl->assign('new-active', ' active');
 		$tpl->newBlock('tinymce-enabled');
 		$tpl->newBlock('blogadmin-new');
 		$tpl->assign('blog-check', md5('lol' . $category->title . $remote_salt . $auth->id));
+        
+        // runescape apakšprojektā eksistē platie raksti,
+        // kuriem nav kreisās kolonnas
+        if (isset($_GET['wide']) && $lang == 9) {
+            $tpl_options = 'no-left';
+        }
+        // izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
+        if (!isset($_GET['wide']) && $lang == 9) {
+            $tpl->newBlock('goto-wide-page');
+        } else if ($lang == 9) {
+            $tpl->newBlock('goto-narrow-page');
+        }       
 	}
 }
