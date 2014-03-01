@@ -339,7 +339,11 @@
 				<div class="infoblock">
 					<div class="inner">
 						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2012-{current-year}</p>
-						<p>E-pasts: info@exs.lv<br />Tālrunis: +371 28690182<br />Mājas lapu izstrāde un hostings.</p>
+						<p>
+							E-pasts: info@exs.lv<br />
+							Tālrunis: <span id="noindex-phone"></span><br />
+							Mājas lapu izstrāde un hostings.
+						</p>
 					</div>
 				</div>
 				<div class="c"></div>
@@ -349,11 +353,11 @@
 		<script>
 								(function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date()
-												;
+										;
 								a = s.createElement(o),
-												m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+										m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
 								})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-												ga('create', 'UA-4190387-9', 'coding.lv');
+										ga('create', 'UA-4190387-9', 'coding.lv');
 								ga('send', 'pageview');
 
 		</script>
