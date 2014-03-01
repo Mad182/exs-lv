@@ -185,7 +185,16 @@ tinymce.init({
                 <a href="http://www.rs07tracker.com/" rel="nofollow" target="_blank">RS07 Trakeris</a>&middot;
             </li>
             <li>
-                <a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a>
+                <a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a>&middot;
+            </li>
+            <li>
+                <a href="http://z8.invisionfree.com/lrc" rel="nofollow" target="_blank">LRC forums</a>&middot;
+            </li>
+            <li>
+                <a href="http://z13.invisionfree.com/Latvian_Archers" rel="nofollow" target="_blank">LA klans</a>&middot;
+            </li>
+            <li>
+                <a href="http://z10.invisionfree.com/Janis_Vimba/" rel="nofollow" target="_blank">JV forums</a>
             </li>
         </ul>
         <ul class="nav-right">
