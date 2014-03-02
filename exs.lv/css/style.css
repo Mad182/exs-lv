@@ -144,6 +144,18 @@ a.thb-image img {
 	min-height: 32px;
 	display: block;
 }
+.text-notice-red {
+	background: #FFCFCF  url('http://img.exs.lv/bildes/notice-red.png') no-repeat 5px 5px;
+	border: 1px solid #EE8989;
+	padding: 5px 8px 5px 45px;
+	margin: 10px 0;
+	color: #CE2C2C;
+	font-size: 90%;
+	height: auto !important;
+	height: 32px;
+	min-height: 32px;
+	display: block;
+}
 pre.prettyprint, code.prettyprint {
 	display: block;
 }
@@ -201,4 +213,18 @@ ul li {
 }
 .red {
 	color: #ef6000;
+}
+
+/* RuneScape projekta tinyMCE stili */
+.rs-image-left {
+    float:left;
+    margin:5px 7px 7px 0;
+    position:relative;
+    top:5px
+}
+.rs-image-right {
+    float:right;
+    margin:5px 0 7px 7px;
+    position:relative;
+    top:5px
 }

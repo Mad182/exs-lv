@@ -47,7 +47,10 @@ tinymce.init({
 			{title: 'Mods', inline: 'span', classes: 'mods'},
 			{title: 'Lejupielāde', inline: 'a', classes: 'download'},
 			{title: 'Koda bloks', block: 'pre', classes: 'prettyprint'},
-			{title: 'Brīdinājuma teksts', block: 'p', classes: 'text-notice'}
+			{title: 'Brīdinājuma teksts (oranžs)', block: 'p', classes: 'text-notice'},
+			{title: 'Brīdinājuma teksts (sarkans)', block: 'p', classes: 'text-notice-red'},
+			{title: 'Attēls (pa labi)', block: 'span', classes: 'rs-image-right'},
+			{title: 'Attēls (pa kreisi)', block: 'span', classes: 'rs-image-left'}
 		]
 });</script>
 <!-- END BLOCK : tinymce-enabled-->

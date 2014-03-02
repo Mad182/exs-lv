@@ -22,7 +22,8 @@
     9.6 Ģildes
  *
  *  10. Aptaujas
- *  11. Here be dragons!
+ *  11. tinyMCE uzliekamie stili
+ *  12. Here be dragons!
  */
 body {
     background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
@@ -1367,3 +1368,21 @@ table.quests-skill-table {
     color:#1F4FA3;
     margin-left:20px
 }
+
+/* 11. tinyMCE uzliekamie stili */
+.rs-image-left {
+    float:left;
+    margin:5px 7px 7px 0;
+    position:relative;
+    top:5px
+}
+.rs-image-right {
+    float:right;
+    margin:5px 0 7px 7px;
+    position:relative;
+    top:5px
+}
+.text-notice {
+	color: #CF651D
+}
+/* 12. Sadly no dragons here... */
