@@ -37,6 +37,14 @@
 		<p>
 			<label><input type="checkbox" name="resize" /> samazināt, lai liktu rakstā (540px)</label>
 		</p>
+        <!-- START BLOCK : rs-watermark-checkbox -->
+        <p>
+			<label><input type="checkbox" name="add-watermark" /> pievienot runescape.exs.lv ūdenszīmi</label>
+		</p>
+        <p>
+			<label><input type="checkbox" name="position-left" /> novietot ūdenszīmi kreisajā apakšējā stūrī (pēc noklusējuma - apakšējais labais stūris)</label>
+		</p>
+        <!-- END BLOCK : rs-watermark-checkbox -->
 		<p>
 			<input type="submit" class="button primary" value="Upload!" />
 		</p>
