@@ -29,7 +29,7 @@
 </div>
 <!-- END BLOCK : img-upload-success-->
 <form class="form" action="{page-url}" method="post" enctype="multipart/form-data">
-  <fieldset>
+	<fieldset>
 		<p>
 			<label>Attēls:</label><br />
 			<input type="file" name="new-image" />
@@ -48,11 +48,11 @@
 		<p>
 			<input type="submit" class="button primary" value="Upload!" />
 		</p>
-  </fieldset>
+	</fieldset>
 </form>
 <!-- START BLOCK : img-upload-item-->
 <div style="padding:5px">
-  <a class="lightbox" href="http://img.exs.lv/{path}/{file}"><img class="av" src="http://img.exs.lv/{path}/small/{file}" alt="" width="100" /></a>
+	<a class="lightbox" href="http://img.exs.lv/{path}/{file}"><img class="av" src="http://img.exs.lv/{path}/small/{file}" alt="" width="100" /></a>
 
 	<div style="font-size:80%">
 

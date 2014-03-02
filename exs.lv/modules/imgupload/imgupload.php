@@ -15,11 +15,11 @@ if ($auth->ok) {
 	}
 
 	$tpl->newBlock('img-upload');
-    
-    // runescape attēliem iespējams pievienot ūdenszīmi
-    if ($lang == 9) {
-        $tpl->newBlock('rs-watermark-checkbox');
-    }
+
+	// runescape attēliem iespējams pievienot ūdenszīmi
+	if ($lang == 9) {
+		$tpl->newBlock('rs-watermark-checkbox');
+	}
 
 	if (isset($_FILES['new-image'])) {
 
@@ -64,37 +64,35 @@ if ($auth->ok) {
 			$foo->image_ratio_no_zoom_in = true;
 			$foo->jpeg_quality = 97;
 		}
-        
-        // runescape.exs.lv ūdenszīme
-        if ($lang == 9 && isset($_POST['add-watermark'])) {
-        
-            // lielizmēra attēliem būs lielāka ūdenszīme
-            if ($foo->image_src_x > 1000 && $foo->image_x > 1000) {
-            
-                $foo->image_watermark = 'watermark-large.png';                
-                $foo->image_watermark_y = -10;
-                
-                if (isset($_POST['position-left'])) {
-                    $foo->image_watermark_x = 10;
-                } else {
-                    $foo->image_watermark_x = -10;
-                }
-                
-            // mazāka izmēra attēliem būs maza ūdenszīme
-            } else {
-            
-                $foo->image_watermark = 'watermark-mini.png';
-                $foo->image_watermark_y = -1;
-                
-                if (isset($_POST['position-left'])) {
-                    $foo->image_watermark_x = 7;                    
-                } else {
-                    $foo->image_watermark_x = -3;
-                }
-            }
-            
-            
-        }
+
+		// runescape.exs.lv ūdenszīme
+		if ($lang == 9 && isset($_POST['add-watermark'])) {
+
+			// lielizmēra attēliem būs lielāka ūdenszīme
+			if ($foo->image_src_x > 1000 && $foo->image_x > 1000) {
+
+				$foo->image_watermark = CORE_PATH . '/bildes/runescape/watermarks/watermark-large.png';
+				$foo->image_watermark_y = -10;
+
+				if (isset($_POST['position-left'])) {
+					$foo->image_watermark_x = 10;
+				} else {
+					$foo->image_watermark_x = -10;
+				}
+
+				// mazāka izmēra attēliem būs maza ūdenszīme
+			} else {
+
+				$foo->image_watermark = CORE_PATH . '/bildes/runescape/watermarks/watermark-mini.png';
+				$foo->image_watermark_y = -1;
+
+				if (isset($_POST['position-left'])) {
+					$foo->image_watermark_x = 7;
+				} else {
+					$foo->image_watermark_x = -3;
+				}
+			}
+		}
 
 		$foo->process(IMG_PATH . '/' . $path . '/');
 
@@ -114,8 +112,8 @@ if ($auth->ok) {
 				$foo->image_convert = 'jpg';
 				$foo->jpeg_quality = 96;
 			}
-            
-            $foo->image_watermark   = '';
+
+			$foo->image_watermark = '';
 
 			$foo->process(IMG_PATH . '/' . $path . '/small/');
 
