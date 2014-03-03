@@ -19,10 +19,10 @@ $sub_include = true;  // submoduļos ir pārbaude, vai šāds mainīgais definē
 
 // array_keys ir lapas textid
 $submodules = array(
-	'series'        => 'quests-series.php', // kvestu info pārvaldība
-	'rsph'          => 'placeholders.php',  // pamācību placeholderi
-	'areas'         => 'areas.php',         // ceļveži
-	'rsactivities'  => 'activities.php'     // aktivitātes
+	'series'        => 'quests-series.php' // kvestu info pārvaldība
+	//'rsph'          => 'placeholders.php',  // pamācību placeholderi
+	//'areas'         => 'areas.php',         // ceļveži
+	//'rsactivities'  => 'activities.php',    // aktivitātes,   
 );
 
 
@@ -39,4 +39,3 @@ if (isset($submodules[$category->textid])) {
 	set_flash('Kļūdaini norādīta adrese!');
 	redirect();
 }
-?>

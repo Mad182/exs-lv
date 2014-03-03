@@ -116,6 +116,8 @@ tinymce.init({
                 <!-- START BLOCK : quest-management-link -->
                 <li><a href="/series">Quests' series</a></li>
                 <li><a href="/atkritne">Dzēstie raksti</a></li>
+                <li><a href="/info-quests">quest info</a></li>
+                <li><a href="/info-distractions">distraction info</a></li>
                 <!-- END BLOCK : quest-management-link -->
                 <li>&nbsp;</li>
             </ul>

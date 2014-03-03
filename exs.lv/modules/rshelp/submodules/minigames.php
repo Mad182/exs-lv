@@ -1,7 +1,10 @@
 <?php
 
 /**
- * 	Publiskā RuneScape minispēļu un D&D sadaļa
+ * 	RuneScape minispēļu un D&D sadaļa
+ *
+ *  /minispeles
+ *  /distractions-diversions
  */
 !isset($sub_include) and die('No hacking, pls.');
 
@@ -60,6 +63,7 @@ if ($minigames) {
 
 		$game->page_date = date('d.m.Y', strtotime($game->page_date));
 		$game->page_title = str_replace('[D&amp;D] ', '', $game->page_title);
+        $game->rspage_p2p_only = 'Nē';
 
 		// ja izdevies atlasīt papildinfo par rakstu no `rs_pages` tabulas...
 		if ($game->rspage_old != '0') {

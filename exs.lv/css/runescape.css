@@ -12,6 +12,7 @@
  *  7. RuneScape jaunumi, sākumlapa
     8.0 RuneScape faktu pārvaldība
     8.1 Kvestu pārvaldība
+    8.2 rs-info sadaļu stili
  *
  *  9.0 RuneScape pamācību sadaļu stili
     9.1 RuneScape kvestu sēriju sadaļa
@@ -19,7 +20,7 @@
     9.3 minigames & D&D
     9.4 prasmju stilizējumi
     9.5 tasks/achievement diaries un ģildes
-    9.6 Ģildes
+    9.6 ģildes
  *
  *  10. Aptaujas
  *  11. tinyMCE uzliekamie stili
@@ -771,6 +772,13 @@ table.quests-skill-table {
   .quest-input {
     width:160px;  
   }
+  
+/* 8.2 rs-info sadaļu stili */
+.info-form textarea {
+    width:600px;
+    min-height:100px;
+    height:auto
+}
 
 /* 9. RuneScape pamācību sadaļu stili */
 .content-title {
