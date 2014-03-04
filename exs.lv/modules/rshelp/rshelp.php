@@ -33,9 +33,9 @@ $submodules = array(
 	'mini-kvesti'               => array('quests.php', 'quests.tpl'),
 	'minispeles'                => array('minigames.php', 'minigames.tpl'),
 	'distractions-diversions'   => array('minigames.php', 'minigames.tpl'),
-	'prasmes'   => array('skills.php', 'skills.tpl'),
-	'tasks'     => 'tasks.php',
-	'gildes'    => 'guilds.php'
+	'prasmes'                   => array('skills.php', 'skills.tpl'),
+	'tasks'                     => 'tasks.php',
+	'gildes'                    => 'guilds.php'
 );
 
 

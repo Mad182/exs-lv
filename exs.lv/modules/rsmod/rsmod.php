@@ -21,8 +21,6 @@ $sub_include = true;  // submoduļos ir pārbaude, vai šāds mainīgais definē
 $submodules = array(
 	'series'        => 'quests-series.php' // kvestu info pārvaldība
 	//'rsph'          => 'placeholders.php',  // pamācību placeholderi
-	//'areas'         => 'areas.php',         // ceļveži
-	//'rsactivities'  => 'activities.php',    // aktivitātes,   
 );
 
 

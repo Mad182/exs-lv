@@ -65,11 +65,11 @@
         
     // runescpape pamācību sadaļu administrēšanas apakšsadaļas
     765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
-        1875 series
-        1876 qskills
-        1877 rsph
-        1878 areas
-        1879 rsactivities
+        1875 series         - kvestu sērija un kvestiem nepieciešamo prasmju līmeņu pārvaldība
+        1877 rsph           - šobrīd neizmantota
+        
+    1916 info-quests
+    1917 info-distractions
 
         
     786  rs-skills 		(module = rsmod-skills)		- prasmju pamācību lappuses
@@ -137,6 +137,7 @@
     /modules/idb
     /modules/rs-events
     /modules/rs-facts
+    /modules/rs-info
     /modules/rshelp
     /modules/rsmod
     /modules/rsmod-skills
@@ -149,6 +150,11 @@
         /modules/approve/approve.php/.tpl
         /modules/history/history.php
         /modules/blogadmin/blogadmin.php/.tpl
+        
+    // ūdenszīme attēliem
+        /modules/imgupload.php/.tpl
+        /watermark-mini.png
+        /watermark-large.png
     
     /index.php
     /json_mb.php                         - ziņošanas podziņa
@@ -163,3 +169,12 @@
         get_latest_mbs() - ->show_rs
         
     
+    
+    
+/*
+    $data = $db->get_results("SELECT `rs_pages_backup`.`img`,`rs_pages_backup`.`location`,`rs_pages_backup`.`members_only`,`rs_pages_backup`.`description`,`rs_pages_backup`.`page_id`,`rs_pages_backup`.`large_img` FROM `rs_pages_backup` LEFT JOIN `rs_classes` ON `rs_pages_backup`.`class_id` = `rs_classes`.`id` WHERE is_placeholder = 0 AND deleted_by = 0 AND `rs_pages_backup`.`category_id` = 792");
+foreach ($data as $d) {
+    $db->query("UPDATE `rs_pages` SET `members_only` = '".$d->members_only."', `location` = '".sanitize($d->location)."', `description` = '".sanitize($d->description)."', `img` = '".$d->img."', `large_img` = '".$d->large_img."' WHERE `page_id` = '".$d->page_id."' ");
+}
+exit;
+*/
