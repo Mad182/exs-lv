@@ -14,6 +14,7 @@ $guilds = $db->get_results("
         `pages`.`strid`             AS `page_strid`,
         `pages`.`title`             AS `page_title`,
         `pages`.`author`            AS `page_author`,
+        `pages`.`category`          AS `page_category`,
         
         IFNULL(`rs_pages`.`id`,0)   AS `rspage_id`,
         `rs_pages`.`img`            AS `rspage_img`,
@@ -42,12 +43,21 @@ if ($guilds) {
 
 		// pārbauda, vai pieprasījumā izdevās atlasīt papildinformāciju
 		if ($page->rspage_id != '0') {
-			$page->rspage_is_old = ($page->rspage_is_old == 1) ?
+			/*$page->rspage_is_old = ($page->rspage_is_old == 1) ?
 					'<img class="guild-old" src="/bildes/runescape/info_yellow_sm.png" title="Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!" alt="">' :
-					'<img class="guild-old" src="/bildes/runescape/info_red_sm.png" title="Pamācību nepieciešams atjaunināt!" alt="">';
+					'<img class="guild-old" src="/bildes/runescape/info_red_sm.png" title="Pamācību nepieciešams atjaunināt!" alt="">';*/
 			$page->rspage_members_only = ($page->rspage_members_only == 1) ?
 					'<img class="guild-icon" src="/bildes/runescape/p2p_small.png" title="Maksājošo spēlētāju ģilde" alt="">' : '';
+            $page->rspage_is_old = '';
 		} else {
+            
+            $ins = $db->query("INSERT INTO `rs_pages` (page_id, category_id, created_by, created_at) VALUES(
+                ".(int)$page->page_id.",
+                ".(int)$page->page_category.",
+                ".(int)$auth->id.",
+                '".time()."'
+            )");
+        
 			$page->rspage_is_old = '';
 			$page->rspage_members_only = '';
 		}

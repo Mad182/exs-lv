@@ -34,7 +34,7 @@ $submodules = array(
 	'minispeles'                => array('minigames.php', 'minigames.tpl'),
 	'distractions-diversions'   => array('minigames.php', 'minigames.tpl'),
 	'prasmes'                   => array('skills.php', 'skills.tpl'),
-	'tasks'                     => 'tasks.php',
+	//'tasks'                     => 'tasks.php',
 	'gildes'                    => 'guilds.php'
 );
 
