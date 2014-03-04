@@ -1,7 +1,10 @@
 <?php
 
 /**
- * 	Pamācībām pievienojamā papildinformācija.
+ * 	Papildinformācijas pievienošana rakstiem.
+ *
+ *  Informācija pievienojama kvestiem, minispēlēm un 
+ *  D&D rakstiem tabulā `rs_pages`.
  */
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
@@ -13,8 +16,8 @@ $sub_include = true;
 
 // array_keys ir lapas textid
 $submodules = array(
-	'info-quests'    => 'quests.php',
-	'info-distractions'    => 'distractions.php'
+	'info-quests'           => 'quests.php',
+	'info-distractions'     => 'distractions.php'
 );
 
 

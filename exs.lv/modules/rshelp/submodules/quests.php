@@ -6,13 +6,21 @@
 !isset($sub_include) and die('No hacking, pls.');
 
 
+// izdrukā lapā ievadtekstu par kvestiem kā tādiem
+$tpl->newBlock('quests-intro');
+    
+    
+// moderatoriem redzama poga, kas aizved uz sadaļu, 
+// kur pamācību rakstiem var pievienot dažādu papildinformāciju
+if (im_mod()) {
+    $tpl->newBlock('quests-info-button');
+}
+
+
 /**
  *  Kvestu sākumlapa ar to sērijām un statistikas datiem.
  */
 if ($category->textid == 'kvestu-pamacibas') {
-
-	// izdrukā lapā ievadtekstu par kvestiem kā tādiem
-	$tpl->newBlock('quests-intro');
 
 	// bildes adrese nav ielikta templeitā,
 	// jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
@@ -115,8 +123,8 @@ if ($category->textid == 'kvestu-pamacibas') {
 			'special' => $stats['special'],
 			'grandmaster' => $stats['grandmaster'],
 			'master' => $stats['master'],
+			'experienced' => $stats['experienced'],
 			'intermediate' => $stats['intermediate'],
-			'easy' => $stats['easy'],
 			'novice' => $stats['novice']
 		));
 	}
@@ -140,9 +148,6 @@ if ($category->textid == 'kvestu-pamacibas') {
  *  Pay-to-play kvesti
  */ 
 elseif ($category->textid == 'p2p-kvesti') {
-
-	// izdrukā lapā ievadtekstu par kvestiem kā tādiem
-	$tpl->newBlock('quests-intro');
 
 	// bildes adrese nav ielikta templeitā,
 	// jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
@@ -227,9 +232,6 @@ elseif ($category->textid == 'p2p-kvesti') {
  *  Free-to-play- vai mini-kvesti
  */
 elseif ($category->textid == 'f2p-kvesti' || $category->textid == 'mini-kvesti') {
-
-	// izdrukā lapā ievadtekstu par kvestiem kā tādiem
-	$tpl->newBlock('quests-intro');
 
 	// atkarībā no atvērtās sadaļas pamaina intro attēlu
 	$intro_img = ($category->textid == 'mini-kvesti') ? 'citharede-sister.png' : 'hazelmere.png';

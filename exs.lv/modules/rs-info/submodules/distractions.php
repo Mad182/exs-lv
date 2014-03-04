@@ -57,7 +57,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
 
         $location       = (isset($_POST['location']) ? sanitize($_POST['location']) : '');
         $description    = (isset($_POST['description']) ? sanitize($_POST['description']) : '');
-        $members_only   = (isset($_POST['members_only`']) ? (int)$_POST['members_only'] : 0);
+        $members_only   = (isset($_POST['members_only']) ? (int)$_POST['members_only'] : 0);
         
         $db->query("
             UPDATE `rs_pages` SET
@@ -70,7 +70,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
                 `is_placeholder`    = 0                    
         ");
     
-        set_flash('Raksts "'.$guide->page_title.'", iespējams, atjaunots!');
+        set_flash('Raksts "'.$guide->page_title.'" atjaunots!');
         redirect('/'.$_GET['viewcat']);
     }
     
@@ -79,6 +79,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
 
         $tpl->newBlock('distraction-edit');
         $tpl->assignAll($guide);
+        
+        if ($guide->rspage_id != '0' && $guide->rspage_members_only == 1) {
+            $tpl->assign('selected-members', ' selected="selected"');
+        }
 
     }
 }
@@ -145,7 +149,7 @@ else {
                         '".time()."'
                     )");
                     
-                }                 
+                }   
             }
         }
     }

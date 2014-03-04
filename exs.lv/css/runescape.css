@@ -849,6 +849,13 @@ table.quests-skill-table {
     text-indent:10px;
     font-size:11px
 }
+.rs-button {
+    position:relative;
+    top:-6px;
+    text-shadow:0;
+    font-family:tahoma,verdana,Ubuntu,arial;
+    color:#4F6066
+}
 
 /* 9.1 RuneScape kvestu sēriju sadaļa */
 #intro-quests img {

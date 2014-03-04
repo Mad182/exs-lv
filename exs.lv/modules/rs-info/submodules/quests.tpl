@@ -1,19 +1,23 @@
 <!-- START BLOCK : quest-list -->
-<table class="rslist" style="margin-left:20px">
-    <tr>
-        <td colspan="8" style="font-weight:bold">{cat-title}</td>	
-    </tr>
+<table class="rslist" style="margin-left:10px;margin-top:25px">
+    <tr class="listhead">
+		<td colspan="2">{cat-title}</td>
+		<td style="width:100px;text-align:center">Autors</td>
+		<td style="width:100px">&nbsp;</td>	
+		<td style="width:150px">&nbsp;</td>	
+		<td style="width:50px">&nbsp;</td>	
+		<td style="width:30px">&nbsp;</td>	
+	</tr>
     <!-- START BLOCK : list-guide -->
     <tr>
-        <td><img src="/bildes/fugue-icons/blue-folder-open-document-text.png" alt=""></td>
-        <td style="width:222px"><a href="/read/{page_strid}">{page_title}</a></td>
-        <td>{user_nick}</td>
-        <td>{mq}</td>
-        <td>{rspage_level}</td>
-        <td style="color:#336699">{storyline}</td>
+        <td style="width:20px"><img src="/bildes/fugue-icons/blue-folder-open-document-text.png" alt=""></td>
+        <td style="width:200px"><a href="/read/{page_strid}">{page_title}</a></td>
+        <td style="text-align:center">{user_nick}</td>
+        <td style="text-align:center">{rspage_difficulty}</td>
+        <td style="color:#336699;text-align:center">{rsclasses_title}</td>
         <td>{page_id}</td>
         <td>
-            <a href="/{category-url}/edit/{page_id}"><img src="/bildes/runescape/page.png" title="Labot" alt=""></a>
+            <a href="/{category-url}/edit/{page_id}"><img src="/bildes/fugue-icons/pencil.png" title="Labot" alt=""></a>
         </td>
     </tr>
     <!-- END BLOCK : list-guide -->
@@ -22,28 +26,27 @@
 
 <!-- START BLOCK : quest-edit -->
 <p style="text-align:right">
-    <a href="/{category-url}">Uz sarakstu</a>
+    <a href="/{category-url}" class="button rs-button" style="top:0">Uz sarakstu</a>
 </p>
 <form class="form info-form" action="/{category-url}/edit/{page_id}" method="post">
     <fieldset>
     
         <legend><a href="/read/{page_strid}">{page_title}</a> informācija</legend>                 
-        <p><strong>Sākumpunkta atrašanās vieta:</strong></p>    
+        <p><strong>Sākumpunkta atrašanās vieta:</strong> (var izmantot nākotnē)</p>    
         <p><input type="text" style="width:400px" name="location" value="{rspage_location}"></p> 
         
-        <p><strong>Nepieciešamās prasmes:</strong></p>
+        <p><strong>Nepieciešamās prasmes:</strong> (var izmantot nākotnē)</p>
         <p>(formāts: 55 Agility, 77 Runecrafting, 111 Mining)</p>
         <textarea name="skills">{rspage_skills}</textarea>
         
-        <p><strong>Nepieciešamie kvesti:</strong></p>
+        <p><strong>Nepieciešamie kvesti:</strong> (var izmantot nākotnē)</p>
         <p class="info">(formāts: Lost Tribe, While Guthix Sleeps, Monkey Madness)</p>
         <textarea name="quests">{rspage_quests}</textarea>
         
-        <p><strong>Citas prasības:</strong></p>
+        <p><strong>Citas prasības:</strong> (var izmantot nākotnē)</p>
         <textarea name="extra">{rspage_extra}</textarea>   
         
-        <br><br>
-        
+        <p><strong>Izvēlnes:</strong></p>        
         <select name="difficulty">
             <option value="0">Nav atzīmēts</option>
             <!-- START BLOCK : edit-difficulty -->
@@ -65,12 +68,17 @@
             <!-- END BLOCK : edit-storyline -->
         </select>  
         
-        <p><strong>Pamācības apraksts:</strong></p>
+        <select name="members_only">
+            <option value="0"{selected-free}>Free</option>
+            <option value="1"{selected-members}>Members only</option>
+        </select>
+        
+        <p><strong>Apraksts:</strong> (minikvestiem/f2p kvestiem)</p>
         <textarea name="description">{rspage_description}</textarea>
         
-        <p><strong>Datums, kad ieviests spēlē:</strong></p>
-        <p>(formāts: dd/mm/yyyy)</p>
-        <input type="text" name="date" value="{rspage_date}"><br><br>   
+        <p style="display:none"><strong>Datums, kad ieviests spēlē:</strong></p>
+        <p style="display:none">(formāts: dd/mm/yyyy)</p>
+        <input style="display:none" type="text" name="date" value="{rspage_date}"><br><br>   
         
         <input class="button" type="submit" value="Apstiprināt">
         

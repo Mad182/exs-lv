@@ -40,7 +40,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
             `rs_pages`.`extra`          AS `rspage_extra`,
             `rs_pages`.`quests`         AS `rspage_quests`,
             `rs_pages`.`skills`         AS `rspage_skills`,
-            `rs_pages`.`location`       AS `rspage_location`
+            `rs_pages`.`location`       AS `rspage_location`,
+            `rs_pages`.`members_only`   AS `rspage_members_only`
         FROM `pages`
             LEFT JOIN `rs_pages` ON (
                 `pages`.`id`                = `rs_pages`.`page_id` AND
@@ -83,6 +84,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
         $difficulty   = (isset($_POST['difficulty']) ? (int)$_POST['difficulty'] : 0);
         $length       = (isset($_POST['length']) ? (int)$_POST['length'] : 0);
         $storyline    = (isset($_POST['storyline']) ? (int)$_POST['storyline'] : 0);
+        $members_only = (isset($_POST['members_only']) ? (int)$_POST['members_only'] : 0);
         $description  = (isset($_POST['description']) ? sanitize($_POST['description']) : '');
         $date         = (isset($_POST['date']) ? date('d/m/Y', strtotime($_POST['date'])) : '');
         
@@ -99,6 +101,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
                 `extra`         = '$extra',
                 `year`          = '$date',
                 `difficulty`    = '$difficulty',
+                `members_only`  = '$members_only',
                 `length`        = '$length',
                 `class_id`      = '$storyline',
                 `description`   = '$description',
@@ -118,6 +121,13 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
 
         $tpl->newBlock('quest-edit');
         $tpl->assignAll($guide);
+        
+        // free/members only
+        if ($guide->rspage_members_only == 1) {
+            $tpl->assign('selected-members', ' selected="selected"');
+        } else {
+            $tpl->assign('selected-free', ' selected="selected"');
+        }
         
         // izvēlne ar kvestu sērijām
         $storylines = $db->get_results("SELECT `id`, `title` FROM `rs_classes` WHERE `category` = 'series' ORDER BY `title` ASC");
@@ -157,6 +167,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
                 $tpl->assign('selected', ' selected="selected"');
             }
         }
+
     }
 }
 
@@ -174,9 +185,9 @@ else {
     );
 
     $levels = array(
-        1 => 'easy', 
-        2 => 'medium', 
-        3 => 'hard',
+        1 => '<span style="color:#16B937;">Novice</span>', 
+        2 => '<span style="color:#FA620D;">Intermediate</span>', 
+        3 => '<span style="color:#0EDAE2;">Experienced</span>',
         4 => '<span style="color:#2777aa;text-transform:uppercase;">Master</span>',
         5 => '<span style="color:#e93546;text-transform:uppercase;">Grandmaster</span>',
         6 => '<span style="color:#e453e2;text-transform:uppercase;">Special</span>'
@@ -197,7 +208,10 @@ else {
                 `users`.`nick`      AS `user_nick`,
                 
                 IFNULL(`rs_pages`.`id`, 0)  AS `rspage_id`,
-                `rs_pages`.`difficulty`     AS `rspage_difficulty`
+                `rs_pages`.`difficulty`     AS `rspage_difficulty`,
+                
+                IFNULL(`rs_classes`.`id`, 0)  AS `rsclasses_id`,
+                `rs_classes`.`title`          AS `rsclasses_title`
             FROM `pages`
                 JOIN `users` ON (
                     `pages`.`author`    = `users`.`id` AND
@@ -208,6 +222,7 @@ else {
                     `rs_pages`.`is_placeholder` = 0 AND
                     `rs_pages`.`deleted_by`     = 0
                 )
+                LEFT JOIN `rs_classes` ON `rs_pages`.`class_id` = `rs_classes`.`id`
             WHERE 
                 `pages`.`category`  = ".(int)$cat[0]." AND
                 `pages`.`lang`      = ".(int)$lang."
@@ -228,10 +243,12 @@ else {
                 
                 // kvesta sarežģītība
                 if ( $guide->rspage_id != '0' && in_array($guide->rspage_difficulty, $diffs) ) {
-                    $tpl->assign('level', $levels[$guide->rspage_difficulty]);
+                    $tpl->assign('rspage_difficulty', $levels[$guide->rspage_difficulty]);
                 } 
                 // ieraksta `rs_pages` tabulā
                 else if ($guide->rspage_id == '0') {
+                
+                    $tpl->assign('rspage_difficulty', '--');
                     
                     $ins = $db->query("INSERT INTO `rs_pages` (page_id, category_id, created_by, created_at) VALUES(
                         ".(int)$guide->page_id.",
@@ -240,7 +257,9 @@ else {
                         '".time()."'
                     )");
                     
-                }                 
+                } else {
+                    $tpl->assign('rspage_difficulty', '--');
+                }
             }
         }
 

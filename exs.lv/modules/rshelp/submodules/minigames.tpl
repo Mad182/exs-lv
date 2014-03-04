@@ -1,5 +1,10 @@
 <!-- START BLOCK : minigames --> 
-<h1 class="content-title">{top-content-title}</h1>
+<h1 class="content-title">
+    {top-content-title}
+    <!-- START BLOCK : mg-info-button -->
+    <span style="float:right"><a class="button rs-button" href="/info-distractions">Mainīt papildinformāciju</a></span>
+    <!-- END BLOCK : mg-info-button -->
+</h1>
 <!-- START BLOCK : minigames-intro -->
 <div class="rs-intro">
 	<img class="mg-logo" src="/bildes/runescape/intro/banner-imp.png">
@@ -33,7 +38,7 @@
 			<p>{rspage_description}</p>
     </td>	
 		<td class="mg-info">
-			<strong>P2P:</strong> {rspage_p2p_only}<br>
+			<strong>P2P:</strong> {members_only}<br>
 			<strong>Vieta:</strong> {rspage_location}<br>
 			<strong>Autors:</strong> {page_author}<br>
 			<strong>Datums:</strong> {page_date}

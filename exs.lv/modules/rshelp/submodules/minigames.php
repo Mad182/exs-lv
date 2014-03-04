@@ -15,6 +15,12 @@ $title_2 = ($cat_id == 160) ? 'minispēļu' : 'Distractions & Diversions';
 $tpl->newBlock('minigames');
 $tpl->assign('top-content-title', 'RuneScape ' . $title_1);
 
+// moderatoriem redzama poga, kas aizved uz sadaļu, 
+// kur pamācību rakstiem var pievienot dažādu papildinformāciju
+if (im_mod()) {
+    $tpl->newBlock('mg-info-button');
+}
+
 // augšējais sadaļas intro teksts
 if ($cat_id == 160) {
 	$tpl->newBlock('minigames-intro');
@@ -31,10 +37,10 @@ $minigames = $db->get_results("
         `pages`.`author`    AS `page_author`, 
         `pages`.`date`      AS `page_date`,
         `pages`.`avatar`,
-        IFNULL(`rs_pages`.`is_old`, 0)  AS `rspage_old`,
+        IFNULL(`rs_pages`.`id`, 0)      AS `rspage_id`,
         `rs_pages`.`description`        AS `rspage_description`,
         `rs_pages`.`location`           AS `rspage_location`,
-        `rs_pages`.`members_only`       AS `rspage_p2p_only`
+        `rs_pages`.`members_only`       AS `members_only`
     FROM `pages`
         LEFT JOIN `rs_pages` ON (
             `pages`.`id`                = `rs_pages`.`page_id` AND
@@ -58,29 +64,30 @@ if ($minigames) {
 
 		$game->avatar = ($game->avatar != '') ?
 				'<a href="/read/' . $game->page_strid . '">
-                <img class="mg-av" src="' . $img_server . '/' . $game->avatar . '" title="' . $game->page_title . '" alt="">
+                <img class="mg-av" src="http://img.exs.lv/' . $game->avatar . '" title="' . $game->page_title . '" alt="">
             </a>' : '';
 
 		$game->page_date = date('d.m.Y', strtotime($game->page_date));
 		$game->page_title = str_replace('[D&amp;D] ', '', $game->page_title);
-        $game->rspage_p2p_only = 'Nē';
 
 		// ja izdevies atlasīt papildinfo par rakstu no `rs_pages` tabulas...
-		if ($game->rspage_old != '0') {
+		if ($game->rspage_id != '0') {
 
-			$game->rspage_p2p_only = ($game->rspage_p2p_only == 1) ? 'Jā' : 'Nē';
+			if ($game->members_only == 1) {
+                $game->members_only = 'Jā';
+            } else $game->members_only = 'Nē';
 
-			$title = ($game->rspage_old == 1) ?
+			/*$title = ($game->rspage_old == 1) ?
 					'Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!' :
 					'Pamācību nepieciešams atjaunināt!';
 
 			$picture = ($game->rspage_old == 1) ? 'info_yellow_sm.png' : 'info_red_sm.png';
 			$picture = '<img class="mg-old" src="/bildes/runescape/' . $picture . '" title="' . $title . '" alt="">';
 
-			$tpl->assign('warning', $picture);
+			$tpl->assign('warning', $picture);*/
 		} else {
-			//$game->rspage_p2p_only = 'Nē';
-		}
+            $game->members_only = 'Nē';
+        }
 
 		$tpl->newBlock('minigame');
 		$tpl->assignAll($game);

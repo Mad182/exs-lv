@@ -1,5 +1,10 @@
 <!-- START BLOCK : quests-intro -->
-<h1 class="content-title no-margin">RuneScape kvesti un minikvesti</h1>
+<h1 class="content-title">
+    RuneScape kvesti un minikvesti
+    <!-- START BLOCK : quests-info-button -->
+    <span style="float:right"><a class="button rs-button" href="/info-quests">Mainīt papildinformāciju</a></span>
+    <!-- END BLOCK : quests-info-button -->
+</h1>
 <div id="intro-quests" class="rs-intro">
 	<img src="{intro-image}" title="" alt="">
 	<p>Neizskaidrojami atgadījumi, nodevīgas idejas un postoši spēki ir tie, kas valda pār Gīlinoras iemītnieku šķietami mierīgo ikdienu. 
@@ -58,8 +63,8 @@
 				<tr><td class="left">Īpašs (kā RFD):</td><td>{special}</td></tr>
 				<tr><td class="left">Grandmaster:</td><td>{grandmaster}</td></tr>
 				<tr><td class="left">Master:</td><td>{master}</td></tr>
+				<tr><td class="left">Experienced:</td><td>{experienced}</td></tr>
 				<tr><td class="left">Intermediate:</td><td>{intermediate}</td></tr>
-				<tr><td class="left">Easy:</td><td>{easy}</td></tr>
 				<tr><td class="left">Novice:</td><td>{novice}</td></tr>
 				<tr class="space"><td class="left">Minikvesti:</td><td>{miniquests}</td></tr>
 			</table>
