@@ -237,6 +237,21 @@ div pre {
     vertical-align: middle;
     text-align:center
 }
+.text-notice li {
+    background: none;
+    padding-left: 0;
+}
+#full-story table img {
+    vertical-align: middle;
+    margin:0 3px
+}
+#full-story table ul {
+    margin-left:0
+}
+#full-story table ul li {
+    background: none;
+    padding-left: 0;
+}
 
 
 /* 3. Jaunie lapas pamatbloki */
