@@ -105,7 +105,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
                 `length`        = '$length',
                 `class_id`      = '$storyline',
                 `description`   = '$description',
-                `date`          = '$date'
+                `date`          = '$date',
+                `updated_by`    = '".(int)$auth->id."',
+                `updated_at`    = '".time()."'
             WHERE 
                 `page_id`           = $guide->page_id AND
                 `deleted_by`        = 0 AND

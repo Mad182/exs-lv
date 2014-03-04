@@ -63,7 +63,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2']) ) {
             UPDATE `rs_pages` SET
                 `location`      = '$location',                
                 `description`   = '$description',
-                `members_only`  = '$members_only'
+                `members_only`  = '$members_only',
+                `updated_by`    = '".(int)$auth->id."',
+                `updated_at`    = '".time()."'
             WHERE 
                 `page_id`           = $guide->page_id AND
                 `deleted_by`        = 0 AND
