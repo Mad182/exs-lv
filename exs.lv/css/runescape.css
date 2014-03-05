@@ -1415,4 +1415,7 @@ table.quests-skill-table {
 .text-notice {
 	color: #CF651D
 }
+.simple-links a {
+    color:inherit
+}
 /* 12. Sadly no dragons here... */

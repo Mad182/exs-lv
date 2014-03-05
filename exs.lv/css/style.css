@@ -228,3 +228,6 @@ ul li {
     position:relative;
     top:5px
 }
+.simple-links a {
+    color:inherit
+}  
