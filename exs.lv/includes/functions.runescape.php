@@ -417,7 +417,7 @@ function update_rspages($update = true, $print = false) {
 
 	// atlasa rakstus, kuri ir iekš `pages`, bet nav iekš `rs_pages`;
 	// šos rakstus ieraksta arī `rs_pages`;
-	$select_new = $db->get_results("
+	/*$select_new = $db->get_results("
         SELECT
             `pages`.`id`            AS `pages_id`,
             `pages`.`category`      AS `pages_catid`,
@@ -462,7 +462,7 @@ function update_rspages($update = true, $print = false) {
 	}
 	if ($print) {
 		exit;
-	}
+	}*/
 }
 
 
@@ -498,8 +498,8 @@ function get_quests_stats($force = false) {
 		$stats['special'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 6 AND `category_id` IN (99,100) ");
 		$stats['grandmaster'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 5 AND `category_id` IN (99,100) ");
 		$stats['master'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 4 AND `category_id` IN (99,100) ");
-		$stats['intermediate'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 3 AND `category_id` IN (99,100) ");
-		$stats['easy'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 2 AND `category_id` IN (99,100) ");
+		$stats['experienced'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 3 AND `category_id` IN (99,100) ");
+		$stats['intermediate'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 2 AND `category_id` IN (99,100) ");
 		$stats['novice'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 1 AND `category_id` IN (99,100) ");
 
 		$m->set('quests-stats', $stats, false, 3600);
