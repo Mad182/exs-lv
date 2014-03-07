@@ -634,4 +634,3 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 }
 
 $pagepath = '';
-

@@ -73,15 +73,15 @@
 <form action="{page-url}" class="form" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Labot rakstu</legend>
-        
-        <!-- START BLOCK : goto-wide-page -->
-        <p style="margin-left:20px"><a href="{wide-page-url}&amp;wide=1">Atvērt platā skata režīmu (notiks lapas pārlāde!)</a></p>
-        <!-- END BLOCK : goto-wide-page -->
-        
-        <!-- START BLOCK : goto-narrow-page -->
-        <p style="margin-left:20px"><a href="{wide-page-url}&amp;narrow=1">Atvērt šaurā skata režīmu (notiks lapas pārlāde!)</a></p>
-        <!-- END BLOCK : goto-narrow-page -->
-        
+
+		<!-- START BLOCK : goto-wide-page -->
+		<p style="margin-left:20px"><a href="{wide-page-url}&amp;wide=1">Atvērt platā skata režīmu (notiks lapas pārlāde!)</a></p>
+		<!-- END BLOCK : goto-wide-page -->
+
+		<!-- START BLOCK : goto-narrow-page -->
+		<p style="margin-left:20px"><a href="{wide-page-url}&amp;narrow=1">Atvērt šaurā skata režīmu (notiks lapas pārlāde!)</a></p>
+		<!-- END BLOCK : goto-narrow-page -->
+
 		<p><label for="edit-topic-title">Nosaukums:</label><br /><input type="text" name="edit-topic-title" id="edit-topic-title" class="title" value="{article-title}" maxlength="64" /></p>
 
 		<!-- START BLOCK : edit-movie-data-->
@@ -117,7 +117,7 @@
 		<p><a class="thb-image"><img src="http://exs.lv/{img}" alt="Avatars" /></a></p>
 		<!-- END BLOCK : edit-article-av-->
 		<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
-        <!-- START BLOCK : edit-article-category -->
+		<!-- START BLOCK : edit-article-category -->
 		<p><label for="edit-category">Lapas sadaļa:</label><br />
 			<select name="edit-category">
 				<!-- START BLOCK : catgroup-->
@@ -128,7 +128,7 @@
 				</optgroup>
 				<!-- END BLOCK : catgroup-->
 			</select></p>
-        <!-- END BLOCK : edit-article-category -->
+		<!-- END BLOCK : edit-article-category -->
 		<p><input type="hidden" name="edit-topic-id" value="{article-id}" /><input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" /></p>
 	</fieldset>
 </form>
@@ -340,7 +340,7 @@
 		<p class="inf">
 			<!-- START BLOCK : comments-vote-->
 			<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
-			<!-- END BLOCK : comments-vote-->			
+			<!-- END BLOCK : comments-vote-->
 			<strong><a href="#c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong><span>{comment-date}</span>
 			<!-- START BLOCK : report-comment -->
 			<span class="report-button">
@@ -375,7 +375,7 @@
 							</span>
 							<!-- END BLOCK : report-reply -->
 							<!-- START BLOCK : reply-adm-->
-							[<a href="{delete}" class="confirm red" title="Dzēst">x</a>] | 
+							[<a href="{delete}" class="confirm red" title="Dzēst">x</a>] |
 							<a href="{edit}">labot</a>
 							<!-- END BLOCK : reply-adm-->
 
@@ -422,18 +422,6 @@
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : comments-block-->
 
-<!-- START BLOCK : no-comments-block-->
-<p>Pagaidām nav komentāru.</p>
-<!-- END BLOCK : no-comments-block-->
-<!-- START BLOCK : login-to-comment-->
-<p>Jāielogojas, lai pievienotu komentāru.</p>
-<!-- END BLOCK : login-to-comment-->
-<!-- START BLOCK : comment-added-->
-<p>Paldies, tavs komentārs pievienots!</p>
-<!-- END BLOCK : comment-added-->
-<!-- START BLOCK : no-flood-->
-<p>Tu jau komentēji pēdējais!</p>
-<!-- END BLOCK : no-flood-->
 <!-- START BLOCK : article-closed-->
 <p class="closed">Komentāri ir slēgti.</p>
 <!-- END BLOCK : article-closed-->
@@ -455,8 +443,8 @@
 </form>
 <!-- END BLOCK : add-comment-->
 
-<!-- START BLOCK : add-comment-anon-->
+<!-- START BLOCK : login-to-comment-->
 <div class="form">
 	<p class="notice">Ielogojies vai <a href="/register">izveido profilu</a>, lai komentētu!</p>
 </div>
-<!-- END BLOCK : add-comment-anon-->
+<!-- END BLOCK : login-to-comment-->

@@ -211,12 +211,6 @@
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<!-- END BLOCK : comments-block-->
 
-	<!-- START BLOCK : no-comments-block-->
-	<p>Pagaidām nav komentāru.</p>
-	<!-- END BLOCK : no-comments-block-->
-	<!-- START BLOCK : login-to-comment-->
-	<p>Jāielogojas, lai pievienotu komentāru.</p>
-	<!-- END BLOCK : login-to-comment-->
 	<!-- START BLOCK : article-closed-->
 	<p class="closed">Komentāri ir slēgti.</p>
 	<!-- END BLOCK : article-closed-->
@@ -233,30 +227,10 @@
 	</form>
 	<!-- END BLOCK : add-comment-->
 
-	<!-- START BLOCK : add-comment-anon-->
-	<form action="" class="form" method="post">
-		<fieldset>
-			<legend>Pievienot komentāru</legend>
-			<p>
-				<small>Varbūt tomēr vēlies ielogoties vai <a href="/register">reģistrēties</a>? Tas ir pavisam ātri ;)<br />Pievienojot komentāru, Tu piekrīti <a href="/read/lietosanas-noteikumi">lietošanas noteikumiem</a>.</small>
-			</p>
-			<p>
-				<label>Niks<span class="red">*</span></label><br />
-				<input type="text" class="text" name="comment-anon-nick" value="{comment-anon-nick}" id="comment-anon-nick" maxlength="14" /> <span id="userexists"></span>
-			</p>
-			<p>
-				<label>E-pasts (netiks parādīts)</label><br />
-				<input type="text" class="text" name="comment-anon-mail" value="{comment-anon-mail}" id="comment-anon-mail" />
-			</p>
-			<label>Teksts<span class="red">*</span></label><br />
-			<textarea style="height:90px" cols="45" rows="5" name="comment-anon-text" id="comment-anon-text" ></textarea>
-			<p>
-				<input type="hidden" name="comment-pid" value="{comment-pid}" />
-				<input type="hidden" name="checksrc" value="{comment-pid-check}" />
-				<input type="submit" class="button primary" value="Pievienot" />
-			</p>
-		</fieldset>
-	</form>
-	<!-- END BLOCK : add-comment-anon-->
+	<!-- START BLOCK : login-to-comment-->
+	<div class="form">
+		<p class="notice">Ielogojies vai <a href="/register">izveido profilu</a>, lai komentētu!</p>
+	</div>
+	<!-- END BLOCK : login-to-comment-->
 
 </div>

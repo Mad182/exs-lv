@@ -9,12 +9,12 @@ if ($article) {
 	if ($article->lang != $lang) {
 		redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
 	}
-    
-    // runescape apakšprojektā eksistē raksti ar platām tabulām,
-    // tāpēc tādiem vienu kolonnu aizvācam
-    if ($lang == 9 && ($article->is_wide && !isset($_GET['narrow']) || isset($_GET['wide'])) ) {
-        $tpl_options = 'no-left';
-    }
+
+	// runescape apakšprojektā eksistē raksti ar platām tabulām,
+	// tāpēc tādiem vienu kolonnu aizvācam
+	if ($lang == 9 && ($article->is_wide && !isset($_GET['narrow']) || isset($_GET['wide']))) {
+		$tpl_options = 'no-left';
+	}
 
 	$category = get_cat($article->category);
 
@@ -29,13 +29,13 @@ if ($article) {
 	}
 	$skip = $skip * $end;
 
-    // pārvietošanās pa komentāru lapām
+	// pārvietošanās pa komentāru lapām
 	if (isset($_GET['skip'])) {
 		$skip = (int) $_GET['skip'];
 		redirect('/read/' . $article->strid . '/com_page/' . $skip / $comments_per_page);
 	}
 
-    // raksta "pielīmēšana"
+	// raksta "pielīmēšana"
 	if ((im_mod() || im_cat_mod()) && isset($_GET['attach'])) {
 		$db->query("UPDATE pages SET attach = '1' WHERE id = '$article->id'");
 		redirect('/read/' . $article->strid);
@@ -46,7 +46,7 @@ if ($article) {
 		redirect('/read/' . $article->strid);
 	}
 
-    // komentāra pievienošana
+	// komentāra pievienošana
 	if (!$article->closed && isset($_POST['comment-pid']) && !empty($_POST['commenttext']) && $auth->ok && $_POST['comment-pid'] == $article->id) {
 		if (!isset($_POST['checksrc']) or $_POST['checksrc'] != substr(md5($article->id . $remote_salt . $auth->id), 0, 8)) {
 			redirect();
@@ -71,7 +71,7 @@ if ($article) {
 	}
 
 
-    // atbildes komentāram pievienošana
+	// atbildes komentāram pievienošana
 	if (!$article->closed && isset($_POST['rpl-comment']) && !empty($_POST['rpl-txt']) && $auth->ok && $_POST['rpl-page'] == $article->id) {
 		$comment = (int) $_POST['rpl-comment'];
 		$comment = $db->get_row("SELECT * FROM `comments` WHERE `id` = '$comment' AND `pid` = '$article->id' AND `parent` = 0");
@@ -101,7 +101,7 @@ if ($article) {
 		}
 	}
 
-    // komentāra rediģēšana
+	// komentāra rediģēšana
 	if ($auth->ok && isset($_POST['edit-comment-id'])) {
 		$edit_comment_id = (int) $_POST['edit-comment-id'];
 		$edit_comment_text = htmlpost2db($_POST['edit-comment-text']);
@@ -122,7 +122,7 @@ if ($article) {
 		redirect('/read/' . $article->strid);
 	}
 
-    // komentāra dzēšana
+	// komentāra dzēšana
 	if (im_mod() && isset($_GET['delanon'])) {
 		$del = (int) $_GET['delanon'];
 		$comment = $db->get_row("SELECT * FROM comments WHERE id = '$del' AND `removed` = 0");
@@ -174,7 +174,7 @@ if ($article) {
 		exit;
 	}
 
-    // lietotāja paraksta dzēšana
+	// lietotāja paraksta dzēšana
 	if (im_mod()) {
 		if (isset($_GET['remove_signature'])) {
 			$remove_signature = (int) $_GET['remove_signature'];
@@ -186,7 +186,7 @@ if ($article) {
 		}
 	}
 
-    // redirekts
+	// redirekts
 	if (!empty($article->redirect)) {
 		header("HTTP/1.1 301 Moved Permanently");
 		redirect($article->redirect);
@@ -196,7 +196,7 @@ if ($article) {
 		$rating_users = array();
 	}
 
-    // raksta vērtēšana
+	// raksta vērtēšana
 	if (isset($_POST['vote']) && !isset($_POST['questions'])) {
 
 		if (isset($_POST['vote']) && $auth->ok) {
@@ -228,7 +228,7 @@ if ($article) {
 		die('Jāielogojas lai balsotu');
 	}
 
-    // atsvaidzina raksta datus
+	// atsvaidzina raksta datus
 	if ($auth->ok) {
 		set_action('rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;');
 	}
@@ -247,10 +247,10 @@ if ($article) {
 		}
 	}
 
-    // priviliģēto līmeņu iespējas
+	// priviliģēto līmeņu iespējas
 	if (!$category->mods_only || im_mod() || $auth->level == 5) {
 
-        // komentāru slēgšana/atslēgšana
+		// komentāru slēgšana/atslēgšana
 		if ($auth->ok && (($auth->id == $article->author && !$article->disable_close) || im_mod() || im_cat_mod())) {
 			if (isset($_POST['close-do'])) {
 				$closed = (bool) $_POST['close'];
@@ -264,7 +264,7 @@ if ($article) {
 			}
 		}
 
-        // autora komentāru atvēršanas bloķēšana
+		// autora komentāru atvēršanas bloķēšana
 		if ($auth->ok && (im_mod() || im_cat_mod())) {
 			if (isset($_POST['disable-close-do'])) {
 				$closed = (bool) $_POST['disable-close'];
@@ -298,7 +298,7 @@ if ($article) {
 			));
 		}
 
-        // komentāra rediģēšanas forma
+		// komentāra rediģēšanas forma
 		if ($auth->ok && isset($_GET['editcom'])) {
 			$editcom = (int) $_GET['editcom'];
 			$comment = $db->get_row("SELECT text,id,author FROM comments WHERE id = '$editcom' AND pid = '$article->id' AND removed = 0 LIMIT 1");
@@ -320,29 +320,27 @@ if ($article) {
 
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana rakstam: &quot;' . $article->title . '&quot; | ' . $category->title;
-            
-        
-		} 
-        
-        // raksta rediģēšanas forma
-        elseif (isset($_GET['mode']) && $_GET['mode'] == 'edit' && can_edit_page($article)) {
+		}
 
-            // iesniegti $_POST dati
+		// raksta rediģēšanas forma
+		elseif (isset($_GET['mode']) && $_GET['mode'] == 'edit' && can_edit_page($article)) {
+
+			// iesniegti $_POST dati
 			if (isset($_POST['edit-topic-title']) && isset($_POST['edit-topic-body']) && isset($_POST['edit-topic-id'])) {
 				$body = trim($_POST['edit-topic-body']);
 				$title = trim($_POST['edit-topic-title']);
 				$topicid = (int) $_POST['edit-topic-id'];
-                
-                // rs apakšprojektā mainīt sadaļu iespējams tikai moderatoriem
-                if (im_mod() || $lang != 9) {
-                    $topiccat = (int) $_POST['edit-category'];
-                } else {
-                    $topiccat = $article->category;
-                }
-                
-                
-                $topicwide = (isset($_GET['wide']) || $article->is_wide && !isset($_GET['narrow'])) ? 1 : 0;
-                
+
+				// rs apakšprojektā mainīt sadaļu iespējams tikai moderatoriem
+				if (im_mod() || $lang != 9) {
+					$topiccat = (int) $_POST['edit-category'];
+				} else {
+					$topiccat = $article->category;
+				}
+
+
+				$topicwide = (isset($_GET['wide']) || $article->is_wide && !isset($_GET['narrow'])) ? 1 : 0;
+
 				if ($body && $title && $topicid) {
 
 					$title = title2db($title);
@@ -394,7 +392,7 @@ if ($article) {
                         '" . sanitize($article->text) . "',
                         '" . $lastmodu . "',
                         '" . $article->category . "',
-                        '" . (int)$article->is_wide . "'
+                        '" . (int) $article->is_wide . "'
                     )");
 
 					$db->query("UPDATE pages SET
@@ -476,7 +474,7 @@ if ($article) {
 				}
 			}
 
-            // raksta rediģēšanas forma ar datiem
+			// raksta rediģēšanas forma ar datiem
 			$tpl->newBlock('edit-article');
 			$tpl->assign(array(
 				'article-showtitle' => $article->title,
@@ -484,48 +482,48 @@ if ($article) {
 				'article-text' => htmlspecialchars($article->text),
 				'article-id' => $article->id
 			));
-            
-            // izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
-            if ( $lang == 9 && (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow'])) ) {
-                $tpl->newBlock('goto-wide-page');
-                $tpl->assign('wide-page-url', str_replace(array('wide=1','narrow=1','\&','&amp;'),'',htmlspecialchars($_SERVER['REQUEST_URI'])));
-            } else if ($lang == 9) {
-                $tpl->newBlock('goto-narrow-page');
-                $tpl->assign('wide-page-url', str_replace(array('wide=1','narrow=1','\&','&amp;'),'',htmlspecialchars($_SERVER['REQUEST_URI'])));
-            }
+
+			// izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
+			if ($lang == 9 && (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow']))) {
+				$tpl->newBlock('goto-wide-page');
+				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', htmlspecialchars($_SERVER['REQUEST_URI'])));
+			} else if ($lang == 9) {
+				$tpl->newBlock('goto-narrow-page');
+				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', htmlspecialchars($_SERVER['REQUEST_URI'])));
+			}
 
 
-            // runescape projektā pie rediģēšanas sadaļu saraksts redzams tikai modiem
-            if (im_mod() || $lang != 9) {
-            
-                // atgriež sarakstu ar formā izvadāmajām kategorijām
-                if ($lang == 9) {
-                    $cats = get_rs_page_categories($article->category);
-                } else {
-                    $cats = get_page_categories($article->category);
-                }
-            
-                $tpl->newBlock('edit-article-category');
-            
-                foreach ($cats as $ctitle => $catgroup) {
-                
-                    $tpl->newBlock('catgroup');
-                    $tpl->assign('title', $ctitle);
-                    
-                    foreach ($catgroup as $key => $val) {
-                        $tpl->newBlock('catitem');
-                        $sel = '';
-                        if ($key == $article->category) {
-                            $sel = ' selected="selected"';
-                        }
-                        $tpl->assign(array(
-                            'title' => $val,
-                            'id' => $key,
-                            'sel' => $sel,
-                        ));
-                    }
-                }            
-            }
+			// runescape projektā pie rediģēšanas sadaļu saraksts redzams tikai modiem
+			if (im_mod() || $lang != 9) {
+
+				// atgriež sarakstu ar formā izvadāmajām kategorijām
+				if ($lang == 9) {
+					$cats = get_rs_page_categories($article->category);
+				} else {
+					$cats = get_page_categories($article->category);
+				}
+
+				$tpl->newBlock('edit-article-category');
+
+				foreach ($cats as $ctitle => $catgroup) {
+
+					$tpl->newBlock('catgroup');
+					$tpl->assign('title', $ctitle);
+
+					foreach ($catgroup as $key => $val) {
+						$tpl->newBlock('catitem');
+						$sel = '';
+						if ($key == $article->category) {
+							$sel = ' selected="selected"';
+						}
+						$tpl->assign(array(
+							'title' => $val,
+							'id' => $key,
+							'sel' => $sel,
+						));
+					}
+				}
+			}
 
 			if ($article->avatar && $category->textid != 'filmas') {
 				$tpl->newBlock('edit-article-av');
@@ -643,8 +641,8 @@ if ($article) {
 
 
 			$tpl->newBlock('tinymce-enabled');
-            
-        // raksta iepriekšējo versiju saraksts
+
+			// raksta iepriekšējo versiju saraksts
 		} elseif (isset($_GET['mode']) && $_GET['mode'] == 'history' && can_edit_page($article)) {
 
 			$tpl->newBlock('page-history');
@@ -721,14 +719,14 @@ if ($article) {
 				'article-posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count
-			));            
+			));
 
 
 
 			$page_title = $article->title . ' - ' . $category->title;
 
-            
-            // filmu rakstiem specifiska informācija
+
+			// filmu rakstiem specifiska informācija
 			if ($category->textid == 'filmas') {
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
 				if (!empty($avatar)) {
@@ -1307,8 +1305,6 @@ if ($article) {
 						'pager-numeric' => $pager['pages']
 					));
 				}
-			} else {
-				$tpl->newBlock('no-comments-block');
 			}
 
 			unset($author);
@@ -1332,7 +1328,7 @@ if ($article) {
 
 				//login to comment
 			} else {
-				$tpl->newBlock('add-comment-anon');
+				$tpl->newBlock('login-to-comment');
 			}
 		}
 
