@@ -10,6 +10,10 @@ function can_edit_page($article) {
 	if (im_mod() || im_cat_mod()) {
 		return true;
 	}
+    
+    if (im_rs_mod() && $auth->id == $article->author) {
+        return true;
+    }
 
 	if ($category->isblog == $auth->id) {
 		return true;

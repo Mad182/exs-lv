@@ -248,7 +248,7 @@ if ($article) {
 	}
 
 	// priviliģēto līmeņu iespējas
-	if (!$category->mods_only || im_mod() || $auth->level == 5) {
+	if (!$category->mods_only || im_mod() || im_rs_mod() || $auth->level == 5) {
 
 		// komentāru slēgšana/atslēgšana
 		if ($auth->ok && (($auth->id == $article->author && !$article->disable_close) || im_mod() || im_cat_mod())) {
@@ -494,7 +494,7 @@ if ($article) {
 
 
 			// runescape projektā pie rediģēšanas sadaļu saraksts redzams tikai modiem
-			if (im_mod() || $lang != 9) {
+			if (im_rs_mod() || $lang != 9) {
 
 				// atgriež sarakstu ar formā izvadāmajām kategorijām
 				if ($lang == 9) {

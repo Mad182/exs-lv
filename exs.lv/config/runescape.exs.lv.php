@@ -3,6 +3,7 @@
 $tpl_options = '';
 $page_title = 'RuneScape lapele';
 
+
 //facebook login
 $fb_api_id = '382758518536064';
 $fb_api_key = 'e91d56558adbab5e25c97d3eb46cf2bb';
@@ -18,6 +19,7 @@ $polls_cat = 0;
 
 // bot user id 
 $rsbot_id = 33342;
+
 
 //auto login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {

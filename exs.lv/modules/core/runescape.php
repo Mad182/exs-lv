@@ -40,7 +40,7 @@ if ($auth->ok) {
 	$tpl->newBlock('auth-nav');
     
     // RS Mod izvēlne
-    if (im_mod()) {
+    if (im_rs_mod()) {
         $tpl->newBlock('rsmod-nav');
         if ($auth->id == 115) {
             $tpl->newBlock('quest-management-link');

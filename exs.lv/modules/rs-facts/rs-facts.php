@@ -31,8 +31,8 @@ if (isset($_GET['_'])) {
 }
 
 
-// 3217 - Mahjarrat
-if ( ! im_mod() ) {
+
+if ( ! im_rs_mod() ) {
     set_flash('Pieeja sadaļai liegta!');
 	redirect();
 }

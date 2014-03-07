@@ -338,6 +338,39 @@ function im_mod() {
 }
 
 /**
+ *  RuneScape satura rediģēšanas moderatoru pārbaude
+ *
+ *  Atlasa no datubāzes tos lietotājus,
+ *  kuriem ļauts rediģēt ar rs saistītu saturu un ir vēl pāris privilēģu.
+ *
+ *  @param  bool    norāde, vai atjaunot memcache vērtību ar moderatoru sarakstu
+ */
+function im_rs_mod($force = true) {
+    global $auth, $db, $m, $lang;
+    
+    if (!$auth->ok || $lang != 9)
+        return false;
+    
+    $rs_mods = array();
+    
+    if ($force || $m->get('runescape-mods') === false) {
+     
+        $get_mods = $db->get_col("SELECT `user_id` FROM `rs_mods` WHERE `is_deleted` = 0");
+        if ($get_mods) {
+            $rs_mods = $get_mods;
+        }
+     
+        // ik pēc 15 min pārbaudīs datubāzi,
+        // 15 min tādēļ, lai pēc izmaiņām tabulā ilgi nebūtu jāgaida
+        $m->set('runescape-mods', $rs_mods, false, 900);
+    }
+    
+    $rs_mods = $m->get('runescape-mods');
+    
+    return (im_mod() || in_array($auth->id, $rs_mods));
+}
+
+/**
  * Parbauda vai aktīvais lietotājs ir atvērtās sadaļas moderators
  */
 function im_cat_mod($id = null) {
