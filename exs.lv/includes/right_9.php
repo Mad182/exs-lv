@@ -29,3 +29,12 @@ $tpl->newBlock('runescape-facts-box');
 if ($rsfacts = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 ORDER BY RAND() LIMIT 1")) {
     $tpl->assign('random-fact', $rsfacts->text);
 }
+
+//lietotāja notifikācijas
+/*if ($auth->ok === true) {
+	if ($html = get_notify($auth->id)) {
+		$tpl->newBlock('notification-list');
+		$tpl->assign('out', $html);
+		unset($html);
+	}
+}*/

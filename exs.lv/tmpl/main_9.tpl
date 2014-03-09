@@ -232,7 +232,7 @@ tinymce.init({
             </li>
             <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
             <li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
-            <li{cat-sel-194}><a href="/tasks">Tasks</a></li>
+            <li{cat-sel-194}><a href="/tasks">Achievements</a></li>
             <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
             <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
             <li{cat-sel-1903}><a href="#">Arhīvs</a>
@@ -371,6 +371,14 @@ tinymce.init({
     
     <!-- START BLOCK : main-layout-right-->
 	<div id="right">
+    
+        <!-- START BLOCK : notification-list-->
+        <h3>Tavi notikumi</h3>
+        <div class="box">
+            {out}
+        </div>
+        <!-- END BLOCK : notification-list-->
+    
 		<h3>Jaunākais lapā</h3>
 		<div class="box">
             <ul class="tabs">
