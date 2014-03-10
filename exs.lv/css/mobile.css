@@ -934,6 +934,11 @@ a.activeTab, a.activeTab:hover {
 	height: 16px;
 }
 
+.tabs li a span.red {
+	padding:0;
+	float:none
+}
+
 .tabs li a {
 	color: gray;
 	border-top: 1px solid #E3E3E3;
