@@ -6,7 +6,7 @@
 			$('#data-' + userid).parent().removeClass('hide-userdata');
 			$.ajax({
 				type: "GET",
-				url: window.location.href + '?display=' + userid,
+				url: '/{category-url}?display=' + userid,
 				data: $(this).serialize(),
 				success: function(data) {
 					$('#data-' + userid).html(data);
@@ -41,4 +41,5 @@
 		} else
 			$(this).children('.toggle-text').text('vairāk');
 	});
+
 </script>
