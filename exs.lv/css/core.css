@@ -1857,6 +1857,7 @@ a.friend:hover {
 /* spotify embed */
 .embedly-embed {
 	margin: 8px auto;
+	display: block;
 }
 
 /* related topics (links in /read/page) */
