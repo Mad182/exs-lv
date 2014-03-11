@@ -200,28 +200,29 @@ html .banned {
 
 /* scroll-up poga */
 #scroll-up {
-    padding:10px;
-    width:24px;
-    height:24px;
-    border:2px solid #1B1C1D;
-    background:rgba(68, 76, 88, 0.87) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-    position:fixed;
-    z-index: 50;
-    right:50px;
-    bottom:-100px;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    opacity:0.6;
-    filter:alpha(opacity=60); /* For IE8 and earlier */
+	padding:10px;
+	width:24px;
+	height:24px;
+	border:2px solid #1B1C1D;
+	background:rgba(68, 76, 88, 0.87) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+	position:fixed;
+	z-index: 50;
+	right:50px;
+	bottom:-100px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	opacity:0.6;
+	filter:alpha(opacity=60); /* For IE8 and earlier */
 }
-    #scroll-up:hover {
-        cursor:pointer;
-        border:2px solid #212E3A;
-        background:rgba(62, 101, 158, 0.87) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-        opacity:1.0;
-        filter:alpha(opacity=100); /* For IE8 and earlier */
-    }
+
+#scroll-up:hover {
+	cursor:pointer;
+	border:2px solid #212E3A;
+	background:rgba(62, 101, 158, 0.87) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
 
 /* layout */
 #wrapper {
@@ -1286,7 +1287,7 @@ a.friend:hover {
 	border-bottom: 1px solid #99e600;
 }
 .mb-col li.rs-linkcode {
-    border-bottom: 1px solid #F1686D;
+	border-bottom: 1px solid #F1686D;
 }
 
 #miniblog-list li ul {
@@ -1853,6 +1854,12 @@ a.friend:hover {
 	color: #555;
 }
 
+/* spotify embed */
+.embedly-embed {
+	margin: 8px auto;
+}
+
+/* related topics (links in /read/page) */
 #related-topics {
 	margin: 10px 0 0;
 }
@@ -1874,6 +1881,7 @@ a.friend:hover {
 	padding: 12px 0 0;
 }
 
+/* april fools joke texts */
 .wtf-txt {
 	font-style: italic;
 }
@@ -3808,10 +3816,10 @@ li.view_more {
 #report-txtarea {
 	width:400px;
 	height:120px;
-    border:1px solid #DFD6D6
+	border:1px solid #DFD6D6
 }
 .report-error, .report-response, .report-response-good {
-	font-weight:700;	
+	font-weight:700;
 	margin:10px 20px;
 	line-height:1.3
 }
