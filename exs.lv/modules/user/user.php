@@ -254,6 +254,7 @@ if ($inprofile) {
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
 				'lastip' => $inprofile->lastip,
+				'user_agent' => $inprofile->user_agent,
 				'mail' => $inprofile->mail
 			));
 		}
