@@ -1,6 +1,6 @@
 <?php
 
-/** 	
+/**
  * 	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem.
  *
  * 	Moduļa adrese: 		exs.lv/checkform
@@ -59,16 +59,16 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 	//$content = '<div><a class="clue" href="javascript:void()" rel="/checkform/?email=115" title="">115</a><div class="c"></div></div><div class="c"></div>';
 	// pārbauda, vai lietotājam ir aktīvs bans
 	$ban = $db->get_row("
-		SELECT 
-			`banned`.`reason`,				
+		SELECT
+			`banned`.`reason`,
 			`banned`.`length`,
 			`banned`.`time`,
 			`users`.`nick`
-		FROM `banned` 
-			JOIN `users` ON `banned`.`author` = `users`.`id` 
-		WHERE 
-			`banned`.`user_id` = '$user->id' 
-		ORDER BY 
+		FROM `banned`
+			JOIN `users` ON `banned`.`author` = `users`.`id`
+		WHERE
+			`banned`.`user_id` = '$user->id'
+		ORDER BY
 			`banned`.`time` DESC
 	");
 	if ($ban && (time() - $ban->time < $ban->length)) {
@@ -79,18 +79,18 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 	// atrod pēdējās x lietotās IP
 	$all_ips = $db->get_results("
-		SELECT `visits`.`ip`, `visits`.`lastseen` FROM `visits` 
-		WHERE 
+		SELECT `visits`.`ip`, `visits`.`lastseen` FROM `visits`
+		WHERE
 			`visits`.`user_id` 	= '$user->id' AND
 			`visits`.`ip`		!= ''
-		ORDER BY 
-			`visits`.`lastseen` DESC 
+		ORDER BY
+			`visits`.`lastseen` DESC
 		LIMIT 0, $limit_total_ips
 	");
 
 	$unique_ips = $db->get_results("
 		SELECT `visits`.`ip`, MAX(`visits`.`lastseen`) AS `lasttime` FROM `visits`
-		WHERE 
+		WHERE
 			`visits`.`user_id` 	= '$user->id' AND
 			`visits`.`ip` 		!= ''
 		GROUP BY `visits`.`ip`
@@ -154,19 +154,19 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 		// moderatori neredzēs, ja viņu paroles sakritīs ar kāda cita profila parolēm
 		$pass = $db->get_results("
-			SELECT 
+			SELECT
 				`users`.`id`,
 				`users`.`nick`,
 				`users`.`lastseen`,
 				`users`.`level`,
 				`users`.`lastip`,
 				`users`.`mail`
-			FROM `users`				
-			WHERE 
-				`users`.`pwd` LIKE '%" . $user->pwd . "%' AND 
-				`users`.`id` != '" . $user->id . "' AND 
-				`users`.`id` != '" . $auth->id . "' 
-			ORDER BY `users`.`nick` ASC 
+			FROM `users`
+			WHERE
+				`users`.`pwd` LIKE '%" . $user->pwd . "%' AND
+				`users`.`id` != '" . $user->id . "' AND
+				`users`.`id` != '" . $auth->id . "'
+			ORDER BY `users`.`nick` ASC
 		");
 
 		if (!$pass) {
@@ -180,7 +180,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 			foreach ($pass as $pwd) {
 
-				// 	paslēps rindu, ja to profilu ar tādu pašu paroli ir daudz; 
+				// 	paslēps rindu, ja to profilu ar tādu pašu paroli ir daudz;
 				//	varēs apskatīt ar jQuery
 				if ($counter > $limit_shown_profiles)
 					$add_class = ' class="hide-rows"';
@@ -225,14 +225,14 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 	// atrod vecos lietotājvārdus
 	$usernames = $db->get_results("
-		SELECT 
+		SELECT
 			`user_id` AS `id`,
 			`nick`,
-			`changed` 
-		FROM `nick_history` 
-		WHERE 
-			`user_id` = '" . $user->id . "' 
-		ORDER BY 
+			`changed`
+		FROM `nick_history`
+		WHERE
+			`user_id` = '" . $user->id . "'
+		ORDER BY
 			`changed` DESC
 	");
 
@@ -263,7 +263,7 @@ $tpl->prepare();
 
 $tpl->newBlock('mod-cpanel');
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) || isset($_GET['ip'])) {
 
 	// meklēšana pēc lietotāja nika
 	if (isset($_POST['nick']) && strlen(trim($_POST['nick'])) >= 2) {
@@ -278,11 +278,11 @@ if (isset($_POST['submit'])) {
 		$tpl->assign('mail', trim($_POST['mail']));
 
 		// meklēšana pēc pēdējās lietotās IP adreses
-	} else if (isset($_POST['ip']) && strlen(trim($_POST['ip'])) >= 3) {
+	} else if (isset($_REQUEST['ip']) && strlen(trim($_REQUEST['ip'])) >= 3) {
 		$field = 'ip';
 		// šeit neder % zīme, jo POST['ip'] laukā to ir ļauts pielietot
-		$criteria = '`lastip` LIKE \'' . sanitize(trim($_POST['ip'])) . '\'';
-		$tpl->assign('ip', trim($_POST['ip']));
+		$criteria = '`lastip` LIKE \'' . sanitize(trim($_REQUEST['ip'])) . '\'';
+		$tpl->assign('ip', trim($_REQUEST['ip']));
 
 		// meklēšana pēc IP iekš 'visits'
 	} else if (isset($_POST['vip']) && strlen(trim($_POST['vip'])) >= 3) {
@@ -300,34 +300,34 @@ if (isset($_POST['submit'])) {
 	if ($field == 'vip') {
 
 		$results = $db->get_results("
-			SELECT 
-				`users`.`id`, 
-				`users`.`nick`, 
-				`users`.`level`, 
+			SELECT
+				`users`.`id`,
+				`users`.`nick`,
+				`users`.`level`,
 				`users`.`lastip`,
-				`users`.`mail`, 
-				`users`.`karma`, 
+				`users`.`mail`,
+				`users`.`karma`,
 				`users`.`date`,
-				`visits`.`ip` 
-			FROM `visits` 
-				JOIN `users` ON `visits`.`user_id` = `users`.`id` 
-			WHERE " . $criteria . " 
-			GROUP BY 
+				`visits`.`ip`
+			FROM `visits`
+				JOIN `users` ON `visits`.`user_id` = `users`.`id`
+			WHERE " . $criteria . "
+			GROUP BY
 				`user_id`
-			ORDER BY 
-				ABS(`users`.`level`) DESC, 
-				`users`.`nick` ASC 
+			ORDER BY
+				ABS(`users`.`level`) DESC,
+				`users`.`nick` ASC
 			LIMIT 0,50
 	");
 	} else {
 		$results = $db->get_results("
-			SELECT 
-				`id`,`nick`,`mail`,`lastip`,`karma`,`date`,`level` 
-			FROM `users` 
-			WHERE " . $criteria . " 
-			ORDER BY 
-				ABS(`level`) DESC, 
-				`nick` ASC 
+			SELECT
+				`id`,`nick`,`mail`,`lastip`,`karma`,`date`,`level`
+			FROM `users`
+			WHERE " . $criteria . "
+			ORDER BY
+				ABS(`level`) DESC,
+				`nick` ASC
 			LIMIT 0,50
 		");
 	}
@@ -347,7 +347,7 @@ if (isset($_POST['submit'])) {
 			if ($field == 'vip') {
 
 				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt.
-				// šeit % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP, 
+				// šeit % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP,
 				// kam beigās ir vēl viens/divi cipari.
 				$escaped = str_replace('%', '', trim($_POST['vip']));
 				$res->lastip = $res->ip;
@@ -362,9 +362,9 @@ if (isset($_POST['submit'])) {
 			} else if ($field == 'ip') {
 
 				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt.
-				// Šeit lai % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP, 
+				// Šeit lai % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP,
 				// kam beigās ir vēl viens/divi cipari.
-				$escaped = str_replace('%', '', trim($_POST['ip']));
+				$escaped = str_replace('%', '', trim($_REQUEST['ip']));
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
 			}
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
@@ -372,5 +372,4 @@ if (isset($_POST['submit'])) {
 			$tpl->assignAll($res);
 		}
 	}
-}	
-
+}

@@ -32,7 +32,7 @@
 		<dt>Vērtēja citus</dt><dd>{user-vote_total}x ({user-vote_others})</dd>
 		<!-- START BLOCK : user-modinfo-->
 		<dt><i>E-pasts</i></dt><dd><i>{mail}</i></dd>
-		<dt><i>Pēdējā IP</i></dt><dd><i>{lastip}</i></dd>
+		<dt><i>Pēdējā IP</i></dt><dd><i><a href="/checkform?ip={lastip}">{lastip}</a></i></dd>
 		<dt><i>UserAgent</i></dt><dd><i>{user_agent}</i></dd>
 		<!-- END BLOCK : user-modinfo-->
 	</dl>
