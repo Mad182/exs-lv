@@ -1,28 +1,28 @@
 <!-- START BLOCK : mod-cpanel -->
 <h1>Profilu meklēšana un pārbaude</h1>
 <div id="checkform">
-	<form id="search-nick" method="post">
+	<form id="search-nick" method="post" action="/{category-url}">
 		<p><strong>Lietotājvārds:</strong></p>
 		<p class="form-input-box">
 			<input type="text" name="nick" value="{nick}"> 
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<form id="search-mail" method="post">
+	<form id="search-mail" method="post" action="/{category-url}">
 		<p><strong>E-pasts:</strong></p>
 		<p class="form-input-box">
 			<input type="text" name="mail" value="{mail}"> 
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<form id="search-ip" method="post">
+	<form id="search-ip" method="post" action="/{category-url}">
 		<p><strong>Pēdējā lietotā IP:</strong></p>
 		<p class="form-input-box">
 			<input type="text" name="ip" value="{ip}">		
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
-	<form id="search-vip" method="post">
+	<form id="search-vip" method="post" action="/{category-url}">
 		<p><strong>Vispār lietota IP:</strong></p>
 		<p class="form-input-box">
 			<input type="text" name="vip" value="{vip}">		
