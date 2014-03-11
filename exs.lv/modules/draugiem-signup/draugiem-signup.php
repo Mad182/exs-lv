@@ -203,8 +203,18 @@ if ($session) {//Authentication successful
 				}
 			}
 		} else {
+
+			//perform login
 			$_SESSION['auth_id'] = $userinfo->id;
 			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+
+			//update lastseen datetime and user_agent field
+			$db->query("UPDATE `users` SET "
+					. "`user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', "
+					. "`lastseen` = NOW(), "
+					. "`lastip` = '" . $auth->ip . "' "
+					. "WHERE `id` = '$userinfo->id'");
+
 			update_karma($userinfo->id, true);
 			redirect();
 		}

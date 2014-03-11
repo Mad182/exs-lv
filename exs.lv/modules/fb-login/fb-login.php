@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Ielogošanās un profila izveide ar facebook autorizāciju
+ */
+//piešķir medaļu
 function fb_award($id) {
 	global $db, $m;
 	$existing_awards = get_awards_list($id);
@@ -207,8 +211,17 @@ if (!empty($me)) {
 				fb_award($userinfo->id);
 			}
 
+			//perform login
 			$_SESSION['auth_id'] = $userinfo->id;
 			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+
+			//update lastseen datetime and user_agent field
+			$db->query("UPDATE `users` SET "
+					. "`user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', "
+					. "`lastseen` = NOW(), "
+					. "`lastip` = '" . $auth->ip . "' "
+					. "WHERE `id` = '$userinfo->id'");
+
 			update_karma($userinfo->id, true);
 			redirect();
 		}
@@ -219,4 +232,3 @@ if (!empty($me)) {
 	  $tpl->newBlock('fb-login');
 	  $tpl->assign('link', $loginUrl); //Show the button */
 }
-
