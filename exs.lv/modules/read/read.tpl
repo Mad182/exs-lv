@@ -1,6 +1,10 @@
 <!-- START BLOCK : page-options-->
-<ul id="page-options"><li class="option-edit"><a href="?mode=edit">labot</a><li class="option-history"><a href="?mode=history">vēsture</a></ul>
+<ul id="page-options">
+	<li class="option-edit"><a href="?mode=edit">labot</a></li>
+	<li class="option-history"><a href="?mode=history">vēsture</a></li>
+</ul>
 <!-- END BLOCK : page-options-->
+
 <!-- START BLOCK : page-history-->
 <h1>Saglabātās versijas</h1>
 <!-- START BLOCK : page-history-list-->
@@ -12,6 +16,7 @@
 	<!-- END BLOCK : page-history-node-->
 </ol>
 <!-- END BLOCK : page-history-list-->
+
 <!-- END BLOCK : page-history-->
 <!-- START BLOCK : adm-edit-comment-->
 <h1>Komentāra labošana</h1>
@@ -29,10 +34,7 @@
 <!-- START BLOCK : edit-article-->
 <h1>Labot rakstu &quot;{article-showtitle}&quot;</h1>
 
-
 <!-- START BLOCK : edit-movie-->
-
-
 <form action="{page-url}" class="form" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Filmas avatars</legend>
@@ -40,20 +42,6 @@
 		<img src="http://img.exs.lv{url}" />
 		<div class="c"></div>
 		<!-- END BLOCK : edit-movie-avatar-->
-		<script type="text/javascript">
-			$(document).ready(function() {
-
-				$('.imgselect').live('click', function() {
-					$('.imgselect').removeClass('clicked');
-					$(this).addClass('clicked');
-					$('#avatar-url').val($(this).attr('href'));
-
-					return false;
-				});
-
-			});
-		</script>
-
 
 		<p><input type="submit" name="search-avatar" value="Meklēt automātiski" class="button primary" /></p>
 		<!-- START BLOCK : edit-movie-image-->

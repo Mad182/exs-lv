@@ -29,8 +29,8 @@ function msgrr() {
 		query_string = query_string + '&friendmb=true';
 	}
 
-	$.getJSON('/get/updates.json' + query_string, function (data) {
-		$.each(data, function (key, val) {
+	$.getJSON('/get/updates.json' + query_string, function(data) {
+		$.each(data, function(key, val) {
 			if (key == 'pm-count') {
 				if (val > 0) {
 					$('#new-msg').html('&nbsp;(<span class="r" style="display:inline">' + val + '</span>)');
@@ -63,9 +63,9 @@ function update_mb() {
 	mbRefreshId = '';
 	if (processing == false) {
 		processing = true;
-		$.getJSON('/json_mb.php?mbid=' + mbid + '&lastid=' + lastid + '&url=' + encodeURIComponent(c_url) + '&type=' + mbtype + '&et=' + edit_time, function (data) {
+		$.getJSON('/json_mb.php?mbid=' + mbid + '&lastid=' + lastid + '&url=' + encodeURIComponent(c_url) + '&type=' + mbtype + '&et=' + edit_time, function(data) {
 			var items = [];
-			$.each(data, function (key, val) {
+			$.each(data, function(key, val) {
 				if (key == 'id' && val != lastid) {
 					lastid = val;
 				}
@@ -74,8 +74,8 @@ function update_mb() {
 				}
 				if (key == 'comment') {
 					refreshlim = mb_refresh_limit;
-					$.each(val, function (ckey, cval) {
-						$.each(cval, function (rkey, rval) {
+					$.each(val, function(ckey, cval) {
+						$.each(cval, function(rkey, rval) {
 							$('<li>' + rval + '</li>').hide().appendTo('ul.responses-' + ckey).fadeIn('slow');
 						});
 					});
@@ -83,7 +83,7 @@ function update_mb() {
 				}
 				if (key == 'edits') {
 					refreshlim = mb_refresh_limit;
-					$.each(val, function (ckey, cval) {
+					$.each(val, function(ckey, cval) {
 						$('#m' + ckey).siblings('.response-content').children('.post-content').html(cval);
 					});
 				}
@@ -106,145 +106,145 @@ Tinycon.setOptions({
 	fallback: true
 });
 
-$(document).ready(function () {
-	
+$(document).ready(function() {
+
 	$.ajaxSetup({
 		cache: false
 	});
-	
+
 	/* 	tiek izsaukta, nospiežot uz lietotāja nosūdzēšanas podziņas;
-		atver fancybox ar pārkāpuma aprakstīšanas formu */
-	$('.report-user').live('click', function(e) {		
+	 atver fancybox ar pārkāpuma aprakstīšanas formu */
+	$('.report-user').live('click', function(e) {
 		$.ajax({
 			dataType: "json",
 			url: $(this).attr('href') + '?_=1',
-			success: function (data) {
-				$.fancybox( data.content );				
+			success: function(data) {
+				$.fancybox(data.content);
 			}
 		});
-		e.preventDefault();		
+		e.preventDefault();
 	});
-	
+
 	/*	izmanto moderatoru sadaļā, lai apskatītu iesniegtās sūdzības saturu */
 	$('.get-report-content').live('click', function(e) {
-		$.getJSON( ($(this).attr('href') + '?_=1'), function(response) {
-		  $.fancybox( response.message );
+		$.getJSON(($(this).attr('href') + '?_=1'), function(response) {
+			$.fancybox(response.message);
 		});
-		e.preventDefault();	
+		e.preventDefault();
 	});
-	
-	/* 	izmanto sūdzību iesūtīšanai; tiek izsaukta, 
-		nospiežot submit pogu fancybox logā */
+
+	/* 	izmanto sūdzību iesūtīšanai; tiek izsaukta,
+	 nospiežot submit pogu fancybox logā */
 	$('#report-form').live('submit', function() {
 		$.ajax({
 			type: "POST",
 			dataType: "json",
 			url: $('#report-form').attr('action') + '?_=1',
 			data: $('#report-form').serialize(),
-			success: function (response) {
-			
+			success: function(response) {
+
 				$('.report-response').html("");
-				
-				if ( response.state == 'success' ) {
+
+				if (response.state == 'success') {
 					$('#outer-form-block').toggle('slow');
-					$('.report-response').attr('class', 'report-response-good').html( response.content );
+					$('.report-response').attr('class', 'report-response-good').html(response.content);
 				}
 				else {
-					$('.report-response').html( response.content );
+					$('.report-response').html(response.content);
 				}
 			}
 		});
 		return false;
 	});
-	
+
 	/* aizver atvērto fancybox, nospiežot uz "Pārdomāju" podziņas */
-	$('.fancy-close').live('click',function() {
+	$('.fancy-close').live('click', function() {
 		$.fancybox.close();
 		return false;
 	});
-	
+
 	/* sūdzību arhivēšanas poga */
-	$('.report-archive').on('click', function(e) {		
+	$('.report-archive').on('click', function(e) {
 		var element = $(this);
-		$.getJSON( $(this).attr('href') + '?_=1', function(response) {
-			if (response.state == 'success') {				
+		$.getJSON($(this).attr('href') + '?_=1', function(response) {
+			if (response.state == 'success') {
 				$(element).attr('href', '#').text(response.text);
-                $(element).removeClass('primary').removeClass('report-archive').addClass('danger');
+				$(element).removeClass('primary').removeClass('report-archive').addClass('danger');
 			}
-		});	
+		});
 		e.preventDefault();
 	});
-	
+
 	/* ļauj apskatīt dzēsto miniblogu ierakstu bijušo saturu */
 	$('.deleted-content').live('click', function(e) {
-		$.get( ($(this).attr('href') ), function(response) {
-		  $.fancybox( response );
+		$.get(($(this).attr('href')), function(response) {
+			$.fancybox(response);
 		});
-		e.preventDefault();	
+		e.preventDefault();
 	});
-	
+
 	/* paslēpj/parāda iesniegto sūdzību paziņojumu pilno saturu */
 	$('.report-full').live('click', function(e) {
 		$content = $(this).siblings('.report-full-content').html();
-		$(this).parent().html( $content );
+		$(this).parent().html($content);
 		e.preventDefault();
 	});
-    
-    /* dzēš minibloga ierakstu bez lapas pārlādes */
-    $('.delete-fast').live('click', function(e) {
-        if ( confirm("Vai tiešām vēlies veikt šo darbību?") ) {
-            var link_element    = $(this);
-            var content_element = $(this).parent().siblings('.post-content');
-            $.getJSON( $(this).attr('href') + '?_=1', function(response) {
-                if (response.state == 'success') {        
-                    $(link_element).parent().after(response.message).show('slow');
-                    $(link_element).siblings('.post-button:not(.comment-permalink)').andSelf().hide();
-                    $(content_element).hide();
-                } else {
-                    alert('Darbība neizdevās!');
-                }
-            });
-        }
-        e.preventDefault();
-    });
-    
-    /* podziņa ātrai scrollošanai uz augšu */
-    var $elem = $('#scroll-up');
-    var is_visible = false;
-    $(window).scroll(function() {
-        if( $(this).scrollTop() > 200 && !is_visible ) {
-            $elem.stop().animate({bottom: '40px', opacity: 0.6}, 500);
-            is_visible = true;
-        }
-        else if ( $(this).scrollTop() <= 200 && is_visible ) {
-            $elem.stop().animate({bottom: '200px', opacity: 0}, 200, function() {
-                $(this).css({bottom:'-100px'});
-            });
-            is_visible = false;
-        }
-    });
-    $elem.click(function() {
-        $('html, body').stop().animate({scrollTop: 0}, 500, function() {
-            $elem.stop().animate({bottom: '500px', opacity: 0}, 200, function() {
-                $(this).css({bottom:'-100px'});
-            });
-        });        
-    });
-	
+
+	/* dzēš minibloga ierakstu bez lapas pārlādes */
+	$('.delete-fast').live('click', function(e) {
+		if (confirm("Vai tiešām vēlies veikt šo darbību?")) {
+			var link_element = $(this);
+			var content_element = $(this).parent().siblings('.post-content');
+			$.getJSON($(this).attr('href') + '?_=1', function(response) {
+				if (response.state == 'success') {
+					$(link_element).parent().after(response.message).show('slow');
+					$(link_element).siblings('.post-button:not(.comment-permalink)').andSelf().hide();
+					$(content_element).hide();
+				} else {
+					alert('Darbība neizdevās!');
+				}
+			});
+		}
+		e.preventDefault();
+	});
+
+	/* podziņa ātrai scrollošanai uz augšu */
+	var $elem = $('#scroll-up');
+	var is_visible = false;
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > 200 && !is_visible) {
+			$elem.stop().animate({bottom: '40px', opacity: 0.6}, 500);
+			is_visible = true;
+		}
+		else if ($(this).scrollTop() <= 200 && is_visible) {
+			$elem.stop().animate({bottom: '200px', opacity: 0}, 200, function() {
+				$(this).css({bottom: '-100px'});
+			});
+			is_visible = false;
+		}
+	});
+	$elem.click(function() {
+		$('html, body').stop().animate({scrollTop: 0}, 500, function() {
+			$elem.stop().animate({bottom: '500px', opacity: 0}, 200, function() {
+				$(this).css({bottom: '-100px'});
+			});
+		});
+	});
+
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);
 	}
 
-	$('.confirm').live('click', function () {
+	$('.confirm').live('click', function() {
 		return confirm("Vai tiešām vēlies veikt šo darbību?");
 	});
 
-	$('#new-tags').live('submit', function (e) {
+	$('#new-tags').live('submit', function(e) {
 		$.ajax({
 			type: "POST",
 			url: $(this).attr('action'),
 			data: $(this).serialize(),
-			success: function (data) {
+			success: function(data) {
 				if ($('#article-tags').length) {
 					$('#article-tags').append(data);
 				} else {
@@ -256,12 +256,12 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-	$('#new-tags-mb').live('submit', function (e) {
+	$('#new-tags-mb').live('submit', function(e) {
 		$.ajax({
 			type: "POST",
 			url: $(this).attr('action'),
 			data: $(this).serialize(),
-			success: function (data) {
+			success: function(data) {
 				if ($('#mb-tags').length) {
 					$('#mb-tags').append(data);
 				} else {
@@ -274,7 +274,7 @@ $(document).ready(function () {
 	});
 
 	//lapu slēgšana
-	$('.ajax-checkbox').live('change', function (e) {
+	$('.ajax-checkbox').live('change', function(e) {
 		$.ajax({
 			type: "POST",
 			url: $(this).parent().parent().parent().attr('action'),
@@ -284,7 +284,7 @@ $(document).ready(function () {
 	});
 
 	//mb komentara forma
-	$('#addresponse').live('submit', function (e) {
+	$('#addresponse').live('submit', function(e) {
 		clearInterval(mbRefreshId);
 		mbRefreshId = '';
 		$('#mbresponse-submit').hide();
@@ -293,7 +293,7 @@ $(document).ready(function () {
 			type: "POST",
 			url: $(this).attr('action') + '?postcomment=true',
 			data: $(this).serialize(),
-			success: function (data) {
+			success: function(data) {
 				$('#responseminiblog').val("");
 				update_mb();
 				$('#mbresponse-waiting').hide();
@@ -307,7 +307,7 @@ $(document).ready(function () {
 	});
 
 	//atbildet uz minibloga komentaru
-	$('.mb-reply-to').live('click', function (e) {
+	$('.mb-reply-to').live('click', function(e) {
 		if ($(this).siblings('.reply-ph').html() != '') {
 			return false;
 		}
@@ -320,7 +320,7 @@ $(document).ready(function () {
 	});
 
 	//atpakaļ uz atbildēšanu galvenajam mb
-	$('.mb-reply-main').live('click', function (e) {
+	$('.mb-reply-main').live('click', function(e) {
 		if ($('.reply-ph-default').html() != '') {
 			return false;
 		}
@@ -332,25 +332,25 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-	$('#random-fact .moar').live('click', function (e) {
+	$('#random-fact .moar').live('click', function(e) {
 		$('#random-fact').fadeTo(250, 0.5);
-		$('#random-fact').load($(this).attr('href'), function () {
+		$('#random-fact').load($(this).attr('href'), function() {
 			$(this).fadeTo(150, 1);
 		});
 		e.preventDefault();
 	});
 
-	$('#addpic').live('click', function (e) {
+	$('#addpic').live('click', function(e) {
 		$('#newpic').toggle(200);
 		e.preventDefault();
 	});
 
-	$('.spoiler-title').live('click', function (e) {
+	$('.spoiler-title').live('click', function(e) {
 		$(this).siblings('.spoiler-content').toggle(200);
 		e.preventDefault();
 	});
 
-	$('#debug-details-trigger').live('click', function (e) {
+	$('#debug-details-trigger').live('click', function(e) {
 		$('#debug-details').toggle(200);
 		e.preventDefault();
 	});
@@ -365,72 +365,72 @@ $(document).ready(function () {
 		'titleShow': false
 	});
 
-	$('.plus, .minus').live('click', function (e) {
+	$('.plus, .minus').live('click', function(e) {
 		var elem = $(this).parent();
 		elem.fadeTo(250, 0.5);
-		elem.load($(this).attr('href'), function () {
+		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(150, 1);
 		});
 		e.preventDefault();
 	});
 
-	$('.ajax-pager a').live('click', function (e) {
+	$('.ajax-pager a').live('click', function(e) {
 		var elem = $(this).parent().parent();
 		elem.fadeTo(250, 0.5);
-		elem.load($(this).attr('href'), function () {
+		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(150, 1);
 		});
 		e.preventDefault();
 	});
 
-	$('.jaunk-queue-ajax').live('click', function (e) {
+	$('.jaunk-queue-ajax').live('click', function(e) {
 		var elem = $(this).parent().parent();
 		elem.fadeTo(250, 0.3);
-		elem.load($(this).attr('href'), function () {
+		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(250, 0.3);
 		});
 		e.preventDefault();
 	});
 
 	$('.mb-rater, .mb-icon').hover(
-		function () {
-			$(this).fadeTo(150, 1)
-		},
-		function () {
-			$(this).fadeTo(150, 0.45)
-		}
+					function() {
+						$(this).fadeTo(150, 1)
+					},
+					function() {
+						$(this).fadeTo(150, 0.45)
+					}
 	);
 
 	$('.mb-rater, .mb-icon').fadeTo(150, 0.45);
 
 	$('#ucl li a').hover(
-		function () {
-			$('#ucd').html($(this).html())
-		},
-		function () {
-			$('#ucd').html('')
-		}
+					function() {
+						$('#ucd').html($(this).html())
+					},
+					function() {
+						$('#ucd').html('')
+					}
 	);
 
 	/* pārbauda vai lietotājs eksistē, piemēram pie reģistrācijas vai nika maiņas */
-	$('.usercheck').live('change', function () {
+	$('.usercheck').live('change', function() {
 		$('.usercheck-response').load('/userexists/?user=' + encodeURIComponent($(this).val()));
 	});
 
 	/* flash message (brīdinājumu un paziņojumu) aizvēršana */
-	$('#close-flash-message').live('click', function (e) {
+	$('#close-flash-message').live('click', function(e) {
 		$('#flash-message').fadeOut(500);
 		e.preventDefault();
 	});
 
-	$('.tabs li a.ajax').live('click', function (e) {
+	$('.tabs li a.ajax').live('click', function(e) {
 
 		var clicked = $(this);
 
 		var tabs = {
-		    'last-sidebar-tab' : {tab1: 'pages', tab2: 'gallery'},
-		    'last-facts-tab' : {tab1: 'fact-all', tab2: 'fact-rs'},
-		    'last-mbs-tab' : {tab1: 'all', tab2: 'friends'}
+			'last-sidebar-tab': {tab1: 'pages', tab2: 'gallery'},
+			'last-facts-tab': {tab1: 'fact-all', tab2: 'fact-rs'},
+			'last-mbs-tab': {tab1: 'all', tab2: 'friends'}
 		};
 
 		$.each(tabs, function(position, values) {
@@ -446,7 +446,7 @@ $(document).ready(function () {
 
 		var elem = clicked.parent().parent().siblings('.ajaxbox');
 		elem.fadeTo(250, 0.6);
-		elem.load(clicked.attr('href'), function () {
+		elem.load(clicked.attr('href'), function() {
 			elem.fadeTo(150, 1);
 		});
 		clicked.parent().siblings().children('a').removeClass('active');
@@ -454,10 +454,10 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-	$('.movie-liker a').live('click', function (e) {
+	$('.movie-liker a').live('click', function(e) {
 		var elem = $(this).parent();
 		elem.fadeTo(250, 0.3);
-		elem.load($(this).attr('href'), function () {
+		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(250, 0.3);
 		});
 		e.preventDefault();
@@ -473,21 +473,22 @@ $(document).ready(function () {
 		starOff: 'star-off-big.png',
 		starOn: 'star-on-big.png',
 		targetType: 'number',
-		click: function (score, evt) {
+		click: function(score, evt) {
 			$.ajax({
 				type: "POST",
 				url: c_url,
 				data: {
 					vote: score
 				},
-				success: function (data) {
+				success: function(data) {
 					$('#post-rating').html(data).fadeIn("slow");
 				}
 			});
 		}
 	});
 
-	$('.ajax-module').live('click', function (e) {
+
+	$('.ajax-module').live('click', function(e) {
 
 		var href = $(this).attr("href");
 		var title = $(this).attr("title");
@@ -497,7 +498,7 @@ $(document).ready(function () {
 		}
 
 		$('#current-module').fadeTo(120, 0.7);
-		$('#current-module').load(href, function () {
+		$('#current-module').load(href, function() {
 			$('#current-module').fadeTo(150, 1);
 			document.title = title;
 		});
@@ -508,7 +509,7 @@ $(document).ready(function () {
 
 
 	/* pm vesture */
-	$('#reply-history').live('click', function (e) {
+	$('#reply-history').live('click', function(e) {
 		$('#pm-history-container').load($(this).attr('href'));
 		$('#reply-history').addClass('disabled');
 		e.preventDefault();
@@ -516,19 +517,28 @@ $(document).ready(function () {
 
 
 	/* junk vote */
-	$('#junk-vote-wrap a').live('click', function (e) {
+	$('#junk-vote-wrap a').live('click', function(e) {
 		$('#junk-vote-wrap').load($(this).attr('href'));
 		e.preventDefault();
 	});
 
 
+	/* auto piemeklētie filmu avatari */
+	$('.imgselect').live('click', function(e) {
+		$('.imgselect').removeClass('clicked');
+		$(this).addClass('clicked');
+		$('#avatar-url').val($(this).attr('href'));
+		e.preventDefault();
+	});
+
+
 	/* wp admin */
-	$('[data-addwp-action="load-external"]').on('click', function (e) {
+	$('[data-addwp-action="load-external"]').on('click', function(e) {
 		var target = $(this).data('target');
 		var resource = $(this).data('resource');
 
-		$.getJSON(resource, function (data) {
-			$(data).each(function (i, entity) {
+		$.getJSON(resource, function(data) {
+			$(data).each(function(i, entity) {
 				$(target).append('<li><a href="' + entity['file'] + '" class="lightbox-added"><img src="' + entity['thumb'] + '"></a><br><input type="radio" name="new-image-id" value="' + i + '"></li>')
 			});
 
