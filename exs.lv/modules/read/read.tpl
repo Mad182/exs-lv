@@ -191,6 +191,12 @@
 	<p>&nbsp;</p>
 	<!-- END BLOCK : movie-info-->
 	{article-text}
+
+	<!-- START BLOCK : page-ad-google-bottom-->
+	<div class="c"></div>
+	{ad-468}
+	<!-- END BLOCK : page-ad-google-bottom-->
+
 </div>
 <!-- START BLOCK : post-stags-->
 <div class="c"></div>

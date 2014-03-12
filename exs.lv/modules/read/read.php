@@ -1348,6 +1348,7 @@ if ($article) {
 			$tpl->newBlock('page-ad-dateks');
 		} else {
 			$tpl->newBlock('page-ad-google');
+			$tpl->newBlock('page-ad-google-bottom');
 		}
 	} else {
 		set_flash('Tev nav atļauts apskatīt šo sadaļu!', 'error');
