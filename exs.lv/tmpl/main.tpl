@@ -96,7 +96,6 @@
 		<div id="wrapper">
 			<div id="header"{page-persona}>
 				<div id="logo">
-					<div id="header-stuff">{ad-top}</div>
 					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
@@ -491,6 +490,8 @@
 				</div>
 				<div class="c"></div>
 			</div>
+
+			<div id="header-stuff">{ad-top}</div>
 
 		</div>
 
