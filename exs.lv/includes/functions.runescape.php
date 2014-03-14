@@ -20,7 +20,7 @@
 function get_runescape_news($force = false) {
     global $m, $db, $auth, $rsbot_id, $lang;
 
-    $list_news  = 12;     // rakstu skaits, cik rādīt sarakstā
+    $list_news = 12;     // rakstu skaits, cik rādīt sarakstā
 
     // memcache glabā tikai laiku, kad jaunumi pēdējoreiz saglabāti,
     // citādi tiek izmantots .html cache fails
@@ -34,35 +34,26 @@ function get_runescape_news($force = false) {
         // nolasa jaunākās ziņas no runescape.com
         $news = curl_get('http://services.runescape.com/m=news/latest_news.rss');
 
-        // cache failā esošo informāciju pārraksta tikai tad,
-        // ja no runescape.com tādu izdevās atlasīt;
-        // citādi atstāj vecās ziņas, lai lapā ir, ko izvadīt
+        // ja izdevās ielasīt saturu no RSS, iet cauri visiem rakstiem un
+        // salīdzina ar ierakstiem datubāzē
         if ($news !== false) {
             $data = new SimpleXmlElement($news);
-
-            // skaita rakstus, jo lapā jārāda tikai pirmie x, nevis visi
-            $article_counter = 0;
-
-            $out = '<ul class="official-news">';
-            foreach ($data->channel->item as $single) {
-
-                $mb_arrow = ''; // bultiņa uz miniblogu jaunuma sānā
-                $image = '';
+            
+            foreach ($data->channel->item as $single) {                
 
                 // pārbaude, vai datubāzē šāds jaunums jau neeksistē
                 $hash_val = sanitize(md5($single->pubDate.$single->title));
                 $val = $db->get_row("
                     SELECT
-                        `rs_news`.`id`,
-                        `rs_news`.`mb_id`,
-                        `rs_news`.`has_image`,
-                        `miniblog`.`text`
+                        `rs_news`.`news_title`
                     FROM `rs_news`
                         JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
-                    WHERE `rs_news`.`hash_value` = '$hash_val'
+                    WHERE 
+                        `rs_news`.`hash_value` = '$hash_val'
                 ");
+                
                 // ieraksta datubāzē vēl nav; tāds tiek izveidots
-                if (!$val) {
+                if (!$val) {         
 
                     // minibloga saturs
                     $mb_text  = '<p class="rsmb-title">'.$single->title.'</p>';
@@ -83,7 +74,7 @@ function get_runescape_news($force = false) {
                         )
                     ");
 
-                    // runescape jaunumos arī ievieto jaunu ierakstu
+                    // izveido ierakstu `rs_news` tabulā
                     if ($insert) {
 
                         $mb_id = $db->insert_id;
@@ -100,73 +91,114 @@ function get_runescape_news($force = false) {
                                 'news-'.$mb_id.'.jpg' // img_title
                             );
 
-                            // attēlu rāda tikai tad, ja to izdevās saglabāt lokāli
-                            if ($save !== false) {
-                                $image = '<img src="/bildes/runescape/news/thumb-news-'.$mb_id.'.jpg" title="'.$single->title.'" alt="Logo">';
-                            }
+                            // ja lokāli attēlu saglabāt neizdodas, tā arī jāatzīmē,
+                            // lai pēcāk varētu rādīt fallback attēlus
+                            if ($save === false)
+                                $has_image = 0;
                         }
 
                         $news_insert = $db->query("INSERT INTO `rs_news`
-                            (hash_value, mb_id, has_image, created_by, created_at)
+                            (hash_value, mb_id, news_title, news_category, news_description, news_date, news_link, has_image, created_by, created_at)
                             VALUES (
                                 '".sanitize($hash_val)."',
                                 '".$mb_id."',
+                                '".sanitize(trim(strip_tags($single->title)))."',
+                                '".sanitize(trim(strip_tags($single->category)))."',
+                                '".sanitize(trim(strip_tags($single->description)))."',
+                                '".sanitize(trim(strip_tags($single->pubDate)))."',
+                                '".sanitize(trim(strip_tags($single->link)))."',
                                 $has_image,
                                 $rsbot_id,
                                 '".time()."'
                             )
-                        ");
-
-                        // bultiņa sānā uz miniblogu
-                        $mb_arrow  = '<p class="goto-mb">';
-                        $mb_arrow .= '<a href="/say/'.$rsbot_id.'/'.$mb_id.'-'.mb_get_strid($mb_text, $mb_id). '">';
-                        $mb_arrow .= '&rsaquo;&rsaquo;</a></p>';
+                        ");                        
                     }
-                // ieraksts datubāzē jau eksistē
-                } else {
-
-                    // bultiņa sānā uz miniblogu
-                    $mb_arrow  = '<p class="goto-mb">';
-                    $mb_arrow .= '<a href="/say/'.$rsbot_id.'/'.$val->mb_id.'-'.mb_get_strid($val->text, $val->mb_id). '">';
-                    $mb_arrow .= '&rsaquo;&rsaquo;</a></p>';
-
-                    // attēls
-                    if ($val->has_image) {
-                        $image = '<img src="/bildes/runescape/news/thumb-news-'.$val->mb_id.'.jpg" title="'.$single->title.'" alt="Logo">';
-                    }
-
                 }
+                // `rs_news` tabulā ierakstam nav virsraksta; atjaunosies
+                elseif (empty($val->news_title)) {
+                    $db->query("
+                        UPDATE `rs_news` 
+                        SET 
+                            `news_title`        = '".sanitize(trim(strip_tags($single->title)))."', 
+                            `news_category`     = '".sanitize(trim(strip_tags($single->category)))."', 
+                            `news_description`  = '".sanitize(trim(strip_tags($single->description)))."', 
+                            `news_date`         = '".sanitize(trim(strip_tags($single->pubDate)))."', 
+                            `news_link`         = '".sanitize(trim(strip_tags($single->link)))."'
+                        WHERE 
+                            `hash_value` = '".sanitize($hash_val)."' 
+                        LIMIT 1
+                    ");
+                }
+            }            
+        }
+        
+        
+        // no datubāzes atlasa jaunākos x rakstus,
+        // no tiem uzģenerē HTML saturu un to saglabā cache failā
+        $all_news = $db->get_results("
+            SELECT
+                `rs_news`.`id`,
+                `rs_news`.`mb_id`,
+                `rs_news`.`has_image`,
+                `rs_news`.`news_title`          AS `title`,
+                `rs_news`.`news_description`    AS `description`,
+                `rs_news`.`news_date`           AS `date`,
+                `rs_news`.`news_category`       AS `category`,
+                `rs_news`.`news_link`           AS `link`,
+                `miniblog`.`text`
+            FROM `rs_news`
+                JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
+            WHERE
+                `rs_news`.`deleted_by` = 0
+            ORDER BY `rs_news`.`id` DESC
+            LIMIT 0, $list_news
+        ");
+        
+        $out = '<ul class="official-news">';
+        if ( $all_news ) {
+           
+            foreach ($all_news as $single_news) {
 
-                $news_date          = date("d.m.Y", strtotime($single->pubDate));
-                $news_category      = translate_category((string)$single->category);
-                $news_description   = (empty($image) ? textlimit($single->description, 95, '...') :
-                                      textlimit($single->description, 75, '...'));
-
-                // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
+                // bultiņa sānā uz miniblogu
+                $mb_arrow  = '<p class="goto-mb">';
+                $mb_arrow .= '<a href="/say/'.$rsbot_id.'/'.$single_news->mb_id.'-'.mb_get_strid($single_news->text, $single_news->mb_id). '">';
+                $mb_arrow .= '&rsaquo;&rsaquo;</a></p>';
+                
+                // attēls
+                $image = '';
+                if ($single_news->has_image &&
+                    file_exists(CORE_PATH . '/bildes/runescape/news/thumb-news-'.$single_news->mb_id.'.jpg') ) {
+                    $image = '<img src="/bildes/runescape/news/thumb-news-'.$single_news->mb_id.'.jpg" title="'.$single_news->title.'" alt="Logo">';
+                } else {
+                    $image = '<img src="/bildes/runescape/fallback/'.get_fallback_image($single_news->category).'" title="'.$single_news->title.'" alt="Logo">';
+                }
+                
+                $news_date          = date("d.m.Y", strtotime($single_news->date));
+                $news_category      = translate_category((string)$single_news->category);
+                $news_description   = (empty($image) ? textlimit($single_news->description, 95, '...') :
+                                      textlimit($single_news->description, 70, '...'));
+                 // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
                 $news_style = (empty($image) ? ' style="padding:0 10px 5px;width:90%"' : '');
-
+                
                 $out .= '<li>';
-                $out .= '<a class="news-image" href="'.$single->link.'" rel="nofollow" target="_blank">'.$image.'</a>';
+                $out .= '<a class="news-image" href="'.$single_news->link.'" rel="nofollow" target="_blank">'.$image.'</a>';
                 $out .= '<p'.$news_style.'>';
-                $out .= '<a class="news-title" href="'.$single->link.'" rel="nofollow" target="_blank">'.$single->title.'</a>';
+                $out .= '<a class="news-title" href="'.$single_news->link.'" rel="nofollow" target="_blank">'.$single_news->title.'</a>';
                 //$out .=
                 $out .= $news_description;
                 $out .= '<span class="news-date">'.$news_date.' &middot; '.$news_category.'</span>';
                 $out .= '</p>' . $mb_arrow . '</li>';
-
-                // redzami tikai jaunākie x raksti
-                if (++$article_counter >= $list_news)
-                    break;
+                
             }
-            $out .= '<li class="news-link"><a href="http://services.runescape.com/m=news/" rel="nofollow" target="_blank">Skatīt senākus rakstus</a></li>';
-            $out .= '</ul>';
-
-            // izveido cache failu
-            $cache_file = fopen(CORE_PATH . '/cache/runescape/official-news.html', 'w');
-            fwrite($cache_file, $out);
-            fclose($cache_file);
         }
-    }
+        $out .= '<li class="news-link"><a href="http://services.runescape.com/m=news/" rel="nofollow" target="_blank">Skatīt senākus rakstus</a></li>';
+        $out .= '</ul>';
+
+        // izveido cache failu
+        $cache_file = fopen(CORE_PATH . '/cache/runescape/official-news.html', 'w');
+        fwrite($cache_file, $out);
+        fclose($cache_file);
+    }    
 
     // nolasa runescape ziņas no cache faila
     $output_file = fopen(CORE_PATH . '/cache/runescape/official-news.html', 'r');
@@ -230,6 +262,39 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
         return false;
     }
     return true;
+}
+
+
+
+/**
+ *  Atgriež fallback bildi RuneScape rakstiem.
+ *
+ *  (Tiek izsaukta get_runescape_news() funkcijā.)
+ *
+ *  @param string kategorijas nosaukums
+ */
+function get_fallback_image($string = '') {
+
+    $categories = array(
+        'Game Update News'          => 'fallback-gameupdates.jpg',
+        'Future Updates'            => 'fallback-gameupdates.jpg',
+        'Behind the Scenes News'    => 'fallback-behindthescenes.jpg',
+        'Your Feedback'             => 'fallback-yourfeedback.jpg',
+        'Website News'              => 'fallback-website.jpg',
+        'Events'                    => 'fallback-community.jpg',
+        'Technical News'            => 'fallback-technical.jpg',
+        'Support'                   => 'fallback-support.jpg',
+        'Customer Support News'     => 'fallback-yourfeedback.jpg',
+        'Community'                 => 'fallback-community.jpg',
+        'Solomon&apos;s Store'      => 'fallback-solomons.jpg',
+        'Treasure Hunter'           => 'fallback-treasurehunter.jpg'
+    );
+
+    if ($string != '' && array_key_exists($string, $categories)) {
+        return $categories[$string];
+    }
+    return 'fallback-technical.jpg';
+
 }
 
 
@@ -539,7 +604,9 @@ function get_rs_page_categories($current = null, $force = false) {
             $return['Kvesti'][$cat->id] = $cat->title;
         } elseif ($cat->module == 'rshelp') {
             $return['Runescape'][$cat->id] = $cat->title;
-        } 
+        } elseif ($cat->id == 599) { // rs ziņas
+            $return['Main'][$cat->id] = $cat->title;
+        }         
         // blogi, atkritne un vēl atsevišķas sadaļas redzamas tikai moderatoriem
         else if ( im_mod() || im_cat_mod($cat->id) ) {
             if (!$cat->isblog && $cat->isforum) {
