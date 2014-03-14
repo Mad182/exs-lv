@@ -1,5 +1,18 @@
 <h1>Animētie avatari</h1>
 
+<!-- START BLOCK : import-->
+<form class="form" action="" method="post">
+	<fieldset>
+		<legend>Importēt avataru no <a href="http://gif-avatars.com/" target="_blank">gif-avatars.com</a></legend>
+		<p>
+			<label>Avatara ID:</label><br />
+			<input type="text" name="gif_avatars_id" class="text number" style="width: 50px;" />
+			<input type="submit" name="gif_avatars_import" class="button primary" value="Importēt" />
+		</p>
+	</fieldset>
+</form>
+<!-- END BLOCK : import-->
+
 <form class="form" action="" method="post">
 	<fieldset>
 		<ul style="padding:0;margin:0">
@@ -14,7 +27,7 @@
 			<!-- END BLOCK : av-node-->
 		</ul>
 		<div class="c"></div>
-		<p>Bez avatariem kas redzami šeit, vari izvēlēties arī jebkuru avataru no <a href="http://gif-avatars.com/">http://gif-avatars.com/</a>, tur ir visi vajadzīgie izmēri. Tādā gadījumā sūti PM <a href="/user/1">@<span class="admins">Maadinsh</span></a> ar linku uz izvēlēto avataru :)</p>
+		<p>Bez avatariem kas redzami šeit, vari izvēlēties arī jebkuru avataru no <a href="http://gif-avatars.com/">http://gif-avatars.com/</a>, tur ir visi vajadzīgie izmēri. Tādā gadījumā sūti PM ar linku uz avataru kādam modiņam vai adminam :)</p>
 
 		<p>Animētais avatars maksā 5 exs.lv kredīta punktus. Par to tu iegūsti vienu avataru, ko izvēlies. Citiem šis avatars vairs nebūs pieejams.</p>
 
@@ -45,3 +58,4 @@
 
 	</fieldset>
 </form>
+

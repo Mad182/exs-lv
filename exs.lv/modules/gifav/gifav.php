@@ -58,3 +58,48 @@ if ($auth->ok && ($user->credit >= 5 || $owned)) {
 } elseif ($auth->ok) {
 	$tpl->newBlock('av-credit');
 }
+
+//failu imports no gif-avatars.com
+if(im_mod()) {
+
+	if(isset($_POST['gif_avatars_import'])) {
+		$id = (int) $_POST['gif_avatars_id'];
+
+		$contents = curl_get('http://gif-avatars.com/avatar/' . $id . '/json');
+		if(empty($contents)) {
+			set_flash('Neizdevās iegūt datus no gif-avatars.com!', 'error');
+			redirect('/' . $category->textid);	
+		}
+
+		$json = json_decode($contents);
+		if(empty($json)) {
+			set_flash('Neizdevās noparsēt datus!', 'error');
+			redirect('/' . $category->textid);	
+		}
+
+		if(file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $json->filename)) {
+			set_flash('Tāds avatars jau atrodas uz exs.lv servera!', 'error');
+			redirect('/' . $category->textid);	
+		}
+
+		file_put_contents(CORE_PATH . '/dati/bildes/u_small/' . $json->filename, curl_get($json->img_45));
+		file_put_contents(CORE_PATH . '/dati/bildes/useravatar/' . $json->filename, curl_get($json->img_90));
+		file_put_contents(CORE_PATH . '/dati/bildes/u_large/' . $json->filename, curl_get($json->img_150));
+		
+		if(file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $json->filename)) {
+		
+			$db->query("INSERT INTO `animations` (`image`, `added_by`) VALUES ('".sanitize($json->filename)."', '$auth->id')");
+			set_flash('Fails veiksmīgi importēts!', 'success');
+			redirect('/' . $category->textid);
+		
+		} else {
+
+			set_flash('Neizdevās nokopēt failus!', 'error');
+			redirect('/' . $category->textid);
+		}
+		
+	}
+
+	$tpl->newBlock('import');
+}
+
