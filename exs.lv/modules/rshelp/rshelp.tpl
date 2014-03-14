@@ -88,6 +88,10 @@
 	</tr>
 	<!-- END BLOCK : rshelp-listitem -->
 </table>
+<!-- START BLOCK : show-pager -->
+<div class="c"></div>
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
+<!-- END BLOCK : show-pager -->
 <!-- END BLOCK : rshelp-list -->
 
 

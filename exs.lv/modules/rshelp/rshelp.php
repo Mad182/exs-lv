@@ -74,17 +74,29 @@ else {
 	// redzamas būs visas trīs lapas kolonnas
 	$tpl_options = '';
     
-    $order_by = 'ORDER BY `title` ASC ';
+    // skaits, cik rakstu rādīt vienā lapā
+    $lim_end = 30;
+    $lim_start = (isset($_GET['skip']) && (int)$_GET['skip'] > 0) ? (int)$_GET['skip'] : 0;
+    
+    // parastās sadaļās vienā lapā būs redzams $lim_end skaits rakstu,
+    // savukārt /padomi sadaļā - visi raksti    
+    $limit = ($category->id == 5) ? '' : 'LIMIT '.$lim_start.', '.$lim_end;    
+    
+    // parastās sadaļās kārtos pēc raksta nosaukuma;
+    // savukārt rs ziņu sadaļā - pēc datuma
+    $order_by   = 'ORDER BY `title` ASC';    
     if ($category->id == 599) { // rs jaunumu raksti
-        $order_by = 'ORDER BY `date` DESC ';
+        $order_by   = 'ORDER BY `date` DESC ';
     }
+    
+    
 
 	$all_items = $db->get_results("
         SELECT `strid`,`title`,`author` 
         FROM `pages` 
         WHERE `category` = '" . $category->id . "' 
-        ORDER BY `title` ASC 
-        LIMIT 0, 150
+        $order_by 
+        $limit
     ");
     
 	if ($all_items) {
@@ -100,9 +112,27 @@ else {
                 $data->author .= usercolor($user->nick, $user->level) . '</a>';
 			}
             
+            // rs rakstu virsrakstiem nodzēš kādreizējos prefixus
+            $replaceable = array('[Runescape] ', '[RuneScape] ', '[runescape] ', '[RS] ', '[rs] ');
+            $data->title = str_replace($replaceable, '', $data->title);
+            
 			$tpl->newBlock('rshelp-listitem');
 			$tpl->assignAll($data);
 		}
+        
+        // visām sadaļām, atskaitot /padomi, kur tāpat uzreiz redzami visi raksti
+        if ($category->id != 5) {
+            
+            $pager = pager($category->stat_topics, $lim_start, $lim_end, '/runescape?skip=');
+            
+            $tpl->newBlock('show-pager');
+            $tpl->assignGlobal(array(
+                'pager-next' => $pager['next'],
+                'pager-prev' => $pager['prev'],
+                'pager-numeric' => $pager['pages']
+            ));
+        }        
+        
 	} else {
 		set_flash('Kļūdaini norādīta adrese!');
 		redirect();
