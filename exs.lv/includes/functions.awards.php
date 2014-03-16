@@ -219,7 +219,7 @@ function list_awards() {
 			'title' => '<a href="http://lol.exs.lv/">lol.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		),
-        'runescape-exs-lv' => array(
+		'runescape-exs-lv' => array(
 			'title' => '<a href="http://runescape.exs.lv/">runescape.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		),
@@ -449,8 +449,8 @@ function update_awards($user) {
 				$awards_list['coding-user']['state'] = 'active';
 			}
 		}
-        
-        if (!in_array('runescape-exs-lv', $existing_awards)) {
+
+		if (!in_array('runescape-exs-lv', $existing_awards)) {
 			if ($db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$user' AND `lang` = 9") >= 10) {
 				$awards_list['runescape-exs-lv']['state'] = 'active';
 			}
@@ -692,12 +692,12 @@ function update_awards($user) {
 
 
 	//spēļu turnīri
-	/* if(in_array($user,array(3512,11807,2222,4027,6001,901,25194,23678,8954,13004,19604,21450,12407,22518,15390,27431,10345,20858,18948,4845,31560,7844,1385,4137,24437,140,12108,23282,1,25093,1293,415,16261,6031,3650))) {
-	  $awards_list['basketball'] = array(
-	  'title' => 'Exs Streetball turnīrs 16.11.2013',
-	  'state' => 'active'
-	  );
-	  } */
+	if (in_array($user, array(655, 858, 1621, 1822, 4137, 5205, 5056, 9418, 10734, 11722, 12732, 13004, 13419, 14623, 15390, 16817, 18057, 18773, 20858, 20999, 21450, 21704, 22518, 23282, 24437, 25093, 25299, 25385, 26091, 26100, 31621, 1135, 1385, 3650, 4432, 5356, 12108, 19604, 24706, 25254, 29176))) {
+		$awards_list['futzals-3'] = array(
+			'title' => '<a href="http://exs.lv/read/ziemas-kauss-14">Ziemas kauss &apos;14</a> (futzāls)',
+			'state' => 'active'
+		);
+	}
 
 	//ghetto games floorball
 	/* if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
