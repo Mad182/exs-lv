@@ -9,6 +9,10 @@ $config_domains = array(
 		'domain' => 'exs.lv',
 		'prefix' => ''
 	),
+    2 => array(
+		'domain' => 'android.exs.lv',
+		'prefix' => 'android'
+	),
 	3 => array(
 		'domain' => 'coding.lv',
 		'prefix' => 'code'
@@ -31,12 +35,16 @@ $config_domains = array(
 	)
 );
 
-
 $found = false;
 foreach ($config_domains as $lang => $site) {
 
-	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
-		require CORE_PATH . '/config/' . $site['domain'] . '.php';
+    // (lokālai testēšanai no telefona)
+    if ($_SERVER['SERVER_NAME'] == '192.168.1.116' && $site['domain'] == 'android.exs.lv') {
+        require CORE_PATH . '/config/android.exs.lv.php';
+        $found = true;
+        break;
+    } else if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+        require CORE_PATH . '/config/' . $site['domain'] . '.php';
 		$found = true;
 		break;
 	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
@@ -46,7 +54,7 @@ foreach ($config_domains as $lang => $site) {
 
 //domain not found, redirect to exs.lv
 if (!$found) {
-	redirect('http://exs.lv' . $_SERVER['REQUEST_URI'], true);
+    redirect('http://exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 //remove index.php from urls
