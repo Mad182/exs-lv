@@ -1646,6 +1646,11 @@ a.friend:hover {
 	padding: 2px 20px;
 }
 
+/* forms */
+input, select, textarea {
+	font-family: 'Open Sans', tahoma, verdana, sans-serif;
+}
+
 .form label .description {
 	font-weight: 400;
 	font-size: 90%;
@@ -1764,6 +1769,7 @@ a.friend:hover {
 	text-align: right;
 }
 
+/* embeddojamie objekti - youtube, spotify... */
 .auto-embed-placeholder {
 	width: 240px;
 	background: #f7f7f7;
