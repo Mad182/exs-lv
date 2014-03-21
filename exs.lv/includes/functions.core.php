@@ -347,26 +347,26 @@ function im_mod() {
  */
 function im_rs_mod($force = true) {
     global $auth, $db, $m, $lang;
-    
+
     if (!$auth->ok || $lang != 9)
         return false;
-    
+
     $rs_mods = array();
-    
+
     if ($force || $m->get('runescape-mods') === false) {
-     
+
         $get_mods = $db->get_col("SELECT `user_id` FROM `rs_mods` WHERE `is_deleted` = 0");
         if ($get_mods) {
             $rs_mods = $get_mods;
         }
-     
+
         // ik pēc 15 min pārbaudīs datubāzi,
         // 15 min tādēļ, lai pēc izmaiņām tabulā ilgi nebūtu jāgaida
         $m->set('runescape-mods', $rs_mods, false, 900);
     }
-    
+
     $rs_mods = $m->get('runescape-mods');
-    
+
     return (im_mod() || in_array($auth->id, $rs_mods));
 }
 
@@ -1721,7 +1721,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			$val->date = strtotime($val->date);
 			if (!$auth->mobile) {
 				$out .= '<div class="mb-av"><a id="m' . $val->id . '" href="/user/' . $val->author . '">';
-				$out .= '<img width="45" height="45" src="' . get_avatar($val, 's') . '" alt="' . htmlspecialchars($val->nick) . '" /></a>';
+				$out .= '<img width="45" height="45" class="av" src="' . get_avatar($val, 's') . '" alt="' . htmlspecialchars($val->nick) . '" /></a>';
 				if (!empty($val->decos)) {
 					$decos = unserialize($val->decos);
 					if (!empty($decos)) {
@@ -2159,7 +2159,6 @@ function get_latest_mbs($friends = false) {
 		`miniblog`.`author` AS `author`,
 		`miniblog`.`posts` AS `posts`,
 		`miniblog`.`groupid` AS `groupid`,
-		`miniblog`.`twitterid` AS `twitterid`,
 		`users`.`avatar` AS `avatar`,
 		`users`.`deleted` AS `deleted`,
 		`users`.`av_alt` AS `av_alt`,
@@ -2237,16 +2236,12 @@ function get_latest_mbs($friends = false) {
 			} else {
 				$time = time_ago($mb->bump);
 			}
-			$tw = '';
-			if (!empty($mb->twitterid)) {
-				$tw = '<span style="background: url(\'http://exs.lv/bildes/i.png\') no-repeat 0 -280px;width:16px;height:16px;position:absolute;right:2px;bottom:3px"></span>';
-			}
 
 			if (!empty($mb->deleted)) {
 				$mb->nick = 'dzēsts';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . '"><span class="av"><img width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" />' . $tw . '</span><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span>pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" /><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span>pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';

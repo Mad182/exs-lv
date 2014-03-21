@@ -1015,10 +1015,10 @@ a.friend:hover {
 	padding: 0;
 }
 
-.av, .mb-av {
+.av {
 	float: left;
 	display: inline;
-	margin: 3px 8px 3px 1px;
+	margin: 5px 10px 3px 1px;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -1072,11 +1072,6 @@ a.friend:hover {
 	top: 13px;
 }
 
-#comments-ajax-list .av, .user-actions .av, #miniblog-list li li .av {
-	width: 40px;
-	height: 40px;
-}
-
 .user-actions {
 	padding: 0;
 	margin: 0;
@@ -1113,7 +1108,6 @@ a.friend:hover {
 }
 
 .mb-col li .av {
-	margin-top: 0;
 	width: 45px;
 	height: 45px;
 	position: relative;
@@ -1927,13 +1921,7 @@ input, select, textarea {
 	padding: 0 0 8px;
 }
 
-.index-list li.sm {
-	background: transparent;
-	margin: 0;
-	padding: 0 0 0 30px;
-}
-
-.index-list.main li p {
+.index-list li p {
 	font-size: 13px;
 }
 

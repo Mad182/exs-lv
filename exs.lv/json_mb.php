@@ -101,7 +101,7 @@ if ($resps) {
 			$limit = 2;
 		}
 
-		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
+		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img class="av" width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
 
 		if (!empty($resp->decos)) {
 			$decos = unserialize($resp->decos);

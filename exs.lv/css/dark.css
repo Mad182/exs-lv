@@ -14,7 +14,7 @@ body {
 	background: #444
 }
 
-.av, .mb-av, #profile-image, .auto-embed-placeholder, .auto-embed, .video-thb img, img.attels_centrets, img.attels_pa_kreisi, img.attels_pa_labi {
+#profile-image, .auto-embed-placeholder, .auto-embed, .video-thb img, img.attels_centrets, img.attels_pa_kreisi, img.attels_pa_labi {
 	background:#555;
 	border:1px solid #333;
 	-moz-box-shadow:2px 2px 3px #363636;

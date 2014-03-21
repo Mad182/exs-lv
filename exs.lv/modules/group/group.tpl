@@ -373,7 +373,7 @@
 			<div class="mbox">
 				<div class="mb-av">
 					<a id="m{id}" href="/user/{author-id}">
-						<img src="{avatar}" alt="{author-nick}" width="45" height="45" />
+						<img class="av" src="{avatar}" alt="{author-nick}" width="45" height="45" />
 					</a>
 					{add_deco}
 				</div>
