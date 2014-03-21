@@ -1,8 +1,7 @@
 body.mce-content-body {
-	font-size: 13px;
-	font-family: tahoma, verdana, arial;
-	color: #111;
-	color: #000;
+	font-size: 14px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #333;
 	padding: 0;
 	margin: 3px;
 }
@@ -17,7 +16,7 @@ code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
 }
 
 code, pre, .code, span.c, .codebox, .prettyprint {
-	font-family: Courier, 'Courier New',  monospace;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 	border-left: 6px solid #C1CAD3;
 	border: 1px solid #eee;
 	font-size: 90%;
@@ -170,7 +169,7 @@ hr {
 
 h1, h2, h3, h4 {
 	color: #444;
-	font-family: Ubuntu, 'Open Sans', tahoma, verdana, sans-serif;
+	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.45;
 	text-shadow: 0 1px 1px #ddd;

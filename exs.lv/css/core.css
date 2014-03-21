@@ -16,7 +16,7 @@ body {
 	height: 100%;
 	font-size: 14px;
 	font-weight: 400;
-	font-family: Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-align: left;
 	color: #333;
 	line-height: 1.45;
@@ -32,7 +32,7 @@ table td, table th {
 }
 
 table th, h1, h2, h3, h4 {
-	font-family: Ubuntu, Arial, sans-serif;
+	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.45;
 }
@@ -153,13 +153,13 @@ code, pre, .code, span.c, .codebox, .prettyprint, blockquote, .q, .quote {
 }
 
 .inlinecode {
-	font-family: "Lucida Console", Monaco, monospace;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 	background: #f3f3f3;
 	color: #369;
 }
 
 code, pre, .code, span.c, .codebox, .prettyprint {
-	font-family: "Lucida Console", Monaco, monospace;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 	border: 1px solid #eee;
 	border-left: 6px solid #C1CAD3;
 	font-size: 90%;
@@ -311,7 +311,7 @@ html .banned {
 #top-menu {
 	margin: 0;
 	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
-	font-family: Ubuntu, Arial, sans-serif;
+	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 11px;
 	border-bottom: 2px solid #2090cc;
 	padding: 0;
@@ -1513,7 +1513,7 @@ a.friend:hover {
 
 /* forms */
 input, select, textarea {
-	font-family: Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .form label .description {
@@ -1538,7 +1538,7 @@ input, select, textarea {
 .form legend {
 	font-weight: 400;
 	font-size: 13px;
-	font-family: Ubuntu, Arial, sans-serif;
+	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #555;
 }
 
