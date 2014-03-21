@@ -1223,7 +1223,7 @@ a.friend:hover {
 
 .user-actions li span {
 	color: #777;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 #profile-user-actions li {
@@ -1389,8 +1389,7 @@ a.friend:hover {
 .blockhref li a span {
 	display: block;
 	color: #888;
-	font-size: 10px;
-	line-height: 12px;
+	line-height: 1.2;
 }
 
 #latest-topics.blockhref li a span.r, #latest-topics.blockhref li a span.lp-prefix {
@@ -1616,7 +1615,7 @@ a.friend:hover {
 }
 
 .imgs a span {
-	font-size: 10px;
+	font-size: 11px;
 	position: absolute;
 	bottom: 1px;
 	right: 1px;
@@ -1756,12 +1755,12 @@ a.friend:hover {
 #picture-game {
 	background: #f5f5f5;
 	border: 2px solid #eee;
-	padding: 10px;
+	padding: 11px;
 }
 
 .moar {
 	display: block;
-	font-size: 10px;
+	font-size: 11px;
 	text-align: right;
 }
 
@@ -1769,7 +1768,7 @@ a.friend:hover {
 	width: 240px;
 	background: #f7f7f7;
 	color: #333;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 13px;
 	text-align: left;
 	border: 1px solid #ccc;
@@ -1823,7 +1822,7 @@ a.friend:hover {
 	width: 380px;
 	background: #f7f7f7;
 	color: #333;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 13px;
 	text-align: left;
 	border: 1px solid #ccc;
@@ -2162,7 +2161,7 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 
 #bottom-tools {
 	height: 16px;
-	font-size: 10px;
+	font-size: 11px;
 	padding: 10px;
 }
 
@@ -2571,7 +2570,7 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 #today-top {
 	padding: 3px 0;
 	margin: 0;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 12px;
 }
 
@@ -2684,13 +2683,11 @@ dl.list-attr dd {
 #user-notify {
 	padding: 0;
 	margin: 0;
-	font-size: 11px;
 }
 
 #user-notify li {
 	padding: 1px 0;
 	margin: 0;
-	font-size: 11px;
 	background: transparent;
 	border-bottom: 1px solid #eee;
 }
@@ -2767,12 +2764,8 @@ dl.list-attr dd {
 #user-notify li span {
 	padding: 0;
 	margin: 0;
-	font-size: 10px;
 	display: block;
-	font-weight: 400;
 	color: #888;
-	font-size: 11px;
-	line-height: 12px;
 }
 
 #user-notify li span.site-name {
