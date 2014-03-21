@@ -1,6 +1,6 @@
 /**
  * dark.css
- * 
+ *
  * Tumšais skins. Overraido core.css krāsas
  * Izmantot TIKAI krāsām, layouts/izmēri definējas core.css
  */
@@ -288,4 +288,14 @@ dl.list-attr dt {
 
 #noindex-phone {
 	background: url('/bildes/number-dark.gif') no-repeat 0 0;
+}
+
+#wrapper .article-info {
+	background: #3a3a3a;
+	border-top: 1px dotted #222;
+	border-bottom: 1px dotted #222;
+}
+
+#wrapper .article-info li {
+	color: #aaa;
 }
