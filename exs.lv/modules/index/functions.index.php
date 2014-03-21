@@ -1,6 +1,6 @@
 <?php
 
-function trim_intro($text, $len = 160) {
+function trim_intro($text, $len = 140) {
 
 	//get rid of smilies, will strip images later
 	$text = add_smile($text);

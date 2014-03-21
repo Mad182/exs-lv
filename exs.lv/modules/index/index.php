@@ -120,7 +120,7 @@ foreach ($articles as $article) {
 
 	$av = '';
 	if (!empty($article->avatar)) {
-		$av = '<a href="/read/' . $article->strid . '" class="av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+		$av = '<a href="/read/' . $article->strid . '" class="av" style="width:72px;height:72px;"><img width="72" height="72" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	}
 
 	$tpl->assign(array(
@@ -173,7 +173,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 		$av = '';
 		if (!empty($article->avatar)) {
-			$av = '<a href="/read/' . $article->strid . '" class="av index-av"><img width="75" height="75" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+			$av = '<a href="/read/' . $article->strid . '" class="av index-av" style="width:72px;height:72px;"><img width="72" height="72" src="http://img.exs.lv/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 		}
 
 		$tpl->assign(array(
