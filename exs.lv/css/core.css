@@ -2359,8 +2359,10 @@ table.players td.score, #forum td.stat {
 }
 
 a.friend img, .comments-avatar {
-	width: 90px;
-	height: 90px;
+	max-width: 90px;
+	max-height: 90px;
+	margin: 5px auto;
+	display: block;
 }
 
 .small-userlist li a:hover img, #walpaper a:hover img, #wallpapers a:hover, .imgs a:hover, a.radio:hover {
@@ -2866,13 +2868,14 @@ a.friend-right {
 #comments dt {
 	border-top: 4px solid #B5C0CF;
 	float: left;
-	width: 102px;
+	width: 117px;
 	margin: 0;
 	padding: 0;
+	text-align: center;
 }
 
 #comments dd {
-	margin: 0 0 0 100px;
+	margin: 0 0 0 115px;
 	padding: 0;
 	border-top: 4px solid #B5C0CF;
 	text-align: left;
@@ -2952,7 +2955,7 @@ a:hover .lp-prefix {
 	padding: 2px 0;
 	margin: 0;
 	font-size: 11px;
-	line-height: 14px;
+	line-height: 12px;
 	color: #718A96;
 }
 
@@ -2961,7 +2964,8 @@ a:hover .lp-prefix {
 }
 
 #content .custom-title {
-	text-align: left;
+	font-style:italic;
+	text-align: center;
 	display: block;
 	font-size: 12px;
 	line-height: 14px;
