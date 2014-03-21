@@ -1925,6 +1925,10 @@ input, select, textarea {
 	font-size: 13px;
 }
 
+.index-list.main h3 {
+	font-size: 15px;
+}
+
 body.mceContentBody {
 	color: #000;
 	margin: 3px;
