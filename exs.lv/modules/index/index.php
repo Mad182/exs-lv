@@ -115,7 +115,7 @@ foreach ($articles as $article) {
 	if (!empty($article->intro)) {
 		$article->text = $article->intro;
 	} else {
-		$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+		$article->text = trim_intro($article->text, 600);
 	}
 
 	$av = '';
@@ -127,7 +127,7 @@ foreach ($articles as $article) {
 		'node-url' => '/read/' . $article->strid,
 		'title' => textlimit($article->title, 26, '...'),
 		'date' => $date,
-		'intro' => textlimit(trim(strip_tags(str_replace(array('&nbsp;', "\t", "\n", '  '), ' ', $article->text))), 95),
+		'intro' => trim_intro($article->text),
 		'av' => $av
 	));
 }
@@ -180,7 +180,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 			'node-url' => '/read/' . $article->strid,
 			'title' => $article->title,
 			'date' => $date,
-			'intro' => textlimit(trim(strip_tags(str_replace(array('Spēles nosaukums:', '&nbsp;', "\t", "\n", '  '), ' ', $article->text))), 95),
+			'intro' => trim_intro($article->text),
 			'av' => $av
 		));
 	}
