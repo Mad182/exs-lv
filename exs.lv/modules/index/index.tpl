@@ -28,29 +28,30 @@
 
 	<!-- START BLOCK : cindex-right-->
 	<h2>Jaunākais blogos</h2>
-	<ul class="index-list">
+	<ul class="index-list secondary">
 		<!-- START BLOCK : index-blogs-node-->
-		<li><h3><a href="{node-url}">{title}</a></h3>{av}<p style="font-size:85%;margin-left:90px;">{intro}</p><div class="c"></div></li>
+		<li>{av}<h3><a href="{node-url}">{title}</a></h3><p>{intro}</p><div class="c"></div></li>
 		<!-- END BLOCK : index-blogs-node-->
 	</ul>
 	<h2>Spēļu apskati</h2>
-	<ul class="index-list">
+	<ul class="index-list secondary">
 		<!-- START BLOCK : index-games-node-->
-		<li><h3><a href="{node-url}">{title}</a></h3>{av}<p style="font-size:85%;margin-left:90px;">{intro}</p><div class="c"></div></li>
+		<li>{av}<h3><a href="{node-url}">{title}</a></h3><p>{intro}</p><div class="c"></div></li>
 		<!-- END BLOCK : index-games-node-->
 	</ul>
 	<h2>Filmu apskati</h2>
-	<ul class="index-list">
+	<ul class="index-list secondary">
 		<!-- START BLOCK : index-movies-node-->
-		<li><h3><a href="{node-url}">{title}</a></h3>{av}<p style="font-size:85%;margin-left:90px;">{intro}</p><div class="c"></div></li>
+		<li>{av}<h3><a href="{node-url}">{title}</a></h3><p>{intro}</p><div class="c"></div></li>
 		<!-- END BLOCK : index-movies-node-->
 	</ul>
 	<h2>Mūzikas apskati</h2>
-	<ul class="index-list">
+	<ul class="index-list secondary">
 		<!-- START BLOCK : index-music-node-->
-		<li><h3><a href="{node-url}">{title}</a></h3>{av}<p style="font-size:85%;margin-left:90px;">{intro}</p><div class="c"></div></li>
+		<li>{av}<h3><a href="{node-url}">{title}</a></h3><p>{intro}</p><div class="c"></div></li>
 		<!-- END BLOCK : index-music-node-->
 	</ul>
 	<!-- END BLOCK : cindex-right-->
 
 </div>
+

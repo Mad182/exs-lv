@@ -2057,8 +2057,12 @@ a.friend:hover {
 	padding: 0 0 0 30px;
 }
 
-.index-list li p {
-	font-size: 90%;
+.index-list.main li p {
+	font-size: 13px;
+}
+
+.index-list.secondary li p {
+	font-size: 12px;
 }
 
 body.mceContentBody {
