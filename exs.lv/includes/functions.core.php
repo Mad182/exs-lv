@@ -1997,7 +1997,7 @@ function get_index_events() {
 
 			$action->avatar = str_replace('http://img.exs.lv/dati', $img_server . '/dati', $action->avatar);
 
-			$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
+			$out .= '<li><img class="av" width="45" height="45" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
 		$out .= '</ul>';
 	}

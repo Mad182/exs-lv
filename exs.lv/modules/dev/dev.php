@@ -1,8 +1,8 @@
 <?php
 
 exit;
-$folder = 'streetball-16-11-2013';
-$user_id = 32246;
+$folder = 'futzals-22-02-2014';
+$user_id = 33698;
 
 
 if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
@@ -11,7 +11,7 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 
 			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
 			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
-			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . ' - exs.lv Streetball turnīrs. 16.11.2013</p>');
+			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . ' - exs.lv Futzāla turnīrs #3. 22.02.2014. Autors: <a href="/user/1385">latvija18</a></p>');
 
 			remake_thb($image, $thb);
 
