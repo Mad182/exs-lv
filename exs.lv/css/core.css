@@ -15,11 +15,11 @@ html, body, form, fieldset, table, tr, td, th, #exs-groups {
 body {
 	width: 100%;
 	height: 100%;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 400;
-	font-family: 'Open Sans', sans-serif;
+	font-family: Arial, sans-serif;
 	text-align: left;
-	color: #333;
+	color: #222;
 	line-height: 1.45;
 	background: #ebebeb;
 }
@@ -29,11 +29,11 @@ table {
 }
 
 table td, table th {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 table th, h1, h2, h3, h4 {
-	font-family: Ubuntu, 'Open Sans', sans-serif;
+	font-family: Ubuntu, Arial, sans-serif;
 	font-weight: 400;
 	line-height: 1.45;
 }
@@ -275,7 +275,7 @@ html .banned {
 	height: 20px;
 	line-height: 20px;
 	color: #ddd;
-	font-size: 10px;
+	font-size: 11px;
 	padding: 0 0 0 7px;
 	margin: 0;
 	background: #333;
@@ -312,7 +312,7 @@ html .banned {
 #top-menu {
 	margin: 0;
 	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
-	font-family: Ubuntu, 'Open Sans', sans-serif;
+	font-family: Ubuntu, Arial, sans-serif;
 	font-size: 11px;
 	border-bottom: 2px solid #2090cc;
 	padding: 0;
@@ -401,7 +401,7 @@ html .banned {
 	margin: 0;
 	height: auto;
 	width: auto;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 14px;
 }
 
@@ -608,7 +608,7 @@ html .banned {
 
 #breadcrumbs {
 	color: #777;
-	font-size: 11px;
+	font-size: 12px;
 	text-align: right;
 }
 
@@ -616,131 +616,9 @@ html .banned {
 	padding: 0 3px 5px;
 }
 
-.monitor {
-	font-size: 90%;
-	line-height: 1.2;
-}
-
-.monitor img {
-	border: 1px solid #888;
-	padding: 1px 2px;
-	margin: 0 2px;
-}
-
-table.players {
-	border-collapse: collapse;
-	font-size: 10px;
-	width: 130px;
-	margin: 5px 0;
-	padding: 0;
-}
-
-table.players td {
-	background: #eee;
-	padding: 0 4px;
-	font-size: 10px;
-}
-
-table.players td {
-	color: #222;
-}
-
-table.players .red td {
-	color: #922;
-}
-
-table.players .green td {
-	color: #292;
-}
-
-table.players .blue td {
-	color: #229;
-}
-
 .box .ajaxbox {
 	overflow: hidden;
 	z-index: 2;
-}
-
-/* spelu monitori */
-.server-img {
-	width: 128px;
-	height: 79px;
-	border: 1px solid #333;
-	position: relative;
-	margin: 2px 0 3px;
-}
-
-.server-addr {
-	display: block;
-	height: 18px;
-	font-size: 10px;
-	text-transform: uppercase;
-	line-height: 18px;
-	padding: 0 3px;
-	color: #fff;
-	background: url('http://img.exs.lv/bildes/monitor-mask.png') repeat;
-}
-
-.server-addr small {
-	font-size: 9px;
-}
-
-.server-count {
-	float: right;
-}
-
-.server-online {
-	color: green;
-	font-size: 10px;
-}
-
-.server-offline {
-	color: red;
-	font-size: 11px;
-}
-
-.server-total {
-	color: red;
-	font-size: 11px;
-}
-
-a.server-link {
-	float: left;
-	height: 14px;
-	width: 38px;
-	background: #444;
-	text-decoration: none;
-	border: 1px solid #333;
-	margin: 0 1px 0 0;
-	padding: 0;
-	font-variant: small-caps;
-	line-height: 14px;
-	text-align: center;
-	font-size: 9px;
-	position: absolute;
-	top: 62px;
-	color: #fff;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-}
-
-a.server-link:hover {
-	background: #777;
-	color: #fff;
-}
-
-a.link1 {
-	left: 2px;
-}
-
-a.link2 {
-	left: 44px;
-}
-
-a.link3 {
-	left: 86px;
 }
 
 .menu {
@@ -756,13 +634,11 @@ a.link3 {
 
 .menu a {
 	font-weight: 700;
-	font-size: 16px;
-	line-height: 16px;
 	display: block;
 	outline: none;
 	margin: 0;
 	padding: 0 0 0 6px;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .menu a:hover, .menu a:focus {
@@ -790,8 +666,7 @@ a.link3 {
 }
 
 #wrapper .menu li.selected li a {
-	font-size: 10px;
-	line-height: 14px;
+	font-size: 11px;
 	display: block;
 	outline: none;
 	margin: 2px 0;
@@ -894,7 +769,6 @@ a.link3 {
 
 .tabs {
 	list-style: none;
-	font-size: 11px;
 	line-height: 24px;
 	height: 25px;
 	z-index: 2;
@@ -927,7 +801,7 @@ a.link3 {
 	line-height: 16px;
 	text-shadow: 0 1px 1px rgba(255,255,255,0.75);
 	color: #333;
-	font-size: 11px;
+	font-size: 12px;
 	outline: none;
 	margin: 0 4px 0 0;
 	padding: 4px 5px 3px 5px;
@@ -1095,7 +969,7 @@ a.friend:hover {
 
 .poll-answers li span {
 	position: absolute;
-	font-size: 9px;
+	font-size: 10px;
 	line-height: 10px;
 	z-index: 10;
 	right: 1px;
@@ -1216,7 +1090,7 @@ a.friend:hover {
 	background: transparent;
 	background: transparent;
 	padding: 3px;
-	font-size: 11px;
+	font-size: 12px;
 	line-height: 14px;
 	border-bottom: 1px solid #eee;
 	width: auto;
@@ -1225,7 +1099,6 @@ a.friend:hover {
 
 .user-actions li span {
 	color: #777;
-	font-size: 11px;
 }
 
 #profile-user-actions li {
@@ -1346,7 +1219,7 @@ a.friend:hover {
 
 #miniblog-list li .post-info, .responses li .post-info {
 	color: #888;
-	font-size: 11px;
+	font-size: 12px;
 	line-height: 20px;
 	margin: 0;
 	padding: 0;
@@ -1376,8 +1249,7 @@ a.friend:hover {
 .blockhref li a {
 	display: block;
 	text-decoration: none;
-	font-size: 11px;
-	line-height: 16px;
+	font-size: 12px;
 	padding: 3px 1px;
 	height: auto !important;
 	height: 51px;
@@ -1449,7 +1321,7 @@ a.friend:hover {
 }
 
 #online-list {
-	font-size: 11px;
+	font-size: 12px;
 }
 
 #footer .infoblock {
@@ -1467,7 +1339,7 @@ a.friend:hover {
 	height: 120px;
 	background: #f2f2f2;
 	border: 1px solid #dfdfdf;
-	font-size: 12px;
+	font-size: 13px;
 	margin: 4px;
 	padding: 6px 11px;
 	line-height: 1.3;
@@ -1521,7 +1393,7 @@ a.friend:hover {
 	padding: 0 7px 0 15px;
 	background: url('http://img.exs.lv/bildes/tag_bg.png') no-repeat 0 0;
 	text-shadow: 0 1px 0 #fff;
-	font-size: 11px;
+	font-size: 12px;
 	-webkit-border-top-right-radius: 2px;
 	-webkit-border-bottom-right-radius: 2px;
 	-moz-border-radius-topright: 2px;
@@ -1567,7 +1439,7 @@ a.friend:hover {
 	height: 14px;
 	float: left;
 	width: 90px;
-	font-size: 11px;
+	font-size: 12px;
 	line-height: 14px;
 	border-right: 0;
 	background: url('http://img.exs.lv/bildes/i.png') repeat 0 -418px;
@@ -1650,7 +1522,7 @@ a.friend:hover {
 
 /* forms */
 input, select, textarea {
-	font-family: 'Open Sans', sans-serif;
+	font-family: Arial, sans-serif;
 }
 
 .form label .description {
@@ -1675,7 +1547,7 @@ input, select, textarea {
 .form legend {
 	font-weight: 400;
 	font-size: 13px;
-	font-family: Ubuntu, 'Open Sans', sans-serif;
+	font-family: Ubuntu, Arial, sans-serif;
 	color: #555;
 }
 
@@ -1878,7 +1750,7 @@ input, select, textarea {
 }
 
 .comment-edited-by {
-	font-size: 80%;
+	font-size: 12px;
 	color: #555;
 	font-style: italic;
 	text-align: right;
@@ -2065,7 +1937,7 @@ input, select, textarea {
 }
 
 .index-list.main li p {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 body.mceContentBody {
@@ -2169,7 +2041,7 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 
 #bottom-tools {
 	height: 16px;
-	font-size: 11px;
+	font-size: 12px;
 	padding: 10px;
 }
 
@@ -2337,11 +2209,11 @@ a.left {
 	padding: 0 0 5px;
 }
 
-.players .odd td, .main-table .darker td {
+.main-table .darker td {
 	background: #fafafa;
 }
 
-table.players td.score, #forum td.stat {
+#forum td.stat {
 	text-align: right;
 	font-size: 11px;
 }
@@ -2499,7 +2371,6 @@ a.friend img, .comments-avatar {
 .button.disabled {
 	cursor: default;
 	background-image: none;
-	filter: progid: DXImageTransform.Microsoft.gradient(enabled = false);
 	filter: alpha(opacity=65);
 	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
@@ -3337,57 +3208,6 @@ ul.taged {
 #fancybox-title-float-right {
 	background: url('http://img.exs.lv/bildes/fancybox.png') -55px -90px no-repeat;
 	padding: 0 0 0 15px;
-}
-
-.fancybox-ie6 #fancybox-close {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_close.png',sizingMethod='scale');
-}
-
-.fancybox-ie6 #fancybox-left-ico {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_nav_left.png',sizingMethod='scale');
-}
-
-.fancybox-ie6 #fancybox-right-ico {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_nav_right.png',sizingMethod='scale');
-}
-
-.fancybox-ie6 #fancybox-title-over {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_over.png',sizingMethod='scale');
-	zoom: 1;
-}
-
-.fancybox-ie6 #fancybox-title-float-left {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_left.png',sizingMethod='scale');
-}
-
-.fancybox-ie6 #fancybox-title-float-main {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_main.png',sizingMethod='scale');
-}
-
-.fancybox-ie6 #fancybox-title-float-right {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_title_right.png',sizingMethod='scale');
-}
-
-.fancybox-ie6 #fancybox-bg-w, .fancybox-ie6 #fancybox-bg-e, .fancybox-ie6 #fancybox-left, .fancybox-ie6 #fancybox-right, #fancybox-hide-sel-frame {
-	height: expression(this.parentNode.clientHeight+"px");
-}
-
-#fancybox-loading.fancybox-ie6 {
-	position: absolute;
-	margin-top: 0;
-	top: expression((-20+(document.documentElement.clientHeight?document.documentElement.clientHeight/2: document.body.clientHeight/2) 0 (ignoreMe=document.documentElement.scrollTop?document.documentElement.scrollTop: document.body.scrollTop)) 0 px);
-}
-
-#fancybox-loading.fancybox-ie6 div {
-	background: transparent;
-	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://img.exs.lv/bildes/fancy_loading.png',sizingMethod='scale');
 }
 
 .fancybox-ie .fancybox-bg {

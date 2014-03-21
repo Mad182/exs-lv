@@ -25,7 +25,6 @@
 			var c_url = "{page-url}";
 			window.google_analytics_uacct = "UA-4190387-9";
 		</script>
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&amp;subset=latin,cyrillic,latin-ext" type="text/css">
 		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css,pm.css" type="text/css">
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
