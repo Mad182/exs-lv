@@ -9,6 +9,7 @@
 html, body, form, fieldset, table, tr, td, th, #exs-groups {
 	margin: 0;
 	padding: 0;
+	-webkit-font-smoothing: antialiased !important;
 }
 
 body {
@@ -20,7 +21,7 @@ body {
 	text-align: left;
 	color: #333;
 	line-height: 1.45;
-	background: #ebebeb
+	background: #ebebeb;
 }
 
 table {
