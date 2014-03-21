@@ -17,7 +17,7 @@
 	background: #F5F5F6
 }
 #pm-table td.title {
-	font-weight: bold
+	font-weight: 700
 }
 #pm-table td.title a {
 	display: block
@@ -57,7 +57,7 @@
 }
 #pm-h h3 {
 	font-size: 110%;
-	font-weight: normal;
+	font-weight: 400;
 	background: #ECEFF5;
 	padding: 3px 10px;
 	margin: 10px 0 3px;

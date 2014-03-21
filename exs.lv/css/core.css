@@ -32,12 +32,12 @@ table td, table th {
 
 table th, h1, h2, h3, h4 {
 	font-family: Ubuntu, 'Open Sans', tahoma, verdana, sans-serif;
-	font-weight: 500;
+	font-weight: 400;
 	line-height: 1.45;
 }
 
 dt, dd {
-	font-weight: normal;
+	font-weight: 400;
 }
 
 fieldset, img {
@@ -788,14 +788,13 @@ a.link3 {
 }
 
 #wrapper .menu li.selected li a {
-	font-weight: 700;
 	font-size: 10px;
 	line-height: 14px;
 	display: block;
 	outline: none;
 	margin: 2px 0;
 	padding: 0 0 0 3px;
-	font-weight: normal;
+	font-weight: 400;
 	color: #0A4E81;
 }
 
@@ -1655,7 +1654,7 @@ a.friend:hover {
 }
 
 .form label.checkbox {
-	font-weight: normal;
+	font-weight: 400;
 }
 
 .form fieldset {
@@ -1668,7 +1667,7 @@ a.friend:hover {
 }
 
 .form legend {
-	font-weight: normal;
+	font-weight: 400;
 	font-size: 13px;
 	font-family: Ubuntu, sans-serif;
 	color: #555;
@@ -2810,7 +2809,7 @@ dl.list-attr dd {
 
 #friends-pending li h3 {
 	color: #bbb;
-	font-weight: normal;
+	font-weight: 400;
 }
 
 ul#friend-list li {
@@ -3568,7 +3567,7 @@ ul.taged {
 	padding-top: 9px;
 }
 #login-form label {
-	font-weight: normal;
+	font-weight: 400;
 }
 #tools-bar {
 	margin: 0;
@@ -3604,26 +3603,26 @@ ul.taged {
 
 /* MOD sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
 .mod-list-table {
-	margin:10px 20px
+	margin: 10px 20px
 }
 .mod-list-table th {
-	font-weight:bold;
-	padding:8px 10px 8px 2px;
-	font-size:12px;
-	text-align:left;
-	color:#284C6D;
-	border-bottom:2px solid #404449
+	font-weight: 700;
+	padding: 8px 10px 8px 2px;
+	font-size: 12px;
+	text-align: left;
+	color: #284C6D;
+	border-bottom: 2px solid #404449
 }
 .mod-list-table td {
-	padding:7px 10px;
+	padding: 7px 10px;
 	border-bottom: 1px solid #EEF0F3;
-	font-size:11px
+	font-size: 11px
 }
 .mod-list-table .counter {
-	font-weight:bold;
-	color: #235A96;
-	text-align:center;
-	padding:5px 0
+	font-weight: 700;
+	color:  #235A96;
+	text-align: center;
+	padding: 5px 0
 }
 
 
@@ -3639,7 +3638,7 @@ ul.taged {
 }
 .list-table li .stronger {
 	color:#515152;
-	font-weight:bold;
+	font-weight: 700;
 	margin-right:7px
 }
 
@@ -3705,7 +3704,7 @@ li.view_more {
 }
 #checkform .toggle-rows {
 	text-align:center;
-	font-weight:bold
+	font-weight: 700
 }
 #checkform .res-info {
 	color:rgb(63, 67, 119)

@@ -170,8 +170,9 @@ hr {
 
 h1, h2, h3, h4 {
 	color: #444;
-	font-weight: normal;
-	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
+	font-family: Ubuntu, 'Open Sans', tahoma, verdana, sans-serif;
+	font-weight: 400;
+	line-height: 1.45;
 	text-shadow: 0 1px 1px #ddd;
 	margin: 8px 0 4px;
 	padding: 3px 0
@@ -230,4 +231,4 @@ ul li {
 }
 .simple-links a {
     color:inherit
-}  
+}
