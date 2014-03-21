@@ -9,7 +9,6 @@
 html, body, form, fieldset, table, tr, td, th, #exs-groups {
 	margin: 0;
 	padding: 0;
-	-webkit-font-smoothing: antialiased !important;
 }
 
 body {
@@ -19,7 +18,7 @@ body {
 	font-weight: 400;
 	font-family: Arial, sans-serif;
 	text-align: left;
-	color: #222;
+	color: #333;
 	line-height: 1.45;
 	background: #ebebeb;
 }
@@ -890,11 +889,15 @@ html .banned {
 #wrapper .article-info li {
 	float: left;
 	color: #666;
-	font-size: 11px;
+	font-size: 12px;
 	line-height: 18px;
 	height: 18px;
 	margin: 0;
 	padding: 0 7px 0 19px;
+}
+
+#wrapper .article-info li a {
+	color: #666;
 }
 
 .comment-signature {
@@ -1015,16 +1018,10 @@ a.friend:hover {
 .av, .mb-av {
 	float: left;
 	display: inline;
-	background: #eee;
-	border: 1px solid #d4d4d4;
 	margin: 3px 8px 3px 1px;
-	padding: 1px;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 3px #eee;
-	-webkit-box-shadow: 2px 2px 3px #eee;
-	box-shadow: 2px 2px 3px #eee;
 }
 
 .mb-av {
