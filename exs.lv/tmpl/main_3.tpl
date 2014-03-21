@@ -25,6 +25,8 @@
 			var c_url = "{page-url}";
 			window.google_analytics_uacct = "UA-4190387-9";
 		</script>
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,cyrillic,latin-ext" type="text/css">
 		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},code.css,prettify.css,pm.css" type="text/css">
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
@@ -353,11 +355,11 @@
 		<script>
 								(function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1 * new Date()
-										;
+												;
 								a = s.createElement(o),
-										m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+												m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
 								})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-										ga('create', 'UA-4190387-9', 'coding.lv');
+												ga('create', 'UA-4190387-9', 'coding.lv');
 								ga('send', 'pageview');
 
 		</script>

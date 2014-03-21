@@ -42,7 +42,6 @@ body {
 	color: #fff;
 	border: 0;
 	padding: 0 8px;
-	font-family: 'PT Sans Narrow', sans-serif;
 	text-transform: uppercase;
 	line-height: 22px;
 	height: 22px;
@@ -134,7 +133,7 @@ body {
 }
 
 #top-menu li .first {
-	background: transparent 
+	background: transparent
 }
 
 #top-menu li.selected a, #header #top-menu li a:hover, #header #top-menu li:hover a {
@@ -249,7 +248,7 @@ p.core-pager {
 	margin: 0 0 0 120px;
 }
 
-#content .custom-title { 
+#content .custom-title {
 	color: #5a5a5a;
 	text-align: center;
 	font-size: 12px;

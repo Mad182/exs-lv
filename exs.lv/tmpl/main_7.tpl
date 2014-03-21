@@ -17,7 +17,8 @@
 			var query_timeout = 60000;
 			var c_url = "{page-url}";
 		</script>
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,cyrillic,latin-ext" type="text/css">
 		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css">
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->

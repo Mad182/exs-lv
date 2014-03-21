@@ -24,7 +24,8 @@
 			var query_timeout = 60000;
 			var c_url = "{page-url}";
 		</script>
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css" />
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600&amp;subset=latin,cyrillic,latin-ext" type="text/css">
 		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}" type="text/css" />
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
@@ -499,12 +500,12 @@
 		<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
 		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 		<script type="text/javascript">
-								function r(f) {
-									/in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
-								}
-								r(function() {
-									new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
-								});
+			function r(f) {
+				/in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
+			}
+			r(function() {
+				new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
+			});
 		</script>
 
 		<!-- smartad.eu -->
