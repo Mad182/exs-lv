@@ -192,4 +192,3 @@ $tpl->newBlock('meta-description');
 $tpl->assign('description', 'Exs.lv ir spēļu un izklaides portāls, kur jautri pavadīt laiku apspriežot datorspēles, filmas, mūziku, uzspēlēt flash spēles un atrast domubiedrus');
 
 $pagepath = '';
-
