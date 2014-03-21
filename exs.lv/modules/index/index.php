@@ -127,7 +127,7 @@ foreach ($articles as $article) {
 		'node-url' => '/read/' . $article->strid,
 		'title' => textlimit($article->title, 26, '...'),
 		'date' => $date,
-		'intro' => textlimit(strip_tags(trim(str_replace('&nbsp;', ' ', $article->text))), 90),
+		'intro' => textlimit(trim(strip_tags(str_replace(array('&nbsp;', "\t", "\n", '  '), ' ', $article->text))), 95),
 		'av' => $av
 	));
 }
@@ -180,7 +180,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 			'node-url' => '/read/' . $article->strid,
 			'title' => $article->title,
 			'date' => $date,
-			'intro' => textlimit(strip_tags(trim(str_replace(array('Spēles nosaukums:', '&nbsp;'), ' ', $article->text))), 90),
+			'intro' => textlimit(trim(strip_tags(str_replace(array('Spēles nosaukums:', '&nbsp;', "\t", "\n", '  '), ' ', $article->text))), 95),
 			'av' => $av
 		));
 	}
@@ -192,3 +192,4 @@ $tpl->newBlock('meta-description');
 $tpl->assign('description', 'Exs.lv ir spēļu un izklaides portāls, kur jautri pavadīt laiku apspriežot datorspēles, filmas, mūziku, uzspēlēt flash spēles un atrast domubiedrus');
 
 $pagepath = '';
+
