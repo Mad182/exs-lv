@@ -92,24 +92,24 @@
 			<nav>
 				<ul class="droplist">
 					<li><a href="http://runescape.exs.lv" class="dropdown">runescape.exs.lv</a>
-            <span class="arrow-down"></span>
-            <ul>
+						<span class="arrow-down"></span>
+						<ul>
 							<li><a href="http://exs.lv">exs.lv</a></li>
 							<li><a rel="nofollow" href="http://old.exs.lv/">old.exs.lv</a></li>
 							<li><a href="http://lol.exs.lv">lol.exs.lv</a></li>
 							<li><a href="http://rp.exs.lv">rp.exs.lv</a></li>
 							<li><a rel="nofollow" href="http://coding.lv">coding.lv</a></li>
 							<li>&nbsp;</li>
-            </ul>
+						</ul>
 					</li>
 					<li{cat-sel-661}><a href="/rs">Forums</a></li>
 				</ul>
 				<ul class="droplist nav-right">
 					<!-- START BLOCK : rsmod-nav -->
 					<li{active-rsmod}>
-            <a href="#" class="dropdown">RS Mod</a>
-            <span class="arrow-down"></span>
-            <ul>
+						<a href="#" class="dropdown">RS Mod</a>
+						<span class="arrow-down"></span>
+						<ul>
 							<li><a href="/rsfacts">RuneScape fakti</a></li>
 							<li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
 							<!-- START BLOCK : quest-management-link -->
@@ -119,27 +119,27 @@
 							<li><a href="/info-distractions">Distractions' info</a></li>
 							<!-- END BLOCK : quest-management-link -->
 							<li>&nbsp;</li>
-            </ul>
+						</ul>
 					</li>
 					<!-- END BLOCK : rsmod-nav -->
 					<!-- START BLOCK : mod-nav -->
 					<li{active-mod}>
-            <a href="#" class="dropdown">Mod</a>
-            <span class="arrow-down"></span>
-            <ul>
+						<a href="#" class="dropdown">Mod</a>
+						<span class="arrow-down"></span>
+						<ul>
 							<li><a href="/banned">Bloķētie lietotāji</a></li>
 							<li><a href="/crows">Atbrīvotās vārnas</a></li>
 							<li><a href="/reports">Iesniegtās sūdzības {reports-count}</a></li>
 							<li><a href="/log">Administrācijas darbības</a></li>
 							<li><a href="/polladmin">Aptaujas</a></li>
 							<li>&nbsp;</li>
-            </ul>
+						</ul>
 					</li>
 					<!-- END BLOCK : mod-nav -->
 					<!-- START BLOCK : auth-nav -->
 					<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
 					<li{cat-sel-646}>
-            <a href="/user/{currentuser-id}" class="dropdown">Profils</a>
+						<a href="/user/{currentuser-id}" class="dropdown">Profils</a>
 						<span class="arrow-down"></span>
 						<ul>
 							<li><a href="/user/edit">Profila informācija</a></li>
@@ -157,20 +157,20 @@
 				<ul id="login-block" class="nav-right">
 					<li{cat-sel-106}><a href="/register">Reģistrēties</a></li>
 					<li>
-            <form id="login-form" action="{page-loginurl}" method="post">
+						<form id="login-form" action="{page-loginurl}" method="post">
 							<fieldset>
-                <input type="hidden" name="xsrf_token" value="{xsrf}" />
-                <label><input id="login-nick" size="16" name="niks" type="text" placeholder="Lietotājvārds"></label>
-                <label><input id="login-pass" size="16" name="parole" type="password" placeholder="Parole"></label>
-                <label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit"></label>
+								<input type="hidden" name="xsrf_token" value="{xsrf}" />
+								<label><input id="login-nick" size="16" name="niks" type="text" placeholder="Lietotājvārds"></label>
+								<label><input id="login-pass" size="16" name="parole" type="password" placeholder="Parole"></label>
+								<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit"></label>
 							</fieldset>
-            </form>
+						</form>
 					</li>
 					<li class="less-padding">
-            <a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=b13bcb7f8f85f203adb84772559897ef&amp;redirect=http%3A%2F%2Frunescape.exs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=b13bcb7f8f85f203adb84772559897ef&amp;redirect=http%3A%2F%2Frunescape.exs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+						<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=b13bcb7f8f85f203adb84772559897ef&amp;redirect=http%3A%2F%2Frunescape.exs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=b13bcb7f8f85f203adb84772559897ef&amp;redirect=http%3A%2F%2Frunescape.exs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 					</li>
 					<li class="less-padding">
-            <a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+						<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 					</li>
 				</ul>
 				<!-- END BLOCK : login-form-->
@@ -178,7 +178,7 @@
 		</div>
 		<div id="wrapper">
 			<div id="header-navig">
-        <ul class="nav-left">
+				<ul class="nav-left">
 					<li>
 						<a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>&middot;
 					</li>
@@ -200,16 +200,16 @@
 					<li>
 						<a href="http://z10.invisionfree.com/Janis_Vimba/" rel="nofollow" target="_blank">JV forums</a>
 					</li>
-        </ul>
-        <ul class="nav-right">
+				</ul>
+				<ul class="nav-right">
 					<li><a href="/img">eXs bilžu hostings</a>&middot;</li>
 					<li><a rel="nofollow" href="http://runescape.com" target="_blank">runescape.com</a>&middot;</li>
 					<li><a rel="nofollow" href="http://oldschool.runescape.com" target="_blank">oldschool rs</a></li>
-        </ul>
+				</ul>
 			</div>
 			<div id="header">
-        <div id="header-stuff">{ad-top}</div>
-        <a href="/">
+				<div id="header-stuff">{ad-top}</div>
+				<a href="/">
 					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
 						<img src="/bildes/runescape/banners/banner-2.jpg" alt="">
 						<img src="/bildes/runescape/banners/banner-3.jpg" alt="">
@@ -217,10 +217,10 @@
 					</div>
 					<img class="rs-logo" src="/bildes/runescape/rs3-logo-sm.png">
 					<img class="rs-logo right-logo" src="/bildes/runescape/osrs-logo-sm.png">
-        </a>
+				</a>
 			</div>
 			<div id="top-menu">
-        <ul id="top-menu-left">
+				<ul id="top-menu-left">
 					<li{cat_sel_1863}><a class="first" href="/">Lobby</a></li>
 					<li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a>
 						<ul>
@@ -243,9 +243,9 @@
 							<li{cat-sel-789}><a href="/stasti-un-vesture">RS stāsti &amp; vēsture</a></li>
 						</ul>
 					</li>
-        </ul>
-        <!-- START BLOCK : user-menu-->
-        <ul id="top-menu-right">
+				</ul>
+				<!-- START BLOCK : user-menu-->
+				<ul id="top-menu-right">
 					<li{cat-sel-319}><a href="/grupas">Grupas</a>
 						<!-- START BLOCK : mygroups-->
 						<ul id="user-group-menu">
@@ -266,8 +266,8 @@
 					<li{cat-sel-1867}><a href="/gallery/{currentuser-id}">Galerija</a></li>
 					<li{cat-sel-1905}><a href="/myblog">Blogs</a></li>
 					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-        </ul>
-        <!-- END BLOCK : user-menu-->
+				</ul>
+				<!-- END BLOCK : user-menu-->
 			</div>
 			<div id="space" class="c"></div>
 			<!-- START BLOCK : flash-message-->
@@ -276,7 +276,7 @@
 					<a id="close-flash-message" href="#">
 						<img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16">
 					</a> {message}
-        </p>
+				</p>
 			</div>
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
@@ -318,8 +318,10 @@
 					<!-- START BLOCK : profile-box-->
 					<h3>{profile-nick}</h3>
 					<div class="box">
-						<a href="{url}"><img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" /></a><br>
-							{profile-top-awards}
+						<a href="{url}">
+							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
+						</a>
+						{profile-top-awards}
 						<!-- START BLOCK : profilebox-pm-link-->
 						<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br>
 						<!-- END BLOCK : profilebox-pm-link-->
@@ -355,12 +357,12 @@
 					<!-- START BLOCK : groups-l-list-->
 					<h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>
 					<div class="box new-groups">
-            <!-- START BLOCK : groups-l-node-->
+						<!-- START BLOCK : groups-l-node-->
 						<p>
 							<img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
 							<a href="{link}">{title}</a>
 						</p>
-            <!-- END BLOCK : groups-l-node-->
+						<!-- END BLOCK : groups-l-node-->
 						<a href="/grupas">Visas grupas &raquo;</a>
 					</div>
 					<!-- END BLOCK : groups-l-list-->
@@ -374,36 +376,36 @@
 					<!-- START BLOCK : notification-list-->
 					<h3>Tavi notikumi</h3>
 					<div class="box">
-            {out}
+						{out}
 					</div>
 					<!-- END BLOCK : notification-list-->
 
 					<h3>Jaunākais lapā</h3>
 					<div class="box">
-            <ul class="tabs">
+						<ul class="tabs">
 							<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
 							<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-            </ul>
+						</ul>
 						<div id="lat" class="ajaxbox">{latest-noscript}</div>
 					</div>
 
 					<!-- START BLOCK : poll-box-->
 					<h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
 					<div class="box poll-box">
-            <p><strong>{poll-title}</strong></p>
-            <!-- START BLOCK : poll-answers-->
-            <ol class="poll-answers">
+						<p><strong>{poll-title}</strong></p>
+						<!-- START BLOCK : poll-answers-->
+						<ol class="poll-answers">
 							<!-- START BLOCK : poll-answers-node-->
 							<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
 							<!-- END BLOCK : poll-answers-node-->
-            </ol>
-            <span class="poll-text">
+						</ol>
+						<span class="poll-text">
 							Balsojuši: {poll-totalvotes}<br />
 							<a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
-            </span>
-            <!-- END BLOCK : poll-answers-->
-            <!-- START BLOCK : poll-questions-->
-            <form name="poll" method="post" action="">
+						</span>
+						<!-- END BLOCK : poll-answers-->
+						<!-- START BLOCK : poll-questions-->
+						<form name="poll" method="post" action="">
 							<fieldset>
 								<!-- START BLOCK : poll-error-->
 								<p>{poll-error}</p>
@@ -417,8 +419,8 @@
 								<input type="submit" name="vote" value="Balsot!" class="button primary" />
 								<!-- END BLOCK : poll-options-->
 							</fieldset>
-            </form>
-            <!-- END BLOCK : poll-questions-->
+						</form>
+						<!-- END BLOCK : poll-questions-->
 					</div>
 					<!-- END BLOCK : poll-box-->
 
@@ -474,7 +476,7 @@
 									(i[r].q = i[r].q || []).push(arguments)
 								}, i[r].l = 1 * new Date();
 								a = s.createElement(o),
-												m = s.getElementsByTagName(o)[0];
+										m = s.getElementsByTagName(o)[0];
 								a.async = 1;
 								a.src = g;
 								m.parentNode.insertBefore(a, m)

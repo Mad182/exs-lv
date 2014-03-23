@@ -306,8 +306,10 @@
 				<!-- START BLOCK : profile-box-->
 				<h3>{profile-nick}</h3>
 				<div class="box">
-					<a href="{url}"><img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" /></a><br />
-						{profile-top-awards}
+					<a href="{url}">
+						<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
+					</a>
+					{profile-top-awards}
 					<!-- START BLOCK : profilebox-pm-link-->
 					<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
 					<!-- END BLOCK : profilebox-pm-link-->
@@ -456,7 +458,7 @@
 					(i[r].q = i[r].q || []).push(arguments)
 				}, i[r].l = 1 * new Date();
 				a = s.createElement(o),
-								m = s.getElementsByTagName(o)[0];
+						m = s.getElementsByTagName(o)[0];
 				a.async = 1;
 				a.src = g;
 				m.parentNode.insertBefore(a, m)
