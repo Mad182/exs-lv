@@ -1858,6 +1858,18 @@ input, select, textarea {
 	font-size: 110%;
 }
 
+/* user profile infobox in sidebar */
+
+#profile-awards {
+	margin: 6px 0 10px;
+	padding: 0;
+	text-align: center;
+}
+
+#profile-awards a {
+	color: #777;
+}
+
 #l-blog {
 	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 -14px;
 	padding: 0 0 0 19px;

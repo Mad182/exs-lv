@@ -16,13 +16,13 @@ function get_top_awards($user) {
 		$data = '';
 		$res = $db->get_results("SELECT `id`,`award`,`title` FROM `autoawards` WHERE `user_id` = '$user' ORDER BY `importance` DESC LIMIT 4");
 		if ($res) {
-			$data .= '<p style="margin:0;padding:4px 0 10px">';
+			$data .= '<p id="profile-awards">';
 			foreach ($res as $award) {
 				$data .= '<img width="32" height="32" src="' . $img_server . '/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . htmlspecialchars(strip_tags($award->title)) . '" />&nbsp;';
 			}
 			$total = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user'");
 			if ($total > 4) {
-				$data .= '<a style="color:#777" title="Visas ' . $total . ' medaļas" href="/awards/' . $user . '">(' . $total . ')</a>';
+				$data .= '<a title="Visas ' . $total . ' medaļas" href="/awards/' . $user . '">(' . $total . ')</a>';
 			}
 			$data .= '</p>';
 		}
