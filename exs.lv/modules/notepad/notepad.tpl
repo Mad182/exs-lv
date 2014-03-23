@@ -1,9 +1,9 @@
 <!-- START BLOCK : notepad-->
 <h1>Pierakstu blociņš <a href="javascript:void();"><abbr title="Piezīmes ir vieta, kur pierakstīt linkus, dziesmu nosaukumus vai pilnīgi jebko citu. Šīs piezīmes nekad netiek dzēstas un citiem lietotājiem nav redzamas. Tās var izmantot arī kā vietu, kur veidot rakstu melnrakstus.">(?)</abbr></a></h1>
 
-<ul class="tabs">
+<ul class="tabs" style="height: auto;">
 	<!-- START BLOCK : np-menu-node-->
-	<li><a href="/piezimes/read/{id}" class="{sel}">{title}</a></li>
+	<li style="height:30px"><a href="/piezimes/read/{id}" class="{sel}">{title}</a></li>
 	<!-- END BLOCK : np-menu-node-->
 	<li><a href="/piezimes/new" class="{active-tab-new}"><span class="tools">+</span></a></li>
 </ul>
