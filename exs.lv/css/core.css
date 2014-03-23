@@ -1849,15 +1849,12 @@ input, select, textarea {
 }
 
 #profile-image {
-	margin: 0 0 4px;
-	border: 1px solid #ccc;
-	padding: 2px;
+	margin: 6px auto;
+	display: block;
+	max-width: 100%;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ddd;
-	-webkit-box-shadow: 2px 2px 4px #ddd;
-	box-shadow: 2px 2px 4px #ddd;
 }
 
 #profile-links {
