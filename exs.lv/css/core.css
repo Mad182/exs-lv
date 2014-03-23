@@ -886,6 +886,13 @@ html .banned {
 	max-width: 520px;
 }
 
+#wrapper .article-info {
+	overflow: hidden;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
 #wrapper .article-info li {
 	float: left;
 	color: #666;
@@ -894,9 +901,10 @@ html .banned {
 	height: 18px;
 	margin: 0;
 	padding: 0 7px 0 19px;
+	background: transparent;
 }
 
-#wrapper .article-info li a {
+#wrapper .article-info li.comments a {
 	color: #666;
 }
 
@@ -2213,14 +2221,9 @@ a.left {
 	font-size: 11px;
 }
 
-#wrapper .article-info, .imgs, ul#mainlist, #downloads, .video-thb p, #latest-blogs, #wallpapers, .small-userlist, .responses li p, #miniblog-list, .mb-col, .bloglist {
+.imgs, ul#mainlist, #downloads, .video-thb p, #latest-blogs, #wallpapers, .small-userlist, .responses li p, #miniblog-list, .mb-col, .bloglist {
 	margin: 0;
 	padding: 0;
-}
-
-.article-info {
-	overflow: hidden;
-	width: 100%;
 }
 
 #walpaper {
