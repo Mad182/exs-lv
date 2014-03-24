@@ -2176,7 +2176,7 @@ function get_latest_mbs($friends = false) {
 		$friendsquery
 	ORDER BY
 		`miniblog`.`bump`
-	DESC LIMIT $skip,7");
+	DESC LIMIT $skip, 6");
 
 	if ($mbs) {
 		foreach ($mbs as $mb) {
