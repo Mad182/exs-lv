@@ -1001,7 +1001,6 @@ if ($article) {
 
 			if ($parents) {
 
-				$userclass = array('Lietotāji', 'Admini', 'Moderatori', 'RA', 'Lietotāji');
 				$tpl->newBlock('comments-block');
 				$comment_number = $skip + 1;
 				$childs_q = $db->get_results("SELECT `id`,`date`,`parent`,`author`,`text`,`vote_value`,`vote_users` FROM `comments` WHERE pid = '" . $article->id . "' AND parent != 0 AND removed = 0 ORDER BY id ASC");
@@ -1076,10 +1075,6 @@ if ($article) {
 							'comment-author-custom_title' => $author[$comment->author]->custom_title,
 							'comment-editedby' => $editedby,
 						));
-
-						if ($article->lang == 1 && $auth->mobile != true) {
-							$tpl->assign('group', '<span class="title">Grupa:</span> <span>' . $userclass[$author[$comment->author]->level] . '</span><br />');
-						}
 
 						if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {
 							$signature = '<div class="comment-signature">' . $author[$comment->author]->signature . '</div>';

@@ -325,17 +325,19 @@
 		<img class="comments-avatar" src="{avatar}" alt="{comment-author-title}" />
 	</a>
 	<span class="custom-title">{comment-author-custom_title}</span>
-	<span class="author-info">
-		{group}
-		<span class="title">Karma:</span> <span>{comment-author-karma}</span>
-	</span>
+	<span class="author-info">Karma: {comment-author-karma}</span>
 	</dt>
 	<dd>
 		<p class="inf">
 			<!-- START BLOCK : comments-vote-->
-			<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
+			<span class="c-rate">
+				<span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}
+			</span>
 			<!-- END BLOCK : comments-vote-->
-			<strong><a href="#c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong><span>{comment-date}</span>
+			<strong>
+				<a href="#c{comment-id}" title="Saite uz komentāru">#{comment-number}</a>
+			</strong>
+			<span>{comment-date}</span>
 			<!-- START BLOCK : report-comment -->
 			<span class="report-button">
 				<a class="report-user" href="/report/article-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>

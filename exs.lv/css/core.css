@@ -2758,6 +2758,7 @@ a.friend-right {
 	padding: 3px;
 	margin: 0 0 3px 0;
 	font-size: 12px;
+	text-align: left;
 }
 
 .inf {
@@ -2828,17 +2829,12 @@ a:hover .lp-prefix {
 	color: #718A96;
 }
 
-.author-info span.title {
-	font-weight: 700;
-}
-
 #content .custom-title {
 	font-style:italic;
 	text-align: center;
 	display: block;
 	font-size: 12px;
 	line-height: 14px;
-	padding: 2px 0;
 }
 
 .mb-rater, .mb-icon {
