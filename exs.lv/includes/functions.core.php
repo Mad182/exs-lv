@@ -346,28 +346,28 @@ function im_mod() {
  *  @param  bool    norāde, vai atjaunot memcache vērtību ar moderatoru sarakstu
  */
 function im_rs_mod($force = true) {
-    global $auth, $db, $m, $lang;
+	global $auth, $db, $m, $lang;
 
-    if (!$auth->ok || $lang != 9)
-        return false;
+	if (!$auth->ok || $lang != 9)
+		return false;
 
-    $rs_mods = array();
+	$rs_mods = array();
 
-    if ($force || $m->get('runescape-mods') === false) {
+	if ($force || $m->get('runescape-mods') === false) {
 
-        $get_mods = $db->get_col("SELECT `user_id` FROM `rs_mods` WHERE `is_deleted` = 0");
-        if ($get_mods) {
-            $rs_mods = $get_mods;
-        }
+		$get_mods = $db->get_col("SELECT `user_id` FROM `rs_mods` WHERE `is_deleted` = 0");
+		if ($get_mods) {
+			$rs_mods = $get_mods;
+		}
 
-        // ik pēc 15 min pārbaudīs datubāzi,
-        // 15 min tādēļ, lai pēc izmaiņām tabulā ilgi nebūtu jāgaida
-        $m->set('runescape-mods', $rs_mods, false, 900);
-    }
+		// ik pēc 15 min pārbaudīs datubāzi,
+		// 15 min tādēļ, lai pēc izmaiņām tabulā ilgi nebūtu jāgaida
+		$m->set('runescape-mods', $rs_mods, false, 900);
+	}
 
-    $rs_mods = $m->get('runescape-mods');
+	$rs_mods = $m->get('runescape-mods');
 
-    return (im_mod() || in_array($auth->id, $rs_mods));
+	return (im_mod() || in_array($auth->id, $rs_mods));
 }
 
 /**
@@ -2091,7 +2091,7 @@ function get_latest_mbs($friends = false) {
 	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
 
 	if (isset($_GET['pg'])) {
-		$skip = 7 * intval($_GET['pg']);
+		$skip = 6 * intval($_GET['pg']);
 	} else {
 		$skip = 0;
 	}
@@ -2182,8 +2182,6 @@ function get_latest_mbs($friends = false) {
 		foreach ($mbs as $mb) {
 			$spec = '';
 
-			$avatar = get_avatar($mb, 's');
-
 			$mb->text = mb_get_title($mb->text);
 			$domain = '';
 			$prefix = '';
@@ -2210,6 +2208,9 @@ function get_latest_mbs($friends = false) {
 					$url = $domain . '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
 				}
 			} else {
+
+				$avatar = get_avatar($mb, 's');
+
 				$url = $domain . '/say/' . $mb->author . '/' . $mb->id . '-' . mb_get_strid($mb->text, $mb->id);
 			}
 
