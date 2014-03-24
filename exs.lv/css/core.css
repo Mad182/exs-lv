@@ -1047,6 +1047,16 @@ a.friend:hover {
 	-webkit-border-radius: 3px;
 }
 
+a.friend img, .comments-avatar {
+	max-width: 90px;
+	max-height: 90px;
+	margin: 8px auto;
+	display: block;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
 .mb-av {
 	position: relative;
 	line-height: 1px;
@@ -2229,15 +2239,11 @@ a.left {
 	text-align: center;
 }
 
-a.friend img, .comments-avatar {
-	max-width: 90px;
-	max-height: 90px;
-	margin: 5px auto;
-	display: block;
-}
-
 .small-userlist li a:hover img, #walpaper a:hover img, #wallpapers a:hover, .imgs a:hover, a.radio:hover {
 	border: 1px solid #000;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 }
 
 .form label, .quote-user {
