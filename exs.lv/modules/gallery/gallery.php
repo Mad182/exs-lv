@@ -482,9 +482,10 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		`galcom`.`vote_users` AS `vote_users`,
 		`users`.`nick` AS `author_nick`,
 		`users`.`level` AS `author_level`,
-		`users`.`avatar` AS `avatar`,
-		`users`.`av_alt` AS `av_alt`,
-		`users`.`karma` AS `author_karma`
+		`users`.`avatar`,
+		`users`.`av_alt`,
+		`users`.`custom_title`,
+		`users`.`karma`
 	FROM
 		`galcom`,
 		`users`
@@ -497,7 +498,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			");
 
 			if ($comments) {
-				$userclass = array('Lietotāji', 'Admini', 'Moderatori', 'RA', 'Lietotāji');
 				$tpl->newBlock('comments-block');
 				$comment_number = 1;
 				foreach ($comments as $comment) {
@@ -527,9 +527,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						'comment-author-id' => $comment->author,
 						'aurl' => '/user/' . $comment->author,
 						'avatar' => get_avatar($comment),
-						'comment-author-karma' => $comment->author_karma,
-						'comment-author-class' => $userclass[$comment->author_level],
-						'comment-author-title' => htmlspecialchars($comment->author_nick),
+						'karma' => $comment->karma,
+						'title' => htmlspecialchars($comment->author_nick),
+						'custom_title' => custom_user_title($comment),
 						'comment-editedby' => $editedby,
 					));
 

@@ -1024,31 +1024,6 @@ if ($article) {
 						$tpl->newBlock('comments-node');
 						$tpl->newBlock('comments-node-user');
 
-
-						if ($author[$comment->author]->avatar == '') {
-							$author[$comment->author]->avatar = 'none.png';
-						}
-
-						if (empty($author[$comment->author]->custom_title)) {
-							if ($author[$comment->author]->karma >= 500) {
-								$author[$comment->author]->custom_title = 'Guru';
-							} elseif ($author[$comment->author]->karma >= 400) {
-								$author[$comment->author]->custom_title = 'Dzīvo exā';
-							} elseif ($author[$comment->author]->karma >= 300) {
-								$author[$comment->author]->custom_title = 'Atkarībnieks';
-							} elseif ($author[$comment->author]->karma >= 200) {
-								$author[$comment->author]->custom_title = 'Profiņš';
-							} elseif ($author[$comment->author]->karma >= 100) {
-								$author[$comment->author]->custom_title = 'Lietpratējs';
-							} elseif ($author[$comment->author]->karma >= 50) {
-								$author[$comment->author]->custom_title = 'Savējais';
-							} elseif ($author[$comment->author]->karma >= 20) {
-								$author[$comment->author]->custom_title = 'Biežais viesis';
-							} else {
-								$author[$comment->author]->custom_title = 'Jauniņais';
-							}
-						}
-
 						$editedby = '';
 						if ($comment->edit_times > 0 && $auth->ok) {
 							if (empty($author[$comment->edit_user])) {
@@ -1059,8 +1034,6 @@ if ($article) {
 
 						$comment->date = display_time(strtotime($comment->date));
 
-						$avatar = get_avatar($author[$comment->author]);
-
 						$tpl->assign(array(
 							'comment-id' => $comment->id,
 							'comment-number' => $comment_number,
@@ -1069,10 +1042,10 @@ if ($article) {
 							'comment-author' => usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author),
 							'comment-author-id' => $comment->author,
 							'aurl' => '/user/' . $comment->author,
-							'avatar' => $avatar,
-							'comment-author-karma' => $author[$comment->author]->karma,
-							'comment-author-title' => htmlspecialchars($author[$comment->author]->nick),
-							'comment-author-custom_title' => $author[$comment->author]->custom_title,
+							'avatar' => get_avatar($author[$comment->author]),
+							'karma' => $author[$comment->author]->karma,
+							'title' => htmlspecialchars($author[$comment->author]->nick),
+							'custom_title' => custom_user_title($author[$comment->author]),
 							'comment-editedby' => $editedby,
 						));
 

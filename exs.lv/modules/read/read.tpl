@@ -322,10 +322,10 @@
 	<dt>
 	<a class="username" id="c{comment-id}" href="{aurl}">{comment-author}</a>
 	<a href="{aurl}">
-		<img class="comments-avatar" src="{avatar}" alt="{comment-author-title}" />
+		<img class="comments-avatar" src="{avatar}" alt="{title}" />
 	</a>
-	<span class="custom-title">{comment-author-custom_title}</span>
-	<span class="author-info">Karma: {comment-author-karma}</span>
+	<span class="custom-title">{custom_title}</span>
+	<span class="author-info">Karma: {karma}</span>
 	</dt>
 	<dd>
 		<p class="inf">

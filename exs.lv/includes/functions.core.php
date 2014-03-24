@@ -2449,3 +2449,30 @@ function esr(&$val, $empty = '') {
 		return $empty;
 	}
 }
+
+/**
+ * Get users title based on karma level
+ */
+function custom_user_title($user) {
+	if (empty($user->custom_title)) {
+		if ($user->karma >= 500) {
+			return 'Guru';
+		} elseif ($user->karma >= 400) {
+			return 'Dzīvo exā';
+		} elseif ($user->karma >= 300) {
+			return 'Atkarībnieks';
+		} elseif ($user->karma >= 200) {
+			return 'Profiņš';
+		} elseif ($user->karma >= 100) {
+			return 'Lietpratējs';
+		} elseif ($user->karma >= 50) {
+			return 'Savējais';
+		} elseif ($user->karma >= 20) {
+			return 'Biežais viesis';
+		} else {
+			return 'Jauniņais';
+		}
+	} else {
+		return $user->custom_title;
+	}
+}
