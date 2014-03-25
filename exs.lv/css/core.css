@@ -310,7 +310,7 @@ html .banned {
 
 #top-menu {
 	margin: 0;
-	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	background: transparent url('http://img.exs.lv/bildes/dark.png') repeat 0 0;
 	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 11px;
 	border-bottom: 2px solid #2090cc;
