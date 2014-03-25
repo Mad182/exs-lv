@@ -85,6 +85,7 @@ if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
 
+/*
 $top_players = $db->get_results("
 	SELECT
 		DISTINCT(`lol_tracking`.`player_id`) as `player_id`,
@@ -109,3 +110,5 @@ if(!empty($top_players)) {
 		$tpl->assignAll($plr);
 	}
 }
+*/
+
