@@ -25,7 +25,7 @@
 			var c_url = "{page-url}";
 		</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}" type="text/css" />
+		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}?fluid" type="text/css" />
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -201,254 +201,259 @@
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
 
-			<div id="content" class="{layout-options}">
-				<!-- START BLOCK : page-path-->
-				<p id="breadcrumbs">{page-path}</p>
-				<!-- END BLOCK : page-path-->
-
-				<!-- START BLOCK : profile-menu-->
-				<h1>{user-nick}{user-menu-add}</h1>
-
-				{ad-468}
-
-				<ul class="tabs">
-					<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-					<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
-					<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-					<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
-					<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
-					<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
-					<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
-				</ul>
-
-				<!-- END BLOCK : profile-menu-->
-
-				<!-- INCLUDE BLOCK : module-core-error -->
-				<div id="current-module">
-					<!-- INCLUDE BLOCK : module-currrent -->
-				</div>
-				<div class="c"></div>
-			</div>
-
 			<!-- START BLOCK : main-layout-left-->
 			<div id="left">
+				<div class="inner">
+					<!-- START BLOCK : movie-search-->
+					<h3>Meklēt filmu</h3>
+					<div class="box">
+						<form id="movie-search" method="get" action="/filmas/search">
+							<!-- START BLOCK : genre-node-->
+							<label style="font-size: 10px;line-heigh: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
+							<!-- START BLOCK : genre-node-->
 
-				<!-- START BLOCK : movie-search-->
-				<h3>Meklēt filmu</h3>
-				<div class="box">
-					<form id="movie-search" method="get" action="/filmas/search">
-						<!-- START BLOCK : genre-node-->
-						<label style="font-size: 10px;line-heigh: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
-						<!-- START BLOCK : genre-node-->
+							<input type="submit" value="Meklēt" class="button primary small" />
+						</form>
+					</div>
+					<!-- END BLOCK : movie-search-->
 
-						<input type="submit" value="Meklēt" class="button primary small" />
-					</form>
-				</div>
-				<!-- END BLOCK : movie-search-->
+					<!-- START BLOCK : menu-list-->
+					<h3>{title}</h3>
+					<ul class="menu" id="nav-{topid}">
+						<!-- START BLOCK : menu-node-->
+						<li{sel}><a href="{url}">{title}</a>
+							<!-- START BLOCK : menu-list-sub-->
+							<ul>
+								<!-- START BLOCK : menu-node-sub-->
+								<li{sel}><a href="{url}">{title}</a></li>
+								<!-- END BLOCK : menu-node-sub-->
+							</ul>
+							<!-- END BLOCK : menu-list-sub-->
+						</li>
+						<!-- END BLOCK : menu-node-->
+					</ul>
+					<!-- END BLOCK : menu-list-->
 
-				<!-- START BLOCK : menu-list-->
-				<h3>{title}</h3>
-				<ul class="menu" id="nav-{topid}">
-					<!-- START BLOCK : menu-node-->
-					<li{sel}><a href="{url}">{title}</a>
-						<!-- START BLOCK : menu-list-sub-->
-						<ul>
-							<!-- START BLOCK : menu-node-sub-->
-							<li{sel}><a href="{url}">{title}</a></li>
-							<!-- END BLOCK : menu-node-sub-->
+					<!-- START BLOCK : notification-list-->
+					<h3>Tavi notikumi</h3>
+					<div class="box">
+						{out}
+					</div>
+					<!-- END BLOCK : notification-list-->
+
+					<h3>Jaunākais portālā</h3>
+					<div class="box">
+						<ul class="tabs">
+							<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+							<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
 						</ul>
-						<!-- END BLOCK : menu-list-sub-->
-					</li>
-					<!-- END BLOCK : menu-node-->
-				</ul>
-				<!-- END BLOCK : menu-list-->
+						<div class="c"></div>
+						<div id="lat" class="ajaxbox">{latest-noscript}</div>
+					</div>
 
-				<!-- START BLOCK : notification-list-->
-				<h3>Tavi notikumi</h3>
-				<div class="box">
-					{out}
-				</div>
-				<!-- END BLOCK : notification-list-->
+					<!-- START BLOCK : groups-l-list-->
+					<h3>Jaunākās grupas</h3>
+					<div class="box">
+						<p>
+							<!-- START BLOCK : groups-l-node-->
+							<a href="{link}">{title}</a><br />
+							<!-- END BLOCK : groups-l-node-->
+						</p>
+						<a href="/grupas">Visas grupas &raquo;</a>
+					</div>
+					<!-- END BLOCK : groups-l-list-->
+					<h3>Meklētājs</h3>
+					<div class="box">
+						Meklēt lapā ar <a href="/search/">google</a>:
+						<form method="get" action="/search/" id="search-form">
+							<fieldset>
+								<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
+								<input type="hidden" name="cof" value="FORID:11" />
+								<input type="hidden" name="ie" value="UTF-8" />
+								<input class="text" name="q" size="16" type="text" value="" />
+								<input value="Meklēt" class="submit button primary" type="submit" />
+							</fieldset>
+						</form>
+					</div>
 
-				<h3>Jaunākais portālā</h3>
-				<div class="box">
-					<ul class="tabs">
-						<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-						<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-					</ul>
-					<div class="c"></div>
-					<div id="lat" class="ajaxbox">{latest-noscript}</div>
-				</div>
+					<!-- START BLOCK : user-top-->
+					<h3>Šodien aktīvākie</h3>
+					<div class="box">
+						<ul id="today-top">
+							<!-- START BLOCK : user-top-node-->
+							<li><a href="{url}"><img class="av" src="{avatar}" alt="" />{user}</a><span class="count">({today})</span></li>
+							<!-- END BLOCK : user-top-node-->
+						</ul>
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : user-top-->
 
-				<!-- START BLOCK : groups-l-list-->
-				<h3>Jaunākās grupas</h3>
-				<div class="box">
-					<p>
-						<!-- START BLOCK : groups-l-node-->
-						<a href="{link}">{title}</a><br />
-						<!-- END BLOCK : groups-l-node-->
-					</p>
-					<a href="/grupas">Visas grupas &raquo;</a>
-				</div>
-				<!-- END BLOCK : groups-l-list-->
-				<h3>Meklētājs</h3>
-				<div class="box">
-					Meklēt lapā ar <a href="/search/">google</a>:
-					<form method="get" action="/search/" id="search-form">
-						<fieldset>
-							<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
-							<input type="hidden" name="cof" value="FORID:11" />
-							<input type="hidden" name="ie" value="UTF-8" />
-							<input class="text" name="q" size="16" type="text" value="" />
-							<input value="Meklēt" class="submit button primary" type="submit" />
-						</fieldset>
-					</form>
-				</div>
+					<h3>Nejaušs fakts</h3>
+					<div class="box">
+						<ul class="tabs">
+							<li><a href="/fact" class="{fact-all-selected} remember-fact-all ajax"><span class="fact-all">Spēles</span></a></li>
+							<li><a href="/fact/rs" class="{fact-rs-selected} remember-fact-rs ajax"><span class="fact-rs">RS</span></a></li>
+						</ul>
+						<div class="c"></div>
+						<div id="random-fact" class="ajaxbox">{random-fact}</div>
+					</div>
 
-				<!-- START BLOCK : user-top-->
-				<h3>Šodien aktīvākie</h3>
-				<div class="box">
-					<ul id="today-top">
-						<!-- START BLOCK : user-top-node-->
-						<li><a href="{url}"><img class="av" src="{avatar}" alt="" />{user}</a><span class="count">({today})</span></li>
-						<!-- END BLOCK : user-top-node-->
-					</ul>
-					<div class="c"></div>
 				</div>
-				<!-- END BLOCK : user-top-->
-
-				<h3>Nejaušs fakts</h3>
-				<div class="box">
-					<ul class="tabs">
-						<li><a href="/fact" class="{fact-all-selected} remember-fact-all ajax"><span class="fact-all">Spēles</span></a></li>
-						<li><a href="/fact/rs" class="{fact-rs-selected} remember-fact-rs ajax"><span class="fact-rs">RS</span></a></li>
-					</ul>
-					<div class="c"></div>
-					<div id="random-fact" class="ajaxbox">{random-fact}</div>
-				</div>
-
 			</div>
 			<!-- END BLOCK : main-layout-left-->
 
+			<div id="content" class="{layout-options}">
+				<div class="inner">
+					<!-- START BLOCK : page-path-->
+					<p id="breadcrumbs">{page-path}</p>
+					<!-- END BLOCK : page-path-->
+
+					<!-- START BLOCK : profile-menu-->
+					<h1>{user-nick}{user-menu-add}</h1>
+
+					{ad-468}
+
+					<ul class="tabs">
+						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
+						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
+						<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
+						<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
+						<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
+						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
+						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+					</ul>
+
+					<!-- END BLOCK : profile-menu-->
+
+					<!-- INCLUDE BLOCK : module-core-error -->
+					<div id="current-module">
+						<!-- INCLUDE BLOCK : module-currrent -->
+					</div>
+					<div class="c"></div>
+				</div>
+			</div>
+
 			<!-- START BLOCK : main-layout-right-->
 			<div id="right">
+				<div class="inner">
 
-				<!-- START BLOCK : junk-info-->
-				<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
-				<!-- END BLOCK : junk-info-->
+					<!-- START BLOCK : junk-info-->
+					<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
+					<!-- END BLOCK : junk-info-->
 
-				<!-- START BLOCK : profile-box-->
-				<h3>{profile-nick}{custom_title}</h3>
-				<div class="box">
-					<a href="{url}">
-						<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
-					</a>
-					{profile-top-awards}
-					<!-- START BLOCK : profilebox-pm-link-->
-					<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
-					<!-- END BLOCK : profilebox-pm-link-->
-					<!-- START BLOCK : profilebox-warn-->
-					<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
-					<!-- END BLOCK : profilebox-warn-->
-					<!-- START BLOCK : profilebox-blog-link-->
-					<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
-					<!-- END BLOCK : profilebox-blog-link-->
-					<!-- START BLOCK : profilebox-twitter-link-->
-					<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
-					<!-- END BLOCK : profilebox-twitter-link-->
-					<!-- START BLOCK : profilebox-yt-link-->
-					<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
-					<!-- END BLOCK : profilebox-yt-link-->
-					<div class="c"></div>
-				</div>
-				<!-- END BLOCK : profile-box-->
-				<!-- START BLOCK : group-box-->
-				<h3>{group-title}</h3>
-				<div class="box">
-					<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
-				</div>
-				<!-- END BLOCK : group-box-->
+					<!-- START BLOCK : profile-box-->
+					<h3>{profile-nick}{custom_title}</h3>
+					<div class="box">
+						<a href="{url}">
+							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
+						</a>
+						{profile-top-awards}
+						<!-- START BLOCK : profilebox-pm-link-->
+						<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
+						<!-- END BLOCK : profilebox-pm-link-->
+						<!-- START BLOCK : profilebox-warn-->
+						<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
+						<!-- END BLOCK : profilebox-warn-->
+						<!-- START BLOCK : profilebox-blog-link-->
+						<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
+						<!-- END BLOCK : profilebox-blog-link-->
+						<!-- START BLOCK : profilebox-twitter-link-->
+						<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+						<!-- END BLOCK : profilebox-twitter-link-->
+						<!-- START BLOCK : profilebox-yt-link-->
+						<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
+						<!-- END BLOCK : profilebox-yt-link-->
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : profile-box-->
+					<!-- START BLOCK : group-box-->
+					<h3>{group-title}</h3>
+					<div class="box">
+						<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
+					</div>
+					<!-- END BLOCK : group-box-->
 
-				<!-- START BLOCK : friendssay-box-->
-				<h3>Miniblogi{miniblog-add}</h3>
+					<!-- START BLOCK : friendssay-box-->
+					<h3>Miniblogi{miniblog-add}</h3>
 
-				<div class="box">
+					<div class="box">
 
-					<!-- START BLOCK : friendssay-tabs-->
-					<ul class="tabs">
-						<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
-						<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
-					</ul>
-					<div class="c"></div>
-					<!-- END BLOCK : friendssay-tabs-->
-					<div id="miniblog-block" class="ajaxbox">{out}</div>
-				</div>
+						<!-- START BLOCK : friendssay-tabs-->
+						<ul class="tabs">
+							<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
+							<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
+						</ul>
+						<div class="c"></div>
+						<!-- END BLOCK : friendssay-tabs-->
+						<div id="miniblog-block" class="ajaxbox">{out}</div>
+					</div>
 
-				<!-- END BLOCK : friendssay-box-->
+					<!-- END BLOCK : friendssay-box-->
 
-				<!-- START BLOCK : side-junk-->
-				<h3>/junk</h3>
-				<div class="box junk-box">
-					<!-- START BLOCK : side-junk-node-->
-					<a href="http://exs.lv/junk/{id}" title="{title}">
-						<img src="http://img.exs.lv{thb}" alt="" class="av" />
-						<span style="">{posts}</span>
-					</a>
-					<!-- END BLOCK : side-junk-node-->
-					<div class="c"></div>
-				</div>
-				<!-- END BLOCK : side-junk-->
+					<!-- START BLOCK : side-junk-->
+					<h3>/junk</h3>
+					<div class="box junk-box">
+						<!-- START BLOCK : side-junk-node-->
+						<a href="http://exs.lv/junk/{id}" title="{title}">
+							<img src="http://img.exs.lv{thb}" alt="" class="av" />
+							<span style="">{posts}</span>
+						</a>
+						<!-- END BLOCK : side-junk-node-->
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : side-junk-->
 
-				<!-- START BLOCK : blog-latest-list-->
-				{html}
-				<!-- END BLOCK : blog-latest-list-->
-				<!-- START BLOCK : poll-box-->
-				<h3>Aptauja</h3>
-				<div class="box">
-					<p><strong>{poll-title}</strong></p>
-					<!-- START BLOCK : poll-answers-->
-					<ol class="poll-answers">
-						<!-- START BLOCK : poll-answers-node-->
-						<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-						<!-- END BLOCK : poll-answers-node-->
-					</ol>
-					Balsojuši: {poll-totalvotes}<br />
-					<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
-					<!-- END BLOCK : poll-answers-->
-					<!-- START BLOCK : poll-questions-->
-					<form name="poll" method="post" action="">
-						<fieldset>
-							<!-- START BLOCK : poll-error-->
-							<p>{poll-error}</p>
-							<!-- END BLOCK : poll-error-->
-							<!-- START BLOCK : poll-options-->
-							<ol id="poll-questions">
-								<!-- START BLOCK : poll-options-node-->
-								<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-								<!-- END BLOCK : poll-options-node-->
-							</ol>
-							<input type="submit" name="vote" value="Balsot!" class="button primary" />
-							<!-- END BLOCK : poll-options-->
-						</fieldset>
-					</form>
-					<!-- END BLOCK : poll-questions-->
-				</div>
-				<!-- END BLOCK : poll-box-->
+					<!-- START BLOCK : blog-latest-list-->
+					{html}
+					<!-- END BLOCK : blog-latest-list-->
+					<!-- START BLOCK : poll-box-->
+					<h3>Aptauja</h3>
+					<div class="box">
+						<p><strong>{poll-title}</strong></p>
+						<!-- START BLOCK : poll-answers-->
+						<ol class="poll-answers">
+							<!-- START BLOCK : poll-answers-node-->
+							<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+							<!-- END BLOCK : poll-answers-node-->
+						</ol>
+						Balsojuši: {poll-totalvotes}<br />
+						<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+						<!-- END BLOCK : poll-answers-->
+						<!-- START BLOCK : poll-questions-->
+						<form name="poll" method="post" action="">
+							<fieldset>
+								<!-- START BLOCK : poll-error-->
+								<p>{poll-error}</p>
+								<!-- END BLOCK : poll-error-->
+								<!-- START BLOCK : poll-options-->
+								<ol id="poll-questions">
+									<!-- START BLOCK : poll-options-node-->
+									<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+									<!-- END BLOCK : poll-options-node-->
+								</ol>
+								<input type="submit" name="vote" value="Balsot!" class="button primary" />
+								<!-- END BLOCK : poll-options-->
+							</fieldset>
+						</form>
+						<!-- END BLOCK : poll-questions-->
+					</div>
+					<!-- END BLOCK : poll-box-->
 
-				<!-- START BLOCK : daily-wallpaper-->
-				<h3>Dienas tapete</h3>
-				<div id="walpaper" class="box">
-					<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
-						<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
-					</a><br />
-					<a href="/wallpapers">Tapetes</a>
-				</div>
-				<!-- END BLOCK : daily-wallpaper-->
+					<!-- START BLOCK : daily-wallpaper-->
+					<h3>Dienas tapete</h3>
+					<div id="walpaper" class="box">
+						<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
+							<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
+						</a><br />
+						<a href="/wallpapers">Tapetes</a>
+					</div>
+					<!-- END BLOCK : daily-wallpaper-->
 
-				<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
-				<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
+					<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
+					<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
 								;</script>
 
+				</div>
 			</div>
 			<!-- END BLOCK : main-layout-right-->
 			<div class="c"></div>

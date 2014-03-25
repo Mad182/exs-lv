@@ -43,18 +43,20 @@
 		<!-- START BLOCK : add-image-form-->
 
 		<!-- START BLOCK : image-list-->
-		<a class="prev browse left gray">&laquo;</a>
-		<div class="scrollable imgs" id="images">
-			<div class="items">
-				<div>
-					<!-- START BLOCK : image-list-node-->
-					{imgblock-seperator}<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
-					<!-- START BLOCK : image-list-node-->
+		<div id="gallery-image-list">
+			<a class="prev browse left gray">&laquo;</a>
+			<div class="scrollable imgs" id="images">
+				<div class="items">
+					<div>
+						<!-- START BLOCK : image-list-node-->
+						{imgblock-seperator}<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
+						<!-- START BLOCK : image-list-node-->
+					</div>
 				</div>
 			</div>
+			<a class="next browse right gray">&raquo;</a>
+			<div class="c"></div>
 		</div>
-		<a class="next browse right gray">&raquo;</a>
-		<div class="c"></div>
 
 		<script type="text/javascript">
 			$().ready(function() {

@@ -174,3 +174,76 @@ body {
 	margin-right: 0;
 	padding-right: 0;
 }
+
+#gallery-image-list {
+	width: 560px;
+	margin: 0 auto;
+}
+
+#left, #content, #right {
+	margin: 0;
+	padding: 0;
+	float: left;
+	left: auto;
+	position: relative;
+}
+
+#left .inner, #right .inner {
+	padding: 8px;
+}
+
+#content .inner {
+	padding: 15px 9px;
+}
+
+#left {
+	overflow: hidden;
+	width: 20%;
+}
+
+#right {
+	overflow: hidden;
+	width: 22%;
+	float: right;
+}
+
+#content {
+	width: 58%;
+}
+
+#content.no-right {
+	width: 80%;
+}
+
+#content.no-left {
+	width: 78%;
+}
+
+#content.no-left-right {
+	width: auto;
+	float: none;
+	left: 0px;
+	display: block;
+	clear: both;
+}
+
+#wrapper {
+	position: relative;
+	background: #fff;
+	width: 90%;
+	min-width: 980px;
+	max-width: 1120px;
+	margin: 0 auto 20px;
+	border-radius:2px;
+	padding: 0 5px 5px;
+	height: auto !important;
+	height: 1100px;
+	min-height: 1100px;
+	-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	-moz-box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	box-shadow:0 1px 1px rgba(0,0,0,0.3);
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+}
