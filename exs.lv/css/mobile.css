@@ -201,6 +201,9 @@ p.comment-tools a {
 	margin: 5px auto;
 	padding: 1px;
 	border: 1px solid #eee;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 .response-content {
@@ -211,8 +214,10 @@ p.comment-tools a {
 	width: 45px;
 	height: 45px;
 	float: left;
-	display: inline;
 	margin: 3px 6px 2px 0;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 
 .mb-av {
@@ -1268,6 +1273,7 @@ blockquote, .q, .quote {
 	width: 32px;
 	height: 32px;
 }
+
 /* spoileri */
 .spoiler {
 	display: block;
