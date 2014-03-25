@@ -17,18 +17,33 @@ if (isset($_GET['var1'])) {
 
     // raksta informācija
     $news_data = $db->get_row("
-        SELECT `title`, `text` FROM `pages` 
+        SELECT 
+            `pages`.`title`     AS `page_title`, 
+            `pages`.`text`      AS `page_text`,
+            `users`.`id`        AS `user_id`,
+            `users`.`nick`      AS `user_nick`
+        FROM `pages` 
+            JOIN `users` ON `pages`.`author` = `users`.`id`
         WHERE 
-            `id` = '".(int)$_GET['var1']."' AND
-            (`lang` = '$android_lang' OR `lang` = 0)
+            `pages`.`id` = '".(int)$_GET['var1']."' AND
+            (`pages`.`lang` = '$android_lang' OR `pages`.`lang` = 0)
     ");
     // raksta komentāri
     $page_comments = $db->get_results("
-        SELECT * FROM comments 
+        SELECT 
+            `comments`.`id`         AS `comment_id`,
+            `comments`.`text`       AS `comment_text`,
+            `comments`.`date`       AS `comment_date`,
+            `comments`.`replies`    AS `comment_replies`,
+            `users`.`id`            AS `user_id`,
+            `users`.`nick`          AS `user_nick`
+        FROM `comments`
+            JOIN `users` ON `comments`.`author` = `users`.`id`
         WHERE 
-            `pid` = '" . (int)$_GET['var1'] . "' AND 
-            `parent` = 0 AND `removed` = 0 
-        ORDER BY `id` ASC
+            `comments`.`pid` = '" . (int)$_GET['var1'] . "' AND 
+            `comments`.`parent` = 0 AND 
+            `comments`.`removed` = 0 
+        ORDER BY `comments`.`id` ASC
     ");
     
     // masīvi, kas tiks pievienoti $json_page 
@@ -38,8 +53,10 @@ if (isset($_GET['var1'])) {
     // informācija par rakstu atrasta
     if ($news_data) {
         $about_news = array(
-            'title' => $news_data->title,
-            'text'  => $news_data->text
+            'page_title'    => $news_data->page_title,
+            'page_text'     => $news_data->page_text,
+            'user_id'       => $news_data->user_id,
+            'user_nick'     => $news_data->user_nick
         );
     }
     
@@ -48,11 +65,12 @@ if (isset($_GET['var1'])) {
     if ($news_data && $page_comments) {   
         foreach ($page_comments as $single_comment) {
             $comments[] = array(
-                'id'        => $single_comment->id,
-                'author'    => $single_comment->author,
-                'text'      => $single_comment->text,
-                'date'      => $single_comment->date,
-                'replies'   => $single_comment->replies
+                'comment_id'        => $single_comment->comment_id,
+                'comment_text'      => $single_comment->comment_text,
+                'comment_date'      => $single_comment->comment_date,
+                'comment_replies'   => $single_comment->comment_replies,
+                'user_id'           => $single_comment->user_id,
+                'user_nick'         => $single_comment->user_nick
             );
         }
     }
