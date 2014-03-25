@@ -6,7 +6,7 @@
  */
 
 $sub_include    = true;     // submoduļos ir pārbaude, vai šāds mainīgais definēts
-$submodule      = '';       // iekļaujamais submodulis
+$android_lang   = 1;        // nākotnē atbalstīs dažādus apakšprojektus
 
 
 /**
@@ -51,7 +51,6 @@ else if (isset($_GET['login'])) {
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
     }
-
     $json_user = array('id' => $auth->id, 'nick' => $auth->nick, 'level' => $auth->level);
 }
 
