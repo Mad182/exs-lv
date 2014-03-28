@@ -227,6 +227,10 @@ body {
 	clear: both;
 }
 
+.no-right #left {
+	left: 0;
+}
+
 #wrapper {
 	position: relative;
 	background: #fff;
