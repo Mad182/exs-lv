@@ -579,7 +579,12 @@ function embed_youtube($matches, $wide = 0) {
 }
 
 function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
-	global $img_server;
+	global $img_server, $lang;
+
+	//disable smilies for coding.lv if post contains code
+	if (strpos($txt, 'prettyprint') !== false && $lang == 3) {
+		$disable_emotions = true;
+	}
 
 	if (!$disable_emotions) {
 		$smilies = array(
