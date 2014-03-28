@@ -110,7 +110,7 @@ if ($inprofile) {
 			$tpl->newBlock('block-domain');
 
 			foreach ($config_domains as $key => $domain) {
-				if ($domain['domain'] !== 'secure.exs.lv') {
+				if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
 					$tpl->newBlock('block-domain-node');
 					$tpl->assign(array(
 						'id' => $key,
