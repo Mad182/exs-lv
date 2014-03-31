@@ -62,12 +62,52 @@ if ($auth->ok) {
 			if ($auth->vote_today >= $limit) {
 				die('Sasniegts dienas limits');
 			} elseif ($_GET['action'] == 'plus') {
-				$db->query("UPDATE `" . $table . "` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
+
+				$vt = 'vote_value+1';
+				if ($lang == 1 && date('d.m.Y', time()) === '01.04.2014') {
+
+					$values = array(
+						'vote_value+1',
+						'vote_value-1',
+						'vote_value+2',
+						'vote_value-2',
+						'vote_value+3',
+						'vote_value-3',
+						'vote_value+4',
+						'vote_value-4',
+					);
+
+					shuffle($values);
+					$vt = $values[0];
+
+				}
+
+				$db->query("UPDATE `" . $table . "` SET vote_value = ".$vt.", vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
 				$db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
 				$comment->vote_value++;
 				get_user($auth->id, true);
 			} else {
-				$db->query("UPDATE `" . $table . "` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
+
+				$vt = 'vote_value-1';
+				if ($lang == 1 && date('d.m.Y', time()) === '01.04.2014') {
+
+					$values = array(
+						'vote_value+1',
+						'vote_value-1',
+						'vote_value+2',
+						'vote_value-2',
+						'vote_value+3',
+						'vote_value-3',
+						'vote_value+4',
+						'vote_value-4',
+					);
+
+					shuffle($values);
+					$vt = $values[0];
+
+				}
+
+				$db->query("UPDATE `" . $table . "` SET vote_value = ".$vt.", vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
 				$db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
 				$comment->vote_value = $comment->vote_value - 1;
 				get_user($auth->id, true);
