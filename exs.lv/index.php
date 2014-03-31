@@ -491,7 +491,7 @@ if ($lang == 1 && date('d.m.Y', time()) === '01.04.2014') {
         }
         
         // pēc x reizēm ieseto cepumu un turpmāk rāda normālu lapu
-        if ($_SESSION['upside-down'] > 5) {            
+        if ($_SESSION['upside-down'] > 10) {            
             setcookie('herebedragons', 1, time() + 86400);
             redirect();
         }
