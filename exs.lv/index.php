@@ -470,6 +470,22 @@ if (!empty($_SESSION['flash_message'])) {
 	$_SESSION['flash_message'] = '';
 }
 
+/* 1. aprīlis - platīna konta paziņojums */
+if ($lang == 1 && date('d.m.Y', time()) === '01.04.2014') {
+
+    // automātiskajam popup pie lapas ielādes
+    if (!isset($_SESSION['platinum'])) {
+        $_SESSION['platinum'] = true;        
+        $tpl->newBlock('platinum');
+    }
+    
+    // labajā kolonnā esošajam blokam
+    if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
+        $tpl->newBlock('platinum-js');
+        $tpl->newBlock('platinum-right');
+    }
+}
+
 //aizveram konekciju lai nekarājas, ja satura sūtīšana ieilgst
 $db->close();
 

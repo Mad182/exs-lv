@@ -88,6 +88,25 @@
 			var mbRefreshId = setInterval("update_mb()", refreshlim);
 		</script>
 		<!-- END BLOCK : mb-head-->
+        <!-- START BLOCK : platinum -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.get('/popup.html', function(response) {
+                    $.fancybox(response);
+                });                
+            });
+        </script>
+        <!-- END BLOCK : platinum -->
+        <!-- START BLOCK : platinum-js -->
+        <script type="text/javascript">
+            $('.platinum_popup').live('click', function(e) {
+                $.get('/popup.html', function(response) {
+                    $.fancybox(response);
+                });
+                e.preventDefault();
+            });
+        </script>
+        <!-- END BLOCK : platinum-js -->
 		<!-- INCLUDE BLOCK : module-head -->
 	</head>
 
@@ -337,6 +356,14 @@
 			<div id="right">
 				<div class="inner">
 
+                    <!-- START BLOCK : platinum-right -->
+                    <h3>Svarīgi!</h3>
+					<div class="box">
+                        <img src="/bildes/ads/golden.png" style="float:left;max-height:40px;margin-right:7px" alt="">
+                        Par lapas turpmāko attīstību lasi <a href="#" class="platinum_popup">šeit</a>.
+                    </div>
+                    <!-- END BLOCK : platinum-right -->
+                
 					<!-- START BLOCK : junk-info-->
 					<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
 					<!-- END BLOCK : junk-info-->

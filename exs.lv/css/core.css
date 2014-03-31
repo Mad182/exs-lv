@@ -3726,3 +3726,36 @@ li.view_more {
 	display: inline-block;
 	background: url('/bildes/number-light.gif') no-repeat 0 0;
 }
+
+/* zelta/platīna kontu popup */
+.golden-ad:hover {
+    cursor:pointer
+}
+.ad-avio {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    max-width: 400px
+}
+.golden-bottom-ads {
+    margin:0;
+    text-align:right
+}
+#golden-footer {
+    width:500px;
+    padding:5px 20px;
+    background:rgb(68, 71, 71);
+    color:#fff
+}
+#golden-upper-block {
+    width:500px;
+    padding:5px 20px;
+    overflow:auto;
+    background:rgb(68, 71, 71)
+}
+#golden-midblock {
+    width:500px;
+    min-height:300px;
+    padding:20px 20px 5px 20px;
+    text-indent:10px
+}
