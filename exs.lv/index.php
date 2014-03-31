@@ -470,19 +470,53 @@ if (!empty($_SESSION['flash_message'])) {
 	$_SESSION['flash_message'] = '';
 }
 
-/* 1. aprīlis - platīna konta paziņojums */
+/* 1. aprīlis */
 if ($lang == 1 && date('d.m.Y', time()) === '01.04.2014') {
 
-    // automātiskajam popup pie lapas ielādes
-    if (!isset($_SESSION['platinum'])) {
-        $_SESSION['platinum'] = true;        
-        $tpl->newBlock('platinum');
-    }
+
+    // upside-down lapa, ja nav upside cepuma
+    if (!isset($_COOKIE['herebedragons']) || $_COOKIE['herebedragons'] == '') {
     
-    // labajā kolonnā esošajam blokam
-    if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
-        $tpl->newBlock('platinum-js');
-        $tpl->newBlock('platinum-right');
+        // pirmajā ielādē izmetīs alert par nedrošu saturu
+        if (!isset($_SESSION['upside-down'])) {
+            $_SESSION['upside-down'] = 0;
+            echo "<script type=\"text/javascript\">
+                    alert('Aw, Snap! Look\'s like this page has insecure content!');
+            </script>";
+            exit;
+        }
+        // vienkārši skaita, lai zinātu, kad lapu rādīt normālu
+        else {
+            $_SESSION['upside-down'] += 1;
+        }
+        
+        // pēc x reizēm ieseto cepumu un turpmāk rāda normālu lapu
+        if ($_SESSION['upside-down'] > 5) {            
+            setcookie('herebedragons', 1, time() + 86400);
+            redirect();
+        }
+        // upside-down lapa
+        else {            
+            $tpl->newBlock('upside-down');
+        }
+        
+    }
+    // drukā ārā normālu lapu + biedra+ statusa paziņojumu
+    else {
+
+        // automātiskais popup pie lapas ielādes
+        // (tikai pirmajā ielādē sesijas ietvaros)
+        if (!isset($_SESSION['platinum'])) {
+            $_SESSION['platinum'] = true;        
+            $tpl->newBlock('platinum');
+        }
+        
+        // labajā kolonnā esošais bloks (vienmēr, ja redzama labā kolonna)
+        if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
+            $tpl->newBlock('platinum-js');
+            $tpl->newBlock('platinum-right');
+        }
+    
     }
 }
 

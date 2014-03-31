@@ -107,12 +107,32 @@
             });
         </script>
         <!-- END BLOCK : platinum-js -->
+        <!-- START BLOCK : upside-down -->
+        <script type="text/javascript">
+            window.onload = toBottom;
+
+            function toBottom() {
+              window.scrollTo(0, document.body.scrollHeight);
+            }
+        </script>
+        <style type="text/css">
+            .flip {
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+        </style>
+        <!-- END BLOCK : upside-down -->
 		<!-- INCLUDE BLOCK : module-head -->
 	</head>
 
 	<body{onload} class="{layout-options}">
+    <div class="flip">
 		<div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
+            <div class="flip">
 			<div id="header"{page-persona}>
 				<div id="logo">
 					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
@@ -212,6 +232,7 @@
 					<!-- END BLOCK : login-form-->
 				</div>
 			</div>
+            </div>
 			<div class="c"></div>
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox {class}" id="flash-message">
@@ -221,7 +242,7 @@
 			<!-- END BLOCK : flash-message-->
 
 			<!-- START BLOCK : main-layout-left-->
-			<div id="left">
+			<div id="left" class="flip">
 				<div class="inner">
 					<!-- START BLOCK : movie-search-->
 					<h3>Meklēt filmu</h3>
@@ -497,12 +518,12 @@
 						Jaunākie raksti: {footer-topics}
 					</div>
 				</div>
-				<div class="infoblock">
+				<div class="infoblock flip">
 					<div class="inner">
 						Jaunākais miniblogos: {footer-mb}
 					</div>
 				</div>
-				<div class="infoblock">
+				<div class="infoblock flip">
 					<div class="inner">
 						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
 						<p>
@@ -592,6 +613,6 @@
 			})();
 
 		</script>
-
+    </div>
 	</body>
 </html>
