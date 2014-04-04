@@ -92,478 +92,486 @@
 	</head>
 
 	<body{onload} class="{layout-options}">
-        <div id="scroll-up" title="Uz augšu"></div>
-        <div id="wrapper">
-            <div id="header"{page-persona}>
-                <div id="logo">
-                    <a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
-                    <div id="tools-bar">
-                        <ul id="site-links">
-                            <li><a href="/blogs">Blogi</a></li>
-                            <li><a href="/img">Bilžu hostings</a></li>
-                            <li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-                            <li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
-                            <li><a href="http://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
-                            <li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
-                            <li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
-                            <li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
-                            <li><a href="/statistika" title="Statistika">Statistika</a></li>
-                            <li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
-                        </ul>
-                        {current-date}
-                    </div>
-                </div>
-                <div id="top-menu">
-                    <ul id="top-menu-left">
-                        <li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
-                        <li{cat-sel-101}><a href="/forums">Forums</a></li>
-                        <li{cat-sel-81}><a href="/speles">Spēles</a></li>
-                        <li{cat-sel-80}><a href="/filmas">Filmas</a></li>
-                        <li{cat-sel-247}><a href="/raksti">Raksti</a></li>
-                    </ul>
-                    <!-- START BLOCK : user-menu-->
-                    <ul id="top-menu-right">
-                        <li{profile-sel}>
-                            <a href="/user/{currentuser-id}">Profils</a>
-                            <ul>
-                                <li><a href="/user/edit">Publiskā profila informācija</a></li>
-                                <li><a href="/user/avatar">Mans avatars</a></li>
-                                <li><a href="/user/settings">Mani iestatījumi</a></li>
-                                <li><a href="/user/security">Parole un e-pasts</a></li>
-                                <li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
-                            </ul>
-                        </li>
-                        <li{cat-sel-319}><a href="/grupas">Grupas</a>
-                            <!-- START BLOCK : mygroups-->
-                            <ul id="user-group-menu">
-                                <!-- START BLOCK : myg-node-->
-                                <li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-                                <!-- END BLOCK : myg-node-->
-                            </ul>
-                            <!-- END BLOCK : mygroups-->
-                        </li>
-                        <li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
-                        <!-- START BLOCK : user-modlink-->
-                        <li{cat-sel-83}><a href="#">Mod</a>
-                            <ul>
-                                <li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
-                                <li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-                                <li{cat-sel-1822}><a href="/crows">Atbrīvotās vārnas</a></li>
-                                <li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
-                                <li{cat-sel-1132}><a href="/checkform">Lietotāju meklēšana</a></li>
-                                <li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
-                                <li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
-                                <li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-                                <li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
-                                <li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
-                                <li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
-                                <li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
-                                <li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
-                                <li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
-                            </ul>
-                        </li>
-                        <!-- END BLOCK : user-modlink-->
-                        <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-                        <!-- START BLOCK : user-approvelink-->
-                        <li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
-                        <!-- END BLOCK : user-approvelink-->
-                        <!-- START BLOCK : user-write-->
-                        <li{cat-sel-116}><a href="/write">Raksti</a></li>
-                        <!-- END BLOCK : user-write-->
-                        <li{cat-sel-111}><a href="/myblog">Blogs</a></li>
-                        <li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-                        <li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
-                        <li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
-                    </ul>
-                    <!-- END BLOCK : user-menu-->
-                    <!-- START BLOCK : login-form-->
-                    <form id="login-form" action="{page-loginurl}" method="post">
-                        <fieldset>
-                            <input type="hidden" name="xsrf_token" value="{xsrf}" />
-                            <span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
-                            <label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-                            <label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-                            <label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-                            <a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+		<div id="scroll-up" title="Uz augšu"></div>
+		<div id="wrapper">
+			<div id="header"{page-persona}>
+				<div id="logo">
+					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
+					<div id="tools-bar">
+						<ul id="site-links">
+							<li><a href="/blogs">Blogi</a></li>
+							<li><a href="/img">Bilžu hostings</a></li>
+							<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+							<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
+							<li><a href="http://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
+							<li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
+							<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
+							<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
+							<li><a href="/statistika" title="Statistika">Statistika</a></li>
+							<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
+						</ul>
+						{current-date}
+					</div>
+				</div>
+				<div id="top-menu">
+					<ul id="top-menu-left">
+						<li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
+						<li{cat-sel-101}><a href="/forums">Forums</a></li>
+						<li{cat-sel-81}><a href="/speles">Spēles</a></li>
+						<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
+						<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
+					</ul>
+					<!-- START BLOCK : user-menu-->
+					<ul id="top-menu-right">
+						<li{profile-sel}>
+							<a href="/user/{currentuser-id}">Profils</a>
+							<ul>
+								<li><a href="/user/edit">Publiskā profila informācija</a></li>
+								<li><a href="/user/avatar">Mans avatars</a></li>
+								<li><a href="/user/settings">Mani iestatījumi</a></li>
+								<li><a href="/user/security">Parole un e-pasts</a></li>
+								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
+							</ul>
+						</li>
+						<li{cat-sel-319}><a href="/grupas">Grupas</a>
+							<!-- START BLOCK : mygroups-->
+							<ul id="user-group-menu">
+								<!-- START BLOCK : myg-node-->
+								<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+								<!-- END BLOCK : myg-node-->
+							</ul>
+							<!-- END BLOCK : mygroups-->
+						</li>
+						<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+						<!-- START BLOCK : user-modlink-->
+						<li{cat-sel-83}><a href="#">Mod</a>
+							<ul>
+								<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
+								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+								<li{cat-sel-1822}><a href="/crows">Atbrīvotās vārnas</a></li>
+								<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
+								<li{cat-sel-1132}><a href="/checkform">Lietotāju meklēšana</a></li>
+								<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
+								<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
+								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+								<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
+								<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
+								<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
+								<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
+								<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
+								<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
+							</ul>
+						</li>
+						<!-- END BLOCK : user-modlink-->
+						<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+						<!-- START BLOCK : user-approvelink-->
+						<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
+						<!-- END BLOCK : user-approvelink-->
+						<!-- START BLOCK : user-write-->
+						<li{cat-sel-116}><a href="/write">Raksti</a></li>
+						<!-- END BLOCK : user-write-->
+						<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
+						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+						<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+						<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
+					</ul>
+					<!-- END BLOCK : user-menu-->
+					<!-- START BLOCK : login-form-->
+					<form id="login-form" action="{page-loginurl}" method="post">
+						<fieldset>
+							<input type="hidden" name="xsrf_token" value="{xsrf}" />
+							<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
+							<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
-                            <a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
-                        </fieldset>
-                    </form>
-                    <!-- END BLOCK : login-form-->
-                </div>
-            </div>
-            <div class="c"></div>
-            <!-- START BLOCK : flash-message-->
-            <div class="mbox {class}" id="flash-message">
-                <p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
-            </div>
-            <div class="c"></div>
-            <!-- END BLOCK : flash-message-->
+						</fieldset>
+					</form>
+					<!-- END BLOCK : login-form-->
+				</div>
+			</div>
+			<div class="c"></div>
+			<!-- START BLOCK : flash-message-->
+			<div class="mbox {class}" id="flash-message">
+				<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+			</div>
+			<div class="c"></div>
+			<!-- END BLOCK : flash-message-->
 
-            <!-- START BLOCK : main-layout-left-->
-            <div id="left">
-                <div class="inner">
-                    <!-- START BLOCK : movie-search-->
-                    <h3>Meklēt filmu</h3>
-                    <div class="box">
-                        <form id="movie-search" method="get" action="/filmas/search">
-                            <!-- START BLOCK : genre-node-->
-                            <label style="font-size: 10px;line-heigh: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
-                            <!-- START BLOCK : genre-node-->
+			<!-- START BLOCK : main-layout-left-->
+			<div id="left">
+				<div class="inner">
+					<!-- START BLOCK : movie-search-->
+					<h3>Meklēt filmu</h3>
+					<div class="box">
+						<form id="movie-search" method="get" action="/filmas/search">
+							<!-- START BLOCK : genre-node-->
+							<label style="font-size: 10px;line-heigh: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
+							<!-- START BLOCK : genre-node-->
 
-                            <input type="submit" value="Meklēt" class="button primary small" />
-                        </form>
-                    </div>
-                    <!-- END BLOCK : movie-search-->
+							<input type="submit" value="Meklēt" class="button primary small" />
+						</form>
+					</div>
+					<!-- END BLOCK : movie-search-->
 
-                    <!-- START BLOCK : menu-list-->
-                    <h3>{title}</h3>
-                    <ul class="menu" id="nav-{topid}">
-                        <!-- START BLOCK : menu-node-->
-                        <li{sel}><a href="{url}">{title}</a>
-                            <!-- START BLOCK : menu-list-sub-->
-                            <ul>
-                                <!-- START BLOCK : menu-node-sub-->
-                                <li{sel}><a href="{url}">{title}</a></li>
-                                <!-- END BLOCK : menu-node-sub-->
-                            </ul>
-                            <!-- END BLOCK : menu-list-sub-->
-                        </li>
-                        <!-- END BLOCK : menu-node-->
-                    </ul>
-                    <!-- END BLOCK : menu-list-->
+					<!-- START BLOCK : menu-list-->
+					<h3>{title}</h3>
+					<ul class="menu" id="nav-{topid}">
+						<!-- START BLOCK : menu-node-->
+						<li{sel}><a href="{url}">{title}</a>
+							<!-- START BLOCK : menu-list-sub-->
+							<ul>
+								<!-- START BLOCK : menu-node-sub-->
+								<li{sel}><a href="{url}">{title}</a></li>
+								<!-- END BLOCK : menu-node-sub-->
+							</ul>
+							<!-- END BLOCK : menu-list-sub-->
+						</li>
+						<!-- END BLOCK : menu-node-->
+					</ul>
+					<!-- END BLOCK : menu-list-->
 
-                    <!-- START BLOCK : notification-list-->
-                    <h3>Tavi notikumi</h3>
-                    <div class="box">
-                        {out}
-                    </div>
-                    <!-- END BLOCK : notification-list-->
+					<!-- START BLOCK : notification-list-->
+					<h3>Tavi notikumi</h3>
+					<div class="box">
+						{out}
+					</div>
+					<!-- END BLOCK : notification-list-->
 
-                    <h3>Jaunākais portālā</h3>
-                    <div class="box">
-                        <ul class="tabs">
-                            <li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-                            <li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-                        </ul>
-                        <div class="c"></div>
-                        <div id="lat" class="ajaxbox">{latest-noscript}</div>
-                    </div>
+					<h3>Jaunākais portālā</h3>
+					<div class="box">
+						<ul class="tabs">
+							<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+							<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+						</ul>
+						<div class="c"></div>
+						<div id="lat" class="ajaxbox">{latest-noscript}</div>
+					</div>
 
-                    <!-- START BLOCK : groups-l-list-->
-                    <h3>Jaunākās grupas</h3>
-                    <div class="box">
-                        <p>
-                            <!-- START BLOCK : groups-l-node-->
-                            <a href="{link}">{title}</a><br />
-                            <!-- END BLOCK : groups-l-node-->
-                        </p>
-                        <a href="/grupas">Visas grupas &raquo;</a>
-                    </div>
-                    <!-- END BLOCK : groups-l-list-->
-                    <h3>Meklētājs</h3>
-                    <div class="box">
-                        Meklēt lapā ar <a href="/search/">google</a>:
-                        <form method="get" action="/search/" id="search-form">
-                            <fieldset>
-                                <input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
-                                <input type="hidden" name="cof" value="FORID:11" />
-                                <input type="hidden" name="ie" value="UTF-8" />
-                                <input class="text" name="q" size="16" type="text" value="" />
-                                <input value="Meklēt" class="submit button primary" type="submit" />
-                            </fieldset>
-                        </form>
-                    </div>
+					<!-- START BLOCK : groups-l-list-->
+					<h3>Jaunākās grupas</h3>
+					<div class="box">
+						<p>
+							<!-- START BLOCK : groups-l-node-->
+							<a href="{link}">{title}</a><br />
+							<!-- END BLOCK : groups-l-node-->
+						</p>
+						<a href="/grupas">Visas grupas &raquo;</a>
+					</div>
+					<!-- END BLOCK : groups-l-list-->
+					<h3>Meklētājs</h3>
+					<div class="box">
+						Meklēt lapā ar <a href="/search/">google</a>:
+						<form method="get" action="/search/" id="search-form">
+							<fieldset>
+								<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
+								<input type="hidden" name="cof" value="FORID:11" />
+								<input type="hidden" name="ie" value="UTF-8" />
+								<input class="text" name="q" size="16" type="text" value="" />
+								<input value="Meklēt" class="submit button primary" type="submit" />
+							</fieldset>
+						</form>
+					</div>
 
-                    <!-- START BLOCK : user-top-->
-                    <h3>Šodien aktīvākie</h3>
-                    <div class="box">
-                        <ul id="today-top">
-                            <!-- START BLOCK : user-top-node-->
-                            <li><a href="{url}"><img class="av" src="{avatar}" alt="" />{user}</a><span class="count">({today})</span></li>
-                            <!-- END BLOCK : user-top-node-->
-                        </ul>
-                        <div class="c"></div>
-                    </div>
-                    <!-- END BLOCK : user-top-->
+					<!-- START BLOCK : user-top-->
+					<h3>Šodien aktīvākie</h3>
+					<div class="box">
+						<ul id="today-top">
+							<!-- START BLOCK : user-top-node-->
+							<li><a href="{url}"><img class="av" src="{avatar}" alt="" />{user}</a><span class="count">({today})</span></li>
+							<!-- END BLOCK : user-top-node-->
+						</ul>
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : user-top-->
 
-                    <h3>Nejaušs fakts</h3>
-                    <div class="box">
-                        <ul class="tabs">
-                            <li><a href="/fact" class="{fact-all-selected} remember-fact-all ajax"><span class="fact-all">Spēles</span></a></li>
-                            <li><a href="/fact/rs" class="{fact-rs-selected} remember-fact-rs ajax"><span class="fact-rs">RS</span></a></li>
-                        </ul>
-                        <div class="c"></div>
-                        <div id="random-fact" class="ajaxbox">{random-fact}</div>
-                    </div>
+					<h3>Nejaušs fakts</h3>
+					<div class="box">
+						<ul class="tabs">
+							<li><a href="/fact" class="{fact-all-selected} remember-fact-all ajax"><span class="fact-all">Spēles</span></a></li>
+							<li><a href="/fact/rs" class="{fact-rs-selected} remember-fact-rs ajax"><span class="fact-rs">RS</span></a></li>
+						</ul>
+						<div class="c"></div>
+						<div id="random-fact" class="ajaxbox">{random-fact}</div>
+					</div>
 
-                </div>
-            </div>
-            <!-- END BLOCK : main-layout-left-->
+				</div>
+			</div>
+			<!-- END BLOCK : main-layout-left-->
 
-            <div id="content" class="{layout-options}">
-                <div class="inner">
-                    <!-- START BLOCK : page-path-->
-                    <p id="breadcrumbs">{page-path}</p>
-                    <!-- END BLOCK : page-path-->
+			<div id="content" class="{layout-options}">
+				<div class="inner">
+					<!-- START BLOCK : page-path-->
+					<p id="breadcrumbs">{page-path}</p>
+					<!-- END BLOCK : page-path-->
 
-                    <!-- START BLOCK : profile-menu-->
-                    <h1>{user-nick}{user-menu-add}</h1>
+					<!-- START BLOCK : profile-menu-->
+					<h1>{user-nick}{user-menu-add}</h1>
 
-                    {ad-468}
+					{ad-468}
 
-                    <ul class="tabs">
-                        <li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-                        <li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
-                        <li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-                        <li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
-                        <li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
-                        <li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
-                        <li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
-                    </ul>
+					<ul class="tabs">
+						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
+						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
+						<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
+						<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
+						<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
+						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
+						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+					</ul>
 
-                    <!-- END BLOCK : profile-menu-->
+					<!-- END BLOCK : profile-menu-->
 
-                    <!-- INCLUDE BLOCK : module-core-error -->
-                    <div id="current-module">
-                        <!-- INCLUDE BLOCK : module-currrent -->
-                    </div>
-                    <div class="c"></div>
-                </div>
-            </div>
+					<!-- INCLUDE BLOCK : module-core-error -->
+					<div id="current-module">
+						<!-- INCLUDE BLOCK : module-currrent -->
+					</div>
+					<div class="c"></div>
+				</div>
+			</div>
 
-            <!-- START BLOCK : main-layout-right-->
-            <div id="right">
-                <div class="inner">
+			<!-- START BLOCK : main-layout-right-->
+			<div id="right">
+				<div class="inner">
 
-                    <!-- START BLOCK : junk-info-->
-                    <p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
-                    <!-- END BLOCK : junk-info-->
+					<!-- START BLOCK : junk-info-->
+					<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
+					<!-- END BLOCK : junk-info-->
 
-                    <!-- START BLOCK : profile-box-->
-                    <h3>{profile-nick}{custom_title}</h3>
-                    <div class="box">
-                        <a href="{url}">
-                            <img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
-                        </a>
-                        {profile-top-awards}
-                        <!-- START BLOCK : profilebox-pm-link-->
-                        <a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
-                        <!-- END BLOCK : profilebox-pm-link-->
-                        <!-- START BLOCK : profilebox-warn-->
-                        <a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
-                        <!-- END BLOCK : profilebox-warn-->
-                        <!-- START BLOCK : profilebox-blog-link-->
-                        <a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
-                        <!-- END BLOCK : profilebox-blog-link-->
-                        <!-- START BLOCK : profilebox-twitter-link-->
-                        <a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
-                        <!-- END BLOCK : profilebox-twitter-link-->
-                        <!-- START BLOCK : profilebox-yt-link-->
-                        <a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
-                        <!-- END BLOCK : profilebox-yt-link-->
-                        <div class="c"></div>
-                    </div>
-                    <!-- END BLOCK : profile-box-->
-                    <!-- START BLOCK : group-box-->
-                    <h3>{group-title}</h3>
-                    <div class="box">
-                        <a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
-                    </div>
-                    <!-- END BLOCK : group-box-->
+					<!-- START BLOCK : profile-box-->
+					<h3>{profile-nick}{custom_title}</h3>
+					<div class="box">
+						<a href="{url}">
+							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
+						</a>
+						{profile-top-awards}
+						<!-- START BLOCK : profilebox-pm-link-->
+						<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
+						<!-- END BLOCK : profilebox-pm-link-->
+						<!-- START BLOCK : profilebox-warn-->
+						<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
+						<!-- END BLOCK : profilebox-warn-->
+						<!-- START BLOCK : profilebox-blog-link-->
+						<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
+						<!-- END BLOCK : profilebox-blog-link-->
+						<!-- START BLOCK : profilebox-twitter-link-->
+						<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+						<!-- END BLOCK : profilebox-twitter-link-->
+						<!-- START BLOCK : profilebox-yt-link-->
+						<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
+						<!-- END BLOCK : profilebox-yt-link-->
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : profile-box-->
+					<!-- START BLOCK : group-box-->
+					<h3>{group-title}</h3>
+					<div class="box">
+						<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
+					</div>
+					<!-- END BLOCK : group-box-->
 
-                    <!-- START BLOCK : friendssay-box-->
-                    <h3>Miniblogi{miniblog-add}</h3>
+					<!-- START BLOCK : friendssay-box-->
+					<h3>Miniblogi{miniblog-add}</h3>
 
-                    <div class="box">
+					<div class="box">
 
-                        <!-- START BLOCK : friendssay-tabs-->
-                        <ul class="tabs">
-                            <li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
-                            <li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
-                        </ul>
-                        <div class="c"></div>
-                        <!-- END BLOCK : friendssay-tabs-->
-                        <div id="miniblog-block" class="ajaxbox">{out}</div>
-                    </div>
+						<!-- START BLOCK : friendssay-tabs-->
+						<ul class="tabs">
+							<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
+							<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
+						</ul>
+						<div class="c"></div>
+						<!-- END BLOCK : friendssay-tabs-->
+						<div id="miniblog-block" class="ajaxbox">{out}</div>
+					</div>
 
-                    <!-- END BLOCK : friendssay-box-->
+					<!-- END BLOCK : friendssay-box-->
 
-                    <!-- START BLOCK : side-junk-->
-                    <h3>/junk</h3>
-                    <div class="box junk-box">
-                        <!-- START BLOCK : side-junk-node-->
-                        <a href="http://exs.lv/junk/{id}" title="{title}">
-                            <img src="http://img.exs.lv{thb}" alt="" class="av" />
-                            <span style="">{posts}</span>
-                        </a>
-                        <!-- END BLOCK : side-junk-node-->
-                        <div class="c"></div>
-                    </div>
-                    <!-- END BLOCK : side-junk-->
+					<!-- START BLOCK : side-junk-->
+					<h3>/junk</h3>
+					<div class="box junk-box">
+						<!-- START BLOCK : side-junk-node-->
+						<a href="http://exs.lv/junk/{id}" title="{title}">
+							<img src="http://img.exs.lv{thb}" alt="" class="av" />
+							<span style="">{posts}</span>
+						</a>
+						<!-- END BLOCK : side-junk-node-->
+						<div class="c"></div>
+					</div>
+					<!-- END BLOCK : side-junk-->
 
-                    <!-- START BLOCK : blog-latest-list-->
-                    {html}
-                    <!-- END BLOCK : blog-latest-list-->
-                    <!-- START BLOCK : poll-box-->
-                    <h3>Aptauja</h3>
-                    <div class="box">
-                        <p><strong>{poll-title}</strong></p>
-                        <!-- START BLOCK : poll-answers-->
-                        <ol class="poll-answers">
-                            <!-- START BLOCK : poll-answers-node-->
-                            <li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-                            <!-- END BLOCK : poll-answers-node-->
-                        </ol>
-                        Balsojuši: {poll-totalvotes}<br />
-                        <a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
-                        <!-- END BLOCK : poll-answers-->
-                        <!-- START BLOCK : poll-questions-->
-                        <form name="poll" method="post" action="">
-                            <fieldset>
-                                <!-- START BLOCK : poll-error-->
-                                <p>{poll-error}</p>
-                                <!-- END BLOCK : poll-error-->
-                                <!-- START BLOCK : poll-options-->
-                                <ol id="poll-questions">
-                                    <!-- START BLOCK : poll-options-node-->
-                                    <li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-                                    <!-- END BLOCK : poll-options-node-->
-                                </ol>
-                                <input type="submit" name="vote" value="Balsot!" class="button primary" />
-                                <!-- END BLOCK : poll-options-->
-                            </fieldset>
-                        </form>
-                        <!-- END BLOCK : poll-questions-->
-                    </div>
-                    <!-- END BLOCK : poll-box-->
+					<!-- START BLOCK : blog-latest-list-->
+					{html}
+					<!-- END BLOCK : blog-latest-list-->
+					<!-- START BLOCK : poll-box-->
+					<h3>Aptauja</h3>
+					<div class="box">
+						<p><strong>{poll-title}</strong></p>
+						<!-- START BLOCK : poll-answers-->
+						<ol class="poll-answers">
+							<!-- START BLOCK : poll-answers-node-->
+							<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+							<!-- END BLOCK : poll-answers-node-->
+						</ol>
+						Balsojuši: {poll-totalvotes}<br />
+						<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+						<!-- END BLOCK : poll-answers-->
+						<!-- START BLOCK : poll-questions-->
+						<form name="poll" method="post" action="">
+							<fieldset>
+								<!-- START BLOCK : poll-error-->
+								<p>{poll-error}</p>
+								<!-- END BLOCK : poll-error-->
+								<!-- START BLOCK : poll-options-->
+								<ol id="poll-questions">
+									<!-- START BLOCK : poll-options-node-->
+									<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+									<!-- END BLOCK : poll-options-node-->
+								</ol>
+								<input type="submit" name="vote" value="Balsot!" class="button primary" />
+								<!-- END BLOCK : poll-options-->
+							</fieldset>
+						</form>
+						<!-- END BLOCK : poll-questions-->
+					</div>
+					<!-- END BLOCK : poll-box-->
 
-                    <!-- START BLOCK : daily-wallpaper-->
-                    <h3>Dienas tapete</h3>
-                    <div id="walpaper" class="box">
-                        <a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
-                            <img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
-                        </a><br />
-                        <a href="/wallpapers">Tapetes</a>
-                    </div>
-                    <!-- END BLOCK : daily-wallpaper-->
+					<!-- START BLOCK : daily-wallpaper-->
+					<h3>Dienas tapete</h3>
+					<div id="walpaper" class="box">
+						<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
+							<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
+						</a><br />
+						<a href="/wallpapers">Tapetes</a>
+					</div>
+					<!-- END BLOCK : daily-wallpaper-->
 
-                    <a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
-                    <script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
-                            ;</script>
+					<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
+					<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
+								;</script>
 
-                </div>
-            </div>
-            <!-- END BLOCK : main-layout-right-->
-            <div class="c"></div>
+				</div>
+			</div>
+			<!-- END BLOCK : main-layout-right-->
+			<div class="c"></div>
 
-            {ad-bottom}
+			{ad-bottom}
 
-            <div id="footer">
-                <div id="online-users">
-                    <ul id="ucl"><li id="ucd"></li><li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li><li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li><li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li><li class="admin"><a href="/lietotaji/klase/1">Administrators</a></li></ul>
-                    Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span id="online-list">{page-onlineusers}</span>
-                </div>
-                <div class="infoblock">
-                    <div class="inner">
-                        Jaunākie raksti: {footer-topics}
-                    </div>
-                </div>
-                <div class="infoblock">
-                    <div class="inner">
-                        Jaunākais miniblogos: {footer-mb}
-                    </div>
-                </div>
-                <div class="infoblock">
-                    <div class="inner">
-                        <p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
-                        <p>
-                            E-pasts: info@exs.lv<br />
-                            Tālrunis: <span id="noindex-phone"></span><br />
-                            Mājas lapu izstrāde un hostings.
-                        </p>
-                    </div>
-                </div>
-                <div class="infoblock">
-                    <div class="inner">
-                        <ul id="internal-links">
-                            <li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-                            <li><a href="/sitemap">Lapas karte</a></li>
-                            <li><a href="/reklama">Reklāma portālā</a></li>
-                        </ul>
-                        <p>Teamspeak 3:<br />ts.exs.lv</p>
-                    </div>
-                </div>
-                <div class="c"></div>
-            </div>
+			<div id="footer">
+				<div id="online-users">
+					<ul id="ucl">
+						<li id="ucd"></li>
+						<li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li>
+						<li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li>
+						<li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li>
+						<li class="admin"><a href="/lietotaji/klase/1">Administrators</a>
+						</li>
+					</ul>
+					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
+					<span id="online-list">{page-onlineusers}</span>
+				</div>
+				<div class="infoblock">
+					<div class="inner">
+						Jaunākie raksti: {footer-topics}
+					</div>
+				</div>
+				<div class="infoblock">
+					<div class="inner">
+						Jaunākais miniblogos: {footer-mb}
+					</div>
+				</div>
+				<div class="infoblock">
+					<div class="inner">
+						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
+						<p>
+							E-pasts: info@exs.lv<br />
+							Tālrunis: <span id="noindex-phone"></span><br />
+							Mājas lapu izstrāde un hostings.
+						</p>
+					</div>
+				</div>
+				<div class="infoblock">
+					<div class="inner">
+						<ul id="internal-links">
+							<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+							<li><a href="/sitemap">Lapas karte</a></li>
+							<li><a href="/reklama">Reklāma portālā</a></li>
+						</ul>
+						<p>Teamspeak 3:<br />ts.exs.lv</p>
+					</div>
+				</div>
+				<div class="c"></div>
+			</div>
 
-            <div id="header-stuff">{ad-top}</div>
+			<div id="header-stuff">{ad-top}</div>
 
-        </div>
+		</div>
 
-        <!-- sekomums.lv -->
-        <script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-        <script type="text/javascript">
-            function r(f) {
-                /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
-            }
-            r(function() {
-                new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
-            });
-        </script>
+		<!-- sekomums.lv -->
+		<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+		<script type="text/javascript">
+			function r(f) {
+				/in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
+			}
+			r(function() {
+				new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
+			});
+		</script>
 
-        <!-- smartad.eu -->
-        <script type='text/javascript'>/* <![CDATA[ */
-            var _smartad = _smartad || new Object();
-            _smartad.page_id = Math.floor(Math.random() * 10000001);
-            if (!_smartad.prop) {
-                _smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
-            }
-            (function() {
-                if (_smartad.space) {
-                    _smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-                } else {
-                    _smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-                    _smartad.type = 'onload';
-                    var f = function() {
-                        var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
-                        s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
-                        s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
-                        n ? b.insertBefore(s, n) : b.appendChild(s);
-                    };
-                    if (document.readyState === 'complete') {
-                        f();
-                        delete _smartad.space;
-                    } else {
-                        if (window.addEventListener) {
-                            window.addEventListener('load', f, false);
-                        } else if (window.attachEvent) {
-                            window.attachEvent('onload', f);
-                        }
-                    }
-                }
-            })();
-            /* ]]> */</script>
+		<!-- smartad.eu -->
+		<script type='text/javascript'>/* <![CDATA[ */
+			var _smartad = _smartad || new Object();
+			_smartad.page_id = Math.floor(Math.random() * 10000001);
+			if (!_smartad.prop) {
+				_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
+			}
+			(function() {
+				if (_smartad.space) {
+					_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
+				} else {
+					_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
+					_smartad.type = 'onload';
+					var f = function() {
+						var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
+						s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
+						s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
+						n ? b.insertBefore(s, n) : b.appendChild(s);
+					};
+					if (document.readyState === 'complete') {
+						f();
+						delete _smartad.space;
+					} else {
+						if (window.addEventListener) {
+							window.addEventListener('load', f, false);
+						} else if (window.attachEvent) {
+							window.attachEvent('onload', f);
+						}
+					}
+				}
+			})();
+			/* ]]> */</script>
 
-        <!-- google analytics -->
-        <script>
+		<!-- google analytics -->
+		<script>
 
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-4190387-2']);
-            _gaq.push(['_setDomainName', 'exs.lv']);
-            _gaq.push(['_trackPageview']);
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-4190387-2']);
+			_gaq.push(['_setDomainName', 'exs.lv']);
+			_gaq.push(['_trackPageview']);
 
-            (function() {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
 
-        </script>
+		</script>
 	</body>
 </html>
