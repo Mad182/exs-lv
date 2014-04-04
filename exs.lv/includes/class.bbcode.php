@@ -968,7 +968,6 @@ class BBCode {
 			for ($i = 0; $i < count($urls_local); $i++) {
 				if (strlen($url) > strlen($urls_local[$i]) && strpos($url, $urls_local[$i]) === 0) {
 					$url_local = true;
-					$url = substr($url, strlen($urls_local[$i]));
 				}
 			}
 			if (!$url_local) {
