@@ -10,8 +10,18 @@
 
 
 
+// izvēlēts konkrēts miniblogs;
+// parādīs tā saturu un komentārus
+if (isset($_GET['var1'])) {
 
 
+}
+
+else {
+
+    $json_page = fetch_miniblogs();
+
+}
 /*
     TODO:
     
