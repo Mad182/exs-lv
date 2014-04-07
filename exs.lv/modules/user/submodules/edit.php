@@ -28,8 +28,11 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	$inprofile->signature = htmlpost2db($_POST['edit-signature']);
-	$inprofile->about = htmlpost2db($_POST['edit-about']);
+	//some users are not allowed to add signature
+	if (!empty($inprofile->allow_signature)) {
+		$inprofile->signature = htmlpost2db($_POST['edit-signature']);
+		$inprofile->about = htmlpost2db($_POST['edit-about']);
+	}
 
 	$inprofile->city = (int) $_POST['edit-city'];
 
@@ -60,10 +63,18 @@ $tpl->assign(array(
 	'user-yt_name' => $inprofile->yt_name,
 	'user-twitter' => $inprofile->twitter,
 	'user-web' => htmlspecialchars($inprofile->web),
-	'user-signature' => htmlspecialchars($inprofile->signature),
-	'user-date' => $inprofile->date,
-	'user-about' => htmlspecialchars($inprofile->about)
+	'user-date' => $inprofile->date
 ));
+
+if (!empty($inprofile->allow_signature)) {
+	$tpl->newBlock('sig-about-edit');
+	$tpl->assign(array(
+		'user-signature' => htmlspecialchars($inprofile->signature),
+		'user-about' => htmlspecialchars($inprofile->about)
+	));
+} else {
+	$tpl->newBlock('sig-about-disabled');
+}
 
 if ($inprofile->karma >= 500 || im_mod() || $inprofile->custom_title_paid) {
 	$tpl->newBlock('custom_title');
@@ -99,3 +110,4 @@ $tpl->assignGlobal(array(
 $page_title = 'Tavs profils';
 
 $tpl->newBlock('tinymce-enabled');
+

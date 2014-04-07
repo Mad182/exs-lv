@@ -257,6 +257,7 @@
 				</select>
 			</p>
 
+			<!-- START BLOCK : sig-about-edit-->
 			<label for="edit-signature">Paraksts:<br /><span class="description">(parādās zem komentāriem)</span></label><br />
 			<textarea rows="4" cols="20" name="edit-signature" id="edit-signature">{user-signature}</textarea>
 
@@ -266,6 +267,13 @@
 			<textarea rows="4" cols="20" style="width:98%;height:300px" name="edit-about" id="edit-about">{user-about}</textarea>
 
 			<br />
+			<!-- END BLOCK : sig-about-edit-->
+
+			<!-- START BLOCK : sig-about-disabled-->
+			<p class="notice">
+				Tavam profilam ir atslēgta foruma paraksta un profila informācijas iespēja.
+			</p>
+			<!-- END BLOCK : sig-about-disabled-->
 
 			<p>
 				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
