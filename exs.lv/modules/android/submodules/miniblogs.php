@@ -73,6 +73,7 @@ if (isset($_GET['var1'])) {
                     `miniblog`.`groupid`    AS `mb_groupid`,
                     `miniblog`.`reply_to`   AS `mb_reply_to`,
                     `miniblog`.`removed`    AS `mb_removed`,
+                    `miniblog`.`vote_value` AS `mb_vote`,
                     `users`.`id`            AS `user_id`,
                     `users`.`nick`          AS `user_nick`,
                     `users`.`deleted`       AS `user_deleted`,
@@ -100,7 +101,7 @@ if (isset($_GET['var1'])) {
                     
                     // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
                     if ( $response->mb_removed ) {
-                        $response->mb_text = 'Dzēsts!';
+                        $response->mb_text = '<em>Ieraksts dzēsts!</em>';
                     }
                     // smaidiņi, embbeds u.c. saturs;
                     // būtībā ir jēga, lai pievieno smaidiņu adreses,
@@ -113,8 +114,9 @@ if (isset($_GET['var1'])) {
                     $response->avatar   = get_user_avatar($response, 's');
                 
                     $json[$response->mb_reply_to][] = $response;
-                }
+                }                
                 
+                $json[-1][] = 'safeguard';
                 // šis tiek pievienots atgriežamajam saturam
                 $array_comments = $json;
             }
