@@ -56,6 +56,7 @@ if (isset($_GET['var1'])) {
             'mb-date'       => display_time(strtotime($record->date)),
             'mb-author'     => $author,
             'mb-author-id'  => $record->user_id,
+            'mb-vote'       => $record->vote_value,
             'avatar'        => get_user_avatar($record, 's')
         );
         
@@ -116,7 +117,11 @@ if (isset($_GET['var1'])) {
                     $json[$response->mb_reply_to][] = $response;
                 }                
                 
+                // ja miniblogā ir tikai viens komentārs, no objekta tas tiek pārveidots uz masīvu;
+                // tā kā lietotne vienmēr gaida objektu, jāpievieno kāds papildobjekts,
+                // kas lietotnē netiks uztverts kā komentārs
                 $json[-1][] = 'safeguard';
+                
                 // šis tiek pievienots atgriežamajam saturam
                 $array_comments = $json;
             }
