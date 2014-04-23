@@ -77,7 +77,6 @@
     1867 gallery		(module = gallery)			- runescape projekta galerijas
     1869 checkform		(module = checkform)		- lietotāju meklēšanas forma
 
-    1897 mbview 		(module = mb-view)			- dzēsto mb ierakstu apskatīšana modiem
     1901 aptaujas 		(module = polls)			- bijušo aptauju uzskaitījums
     1905 myblog         (module = blogadmin)        - bloga administrēšanas sadaļa
 
