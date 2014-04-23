@@ -2,20 +2,17 @@
 
 <!-- START BLOCK : skills-intro -->
 <div class="rs-intro" style="padding-bottom:5px">  
-  <img id="sage" src="/bildes/runescape/intro/lumby_sage.png" title="Lumbridge Sage">
-  <img id="wagtail" src="/bildes/runescape/intro/tropical_wagtail.png" title="Tropical Wagtail">
 
-  <p>Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā savu piemājas<br> dobīšu uzaršana un izravēšana, 
-		kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē<br> piedzīvojumus, 
-		cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti nepieciešamas. 
-		Prasmju<br>attīstīšana un iemaņu uzlabošana paver daudz plašākas iespējas, un kādam, kurš vēlas kļūt par spēcīgu un prasmīgu vīru, 
+    <img id="sage" src="/bildes/runescape/intro/lumby_sage.png" title="Lumbridge Sage">
+    <img id="wagtail" src="/bildes/runescape/intro/tropical_wagtail.png" title="Tropical Wagtail">
+
+    <p>Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā savu piemājas<br> dobīšu uzaršana un izravēšana, 
+		kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē<br>piedzīvojumus, 
+		cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti būtiskas.</p>        
+    <p>Prasmju attīstīšana un iemaņu uzlabošana paver daudz plašākas iespējas, un kādam, kurš vēlas kļūt par spēcīgu un prasmīgu vīru, 
 		jāapgūst tās visas. No vienkāršas ugunskura iekuršanas un ēdmaņas zvejošanas līdz nesalaužamu slēdzeņu atdarīšanai 
-		un nāvīgi maģisku virumu brūvēšanai. Pārpasaulīgu būtņu izsaukšana vai nešķīsteņu ieradumu pārzināšana, 
-		šajā zemē izaicinājumi gaida ikvienu domājošu radību.</p>  
-
-  <p>RuneScape pavisam pieejamas 26 prasmes. Attīstot šīs prasmes, spēlētājs gūst piekļuvi daudzām iepriekš nepieejamām vietām 
-		un neiedomātām iespējām. Daudzas no prasmēm ir viena ar otru cieši saistītas, tāpēc vienas attīstīšana var lieti noderēt kādai citai. 
-		Malkas ciršana un cirvja vicināšana ir tikai sākums; spējīgākos spēlētājus gaida nopietnāki darbi.</p>
+		un nāvīgi maģisku virumu brūvēšanai. Un tas ir tikai sākums!</p>  
+    <p>Līdz ar <strong style="color:#012542">Divination</strong> izlaišanu spēlē pavisam pieejamas <strong style="color:#012542">26</strong> prasmes.</p>
 </div>
 <div class="rs_info">
   <img style="margin-top:3px" src="/bildes/runescape/p2p_small.png" title="" alt="">Prasme pieejama tikai maksājošajiem spēlētājiem!
@@ -49,29 +46,27 @@
 <!-- END BLOCK : skills -->
 
 <!-- START BLOCK : skills-facts -->
-<h1 class="content-title">RuneScape prasmju fakti</h1>
+<h1 class="content-title" style="margin-top:35px">Ar prasmēm saistīti, interesanti fakti</h1>
 <div id="skills_facts">
-  <img id="xenia" src="/bildes/runescape/intro/xenia.png" title="Xenia" alt="">
 	<ul>
-		<li>Visas prasmes iespējams uztrenēt līdz 200,000,000 pieredzes punktiem.</li>
-		<li>Dungeoneering ir vienīgā prasme, kurā spēlētājs var uztrenēt 120. līmeni. Citās prasmēs iespējams sasniegt<br /> tādu pašu 
-			pieredzes punktu apjomu, saglabājot 99. līmeni.</li>
-		<li>Pašreiz augstākais iegūstamais Total līmenis ir 2595. RuneScape Classic tas bija 1782.</li>
+		<li>Katrā prasmē iespējams iegūt līdz pat <strong>200,000,000</strong> pieredzes punktiem.</li>
+		<li>Dungeoneering ir vienīgā prasme, kurā spēlētājs var uztrenēt <strong>120.</strong> līmeni. Citās prasmēs iespējams sasniegt tādu pašu 
+			pieredzes punktu apjomu, saglabājot <strong>99.</strong> līmeni.</li>
+		<li>Pašreiz līdz ar <strong>Divination</strong> prasmes ieviešanu augstākais iegūstamais Total līmenis ir <strong>2595</strong>. RuneScape Classic tas bija <strong>1782</strong>.</li>
 		<li>Sasniedzot 99. līmeni, spēlētājs pie prasmes skolotāja par 99,000gp var iegādāties attiecīgās prasmes apmetni.</li>
 		<li>120. līmenim nepieciešamais pieredzes punktu daudzums ir 8 reizes lielāks nekā 99. līmenim.</li>
 		<li>Sasniedzot 99. līmeni vairāk nekā vienā prasmē, visi iegūtie prasmju apmetņi iegūst apzeltītas maliņas.</li>
-		<li>Apzeltītam apmetnim ir "boost" opcija, ar kuru uz neilgu laiku attiecīgā prasme tiek palielināa līdz 100. līmenim.</li>
+		<li>Apzeltītam apmetnim ir "boost" iespēja, ar kuru uz neilgu laiku attiecīgā prasme tiek palielināa līdz 100. līmenim.</li>
 		<li>Spēlētājam kādā prasmē sasniedzot 99. līmeni, par to uzzina visi spēlētāji, kuri atrodas tajā pašā spēles serverī.</li>
-		<li>Sasniedzot 120. Dungeoneering līmeni, 99. līmeni visās prasmēs vai iegūstot spēju valkāt Completionist Cape, paziņojums par to parādās visos RuneScape serveros.</li> 
-		<li>Dažiem spēlētājiem Constitution līmenis ir mazāks par 10. 
-			RuneScape Classic pirmssākumos noteikumu pārkāpējus<br> sodīja ar prasmju līmeņu samazināšanu, kas nozīmē, ka arī to Hitpoints prasme, 
-			Constitution priekšgājēja, tika samazināta. Šādi RuneScape profili tagad ir ļoti reti.</li>
+		<li>Sasniedzot 120. Dungeoneering līmeni, 99. līmeni visās prasmēs vai iegūstot spēju valkāt Completitionist Cape, sasniegums tiek izziņots visos RuneScape serveros.</li> 
+		<li>Dažiem spēlētājiem <strong>Constitution</strong> līmenis ir mazāks par 10. 
+			RuneScape Classic pirmssākumos noteikumu pārkāpējus sodīja ar prasmju līmeņu samazināšanu, kas nozīmē, ka arī to <strong>Hitpoints</strong> (Constitution sākotnējais nosaukums) prasme, tika samazināta. Šādi RuneScape profili tagad ir ļoti reti.</li>
 	</ul>
 </div>
 <!-- END BLOCK : skills-facts -->
 
 <!-- START BLOCK : skills-xp-table -->
-<h1 class="content-title" style="margin-top:20px">RuneScape prasmju līmeņu un pieredzes punktu saistība</h1>
+<h1 class="content-title" style="margin-top:35px">RuneScape prasmju līmeņu un pieredzes punktu saistība</h1>
 <table class="rslist rslist-center xp-table">
 	<tr class="listhead">
 		<td style="width:80px">Līmenis</td>

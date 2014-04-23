@@ -574,6 +574,7 @@ ul.pagelist li.arrows a, ul.pagelist li.arrows a:active {
     .official-news p {
         float:left;
         width:70%;
+        font-size: 11px;
         line-height:1.8;
         padding-top:0
     }
