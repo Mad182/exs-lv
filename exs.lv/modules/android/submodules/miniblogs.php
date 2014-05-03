@@ -61,7 +61,7 @@ if (isset($_GET['var1'])) {
         // atbildes pievienošana
         else if (isset($_POST['comment'])) {
             if (!empty($_POST['comment']) && isset($_POST['response-to'])) {
-                add_mb_comment(array('id' => $record->user_id, 'nick' => $record->user_nick), true);
+                a_add_mb_comment(array('id' => $record->user_id, 'nick' => $record->user_nick), true);
             } else {
                 a_error('Kļūdaini komentāra dati!');
             }

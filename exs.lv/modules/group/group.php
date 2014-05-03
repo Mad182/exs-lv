@@ -1,8 +1,21 @@
 <?php
 
 /**
- * Konkrētās grupas skats
+ *  Konkrētās grupas skats
  */
+ 
+/**
+ *  Aptuvens saturs pa galvenajiem blokiem:
+ *  (CTRL + F -> <nr>.)
+ *
+ *  1. grupas biedru cilne
+ *  2. grupas miniblogu cilne
+ *  3. specifiska grupas cilne
+ *  4. grupas opcijas
+ *  5. grupas meklēšanas cilne
+ *  6. grupas sākumlapas cilne
+ */
+ 
 if (!empty($category->content)) {
 	$_GET['var5'] = esr($_GET['var4']);
 	$_GET['var4'] = esr($_GET['var3']);
@@ -16,6 +29,7 @@ if (!empty($category->content)) {
 
 $tpl->assignGlobal('group-link', $group_link);
 
+// atvērta neeksistējoša grupa
 if (!isset($_GET['var1']) || !$group = $db->get_row("SELECT * FROM `clans` WHERE `id` = '" . intval($_GET['var1']) . "'")) {
 	redirect('/grupas');
 }
@@ -29,16 +43,18 @@ set_action('grupas');
 if ($group->id == 65) {
 	redirect('http://lol.exs.lv/', true);
 }
-//rediretk uz pareizo apakšprojektu ja grupa pārvietota (padariju šo universālu)
+// redirekts uz pareizo apakšprojektu, ja grupa pārvietota
 else if ($group->lang != $lang) {
 	redirect('http://' . $config_domains[$group->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
 }
 
+// grupas avatars
 $group->av_alt = 1;
 if (empty($group->avatar)) {
 	$group->avatar = 'none.png';
 }
 
+// reklāmas
 if (!empty($group->disable_adsense)) {
 	$disable_adsense = true;
 }
@@ -86,6 +102,7 @@ $tpl->assign(array(
 	'group-title' => $group->title
 ));
 
+// pievienos grupas cilnes un iekrāsos atvērto
 if ($group_tabs) {
 	foreach ($group_tabs as $tab) {
 		$sel = '';
@@ -102,13 +119,15 @@ if ($group_tabs) {
 	}
 }
 
+// grupas administratoru fīčas
 if ($is_admin) {
-	$tpl->newBlock("group-menu-options");
+	$tpl->newBlock('group-menu-options');
 	$tpl->assign(array(
 		'group-id' => $group->id
 	));
 }
 
+// grupas apraksta rediģēšana
 if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || im_mod())) {
 
 	if (isset($_POST['edit-group-text'])) {
@@ -139,6 +158,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		'group-title' => $group->title,
 	));
 
+    // grupas kategorijas mainīšanas forma
 	if (im_mod()) {
 		$tpl->newBlock('group-edit-category');
 		$fcategorys = $db->get_results("SELECT `id`,`title` FROM `clans_categories` ORDER BY `importance` DESC");
@@ -157,6 +177,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 	}
+    
+    // ...
 	if ($auth->level == 1) {
 		$tpl->newBlock('group-edit-interest');
 		$fcategorys = $db->get_results("SELECT `id`,`title` FROM `interests` ORDER BY `id` ASC");
@@ -179,11 +201,20 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 	$tpl->newBlock('tinymce-enabled');
 	$page_title = $group->title . ' - labo grupu';
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'members') {
+}
+
+
+
+
+/**
+ *  1. GRUPAS BIEDRU CILNE UN TĀS IESPĒJAS
+ */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'members') {
 
 	$tpl->assignGlobal('active-tab-members', 'active');
 	$tpl->newBlock('group-members');
 
+    // modiem / adminiem atlasa biedru pieteikumus
 	if ($is_admin || $is_mod) {
 		$pendings = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '0'");
 		if ($pendings) {
@@ -206,6 +237,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
+    // pirms biedru saraksta pievieno grupas administratoru
 	$tpl->newBlock('members');
 
 	$m_owner = get_user($group->owner);
@@ -227,8 +259,11 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	}
 	$end = 119;
 
+    // atlasa grupas biedrus
 	$members = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '1' ORDER BY `moderator` DESC, `date_added` ASC LIMIT $skip,$end");
 	if ($members) {
+    
+        // pievieno biedrus sarakstam
 		foreach ($members as $member) {
 			$m_user = get_user($member->user);
 
@@ -272,6 +307,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
+    // biedru saraksta lappuses
 	$pager = pager($group->members, $skip, $end, $group_link . '/members/?skip=');
 	$tpl->assignGlobal(array(
 		'pager-next' => $pager['next'],
@@ -280,26 +316,32 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	));
 
 	$page_title = $group->title . ' - biedri';
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod)) {
+} 
+
+// grupas biedra dzēšana
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod)) {
 	$drop = (int) $_GET['var3'];
 	$db->query("DELETE FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$drop'");
 	update_members($group->id);
 	$auth->log('Izmeta biedru #' . $drop, 'clans', $group->id);
 	redirect($group_link . '/members');
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin) {
+} 
+// uzliek biedram moderatora statusu
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin) {
 	$uid = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET moderator = '1' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Uzlika par moderatoru #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
+} 
+// noņem biedram moderatora statusu
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
 	$uid = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET moderator = '0' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
-
-
-	/* confirm pending member */
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod)) {
+} 
+/* confirm pending member */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod)) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -312,9 +354,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
 
-
-	/* deny pendig member, remove pending status */
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod)) {
+} 
+/* deny pendig member, remove pending status */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod)) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -323,7 +365,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 	$auth->log('Noraidīja iestāšanās pieteikumu lietotājam #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok) {
+} 
+// lietotājs piesakās būt par grupas biedru
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
@@ -335,7 +379,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 		redirect($group_link);
 	}
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'submitpay' && $auth->ok && $group->paid) {
+} 
+// lietotājs piesakās par grupas biedru maksas grupā
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'submitpay' && $auth->ok && $group->paid) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 
 		$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
@@ -351,7 +397,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true));
 		redirect($group_link);
 	}
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid) {
+} 
+// ...
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 
 		$tpl->assignGlobal('active-tab-info', 'active');
@@ -399,36 +447,55 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
-
-	/* leave group */
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
+} 
+// izstāšanās no grupas
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
 		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true));
 	}
 	redirect($group_link);
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
+} 
 
+
+
+
+
+
+/**
+ *  2. GRUPAS MINIBLOGU CILNE UN TĀS IESPĒJAS
+ */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
+
+    // iekrāso atvērto cilni
 	$tpl->assignGlobal('active-tab-community', 'active');
 	$tpl->newBlock('group-community');
 	$page_title = $group->title . ' - forums';
 
+    // ...
 	if (isset($_GET['var3']) && !empty($_GET['var3'])) {
 		$_GET['single'] = base_convert($_GET['var3'], 36, 10);
 	}
 
+    // miniblogu saraksts aplūkojams tikai grupas biedriem,
+    // ja vien grupa nav publiska
 	if ($group->public || ($is_mod || $is_admin || $is_member)) {
 
+        // mb sarakstam ir lappuses,
+        // tāpēc nepieciešams datubāzes pieprasījumiem
 		$skip = 0;
 		if (isset($_GET['skip'])) {
 			$skip = (int) $_GET['skip'];
 		}
 		$end = 6;
 
+        // jauna minibloga pievienošana
+        // (iespējama vien nearhivētām grupām)
 		if ($auth->ok && isset($_POST['newminiblog']) && !empty($_POST['newminiblog']) && !$group->archived) {
 
 			$body = post2db($_POST['newminiblog']);
 
+            // ja nav pārkāpts flood limits, pievieno miniblogu un visādas notifikācijas
 			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) {
 				$_SESSION["antiflood"] = time();
 
@@ -450,21 +517,23 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 
+        // komentāra pievienošana, ja vien grupa nav arhivēta
 		if ($auth->ok && isset($_POST['responseminiblog']) && !empty($_POST['responseminiblog']) && !$group->archived) {
 
 			$to = (int) $_POST['response-to'];
 
 			$mlevel = 3;
 
+            // security pārbaudes...
 			if (get_mb_level($to) > $mlevel && $auth->level != 1) {
 				die('Too deep ;(');
 			}
-
 			if (!isset($_POST['token']) or $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
 				set_flash('Kļūdains pieprasījums! Hacking around?');
 				redirect();
 			}
 
+            // nosaka parent miniblogus
 			$reply_to = $db->get_row("SELECT * FROM miniblog WHERE id = '$to'");
 
 			$reply_to_id = 0;
@@ -475,6 +544,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$mainid = $to;
 			}
 
+            // eskeipos un embeddos dažādas specifiskas fīčas
 			$body = post2db($_POST['responseminiblog']);
 
 			$check = $db->get_var("SELECT author FROM miniblog WHERE id = '" . $mainid . "' AND removed = '0' AND groupid = '$group->id'");
@@ -485,6 +555,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			if ($check2) {
 				die("Tēma ir slēgta.");
 			}
+            
+            // pievieno komentāru, ja nav pārsniegts flood limits          
 			if ($mainid) {
 				if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 5) {
 					$_SESSION["antiflood"] = time();
@@ -507,7 +579,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					} else {
 						push('Atbildēja ' . $group->title . ' grupā', get_avatar($group, 's', true), 'g-' . $mainid);
 					}
-
+                    
+                    // mentions & notifikācijas
 					$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
 					$newpost->text = mention($newpost->text, $url, 'group', $mainid);
 					$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
@@ -545,7 +618,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 
-
+        // minibloga slēgšana
 		if ((im_mod() || $is_mod || $is_admin) && isset($_GET['var4']) && $_GET['var4'] === 'close' && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
 			if (isset($_POST['reason']) && !empty($_POST['reason'])) {
@@ -558,29 +631,39 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 
+        // minibloga atslēgšana
 		if ((im_mod() || $is_mod || $is_admin) && isset($_GET['var4']) && $_GET['var4'] === 'open' && isset($_GET['single'])) {
 			$sid = (int) $_GET['single'];
 			$db->query("UPDATE `miniblog` SET `closed` = '0', `closed_by` = '0' WHERE `id` = '$sid' AND `groupid` = '$group->id'");
 			redirect($group_link . '/forum/' . base_convert($sid, 10, 36));
 		}
 
+        // minibloga lasīšanas skats
 		$tpl->newBlock('user-miniblog');
 
+        // jauna minibloga pievienošanas forma atkarībā no tā, 
+        // vai grupa ir arhivēta
 		if ($auth->ok && !isset($_GET['single']) && !$group->archived) {
 			$tpl->newBlock('user-miniblog-form');
 		} elseif ($group->archived) {
 			$tpl->newBlock('archived');
 		}
 
+        // grupā esošo miniblogu saraksts
 		if (!isset($_GET['single'])) {
 			$records = $db->get_results("SELECT * FROM miniblog WHERE groupid = ('" . $group->id . "') AND removed = '0' AND parent = '0' ORDER BY bump DESC LIMIT $skip,$end");
-		} else {
+		} 
+        // atvērtā minibloga dati
+        else {
 			$single = (int) $_GET['single'];
 			$records = $db->get_results("SELECT * FROM miniblog WHERE id = ('$single') AND groupid = ('" . $group->id . "') AND removed = '0' AND parent = '0' LIMIT 1");
 		}
 
+        // izdrukā visus atlasītos ierakstus
 		if ($records) {
-			$tpl->newBlock('user-miniblog-list');
+        
+			$tpl->newBlock('user-miniblog-list');            
+            
 			foreach ($records as $record) {
 				$tpl->newBlock('user-miniblog-list-node');
 
@@ -594,11 +677,13 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					$page_title = textlimit(youtube_title($record->text), 64, '...') . ' - forums';
 				}
 
+                // twitter ierakstu fīčas
 				$append = '';
 				if ($record->twitterid && $record->twitteruser != 'rssbot') {
 					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="http://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
 				}
 
+                // lietotāja apbalvojumu ikonas
 				$add_deco = '';
 				if (!empty($user->decos)) {
 					$decos = unserialize($user->decos);
@@ -611,6 +696,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					}
 				}
 
+                // dzēstu lietotāju lietotājvārdi
 				if (!$user->deleted) {
 					$author = '<a href="/user/' . $user->id . '">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
 				} else {
@@ -631,14 +717,16 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'title' => $title
 				));
 
+                // no mobilās versijas nav pieejama vērtēšana (?)
 				if (!$auth->mobile) {
 					$tpl->assign(array(
 						'rater' => mb_rater($record, $url)
 					));
 				}
-
+                
+                // atvērtos miniblogos rāda administratīvās iespējas un komentārus
 				if (isset($_GET['single'])) {
-
+                    
 					if ($auth->ok) {
 						$tpl->newBlock('mb-reply-main');
 					}
@@ -650,7 +738,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						));
 					}
 
-					//linki ieraksta aizslēgšanai/atslēgšanai
+					// linki ieraksta aizslēgšanai/atslēgšanai
 					if (im_mod() || $is_mod || $is_admin) {
 						if ($record->closed) {
 							$tpl->newBlock('mb-edit-unclose');
@@ -660,7 +748,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						$tpl->assign('url', $url);
 					}
 
-					//lūdzu neņem nost laika ierobežojumu :/
+					// lūdzu, neņem nost laika ierobežojumu :/
 					if (im_mod() && strtotime($record->date) > time() - 86400) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign(array(
@@ -679,36 +767,39 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					$limit = ' LIMIT 0,3';
 				}
 
+                // komentāri
 				if ($record->posts) {
 
 					$responses = $db->get_results("
-					SELECT
-	 					`miniblog`.`text` AS `text`,
-	 					`miniblog`.`vote_value` AS `vote_value`,
-	 					`miniblog`.`vote_users` AS `vote_users`,
-	 					`miniblog`.`date` AS `date`,
-	 					`miniblog`.`author` AS `author`,
-	 					`miniblog`.`groupid` AS `groupid`,
-	 					`miniblog`.`id` AS `id`,
-						`miniblog`.`posts` AS `posts`,
-						`miniblog`.`reply_to` AS `reply_to`,
-						`miniblog`.`removed` AS `mb_removed`,
-	 					`users`.`nick` AS `nick`,
-						`users`.`decos` AS `decos`,
-	 					`users`.`avatar` AS `avatar`,
-	 					`users`.`av_alt` AS `av_alt`,
-	 					`users`.`level` AS `level`,
-						`users`.`deleted` AS `user_deleted`
-					FROM
-						miniblog,
-						users
-					WHERE
-						`miniblog`.`parent` = '" . $record->id . "' AND
-						`users`.`id` = `miniblog`.`author`
-					ORDER BY
-						`miniblog`.`id`
-					ASC" . $limit);
+                        SELECT
+                            `miniblog`.`text` AS `text`,
+                            `miniblog`.`vote_value` AS `vote_value`,
+                            `miniblog`.`vote_users` AS `vote_users`,
+                            `miniblog`.`date` AS `date`,
+                            `miniblog`.`author` AS `author`,
+                            `miniblog`.`groupid` AS `groupid`,
+                            `miniblog`.`id` AS `id`,
+                            `miniblog`.`posts` AS `posts`,
+                            `miniblog`.`reply_to` AS `reply_to`,
+                            `miniblog`.`removed` AS `mb_removed`,
+                            `users`.`nick` AS `nick`,
+                            `users`.`decos` AS `decos`,
+                            `users`.`avatar` AS `avatar`,
+                            `users`.`av_alt` AS `av_alt`,
+                            `users`.`level` AS `level`,
+                            `users`.`deleted` AS `user_deleted`
+                        FROM
+                            miniblog,
+                            users
+                        WHERE
+                            `miniblog`.`parent` = '" . $record->id . "' AND
+                            `users`.`id` = `miniblog`.`author`
+                        ORDER BY
+                            `miniblog`.`id`
+                        ASC" . $limit
+                    );
 
+                    // komentāri tiks pievienoti rekursīvi
 					if ($responses) {
 						$json = array();
 						foreach ($responses as $response) {
@@ -720,6 +811,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					}
 				}
 
+                // minibloga atvēršanas iespēja
 				if (!isset($_GET['single'])) {
 					$tpl->newBlock('mb-more');
 					if ($record->posts > 3) {
@@ -736,6 +828,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				}
 			}
 
+            // minibloga komentēšanas forma
 			if (isset($_GET['single']) && $auth->ok && !$record->closed && !$group->archived) {
 				$tpl->newBlock('user-miniblog-resp');
 				$tpl->assign(array(
@@ -751,7 +844,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'type' => 'miniblog',
 					'lastid' => (int) $db->get_var("SELECT id FROM miniblog WHERE parent = '$record->id' ORDER BY id DESC LIMIT 1")
 				));
-			} elseif ($record->closed) {
+			} 
+            // par slēgtiem komentāriem paziņo
+            elseif ($record->closed) {
 				$tpl->newBlock('user-miniblog-closed');
 				if (!empty($record->close_reason)) {
 					$tpl->assign('reason', add_smile($record->close_reason));
@@ -762,6 +857,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				}
 			}
 
+            // grupas mb sarakstā rāda lappuses
 			if (!isset($_GET['single'])) {
 
 				$total = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = '" . $group->id . "' AND `removed` = '0' AND `parent` = '0'");
@@ -775,12 +871,15 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 		}
 
+        // fiksē, cik daudz komentāru attiecīgajā grupā lietotājs ir jau lasījis
 		if ($group->owner == $auth->id) {
 			$db->query("UPDATE clans SET owner_seenposts = '$group->posts' WHERE owner = '$auth->id' AND id = '$group->id'");
 		} else {
 			$db->query("UPDATE clans_members SET seenposts = '$group->posts' WHERE user = '$auth->id' AND clan = '$group->id'");
 		}
-	} else {
+	} 
+    // viesiem nepubliskotas grupas nav skatāmas
+    else {
 		$tpl->newBlock('noguestacc');
 		$tpl->assign(array(
 			'group-id' => $group->id,
@@ -790,16 +889,26 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$tpl->assign('xsrf', $auth->xsrf);
 		}
 	}
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3'])) {
+} 
+
+
+
+/**
+ *  3. SPECIFISKA GRUPAS CILNE UN TĀS IESPĒJAS
+ */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3'])) {
 	$tab = mkslug($_GET['var3']);
 
 	$tab = $db->get_row("SELECT * FROM clans_tabs WHERE slug = '$tab' AND clan_id = '$group->id'");
 	$module_content = '';
+    
+    // iekļaus cilnes moduli, ja tāds cilnei ir norādīts
 	if (!empty($tab->module)) {
 		include(CORE_PATH . '/modules/groups/tabs/' . $tab->module . '.php');
 	}
 	if ($tab) {
 
+        // cilnes satura rediģēšana
 		if (isset($_GET['var4']) && $_GET['var4'] == 'edit' && ($is_admin || $is_mod)) {
 
 			if (isset($_POST['tab-text'])) {
@@ -815,7 +924,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				'tab-text' => htmlspecialchars($tab->text)
 			));
 			$page_title = $group->title . ' - labot &quot;' . $tab->title . '&quot;';
-		} elseif ($tab->public or ($is_mod || $is_admin || $is_member)) {
+		} 
+        // cilnes satura skatīšana
+        elseif ($tab->public or ($is_mod || $is_admin || $is_member)) {
 
 			if ($is_admin || $is_mod) {
 				$tpl->newBlock('tab-options');
@@ -825,6 +936,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				));
 			}
 
+            // cilnes šārēšana draugos un twitterī
 			$share = '';
 			if ($tab->share) {
 				$share = '
@@ -863,13 +975,21 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	} else {
 		redirect($group_link);
 	}
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'options') {
+} 
+
+
+
+/**
+ *  4. GRUPAS OPCIJAS
+ */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'options') {
 
 	$tpl->assignGlobal('active-tab-options', 'active');
 	$tpl->newBlock('group-settings');
 
 	if ($is_admin) {
 
+        // cilnes dzēšana
 		if (isset($_GET['deltab'])) {
 			$delete = intval($_GET['deltab']);
 			if ($delete && $delete != 303) {
@@ -878,6 +998,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			redirect($group_link . '/options');
 		}
 
+        // cilnes pievienošana
 		if (isset($_POST['tab-title']) && count($group_tabs) < 6 && strlen($_POST['tab-title']) > 2) {
 			$title = trim(substr(strip_tags($_POST['tab-title']), 0, 16));
 			$slug = mkslug($title);
@@ -890,6 +1011,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			redirect($group_link . '/tab/' . $slug . '/edit');
 		}
 
+        // citas iespējas
 		if (isset($_POST['submit-main'])) {
 			$public = (bool) $_POST['main-public'];
 			$auto_approve = (bool) $_POST['main-auto_approve'];
@@ -897,6 +1019,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			redirect($group_link . '/options');
 		}
 
+        // ciļņu skaitam ir noteikts limits, lai neaizcūkātu visu skatu
 		if (count($group_tabs) < 6) {
 			$tpl->newBlock('group-settings-newtab');
 		}
@@ -921,6 +1044,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$tpl->assign('auto_approve-sel', ' checked="checked"');
 		}
 
+        // grupas aptaujas
 		$tpl->newBlock('polls_admin-body');
 		$tpl->assign('list-active', 'active');
 		$polls = $db->get_results("SELECT * FROM `poll` WHERE `group` = '$group->id' ORDER BY `id` DESC");
@@ -934,6 +1058,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				));
 			}
 		}
+        
+        // jaunas aptaujas pievienošana
 		$tpl->assign('exist-active', 'active');
 		if (isset($_POST['new-poll-q']) && isset($_POST['new-poll-a'])) {
 			$new_q = sanitize(htmlspecialchars(trim($_POST['new-poll-q'])));
@@ -957,17 +1083,27 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$page_title = $group->title . ' - rīki';
 
 
-	/* search */
-} elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
+} 
+
+
+
+
+/**
+ *  5. GRUPAS MEKLĒŠANAS CILNE
+ */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
 	$tpl->assignGlobal('active-tab-search', 'active');
 	$tpl->newBlock('group-search');
 
+    // meklēt ļauts tikai grupas biedriem, ja vien grupa nav publiska
 	if ($group->public || ($is_mod || $is_admin || $is_member)) {
 
 		$tpl->newBlock('form-search');
 
+        // meklēšanas forma jau aizpildīta; meklē...
 		if (isset($_GET['q'])) {
+        
 			$q_string = str_replace(array(',', '.', '+', '-', '_'), ' ', $_GET['q']);
 			$q_string = strip_tags($q_string);
 			$tpl->assign('qstr', htmlspecialchars($q_string));
@@ -977,6 +1113,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$cond .= " AND `text` LIKE '%" . sanitize($str) . "%'";
 			}
 
+            // atlasa meklēšanas rezultātus un izvada lapā
 			$results = $db->get_results("SELECT * FROM miniblog WHERE `groupid` = '$group->id' $cond ORDER BY id DESC LIMIT 50");
 			if ($results) {
 				$tpl->newBlock('res-search');
@@ -998,18 +1135,27 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				}
 			}
 		}
-	} else {
+	} 
+    // nav tiesību izmantot meklētāju
+    else {
 		$tpl->newBlock('noguestacc-search');
 	}
 
 	$page_title = $group->title . ' - meklēšana';
 
+} 
 
-	/* group index */
-} else {
+
+
+
+/**
+ *  6. GRUPAS SĀKUMLAPAS CILNE UN TĀS IESPĒJAS
+ */
+else {
 
 	$tpl->assignGlobal('active-tab-info', 'active');
 
+    // grupas statistika
 	$tpl->newBlock('group-info');
 	$owner = get_user($group->owner);
 	$tpl->assign(array(
@@ -1018,12 +1164,16 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		'group-members' => $group->members + 1,
 		'group-admin' => $owner->nick
 	));
+    
+    // iespējas
 	if ($group->owner == $auth->id || im_mod() || $is_mod) {
 		$tpl->newBlock('group-options');
 		$tpl->assign(array(
 			'group-id' => $group->id,
 		));
 	}
+    
+    // ...
 	if ($auth->ok && $auth->id != $group->owner) {
 
 		if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $group->paid == 0 && !$group->archived) {
@@ -1051,6 +1201,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
+    // balsošana aptaujā
 	if (isset($_POST['g-vote']) && isset($_POST['g-questions'])) {
 		$q_pid = $db->get_var("SELECT `questions`.`pid` FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid=(SELECT pid FROM `questions` WHERE id='" . intval($_POST['g-questions']) . "' LIMIT 1)");
 		if (empty($q_pid)) {
@@ -1063,6 +1214,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	} else if (!isset($_POST['questions']) && isset($_POST['vote'])) {
 		$error = 'Jāizvēlas atbilde!';
 	}
+    
+    // aptaujas forma
 	$poll = $db->get_row("SELECT * FROM `poll` WHERE `group` = '$group->id' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 1");
 	$title = 'Nav aptaujas!';
 	if ($poll) {
@@ -1114,6 +1267,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
+    // jaunāko biedru saraksts grupas sākumlapā
 	if (!$auth->mobile) {
 		$members = $db->get_results("SELECT user,moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
 		if ($members) {
@@ -1138,28 +1292,31 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
+    // jaunāko miniblogu fragmenti, ja tie nav slēpti
 	if (!$group->hide_intro || im_mod()) {
 
-		$mbs = $db->get_results("SELECT
-		`miniblog`.`id` AS `id`,
-		`miniblog`.`text` AS `text`,
-		`miniblog`.`bump` AS `bump`,
-		`miniblog`.`author` AS `author`,
-		`miniblog`.`posts` AS `posts`,
-		`users`.`avatar` AS `avatar`,
-		`users`.`av_alt` AS `av_alt`,
-		`users`.`nick` AS `nick`
-	FROM
-		`miniblog`,
-		`users`
-	WHERE
-		`miniblog`.`removed` = '0' AND
-		`miniblog`.`parent` = '0' AND
-		`miniblog`.`groupid` = '$group->id' AND
-		`users`.`id` = `miniblog`.`author`
-	ORDER BY
-		`miniblog`.`bump`
-	DESC LIMIT 5");
+		$mbs = $db->get_results("
+            SELECT
+                `miniblog`.`id` AS `id`,
+                `miniblog`.`text` AS `text`,
+                `miniblog`.`bump` AS `bump`,
+                `miniblog`.`author` AS `author`,
+                `miniblog`.`posts` AS `posts`,
+                `users`.`avatar` AS `avatar`,
+                `users`.`av_alt` AS `av_alt`,
+                `users`.`nick` AS `nick`
+            FROM
+                `miniblog`,
+                `users`
+            WHERE
+                `miniblog`.`removed` = '0' AND
+                `miniblog`.`parent` = '0' AND
+                `miniblog`.`groupid` = '$group->id' AND
+                `users`.`id` = `miniblog`.`author`
+            ORDER BY
+                `miniblog`.`bump`
+            DESC LIMIT 5
+        ");
 
 		if ($mbs) {
 			$tpl->newBlock('glatest-box');
