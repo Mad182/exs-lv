@@ -62,7 +62,7 @@ if (isset($_GET['var1'])) {
 
             // aizstāj/neaizstāj dzēsta autora lietotājvārdu
             if (!$record->user_deleted ) {
-                $record->user_nick = stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
+                $record->user_nick = a_stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
             } else {
                 $record->user_nick = '<em>dzēsts</em>';
             }
@@ -78,7 +78,7 @@ if (isset($_GET['var1'])) {
                 'mb-author'     => $record->user_nick,
                 'mb-author-id'  => $record->user_id,
                 'mb-vote'       => $record->vote_value,
-                'avatar'        => get_user_avatar($record, 's')
+                'avatar'        => a_get_user_avatar($record, 's')
             );
             
             // galvenā minibloga komentāri
@@ -119,7 +119,7 @@ if (isset($_GET['var1'])) {
                     
                         // aizstāj dzēstu autora lietotājvārdu
                         if (!$record->user_deleted) {
-                            $response->user_nick = stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
+                            $response->user_nick = a_stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
                         } else {
                             $response->user_nick = '<em>dzēsts</em>';
                         }
@@ -136,7 +136,7 @@ if (isset($_GET['var1'])) {
                         }
                         
                         $response->mb_date  = display_time(strtotime($response->mb_date));
-                        $response->avatar   = get_user_avatar($response, 's');
+                        $response->avatar   = a_get_user_avatar($response, 's');
                     
                         $json[$response->mb_reply_to][] = $response;
                     }                
@@ -165,6 +165,6 @@ if (isset($_GET['var1'])) {
 // jaunāko miniblogu saraksts
 else {
 
-    $json_page = fetch_miniblogs();
+    $json_page = a_fetch_miniblogs();
 
 }

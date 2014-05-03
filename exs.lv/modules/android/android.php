@@ -26,7 +26,7 @@ $android_lang   = 1;        // nākotnē atbalstīs dažādus apakšprojektus
 // json objekta mainīgie
 $json_state     = 'success';
 $json_message   = '';
-$json_user      = fetch_user_data();
+$json_user      = a_user_data();
 $json_page      = null;
 
 
@@ -41,7 +41,7 @@ if ($auth->ok) {
     else if (isset($_GET['logout'])) {
     
         $auth->logout();        
-        $json_user = fetch_user_data();
+        $json_user = a_user_data();
     }
 }
 // vēlas autorizēties
@@ -50,7 +50,7 @@ else if (isset($_GET['login'])) {
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
     }
-    $json_user = fetch_user_data();
+    $json_user = a_user_data();
 }
 
 

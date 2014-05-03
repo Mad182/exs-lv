@@ -87,7 +87,7 @@ if (isset($_GET['var1'])) {
 
 // visos pārējos gadījumos atgriezīs sarakstu ar jaunākajiem rakstiem
 else {    
-    $json_page = get_news();
+    $json_page = a_get_news();
 }
 
 /*

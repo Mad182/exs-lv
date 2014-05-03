@@ -26,7 +26,7 @@ function a_error($string = '') {
  *
  *  @param int     skaits, cik rakstu rādīt vienā lapā
  */
-function get_news($in_page = 20) {
+function a_get_news($in_page = 20) {
 	global $auth, $db, $lang, $android_lang;
     
     // rakstu skaits, cik izlaist
@@ -117,7 +117,7 @@ function get_news($in_page = 20) {
  *
  *  Šobrīd apakšprojektu miniblogi netiek ņemti vērā un ir izlaisti.
  */
-function fetch_miniblogs() {
+function a_fetch_miniblogs() {
 	global $auth, $db, $android_lang;      
     
     // vienā lappusē redzamo miniblogu skaits;
@@ -228,7 +228,7 @@ function fetch_miniblogs() {
             $group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
             if ($group->avatar) {
                 $group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
-                $avatar = get_user_avatar($group, 's');
+                $avatar = a_get_user_avatar($group, 's');
             }
             if ($group) {
                 $group_title = ' @ ' . $group->title;
@@ -270,7 +270,7 @@ function fetch_miniblogs() {
  *  @param object   satur vērtības, pēc kurām var izveidot adresi
  *  @param string   s|m|l   norāda nepieciešamā avatara izmēru
  */
-function get_user_avatar($user, $size = 'm') {
+function a_get_user_avatar($user, $size = 'm') {
 	global $auth, $img_server;
     
     // pēc noklusējuma izveido vidēja izmēra attēla adresi
@@ -313,12 +313,12 @@ function get_user_avatar($user, $size = 'm') {
  *
  *  @return array   masīvs ar lietotāja datiem
  */
-function fetch_user_data() {
+function a_user_data() {
     global $auth;
     
     $colored_nick = $auth->nick;
     if ($auth->ok) {
-        $colored_nick = stylize_nick($auth->nick, $auth->level, false, $auth->id);
+        $colored_nick = a_stylize_nick($auth->nick, $auth->level, false, $auth->id);
     }
     
     $data = array(
@@ -341,7 +341,7 @@ function fetch_user_data() {
  *  @param int      lietotāja ID
  *  @return string  krāsains lietotājvārds HTML formā
  */
-function stylize_nick($nick, $level = 0, $online = false, $userid = 0) {
+function a_stylize_nick($nick, $level = 0, $online = false, $userid = 0) {
 	global $online_users, $busers, $site_access, $auth, $img_server;
     
 	$star = '';
