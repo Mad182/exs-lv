@@ -40,10 +40,10 @@ if (isset($_GET['var1'])) {
     if ($record) {
             
         // aizstāj/neaizstāj dzēstu autora lietotājvārdu
-        if ( ! $record->user_deleted ) {
-            $author = $record->user_nick;
+        if (!$record->user_deleted ) {
+            $record->user_nick = stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
         } else {
-            $author = 'dzēsts';
+            $record->user_nick = '<em>dzēsts</em>';
         }
         
         // paredzēts avataru funkcijai
@@ -54,7 +54,7 @@ if (isset($_GET['var1'])) {
             'mb-id'         => $record->id,
             'mb-text'       => strip_tags(add_smile($record->text), '<img><p><strong><b><i><em>'),
             'mb-date'       => display_time(strtotime($record->date)),
-            'mb-author'     => $author,
+            'mb-author'     => $record->user_nick,
             'mb-author-id'  => $record->user_id,
             'mb-vote'       => $record->vote_value,
             'avatar'        => get_user_avatar($record, 's')
@@ -77,6 +77,7 @@ if (isset($_GET['var1'])) {
                     `miniblog`.`vote_value` AS `mb_vote`,
                     `users`.`id`            AS `user_id`,
                     `users`.`nick`          AS `user_nick`,
+                    `users`.`level`         AS `user_level`,
                     `users`.`deleted`       AS `user_deleted`,
                     `users`.`avatar`        AS `avatar`,
                     `users`.`av_alt`        AS `av_alt`
@@ -96,12 +97,14 @@ if (isset($_GET['var1'])) {
                 foreach ($responses as $response) {
                 
                     // aizstāj dzēstu autora lietotājvārdu
-                    if ( $response->user_deleted ) {
-                        $response->user_nick = 'dzēsts';
+                    if (!$record->user_deleted) {
+                        $response->user_nick = stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
+                    } else {
+                        $response->user_nick = '<em>dzēsts</em>';
                     }
                     
                     // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
-                    if ( $response->mb_removed ) {
+                    if ($response->mb_removed) {
                         $response->mb_text = '<em>Ieraksts dzēsts!</em>';
                     }
                     // smaidiņi, embbeds u.c. saturs;
