@@ -2,7 +2,7 @@
 /**
  *  Android lietotnes modulis
  *
- *  Apstrādā visus no Android saņemtos pieprasījumus.
+ *  Apstrādā visus no Android saņemtos pieprasījumus
  */
 
 $sub_include    = true;     // submoduļos ir pārbaude, vai šāds mainīgais definēts
@@ -26,7 +26,7 @@ $android_lang   = 1;        // nākotnē atbalstīs dažādus apakšprojektus
 // json objekta mainīgie
 $json_state     = 'success';
 $json_message   = '';
-$json_user      = array('id' => $auth->id, 'nick' => $auth->nick, 'level' => $auth->level);
+$json_user      = fetch_user_data();
 $json_page      = null;
 
 
@@ -42,7 +42,7 @@ if ($auth->ok) {
     
         $auth->logout();
         
-        $json_user = array('id' => $auth->id, 'nick' => $auth->nick, 'level' => $auth->level);
+        $json_user = fetch_user_data();
     }
 }
 // vēlas autorizēties
@@ -51,7 +51,7 @@ else if (isset($_GET['login'])) {
     if (isset($_POST['username']) && isset($_POST['password'])) {
         $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
     }
-    $json_user = array('id' => $auth->id, 'nick' => $auth->nick, 'level' => $auth->level);
+    $json_user = fetch_user_data();
 }
 
 

@@ -108,7 +108,7 @@ function fetch_miniblogs() {
     // vienā lappusē redzamo miniblogu skaits;
     // lappušu saraksta lietotnē nav, tā vietā nākamās lapas ieraksti 
     // pievienojas aiz iepriekšējiem    
-    $mbs_in_page = 15;
+    $mbs_in_page = 10;
     
     // nosaka, cik mbs SQL pieprasījumā izlaist
     if (isset($_GET['page'])) {
@@ -148,31 +148,33 @@ function fetch_miniblogs() {
     }
 
     // atlasa pašus miniblogus
-    $mbs = $db->get_results("SELECT
-        `miniblog`.`id`         AS `id`,
-        `miniblog`.`text`       AS `text`,
-        `miniblog`.`date`       AS `date`,
-        `miniblog`.`author`     AS `author`,
-        `miniblog`.`posts`      AS `posts`,
-        `miniblog`.`groupid`    AS `groupid`,
-        `miniblog`.`closed`     AS `closed`,
-        `users`.`avatar`        AS `avatar`,
-        `users`.`deleted`       AS `deleted`,
-        `users`.`av_alt`        AS `av_alt`,
-        `users`.`nick`          AS `nick`
-    FROM
-        `miniblog`  USE INDEX(`parent_2`),
-        `users`     USE INDEX(`PRIMARY`)
-    WHERE
-        `miniblog`.`removed`    = '0' AND
-        `miniblog`.`parent`     = '0' AND
-        `miniblog`.`type`       = 'miniblog' AND
-        `miniblog`.`lang`       = '$android_lang' AND
-        (" . $groupquery . ") AND
-        `users`.`id`            = `miniblog`.`author`
-    ORDER BY
-        `miniblog`.`bump`
-    DESC LIMIT $skip, 15");
+    $mbs = $db->get_results("
+        SELECT
+            `miniblog`.`id`         AS `id`,
+            `miniblog`.`text`       AS `text`,
+            `miniblog`.`date`       AS `date`,
+            `miniblog`.`author`     AS `author`,
+            `miniblog`.`posts`      AS `posts`,
+            `miniblog`.`groupid`    AS `groupid`,
+            `miniblog`.`closed`     AS `closed`,
+            `users`.`avatar`        AS `avatar`,
+            `users`.`deleted`       AS `deleted`,
+            `users`.`av_alt`        AS `av_alt`,
+            `users`.`nick`          AS `nick`
+        FROM
+            `miniblog`  USE INDEX(`parent_2`),
+            `users`     USE INDEX(`PRIMARY`)
+        WHERE
+            `miniblog`.`removed`    = '0' AND
+            `miniblog`.`parent`     = '0' AND
+            `miniblog`.`type`       = 'miniblog' AND
+            `miniblog`.`lang`       = '$android_lang' AND
+            (" . $groupquery . ") AND
+            `users`.`id`            = `miniblog`.`author`
+        ORDER BY
+            `miniblog`.`bump`
+        DESC LIMIT $skip, $mbs_in_page
+    ");
 
     // masīvs, kas tiks atgriezts
     $arr_mbs = array();
@@ -287,4 +289,77 @@ function get_user_avatar($user, $size = 'm') {
     } else {
         return $img_server . '/userpic/' . $path . '/' . $user->avatar;
     }
+}
+
+
+
+/**
+ *  Atgriež Android lietotnei nepieciešamos lietotāja datus
+ *
+ *  @return array   masīvs ar lietotāja datiem
+ */
+function fetch_user_data() {
+    global $auth;
+    
+    $colored_nick = $auth->nick;
+    if ($auth->ok) {
+        $colored_nick = stylize_nick($auth->nick, $auth->level, false, $auth->id);
+    }
+    
+    $data = array(
+        'id'        => $auth->id, 
+        'nick'      => $auth->nick, 
+        'colorful'  => $colored_nick, 
+        'level'     => $auth->level
+    );
+    
+    return $data;
+}
+
+
+/**
+ *  Atgriež lietotājvārdu ar pareizām krāsām un zvaigznīti
+ *
+ *  @param string   lietotājvārds
+ *  @param int      lietotāja līmenis
+ *  @param bool     ??
+ *  @param int      lietotāja ID
+ *  @return string  krāsains lietotājvārds HTML formā
+ */
+function stylize_nick($nick, $level = 0, $online = false, $userid = 0) {
+	global $online_users, $busers, $site_access, $auth, $img_server;
+    
+	$star = '';
+
+    // vai lietotājs ir tiešsaistē?
+    // atšķiras zvaigznīte, ja izmanto mobilo versiju
+	if ($online !== 'disable') {
+		if ($online || (!empty($userid) && !empty($online_users['onlineusers'][$userid])) || (!empty($online_users['onlineusers']) && in_array($nick, $online_users['onlineusers']))) {
+			if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
+				$star = '<span style="color: #60ef00">*</span>';
+			} else {
+				$star = '<span style="color: #ef6000">*</span>';
+			}
+		}
+	}
+	$nick = $star . htmlspecialchars($nick);
+
+    // īpašo lietotāju klašu krāsas
+    // (1 - admins, 2 - mods, 3 - rakstu autors, 5 - bots)
+	$user_classes = array(1 => '#700', 2 => '#00b', 3 => '#070', 5 => '#777');
+
+	foreach ($user_classes as $key => $color) {
+		if ($level == $key || ($userid != 0 && !empty($site_access[$key]) && in_array($userid, $site_access[$key]))) {
+			$nick = '<span style="color:' . $color . '">' . $nick . '</span>';
+		}
+	}
+
+    // bloķēto lietotāju vārdi pārsvītroti
+	if ($online !== 'disable' && $userid && !empty($busers)) {
+		if (!empty($busers[$userid])) {
+			$nick = '<span style="text-decoration:line-through;color:#000;">' . $nick . '</span>';
+		}
+	}
+
+	return $nick;
 }
