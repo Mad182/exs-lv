@@ -14,7 +14,7 @@ $android_lang   = 1;        // nākotnē atbalstīs dažādus apakšprojektus
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:
  *
  *  $json = array(
- *      'state'     => string       // error/success (vēl pielietojumu izdomāšu)
+ *      'state'     => string       // error/success
  *      'message'   => string,      // ziņa, kas lietotnē tiek izcelta, ja "state" == "error"
  *      'auth'      => bool,        // statuss, kas apzīmē, vai lietotājs ir autorizēts
  *      'userdata'  => array(),     // masīvs, kas satur datus par lietotāju (id, niks, līmenis, utt.)
@@ -40,8 +40,7 @@ if ($auth->ok) {
     
     else if (isset($_GET['logout'])) {
     
-        $auth->logout();
-        
+        $auth->logout();        
         $json_user = fetch_user_data();
     }
 }

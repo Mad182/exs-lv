@@ -2,6 +2,21 @@
 /**
  *  android.exs.lv izmantotās funkcijas
  */
+
+
+
+/**
+ *  Pievieno kļūdas paziņojumu nākamajai atbildei
+ *
+ *  @param string   kļūdas paziņojums
+ */
+function a_error($string = '') {
+    global $json_state, $json_message;
+    
+    $json_state     = 'error';
+    $json_message   = $string;
+}
+ 
  
  
 /**
@@ -9,7 +24,7 @@
  *
  *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
  *
- *  @param  int     skaits, cik rakstu rādīt vienā lapā
+ *  @param int     skaits, cik rakstu rādīt vienā lapā
  */
 function get_news($in_page = 20) {
 	global $auth, $db, $lang, $android_lang;
@@ -362,4 +377,95 @@ function stylize_nick($nick, $level = 0, $online = false, $userid = 0) {
 	}
 
 	return $nick;
+}
+
+
+
+/**
+ *  Minibloga vērtēšana
+ *
+ *  @param id   minibloga id
+ *  @param bool vai vērtēt pozitīvi?
+ */
+function a_rate_mb($id = 0, $type = true) {
+    global $auth, $db, $json_page;
+    
+    if ($id == 0) {
+        a_error('Kļūda!'); return;
+    } 
+    
+    $id     = (int)$id;
+    $action = ($type) ? 'plus' : 'minus';
+    
+    // neļauj vērtēt pārāk bieži
+    if (isset($_SESSION['antiflood_rate']) && microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
+		$_SESSION["antiflood_rate"] = microtime(true);
+		$db->query("UPDATE `users` SET `vote_today` = `vote_today`+3 WHERE `id` = '$auth->id'");
+        
+        a_error('Hold your horses!'); return;
+	}
+	$_SESSION["antiflood_rate"] = microtime(true);
+    
+    // vērtējamā minibloga dati
+    $comment = $db->get_row("
+        SELECT `id`, `vote_users`, `vote_value`, `author` 
+        FROM `miniblog` 
+        WHERE `id` = '$id'
+    ");
+    
+    if (empty($comment)) {
+        a_error('Vērtēts neeksistējošs komentārs!'); return;
+    }
+
+    if ($comment->author == $auth->id) {
+        a_error('Savu komentāru nevar vērtēt!'); return;
+    }
+    
+    // pārbauda masīvu ar lietotājiem, kas miniblogu jau vērtējuši
+    $check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
+
+    if (!empty($comment->vote_users)) {
+        $voters = unserialize($comment->vote_users);
+    } else {
+        $voters = array();
+    }
+
+    $voted = in_array($auth->id, $voters);    
+    
+    if (isset($_GET['check']) && !$voted && $_GET['check'] == $check && isset($_GET['action'])) {
+        
+        $voters[] = $auth->id;
+        $comment->vote_users = serialize($voters);
+
+        // vērtējumu limits
+        $limit = (5 + $auth->karma / 30);
+        if(im_mod()) {
+            $limit += 50;
+        }
+
+        if ($auth->vote_today >= $limit) {
+            a_error('Sasniegts dienas limits!'); return;
+        } 
+        else if ($action == 'plus') {
+
+            $db->query("UPDATE `miniblog` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
+            $db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+            $comment->vote_value++;
+            get_user($auth->id, true);
+            
+        } else {
+            $db->query("UPDATE `miniblog` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
+            $db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+            $comment->vote_value = $comment->vote_value - 1;
+            get_user($auth->id, true);
+        }
+        
+        // atgriezīs lietotnei jauno vērtējumu
+        $json_page = array(
+            'vote-value' => $comment->vote_value
+        );
+        
+    } else {
+        a_error('Komentārs jau novērtēts!'); return;
+    }
 }
