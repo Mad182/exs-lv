@@ -175,7 +175,8 @@ function a_fetch_miniblogs() {
             `users`.`avatar`        AS `avatar`,
             `users`.`deleted`       AS `deleted`,
             `users`.`av_alt`        AS `av_alt`,
-            `users`.`nick`          AS `nick`
+            `users`.`nick`          AS `nick`,
+            `users`.`level`         AS `level`
         FROM
             `miniblog`  USE INDEX(`parent_2`),
             `users`     USE INDEX(`PRIMARY`)
@@ -217,8 +218,10 @@ function a_fetch_miniblogs() {
 
         // aizstāj dzēsto profilu lietotājvārdus
         if (!empty($mb->deleted)) {
-            $mb->nick = 'dzēsts';
-        }        
+            $mb->nick = '<em>dzēsts</em>';
+        } else {
+            $mb->nick = a_stylize_nick($mb->nick, $mb->level, false, $mb->author);
+        }
         
         // iegūst pareizu avatara adresi un grupas nosaukumu
         $avatar = '';
@@ -235,7 +238,7 @@ function a_fetch_miniblogs() {
             }
         // pārējiem miniblogiem - to autoru avatarus
         } else {
-            $avatar = get_user_avatar($mb, 's');
+            $avatar = a_get_user_avatar($mb, 's');
         }        
         
         // atgriežamais masīvs
@@ -388,7 +391,7 @@ function a_stylize_nick($nick, $level = 0, $online = false, $userid = 0) {
  *  @param bool vai vērtēt pozitīvi?
  */
 function a_rate_mb($id = 0, $type = true) {
-    global $auth, $db, $json_page;
+    global $auth, $db, $json_page, $remote_salt;
     
     if ($id == 0) {
         a_error('Kļūda!'); return;
@@ -430,42 +433,160 @@ function a_rate_mb($id = 0, $type = true) {
         $voters = array();
     }
 
-    $voted = in_array($auth->id, $voters);    
-    
-    if (isset($_GET['check']) && !$voted && $_GET['check'] == $check && isset($_GET['action'])) {
-        
-        $voters[] = $auth->id;
-        $comment->vote_users = serialize($voters);
-
-        // vērtējumu limits
-        $limit = (5 + $auth->karma / 30);
-        if(im_mod()) {
-            $limit += 50;
-        }
-
-        if ($auth->vote_today >= $limit) {
-            a_error('Sasniegts dienas limits!'); return;
-        } 
-        else if ($action == 'plus') {
-
-            $db->query("UPDATE `miniblog` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
-            $db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
-            $comment->vote_value++;
-            get_user($auth->id, true);
-            
-        } else {
-            $db->query("UPDATE `miniblog` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
-            $db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
-            $comment->vote_value = $comment->vote_value - 1;
-            get_user($auth->id, true);
-        }
-        
-        // atgriezīs lietotnei jauno vērtējumu
-        $json_page = array(
-            'vote-value' => $comment->vote_value
-        );
-        
-    } else {
+    $voted = in_array($auth->id, $voters);
+    if ( !(isset($_GET['check']) && $_GET['check'] == $check) || $voted) {
         a_error('Komentārs jau novērtēts!'); return;
     }
+        
+    $voters[] = $auth->id;
+    $comment->vote_users = serialize($voters);
+
+    // vērtējumu limits
+    $limit = (5 + $auth->karma / 30);
+    if(im_mod()) {
+        $limit += 50;
+    }
+
+    if ($auth->vote_today >= $limit) {
+        a_error('Sasniegts dienas limits!'); return;
+    } 
+    else if ($action == 'plus') {
+
+        $db->query("UPDATE `miniblog` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
+        $db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+        $comment->vote_value++;
+        get_user($auth->id, true);
+        
+    } else {
+        $db->query("UPDATE `miniblog` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
+        $db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+        $comment->vote_value = $comment->vote_value - 1;
+        get_user($auth->id, true);
+    }
+    
+    // atgriezīs lietotnei jauno vērtējumu
+    $json_page = array(
+        'vote-value' => $comment->vote_value
+    );
+}
+
+
+
+/**
+ *  Minibloga komentāra pievienošana
+ *
+ *  @param object   dati par lietotāju, kurš pievienojis parent miniblogu
+ */
+function a_add_mb_comment($inprofile, $android = false) {
+    global $db, $auth, $remote_salt;
+ 
+    if (!isset($_POST['response-to'])) {
+        a_error('Kļūdains pieprasījums!'); return;
+    }
+    $to = (int) $_POST['response-to'];
+
+    if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
+        a_error('Hacking around?'); return;
+    }
+
+    if (get_mb_level($to) > 1 && $auth->level != 1) {
+        a_error('Too deep ;('); return;
+    }
+
+    // parent komentāra dati
+    $reply_to = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$to' AND `removed` = '0' AND `groupid` = '0' ");
+
+    $reply_to_id = 0;
+    if ($reply_to->parent != 0) {
+        $mainid = $reply_to->parent;
+        $reply_to_id = $reply_to->id;
+    } else {
+        $mainid = $to;
+    }
+
+    $body = post2db($_POST['responseminiblog']);
+
+    // vai parents eksistē? vai tēma nav slēgta?
+    $check = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `removed` = '0' AND `groupid` = '0' ");
+    if (!$check || $check != $inprofile->id) {
+        a_error('Kļūdains parent id!');
+    }
+    $check2 = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `closed` = '1' ");
+    if ($check2) {
+        a_error('Tēma ir slēgta!');
+    }
+    
+    // viss kārtībā, var pievienot
+    if ($mainid) {
+    
+        // flood kontrole
+        if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] < time() - 4) {
+            a_error('err: flood');
+        }        
+        $_SESSION["antiflood"] = time();
+
+        // pievieno komentāru
+        $newid = post_mb(array(
+            'text' => $body,
+            'parent' => $mainid,
+            'reply_to' => $reply_to_id
+        ));
+
+        if ($check == $auth->id) {
+            $str = 'savā';
+        } else {
+            $str = $inprofile->nick;
+        }
+        $body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid' ");
+
+        $title = mb_get_title(stripslashes($body));
+        $strid = mb_get_strid($title, $mainid);
+        $url = '/say/' . $check . '/' . $mainid . '-' . $strid;
+
+        // bump, notifikācijas
+        if (!isset($_POST['no-bump'])) {
+            push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid);
+
+            $newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
+            $newpost->text = mention($newpost->text, $url, 'mb', $mainid);
+            $db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
+
+            notify($inprofile->id, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
+            if (!empty($reply_to_id) && $inprofile->id != $reply_to->author) {
+                notify($reply_to->author, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
+            }
+        }
+
+        // ja miniblogā ir vismaz 500 komentāri, to aizver un izveido jaunu miniblogu,
+        // kurā viss turpinās
+        $topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mainid'");
+        
+        if ($topic->posts >= 500) {
+        
+            $body = sanitize($topic->text . '<p>(<a href="' . $url . '">Tēmas</a> turpinājums)</p>');
+            $db->query("INSERT INTO miniblog (`author`,`date`,`text`,`ip`,`bump`,`lang`) VALUES ('$topic->author',NOW(),'$body','$topic->ip','" . time() . "','$topic->lang')");
+            
+            $new = $db->insert_id;
+            
+            $newtopic = $db->get_row("SELECT * FROM miniblog WHERE id = '$new'");
+            $newtitle = mb_get_title($newtopic->text);
+            $newstrid = mb_get_strid($newtitle, $new);
+            $newurl = '/say/' . $topic->author . '/' . $newtopic->id . '-' . $newstrid;
+            
+            $reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">http://' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
+            $db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '17077' WHERE `id` = '$mainid'");
+            
+            if (!$android) {
+                redirect($newurl);
+            }
+        }
+
+        if (isset($_GET['postcomment'])) {
+            a_error('ok');
+        }
+    }
+    if (isset($_GET['postcomment'])) {
+        a_error('err: wrong params');
+    }
+    
 }
