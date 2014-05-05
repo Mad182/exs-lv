@@ -71,10 +71,8 @@ if (isset($_GET['var1'])) {
         else {
 
             // aizstāj/neaizstāj dzēsta autora lietotājvārdu
-            if (!$record->user_deleted ) {
-                $record->user_nick = a_stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
-            } else {
-                $record->user_nick = '<em>dzēsts</em>';
+            if ($record->user_deleted ) {
+                $record->user_nick = 'dzēsts';
             }
             
             // paredzēts avataru funkcijai
@@ -85,8 +83,7 @@ if (isset($_GET['var1'])) {
                 'mb-id'         => $record->id,
                 'mb-text'       => strip_tags(add_smile($record->text), '<img><p><strong><b><i><em>'),
                 'mb-date'       => display_time(strtotime($record->date)),
-                'mb-author'     => $record->user_nick,
-                'mb-author-id'  => $record->user_id,
+                'mb-author'     => a_fetch_user($record->user_id, $record->user_nick, $record->user_level),
                 'mb-vote'       => $record->vote_value,
                 'avatar'        => a_get_user_avatar($record, 's')
             );
@@ -128,11 +125,10 @@ if (isset($_GET['var1'])) {
                     foreach ($responses as $response) {
                     
                         // aizstāj dzēstu autora lietotājvārdu
-                        if (!$record->user_deleted) {
-                            $response->user_nick = a_stylize_nick($record->user_nick, $record->user_level, false, $record->user_id);
-                        } else {
-                            $response->user_nick = '<em>dzēsts</em>';
+                        if ($response->user_deleted) {
+                            $response->user_nick = 'dzēsts';
                         }
+                        $response->user_data = a_fetch_user($response->user_id, $response->user_nick, $response->user_level);
                         
                         // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
                         if ($response->mb_removed) {

@@ -175,6 +175,7 @@ function a_fetch_miniblogs() {
             `users`.`avatar`        AS `avatar`,
             `users`.`deleted`       AS `deleted`,
             `users`.`av_alt`        AS `av_alt`,
+            `users`.`id`            AS `user_id`,
             `users`.`nick`          AS `nick`,
             `users`.`level`         AS `level`
         FROM
@@ -218,9 +219,7 @@ function a_fetch_miniblogs() {
 
         // aizstāj dzēsto profilu lietotājvārdus
         if (!empty($mb->deleted)) {
-            $mb->nick = '<em>dzēsts</em>';
-        } else {
-            $mb->nick = a_stylize_nick($mb->nick, $mb->level, false, $mb->author);
+            $mb->nick = 'dzēsts';
         }
         
         // iegūst pareizu avatara adresi un grupas nosaukumu
@@ -243,8 +242,8 @@ function a_fetch_miniblogs() {
         
         // atgriežamais masīvs
         $arr_mbs[] = array(
-            'mb-id'             => $mb->id, 
-            'mb-author'         => $mb->nick, 
+            'mb-id'             => $mb->id,
+            'mb-author'         => a_fetch_user($mb->user_id, $mb->nick, $mb->level),
             'mb-text'           => $mb->text,
             'mb-date'           => 'pirms ' . time_ago(strtotime($mb->date)),
             'mb-avatar'         => $avatar,
@@ -316,70 +315,47 @@ function a_get_user_avatar($user, $size = 'm') {
  *
  *  @return array   masīvs ar lietotāja datiem
  */
-function a_user_data() {
-    global $auth;
+function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
+    global $auth, $online_users, $busers;
     
-    $colored_nick = $auth->nick;
-    if ($auth->ok) {
-        $colored_nick = a_stylize_nick($auth->nick, $auth->level, false, $auth->id);
+    // atgriežamais masīvs
+    $data = array();
+    
+    $user_id        = ($user_id == 0) ? $auth->id : (int)$user_id;
+    $user_nick      = ($user_id == 0) ? $auth->nick : $nick;
+    $user_level     = ($user_id == 0) ? $auth->level : (int)$level;
+    $online_status  = false;
+    $online_type    = 0;
+    
+    
+    // vai lietotājs ir tiešsaistē?
+    if ( (!empty($user_id) && !empty($online_users['onlineusers'][$user_id])) || (!empty($online_users['onlineusers']) && in_array($user_nick, $online_users['onlineusers'])) ) {
+    
+        $online_status = true;
+        
+        // mob
+        if (!empty($online_users['mobileusers']) && in_array($user_nick, $online_users['mobileusers'])) {
+            $online_type = 1;
+        // cits
+        } else {
+            $online_type = 0;
+        }
     }
     
+    // bloķētie lietotāji
+	if (!empty($busers) && !empty($busers[$user_id])) {
+        $level = -1;
+	}
+    
     $data = array(
-        'id'        => $auth->id, 
-        'nick'      => $auth->nick, 
-        'colorful'  => $colored_nick, 
-        'level'     => $auth->level
+        'id'        => (int)$user_id, 
+        'nick'      => $user_nick,
+        'level'     => (int)$user_level,
+        'online'    => (bool)$online_status,
+        'type'      => (int)$online_type
     );
-    
+
     return $data;
-}
-
-
-/**
- *  Atgriež lietotājvārdu ar pareizām krāsām un zvaigznīti
- *
- *  @param string   lietotājvārds
- *  @param int      lietotāja līmenis
- *  @param bool     ??
- *  @param int      lietotāja ID
- *  @return string  krāsains lietotājvārds HTML formā
- */
-function a_stylize_nick($nick, $level = 0, $online = false, $userid = 0) {
-	global $online_users, $busers, $site_access, $auth, $img_server;
-    
-	$star = '';
-
-    // vai lietotājs ir tiešsaistē?
-    // atšķiras zvaigznīte, ja izmanto mobilo versiju
-	if ($online !== 'disable') {
-		if ($online || (!empty($userid) && !empty($online_users['onlineusers'][$userid])) || (!empty($online_users['onlineusers']) && in_array($nick, $online_users['onlineusers']))) {
-			if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
-				$star = '<span style="color: #60ef00">*</span>';
-			} else {
-				$star = '<span style="color: #ef6000">*</span>';
-			}
-		}
-	}
-	$nick = $star . htmlspecialchars($nick);
-
-    // īpašo lietotāju klašu krāsas
-    // (1 - admins, 2 - mods, 3 - rakstu autors, 5 - bots)
-	$user_classes = array(1 => '#700', 2 => '#00b', 3 => '#070', 5 => '#777');
-
-	foreach ($user_classes as $key => $color) {
-		if ($level == $key || ($userid != 0 && !empty($site_access[$key]) && in_array($userid, $site_access[$key]))) {
-			$nick = '<span style="color:' . $color . '">' . $nick . '</span>';
-		}
-	}
-
-    // bloķēto lietotāju vārdi pārsvītroti
-	if ($online !== 'disable' && $userid && !empty($busers)) {
-		if (!empty($busers[$userid])) {
-			$nick = '<span style="text-decoration:line-through;color:#000;">' . $nick . '</span>';
-		}
-	}
-
-	return $nick;
 }
 
 
