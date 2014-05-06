@@ -410,7 +410,10 @@ function a_rate_mb($id = 0, $type = true) {
     }
 
     $voted = in_array($auth->id, $voters);
-    if ( !(isset($_GET['check']) && $_GET['check'] == $check) || $voted) {
+    if ( !(isset($_GET['safe']) && $_GET['safe'] == $check)) {
+        a_error('Hacker spotted!'); return;
+    }
+    else if ($voted) {
         a_error('Komentārs jau novērtēts!'); return;
     }
         

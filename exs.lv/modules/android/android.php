@@ -64,5 +64,7 @@ $arr = array(
     'pagedata'  => $json_page
 );
 
+header('Content-Type: application/json');
+
 echo json_encode($arr);
 exit;

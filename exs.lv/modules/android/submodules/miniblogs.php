@@ -85,7 +85,8 @@ if (isset($_GET['var1'])) {
                 'mb-date'       => display_time(strtotime($record->date)),
                 'mb-author'     => a_fetch_user($record->user_id, $record->user_nick, $record->user_level),
                 'mb-vote'       => $record->vote_value,
-                'avatar'        => a_get_user_avatar($record, 's')
+                'avatar'        => a_get_user_avatar($record, 's'),
+                'safeguard'     => substr(md5($record->id . $remote_salt . $auth->id), 0, 5)
             );
             
             // galvenā minibloga komentāri
@@ -129,6 +130,10 @@ if (isset($_GET['var1'])) {
                             $response->user_nick = 'dzēsts';
                         }
                         $response->user_data = a_fetch_user($response->user_id, $response->user_nick, $response->user_level);
+                        
+                        // drošības atslēga, ko lietotnē pievienos adreses galā,
+                        // lai novērstu xsrf-tipa uzbrukumus, ja android lapu skatās caur pārlūku
+                        $response->safeguard = substr(md5($response->mb_id . $remote_salt . $auth->id), 0, 5);
                         
                         // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
                         if ($response->mb_removed) {
