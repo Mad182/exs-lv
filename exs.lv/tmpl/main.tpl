@@ -480,7 +480,7 @@
 				</div>
 				<div class="infoblock">
 					<div class="inner">
-						Jaunākais miniblogos: {footer-mb}
+						Pēdējie miniblogi: {footer-mb}
 					</div>
 				</div>
 				<div class="infoblock">
@@ -509,18 +509,6 @@
 			<div id="header-stuff">{ad-top}</div>
 
 		</div>
-
-		<!-- sekomums.lv -->
-		<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
-		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-		<script type="text/javascript">
-			function r(f) {
-				/in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
-			}
-			r(function() {
-				new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
-			});
-		</script>
 
 		<!-- smartad.eu -->
 		<script type='text/javascript'>/* <![CDATA[ */
