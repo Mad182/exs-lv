@@ -1949,14 +1949,14 @@ function get_latest_posts() {
 				$out .= '<li><a href="' . $url . $skip . '">';
 
 				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
-					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']<span>pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
+					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
 				} else {
-					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span>pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
+					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
 				}
 			} else {
 				$out .= '<li><a href="' . $url . $skip . '"><img src="http://exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
-				$out .= '<span>pirms ' . time_ago(strtotime($late->bump)) . '</span>';
+				$out .= '<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span>';
 
 				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']</a></li>';
@@ -2002,7 +2002,7 @@ function get_index_events() {
 
 			$action->avatar = str_replace('http://img.exs.lv/dati', $img_server . '/dati', $action->avatar);
 
-			$out .= '<li><img class="av" width="45" height="45" src="' . $action->avatar . '" alt="" /><div class="event-content"><span>' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
+			$out .= '<li><img class="av" width="45" height="45" src="' . $action->avatar . '" alt="" /><div class="event-content"><span class="post-time">' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
 		$out .= '</ul>';
 	}
@@ -2247,7 +2247,7 @@ function get_latest_mbs($friends = false) {
 				$mb->nick = 'dzēsts';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" /><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span>pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" /><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';
