@@ -795,18 +795,38 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		} else {
 			$fn = 'get_youtube_video_small';
 		}
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt);
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 
+            $fn, $txt
+        );
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 
+            $fn, $txt
+        );
 	}
 
 	// auto embed twitter posts
 	if (!$disable_embed && strpos($txt, 'twitter') !== false) {
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt);
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 
+            'embed_twitter', $txt
+        );
 	}
 
 	// auto embed spotify
 	if (!$disable_embed && strpos($txt, 'spotify') !== false) {
-		$txt = preg_replace_callback("#(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_spotify', $txt);
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 
+            'embed_spotify', $txt
+        );
+	}
+    
+    // auto embed deezer track or album or even playlist
+	if (!$disable_embed && strpos($txt, 'deezer') !== false) {
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)((.*?)</a>)?#im", 
+            'embed_deezer', $txt
+        );		
 	}
 
 	return $txt;
@@ -870,6 +890,49 @@ function embed_spotify($params) {
 	}
 
 	return $spotify_html;
+}
+
+/**
+ * preg_replace callback function for Deezer
+ * Uses memcache to store cached HTML
+ *
+ * @param array $params
+ * @return string Embeddable HTML
+ */
+function embed_deezer($params) {
+	global $m;
+
+    $type = 'tracks';
+	$height = 180; // izmērs pietiek, lai redzētu vienu dziesmu
+	
+    // izmērs atbilst 6 dziesmām sarakstā
+	if ($params[4] === 'album') {
+		$type = 'album';
+		$height = 375;
+	} elseif ($params[4] === 'playlist') {
+		$type = 'playlist';
+		$height = 375;		
+	}
+    
+    // unikāla simbolu virkne, domāta memcache
+    $unique_string = substr('deezer_' . $type . '_' . (int)$params[5], 0, 50);
+    
+    // pusstundu glabās html saturu iekš memcache
+    if (($deezer_html = $m->get($unique_string)) === false) {
+    
+        $deezer_html  = '<p><iframe scrolling="no" frameborder="0" ';
+        $deezer_html .= 'allowTransparency="true" ';
+        $deezer_html .= 'src="http://www.deezer.com/plugins/player?';
+        $deezer_html .= 'autoplay=false&playlist=true&width=300';
+        $deezer_html .= '&height='.(int)$height.'&cover=false&type='.$type;
+        $deezer_html .= '&id='.(int)$params[5].'&title=&format=vertical';
+        $deezer_html .= '&app_id=undefined" width="300" ';
+        $deezer_html .= 'height="'.(int)$height.'"></iframe></p>';
+
+		$m->set($unique_string, $deezer_html, false, 1800);
+	}
+    
+	return $deezer_html;
 }
 
 /**
