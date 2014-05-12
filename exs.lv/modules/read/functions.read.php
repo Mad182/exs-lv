@@ -10,10 +10,10 @@ function can_edit_page($article) {
 	if (im_mod() || im_cat_mod()) {
 		return true;
 	}
-    
-    if (im_rs_mod() && $auth->id == $article->author) {
-        return true;
-    }
+
+	if (im_rs_mod() && $auth->id == $article->author) {
+		return true;
+	}
 
 	if ($category->isblog == $auth->id) {
 		return true;
@@ -48,15 +48,15 @@ function get_page_categories($current = null, $force = false) {
 	foreach ($cats as $cat) {
 		if ((im_mod() || im_cat_mod($cat->id) || $cat->id == $current || $current == 'all') && $cat->status == 'active') {
 
-            if ($cat->isforum) {
-                $return['Forums'][$cat->id] = $cat->title . ' forums';
-            } elseif ($cat->isblog) {
-                $return['Blogi'][$cat->id] = $cat->title;
-            } elseif ($cat->persona == 'runescape.jpg') {
-                $return['Runescape'][$cat->id] = $cat->title;
-            } else {
-                $return['Main'][$cat->id] = $cat->title;
-            }    
+			if ($cat->isforum) {
+				$return['Forums'][$cat->id] = $cat->title . ' forums';
+			} elseif ($cat->isblog) {
+				$return['Blogi'][$cat->id] = $cat->title;
+			} elseif ($cat->persona == 'runescape.jpg') {
+				$return['Runescape'][$cat->id] = $cat->title;
+			} else {
+				$return['Main'][$cat->id] = $cat->title;
+			}
 		}
 	}
 	return $return;

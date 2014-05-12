@@ -355,7 +355,7 @@ if ($article) {
 						$foo->allowed = array('image/*');
 						$foo->image_ratio = true;
 						$foo->image_ratio_pixels = 17800;
-						$foo->jpeg_quality = 96;
+						$foo->jpeg_quality = 98;
 						$foo->image_ratio_no_zoom_in = true;
 						$foo->file_auto_rename = false;
 						$foo->file_overwrite = true;
@@ -368,7 +368,7 @@ if ($article) {
 							$foo->image_y = 75;
 							$foo->allowed = array('image/*');
 							$foo->image_ratio_crop = true;
-							$foo->jpeg_quality = 96;
+							$foo->jpeg_quality = 98;
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process('dati/bildes/av_sm/');
@@ -569,7 +569,7 @@ if ($article) {
 						$foo->file_new_name_body = $file_title;
 						$foo->image_ratio_no_zoom_in = false;
 						$foo->image_ratio_crop = true;
-						$foo->jpeg_quality = 96;
+						$foo->jpeg_quality = 98;
 						$foo->file_overwrite = true;
 						$foo->image_convert = 'jpg';
 						$foo->process(IMG_PATH . '/movies/thb/' . $path . '/');
@@ -583,7 +583,7 @@ if ($article) {
 							$foo->allowed = array('image/*');
 							$foo->image_ratio_crop = false;
 							$foo->image_ratio_no_zoom_in = true;
-							$foo->jpeg_quality = 96;
+							$foo->jpeg_quality = 98;
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process(IMG_PATH . '/movies/large/' . $path . '/');
@@ -591,6 +591,41 @@ if ($article) {
 							$db->query("DELETE FROM `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id'");
 							$db->query("INSERT INTO `movie_images` (`page_id`, `main`, `image`, `thb`, `title`, `created`, `created_by`)
 									VALUES ('$article->id', 1, '" . sanitize('/movies/large/' . $path . '/' . $foo->file_dst_name) . "', '" . sanitize('/movies/thb/' . $path . '/' . $foo->file_dst_name) . "', '" . sanitize($article->title . ' poster') . "', NOW(), '$auth->id')");
+
+							//update page avatars
+							$foo->file_new_name_body = $article->id;
+							$foo->image_resize = true;
+							$foo->image_convert = 'jpg';
+							$foo->allowed = array('image/*');
+							$foo->image_ratio = true;
+							$foo->image_ratio_pixels = 17800;
+							$foo->jpeg_quality = 98;
+							$foo->image_ratio_no_zoom_in = true;
+							$foo->file_auto_rename = false;
+							$foo->file_overwrite = true;
+							$foo->process('dati/bildes/avatari/');
+							if ($foo->processed) {
+								$foo->file_new_name_body = $article->id;
+								$foo->image_resize = true;
+								$foo->image_convert = 'jpg';
+								$foo->image_x = 75;
+								$foo->image_y = 75;
+								$foo->allowed = array('image/*');
+								$foo->image_ratio_crop = true;
+								$foo->jpeg_quality = 98;
+								$foo->file_auto_rename = false;
+								$foo->file_overwrite = true;
+								$foo->process('dati/bildes/av_sm/');
+								unlink('dati/bildes/topic-av/' . $article->id . '.jpg');
+								$foo->clean();
+								$article->avatar = 'dati/bildes/avatari/' . $topicid . '.jpg';
+								$article->sm_avatar = 'dati/bildes/av_sm/' . $topicid . '.jpg';
+
+								$db->query("UPDATE pages SET
+									avatar = ('$article->avatar'),
+									sm_avatar = ('$article->sm_avatar'),
+								WHERE id = '$article->id'");
+							}
 
 							$foo->clean();
 							set_flash('Attēls pievienots', 'success');
