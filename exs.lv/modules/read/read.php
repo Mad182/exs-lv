@@ -616,7 +616,11 @@ if ($article) {
 								$foo->file_auto_rename = false;
 								$foo->file_overwrite = true;
 								$foo->process('dati/bildes/av_sm/');
-								unlink('dati/bildes/topic-av/' . $article->id . '.jpg');
+
+								if (file_exists('dati/bildes/topic-av/' . $article->id . '.jpg')) {
+									unlink('dati/bildes/topic-av/' . $article->id . '.jpg');
+								}
+
 								$foo->clean();
 								$article->avatar = 'dati/bildes/avatari/' . $article->id . '.jpg';
 								$article->sm_avatar = 'dati/bildes/av_sm/' . $article->id . '.jpg';
