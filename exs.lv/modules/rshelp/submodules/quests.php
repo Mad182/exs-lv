@@ -96,7 +96,9 @@ if ($category->textid == 'kvestu-pamacibas') {
 				$quest_addr = '<a href="#">' . $single->page_title . '</a>';
 			}*/
             
-            $quest_addr = '<a href="#">' . $single->pages_title . '</a>';
+            //$quest_addr = '<a href="#">' . $single->pages_title . '</a>';
+            $quest_addr = '<a href="/read/' . $single->pages_strid . '" ';
+            $quest_addr .= 'title="' . $single->pages_title . '">' . $single->pages_title . '</a>';
 
 			$tpl->newBlock('series-quest');
 			$tpl->assign('page_title', $quest_addr);
