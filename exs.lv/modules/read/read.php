@@ -623,7 +623,7 @@ if ($article) {
 
 								$db->query("UPDATE pages SET
 									avatar = ('$article->avatar'),
-									sm_avatar = ('$article->sm_avatar'),
+									sm_avatar = ('$article->sm_avatar')
 								WHERE id = '$article->id'");
 							}
 
