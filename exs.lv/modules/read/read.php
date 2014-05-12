@@ -618,8 +618,8 @@ if ($article) {
 								$foo->process('dati/bildes/av_sm/');
 								unlink('dati/bildes/topic-av/' . $article->id . '.jpg');
 								$foo->clean();
-								$article->avatar = 'dati/bildes/avatari/' . $topicid . '.jpg';
-								$article->sm_avatar = 'dati/bildes/av_sm/' . $topicid . '.jpg';
+								$article->avatar = 'dati/bildes/avatari/' . $article->id . '.jpg';
+								$article->sm_avatar = 'dati/bildes/av_sm/' . $article->id . '.jpg';
 
 								$db->query("UPDATE pages SET
 									avatar = ('$article->avatar'),
