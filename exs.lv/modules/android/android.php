@@ -5,9 +5,15 @@
  *  Apstrādā visus no Android saņemtos pieprasījumus
  */
 
-$sub_include    = true;     // submoduļos ir pārbaude, vai šāds mainīgais definēts
-$android_lang   = 1;        // nākotnē atbalstīs dažādus apakšprojektus
+$sub_include    = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
+$android_lang   = 1;     // nākotnē atbalstīs dažādus apakšprojektus
 
+// ja androīds json formāta vietā saņems random kļūdas paziņojumu, 
+// kaut kas var nobrukt... skatoties logfailus, 
+// bez apstājas rakstās "GC_CONCURRENT freed [..]" paziņojums
+$debug = false;
+ini_set('display_errors', '0');
+error_reporting(NULL);
 
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,

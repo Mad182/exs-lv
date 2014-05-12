@@ -459,14 +459,14 @@ function a_rate_mb($id = 0, $type = true) {
 function a_add_mb_comment($inprofile, $android = false) {
     global $db, $auth, $remote_salt;
  
-    if (!isset($_POST['response-to'])) {
+    if (!isset($_POST['comment_id']) || !isset($_POST['comment'])) {
         a_error('Kļūdains pieprasījums!'); return;
     }
-    $to = (int) $_POST['response-to'];
-
-    if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
+    $to = intval($_POST['comment_id']);
+    
+    /*if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
         a_error('Hacking around?'); return;
-    }
+    }*/
 
     if (get_mb_level($to) > 1 && $auth->level != 1) {
         a_error('Too deep ;('); return;
@@ -476,31 +476,31 @@ function a_add_mb_comment($inprofile, $android = false) {
     $reply_to = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$to' AND `removed` = '0' AND `groupid` = '0' ");
 
     $reply_to_id = 0;
+    $mainid = $to;
+    
     if ($reply_to->parent != 0) {
         $mainid = $reply_to->parent;
         $reply_to_id = $reply_to->id;
-    } else {
-        $mainid = $to;
     }
 
-    $body = post2db($_POST['responseminiblog']);
+    $body = post2db($_POST['comment']);
 
     // vai parents eksistē? vai tēma nav slēgta?
     $check = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `removed` = '0' AND `groupid` = '0' ");
-    if (!$check || $check != $inprofile->id) {
-        a_error('Kļūdains parent id!');
+    if (!$check || $check != $inprofile['id']) {
+        a_error('Kļūdains parent id!'); return;
     }
     $check2 = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `closed` = '1' ");
     if ($check2) {
-        a_error('Tēma ir slēgta!');
+        a_error('Tēma ir slēgta!'); return;
     }
     
     // viss kārtībā, var pievienot
     if ($mainid) {
     
         // flood kontrole
-        if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] < time() - 4) {
-            a_error('err: flood');
+        if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] > time() - 4) {
+            a_error('no flood, pls'); return;
         }        
         $_SESSION["antiflood"] = time();
 
@@ -514,7 +514,7 @@ function a_add_mb_comment($inprofile, $android = false) {
         if ($check == $auth->id) {
             $str = 'savā';
         } else {
-            $str = $inprofile->nick;
+            $str = $inprofile['nick'];
         }
         $body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid' ");
 
@@ -530,8 +530,8 @@ function a_add_mb_comment($inprofile, $android = false) {
             $newpost->text = mention($newpost->text, $url, 'mb', $mainid);
             $db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
-            notify($inprofile->id, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
-            if (!empty($reply_to_id) && $inprofile->id != $reply_to->author) {
+            notify($inprofile['id'], 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
+            if (!empty($reply_to_id) && $inprofile['id'] != $reply_to->author) {
                 notify($reply_to->author, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
             }
         }
@@ -559,13 +559,7 @@ function a_add_mb_comment($inprofile, $android = false) {
                 redirect($newurl);
             }
         }
-
-        if (isset($_GET['postcomment'])) {
-            a_error('ok');
-        }
+    } else {
+        a_error('Kļūdains pieprasījums');
     }
-    if (isset($_GET['postcomment'])) {
-        a_error('err: wrong params');
-    }
-    
 }

@@ -60,7 +60,7 @@ if (isset($_GET['var1'])) {
         
         // atbildes pievienošana
         else if (isset($_POST['comment'])) {
-            if (!empty($_POST['comment']) && isset($_POST['response-to'])) {
+            if (!empty($_POST['comment']) && isset($_POST['comment_id'])) {
                 a_add_mb_comment(array('id' => $record->user_id, 'nick' => $record->user_nick), true);
             } else {
                 a_error('Kļūdaini komentāra dati!');
@@ -69,7 +69,6 @@ if (isset($_GET['var1'])) {
         
         // atgriež minibloga saturu
         else {
-
             // aizstāj/neaizstāj dzēsta autora lietotājvārdu
             if ($record->user_deleted ) {
                 $record->user_nick = 'dzēsts';
@@ -169,6 +168,8 @@ if (isset($_GET['var1'])) {
                 'comments'  => $array_comments
             );
         }
+    } else {
+        a_error('Kļūdaini minibloga dati');
     }
 }
 
