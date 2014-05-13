@@ -18,12 +18,17 @@ if (isset($_GET['var1'])) {
     // raksta informācija
     $news_data = $db->get_row("
         SELECT 
+            `pages`.`id`        AS `page_id`,
             `pages`.`title`     AS `page_title`, 
             `pages`.`text`      AS `page_text`,
+            `pages`.`date`      AS `page_date`,
+            `cat`.`title`       AS `category`,
             `users`.`id`        AS `user_id`,
-            `users`.`nick`      AS `user_nick`
+            `users`.`nick`      AS `user_nick`,
+            `users`.`level`     AS `user_level`
         FROM `pages` 
             JOIN `users` ON `pages`.`author` = `users`.`id`
+            JOIN `cat` ON `pages`.`category` = `cat`.`id`
         WHERE 
             `pages`.`id` = '".(int)$_GET['var1']."' AND
             (`pages`.`lang` = '$android_lang' OR `pages`.`lang` = 0)
@@ -36,7 +41,8 @@ if (isset($_GET['var1'])) {
             `comments`.`date`       AS `comment_date`,
             `comments`.`replies`    AS `comment_replies`,
             `users`.`id`            AS `user_id`,
-            `users`.`nick`          AS `user_nick`
+            `users`.`nick`          AS `user_nick`,
+            `users`.`level`         AS `user_level`
         FROM `comments`
             JOIN `users` ON `comments`.`author` = `users`.`id`
         WHERE 
@@ -53,10 +59,14 @@ if (isset($_GET['var1'])) {
     // informācija par rakstu atrasta
     if ($news_data) {
         $about_news = array(
-            'page_title'    => $news_data->page_title,
-            'page_text'     => $news_data->page_text,
-            'user_id'       => $news_data->user_id,
-            'user_nick'     => $news_data->user_nick
+            'article_id'    => (int)$news_data->page_id,    
+            'article_title' => $news_data->page_title,
+            'article_text'  => $news_data->page_text,
+            'article_date'  => display_time(strtotime($news_data->page_date)),
+            'category'      => $news_data->category,
+            'user_data'     => a_fetch_user($news_data->user_id, 
+                                            $news_data->user_nick, 
+                                            $news_data->user_level)
         );
     }
     
@@ -65,12 +75,14 @@ if (isset($_GET['var1'])) {
     if ($news_data && $page_comments) {   
         foreach ($page_comments as $single_comment) {
             $comments[] = array(
-                'comment_id'        => $single_comment->comment_id,
-                'comment_text'      => $single_comment->comment_text,
-                'comment_date'      => $single_comment->comment_date,
-                'comment_replies'   => $single_comment->comment_replies,
-                'user_id'           => $single_comment->user_id,
-                'user_nick'         => $single_comment->user_nick
+                'comment_id'      => (int)$single_comment->comment_id,
+                'comment_text'    => $single_comment->comment_text,
+                'comment_date'    => display_time(strtotime(
+                                        $single_comment->comment_date)),
+                'comment_replies' => (int)$single_comment->comment_replies,
+                'user_data'       => a_fetch_user($single_comment->user_id, 
+                                                  $single_comment->user_nick, 
+                                                  $single_comment->user_level)
             );
         }
     }
