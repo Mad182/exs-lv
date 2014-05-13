@@ -247,6 +247,8 @@ if ($skin === 'main') {
 $persona = '';
 if (!empty($inprofile) && !empty($inprofile->persona)) {
 	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0"';
+} elseif (!empty($ingroup) && !empty($ingroup->persona)) {
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0"';
 } elseif (!empty($auth->persona)) {
 	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $auth->persona . '\') repeat-x 0 0"';
 } elseif (!empty($category->persona)) {
