@@ -353,6 +353,10 @@ if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'))
 if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl')) {
 	$tpl->assignGlobal('ad-bottom', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl'));
 }
+//reklāma sidebarā tikai nereģistrētajiem, googles apmeklētājiem
+if (!$auth->ok && file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_left' . $ads_type . '.tpl')) {
+	$tpl->assignGlobal('ad-left', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_left' . $ads_type . '.tpl'));
+}
 
 
 if (!empty($pagepath) && $skin === 'main') {

@@ -204,6 +204,9 @@
 			<!-- START BLOCK : main-layout-left-->
 			<div id="left">
 				<div class="inner">
+				
+					{ad-left}
+				
 					<!-- START BLOCK : movie-search-->
 					<h3>Meklēt filmu</h3>
 					<div class="box">
