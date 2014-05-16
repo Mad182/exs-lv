@@ -106,7 +106,8 @@
 							<li><a href="http://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
 							<li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
 							<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
-							<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
+							<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
+							<li><a href="http://gif-avatars.com/" title="Gif avatari forumam">Gif avatari</a></li>
 							<li><a href="/statistika" title="Statistika">Statistika</a></li>
 							<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 						</ul>
