@@ -42,7 +42,9 @@ if (isset($_GET['var1'])) {
             `comments`.`replies`    AS `comment_replies`,
             `users`.`id`            AS `user_id`,
             `users`.`nick`          AS `user_nick`,
-            `users`.`level`         AS `user_level`
+            `users`.`level`         AS `user_level`,
+            `users`.`avatar`        AS `avatar`,
+            `users`.`av_alt`        AS `av_alt`
         FROM `comments`
             JOIN `users` ON `comments`.`author` = `users`.`id`
         WHERE 
@@ -82,7 +84,8 @@ if (isset($_GET['var1'])) {
                 'comment_replies' => (int)$single_comment->comment_replies,
                 'user_data'       => a_fetch_user($single_comment->user_id, 
                                                   $single_comment->user_nick, 
-                                                  $single_comment->user_level)
+                                                  $single_comment->user_level),
+                'avatar'          => a_get_user_avatar($single_comment, 's'),
             );
         }
     }
