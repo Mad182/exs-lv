@@ -69,8 +69,8 @@ if (isset($_GET['var1'])) {
         
         // atgriež minibloga saturu
         else {
-            // aizstāj/neaizstāj dzēsta autora lietotājvārdu
-            if ($record->user_deleted ) {
+
+            if ($record->user_deleted) {
                 $record->user_nick = 'dzēsts';
             }
             

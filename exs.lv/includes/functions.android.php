@@ -321,9 +321,18 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
     // atgriežamais masīvs
     $data = array();
     
-    $user_id        = ($user_id == 0) ? $auth->id : (int)$user_id;
-    $user_nick      = ($user_id == 0) ? $auth->nick : $nick;
-    $user_level     = ($user_id == 0) ? $auth->level : (int)$level;
+    // ja parametri nav norādīti, jāatgriež dati par autorizēto lietotāju
+    if ($user_id == 0) {
+        $user_id    = $auth->id;
+        $user_nick  = $auth->nick;
+        $user_level = $auth->level;  
+    // pārējos gadījumos meklē datus par norādīto lietotāju
+    } else {
+        $user_id    = (int)$user_id;
+        $user_nick  = $nick;
+        $user_level = (int)$level;
+    }
+
     $online_status  = false;
     $online_type    = 0;
     
