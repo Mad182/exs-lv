@@ -44,17 +44,17 @@ if (isset($_GET['var1'])) {
             // miniblogā esoša komentāra vērtēšana
             if (isset($_GET['var3'])) {
                 if ($_GET['var2'] == 'plus') {
-                    a_rate_mb((int)$_GET['var3'], true);
+                    a_rate_comment((int)$_GET['var3'], 'miniblog', true);
                 } else {
-                    a_rate_mb((int)$_GET['var3'], false);
+                    a_rate_comment((int)$_GET['var3'], 'miniblog', false);
                 }
             }
             // galvenā minibloga vērtēšana
             else if ($_GET['var2'] == 'plus') {
-                a_rate_mb($record->id, true);
+                a_rate_comment($record->id, 'miniblog', true);
             }
             else if ($_GET['var2'] == 'minus') {
-                a_rate_mb($record->id, false);
+                a_rate_comment($record->id, 'miniblog', false);
             }
         }
         
