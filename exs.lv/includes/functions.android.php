@@ -572,3 +572,87 @@ function a_add_mb_comment($inprofile, $android = false) {
         a_error('Kļūdains pieprasījums');
     }
 }
+
+
+/**
+ *  Raksta komentāra vai tā atbildes pievienošana
+ *
+ *  @param object   raksta dati no datubāzes
+ */
+function a_add_article_comment($article = null) {
+    global $auth, $remote_salt, $comments_per_page;
+    
+    if ($article == null) {
+        a_set_error('Pievienot neizdevās'); 
+        return;
+    }
+    
+    // drošības atslēga xsrf tipa uzbrukumiem
+    $article_salt = md5($article->id . $remote_salt . $auth->id);
+    
+    // pārbaudes
+    if ($article->closed) {    
+        a_set_error('Raksta komentēšana slēgta'); 
+        return;        
+    } else if (empty($_POST['comment'])) {    
+        a_set_error('Tukšu komentāru nevar pievienot'); 
+        return;        
+    } 
+    // drošības atslēgas pārbaude
+    else if (!isset($_POST['safeguard']) || 
+             $_POST['safeguard'] != substr($article_salt, 0, 8)) {
+        a_set_error('no hacking, pls');
+        return;
+    } else {
+    
+        // pārbaude, vai tiek atbildēts kādam esošam komentāram
+        $parent_id = 0;
+        if (isset($_POST['parent_comment')) {
+            $parent_id = (int)$_POST['parent_comment'];
+            $comment = $db->get_row("
+                SELECT * FROM `comments` 
+                WHERE 
+                    `id` = ".$parent_id." AND 
+                    `pid` = ".(int)$article->id." AND 
+                    `parent` = 0
+            ");
+            if (!$comment) {
+                a_set_error('Atbildāmais komentārs neeksistē'); 
+                return;
+            }
+        }
+
+        // komentāru saglabā datubāzē
+        require(CORE_PATH . '/includes/class.comment.php');
+        $addcom = new Comment();
+        $addcom->add_comment($article->id, $auth->id, $_POST['rpl-txt'], 
+                             0, $parent_id);
+        
+        // izveido adresi notifikācijai raksta autoram
+        $total = $db->get_var("
+            SELECT count(*) FROM `comments` 
+            WHERE 
+                `pid` = " . (int)$article->id . " AND 
+                `parent` = 0 AND 
+                `removed` = 0
+        ");
+        if ($total > $comments_per_page) {
+            $skip = '/com_page/' . floor($total / $comments_per_page);
+        } else {
+            $skip = '';
+        }
+        $url = '/read/' . $article->strid . $skip;
+        
+        // pievieno notifikāciju raksta autoram
+        if ($comment->author != $article->author) {
+            notify($comment->author, 0, $comment->id, $url, 
+                   textlimit(hide_spoilers($article->title), 64));
+        }
+
+        // atjauno raksta skaitliskos datus
+        update_stats($article->category);
+        if (!empty($category->parent)) {
+            update_stats($category->parent);
+        }
+    }
+}

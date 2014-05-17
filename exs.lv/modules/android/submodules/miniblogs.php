@@ -169,7 +169,7 @@ if (isset($_GET['var1'])) {
             );
         }
     } else {
-        a_error('Kļūdaini minibloga dati');
+        a_error('Miniblogs nav atrasts');
     }
 }
 

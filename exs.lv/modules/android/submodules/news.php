@@ -1,118 +1,122 @@
 <?php
+
 /**
  *  Android rakstu apakšmodulis
  *
- *  Kaut ko šeit darīs saistībā ar rakstiem.
+ *  Rakstu lasīšana, komentēšana, vērtēšana
  */
 
-// pa tiešo šeit nebūs nekādas skatīšanās
+// nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
 
 
-
-
-// izvēlēts konkrēts raksts;
-// parādīs tā saturu un komentārus
+/**
+ *  Norādīts kāda, iespējams, eksistējoša raksta id
+ *  
+ *  Šajā blokā notiek raksta lasīšana, komentēšana un 
+ *  komentāru vērtēšana
+ */
 if (isset($_GET['var1'])) {
 
-    // raksta informācija
-    $news_data = $db->get_row("
+    // atlasa norādīta raksta informāciju
+    $article = $db->get_row("
         SELECT 
-            `pages`.`id`        AS `page_id`,
-            `pages`.`title`     AS `page_title`, 
-            `pages`.`text`      AS `page_text`,
-            `pages`.`date`      AS `page_date`,
-            `cat`.`title`       AS `category`,
-            `users`.`id`        AS `user_id`,
-            `users`.`nick`      AS `user_nick`,
-            `users`.`level`     AS `user_level`
-        FROM `pages` 
-            JOIN `users` ON `pages`.`author` = `users`.`id`
+            `pages`.`id`        AS `id`,
+            `pages`.`strid`     AS `strid`,
+            `pages`.`title`     AS `title`, 
+            `pages`.`text`      AS `text`,
+            `pages`.`author`    AS `author`,
+            `pages`.`date`      AS `date`,
+            `pages`.`closed`    AS `closed`,
+            `cat`.`title`       AS `category`
+        FROM `pages`
             JOIN `cat` ON `pages`.`category` = `cat`.`id`
         WHERE 
             `pages`.`id` = '".(int)$_GET['var1']."' AND
             (`pages`.`lang` = '$android_lang' OR `pages`.`lang` = 0)
     ");
-    // raksta komentāri
-    $page_comments = $db->get_results("
-        SELECT 
-            `comments`.`id`         AS `comment_id`,
-            `comments`.`text`       AS `comment_text`,
-            `comments`.`date`       AS `comment_date`,
-            `comments`.`replies`    AS `comment_replies`,
-            `users`.`id`            AS `user_id`,
-            `users`.`nick`          AS `user_nick`,
-            `users`.`level`         AS `user_level`,
-            `users`.`avatar`        AS `avatar`,
-            `users`.`av_alt`        AS `av_alt`
-        FROM `comments`
-            JOIN `users` ON `comments`.`author` = `users`.`id`
-        WHERE 
-            `comments`.`pid` = '" . (int)$_GET['var1'] . "' AND 
-            `comments`.`parent` = 0 AND 
-            `comments`.`removed` = 0 
-        ORDER BY `comments`.`id` ASC
-    ");
     
-    // masīvi, kas tiks pievienoti $json_page 
-    $about_news = array();
-    $comments   = array();
+    if (!$article) {
+        a_error('Raksts nav atrasts');
+    } else {
     
-    // informācija par rakstu atrasta
-    if ($news_data) {
-        $about_news = array(
-            'article_id'    => (int)$news_data->page_id,    
-            'article_title' => $news_data->page_title,
-            'article_text'  => $news_data->page_text,
-            'article_date'  => display_time(strtotime($news_data->page_date)),
-            'category'      => $news_data->category,
-            'user_data'     => a_fetch_user($news_data->user_id, 
-                                            $news_data->user_nick, 
-                                            $news_data->user_level)
-        );
-    }
-    
-    // nebūtu jēdzīgi rādīt komentārus, ja neatrastu rakstu,
-    // tāpēc arī raksta pārbaude
-    if ($news_data && $page_comments) {   
-        foreach ($page_comments as $single_comment) {
-            $comments[] = array(
-                'comment_id'      => (int)$single_comment->comment_id,
-                'comment_text'    => $single_comment->comment_text,
-                'comment_date'    => display_time(strtotime(
-                                        $single_comment->comment_date)),
-                'comment_replies' => (int)$single_comment->comment_replies,
-                'user_data'       => a_fetch_user($single_comment->user_id, 
-                                                  $single_comment->user_nick, 
-                                                  $single_comment->user_level),
-                'avatar'          => a_get_user_avatar($single_comment, 's'),
-            );
+        // raksta komentāra vērtēšana
+        if (false) {
+        
         }
+        
+        // jauna komentāra pievienošana
+        else if (isset($_POST['comment'])) {
+            a_post_comment($article);
+        }
+        
+        // raksta satura skatīšana
+        else {
+        
+            $author = get_user($article->author);
+
+            // dati par pašu rakstu
+            $about_article = array(
+                'id'        => (int)$article->id,
+                'title'     => $article->title,
+                'text'      => $article->text,
+                'date'      => display_time(strtotime($article->date)),
+                'category'  => $article->category,
+                'author'    => a_fetch_user($author->id, $author->nick, 
+                                            $author->level)
+            );
+        
+            // atlasa raksta komentārus, ja tādi maz ir
+            $comments = $db->get_results("
+                SELECT 
+                    `comments`.`id`       AS `id`,
+                    `comments`.`text`     AS `text`,
+                    `comments`.`date`     AS `date`,
+                    `comments`.`replies`  AS `replies`,
+                    `comments`.`author`   AS `author`
+                FROM 
+                    `comments`
+                WHERE 
+                    `comments`.`pid` = '".(int)$_GET['var1']."' AND 
+                    `comments`.`parent` = 0 AND 
+                    `comments`.`removed` = 0 
+                ORDER BY `comments`.`id` ASC
+            ");
+            
+            // komentāru datu masīvs
+            $arr_comments  = array();
+            
+            if ($comments) {
+                foreach ($comments as $comment) {
+                    
+                    $author = get_user($comment->author);
+                
+                    $arr_comments[] = array(
+                        'id'      => (int)$comment->id,
+                        'text'    => $comment->text,
+                        'date'    => display_time(strtotime($comment->date)),
+                        'replies' => (int)$comment->replies,
+                        'author'  => a_fetch_user($author->id, $author->nick,
+                                                  $author->level),
+                        'avatar'  => a_get_user_avatar($author, 's'),
+                    );
+                }
+            }
+            
+            // atgriežamais saturs
+            $json_page = array(
+                'content'   => $about_article,
+                'comments'  => $arr_comments
+            );        
+        }
+        
     }
-    
-    // atgriežamais saturs
-    $json_page = array(
-        'content'   => $about_news,
-        'comments'  => $comments
-    );
 }
 
 
-
-
-// visos pārējos gadījumos atgriezīs sarakstu ar jaunākajiem rakstiem
+/**
+ *  Visos pārējos gadījumos atgriezīs sarakstu ar jaunākajiem rakstiem
+ */
 else {    
     $json_page = a_get_news();
 }
-
-/*
-    TODO:
-    
-        - rakstu rediģēšana (vai ļaut?)
-        - komentāru rediģēšana
-        - rakstu komentāru slēgšana
-        - rakstu vērtēšana
-        - komentāru vērtēšana
-        - daudz kas cits
-        - ...
-*/
