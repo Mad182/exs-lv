@@ -374,19 +374,19 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
  *
  *  Strādā rakstos, miniblogos un attēlos
  *
- *  @param int      atbildāmā raksta/minibloga/attēla id
+ *  @param int      vērtējamā komentāra id
  *  @param string   'article'/'miniblog'/'image'
  *  @param bool     vai vērtēt pozitīvi?
  */
-function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
+function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
     global $db, $auth, $remote_salt, $json_page;
     
-    if ($parent_id == 0) {
+    if ($comment_id == 0) {
         a_error('Kļūda'); 
         return;
     }
     
-    $parent_id  = (int)$parent_id;
+    $comment_id  = (int)$comment_id;
     $positive   = ($positive) ? 'plus' : 'minus';
     
     // vērtēt neļauj pārāk bieži
@@ -427,7 +427,7 @@ function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
     $comment = $db->get_row("
         SELECT `id`, `vote_users`, `vote_value`, `author` 
         FROM `" . $table . "` 
-        WHERE `id` = " . (int)$parent_id . "
+        WHERE `id` = " . (int)$comment_id . "
     ");
     if (!$comment || empty($comment)) {
         a_error('Vērtēts neeksistējošs komentārs'); 
@@ -468,7 +468,7 @@ function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
             SET
                 `vote_value` = (`vote_value` + 1), 
                 `vote_users` = '" . $comment->vote_users . "' 
-            WHERE `id` = " . (int)$parent_id . "
+            WHERE `id` = " . (int)$comment_id . "
         ");
         $db->query("
             UPDATE `users` 
@@ -488,7 +488,7 @@ function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
             SET 
                 `vote_value` = (`vote_value` - 1), 
                 `vote_users` = '" . $comment->vote_users . "' 
-            WHERE `id` = " . (int)$parent_id . "
+            WHERE `id` = " . (int)$comment_id . "
         ");
         $db->query("
             UPDATE `users` 
