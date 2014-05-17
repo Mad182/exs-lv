@@ -370,85 +370,136 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 
 /**
- *  Minibloga vērtēšana
+ *  Komentāra vērtēšana
  *
- *  @param id   minibloga id
- *  @param bool vai vērtēt pozitīvi?
+ *  Strādā rakstos, miniblogos[ un attēlos]
+ *
+ *  @param id       raksta/minibloga/attēla id
+ *  @param string   'article'/'miniblog'/'image'
+ *  @param bool     vai vērtēt pozitīvi?
  */
-function a_rate_mb($id = 0, $type = true) {
-    global $auth, $db, $json_page, $remote_salt;
+function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
+    global $db, $auth, $remote_salt, $json_page;
     
-    if ($id == 0) {
-        a_error('Kļūda!'); return;
-    } 
+    if ($parent_id == 0) {
+        a_error('Kļūda'); 
+        return;
+    }
     
-    $id     = (int)$id;
-    $action = ($type) ? 'plus' : 'minus';
+    $parent_id  = (int)$parent_id;
+    $positive   = ($positive) ? 'plus' : 'minus';
     
-    // neļauj vērtēt pārāk bieži
-    if (isset($_SESSION['antiflood_rate']) && microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
-		$_SESSION["antiflood_rate"] = microtime(true);
-		$db->query("UPDATE `users` SET `vote_today` = `vote_today`+3 WHERE `id` = '$auth->id'");
+    // vērtēt neļauj pārāk bieži
+    if (isset($_SESSION['antiflood_rate']) && 
+        microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
         
-        a_error('Hold your horses!'); return;
+		$_SESSION['antiflood_rate'] = microtime(true);
+		$db->query("
+            UPDATE `users` 
+            SET `vote_today` = (`vote_today` + 3)
+            WHERE `id` = " . (int)$auth->id . "
+        ");
+        
+        a_error('Hold your horses!'); 
+        return;
 	}
-	$_SESSION["antiflood_rate"] = microtime(true);
+	$_SESSION['antiflood_rate'] = microtime(true);
     
-    // vērtējamā minibloga dati
+    // vērtēšanas dienas limita pārbaude
+    $limit = (5 + $auth->karma / 30);
+    if (im_mod()) {
+        $limit += 50;
+    }
+    if ($auth->vote_today >= $limit) {
+        a_error('Sasniegts dienas limits'); 
+        return;
+    }
+    
+    // nosaka datubāzes tabulu, kuras ieraksts jāvērtē
+    $table = 'comments';
+	if ($type === 'miniblog') {
+        $table = 'miniblog';
+	} else if ($type === 'image') {
+        $table = 'galcom';
+    }
+    
+    // parent ieraksta esamības pārbaude
     $comment = $db->get_row("
         SELECT `id`, `vote_users`, `vote_value`, `author` 
-        FROM `miniblog` 
-        WHERE `id` = '$id'
+        FROM `" . $table . "` 
+        WHERE `id` = " . (int)$parent_id . "
     ");
-    
-    if (empty($comment)) {
-        a_error('Vērtēts neeksistējošs komentārs!'); return;
+    if (!$comment || empty($comment)) {
+        a_error('Vērtēts neeksistējošs komentārs'); 
+        return;
     }
-
+    
+    // sevi plusot/mīnusot nav ļauts
     if ($comment->author == $auth->id) {
-        a_error('Savu komentāru nevar vērtēt!'); return;
+        a_error('Savu komentāru nevar vērtēt'); 
+        return;
     }
     
-    // pārbauda masīvu ar lietotājiem, kas miniblogu jau vērtējuši
-    $check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
-
+    // drošības atslēgas pārbaude xsrf tipa uzbrukumiem
+    $key = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
+    if (!(isset($_GET['safeguard']) && $_GET['safeguard'] == $key)) {
+        a_error('no hacking, pls'); 
+        return;
+    }
+    
+    // pārbauda, vai šis lietotājs komentāru jau nav vērtējis
     if (!empty($comment->vote_users)) {
         $voters = unserialize($comment->vote_users);
     } else {
         $voters = array();
+    }    
+    if (in_array($auth->id, $voters)) {
+        a_error('Komentārs jau novērtēts'); 
+        return;
     }
-
-    $voted = in_array($auth->id, $voters);
-    if ( !(isset($_GET['safe']) && $_GET['safe'] == $check)) {
-        a_error('Hacker spotted!'); return;
-    }
-    else if ($voted) {
-        a_error('Komentārs jau novērtēts!'); return;
-    }
-        
+    
+    // pievieno šo lietotāju komentāra vērtētājiem
     $voters[] = $auth->id;
     $comment->vote_users = serialize($voters);
 
-    // vērtējumu limits
-    $limit = (5 + $auth->karma / 30);
-    if(im_mod()) {
-        $limit += 50;
-    }
-
-    if ($auth->vote_today >= $limit) {
-        a_error('Sasniegts dienas limits!'); return;
-    } 
-    else if ($action == 'plus') {
-
-        $db->query("UPDATE `miniblog` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
-        $db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+    // plusiņš!
+    if ($positive === 'plus') {
+        $db->query("
+            UPDATE `miniblog` 
+            SET 
+                `vote_value` = (`vote_value` + 1), 
+                `vote_users` = '" . $comment->vote_users . "' 
+            WHERE `id` = " . (int)$id . "
+        ");
+        $db->query("
+            UPDATE `users` 
+            SET 
+                `vote_others` = (`vote_others` + 1), 
+                `vote_total` = (`vote_total` + 1), 
+                `vote_today` = (`vote_today` + 1) 
+            WHERE `id` = " . (int)$auth->id . "
+        ");
         $comment->vote_value++;
         get_user($auth->id, true);
-        
-    } else {
-        $db->query("UPDATE `miniblog` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$id'");
-        $db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
-        $comment->vote_value = $comment->vote_value - 1;
+    }
+    // mīnusiņš!
+    else {
+        $db->query("
+            UPDATE `miniblog` 
+            SET 
+                `vote_value` = (`vote_value` - 1), 
+                `vote_users` = '" . $comment->vote_users . "' 
+            WHERE `id` = " . (int)$id . "
+        ");
+        $db->query("
+            UPDATE `users` 
+            SET 
+                `vote_others` = (`vote_others` - 1), 
+                `vote_total` = (`vote_total` + 1), 
+                `vote_today` = (`vote_today` + 1) 
+            WHERE `id` = " . (int)$auth->id . "
+        ");
+        $comment->vote_value--;
         get_user($auth->id, true);
     }
     
@@ -583,7 +634,7 @@ function a_add_article_comment($article = null) {
     global $auth, $remote_salt, $comments_per_page;
     
     if ($article == null) {
-        a_set_error('Pievienot neizdevās'); 
+        a_error('Pievienot neizdevās'); 
         return;
     }
     
@@ -592,22 +643,22 @@ function a_add_article_comment($article = null) {
     
     // pārbaudes
     if ($article->closed) {    
-        a_set_error('Raksta komentēšana slēgta'); 
+        a_error('Raksta komentēšana slēgta'); 
         return;        
     } else if (empty($_POST['comment'])) {    
-        a_set_error('Tukšu komentāru nevar pievienot'); 
+        a_error('Tukšu komentāru nevar pievienot'); 
         return;        
     } 
     // drošības atslēgas pārbaude
     else if (!isset($_POST['safeguard']) || 
              $_POST['safeguard'] != substr($article_salt, 0, 8)) {
-        a_set_error('no hacking, pls');
+        a_error('no hacking, pls');
         return;
     } else {
     
         // pārbaude, vai tiek atbildēts kādam esošam komentāram
         $parent_id = 0;
-        if (isset($_POST['parent_comment')) {
+        if (isset($_POST['parent_comment'])) {
             $parent_id = (int)$_POST['parent_comment'];
             $comment = $db->get_row("
                 SELECT * FROM `comments` 
@@ -617,7 +668,7 @@ function a_add_article_comment($article = null) {
                     `parent` = 0
             ");
             if (!$comment) {
-                a_set_error('Atbildāmais komentārs neeksistē'); 
+                a_error('Atbildāmais komentārs neeksistē'); 
                 return;
             }
         }

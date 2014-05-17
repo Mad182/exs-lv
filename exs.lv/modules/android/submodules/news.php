@@ -40,9 +40,15 @@ if (isset($_GET['var1'])) {
         a_error('Raksts nav atrasts');
     } else {
     
-        // raksta komentāra vērtēšana
-        if (false) {
-        
+        // ieraksta vērtēšana
+        if (isset($_GET['var2']) && isset($_GET['var3']) &&
+            in_array($_GET['var2'], array('plus', 'minus'))) {
+
+            if ($_GET['var2'] == 'plus') {
+                a_rate_comment((int)$_GET['var3'], 'article', true);
+            } else {
+                a_rate_comment((int)$_GET['var3'], 'article', false);
+            }
         }
         
         // jauna komentāra pievienošana
