@@ -372,9 +372,9 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 /**
  *  Komentāra vērtēšana
  *
- *  Strādā rakstos, miniblogos[ un attēlos]
+ *  Strādā rakstos, miniblogos un attēlos
  *
- *  @param id       raksta/minibloga/attēla id
+ *  @param int      atbildāmā raksta/minibloga/attēla id
  *  @param string   'article'/'miniblog'/'image'
  *  @param bool     vai vērtēt pozitīvi?
  */
@@ -442,17 +442,16 @@ function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
     
     // drošības atslēgas pārbaude xsrf tipa uzbrukumiem
     $key = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
-    if (!(isset($_GET['safeguard']) && $_GET['safeguard'] == $key)) {
+    if (!isset($_GET['safeguard']) || $_GET['safeguard'] != $key) {
         a_error('no hacking, pls'); 
         return;
     }
-    
+
     // pārbauda, vai šis lietotājs komentāru jau nav vērtējis
+    $voters = array();
     if (!empty($comment->vote_users)) {
         $voters = unserialize($comment->vote_users);
-    } else {
-        $voters = array();
-    }    
+    }   
     if (in_array($auth->id, $voters)) {
         a_error('Komentārs jau novērtēts'); 
         return;
@@ -465,11 +464,11 @@ function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
     // plusiņš!
     if ($positive === 'plus') {
         $db->query("
-            UPDATE `miniblog` 
-            SET 
+            UPDATE `" . $table . "` 
+            SET
                 `vote_value` = (`vote_value` + 1), 
                 `vote_users` = '" . $comment->vote_users . "' 
-            WHERE `id` = " . (int)$id . "
+            WHERE `id` = " . (int)$parent_id . "
         ");
         $db->query("
             UPDATE `users` 
@@ -485,11 +484,11 @@ function a_rate_comment($parent_id = 0, $type = 'article', $positive = true) {
     // mīnusiņš!
     else {
         $db->query("
-            UPDATE `miniblog` 
+            UPDATE `" . $table . "` 
             SET 
                 `vote_value` = (`vote_value` - 1), 
                 `vote_users` = '" . $comment->vote_users . "' 
-            WHERE `id` = " . (int)$id . "
+            WHERE `id` = " . (int)$parent_id . "
         ");
         $db->query("
             UPDATE `users` 
