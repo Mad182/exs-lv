@@ -69,7 +69,8 @@ if (isset($_GET['var1'])) {
                 'date'      => display_time(strtotime($article->date)),
                 'category'  => $article->category,
                 'author'    => a_fetch_user($author->id, $author->nick, 
-                                            $author->level)
+                                            $author->level),
+                'closed'    => (bool)$article->closed
             );
         
             // atlasa raksta komentārus, ja tādi maz ir
