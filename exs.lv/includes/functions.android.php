@@ -430,19 +430,19 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
         WHERE `id` = " . (int)$comment_id . "
     ");
     if (!$comment || empty($comment)) {
-        a_error('Vērtēts neeksistējošs komentārs'); 
+        a_error('Vērtēts neeksistējošs ieraksts'); 
         return;
     }
     
     // sevi plusot/mīnusot nav ļauts
     if ($comment->author == $auth->id) {
-        a_error('Savu komentāru nevar vērtēt'); 
+        a_error('Savu ierakstu nevar vērtēt'); 
         return;
     }
     
     // drošības atslēgas pārbaude xsrf tipa uzbrukumiem
     $key = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
-    if (!isset($_GET['safeguard']) || $_GET['safeguard'] != $key) {
+    if (!isset($_GET['safe']) || $_GET['safe'] != $key) {
         a_error('no hacking, pls'); 
         return;
     }
@@ -453,7 +453,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
         $voters = unserialize($comment->vote_users);
     }   
     if (in_array($auth->id, $voters)) {
-        a_error('Komentārs jau novērtēts'); 
+        a_error('Ieraksts jau novērtēts'); 
         return;
     }
     
@@ -504,7 +504,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
     
     // atgriezīs lietotnei jauno vērtējumu
     $json_page = array(
-        'vote-value' => $comment->vote_value
+        'vote_value' => (int)$comment->vote_value
     );
 }
 
@@ -630,15 +630,15 @@ function a_add_mb_comment($inprofile, $android = false) {
  *  @param object   raksta dati no datubāzes
  */
 function a_add_article_comment($article = null) {
-    global $auth, $remote_salt, $comments_per_page;
+    global $db, $auth, $remote_salt, $comments_per_page;
     
-    if ($article == null) {
+    if ($article == null || !isset($_POST['comment'])) {
         a_error('Pievienot neizdevās'); 
         return;
     }
     
     // drošības atslēga xsrf tipa uzbrukumiem
-    $article_salt = md5($article->id . $remote_salt . $auth->id);
+    $article_salt = substr(md5($article->id . $remote_salt . $auth->id), 0, 5);
     
     // pārbaudes
     if ($article->closed) {    
@@ -649,14 +649,14 @@ function a_add_article_comment($article = null) {
         return;        
     } 
     // drošības atslēgas pārbaude
-    else if (!isset($_POST['safeguard']) || 
-             $_POST['safeguard'] != substr($article_salt, 0, 8)) {
+    else if (!isset($_POST['safe']) || $_POST['safe'] != $article_salt) {
         a_error('no hacking, pls');
         return;
     } else {
     
         // pārbaude, vai tiek atbildēts kādam esošam komentāram
         $parent_id = 0;
+        $comment = null;
         if (isset($_POST['parent_comment'])) {
             $parent_id = (int)$_POST['parent_comment'];
             $comment = $db->get_row("
@@ -675,7 +675,7 @@ function a_add_article_comment($article = null) {
         // komentāru saglabā datubāzē
         require(CORE_PATH . '/includes/class.comment.php');
         $addcom = new Comment();
-        $addcom->add_comment($article->id, $auth->id, $_POST['rpl-txt'], 
+        $addcom->add_comment($article->id, $auth->id, $_POST['comment'], 
                              0, $parent_id);
         
         // izveido adresi notifikācijai raksta autoram
@@ -693,14 +693,15 @@ function a_add_article_comment($article = null) {
         }
         $url = '/read/' . $article->strid . $skip;
         
-        // pievieno notifikāciju raksta autoram
-        if ($comment->author != $article->author) {
+        // pievieno notifikāciju raksta autoram, ja tiek atbildēts
+        if ($comment != null && $comment->author != $article->author) {
             notify($comment->author, 0, $comment->id, $url, 
                    textlimit(hide_spoilers($article->title), 64));
         }
 
         // atjauno raksta skaitliskos datus
         update_stats($article->category);
+        $category = get_cat($article->category);
         if (!empty($category->parent)) {
             update_stats($category->parent);
         }

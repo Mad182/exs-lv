@@ -28,6 +28,8 @@ if (isset($_GET['var1'])) {
             `pages`.`author`    AS `author`,
             `pages`.`date`      AS `date`,
             `pages`.`closed`    AS `closed`,
+            `pages`.`posts`     AS `posts`,
+            `pages`.`views`     AS `views`,
             `cat`.`title`       AS `category`
         FROM `pages`
             JOIN `cat` ON `pages`.`category` = `cat`.`id`
@@ -53,13 +55,14 @@ if (isset($_GET['var1'])) {
         
         // jauna komentāra pievienošana
         else if (isset($_POST['comment'])) {
-            a_post_comment($article);
+            a_add_article_comment($article);
         }
         
         // raksta satura skatīšana
         else {
         
             $author = get_user($article->author);
+            $key = substr(md5($article->id . $remote_salt . $auth->id), 0, 5);
 
             // dati par pašu rakstu
             $about_article = array(
@@ -70,17 +73,20 @@ if (isset($_GET['var1'])) {
                 'category'  => $article->category,
                 'author'    => a_fetch_user($author->id, $author->nick, 
                                             $author->level),
-                'closed'    => (bool)$article->closed
+                'closed'    => (bool)$article->closed,
+                'safe'      => $key
             );
         
             // atlasa raksta komentārus, ja tādi maz ir
             $comments = $db->get_results("
                 SELECT 
-                    `comments`.`id`       AS `id`,
-                    `comments`.`text`     AS `text`,
-                    `comments`.`date`     AS `date`,
-                    `comments`.`replies`  AS `replies`,
-                    `comments`.`author`   AS `author`
+                    `comments`.`id`         AS `id`,
+                    `comments`.`text`       AS `text`,
+                    `comments`.`date`       AS `date`,
+                    `comments`.`replies`    AS `replies`,
+                    `comments`.`author`     AS `author`,
+                    `comments`.`vote_value` AS `vote`,
+                    `comments`.`vote_users` AS `voted_by`
                 FROM 
                     `comments`
                 WHERE 
@@ -97,15 +103,30 @@ if (isset($_GET['var1'])) {
                 foreach ($comments as $comment) {
                     
                     $author = get_user($comment->author);
-                
+                    $key = substr(md5($comment->id . $remote_salt . $auth->id),
+                                  0, 5);
+                    
+                    // noskaidro, vai šo ierakstu lietotājs jau ir vērtējis
+                    $voters = array();
+                    $voted = true;
+                    if (!empty($comment->voted_by)) {
+                        $voters = unserialize($comment->voted_by);
+                    }
+                    if (!in_array($auth->id, $voters)) {
+                        $voted = false;
+                    }
+                    
                     $arr_comments[] = array(
-                        'id'      => (int)$comment->id,
-                        'text'    => $comment->text,
-                        'date'    => display_time(strtotime($comment->date)),
-                        'replies' => (int)$comment->replies,
-                        'author'  => a_fetch_user($author->id, $author->nick,
-                                                  $author->level),
-                        'avatar'  => a_get_user_avatar($author, 's'),
+                        'id'        => (int)$comment->id,
+                        'text'      => $comment->text,
+                        'date'      => display_time(strtotime($comment->date)),
+                        'replies'   => (int)$comment->replies,
+                        'vote'      => (int)$comment->vote,
+                        'voted'     => (bool)$voted,
+                        'author'    => a_fetch_user($author->id, $author->nick,
+                                                    $author->level),
+                        'avatar'    => a_get_user_avatar($author, 's'),
+                        'safe'      => $key
                     );
                 }
             }
