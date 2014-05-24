@@ -22,18 +22,22 @@ function a_error($string = '') {
 /**
  *  Atgriež JSON sarakstu ar jaunākajiem exs.lv rakstiem
  *
- *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
- *
- *  @param int     skaits, cik rakstu rādīt vienā lapā
+ *  Atbalsta pārvietošanos pa lapām un apakšprojektus
  */
-function a_get_news($in_page = 20) {
+function a_get_news() {
 	global $auth, $db, $lang, $android_lang;
     
-    // rakstu skaits, cik izlaist
-	$skip = 0;
-	if (isset($_GET['page'])) {
-		$skip = $in_page * (intval($_GET['page']) - 1);
-	}
+    // vienā lappusē redzamo rakstu skaits;
+    // lappušu saraksta lietotnē nav, tā vietā nākamās lapas ieraksti 
+    // pievienojas aiz iepriekšējiem    
+    $news_in_page = 20;
+    
+    // nosaka, cik rakstus SQL pieprasījumā izlaist
+    if (isset($_GET['page'])) {
+        $skip = $news_in_page * intval($_GET['page']);
+    } else {
+        $skip = 0;
+    }
     
     // tiek pievienoti kritēriji rakstu atlasei
 	$conditions = array();
@@ -74,7 +78,8 @@ function a_get_news($in_page = 20) {
         WHERE
             " . implode(' AND ', $conditions) . $mods_only . "            
         ORDER BY
-            `pages`.`bump` DESC LIMIT $skip, $in_page
+            `pages`.`bump` DESC 
+        LIMIT $skip, $news_in_page
     ");
 
     // masīvs, kas tiks atgriezts
