@@ -17,29 +17,23 @@ if (isset($_GET['var1'])) {
     $parent_mb_id = (int)$_GET['var1'];
 
     // atlasa minibloga informāciju
-    $record = $db->get_row("
+    $miniblog = $db->get_row("
         SELECT 
-            `miniblog`.*,
-            `users`.`id`        AS `user_id`,
-            `users`.`nick`      AS `user_nick`,
-            `users`.`level`     AS `user_level`,
-            `users`.`deleted`   AS `user_deleted`,
-            `users`.`avatar`    AS `avatar`,
-            `users`.`av_alt`    AS `av_alt`
-        FROM `miniblog` 
-            JOIN `users` ON `miniblog`.`author` = `users`.`id`
+            `miniblog`.*
+        FROM `miniblog`
         WHERE 
-            `miniblog`.`id`        = " . $parent_mb_id . " AND
-            `miniblog`.`removed`   = '0' AND 
-            `miniblog`.`parent`    = '0' AND 
-            `miniblog`.`lang`      = '$android_lang' 
-        ORDER BY `miniblog`.`bump` DESC
+            `id`        = " . $parent_mb_id . " AND
+            `removed`   = '0' AND 
+            `parent`    = '0' AND 
+            `lang`      = '$android_lang' 
+        ORDER BY `bump` DESC
     ");
     
-    if ($record) {
+    if ($miniblog) {
     
         // minibloga vērtēšana
-        if (isset($_GET['var2']) && in_array($_GET['var2'], array('plus', 'minus'))) {
+        if (isset($_GET['var2']) && 
+            in_array($_GET['var2'], array('plus', 'minus'))) {
         
             // miniblogā esoša komentāra vērtēšana
             if (isset($_GET['var3'])) {
@@ -51,117 +45,114 @@ if (isset($_GET['var1'])) {
             }
             // galvenā minibloga vērtēšana
             else if ($_GET['var2'] == 'plus') {
-                a_rate_comment($record->id, 'miniblog', true);
+                a_rate_comment($miniblog->id, 'miniblog', true);
             }
             else if ($_GET['var2'] == 'minus') {
-                a_rate_comment($record->id, 'miniblog', false);
+                a_rate_comment($miniblog->id, 'miniblog', false);
             }
         }
         
         // atbildes pievienošana
         else if (isset($_POST['comment'])) {
             if (!empty($_POST['comment']) && isset($_POST['comment_id'])) {
-                a_add_mb_comment(array('id' => $record->user_id, 'nick' => $record->user_nick), true);
+                a_add_mb_comment(array('id' => $miniblog->user_id, 
+                                       'nick' => $miniblog->user_nick),
+                                 true);
             } else {
                 a_error('Kļūdaini komentāra dati!');
             }
         }
         
         // atgriež minibloga saturu
-        else {
-
-            if ($record->user_deleted) {
-                $record->user_nick = 'dzēsts';
-            }
+        else {          
             
             // paredzēts avataru funkcijai
-            $record->av_alt = 1;       
+            $miniblog->av_alt = 1;
+            
+            $author = get_user($miniblog->author);
+            if ($author->deleted) {
+                $author->nick = 'dzēsts';
+            }            
+            $key = substr(md5($miniblog->id . $remote_salt . $auth->id),
+                                  0, 5);
             
             // galvenā minibloga informācija
             $array_miniblog = array(
-                'mb-id'         => $record->id,
-                'mb-text'       => strip_tags(add_smile($record->text), '<img><p><strong><b><i><em>'),
-                'mb-date'       => display_time(strtotime($record->date)),
-                'mb-author'     => a_fetch_user($record->user_id, $record->user_nick, $record->user_level),
-                'mb-vote'       => $record->vote_value,
-                'avatar'        => a_get_user_avatar($record, 's'),
-                'safeguard'     => substr(md5($record->id . $remote_salt . $auth->id), 0, 5)
+                'id'        => (int)$miniblog->id,
+                'text'      => strip_tags(add_smile($miniblog->text), 
+                                          '<img><p><strong><b><i><em>'),
+                'date'      => display_time(strtotime($miniblog->date)),
+                'author'    => a_fetch_user($author->id, 
+                                            $author->nick, 
+                                            $author->level),
+                'vote'      => (int)$miniblog->vote_value,
+                'avatar'    => a_get_user_avatar($author, 's'),
+                'closed'    => (bool)$miniblog->closed,
+                'safe'      => substr(md5($miniblog->id . $remote_salt . $auth->id), 0, 5)
             );
-            
+
             // galvenā minibloga komentāri
             $array_comments = array();
+            $json = array();
             
-            if ($record->posts) {
+            if ($miniblog->posts) {
 
                 // atlasa visus ierakstus, kuriem parent ir galvenais miniblogs
                 $responses = $db->get_results("
                     SELECT
-                        `miniblog`.`id`         AS `mb_id`,
-                        `miniblog`.`text`       AS `mb_text`,
-                        `miniblog`.`date`       AS `mb_date`,
-                        `miniblog`.`groupid`    AS `mb_groupid`,
-                        `miniblog`.`reply_to`   AS `mb_reply_to`,
-                        `miniblog`.`removed`    AS `mb_removed`,
-                        `miniblog`.`vote_value` AS `mb_vote`,
-                        `users`.`id`            AS `user_id`,
-                        `users`.`nick`          AS `user_nick`,
-                        `users`.`level`         AS `user_level`,
-                        `users`.`deleted`       AS `user_deleted`,
-                        `users`.`avatar`        AS `avatar`,
-                        `users`.`av_alt`        AS `av_alt`
+                        `id`, `text`, `author`, `date`, `groupid`, `reply_to`,
+                        `removed`, `vote_value` AS `vote`
                     FROM `miniblog`
-                        JOIN `users` ON `miniblog`.`author` = `users`.`id`
                     WHERE
-                        `miniblog`.`parent`     = '" . $record->id . "' AND
-                        `miniblog`.`type`       = 'miniblog'
-                    ORDER BY `miniblog`.`id` ASC"
-                );
+                        `parent` = '" . $miniblog->id . "' AND
+                        `type`   = 'miniblog'
+                    ORDER BY `id` ASC
+                ");
 
                 // ja miniblogam ir komentāri, tos visus ievieto masīvā
                 if ($responses) {
-                
-                    $json = array();
                     
                     foreach ($responses as $response) {
                     
+                        $author = get_user($response->author);
+                    
                         // aizstāj dzēstu autora lietotājvārdu
-                        if ($response->user_deleted) {
-                            $response->user_nick = 'dzēsts';
+                        if ($author->deleted) {
+                            $response->nick = 'dzēsts';
                         }
-                        $response->user_data = a_fetch_user($response->user_id, $response->user_nick, $response->user_level);
-                        
-                        // drošības atslēga, ko lietotnē pievienos adreses galā,
-                        // lai novērstu xsrf-tipa uzbrukumus, ja android lapu skatās caur pārlūku
-                        $response->safeguard = substr(md5($response->mb_id . $remote_salt . $auth->id), 0, 5);
+                        $response->author = a_fetch_user($author->id, $author->nick, $author->level);
                         
                         // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
-                        if ($response->mb_removed) {
-                            $response->mb_text = '<em>Ieraksts dzēsts!</em>';
+                        if ($response->removed) {
+                            $response->text = '<em>Ieraksts dzēsts!</em>';
                         }
                         // smaidiņi, embbeds u.c. saturs;
                         // būtībā ir jēga, lai pievieno smaidiņu un attēlu adreses,
                         // kuras lietotnē varētu ielādēt
                         else {
-                            $response->mb_text = strip_tags(add_smile($response->mb_text, 0, 0, 1), '<img><p><strong><b><i><em>');
+                            $response->text = strip_tags(add_smile($response->text, 0, 0, 1), '<img><p><strong><b><i><em>');
                         }
                         
-                        $response->mb_date  = display_time(strtotime($response->mb_date));
-                        $response->avatar   = a_get_user_avatar($response, 's');
+                        $response->date     = display_time(strtotime($response->date));
+                        $response->avatar   = a_get_user_avatar($author, 's');
+                        
+                        // drošības atslēga, ko lietotnē pievienos adreses galā,
+                        // lai novērstu xsrf-tipa uzbrukumus, ja android lapu skatās caur pārlūku
+                        $response->safe = substr(md5($response->id . $remote_salt . $auth->id), 0, 5);
                     
-                        $json[$response->mb_reply_to][] = $response;
-                    }                
-                    
-                    // ja miniblogā ir tikai viens komentārs, no objekta tas tiek pārveidots uz masīvu;
-                    // tā kā lietotne vienmēr gaida objektu, jāpievieno kāds papildobjekts,
-                    // kas lietotnē netiks uztverts kā komentārs
-                    $json[-1][] = 'safeguard';
-                    
-                    // šis tiek pievienots atgriežamajam saturam
-                    $array_comments = $json;
+                        $json[$response->reply_to][] = $response;
+                    }  
                 }
             }  
             
+            // ja miniblogā ir tikai viens komentārs, no objekta tas tiek pārveidots uz masīvu;
+            // tā kā lietotne vienmēr gaida objektu, jāpievieno kāds papildobjekts,
+            // kas lietotnē netiks uztverts kā komentārs
+            $json[-1][] = 'safe';
             
+            // šis tiek pievienots atgriežamajam saturam
+            $array_comments = $json;
+                    
             // atgriežamais rezultāts
             $json_page = array(
                 'content'   => $array_miniblog,
