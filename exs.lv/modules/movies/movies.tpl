@@ -1,5 +1,5 @@
 <!-- START BLOCK : list-articles-->
-<h1><a class="rss" title="Seko līdzi jaunumiem šajā lapas sadaļā, izmantojot RSS!" href="/rss/{strid}" rel="feed">rss</a> {title}</h1>
+<h1>{title}</h1>
 
 <ul id="mainlist">
 	<!-- START BLOCK : list-->
@@ -30,7 +30,7 @@
 
 
 <!-- START BLOCK : list-search-->
-<h1><a class="rss" title="Seko līdzi jaunumiem šajā lapas sadaļā, izmantojot RSS!" href="/rss/{strid}" rel="feed">rss</a> {title}</h1>
+<h1>{title}</h1>
 
 <ul id="movie-list">
 	<!-- START BLOCK : movie-->

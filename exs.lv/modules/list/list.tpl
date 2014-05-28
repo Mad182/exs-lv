@@ -22,7 +22,7 @@
 
 
 <!-- START BLOCK : list-articles-->
-<h1><a class="rss" title="Seko līdzi jaunumiem šajā lapas sadaļā, izmantojot RSS!" href="/rss/{strid}" rel="feed">rss</a> {title}</h1>
+<h1>{title}</h1>
 
 <ul id="mainlist">
 	<!-- START BLOCK : list-->
@@ -46,7 +46,7 @@
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-->
 <!-- START BLOCK : list-articles-short-->
-<h1><a class="rss" title="Seko līdzi jaunumiem šajā lapas sadaļā, izmantojot RSS!" href="/rss/{strid}" rel="feed">rss</a> {title}</h1>
+<h1>{title}</h1>
 <ul>
 	<!-- START BLOCK : list-articles-short-node-->
 	<li><a href="{node-url}">{title}</a> no <a href="/user/{author-id}">{author}</a></li>
