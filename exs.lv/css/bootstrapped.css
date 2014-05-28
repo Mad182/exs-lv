@@ -280,6 +280,13 @@ a.friend img, .comments-avatar {
 
 /* misc */
 
+
+
+.add-topic {
+	float: right;
+	margin: 0 2px 0 10px;
+}
+
 .mb-col {
 	padding: 0;
 	margin: 5px 10px;
@@ -1420,5 +1427,170 @@ a:hover .lp-prefix {
 
 .half-right {
 	float: right;
+}
+
+
+/* pogas */
+.button.danger, .button.danger:hover, .button.error, .button.error:hover, .button.success, .button.success:hover, .button.info, .button.info:hover, .alert-message.danger, .alert-message.danger:hover, .alert-message.error, .alert-message.error:hover, .alert-message.success, .alert-message.success:hover, .alert-message.info, .alert-message.info:hover {
+	color: #fff;
+}
+
+.button .close, .alert-message .close {
+	line-height: 18px;
+}
+
+.button.danger, .button.error, .alert-message.danger, .alert-message.error {
+	background-color: #c43c35;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear,left top,left bottom,from(#ee5f5b), to(#c43c35));
+	background-image: -moz-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: -ms-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#ee5f5b), color-stop(100%,#c43c35));
+	background-image: -webkit-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: -o-linear-gradient(top,#ee5f5b,#c43c35);
+	background-image: linear-gradient(top,#ee5f5b,#c43c35);
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border-color: #c43c35 #c43c35 #882a25;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+}
+
+.button.success, .alert-message.success {
+	background-color: #57a957;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear,left top,left bottom,from(#62c462), to(#57a957));
+	background-image: -moz-linear-gradient(top,#62c462,#57a957);
+	background-image: -ms-linear-gradient(top,#62c462,#57a957);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#62c462), color-stop(100%,#57a957));
+	background-image: -webkit-linear-gradient(top,#62c462,#57a957);
+	background-image: -o-linear-gradient(top,#62c462,#57a957);
+	background-image: linear-gradient(top,#62c462,#57a957);
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border-color: #57a957 #57a957 #3d773d;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+}
+
+.button.info, .alert-message.info {
+	background-color: #339bb9;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear,left top,left bottom,from(#5bc0de), to(#339bb9));
+	background-image: -moz-linear-gradient(top,#5bc0de,#339bb9);
+	background-image: -ms-linear-gradient(top,#5bc0de,#339bb9);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#5bc0de), color-stop(100%,#339bb9));
+	background-image: -webkit-linear-gradient(top,#5bc0de,#339bb9);
+	background-image: -o-linear-gradient(top,#5bc0de,#339bb9);
+	background-image: linear-gradient(top,#5bc0de,#339bb9);
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	border-color: #339bb9 #339bb9 #22697d;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+}
+
+.button {
+	cursor: pointer;
+	display: inline-block;
+	background-color: #e6e6e6;
+	background-repeat: no-repeat;
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#fffffe), color-stop(25%,#fffffe), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
+	background-image: -moz-linear-gradient(top,#fffffe,#fffffe 25%,#e6e6e6);
+	background-image: -ms-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
+	background-image: -o-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
+	background-image: linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
+	padding: 4px 14px;
+	text-shadow: 0 1px 1px #ccc;
+	color: #333;
+	font-size: 11px;
+	line-height: normal;
+	border: 1px solid #ccc;
+	border-bottom-color: #bbb;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+	-webkit-transition: 0.1s linear all;
+	-moz-transition: 0.1s linear all;
+	-ms-transition: 0.1s linear all;
+	-o-transition: 0.1s linear all;
+	transition: 0.1s linear all;
+}
+
+.button:hover {
+	background-position: 0 -15px;
+	color: #333;
+	text-decoration: none;
+}
+
+.button:focus {
+	outline: 1px dotted #666;
+}
+
+.button.primary {
+	color: #fff;
+	background-color: #0064cd;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear,left top,left bottom,from(#049cdb), to(#0064cd));
+	background-image: -moz-linear-gradient(top,#049cdb,#0064cd);
+	background-image: -ms-linear-gradient(top,#049cdb,#0064cd);
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#049cdb), color-stop(100%,#0064cd));
+	background-image: -webkit-linear-gradient(top,#049cdb,#0064cd);
+	background-image: -o-linear-gradient(top,#049cdb,#0064cd);
+	background-image: linear-gradient(top,#049cdb,#0064cd);
+	text-shadow: 0 -1px 0 #444;
+	border-color: #0064cd #0064cd #003f81;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+}
+
+.button:active, .button.active {
+	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.button.disabled {
+	cursor: default;
+	background-image: none;
+	filter: alpha(opacity=65);
+	-khtml-opacity: 0.65;
+	-moz-opacity: 0.65;
+	opacity: 0.65;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.button[disabled] {
+	cursor: default;
+	background-image: none;
+	filter: alpha(opacity=65);
+	-khtml-opacity: 0.65;
+	-moz-opacity: 0.65;
+	opacity: 0.65;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.button.large {
+	font-size: 15px;
+	line-height: normal;
+	padding: 9px 14px 9px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.button.small {
+	padding: 3px 6px;
+	font-size: 11px;
+}
+
+:root .alert-message,:root .button {
+	border-radius: 0 \0;
+}
+
+button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
 }
 
