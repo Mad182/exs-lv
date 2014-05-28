@@ -351,13 +351,13 @@
 					{ad-468}
 
 					<ul class="tabs nav nav-tabs">
-						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
-						<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-						<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
-						<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
-						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
-						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+						<li class="{active-tab-profile}"><a href="/user/{user-id}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
+						<li class="{active-tab-gallery}"><a href="/gallery/{user-id}"><span class="gallery">Galerija</span></a></li>
+						<li class="{active-tab-awards}"><a href="/awards/{user-id}"><span class="awards">Medaļas</span></a></li>
+						<li class="{active-tab-friends}"><a href="/friends/{user-id}"><span class="friends">Draugi</span></a></li>
+						<li class="{active-tab-bookmarks}"><a href="/bookmarks/{user-id}"><span class="bookmarks">Izlase</span></a></li>
+						<li class="{active-tab-usertopics}"><a href="/topics/{user-id}"><span class="pages">Raksti</span></a></li>
+						<li class="{active-tab-miniblog}"><a href="/say/{user-id}"><span class="comments">Miniblogs</span></a></li>
 					</ul>
 
 					<!-- END BLOCK : profile-menu-->
@@ -420,8 +420,8 @@
 
 						<!-- START BLOCK : friendssay-tabs-->
 						<ul class="tabs nav nav-tabs">
-							<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
-							<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
+							<li class="{all-selected}"><a href="/mb-latest?pg=0" class="remember-all ajax"><span class="comments">Visi</span></a></li>
+							<li class="{friends-selected}"><a href="/mb-latest?pg=0&amp;friendmb=true" class="remember-friends ajax"><span class="friends">Draugu</span></a></li>
 						</ul>
 						<div class="c"></div>
 						<!-- END BLOCK : friendssay-tabs-->

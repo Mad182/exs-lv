@@ -1407,3 +1407,18 @@ a:hover .lp-prefix {
 	text-decoration: none;
 }
 
+/* temp */
+.index-list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.half-left {
+	float: left;
+}
+
+.half-right {
+	float: right;
+}
+
