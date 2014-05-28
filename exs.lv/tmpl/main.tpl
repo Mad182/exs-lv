@@ -205,15 +205,15 @@
 			<!-- START BLOCK : main-layout-left-->
 			<div id="left">
 				<div class="inner">
-				
+
 					{ad-left}
-				
+
 					<!-- START BLOCK : movie-search-->
 					<h3>Meklēt filmu</h3>
 					<div class="box">
 						<form id="movie-search" method="get" action="/filmas/search">
 							<!-- START BLOCK : genre-node-->
-							<label style="font-size: 10px;line-heigh: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
+							<label style="font-size: 10px;line-height: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
 							<!-- START BLOCK : genre-node-->
 
 							<input type="submit" value="Meklēt" class="button primary small" />
