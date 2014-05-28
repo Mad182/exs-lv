@@ -10,7 +10,7 @@
 
 {top-group-ad}
 
-<ul class="tabs">
+<ul class="tabs nav nav-tabs">
 	<li><a href="{group-link}" class="ajax-module-mobile {active-tab-info}"><span class="group-profile">Sākums</span></a></li>
 	<li><a href="{group-link}/forum" class="ajax-module-mobile {active-tab-community}"><span class="comments">Sarunas</span></a></li>
 	<li><a href="{group-link}/members" class="ajax-module-mobile {active-tab-members}"><span class="users">Biedri{pending_count}</span></a></li>

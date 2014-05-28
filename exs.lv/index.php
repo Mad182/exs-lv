@@ -109,6 +109,12 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 	exit;
 }
 
+//lai testētu jauno layoutu
+$use_bootstrap = false;
+if($auth->id === 1 && $lang === 1) {
+	$use_bootstrap = true;
+}
+
 //banoto lietotāju saraksts
 $busers = get_banlist();
 
@@ -147,6 +153,10 @@ if (isset($_GET['p'])) {
 $loadskin = $skin;
 if ($lang !== 1 && $skin === 'main') {
 	$loadskin = $skin . '_' . $lang;
+}
+
+if($use_bootstrap) {
+	$loadskin = 'bootstrapped';
 }
 
 $tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
@@ -214,7 +224,7 @@ if (isset($_GET['u'])) {
 // RuneScape apakšprojekts ielādē papildu failu,
 // kas veic vēl atsevišķas pārbaudes
 if ($lang == 9) {
-	include('./modules/core/runescape.php');
+	include(CORE_PATH . '/modules/core/runescape.php');
 }
 
 //izdomā, ko darīt ar templeita opšeniem (rādīt vai nerādīt kreiso un labo kolonnu)
@@ -298,7 +308,7 @@ if (!empty($secure_login)) {
 	$login_url = htmlspecialchars('https://secure.exs.lv/');
 }
 
-if ($auth->skin == 1 && $lang == 1) {
+if ($auth->skin == 1 && $lang == 1 && !$use_bootstrap) {
 	$add_css .= ',dark.css';
 }
 
@@ -334,6 +344,16 @@ $tpl->assignGlobal(array(
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash
 ));
+
+if($use_bootstrap) {
+	$content_cols = 6;
+	if($tpl_options == 'no-left' || $tpl_options == 'no-right') {
+		$content_cols = 9;
+	} elseif($tpl_options == 'no-left-right') {
+		$content_cols = 12;
+	}
+	$tpl->assignGlobal('content_cols', $content_cols);
+}
 
 
 //reklāmas
@@ -485,7 +505,7 @@ if (isset($_GET['vc'])) {
 
 $tpl->printToScreen();
 
-if ($debug && !$requested_json) {
+if ($debug && !$requested_json && !$use_bootstrap) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
 	echo '<div><a id="debug-details-trigger" href="#" style="float:right;color: #ccf;">detaļas &raquo;</a>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
