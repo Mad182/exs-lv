@@ -1391,12 +1391,11 @@ ul#friend-list li {
 	background: transparent;
 	float: left;
 	position: relative;
-	padding: 4px 0;
-	border: 1px solid #fff;
-	margin: 1px;
+	padding: 3px;
+	margin: 3px;
 	text-align: center;
-	width: 85px;
-	height: 98px;
+	width: 100px;
+	height: 100px;
 	font-size: 90%;
 }
 
