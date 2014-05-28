@@ -1026,7 +1026,119 @@ h4 {
 	margin: 0 auto;
 }
 
+/* embeddojamie objekti - youtube, spotify... */
+.auto-embed-placeholder {
+	width: 240px;
+	background: #f7f7f7;
+	color: #333;
+	font-size: 11px;
+	line-height: 13px;
+	text-align: left;
+	border: 1px solid #ccc;
+	margin: 8px auto;
+	padding: 3px 3px 2px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-box-shadow: 2px 2px 4px #ccc;
+	-webkit-box-shadow: 2px 2px 4px #ccc;
+	box-shadow: 2px 2px 4px #ccc;
+	position: relative;
+}
 
+.auto-embed-placeholder .play-button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url('http://img.exs.lv/bildes/play.png') no-repeat 50% 50%;
+	text-decoration: none;
+}
+
+.auto-embed-placeholder .play-button:hover {
+	background: url('http://img.exs.lv/bildes/play_hover.png') no-repeat 50% 50%;
+}
+
+.auto-embed-placeholder .play-button span {
+	font-size: 11px;
+	text-align: left;
+	margin: 6px 20px 0 8px;
+	line-height: 13px;
+	text-decoration: none;
+	float: left;
+}
+
+.auto-embed-placeholder .play-button span span {
+	background: #000;
+	color: #eee;
+	float: none;
+	margin: 0;
+	padding: 0 1px;
+}
+
+.auto-embed-placeholder .play-button:hover span span {
+	color: #fff;
+}
+
+.auto-embed {
+	width: 380px;
+	background: #f7f7f7;
+	color: #333;
+	font-size: 11px;
+	line-height: 13px;
+	text-align: left;
+	border: 1px solid #ccc;
+	margin: 8px auto;
+	padding: 3px 3px 2px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-box-shadow: 2px 2px 4px #ccc;
+	-webkit-box-shadow: 2px 2px 4px #ccc;
+	box-shadow: 2px 2px 4px #ccc;
+}
+
+#full-story .auto-embed, .no-left .auto-embed {
+	width: 520px;
+}
+
+#wrapper .auto-embed a {
+	color: #888;
+	float: right;
+}
+
+#wrapper .auto-embed a strong {
+	color: #555;
+}
+
+/* spotify embed */
+.embedly-embed {
+	margin: 8px auto;
+	display: block;
+}
+
+/* related topics (links in /read/page) */
+#related-topics {
+	margin: 10px 0 0;
+}
+
+#related-topics li {
+	background: url('http://img.exs.lv/bildes/i.png') no-repeat 0 6px;
+}
+
+.inliner-link {
+	font-size: 90%;
+	padding: 2px;
+}
+
+.comment-edited-by {
+	font-size: 12px;
+	color: #555;
+	font-style: italic;
+	text-align: right;
+	padding: 12px 0 0;
+}
 
 /* april fools joke texts */
 .wtf-txt {
