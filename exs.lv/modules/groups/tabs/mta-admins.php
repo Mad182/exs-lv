@@ -9,7 +9,7 @@ if (!empty($admins)) {
 
 	$module_content = '
 
-	<table class="main-table">
+	<table class="table">
 		<tr>
 			<th>Admins</th>
 			<th>Exs niks</th>

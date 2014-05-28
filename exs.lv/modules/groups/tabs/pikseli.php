@@ -1,6 +1,6 @@
 <?php
 
-$module_content = '<table class="main-table">';
+$module_content = '<table class="table">';
 
 $files = array();
 if ($handle = opendir('/home/www/img.exs.lv/pikseli-atbildes')) {

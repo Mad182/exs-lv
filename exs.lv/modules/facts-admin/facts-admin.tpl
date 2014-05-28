@@ -26,7 +26,7 @@
 
 <!-- START BLOCK : facts_admin-list-->
 <h2>{facts-title}</h2>
-<table class="main-table">
+<table class="table">
 	<tr>
 		<th>Teksts</th>
 		<th>Labot</th>

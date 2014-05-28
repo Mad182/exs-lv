@@ -8,7 +8,7 @@
 </ul>
 
 <div class="tabMain">
-	<table class="main-table">
+	<table class="table">
 		<tr>
 			<th>Blogs</th>
 			<th><a href="/blogstats">Rakstu skaits</a></th>

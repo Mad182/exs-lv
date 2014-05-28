@@ -1965,19 +1965,19 @@ body.mceContentBody {
 	padding: 0;
 }
 
-table.main-table, table.infotable {
+table.table {
 	border: 1px solid #ccc;
 	border-collapse: collapse;
 	margin: 8px auto;
 	padding: 0;
 }
 
-table.main-table th, table.main-table td, table.infotable td {
+table.table th, table.table td {
 	border: 1px solid #ccc;
 	padding: 2px 4px;
 }
 
-.main-table th, .main-table thead td, .infotable th {
+.table th, .table thead td {
 	background: #f3f3f3;
 	text-align: center;
 	padding: 2px 3px;
@@ -2228,7 +2228,7 @@ a.left {
 	padding: 0 0 5px;
 }
 
-.main-table .darker td {
+.table .darker td {
 	background: #fafafa;
 }
 

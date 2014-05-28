@@ -28,7 +28,7 @@ if (!empty($series)) {
 
 	$module_content .= '<h2>' . $movie_rater_title . '</h2>';
 	$module_content .= $movie_rater_description;
-	$module_content .= '<table class="main-table" id="series-ratings-ingroup">';
+	$module_content .= '<table class="table" id="series-ratings-ingroup">';
 	$module_content .= '	<tr>';
 	$module_content .= '		<th></th>';
 	$module_content .= '		<th style="width:115px;">Nosaukums</th>';

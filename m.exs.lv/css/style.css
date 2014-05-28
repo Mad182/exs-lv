@@ -424,20 +424,20 @@ p.comment-tools a {
 	-webkit-border-radius: 4px;
 }
 
-table.main-table, table.infotable {
+table.table, table.table {
 	border: 1px solid #ccc;
 	margin: 8px auto;
 	padding: 0;
 	border-collapse: collapse;
 }
 
-table.main-table th, table.main-table td, table.infotable td {
+table.table th, table.table td, table.table td {
 	border: 1px solid #ccc;
 	padding: 2px 4px;
 	font-size: 90%
 }
 
-table.main-table th, table.main-table thead td, table.infotable th {
+table.table th, table.table thead td, table.table th {
 	background: #f3f3f3;
 	text-align: center;
 	font-weight: 700;
@@ -446,11 +446,11 @@ table.main-table th, table.main-table thead td, table.infotable th {
 	color: #555
 }
 
-table.main-table tr.darker td, table.infotable tr.r2 td {
+table.table tr.darker td, table.table tr.r2 td {
 	background: #fafafa
 }
 
-table.infotable tr.hirank td {
+table.table tr.hirank td {
 	background: #fbe6f3;
 }
 

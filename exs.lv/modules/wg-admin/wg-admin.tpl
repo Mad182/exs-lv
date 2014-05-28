@@ -46,7 +46,7 @@
 
 <!-- START BLOCK : facts_admin-list-->
 <h2>Visi vārdi</h2>
-<table class="main-table">
+<table class="table">
   <tr>
     <th>Vārds</th>
     <th>Jautājums</th>

@@ -16,7 +16,7 @@
 
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 
-<table class="main-table">
+<table class="table">
   <tr>
     <th>Lietotājs</th>
     <th>Vieta</th>

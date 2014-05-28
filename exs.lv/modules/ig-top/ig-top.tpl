@@ -9,7 +9,7 @@
 </div>
 
 <div class="tabMain">
-	<table class="main-table">
+	<table class="table">
 		<tr>
 			<th>Vieta</th>
 			<th>Niks</th>

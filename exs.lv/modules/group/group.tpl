@@ -662,7 +662,7 @@
 	<!-- END BLOCK : polls_admin-add-->
 
 	<!-- START BLOCK : polls_admin-list-->
-	<table class="main-table">
+	<table class="table">
 		<tr>
 			<th class="title">Iepriekšējie jautājumi</th>
 		</tr>

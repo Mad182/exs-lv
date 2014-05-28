@@ -2,7 +2,7 @@
 
 <p><a href="/deco_list">Ikonu saraksts</a> (right click - copy link location)</p>
 
-<table class="main-table">
+<table class="table">
 	<tr>
 		<th>title</th>
 		<th>nick</th>

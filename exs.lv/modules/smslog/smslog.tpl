@@ -1,6 +1,6 @@
 <!-- START BLOCK : smslog-->
 <h1>SMS log</h1>
-<table class="main-table">
+<table class="table">
 	<tr>
 		<th>#</th>
 		<th>Lietotājs</th>

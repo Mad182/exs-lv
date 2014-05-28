@@ -19,7 +19,7 @@
 <!-- START BLOCK : ig-listgame-->
 <h2>Spēļu saraksts</h2>
 
-<table class="main-table">
+<table class="table">
 	<tr>
 		<th>ID</th>
 		<th>Datums</th>
@@ -38,7 +38,7 @@
 <!-- START BLOCK : ig-listimages-->
 <h2>Attēlu saraksts</h2>
 
-<table class="main-table">
+<table class="table">
 	<tr>
 		<th>ID</th>
 		<th>Atbilde</th>

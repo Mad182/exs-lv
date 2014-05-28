@@ -77,7 +77,7 @@
 	<!-- END BLOCK : blogadmin-new-->
 	<!-- START BLOCK : blogadmin-links-->
 	<!-- START BLOCK : user-sidelinks-list-->
-	<table class="main-table">
+	<table class="table">
 		<tr>
 			<th>Nosaukums</th>
 			<th>Saite</th>

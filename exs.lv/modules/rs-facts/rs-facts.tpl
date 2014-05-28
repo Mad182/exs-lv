@@ -39,7 +39,7 @@
 <!-- START BLOCK : block-add-->
 
 <!-- START BLOCK : block-list -->
-<table class="main-table facts-table">
+<table class="table facts-table">
 	<tr>
         <th style="padding:0"></th>
 		<th>Teksts</th>

@@ -4,7 +4,7 @@
 
 <!-- START BLOCK : banned-admin-->
 <h2>Bloķētie lietotāji</h2>
-<table class="main-table" style="margin: 0 auto;font-size:80%">
+<table class="table" style="margin: 0 auto;font-size:80%">
 	<tr>
 		<th>Lietotājs</th>
 		<th>Iemesls</th>

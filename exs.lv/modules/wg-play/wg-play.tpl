@@ -26,7 +26,7 @@
 
 	<!-- START BLOCK : hm-top-->
 	<h4>Aktīvākie šodien</h4>
-	<table class="main-table">
+	<table class="table">
 		<tr>
 			<th>Vieta</th>
 			<th>Niks</th>

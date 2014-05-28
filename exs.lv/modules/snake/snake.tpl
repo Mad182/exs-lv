@@ -32,7 +32,7 @@
 <div class="c"></div>
 <br />
 <h2>Highscores</h2>
-<table class="main-table" style="margin: 10px 0;">
+<table class="table" style="margin: 10px 0;">
 	<tr>
 		<th>Vieta</th>
 		<th>Lietotājs</th>

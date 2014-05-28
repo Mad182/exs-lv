@@ -120,7 +120,7 @@ $str = "			':sweat:' => 'smiley-sweat.png',
 
 $aa = explode("\n", $str);
 
-$out = '<table class="main-table">';
+$out = '<table class="table">';
 foreach ($aa as $a) {
 	$out .= '<tr>';
 	$bb = explode(' => ', $a);
