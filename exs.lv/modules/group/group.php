@@ -211,6 +211,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
  */
 elseif (isset($_GET['var2']) && $_GET['var2'] == 'members') {
 
+	$robotstag[] = 'noindex';
+
 	$tpl->assignGlobal('active-tab-members', 'active');
 	$tpl->newBlock('group-members');
 
