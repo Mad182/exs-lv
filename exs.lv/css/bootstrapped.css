@@ -1,6 +1,4 @@
 body {
-  padding-top: 70px;
-  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -760,7 +758,7 @@ h4 {
 	list-style: none;
 }
 
-#mainlist li .article-info li, .article-info li {
+#mainlist li .article-info li, .article-info li, .index-list .article-info li {
 	float: left;
 	color: #666;
 	line-height: 18px;
@@ -1252,6 +1250,7 @@ h4 {
 #friends-pending, #friend-list {
 	padding: 0;
 	margin: 0;
+	list-style: none;
 }
 
 #friends-pending li {
