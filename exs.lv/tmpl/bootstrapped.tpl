@@ -127,9 +127,9 @@
 						<li{cat-sel-101}><a href="/forums">Forums</a></li>
 						<li{cat-sel-81}><a href="/speles">Spēles</a></li>
 						<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
-						<li{cat-sel-80}><a href="/muzika">Mūzika</a></li>
+						<li{cat-sel-323}><a href="/muzika">Mūzika</a></li>
 						<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
-						<li><a href="/blogs">Blogi</a></li>
+						<li{cat-sel-110}><a href="/blogs">Blogi</a></li>
 					</ul>
 				</div>
 			</div>
