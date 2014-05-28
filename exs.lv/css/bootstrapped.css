@@ -1394,17 +1394,19 @@ ul#friend-list li {
 	padding: 3px;
 	margin: 3px;
 	text-align: center;
-	width: 100px;
+	width: 105px;
 	height: 100px;
 	font-size: 90%;
 }
 
 ul#friend-list li.owner {
 	border: 1px solid #911;
+	margin: 2px;
 }
 
 ul#friend-list li.mod {
 	border: 1px solid #119;
+	margin: 2px;
 }
 
 ul#friend-list li a.profile-link img {
