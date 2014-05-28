@@ -25,9 +25,9 @@ foreach ($categories as $group_category) {
 
 			$user = $db->get_row("SELECT id,seenposts FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'");
 			if ($auth->ok && $user or $group->owner == $auth->id) {
-				$istyle = ' style="background:green;width:72px;height:72px;" ';
+				$istyle = ' style="background:green;width:75px;height:75px;margin-top:15px;" ';
 			} else {
-				$istyle = ' style="width:72px;height:72px;" ';
+				$istyle = ' style="width:75px;height:75px;margin-top:15px;" ';
 			}
 			if ($auth->ok && $user && ($group->posts - $user->seenposts) > 0) {
 				$add = '&nbsp;(<a style="font-size: 16px;" href="/group/' . $group->id . '/forum/"><span class="red">' . ($group->posts - $user->seenposts) . '</span></a>)';

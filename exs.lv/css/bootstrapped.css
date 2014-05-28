@@ -2079,3 +2079,25 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 #junk-queue-list {
 	list-style: none;
 }
+
+#exs-groups {
+	padding: 0;
+	margin: 10px;
+	list-style: none;
+}
+
+#exs-groups li {
+	background: transparent;
+	height: 120px;
+	width: 45%;
+	float: left;
+	margin: 0;
+	padding: 5px;
+}
+
+#exs-groups li p {
+	font-size: 90%;
+	color: #888;
+	line-height: 1.2;
+	margin-left: 85px;
+}

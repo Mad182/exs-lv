@@ -1,6 +1,6 @@
-<ul id="junk-menu" class="mbox">
+<ul class="tabs nav nav-tabs">
 	<li><a href="/junk">Jaunākie</a></li>
-	<li><a href="/junk/commented">Pēdējie komentēti</a></li>
+	<li><a href="/junk/commented">Pēdējie komentētie</a></li>
 	<li><a href="/junk/add">Pievienot savu</a></li>
 </ul>
 

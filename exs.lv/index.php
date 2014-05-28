@@ -390,14 +390,14 @@ if (!empty($pagepath) && $skin === 'main') {
 if (isset($category) && !isset($_GET['u']) && !isset($_GET['g']) && !isset($_GET['m'])) {
 
 	$tpl->assignGlobal(array(
-		'cat-sel-' . $category->id => ' class="selected"',
-		'cat-sel-' . $category->parent => ' class="selected"',
+		'cat-sel-' . $category->id => ' class="selected active"',
+		'cat-sel-' . $category->parent => ' class="selected active"',
 	));
 	if ($category->parent) {
 		$topcat = get_cat($category->parent);
 		if ($topcat->parent) {
 			$tpl->assignGlobal(array(
-				'cat-sel-' . $topcat->parent => ' class="selected"',
+				'cat-sel-' . $topcat->parent => ' class="selected active"',
 			));
 		}
 	}
