@@ -111,7 +111,7 @@
 
 
 
-		<div class="navbar navbar-static-top navbar-inverse" role="navigation">
+		<div class="navbar navbar-static-top navbar-inverse" role="navigation" style="margin-bottom:0;">
 			<div class="container">
 				<div class="navbar-header">
 					<a class="active navbar-brand" rel="home" href="/">exs.lv</a>
@@ -127,6 +127,7 @@
 						<li{cat-sel-101}><a href="/forums">Forums</a></li>
 						<li{cat-sel-81}><a href="/speles">Spēles</a></li>
 						<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
+						<li{cat-sel-80}><a href="/muzika">Mūzika</a></li>
 						<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
 						<li><a href="/blogs">Blogi</a></li>
 					</ul>
@@ -156,7 +157,7 @@
 				<!-- END BLOCK : login-form-->
 
 				<!-- START BLOCK : user-menu-->
-				<ul class="nav navbar-nav">
+				<ul class="nav navbar-nav" style="float:right;">
 					<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
 					<li{profile-sel} class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="/user/{currentuser-id}">Profils <b class="caret"></b></a>
@@ -199,23 +200,23 @@
 							<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
 						</ul>
 					</li>
+					<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+					<!-- START BLOCK : user-approvelink-->
+					<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
+					<!-- END BLOCK : user-approvelink-->
+					<!-- START BLOCK : user-write-->
+					<li{cat-sel-116}><a href="/write">Raksti</a></li>
+					<!-- END BLOCK : user-write-->
 					<!-- END BLOCK : user-modlink-->
 					<li{cat-sel-83} class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Rīki <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="/img">Bilžu hostings</a></li>
-							<!-- START BLOCK : user-approvelink-->
-							<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
-							<!-- END BLOCK : user-approvelink-->
-							<!-- START BLOCK : user-write-->
-							<li{cat-sel-116}><a href="/write">Raksti</a></li>
-							<!-- END BLOCK : user-write-->
 							<li{cat-sel-585}><a href="/piezimes">Manas piezīmes</a></li>
 							<li{cat-sel-585}><a href="/myblog">Mans blogs</a></li>
-							<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
 						</ul>
 					</li>
-					<li{mb-sel}><a href="/say/{currentuser-id}">Sarunas</a></li>
+					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogi</a></li>
 					<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 				</ul>
 				<!-- END BLOCK : user-menu-->
