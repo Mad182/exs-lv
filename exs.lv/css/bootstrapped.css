@@ -4,6 +4,34 @@ body {
   margin: 0 auto;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+	border: 0;
+}
+
+/* lietotaju klases */
+.admins {
+	color: #700;
+}
+
+.mods {
+	color: #00b;
+}
+
+.rautors {
+	color: #070;
+}
+
+.bot {
+	color: #777;
+}
+
+html .banned {
+	text-decoration: line-through;
+	color: #000;
+}
+
 /* user profile infobox in sidebar */
 
 #profile-awards {
@@ -1144,3 +1172,15 @@ h4 {
 	width: 330px;
 	height: 90px;
 }
+
+.clear, .c, .clearfix {
+	clear: both;
+	font-size: 1px;
+	line-height: 0;
+}
+
+#breadcrumbs {
+	color: #777;
+	text-align: right;
+}
+
