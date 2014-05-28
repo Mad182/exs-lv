@@ -111,7 +111,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 
 //lai testētu jauno layoutu
 $use_bootstrap = false;
-if($auth->id === 1 && $lang === 1) {
+if($auth->id == 1 && $lang == 1) {
 	$use_bootstrap = true;
 }
 
