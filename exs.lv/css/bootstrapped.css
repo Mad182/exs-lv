@@ -1392,7 +1392,7 @@ ul#friend-list li {
 	float: left;
 	position: relative;
 	padding: 3px;
-	margin: 3px;
+	margin: 10px 20px;
 	text-align: center;
 	width: 105px;
 	height: 100px;
