@@ -364,7 +364,7 @@
 
 				{ad-468}
 
-				<ul class="tabs nav nav-tabs">
+				<ul class="tabs nav nav-tabs nav-justified">
 					<li class="{active-tab-profile}"><a href="/user/{user-id}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
 					<li class="{active-tab-gallery}"><a href="/gallery/{user-id}"><span class="gallery">Galerija</span></a></li>
 					<li class="{active-tab-awards}"><a href="/awards/{user-id}"><span class="awards">Medaļas</span></a></li>

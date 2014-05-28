@@ -3,11 +3,11 @@
 
 {ad-468}
 
-<ul class="tabs nav nav-tabs">
-	<li><a title="Saņemtās vēstules" href="/pm" class="{inbox-active}"><span class="inbox">Saņemtās</span></a></li>
-	<li><a title="Sūtītās vēstules" href="/pm/sent" class="{outbox-active}"><span class="outbox">Sūtītās</span></a></li>
-	<li><a title="Rakstīt vēstuli" href="/pm/write" class="ajax-module-mobile {compose-active}"><span class="compose">Rakstīt</span></a></li>
-	<li><a title="Meklēt vēstuli" href="/pm/search" class="{search-active}"><span class="mail-search">Meklēt</span></a></li>
+<ul class="tabs nav nav-tabs nav-justified">
+	<li class="{inbox-active}"><a title="Saņemtās vēstules" href="/pm" class="{inbox-active}"><span class="inbox">Saņemtās</span></a></li>
+	<li class="{outbox-active}"><a title="Sūtītās vēstules" href="/pm/sent" class="{outbox-active}"><span class="outbox">Sūtītās</span></a></li>
+	<li class="{compose-active}"><a title="Rakstīt vēstuli" href="/pm/write" class="ajax-module-mobile {compose-active}"><span class="compose">Rakstīt</span></a></li>
+	<li class="{search-active}"><a title="Meklēt vēstuli" href="/pm/search" class="{search-active}"><span class="mail-search">Meklēt</span></a></li>
 </ul>
 
 <div class="c"></div>

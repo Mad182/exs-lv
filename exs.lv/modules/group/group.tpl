@@ -10,16 +10,16 @@
 
 {top-group-ad}
 
-<ul class="tabs nav nav-tabs">
-	<li><a href="{group-link}" class="ajax-module-mobile {active-tab-info}"><span class="group-profile">Sākums</span></a></li>
-	<li><a href="{group-link}/forum" class="ajax-module-mobile {active-tab-community}"><span class="comments">Sarunas</span></a></li>
-	<li><a href="{group-link}/members" class="ajax-module-mobile {active-tab-members}"><span class="users">Biedri{pending_count}</span></a></li>
+<ul class="tabs nav nav-tabs nav-justified">
+	<li class="{active-tab-info}"><a href="{group-link}" class="ajax-module-mobile {active-tab-info}"><span class="group-profile">Sākums</span></a></li>
+	<li class="{active-tab-community}"><a href="{group-link}/forum" class="ajax-module-mobile {active-tab-community}"><span class="comments">Sarunas</span></a></li>
+	<li class="{active-tab-members}"><a href="{group-link}/members" class="ajax-module-mobile {active-tab-members}"><span class="users">Biedri{pending_count}</span></a></li>
 	<!-- START BLOCK : group-menu-add-->
-	<li><a href="{group-link}/tab/{url}" class="ajax-module-mobile {sel}">{title}</a></li>
+	<li class="{sel}"><a href="{group-link}/tab/{url}" class="ajax-module-mobile {sel}">{title}</a></li>
 	<!-- END BLOCK : group-menu-add-->
-	<li><a href="{group-link}/search" class="ajax-module-mobile {active-tab-search}"><span class="search">Meklēt</span></a></li>
+	<li class="{active-tab-search}"><a href="{group-link}/search" class="ajax-module-mobile {active-tab-search}"><span class="search">Meklēt</span></a></li>
 	<!-- START BLOCK : group-menu-options-->
-	<li><a href="{group-link}/options" class="ajax-module-mobile {active-tab-options}"><span class="tools">Rīki</span></a></li>
+	<li class="{active-tab-options}"><a href="{group-link}/options" class="ajax-module-mobile {active-tab-options}"><span class="tools">Rīki</span></a></li>
 	<!-- END BLOCK : group-menu-options-->
 </ul>
 <!-- END BLOCK : group-menu-->

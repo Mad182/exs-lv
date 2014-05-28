@@ -1,14 +1,14 @@
 <!-- START BLOCK : approve-body-->
 <h1>Raksta iesniegšana</h1>
 
-<ul class="tabs">
-	<li><a href="/write" class="{new-active}">Jauns raksts</a></li>
-	<li><a href="/write/list" class="{edit-active}">Iesniegtie</a></li>
+<ul class="tabs nav nav-tabs">
+	<li class="{new-active}"><a href="/write" class="{new-active}">Jauns raksts</a></li>
+	<li class="{edit-active}"><a href="/write/list" class="{edit-active}">Iesniegtie</a></li>
 </ul>
 
 <div class="tabMain">
 	<!-- START BLOCK : approve-new-->
-    
+
     <!-- START BLOCK : goto-wide-page -->
     <p style="margin-left:20px"><a href="/write?wide=1">Atvērt platā skata režīmu (notiks lapas pārlāde!)</a></p>
     <!-- END BLOCK : goto-wide-page -->
@@ -42,7 +42,7 @@
                     <!-- END BLOCK : rs-catgroup-->
 				</select>
                 <!-- END BLOCK : rs-cat-selection -->
-                
+
                 <!-- START BLOCK : cat-selection -->
 				<select name="new-topic-category">
                     <!-- START BLOCK : select-category-->
@@ -73,7 +73,7 @@
 			</p>
 			<p>
 				<label for="ap-topic-category">Sadaļa:</label><br />
-                
+
                 <!-- START BLOCK : rs-cat-app-selection -->
 				<select name="ap-topic-category">
                     <!-- START BLOCK : rs-app-catgroup-->
@@ -85,7 +85,7 @@
                     <!-- END BLOCK : rs-app-catgroup-->
 				</select>
                 <!-- END BLOCK : rs-cat-app-selection -->
-                
+
                 <!-- START BLOCK : cat-app-selection -->
 				<select name="ap-topic-category">
                     <!-- START BLOCK : select-app-category-->

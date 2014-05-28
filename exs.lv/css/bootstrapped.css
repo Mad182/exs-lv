@@ -1,5 +1,5 @@
 body {
-  margin: 0 auto;
+	margin: 0 auto;
 }
 
 img {
@@ -1960,3 +1960,10 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	white-space: normal;
 }
 
+.tabMain {
+	padding: 10px 0;
+}
+
+#junk-queue-list {
+	list-style: none;
+}
