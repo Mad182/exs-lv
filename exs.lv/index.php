@@ -111,8 +111,10 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 
 //lai testētu jauno layoutu
 $use_bootstrap = false;
+$bootstrap_cache_key = '';
 if($auth->id == 1 && $lang == 1) {
 	$use_bootstrap = true;
+	$bootstrap_cache_key = '_bootstrap';
 }
 
 //banoto lietotāju saraksts
@@ -190,9 +192,9 @@ if (isset($_GET['u'])) {
 
 			$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
-			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
+			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module . $bootstrap_cache_key)) === false || $debug === true) {
 				$tpl->prepare();
-				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, false, 3600);
+				$m->set('tpl_' . $lang . '_' . $category->module . $bootstrap_cache_key, $tpl, false, 3600);
 			} else {
 				$tpl = $tpl2;
 				unset($tpl2);
