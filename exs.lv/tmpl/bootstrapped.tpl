@@ -462,52 +462,57 @@
 			<!-- START BLOCK : blog-latest-list-->
 			{html}
 			<!-- END BLOCK : blog-latest-list-->
+
 			<!-- START BLOCK : poll-box-->
-			<h3>Aptauja</h3>
-			<div class="box">
-				<p><strong>{poll-title}</strong></p>
-				<!-- START BLOCK : poll-answers-->
-				<ol class="poll-answers">
-					<!-- START BLOCK : poll-answers-node-->
-					<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-					<!-- END BLOCK : poll-answers-node-->
-				</ol>
-				Balsojuši: {poll-totalvotes}<br />
-				<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
-				<!-- END BLOCK : poll-answers-->
-				<!-- START BLOCK : poll-questions-->
-				<form name="poll" method="post" action="">
-					<fieldset>
-						<!-- START BLOCK : poll-error-->
-						<p>{poll-error}</p>
-						<!-- END BLOCK : poll-error-->
-						<!-- START BLOCK : poll-options-->
-						<ol id="poll-questions">
-							<!-- START BLOCK : poll-options-node-->
-							<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-							<!-- END BLOCK : poll-options-node-->
-						</ol>
-						<input type="submit" name="vote" value="Balsot!" class="button primary" />
-						<!-- END BLOCK : poll-options-->
-					</fieldset>
-				</form>
-				<!-- END BLOCK : poll-questions-->
+			<div class="panel panel-default">
+				<div class="panel-heading">Aptauja</div>
+				<div class="panel-body junk-box">
+					<p><strong>{poll-title}</strong></p>
+					<!-- START BLOCK : poll-answers-->
+					<ol class="poll-answers">
+						<!-- START BLOCK : poll-answers-node-->
+						<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+						<!-- END BLOCK : poll-answers-node-->
+					</ol>
+					Balsojuši: {poll-totalvotes}<br />
+					<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+					<!-- END BLOCK : poll-answers-->
+					<!-- START BLOCK : poll-questions-->
+					<form name="poll" method="post" action="">
+						<fieldset>
+							<!-- START BLOCK : poll-error-->
+							<p>{poll-error}</p>
+							<!-- END BLOCK : poll-error-->
+							<!-- START BLOCK : poll-options-->
+							<ol id="poll-questions">
+								<!-- START BLOCK : poll-options-node-->
+								<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+								<!-- END BLOCK : poll-options-node-->
+							</ol>
+							<input type="submit" name="vote" value="Balsot!" class="button primary" />
+							<!-- END BLOCK : poll-options-->
+						</fieldset>
+					</form>
+					<!-- END BLOCK : poll-questions-->
+				</div>
 			</div>
 			<!-- END BLOCK : poll-box-->
 
 			<!-- START BLOCK : daily-wallpaper-->
-			<h3>Dienas tapete</h3>
-			<div id="walpaper" class="box">
-				<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
-					<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
-				</a><br />
-				<a href="/wallpapers">Tapetes</a>
+			<div class="panel panel-default">
+				<div class="panel-heading">Aptauja</div>
+				<div id="walpaper" class="panel-body junk-box">
+					<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
+						<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
+					</a><br />
+					<a href="/wallpapers">Tapetes</a>
+				</div>
 			</div>
 			<!-- END BLOCK : daily-wallpaper-->
 
 			<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2">Tweets by @exs_lv</a>
 			<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
-						;</script>
+							;</script>
 
 		</div>
 	</div>
