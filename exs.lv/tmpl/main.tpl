@@ -107,7 +107,6 @@
 							<li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
 							<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
 							<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
-							<li><a href="http://gif-avatars.com/" title="Gif avatari forumam">Gif avatari</a></li>
 							<li><a href="/statistika" title="Statistika">Statistika</a></li>
 							<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 						</ul>
@@ -120,6 +119,7 @@
 						<li{cat-sel-101}><a href="/forums">Forums</a></li>
 						<li{cat-sel-81}><a href="/speles">Spēles</a></li>
 						<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
+						<li{cat-sel-323}><a href="/muzika">Mūzika</a></li>
 						<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->

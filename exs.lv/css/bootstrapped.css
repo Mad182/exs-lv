@@ -1,11 +1,26 @@
 body {
 	margin: 0 auto;
+	background: #eaecee url('http://minecrafthelp.tk/mc-ccn/css/background2.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 img {
 	max-width: 100%;
 	height: auto;
 	border: 0;
+}
+
+#main-container {
+	background: #fff;
+	margin-top: -20px;
+	padding-top: 30px;
+}
+
+#footer-container {
+	background: #444;
 }
 
 /* lietotaju klases */
@@ -29,6 +44,7 @@ html .banned {
 	text-decoration: line-through;
 	color: #000;
 }
+
 
 /* user profile infobox in sidebar */
 
@@ -1292,6 +1308,7 @@ h4 {
 #footer {
 	margin: 0;
 	padding: 8px 0 0;
+	color: #eee;
 }
 
 #online-list {
@@ -1300,7 +1317,6 @@ h4 {
 
 #footer .infoblock {
 	width: 24.99%;
-	color: #777;
 	float: left;
 	overflow: hidden;
 	padding: 0;
@@ -1309,10 +1325,7 @@ h4 {
 
 #footer .infoblock .inner {
 	width: auto;
-	color: #777;
 	height: 120px;
-	background: #f2f2f2;
-	border: 1px solid #dfdfdf;
 	font-size: 13px;
 	margin: 4px;
 	padding: 6px 11px;
@@ -1332,13 +1345,10 @@ h4 {
 }
 
 #footer .infoblock li a {
-	border-bottom: 1px dashed #dfdfdf;
 	display: block;
 }
 
 #online-users {
-	background: #f2f2f2;
-	border: 1px solid #dfdfdf;
 	margin: 4px;
 	padding: 6px 10px;
 }

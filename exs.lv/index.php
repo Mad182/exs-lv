@@ -321,6 +321,7 @@ $new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
 $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
 	'page-loginurl' => $login_url,
+	'page-time' => time(),
 	'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 	'page-domain' => $_SERVER['HTTP_HOST'],
 	'category-url' => $category->textid,
