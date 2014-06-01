@@ -1,10 +1,11 @@
 body {
 	margin: 0 auto;
-	background: #eaecee url('http://minecrafthelp.tk/mc-ccn/css/background2.jpg') no-repeat center center fixed;
+	background: #eaecee
+	/* url('http://minecrafthelp.tk/mc-ccn/css/background2.jpg') no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: cover;
+	background-size: cover;*/
 }
 
 img {
@@ -407,7 +408,7 @@ a.friend img, .comments-avatar {
 	margin: 0 0 0 57px;
 }
 
-#miniblog-list, #miniblog-list ul {
+#miniblog-list, #miniblog-list ul, .user-actions {
 	list-style: none;
 }
 
