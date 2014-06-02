@@ -785,7 +785,12 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 
 	if (strpos($txt, 'spoiler') !== false) {
-		$txt = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/iseU', 'replace_spoiler("\\1")', $txt);
+
+		$txt = preg_replace_callback(
+			"/\[spoiler](.*?)\[\/spoiler]/ims", 
+			'replace_spoiler', $txt
+		);
+
 	}
 
 	// auto embed youtube videos
@@ -964,7 +969,7 @@ function get_blacklisted_sites() {
 }
 
 function replace_spoiler($text) {
-	$text = str_replace(array('<p>', '</p>'), array('<br />', '<br />'), $text);
+	$text = str_replace(array('<p>', '</p>'), array('<br />', '<br />'), $text[1]);
 	return '<span class="spoiler"><a href="javascript:void(0);" class="spoiler-title" title="Slēpt/rādīt spoilera saturu">Rādīt spoileri</a><br /><span style="display:none" class="spoiler-content">' . $text . '</span></span>';
 }
 
