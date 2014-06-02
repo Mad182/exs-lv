@@ -24,11 +24,6 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0
 	$secure_login = true;
 }
 
-//redirect https links
-if (!empty($_SERVER['HTTPS'])) {
-	redirect("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
-}
-
 /*
  * exs.lv specific functions
  */
