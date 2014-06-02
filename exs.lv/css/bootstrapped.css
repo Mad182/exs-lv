@@ -21,7 +21,7 @@ img {
 }
 
 #footer-container {
-	background: #444;
+	background: #010C11 url('http://img.exs.lv/bildes/footerbg.png') repeat-x top;
 }
 
 /* lietotaju klases */
@@ -1310,6 +1310,7 @@ h4 {
 	margin: 0;
 	padding: 8px 0 0;
 	color: #eee;
+	font-size: 0.90em;
 }
 
 #online-list {
@@ -1321,16 +1322,21 @@ h4 {
 	float: left;
 	overflow: hidden;
 	padding: 0;
+	color: #B5C5F4;
 	margin: 0;
 }
 
 #footer .infoblock .inner {
 	width: auto;
 	height: 120px;
-	font-size: 13px;
 	margin: 4px;
 	padding: 6px 11px;
 	line-height: 1.3;
+}
+
+#footer .infoblock .inner .title {
+	border-bottom: 1px solid #646E88;
+	display: block;
 }
 
 #footer .infoblock ul {

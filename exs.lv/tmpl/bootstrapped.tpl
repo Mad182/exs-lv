@@ -527,56 +527,54 @@
 		<!-- END BLOCK : main-layout-right-->
 		<div class="c"></div>
 
-		<div class="container" id="footer-container">
-
-			{ad-bottom}
-
-			<div id="footer">
-				<div id="online-users">
-					<ul id="ucl">
-						<li id="ucd"></li>
-						<li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li>
-						<li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li>
-						<li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li>
-						<li class="admin"><a href="/lietotaji/klase/1">Administrators</a>
-						</li>
-					</ul>
-					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
-					<span id="online-list">{page-onlineusers}</span>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Jaunākie raksti: {footer-topics}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Pēdējie miniblogi: {footer-mb}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
-						<p>
-							E-pasts: info@exs.lv<br />
-							Tālrunis: <span id="noindex-phone"></span><br />
-							Mājas lapu izstrāde un hostings.
-						</p>
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<ul id="internal-links">
-							<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-							<li><a href="/sitemap">Lapas karte</a></li>
-							<li><a href="/reklama">Reklāma portālā</a></li>
+		<div id="footer-container">
+			<div class="container">
+				<div id="footer">
+					<div id="online-users">
+						<ul id="ucl">
+							<li id="ucd"></li>
+							<li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li>
+							<li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li>
+							<li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li>
+							<li class="admin"><a href="/lietotaji/klase/1">Administrators</a>
+							</li>
 						</ul>
-						<p>Teamspeak 3:<br />ts.exs.lv</p>
+						Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
+						<span id="online-list">{page-onlineusers}</span>
 					</div>
+					<div class="infoblock">
+						<div class="inner">
+							<span class="title">Jaunākie raksti</span> {footer-topics}
+						</div>
+					</div>
+					<div class="infoblock">
+						<div class="inner">
+							<span class="title">Pēdējie miniblogi</span> {footer-mb}
+						</div>
+					</div>
+					<div class="infoblock">
+						<div class="inner">
+							<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
+							<p>
+								E-pasts: info@exs.lv<br />
+								Tālrunis: <span id="noindex-phone"></span><br />
+								Mājas lapu izstrāde un hostings.
+							</p>
+						</div>
+					</div>
+					<div class="infoblock">
+						<div class="inner">
+							<ul id="internal-links">
+								<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+								<li><a href="/sitemap">Lapas karte</a></li>
+								<li><a href="/reklama">Reklāma portālā</a></li>
+							</ul>
+							<p>Teamspeak 3:<br />ts.exs.lv</p>
+						</div>
+					</div>
+					<div class="c"></div>
 				</div>
-				<div class="c"></div>
 			</div>
-
 		</div>
 
 	</div>
