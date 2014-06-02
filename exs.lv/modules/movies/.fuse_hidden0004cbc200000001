@@ -17,6 +17,8 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 	$pagepath = '';
 
 
+
+
 	$articles = $db->get_results("SELECT
 		`pages`.`id` AS `id`,
 		`pages`.`title` AS `title`,
@@ -44,6 +46,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		" . $sortby . "
 	LIMIT
 		$skip,$end");
+
 
 
 	if ($skip) {
