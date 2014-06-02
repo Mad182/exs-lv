@@ -1,4 +1,7 @@
 <?php 
+
+require CORE_PATH . '/config/android.exs.lv.php';
+
 /**
  *  Android lietotnes modulis
  *
