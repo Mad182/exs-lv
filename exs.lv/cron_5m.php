@@ -88,3 +88,5 @@ foreach ($cats as $cat) {
 $get_img->xkcd();
 $get_img->reddit();
 
+//remove bans 
+$db->query("UPDATE `banned` SET `active` = 0 WHERE `time`+`length` < '" . time() . "'");
