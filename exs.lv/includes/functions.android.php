@@ -556,7 +556,7 @@ function a_add_mb_comment($inprofile, $android = false) {
     }
     $check2 = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `closed` = '1' ");
     if ($check2) {
-        a_error('Tēma ir slēgta!'); return;
+        a_error('Miniblogs slēgts'); return;
     }
     
     // viss kārtībā, var pievienot

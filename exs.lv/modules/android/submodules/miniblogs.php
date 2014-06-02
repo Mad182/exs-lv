@@ -31,6 +31,11 @@ if (isset($_GET['var1'])) {
     
     if ($miniblog) {
     
+        $author = get_user($miniblog->author);
+        if ($author->deleted) {
+            $author->nick = 'dzēsts';
+        }
+    
         // minibloga vērtēšana
         if (isset($_GET['var2']) && 
             in_array($_GET['var2'], array('plus', 'minus'))) {
@@ -55,8 +60,8 @@ if (isset($_GET['var1'])) {
         // atbildes pievienošana
         else if (isset($_POST['comment'])) {
             if (!empty($_POST['comment']) && isset($_POST['comment_id'])) {
-                a_add_mb_comment(array('id' => $miniblog->user_id, 
-                                       'nick' => $miniblog->user_nick),
+                a_add_mb_comment(array('id' => $author->id, 
+                                       'nick' => $author->nick),
                                  true);
             } else {
                 a_error('Kļūdaini komentāra dati!');
@@ -67,12 +72,8 @@ if (isset($_GET['var1'])) {
         else {          
             
             // paredzēts avataru funkcijai
-            $miniblog->av_alt = 1;
-            
-            $author = get_user($miniblog->author);
-            if ($author->deleted) {
-                $author->nick = 'dzēsts';
-            }            
+            $miniblog->av_alt = 1;            
+                        
             $key = substr(md5($miniblog->id . $remote_salt . $auth->id),
                                   0, 5);
             
