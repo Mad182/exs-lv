@@ -590,7 +590,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 							'delete' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?delcom=' . $comment->id,
 							'edit' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?editcom=' . $comment->id,
 						));
-					} elseif ($auth->ok && ($auth->level == 3 || $comment->author_karma >= 100) && $auth->id == $comment->author) {
+					} elseif ($auth->ok && ($auth->level == 3 || $comment->karma >= 100) && $auth->id == $comment->author) {
 						$tpl->newBlock('comments-own');
 						$tpl->assign(array(
 							'edit' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?editcom=' . $comment->id,
@@ -634,3 +634,4 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 }
 
 $pagepath = '';
+
