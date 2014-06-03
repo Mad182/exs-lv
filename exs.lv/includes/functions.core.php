@@ -787,7 +787,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	if (strpos($txt, 'spoiler') !== false) {
 
 		$txt = preg_replace_callback(
-			"/\[spoiler](.*?)\[\/spoiler]/ismU",
+			"/\[spoiler](.*?)\[\/spoiler]/isS",
 			'replace_spoiler', $txt
 		);
 
