@@ -928,8 +928,12 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
 	curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$contents = curl_exec($ch);
+    echo curl_error($ch);
 	curl_close($ch);
+    
 	return $contents;
 }
 

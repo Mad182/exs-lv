@@ -523,8 +523,7 @@ function embed_twitter($params) {
 	if (($tweet_html = $m->get($tweet_unique)) === false) {
 		$tweet_html = $params[0];
 
-		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id=' 
-                             .$params[5].'&align=center&maxwidth='.$maxwidth);
+		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id='.$params[5].'&align=center&maxwidth='.$maxwidth);
 		if (!empty($response)) {
 			$tweet = json_decode($response);
 			if (empty($tweet->error) && !empty($tweet->html)) {
@@ -691,8 +690,7 @@ function embed_soundcloud($params) {
         $url .= '&url='.urlencode(strip_tags($params[2]));
 
         $data = '';
-        //$response = curl_get($url); //not working...
-        $response = file_get_contents($url);
+        $response = curl_get($url);
 		if (!empty($response)) {
 			$data = json_decode($response);
 		}       
