@@ -1,5 +1,8 @@
 <?php
 
+// nerādīs apakšējo dev joslu, kas sadaļā neiederas :)
+$debug = false;
+
 $msgs = array(
 	'<p>Cilvēki ar aizspriedumiem piektdienu uzskata par sevišķi neveiksmīgu dienu, ja tā iekrīt 13. datumā. Bailes no piektdienas psihologi sauc par paraskevidekatriafobiju.</p>',
 	'<p>Senajā Romā piektdiena bija veltīta dievietei Venērai. Vēl mūsdienās itāļu valodā piektdienu sauc venerdì, tāpat spāņu un franču nosaukumi atvasināti no Venēras. Senie ģermāņi piektdienu dēvēja auglības dievietes Freijas vārdā (angļu: Friday). Arī vācu nosaukums Freitag cēlies no Freijas.</p>',
