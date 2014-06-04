@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem.
+ * 	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem
  *
- * 	Moduļa adrese: 		exs.lv/checkform
+ * 	Moduļa adrese: exs.lv/checkform
  */
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
@@ -11,15 +11,16 @@ if (!im_mod()) {
 	redirect();
 }
 
-/**
- * 	globālie mainīgie
- */
-$limit_total_ips = 50;  // maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
+// maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
 // nospiežot "rādīt vairāk" pogu
+$limit_total_ips = 50;
 
-$limit_shown_ips = 10;  // IP skaits, cik parādīt pirms "rādīt vairāk" pogas
-$limit_shown_profiles = 10;  // profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
+// IP skaits, cik parādīt pirms "rādīt vairāk" pogas
+$limit_shown_ips = 10;
+
+// profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
 // dažiem kadriem ir desmitiem fake profilu!
+$limit_shown_profiles = 10;
 
 
 if (isset($_GET['email']) && is_numeric($_GET['email'])) {
@@ -258,45 +259,55 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 /**
  * 	Ievades formas un meklēšanas rezultāti
  */
-$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
+$tpl->assignInclude('module-head', CORE_PATH . '/modules/' .
+                                   $category->module . '/head.tpl');
 $tpl->prepare();
-
 $tpl->newBlock('mod-cpanel');
 
+
+// kāda no formām aizpildīta un iesūtīta
 if (isset($_POST['submit']) || isset($_GET['ip'])) {
 
-	// meklēšana pēc lietotāja nika
+	// pēc lietotājvārda
 	if (isset($_POST['nick']) && strlen(trim($_POST['nick'])) >= 2) {
 		$field = 'nick';
 		$criteria = '`nick` LIKE \'%' . sanitize(trim($_POST['nick'])) . '%\'';
 		$tpl->assign('nick', trim($_POST['nick']));
-
-		// meklēšana pēc e-pasta
-	} else if (isset($_POST['mail']) && strlen(trim($_POST['mail'])) >= 3) {
+    }    
+    // pēc e-pasta
+	else if (isset($_POST['mail']) && strlen(trim($_POST['mail'])) >= 3) {
 		$field = 'mail';
 		$criteria = '`mail` LIKE \'%' . sanitize(trim($_POST['mail'])) . '%\'';
 		$tpl->assign('mail', trim($_POST['mail']));
-
-		// meklēšana pēc pēdējās lietotās IP adreses
-	} else if (isset($_REQUEST['ip']) && strlen(trim($_REQUEST['ip'])) >= 3) {
+    }    
+	// pēc pēdējās lietotās IP adreses
+	else if (isset($_REQUEST['ip']) && strlen(trim($_REQUEST['ip'])) >= 3) {
 		$field = 'ip';
 		// šeit neder % zīme, jo POST['ip'] laukā to ir ļauts pielietot
 		$criteria = '`lastip` LIKE \'' . sanitize(trim($_REQUEST['ip'])) . '\'';
 		$tpl->assign('ip', trim($_REQUEST['ip']));
-
-		// meklēšana pēc IP iekš 'visits'
-	} else if (isset($_POST['vip']) && strlen(trim($_POST['vip'])) >= 3) {
+    }    
+	// pēc IP iekš 'visits'
+	else if (isset($_POST['vip']) && strlen(trim($_POST['vip'])) >= 3) {
 		$field = 'vip';
-		// šeit neder = zīme, jo POST['vip'] laukā tā var tikt izmantota
+		// šeit neder % zīme, jo POST['vip'] laukā tā var tikt izmantota
 		$criteria = '`visits`.`ip` LIKE \'' . sanitize(trim($_POST['vip'])) . '\'';
 		$tpl->assign('vip', trim($_POST['vip']));
-
-		// kļūdu gadījumā
-	} else {
+    }
+    // pēc user-agent
+    else if (isset($_POST['useragent']) && strlen(trim($_POST['useragent'])) >= 5) {
+        $field = 'useragent';
+        // šeit neder % zīme, jo POST['useragent'] laukā tā var tikt izmantota
+		$criteria = '`users`.`user_agent` LIKE \'' . sanitize(trim($_POST['useragent'])) . '\'';
+		$tpl->assign('useragent', trim($_POST['useragent']));
+    }
+	// kļūdu gadījumā
+	else {
 		$criteria = '1';
 		$field = '';
 	}
 
+    // meklējot pēc IP, jāpiesaista `visits` tabula
 	if ($field == 'vip') {
 
 		$results = $db->get_results("
@@ -318,8 +329,10 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 				ABS(`users`.`level`) DESC,
 				`users`.`nick` ASC
 			LIMIT 0,50
-	");
-	} else {
+        ");
+	} 
+    // pārējos gadījumos pietiek ar meklēšanu `users` tabulā
+    else {
 		$results = $db->get_results("
 			SELECT
 				`id`,`nick`,`mail`,`lastip`,`karma`,`date`,`level`
@@ -344,29 +357,24 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 		foreach ($results as $res) {
 
 			$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);
+            
+            // izceļ kādu no laukiem, ja pēc tāda tika veikta meklēšana;
+            // ja laukā ļauts ievadīt "%", tos šeit vispirms izvāc,
+            // lai varētu veikt pareizu aizstāšanu
 			if ($field == 'vip') {
-
-				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt.
-				// šeit % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP,
-				// kam beigās ir vēl viens/divi cipari.
 				$escaped = str_replace('%', '', trim($_POST['vip']));
 				$res->lastip = $res->ip;
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-			} else if ($field == 'mail') {
-
-				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt
-				//$escaped = str_replace('%','',trim($_POST['mail']));
-				// laikam nevajag. Parasti modi % nekur neliks
+			} 
+            else if ($field == 'mail') {
 				$escaped = trim($_POST['mail']);
 				$res->mail = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->mail);
-			} else if ($field == 'ip') {
-
-				// izdzēš %-zīmes no formas ievades, citādi nebūtu, ko izcelt.
-				// Šeit lai % izmantošana paliek, citādi, piem., 212.93.100.1 atrastu veselu jūru citu IP,
-				// kam beigās ir vēl viens/divi cipari.
+			} 
+            else if ($field == 'ip') {
 				$escaped = str_replace('%', '', trim($_REQUEST['ip']));
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
 			}
+            
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
 			$tpl->newBlock('search-result');
 			$tpl->assignAll($res);
