@@ -1,6 +1,9 @@
 <!-- START BLOCK : mod-cpanel -->
 <h1>Profilu meklēšana un pārbaude</h1>
 <div id="checkform">
+    <p>
+        <span style="color:orangered">*</span> Šajos laukos daļu no kritērija var aizstāt ar %, piemēram, <em>192.%.1.%</em> vai <em>Moz%lla</em>.
+    </p>
 	<form id="search-nick" method="post" action="/{category-url}">
 		<p><strong>Lietotājvārds:</strong></p>
 		<p class="form-input-box">
@@ -16,21 +19,21 @@
 		</p>
 	</form>
 	<form id="search-ip" method="post" action="/{category-url}">
-		<p><strong>Pēdējā lietotā IP:</strong> (var veikt aizstāšanu ar %, piemēram, <em>%192.168%</em>)</p>
+		<p><strong>Pēdējā lietotā IP:</strong><span style="color:orangered">*</span></p>
 		<p class="form-input-box">
 			<input type="text" name="ip" value="{ip}">		
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
 	<form id="search-vip" method="post" action="/{category-url}">
-		<p><strong>Vispār lietota IP:</strong> (var veikt aizstāšanu ar %, piemēram, <em>%192.168%</em>)</p>
+		<p><strong>Vispār lietota IP:</strong><span style="color:orangered">*</span></p>
 		<p class="form-input-box">
 			<input type="text" name="vip" value="{vip}">		
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
 		</p>
 	</form>
     <form id="search-agent" method="post" action="/{category-url}">
-		<p><strong>User-agent:</strong> (var veikt aizstāšanu ar %, piemēram, <em>vēr%īb%</em>)</p>
+		<p><strong>User-agent:</strong><span style="color:orangered">*</span></p>
 		<p class="form-input-box">
 			<input type="text" name="useragent" value="{useragent}">		
 			<input type="submit" name="submit" class="danger button" value="Meklēt">
