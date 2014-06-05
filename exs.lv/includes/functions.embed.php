@@ -2,6 +2,11 @@
 
 /**
  *  Metodes, kas norādītajā tekstā apstrādā adreses, smaidiņus, widgets u.c.
+ *
+ *  Pagaidām atbalstītie ārējo lapu widgets:
+ *
+ *      YouTube, Twitter, Spotify, Deezer,
+ *      Vine, Soundcloud, Instagram
  */
 
 /**
@@ -271,6 +276,7 @@ function insert_smilies($txt) {
  *      - Deezer
  *      - Vine
  *      - Soundcloud
+ *      - Instagram
  *
  *  @param $txt     apstrādājamais saturs
  *  @param $wide    vai rādīt platu video
@@ -336,6 +342,14 @@ function embed_widgets($txt, $wide = 0) {
         );
 	}
     
+    // instagram images
+	if (strpos($txt, 'instagram') !== false) {
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9]+)(.*?))</a>#im",
+            'embed_instagram', $txt
+        );
+	}
+    
     return $txt;
 }
 
@@ -368,10 +382,6 @@ function get_youtube_video_small($matches) {
  */
 function embed_youtube($matches, $wide = 0) {
 
-    // $matches[0] - ..
-    // $matches[1] - ..
-    // $matches[2] - ..
-    // $matches[3] - ..
     // $matches[4] - video id
 
 	$safe = mkslug($matches[4], false, false);
@@ -503,14 +513,11 @@ function youtube_title_callback($matches) {
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params        ieraksta parametri
- *  @return $tweet_html   izvadē iekļaujams tvīts HTML formātā
+ *  @return $tweet_html   iframe ar tvītu
  */
 function embed_twitter($params) {
 	global $m, $tpl_options;
-    
-    // $matches[0] - ..
-    // $matches[1] - ..
-    // $matches[x] - ..
+
     // $matches[5] - tvīta id
 
 	$maxwidth = 400;
@@ -543,14 +550,12 @@ function embed_twitter($params) {
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params          ieraksta parametri
- *  @return $spotify_html   izvadē iekļaujams HTML ar ierakstu
+ *  @return $spotify_html   iframe ar dziesmām
  */
 function embed_spotify($params) {
 	global $m;
     
     // $matches[0] - ieraksta adrese
-    // $matches[1] - ..
-    // $matches[x] - ..
 
 	// nolasa no Memcached vai izveido iframe saturu
 	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
@@ -577,13 +582,11 @@ function embed_spotify($params) {
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params          ieraksta parametri
- *  @return $deezer_html    izvadē iekļaujams HTML ar ierakstu
+ *  @return $deezer_html    iframe ar dziesmām
  */
 function embed_deezer($params) {
 	global $m;
-    
-    // $matches[0] - ..
-    // $matches[x] - ..
+
     // $matches[4] - ieraksta veids
     // $matches[5] - ieraksta id
 
@@ -626,7 +629,7 @@ function embed_deezer($params) {
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params       video parametri
- *  @return $vine_html   izvadē iekļaujams HTML ar video
+ *  @return $vine_html   iframe ar video
  */
 function embed_vine($params) {
 	global $m;
@@ -639,9 +642,38 @@ function embed_vine($params) {
     // nolasa no Memcached vai arī tajā ieraksta iframe saturu
 	if (($vine_html = $m->get('vine_' . md5($params[3]))) === false) {
         
-        $vine_html  = '<iframe src="http://vine.co/v/'.urlencode($params[3]);
-        $vine_html .= '/card" width="300" height="300" ';
-        $vine_html .= 'frameborder="0"></iframe>';
+        $encoded_url = urlencode(strip_tags(
+            'https://vine.co/v/'.$params[3]));    
+        $url = 'http://api.embed.ly/1/oembed?url=' .
+               $encoded_url . '&maxwidth=320&maxheight=320';
+
+        $response = curl_get($url);
+        if (!empty($response)) {
+            $vine = json_decode($response);
+            if (isset($vine->html)) {
+                $vine_html = $vine->html;
+                // imho glītāk, ja iframe nav centrēts
+                $vine_html = str_replace(
+                    '></iframe>', 
+                    ' style="margin-left:0"></iframe>', 
+                    $vine_html);
+            }
+        }
+        
+        /*
+        Jaukāks variants, kur redzama arī video info,
+        bet pagaidām nemāku noņemt autoplay 
+        (šķiet, ka tāda iespēja netiek piedāvāta)
+    
+        $encoded_url = urlencode(strip_tags($params[3]));  
+
+        $vine_html  = '<iframe class="vine-embed" ';
+        $vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
+        $vine_html .= 'width="320" height="320" frameborder="0">';
+        $vine_html .= '</iframe><script async src="';
+        $vine_html .= '//platform.vine.co/static/scripts/embed.js"';
+        $vine_html .= 'charset="utf-8"></script>';
+        */
 
 		$m->set('vine_' . md5($params[3]), $vine_html, false, 1800);
 	}
@@ -656,7 +688,7 @@ function embed_vine($params) {
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params          dziesmas parametri
- *  @return $scloud_html    izvadē iekļaujams HTML ar video
+ *  @return $scloud_html    iframe ar dziesmām
  */
 function embed_soundcloud($params) {
 	global $m;
@@ -679,7 +711,6 @@ function embed_soundcloud($params) {
         $max_height = 130;
     }
     
-    $scloud_html = '';
     // nolasa no Memcached vai arī tajā ieraksta iframe saturu
     if (($scloud_html = $m->get('scloud_' . md5($params[2]))) === false) {
     
@@ -702,13 +733,42 @@ function embed_soundcloud($params) {
         
         // šis paslēpj fona attēlu
         if ($data !== '') {
-            $scloud_html = str_replace('visual=true', 'visual=false', $data->html);
+            $scloud_html = str_replace(
+                'visual=true', 'visual=false', $data->html);
         }
     
 		$m->set('scloud_' . md5($params[2]), $scloud_html, false, 1800);
 	}   
     
     return $scloud_html;
+}
+
+
+/**
+ *  Callback metode Instagram attēlu iekļaušanai tekstā
+ * 
+ *  Izveidoto HTML iekešo Memcached (30 min)
+ *
+ *  @param $params       attēla parametri
+ *  @return $inst_html   iframe ar attēlu
+ */
+function embed_instagram($params) {
+	global $m;
+    
+    // $params[4] - attēla ID
+
+    // nolasa no Memcached vai arī tajā ieraksta iframe saturu
+    if (($inst_html = $m->get('inst_' . md5($params[4]))) === false) {
+        
+        $inst_html  = '<iframe src="//instagram.com/p/';
+        $inst_html .= urlencode($params[4]).'/embed/" ';
+        $inst_html .= 'width="350" height="450" frameborder="0" ';
+        $inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
+
+		$m->set('inst_' . md5($params[4]), $inst_html, false, 1800);
+	}
+
+	return $inst_html;
 }
 
 
