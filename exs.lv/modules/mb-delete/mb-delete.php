@@ -18,6 +18,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
 			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
 			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->reply_to' LIMIT 1");
+            $auth->log('Izdzēsa miniblogu', 'miniblog', $mbid);
 
 			if (!isset($_GET['_'])) {
 				return2mb($mb);
@@ -28,14 +29,17 @@ if ($auth->ok && isset($_GET['var1'])) {
 					$message .= '<a style="float:right" class="deleted-content" href="/mbview/' . $mb->id . '">skatīt saturu</a>';
 				}
 				$message .= '</p>';
+                
 				echo json_encode(array('state' => 'success', 'message' => $message));
 				exit;
 			}
 
-			//level 1
+        //level 1
 		} elseif ($mb->parent != 0) {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
 			//$db->query("UPDATE miniblog SET posts = posts-1 WHERE id = '$mb->parent' LIMIT 1");
+            $auth->log('Izdzēsa miniblogu', 'miniblog', $mbid);
+            
 			if (!isset($_GET['_'])) {
 				return2mb($mb);
 			} else {
@@ -45,6 +49,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 					$message .= '<a style="float:right" class="deleted-content" href="/mbview/' . $mb->id . '">skatīt saturu</a>';
 				}
 				$message .= '</p>';
+                
 				echo json_encode(array('state' => 'success', 'message' => $message));
 				exit;
 			}
@@ -53,9 +58,8 @@ if ($auth->ok && isset($_GET['var1'])) {
 		} else {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
 			$db->query("UPDATE miniblog SET removed = '1' WHERE parent = '" . $mbid . "'");
+            $auth->log('Izdzēsa miniblogu', 'miniblog', $mbid);
 		}
-
-		$auth->log('Izdzēsa miniblogu', 'miniblog', $mbid);
 	}
 }
 redirect();
