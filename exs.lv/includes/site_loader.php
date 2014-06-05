@@ -38,12 +38,7 @@ $config_domains = array(
 $found = false;
 foreach ($config_domains as $lang => $site) {
 
-    // (lokālai testēšanai no telefona)
-    if ($_SERVER['SERVER_NAME'] == '192.168.1.116' && $site['domain'] == 'android.exs.lv') {
-        require CORE_PATH . '/config/android.exs.lv.php';
-        $found = true;
-        break;
-    } else if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+    if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
         require CORE_PATH . '/config/' . $site['domain'] . '.php';
 		$found = true;
 		break;
