@@ -14,6 +14,7 @@ require('includes/site_loader.php');
 session_start();
 
 $cat = 'wall';
+$bootstrap_cache_key = '';
 
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);

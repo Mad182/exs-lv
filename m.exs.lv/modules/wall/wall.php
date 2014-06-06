@@ -70,46 +70,56 @@ foreach ($articles as $article) {
 	);
 }
 
-$usergroups = array("`miniblog`.`groupid` = '0'");
-if ($auth->ok) {
-	$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
-	if ($g_owners) {
-		foreach ($g_owners as $g_owner) {
-			$usergroups[] = "`miniblog`.`groupid` = '" . $g_owner . "'";
+
+if ($auth->level == 1) {
+	$groupquery = '1 = 1';
+} else {
+	$usergroups = array("`miniblog`.`groupid` = '0'");
+	if ($auth->ok === true) {
+		$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
+		if ($g_owners) {
+			foreach ($g_owners as $g_owner) {
+				$usergroups[] = "`miniblog`.`groupid` = '" . $g_owner . "'";
+			}
+		}
+		$g_members = $db->get_col("SELECT clan FROM clans_members WHERE user = '$auth->id' AND approve = '1'");
+		if ($g_members) {
+			foreach ($g_members as $g_member) {
+				$usergroups[] = "`miniblog`.`groupid` = '" . $g_member . "'";
+			}
 		}
 	}
-	$g_members = $db->get_col("SELECT clan FROM clans_members WHERE user = '$auth->id' AND approve = '1'");
-	if ($g_members) {
-		foreach ($g_members as $g_member) {
-			$usergroups[] = "`miniblog`.`groupid` = '" . $g_member . "'";
-		}
-	}
+	$groupquery = implode(' OR ', $usergroups);
 }
-$groupquery = implode(' OR ', $usergroups);
+
+$addlang = "`miniblog`.`lang` = '$lang'";
 
 $mbs = $db->get_results("SELECT
 	`miniblog`.`id` AS `id`,
 	`miniblog`.`text` AS `text`,
-	`miniblog`.`date` AS `date`,
 	`miniblog`.`bump` AS `bump`,
+	`miniblog`.`date` AS `date`,
+	`miniblog`.`lang` AS `lang`,
 	`miniblog`.`author` AS `author`,
 	`miniblog`.`posts` AS `posts`,
 	`miniblog`.`groupid` AS `groupid`,
 	`users`.`avatar` AS `avatar`,
+	`users`.`deleted` AS `deleted`,
 	`users`.`av_alt` AS `av_alt`,
 	`users`.`nick` AS `nick`
 FROM
-	`miniblog`,
-	`users`
+	`miniblog` USE INDEX(`parent_2`),
+	`users` USE INDEX(`PRIMARY`)
 WHERE
-	`miniblog`.`parent` = '0' AND
-	(" . $groupquery . ") AND
 	`miniblog`.`removed` = '0' AND
-	`miniblog`.`lang` = '$lang' AND
+	`miniblog`.`parent` = '0' AND
+	`miniblog`.`type` = 'miniblog' AND
+	" . $addlang . " AND
+	(" . $groupquery . ") AND
 	`users`.`id` = `miniblog`.`author`
 ORDER BY
 	`miniblog`.`bump`
-DESC LIMIT 20");
+DESC LIMIT 0, 20");
 
 if ($mbs) {
 
