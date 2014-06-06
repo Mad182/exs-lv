@@ -26,6 +26,9 @@ RewriteRule ^favicon\.ico$ /bildes/coding/favicon.ico
 RewriteCond %{HTTP_HOST} ^rp.exs.lv$
 RewriteRule ^favicon\.ico$ /bildes/gta/favicon.ico
 
+RewriteCond %{HTTP_HOST} ^runescape.exs.lv$
+RewriteRule ^favicon\.ico$ /bildes/faviconrs.ico
+
 RewriteCond %{HTTP_HOST} ^www\.exs\.lv$ [NC]
 RewriteRule ^(.*)$ http://exs.lv/$1 [L,R=301]
 
