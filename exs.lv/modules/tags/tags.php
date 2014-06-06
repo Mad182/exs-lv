@@ -129,22 +129,10 @@ if (isset($_GET['var1'])) {
 
 $cloud = rand(0, 200);
 $cache_created = @filemtime(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html');
-if (!$cache_created || (time() - $cache_created) > 115200) {
-	$tags = $db->get_results("
-		SELECT
-			`tags`.*
-		FROM
-			`tags`,
-			`taged`
-		WHERE
-			`taged`.`tag_id` = `tags`.`id` AND
-			`taged`.`lang` = '$lang'
-		GROUP BY
-		  `tags`.`id`
-		ORDER BY
-			rand()
-		LIMIT 80"
-	);
+if (!$cache_created || (time() - $cache_created) > 43200) {
+
+	$tags = tags_random($db, $lang, 90);
+
 	if ($tags) {
 		$out = '';
 		if ($lang == 1) {
@@ -167,3 +155,4 @@ if (!$cache_created || (time() - $cache_created) > 115200) {
 
 $tpl->newBlock('tags-rand');
 $tpl->assign('out', $out);
+
