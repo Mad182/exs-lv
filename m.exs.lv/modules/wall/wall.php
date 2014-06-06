@@ -42,7 +42,7 @@ $articles = $db->get_results("
 		ORDER BY
 			`pages`.`bump` DESC
 		LIMIT
-			8");
+			10");
 
 foreach ($articles as $article) {
 
@@ -102,16 +102,14 @@ FROM
 	`miniblog`,
 	`users`
 WHERE
-	`miniblog`.`date` > '" . date('Y-m-d H:i:s', strtotime('-10 days')) . "' AND
-	`miniblog`.`removed` = '0' AND
 	`miniblog`.`parent` = '0' AND
-	`miniblog`.`type` = 'miniblog' AND
-	`miniblog`.`lang` = '$lang' AND
 	(" . $groupquery . ") AND
+	`miniblog`.`removed` = '0' AND
+	`miniblog`.`lang` = '$lang' AND
 	`users`.`id` = `miniblog`.`author`
 ORDER BY
 	`miniblog`.`bump`
-DESC LIMIT 18");
+DESC LIMIT 20");
 
 if ($mbs) {
 
@@ -179,3 +177,4 @@ if (!empty($events)) {
 		));
 	}
 }
+
