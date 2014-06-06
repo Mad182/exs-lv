@@ -206,8 +206,8 @@ class Auth {
 	function update_counter() {
 		global $db, $m, $lang;
 
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang")) {
-			$db->query("UPDATE counter_ip SET last_hit = CURRENT_TIMESTAMP WHERE ip_addr = '" . $this->ip . "' AND `site_id` = $lang");
+		if ($upd = $db->get_var("SELECT `id` FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang")) {
+			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `id` = " . $upd);
 		} else {
 			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, $lang)");
 		}
@@ -225,3 +225,4 @@ class Auth {
 	}
 
 }
+

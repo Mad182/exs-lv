@@ -26,7 +26,6 @@ class Auth {
 		$this->mobile = 0;
 		$this->skin = 3;
 		$this->vote_today = 0;
-		$this->transfer = '';
 		$this->showsig = 1;
 		$this->nick = "Viesis";
 		$this->flood = 8;
@@ -222,7 +221,6 @@ class Auth {
 		$this->showsig = 1;
 		$this->karma = 0;
 		$this->persona = '';
-		$this->transfer = '';
 		$this->ok = false;
 		$_SESSION['auth_id'] = '';
 		session_regenerate_id(true);
@@ -232,8 +230,8 @@ class Auth {
 	function update_counter() {
 		global $db, $m, $lang;
 
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang")) {
-			$db->query("UPDATE counter_ip SET last_hit = NOW() WHERE ip_addr = '" . $this->ip . "' AND `site_id` = $lang");
+		if ($upd = $db->get_var("SELECT `id` FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang")) {
+			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `id` = " . $upd);
 		} else {
 			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, $lang)");
 		}
@@ -251,3 +249,4 @@ class Auth {
 	}
 
 }
+
