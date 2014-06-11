@@ -235,6 +235,10 @@ function list_awards() {
 			'title' => 'Facebook.com <a href="https://www.facebook.com/exs.lv">like</a>',
 			'state' => 'inactive'
 		),
+		'twitter-follower' => array(
+			'title' => 'Twitter.com <a href="https://twitter.com/exs_lv" rel="nofollow">sekotājs</a>',
+			'state' => 'inactive'
+		),
 		'blogs-50' => array(
 			'title' => 'Veica 50 bloga ierakstus',
 			'state' => 'inactive'

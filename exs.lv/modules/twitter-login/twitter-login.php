@@ -3,6 +3,19 @@
 /**
  * Ielogošanās un profila izveide ar twitter autorizāciju
  */
+//piešķir medaļu
+function twitter_award($id) {
+	global $db, $m;
+	$existing_awards = get_awards_list($id);
+	if (!in_array('twitter-follower', $existing_awards)) {
+		$title = sanitize('Twitter.com <a href="https://twitter.com/exs_lv" rel="nofollow">sekotājs</a>');
+		$db->query("INSERT INTO autoawards (user_id,award,title,created) VALUES ('$id','twitter-follower','$title',NOW())");
+		$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
+		userlog($id, 'Ieguva medaļu &quot;' . stripslashes($title) . '&quot;', '/dati/bildes/awards/twitter-follower.png');
+		notify($id, 7);
+		$m->delete('aw_' . $id);
+	}
+}
 
 require(LIB_PATH . '/twitteroauth/twitteroauth/twitteroauth.php');
 
@@ -80,7 +93,16 @@ if (!empty($_SESSION['twitter_id'])) {
 					}
 
 				}
+				
+				//award
+				$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+				$check_followig = $connection->get('friendships/lookup', array('screen_name' => 'exs_lv'));
+				if(is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
+					twitter_award($auth->id);
+				}
+				
 				update_karma($auth->id);
+				
 				redirect();
 			} else {
 				$tpl->newBlock('invalid');
@@ -204,6 +226,13 @@ if (!empty($_SESSION['twitter_id'])) {
 				. "`lastseen` = NOW(), "
 				. "`lastip` = '" . $auth->ip . "' "
 				. "WHERE `id` = '$userinfo->id'");
+				
+		//award
+		$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+		$check_followig = $connection->get('friendships/lookup', array('screen_name' => 'exs_lv'));
+		if(is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
+			twitter_award($auth->id);
+		}
 
 		update_karma($userinfo->id, true);
 		redirect();
