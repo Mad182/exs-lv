@@ -19,3 +19,6 @@
 [submodule "libs/bcrypt"]
 	path = libs/bcrypt
 	url = https://github.com/ircmaxell/password_compat.git
+[submodule "libs/twitteroauth"]
+	path = libs/twitteroauth
+	url = https://github.com/abraham/twitteroauth.git

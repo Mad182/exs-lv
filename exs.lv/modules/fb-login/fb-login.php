@@ -232,3 +232,4 @@ if (!empty($me)) {
 	  $tpl->newBlock('fb-login');
 	  $tpl->assign('link', $loginUrl); //Show the button */
 }
+

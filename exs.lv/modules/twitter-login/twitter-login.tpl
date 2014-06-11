@@ -1,12 +1,11 @@
-<!-- START BLOCK : fb-signup-->
-<h1>Ienākt ar facebook.lv</h1>
+<!-- START BLOCK : twitter-signup-->
+<h1>Autorizēties ar twitter.com</h1>
 
-<p>Izskatās, ka Tu pirmo reizi esi ienācis izmantojot facebook. Ja Tev jau ir savs profils, Tu to vari savienot ar facebook pasi. Ja ne, izvēlies niku un nāc iekšā tā pat :)</p>
-
+<p>Izskatās, ka Tu pirmo reizi esi ienācis izmantojot twitter. Ja Tev jau ir savs profils, Tu to vari savienot ar twitter login. Ja ne, droši izvēlies niku un nāc iekšā tā pat :)</p>
 
 <div>
 	<div class="half-left">
-		<h3>Izveidot profilu</h3>
+		<h3>Vēlos izveidot jaunu profilu</h3>
 		<form id="edit-profile" class="form" action="" method="post">
 			<fieldset style="border: 0;padding: 0;margin: 10px 10px 10px 0">
 				<!-- START BLOCK : invalid-nick-len-->
@@ -22,6 +21,7 @@
 					<label for="nick">Niks:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
 					<input style="width: 120px;" type="text" class="text usercheck" name="nick" id="nick" value="{nick}" maxlength="20" /> <span class="usercheck-response" id="userexists"></span>
 				</p>
+				<label style="font-weight: normal;"><input type="checkbox" name="follow" checked="checked" /> Sekot @exs_lv oficiālajam twitter kontam</label>
 				<p>
 					<input class="button primary" type="submit" name="submit" id="submit" value="Taisam jaunu" />
 				</p>
@@ -45,6 +45,7 @@
 					<label for="existing-password">Parole:</label><br />
 					<input style="width: 180px;" type="password" class="text" name="existing-password" id="existing-password" />
 				</p>
+				<label style="font-weight: normal;"><input type="checkbox" name="follow" checked="checked" /> Sekot @exs_lv oficiālajam twitter kontam</label>
 				<p>
 					<input class="button primary" type="submit" name="submit" id="submit" value="Ienākt" />
 				</p>
@@ -54,10 +55,5 @@
 	<div class="c"></div>
 </div>
 
-<!-- END BLOCK : fb-signup-->
-
-<!-- START BLOCK : fb-login-->
-<h2>Ienākt ar facebook.com</h2>
-<a href="{link}"><img src="http://exs.lv/bildes/fb-login.png" alt="login with facebook" /></a>
-<!-- END BLOCK : fb-login-->
+<!-- END BLOCK : twitter-signup-->
 
