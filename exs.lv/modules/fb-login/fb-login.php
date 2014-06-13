@@ -3,20 +3,6 @@
 /**
  * Ielogošanās un profila izveide ar facebook autorizāciju
  */
-//piešķir medaļu
-function fb_award($id) {
-	global $db, $m;
-	$existing_awards = get_awards_list($id);
-	if (!in_array('facebook-like', $existing_awards)) {
-		$title = sanitize('Facebook.com <a href="https://www.facebook.com/exs.lv">like</a>');
-		$db->query("INSERT INTO autoawards (user_id,award,title,created) VALUES ('$id','facebook-like','$title',NOW())");
-		$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
-		userlog($id, 'Ieguva medaļu &quot;' . stripslashes($title) . '&quot;', '/dati/bildes/awards/facebook-like.png');
-		notify($id, 7);
-		$m->delete('aw_' . $id);
-	}
-}
-
 require(LIB_PATH . '/facebook-php-sdk/src/base_facebook.php');
 require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
 
@@ -75,7 +61,7 @@ if (!empty($me)) {
 									if (!$c1 && !$c2) {
 
 										$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
-											VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
+										VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
 										update_karma($existing->id, true);
 									}
 								}
@@ -109,7 +95,7 @@ if (!empty($me)) {
 
 						//write down
 						$db->query("INSERT INTO users (id,nick,mail,date,lastip,skin,facebook_id,source_site,gender, `user_agent`)
-							VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($me['id']) . "', '$lang', '$gender', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
+						VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($me['id']) . "', '$lang', '$gender', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
 						$newid = $db->insert_id;
 
 						//log registration
@@ -122,7 +108,7 @@ if (!empty($me)) {
 								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . $friend['id'] . "'");
 								if ($existing && $friend['id'] > 0) {
 									$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
-										VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
+									VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
 									update_karma($existing->id, true);
 								}
 							}
