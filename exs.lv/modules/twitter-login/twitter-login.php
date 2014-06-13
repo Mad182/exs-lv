@@ -83,7 +83,7 @@ if (!empty($_SESSION['twitter_id'])) {
 
 					$db->query("UPDATE `users` SET `twitter_id` = '" . sanitize($_SESSION['twitter_id']) . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "' WHERE `id` = '$auth->id'");
 					userlog($auth->id, 'Lieto twitter.com autorizāciju', '/bildes/twitter.png');
-					
+
 					/**
 					 * Twitter follow exs_lv
 					 */
@@ -91,18 +91,17 @@ if (!empty($_SESSION['twitter_id'])) {
 						$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 						$connection->post('friendships/create', array('id' => 104146775));
 					}
-
 				}
-				
+
 				//award
 				$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 				$check_followig = $connection->get('friendships/lookup', array('screen_name' => 'exs_lv'));
-				if(is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
+				if (is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
 					twitter_award($auth->id);
 				}
-				
+
 				update_karma($auth->id);
-				
+
 				redirect();
 			} else {
 				$tpl->newBlock('invalid');
@@ -118,10 +117,9 @@ if (!empty($_SESSION['twitter_id'])) {
 				} else {
 
 					//process register
-
 					//write down
 					$db->query("INSERT INTO users (id,nick,mail,date,lastip,skin,twitter_id,source_site, `user_agent`)
-						VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($_SESSION['twitter_id']) . "', '$lang', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
+					VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($_SESSION['twitter_id']) . "', '$lang', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
 					$newid = $db->insert_id;
 
 					//log registration
@@ -184,7 +182,7 @@ if (!empty($_SESSION['twitter_id'])) {
 						}
 						$foo->clean();
 					}
-					
+
 					/**
 					 * Twitter follow exs_lv
 					 */
@@ -192,7 +190,7 @@ if (!empty($_SESSION['twitter_id'])) {
 						$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 						$connection->post('friendships/create', array('id' => 104146775));
 					}
-					
+
 					redirect('/twitter-login');
 				}
 			} else {
@@ -205,15 +203,14 @@ if (!empty($_SESSION['twitter_id'])) {
 			$nick = $_SESSION['twitter_id'];
 		} elseif (strlen($_SESSION['name']) > 2 && !$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($_SESSION['name']) . "'")) {
 			$nick = $_SESSION['name'];
-		} elseif (!$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($_SESSION['name'] . " (" . $_SESSION['twitter_id'] .")") . "'")) {
-			$nick = $_SESSION['name'] . " (" . $_SESSION['twitter_id'] .")";
+		} elseif (!$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($_SESSION['name'] . " (" . $_SESSION['twitter_id'] . ")") . "'")) {
+			$nick = $_SESSION['name'] . " (" . $_SESSION['twitter_id'] . ")";
 		}
 
 		$tpl->assign(array(
 			'nick' => htmlspecialchars($nick),
 			'avatar' => htmlspecialchars($_SESSION['image'])
 		));
-
 	} else {
 
 		//perform login
@@ -226,12 +223,13 @@ if (!empty($_SESSION['twitter_id'])) {
 				. "`lastseen` = NOW(), "
 				. "`lastip` = '" . $auth->ip . "' "
 				. "WHERE `id` = '$userinfo->id'");
-				
+
 		//award
 		$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 		$check_followig = $connection->get('friendships/lookup', array('screen_name' => 'exs_lv'));
-		if(is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
-			twitter_award($auth->id);
+
+		if (is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
+			twitter_award($userinfo->id);
 		}
 
 		update_karma($userinfo->id, true);
