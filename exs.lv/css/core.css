@@ -536,6 +536,11 @@ html .banned {
 	width: 55px;
 }
 
+#top-menu a.external-twitter span {
+	background: url('http://img.exs.lv/bildes/twitter_login.png') no-repeat 0 50%;
+	width: 61px;
+}
+
 #login-form a {
 	float: left;
 	color: #fff;
