@@ -1,10 +1,10 @@
 <!-- START BLOCK : comments-ajax-form -->
 <form class="form comments-ajax-add" action="" method="post" onsubmit="return postcomment();">
-  <fieldset>
+	<fieldset>
 		<legend>Komentāri</legend>
 		<p><textarea rows="4" cols="40" name="new-c-text" id="new-c-text"></textarea></p>
 		<p><input type="submit" name="submit" class="button" value="Pievienot" /></p>
-  </fieldset>
+	</fieldset>
 </form>
 <!-- END BLOCK : comments-ajax-form -->
 <!-- START BLOCK : comments-ajax-list -->
