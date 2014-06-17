@@ -3,10 +3,7 @@
 <script type="text/javascript">
 
 	function savePosition(arr) {
-		$.post("{page-url}", {position: arr},
-						function(data) {
-							//
-						});
+		$.post("{page-url}", {position: arr});
 	}
 
 	$(document).ready(function() {
