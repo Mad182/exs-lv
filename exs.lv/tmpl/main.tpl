@@ -514,6 +514,7 @@
 
 		</div>
 
+		<!-- START BLOCK : smartad-eu-->
 		<!-- smartad.eu -->
 		<script type='text/javascript'>/* <![CDATA[ */
 			var _smartad = _smartad || new Object();
@@ -546,6 +547,7 @@
 				}
 			})();
 			/* ]]> */</script>
+		<!-- END BLOCK : smartad-eu-->
 
 		<!-- google analytics -->
 		<script>

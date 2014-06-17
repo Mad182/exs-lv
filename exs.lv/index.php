@@ -506,6 +506,13 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
+//smartad.eu, nerāda mobilajām ierīcēm
+require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
+$detect = new Mobile_Detect;
+if(!$detect->isMobile()) {
+	$tpl->newBlock('smartad-eu');
+}
+
 $tpl->printToScreen();
 
 if ($debug && !$requested_json && !$use_bootstrap) {
@@ -524,3 +531,4 @@ if ($debug && !$requested_json && !$use_bootstrap) {
 	pr($_POST);
 	echo '</div></div></div>';
 }
+
