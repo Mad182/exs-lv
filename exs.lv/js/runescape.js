@@ -110,4 +110,43 @@ $(document).ready(function () {
         }); 
     });
     
+    /* dzēš rs_page ierakstu */
+    $('.del-page').live('click', function(e) {
+
+        e.preventDefault();
+        
+        if (confirm('Vai tiešām vēlies šo ierakstu dzēst?')) {
+
+            $elem = $(this);
+            
+            $.getJSON($elem.attr('href') + '?_=1', function(response) {
+                if (response.state == 'success') {
+                    $elem.parent().parent().hide('slow');
+                } else {
+                    alert(response.content);
+                }
+            });
+        }
+    });
+    
+    /* slēpj/parāda rs_page ierakstu */
+    $('.hide-page').live('click', function(e) {
+
+        $elem = $(this);
+        
+        $.getJSON($elem.attr('href') + '?_=1', function(response) {
+            if (response.state == 'success') {
+                if (response.content == 'hidden') {
+                    $elem.parent().parent().attr('style', 'opacity:0.5');
+                } else {
+                    $elem.parent().parent().attr('style', 'opacity:1.0');
+                }
+            } else {
+                alert(response.content);
+            }
+        });
+        
+        e.preventDefault();
+    });
+    
 });

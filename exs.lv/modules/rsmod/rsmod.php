@@ -1,39 +1,55 @@
 <?php
-
 /**
- * 	RuneScape rakstu sadaļu administrācijas panelis.
+ * 	RuneScape pamācību sadaļu (kvesti/prasmes u.tml.) administrācijas panelis
  *
- * 	Moduļa adrese: runescape.exs.lv/[..]
+ *  Šis modulis apkopo tās sadaļas, kurās iespējams veikt izmaiņas
+ *  RuneScape pamācību sadaļām, piemēram, pievienojot jaunas rakstu sērijas,
+ *  mainot rakstu secību sērijā, izveidojot rakstu "placeholders" u.c.
  */
-// ne-moderatorus sūtām prom
+
 if (!im_mod()) {
 	set_flash('Error 403: Permission denied!');
 	redirect();
 }
 
-
 $tpl_options = 'no-left';
-$sub_include = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
 
+// submoduļos jāveic pārbaude, vai šāds mainīgais definēts
+// (lai nevarētu skatīt failu pa tiešo)
+$sub_include = true;
 
-
-// array_keys ir lapas textid
+// array_key ir lapas "textid"
 $submodules = array(
-	'series'        => 'quests-series.php' // kvestu info pārvaldība
-	//'rsph'          => 'placeholders.php',  // pamācību placeholderi
+	'all-quests'        => array('lists.php','lists.tpl'),
+	'all-miniquests'    => array('lists.php','lists.tpl'),
+	'all-minigames'     => array('lists.php','lists.tpl')
 );
 
-
-// iekļauj lapā pareizo apakšmoduli
+// iekļauj lapā pareizos failus
 if (isset($submodules[$category->textid])) {
 
-	if (file_exists(CORE_PATH . '/modules/rsmod/submodules/' . $submodules[$category->textid])) {
-		include(CORE_PATH . '/modules/rsmod/submodules/' . $submodules[$category->textid]);
+    $php_filename = CORE_PATH.'/modules/'.$category->module.'/'
+                             .$submodules[$category->textid][0];
+
+    $tpl_filename = '';
+    if ($submodules[$category->textid][1] !== '') {
+        $tpl_filename = CORE_PATH.'/modules/'.$category->module.'/'
+                                 .$submodules[$category->textid][1];
+    }
+
+	if (file_exists($php_filename)) {        
+        
+        if ($tpl_filename !== '' && file_exists($tpl_filename)) {
+            $tpl->assignInclude('sub-template', $tpl_filename);
+            $tpl->prepare();
+        }
+		include($php_filename);
+
 	} else {
-		set_flash('Kļūdaini norādīta adrese!');
+		set_flash('Kļūdaini norādīta adrese.');
 		redirect();
 	}
 } else {
-	set_flash('Kļūdaini norādīta adrese!');
+	set_flash('Kļūdaini norādīta adrese.');
 	redirect();
 }

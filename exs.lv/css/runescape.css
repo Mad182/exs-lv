@@ -11,7 +11,8 @@
  *  6. Lappušu saraksta stili
  *  7. RuneScape jaunumi, sākumlapa
     8.0 RuneScape faktu pārvaldība
-    8.1 Kvestu pārvaldība
+    8.1 rsmod - pamācību saraksti
+    8.2 Kvestu pārvaldība
     8.2 rs-info sadaļu stili
  *
  *  9.0 RuneScape pamācību sadaļu stili
@@ -42,6 +43,13 @@ body {
     padding:0;
     clear:both;
     display:block
+}
+.is-right-aligned {
+    position:absolute;
+    right:10px
+}
+.is-centered {
+    text-align:center
 }
 
 /* 2. Pārrakstītie core.css elementi */
@@ -695,7 +703,31 @@ table.facts-table .row-counter {
     text-align:center
 }
 
-/* 8.1 RuneScape kvestu pārvaldība */
+/* 8.1 rsmod - pamācību saraksti */
+.list-intro {
+    margin:10px 3px;
+    padding:7px 12px 7px 45px;
+    background:#f4f5f7 url('/bildes/notice.png') no-repeat 1% 10%;
+    border:1px solid #e2e6ec;
+    font-size:12px;
+    text-indent:10px
+}
+.guide-list-table {
+    margin-left:10px;
+    margin-top:15px;
+    width:97%
+}
+.is-splitted {
+    border-top:2px solid #ccc
+}
+.is-faded {
+    opacity:0.5
+}
+.is-faded:hover {
+    opacity:1
+}
+
+/* 8.2 RuneScape kvestu pārvaldība */
 .show-related-quests:hover {
     cursor:pointer
 }
@@ -789,7 +821,7 @@ table.quests-skill-table {
     width:160px;
   }
 
-/* 8.2 rs-info sadaļu stili */
+/* 8.3 rs-info sadaļu stili */
 .info-form textarea {
     width:600px;
     min-height:100px;

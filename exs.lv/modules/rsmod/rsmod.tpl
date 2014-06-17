@@ -1,3 +1,5 @@
+<!-- INCLUDE BLOCK : sub-template -->
+
 <!-- START BLOCK : series-form -->
 <h1 class="rs-content-title">Quest storylines' management</h1>
 
