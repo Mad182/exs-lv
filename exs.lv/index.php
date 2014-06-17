@@ -506,11 +506,13 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
-//smartad.eu, nerāda mobilajām ierīcēm
-require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
-$detect = new Mobile_Detect;
-if(!$detect->isMobile()) {
-	$tpl->newBlock('smartad-eu');
+if($lang === 1) {
+	//smartad.eu, nerāda mobilajām ierīcēm
+	require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
+	$detect = new Mobile_Detect;
+	if(!$detect->isMobile()) {
+		$tpl->newBlock('smartad-eu');
+	}
 }
 
 $tpl->printToScreen();
