@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Ielogoties/reģistrēties ar draugiem.lv pasi
  */

@@ -41,7 +41,7 @@
 			data: $("#game-rating-form").serialize(),
 			success: function(data) {
 				$('#game-rating-form').fadeOut("slow"),
-								$('#game-rating').html(data).fadeIn("slow");
+						$('#game-rating').html(data).fadeIn("slow");
 			}
 		});
 		return false;
