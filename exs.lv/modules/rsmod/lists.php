@@ -84,7 +84,9 @@ if (!isset($_GET['var1'])) {
         ORDER BY `rs_pages`.`title` ASC
     ");
 
-    if ($found_pages) {
+    if (!$found_pages) {
+        $tpl->newBlock('list-no-pages');
+    } else {
 
         $tpl->newBlock('list-all-pages');
         

@@ -19,8 +19,15 @@
 <!-- START BLOCK : list-button-new -->
 
 
+<!-- START BLOCK : list-no-pages -->
+<p class="list-no-pages">
+    Nav neviena pievienota ieraksta.
+</p>
+<!-- END BLOCK : list-no-pages -->
+
+
 <!-- START BLOCK : list-all-pages -->
-<table class="rslist guide-list-table">
+<table class="rslist list-table">
     <tr class="listhead">
 		<td style="width:20px">&nbsp;</td>
 		<td style="width:200px">Nosaukums</td>        
@@ -42,7 +49,7 @@
         <td><a class="hide-page" href="/{category-url}/hide/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/bin.png" title="Paslēpt/parādīt pamācību sadaļās" alt="">
         </a></td>
-        <td><a href="#">
+        <td><a href="/{category-url}/edit/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/notebook--pencil.png" title="Labot informāciju" alt="">
         </a></td>
         <td><a class="del-page" href="/{category-url}/delete/{rspage_id}">
@@ -59,7 +66,7 @@
         <td><a class="hide-page" href="/{category-url}/hide/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/bin.png" title="Paslēpt/parādīt pamācību sadaļās" alt="">
         </a></td>
-        <td><a href="#">
+        <td><a href="/{category-url}/edit/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/notebook--pencil.png" title="Labot informāciju" alt="">
         </a></td>
         <td><a class="del-page" href="/{category-url}/delete/{rspage_id}">
@@ -72,72 +79,69 @@
 <!-- END BLOCK : list-all-pages -->
 
 
-<!-- START BLOCK : new-page-form -->
-<p>Lorems Ipsums lives here<br>Parametrus varēs labot arī vēlāk</p>
-
-<p style="text-align:right">
-    <a href="/{category-url}" class="button rs-button" style="top:0">Uz sarakstu</a>
+<!-- START BLOCK : quest-form -->
+<p class="list-text">
+    - Vairāki no aizpildāmajiem laukiem šobrīd netiek izmantoti, bet var noderēt nākotnē, tāpēc ieteicams aizpildīt visu.<br>
+    - Ja ierakstam nebūs norādīta eksistējoša raksta adrese, tas tiks uztverts kā <em>placeholder</em>.<br>
+    <span class="required">*</span> - obligāti aizpildāmie lauki. Pārējais var tikt aizpildīts arī vēlāk.
 </p>
-<form class="form info-form" method="post">
+<form class="form list-form" method="post">
     <fieldset>
-    
-        <legend>Jauns ieraksts</legend>
         
-        <p><strong>Nosaukums:</strong></p>    
-        <p><input type="text" style="width:400px" name="title" value=""></p>
+        <p class="field-title">
+            <strong><span class="required">*</span>&nbsp;Nosaukums:</strong>
+        </p>    
+        <p><input type="text" style="width:400px" name="title" value="{title}"></p>
         
-        <p><strong>Eksistējoša raksta adreses nosaukums:</strong></p>    
-        <p><input type="text" style="width:400px" name="strid" value=""></p> 
+        <p class="field-title">
+            <strong>Eksistējoša raksta adreses nosaukums:</strong>
+        </p>
+        <p class="field-example info">(piemērs: <em>death-to-the-dorgeshuun</em>)</p>
+        <p><input type="text" style="width:400px" name="strid" value="{strid}"></p> 
+               
+        <p class="field-title">
+            <strong>Sākumpunkta atrašanās vieta:</strong>
+        </p>    
+        <p><input type="text" style="width:400px" name="location" value="{location}"></p> 
         
-        <input class="button" type="submit" value="Apstiprināt">
+        <p class="field-title">
+            <strong>Nepieciešamās prasmes:</strong>
+        </p>
+        <p class="field-example">(formāts: 55 Agility, 77 Runecrafting, 111 Mining)</p>
+        <textarea name="skills">{skills}</textarea>
         
-    </fieldset>
-</form>
-<!-- START BLOCK : new-page-form -->
-
-
-<!-- START BLOCK : quest-edit -->
-<p style="text-align:right">
-    <a href="/{category-url}" class="button rs-button" style="top:0">Uz sarakstu</a>
-</p>
-<form class="form info-form" action="/{category-url}/edit/{page_id}" method="post">
-    <fieldset>
-    
-        <legend><a href="/read/{page_strid}">{page_title}</a> informācija</legend>                 
-        <p><strong>Sākumpunkta atrašanās vieta:</strong> (var izmantot nākotnē)</p>    
-        <p><input type="text" style="width:400px" name="location" value="{rspage_location}"></p> 
+        <p class="field-title">
+            <strong>Nepieciešamie kvesti:</strong>
+        </p>
+        <p class="field-example info">(formāts: Lost Tribe, While Guthix Sleeps, Monkey Madness)</p>
+        <textarea name="quests">{quests}</textarea>
         
-        <p><strong>Nepieciešamās prasmes:</strong> (var izmantot nākotnē)</p>
-        <p>(formāts: 55 Agility, 77 Runecrafting, 111 Mining)</p>
-        <textarea name="skills">{rspage_skills}</textarea>
+        <p class="field-title">
+            <strong>Citas prasības:</strong>
+        </p>
+        <p class="field-example">(formāts: tekstveida apraksts)</p>
+        <textarea name="extra">{extra}</textarea>   
         
-        <p><strong>Nepieciešamie kvesti:</strong> (var izmantot nākotnē)</p>
-        <p class="info">(formāts: Lost Tribe, While Guthix Sleeps, Monkey Madness)</p>
-        <textarea name="quests">{rspage_quests}</textarea>
-        
-        <p><strong>Citas prasības:</strong> (var izmantot nākotnē)</p>
-        <textarea name="extra">{rspage_extra}</textarea>   
-        
-        <p><strong>Izvēlnes:</strong></p>        
+        <p class="field-title">
+            <strong>Izvēlnes:</strong>
+        </p>        
         <select name="difficulty">
-            <option value="0">Nav atzīmēts</option>
-            <!-- START BLOCK : edit-difficulty -->
+            <!-- START BLOCK : add-difficulty -->
             <option value="{level-id}"{selected}>{level-title}</option>
-            <!-- END BLOCK : edit-difficulty -->
+            <!-- END BLOCK : add-difficulty -->
         </select> 
         
         <select name="length">
-            <option value="0">Nav atzīmēts</option>
-            <!-- START BLOCK : edit-length -->
+            <!-- START BLOCK : add-length -->
             <option value="{length-id}"{selected}>{length-title}</option>
-            <!-- END BLOCK : edit-length -->
+            <!-- END BLOCK : add-length -->
         </select>  
         
         <select name="storyline">
             <option value="0">Ārpus sērijas</option>
-            <!-- START BLOCK : edit-storyline -->
+            <!-- START BLOCK : add-story -->
             <option value="{story-id}"{selected}>{story-title}</option>
-            <!-- END BLOCK : edit-storyline -->
+            <!-- END BLOCK : add-story -->
         </select>  
         
         <select name="members_only">
@@ -145,15 +149,19 @@
             <option value="1"{selected-members}>Members only</option>
         </select>
         
-        <p><strong>Apraksts:</strong> (minikvestiem/f2p kvestiem)</p>
-        <textarea name="description">{rspage_description}</textarea>
+        <p class="field-title">
+            <strong>Apraksts:</strong> (f2p kvestiem)
+        </p>
+        <textarea name="description">{description}</textarea>
         
-        <p style="display:none"><strong>Datums, kad ieviests spēlē:</strong></p>
-        <p style="display:none">(formāts: dd/mm/yyyy)</p>
-        <input style="display:none" type="text" name="date" value="{rspage_date}"><br><br>   
-        
-        <input class="button" type="submit" value="Apstiprināt">
+        <p class="field-title">
+            <strong>Datums, kad ieviests spēlē:</strong>
+        </p>
+        <p class="field-example">(formāts: dd/mm/yyyy)</p>
+        <input type="text" name="date" value="{date}"><br><br>   
+
+        <input class="button" type="submit" name="submit" value="Pievienot">
         
     </fieldset>
 </form>
-<!-- END BLOCK : quest-edit -->
+<!-- START BLOCK : quest-form -->
