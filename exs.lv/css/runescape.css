@@ -13,7 +13,6 @@
     8.0 RuneScape faktu pārvaldība
     8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas
     8.2 rsmod - kvestu pārvaldība
-    8.3 rs-info sadaļu stili
  *
  *  9.0 RuneScape pamācību sadaļu stili
     9.1 RuneScape kvestu sēriju sadaļa
@@ -59,6 +58,9 @@ body {
 }
 .is-faded:hover {
     opacity:1
+}
+.required {
+    color:orangered
 }
 
 /* 2. Pārrakstītie core.css elementi */
@@ -742,19 +744,13 @@ table.facts-table .row-counter {
 .is-splitted {
     border-top:2px solid #ccc
 }
-.field-title {
-    padding-bottom:0
-}
-.field-example {
+.field-title, .field-example {
     padding-bottom:0
 }
 .list-form textarea {
     width:600px;
     min-height:100px;
     height:auto
-}
-.required {
-    color:orangered
 }
 
 /* 8.2 rsmod - kvestu pārvaldība */
@@ -850,13 +846,6 @@ table.quests-skill-table {
   .quest-input {
     width:160px;
   }
-
-/* 8.3 rs-info sadaļu stili */
-.info-form textarea {
-    width:600px;
-    min-height:100px;
-    height:auto
-}
 
 /* 9. RuneScape pamācību sadaļu stili */
 .content-title {
