@@ -28,7 +28,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
                 SELECT `id` FROM `pages` 
                 WHERE 
                     `strid` = '" . sanitize($strid) . "' AND 
-                    `category` IN(" . implode(',', $cat_minigames) . ")
+                    `category` IN(" . implode(',', $cat_activities) . ")
             ");
             if ($if_exists) {
                 $page_id = (int)$if_exists->id;
@@ -46,7 +46,14 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         $description = (isset($_POST['description'])) ? 
             input2db($_POST['description'], 1024) : '';        
         $members_only = (isset($_POST['members_only'])) ? 
-            (int)((bool)$_POST['members_only']) : 0;    
+            (int)((bool)$_POST['members_only']) : 0;
+
+        $cat = 0;
+        if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'all-minigames') {
+            $cat = $cat_minigames;
+        } else {
+            $cat = $cat_distractions;
+        }
         
         $insert = $db->query("
             INSERT INTO `rs_pages`
@@ -54,7 +61,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
                  description, created_by, created_at)
             VALUES(
                 $page_id,
-                ".(int)$cat_minigames.",
+                ".(int)$cat.",
                 '$title',
                 $members_only,
                 '$location',
@@ -92,7 +99,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             LEFT JOIN `pages` ON (
                 `rs_pages`.`page_id` = `pages`.`id` AND
                 `pages`.`lang` = 9 AND
-                `pages`.`category` = ".(int)$cat_minigames."
+                `pages`.`category` IN(" . implode(',', $cat_activities) . ")
             )
         WHERE 
             `rs_pages`.`id` = ".(int)$_GET['var2']." AND
@@ -116,7 +123,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
                     SELECT `id` FROM `pages` 
                     WHERE 
                         `strid` = '" . sanitize($entry->strid) . "' AND 
-                        `category` IN(" . implode(',', $cat_minigames) . ")
+                        `category` IN(" . implode(',', $cat_activities) . ")
                 ");
                 if ($if_exists) {
                     $entry->page_id = (int)$if_exists->id;

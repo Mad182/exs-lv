@@ -22,7 +22,8 @@ $sub_include = true;
 $submodules = array(
 	'all-quests'        => array('lists.php','lists.tpl'),
 	'all-miniquests'    => array('lists.php','lists.tpl'),
-	'all-minigames'     => array('lists.php','lists.tpl')
+	'all-minigames'     => array('lists.php','lists.tpl'),
+	'all-distractions'  => array('lists.php','lists.tpl')
 );
 
 // iekļauj lapā pareizos failus
@@ -46,10 +47,10 @@ if (isset($submodules[$category->textid])) {
 		include($php_filename);
 
 	} else {
-		set_flash('Kļūdaini norādīta adrese.');
+		set_flash('Kļūdaini norādīta adrese');
 		redirect();
 	}
 } else {
-	set_flash('Kļūdaini norādīta adrese.');
+	set_flash('Kļūdaini norādīta adrese');
 	redirect();
 }

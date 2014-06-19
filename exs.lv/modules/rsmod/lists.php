@@ -12,6 +12,7 @@
  *      - kvesti (p2p un f2p)
  *      - minikvesti
  *      - minispēles
+ *      - distractions & diversions
  *
  *  Cita veida pamācību sadaļās rāda īstos pievienotos rakstus.
  */
@@ -25,15 +26,22 @@ if ($_GET['viewcat'] === 'all-miniquests') {
     $opened_tab = 'miniquests';
 } else if ($_GET['viewcat'] === 'all-minigames') {
     $opened_tab = 'minigames';
+} else if ($_GET['viewcat'] === 'all-distractions') {
+    $opened_tab = 'distractions';
 }
 
 // cilnēm mainās rakstu kategorijas, kas jānorāda SQL pieprasījumam
 $tab_cats = '`pages`.`category` IN(99, 100) OR ' . 
             '`rs_pages`.`cat_id` IN(99, 100)';
 if ($_GET['viewcat'] === 'all-miniquests') {
-    $tab_cats = '`pages`.`category` = 193 OR `rs_pages`.`cat_id` = 193';
+    $tab_cats = '`pages`.`category` = '.(int)$cat_miniquests.
+        ' OR `rs_pages`.`cat_id` = '.(int)$cat_miniquests;
 } else if ($_GET['viewcat'] === 'all-minigames') {
-    $tab_cats = '`pages`.`category` = 160 OR `rs_pages`.`cat_id` = 160';
+    $tab_cats = '`pages`.`category` = '.(int)$cat_minigames.
+        ' OR `rs_pages`.`cat_id` = '.(int)$cat_minigames;
+} else if ($_GET['viewcat'] === 'all-distractions') {
+    $tab_cats = '`pages`.`category` = '.(int)$cat_distractions.
+        ' OR `rs_pages`.`cat_id` = '.(int)$cat_distractions;
 }
 
 
@@ -227,7 +235,9 @@ else {
         $php_filename = 'lists_miniquests.php';
     } else */if ($opened_tab === 'minigames') {
         $php_filename = 'lists_minigames.php';
-    }    
+    } else if ($opened_tab === 'distractions') {
+        $php_filename = 'lists_minigames.php';
+    }
     $php_filename = CORE_PATH.'/modules/'.$category->module.'/'.$php_filename;
     
     if (file_exists($php_filename)) {

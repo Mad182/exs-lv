@@ -83,11 +83,11 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         
         $members_only = (isset($_POST['members_only'])) ? 
             (int)((bool)$_POST['members_only']) : 0;
-        $category = 0;
+        $cat = 0;
         if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'all-miniquests') {
-            $category = $cat_miniquests;
+            $cat = $cat_miniquests;
         } else {
-            $category = ($members_only) ? $cat_p2p_quests : $cat_f2p_quests;
+            $cat = ($members_only) ? $cat_p2p_quests : $cat_f2p_quests;
         }
             
         $difficulty = 0;
@@ -116,7 +116,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
             VALUES(
                 $page_id,
                 $storyline,
-                ".(int)$category.",
+                ".(int)$cat.",
                 '$title',
                 $members_only,
                 $difficulty,

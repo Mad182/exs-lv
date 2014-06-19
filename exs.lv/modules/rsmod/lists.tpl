@@ -3,6 +3,7 @@
     <li><a class="{tab-quests}" href="/all-quests">Kvesti</a></li>
     <li><a class="{tab-miniquests}" href="/all-miniquests">Minikvesti</a></li>
     <li><a class="{tab-minigames}" href="/all-minigames">Minispēles</a></li> 
+    <li><a class="{tab-distractions}" href="/all-distractions">Distractions &amp; Diversions</a></li> 
 </ul>
 <!-- END BLOCK : list-tabs -->
 
