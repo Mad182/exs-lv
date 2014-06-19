@@ -33,6 +33,8 @@ $cat_minigames      = 160;
 $cat_distractions   = 792;
 $cat_activities     = array(160, 792);
 
+$cat_guilds = 791;
+
 
 // auto login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {

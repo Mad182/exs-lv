@@ -71,6 +71,7 @@
         19xx all-miniquests
         19xx all-minigames
         19xx all-distractions
+        19xx all-guilds
         19xx all-unlisted
         
     1916 info-quests

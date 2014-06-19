@@ -13,6 +13,7 @@
  *      - minikvesti
  *      - minispēles
  *      - distractions & diversions
+ *      - ģildes
  *
  *  Cita veida pamācību sadaļās rāda īstos pievienotos rakstus.
  */
@@ -28,20 +29,25 @@ if ($_GET['viewcat'] === 'all-miniquests') {
     $opened_tab = 'minigames';
 } else if ($_GET['viewcat'] === 'all-distractions') {
     $opened_tab = 'distractions';
+} else if ($_GET['viewcat'] === 'all-guilds') {
+    $opened_tab = 'guilds';
 }
 
 // cilnēm mainās rakstu kategorijas, kas jānorāda SQL pieprasījumam
 $tab_cats = '`pages`.`category` IN(99, 100) OR ' . 
             '`rs_pages`.`cat_id` IN(99, 100)';
-if ($_GET['viewcat'] === 'all-miniquests') {
+if ($opened_tab == 'miniquests') {
     $tab_cats = '`pages`.`category` = '.(int)$cat_miniquests.
         ' OR `rs_pages`.`cat_id` = '.(int)$cat_miniquests;
-} else if ($_GET['viewcat'] === 'all-minigames') {
+} else if ($opened_tab == 'minigames') {
     $tab_cats = '`pages`.`category` = '.(int)$cat_minigames.
         ' OR `rs_pages`.`cat_id` = '.(int)$cat_minigames;
-} else if ($_GET['viewcat'] === 'all-distractions') {
+} else if ($opened_tab == 'distractions') {
     $tab_cats = '`pages`.`category` = '.(int)$cat_distractions.
         ' OR `rs_pages`.`cat_id` = '.(int)$cat_distractions;
+} else if ($opened_tab == 'guilds') {
+    $tab_cats = '`pages`.`category` = '.(int)$cat_guilds.
+        ' OR `rs_pages`.`cat_id` = '.(int)$cat_guilds;
 }
 
 
@@ -54,15 +60,6 @@ $tpl->assign('tab-' . $opened_tab, 'active');
  *  Izdrukā visus cilnes ierakstus tabulas formā
  */
 if (!isset($_GET['var1'])) {
-
-    /*$levels = array(
-        1 => '<span style="color:#16B937;">Novice</span>', 
-        2 => '<span style="color:#FA620D;">Intermediate</span>', 
-        3 => '<span style="color:#0EDAE2;">Experienced</span>',
-        4 => '<span style="color:#2777aa;text-transform:uppercase;">Master</span>',
-        5 => '<span style="color:#e93546;text-transform:uppercase;">Grandmaster</span>',
-        6 => '<span style="color:#e453e2;text-transform:uppercase;">Special</span>'
-    );*/
     
     $tpl->newBlock('list-intro-text');
     $tpl->newBlock('list-button-new');
@@ -237,6 +234,8 @@ else {
         $php_filename = 'lists_minigames.php';
     } else if ($opened_tab === 'distractions') {
         $php_filename = 'lists_minigames.php';
+    } else if ($opened_tab === 'guilds') {
+        $php_filename = 'lists_guilds.php';
     }
     $php_filename = CORE_PATH.'/modules/'.$category->module.'/'.$php_filename;
     

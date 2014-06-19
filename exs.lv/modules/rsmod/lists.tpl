@@ -4,6 +4,7 @@
     <li><a class="{tab-miniquests}" href="/all-miniquests">Minikvesti</a></li>
     <li><a class="{tab-minigames}" href="/all-minigames">Minispēles</a></li> 
     <li><a class="{tab-distractions}" href="/all-distractions">Distractions &amp; Diversions</a></li> 
+    <li><a class="{tab-guilds}" href="/all-guilds">Ģildes</a></li> 
     <li><a class="{tab-unlisted}" href="/all-unlisted">Nepiesaistītie raksti</a></li> 
 </ul>
 <!-- END BLOCK : list-tabs -->
@@ -72,12 +73,12 @@
         <td><a href="/read/{strid}">{title}</a></td>
         <td><a href="/read/{strid}">{strid}</a></td>
         <td class="is-centered">{page_id}</td>
-        <td>&nbsp;</td>        
-        <td><a class="hide-page" href="/{category-url}/hide/{rspage_id}">
-            <img class="is-faded" src="/bildes/fugue-icons/bin.png" title="Paslēpt/parādīt pamācību sadaļās" alt="">
-        </a></td>
+        <td>&nbsp;</td>
         <td><a href="/{category-url}/edit/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/notebook--pencil.png" title="Labot informāciju" alt="">
+        </a></td>        
+        <td><a class="hide-page" href="/{category-url}/hide/{rspage_id}">
+            <img class="is-faded" src="/bildes/fugue-icons/bin.png" title="Paslēpt/parādīt pamācību sadaļās" alt="">
         </a></td>
         <td><a class="del-page" href="/{category-url}/delete/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/cross-button.png" title="Dzēst ierakstu" alt="">
@@ -90,11 +91,11 @@
         <td>{title}</td>
         <td class="is-centered" colspan="2"><em>Ierakstam nav piesaistīta raksta</em></td>
         <td>&nbsp;</td>
-        <td><a class="hide-page" href="/{category-url}/hide/{rspage_id}">
-            <img class="is-faded" src="/bildes/fugue-icons/bin.png" title="Paslēpt/parādīt pamācību sadaļās" alt="">
-        </a></td>
         <td><a href="/{category-url}/edit/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/notebook--pencil.png" title="Labot informāciju" alt="">
+        </a></td>
+        <td><a class="hide-page" href="/{category-url}/hide/{rspage_id}">
+            <img class="is-faded" src="/bildes/fugue-icons/bin.png" title="Paslēpt/parādīt pamācību sadaļās" alt="">
         </a></td>
         <td><a class="del-page" href="/{category-url}/delete/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/cross-button.png" title="Dzēst ierakstu" alt="">
@@ -191,7 +192,7 @@
         
     </fieldset>
 </form>
-<!-- START BLOCK : quest-form -->
+<!-- END BLOCK : quest-form -->
 
 
 <!-- START BLOCK : minigame-form -->
@@ -239,4 +240,46 @@
         
     </fieldset>
 </form>
-<!-- START BLOCK : minigame-form -->
+<!-- END BLOCK : minigame-form -->
+
+
+<!-- START BLOCK : guild-form -->
+<p class="list-text">
+    Ja ierakstam nebūs norādīta eksistējoša raksta adrese, tas tiks uztverts kā <em>placeholder</em>.<br>
+    <span class="required">*</span> - obligāti aizpildāmie lauki. Pārējais var tikt aizpildīts arī vēlāk.
+</p>
+<form class="form list-form" method="post">
+    <fieldset>
+        
+        <p class="field-title">
+            <strong><span class="required">*</span>&nbsp;Nosaukums:</strong>
+        </p>    
+        <p><input type="text" style="width:400px" name="title" value="{title}"></p>
+        
+        <p class="field-title">
+            <strong>Eksistējoša raksta adreses nosaukums:</strong>
+        </p>
+        <p class="field-example info">(piemērs: <em>champion-s-guild</em>)</p>
+        <p><input type="text" style="width:400px" name="strid" value="{strid}"></p> 
+               
+        <p class="field-title">
+            <strong>Sākumpunkta atrašanās vieta:</strong>
+        </p>    
+        <p><input type="text" style="width:400px" name="location" value="{location}"></p>
+        
+        <p class="field-title">
+            <strong>Prasības:</strong>
+        </p>
+        <p class="field-example">(formāts: tekstveida apraksts)</p>
+        <textarea name="extra">{extra}</textarea>
+        
+        <select name="members_only">
+            <option value="0"{selected-free}>Brīvi pieejama</option>
+            <option value="1"{selected-members}>Pieejama maksas pasaulēs</option>
+        </select><br>
+
+        <input class="button" type="submit" name="submit" value="Pievienot">
+        
+    </fieldset>
+</form>
+<!-- END BLOCK : guild-form -->

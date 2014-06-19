@@ -24,6 +24,7 @@ $submodules = array(
 	'all-miniquests'    => array('lists.php','lists.tpl'),
 	'all-minigames'     => array('lists.php','lists.tpl'),
 	'all-distractions'  => array('lists.php','lists.tpl'),
+	'all-guilds'        => array('lists.php','lists.tpl'),
     'all-unlisted'      => array('unlisted.php', 'lists.tpl')
 );
 
