@@ -4,6 +4,7 @@
     <li><a class="{tab-miniquests}" href="/all-miniquests">Minikvesti</a></li>
     <li><a class="{tab-minigames}" href="/all-minigames">Minispēles</a></li> 
     <li><a class="{tab-distractions}" href="/all-distractions">Distractions &amp; Diversions</a></li> 
+    <li><a class="{tab-unlisted}" href="/all-unlisted">Nepiesaistītie raksti</a></li> 
 </ul>
 <!-- END BLOCK : list-tabs -->
 
@@ -11,6 +12,11 @@
 <!-- START BLOCK : list-intro-text -->
 <p class="list-intro">Vairākās RuneScape pamācību sadaļās <em>(skatīt cilnes)</em> tiek parādīti tikai tie raksti, par kuriem šajā sadaļā ir izveidots ieraksts. Tas veidots ar mērķi, lai varētu pievienot arī lapā neesošu rakstu <em>placeholders</em>, pievienot rakstiem papildinformāciju (p2p only, sarežģītība u.tml.), kā arī ērti rakstu no pamācību sadaļas paslēpt, to nepārvietojot pa sadaļām. Visas šīs darbības veicamas šeit.<br><br>No tā izriet, ka raksts, kas tiek apstiprināts kādā no augstāk minētajām sadaļām, uzreiz pamācību sadaļā nebūs redzams, ja vien šeit nebūs ieraksta, kam raksts piesaistīts.</p>
 <!-- END BLOCK : list-intro-text -->
+
+
+<!-- START BLOCK : list-intro-unlisted -->
+<p class="list-text">Šajā sarakstā aplūkojami visi tie raksti, kas pievienoti kādai no galvenajām RuneScape pamācību sadaļām, bet nav piesaistīti nevienam ierakstam.</p>
+<!-- END BLOCK : list-intro-unlisted -->
 
 
 <!-- START BLOCK : list-button-new -->
@@ -25,6 +31,26 @@
     Nav neviena pievienota ieraksta.
 </p>
 <!-- END BLOCK : list-no-pages -->
+
+
+<!-- START BLOCK : list-all-unlisted -->
+<table class="rslist list-table">
+    <tr class="listhead">
+		<td style="width:20px">&nbsp;</td>
+		<td style="width:270px">Nosaukums</td>        
+		<td style="width:270px">Raksta adrese</td>
+		<td class="is-centered" style="width:90px">Raksta ID</td>
+	</tr>
+    <!-- START BLOCK : unlisted-page -->
+    <tr{splitted-row-style}{faded-row}>
+        <td class="is-centered">{splitted-by}</td>
+        <td><a href="/read/{strid}">{title}</a></td>
+        <td><a href="/read/{strid}">{strid}</a></td>
+        <td class="is-centered">{page_id}</td>
+    </tr>
+    <!-- END BLOCK : unlisted-page -->
+</table>  
+<!-- END BLOCK : list-all-unlisted -->
 
 
 <!-- START BLOCK : list-all-pages -->
