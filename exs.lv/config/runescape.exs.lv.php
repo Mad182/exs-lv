@@ -26,8 +26,9 @@ $rsbot_id = 33342;
 
 $cat_f2p_quests = 99;
 $cat_p2p_quests = 100;
+$cat_quests     = array(99, 100, 193);
 $cat_miniquests = 193;
-$cat_quests     = array(99, 100);
+$cat_minigames  = 160;
 
 
 // auto login visos subdomēnos

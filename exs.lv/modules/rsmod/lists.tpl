@@ -150,14 +150,14 @@
         </select>
         
         <p class="field-title">
-            <strong>Apraksts:</strong> (f2p kvestiem)
+            <strong>Apraksts:</strong> (f2p kvestiem/mini-kvestiem)
         </p>
         <textarea name="description">{description}</textarea>
         
         <p class="field-title">
             <strong>Datums, kad ieviests spēlē:</strong>
         </p>
-        <p class="field-example">(formāts: dd/mm/yyyy)</p>
+        <p class="field-example">(formāts: dd/mm/gggg)</p>
         <input type="text" name="date" value="{date}"><br><br>   
 
         <input class="button" type="submit" name="submit" value="Pievienot">

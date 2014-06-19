@@ -1,6 +1,6 @@
 <?php
 /**
- *  Ar kvestiem saistītu ierakstu pievienošana un rediģēšana
+ *  Ar [mini-]kvestiem saistītu ierakstu pievienošana un rediģēšana
  *
  *  Tiek iekļauts lists.php failā
  */
@@ -76,14 +76,19 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         $description = (isset($_POST['description'])) ? 
             input2db($_POST['description'], 1024) : '';
         $date = '01/01/2001';
-        if (isset($_POST['date'])) {
-            $date = str_replace('/', '-', $_POST['date']);
+        if (isset($_POST['date']) && !empty($_POST['date'])) {
+            $date = str_replace('/', '-', trim($_POST['date']));
             $date = date('d/m/Y', strtotime($date));
         }
         
         $members_only = (isset($_POST['members_only'])) ? 
             (int)((bool)$_POST['members_only']) : 0;
-        $ph_cat = ($members_only) ? $cat_p2p_quests : $cat_f2p_quests;
+        $category = 0;
+        if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'all-miniquests') {
+            $category = $cat_miniquests;
+        } else {
+            $category = ($members_only) ? $cat_p2p_quests : $cat_f2p_quests;
+        }
             
         $difficulty = 0;
         if (isset($_POST['difficulty']) && 
@@ -105,13 +110,13 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         
         $insert = $db->query("
             INSERT INTO `rs_pages`
-                (page_id, series_id, ph_cat, title, members_only, difficulty, 
+                (page_id, series_id, cat_id, title, members_only, difficulty, 
                  length, location, skills, quests, extra, description, date,
                  created_by, created_at)
             VALUES(
                 $page_id,
                 $storyline,
-                $ph_cat,
+                ".(int)$category.",
                 '$title',
                 $members_only,
                 $difficulty,
@@ -121,7 +126,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
                 '$quests',
                 '$extra',
                 '$description',
-                '$date',
+                '".sanitize($date)."',
                 '".(int)$auth->id."',
                 '".time()."'
             )
@@ -234,15 +239,14 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             input2db($_POST['extra'], 1024) : '';
         $entry->description = (isset($_POST['description'])) ? 
             input2db($_POST['description'], 1024) : '';
-        if (isset($_POST['date'])) {
-            $entry->date = str_replace('/', '-', $_POST['date']);
+        $entry->date = '01/01/2001';
+        if (isset($_POST['date']) && !empty($_POST['date'])) {
+            $entry->date = str_replace('/', '-', trim($_POST['date']));
             $entry->date = date('d/m/Y', strtotime($entry->date));
         }
 
         $entry->members_only = (isset($_POST['members_only'])) ? 
             (bool)$_POST['members_only'] : false;
-        $entry->ph_cat = ($entry->members_only) ? 
-            $cat_p2p_quests : $cat_f2p_quests;
 
         $entry->difficulty = 0;
         if (isset($_POST['difficulty']) && 
@@ -266,7 +270,6 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             UPDATE `rs_pages` SET
                 `page_id`       = ".$entry->page_id.",
                 `series_id`     = ".$entry->series_id.",
-                `ph_cat`        = ".$entry->ph_cat.",
                 `title`         = '".$entry->title."',
                 `members_only`  = ".(int)$entry->members_only.",
                 `difficulty`    = ".$entry->difficulty.",
@@ -276,7 +279,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
                 `quests`        = '".$entry->quests."',
                 `extra`         = '".$entry->extra."',
                 `description`   = '".$entry->description."',
-                `date`          = '".$entry->date."',
+                `date`          = '".sanitize($entry->date)."',
                 `updated_by`    = ".(int)$auth->id.",
                 `updated_at`    = '".time()."'
             WHERE 

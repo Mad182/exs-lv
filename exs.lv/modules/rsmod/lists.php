@@ -29,11 +29,11 @@ if ($_GET['viewcat'] === 'all-miniquests') {
 
 // cilnēm mainās rakstu kategorijas, kas jānorāda SQL pieprasījumam
 $tab_cats = '`pages`.`category` IN(99, 100) OR ' . 
-            '`rs_pages`.`ph_cat` IN(99, 100)';
+            '`rs_pages`.`cat_id` IN(99, 100)';
 if ($_GET['viewcat'] === 'all-miniquests') {
-    $tab_cats = '`pages`.`category` = 193 OR `rs_pages`.`ph_cat` = 193';
+    $tab_cats = '`pages`.`category` = 193 OR `rs_pages`.`cat_id` = 193';
 } else if ($_GET['viewcat'] === 'all-minigames') {
-    $tab_cats = '`pages`.`category` = 160 OR `rs_pages`.`ph_cat` = 160';
+    $tab_cats = '`pages`.`category` = 160 OR `rs_pages`.`cat_id` = 160';
 }
 
 
@@ -223,9 +223,9 @@ else {
 
     $php_filename = 'lists_quests.php';
     
-    if ($opened_tab === 'miniquests') {
+    /*if ($opened_tab === 'miniquests') {
         $php_filename = 'lists_miniquests.php';
-    } else if ($opened_tab === 'minigames') {
+    } else */if ($opened_tab === 'minigames') {
         $php_filename = 'lists_minigames.php';
     }    
     $php_filename = CORE_PATH.'/modules/'.$category->module.'/'.$php_filename;
