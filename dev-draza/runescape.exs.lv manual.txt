@@ -63,10 +63,15 @@
         661 rs 			(module = list)				- foruma vienīgā sadaļa
 
         
-    // runescpape pamācību sadaļu administrēšanas apakšsadaļas
+    // runescape pamācību sadaļu administrēšanas apakšsadaļas
     765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
         1875 series         - kvestu sērija un kvestiem nepieciešamo prasmju līmeņu pārvaldība
         1877 rsph           - šobrīd neizmantota
+        19xx all-quests
+        19xx all-miniquests
+        19xx all-minigames
+        19xx all-distractions
+        19xx all-unlisted
         
     1916 info-quests
     1917 info-distractions
@@ -166,11 +171,7 @@
         
     functions.core.php  
         get_latest_posts() - ->show_rs
-        get_latest_mbs() - ->show_rs
-        
-    
-    
-    
+        get_latest_mbs() - ->show_rs  
     
     
 // runescape apakšprojekta satura moderatoriem pieejamās iespējas:
