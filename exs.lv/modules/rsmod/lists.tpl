@@ -145,8 +145,8 @@
         </select>  
         
         <select name="members_only">
-            <option value="0"{selected-free}>Free</option>
-            <option value="1"{selected-members}>Members only</option>
+            <option value="0"{selected-free}>Brīvi pieejams</option>
+            <option value="1"{selected-members}>Pieejams maksas pasaulēs</option>
         </select>
         
         <p class="field-title">
@@ -165,3 +165,51 @@
     </fieldset>
 </form>
 <!-- START BLOCK : quest-form -->
+
+
+<!-- START BLOCK : minigame-form -->
+<p class="list-text">
+    - Vairāki no aizpildāmajiem laukiem šobrīd netiek izmantoti, bet var noderēt nākotnē, tāpēc ieteicams aizpildīt visu.<br>
+    - Ja ierakstam nebūs norādīta eksistējoša raksta adrese, tas tiks uztverts kā <em>placeholder</em>.<br>
+    <span class="required">*</span> - obligāti aizpildāmie lauki. Pārējais var tikt aizpildīts arī vēlāk.
+</p>
+<form class="form list-form" method="post">
+    <fieldset>
+        
+        <p class="field-title">
+            <strong><span class="required">*</span>&nbsp;Nosaukums:</strong>
+        </p>    
+        <p><input type="text" style="width:400px" name="title" value="{title}"></p>
+        
+        <p class="field-title">
+            <strong>Eksistējoša raksta adreses nosaukums:</strong>
+        </p>
+        <p class="field-example info">(piemērs: <em>lava-flow-mine</em>)</p>
+        <p><input type="text" style="width:400px" name="strid" value="{strid}"></p> 
+               
+        <p class="field-title">
+            <strong>Sākumpunkta atrašanās vieta:</strong>
+        </p>    
+        <p><input type="text" style="width:400px" name="location" value="{location}"></p>
+        
+        <p class="field-title">
+            <strong>Prasības:</strong>
+        </p>
+        <p class="field-example">(formāts: tekstveida apraksts)</p>
+        <textarea name="extra">{extra}</textarea>
+        
+        <select name="members_only">
+            <option value="0"{selected-free}>Brīvi pieejama</option>
+            <option value="1"{selected-members}>Pieejama maksas pasaulēs</option>
+        </select>
+        
+        <p class="field-title">
+            <strong>Īss apraksts:</strong>
+        </p>
+        <textarea name="description">{description}</textarea><br>
+
+        <input class="button" type="submit" name="submit" value="Pievienot">
+        
+    </fieldset>
+</form>
+<!-- START BLOCK : minigame-form -->
