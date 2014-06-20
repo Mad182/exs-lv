@@ -61,38 +61,50 @@
 </form>
 <!-- END BLOCK : series-form -->
 
-<div class="clearfix"></div>
 
-<!-- START BLOCK : quests-skills -->
-<h1 class="rs-content-title" style="margin-top:30px">Skills needed to complete all quests</h1>
+<!-- START BLOCK : skill-requirements -->
 
-<form class="form" action="/series/skills" method="post">
-    <!-- START BLOCK : skills-column -->
-    <table class="quests-skill-table rslist">
-        <tr class="listhead">
-            <td>&nbsp;</td>
-            <td style="width:70px">Prasme</td>
-            <td style="width:70px;text-align:center">Līmenis</td>
-            <td style="width:160px;text-align:left">Kvests</td>
-        </tr>
-        <!-- START BLOCK : single-skill -->
-        <tr>
-            <td><img src="/bildes/fugue-icons/layer-mask.png" alt=""></td>
-            <td style="width:70px">{skill}</td>
-            <td style="width:50px;text-align:center">
-                <input class="level-input" type="text" name="level-{id}" value="{level}">
-            </td>
-            <td>
-                <input class="quest-input" type="text" name="quest-{id}" value="{page_title}">
-            </td>
-        </tr>
-        <!-- END BLOCK : single-skill -->
-    </table>
-    <!-- END BLOCK : skills-column -->
-    <div class="clearfix"></div>
-    <input type="submit" name="submit" class="button primary" value="Veikt izmaiņas">
-</form>
-<!-- END BLOCK : quests-skills -->
+    <!-- START BLOCK : no-skills-added -->
+    <p class="simple-note">Neizdevās atlasīt prasmju sarakstu.</p>
+    <!-- END BLOCK : no-skills-added -->
+
+    <!-- START BLOCK : skills-notes -->
+    <p class="simple-note">
+        Saraksts paredzēts, lai katrai prasmei varētu norādīt augstāko līmeni, kāds nepieciešams kādam no kvestiem.<br><br>
+        - Ja lapā eksistē raksts par kvestu, laukā norādāms raksta adreses nosaukums (<a href="/all-quests">atrodams pamācību sarakstos</a>), savukārt, ja raksta nav, laukā vienkārši jāievada kvesta nosaukums.<br>
+        - Ievades lauki ar <span style="color:#fb7d89">sarkanu rāmi</span> apzīmē to, ka raksts ar tādu adresi nav atrasts.
+    </p>
+    <!-- END BLOCK : skills-notes -->
+
+    <!-- START BLOCK : skills-form -->
+    <form class="form" action="/{category-url}" method="post">
+        <!-- START BLOCK : skills-column -->
+        <table class="rslist skill-reqs">
+            <tr class="listhead">
+                <td>&nbsp;</td>
+                <td style="width:70px">Prasme</td>
+                <td class="is-centered" style="width:70px">Līmenis</td>
+                <td class="is-left" style="width:160px">Kvests</td>
+            </tr>
+            <!-- START BLOCK : single-skill -->
+            <tr{special}>
+                <td><img src="/bildes/fugue-icons/control-stop-square-small.png" title="{title} prasība" alt=""></td>
+                <td style="width:70px">{title}</td>
+                <td class="is-centered" style="width:50px">
+                    <input class="level-input" type="text" name="level-{id}" value="{level}">
+                </td>
+                <td>
+                    <input class="quest-input" type="text" name="quest-{id}" value="{page_title}">
+                </td>
+            </tr>
+            <!-- END BLOCK : single-skill -->
+        </table>
+        <!-- END BLOCK : skills-column -->
+        <div class="clearfix"></div>
+        <input type="submit" name="submit" class="button" value="Veikt izmaiņas">
+    </form>
+    <!-- END BLOCK : skills-form -->
+<!-- END BLOCK : skill-requirements -->
 
 
 <!-- START BLOCK : rsmod-placeholders -->

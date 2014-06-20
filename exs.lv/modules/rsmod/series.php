@@ -1,18 +1,12 @@
 <?php
 
 /**
- * 	RuneScape questu sēriju pārvaldība.
+ * 	RuneScape kvestu sēriju pārvaldība
  *
- *  Sēriju izmaiņas, kvestu piesaiste, to secība;
- *  nepieciešamo prasmju uzskaite.
- *
- * 	Moduļa adrese: runescape.exs.lv/series
+ *  Sēriju izmaiņas, kvestu piesaiste, to secība utt.
  */
 
-// mainīgais definēts parent failā, kas šo iekļauj (rsmod.php)
-if ( !isset($sub_include) ) {
-	die('No hacking, pls.');
-}
+!isset($sub_include) and die('No hacking, pls.');
 
 
 /**
@@ -410,52 +404,4 @@ else {
 			$counter++;
 		}
 	}
-    
-    
-    
-    
-    /**
-	 *  izdrukās kvestiem nepieciešamās prasmes un rediģēšanas formu
-	 */
-    $skills = $db->get_results("SELECT * FROM `rs_qskills` ORDER BY `skill` ASC");
-    
-    // info atjaunošana
-    if ($skills && isset($_GET['var1']) && $_GET['var1'] == 'skills' && isset($_POST['submit'])) {
-        
-        foreach ($skills as $skill) {
-        
-            if (isset($_POST['level-'.$skill->id]) && isset($_POST['quest-'.$skill->id])) {
-                $db->query("
-                    UPDATE `rs_qskills` 
-                    SET 
-                        `level` = ".(int)$_POST['level-'.$skill->id].", 
-                        `page_title` = '".sanitize($_POST['quest-'.$skill->id])."'
-                    WHERE `id` = ".(int)$skill->id."
-                    LIMIT 1
-                ");
-            }
-        }
-        set_flash('Informācija atjaunināta!');
-        redirect('/'.$_GET['viewcat']);
-    } 
-
-    // info izdrukāšana tabulas veidā
-    if ($skills) {
-    
-        $tpl->newBlock('quests-skills');
-        $tpl->newBlock('skills-column');
-        
-        $counter = 0;
-        $split_by = floor(count($skills) / 2);
-        
-        foreach ($skills as $data) {
-        
-            $tpl->newBlock('single-skill');
-            $tpl->assignAll($data);
-            
-            if (++$counter == $split_by) {
-                $tpl->newBlock('skills-column');
-            }
-        }
-    }
 }

@@ -13,6 +13,7 @@
     8.0 RuneScape faktu pārvaldība
     8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas
     8.2 rsmod - kvestu pārvaldība
+    8.3 rsmod - prasmju prasības
  *
  *  9.0 RuneScape pamācību sadaļu stili
     9.1 RuneScape kvestu sēriju sadaļa
@@ -49,6 +50,9 @@ body {
 }
 .is-centered {
     text-align:center
+}
+.is-left {
+    text-align:left
 }
 .is-smaller {
     font-size:11px
@@ -715,7 +719,7 @@ table.facts-table .row-counter {
 }
 
 /* 8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas */
-.list-intro, .list-text {
+.list-intro, .list-text, .simple-note {
     background-color:#f4f5f7;
     margin:10px 3px;
     border:1px solid #e2e6ec;
@@ -726,7 +730,7 @@ table.facts-table .row-counter {
         padding:7px 12px 7px 45px;
         text-indent:10px
     }
-    .list-text {
+    .list-text, .simple-note {
         padding:7px 12px;
     }
 .list-no-pages {
@@ -823,29 +827,36 @@ table.facts-table .row-counter {
         position:absolute;
         right:3px
     }
-table.quests-skill-table {
+/* 8.3 rsmod - prasmju prasības */
+table.skill-reqs {
     float:left;
     width:47%;
     margin-left:10px;
     background:#fff
 }
-.quests-skill-table tr td {
+.skill-reqs tr td {
     font-size:11px
 }
-    .level-input, .quest-input {
+.level-input, .quest-input {
     border:1px solid #E4E4E4;
     height:20px;
     font-family:tahoma,verdana,arial;
     font-size:11px;
-    padding:3px 7px
-  }
-  .level-input {
+    padding:2px 7px
+}
+.level-input {
     width:25px;
     text-align:center
-  }
-  .quest-input {
-    width:160px;
-  }
+}
+.quest-input {
+    width:160px
+}
+.is-special-input td {
+    background:#e0f5fd
+}
+.is-not-set .quest-input {
+    border:1px solid #fcb7bd
+}
 
 /* 9. RuneScape pamācību sadaļu stili */
 .content-title {

@@ -25,8 +25,6 @@ $tpl->newBlock('list-intro-unlisted');
 $cats = array($cat_f2p_quests, $cat_p2p_quests, $cat_miniquests, 
               $cat_minigames, $cat_distractions, $cat_guilds);
 
-
-// atlasa cilnes ierakstus no `rs_pages` tabulas
 $found_pages = $db->get_results("
     SELECT
         `pages`.`id`     AS `id`,

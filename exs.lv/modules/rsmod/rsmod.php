@@ -25,7 +25,9 @@ $submodules = array(
 	'all-minigames'     => array('lists.php','lists.tpl'),
 	'all-distractions'  => array('lists.php','lists.tpl'),
 	'all-guilds'        => array('lists.php','lists.tpl'),
-    'all-unlisted'      => array('unlisted.php', 'lists.tpl')
+    'all-unlisted'      => array('unlisted.php', 'lists.tpl'),
+    'series'            => array('series.php', ''),
+    'skills'            => array('skills.php', '')
 );
 
 // iekļauj lapā pareizos failus
