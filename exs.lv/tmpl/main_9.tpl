@@ -113,10 +113,9 @@
 							<li><a href="/rsfacts">RuneScape fakti</a></li>
 							<li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
 							<!-- START BLOCK : quest-management-link -->
+                            <li><a href="/all-quests">Pamācību saraksti</a></li>
 							<li><a href="/series">Quests' series</a></li>
 							<li><a href="/atkritne">Dzēstie raksti</a></li>
-							<li><a href="/info-quests">Quests' info</a></li>
-							<li><a href="/info-distractions">Distractions' info</a></li>
 							<!-- END BLOCK : quest-management-link -->
 							<li>&nbsp;</li>
 						</ul>
