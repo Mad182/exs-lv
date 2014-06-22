@@ -6,13 +6,11 @@
  *     Eksperimentāls variants!
  *  ******************************
  *
- *  Funkciju nosaukumi:
- *      get_<..>    - atgriež vienu rindu
- *      fetch_<..>  - atgriež daudz rindu
- *      check_<..>  - pārbauda rindas/-u eksistenci
+ *  Ideja:
+
+        - funkcijas vienmēr atgriež vai nu pieprasījuma rezultātu, vai true|false
+        - funkcijas vienmēr validē ievades parametrus (pirms funkciju izsaukuma bez tā var pat iztikt)
  *
- *  - funkcijas vienmēr atgriež vai nu pieprasījuma rezultātu, vai true|false
- *  - funkcijas vienmēr validē ievades parametrus (pirms funkciju izsaukuma bez tā var pat iztikt)
  */
 
 class Model_rsmod extends Models {
@@ -56,8 +54,6 @@ class Model_rsmod extends Models {
 
     /**
      *  Atlasa visus kvestus
-     *
-     *  Ar kvestiem saprotami arī minikvesti un placeholders.
      */
     public function fetch_quests($series_id = 0) {
         
@@ -92,8 +88,6 @@ class Model_rsmod extends Models {
     
     /**
      *  Atlasa norādītajā sērijā ietilpstošos kvestus
-     *
-     *  Ar kvestiem saprotami arī minikvesti un placeholders.
      */
     public function fetch_series_quests($series_id = 0) {
     
@@ -217,8 +211,6 @@ class Model_rsmod extends Models {
     
     /**
      *  Piesaista sērijai kvestu
-     *
-     *  @param int $row_id  
      */
     public function set_series_quest($series_id = 0, $quest_id = 0, $row_id = 0) {
     

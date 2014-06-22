@@ -4,6 +4,9 @@
  *
  *  Visi pārējie kontrolleri šo atvasina.
  *  Globālie mainīgie, kas nepieciešami kontrolleros, definējami tikai šeit.
+ *
+ *  Specifiskus mainīgos var definēt moduļa kontrollera konstruktorā,
+ *  no kura tad jāizsauc parent klases konstruktors.
  */
 
 class Controllers {

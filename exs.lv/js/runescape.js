@@ -17,7 +17,9 @@ function fancyContent(url) {
 
 $(document).ready(function () {
     
-    /* atjauno runescape random faktu */    
+    /**
+     *  RuneScape random fakta atjaunotājs
+     */
     var $fact_box = $('.facts-box');
     $('.fetch-new-fact').live('click', function(e) {
         
@@ -31,7 +33,9 @@ $(document).ready(function () {
         e.preventDefault();
     });
     
-    /* runescape augšējās navigācijas pielīmēšana */
+    /**
+     *  Pielīmēs RuneScape projekta augšējo navigāciju
+     */
     jQuery(function($) {
     
         var $topmenu    = $('#top-menu');
@@ -52,7 +56,9 @@ $(document).ready(function () {
         fixDiv();
     });
     
-    /* prasmju sadaļas pārvietošanās pa lapām */
+    /**
+     *  Prasmju sadaļas pārvietošanās pa lapām
+     */
     $('a.skill-pager').live('click', function() {
         var elem = $(this).parent().parent();
         elem.fadeTo(250, 0.5);
@@ -62,22 +68,27 @@ $(document).ready(function () {
         return false;
     });    
     
-
-    /* parāda sērijai piesaistītos kvestus */
+    /**
+     *  Parāda sērijai piesaistītos kvestus
+     */
     $('.series-list').on('click', '.related-quests', function(e) {
         e.preventDefault();
         fancyContent($(this).attr('href') + '?_=1');
     });
     
-    /* parāda izvēlni ar visiem piesaistāmajiem kvestiem */
+    /**
+     *  Parāda izvēlni ar visiem piesaistāmajiem kvestiem
+     */
     $('body').on('click', '.change-list', function(e) {     
         e.preventDefault();
         parent.$.fancybox.close();
         fancyContent($(this).attr('href') + '?_=1');
     });
     
-    /* atjauno sērijas kvestu secību */
-    $('body').on('submit', '#quest-order', function(e) {
+    /**
+     *  Atjauno sērijas kvestu secību
+     */
+    $('#content').on('submit', '#quest-order', function(e) {
         e.preventDefault();
 
         $form = $(this);
@@ -100,8 +111,10 @@ $(document).ready(function () {
 		});
     });
     
-    /* pievieno/dzēš sērijai kvestu */
-    $('body').on('click', '.set-quest', function(e) {    
+    /**
+     *  Pievieno/dzēš sērijai piesaistītu kvestu
+     */
+    $('#content').on('click', '.set-quest', function(e) {    
         e.preventDefault();
         
         $a_clicked = $(this);
@@ -121,7 +134,8 @@ $(document).ready(function () {
                     return;
                 }                    
                 if (response.type == 'del') {
-                    $li_parent.removeClass('mark-removed').removeClass('mark-neutral');
+                    $li_parent.removeClass('mark-removed');
+                    $li_parent.removeClass('mark-neutral');
                     $li_parent.addClass('mark-added');
                     $('#series-' + response.series_id + ' .no-quests').remove();
                 } else {
@@ -133,7 +147,9 @@ $(document).ready(function () {
         });
     });
     
-    /* dzēš rs_page ierakstu */
+    /**
+     * Dzēš ierakstu par RuneScape pamācību
+     */
     $('.del-page').live('click', function(e) {
 
         e.preventDefault();
@@ -152,7 +168,9 @@ $(document).ready(function () {
         }
     });
     
-    /* slēpj/parāda rs_page ierakstu */
+    /**
+     * Slēpj/parāda ierakstu par RuneScape pamācību
+     */
     $('.hide-page').live('click', function(e) {
 
         $elem = $(this);
@@ -170,6 +188,5 @@ $(document).ready(function () {
         });
         
         e.preventDefault();
-    });
-    
+    });    
 });

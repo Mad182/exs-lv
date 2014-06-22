@@ -5,6 +5,9 @@
  *  Visi pārējie modeļi šo atvasina.
  *  Globālie mainīgie, kas nepieciešami modeļos, definējami tikai šeit,
  *  ja vien tie nav pārāk specifiski konkrētajam modelim.
+ *
+ *  Specifiskus mainīgos var definēt moduļa modeļa konstruktorā,
+ *  no kura tad jāizsauc parent klases konstruktors.
  */
 
 class Models {
