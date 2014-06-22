@@ -1,65 +1,126 @@
 <!-- INCLUDE BLOCK : sub-template -->
 
-<!-- START BLOCK : series-form -->
-<h1 class="rs-content-title">Quest storylines' management</h1>
 
-<form class="form" action="/series/update" method="post">
-	<!-- START BLOCK : series-column -->
-	<table class="rslist col-list" style="background:#fff">
-    <tr class="listhead">
-			<td style="width:20px"></td>
-			<td style="width:230px">Nosaukums</td>
-			<td style="width:70px;text-align:center">Secība</td>
+<!-- START BLOCK : all-series-block -->
+
+    <!-- START BLOCK : no-series-found -->
+    <p class="simple-note">Neizdevās atlasīt informāciju par kvestu sērijām.</p>
+    <!-- END BLOCK : no-series-found -->
+
+    <!-- START BLOCK : series-notes -->
+    <p class="simple-note">
+        Nospiežot uz bultiņas pie katras sērijas, var aplūkot sarakstu ar sērijai piesaistītajiem kvestiem, kā arī sarakstu rediģēt.
+    </p>
+    <!-- END BLOCK : series-notes -->
+
+    <!-- START BLOCK : series-form -->
+    <form class="form" action="/{category-url}/update" method="post">
+
+        <!-- START BLOCK : series-column -->
+        <table class="rslist series-list">
+        <tr class="listhead">
+            <td style="width:5px"></td>
+            <td style="width:230px">Nosaukums</td>
+            <td class="is-centered" style="width:70px">Secība</td>
             <td>&nbsp;</td>
-    </tr>
-    <!-- START BLOCK : single-series -->
-    <tr>
-			<td><img src="/bildes/fugue-icons/layer-mask.png" alt=""></td>
-			<td><input class="transp-input" style="width:220px" name="title_{class_id}" value="{class_title}"></td>
-			<td class="center">
-				<select name="order_{class_id}">
-					<!-- START BLOCK : selection-option -->
-					<option value="{ordered}"{selected}>{ordered}</option>
-					<!-- END BLOCK : selection-option -->
-				</select>
-			</td>
-            <td><img class="show-related-quests" src="/bildes/fugue-icons/arrow-curve-180-double.png" alt="related quests"></td>
-    </tr>
-    <tr id="series-{class_id}" class="series-hidden">
-        <td colspan="4">
+        </tr>
+        <!-- START BLOCK : series-row -->
+        <tr>
+            <td>&nbsp;</td>
+            <td><input class="series-input" name="title_{id}" value="{title}"></td>
+            <td class="is-centered">
+                <select name="order_{id}">
+                    <!-- START BLOCK : selection-option -->
+                    <option value="{ordered_by}"{selected}>{ordered_by}</option>
+                    <!-- END BLOCK : selection-option -->
+                </select>
+            </td>
+            <td>
+                <a class="related-quests" href="/{category-url}/getlist/{id}">
+                    <img class="is-pointer" src="/bildes/fugue-icons/navigation-270-button.png" title="Skatīt sērijas kvestus" alt="">
+                </a>
+            </td>
+        </tr>
+        <!-- END BLOCK : series-row -->
+        </table>
+        <!-- END BLOCK : series-column -->
         
-            <form action="/series/change-order/{class_id}" method="post">
-            <ul class="related-quests">
-            <!-- START BLOCK : related-quests -->
-                <!-- START BLOCK : related-quest -->
+        <div class="clearfix"></div>
+        <input class="button primary" type="submit" name="submit" value="Apstiprināt izmaiņas">
+    </form>
+    <!-- END BLOCK : series-form -->
+<!-- END BLOCK : all-series-block -->
+
+
+<!-- START BLOCK : series-quests-block -->
+<div style="width:500px">
+    <p class="simple-note">
+        <strong>Sērijas kvestu secība</strong>
+        <a class="change-list" style="float:right" href="/{category-url}/list/{series-id}">Veikt izmaiņas sarakstā</a>
+    </p>
+    <div style="padding:0 10px 10px">
+        <form id="quest-order" action="/{category-url}/order/{series-id}" method="post">
+            <input type="hidden" name="json_check" value="1">
+            
+            <!-- START BLOCK : quest-list -->
+            <ul class="series-quests">
+                <!-- START BLOCK : series-quest -->
                 <li>
-                    <select name="related-{rspages_id}">
+                    <a href="/read/{strid}">{title}</a>
+                    <select name="order-{id}">
                     <!-- START BLOCK : option-param -->
                         <option value="{value}"{selected}>{value}</option>
                     <!-- END BLOCK : option-param -->
                     </select>
-                    <a id="quest-{rspages_id}" href="/read/{pages_strid}">{pages_title}</a>
                 </li>
-                <!-- END BLOCK : related-quest -->
-            <!-- END BLOCK : related-quests -->            
+                <!-- END BLOCK : series-quest -->        
             </ul>
-                <input type="submit" class="button primary" name="submit" value="Atjaunināt secību">
-            </form>
+            <!-- END BLOCK : quest-list -->
             
-            <!-- START BLOCK : no-related-quests -->
-            <p style="margin-left:20px">Nav piesaistītu pamācību!</p>
-            <!-- END BLOCK : no-related-quests -->
+            <!-- START BLOCK : no-series-quests -->
+            <p class="no-quests" style="margin-left:20px">Sērijā nav neviena kvesta.</p>
+            <!-- END BLOCK : no-series-quests -->
             
-            <a class="open-quest-list button danger" href="/series/list-quests/{class_id}">Rediģēt sarakstu</a>
-        </td>
-    </tr>
-    <!-- END BLOCK : single-series -->
-	</table>
-	<!-- END BLOCK : series-column -->
-    <div class="clearfix"></div>
-  <input class="button primary" type="submit" name="submit" value="Mainīt secību">
-</form>
-<!-- END BLOCK : series-form -->
+            <!-- START BLOCK : submit-button -->
+            <input type="submit" class="button primary" name="submit" value="Atjaunot secību">
+            <p class="response"></p>
+            <!-- END BLOCK : submit-button -->
+        </form>
+    </div>
+</div>
+<!-- END BLOCK : series-quests-block -->
+
+
+<!-- START BLOCK : all-quests-block -->
+
+    <!-- START BLOCK : wrong-params -->
+    <p class="simple-note">Nepareizi norādīta sērija</p>
+    <!-- END BLOCK : wrong-params -->
+    
+    <!-- START BLOCK : series-not-found -->
+    <p class="simple-note">Neizdevās atlasīt sarakstu ar kvestiem</p>
+    <!-- END BLOCK : series-not-found -->
+    
+    <!-- START BLOCK : all-quests-list -->
+    <div class="fancy-list">
+        <p class="simple-note">Pievienojamie RuneScape kvesti</p>
+        <p style="color:#4A84B1;margin-left:12px">Sarakstā redzami arī placeholders.</p>
+        <ul>
+            <!-- START BLOCK : list-single-quest -->
+            <li class="{marker}">
+                <a class="set-quest" href="/series/{type}/{series-id}/{page-id}">{title}</a>
+            </li>
+            <!-- END BLOCK : list-single-quest -->
+        </ul>
+    </div>
+    <!-- END BLOCK : all-quests-list -->
+
+<!-- END BLOCK : all-quests-block -->
+
+
+<!-- START BLOCK : set-quest-block -->
+<p class="simple-note">SUCCESS story</p>
+<!-- END BLOCK : set-quest-block -->
 
 
 <!-- START BLOCK : skill-requirements -->

@@ -33,12 +33,12 @@ $submodules = array(
 // iekļauj lapā pareizos failus
 if (isset($submodules[$category->textid])) {
 
-    $php_filename = CORE_PATH.'/modules/'.$category->module.'/'
+    $php_filename = CORE_PATH.'/modules/'.$category->module.'/submodules/'
                              .$submodules[$category->textid][0];
 
     $tpl_filename = '';
     if ($submodules[$category->textid][1] !== '') {
-        $tpl_filename = CORE_PATH.'/modules/'.$category->module.'/'
+        $tpl_filename = CORE_PATH.'/modules/'.$category->module.'/submodules/'
                                  .$submodules[$category->textid][1];
     }
 

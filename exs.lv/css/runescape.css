@@ -66,6 +66,9 @@ body {
 .required {
     color:orangered
 }
+.is-pointer:hover {
+    cursor:pointer
+}
 
 /* 2. Pārrakstītie core.css elementi */
 #wrapper {
@@ -758,75 +761,86 @@ table.facts-table .row-counter {
 }
 
 /* 8.2 rsmod - kvestu pārvaldība */
-.show-related-quests:hover {
-    cursor:pointer
+.rslist.series-list {
+    background:#fff;
+    float:left;
+    margin-left:20px
 }
-.transp-input {
-  font-family:tahoma, verdana, arial;
-  font-size:11px;
-  border:2px solid #fff;
-  background:transparent;
-  padding:3px 5px
+.series-input {
+    border:1px solid #E4E4E4;
+    height:20px;
+    width:220px;
+    font-family:tahoma,verdana,arial;
+    font-size:11px;
+    padding:2px 7px
 }
-    .transp-input:hover {
-        border:2px solid #BAD2E9
+    .series-input:hover {
+        border:1px solid #BAD2E9
     }
-.series-hidden {
-    display:none
-}
-    .series-hidden input[type=submit] {
-        margin: 0 0 7px 20px;
-    }
-.related-quests {
+.series-quests {
     padding-left:0;
     font-size:11px;
-    margin:0
+    margin:10px
 }
-    .related-quests select {
-        margin:0 8px 0 0
+    .series-quests select {
+        margin-right:8px;
+        float:right;
+        position:relative;
+        bottom:6px
     }
-    .related-quests li {
+    .series-quests li {
         background:transparent;
         border-bottom:1px solid #eee;
-        padding:3px 20px
+        padding:3px 10px
     }
-.open-quest-list {
-    float: right;
-    margin-top: -30px;
+.list-all {
+    float:right;
+    margin-top:1px
 }
-.fancy-questlist {
+.no-quests {
+    font-size:12px
+}
+.response {
+    display:inline-block;
+    margin-left:7px;
+    font-weight:bold;
+    font-size:12px;
+    color:red
+}
+.fancy-list {
     width:750px;
     max-height:400px;
     font-size:11px;
     overflow-y:visible;
-    overflow-x:hidden;
-    margin:15px
+    overflow-x:hidden
 }
-    .fancy-questlist h2 {
-        margin-top:0
-    }
-    .fancy-questlist ul {
+    .fancy-list ul {
         padding-left:0;
         column-count:4;
         -moz-column-count:4; /* Firefox */
-        -webkit-column-count:4; /* Safari and Chrome */
+        -webkit-column-count:4 /* Safari and Chrome */
     }
-    .fancy-questlist ul li {
-        background: transparent;
-        border-bottom: 1px solid #E4F1F8;
-        padding: 3px;
+    .fancy-list ul li {
+        background:transparent;
+        border-bottom:1px solid #E4F1F8;
+        padding:0;
         position:relative
     }
-    .fancy-questlist .mark-added {
+    .fancy-list li a {
+        padding:2px 12px;
+        display:inline-block;
+        width:100%
+    }
+    .fancy-list .mark-added {
         background:#9CE597
     }
-    .fancy-questlist .mark-removed {
+    .fancy-list .mark-neutral {
+        background:rgb(250, 250, 253)
+    }
+    .fancy-list .mark-removed {
         background:rgb(250, 207, 214)
     }
-    .fancy-questlist .related-quest {
-        position:absolute;
-        right:3px
-    }
+
 /* 8.3 rsmod - prasmju prasības */
 table.skill-reqs {
     float:left;
@@ -873,7 +887,7 @@ table.skill-reqs {
   font-size:11px;
   margin:10px auto
 }
-.col-list {
+.rslist.col-list {
     float:left;
     margin-left:10px
 }

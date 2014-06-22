@@ -3,6 +3,50 @@
  *  RuneScape apakšprojektā izmantotās funkcijas
  */
 
+/**
+ *  Testēšanas nolūkiem, lai pārbaudītu Models (un ne tikai) rezultātus kā json
+ *  @see https://github.com/callumlocke/json-formatter
+ */
+function as_json($content) {
+    header('Content-Type: application/json');
+    
+    if (is_string($content) || is_integer($content)) {
+        $content = array($content);
+    }
+    
+    echo json_encode($content);
+    exit;
+}
+ 
+/**
+ *  Atgriež objektu ar template faila saturu
+ *
+ *  @param string $file     faila nosaukums
+ *  @param bool $add_path   vai pievienot pilno ceļu uz atvērto moduli
+ *  @return bool            "false", ja fails neeksistē
+ *  @return TemplatePower   template objekts
+ */
+function get_template($file = '', $add_path = true) {
+    global $category;
+    
+    if ($file == '') {
+        return false;
+    }
+
+    if ($add_path) {
+        $file = CORE_PATH.'/modules/'.$category->module.'/'.$file;
+    }
+    
+    if (!file_exists($file)) {
+        return false;
+    }
+
+    $tpl = new TemplatePower($file);
+    $tpl->prepare();
+    
+    return $tpl;
+}
+
 
 /**
  *  RuneScape.com RSS feed lasītājs
