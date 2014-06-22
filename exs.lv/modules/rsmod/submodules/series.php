@@ -200,7 +200,7 @@ class Controller_rsmod extends Controllers {
             $tpl->newBlock('wrong-params');
             return $tpl->getOutputContent();
         }        
-        $series = $this->model->check_series($series_id);
+        $series = $this->model->fetch_single_series($series_id);
         if (!$series) {
             $tpl->newBlock('wrong-params');
             return $tpl->getOutputContent();
@@ -213,6 +213,11 @@ class Controller_rsmod extends Controllers {
         }
         
         $tpl->newBlock('all-quests-list');
+        $tpl->assign(array(
+            'category-url' => $_GET['viewcat'],
+            'series-id' => $series->id,
+            'series-title' => $series->title
+        ));
         
         foreach ($get_quests as $quest) {
         

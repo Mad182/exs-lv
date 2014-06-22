@@ -75,6 +75,11 @@ $(document).ready(function () {
         e.preventDefault();
         fancyContent($(this).attr('href') + '?_=1');
     });
+    $('body').on('click', '.show-series-quests', function(e) {
+        e.preventDefault();
+        parent.$.fancybox.close();
+        fancyContent($(this).attr('href') + '?_=1');
+    });
     
     /**
      *  Parāda izvēlni ar visiem piesaistāmajiem kvestiem
@@ -88,7 +93,7 @@ $(document).ready(function () {
     /**
      *  Atjauno sērijas kvestu secību
      */
-    $('#content').on('submit', '#quest-order', function(e) {
+    $('body').on('submit', '#quest-order', function(e) {
         e.preventDefault();
 
         $form = $(this);
@@ -114,15 +119,11 @@ $(document).ready(function () {
     /**
      *  Pievieno/dzēš sērijai piesaistītu kvestu
      */
-    $('#content').on('click', '.set-quest', function(e) {    
+    $('body').on('click', '.set-quest', function(e) {    
         e.preventDefault();
         
         $a_clicked = $(this);
         $li_parent = $(this).parent();
-        
-        if (!confirm('Vai tiešām vēlies veikt šo darbību?')) {
-            return false;
-        }
         
         $.ajax({
             url: $(this).attr('href') + '?_=1',

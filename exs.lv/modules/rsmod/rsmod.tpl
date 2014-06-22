@@ -103,8 +103,11 @@
     
     <!-- START BLOCK : all-quests-list -->
     <div class="fancy-list">
-        <p class="simple-note">Pievienojamie RuneScape kvesti</p>
-        <p style="color:#4A84B1;margin-left:12px">Sarakstā redzami arī placeholders.</p>
+        <p class="simple-note">
+            <strong>{series-title} - pievienojamie kvesti</strong>
+            <a class="show-series-quests" style="float:right" href="/{category-url}/getlist/{series-id}">Mainīt sērijas kvestu secību</a>
+        </p>
+        <p style="color:#4A84B1;margin-left:12px">Sarakstā redzami arī minikvesti un placeholders.</p>
         <ul>
             <!-- START BLOCK : list-single-quest -->
             <li class="{marker}">

@@ -112,6 +112,29 @@ class Model_rsmod extends Models {
             WHERE
                 `rs_series_quests`.`deleted_by` = 0 AND
                 `rs_series_quests`.`series_id` = ".$series_id."
+            ORDER BY 
+                `rs_series_quests`.`ordered_by` ASC,
+                `rs_pages`.`title` ASC
+        ");
+        
+        return $query;
+    }
+    
+    
+    /**
+     *  Atgriež datus par norādīto sēriju
+     */
+    public function fetch_single_series($series_id = 0) {
+    
+        $series_id = (int)$series_id;
+        if ($series_id === 0) return false;
+        
+        $query = $this->db->get_row("
+            SELECT * FROM `rs_series` 
+            WHERE 
+                `id` = ".$series_id." AND
+                `category` = 'series'
+            LIMIT 0,1
         ");
         
         return $query;
