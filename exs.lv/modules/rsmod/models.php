@@ -6,11 +6,6 @@
  *     Eksperimentāls variants!
  *  ******************************
  *
- *  Ideja:
-
-        - funkcijas vienmēr atgriež vai nu pieprasījuma rezultātu, vai true|false
-        - funkcijas vienmēr validē ievades parametrus (pirms funkciju izsaukuma bez tā var pat iztikt)
- *
  */
 
 class Model_rsmod extends Models {
