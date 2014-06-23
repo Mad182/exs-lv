@@ -441,14 +441,22 @@ if (!$auth->ok) {
 						'pm-from-title' => htmlspecialchars($from->nick),
 						'pm-read' => $pm->is_read,
 					));
+
 					if (empty($pm->imap_uid)) {
 						$tpl->newBlock('pm-read-from');
+
+						if (!empty($from->user_deleted)) {
+							$nick = '<em>dzēsts</em>';
+						} else {
+							$nick = usercolor($from->nick, $from->level, false, $from->id);
+						}
+
 						$tpl->assign(array(
 							'pm-title' => $pm->title,
 							'pm-text' => add_smile($pm->text),
 							'pm-id' => $pm->id,
 							'pm-date' => substr($pm->date, 0, 16),
-							'pm-from-nick' => usercolor($from->nick, $from->level, false, $from->id),
+							'pm-from-nick' => $nick,
 							'pm-from-id' => $pm->from_uid,
 							'pm-from-avatar' => $from->avatar,
 							'pm-from-title' => htmlspecialchars($from->nick),
