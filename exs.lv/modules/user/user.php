@@ -14,11 +14,7 @@ $inprofile = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' 
 
 if ($inprofile) {
 
-	if ($auth->ok) {
-		set_action('<a href="/user/' . $inprofile->id . '">' . sanitize($inprofile->nick) . '</a> profilu');
-	}
-
-	$tpl->newBlock('profile-menu');
+	profile_menu($inprofile, 'profile', 'profils', 'profilu');
 
 	/**
 	 * 	Lietotāja bloķēšana
@@ -120,11 +116,6 @@ if ($inprofile) {
 			}
 		}
 
-		$tpl->assignGlobal(array(
-			'user-id' => $inprofile->id,
-			'user-nick' => htmlspecialchars($inprofile->nick),
-			'active-tab-profile' => 'active'
-		));
 		$page_title = 'Bloķēt lietotāju &quot;' . $inprofile->nick . '&quot;';
 	}
 
@@ -183,11 +174,7 @@ if ($inprofile) {
 			'user-vote_total' => $inprofile->vote_total,
 			'user-votes' => $voteval
 		));
-		$tpl->assignGlobal(array(
-			'user-id' => $inprofile->id,
-			'user-nick' => htmlspecialchars($inprofile->nick),
-			'active-tab-profile' => 'active'
-		));
+
 		if ($auth->ok && $auth->id == $inprofile->id) {
 			$tpl->assign(array(
 				'edit' => '<p>[<a href="/user/edit">labot profilu</a>]
@@ -521,8 +508,6 @@ if ($inprofile) {
 		if ($auth->ok && $auth->id == $inprofile->id) {
 			$tpl->assignGlobal('profile-sel', ' class="selected"');
 			$page_title = 'Tavs profils';
-		} else {
-			$page_title = $inprofile->nick . ' | Profils';
 		}
 	}
 } else {

@@ -101,12 +101,6 @@ foreach ($citys as $city) {
 	));
 }
 
-$tpl->assignGlobal(array(
-	'user-id' => $inprofile->id,
-	'user-nick' => htmlspecialchars($inprofile->nick),
-	'active-tab-profile' => 'active',
-	'profile-sel' => ' class="selected"'
-));
 $page_title = 'Tavs profils';
 
 $tpl->newBlock('tinymce-enabled');

@@ -4,10 +4,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 	include(CORE_PATH . '/includes/class.tags.php');
 
-	if ($auth->ok) {
-		set_action($inprofile->nick . ' galeriju');
-	}
-
 	//write comment
 	if (isset($_POST['comment-pid']) && !empty($_POST['commenttext']) && $auth->ok) {
 		$page_id = (int) $_POST['comment-pid'];
@@ -148,17 +144,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		}
 	}
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' galerija');
-
-	$tpl->newBlock('user-gallery');
-	$tpl->assignGlobal(array(
-		'user-id' => $inprofile->id,
-		'user-nick' => htmlspecialchars($inprofile->nick),
-		'active-tab-gallery' => 'active'
-	));
-
-	$page_title = $inprofile->nick . ' galerija';
+	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');
 
 	//add image form
 	if ($auth->ok && $auth->id == $inprofile->id) {

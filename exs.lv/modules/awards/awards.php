@@ -36,18 +36,8 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		$tpl->prepare();
 	}
 
-	if ($auth->ok) {
-		set_action($inprofile->nick . ' medaļas');
-	}
+	profile_menu($inprofile, 'awards', 'medaļas');
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' medaļas');
-	$page_title = $inprofile->nick . ' exs apbalvojumi';
-	$tpl->assignGlobal(array(
-		'user-id' => $inprofile->id,
-		'user-nick' => htmlspecialchars($inprofile->nick),
-		'active-tab-awards' => 'active'
-	));
 	$tpl->newBlock('user-awards');
 
 	$awards = get_awards($inprofile->id);

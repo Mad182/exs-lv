@@ -11,10 +11,6 @@ if (isset($_GET['var1'])) {
 
 if ($inprofile) {
 
-	if ($auth->ok) {
-		set_action($inprofile->nick . ' draugus');
-	}
-
 	include(CORE_PATH . '/includes/class.friend.php');
 	$friend = new Friend();
 
@@ -30,15 +26,7 @@ if ($inprofile) {
 		$friend->delete_friend($deny);
 	}
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' draugi');
-
-	$page_title = $inprofile->nick . ' | draugi';
-	$tpl->assignGlobal(array(
-		'user-id' => $inprofile->id,
-		'user-nick' => htmlspecialchars($inprofile->nick),
-		'active-tab-friends' => 'active'
-	));
+	profile_menu($inprofile, 'friends', 'draugi', 'draugus');
 
 	$tpl->newBlock('user-friends');
 

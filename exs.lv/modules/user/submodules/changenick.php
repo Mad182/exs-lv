@@ -41,12 +41,4 @@ $tpl->assign(array(
 	'user-credit' => $inprofile->credit
 ));
 
-
-$tpl->assignGlobal(array(
-	'user-id' => $inprofile->id,
-	'user-nick' => htmlspecialchars($inprofile->nick),
-	'active-tab-profile' => 'active',
-	'profile-sel' => ' class="selected"'
-));
-
 $page_title = 'Exs.lv nika maiņa';

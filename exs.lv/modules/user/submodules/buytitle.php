@@ -26,11 +26,4 @@ $tpl->assign(array(
 	'pay' => $pay
 ));
 
-$tpl->assignGlobal(array(
-	'user-id' => $inprofile->id,
-	'user-nick' => htmlspecialchars($inprofile->nick),
-	'active-tab-profile' => 'active',
-	'profile-sel' => ' class="selected"'
-));
-
 $page_title = 'Lietotāja nosaukuma maiņa';
