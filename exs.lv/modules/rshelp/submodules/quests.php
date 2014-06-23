@@ -28,35 +28,42 @@ if ($category->textid == 'kvestu-pamacibas') {
 
 	// pieprasījumā 99 un 100 ir attiecīgi kvestu kategoriju id    
     $series = $db->get_results("
-        SELECT            
+        SELECT
+            IFNULL(`pages`.`id`, 0) AS `pages_id`,
             `pages`.`category`              AS `pages_category`,
             `pages`.`title`                 AS `pages_title`,
             `pages`.`strid`                 AS `pages_strid`,
             
-            IFNULL(`rs_pages`.`id`, 0)      AS `rspages_id`,
-            `rs_pages`.`is_placeholder`     AS `rspages_placeholder`,
+            `rs_pages`.`id`      AS `rspages_id`,
+            `rs_pages`.`title` AS `title`,
             
-            IFNULL(`rs_classes`.`id`, 0)    AS `series_id`,
-            `rs_classes`.`title`            AS `series_title`,
-            `rs_classes`.`img`              AS `series_img`
-        FROM `pages`
-            LEFT JOIN `rs_pages` ON (
+            `rs_series`.`id`    AS `series_id`,
+            `rs_series`.`title`            AS `series_title`,
+            `rs_series`.`img`              AS `series_img`
+        FROM `rs_series_quests`
+            JOIN `rs_series` ON (
+                `rs_series_quests`.`series_id` = `rs_series`.`id` AND
+                `rs_series`.`category` = 'series'
+            )
+            JOIN `rs_pages` ON (
+                `rs_series_quests`.`rspages_id` = `rs_pages`.`id` AND
+                `rs_pages`.`deleted_by` = 0 AND
+                `rs_pages`.`is_hidden` = 0 AND
+                `rs_pages`.`cat_id` IN(".implode(',', $cat_quests).")
+            )
+            LEFT JOIN `pages` ON (
                 `pages`.`id`                = `rs_pages`.`page_id` AND
-                `rs_pages`.`deleted_by`     = 0 AND
-                `rs_pages`.`is_placeholder` = 0
+                `pages`.`lang` = 9 AND
+                `pages`.`category` IN(".implode(',', $cat_quests).")
             )
-            LEFT JOIN `rs_classes` ON (
-                `rs_pages`.`class_id`       = `rs_classes`.`id` AND
-                `rs_classes`.`category`     = 'series'
-            )
+            
         WHERE
-            `pages`.`category` IN(99, 100) AND
-            `pages`.`lang` = '".(int)$lang."'
-        ORDER BY
-            ABS(`rs_classes`.`ordered`) ASC,
-            ABS(`rs_classes`.`id`) ASC,
-            `rs_pages`.`ordered` ASC,
-            `pages`.`title` ASC
+            `rs_series_quests`.`deleted_by` = 0
+        ORDER BY            
+            ABS(`rs_series`.`ordered_by`) ASC,
+            ABS(`rs_series`.`id`) ASC,
+            `rs_series_quests`.`ordered_by` ASC,
+            `rs_pages`.`title` ASC
     ");
     
 	if ($series) {
@@ -97,8 +104,12 @@ if ($category->textid == 'kvestu-pamacibas') {
 			}*/
             
             //$quest_addr = '<a href="#">' . $single->pages_title . '</a>';
-            $quest_addr = '<a href="/read/' . $single->pages_strid . '" ';
-            $quest_addr .= 'title="' . $single->pages_title . '">' . $single->pages_title . '</a>';
+            $quest_addr = $single->title;
+            if ($single->pages_id != '0') {
+                $quest_addr = '<a href="/read/'.$single->pages_strid.'">'.$quest_addr.'</a>';
+            } else {
+                $quest_addr = '<a href="javascript:void(0);">'.$quest_addr.'</a>';
+            }
 
 			$tpl->newBlock('series-quest');
 			$tpl->assign('page_title', $quest_addr);
