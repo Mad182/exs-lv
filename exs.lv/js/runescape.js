@@ -107,6 +107,7 @@ $(document).ready(function () {
                 if (response.state == 'error') {
                     alert(response.message);
                 } else {
+                    $form.parent().parent().replaceWith(response.content);
                     $('.response').html('Secība atjaunota');
                     setTimeout(function() {
                         $('.response').html('');
