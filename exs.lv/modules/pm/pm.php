@@ -445,7 +445,7 @@ if (!$auth->ok) {
 					if (empty($pm->imap_uid)) {
 						$tpl->newBlock('pm-read-from');
 
-						if (!empty($from->user_deleted)) {
+						if (!empty($from->deleted)) {
 							$nick = '<em>dzēsts</em>';
 						} else {
 							$nick = usercolor($from->nick, $from->level, false, $from->id);
