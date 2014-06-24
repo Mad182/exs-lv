@@ -25,8 +25,7 @@ if ($category->textid == 'kvestu-pamacibas') {
 	// bildes adrese nav ielikta templeitā,
 	// jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
 	$tpl->assign('intro-image', '/bildes/runescape/intro/khazard.png');
-
-	// pieprasījumā 99 un 100 ir attiecīgi kvestu kategoriju id    
+   
     $series = $db->get_results("
         SELECT
             IFNULL(`pages`.`id`, 0) AS `pages_id`,
@@ -55,8 +54,7 @@ if ($category->textid == 'kvestu-pamacibas') {
                 `pages`.`id`                = `rs_pages`.`page_id` AND
                 `pages`.`lang` = 9 AND
                 `pages`.`category` IN(".implode(',', $cat_quests).")
-            )
-            
+            )            
         WHERE
             `rs_series_quests`.`deleted_by` = 0
         ORDER BY            
@@ -90,20 +88,6 @@ if ($category->textid == 'kvestu-pamacibas') {
 				}
 			}
 
-			// pievieno sērijai visus tai piesaistītos kvestus,
-			// ja tādi ir atrasti
-            
-			// eksistējošs raksts `pages` tabulā
-			/*if ($single->category_id != '0') {
-
-				$quest_addr = '<a href="/read/' . $single->page_strid . '" title="' . $single->page_title . '">' . $single->page_title . '</a>';
-			}
-			// raksts vēl neeksistē, bet tam ir izveidots placeholderis @ `rs_pages`
-			elseif ($single->is_placeholder == 1) {
-				$quest_addr = '<a href="#">' . $single->page_title . '</a>';
-			}*/
-            
-            //$quest_addr = '<a href="#">' . $single->pages_title . '</a>';
             $quest_addr = $single->title;
             if ($single->pages_id != '0') {
                 $quest_addr = '<a href="/read/'.$single->pages_strid.'">'.$quest_addr.'</a>';

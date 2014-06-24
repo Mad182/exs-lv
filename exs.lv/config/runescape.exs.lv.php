@@ -24,9 +24,11 @@ $polls_cat = 0;
 // bot user id
 $rsbot_id = 33342;
 
+// sadaļu id, kas tiek izmantoti /rsmod un /rshelp moduļa db pieprasījumos
 $cat_f2p_quests = 99;
 $cat_p2p_quests = 100;
 $cat_miniquests = 193;
+$cats_quests    = array(99, 100);
 $cat_quests     = array(99, 100, 193);
 
 $cat_minigames      = 160;

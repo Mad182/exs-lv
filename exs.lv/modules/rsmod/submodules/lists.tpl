@@ -163,18 +163,11 @@
             <!-- START BLOCK : add-length -->
             <option value="{length-id}"{selected}>{length-title}</option>
             <!-- END BLOCK : add-length -->
-        </select>  
-        
-        <select name="storyline">
-            <option value="0">Ārpus sērijas</option>
-            <!-- START BLOCK : add-story -->
-            <option value="{story-id}"{selected}>{story-title}</option>
-            <!-- END BLOCK : add-story -->
-        </select>  
+        </select> 
         
         <select name="members_only">
-            <option value="0"{selected-free}>Brīvi pieejams</option>
-            <option value="1"{selected-members}>Pieejams maksas pasaulēs</option>
+            <option value="0"{selected-free}>F2P</option>
+            <option value="1"{selected-members}>P2P</option>
         </select>
         
         <p class="field-title">
@@ -227,8 +220,8 @@
         <textarea name="extra">{extra}</textarea>
         
         <select name="members_only">
-            <option value="0"{selected-free}>Brīvi pieejama</option>
-            <option value="1"{selected-members}>Pieejama maksas pasaulēs</option>
+            <option value="0"{selected-free}>F2P</option>
+            <option value="1"{selected-members}>P2P</option>
         </select>
         
         <p class="field-title">
@@ -274,8 +267,8 @@
         <textarea name="extra">{extra}</textarea>
         
         <select name="members_only">
-            <option value="0"{selected-free}>Brīvi pieejama</option>
-            <option value="1"{selected-members}>Pieejama maksas pasaulēs</option>
+            <option value="0"{selected-free}>F2P</option>
+            <option value="1"{selected-members}>P2P</option>
         </select><br>
 
         <input class="button" type="submit" name="submit" value="Pievienot">

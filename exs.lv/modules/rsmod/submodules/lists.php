@@ -237,7 +237,7 @@ else {
     } else if ($opened_tab === 'guilds') {
         $php_filename = 'lists_guilds.php';
     }
-    $php_filename = CORE_PATH.'/modules/'.$category->module.'/'.$php_filename;
+    $php_filename = CORE_PATH.'/modules/'.$category->module.'/submodules/'.$php_filename;
     
     if (file_exists($php_filename)) {
         include($php_filename);

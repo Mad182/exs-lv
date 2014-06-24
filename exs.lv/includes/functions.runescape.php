@@ -384,31 +384,32 @@ function translate_category($string = '') {
  */
 function get_quests_stats($force = false) {
 	global $db, $m;
+    global $cats_quests, $cat_p2p_quests, $cat_f2p_quests, $cat_miniquests;
 
 	$stats = false;
 
 	if ($force || ($stats = $m->get('quests-stats')) === false) {
 
 		// izlaisto kvestu skaits noteiktos gados
-		$stats[14] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = '14' AND `category_id` IN (99,100) ");
-		$stats[13] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = '13' AND `category_id` IN (99,100) ");
-		$stats[12] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = '12' AND `category_id` IN (99,100) ");
-		$stats[11] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = '11' AND `category_id` IN (99,100) ");
-		$stats[10] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = '10' AND `category_id` IN (99,100) ");
-		$stats['older'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` NOT IN ('12','11','10','09','08') AND `category_id` IN (99,100) ");
+		$stats[14] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 14 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats[13] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 13 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats[12] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 12 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats[11] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 11 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats[10] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 10 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats['older'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` NOT IN (12,11,10,9,8) AND `cat_id` IN (".implode(',', $cats_quests).") ");
 
 		// kvestu tips
-		$stats['p2p'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `category_id` = 100 ");
-		$stats['f2p'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `category_id` = 99 ");
-		$stats['miniquests'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `category_id` = 193 ");
+		$stats['p2p'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `members_only` = 1 AND `cat_id` = ".(int)$cat_p2p_quests);
+		$stats['f2p'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `members_only` = 0 AND `cat_id` = ".(int)$cat_f2p_quests);
+		$stats['miniquests'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `cat_id` = ".(int)$cat_miniquests);
 
 		// kvestu sarežģītība
-		$stats['special'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 6 AND `category_id` IN (99,100) ");
-		$stats['grandmaster'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 5 AND `category_id` IN (99,100) ");
-		$stats['master'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 4 AND `category_id` IN (99,100) ");
-		$stats['experienced'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 3 AND `category_id` IN (99,100) ");
-		$stats['intermediate'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 2 AND `category_id` IN (99,100) ");
-		$stats['novice'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 1 AND `category_id` IN (99,100) ");
+		$stats['special'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 6 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats['grandmaster'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 5 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats['master'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 4 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats['experienced'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 3 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats['intermediate'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 2 AND `cat_id` IN (".implode(',', $cats_quests).") ");
+		$stats['novice'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 1 AND `cat_id` IN (".implode(',', $cats_quests).") ");
 
 		$m->set('quests-stats', $stats, false, 3600);
 	}

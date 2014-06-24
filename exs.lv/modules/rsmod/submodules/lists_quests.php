@@ -8,9 +8,9 @@
 !isset($sub_include) and die('No hacking, pls.');
 
 $arr_levels = array(
-    1 => 'Viegls', 
-    2 => 'Vidējs', 
-    3 => 'Grūts', 
+    1 => 'Novice', 
+    2 => 'Intermediate', 
+    3 => 'Experienced', 
     4 => 'Master', 
     5 => 'Grandmaster', 
     6 => 'Special'
@@ -100,22 +100,15 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         if (isset($_POST['length']) && 
             array_key_exists((int)$_POST['length'], $arr_length)) {            
             $length = (int)$_POST['length'];
-        }
-            
-        $storyline = 0;
-        if (isset($_POST['storyline']) && 
-            in_array((int)$_POST['storyline'], $series_ids)) {            
-            $storyline = (int)$_POST['storyline'];
         }        
         
         $insert = $db->query("
             INSERT INTO `rs_pages`
-                (page_id, series_id, cat_id, title, members_only, difficulty, 
+                (page_id, cat_id, title, members_only, difficulty, 
                  length, location, skills, quests, extra, description, date,
                  created_by, created_at)
             VALUES(
                 $page_id,
-                $storyline,
                 ".(int)$cat.",
                 '$title',
                 $members_only,
@@ -156,17 +149,6 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
                 'length-id' => $length,
                 'length-title' => $value
             ));
-        }
-        
-        // sērijas izvēlne
-        if ($arr_series) {
-            foreach ($arr_series as $series) {
-                $tpl->newBlock('add-story');
-                $tpl->assign(array(
-                    'story-id' => $series->id,
-                    'story-title' => $series->title
-                ));
-            }
         }
     }
 }
@@ -259,17 +241,10 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             array_key_exists((int)$_POST['length'], $arr_length)) {            
             $entry->length = (int)$_POST['length'];
         }
-            
-        $entry->series_id = 0;
-        if (isset($_POST['storyline']) && 
-            in_array((int)$_POST['storyline'], $series_ids)) {            
-            $entry->series_id = (int)$_POST['storyline'];
-        }
 
         $db->query("
             UPDATE `rs_pages` SET
                 `page_id`       = ".$entry->page_id.",
-                `series_id`     = ".$entry->series_id.",
                 `title`         = '".$entry->title."',
                 `members_only`  = ".(int)$entry->members_only.",
                 `difficulty`    = ".$entry->difficulty.",
@@ -325,20 +300,6 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             ));
             if ((int)$entry->length === $length) {
                 $tpl->assign('selected', ' selected="selected"');
-            }
-        }
-        
-        // sērijas izvēlne
-        if ($arr_series) {
-            foreach ($arr_series as $series) {
-                $tpl->newBlock('add-story');
-                $tpl->assign(array(
-                    'story-id' => $series->id,
-                    'story-title' => $series->title
-                ));
-                if ($entry->series_id === $series->id) {
-                    $tpl->assign('selected', ' selected="selected"');
-                }
             }
         }
     }
