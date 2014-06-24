@@ -2,6 +2,9 @@
 
 if ($inprofile = get_user(intval($_GET['var1']))) {
 
+	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');
+	$tpl->newBlock('user-gallery');
+
 	include(CORE_PATH . '/includes/class.tags.php');
 
 	//write comment
@@ -143,8 +146,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			redirect('/gallery/' . $inprofile->id . '/' . intval($_GET['var2']));
 		}
 	}
-
-	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');
 
 	//add image form
 	if ($auth->ok && $auth->id == $inprofile->id) {
