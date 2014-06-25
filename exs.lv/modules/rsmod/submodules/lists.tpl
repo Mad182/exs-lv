@@ -37,11 +37,11 @@
 <!-- START BLOCK : list-all-unlisted -->
 <table class="rslist list-table">
     <tr class="listhead">
-		<td style="width:20px">&nbsp;</td>
-		<td style="width:270px">Nosaukums</td>        
-		<td style="width:270px">Raksta adrese</td>
-		<td class="is-centered" style="width:90px">Raksta ID</td>
-	</tr>
+        <td style="width:20px">&nbsp;</td>
+        <td style="width:270px">Nosaukums</td>        
+        <td style="width:270px">Raksta adrese</td>
+        <td class="is-centered" style="width:90px">Raksta ID</td>
+    </tr>
     <!-- START BLOCK : unlisted-page -->
     <tr{splitted-row-style}{faded-row}>
         <td class="is-centered">{splitted-by}</td>
@@ -57,15 +57,15 @@
 <!-- START BLOCK : list-all-pages -->
 <table class="rslist list-table">
     <tr class="listhead">
-		<td style="width:20px">&nbsp;</td>
-		<td style="width:200px">Nosaukums</td>        
-		<td style="width:200px">Raksta adrese</td>
-		<td class="is-centered" style="width:90px">Raksta ID</td>        
-		<td style="width:20px">&nbsp;</td>	
-		<td style="width:20px">&nbsp;</td>	
-		<td style="width:20px">&nbsp;</td>	
-		<td style="width:20px">&nbsp;</td>	
-	</tr>
+        <td style="width:20px">&nbsp;</td>
+        <td style="width:200px">Nosaukums</td>        
+        <td style="width:200px">Raksta adrese</td>
+        <td class="is-centered" style="width:90px">Raksta ID</td>        
+        <td style="width:20px">&nbsp;</td>    
+        <td style="width:20px">&nbsp;</td>    
+        <td style="width:20px">&nbsp;</td>    
+        <td style="width:20px">&nbsp;</td>    
+    </tr>
     <!-- START BLOCK : list-row -->
     <!-- START BLOCK : list-page -->
     <tr{splitted-row-style}{faded-row}>
@@ -130,7 +130,7 @@
         <p class="field-title">
             <strong>Sākumpunkta atrašanās vieta:</strong>
         </p>    
-        <p><input type="text" style="width:400px" name="location" value="{location}"></p> 
+        <p><input type="text" style="width:400px" name="starting_point" value="{starting_point}"></p> 
         
         <p class="field-title">
             <strong>Nepieciešamās prasmes:</strong>
@@ -166,8 +166,18 @@
         </select> 
         
         <select name="members_only">
-            <option value="0"{selected-free}>F2P</option>
-            <option value="1"{selected-members}>P2P</option>
+            <option value="0">F2P</option>
+            <option value="1"{sel-members}>P2P</option>
+        </select>
+        
+        <select name="age">
+            <option value="0">Fifth age</option>
+            <option value="1"{sel-sixth}>Sixth age</option>
+        </select>
+        
+        <select name="voice_acted">
+            <option value="0">Neierunāti dialogi</option>
+            <option value="1"{sel-voiced}>Ierunāti dialogi</option>
         </select>
         
         <p class="field-title">
@@ -211,7 +221,7 @@
         <p class="field-title">
             <strong>Sākumpunkta atrašanās vieta:</strong>
         </p>    
-        <p><input type="text" style="width:400px" name="location" value="{location}"></p>
+        <p><input type="text" style="width:400px" name="starting_point" value="{starting_point}"></p>
         
         <p class="field-title">
             <strong>Prasības:</strong>
@@ -258,7 +268,7 @@
         <p class="field-title">
             <strong>Sākumpunkta atrašanās vieta:</strong>
         </p>    
-        <p><input type="text" style="width:400px" name="location" value="{location}"></p>
+        <p><input type="text" style="width:400px" name="starting_point" value="{starting_point}"></p>
         
         <p class="field-title">
             <strong>Prasības:</strong>

@@ -65,8 +65,8 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
             input2db($_POST['title'], 255) : '--';
 
         // citi parametri, kas nav obligāti norādāmi
-        $location = (isset($_POST['location'])) ? 
-            input2db($_POST['location'], 100) : '';
+        $starting_point = (isset($_POST['starting_point'])) ? 
+            input2db($_POST['starting_point'], 100) : '';
         $skills = (isset($_POST['skills'])) ? 
             input2db($_POST['skills'], 512) : '';
         $quests = (isset($_POST['quests'])) ? 
@@ -100,13 +100,23 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         if (isset($_POST['length']) && 
             array_key_exists((int)$_POST['length'], $arr_length)) {            
             $length = (int)$_POST['length'];
-        }        
+        }
+
+        $age = 0;
+        if (isset($_POST['age']) && (int)$_POST['age'] === 1) {
+            $age = 1;
+        }
+        
+        $voice_acted = 0;
+        if (isset($_POST['voice_acted']) && (int)$_POST['voice_acted'] === 1) {
+            $voice_acted = 1;
+        }
         
         $insert = $db->query("
             INSERT INTO `rs_pages`
                 (page_id, cat_id, title, members_only, difficulty, 
-                 length, location, skills, quests, extra, description, date,
-                 created_by, created_at)
+                 length, age, voice_acted, starting_point, skills, quests, 
+                 extra, description, date, created_by, created_at)
             VALUES(
                 $page_id,
                 ".(int)$cat.",
@@ -114,7 +124,9 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
                 $members_only,
                 $difficulty,
                 $length,
-                '$location',
+                $age,
+                $voice_acted,
+                '$starting_point',
                 '$skills',
                 '$quests',
                 '$extra',
@@ -211,8 +223,8 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             input2db($_POST['title'], 255) : '--';
 
         // citi parametri, kas nav obligāti norādāmi
-        $entry->location = (isset($_POST['location'])) ? 
-            input2db($_POST['location'], 256) : '';
+        $entry->starting_point = (isset($_POST['starting_point'])) ? 
+            input2db($_POST['starting_point'], 256) : '';
         $entry->skills = (isset($_POST['skills'])) ? 
             input2db($_POST['skills'], 512) : '';
         $entry->quests = (isset($_POST['quests'])) ? 
@@ -241,6 +253,16 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             array_key_exists((int)$_POST['length'], $arr_length)) {            
             $entry->length = (int)$_POST['length'];
         }
+        
+        $entry->age = 0;
+        if (isset($_POST['age']) && (int)$_POST['age'] === 1) {
+            $entry->age = 1;
+        }
+        
+        $entry->voice_acted = 0;
+        if (isset($_POST['voice_acted']) && (int)$_POST['voice_acted'] === 1) {
+            $entry->voice_acted = 1;
+        }
 
         $db->query("
             UPDATE `rs_pages` SET
@@ -249,7 +271,9 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
                 `members_only`  = ".(int)$entry->members_only.",
                 `difficulty`    = ".$entry->difficulty.",
                 `length`        = ".$entry->length.",
-                `location`      = '".$entry->location."',
+                `age`           = ".$entry->age.",
+                `voice_acted`   = ".$entry->voice_acted.",
+                `starting_point` = '".$entry->starting_point."',
                 `skills`        = '".$entry->skills."',
                 `quests`        = '".$entry->quests."',
                 `extra`         = '".$entry->extra."',
@@ -271,13 +295,6 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
         $tpl->newBlock('quest-form');
         $tpl->assignAll($entry);
         $tpl->assign('strid', $entry->strid);
-        
-        // free/members only
-        if ((bool)$entry->members_only) {
-            $tpl->assign('selected-members', ' selected="selected"');
-        } else {
-            $tpl->assign('selected-free', ' selected="selected"');
-        }
         
         // kvesta sarežģītības izvēlne
         foreach ($arr_levels as $level => $value) {
@@ -301,6 +318,18 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             if ((int)$entry->length === $length) {
                 $tpl->assign('selected', ' selected="selected"');
             }
+        }
+
+        if ((bool)$entry->members_only) {
+            $tpl->assign('sel-members', ' selected="selected"');
+        }
+
+        if ((bool)$entry->age) {
+            $tpl->assign('sel-sixth', ' selected="selected"');
+        }
+
+        if ((bool)$entry->voice_acted) {
+            $tpl->assign('sel-voiced', ' selected="selected"');
         }
     }
 }

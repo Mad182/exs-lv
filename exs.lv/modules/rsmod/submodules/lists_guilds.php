@@ -41,21 +41,21 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
         // citi parametri, kas nav obligāti norādāmi       
         $members_only = (isset($_POST['members_only'])) ? 
             (int)((bool)$_POST['members_only']) : 0;
-        $location = (isset($_POST['location'])) ? 
-            input2db($_POST['location'], 100) : '';
+        $starting_point = (isset($_POST['starting_point'])) ? 
+            input2db($_POST['starting_point'], 100) : '';
         $extra = (isset($_POST['extra'])) ? 
             input2db($_POST['extra'], 1024) : '';
         
         $insert = $db->query("
             INSERT INTO `rs_pages`
-                (page_id, cat_id, title, members_only, location, extra, 
+                (page_id, cat_id, title, members_only, starting_point, extra, 
                  created_by, created_at)
             VALUES(
                 $page_id,
                 ".(int)$cat_guilds.",
                 '$title',
                 $members_only,
-                '$location',
+                '$starting_point',
                 '$extra',
                 '".(int)$auth->id."',
                 '".time()."'
@@ -131,20 +131,20 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
         // citi parametri, kas nav obligāti norādāmi
         $entry->members_only = (isset($_POST['members_only'])) ? 
             (bool)$_POST['members_only'] : false;
-        $entry->location = (isset($_POST['location'])) ? 
-            input2db($_POST['location'], 256) : '';
+        $entry->starting_point = (isset($_POST['starting_point'])) ? 
+            input2db($_POST['starting_point'], 256) : '';
         $entry->extra = (isset($_POST['extra'])) ? 
             input2db($_POST['extra'], 1024) : '';
 
         $db->query("
             UPDATE `rs_pages` SET
-                `page_id`       = ".$entry->page_id.",
-                `title`         = '".$entry->title."',
-                `members_only`  = ".(int)$entry->members_only.",
-                `location`      = '".$entry->location."',
-                `extra`         = '".$entry->extra."',
-                `updated_by`    = ".(int)$auth->id.",
-                `updated_at`    = '".time()."'
+                `page_id`        = ".$entry->page_id.",
+                `title`          = '".$entry->title."',
+                `members_only`   = ".(int)$entry->members_only.",
+                `starting_point` = '".$entry->starting_point."',
+                `extra`          = '".$entry->extra."',
+                `updated_by`     = ".(int)$auth->id.",
+                `updated_at`     = '".time()."'
             WHERE 
                 `id`          = ".(int)$entry->id." AND
                 `deleted_by`  = 0               

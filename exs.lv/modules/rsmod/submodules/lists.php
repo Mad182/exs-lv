@@ -228,9 +228,7 @@ else {
 
     $php_filename = 'lists_quests.php';
     
-    /*if ($opened_tab === 'miniquests') {
-        $php_filename = 'lists_miniquests.php';
-    } else */if ($opened_tab === 'minigames') {
+    if ($opened_tab === 'minigames') {
         $php_filename = 'lists_minigames.php';
     } else if ($opened_tab === 'distractions') {
         $php_filename = 'lists_minigames.php';
