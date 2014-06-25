@@ -79,8 +79,12 @@ if (!isset($_GET['var1'])) {
             `pages`.`title`         AS `page_title`
             
         FROM `rs_pages`
+            LEFT JOIN `rs_series_quests` ON (
+                `rs_pages`.`id` = `rs_series_quests`.`rspages_id` AND 
+                `rs_series_quests`.`deleted_by` = 0
+            )
             LEFT JOIN `rs_series` ON 
-                `rs_pages`.`series_id` = `rs_series`.`id`
+                `rs_series_quests`.`series_id` = `rs_series`.`id`
             LEFT JOIN `pages` ON 
                 `rs_pages`.`page_id` = `pages`.`id`
         WHERE

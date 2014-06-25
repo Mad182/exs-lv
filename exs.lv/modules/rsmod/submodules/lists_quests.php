@@ -296,6 +296,16 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
         $tpl->assignAll($entry);
         $tpl->assign('strid', $entry->strid);
         
+        if ((bool)$entry->members_only) {
+            $tpl->assign('sel-members', ' selected="selected"');
+        }
+        if ((bool)$entry->age) {
+            $tpl->assign('sel-sixth', ' selected="selected"');
+        }
+        if ((bool)$entry->voice_acted) {
+            $tpl->assign('sel-voiced', ' selected="selected"');
+        }
+        
         // kvesta sarežģītības izvēlne
         foreach ($arr_levels as $level => $value) {
             $tpl->newBlock('add-difficulty');
@@ -318,18 +328,6 @@ else if (isset($_GET['var1']) && $_GET['var1'] === 'edit' &&
             if ((int)$entry->length === $length) {
                 $tpl->assign('selected', ' selected="selected"');
             }
-        }
-
-        if ((bool)$entry->members_only) {
-            $tpl->assign('sel-members', ' selected="selected"');
-        }
-
-        if ((bool)$entry->age) {
-            $tpl->assign('sel-sixth', ' selected="selected"');
-        }
-
-        if ((bool)$entry->voice_acted) {
-            $tpl->assign('sel-voiced', ' selected="selected"');
         }
     }
 }
