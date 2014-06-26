@@ -203,15 +203,24 @@ if (isset($_GET['u'])) {
 
 		$pagepath = $category->title;
 
-		/* ielade moduļa funkcijas */
+		/* ielādē moduļa funkcijas */
 		if (file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
 			require(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php');
 		}
 
-		/* ielade moduli */
-		require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+		/* ielādē moduli */
+		if ($category->has_mvc) { // sadaļām, kas izmanto MVC-tipa arhitektūru
+			require(CORE_PATH . '/includes/class.controller.php');
+			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+			$class_name = ucfirst(escape_classname($category->module));
+			if ($class_name === false) die('Ooooops! Sistēmas kļūda. :)');
+			$controller = new $class_name();
+			$controller->index();
+		} else {
+			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+		}
 
-		/* ajax pieprasijumus te ari izbeidzam */
+		/* ajax pieprasījumus te arī izbeidzam */
 		if (isset($_GET['_'])) {
 			$tpl->printToScreen();
 			exit;

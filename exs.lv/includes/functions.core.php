@@ -26,7 +26,23 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 }
 
 /**
- * Aprekina un updato lietotja karmu
+ *  Eskeipo klašu nosaukumus (piemēram, MVC klasēm)
+ */
+function escape_classname($name = '') {
+
+    $name = trim($name);
+    if ($name === '') return false;
+
+    $allowed = "/[^a-z0-9_]/i";
+	$name = preg_replace($allowed, '', $name);
+    
+    if ($name === '') return false;
+    
+    return $name;
+}
+
+/**
+ * Aprēķina un updeito lietotāja karmu
  *
  * @param int $userid
  * @param bool $force_award
