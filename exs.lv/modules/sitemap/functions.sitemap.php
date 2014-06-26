@@ -1,6 +1,9 @@
 <?php
 
-function sitemap($parent = 0, $sitemap_modules = 'list') {
+/**
+ * Rekursīvi parāda lapas karti
+ */
+function create_sitemap($parent = 0, $sitemap_modules = 'list') {
 	global $db, $lang, $auth;
 
 	$cats = $db->get_results("SELECT `id`,`textid`,`title`,`content`,`isforum` FROM `cat` WHERE `parent` = '$parent' AND (`lang` = '$lang' OR `lang` = 0) AND `mods_only` = 0 AND `sitemap` = 1 AND `module` IN(" . $sitemap_modules . ") ORDER BY `ordered` ASC");
@@ -23,7 +26,7 @@ function sitemap($parent = 0, $sitemap_modules = 'list') {
 
 			$out .= '<a href="/' . $cat->textid . '" title="' . htmlspecialchars($description) . '">' . $cat->title . '</a>';
 
-			$out .= sitemap($cat->id, $sitemap_modules);
+			$out .= create_sitemap($cat->id, $sitemap_modules);
 			$out .= '</li>';
 		}
 

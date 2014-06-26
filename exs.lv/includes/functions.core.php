@@ -958,6 +958,29 @@ function get_cat($id, $force = false) {
 }
 
 /**
+ * Pārvieto sadaļu secībā uz augšu vai leju
+ */
+function move_cat($id, $direction = 'down') {
+	global $auth, $db, $lang;
+
+	$order = 'ASC';
+	$sign = '>';
+	if ($direction === 'up') {
+		$order = 'DESC';
+		$sign = '<';
+	}
+
+	if ($auth->level == 1) {
+		$move = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($id) . "'");
+		$swap = $db->get_row("SELECT * FROM `cat` WHERE `parent` = '$move->parent' AND (`lang` = '$lang' OR `lang` = 0) AND `ordered` $sign '$move->ordered' ORDER BY `ordered` $order LIMIT 1");
+		if ($move && $swap) {
+			$db->query("UPDATE `cat` SET `ordered` = '$move->ordered' WHERE `id` = '$swap->id' LIMIT 1");
+			$db->query("UPDATE `cat` SET `ordered` = '$swap->ordered' WHERE `id` = '$move->id' LIMIT 1");
+		}
+	}
+}
+
+/**
  * Find page id by strid
  */
 function get_page_strid($id = null) {
@@ -2132,3 +2155,4 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$page_title = $user->nick . ' ' . $title;
 }
+

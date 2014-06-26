@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Foruma kategoriju saraksta skats
+ */
 $add_css .= ',forum.css';
 
 $columns = 4;
@@ -51,22 +54,11 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 $tpl->newBlock('forum');
 $tpl->assign('title', $category->title);
 
-if ($auth->level == 1 && isset($_GET['moveup'])) {
-	$move = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($_GET['moveup']) . "'");
-	$upper = $db->get_row("SELECT * FROM `cat` WHERE `isforum` = 1 AND `parent` = '$move->parent' AND `ordered` < '$move->ordered' ORDER BY `ordered` DESC LIMIT 1");
-	if ($move && $upper) {
-		$db->query("UPDATE `cat` SET `ordered` = '$move->ordered' WHERE `id` = '$upper->id' LIMIT 1");
-		$db->query("UPDATE `cat` SET `ordered` = '$upper->ordered' WHERE `id` = '$move->id' LIMIT 1");
-	}
-}
-
-if ($auth->level == 1 && isset($_GET['movedown'])) {
-	$move = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($_GET['movedown']) . "'");
-	$upper = $db->get_row("SELECT * FROM `cat` WHERE `isforum` = 1 AND `parent` = '$move->parent' AND `ordered` > '$move->ordered' ORDER BY `ordered` ASC LIMIT 1");
-	if ($move && $upper) {
-		$db->query("UPDATE `cat` SET `ordered` = '$move->ordered' WHERE `id` = '$upper->id' LIMIT 1");
-		$db->query("UPDATE `cat` SET `ordered` = '$upper->ordered' WHERE `id` = '$move->id' LIMIT 1");
-	}
+//sadaļu pārkārtošana
+if ($auth->level == 1 && !empty($_GET['moveup'])) {
+	move_cat($_GET['moveup'], 'up');
+} elseif ($auth->level == 1 && !empty($_GET['movedown'])) {
+	move_cat($_GET['movedown'], 'down');
 }
 
 $fcategorys = array();
@@ -268,3 +260,4 @@ if ($category->textid == 'index' && !empty($category->content) && !$auth->mobile
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', htmlspecialchars($category->content));
 }
+
