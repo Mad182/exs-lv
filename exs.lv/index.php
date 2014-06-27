@@ -212,8 +212,7 @@ if (isset($_GET['u'])) {
 		if ($category->has_mvc) { // sadaļām, kas izmanto MVC-tipa arhitektūru
 			require_once(CORE_PATH . '/includes/class.controller.php');
 			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
-			$class_name = ucfirst(escape_classname($category->module));
-			if ($class_name === false) die('Ooooops! Sistēmas kļūda. :)');
+			$class_name = as_classname($category->module);
 			$controller = new $class_name();
 			$controller->index();
 		} else {

@@ -26,9 +26,11 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 }
 
 /**
- *  Eskeipo klašu nosaukumus (piemēram, MVC klasēm)
+ *  Pārveido stringu par pieļaujamu klases nosaukumu
+ *
+ *  @return string|false    false, ja nosaukumu nevar izveidot
  */
-function escape_classname($name = '') {
+function as_classname($name = '') {
 
     $name = trim($name);
     if ($name === '') return false;
@@ -37,9 +39,13 @@ function escape_classname($name = '') {
     $name = str_replace('-', '_', $name);
     
     $allowed = "/[^a-z0-9_]/i";
-	$name = preg_replace($allowed, '', $name);
-    
+	$name = preg_replace($allowed, '', $name);    
     if ($name === '') return false;
+    
+    // katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
+    $name = str_replace('_', ' ', $name);
+    $name = ucwords($name);
+    $name = str_replace(' ', '_', $name);
     
     return $name;
 }

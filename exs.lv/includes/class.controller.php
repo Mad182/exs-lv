@@ -4,9 +4,6 @@
  *
  *  Kontrolleri, kas šo klasi atvasina, meklējami moduļu mapēs.
  *  Caur šo klasi pēc vajadzības notiek arī modeļa ielāde.
- *
- *  TODO:
- *      - klases nosaukumos visām daļām pirmajam burtam jābūt lielajam
  */
 
 class Controller {
@@ -68,7 +65,7 @@ class Controller {
 
             $matches = explode('/', $model_string);
             $last_match = $matches[sizeof($matches) - 1];
-            $last_match = escape_classname($last_match);
+            $last_match = as_classname($last_match);
 
             if ($last_match === false) 
                 $this->display_error('Nepareizi norādīts modelis!');
