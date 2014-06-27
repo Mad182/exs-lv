@@ -18,22 +18,12 @@ if (isset($_GET['var1'])) {
 
 if (!empty($inprofile) && empty($inprofile->deleted)) {
 
-	if ($auth->ok) {
-		set_action($inprofile->nick . ' rakstus');
-	}
+	profile_menu($inprofile, 'usertopics', 'raksti', 'rakstus');
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' raksti');
-
-	$page_title = $inprofile->nick . ' | raksti';
 	if ($skip) {
 		$page_title = $page_title . ' - lapa ' . ($skip / $end + 1);
 	}
-	$tpl->assignGlobal(array(
-		'user-id' => $inprofile->id,
-		'user-nick' => htmlspecialchars($inprofile->nick),
-		'active-tab-usertopics' => 'active'
-	));
+
 	$tpl->newBlock('user-usertopics');
 
 	$total = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '" . $inprofile->id . "' AND `lang` = '$lang' AND `category` != '6'");

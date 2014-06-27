@@ -6,7 +6,7 @@
 
 /**
  * Piešķir medaļu par sekošanu FB lapai
- * 
+ *
  * @global type $db
  * @global type $m
  * @param type $id
@@ -23,4 +23,3 @@ function fb_award($id) {
 		$m->delete('aw_' . $id);
 	}
 }
-

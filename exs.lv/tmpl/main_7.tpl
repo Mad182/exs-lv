@@ -122,6 +122,7 @@
 					<ul id="top-menu-left">
 						<li{cat-sel-1755}><a class="first" href="/">Sākumlapa</a></li>
 						<li{cat-sel-1122}><a href="/forums">Forums</a></li>
+						<li><a href="http://tops.exs.lv/lol" rel="nofollow">Tops</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">

@@ -70,12 +70,12 @@ function uploadFile($db, $auth, $file) {
 		$tomorrow = mktime(0, 0, 0, date("m", strtotime($last)), date("d", strtotime($last)) + 1, date("Y", strtotime($last)));
 
 		$tdate = date('Y-m-d', $tomorrow);
-		
+
 		//ja ilgaku laiku nav bijuši jauni wallpapers, sākam ar šodienu, nevis aizpildam vecos datumus
-		if($tdate < date('Y-m-d')) {
+		if ($tdate < date('Y-m-d')) {
 			$tdate = date('Y-m-d');
 		}
-		
+
 		$image = $text . '.jpg';
 
 		$db->query("INSERT INTO wallpapers (date,image,author) VALUES ('$tdate','$image','$auth->id')");
@@ -98,11 +98,10 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'catsite.json') {
 		foreach ($wallpapers as $image) {
 			$tpl->newBlock('wallpaper');
 			$tpl->assign(array(
-				'wallpaper-image' => $image->image,
-				'wallpaper-date' => $image->date,
+				'image' => $image->image,
+				'date' => $image->date,
 				'style' => ' style="color:red"'
 			));
 		}
 	}
 }
-

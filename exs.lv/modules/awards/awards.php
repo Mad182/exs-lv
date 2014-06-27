@@ -12,7 +12,7 @@ if (isset($_GET['var1'])) {
 	$inprofile = get_user($auth->id);
 }
 
-if ($inprofile) {
+if (!empty($inprofile) && empty($inprofile->deleted)) {
 
 	if ($inprofile->id == $auth->id || $debug) {
 
@@ -36,18 +36,8 @@ if ($inprofile) {
 		$tpl->prepare();
 	}
 
-	if ($auth->ok) {
-		set_action($inprofile->nick . ' medaļas');
-	}
+	profile_menu($inprofile, 'awards', 'medaļas');
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' medaļas');
-	$page_title = $inprofile->nick . ' exs apbalvojumi';
-	$tpl->assignGlobal(array(
-		'user-id' => $inprofile->id,
-		'user-nick' => htmlspecialchars($inprofile->nick),
-		'active-tab-awards' => 'active'
-	));
 	$tpl->newBlock('user-awards');
 
 	$awards = get_awards($inprofile->id);

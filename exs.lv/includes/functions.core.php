@@ -26,7 +26,32 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 }
 
 /**
- * Aprekina un updato lietotja karmu
+ *  Pārveido stringu par pieļaujamu klases nosaukumu
+ *
+ *  @return string|false    false, ja nosaukumu nevar izveidot
+ */
+function as_classname($name = '') {
+
+    $name = trim($name);
+    if ($name === '') return false;
+
+    // klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
+    $name = str_replace('-', '_', $name);
+    
+    $allowed = "/[^a-z0-9_]/i";
+	$name = preg_replace($allowed, '', $name);    
+    if ($name === '') return false;
+    
+    // katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
+    $name = str_replace('_', ' ', $name);
+    $name = ucwords($name);
+    $name = str_replace(' ', '_', $name);
+    
+    return $name;
+}
+
+/**
+ * Aprēķina un updeito lietotāja karmu
  *
  * @param int $userid
  * @param bool $force_award
@@ -536,7 +561,6 @@ function mkurl($type, $id, $title, $add = '') {
 	return '/' . $type . '/' . $id . '-' . mkslug($title) . $add;
 }
 
-
 /**
  * Adreses, kurām nelikt nofollow tagu
  */
@@ -928,14 +952,13 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
 	curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$contents = curl_exec($ch);
 	curl_close($ch);
-    
+
 	return $contents;
 }
-
 
 /**
  * Returns category object by either id or strid
@@ -957,6 +980,29 @@ function get_cat($id, $force = false) {
 		$m->set('cat_' . $lang . '_' . $id, $data, false, 7200);
 	}
 	return $data;
+}
+
+/**
+ * Pārvieto sadaļu secībā uz augšu vai leju
+ */
+function move_cat($id, $direction = 'down') {
+	global $auth, $db, $lang;
+
+	$order = 'ASC';
+	$sign = '>';
+	if ($direction === 'up') {
+		$order = 'DESC';
+		$sign = '<';
+	}
+
+	if ($auth->level == 1) {
+		$move = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($id) . "'");
+		$swap = $db->get_row("SELECT * FROM `cat` WHERE `parent` = '$move->parent' AND (`lang` = '$lang' OR `lang` = 0) AND `ordered` $sign '$move->ordered' ORDER BY `ordered` $order LIMIT 1");
+		if ($move && $swap) {
+			$db->query("UPDATE `cat` SET `ordered` = '$move->ordered' WHERE `id` = '$swap->id' LIMIT 1");
+			$db->query("UPDATE `cat` SET `ordered` = '$swap->ordered' WHERE `id` = '$move->id' LIMIT 1");
+		}
+	}
 }
 
 /**
@@ -1904,7 +1950,7 @@ function get_latest_mbs($friends = false) {
 function set_action($action = '') {
 	global $db, $auth;
 	if ($auth->ok === true) {
-		$db->query("UPDATE `users` SET `last_action` = '".sanitize($action)."' WHERE `id` = $auth->id LIMIT 1");
+		$db->query("UPDATE `users` SET `last_action` = '" . sanitize($action) . "' WHERE `id` = $auth->id LIMIT 1");
 	}
 }
 
@@ -2109,3 +2155,29 @@ function custom_user_title($user) {
 		return $user->custom_title;
 	}
 }
+
+/**
+ * Lietotāja profila izvēlne (tabi)
+ */
+function profile_menu($user, $active, $title, $action = null) {
+	global $auth, $tpl, $page_title;
+
+	if ($auth->ok) {
+		if (empty($action)) {
+			$action = $title;
+		}
+		set_action($user->nick . ' ' . $action);
+	}
+
+	$tpl->newBlock('profile-menu');
+	$tpl->assign('user-menu-add', ' ' . $title);
+
+	$tpl->assignGlobal(array(
+		'user-id' => $user->id,
+		'user-nick' => htmlspecialchars($user->nick),
+		'active-tab-' . $active => 'active'
+	));
+
+	$page_title = $user->nick . ' ' . $title;
+}
+

@@ -104,11 +104,4 @@ if (isset($_POST['submit'])) {
 
 $tpl->newBlock('user-profile-avatar');
 
-$tpl->assignGlobal(array(
-	'user-id' => $inprofile->id,
-	'user-nick' => htmlspecialchars($inprofile->nick),
-	'active-tab-profile' => 'active',
-	'profile-sel' => ' class="selected"'
-));
-
 $page_title = 'Avatara attēla maiņa';

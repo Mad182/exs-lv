@@ -203,15 +203,23 @@ if (isset($_GET['u'])) {
 
 		$pagepath = $category->title;
 
-		/* ielade moduļa funkcijas */
+		/* ielādē moduļa funkcijas */
 		if (file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
 			require(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php');
 		}
 
-		/* ielade moduli */
-		require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+		/* ielādē moduli */
+		if ($category->has_mvc) { // sadaļām, kas izmanto MVC-tipa arhitektūru
+			require_once(CORE_PATH . '/includes/class.controller.php');
+			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+			$class_name = as_classname($category->module);
+			$controller = new $class_name();
+			$controller->index();
+		} else {
+			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+		}
 
-		/* ajax pieprasijumus te ari izbeidzam */
+		/* ajax pieprasījumus te arī izbeidzam */
 		if (isset($_GET['_'])) {
 			$tpl->printToScreen();
 			exit;
@@ -506,6 +514,15 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
+if($lang === 1) {
+	//smartad.eu, nerāda mobilajām ierīcēm
+	require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
+	$detect = new Mobile_Detect;
+	if(!$detect->isMobile()) {
+		$tpl->newBlock('smartad-eu');
+	}
+}
+
 $tpl->printToScreen();
 
 if ($debug && !$requested_json && !$use_bootstrap) {
@@ -524,3 +541,4 @@ if ($debug && !$requested_json && !$use_bootstrap) {
 	pr($_POST);
 	echo '</div></div></div>';
 }
+

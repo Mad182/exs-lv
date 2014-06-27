@@ -14,20 +14,8 @@ if (isset($_GET['var1'])) {
 
 if (!empty($inprofile) && empty($inprofile->deleted)) {
 
-	if ($auth->ok) {
-		set_action($inprofile->nick . ' grāmatzīmes');
-	}
+	profile_menu($inprofile, 'bookmarks', 'grāmatzīmes');
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' grāmatzīmes');
-
-
-	$page_title = $inprofile->nick . ' grāmatzīmes';
-	$tpl->assignGlobal(array(
-		'user-id' => $inprofile->id,
-		'user-nick' => htmlspecialchars($inprofile->nick),
-		'active-tab-bookmarks' => 'active'
-	));
 	$tpl->newBlock('user-bookmarks');
 
 	//delete

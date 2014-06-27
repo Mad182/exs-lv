@@ -2,7 +2,7 @@
 <div id="idb-navig">
 	<a class="modbutton" href="/db"><img src="/modules/idb/images/magnifying_glass.png" title="Sākumlapa" alt="" /></a>
 	<a class="modbutton" href="/db/unlisted"><img src="/modules/idb/images/pencil.png" title="lot of work :(" alt="" /></a>
-	<a class="modbutton" href="/db/listed"><img src="/modules/idb/images/correct.png" title="Iztulkotie šķirkļi" alt="" /></a>	
+	<a class="modbutton" href="/db/listed"><img src="/modules/idb/images/correct.png" title="Iztulkotie šķirkļi" alt="" /></a>
 	<!-- START BLOCK : navig-mods -->
 	<a class="modbutton" style="position:relative" href="/db/stats"><img src="/modules/idb/images/3d_bar_chart.png" title="Lietotāju statistika" alt="" /></a>
 	<a class="modbutton" href="/db/queue"><img src="/modules/idb/images/down.png" title="Pārskatāmi garadarbi" alt="" /></a>
@@ -16,11 +16,11 @@
 <!-- END BLOCK : idb-navig -->
 <!-- START BLOCK : item-search-->
 <div id="search_line">
-	<form class="form jqsearch" action="/db/search/" method="get">	
+	<form class="form jqsearch" action="/db/search/" method="get">
 		<img class="search_icon" src="/modules/idb/images/magnifier.png" title="Meklētājs" alt="" />
 		<input class="search" name="q" value="{qstr}" tabindex="1" /><br />
 		<input class="search_input button" type="submit" value="Meklēt" tabindex="2" /><br />
-		<input id="search_ch" type="checkbox" name="checkbox" style="vertical-align:middle" {checked} /> 
+		<input id="search_ch" type="checkbox" name="checkbox" style="vertical-align:middle" {checked} />
 		<label for="search_ch" class="search_lv">meklēt starp neiztulkotajiem šķirkļiem</label>
 	</form>
 </div>
@@ -29,9 +29,9 @@
 	<!-- START BLOCK : search-list -->
 	<ul class="item_list_main">
 		<li class="list_main_title">{main_title}</li>
-    <!-- START BLOCK : search-items -->
+		<!-- START BLOCK : search-items -->
 		<li><span class="list_nr">{counter}</span> <a href="/db/{strid}" title="{item}">{item}</a></li>
-    <!-- END BLOCK : search-items -->
+		<!-- END BLOCK : search-items -->
 		<!-- START BLOCK : search-page-sm -->
 		<li class="{block_class} pagerow">{page-nr}</li>
 		<!-- END BLOCK : search-page-sm -->
@@ -162,7 +162,7 @@
 		<!-- END BLOCK : itemview-notes -->
 		<!-- START BLOCK : itemview-monsters -->
 		<tr><td><span class="item-field">Briesmoņi</span></td><td>{droppedby}</td></tr>
-		<!-- END BLOCK : itemview-monsters -->		
+		<!-- END BLOCK : itemview-monsters -->
 		<tr><td><span class="item-field">Autors{views}</span></td><td>{auser}</td></tr>
 		<!-- START BLOCK : itemview-appby -->
 		<tr>
@@ -206,12 +206,12 @@
 			<tr><td class="rowbg idb_center" colspan="4"><strong>Cita info</strong></td></tr>
 			<tr><td colspan="2" class="idb_hlight">Critical melee</td><td colspan="2">{cmelee}</td></tr>
 			<tr><td colspan="2" class="idb_hlight">Critical magic</td><td colspan="2">{cmage}</td></tr>
-			<tr><td colspan="2" class="idb_hlight">Critical ranged</td><td colspan="2">{crange}</td></tr>	
+			<tr><td colspan="2" class="idb_hlight">Critical ranged</td><td colspan="2">{crange}</td></tr>
 			<tr><td colspan="2" class="idb_hlight">Ekipējuma lauks</td><td colspan="2">{slot}</td></tr>
 			<tr><td colspan="2" class="idb_hlight">Uzbrukuma veids</td><td colspan="2">{type}</td></tr>
 			<tr><td colspan="2" class="idb_hlight">Uzbrukuma stils</td><td colspan="2">{style}</td></tr>
 			<tr><td colspan="2" class="idb_hlight">Ātrums</td><td colspan="2">{speed}</td></tr>
-			<tr><td colspan="2" class="idb_hlight">Munīcija</td><td colspan="2">{ammo}</td></tr>	
+			<tr><td colspan="2" class="idb_hlight">Munīcija</td><td colspan="2">{ammo}</td></tr>
 		</table>
 	</div>
 	<!-- START BLOCK : bonuses-old -->
@@ -279,8 +279,8 @@
 				<p class="idb_button{stacks}" data-id="stacks">Krājas kaudzē</p>
 				<p class="idb_button{quest}" data-id="quest">Kvests</p>
 			</td>
-			<td>			
-				<span class="rowname">Svars:</span>&nbsp;&nbsp;&nbsp; 
+			<td>
+				<span class="rowname">Svars:</span>&nbsp;&nbsp;&nbsp;
 				<input class="input-small" type="text" name="weight" value="{weight}" />
 			</td>
 		</tr>
@@ -335,7 +335,7 @@
 			</td></tr>
 		<tr><td colspan="2" class="idb_hlight">Critical ranged</td><td colspan="2">
 				<input class="input-tiny" name="crange" value="{crange}" />
-			</td></tr>	
+			</td></tr>
 	</table>
 	<table class="bonuses" style="margin:10px 10px 10px 0;">
 		<tr><td class="rowbg idb_center" colspan="4"><strong>&nbsp;</strong></td></tr>
@@ -374,7 +374,7 @@
 					<!-- END BLOCK : itemedit-ammo -->
 				</select>
 				<!-- END BLOCK : itemedit-ammos -->
-			</td></tr>	
+			</td></tr>
 	</table>
 	<p><input type="submit" name="submit" class="button danger" value="Saglabāt izmaiņas" /></p>
 </form>
@@ -417,14 +417,14 @@
 	<tr class="rowbg">
 		<td style="width:120px;">Lietotājs</td>
 		<td style="width:50px"></td>
-		<td style="width:150px;text-align:center;">{prev_text} (<span class="idb-red">{prev_count}</span>)</td>		
+		<td style="width:150px;text-align:center;">{prev_text} (<span class="idb-red">{prev_count}</span>)</td>
 		<td style="width:150px;text-align:center;">{this_text} (<span class="idb-red">{this_count}</span>)</td>
 	</tr>
 	<!-- START BLOCK : contest-node -->
 	<tr>
 		<td>{nick} ({items})</td>
 		<td style="text-align:center;"><a href="/db/stats/{user}">Skatīt</a></td>
-		<td style="text-align:center;">{lcount}</td>		
+		<td style="text-align:center;">{lcount}</td>
 		<td style="text-align:center;">{tcount}</td>
 	</tr>
 	<!-- END BLOCK : contest-node -->
@@ -546,7 +546,7 @@
 		</tr>
 		<tr>
 			<td></td><td><input type="submit" name="submit" class="button" value="Apstiprināt ar šādām izmaiņām" /></td>
-		</tr>	
+		</tr>
 		<!-- END BLOCK : queue-form-lv -->
 		<!-- START BLOCK : queue-form-eng -->
 		<tr><td><strong>Ieguve:</strong></td><td>{location}</td></tr>

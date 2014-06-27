@@ -16,11 +16,11 @@
 	</fieldset>
 </form>
 
-<h2>Upcoming</h2>
+<h2>Tuvākajā laikā būs...</h2>
 
 <ul id="wallpapers">
 	<!-- START BLOCK : wallpaper-->
-	<li><a href="http://exs.lv/dati/wallpapers/{wallpaper-image}"><img src="http://exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" /><span{style}>{wallpaper-date}</span></a></li>
+	<li><a href="http://exs.lv/dati/wallpapers/{image}"><img src="http://exs.lv/dati/wallpapers/thb/{image}" alt="dienas ekrāntapete" /><span{style}>{date}</span></a></li>
 	<!-- END BLOCK : wallpaper-->
 </ul>
 <div class="c"></div>

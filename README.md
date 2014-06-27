@@ -40,14 +40,6 @@ uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
 nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt.,
 ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
-libs mapē vajadzīgi:
-(instalējas kā submoduļi)
-
-https://github.com/ezyang/htmlpurifier
-https://github.com/swiftmailer/swiftmailer
-https://github.com/Austinb/GameQ
-https://github.com/facebook/facebook-php-sdk
-
 
 ## Arch
 

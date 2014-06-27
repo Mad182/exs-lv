@@ -352,6 +352,12 @@ ul.nav-right {
         color:#96C7EB;
         text-decoration:none
     }
+    .new-link {
+        color:#FF5959;
+        font-size:10px;
+        position:relative;
+        top:-4px
+    }
 #header {
     margin:0;
     padding:0;

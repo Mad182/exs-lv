@@ -11,7 +11,6 @@
 function tags_total($db, $lang) {
 
 	return $db->get_var("SELECT count(*) FROM `tags`, `taged` WHERE `taged`.`tag_id` = `tags`.`id` AND `taged`.`lang` = '$lang' GROUP BY `tags`.`id`");
-
 }
 
 /**
@@ -24,6 +23,11 @@ function tags_total($db, $lang) {
  */
 function tags_random($db, $lang, $count) {
 
+	$start = tags_total($db, $lang) - $count;
+	if ($start < 0) {
+		$start = 0;
+	}
+
 	return $db->get_results("
 		SELECT
 			`tags`.*
@@ -35,7 +39,6 @@ function tags_random($db, $lang, $count) {
 			`taged`.`lang` = '$lang'
 		GROUP BY
 		  `tags`.`id`
-		LIMIT ".rand(0,tags_total($db, $lang)-$count).",".$count);
-
+		LIMIT " . rand(0, $start) . "," . $count);
 }
 

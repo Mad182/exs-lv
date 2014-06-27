@@ -2209,6 +2209,40 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	margin: 0;
 }
 
+/* gallery */
+#gal-large {
+	margin: 0 auto;
+	padding: 5px 0;
+	position: relative;
+}
+
+#gal-large .img-newer, #gal-large .img-older {
+	position: absolute;
+	width: 33%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	outline: none;
+	text-indent: -99999px;
+	top: 0;
+}
+
+#gal-large .img-newer {
+	left: 0;
+}
+
+#gal-large .img-older {
+	right: 0;
+}
+
+#gal-large .img-newer:hover {
+	background: url('http://img.exs.lv/bildes/arrow-left.png') no-repeat 30% 50%;
+}
+
+#gal-large .img-older:hover {
+	background: url('http://img.exs.lv/bildes/arrow-rgt.png') no-repeat 70% 50%;
+}
+
 /* gallery scrollable */
 .scrollable {
 	position: relative;

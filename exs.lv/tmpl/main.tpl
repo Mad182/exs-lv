@@ -188,6 +188,8 @@
 							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
 							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+							
+							<a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Log in</span></a>
 
 						</fieldset>
 					</form>
@@ -514,6 +516,7 @@
 
 		</div>
 
+		<!-- START BLOCK : smartad-eu-->
 		<!-- smartad.eu -->
 		<script type='text/javascript'>/* <![CDATA[ */
 			var _smartad = _smartad || new Object();
@@ -546,6 +549,7 @@
 				}
 			})();
 			/* ]]> */</script>
+		<!-- END BLOCK : smartad-eu-->
 
 		<!-- google analytics -->
 		<script>

@@ -54,4 +54,3 @@ function junk_vote($pic, $user) {
 	$out .= '</div>';
 	return $out;
 }
-
