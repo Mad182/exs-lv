@@ -4,6 +4,9 @@
  *
  *  Kontrolleri, kas šo klasi atvasina, meklējami moduļu mapēs.
  *  Caur šo klasi pēc vajadzības notiek arī modeļa ielāde.
+ *
+ *  TODO:
+ *      - klases nosaukumos visām daļām pirmajam burtam jābūt lielajam
  */
 
 class Controller {
@@ -17,12 +20,13 @@ class Controller {
     protected $auth;
     protected $tpl;
     protected $category;
+    protected $debug;
 
     // mainīgais atsauksies uz ielādēto modeli
     protected $model;
     
     public function __construct() {
-        global $db, $auth, $tpl, $category;
+        global $db, $auth, $tpl, $category, $debug;
 
         $this->model = false;
 
@@ -30,6 +34,7 @@ class Controller {
         $this->auth = $auth;
         $this->tpl = $tpl;
         $this->category = $category;
+        $this->debug = $debug;
     }
     
     
@@ -49,6 +54,9 @@ class Controller {
      */
     protected function load_model($model_string = '') {
 
+        if ($this->model !== false) 
+            $this->display_error('Vienlaicīgi kontrollerī var ielādēt tikai vienu modeli!');
+
         // atstās tikai pieļaujamos simbolus
         $model_string = $this->escape_model_string($model_string);
         if (empty($model_string)) return false;
@@ -62,7 +70,8 @@ class Controller {
             $last_match = $matches[sizeof($matches) - 1];
             $last_match = escape_classname($last_match);
 
-            if ($last_match === false) die('Ooooops! Sistēmas kļūda. :)');
+            if ($last_match === false) 
+                $this->display_error('Nepareizi norādīts modelis!');
             $class_name = $last_match;
         }
 
@@ -73,7 +82,7 @@ class Controller {
         if (file_exists($file_path)) {
             require($file_path);
         } else {
-            die('Ooooops! Sistēmas kļūda. :)');
+            $this->display_error('Norādītais modelis neeksistē!');
         }
 
         // inicializē modeļa objektu
@@ -98,5 +107,17 @@ class Controller {
         $string = preg_replace($allowed, '', $string);
         
         return $string;
-    }   
+    }
+    
+    
+    /**
+     *  Lapas izstrādātājiem būs redzami kļūdas paziņojumi
+     */
+    private function display_error($string = '') {
+        if ($this->debug) {
+            die('Kļūda: '. $string);
+        } else {
+            die('Ooooops! Sistēmas kļūda. :)');
+        }
+    }
 }
