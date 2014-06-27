@@ -33,6 +33,9 @@ function escape_classname($name = '') {
     $name = trim($name);
     if ($name === '') return false;
 
+    // klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
+    $name = str_replace('-', '_', $name);
+    
     $allowed = "/[^a-z0-9_]/i";
 	$name = preg_replace($allowed, '', $name);
     

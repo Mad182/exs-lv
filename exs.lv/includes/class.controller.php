@@ -3,73 +3,100 @@
  *  Parent klase MVC arhitektūras kontrolleriem
  *
  *  Kontrolleri, kas šo klasi atvasina, meklējami moduļu mapēs.
+ *  Caur šo klasi pēc vajadzības notiek arī modeļa ielāde.
  */
 
 class Controller {
-    
+
     /**
      *  Globālie mainīgie, kas nepieciešami visos kontrolleros, definējami šeit.
      *  Specifiskus mainīgos var definēt moduļa kontrollera konstruktorā,
-     *  no kura obligāti jāizsauc šīs parent klases konstruktors.
+     *  no kura tad obligāti jāizsauc šīs parent klases konstruktors.
      */
     protected $db;
     protected $auth;
     protected $tpl;
     protected $category;
+
+    // mainīgais atsauksies uz ielādēto modeli
     protected $model;
     
     public function __construct() {
         global $db, $auth, $tpl, $category;
 
+        $this->model = false;
+
         $this->db = $db;
         $this->auth = $auth;
         $this->tpl = $tpl;
         $this->category = $category;
-
-        $this->model = false;
     }
+    
     
     /**
      *  Ielādē moduļa modeli
      *
-     *  Nenorādot modeli, funkcija mēģina ielādēt models.php failu.
-     *  Pieļaujamie modeļa nosaukuma varianti:
+     *  Nosaukumā (arī faila) drīkst būt tikai burti, cipari, "_" un "/".
      *
-     *      -   models
-     *      -   other_models
-     *      -   submodels/submodel_1 
+     *  Ja modeļa fails atrodas moduļa apakšmapē, drīkst norādīt ceļu,
+     *  piemēram,
+     *      
+     *      submodels/model_1
+     *          vai
+     *      models/user_profile
      *  
-     *  @param string|empty $string faila nosaukums
-     *
-     *  TODO: masīvs ar ielādēto modeļu nosaukumiem
-     *  TODO: modeļu nosaukumi, ja faili ir vairāki
+     *  @param string $model_name   modeļa nosaukums bez faila paplašinājuma
      */
-    protected function load_model($string = '') {    
-        require_once(CORE_PATH . '/includes/class.model.php');
+    protected function load_model($model_string = '') {
 
-        $model_name = 'models.php';
-        if ($string !== '') {
-            // ext jāpievieno galā, jo parametrā to var arī nenorādīt
-            $model_name = str_replace('.php', '', $string) . '.php';
+        // atstās tikai pieļaujamos simbolus
+        $model_string = $this->escape_model_string($model_string);
+        if (empty($model_string)) return false;
+        
+        // nolasīs pēdējo string'a daļu (aka klases nosaukumu), 
+        // ja norādīts arī ceļš uz modeli
+        $class_name = $model_string;
+        if (($pos = strpos($model_string, '/')) !== false) { 
+
+            $matches = explode('/', $model_string);
+            $last_match = $matches[sizeof($matches) - 1];
+            $last_match = escape_classname($last_match);
+
+            if ($last_match === false) die('Ooooops! Sistēmas kļūda. :)');
+            $class_name = $last_match;
         }
-        $path = CORE_PATH . '/modules/' . $this->category->module . '/';
-        $file_name = $path . $model_name;
 
-        if (file_exists($file_name)) {
-            require($file_name);
-        } else if (file_exists($path . 'models.php')) {
-            require($path . 'models.php');
+        require_once(CORE_PATH . '/includes/class.model.php');
+        $file_path = CORE_PATH . '/modules/' . $this->category->module 
+                                 . '/' . $model_string . '.php';
+
+        if (file_exists($file_path)) {
+            require($file_path);
         } else {
             die('Ooooops! Sistēmas kļūda. :)');
         }
-        
-        // izveido modeļa objektu
-        $class_name = escape_classname($this->category->module);
-        if ($class_name === false) {
-            die('Ooooops! Sistēmas kļūda. :)');
-        }
-        $class_name = 'Model_' . $class_name;
-        
+
+        // inicializē modeļa objektu
+        $class_name = 'Model_' . $class_name;        
         $this->model = new $class_name();
     }
+    
+    
+    /**
+     *  Eskeipo modeļa faila nosaukumu
+     *
+     *  Atstās nosaukumā tikai burtus, ciparus, "_" un "/".
+     */
+    private function escape_model_string($string = '') {
+    
+        if (empty($string) || trim($string) === '') 
+            return trim($string);
+
+        // modeļa nosaukumā drīkst būt "/", 
+        // lai varētu norādīt ceļu uz apakšmapi
+        $allowed = "/[^a-z0-9_\/]/i";
+        $string = preg_replace($allowed, '', $string);
+        
+        return $string;
+    }   
 }
