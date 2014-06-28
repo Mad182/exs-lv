@@ -9,16 +9,9 @@
 
 class Rsmod extends Controller {
 
-    public function index() {
-    
-        if (!im_mod()) {
-            set_flash('Error 403: Permission denied!');
-            redirect();
-        }
-        // temp fix
-        global $tpl_options;
-        $tpl_options = 'no-left';
-
+    public function index() {    
+        $this->check_permission();
+        $this->tpl_options = 'no-left';
         $this->load_submodule();
     }
     

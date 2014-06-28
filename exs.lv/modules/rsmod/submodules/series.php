@@ -133,7 +133,7 @@ class Series extends Controller {
         }
         
         // tā kā šo izsauc jquery, funkcija izmanto lokālo $tpl objektu
-        if (($tpl = get_template('rsmod.tpl')) === false) {
+        if (($tpl = $this->load_template('rsmod')) === false) {
             return '';
         }
         
@@ -183,7 +183,7 @@ class Series extends Controller {
         $series_id = (int)$series_id;
         
         // tā kā šo izsauc jquery, funkcija izmanto lokālo $tpl objektu
-        if (($tpl = get_template('rsmod.tpl')) === false) {
+        if (($tpl = $this->load_template('rsmod')) === false) {
             return '';
         }
         $tpl->newBlock('all-quests-block');
@@ -313,7 +313,7 @@ class Series extends Controller {
     private function set_series_quest($type = null, $series_id = 0,
                                       $quest_id = 0) {
 
-        if (($tpl = get_template('rsmod.tpl')) === false) {
+        if (($tpl = $this->load_template('rsmod')) === false) {
             return '';
         }
             
