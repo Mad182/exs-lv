@@ -132,7 +132,7 @@ $(document).ready(function () {
             async: false,
             success: function(response) {
                 if (response.state == 'error') {
-                    alert(response.message);
+                    alert(response.error);
                     return;
                 }                    
                 if (response.type == 'del') {

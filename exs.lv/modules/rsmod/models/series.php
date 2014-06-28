@@ -158,25 +158,15 @@ class Model_Series extends Model {
         $quest_id = (int)$quest_id;
         if ($quest_id < 1) return false;
     
-        $query = $this->db->get_row("
-            SELECT 
-                `rs_pages`.`id`, 
-                `rs_pages`.`series_id`,
-                `rs_pages`.`title`,
-                IFNULL(`pages`.`id`, 0) AS `pages_id`,  
-                `pages`.`strid` AS `strid`    
-            FROM `rs_pages`
-                LEFT JOIN `pages` ON (
-                    `rs_pages`.`page_id` = `pages`.`id` AND
-                    `pages`.`category` IN(".implode(',', $this->cat_quests).")
-                )
+        $query = $this->db->get_var("
+            SELECT count(*) FROM `rs_pages`
             WHERE 
-                `rs_pages`.`id` = ".$quest_id." AND
-                `rs_pages`.`deleted_by`  = 0 AND
-                `rs_pages`.`cat_id` IN(".implode(',', $this->cat_quests).")
+                `id` = ".$quest_id." AND
+                `deleted_by`  = 0 AND
+                `cat_id` IN(".implode(',', $this->cat_quests).")
         ");
         
-        return $query;
+        return ($query == 1);
     }
 
 

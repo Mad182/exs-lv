@@ -12,7 +12,7 @@ class Series extends Controller {
      */
     public function index() {
 
-        $this->load_model('models/series');
+        $this->model('models/series');
 
         $var1 = isset($_GET['var1']) ? $_GET['var1'] : '';
         $var2 = isset($_GET['var2']) ? (int)$_GET['var2'] : 0;
@@ -79,18 +79,18 @@ class Series extends Controller {
      */
     private function display_series() {
 
-        $this->tpl->newBlock('all-series-block');
+        $this->view->newBlock('all-series-block');
 
         $series = $this->model->fetch_series();
         $series_count = $this->model->count_series();
         
         if ($series === false || $series_count === false) {
-            $this->tpl->newBlock('no-series-found');
+            $this->view->newBlock('no-series-found');
             return;
         }
 
-        $this->tpl->newBlock('series-notes');
-        $this->tpl->newBlock('series-form');
+        $this->view->newBlock('series-notes');
+        $this->view->newBlock('series-form');
 
         // skaits, aiz kura sarakstu pārdalīt uz pusēm
         $col_split = floor($series_count / 2);
@@ -100,19 +100,19 @@ class Series extends Controller {
         
             // lapā būs redzamas divas kolonnas ar sērijām
             if ($counter == 0 || $counter == $col_split) {
-                $this->tpl->newBlock('series-column');
+                $this->view->newBlock('series-column');
             }
             $counter++;
             
-            $this->tpl->newBlock('series-row');
-            $this->tpl->assignAll($single);          
+            $this->view->newBlock('series-row');
+            $this->view->assignAll($single);          
 
             // katrai sērijai ir izvēlne ar kārtas numuriem
             for ($i = 1; $i <= $series_count; $i++) {
                 $selected = ($i == $single->ordered_by) ? 
                     ' selected="selected"' : '';
-                $this->tpl->newBlock('selection-option');
-                $this->tpl->assign(array(
+                $this->view->newBlock('selection-option');
+                $this->view->assign(array(
                     'ordered_by' => $i,
                     'selected' => $selected
                 ));
@@ -127,18 +127,13 @@ class Series extends Controller {
     function display_series_quests($series_id = 0) {
     
         $series_id = (int)$series_id;
+        if ($series_id < 1) return '';
 
-        if ($series_id < 1) {
-            return '';
-        }
+        // izmanto lokālo skatu, jo šo funkciju izsauc jquery
+        if (($view = $this->view('rsmod')) === false) return '';
         
-        // tā kā šo izsauc jquery, funkcija izmanto lokālo $tpl objektu
-        if (($tpl = $this->load_template('rsmod')) === false) {
-            return '';
-        }
-        
-        $tpl->newBlock('series-quests-block');
-        $tpl->assign(array(
+        $view->newBlock('series-quests-block');
+        $view->assign(array(
             'category-url'  => $_GET['viewcat'],
             'series-id'     => $series_id
         ));
@@ -146,32 +141,32 @@ class Series extends Controller {
         $quests = $this->model->fetch_series_quests($series_id);
         
         if (!$quests) {
-            $tpl->newBlock('no-series-quests');
-            return $tpl->getOutputContent();
+            $view->newBlock('no-series-quests');
+            return $view->getOutputContent();
         } else {
-            $tpl->newBlock('submit-button');
+            $view->newBlock('submit-button');
         }   
 
         $quest_count = count($quests);
         
         // pievienos sarakstam katru atlasīto kvestu
-        $tpl->newBlock('quest-list');
+        $view->newBlock('quest-list');
         foreach ($quests as $quest) {
         
-            $tpl->newBlock('series-quest');
-            $tpl->assignAll($quest);
+            $view->newBlock('series-quest');
+            $view->assignAll($quest);
 
             // uzreiz atzīmēs jau iepriekš izvēlēto kārtas numuru
             for ($i = 1; $i <= $quest_count; $i++) {
-                $tpl->newBlock('option-param');
-                $tpl->assign('value', $i);
+                $view->newBlock('option-param');
+                $view->assign('value', $i);
                 if ($i == $quest->ordered_by) {
-                    $tpl->assign('selected', ' selected="selected"');
+                    $view->assign('selected', ' selected="selected"');
                 }
             }
         }
         
-        return $tpl->getOutputContent();
+        return $view->getOutputContent();
     }
     
 
@@ -181,32 +176,30 @@ class Series extends Controller {
     function display_all_quests($series_id = 0) {
         
         $series_id = (int)$series_id;
-        
-        // tā kā šo izsauc jquery, funkcija izmanto lokālo $tpl objektu
-        if (($tpl = $this->load_template('rsmod')) === false) {
-            return '';
-        }
-        $tpl->newBlock('all-quests-block');
+
+        // izveido lokālo skatu, jo šo funkciju izsauc jquery
+        if (($view = $this->view('rsmod')) === false) return '';
+        $view->newBlock('all-quests-block');
 
         // sērijas eksistences pārbaude
         if ($series_id < 1) {
-            $tpl->newBlock('wrong-params');
-            return $tpl->getOutputContent();
+            $view->newBlock('wrong-params');
+            return $view->getOutputContent();
         }        
         $series = $this->model->fetch_single_series($series_id);
         if (!$series) {
-            $tpl->newBlock('wrong-params');
-            return $tpl->getOutputContent();
+            $view->newBlock('wrong-params');
+            return $view->getOutputContent();
         }        
         
         $get_quests = $this->model->fetch_quests($series_id);
         if (!$get_quests) {
-            $tpl->newBlock('series-not-found');
-            return $tpl->getOutputContent();
+            $view->newBlock('series-not-found');
+            return $view->getOutputContent();
         }
         
-        $tpl->newBlock('all-quests-list');
-        $tpl->assign(array(
+        $view->newBlock('all-quests-list');
+        $view->assign(array(
             'category-url' => $_GET['viewcat'],
             'series-id' => $series->id,
             'series-title' => $series->title
@@ -214,8 +207,8 @@ class Series extends Controller {
         
         foreach ($get_quests as $quest) {
         
-            $tpl->newBlock('list-single-quest');
-            $tpl->assign(array(
+            $view->newBlock('list-single-quest');
+            $view->assign(array(
                 'series-id' => $series_id,
                 'page-id'   => $quest->id,
                 'title'     => $quest->title,
@@ -224,10 +217,10 @@ class Series extends Controller {
             
             // iekrāsos kvestu, ja tas jau ir pievienots atvērtajai sērijai
             $marker = ($quest->quests_id != '0') ? 'mark-added' : 'mark-neutral';
-            $tpl->assign('marker', $marker);
+            $view->assign('marker', $marker);
         }
         
-        return $tpl->getOutputContent();
+        return $view->getOutputContent();
     }
 
 
@@ -312,10 +305,6 @@ class Series extends Controller {
      */
     private function set_series_quest($type = null, $series_id = 0,
                                       $quest_id = 0) {
-
-        if (($tpl = $this->load_template('rsmod')) === false) {
-            return '';
-        }
             
         // ievades parametru pārbaudes
         if ($type !== 'add' && $type !== 'del') {

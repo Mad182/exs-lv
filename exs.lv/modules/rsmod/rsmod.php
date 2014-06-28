@@ -40,11 +40,11 @@ class Rsmod extends Controller {
         
         $path = CORE_PATH.'/modules/'.$this->category->module.'/submodules/';
         $php_file = $path.$submodules[$this->category->textid][0].'.php';
-        $tpl_file = $path.$submodules[$this->category->textid][1].'.tpl';
+        $view_file = $path.$submodules[$this->category->textid][1].'.tpl';
             
         if ($submodules[$this->category->textid][1] !== '') {
-            $this->tpl->assignInclude('sub-template', $tpl_file);
-            $this->tpl->prepare();
+            $this->view->assignInclude('sub-view', $view_file);
+            $this->view->prepare();
         }
         include($php_file);
         

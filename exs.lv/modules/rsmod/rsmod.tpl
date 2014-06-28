@@ -1,5 +1,4 @@
-<!-- INCLUDE BLOCK : sub-template -->
-
+<!-- INCLUDE BLOCK : sub-view -->
 
 <!-- START BLOCK : all-series-block -->
 
