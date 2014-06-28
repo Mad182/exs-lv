@@ -38,6 +38,30 @@ class Controller {
     
     
     /**
+     *  Ielādē moduļa mapē esošu template failu
+     *
+     *  @param string $file     faila nosaukums
+     *  @return TemplatePower   template objekts
+     */
+    protected function load_template($file = '') {
+        
+        $file = trim($file);        
+        if ($file == '') $this->display_error('Template fails neeksistē');
+
+        $file = CORE_PATH.'/modules/'.$this->category->module.'/'.$file;
+        
+        if (!file_exists($file)) {
+            return false;
+        }
+
+        $tpl = new TemplatePower($file);
+        $tpl->prepare();
+        
+        return $tpl;
+    }
+    
+    
+    /**
      *  Ielādē moduļa modeli
      *
      *  Nosaukumā (arī faila) drīkst būt tikai burti, cipari, "_" un "/".
@@ -131,25 +155,12 @@ class Controller {
     
     
     /**
-     *  Ielādē moduļa mapē esošu template failu
-     *
-     *  @param string $file     faila nosaukums
-     *  @return TemplatePower   template objekts
+     *  Pārbauda, vai lietotājs ir tiesīgs skatīt sadaļu
      */
-    protected function load_template($file = '') {
-        
-        $file = trim($file);        
-        if ($file == '') $this->display_error('Template fails neeksistē');
-
-        $file = CORE_PATH.'/modules/'.$this->category->module.'/'.$file;
-        
-        if (!file_exists($file)) {
-            return false;
+    protected function check_permission() {
+        if (!im_mod()) {
+            set_flash('Error 403: Permission denied!');
+            redirect();
         }
-
-        $tpl = new TemplatePower($file);
-        $tpl->prepare();
-        
-        return $tpl;
     }
 }
