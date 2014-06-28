@@ -1,14 +1,9 @@
 <?php
 /**
  *  /modules/rsmod paredzētie Models
- *
- *  ******************************
- *     Eksperimentāls variants!
- *  ******************************
- *
  */
 
-class Model_rsmod extends Models {
+class Model_Series extends Model {
 
     private $cat_quests;
 
@@ -230,7 +225,8 @@ class Model_rsmod extends Models {
     /**
      *  Piesaista sērijai kvestu
      */
-    public function set_series_quest($series_id = 0, $quest_id = 0, $row_id = 0) {
+    public function set_series_quest($series_id = 0, $quest_id = 0, 
+                                     $row_id = 0) {
     
         $series_id = (int)$series_id;
         if ($series_id < 1) return false;

@@ -3,24 +3,17 @@
  * 	RuneScape kvestu sēriju pārvaldība
  *
  *  Sēriju izmaiņas, kvestu piesaiste tām, to secība utt.
- *
- *  ******************************
- *     Eksperimentāls variants!
- *  ******************************
  */
-require_once(CORE_PATH.'/modules/rsmod/class.Controllers.php');
-require_once(CORE_PATH.'/modules/rsmod/class.Models.php');
-require_once(CORE_PATH.'/modules/rsmod/models.php');
 
-// zem šīs klases tiek izsauktas vairākas funkcijas
-
-class Controller_rsmod extends Controllers {
+class Series extends Controller {
 
     /**
      *  Pēc adreses parametriem izsauc pārējās funkcijas
      */
-    public function init() {
-    
+    public function index() {
+
+        $this->load_model('models/series');
+
         $var1 = isset($_GET['var1']) ? $_GET['var1'] : '';
         $var2 = isset($_GET['var2']) ? (int)$_GET['var2'] : 0;
         $var3 = isset($_GET['var3']) ? $_GET['var3'] : '';
@@ -367,9 +360,3 @@ class Controller_rsmod extends Controllers {
         return array($error, '', $type, $series_id, $url);
     }
 }
-
-!isset($sub_include) and die('No hacking, pls.');
-
-$model = new Model_rsmod();
-$controller = new Controller_rsmod();
-$controller->init();

@@ -1,60 +1,64 @@
 <?php
 /**
- *     RuneScape pamācību sadaļu (kvesti/prasmes u.tml.) administrācijas panelis
+ *  RuneScape pamācību sadaļu (kvesti/prasmes u.tml.) administrācijas panelis
  *
  *  Šis modulis apkopo tās sadaļas, kurās iespējams veikt izmaiņas
  *  RuneScape pamācību sadaļām, piemēram, pievienojot jaunas rakstu sērijas,
  *  mainot rakstu secību sērijā, izveidojot rakstu "placeholders" u.c.
  */
 
-if (!im_mod()) {
-    set_flash('Error 403: Permission denied!');
-    redirect();
-}
+class Rsmod extends Controller {
 
-$tpl_options = 'no-left';
-
-// submoduļos jāveic pārbaude, vai šāds mainīgais definēts
-// (lai nevarētu skatīt failu pa tiešo)
-$sub_include = true;
-
-// array_key ir lapas "textid"
-$submodules = array(
-    'all-quests'        => array('lists.php','lists.tpl'),
-    'all-miniquests'    => array('lists.php','lists.tpl'),
-    'all-minigames'     => array('lists.php','lists.tpl'),
-    'all-distractions'  => array('lists.php','lists.tpl'),
-    'all-guilds'        => array('lists.php','lists.tpl'),
-    'all-unlisted'      => array('unlisted.php', 'lists.tpl'),
-    'series'            => array('series.php', ''),
-    'skills'            => array('skills.php', '')
-);
-
-// iekļauj lapā pareizos failus
-if (isset($submodules[$category->textid])) {
-
-    $php_filename = CORE_PATH.'/modules/'.$category->module.'/submodules/'
-                             .$submodules[$category->textid][0];
-
-    $tpl_filename = '';
-    if ($submodules[$category->textid][1] !== '') {
-        $tpl_filename = CORE_PATH.'/modules/'.$category->module.'/submodules/'
-                                 .$submodules[$category->textid][1];
-    }
-
-    if (file_exists($php_filename)) {        
-        
-        if ($tpl_filename !== '' && file_exists($tpl_filename)) {
-            $tpl->assignInclude('sub-template', $tpl_filename);
-            $tpl->prepare();
+    public function index() {
+    
+        if (!im_mod()) {
+            set_flash('Error 403: Permission denied!');
+            redirect();
         }
-        include($php_filename);
+        // temp fix
+        global $tpl_options;
+        $tpl_options = 'no-left';
 
-    } else {
-        set_flash('Kļūdaini norādīta adrese');
-        redirect();
+        $this->load_submodule();
     }
-} else {
-    set_flash('Kļūdaini norādīta adrese');
-    redirect();
+    
+    
+    /**
+     *  Apakšmoduļa ielāde
+     */
+    private function load_submodule() {
+        
+        // array_key ir lapas "textid"
+        $submodules = array( // [0] .php, [1] .tpl
+            'all-quests'        => array('lists', 'lists'),
+            'all-miniquests'    => array('lists', 'lists'),
+            'all-minigames'     => array('lists', 'lists'),
+            'all-distractions'  => array('lists', 'lists'),
+            'all-guilds'        => array('lists', 'lists'),
+            'all-unlisted'      => array('unlisted', 'lists'),
+            'series'            => array('series', ''),
+            'skills'            => array('skills', '')
+        );
+
+        if (!isset($submodules[$this->category->textid])) {
+            set_flash('Kļūdaini norādīta adrese');
+            redirect();
+        }
+        
+        $path = CORE_PATH.'/modules/'.$this->category->module.'/submodules/';
+        $php_file = $path.$submodules[$this->category->textid][0].'.php';
+        $tpl_file = $path.$submodules[$this->category->textid][1].'.tpl';
+            
+        if ($submodules[$this->category->textid][1] !== '') {
+            $this->tpl->assignInclude('sub-template', $tpl_file);
+            $this->tpl->prepare();
+        }
+        include($php_file);
+        
+        $class_name = as_classname($submodules[$this->category->textid][0]);        
+        if ($class_name === false) return false;
+        
+        $controller = new $class_name();
+        $controller->index();
+    }
 }
