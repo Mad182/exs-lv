@@ -18,12 +18,13 @@ class Controller {
     protected $tpl;
     protected $category;
     protected $debug;
+    protected $tpl_options;
 
     // mainīgais atsauksies uz ielādēto modeli
     protected $model;
     
     public function __construct() {
-        global $db, $auth, $tpl, $category, $debug;
+        global $db, $auth, $tpl, $category, $debug, $tpl_options;
 
         $this->model = false;
 
@@ -32,6 +33,7 @@ class Controller {
         $this->tpl = $tpl;
         $this->category = $category;
         $this->debug = $debug;
+        $this->tpl_options = $tpl_options;
     }
     
     
@@ -52,7 +54,8 @@ class Controller {
     protected function load_model($model_string = '') {
 
         if ($this->model !== false) 
-            $this->display_error('Vienlaicīgi kontrollerī var ielādēt tikai vienu modeli!');
+            $this->display_error('Vienlaicīgi kontrollerī var ielādēt tikai ' . 
+                'vienu modeli!');
 
         // atstās tikai pieļaujamos simbolus
         $model_string = $this->escape_model_string($model_string);
@@ -89,6 +92,14 @@ class Controller {
     
     
     /**
+     *  Atbrīvo atsauci uz ielādēto modeli, lai varētu ielādēt citu
+     */
+    protected function clear_model() {
+        $this->model = false;
+    }
+    
+    
+    /**
      *  Eskeipo modeļa faila nosaukumu
      *
      *  Atstās nosaukumā tikai burtus, ciparus, "_" un "/".
@@ -116,5 +127,29 @@ class Controller {
         } else {
             die('Ooooops! Sistēmas kļūda. :)');
         }
+    }
+    
+    
+    /**
+     *  Ielādē moduļa mapē esošu template failu
+     *
+     *  @param string $file     faila nosaukums
+     *  @return TemplatePower   template objekts
+     */
+    protected function load_template($file = '') {
+        
+        $file = trim($file);        
+        if ($file == '') $this->display_error('Template fails neeksistē');
+
+        $file = CORE_PATH.'/modules/'.$this->category->module.'/'.$file;
+        
+        if (!file_exists($file)) {
+            return false;
+        }
+
+        $tpl = new TemplatePower($file);
+        $tpl->prepare();
+        
+        return $tpl;
     }
 }
