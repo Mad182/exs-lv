@@ -137,7 +137,7 @@ class Model_Series extends Model {
     public function check_series($series_id = 0) {
     
         $series_id = (int)$series_id;
-        if ($series_id === 0) return false;
+        if ($series_id < 1) return false;
         
         $query = $this->db->get_var("
             SELECT count(*) FROM `rs_series` 
@@ -199,16 +199,14 @@ class Model_Series extends Model {
     
         $row_id = (int)$row_id;
         if ($row_id < 1) return false;
-    
-        $query = $this->db->query("
-            UPDATE `rs_series_quests` 
-            SET 
-                `deleted_by` = ".(int)$this->auth->id.",
-                `deleted_at` = '".time()."'
-            WHERE `id` = ".$row_id."
-        ");
+
+        $fields = array(
+            'deleted_by' => (int)$this->auth->id,
+            'deleted_at' => time()
+        );
+        $this->db->update('rs_series_quests', $row_id, $fields);
         
-        return $query;
+        return true;
     }
     
     
@@ -230,14 +228,14 @@ class Model_Series extends Model {
         // tikai ticis dzēsts, tāpēc jāatjauno
         $query = true;
         if ($row_id > 0) {
-            $query = $this->db->query("
-                UPDATE `rs_series_quests` 
-                SET
-                    `deleted_by` = 0,
-                    `updated_by` = ".(int)$this->auth->id.",
-                    `updated_at` = '".time()."'
-                WHERE `id` = ".$row_id."
-            ");
+        
+            $fields = array(
+                'deleted_by' => 0,
+                'updated_by' => (int)$this->auth->id,
+                'updated_at' => time()
+            );
+            $this->db->update('rs_series_quests', $row_id, $fields);
+
         // ieraksta tabulā vēl nav
         } else {
             $query = $this->db->query("
