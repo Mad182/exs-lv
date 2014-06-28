@@ -48,7 +48,7 @@ class Controller {
         $file = trim($file);        
         if ($file == '') $this->display_error('Template fails neeksistē');
 
-        $file = CORE_PATH.'/modules/'.$this->category->module.'/'.$file;
+        $file = CORE_PATH.'/modules/'.$this->category->module.'/'.$file.'.tpl';
         
         if (!file_exists($file)) {
             return false;
