@@ -28,12 +28,12 @@ class Controller {
 
         $this->model = false;
 
-        $this->db = $db;
-        $this->auth = $auth;
-        $this->tpl = $tpl;
-        $this->category = $category;
-        $this->debug = $debug;
-        $this->tpl_options = $tpl_options;
+        $this->db =& $db;
+        $this->auth =& $auth;
+        $this->tpl =& $tpl;
+        $this->category =& $category;
+        $this->debug =& $debug;
+        $this->tpl_options =& $tpl_options;
     }
     
     
