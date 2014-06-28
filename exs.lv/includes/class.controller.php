@@ -15,7 +15,7 @@ class Controller {
      */
     protected $db;
     protected $auth;
-    protected $tpl;
+    protected $view;
     protected $category;
     protected $debug;
     protected $tpl_options;
@@ -30,7 +30,7 @@ class Controller {
 
         $this->db =& $db;
         $this->auth =& $auth;
-        $this->tpl =& $tpl;
+        $this->view =& $tpl;
         $this->category =& $category;
         $this->debug =& $debug;
         $this->tpl_options =& $tpl_options;
@@ -43,7 +43,7 @@ class Controller {
      *  @param string $file     faila nosaukums
      *  @return TemplatePower   template objekts
      */
-    protected function load_template($file = '') {
+    protected function view($file = '') {
         
         $file = trim($file);        
         if ($file == '') $this->display_error('Template fails neeksistē');
@@ -75,7 +75,7 @@ class Controller {
      *  
      *  @param string $model_name   modeļa nosaukums bez faila paplašinājuma
      */
-    protected function load_model($model_string = '') {
+    protected function model($model_string = '') {
 
         if ($this->model !== false) 
             $this->display_error('Vienlaicīgi kontrollerī var ielādēt tikai ' . 
@@ -139,6 +139,18 @@ class Controller {
         $string = preg_replace($allowed, '', $string);
         
         return $string;
+    }
+    
+    
+    /**
+     *  Pievieno jaunu template faila bloku
+     */
+    protected function block($string = '') {
+
+        $string = trim($string);        
+        if (empty($string)) return false;
+        
+        $this->view->newBlock($string);
     }
     
     
