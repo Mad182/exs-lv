@@ -16,48 +16,39 @@
  *      - ģildes
  */
 
-!isset($sub_include) and die('No hacking, pls.');
+class Unlisted extends Controller {
 
-$tpl->newBlock('list-tabs');
-$tpl->assign('tab-unlisted', 'active');
-$tpl->newBlock('list-intro-unlisted');
-
-$cats = array($cat_f2p_quests, $cat_p2p_quests, $cat_miniquests, 
-              $cat_minigames, $cat_distractions, $cat_guilds);
-
-$found_pages = $db->get_results("
-    SELECT
-        `pages`.`id`     AS `id`,
-        `pages`.`strid`  AS `strid`,
-        `pages`.`title`  AS `title`
-    FROM `pages`
-        LEFT JOIN `rs_pages` ON ( 
-            `pages`.`id` = `rs_pages`.`page_id` AND
-            `rs_pages`.`deleted_by` = 0
-        )
-    WHERE
-        `pages`.`lang` = 9 AND
-        `pages`.`category` IN(".implode(',', $cats).") AND
-        `rs_pages`.`id` IS NULL
-    ORDER BY `pages`.`title` ASC
-");
-
-if (!$found_pages) {
-    $tpl->newBlock('list-no-pages');
-} else {
-
-    $tpl->newBlock('list-all-unlisted');
+    /**
+     *  Parāda sarakstu ar rakstiem tabulas formā
+     */
+    public function index() {
     
-    $saved_letter = '';
-
-    foreach ($found_pages as $guide) {
-
-        $tpl->newBlock('unlisted-page');
+        $this->model('models/unlisted');
         
-        $tpl->assign(array(
-            'page_id'   => $guide->id,
-            'strid'     => $guide->strid,
-            'title'     => $guide->title
-        ));
+        $this->view->newBlock('list-tabs');
+        $this->view->assign('tab-unlisted', 'active');
+        $this->view->newBlock('list-intro-unlisted');
+        
+        // atlasa rakstus
+        $pages = $this->model->fetch_pages();
+        if (!$pages) {
+            $this->view->newBlock('list-no-pages');
+            return;
+        }
+        
+        $this->view->newBlock('list-all-unlisted');
+        
+        $saved_letter = '';
+
+        foreach ($pages as $guide) {
+
+            $this->view->newBlock('unlisted-page');
+            
+            $this->view->assign(array(
+                'page_id'   => $guide->id,
+                'strid'     => $guide->strid,
+                'title'     => $guide->title
+            ));
+        }
     }
 }

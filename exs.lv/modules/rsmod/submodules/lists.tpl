@@ -229,9 +229,9 @@
         <p class="field-example">(formāts: tekstveida apraksts)</p>
         <textarea name="extra">{extra}</textarea>
         
-        <select name="members_only">
-            <option value="0"{selected-free}>F2P</option>
-            <option value="1"{selected-members}>P2P</option>
+        <select style="clear:both;display:block" name="members_only">
+            <option value="0">F2P</option>
+            <option value="1"{sel-members}>P2P</option>
         </select>
         
         <p class="field-title">
@@ -276,9 +276,9 @@
         <p class="field-example">(formāts: tekstveida apraksts)</p>
         <textarea name="extra">{extra}</textarea>
         
-        <select name="members_only">
-            <option value="0"{selected-free}>F2P</option>
-            <option value="1"{selected-members}>P2P</option>
+        <select style="clear:both; display:block" name="members_only">
+            <option value="0">F2P</option>
+            <option value="1"{sel-members}>P2P</option>
         </select><br>
 
         <input class="button" type="submit" name="submit" value="Pievienot">
