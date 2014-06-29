@@ -35,8 +35,7 @@ class Controller {
         $this->view =& $tpl;
 
         $this->model = false;
-    }
-    
+    }    
     
     /**
      *  Ielādē moduļa mapē esošu template failu
@@ -59,8 +58,7 @@ class Controller {
         $tpl->prepare();
         
         return $tpl;
-    }
-    
+    }    
     
     /**
      *  Ielādē moduļa modeli
@@ -113,16 +111,14 @@ class Controller {
         // inicializē modeļa objektu
         $class_name = 'Model_' . $class_name;        
         $this->model = new $class_name();
-    }
-    
+    }    
     
     /**
      *  Atbrīvo atsauci uz ielādēto modeli, lai varētu ielādēt citu
      */
     protected function clear_model() {
         $this->model = false;
-    }
-    
+    }    
     
     /**
      *  Eskeipo modeļa faila nosaukumu
@@ -140,20 +136,7 @@ class Controller {
         $string = preg_replace($allowed, '', $string);
         
         return $string;
-    }
-    
-    
-    /**
-     *  Pievieno jaunu template faila bloku
-     */
-    protected function block($string = '') {
-
-        $string = trim($string);        
-        if (empty($string)) return false;
-        
-        $this->view->newBlock($string);
-    }
-    
+    } 
     
     /**
      *  Lapas izstrādātājiem būs redzami kļūdas paziņojumi
@@ -164,16 +147,19 @@ class Controller {
         } else {
             die('Ooooops! Sistēmas kļūda. :)');
         }
-    }
-    
+    }    
     
     /**
      *  Pārbauda, vai lietotājs ir tiesīgs skatīt sadaļu
      */
-    protected function check_permission() {
-        if (!im_mod()) {
-            set_flash('Error 403: Permission denied!');
-            redirect();
+    protected function check_permission($string = 'mod') {
+        if ($string === 'mod' && !im_mod()) {
+            set_flash('Pieeja liegta!');
+        } else if ($string === 'user' && !$this->auth->ok) {
+            set_flash('Pieeja liegta! Lūdzu, autorizējies.');
+        } else {
+            set_flash('Pieeja liegta!');
         }
+        redirect();
     }
 }
