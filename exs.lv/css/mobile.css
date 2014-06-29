@@ -1312,65 +1312,67 @@ blockquote, .q, .quote {
 	border-bottom: 1px solid #eee;
 }
 
-#user-notify li a {
-	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 6px;
+#user-notify li a .notification-icon {
+	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 -526px;
+	width: 28px;
+	height: 28px;
+	margin: 2px;
+	float: left;
 }
 
-#user-notify li.notification-1 a {
-	background-position: 0 -38px;
+#user-notify li.notification-1 a .notification-icon {
+	background-position: 0 -42px;
 }
 
-#user-notify li.notification-2 a {
-	background-position: 0 -82px;
+#user-notify li.notification-2 a .notification-icon {
+	background-position: 0 -86px;
 }
 
-#user-notify li.notification-3 a {
-	background-position: 0 -126px;
+#user-notify li.notification-3 a .notification-icon {
+	background-position: 0 -130px;
 }
 
-#user-notify li.notification-4 a {
-	background-position: 0 -170px;
+#user-notify li.notification-4 a .notification-icon {
+	background-position: 0 -174px;
 }
 
-#user-notify li.notification-5 a {
-	background-position: 0 -214px;
+#user-notify li.notification-5 a .notification-icon {
+	background-position: 0 -218px;
 }
 
-#user-notify li.notification-6 a {
-	background-position: 0 -258px;
+#user-notify li.notification-6 a .notification-icon {
+	background-position: 0 -262px;
 }
 
-#user-notify li.notification-7 a {
-	background-position: 0 -302px;
+#user-notify li.notification-7 a .notification-icon {
+	background-position: 0 -306px;
 }
 
-#user-notify li.notification-9 a {
-	background-position: 0 -346px;
+#user-notify li.notification-9 a .notification-icon {
+	background-position: 0 -350px;
 }
 
-#user-notify li.notification-10 a {
-	background-position: 0 -390px;
+#user-notify li.notification-10 a .notification-icon {
+	background-position: 0 -394px;
 }
 
-#user-notify li.notification-11 a {
-	background-position: 0 -434px;
+#user-notify li.notification-11 a .notification-icon {
+	background-position: 0 -438px;
 }
 
-#user-notify li.notification-12 a {
-	background-position: 0 -478px;
-}
-
-#user-notify li.notification-13 a, #user-notify li.notification-14 a, #user-notify li.notification-15 a, #user-notify li.notification-16 a {
-	background-position: 0 -522px;
+#user-notify li.notification-12 a .notification-icon {
+	background-position: 0 -482px;
 }
 
 #user-notify li a {
 	display: block;
 	text-decoration: none;
-	padding: 3px 0 3px 28px;
+	line-height: 1.3;
+	padding: 3px;
 	height: auto !important;
 	height: 28px;
 	min-height: 28px;
+	overflow: hidden;
 }
 
 #user-notify li a:hover {
