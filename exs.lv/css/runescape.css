@@ -29,6 +29,14 @@
 body {
     background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
 }
+
+/* background fix lielajiem ekrāniem  */
+@media only screen and (min-width:1920px) {
+	body {
+		background-size:cover;
+	}
+}
+
 #scroll-up {
     background:rgba(86, 105, 136, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
     border: 2px solid #000
