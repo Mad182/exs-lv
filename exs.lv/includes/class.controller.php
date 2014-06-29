@@ -8,32 +8,33 @@
 
 class Controller {
 
-    /**
-     *  Globālie mainīgie, kas nepieciešami visos kontrolleros, definējami šeit.
-     *  Specifiskus mainīgos var definēt moduļa kontrollera konstruktorā,
-     *  no kura tad obligāti jāizsauc šīs parent klases konstruktors.
-     */
-    protected $db;
-    protected $auth;
-    protected $view;
-    protected $category;
-    protected $debug;
-    protected $tpl_options;
-
-    // mainīgais atsauksies uz ielādēto modeli
+    // atsauce uz ielādēto modeli
     protected $model;
     
+    // atsauce uz $tpl globālo mainīgo
+    protected $view;
+    
+    /**
+     *  Pievieno kontrollerim atsauces uz atsevišķiem 
+     *  projekta globālajiem mainīgajiem
+     */
     public function __construct() {
-        global $db, $auth, $tpl, $category, $debug, $tpl_options;
+        
+        $globals = array(
+            'db', 'auth', 'lang',
+            'tpl_options', 'debug',
+            'm', 'ss',
+            'category', 'page_title'
+        );
+        foreach ($globals as $global) {
+            global ${$global};
+            $this->{$global} =& ${$global};
+        }
+
+        global $tpl;
+        $this->view =& $tpl;
 
         $this->model = false;
-
-        $this->db =& $db;
-        $this->auth =& $auth;
-        $this->view =& $tpl;
-        $this->category =& $category;
-        $this->debug =& $debug;
-        $this->tpl_options =& $tpl_options;
     }
     
     
