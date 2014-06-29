@@ -8,19 +8,17 @@
 class Model {
     
     /**
-     *  Globālie mainīgie, kas nepieciešami visos modeļos, definējami šeit.
-     *  Specifiskus mainīgos var definēt moduļa modeļa konstruktorā,
-     *  no kura obligāti jāizsauc šīs parent klases konstruktors.
+     *  Pievieno modelim atsauces uz atsevišķiem 
+     *  projekta globālajiem mainīgajiem
      */
-    protected $db;
-    protected $auth;
-    protected $tpl;
-    
     public function __construct() {
-        global $db, $auth, $tpl;
 
-        $this->db = $db;
-        $this->auth = $auth;
-        $this->tpl = $tpl;
+        $globals = array(
+            'db', 'auth', 'lang', 'debug', 'category'
+        );
+        foreach ($globals as $global) {
+            global ${$global};
+            $this->{$global} =& ${$global};
+        }
     }
 }

@@ -112,7 +112,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 //lai testētu jauno layoutu
 $use_bootstrap = false;
 $bootstrap_cache_key = '';
-if($auth->id == 1 && $lang == 1) {
+if(false && $auth->id == 1 && $lang == 1) {
 	$use_bootstrap = true;
 	$bootstrap_cache_key = '_bootstrap';
 }
@@ -266,17 +266,17 @@ if ($skin === 'main') {
 
 $persona = '';
 if (!empty($inprofile) && !empty($inprofile->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($ingroup) && !empty($ingroup->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($auth->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $auth->persona . '\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $auth->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($category->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $category->persona . '\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $category->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif ($lang == 3) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gear.png\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gear.png\') repeat-x 0 0;background-size:cover;"';
 } else {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0"';
+	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0;background-size:cover;"';
 }
 
 $in_level = 0;

@@ -189,11 +189,11 @@ body {
 }
 
 #left .inner, #right .inner {
-	padding: 8px;
+	padding: 10px;
 }
 
 #content .inner {
-	padding: 15px 9px;
+	padding: 15px;
 }
 
 #left {
@@ -234,9 +234,9 @@ body {
 #wrapper {
 	position: relative;
 	background: #fff;
-	width: 90%;
+	width: 92%;
 	min-width: 980px;
-	max-width: 1120px;
+	max-width: 1180px;
 	margin: 0 auto 20px;
 	border-radius:2px;
 	padding: 0 5px 5px;

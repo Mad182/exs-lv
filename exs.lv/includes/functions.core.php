@@ -190,12 +190,12 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 		0 => 'atbilde komentāram',
 		1 => 'komentārs galerijā',
 		2 => 'komentārs rakstam',
-		3 => 'atbilde miniblogā',
+		3 => 'atbilde mb',
 		4 => 'jauns biedrs tavā grupā',
 		5 => 'tevi aicina draudzēties',
 		6 => 'tev ir jauns draugs',
 		7 => 'tu saņēmi medaļu',
-		8 => 'tev atbildēja grupā',
+		8 => 'atbilde grupā',
 		9 => 'saņemta vēstule',
 		10 => 'brīdinājums!',
 		11 => 'noņemts brīdinājums',
@@ -253,7 +253,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= 'title="' . htmlspecialchars($notify->info) . '" ';
 				}
-				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
+				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-icon"></span><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
 
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= ' - <span class="info-content">' . strip_tags(textlimit($notify->info, 45, '')) . '...</span>';
@@ -2180,4 +2180,3 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$page_title = $user->nick . ' ' . $title;
 }
-

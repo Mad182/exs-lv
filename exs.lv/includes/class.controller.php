@@ -8,34 +8,34 @@
 
 class Controller {
 
-    /**
-     *  Globālie mainīgie, kas nepieciešami visos kontrolleros, definējami šeit.
-     *  Specifiskus mainīgos var definēt moduļa kontrollera konstruktorā,
-     *  no kura tad obligāti jāizsauc šīs parent klases konstruktors.
-     */
-    protected $db;
-    protected $auth;
-    protected $view;
-    protected $category;
-    protected $debug;
-    protected $tpl_options;
-
-    // mainīgais atsauksies uz ielādēto modeli
+    // atsauce uz ielādēto modeli
     protected $model;
     
+    // atsauce uz $tpl globālo mainīgo
+    protected $view;
+    
+    /**
+     *  Pievieno kontrollerim atsauces uz atsevišķiem 
+     *  projekta globālajiem mainīgajiem
+     */
     public function __construct() {
-        global $db, $auth, $tpl, $category, $debug, $tpl_options;
+        
+        $globals = array(
+            'db', 'auth', 'lang',
+            'tpl_options', 'debug',
+            'm', 'ss',
+            'category', 'page_title'
+        );
+        foreach ($globals as $global) {
+            global ${$global};
+            $this->{$global} =& ${$global};
+        }
+
+        global $tpl;
+        $this->view =& $tpl;
 
         $this->model = false;
-
-        $this->db =& $db;
-        $this->auth =& $auth;
-        $this->view =& $tpl;
-        $this->category =& $category;
-        $this->debug =& $debug;
-        $this->tpl_options =& $tpl_options;
-    }
-    
+    }    
     
     /**
      *  Ielādē moduļa mapē esošu template failu
@@ -58,8 +58,7 @@ class Controller {
         $tpl->prepare();
         
         return $tpl;
-    }
-    
+    }    
     
     /**
      *  Ielādē moduļa modeli
@@ -112,16 +111,14 @@ class Controller {
         // inicializē modeļa objektu
         $class_name = 'Model_' . $class_name;        
         $this->model = new $class_name();
-    }
-    
+    }    
     
     /**
      *  Atbrīvo atsauci uz ielādēto modeli, lai varētu ielādēt citu
      */
     protected function clear_model() {
         $this->model = false;
-    }
-    
+    }    
     
     /**
      *  Eskeipo modeļa faila nosaukumu
@@ -139,20 +136,7 @@ class Controller {
         $string = preg_replace($allowed, '', $string);
         
         return $string;
-    }
-    
-    
-    /**
-     *  Pievieno jaunu template faila bloku
-     */
-    protected function block($string = '') {
-
-        $string = trim($string);        
-        if (empty($string)) return false;
-        
-        $this->view->newBlock($string);
-    }
-    
+    } 
     
     /**
      *  Lapas izstrādātājiem būs redzami kļūdas paziņojumi
@@ -163,16 +147,19 @@ class Controller {
         } else {
             die('Ooooops! Sistēmas kļūda. :)');
         }
-    }
-    
+    }    
     
     /**
      *  Pārbauda, vai lietotājs ir tiesīgs skatīt sadaļu
      */
-    protected function check_permission() {
-        if (!im_mod()) {
-            set_flash('Error 403: Permission denied!');
-            redirect();
+    protected function check_permission($string = 'mod') {
+        if ($string === 'mod' && !im_mod()) {
+            set_flash('Pieeja liegta!');
+        } else if ($string === 'user' && !$this->auth->ok) {
+            set_flash('Pieeja liegta! Lūdzu, autorizējies.');
+        } else {
+            set_flash('Pieeja liegta!');
         }
+        redirect();
     }
 }

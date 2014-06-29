@@ -65,17 +65,19 @@ class mdb extends mysqli {
 	function update($table = null, $params = null, $data = null) {
 
 		if (empty($table) || empty($params) || empty($data)) 
-			return null;
+			return false;
 	
 		$criteria = array();
 		$updates = array();
+        $limit = 'LIMIT 1';
 
 		if (is_array($params)) {
 			foreach ($params as $key => $value) {
 				$criteria[] = "`" . $key . "` = '" . $value . "'";
 			}
+            $limit = '';
 		} else {
-			if ((int)$params < 1) return null;
+			if ((int)$params < 1) return false;
 			$criteria[] = "`id` = " . (int)$params;
 		}       
 
@@ -85,15 +87,18 @@ class mdb extends mysqli {
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
 		}
+        if (empty($updates) || empty($criteria)) return false;
+        
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);
 
-		return $this->query("UPDATE `$table` SET $updates WHERE $criteria LIMIT 1");
+        $this->query("UPDATE `$table` SET $updates WHERE $criteria $limit");
+		return ($this->affected_rows > 0);
 	}
 
 	function insert($table = null, $data = null) {
 
-		if ($data === null || empty($data)) return false;
+		if (empty($data)) return false;
 
 		$keys = array();
 		$values = array();
@@ -107,7 +112,8 @@ class mdb extends mysqli {
 		$keys = implode(',', $keys);
 		$values = implode(',', $values);
 
-		return $this->query("INSERT INTO `$table` ($keys) VALUES($values)");
+        $this->query("INSERT INTO `$table` ($keys) VALUES($values)");
+		return ($this->affected_rows > 0);
 	}
 
 }
