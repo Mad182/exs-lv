@@ -2886,23 +2886,32 @@ ul.taged {
 
 /* flash message */
 #flash-message {
-	margin: 5px 5px 2px;
+	margin: 16px 5px 10px;
+	padding: 10px 16px 8px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+#flash-message a {
+	font-weight: bold;
 }
 
 #flash-message.success {
-	border: 1px solid #57a957;
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+}
+
+#flash-message.warning {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
 }
 
 #flash-message.error {
-	border: 1px solid #c43c35;
-}
-
-#flash-message p {
-	font-size: 11px;
-	padding: 5px;
-	margin: 0;
-	line-height: 14px;
-	border-width: 1px;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
 }
 
 #close-flash-message {
