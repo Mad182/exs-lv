@@ -1,6 +1,6 @@
 <?php
 /**
- *  /modules/rsmod paredzētie Models
+ *  Darbības ar RuneScape kvestu sērijām
  */
 
 class Model_Series extends Model {
@@ -11,8 +11,7 @@ class Model_Series extends Model {
         global $cat_quests;
         $this->cat_quests = $cat_quests;
         parent::__construct();
-    }
-    
+    }    
     
     /**
      *  Atlasa visas kvestu sērijas
@@ -26,8 +25,7 @@ class Model_Series extends Model {
         ");
         
         return $query;
-    }
-    
+    }    
     
     /**
      *  Atgriež kvestu sēriju skaitu
@@ -39,8 +37,7 @@ class Model_Series extends Model {
         ");
         
         return $query;
-    }
-    
+    }    
 
     /**
      *  Atlasa visus kvestus
@@ -73,8 +70,7 @@ class Model_Series extends Model {
         ");
         
         return $query;
-    }
-    
+    }    
     
     /**
      *  Atlasa norādītajā sērijā ietilpstošos kvestus
@@ -108,8 +104,7 @@ class Model_Series extends Model {
         ");
         
         return $query;
-    }
-    
+    }    
     
     /**
      *  Atgriež datus par norādīto sēriju
@@ -128,8 +123,7 @@ class Model_Series extends Model {
         ");
         
         return $query;
-    }
-    
+    }    
     
     /**
      *  Veic pārbaudi, vai eksistē norādītā sērija
@@ -147,8 +141,7 @@ class Model_Series extends Model {
         ");
         
         return ($query == 1);
-    }
-    
+    }    
     
     /**
      *  Veic pārbaudi, vai norādītais kvests eksistē
@@ -169,7 +162,6 @@ class Model_Series extends Model {
         return ($query == 1);
     }
 
-
     /**
      *  Atgriež norādītās sērijas un kvesta `rs_series_quests` ierakstu
      */
@@ -189,8 +181,7 @@ class Model_Series extends Model {
         ");
         
         return $query;
-    }
-    
+    }    
     
     /**
      *  Dzēš kvestu no norādītās sērijas
@@ -207,8 +198,7 @@ class Model_Series extends Model {
         $this->db->update('rs_series_quests', $row_id, $fields);
         
         return true;
-    }
-    
+    }    
     
     /**
      *  Piesaista sērijai kvestu

@@ -71,8 +71,7 @@ class Series extends Controller {
                 $this->display_series();
             }
         }        
-    }
-    
+    }    
     
     /**
      *  Parāda lapā kvestu sērijas un to izmaiņu formu
@@ -118,8 +117,7 @@ class Series extends Controller {
                 ));
             }
         }
-    }
-    
+    }    
     
     /**
      *  Atgriež html saturu ar sērijas kvestiem
@@ -167,8 +165,7 @@ class Series extends Controller {
         }
         
         return $view->getOutputContent();
-    }
-    
+    }    
 
     /**
      *  Atgriež html saturu ar visiem kvestiem
@@ -223,7 +220,6 @@ class Series extends Controller {
         return $view->getOutputContent();
     }
 
-
     /**
      *  Sēriju secības izmaiņas
      */
@@ -250,8 +246,7 @@ class Series extends Controller {
         
         set_flash('Sēriju secība un nosaukumi atjaunoti');
         redirect('/'.$_GET['viewcat']);    
-    }
-    
+    }    
     
     /**
      *  Sērijas kvestu secības maiņa
@@ -298,7 +293,6 @@ class Series extends Controller {
             $this->display_series_quests($series_id));
         return $arr;
     }
-
 
     /**
      *  Pievieno sērijai vai no tās dzēš kādu kvestu

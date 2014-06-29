@@ -1,6 +1,6 @@
 <?php
 /**
- *  
+ *  Darbības ar RuneScape prasmēm
  */
 
 class Model_Skills extends Model {
