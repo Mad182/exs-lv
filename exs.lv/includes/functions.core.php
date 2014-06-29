@@ -26,7 +26,32 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 }
 
 /**
- * Aprekina un updato lietotja karmu
+ *  Pārveido stringu par pieļaujamu klases nosaukumu
+ *
+ *  @return string|false    false, ja nosaukumu nevar izveidot
+ */
+function as_classname($name = '') {
+
+    $name = trim($name);
+    if ($name === '') return false;
+
+    // klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
+    $name = str_replace('-', '_', $name);
+    
+    $allowed = "/[^a-z0-9_]/i";
+	$name = preg_replace($allowed, '', $name);    
+    if ($name === '') return false;
+    
+    // katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
+    $name = str_replace('_', ' ', $name);
+    $name = ucwords($name);
+    $name = str_replace(' ', '_', $name);
+    
+    return $name;
+}
+
+/**
+ * Aprēķina un updeito lietotāja karmu
  *
  * @param int $userid
  * @param bool $force_award
