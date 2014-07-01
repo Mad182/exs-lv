@@ -37,7 +37,7 @@ class Quests extends Controller {
         if (isset($_GET['var1']) && $_GET['var1'] === 'new') {
 
             if (isset($_POST['submit'])) {
-                $this->model->post_new_quest($_POST);
+                $this->list_quests->post_new_quest($_POST);
                 set_flash('Ieraksts pievienots');
                 redirect('/'.$_GET['viewcat']);
             }
@@ -48,7 +48,7 @@ class Quests extends Controller {
                    isset($_GET['var2'])) {
 
             if (isset($_POST['submit'])) {
-                $this->model->update_quest($_GET['var2'], $_POST);
+                $this->list_quests->update_quest($_GET['var2'], $_POST);
                 set_flash('Ieraksts atjaunots');
                 redirect('/'.$_GET['viewcat']);
             }
@@ -92,7 +92,7 @@ class Quests extends Controller {
      */
     private function show_edit_form($entry_id = 0) {
     
-        $entry = $this->model->fetch_entry($entry_id);        
+        $entry = $this->list_quests->fetch_entry($entry_id);        
         if (!$entry) {
             set_flash('Ieraksts neeksistē');
             redirect('/'.$_GET['viewcat']);

@@ -30,7 +30,7 @@ class Unlisted extends Controller {
         $this->view->newBlock('list-intro-unlisted');
         
         // atlasa rakstus
-        $pages = $this->model->fetch_pages();
+        $pages = $this->unlisted->fetch_pages();
         if (!$pages) {
             $this->view->newBlock('list-no-pages');
             return;

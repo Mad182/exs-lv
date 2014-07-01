@@ -72,7 +72,7 @@ class Lists extends Controller {
         $this->view->newBlock('list-intro-text');
         $this->view->newBlock('list-button-new');
         
-        $found_pages = $this->model->fetch_pages();
+        $found_pages = $this->lists->fetch_pages();
         if (!$found_pages) {
             $this->view->newBlock('list-no-pages');
             return;
@@ -130,7 +130,7 @@ class Lists extends Controller {
         $response = 'Ieraksts dzēsts';
         $error = 'success';
     
-        $val = $this->model->delete_entry($entry_id);
+        $val = $this->lists->delete_entry($entry_id);
         if ($val === false) {
             $response = 'Ierakstu dzēst neizdevās';
             $error = 'error';
@@ -156,7 +156,7 @@ class Lists extends Controller {
         $entry_id = (int)$_GET['var2'];
     
         // pārbauda, vai norādītais ieraksts vispār eksistē
-        $get_entry = $this->model->fetch_entry($entry_id);
+        $get_entry = $this->lists->fetch_entry($entry_id);
         if (!$get_entry) {
             if (isset($_GET['_'])) {
                 echo json_encode(array('state' => 'error', 
@@ -171,7 +171,7 @@ class Lists extends Controller {
         $swap_to = ($get_entry->is_hidden) ? 0 : 1;
         $swap_text = ($swap_to) ? 'hidden' : 'shown';
         
-        $this->model->toggle_entry($entry_id, $swap_to);        
+        $this->lists->toggle_entry($entry_id, $swap_to);        
         
         if (isset($_GET['_'])) {
             echo json_encode(array('state' => 'success', 
@@ -205,7 +205,7 @@ class Lists extends Controller {
         if (file_exists($path)) {
             require($path);
             $class_name = str_replace(array('.php','lists_'), '', $filename);
-            $class_name = as_classname($class_name);
+            $class_name = as_class_name($class_name);
             $controller = new $class_name();
             $controller->index();
 

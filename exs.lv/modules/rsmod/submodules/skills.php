@@ -26,7 +26,7 @@ class Skills extends Controller {
 
         $this->view->newBlock('skill-requirements');
 
-        $skills = $this->model->fetch_skills();        
+        $skills = $this->skills->fetch_skills();        
         if (!$skills) {
             $this->view->newBlock('no-skills-added');
             return;
@@ -66,7 +66,7 @@ class Skills extends Controller {
      */
     private function submit($post_arr = null) {
 
-        $skills = $this->model->fetch_skills();
+        $skills = $this->skills->fetch_skills();
 
         if (empty($post_arr) || !$skills) {
             set_flash('Informāciju neizdevās atjaunot');
@@ -85,7 +85,7 @@ class Skills extends Controller {
                 if ($post_arr['quest-'.$skill->id] !== '') {
                 
                     $title = input2db($post_arr['quest-'.$skill->id], 256);
-                    $article = $this->model->fetch_page($title);
+                    $article = $this->skills->fetch_page($title);
                     
                     if ($article) {
                         $page_value = $article->id;

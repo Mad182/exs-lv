@@ -80,8 +80,8 @@ class Series extends Controller {
 
         $this->view->newBlock('all-series-block');
 
-        $series = $this->model->fetch_series();
-        $series_count = $this->model->count_series();
+        $series = $this->series->fetch_series();
+        $series_count = $this->series->count_series();
         
         if ($series === false || $series_count === false) {
             $this->view->newBlock('no-series-found');
@@ -136,7 +136,7 @@ class Series extends Controller {
             'series-id'     => $series_id
         ));
         
-        $quests = $this->model->fetch_series_quests($series_id);
+        $quests = $this->series->fetch_series_quests($series_id);
         
         if (!$quests) {
             $view->newBlock('no-series-quests');
@@ -183,13 +183,13 @@ class Series extends Controller {
             $view->newBlock('wrong-params');
             return $view->getOutputContent();
         }        
-        $series = $this->model->fetch_single_series($series_id);
+        $series = $this->series->fetch_single_series($series_id);
         if (!$series) {
             $view->newBlock('wrong-params');
             return $view->getOutputContent();
         }        
         
-        $get_quests = $this->model->fetch_quests($series_id);
+        $get_quests = $this->series->fetch_quests($series_id);
         if (!$get_quests) {
             $view->newBlock('series-not-found');
             return $view->getOutputContent();
@@ -226,7 +226,7 @@ class Series extends Controller {
     private function reorder_series($post_arr = null) {
 
         // atlasa visas sērijas, lai katrai pārbaudītu iesniegtu datu esamību
-        $series = $this->model->fetch_series();
+        $series = $this->series->fetch_series();
         if ($post_arr == null || $series === false) {
             set_flash('Darbība neizdevās');
             redirect('/'.$_GET['viewcat']);
@@ -260,13 +260,13 @@ class Series extends Controller {
             return $arr;
         }
         
-        $series = $this->model->check_series($series_id);        
+        $series = $this->series->check_series($series_id);        
         if (!$series) {
             $arr = array('error', 'Darbība neizdevās', '');
             return $arr;
         }
         
-        $quests = $this->model->fetch_series_quests($series_id);
+        $quests = $this->series->fetch_series_quests($series_id);
         if ($quests === false) {
             $arr = array('error', 'Darbība neizdevās', '');
             return $arr;
@@ -308,30 +308,30 @@ class Series extends Controller {
         $series_id = (int)$series_id;
         $quest_id = (int)$quest_id;
 
-        if (!$this->model->check_series($series_id)) {
+        if (!$this->series->check_series($series_id)) {
             return array('error', 'Norādītā sērija neeksistē', '', '', '');
         }
-        if (!$this->model->check_quest($quest_id)) {
+        if (!$this->series->check_quest($quest_id)) {
             return array('error', 'Norādītais kvests neeksistē', '', '', '');
         }
         
         // pārbauda, vai ieraksts par šādu sērijas un kvesta kombināciju 
         // eksistē, lai varētu veikt attiecīgus labojumus
-        $entry = $this->model->get_series_quest($series_id, $quest_id);
+        $entry = $this->series->get_series_quest($series_id, $quest_id);
         
         $query_response = false;
         if ($type === 'del') {
             if ($entry) {
-                $query_response = $this->model->remove_series_quest($entry->id);
+                $query_response = $this->series->remove_series_quest($entry->id);
             } else { // ja nav dzēšama ieraksta, pieņem, ka viss kārtībā
                 $query_response = true;
             }
         } else if ($type === 'add') {
             if (!$entry) {
-                $query_response = $this->model->set_series_quest(
+                $query_response = $this->series->set_series_quest(
                     $series_id, $quest_id);
             } else {
-                $query_response = $this->model->set_series_quest(
+                $query_response = $this->series->set_series_quest(
                     $series_id, $quest_id, $entry->id);
             }
         }
