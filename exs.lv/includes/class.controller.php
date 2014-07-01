@@ -4,10 +4,6 @@
  *
  *  Kontrolleri, kas šo klasi atvasina, meklējami moduļu mapēs.
  *
- *  TODO:
- *      - as_classname() - atstarpes jādzēš
- *      - $this->quit() kā funkcija globālajos failos *
- *
  *  Daudzas funkcijas ievadē saņem faila nosaukumu. Ar nosaukumu jāsaprot,
  *  ka norādīts drīkst būt arī ceļš, sākot no atvērtā moduļa mapes.
  *
@@ -26,10 +22,6 @@ class Controller {
     
     // ceļš pa mapēm uz atvērto moduli
     private $path;
-    
-    // masīvs ar ielādētajiem modeļiem, lai zinātu, 
-    // vai nepieprasa vienu un to pašu atkārtoti
-    private $loaded_models;
     
     /**
      *  Pievieno kontrollerim atsauces uz atsevišķiem 
@@ -51,8 +43,6 @@ class Controller {
         global $tpl;
         $this->view =& $tpl;
         $this->path = CORE_PATH.'/modules/'.$this->category->module.'/';
-        
-        $this->loaded_models = array();
     }
     
     /**
@@ -61,13 +51,14 @@ class Controller {
      *  @param string $file  faila nosaukums
      */
     protected function model($file = '') {
+
+        $last_part = $this->get_last_part($file);
         
         // nosaukums mainīgajam, caur kādu varēs atsaukties uz modeli
-        $variable_name = trim($file);
         $allowed = "/[^a-z0-9_]/i";
-        $variable_name = preg_replace($allowed, '', $variable_name);
+        $variable_name = preg_replace($allowed, '', $last_part);
 
-        if (isset($this->{$variable_name})) {
+        if (empty($variable_name) || isset($this->{$variable_name})) {
             $this->quit('Neizdevās izveidot mainīgo ar šādu modeļa nosaukumu');
         }
 
@@ -81,16 +72,9 @@ class Controller {
         
         require_once(CORE_PATH . '/includes/class.model.php');
         require($this->path.$file.'.php');
-        
-        // vienu un to pašu modeli nedrīkst ielādēt atkārtoti;
-        // bez kļūdas paziņojuma arī var iztikt, jo modelis jau ir ielādēts
-        $class_name = as_classname($this->get_last_part($file));
-        if (in_array($class_name, $this->loaded_models)) {
-            return;
-        }
-        
+
         // inicializē modeļa objektu
-        $class_name = 'Model_' . $class_name;
+        $class_name = 'Model_' . as_classname($last_part);
         $this->{$variable_name} = new $class_name();
     }
 
@@ -104,7 +88,7 @@ class Controller {
      */
     protected function view($file = '') {
         
-        $file = as_file_name($file);   
+        $file = $this->as_file_name($file);   
         if (empty($file)) $this->quit('Kļūdaini norādīti parametri');
      
         if (!file_exists($this->path.$file.'.tpl')) {
@@ -125,7 +109,7 @@ class Controller {
      */
     protected function subview($file = '', $parent_block = '') {
         
-        $file = as_file_name($file);
+        $file = $this->as_file_name($file);
         $parent_block = trim($parent_block);
         
         if (empty($file) || empty($parent_block)) {
@@ -147,7 +131,7 @@ class Controller {
      */
     protected function submodule($file = '') {
 
-        $file = as_file_name($file);        
+        $file = $this->as_file_name($file);        
         if (empty($file)) {
             $this->quit('Kļūdaini norādīti parametri');
         }
@@ -158,12 +142,12 @@ class Controller {
         
         require($this->path.$file.'.php');
 
-        $class_name = as_classname($this->get_last_part($file);
+        $class_name = as_classname($this->get_last_part($file));
         if (empty($class_name)) {
             $this->quit('Kļūda klases nosaukumā');
         }
             
-        $class = new $classname();
+        $class = new $class_name();
 
         if (!method_exists($class, 'index')) {
             $this->quit('Objektu neizdevās inicializēt');
