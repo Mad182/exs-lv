@@ -1,76 +1,36 @@
 <?php
-
 /**
- * 	RuneScape ģildes
+ *  RuneScape ģilžu pamācību saraksta sadaļa
  */
-!isset($sub_include) and die('No hacking, pls.');
 
+class Guilds extends Controller {
 
-// atlasa runescape ģilžu rakstus un tiem piesaista
-// papildinformāciju, ja tāda atrodama `rs_pages` tabulā
-$guilds = $db->get_results("
-    SELECT 
-        `pages`.`id`                AS `page_id`,
-        `pages`.`strid`             AS `page_strid`,
-        `pages`.`title`             AS `page_title`,
-        `pages`.`author`            AS `page_author`,
-        `pages`.`category`          AS `page_category`,
+    public function index() {
+    
+        $this->model('models/other');
         
-        IFNULL(`rs_pages`.`id`,0)   AS `rspage_id`,
-        `rs_pages`.`img`            AS `rspage_img`,
-        `rs_pages`.`members_only`   AS `rspage_members_only`,
-        `rs_pages`.`location`       AS `rspage_location`,
-        `rs_pages`.`extra`          AS `rspage_extra`,
-        `rs_pages`.`is_old`         AS `rspage_is_old`
-    FROM `pages` 
-        LEFT JOIN `rs_pages` ON (
-            `pages`.`id`                = `rs_pages`.`page_id` AND
-            `rs_pages`.`deleted_by`     = 0 AND
-            `rs_pages`.`is_placeholder` = 0
-        )
-    WHERE 
-        `pages`.`category` = 791 
-    ORDER BY 
-        `pages`.`title` ASC
-");
+        $guilds = $this->other->fetch_guilds();
 
-if ($guilds) {
+        if (!$guilds) {
+            $this->view->newBlock('..');
+            return;
+        }
 
-	$tpl->newBlock('guilds');
-	$tpl->newBlock('guilds-not');
+        $this->view->newBlock('guilds');
+        $this->view->newBlock('guilds-not');
 
-	foreach ($guilds as $page) {
+        foreach ($guilds as $page) {
 
-		// pārbauda, vai pieprasījumā izdevās atlasīt papildinformāciju
-		if ($page->rspage_id != '0') {
-			/*$page->rspage_is_old = ($page->rspage_is_old == 1) ?
-					'<img class="guild-old" src="/bildes/runescape/info_yellow_sm.png" title="Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!" alt="">' :
-					'<img class="guild-old" src="/bildes/runescape/info_red_sm.png" title="Pamācību nepieciešams atjaunināt!" alt="">';*/
-			$page->rspage_members_only = ($page->rspage_members_only == 1) ?
-					'<img class="guild-icon" src="/bildes/runescape/p2p_small.png" title="Maksājošo spēlētāju ģilde" alt="">' : '';
-            $page->rspage_is_old = '';
-		} else {
-            
-            $ins = $db->query("INSERT INTO `rs_pages` (page_id, category_id, created_by, created_at) VALUES(
-                ".(int)$page->page_id.",
-                ".(int)$page->page_category.",
-                ".(int)$auth->id.",
-                '".time()."'
-            )");
-        
-			$page->rspage_is_old = '';
-			$page->rspage_members_only = '';
-		}
-
-		// ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
-		if ($page->rspage_img != '') {
-			$tpl->newBlock('guild');
-			$tpl->assignAll($page);
-		}
-		// pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
-		else {
-			$tpl->newBlock('guild-page');
-			$tpl->assignAll($page);
-		}
-	}
+            // ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
+            if ($page->rspage_img != '') {
+                $this->view->newBlock('guild');
+                $this->view->assignAll($page);
+            }
+            // pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
+            else {
+                $this->view->newBlock('guild-page');
+                $this->view->assignAll($page);
+            }
+        }
+    }
 }

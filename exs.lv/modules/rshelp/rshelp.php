@@ -1,140 +1,103 @@
 <?php
-
 /**
  * 	RuneScape pamācību sadaļas
+ *
+ *  Starp tām ietilpst:
+ *
+ *      - kvesti (f2p, p2p, mini-)
+ *      - minispēles
+ *      - distractions & diversions
+ *      - tasks
+ *      - u.c.
  */
 
-// dev tools
-if ($auth->id == 115 && isset($_GET['force'])) {
-	if ($_GET['force'] == 'true') {
-		update_rspages(true, true); // updeito, drukā
-	} else {
-		update_rspages(false, true);  // neupdeito, drukā
-	}
-	exit;
-} elseif ($auth->id == 115 && isset($_GET['refresh'])) {
-	// atjauno iekešotās daļas
-	$stats = get_quests_stats(true);
-	echo '<pre>' . var_dump($stats, false) . '</pre>';
-	exit;
-}
+class Rshelp extends Controller {
 
-
-
-$tpl_options = 'no-right';  // attieksies uzreiz uz visiem apakšmoduļiem
-$sub_include = true;        // submoduļos ir pārbaude, vai šāds mainīgais definēts
-
-
-// submoduļu indeksi ir kategoriju strid no datubāzes
-$submodules = array(
-	'kvestu-pamacibas'          => array('quests.php', 'quests.tpl'),
-	'f2p-kvesti'                => array('quests.php', 'quests.tpl'),
-	'p2p-kvesti'                => array('quests.php', 'quests.tpl'),
-	'mini-kvesti'               => array('quests.php', 'quests.tpl'),
-	'minispeles'                => array('minigames.php', 'minigames.tpl'),
-	'distractions-diversions'   => array('minigames.php', 'minigames.tpl'),
-	'prasmes'                   => array('skills.php', 'skills.tpl'),
-	//'tasks'                     => 'tasks.php',
-	'gildes'                    => 'guilds.php'
-);
-
-
-
-// iekļauj lapā pareizo apakšmoduli
-if (isset($submodules[$category->textid])) {
-
-	if (is_array($submodules[$category->textid])) {
-		$cat = $submodules[$category->textid][0];
-		$sub_tpl = $submodules[$category->textid][1];
-	} else {
-		$cat = $submodules[$category->textid];
-		$sub_tpl = false;
-	}
-
-	// sub-template
-	if ($sub_tpl !== false) {
-		$tpl->assignInclude('sub-template', CORE_PATH . '/modules/rshelp/submodules/' . $sub_tpl);
-		$tpl->prepare();
-	}
-
-	// sub-file
-	if (file_exists(CORE_PATH . '/modules/rshelp/submodules/' . $cat)) {
-		include(CORE_PATH . '/modules/rshelp/submodules/' . $cat);
-	} else {
-		set_flash('Kļūdaini norādīta adrese!');
-		redirect();
-	}
-}
-
-
-
-// pārējās RuneScape pamācību sadaļās raksti tiks izdrukāti parastā tabulas formā
-else {
-
-	// redzamas būs visas trīs lapas kolonnas
-	$tpl_options = '';
+    // [category->textid] => [file name]
+    private $submodules = array(
+        'kvestu-pamacibas'          => 'quests',
+        'f2p-kvesti'                => 'quests',
+        'p2p-kvesti'                => 'quests',
+        'mini-kvesti'               => 'quests',
+        'minispeles'                => 'minigames',
+        'distractions-diversions'   => 'minigames',
+        'prasmes'                   => 'skills',
+        'gildes'                    => 'guilds',
+        'tasks'                     => 'tasks'
+    );
     
-    // skaits, cik rakstu rādīt vienā lapā
-    $lim_end = 30;
-    $lim_start = (isset($_GET['skip']) && (int)$_GET['skip'] > 0) ? (int)$_GET['skip'] : 0;
+    /**
+     *  Ielādēs pareizo apakšmoduli
+     */
+    public function index() {
     
-    // parastās sadaļās vienā lapā būs redzams $lim_end skaits rakstu,
-    // savukārt /padomi sadaļā - visi raksti    
-    $limit = ($category->id == 5) ? '' : 'LIMIT '.$lim_start.', '.$lim_end;    
-    
-    // parastās sadaļās kārtos pēc raksta nosaukuma;
-    // savukārt rs ziņu sadaļā - pēc datuma
-    $order_by   = 'ORDER BY `title` ASC';    
-    if ($category->id == 599) { // rs jaunumu raksti
-        $order_by   = 'ORDER BY `date` DESC ';
+        $this->check_permission('mod');
+        $this->tpl_options = 'no-right';
+        
+        if (array_key_exists($this->category->textid, $this->submodules)) {
+        
+            $file_name = $this->submodules[$this->category->textid];
+            $this->subview('submodules/'.$file_name, 'sub-template');
+            $this->submodule('submodules/'.$file_name);
+
+        // pārējo sadaļu raksti tiks izdrukāti vienkāršā tabulas sarakstā
+        } else {
+            $this->show_default_list();
+        }
     }
     
-    
+    /**
+     *  Parādīs sadaļas rakstus tabulas formāta sarakstā
+     */
+    private function show_default_list() {
 
-	$all_items = $db->get_results("
-        SELECT `strid`,`title`,`author` 
-        FROM `pages` 
-        WHERE `category` = '" . $category->id . "' 
-        $order_by 
-        $limit
-    ");
-    
-	if ($all_items) {
-    
-		$tpl->newBlock('rshelp-list');
-		$tpl->assign('category-title', $category->title);
+        $this->tpl_options = '';        
+
+        $this->model('models/rshelp');
         
-		foreach ($all_items as $item => $data) {
+        $items = $this->rshelp->fetch_items($this->category->id);
+        if (!$items) {
+            $this->view->newBlock('..');
+            return;
+        }
         
-			if ($user = get_user($data->author)) {
-				$data->author  = '<a style="font-size:11px;"';
-                $data->author .= ' href="'.mkurl('user', $user->id, $user->nick).'">';
-                $data->author .= usercolor($user->nick, $user->level) . '</a>';
-			}
+        $this->view->newBlock('rshelp-list');
+        $this->view->assign('category-title', $this->category->title);
+        
+        foreach ($items as $item => $data) {
+            
+            if ($user = get_user($data->author)) {
+                $data->author  = '<a style="font-size:11px;"';
+                $data->author .= ' href="'.mkurl('user', $user->id, $user->nick);
+                $data->author .= '">'.usercolor($user->nick, $user->level).'</a>';
+            }
             
             // rs rakstu virsrakstiem nodzēš kādreizējos prefixus
-            $replaceable = array('[Runescape] ', '[RuneScape] ', '[runescape] ', '[RS] ', '[rs] ');
+            $replaceable = array(
+                '[Runescape] ', '[RuneScape] ', '[runescape] ', 
+                '[RS] ', '[rs] '
+            );
             $data->title = str_replace($replaceable, '', $data->title);
             
-			$tpl->newBlock('rshelp-listitem');
-			$tpl->assignAll($data);
-		}
+            $this->view->newBlock('rshelp-listitem');
+            $this->view->assignAll($data);
+        }
         
-        // visām sadaļām, atskaitot /padomi, kur tāpat uzreiz redzami visi raksti
-        if ($category->id != 5) {
+        // visām sadaļām, atskaitot /padomi, kur uzreiz redzami visi raksti
+        /*if ($this->category->id != $this->cat_padomi) {
+        
+            $lim_end = 30;
+            $lim_start = (isset($_GET['skip']) && (int)$_GET['skip'] > 0) ? (int)$_GET['skip'] : 0;
             
-            $pager = pager($category->stat_topics, $lim_start, $lim_end, '/runescape?skip=');
+            $pager = pager($this->category->stat_topics, $lim_start, 
+                           $lim_end, '/runescape?skip=');
             
-            $tpl->newBlock('show-pager');
-            $tpl->assignGlobal(array(
+            $this->view->newBlock('show-pager');
+            $this->view->assignGlobal(array(
                 'pager-next' => $pager['next'],
                 'pager-prev' => $pager['prev'],
                 'pager-numeric' => $pager['pages']
             ));
-        }        
-        
-	} else {
-		set_flash('Kļūdaini norādīta adrese!');
-		redirect();
-	}
+        } */       
+    }
 }

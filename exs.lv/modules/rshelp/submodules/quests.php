@@ -1,322 +1,261 @@
 <?php
-
 /**
- * 	Publiskās RuneScape kvestu pamācību sadaļas
+ *  RuneScape kvestu pamācību sadaļas, tai skaitā sākumlapa,
+ *  p2p/f2p kvesti un minikvesti
  */
-!isset($sub_include) and die('No hacking, pls.');
 
+class Quests extends Controller {
 
-// izdrukā lapā ievadtekstu par kvestiem kā tādiem
-$tpl->newBlock('quests-intro');
+    private $cat_f2p_quests;
+    private $cat_miniquests;
     
-    
-// moderatoriem redzama poga, kas aizved uz sadaļu, 
-// kur pamācību rakstiem var pievienot dažādu papildinformāciju
-if (im_mod()) {
-    $tpl->newBlock('quests-info-button');
-}
+    public function __construct() {
+        global $cat_f2p_quests, $cat_miniquests;
 
-
-/**
- *  Kvestu sākumlapa ar to sērijām un statistikas datiem.
- */
-if ($category->textid == 'kvestu-pamacibas') {
-
-	// bildes adrese nav ielikta templeitā,
-	// jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
-	$tpl->assign('intro-image', '/bildes/runescape/intro/khazard.png');
-   
-    $series = $db->get_results("
-        SELECT
-            IFNULL(`pages`.`id`, 0) AS `pages_id`,
-            `pages`.`category`              AS `pages_category`,
-            `pages`.`title`                 AS `pages_title`,
-            `pages`.`strid`                 AS `pages_strid`,
-            
-            `rs_pages`.`id`      AS `rspages_id`,
-            `rs_pages`.`title` AS `title`,
-            
-            `rs_series`.`id`    AS `series_id`,
-            `rs_series`.`title`            AS `series_title`,
-            `rs_series`.`img`              AS `series_img`
-        FROM `rs_series_quests`
-            JOIN `rs_series` ON (
-                `rs_series_quests`.`series_id` = `rs_series`.`id` AND
-                `rs_series`.`category` = 'series'
-            )
-            JOIN `rs_pages` ON (
-                `rs_series_quests`.`rspages_id` = `rs_pages`.`id` AND
-                `rs_pages`.`deleted_by` = 0 AND
-                `rs_pages`.`is_hidden` = 0 AND
-                `rs_pages`.`cat_id` IN(".implode(',', $cat_quests).")
-            )
-            LEFT JOIN `pages` ON (
-                `pages`.`id`                = `rs_pages`.`page_id` AND
-                `pages`.`lang` = 9 AND
-                `pages`.`category` IN(".implode(',', $cat_quests).")
-            )            
-        WHERE
-            `rs_series_quests`.`deleted_by` = 0
-        ORDER BY            
-            ABS(`rs_series`.`ordered_by`) ASC,
-            ABS(`rs_series`.`id`) ASC,
-            `rs_series_quests`.`ordered_by` ASC,
-            `rs_pages`.`title` ASC
-    ");
-    
-	if ($series) {
-
-		$tpl->newBlock('quests-series');
+        $this->cat_f2p_quests =& $cat_f2p_quests;
+        $this->cat_miniquests =& $cat_miniquests;
         
-		$temp_series    = 0; // ciklā fiksē ejošo sērijas id
-		$series_count   = 0;
+        parent::__construct();
+    }
 
-		foreach ($series as $single) {
+    /**
+     *  
+     */
+    public function index() {
+        
+        $this->view->newBlock('quests-intro');
+        
+        // moderatoriem redzama poga, kas aizved uz sadaļu, 
+        // kur pamācību rakstiem var pievienot dažādu papildinformāciju
+        if (im_mod()) {
+            $this->view->newBlock('quests-info-button');
+        }
+        
+        if ($this->category->textid === 'kvestu-pamacibas') {
+            $this->show_index();
 
-			// izveido jaunu sēriju, ja nesakrīt pieglabātais id
-			if ($single->series_id != $temp_series) {
+        } else if ($this->category->textid === 'p2p-kvesti') {
+            $this->show_p2p();
             
-				$tpl->newBlock('single-series');
-				$tpl->assignAll($single);
+        } else if ($this->category->textid === 'f2p-kvesti') {
+            $this->show_other($this->cat_f2p_quests);
 
-				$series_count++;
-				$temp_series = $single->series_id;
+        } else if ($this->category->textid === 'mini-kvesti') {
+            $this->show_other($this->cat_miniquests);
 
-				// ik pēc 4 sērijām pārlec uz jaunu rindu
-				if ($series_count > 1 && ($series_count - 1) % 4 == 0) {
-					$tpl->assign('newline', ' style="clear:left"');
-				}
-			}
+        // hackz
+        } else {
+            set_flash('No hacking, pls');
+            redirect();
+        }
+    }
+    
+    /**
+     *  Kvestu sēriju cilne
+     */
+    private function show_index() {
 
-            $quest_addr = $single->title;
-            if ($single->pages_id != '0') {
-                $quest_addr = '<a href="/read/'.$single->pages_strid.'">'.$quest_addr.'</a>';
-            } else {
-                $quest_addr = '<a href="javascript:void(0);">'.$quest_addr.'</a>';
+        // bildes adrese nav ielikta templeitā,
+        // jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
+        $this->view->assign('intro-image', '/bildes/runescape/intro/khazard.png');
+       
+        $this->model('models/quests');
+       
+        $series = $this->quests->fetch_series();    
+        if (!$series) {
+            $his->view->newBlock('..');
+        } else {
+
+            $this->view->newBlock('quests-series');
+            
+            $temp_series    = 0; // ciklā fiksē ejošo sērijas id
+            $series_count   = 0;
+
+            foreach ($series as $single) {
+
+                // izveido jaunu sēriju, ja nesakrīt pieglabātais id
+                if ($single->series_id != $temp_series) {
+                
+                    $this->view->newBlock('single-series');
+                    $this->view->assignAll($single);
+
+                    $series_count++;
+                    $temp_series = $single->series_id;
+
+                    // ik pēc 4 sērijām pārlec uz jaunu rindu
+                    if ($series_count > 1 && ($series_count - 1) % 4 == 0) {
+                        $this->view->assign('newline', ' style="clear:left"');
+                    }
+                }
+
+                $quest_addr = $single->title;
+                if ($single->pages_id != '0') {
+                    $quest_addr = '<a href="/read/'.$single->pages_strid.'">'.$quest_addr.'</a>';
+                } else {
+                    $quest_addr = '<a href="javascript:void(0);">'.$quest_addr.'</a>';
+                }
+
+                $this->view->newBlock('series-quest');
+                $this->view->assign('page_title', $quest_addr);
             }
 
-			$tpl->newBlock('series-quest');
-			$tpl->assign('page_title', $quest_addr);
-		}
-	}
+            // kvestu statistika, fakti un nepieciešamās prasmes
+            $this->view->newBlock('quests-outro');
 
-	// kvestu statistika, fakti un nepieciešamās prasmes
-	$tpl->newBlock('quests-outro');
+            // kvestu statistika
+            $stats = get_quests_stats();
+            if ($stats) {
+                $this->view->newBlock('quests-stats');
+                $this->view->assign(array(
+                    '2014'          => $stats[14],
+                    '2013'          => $stats[13],
+                    '2012'          => $stats[12],
+                    '2011'          => $stats[11],
+                    '2010'          => $stats[10],
+                    'older'         => $stats['older'],
+                    'p2p'           => $stats['p2p'],
+                    'f2p'           => $stats['f2p'],
+                    'miniquests'    => $stats['miniquests'],
+                    'special'       => $stats['special'],
+                    'grandmaster'   => $stats['grandmaster'],
+                    'master'        => $stats['master'],
+                    'experienced'   => $stats['experienced'],
+                    'intermediate'  => $stats['intermediate'],
+                    'novice'        => $stats['novice']
+                ));
+            }
 
-	// kvestu statistika
-	$stats = get_quests_stats();
-	if ($stats) {
-		$tpl->newBlock('quests-stats');
-		$tpl->assign(array(
-			'2014' => $stats[14],
-			'2013' => $stats[13],
-			'2012' => $stats[12],
-			'2011' => $stats[11],
-			'2010' => $stats[10],
-			'older' => $stats['older'],
-			'p2p' => $stats['p2p'],
-			'f2p' => $stats['f2p'],
-			'miniquests' => $stats['miniquests'],
-			'special' => $stats['special'],
-			'grandmaster' => $stats['grandmaster'],
-			'master' => $stats['master'],
-			'experienced' => $stats['experienced'],
-			'intermediate' => $stats['intermediate'],
-			'novice' => $stats['novice']
-		));
-	}
+            $this->view->newBlock('quests-facts');
 
-	// kvestu fakti
-	$tpl->newBlock('quests-facts');
+            // nepieciešamās prasmes, lai izietu visus kvestus
+            $skills = $this->quests->fetch_skills();
+            if ($skills) {
+                $this->view->newBlock('max-skills');
+                foreach ($skills as $skill) {
+                    $this->view->newBlock('skill-requirement');
+                    $this->view->assignAll($skill);
+                }
+            }
+        }
+    }
+    
+    /**
+     *  Maksas kvestu cilne
+     */
+    private function show_p2p() {
 
-	// nepieciešamās prasmes, lai izietu visus kvestus
-	$skills = $db->get_results("SELECT * FROM `rs_qskills` ORDER BY `skill` ASC");
-	if ($skills) {
-		$tpl->newBlock('max-skills');
-		foreach ($skills as $skill) {
-			$tpl->newBlock('skill-requirement');
-			$tpl->assignAll($skill);
-		}
-	}
+        // bildes adrese nav ielikta templeitā,
+        // jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
+        $this->view->assign('intro-image', '/bildes/runescape/intro/vampyre-juvinate.png');
+        
+        $this->model('models/quests');
+        
+        $quests = $this->quests->fetch_p2p_quests();
+        if (!$quests) {
+            $this->view->newBlock('..');
+            return;
+        }
+
+        $this->view->newBlock('p2p-quests');
+
+        // kvesti tiek kategorizēti pēc alfabēta burtiem;
+        // mainīgais fiksē ejošo burtu
+        $letter = '';
+
+        foreach ($quests as $data) {
+
+            $this->view->newBlock('p2p-quest');
+            $this->view->assignAll($data);
+
+            // atlasa datus par raksta autoru
+            $author = '';
+            if ($user = get_user($data->page_author)) {
+                $author = '<a style="font-size:11px;" href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
+            }
+            $this->view->assign('page-author', $author);
+
+            // ja nepieciešams, pārmaina fiksēto burtu
+            if (substr($data->page_title, 0, 1) != $letter) {
+                $letter = substr($data->page_title, 0, 1);
+                $this->view->assign(array(
+                    'letter' => '<b>' . $letter . '</b>',
+                    'border' => ' class="border"',
+                ));
+            }
+
+            // ja raksts ir novecojis, parāda info, ka to būtu vēlams atjaunot
+            /*if ($data->rspages_old != '0') {
+
+                $title = ($data->rspages_old == 1) ?
+                        'Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!' :
+                        'Pamācību nepieciešams atjaunināt!';
+                $picture = ($data->rspages_old == 1) ? 'info_yellow_sm.png' : 'info_red_sm.png';
+
+                $this->view->assign('warning', '<img class="warning_small" src="/bildes/runescape/' . $picture . '" title="' . $title . '" alt="">');
+            }*/
+        }
+    }
+    
+    /**
+     *  F2P/minikvestu cilne
+     */
+    private function show_other($category_id = 0) {
+    
+        $intro_img  = 'citharede-sister.png';
+        $folder     = 'miniquests';
+        $title      = 'RuneScape minikvesti';
+
+        if ((int)$category_id === $this->cat_f2p_quests) {
+            $intro_img  = 'hazelmere.png';
+            $folder     = 'freequests';
+            $title      = 'RuneScape visiem spēlētājiem pieejamie kvesti';
+        }
+        
+        $this->view->assign('intro-image', 
+                            '/bildes/runescape/intro/'.$intro_img);
+
+        $this->model('models/quests');
+
+        $pages = $this->quests->fetch_simple_quests($category_id);
+        if (!$pages) {
+            $this->view->newBlock('..');
+            return;
+        }
+
+        $this->view->newBlock('other-quests');
+        $this->view->assign('extended-title', $title);
+
+        foreach ($pages as $quest) {
+
+            $author = '';
+            if ($user = get_user($quest->page_author)) {
+                $quest->page_author = '<a href="' . mkurl('user', $user->id, $user->nick) . '">';
+                $quest->page_author .= usercolor($user->nick, $user->level) . '</a>';
+            }
+            $quest->page_date = date('d.m.Y', strtotime($quest->page_date));
+
+            $this->view->newBlock('other-quest');
+            $this->view->assignAll($quest);
+
+            // banerītis pie minikvestiem/prastajiem kvestiem
+            /*if ($quest->rspage_img != '') {
+                $quest->rspage_img = '<img src="/bildes/runescape/' . $folder . '/' . $quest->rspage_img . '" title="' . $quest->page_title . '" alt="">';
+                $this->view->assign('page_image', $quest->rspage_img);
+            }*/
+
+            // pamācība novecojusi vai nepieciešamas HD bildes
+            /*if ($quest->rspage_old != 0) {
+
+                $title = ($quest->rspage_old == 1) ?
+                        'Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!' :
+                        'Pamācību nepieciešams atjaunināt!';
+
+                $picture = ($quest->rspage_old == 1) ? 'info_yellow.png' : 'info_red.png';
+                $picture = '<img class="warning" src="/bildes/runescape/' . $picture . '" title="' . $title . '" alt="">';
+
+                $this->view->assign('warning', $picture);
+            }*/
+        }
+    }
 }
 
-
-/**
- *  Pay-to-play kvesti
- */ 
-elseif ($category->textid == 'p2p-kvesti') {
-
-	// bildes adrese nav ielikta templeitā,
-	// jo citās kvestu sadaļās tajā pašā vietā būs jau cits attēls
-	$tpl->assign('intro-image', '/bildes/runescape/intro/vampyre-juvinate.png');
-
-	$p2p_quests = $db->get_results("
-		SELECT 
-			`pages`.`id`            AS `page_id`,
-			`pages`.`strid`         AS `page_strid`,
-			`pages`.`title`         AS `page_title`,
-			`pages`.`author`        AS `page_author`,
-            IFNULL(`rs_pages`.`is_old`, 0) AS `rspages_old`
-		FROM `pages`
-            LEFT JOIN `rs_pages` ON (
-                `pages`.`id`                = `rs_pages`.`page_id` AND
-                `rs_pages`.`deleted_by`     = 0 AND
-                `rs_pages`.`is_placeholder` = 0
-            )
-		WHERE 
-			`pages`.`category` = '100'
-		ORDER BY `pages`.`title` ASC 
-	");
-
-	if ($p2p_quests) {
-
-		$tpl->newBlock('p2p-quests');
-
-		// kvesti tiek kategorizēti pēc alfabēta burtiem;
-		// mainīgais fiksē ejošo burtu
-		$letter = '';
-
-		foreach ($p2p_quests as $data) {
-
-			$tpl->newBlock('p2p-quest');
-			$tpl->assignAll($data);
-
-			// atlasa datus par raksta autoru
-			$author = '';
-			if ($user = get_user($data->page_author)) {
-				$author = '<a style="font-size:11px;" href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
-			}
-			$tpl->assign('page-author', $author);
-
-			// ja nepieciešams, pārmaina fiksēto burtu
-			if (substr($data->page_title, 0, 1) != $letter) {
-				$letter = substr($data->page_title, 0, 1);
-				$tpl->assign(array(
-					'letter' => '<b>' . $letter . '</b>',
-					'border' => ' class="border"',
-				));
-			}
-
-			// ja raksts ir novecojis, parāda info, ka to būtu vēlams atjaunot
-			if ($data->rspages_old != '0') {
-
-				$title = ($data->rspages_old == 1) ?
-						'Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!' :
-						'Pamācību nepieciešams atjaunināt!';
-				$picture = ($data->rspages_old == 1) ? 'info_yellow_sm.png' : 'info_red_sm.png';
-
-				$tpl->assign('warning', '<img class="warning_small" src="/bildes/runescape/' . $picture . '" title="' . $title . '" alt="">');
-			}
-		}
-	}
-
-	/*
-	  $placeholders = $db->get_results("SELECT `title` FROM `rs_placeholders` WHERE `cat` = '100' ORDER BY `title` ASC");
-	  if ($placeholders) {
-	  $tpl->newBlock('questlist-placeholders');
-	  foreach ($placeholders as $ph) {
-	  $tpl->newBlock('quest-ph');
-	  $tpl->assignAll($ph);
-	  $tpl->assign(array(
-	  'title' => $ph->title,
-	  'info' => 'Šāda pamācība lapā iztrūkst. Lai tādu izveidotu, dodies uz <a href="/write">šo sadaļu</a>.'
-	  ));
-	  }
-	  } */
-}
-
-/**
- *  Free-to-play- vai mini-kvesti
- */
-elseif ($category->textid == 'f2p-kvesti' || $category->textid == 'mini-kvesti') {
-
-	// atkarībā no atvērtās sadaļas pamaina intro attēlu
-	$intro_img = ($category->textid == 'mini-kvesti') ? 'citharede-sister.png' : 'hazelmere.png';
-	$tpl->assign('intro-image', '/bildes/runescape/intro/' . $intro_img);
-
-	$cat_id = ($category->textid == 'f2p-kvesti') ? 99 : 193;
-	$folder = ($cat_id == 99) ? 'freequests' : 'miniquests';
-	$title = ($cat_id == 99) ?
-			'RuneScape visiem spēlētājiem pieejamie kvesti' : 'RuneScape minikvesti';
-
-	$other_quests = $db->get_results("
-		SELECT 
-			`pages`.`id`            AS `page_id`,
-			`pages`.`strid`         AS `page_strid`,
-			`pages`.`title`         AS `page_title`,
-			`pages`.`date`          AS `page_date`,
-			`pages`.`author`        AS `page_author`,
-			`pages`.`category`      AS `page_catid`,
-            
-            IFNULL(`rs_pages`.`is_old`, 0) AS `rspage_old`,
-			`rs_pages`.`page_id`        AS `rspage_pageid`,			
-			`rs_pages`.`img`            AS `rspage_img`,
-			`rs_pages`.`description`    AS `rspage_description` 
-		FROM `pages` 
-            LEFT JOIN `rs_pages` ON (
-                `pages`.`id`                = `rs_pages`.`page_id` AND
-                `rs_pages`.`deleted_by`     = 0     AND
-                `rs_pages`.`is_placeholder` = 0
-            )
-		WHERE 
-			`pages`.`category` = $cat_id 
-		ORDER BY 
-			`pages`.`title` ASC
-		");
-
-	if ($other_quests) {
-
-		$tpl->newBlock('other-quests');
-		$tpl->assign('extended-title', $title);
-
-		foreach ($other_quests as $quest) {
-
-			$author = '';
-			if ($user = get_user($quest->page_author)) {
-				$quest->page_author = '<a href="' . mkurl('user', $user->id, $user->nick) . '">';
-				$quest->page_author .= usercolor($user->nick, $user->level) . '</a>';
-			}
-			$quest->page_date = date('d.m.Y', strtotime($quest->page_date));
-
-			$tpl->newBlock('other-quest');
-			$tpl->assignAll($quest);
-
-			// banerītis pie minikvestiem/prastajiem kvestiem
-			if ($quest->rspage_img != '') {
-				$quest->rspage_img = '<img src="/bildes/runescape/' . $folder . '/' . $quest->rspage_img . '" title="' . $quest->page_title . '" alt="">';
-				$tpl->assign('page_image', $quest->rspage_img);
-			}
-
-			// pamācība novecojusi vai nepieciešamas HD bildes
-			if ($quest->rspage_old != 0) {
-
-				$title = ($quest->rspage_old == 1) ?
-						'Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!' :
-						'Pamācību nepieciešams atjaunināt!';
-
-				$picture = ($quest->rspage_old == 1) ? 'info_yellow.png' : 'info_red.png';
-				$picture = '<img class="warning" src="/bildes/runescape/' . $picture . '" title="' . $title . '" alt="">';
-
-				$tpl->assign('warning', $picture);
-			}
-		}
-	}
-
-	// placeholders
-	/*
-	  $placeholders = $db->get_results("SELECT * FROM `rs_placeholders` WHERE `cat` = '$id' ORDER BY `title` ASC");
-	  if ($placeholders) {
-	  $needed = ($id == 99) ? 'visiem spēlētājiem pieejamo kvestu' : 'minikvestu';
-	  $tpl->newBlock('extended-placeholders');
-	  $tpl->assign('needed', $needed);
-	  foreach ($placeholders as $ph) {
-	  $tpl->newBlock('extended-ph');
-	  $tpl->assignAll($ph);
-	  $link2 = ($ph->url2 == '') ? '' : ' un <a href="' . $ph->url2 . '">šis raksts</a>';
-	  $link1 = ($link2 == '') ? '<a href="' . $ph->url . '">šis raksts</a>' : '<a href="' . $ph->url . '">šis</a>';
-	  if ($ph->url != '' || $ph->url2 != '') {
-	  $tpl->assign('link', '<br />Pamācības veidošanas procesā Tev var noderēt ' . $link1 . $link2 . '.');
-	  }
-	  }
-	  } */
-}
