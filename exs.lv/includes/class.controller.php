@@ -74,7 +74,7 @@ class Controller {
         require($this->path.$file.'.php');
 
         // inicializē modeļa objektu
-        $class_name = 'Model_' . as_classname($last_part);
+        $class_name = 'Model_' . as_class_name($last_part);
         $this->{$variable_name} = new $class_name();
     }
 
@@ -142,7 +142,7 @@ class Controller {
         
         require($this->path.$file.'.php');
 
-        $class_name = as_classname($this->get_last_part($file));
+        $class_name = as_class_name($this->get_last_part($file));
         if (empty($class_name)) {
             $this->quit('Kļūda klases nosaukumā');
         }
@@ -161,12 +161,14 @@ class Controller {
     protected function check_permission($string = 'mod') {
         if ($string === 'mod' && !im_mod()) {
             set_flash('Pieeja liegta!');
+            redirect();
         } else if ($string === 'ra' && $this->auth->level > 3) {
             set_flash('Pieeja liegta!');
+            redirect();
         } else if ($string === 'user' && !$this->auth->ok) {
             set_flash('Pieeja liegta! Lūdzu, autorizējies.');
+            redirect();
         }
-        redirect();
     }
     
     /**

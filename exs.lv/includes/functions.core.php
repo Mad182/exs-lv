@@ -27,20 +27,18 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
 
 /**
  *  Pārveido stringu par pieļaujamu klases nosaukumu
- *
- *  @return string|false    false, ja nosaukumu nevar izveidot
  */
-function as_classname($name = '') {
+function as_class_name($name = '') {
 
     $name = trim($name);
-    if ($name === '') return false;
+    if (empty($name)) return '';
 
     // klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
-    $name = str_replace('-', '_', $name);
+    $name = str_replace(array('-', ' '), '_', $name);
     
     $allowed = "/[^a-z0-9_]/i";
 	$name = preg_replace($allowed, '', $name);    
-    if ($name === '') return false;
+    if (empty($name)) return '';
     
     // katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
     $name = str_replace('_', ' ', $name);
