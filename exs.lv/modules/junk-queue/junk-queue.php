@@ -1,7 +1,10 @@
 <?php
 
+/**
+ * Junk attēlu apstiprināšana
+ */
 if (!im_mod()) {
-	set_flash('Tev šī sadaļa nav peiejama!', 'error');
+	set_flash('Šī sadaļa paredzēta tikai administrācijai!', 'error');
 	redirect();
 }
 
