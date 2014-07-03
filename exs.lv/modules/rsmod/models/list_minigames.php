@@ -99,6 +99,8 @@ class Model_List_Minigames extends Model {
             input2db($post_arr['description'], 1024) : '';        
         $members_only = (isset($post_arr['members_only'])) ? 
             (int)((bool)$post_arr['members_only']) : 0;
+        $safe = (isset($post_arr['safe'])) ? 
+            (int)((bool)$post_arr['safe']) : 0;
 
         $cat = 0;
         if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'all-minigames') {
@@ -113,6 +115,7 @@ class Model_List_Minigames extends Model {
             'title'             => $title,
             'members_only'      => $members_only,
             'starting_point'    => $starting_point,
+            'safe'              => $safe,
             'extra'             => $extra,
             'description'       => $description,
             'created_by'        => (int)$this->auth->id,
@@ -166,11 +169,14 @@ class Model_List_Minigames extends Model {
             input2db($post_arr['description'], 1024) : '';
         $entry->members_only = (isset($post_arr['members_only'])) ? 
             (bool)$post_arr['members_only'] : false;
+        $entry->safe = (isset($post_arr['safe'])) ? 
+            (bool)$post_arr['safe'] : false;
 
         $values = array(
             'page_id'           => $entry->page_id,
             'title'             => $entry->title,
             'members_only'      => (int)$entry->members_only,
+            'safe'              => (int)$entry->safe,
             'starting_point'    => $entry->starting_point,
             'extra'             => $entry->extra,
             'description'       => $entry->description,

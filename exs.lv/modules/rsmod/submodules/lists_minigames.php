@@ -61,5 +61,10 @@ class Minigames extends Controller {
         if ((bool)$entry->members_only) {
             $this->view->assign('sel-members', ' selected="selected"');
         }
+        
+        // safe/unsafe
+        if (!(bool)$entry->safe) {
+            $this->view->assign('sel-unsafe', ' selected="selected"');
+        }
     }
 }

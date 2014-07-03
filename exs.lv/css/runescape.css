@@ -16,12 +16,13 @@
     8.3 rsmod - prasmju prasības
  *
  *  9.0 RuneScape pamācību sadaļu stili
-    9.1 RuneScape kvestu sēriju sadaļa
-    9.2 freeplay & miniquests
-    9.3 minigames & D&D
-    9.4 prasmju stilizējumi
-    9.5 tasks/achievement diaries un ģildes
-    9.6 ģildes
+    9.1 RS tabulas
+    9.2 RuneScape kvestu sēriju sadaļa
+    9.3 freeplay & miniquests
+    9.4 minigames & D&D
+    9.5 prasmju stilizējumi
+    9.6 tasks/achievement diaries un ģildes
+    9.7 ģildes
  *
  *  10. Aptaujas
  *  11. tinyMCE uzliekamie stili
@@ -36,6 +37,17 @@ body {
 	body {
 		background-size:cover;
 	}
+}
+
+/* vertically center */
+.vc-ghost-item {
+    display:inline-block; 
+    height:100%; 
+    vertical-align:middle
+}
+.vc-item {
+    vertical-align:middle;
+    display: inline-block
 }
 
 #scroll-up {
@@ -886,17 +898,26 @@ table.skill-reqs {
     border:1px solid #fcb7bd
 }
 
-/* 9. RuneScape pamācību sadaļu stili */
-.content-title {
-  margin:10px 0 10px 20px;
-  position:relative;
-  color:#33353a;
-  padding-bottom:3px;
-  border-bottom:1px dotted #ccc
+/* 9.0 RuneScape pamācību sadaļu stili */
+.rs-intro {
+    margin:10px 20px 20px;
+    padding:7px 15px;
+    border:1px solid #ddd;
+    border-bottom:2px solid #bbb;
+    border-top:2px solid #bbb;
+    position:relative
 }
-    .content-title.no-margin {
-        top:-20px
-    }
+.rs-intro img {
+    position:relative;
+    left:-7px
+}
+.rs-intro p {
+    text-indent:10px;
+    font-size:12px;
+    line-height:1.5
+}
+
+/* 9.1 RS tabulas */
 .rslist {
   font-size:11px;
   margin:10px auto
@@ -915,9 +936,9 @@ table.skill-reqs {
   padding:3px;
   border-bottom:1px solid #ddd
 }
-  .rslist tr:hover td {
+  /*.rslist tr:hover td {
     background-color:rgb(253, 253, 253)
-  }
+  }*/
   .rslist tr.listhead:hover td {
     background:transparent url('bildes/runescape/table-bg.png') repeat-x top
   }
@@ -937,33 +958,8 @@ table.skill-reqs {
   .rslist .border {
     border-top:2px solid #bbb
   }
-.skill-block {
-    width:333px !important
-}
-.skill-pages {
-    width:144px
-}
-.rs-intro {
-    margin:10px 20px 0 20px;
-    padding:15px;
-    border:1px solid #ddd;
-    border-bottom:2px solid #bbb;
-    border-top:2px solid #bbb;
-    position:relative
-}
-.rs-intro p {
-    text-indent:10px;
-    font-size:11px
-}
-.rs-button {
-    position:relative;
-    top:-6px;
-    text-shadow:0;
-    font-family:tahoma,verdana,Ubuntu,arial;
-    color:#4F6066
-}
 
-/* 9.1 RuneScape kvestu sēriju sadaļa */
+/* 9.2 RuneScape kvestu sēriju sadaļa */
 #intro-quests img {
     max-height:120px;
     float:left;
@@ -1113,7 +1109,7 @@ table.skill-reqs {
         font-size: 11px
     }
 
-/* 9.2 freeplay & miniquests */
+/* 9.3 freeplay & miniquests */
 .other-quests {
     margin:20px 50px 20px 20px;
     font-size:11px;
@@ -1160,48 +1156,50 @@ table.skill-reqs {
         width:150px
     }
 
-/* 9.3 minigames & D&D */
-.mg-logo {
-  float:left;
-  position:relative;
-  max-height:105px;
-  bottom:12px
+/* 9.4 minigames & D&D */
+#logo-minigames {
+  max-height:110px
 }
-.dd-logo {
-  float:left;
-  max-height:140px;
-  position:relative;
-  bottom: 15px;
+#logo-distractions {
+  max-height:140px
 }
-.rslist .mg-avatar {
+.stats-block {
+    list-style:none;
+    margin:0 20px 20px;
+    background:#f3f4f6;
+    border:1px solid #e3e5e9
+}
+.stats-block li {
+    display:inline-block;
+    background-image:none;
+    width:10%;
+    padding:0;
+    margin:0
+}
+.stats-block img {
+    position:relative;
+    top:2px
+}
+.minigame-list {
+    clear:both
+}
+.minigame-avatar {
   width:80px
 }
-.rslist .mg-title {
-	font-weight: 700;
-	color:#153f54;
-	text-transform:uppercase
-}
-.rslist .mg-info {
-   position:relative;
-   width:150px
-}
-.rslist .mg-av {
-  max-width:80px;
+.minigame-avatar img {
+    max-width:80px;
 	max-height:80px;
 	margin:3px;
 	border:2px solid #ccc
 }
-.rslist .mg-old {
-  float:right;
-  position:absolute;
-  top:2px;
-  right:0
-}
-.mglist tr td {
+.minigame-location {
+    float:right;
+    margin-right:7px;
+    color:#6f7987;
     font-size:11px
 }
 
-/* 9.4 prasmju stilizējumi */
+/* 9.5 prasmju stilizējumi */
 .rs_info {
   padding:3px 7px;
   border:1px solid #bbb;
@@ -1320,7 +1318,7 @@ table.skill-reqs {
     margin-left:15px
 }
 
-/* 9.5 tasks/achievement diaries un ģildes */
+/* 9.6 tasks/achievement diaries un ģildes */
 #trollis {
     max-height:100px;
     float:left;
@@ -1415,7 +1413,7 @@ table.skill-reqs {
     color:#0059A7
   }
 
-/* 9.6 Ģildes */
+/* 9.7 Ģildes */
 .guild-strong {
     font-weight: 700;
     color:#355575

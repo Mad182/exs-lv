@@ -234,6 +234,11 @@
             <option value="1"{sel-members}>P2P</option>
         </select>
         
+        <select style="clear:both;display:inline-block" name="safe">
+            <option value="1">Droša minispēle</option>
+            <option value="0"{sel-unsafe}>Bīstama minispēle</option>
+        </select>
+        
         <p class="field-title">
             <strong>Īss apraksts:</strong>
         </p>

@@ -1,52 +1,70 @@
-<!-- START BLOCK : minigames --> 
-<h1 class="content-title">
-    {top-content-title}
-    <!-- START BLOCK : mg-info-button -->
-    <span style="float:right"><a class="button rs-button" href="/info-distractions">Mainīt papildinformāciju</a></span>
-    <!-- END BLOCK : mg-info-button -->
-</h1>
-<!-- START BLOCK : minigames-intro -->
+<!-- START BLOCK : minigames -->
+
+<!-- START BLOCK : mg-intro-text -->
 <div class="rs-intro">
-	<img class="mg-logo" src="/bildes/runescape/intro/banner-imp.png">
-	<p>   
-		Minispēles (savulaik sauktas par Aktivitātēm) ir spēles, kurās viens vai vairāki spēlētāji kopīgiem spēkiem cenšas sasniegt kādu mērķi. Dažreiz šajās minispēlēs spēlētājs var saņemt atalgojumu par paveikto - vai nu XP punktus, vai arī kādu priekšmetu. Minispēles RuneScape kartē ir atzīmētas ar sarkanu zvaigzni, kas ievilkta aplī. Šīs spēles, atšķirībā no kvestiem un minikvestiem, var atkārtot daudz reižu. Kādreiz nemaksājošajiem spēlētājiem nebija pieejama neviena no tām, tomēr tagad atsevišķām spēlēm var piekļūt jebkurš spēlētājs.
+    <span class="vc-ghost-item"></span>
+	<img id="logo-minigames" class="vc-item" src="/bildes/runescape/intro/banner-imp.png">
+    <p class="vc-item" style="max-width:85%">   
+		<strong>Minispēles</strong> (savulaik sauktas par <strong>Aktivitātēm</strong>) ir spēles, kurās viens vai vairāki spēlētāji kopīgiem spēkiem cenšas sasniegt kādu mērķi. Dažreiz šajās minispēlēs spēlētājs var saņemt atalgojumu par paveikto - vai nu XP punktus, vai arī kādu priekšmetu.<br>&nbsp;&nbsp;&nbsp;Tās RuneScape kartē ir atzīmētas ar sarkanu zvaigzni, kas ievilkta aplī. Atšķirībā no kvestiem un minikvestiem, šīs spēles var atkārtot daudz reižu.
 	</p>
 </div>
-<!-- END BLOCK : minigames-intro -->
-<!-- START BLOCK : diversions-intro -->
-<div class="rs-intro">
-	<img class="dd-logo" src="/bildes/runescape/intro/phoenix.png" />
-	<p>Šīs aktivitātes, dažkārt apzīmētas ar D&D, ir nelielu notikumu sērija, kas no spēlē ieviestajām minispēlēm atšķiras ar to, ka tās vai nu pārvietojas apkārt pa Gīlinoru, vai tām ir ierobežots laiks, kad un cik ilgi tās var pildīt, vai arī tās vieno abi faktori. Šo sēriju nosaukums 'Distractions & Diversions' norāda uz to, ka tās domātas spēlētāja iecerēto darbību dažādošanai un pārmaiņām.</p>
-	<p style="margin-bottom:-8px">Meteorīta ietriekšanās zemē bankas apmeklējuma laikā, spiegojoši pingvīni, kas noslēpušies ziedošajos krūmos, vai apņēmīgas koka saknes, kas saķer nejaušu garāmgājēju aiz pēdām un nelaiž vaļā, ir tieši tas, kas ietilpst tajās!</p>
-</p>
-</div>
-<!-- END BLOCK : diversions-intro -->
+<!-- END BLOCK : mg-intro-text -->
 
-<table class="rslist mglist" style="clear:both">
+<!-- START BLOCK : dd-intro-text -->
+<div class="rs-intro">
+    <span class="vc-ghost-item"></span>
+	<img id="logo-distractions" class="vc-item" src="/bildes/runescape/intro/phoenix.png">
+    <span class="vc-item" style="max-width:80%">
+        <p>Šīs aktivitātes, dažkārt apzīmētas ar <strong>D&amp;D</strong>, ir nelielu notikumu sērija, kas no spēlē ieviestajām minispēlēm atšķiras ar to, ka tās vai nu pārvietojas apkārt pa Gīlinoru, vai tām ir ierobežots laiks, kad un cik ilgi tās var pildīt, vai arī tās vieno abi faktori.</p>
+        <p style="margin-bottom:-8px">Meteorīta ietriekšanās zemē bankas apmeklējuma laikā, spiegojoši pingvīni, kas noslēpušies ziedošajos krūmos, vai apņēmīgas koka saknes, kas saķer nejaušu garāmgājēju aiz pēdām un nelaiž vaļā, ir tieši tas, kas ietilpst tajās!</p>
+    </span>
+</div>
+<!-- END BLOCK : dd-intro-text -->
+
+<!-- START BLOCK : minigames-statistics -->
+<ul class="stats-block">
+    <li><img src="/bildes/runescape/star-f2p.png" title="Bezmaksas versijas minispēle">&nbsp;{f2p-only}</li>
+    <li><img src="/bildes/runescape/star-p2p.png" title="Maksas versijas minispēle">&nbsp;{p2p-only}</li>
+    <li><img src="/bildes/runescape/safe.png" title="Droša minispēle">&nbsp;{safe}</li>
+    <li><img src="/bildes/runescape/unsafe.png" title="Bīstama minispēle">&nbsp;{unsafe}</li>
+</ul>
+<!-- END BLOCK : minigames-statistics -->
+
+<!-- START BLOCK : no-guides-found -->
+<p class="simple-note">
+    Neizdevās atrast nevienu šīs sadaļas rakstu.
+</p>
+<!-- END BLOCK : no-guides-found -->
+
+<!-- START BLOCK : minigames-list -->
+<table class="rslist minigame-list">
 	<tr class="listhead">
-		<td style="width:80px">&nbsp;</td>
-		<td style="width:450px">Apraksts</td>
-		<td style="width:150px">Informācija</td>
+		<td style="width:90px">&nbsp;</td>
+		<td style="width:600px">
+            Aktivitātes apraksts
+            <span style="float:right;margin-right:7px">Vieta</span>
+        </td>
 	</tr>
 	<!-- START BLOCK : minigame -->
-	<tr>
-		<td style="width:80px" class="mg-avatar">{avatar}</td>
+	<tr{faded}>
+		<td style="width:80px" class="minigame-avatar">{avatar}</td>
 		<td style="width:450px">
 			<p class="mg-title">
-				<a href="/read/{page_strid}">{page_title}</a>
-			</p>
-			<p>{rspage_description}</p>
-    </td>	
-		<td class="mg-info">
-			<strong>P2P:</strong> {members_only}<br>
-			<strong>Vieta:</strong> {rspage_location}<br>
-			<strong>Autors:</strong> {page_author}<br>
-			<strong>Datums:</strong> {page_date}
-			{warning}
-		</td>	
+                {title}
+                <!-- START BLOCK : p2p-only -->
+                <img src="/bildes/runescape/star-p2p-small.png" title="Pieejama tikai maksas spēlētājiem" alt="">
+                <!-- END BLOCK : p2p-only -->
+                <!-- START BLOCK : unsafe-minigame -->
+                <img src="/bildes/runescape/unsafe-small.png" title="Bīstama minispēle ar iespēju mirt" alt="">
+                <!-- END BLOCK : unsafe-minigame -->
+                <span class="minigame-location">{starting_point}</span>
+            </p>
+			<p>{description}</p>
+        </td>	
 	</tr>
 	<!-- END BLOCK : minigame -->
 </table>
+<!-- END BLOCK : minigames-list -->
 
 <!-- START BLOCK : minigames-placeholders -->
 <h1 class="content-title">Lapā vēl iztrūkstošās {type} pamācības</h1>
@@ -70,4 +88,5 @@
 	<!-- END BLOCK : minigame-placeholder -->
 </table>
 <!-- END BLOCK : minigames-placeholders -->
+
 <!-- END BLOCK : minigames -->

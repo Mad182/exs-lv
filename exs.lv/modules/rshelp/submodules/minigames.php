@@ -1,96 +1,133 @@
 <?php
 /**
- * 	RuneScape minispēļu un D&D sadaļa
+ *  RuneScape minispēļu un D&D pamācību sadaļa
  *
- *  /minispeles
- *  /distractions-diversions
+ *  Adreses:
+ *
+ *      /minispeles
+ *      /distractions-diversions
  */
 
 class Minigames extends Controller {
 
+    // sadaļu id
     private $cat_minigames;
     private $cat_distractions;
     
+    // minispēļu īpašības
+    private $count_f2p;
+    private $count_p2p;
+    private $count_safe;
+    private $count_unsafe;
+    
     public function __construct() {
-        global $cat_minigames, $cat_distractions;
 
+        global $cat_minigames, $cat_distractions;
         $this->cat_minigames =& $cat_minigames;
         $this->cat_distractions =& $cat_distractions;
+        
+        $this->count_f2p = 0;
+        $this->count_p2p = 0;
+        $this->count_safe = 0;
+        $this->count_unsafe = 0;
         
         parent::__construct();
     }
 
+    /**
+     *  Atkarībā no sadaļas nosaka parādāmo saturu
+     */
     public function index() {
 
-        $this->model('models/other');
-        
-        $cat_id = ($this->category->id === 'minispeles') ? 160 : 792;
-
         $this->view->newBlock('minigames');
-        
-        /*
-        // augšējais sadaļas intro teksts
-        if ($cat_id == 160) {
-            $this->view->newBlock('minigames-intro');
-        } else {
-            $this->view->newBlock('diversions-intro');
-        }
-        */
-        
-        // nosaka atvērto cilni
+
         if ($this->category->textid === 'minispeles') {
-            $this->view->assign('top-content-title', 'RuneScape minispēles');
+
+            $this->view->newBlock('mg-intro-text');
             $this->show_list($this->cat_minigames);
+
         } else {
-            $this->view->assign('top-content-title', 'Distractions & Diversions');
+            $this->view->newBlock('dd-intro-text');
             $this->show_list($this->cat_distractions);
         }
-        
-        /*
-        // moderatoriem redzama poga, kas aizved uz sadaļu, 
-        // kur pamācību rakstiem var pievienot dažādu papildinformāciju
-        if (im_mod()) {
-            $this->view->newBlock('mg-info-button');
-        }
-        */
     }
     
+    /**
+     *  Saraksts ar minispēlēm vai D&D aktivitātēm
+     *
+     *  Katram ierakstam kreisajā pusē ir neliels attēls, bet blakus -
+     *  īss apraksts.
+     */
     private function show_list($cat_id = 0) {
     
-        $minigames = $this->other->fetch_minigames($cat_id);
+        $this->model('models/guides');
+    
+        $minigames = $this->guides->fetch_minigames($cat_id);
         if (!$minigames) {
-            $this->view->newBlock('..');
+            $this->view->newBlock('no-guides-found');
             return;
         }
+
+        $this->view->newBlock('minigames-list');
         
         foreach ($minigames as $game) {
 
-            // mainīgo raksturiezīmju pārveidošana
-            if ($user = get_user($game->page_author)) {
-                $game->page_author = '<a href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
+            if (!empty($game->avatar)) {
+                $avatar  = '<a href="/read/'.$game->strid.'">';
+                $avatar .= '<img src="http://img.exs.lv/'.$game->avatar.'" ';
+                $avatar .= 'title="'.$game->title.'" alt=""></a>';
+                $game->avatar = $avatar;
             }
 
-            $game->avatar = ($game->avatar != '') ?
-                    '<a href="/read/' . $game->page_strid . '">
-                    <img class="mg-av" src="http://img.exs.lv/' . $game->avatar . '" title="' . $game->page_title . '" alt="">
-                </a>' : '';
-
-            $game->page_date = date('d.m.Y', strtotime($game->page_date));
-            $game->page_title = str_replace('[D&amp;D] ', '', $game->page_title);
-
-            // ja izdevies atlasīt papildinfo par rakstu no `rs_pages` tabulas...
-            if ($game->rspage_id != '0') {
-
-                if ($game->members_only == 1) {
-                    $game->members_only = 'Jā';
-                } else $game->members_only = 'Nē';
-
+            // D&D rakstiem vēl mēdz būt šāds prefix
+            $game->title = str_replace('[D&amp;D] ', '', $game->title);
+            
+            // placeholderiem adresi nevar norādīt...
+            if ($game->page_id != '0') {
+                $game->title = 
+                    '<a href="/read/'.$game->strid.'">'.$game->title.'</a>';
             } else {
-                $game->members_only = 'Nē';
+                $game->title = '<strong>'.$game->title.'</strong>';
             }
 
             $this->view->newBlock('minigame');
             $this->view->assignAll($game);
-        }        
+            
+            // placeholderiem līnijas būs "izbalējušas"
+            if ($game->page_id == '0') {
+                $this->view->assign('faded', ' class="is-faded"');
+            }
+
+            if ($game->members_only) {
+                $this->view->newBlock('p2p-only');
+                $this->count_p2p++;
+            } else {
+                $this->count_f2p++;
+            }
+           
+            // vai bīstama minispēle ar iespēju mirt?
+            if (!$game->safe) {
+                $this->view->newBlock('unsafe-minigame');
+                $this->count_unsafe++;
+            } else {
+                $this->count_safe++;
+            }
+        }
+
+        $this->show_stats();
+    }
+    
+    /**
+     *  Ievieto skatā bloku ar statistikas datiem par minispēlēm/d&d
+     */
+    private function show_stats() {
+
+        $this->view->newBlock('minigames-statistics');
+        $this->view->assign(array(
+            'f2p-only'  => $this->count_f2p,
+            'p2p-only'  => $this->count_p2p,
+            'safe'      => $this->count_safe,
+            'unsafe'    => $this->count_unsafe
+        ));
     }
 }

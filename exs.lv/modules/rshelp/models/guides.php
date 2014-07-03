@@ -1,9 +1,9 @@
 <?php
 /**
- *
+ *  Datu apstrāde minispēlēm un distractions & diversions
  */
 
-class Model_Other extends Model {
+class Model_Guides extends Model {
 
     private $cat_guilds;
     
@@ -117,7 +117,9 @@ class Model_Other extends Model {
     }
     
     /**
-     *  Atgriež datus par minispēlēm/distractions & diversions
+     *  Atgriež datus par minispēlēm vai distractions & diversions
+     *
+     *  @param int $cat_id  attiecīgās sadaļas id
      */
     public function fetch_minigames($cat_id = 0) {
     
@@ -125,27 +127,27 @@ class Model_Other extends Model {
         if ($cat_id < 1) return false;
     
         $query = $this->db->get_results("
-            SELECT 
-                `pages`.`id`,
-                `pages`.`strid`     AS `page_strid`, 
-                `pages`.`title`     AS `page_title`,
-                `pages`.`author`    AS `page_author`, 
-                `pages`.`date`      AS `page_date`,
-                `pages`.`avatar`,
-                IFNULL(`rs_pages`.`id`, 0)      AS `rspage_id`,
-                `rs_pages`.`description`        AS `rspage_description`,
-                `rs_pages`.`location`           AS `rspage_location`,
-                `rs_pages`.`members_only`       AS `members_only`
-            FROM `pages`
-                LEFT JOIN `rs_pages` ON (
-                    `pages`.`id`                = `rs_pages`.`page_id` AND
-                    `rs_pages`.`deleted_by`     = 0 AND
-                    `rs_pages`.`is_placeholder` = 0
+            SELECT
+                `rs_pages`.`id`,
+                `rs_pages`.`title`,
+                `rs_pages`.`starting_point`,
+                `rs_pages`.`members_only`,
+                `rs_pages`.`safe`,
+                `rs_pages`.`description`,
+                IFNULL(`pages`.`id`, 0) AS `page_id`,
+                `pages`.`strid`,
+                `pages`.`avatar`                
+            FROM `rs_pages`
+                LEFT JOIN `pages` ON (
+                    `rs_pages`.`page_id` = `pages`.`id` AND
+                    `pages`.`category` = $cat_id
                 )
             WHERE 
-                `pages`.`category` = $cat_id
+                `rs_pages`.`deleted_by` = 0 AND
+                `rs_pages`.`is_hidden` = 0 AND
+                `rs_pages`.`cat_id` = $cat_id
             ORDER BY 
-                `pages`.`title` ASC
+                `rs_pages`.`title` ASC
         ");
         
         return $query;
