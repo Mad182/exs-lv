@@ -587,8 +587,6 @@ function embed_spotify($params) {
 
 /**
  *  Callback metode Deezer ierakstu iekļaušanai tekstā
- * 
- *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params          ieraksta parametri
  *  @return $deezer_html    iframe ar dziesmām
@@ -611,22 +609,14 @@ function embed_deezer($params) {
 		$height = 375;
 	}
 
-    $unique_string = substr('deezer_' . $type . '_' . (int)$params[5], 0, 50);
-
-    // pusstundu glabās html saturu iekš memcache
-    if (($deezer_html = $m->get($unique_string)) === false) {
-
-        $deezer_html  = '<p><iframe scrolling="no" frameborder="0" ';
-        $deezer_html .= 'allowTransparency="true" ';
-        $deezer_html .= 'src="http://www.deezer.com/plugins/player?';
-        $deezer_html .= 'autoplay=false&playlist=true&width=300';
-        $deezer_html .= '&height='.(int)$height.'&cover=false&type='.$type;
-        $deezer_html .= '&id='.(int)$params[5].'&title=&format=vertical';
-        $deezer_html .= '&app_id=undefined" width="300" ';
-        $deezer_html .= 'height="'.(int)$height.'"></iframe></p>';
-
-		$m->set($unique_string, $deezer_html, false, 1800);
-	}
+    $deezer_html  = '<p><iframe scrolling="no" frameborder="0" ';
+    $deezer_html .= 'allowTransparency="true" ';
+    $deezer_html .= 'src="http://www.deezer.com/plugins/player?';
+    $deezer_html .= 'autoplay=false&playlist=true&width=300';
+    $deezer_html .= '&height='.(int)$height.'&cover=false&type='.$type;
+    $deezer_html .= '&id='.(int)$params[5].'&title=&format=vertical';
+    $deezer_html .= '&app_id=undefined" width="300" ';
+    $deezer_html .= 'height="'.(int)$height.'"></iframe></p>';
 
 	return $deezer_html;
 }
@@ -752,8 +742,6 @@ function embed_soundcloud($params) {
 
 /**
  *  Callback metode Instagram attēlu iekļaušanai tekstā
- * 
- *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params       attēla parametri
  *  @return $inst_html   iframe ar attēlu
@@ -762,17 +750,11 @@ function embed_instagram($params) {
 	global $m;
     
     // $params[4] - attēla ID
-
-    // nolasa no Memcached vai arī tajā ieraksta iframe saturu
-    if (($inst_html = $m->get('inst_' . md5($params[4]))) === false) {
         
-        $inst_html  = '<iframe src="//instagram.com/p/';
-        $inst_html .= urlencode($params[4]).'/embed/" ';
-        $inst_html .= 'width="350" height="450" frameborder="0" ';
-        $inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
-
-		$m->set('inst_' . md5($params[4]), $inst_html, false, 1800);
-	}
+    $inst_html  = '<iframe src="//instagram.com/p/';
+    $inst_html .= urlencode($params[4]).'/embed/" ';
+    $inst_html .= 'width="350" height="450" frameborder="0" ';
+    $inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
 
 	return $inst_html;
 }
@@ -780,8 +762,6 @@ function embed_instagram($params) {
 
 /**
  *  Callback metode Vimeo video iekļaušanai tekstā
- * 
- *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params        video parametri
  *  @return $vimeo_html   iframe ar video
@@ -790,18 +770,12 @@ function embed_vimeo($params) {
 	global $m;
 
     // $params[3] - video id
-
-    // nolasa no Memcached vai arī tajā ieraksta iframe saturu
-    if (($vimeo_html = $m->get('vimeo_' . md5($params[3]))) === false) {
         
-        $vimeo_html  = '<iframe src="//player.vimeo.com/video/';
-        $vimeo_html .= urlencode($params[3]).'?badge=0&byline=0" ';
-        $vimeo_html .= 'width="520" height="300" frameborder="0" ';
-        $vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
-        $vimeo_html .= 'allowfullscreen></iframe>';
-
-		$m->set('vimeo_' . md5($params[3]), $vimeo_html, false, 1800);
-	}
+    $vimeo_html  = '<iframe src="//player.vimeo.com/video/';
+    $vimeo_html .= urlencode($params[3]).'?badge=0&byline=0" ';
+    $vimeo_html .= 'width="520" height="300" frameborder="0" ';
+    $vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
+    $vimeo_html .= 'allowfullscreen></iframe>';
 
 	return $vimeo_html;
 }
