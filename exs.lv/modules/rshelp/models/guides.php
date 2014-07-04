@@ -84,33 +84,65 @@ class Model_Guides extends Model {
     }
     
     /**
-     *
+     *  Atgriež datus par prasmēm un tām piesaistītos rakstus
      */
-    public function fetch_skill_pages() {
-    
+    public function fetch_skills($page_nr = 0) {
+
         $query = $this->db->get_results("
             SELECT 
                 `cat`.`id`              AS `cat_id`,
-                `cat`.`title`           AS `cat_title`,
-                
+                `cat`.`title`           AS `cat_title`,                
                 IFNULL(`pages`.`id`, 0) AS `page_id`,
                 `pages`.`title`         AS `page_title`,
-                `pages`.`strid`         AS `page_strid`,
-                
-                IFNULL(`rs_classes`.`id`, 0)    AS `class_id`,
-                `rs_classes`.`img`              AS `class_img`,
-                `rs_classes`.`info`             AS `class_info`,
-                `rs_classes`.`members_only`     AS `members_only`
+                `pages`.`strid`         AS `strid`,                
+                IFNULL(`rs_series`.`id`, 0)    AS `class_id`,
+                `rs_series`.`img`              AS `img`,
+                `rs_series`.`info`             AS `info`,
+                `rs_series`.`members_only`     AS `members_only`
             FROM `cat` 
-                LEFT JOIN `pages` ON `cat`.`id` = `pages`.`category`
-                LEFT JOIN `rs_classes` ON (
-                    `cat`.`title`           = `rs_classes`.`title` AND
-                    `rs_classes`.`category` = 'skills'
+                JOIN `rs_series` ON (
+                    `cat`.`title` = `rs_series`.`title` AND
+                    `rs_series`.`category` = 'skills'
                 )
+                LEFT JOIN `pages` ON `cat`.`id` = `pages`.`category`
             WHERE 
                 `cat`.`parent` = 4  
             ORDER BY 
-                `cat`.`title` ASC
+                `cat`.`title` ASC,
+                `pages`.`title` ASC
+        ");
+        
+        return $query;
+    }
+    
+    /**
+     *  Atgriež norādītās prasmes rakstus kādā no lappusēm
+     */
+    public function fetch_skill_pages($max_per_page = 5) {
+    
+        $start = 0;
+        $skill_id = 0;
+        $max_per_page = (int)$max_per_page;
+        if ($max_per_page < 1) {
+            $max_per_page = 5;
+        }
+        
+        if (isset($_GET['skill'])) $skill_id = (int)$_GET['skill'];
+        if ($skill_id < 1) return false;
+        
+        if (isset($_GET['page'])) {
+            $page_nr = (int)$_GET['page'];
+            if ($page_nr > 0) {
+                $start = ($page_nr - 1) * $max_per_page;
+            }
+        }
+        
+        $query = $this->db->get_results("
+            SELECT `title`, `strid` FROM `pages` 
+            WHERE 
+                `category` = $skill_id 
+            ORDER BY `title` ASC 
+            LIMIT $start, $max_per_page
         ");
         
         return $query;
