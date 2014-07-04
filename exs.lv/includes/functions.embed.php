@@ -6,7 +6,7 @@
  *  Pagaidām atbalstītie ārējo lapu widgets:
  *
  *      YouTube, Twitter, Spotify, Deezer,
- *      Vine, Soundcloud, Instagram
+ *      Vine, Soundcloud, Instagram, Vimeo
  */
 
 /**
@@ -277,6 +277,7 @@ function insert_smilies($txt) {
  *      - Vine
  *      - Soundcloud
  *      - Instagram
+ *      - Vimeo
  *
  *  @param $txt     apstrādājamais saturs
  *  @param $wide    vai rādīt platu video
@@ -347,6 +348,14 @@ function embed_widgets($txt, $wide = 0) {
 		$txt = preg_replace_callback(
             "#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9]+)(.*?))</a>#im",
             'embed_instagram', $txt
+        );
+	}
+    
+    // vimeo video
+	if (strpos($txt, 'vimeo') !== false) {
+		$txt = preg_replace_callback(
+            "#(^|[\n ]|<a(.*?)>)https?:\/\/vimeo\.com\/([a-z0-9]+)\/?#im",
+            'embed_vimeo', $txt
         );
 	}
     
@@ -692,14 +701,11 @@ function embed_vine($params) {
  */
 function embed_soundcloud($params) {
 	global $m;
-    
-    // $params[0] - <a..href=".."..>https://../..</a>
-    // $params[1] - <a..href="..">
+
         // [2] adrese ir nesaīsinātā formā, jo atrodas iekš href=""
     // $params[2] - https://../..
         // [3] adrese var būt saīsināta, jo atrodas starp <a></a>
     // $params[3] - https://../..
-    // $params[4] - soundcloud.com | snd.sc
     // $params[5] - lietotājvārds
     // $params[6] - parametri aiz lietotājvārda (ņemti no saīsinātās adreses)
     
@@ -769,6 +775,35 @@ function embed_instagram($params) {
 	}
 
 	return $inst_html;
+}
+
+
+/**
+ *  Callback metode Vimeo video iekļaušanai tekstā
+ * 
+ *  Izveidoto HTML iekešo Memcached (30 min)
+ *
+ *  @param $params        video parametri
+ *  @return $vimeo_html   iframe ar video
+ */
+function embed_vimeo($params) {
+	global $m;
+
+    // $params[3] - video id
+
+    // nolasa no Memcached vai arī tajā ieraksta iframe saturu
+    if (($vimeo_html = $m->get('vimeo_' . md5($params[3]))) === false) {
+        
+        $vimeo_html  = '<iframe src="//player.vimeo.com/video/';
+        $vimeo_html .= urlencode($params[3]).'?badge=0&byline=0" ';
+        $vimeo_html .= 'width="520" height="300" frameborder="0" ';
+        $vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
+        $vimeo_html .= 'allowfullscreen></iframe>';
+
+		$m->set('vimeo_' . md5($params[3]), $vimeo_html, false, 1800);
+	}
+
+	return $vimeo_html;
 }
 
 
