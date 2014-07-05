@@ -20,7 +20,7 @@
     9.2 RuneScape kvestu sēriju sadaļa
     9.3 freeplay & miniquests
     9.4 minigames & D&D
-    9.5 prasmju stilizējumi
+    9.5 prasmes
     9.6 tasks un ģildes
  *
  *  10. Aptaujas
@@ -1198,7 +1198,7 @@ table.skill-reqs {
     font-size:11px
 }
 
-/* 9.5 prasmju stilizējumi */
+/* 9.5 prasmes */
 /*.rs_info {
   padding:3px 7px;
   border:1px solid #bbb;
@@ -1309,8 +1309,7 @@ table.skill-reqs {
 
 /* 9.6 tasks un ģildes */
 #trollis {
-    max-height:100px;
-    float:left;
+    max-height:110px;
     margin:0 10px 5px 0
 }
     #montai {

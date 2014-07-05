@@ -11,11 +11,13 @@
 class Model_Guides extends Model {
 
     private $cat_guilds;
+    private $cat_achievements;
     
     public function __construct() {
-        global $cat_guilds;
+        global $cat_guilds, $cat_achievements;
 
         $this->cat_guilds =& $cat_guilds;
+        $this->cat_achievements =& $cat_achievements;
         
         parent::__construct();
     }
@@ -50,34 +52,68 @@ class Model_Guides extends Model {
     }
     
     /**
-     *  Atgriež datus par Tasks
-     *
-     *  @param bool $categorised    vai atlasīt kategorizētos Tasks?
+     *  Atgriež datus par Tasks/Achievements
      */
-    public function fetch_tasks($categorised = true) {
-    
-        $categorised = (bool)$categorised;
+    public function fetch_tasks() {
     
         $query = $this->db->get_results("
             SELECT 
-                `rs_classes`.`id`       AS `class_id`, 
-                `rs_classes`.`title`    AS `class_title`, 
-                `rs_classes`.`img`      AS `class_img`,
+                `rs_series`.`id`, 
+                `rs_series`.`title` AS `series_title`, 
+                `rs_series`.`img`,
                 IFNULL(`pages`.`id`, 0) AS `page_id`, 
-                `pages`.`strid`         AS `page_strid`,
-                `pages`.`title`         AS `page_title`
-            FROM `rs_classes`
+                `pages`.`strid`,
+                `pages`.`title`
+            FROM `rs_series`
+                LEFT JOIN `rs_series_quests` ON (
+                    `rs_series`.`id` = `rs_series_quests`.`series_id` AND 
+                    `rs_series_quests`.`deleted_by` = 0
+                )
                 LEFT JOIN `rs_pages` ON (
-                    `rs_classes`.`id` = `rs_pages`.`class_id` AND
-                    `rs_pages`.`is_placeholder` = 0  AND
+                    `rs_series_quests`.`rspages_id` = `rs_pages`.`id` AND
+                    `rs_pages`.`is_hidden` = 0  AND
                     `rs_pages`.`deleted_by` = 0
                 )
-                LEFT JOIN `pages` ON `rs_pages`.`page_id` = `pages`.`id`
+                LEFT JOIN `pages` ON (
+                    `rs_pages`.`page_id` = `pages`.`id` AND
+                    `pages`.`category` = $this->cat_achievements
+                )
             WHERE 
-                `rs_classes`.`category` = 'tasks' AND
-                `rs_classes`.`id` != 112
+                `rs_series`.`category` = 'tasks' AND
+                `rs_series`.`id` != 112
             ORDER BY 
-                `rs_classes`.`ordered` ASC
+                `rs_series`.`id` ASC,
+                `rs_series`.`ordered_by` ASC
+        ");
+        //CASE WHEN `page_id` IS NULL THEN 1 ELSE 0 ASC,
+
+        return $query;
+    }
+    
+    /**
+     *  Atgriež datus par rakstiem, kuri atrodas Tasks sadaļā,
+     *  bet nav piesaistīti nevienam reģionam no `rs_series`
+     */
+    public function fetch_uncategorized_tasks() {
+    
+        $query = $this->db->get_results("
+            SELECT
+                `pages`.`id`, 
+                `pages`.`strid`,
+                `pages`.`title`,
+                `rs_pages`.`id` AS `rspage_id`
+            FROM `pages`
+                LEFT JOIN `rs_pages` ON (
+                    `pages`.`id` = `rs_pages`.`page_id` AND
+                    `rs_pages`.`is_hidden` = 0  AND
+                    `rs_pages`.`deleted_by` = 0 AND
+                    `rs_pages`.`cat_id` = $this->cat_achievements
+                )
+            WHERE 
+                `pages`.`category` = $this->cat_achievements AND
+                `rs_pages`.`id` IS NULL
+            ORDER BY 
+                `pages`.`title` ASC
         ");
 
         return $query;

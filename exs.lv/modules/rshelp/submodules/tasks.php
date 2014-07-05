@@ -1,94 +1,104 @@
 <?php
 /**
- *  RuneScape tasks/achievement diaries
+ *  RuneScape Achievements
+ *  (agrāk saukti par Tasks un Achievement Diaries)
  */
 
 class Tasks extends Controller {
 
     public function index() {
-    
-        $this->model('models/other');
 
-        $this->view->newBlock('tasks');
+        $this->view->newBlock('tasks-intro-text');
         
-        $this->show_categorised();
+        $this->model('models/guides');
+
+        $this->show_regions();
         $this->show_uncategorised();        
     }
-    
+
     /**
-     *  Parādīs kategorizētos tasks
+     *  Parādīs Achievements reģionus un piesaistīs tiem
+     *  rakstus no `rs_pages` tabulas (tai skaitā placeholders)
+     *
+     *  Ja reģionam rakstu nav, rādīs tikai tā nosaukumu un attēlu
+     *  (zem reģioniem, kuriem raksti ir).
      */
-    private function show_categorised() {
+    private function show_regions() {
         
-        $tasks = $this->other->fetch_tasks();
+        $tasks = $this->guides->fetch_tasks();
         if (!$tasks) {
-            $this->view->newBlock('..');
+            $this->view->newBlock('no-tasks-found');
             return;
         }
+        
+        $this->view->newBlock('tasks');
         
         $counter_yes = 1;
         $counter_no  = 1;
         $page_id = 0;
 
-        foreach ($tasks as $page) {
+        foreach ($tasks as $task) {
 
             // izveido jaunu noteikta reģiona bloku
-            if ($page->class_id != $page_id) {
+            if ($task->id != $page_id) {
 
-                $page_id = $page->class_id;
+                $page_id = $task->id;
 
                 // teritorijai ir vismaz viens raksts
-                if ($page->page_id != '0') {
-                    $this->view->newBlock('tasks-block');
-                    $this->view->assignAll($page);
+                if ($task->page_id != '0') {
+
+                    $this->view->newBlock('tasks-has-pages');
+                    $this->view->assignAll($task);
                     
-                    if ( ($counter_yes - 1) % 3 == 0 && ($counter_yes - 1) > 0) {
+                    // pārmet blokus jaunā rindā    
+                    if (($counter_yes - 1) % 3 == 0 && ($counter_yes - 1) > 0){
                         $this->view->assign('newline', ' newline');
-                    }  // pārmet blokus jaunā rindā	
+                    }
                     $counter_yes++;
-                }
+
                 // teritorijām, kurām nav rakstu, izveido jaunu bloku
-                // zem pārējām teritorijām
-                else {
-                    $this->view->newBlock('tasks-not');
-                    $this->view->assignAll($page);
+                // zem pārējām teritorijām, 
+                // kurā redzams būs tikai nosaukums un attēls
+                } else {
+
+                    $this->view->newBlock('tasks-no-pages');
+                    $this->view->assignAll($task);
                     
-                    if ( ($counter_no - 1) % 3 == 0 && ($counter_no - 1) > 0) {
+                    // pārmet blokus jaunā rindā
+                    if (($counter_no - 1) % 3 == 0 && ($counter_no - 1) > 0) {
                         $this->view->assign('newline', ' newline');
-                    }  // pārmet blokus jaunā rindā	
+                    }   
                     $counter_no++;
                 }            
             }
 
-            // pārbaude novērš situācijas, kad tiek pievienotas teritorijas,
-            // kurām nav rakstu
-            if ($page->page_id != '0') {
+            if ($task->page_id != '0') {
                 $this->view->newBlock('task');
-                $this->view->assignAll($page);
+                $this->view->assignAll($task);
             }
         }
     }
     
     /**
-     *  Parādīs nekategorizētos Tasks
+     *  Parādīs vienu bloku ar rakstiem, 
+     *  kuri nevienam esošajam reģionam nav piesaistīti
      */
     private function show_uncategorised() {
 
-        $uncategorised = $this->other->fetch_tasks(false);
+        $uncategorised = $this->guides->fetch_uncategorized_tasks();
         if (!$uncategorised) {
-            $this->view->newBlock('..');
             return;
         }
 
-        $this->view->newBlock('tasks-block');
+        $this->view->newBlock('tasks-has-pages');
         $this->view->assign(array(
-            'class_img'     => 'uncategorised.png',
-            'class_title'   => 'Nekategorizēti raksti'
+            'img'           => 'uncategorised.png',
+            'series_title'  => 'Nekategorizēti raksti'
         ));
 
-        foreach ($others as $other) {
+        foreach ($uncategorised as $task) {
             $this->view->newBlock('task');
-            $this->view->assignAll($other);
+            $this->view->assignAll($task);
         }
     }    
 }

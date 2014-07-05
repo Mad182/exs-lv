@@ -35,6 +35,8 @@ $cat_minigames      = 160;
 $cat_distractions   = 792;
 $cat_activities     = array(160, 792);
 
+$cat_achievements   = 194;
+
 $cat_guilds = 791;
 
 

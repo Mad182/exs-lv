@@ -1,45 +1,5 @@
-<!-- INCLUDE BLOCK : sub-template --> 
+<!-- INCLUDE BLOCK : sub-template -->
 
-<!-- START BLOCK : tasks -->
-<h1 class="content-title">RuneScape Tasks</h1>
-<div class="rs-intro">
-  <img id="trollis" src="/bildes/runescape/intro/troll.png" title="" alt="">
-  <p>Tasks, agrāk zināmi kā 'Achievement Diaries', sastāv no izaicinājumu un uzdevumu sērijām, kuras spēlētājam liek veikt spēles NPC, 
-		lai pārbaudītu tā zināšanas un iemaņas attiecīgajā teritorijā. 
-		Katras teritorijas uzdevumi tiek iedalīti 4 sarežģītības līmeņos: vieglie, vidēji grūtie, sarežģītie un ļoti sarežģītie (elite). 
-		Jo tālāk uzdevumu sarakstā spēlētājs tiek, jo grūtāki paliek veicamie uzdevumi, turklāt tie prasa aizvien augstākas prasmes, 
-		sarežģītākus kvestus un plašākas zināšanas.</p>
-  <p>Centīgākie pildītāji nepaliek bez atalgojuma!</p>
-</div>
-<div class="rs_info">
-  <img src="/bildes/runescape/tasks.png" title="" alt="">
-  Sadaļā esošās pamācības ir ļoti novecojušas un īsti neatbilst pašreizējai situācijai spēlē! Palīdzi atjaunot tās! 
-</div>
-<div class="clearfix"></div>
-
-<div style="margin-top:20px">
-	<!-- START BLOCK : tasks-block -->
-	<div class="tasks-block{newline}">
-		<div class="tasks-title">{class_title}</div>
-		<img src="/bildes/runescape/tasks/{class_img}" title="{class_title}" alt="">
-		<ul>
-			<!-- START BLOCK : task -->
-			<li><a class="page" href="/read/{page_strid}">{page_title}</a></li>
-			<!-- END BLOCK : task-->
-		</ul>
-	</div>
-	<!-- END BLOCK : tasks-block -->
-	<div class="clearfix"></div>
-
-	<h1 class="content-title">Lapā iztrūkstošās teritorijas</h1>
-	<!-- START BLOCK : tasks-not -->
-	<div class="tasks-block{newline}">
-		<div class="tasks-title">{class_title}</div>
-		<img src="/bildes/runescape/tasks/{class_img}" title="{class_title}" alt="">
-	</div>
-	<!-- END BLOCK : tasks-not -->
-</div>
-<!-- END BLOCK : tasks -->                                                       
 
 <!-- START BLOCK : rshelp-list -->
 <h1 class="rs_content_title title-margin">{category-title}</h1>
