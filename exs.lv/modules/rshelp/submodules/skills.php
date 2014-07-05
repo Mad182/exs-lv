@@ -59,6 +59,10 @@ class Skills extends Controller {
         $skill_counter  = 0; 
         $skill_id       = 0; // fiksē ciklā ejošo prasmi
         $page_counter   = 0; // skaita rakstus katras prasmes iekšienē
+        
+        // fiksēs pašu pēdējo prasmi (tādējādi arī pēdējo spēlē izlaisto)
+        $largest_skill_id = 0;
+        $largest_skill = '';
 
         foreach ($pages as $skill) {
 
@@ -69,7 +73,12 @@ class Skills extends Controller {
             }
 
             // mainoties prasmei, izveido jaunu prasmes bloku
-            if ($skill_id != $skill->cat_id) {
+            if ($skill_id != $skill->cat_id) {            
+                
+                if ($skill->cat_id > $largest_skill_id) {
+                    $largest_skill_id = $skill->cat_id;
+                    $largest_skill = $skill->cat_title;
+                }
 
                 $skill_counter++;
 
@@ -127,6 +136,14 @@ class Skills extends Controller {
                 'Tālāk &rsaquo;&rsaquo;</a>';
             $this->view->assign('next', $addr);
         }
+
+        $this->view->gotoBlock('skills-intro-text');
+        $this->view->assign(array(
+            'latest-skill' => $largest_skill,
+            'max-xp'       => number_format(($skill_counter + 3) * 200000000),
+            'skill-count'  => $skill_counter + 3 
+                // pieskaita arī Constitution un cmb prasmes
+        ));
     }
     
     /**

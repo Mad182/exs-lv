@@ -10,7 +10,7 @@
 <div class="rs-intro">  
     <span class="vc-ghost-item"></span>
     <img id="sage" class="vc-item" src="/bildes/runescape/intro/lumby_sage.png" title="Lumbridge Sage">
-    <p class="vc-item" style="max-width:80%">Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā savu piemājas dobīšu uzaršana un izravēšana, kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē piedzīvojumus, cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti būtiskas.<br>&nbsp;&nbsp;&nbsp;No vienkāršas ugunskura iekuršanas un ēdmaņas zvejošanas līdz nesalaužamu slēdzeņu atdarīšanai un nāvīgi maģisku virumu brūvēšanai. Un tas ir tikai sākums!<br><br>Līdz ar <strong style="color:#012542">Divination</strong> izlaišanu spēlē pavisam pieejamas <strong style="color:#012542">26</strong> prasmes.</p>
+    <p class="vc-item" style="max-width:80%">Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā savu piemājas dobīšu uzaršana un izravēšana, kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē piedzīvojumus, cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti būtiskas.<br>&nbsp;&nbsp;&nbsp;No vienkāršas ugunskura iekuršanas un ēdmaņas zvejošanas līdz nesalaužamu slēdzeņu atdarīšanai un nāvīgi maģisku virumu brūvēšanai. Un tas ir tikai sākums!<br><br>Līdz ar <strong style="color:#012542">{latest-skill}</strong> izlaišanu spēlē pavisam pieejamas <strong style="color:#012542">{skill-count}</strong> prasmes (max xp: <strong>{max-xp}</strong>).</p>
 </div>
 <div class="simple-note">
   <img style="margin:3px 7px 0 0" src="/bildes/runescape/star-p2p-small.png" alt="">Prasme pieejama tikai maksājošajiem spēlētājiem
