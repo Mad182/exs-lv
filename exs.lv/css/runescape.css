@@ -258,9 +258,19 @@ div pre {
 .top-navig .green, .top-navig .g {
 	color: #60ef00;
 }
-#flash-message.error {
-    border: 1px solid #C5C3C3
+#wrapper .article-info {
+	background: #f4f5f6;
+	padding: 3px 0 2px;
+	border-top: 1px dotted #ddd;
+	border-bottom: 1px dotted #ddd;
+	margin: 5px 0;
 }
+#wrapper .article-info li {
+	margin-left: 12px;
+	margin-right: 0;
+	padding-right: 0;
+}
+
 /* raksta saturs */
 #full-story img {
     max-width:550px
@@ -297,7 +307,6 @@ div pre {
     background: none;
     padding-left: 0;
 }
-
 
 /* 3. Jaunie lapas pamatbloki */
 .top-navig {

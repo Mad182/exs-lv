@@ -7,13 +7,13 @@
 class Tasks extends Controller {
 
     public function index() {
-
+    
         $this->view->newBlock('tasks-intro-text');
         
         $this->model('models/guides');
 
         $this->show_regions();
-        $this->show_uncategorised();        
+        $this->show_uncategorised();
     }
 
     /**

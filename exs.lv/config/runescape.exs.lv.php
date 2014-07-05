@@ -34,10 +34,11 @@ $cat_quests     = array(99, 100, 193);
 $cat_minigames      = 160;
 $cat_distractions   = 792;
 $cat_activities     = array(160, 792);
-
 $cat_achievements   = 194;
-
 $cat_guilds = 791;
+
+$cat_rsnews = 599;
+$cat_padomi = 5;
 
 
 // auto login visos subdomēnos
