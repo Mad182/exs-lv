@@ -21,4 +21,21 @@ class Model {
             $this->{$global} =& ${$global};
         }
     }
+    
+    /**
+     *  Manuāla globālo mainīgo piesaiste no atvasinātajām klasēm
+     *
+     *  @param array $arr   masīvs ar mainīgo nosaukumiem
+     */
+    protected function globals($arr = null) {
+        
+        if (empty($arr) || !is_array($arr)) {
+            return false;
+        }
+        
+        foreach ($arr as $element) {
+            global ${$element};
+            $this->{$element} =& ${$element};
+        }
+    }
 }
