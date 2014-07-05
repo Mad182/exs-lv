@@ -230,7 +230,13 @@
 						</ul>
 					</li>
 					<li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-					<li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
+					<li{cat-sel-4}><a href="/prasmes">Prasmes</a>
+                        <ul>
+							<li><a href="/prasmes">Prasmju saraksts</a></li>
+							<li><a href="/prasmes/xp-table">XP tabula</a></li>
+							<li><a href="/prasmes/facts">Fakti</a></li>
+						</ul>
+                    </li>
 					<li{cat-sel-194}><a href="/tasks">Achievements</a></li>
 					<li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
 					<li{cat-sel-791}><a href="/gildes">Ģildes</a></li>

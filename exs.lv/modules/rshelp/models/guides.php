@@ -1,6 +1,11 @@
 <?php
 /**
- *  Datu apstrāde minispēlēm un distractions & diversions
+ *  Datu apstrāde vairākām RuneScape pamācību sadaļām,
+ *  tai skaitā:
+ *
+ *      - minispēlēm un D&D
+ *      - tasks
+ *      - ģildēm
  */
 
 class Model_Guides extends Model {
@@ -21,29 +26,24 @@ class Model_Guides extends Model {
     public function fetch_guilds() {
     
         $query = $this->db->get_results("
-            SELECT 
-                `pages`.`id`                AS `page_id`,
-                `pages`.`strid`             AS `page_strid`,
-                `pages`.`title`             AS `page_title`,
-                `pages`.`author`            AS `page_author`,
-                `pages`.`category`          AS `page_category`,
-                
-                IFNULL(`rs_pages`.`id`,0)   AS `rspage_id`,
-                `rs_pages`.`img`            AS `rspage_img`,
-                `rs_pages`.`members_only`   AS `rspage_members_only`,
-                `rs_pages`.`location`       AS `rspage_location`,
-                `rs_pages`.`extra`          AS `rspage_extra`,
-                `rs_pages`.`is_old`         AS `rspage_is_old`
-            FROM `pages` 
-                LEFT JOIN `rs_pages` ON (
-                    `pages`.`id`                = `rs_pages`.`page_id` AND
-                    `rs_pages`.`deleted_by`     = 0 AND
-                    `rs_pages`.`is_placeholder` = 0
+            SELECT                 
+                `rs_pages`.`id`,
+                `rs_pages`.`title`,
+                `rs_pages`.`image`,
+                `rs_pages`.`members_only`,
+                `rs_pages`.`starting_point`,
+                `rs_pages`.`extra`,
+                IFNULL(`pages`.`id`, 0) AS `page_id`,
+                `pages`.`strid`
+            FROM `rs_pages` 
+                LEFT JOIN `pages` ON (
+                    `rs_pages`.`page_id` = `pages`.`id` AND
+                    `pages`.`category`   = ".(int)$this->cat_guilds."
                 )
             WHERE 
-                `pages`.`category` = ".(int)$this->cat_guilds." 
+                `rs_pages`.`cat_id` = ".(int)$this->cat_guilds." 
             ORDER BY 
-                `pages`.`title` ASC
+                `rs_pages`.`title` ASC
         ");
         
         return $query;
@@ -122,6 +122,7 @@ class Model_Guides extends Model {
     
         $start = 0;
         $skill_id = 0;
+
         $max_per_page = (int)$max_per_page;
         if ($max_per_page < 1) {
             $max_per_page = 5;
@@ -139,8 +140,7 @@ class Model_Guides extends Model {
         
         $query = $this->db->get_results("
             SELECT `title`, `strid` FROM `pages` 
-            WHERE 
-                `category` = $skill_id 
+            WHERE `category` = $skill_id 
             ORDER BY `title` ASC 
             LIMIT $start, $max_per_page
         ");

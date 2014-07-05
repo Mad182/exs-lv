@@ -39,38 +39,7 @@
 	</div>
 	<!-- END BLOCK : tasks-not -->
 </div>
-<!-- END BLOCK : tasks -->
-
-<!-- START BLOCK : guilds -->
-<h1 class="content-title">RuneScape Ģildes</h1>
-<div class="rs-intro" style="margin-bottom:20px">
-	<img id="wise-old-man" src="/bildes/runescape/intro/wise-old-man.png" title="Wise Old Man" alt="">
-	<p>Ģildes ir īpaši iekārtotas ēkas, kurās var iekļūt tikai attiecīgajā prasmē sevišķi iepratušies spēlētāji, 
-		ja tie sasnieguši noteiktu prasmes līmeni, izpildījuši grūtu kvestu vai sakrājuši noteiktu Quest Points apjomu.</p> 
-	<p style="margin-bottom:7px">Katrai ģildei ir savas unikālās iespējas, ieskaitot vieglāku piekļuvi rīkiem un resursiem, kas veltīti attiecīgajai prasmei, 
-		un veikaliem, kuros pārdod citur nenopērkamus priekšmetus.</p>
-</div> 
-<!-- START BLOCK : guild -->
-<div class="tasks-block{newline}">
-	<div class="tasks-title">{page_title}{rspage_members_only}{rspage_is_old}</div>
-	<a href="/read/{page_strid}"><img src="/bildes/runescape/guilds/{rspage_img}" title="{page_title}" alt=""></a>
-	<p><span class="guild-strong">Koordinātas:</span> {rspage_location}</p>
-	<p style="padding-bottom:5px"><span class="guild-strong">Prasības:</span> {rspage_extra}</p>
-</div>
-<!-- END BLOCK : guild -->
-<!-- START BLOCK : guilds-not -->
-<div class="tasks-block">
-	<div class="tasks-title">
-		<img class="guild-icon" src="/bildes/runescape/other.png" alt=""> Citi sadaļas raksti</div>
-	<img src="/bildes/runescape/guilds/other.png" title="Citi ģilžu raksti" alt="">
-	<ul>
-		<!-- START BLOCK : guild-page -->
-		<li><a class="page" href="/read/{page_strid}">{page_title}</a></li>
-		<!-- END BLOCK : guild-page -->
-	</ul>
-</div>
-<!-- END BLOCK : guilds-not -->
-<!-- END BLOCK : guilds -->                                                            
+<!-- END BLOCK : tasks -->                                                       
 
 <!-- START BLOCK : rshelp-list -->
 <h1 class="rs_content_title title-margin">{category-title}</h1>

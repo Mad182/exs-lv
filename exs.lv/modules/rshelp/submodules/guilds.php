@@ -5,30 +5,60 @@
 
 class Guilds extends Controller {
 
+    /**
+     *  Parādīs lapā visas pievienotās ģildes
+     *
+     *  Katrai no tām būs attēls, bet zem tā - atrašanās vieta un prasības
+     */
     public function index() {
     
-        $this->model('models/other');
+        $this->view->newBlock('guilds-intro-text');
+    
+        $this->model('models/guides');
         
-        $guilds = $this->other->fetch_guilds();
-
+        $guilds = $this->guides->fetch_guilds();
         if (!$guilds) {
-            $this->view->newBlock('..');
+            $this->view->newBlock('no-guilds-found');
             return;
         }
 
-        $this->view->newBlock('guilds');
-        $this->view->newBlock('guilds-not');
+        $this->view->newBlock('guilds-block');
+        $this->view->newBlock('not-a-guild');
 
         foreach ($guilds as $page) {
+        
+            if ((int)$page->members_only === 1) {
+                $page->members_only = 
+                    '<img class="guide-p2p" src="/bildes/runescape/star-p2p-small.png"'.
+                    ' title="Pieejama tikai maksājošajiem spēlētājiem">';
+            } else {
+                $page->members_only = '';
+            }
+            
+            // placeholder ģildēm papildikona
+            if ($page->page_id == '0') {
+                $page->placeholder = 
+                    '<img class="is-old" src="/bildes/runescape/question-mark.png"'.
+                    ' title="Šai ģildei nav pievienota raksta!">';
+            } else {
+                $page->placeholder = '';
+            }
+            
+            // adreses placeholderiem arī nav
+            if ($page->page_id != '0') {
+                $page->strid = '/read/'.$page->strid;
+            } else {
+                $page->strid = 'javascript:void(0);';
+            }
 
             // ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
-            if ($page->rspage_img != '') {
+            if (!empty($page->image)) {
                 $this->view->newBlock('guild');
                 $this->view->assignAll($page);
-            }
+
             // pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
-            else {
-                $this->view->newBlock('guild-page');
+            } else {
+                $this->view->newBlock('not-guild-page');
                 $this->view->assignAll($page);
             }
         }

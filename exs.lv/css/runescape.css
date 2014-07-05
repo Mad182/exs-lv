@@ -21,8 +21,7 @@
     9.3 freeplay & miniquests
     9.4 minigames & D&D
     9.5 prasmju stilizējumi
-    9.6 tasks/achievement diaries un ģildes
-    9.7 ģildes
+    9.6 tasks un ģildes
  *
  *  10. Aptaujas
  *  11. tinyMCE uzliekamie stili
@@ -1308,7 +1307,7 @@ table.skill-reqs {
     margin-left:15px
 }
 
-/* 9.6 tasks/achievement diaries un ģildes */
+/* 9.6 tasks un ģildes */
 #trollis {
     max-height:100px;
     float:left;
@@ -1320,11 +1319,21 @@ table.skill-reqs {
         margin:0 10px 5px 0
     }
     #wise-old-man {
-        max-height:90px;
-        float:left;
+        max-height:100px;
         margin:0 10px 5px 0
     }
-.tasks-block {
+.newline {
+    clear:left
+}
+/*.border-gray {
+    border:1px solid #cccdcd;
+    border-bottom:1px solid #b3b8bc
+}
+.border-orange {
+    border:1px solid #95a5c2;
+    border-bottom:1px solid #677898
+}*/
+.guide-block {
     float:left;
     padding:5px 0 0;
     margin:0 7px 20px 10px;
@@ -1332,88 +1341,62 @@ table.skill-reqs {
     border-bottom:1px solid #b3b8bc;
     background:#f4f3f3;
     font-size:11px;
-    position:relative;
     width:218px
 }
-    .newline {
-        clear:left
+    .guide-block p {
+        margin:2px 7px 3px 7px;
+        padding:0;
+        line-height:1.3
     }
-    .border-gray {
-        border:1px solid #cccdcd;
-        border-bottom:1px solid #b3b8bc
+    p.guide-title {
+        font-weight: 700;
+        color:#374e5b;
+        display:block;
+        padding:0 3px 3px;
+        border-bottom:1px solid #E9E4E4
     }
-    .border-orange {
-        border:1px solid #95a5c2;
-        border-bottom:1px solid #677898
+    .guide-block p span {
+        font-weight:700;
+        color:#355575
     }
-.tasks-block .tasks-title {
-    margin:0 auto 5px;
-    padding:0 5px 3px 7px;
-    font-weight: 700;
-    color:#374e5b;
-    display:block;
-    border-bottom:1px dotted #ccc
-}
-  .tasks-block .guild-icon {
-    vertical-align:middle;
-    border:0 !important;
-    margin:-4px 3px 0 5px
-  }
-  .tasks-block .old {
-    float:right;
-    position:absolute;
-    top:-3px;
-    right:-2px;
-    border:0 !important;
-  }
-.tasks-block img {
-    margin:3px 5px 10px;
-    border:3px solid #ddd;
-    max-width:200px
-}
-.tasks-block p {
-    margin:0 7px 3px 7px;
-    padding:0;
-    line-height:1.3
-}
-.tasks-block ul {
+    .guide-block > a img {
+        margin:3px 8px 0;
+        max-width:200px;
+        opacity:0.88
+    }
+        .guide-block > a img:hover {
+            opacity:1.0
+        }
+    .guide-p2p {
+        position:relative;
+        left:3px
+    }
+.guide-block ul {
     padding:0;
     margin:0
 }
-    .tasks-block ul li {
+    .guide-block ul li {
         overflow:auto;
         background:transparent;
         padding:0;
         margin:0
     }
-    .tasks-block ul li a.page {
+    .guide-block ul li a.page {
         padding:4px 5px 4px 10px;
         border-bottom:0 solid #d9e4f4;
         border-top:1px solid #dadada;
         margin:0;
         display:block
     }
-  .tasks-block li:hover {
-    background:lavender;
-    border-left:3px solid #778DA5;
-  }
-  .tasks-block li:hover a.page {
-    padding-left:7px;
-    text-decoration:none;
-    color:#0059A7
-  }
-
-/* 9.7 Ģildes */
-.guild-strong {
-    font-weight: 700;
-    color:#355575
-}
-.guild-old {
-    float:right;
-    border:0 !important;
-    position:absolute;
-    right:0;
-    top:0
+    .guide-block li:hover {
+        background:#eaebec
+    }
+    .guide-block li:hover a.page {
+        text-decoration:none;
+        color:#0059A7
+    }
+img.is-old {
+    float:right
 }
 
 /* 10. Aptaujas */
