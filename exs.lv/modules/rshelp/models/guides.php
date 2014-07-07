@@ -85,7 +85,6 @@ class Model_Guides extends Model {
                 `rs_series`.`id` ASC,
                 `rs_series`.`ordered_by` ASC
         ");
-        //CASE WHEN `page_id` IS NULL THEN 1 ELSE 0 ASC,
 
         return $query;
     }

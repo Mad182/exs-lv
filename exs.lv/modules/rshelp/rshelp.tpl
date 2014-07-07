@@ -44,14 +44,17 @@
 			<li class="views">skatīts {views}x</li>
 		</ul>
 		<div class="c"></div>
-		<!-- START BLOCK : article-avatar -->
-		<img class="av" style="max-height:70px" src="http://exs.lv/{image}">
-		<!-- END BLOCK : article-avatar -->
-		<div style="padding: 5px 0 10px">
-            {intro} 
-            <a href="{url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a>
+        <div>
+            <span class="vc-ghost-item"></span>
+            <!-- START BLOCK : article-avatar -->
+            <img class="av vc-item" style="max-height:70px;float:none" src="http://exs.lv/{image}">
+            <!-- END BLOCK : article-avatar -->
+            <div class="vc-item" style="padding: 5px 0 10px;font-size:13px;max-width:80%">
+                {intro} 
+                <a href="{url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a>
+            </div>
         </div>
-		<div class="c"></div>
+        <div class="c"></div>
 	</li>
 	<!-- END BLOCK : rs-article -->
 </ul>

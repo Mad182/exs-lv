@@ -175,7 +175,8 @@ class Rshelp extends Controller {
             $this->view->assignAll($data);
         }
         
-        // visām sadaļām, atskaitot /padomi, kur uzreiz redzami visi raksti
+        // lappuses visām sadaļām, atskaitot /padomi, 
+        // kur uzreiz redzami visi raksti
         if ($this->category->id != $this->cat_padomi) {
         
             $lim_start = (isset($_GET['skip']) && (int)$_GET['skip'] > 0) ? 
