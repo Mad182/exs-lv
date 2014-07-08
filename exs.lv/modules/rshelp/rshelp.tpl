@@ -47,7 +47,7 @@
         <div>
             <span class="vc-ghost-item"></span>
             <!-- START BLOCK : article-avatar -->
-            <img class="av vc-item" style="max-height:70px;float:none" src="http://exs.lv/{image}">
+            <img class="av vc-item" style="max-height:70px;max-width:20%;float:none" src="http://exs.lv/{image}">
             <!-- END BLOCK : article-avatar -->
             <div class="vc-item" style="padding: 5px 0 10px;font-size:13px;max-width:80%">
                 {intro} 
