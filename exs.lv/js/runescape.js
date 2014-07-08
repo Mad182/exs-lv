@@ -16,6 +16,15 @@ function fancyContent(url) {
 }
 
 $(document).ready(function () {
+
+    /**
+     *  cluetip
+     */
+    $('a.cluetip').cluetip({
+        splitTitle: '|',
+        showTitle: false,
+        width: '300px'
+    });
     
     /**
      *  RuneScape random fakta atjaunotājs
@@ -190,5 +199,5 @@ $(document).ready(function () {
         });
         
         e.preventDefault();
-    });    
+    });
 });
