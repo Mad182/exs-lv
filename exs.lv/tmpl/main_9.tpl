@@ -180,7 +180,7 @@
 			<div id="header-navig">
 				<ul class="nav-left">
                     <li>
-						<a href="http://tops.exs.lv/runescape" rel="nofollow">Tops <span class="new-link">new</span></a>&middot;
+						<a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a>&middot;
 					</li>
 					<li>
 						<a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>&middot;
@@ -224,9 +224,13 @@
 					<li{cat_sel_1863}><a class="first" href="/">Lobby</a></li>
 					<li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a>
 						<ul>
+							<li><a href="/kvestu-pamacibas">Sērijas</a></li>
 							<li><a href="/p2p-kvesti">P2P kvesti</a></li>
 							<li><a href="/f2p-kvesti">F2P kvesti</a></li>
 							<li><a href="/mini-kvesti">Minikvesti</a></li>
+							<li><a href="/kvestu-pamacibas/stats">Statistika</a></li>
+							<li><a href="/kvestu-pamacibas/facts">Fakti</a></li>
+							<li><a href="/kvestu-pamacibas/skill-reqs">Prasmju prasības</a></li>
 						</ul>
 					</li>
 					<li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
