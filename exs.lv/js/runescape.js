@@ -20,7 +20,7 @@ $(document).ready(function () {
     /**
      *  cluetip
      */
-    $('a.cluetip').cluetip({
+    $('.cluetip').cluetip({
         splitTitle: '|',
         showTitle: false,
         width: '300px'

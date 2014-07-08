@@ -18,7 +18,6 @@ function as_json($content) {
     exit;
 }
 
-
 /**
  *  Atgriež objektu ar template faila saturu
  *
@@ -27,7 +26,7 @@ function as_json($content) {
  *  @return bool            "false", ja fails neeksistē
  *  @return TemplatePower   template objekts
  */
-function get_template($file = '', $add_path = true) {
+function get_tpl($file = '', $add_path = true) {
     global $category;
     
     if ($file == '') {
@@ -35,7 +34,7 @@ function get_template($file = '', $add_path = true) {
     }
 
     if ($add_path) {
-        $file = CORE_PATH.'/modules/'.$category->module.'/'.$file;
+        $file = CORE_PATH.'/modules/'.$category->module.'/'.$file.'.tpl';
     }
     
     if (!file_exists($file)) {
@@ -47,7 +46,6 @@ function get_template($file = '', $add_path = true) {
     
     return $tpl;
 }
-
 
 /**
  *  RuneScape.com RSS feed lasītājs
@@ -76,11 +74,8 @@ function get_runescape_news($force = false) {
         // vairāki lietotāji neizsauktu atjaunošanos vienlaicīgi
         $m->set('runescape-news', time(), false, 600);
 
-        // nolasa jaunākās ziņas no runescape.com
         $news = curl_get('http://services.runescape.com/m=news/latest_news.rss');
 
-        // ja izdevās ielasīt saturu no RSS, iet cauri visiem rakstiem un
-        // salīdzina ar ierakstiem datubāzē
         if ($news !== false) {
             $data = new SimpleXmlElement($news);
             
@@ -340,7 +335,6 @@ function get_fallback_image($string = '') {
 
 }
 
-
 /**
  *  Iztulko jaunumu kategoriju.
  *
@@ -373,50 +367,6 @@ function translate_category($string = '') {
     }
     return $string;
 }
-
-
-/**
- *  Ar Memcache saglabā un atgriež kvestu statistikas datus.
- *
- *  Funkcija tiek izsaukta, caur MOD sadaļu rediģējot rs pamācības.
- *
- *  @param  bool  norāde, vai atjaunināt memcache glabāto saturu
- */
-function get_quests_stats($force = false) {
-	global $db, $m;
-    global $cats_quests, $cat_p2p_quests, $cat_f2p_quests, $cat_miniquests;
-
-	$stats = false;
-
-	if ($force || ($stats = $m->get('quests-stats')) === false) {
-
-		// izlaisto kvestu skaits noteiktos gados
-		$stats[14] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 14 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats[13] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 13 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats[12] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 12 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats[11] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 11 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats[10] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 10 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats['older'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` NOT IN (12,11,10,9,8) AND `cat_id` IN (".implode(',', $cats_quests).") ");
-
-		// kvestu tips
-		$stats['p2p'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `members_only` = 1 AND `cat_id` = ".(int)$cat_p2p_quests);
-		$stats['f2p'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `members_only` = 0 AND `cat_id` = ".(int)$cat_f2p_quests);
-		$stats['miniquests'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `cat_id` = ".(int)$cat_miniquests);
-
-		// kvestu sarežģītība
-		$stats['special'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 6 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats['grandmaster'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 5 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats['master'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 4 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats['experienced'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 3 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats['intermediate'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 2 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-		$stats['novice'] = $db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 1 AND `cat_id` IN (".implode(',', $cats_quests).") ");
-
-		$m->set('quests-stats', $stats, false, 3600);
-	}
-
-	return $stats;
-}
-
 
 /**
  *  RuneScape kategoriju saraksts

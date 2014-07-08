@@ -1,178 +1,168 @@
-<!-- START BLOCK : quests-intro -->
-<h1 class="content-title">
-    RuneScape kvesti un minikvesti
-    <!-- START BLOCK : quests-info-button -->
-    <span style="float:right"><a class="button rs-button" href="/info-quests">Mainīt papildinformāciju</a></span>
-    <!-- END BLOCK : quests-info-button -->
-</h1>
-<div id="intro-quests" class="rs-intro">
-	<img src="{intro-image}" title="" alt="">
-	<p>Neizskaidrojami atgadījumi, nodevīgas idejas un postoši spēki ir tie, kas valda pār Gīlinoras iemītnieku šķietami mierīgo ikdienu. 
-    Tomēr aiz mierpilnajām sejām un glaimojošajiem vārdiem briest daudz nopietnāki draudi, kas var ietekmēt ikvienas radības turpmāko likteni. 
-    Pār zemi klīst drūmas domas, gaisu pāršķeļ stindzinoši kliedzieni, bet ēnās milst naids un atriebība.</p> 
-	<p>Šur tur krodziņos uzklīst arī pa kādam izslāpušam dēkainim, kura mēle nakts gaitā atraisās, un tādās reizēs ciematu iemītnieki kāri ķer katru vārdu par nedienām un raižpilnām zīmēm citviet. 
-    Kā rādās, pēc asinīm izslāpuši nezvēri, prasmīgi šamaņi un varaskāri dēmoni nav vienīgā nelaime. 
-    Vēl jau eksistē tie nešķīsteņi, kas uzglūn domās un sapņos...</p>  
-</div>
-<ul id="quests-tabs">
-  <li class="nohover">Rādīt:</li>  
-  <li><a href="/kvestu-pamacibas">sērijas</a></li>
-  <li><a href="/p2p-kvesti">P2P</a></li>
-  <li><a href="/f2p-kvesti">F2P</a></li>
-  <li><a href="/mini-kvesti">minikvestus</a></li>
+<!-- START BLOCK : list-tabs -->
+<ul class="tabs">
+    <li><a class="{tab-series}" href="/kvestu-pamacibas">Sērijas</a></li>
+    <li><a class="{tab-p2p}" href="/p2p-kvesti">P2P</a></li>
+    <li><a class="{tab-f2p}" href="/f2p-kvesti">F2P</a></li>
+    <li><a class="{tab-miniquests}" href="/mini-kvesti">Minikvesti</a></li>
+    <li><a class="{tab-stats}" href="/kvestu-pamacibas/stats">Statistika</a></li>
+    <li><a class="{tab-facts}" href="/kvestu-pamacibas/facts">Fakti</a></li>
+    <li><a class="{tab-reqs}" href="/kvestu-pamacibas/skill-reqs">Prasmju prasības</a></li>
 </ul>
-<div class="clearfix"></div>
-<!-- END BLOCK : quests-intro -->
+<!-- END BLOCK : list-tabs -->
 
-<!-- START BLOCK : quests-series -->
-<h1 class="content-title">RuneScape kvestu sērijas</h1>
-<div id="quests-series">
+
+<!-- START BLOCK : series-intro-text -->
+<div class="rs-intro">
+    <span class="vc-ghost-item"></span>
+	<img id="khazard" class="vc-item" src="{intro-image}" alt="">
+	<p class="vc-item" style="max-width:85%">Neizskaidrojamas parādības un postoši spēki ir tie, kas satricina Gīlinoras iemītnieku mierīgo ikdienu. Pār zemi klīst drūmas domas, gaisu pāršķeļ stindzinoši kliedzieni, bet ēnās milst naids un atriebība.<br><span style="position:relative;top:4px">&nbsp;&nbsp;&nbsp;Šur tur krodziņos uzklīst arī pa kādam izslāpušam dēkainim, kura mēle nakts gaitā atraisās, un tādās reizēs ciematu iemītnieki kāri ķer katru vārdu par nedienām citviet. Kā rādās, pēc asinīm izslāpuši nezvēri, prasmīgi šamaņi un varaskāri dēmoni nav vienīgā nelaime. Vēl jau eksistē arī tie nešķīsteņi, kas uzglūn domās un sapņos...</span></p>  
+</div>
+<!-- END BLOCK : series-intro-text -->
+
+<!-- START BLOCK : no-series-found -->
+<p class="simple-note">Nav izveidota neviena kvestu sērija.</p>
+<!-- END BLOCK : no-series-found -->
+
+<!-- START BLOCK : series-block -->
+<p class="simple-note" style="margin-bottom:20px;text-indent:7px">Šis sadalījums pa sērijām ir neoficiāls, arī liela daļa kvestu iederas vairākās sērijās, savukārt pašas sērijas nereti viena ar otru pārklājas vai papildina kādu citu, tāpēc atspoguļotais kādam var nešķist pilnīgi pareizs.</p>
+<div id="series">
 	<!-- START BLOCK : single-series -->
 	<div class="series"{newline}>
-		<div class="series-title">{series_title}</div>
-		<img src="/bildes/runescape/series/{series_img}" title="{page_title}" alt="{page_title}">
+		<h3>{series_title}</h3>
+		<img src="/bildes/runescape/series/{img}" title="{series_title}" alt="{series_title}">
 		<!-- START BLOCK : series-quest -->
-		{page_title}
+		{quest}
 		<!-- END BLOCK : series-quest-->
 	</div>
 	<!-- END BLOCK : single-series -->
 </div>
 <div class="clearfix"></div>
-<!-- END BLOCK : quests-series -->
+<!-- END BLOCK : series-block -->
 
-<!-- START BLOCK : quests-outro -->
-<h1 class="content-title" style="border-bottom:none">RuneScape kvestu statistika</h1>
-<div id="quests-outro">
-	<div style="float:left;width:60%">
 
-		<!-- START BLOCK : quests-stats -->
-		<p class="facts-title"><b>Statistika</b></p>
-		<div style="width:350px"> 
-			<table class="stats-left">
-				<tr><td class="left">P2P kvesti:</td><td>{p2p}</td></tr>
-				<tr><td class="left">F2P kvesti:</td><td>{f2p}</td></tr>
-				<tr class="space"><td class="left">2014. gadā:</td><td>{2014}</td></tr>
-				<tr><td class="left">13. gadā:</td><td>{2013}</td></tr>
-				<tr><td class="left">12. gadā:</td><td>{2012}</td></tr>
-				<tr><td class="left">11. gadā:</td><td>{2011}</td></tr>
-				<tr><td class="left">10. gadā:</td><td>{2010}</td></tr>
-				<tr><td class="left">Senāk:</td><td>{older}</td></tr>  
-			</table>
-			<img id="balance" src="/bildes/runescape/balance.png" title="Balance Elemental">
-			<table class="stats-right">
-				<tr><td class="left">Īpašs (kā RFD):</td><td>{special}</td></tr>
-				<tr><td class="left">Grandmaster:</td><td>{grandmaster}</td></tr>
-				<tr><td class="left">Master:</td><td>{master}</td></tr>
-				<tr><td class="left">Experienced:</td><td>{experienced}</td></tr>
-				<tr><td class="left">Intermediate:</td><td>{intermediate}</td></tr>
-				<tr><td class="left">Novice:</td><td>{novice}</td></tr>
-				<tr class="space"><td class="left">Minikvesti:</td><td>{miniquests}</td></tr>
-			</table>
-		</div>
-		<!-- END BLOCK : quests-stats -->
-
-		<!-- START BLOCK : quests-facts -->
-		<p style="margin-top:15px" class="facts-title"><b>Fakti par RuneScape kvestiem</b></p>
-		<ul id="quests-facts">
-			<li>Pirms EoC visu kvestu izpildīšanai bija nepieciešams vismaz 85. combat līmenis, bet, izejot tos, spēlētāja Combat pieauga līdz 105. līmenim.</li>
-			<li>Spēlētāji, kuri ir izgājuši visus kvestus, no Wise Old Man par 99,000gp var nopirkt Quest Point Cape - vienu no Capes of Accomplishment.</li>
-			<li>50. kvests - <a href="/read/legends-quest-2">Legends' Quest</a>, 100. kvests - <a href="/read/recipe-for-disaster-3">Recipe for Disaster</a>, 150. kvests - <a href="/read/chosen-commander-the">The Chosen Commander</a>, 200. kvests - Priffdinas?</li>
-			<li><a href="/read/recipe-for-disaster-3">Recipe for Disaster</a> patiesībā sastāv no daudziem apakškvestiem.</li>
-			<li>Laika gaitā daži kvesti tikuši mainīti. Piemēram, Unstable Foundations un Learning the Ropes no spēles ir izņemti, Romeo & Juliet aizstāts ar <a href="/read/gunnar-s-ground">Gunnar's Ground</a>, bet <a href="/read/sheep-shearer">Sheep Shearer</a> atstāts kā minikvests.</li> 
-			<li>Jagex apgalvo, ka <a href="/read/cook-s-assistant">Cook's Assistant</a> ir pats pirmais kvests, kuru viņi bija sākuši izstrādāt.</li>
-		</ul>
-		<!-- END BLOCK : quests-facts -->
-
-	</div>
-	<!-- START BLOCK : max-skills -->
-	<div id="quests-skills">
-		<table class="rslist skill-level">
-			<tr class="listhead">
-				<td class="right" style="width:100px">Prasme</td>
-				<td style="width:20px"></td>
-				<td style="width:150px;text-align:left">Kvests</td>
-			</tr>
-			<!-- START BLOCK : skill-requirement -->
-			<tr>
-				<td class="right">{skill}</td>
-				<td class="center">{level}</td>
-				<td class="left">{page_title}</td>
-			</tr>
-			<!-- END BLOCK : skill-requirement -->
-		</table>
-	</div>
-	<!-- END BLOCK : max-skills -->
-</div>
-<!-- END BLOCK : quests-outro -->
-
+<!-- START BLOCK : p2p-quests-block -->
+<p class="simple-note">Šajā sarakstā uzskaitīti tie kvesti, kas pieejami tikai spēles maksas versijā (pay-to-play).<br>Atsevišķas iztrūkstošās pamācības var meklēt <a href="/padomi">arhīvā</a>.</p>
+<!-- START BLOCK : no-p2p-quests -->
+<p class="simple-note">Neizdevās atlasīt sadaļas rakstus. Tādu, iespējams, nemaz nav!</p>
+<!-- END BLOCK : no-p2p-quests -->
 <!-- START BLOCK : p2p-quests -->
-<h1 class="content-title">RuneScape maksas kvesti</h1>
-<table class="rslist questlist">
+<table class="rslist">
 	<tr class="listhead">
-		<td style="width:15px;">&nbsp;</td>
-		<td style="width:500px;">&nbsp;</td>
-		<td style="width:140px;" class="center">Autors</td>
-		<td style="width:20px">&nbsp;</td>	
+		<td style="width:15px">&nbsp;</td>
+		<td style="width:500px">&nbsp;</td>
+		<td style="width:140px" class="center">Autors</td>
 	</tr>
 	<!-- START BLOCK : p2p-quest -->
 	<tr{border}>
 		<td class="letter">{letter}</td>  
-		<td><a href="/read/{page_strid}">{page_title}</a></td>
-		<td class="center">{page-author}</td>
-		<td style="position:relative">{warning}</td>
+		<td><a{extra} href="{strid}">{title}</a></td>
+		<td class="center">{author}</td>
 	</tr>
 	<!-- END BLOCK : p2p-quest -->
 </table>
-<!-- START BLOCK : questlist-placeholders -->
-<h1 class="content-title">Vēl neuzrakstītās pamācības</h1>
-<table class="rslist questlist">
-	<tr class="listhead">
-		<td style="width:15px;">&nbsp;</td>
-		<td style="width:200px;">&nbsp;</td>
-		<td style="width:440px;">&nbsp;</td>
-	</tr>
-	<!-- START BLOCK : quest-ph -->
-	<tr>
-		<td>&nbsp;</td>  
-		<td><a href="#">{page_title}</a></td>
-		<td>Šāda pamācība lapā iztrūkst. Lai tādu izveidotu, dodies uz <a href="/write">šo lapu</a>.</td>
-	</tr>
-	<!-- END BLOCK : quest-ph -->
-</table>
-<!-- END BLOCK : questlist-placeholders -->
-<!-- END BLOCK : p2p-quests --> 
+<!-- END BLOCK : p2p-quests -->
+<!-- END BLOCK : p2p-quests-block --> 
 
-<!-- START BLOCK : other-quests -->
-<h1 class="content-title">{extended-title}</h1>
-<table class="other-quests">
-	<!-- START BLOCK : other-quest -->
-	<tr>
-		<td class="quest-image">
-			<a href="/read/{page_strid}">{page_image}</a>
-		</td>
-		<td style="position:relative">
-			<p class="mq-title">
-				<a href="/read/{page_strid}">{page_title}</a> @ {page_date} no {page_author} {warning}
-			</p>
-			<p style="font-size: 11px;">{rspage_description}</p>
-		</td>
-	</tr>
-	<!-- END BLOCK : other-quest -->
-</table>
-<!-- START BLOCK : extended-placeholders -->
-<h1 class="content-title">Lapā vēl iztrūkstošās {needed} pamācības</h1>
-<table class="ext-quests">
-	<!-- START BLOCK : extended-ph -->
-	<tr>
-		<td class="exists-not">
-			<a href="/write"><img src="/bildes/runescape/empty.png" title="" alt=""></a>
-		</td>
-		<td>
-			<p class="mq-title facts-title"><a href="#">{title}</a></p>
-			<p>Oops! Šāda pamācība ir nomaldījusies lapas rakstu labirintos un nav atrodama. Vai palīdzēsi <a href="/write">papildināt</a> exs.lv datu krātuvi ar šo rakstu latviešu valodā? {link}</p>
-		</td>
-	</tr>
-	<!-- END BLOCK : extended-ph -->
-</table>
-<!-- END BLOCK : extended-placeholders -->
-<!-- END BLOCK : other-quests -->
+
+<!-- START BLOCK : common-quests -->
+<!-- START BLOCK : no-quests-found -->
+<p class="simple-note">Neizdevās atlasīt sadaļas rakstus. Tādu, iespējams, nemaz nav!</p>
+<!-- END BLOCK : no-quests-found -->
+<!-- START BLOCK : quests-found -->
+
+    <table class="simple-quests">
+        <!-- START BLOCK : common-quest -->
+        <tr>
+            <td><a href="{strid}">{image}</a></td>
+            <td>
+                <p><a href="{strid}">{title}</a> {date} {author}</p>
+                {description}
+            </td>
+        </tr>
+        <!-- END BLOCK : common-quest -->
+    </table>
+<!-- END BLOCK : quests-found -->
+<!-- END BLOCK : common-quests -->
+
+
+<!-- START BLOCK : stats-block -->
+<p class="simple-note">Šajā sadaļā aplūkojama ar kvestiem saistīta statistika</p>
+<!-- START BLOCK : no-stats-found -->
+<p class="simple-note">
+    Statistika nav pieejama.
+</p>
+<!-- END BLOCK : no-stats-found -->
+<!-- START BLOCK : stats-found -->
+<div class="quest-stats-block">
+    <span class="vc-ghost-item"></span>
+    <table class="stats-left vc-item">
+        <tr><td class="left">P2P kvesti:</td><td>{p2p}</td></tr>
+        <tr><td class="left">F2P kvesti:</td><td>{f2p}</td></tr>
+        <tr class="space"><td class="left">2014. gadā:</td><td>{14}</td></tr>
+        <tr><td class="left">13. gadā:</td><td>{13}</td></tr>
+        <tr><td class="left">12. gadā:</td><td>{12}</td></tr>
+        <tr><td class="left">11. gadā:</td><td>{11}</td></tr>
+        <tr><td class="left">10. gadā:</td><td>{10}</td></tr>
+        <tr><td class="left">Senāk:</td><td>{older}</td></tr>  
+    </table>
+    <img id="balance" class="vc-item" src="/bildes/runescape/intro/balance.png" title="Balance Elemental">
+    <table class="stats-left vc-item">
+        <tr><td class="left">Īpašs (kā RFD):</td><td>{special}</td></tr>
+        <tr><td class="left">Grandmaster:</td><td>{grandmaster}</td></tr>
+        <tr><td class="left">Master:</td><td>{master}</td></tr>
+        <tr><td class="left">Experienced:</td><td>{experienced}</td></tr>
+        <tr><td class="left">Intermediate:</td><td>{intermediate}</td></tr>
+        <tr><td class="left">Novice:</td><td>{novice}</td></tr>
+        <tr class="space"><td class="left">Minikvesti:</td><td>{miniquests}</td></tr>
+    </table>
+</div>
+<!-- END BLOCK : stats-found -->
+<div class="break"></div>
+<!-- END BLOCK : stats-block -->
+
+
+<!-- START BLOCK : facts-block -->
+<p class="simple-note">
+    Šajā sadaļā apkopoti dažādi ar kvestiem saistīti fakti
+</p>
+<div id="skills-facts" style="font-size:13px">
+	<ul>
+		<li>Pirms EoC visu kvestu izpildīšanai bija nepieciešams vismaz 85. combat līmenis, bet, izejot tos, spēlētāja Combat pieauga līdz 105. līmenim.</li>
+        <li>Spēlētāji, kuri ir izgājuši visus kvestus, no Wise Old Man par 99,000gp var nopirkt Quest Point Cape - vienu no Capes of Accomplishment.</li>
+        <li>50. kvests - <a href="/read/legends-quest-2">Legends' Quest</a>, 100. kvests - <a href="/read/recipe-for-disaster-3">Recipe for Disaster</a>, 150. kvests - <a href="/read/chosen-commander-the">The Chosen Commander</a>, 200. kvests - ?</li>
+        <li><a href="/read/recipe-for-disaster-3">Recipe for Disaster</a> patiesībā sastāv no daudziem apakškvestiem.</li>
+        <li>Laika gaitā daži kvesti tikuši mainīti. Piemēram, Unstable Foundations un Learning the Ropes no spēles ir izņemti, Romeo & Juliet aizstāts ar <a href="/read/gunnar-s-ground">Gunnar's Ground</a>, bet <a href="/read/sheep-shearer">Sheep Shearer</a> atstāts kā minikvests.</li> 
+        <li>Jagex apgalvo, ka <a href="/read/cook-s-assistant">Cook's Assistant</a> ir pats pirmais kvests, kuru viņi bija sākuši izstrādāt.</li>
+	</ul>
+</div>
+<div class="break"></div>
+<!-- END BLOCK : facts-block -->
+
+
+<!-- START BLOCK : skills-block -->
+    <p class="simple-note">
+        Šajā sadaļā parādīts augstākais līmenis katrā prasmē, kāds nepieciešams kādam no kvestiem. Sasniedzot šīs prasības, iespējams izpildīt visus kvestus.
+    </p>
+    <!-- START BLOCK : no-skills-found -->
+    <p class="simple-note">
+        Prasības nav pieejamas.
+    </p>
+    <!-- END BLOCK : no-skills-found -->
+    <!-- START BLOCK : skills-found -->
+    <table class="rslist skill-req">
+        <tr class="listhead">
+            <td class="right" style="width:130px">Prasme</td>
+            <td style="width:80px"></td>
+            <td style="width:220px;text-align:left">Kvests</td>
+        </tr>
+        <!-- START BLOCK : skill-requirement -->
+        <tr>
+            <td class="name" style="{style}">{title}</td>
+            <td class="level">{level}</td>
+            <td>{page_title}</td>
+        </tr>
+        <!-- END BLOCK : skill-requirement -->
+    </table>
+    <!-- END BLOCK : skills-found -->
+    <div class="break"></div>
+<!-- END BLOCK : skills-block -->
