@@ -14,7 +14,7 @@ class Model {
     public function __construct() {
 
         $globals = array(
-            'db', 'auth', 'lang', 'debug', 'category'
+            'db', 'auth', 'lang', 'debug', 'category', 'm'
         );
         foreach ($globals as $global) {
             global ${$global};
