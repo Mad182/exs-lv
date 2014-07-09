@@ -3930,3 +3930,29 @@ li.view_more {
 	display: inline-block;
 	background: url('/bildes/number-light.gif') no-repeat 0 0;
 }
+
+/* spēļu serveru monitorings */
+#mta-monitor {
+	padding: 3px 0;
+}
+
+#mta-monitor p {
+	margin: 0;
+	padding: 1px 5px;
+	font-size: 12px;
+}
+
+#mta-monitor p.playerlist {
+	padding: 5px;
+	background: #f5f2fc;
+}
+
+#mta-monitor p.playerlist span {
+	display: block;
+	padding: 1px 8px;
+	font-size: 11px;
+}
+
+#mta-monitor p.playerlist span.odd {
+	background: #faf8ff;
+}

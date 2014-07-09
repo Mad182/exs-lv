@@ -102,7 +102,7 @@ if ($auth->ok === true) {
 }
 
 //player online chart
-$chart_items = $db->get_results("SELECT `time`, `count` FROM `mta_chart` WHERE `time` > '".date('Y-m-d H:i:s', strtotime('-1 day'))."' ORDER BY `time` ASC");
+$chart_items = $db->get_results("SELECT `time`, `count` FROM `players_online` WHERE `game` = 'mta' AND `time` > '".date('Y-m-d H:i:s', strtotime('-1 day'))."' ORDER BY `time` ASC");
 
 if($chart_items) {
 	$tpl->newBlock('google-chart');
