@@ -96,7 +96,7 @@ class Skills extends Controller {
                 $level_value = (int)$post_arr['level-'.$skill->id];
                 if ($level_value < 1) {
                     $level_value = 1;
-                } else if ($level_value > 120) {
+                } else if ($level_value > 2500) {
                     $level_value = 99;
                 }
 

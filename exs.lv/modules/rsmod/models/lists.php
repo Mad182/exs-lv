@@ -80,21 +80,12 @@ class Model_Lists extends Model {
                 `rs_pages`.`id`         AS `rspage_id`,
                 `rs_pages`.`is_hidden`,
                 `rs_pages`.`title`      AS `rspage_title`,
-
-                `rs_series`.`id`        AS `rsseries_id`,
-                `rs_series`.`title`     AS `rsseries_title`,
                 
                 IFNULL(`pages`.`id`, 0) AS `page_id`,
                 `pages`.`strid`         AS `page_strid`,
                 `pages`.`title`         AS `page_title`
                 
             FROM `rs_pages`
-                LEFT JOIN `rs_series_quests` ON (
-                    `rs_pages`.`id` = `rs_series_quests`.`rspages_id` AND 
-                    `rs_series_quests`.`deleted_by` = 0
-                )
-                LEFT JOIN `rs_series` ON 
-                    `rs_series_quests`.`series_id` = `rs_series`.`id`
                 LEFT JOIN `pages` ON 
                     `rs_pages`.`page_id` = `pages`.`id`
             WHERE
