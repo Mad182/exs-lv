@@ -8,9 +8,7 @@
 </div>
 <div class="simple-note">
   <img style="margin-right:7px;position:relative;left:3px;top:1px" src="/bildes/runescape/star-p2p-small.png" alt="">
-    Ģilde pieejama tikai maksājošajiem spēlētājiem<br>
-  <img style="position:relative;top:4px" src="/bildes/runescape/question-mark.png" alt="">
-    Ģildei nav pievienota raksta
+    Ģilde pieejama tikai maksājošajiem spēlētājiem
 </div>
 <!-- END BLOCK : guilds-intro-text -->
 
@@ -26,8 +24,8 @@
 <div style="margin-left:15px">
     <!-- START BLOCK : guild -->
     <div class="guide-block{newline}">
-        <p class="guide-title">{title}{members_only}{placeholder}</p>
-        <a href="{strid}"><img src="/bildes/runescape/guilds/{image}" title="{title}" alt=""></a>
+        <p class="guide-title">{title}{members_only}</p>
+        <a href="{strid}"><img{cluetip} src="/bildes/runescape/guilds/{image}" title="{cluetip_title}" alt=""></a>
         <p><span>Koordinātas:</span> {starting_point}</p>
         <p style="padding-bottom:5px"><span>Prasības:</span>&nbsp;{extra}</p>
     </div>

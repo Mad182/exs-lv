@@ -37,11 +37,11 @@ class Guilds extends Controller {
             
             // placeholder ģildēm papildikona
             if ($page->page_id == '0') {
-                $page->placeholder = 
-                    '<img class="is-old" src="/bildes/runescape/question-mark.png"'.
-                    ' title="Šai ģildei nav pievienota raksta!">';
+                $page->cluetip = ' class="cluetip"';
+                $page->cluetip_title = '|Ģildei nav pamācības';
             } else {
                 $page->placeholder = '';
+                $page->cluetip_title = $page->title;
             }
             
             // adreses placeholderiem arī nav

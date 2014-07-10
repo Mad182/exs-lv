@@ -227,8 +227,9 @@ class Quests extends Controller {
             $cluetip = $quest->title;
             $clue_class = '';
             if ($quest->page_id == '0') {
-                $cluetip = 'Šim kvestam pamācība iztrūkst';
+                $cluetip = '|Šim kvestam pamācība iztrūkst';
                 $clue_class = ' class="cluetip"';
+                $quest->clue = ' class="cluetip" title="|Šim kvestam pamācība iztrūkst"';
             }
             if (empty($quest->image)) {
                 $image = '/bildes/runescape/miniquests/bar_crawl.png';

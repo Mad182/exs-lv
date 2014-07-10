@@ -75,7 +75,7 @@
         <tr>
             <td><a href="{strid}">{image}</a></td>
             <td>
-                <p><a href="{strid}">{title}</a> {date} {author}</p>
+                <p><a href="{strid}"{clue}>{title}</a> {date} {author}</p>
                 {description}
             </td>
         </tr>

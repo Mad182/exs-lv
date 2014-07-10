@@ -82,8 +82,8 @@ class Model_Guides extends Model {
                 `rs_series`.`category` = 'tasks' AND
                 `rs_series`.`id` != 112
             ORDER BY 
-                `rs_series`.`id` ASC,
-                `rs_series`.`ordered_by` ASC
+                `rs_series`.`title` ASC,
+                `rs_pages`.`title` ASC
         ");
 
         return $query;

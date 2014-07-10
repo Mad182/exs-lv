@@ -970,7 +970,7 @@ table.skill-reqs {
     width:95%
 }
     .simple-quests tr td {
-        padding:3px;
+        padding:1px 3px;
         border:1px solid #ccc;
         min-height:15px
     }
@@ -1015,20 +1015,29 @@ table.skill-reqs {
 .minigame-list {
     clear:both
 }
-.minigame-avatar {
-  width:80px
+.minigame-list tr td:nth-child(1) {
+    padding:2px 3px
 }
-.minigame-avatar img {
-    max-width:80px;
-	max-height:80px;
-	margin:3px;
-	border:2px solid #ccc
+.minigame-list a > img {
+    max-width:90px;
+	max-height:90px;
+    vertical-align:middle
 }
-.minigame-location {
+.minigame-list p {
+    margin:3px 0 0;
+    padding:0
+}
+.minigame-list p:nth-child(1) {
+    margin-bottom:6px
+}
+.minigame-list p span {
     float:right;
     margin-right:7px;
     color:#6f7987;
     font-size:11px
+}
+.minigame-list tr:hover td {
+    background:#f1f1f1
 }
 
 /* 9.5 prasmes */
@@ -1176,7 +1185,7 @@ table.skill-reqs {
     .guide-block > a img {
         margin:3px 8px 0;
         max-width:200px;
-        opacity:0.88
+        opacity:0.95
     }
         .guide-block > a img:hover {
             opacity:1.0
