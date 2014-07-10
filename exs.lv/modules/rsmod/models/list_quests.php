@@ -165,7 +165,7 @@ class Model_List_Quests extends Model {
 
         $values = array(
             'page_id'           => $page_id,
-            'cat_id'            => (int)$cat_id,
+            'cat_id'            => (int)$cat,
             'title'             => $title,
             'members_only'      => $members_only,
             'difficulty'        => $difficulty,
