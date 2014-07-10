@@ -101,7 +101,8 @@ class Quests extends Controller {
             if ($single->pages_id != '0') {
                 $addr = '<a href="/read/'.$single->strid.'">'.$addr.'</a>';
             } else {
-                $addr = '<a href="javascript:void(0)">'.$addr.'</a>';
+                $addr = '<a class="cluetip" href="javascript:void(0)"'.
+                    ' title="|Pamācība iztrūkst">'.$addr.'</a>';
             }
 
             $this->view->newBlock('series-quest');

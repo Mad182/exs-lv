@@ -65,7 +65,7 @@
             <ul class="series-quests">
                 <!-- START BLOCK : series-quest -->
                 <li>
-                    <a href="/read/{strid}">{title}</a>
+                    <a href="{strid}">{title}</a>
                     <select name="order-{id}">
                     <!-- START BLOCK : option-param -->
                         <option value="{value}"{selected}>{value}</option>

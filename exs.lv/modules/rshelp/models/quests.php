@@ -58,6 +58,7 @@ class Model_Quests extends Model {
                 `rs_series_quests`.`deleted_by` = 0
             ORDER BY            
                 ABS(`rs_series`.`ordered_by`) ASC,
+                ABS(`rs_series`.`id`) ASC,
                 `rs_series_quests`.`ordered_by` ASC,
                 `rs_pages`.`title` ASC
         ");

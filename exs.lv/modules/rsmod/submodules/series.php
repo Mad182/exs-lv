@@ -151,6 +151,12 @@ class Series extends Controller {
         $view->newBlock('quest-list');
         foreach ($quests as $quest) {
         
+            if ($quest->strid != '0') {
+                $quest->strid = '/read/'.$quest->strid;
+            } else {
+                $quest->strid = 'javascript:void(0)';
+            }
+        
             $view->newBlock('series-quest');
             $view->assignAll($quest);
 
