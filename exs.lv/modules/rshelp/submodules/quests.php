@@ -62,6 +62,8 @@ class Quests extends Controller {
      */
     private function series_tab() {
     
+        $this->tpl_options = 'no-left-right';
+    
         $this->view->assign('tab-series', 'active');
         $this->view->newBlock('series-intro-text');        
         $this->view->assign('intro-image', 
@@ -92,7 +94,7 @@ class Quests extends Controller {
                 $temp_series = $single->series_id;
 
                 // ik pēc x sērijām pārlec uz jaunu rindu
-                if ($series_count > 1 && ($series_count - 1) % 3 == 0) {
+                if ($series_count > 1 && ($series_count - 1) % 4 == 0) {
                     $this->view->assign('newline', ' style="clear:left"');
                 }
             }
