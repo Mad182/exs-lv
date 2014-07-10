@@ -230,6 +230,13 @@ class Model_List_Quests extends Model {
         $entry->members_only = (isset($post_arr['members_only'])) ? 
             (bool)$post_arr['members_only'] : false;
 
+        if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'all-miniquests') {
+            $entry->cat_id = $this->cat_miniquests;
+        } else {
+            $entry->cat_id = ($entry->members_only) ? 
+                $this->cat_p2p_quests : $this->cat_f2p_quests;
+        }
+
         $entry->date = '01/01/2001';
         if (isset($post_arr['date']) && !empty($post_arr['date'])) {
             $entry->date = str_replace('/', '-', trim($post_arr['date']));
@@ -261,6 +268,7 @@ class Model_List_Quests extends Model {
         
         $values = array(
             'page_id'           => $entry->page_id,
+            'cat_id'            => $entry->cat_id,
             'title'             => $entry->title,
             'members_only'      => (int)$entry->members_only,
             'difficulty'        => $entry->difficulty,

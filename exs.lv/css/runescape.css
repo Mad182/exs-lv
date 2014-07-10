@@ -977,8 +977,7 @@ table.skill-reqs {
     .simple-quests a > img {
         vertical-align:middle;
         width:150px;
-        max-width:150px;
-        height:85px
+        max-width:150px
     }
     .simple-quests p {
         margin-left:7px

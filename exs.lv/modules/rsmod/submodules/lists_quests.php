@@ -50,7 +50,7 @@ class Quests extends Controller {
             if (isset($_POST['submit'])) {
                 $this->list_quests->update_quest($_GET['var2'], $_POST);
                 set_flash('Ieraksts atjaunots');
-                redirect('/'.$_GET['viewcat']);
+                redirect('/'.$_GET['viewcat'].'/edit/'.$_GET['var2']);
             }
             $this->show_edit_form($_GET['var2']);
                 
