@@ -39,17 +39,17 @@
 <!-- START BLOCK : minigames-list -->
 <table class="rslist minigame-list">
 	<tr class="listhead">
-		<td style="width:90px">&nbsp;</td>
+		<td style="width:100px">&nbsp;</td>
 		<td style="width:600px">
             Aktivitātes apraksts
             <span style="float:right;margin-right:7px">Vieta</span>
         </td>
 	</tr>
 	<!-- START BLOCK : minigame -->
-	<tr{faded}>
-		<td style="width:80px" class="minigame-avatar">{avatar}</td>
-		<td style="width:450px">
-			<p class="mg-title">
+	<tr>
+		<td{cluetip}>{avatar}</td>
+		<td>
+			<p>
                 {title}
                 <!-- START BLOCK : p2p-only -->
                 <img src="/bildes/runescape/star-p2p-small.png" title="Pieejama tikai maksas spēlētājiem" alt="">
@@ -57,7 +57,7 @@
                 <!-- START BLOCK : unsafe-minigame -->
                 <img src="/bildes/runescape/unsafe-small.png" title="Bīstama minispēle ar iespēju mirt" alt="">
                 <!-- END BLOCK : unsafe-minigame -->
-                <span class="minigame-location">{starting_point}</span>
+                <span>{starting_point}</span>
             </p>
 			<p>{description}</p>
         </td>	

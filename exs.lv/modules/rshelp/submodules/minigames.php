@@ -77,6 +77,11 @@ class Minigames extends Controller {
                 $avatar .= '<img src="http://img.exs.lv/'.$game->avatar.'" ';
                 $avatar .= 'title="'.$game->title.'" alt=""></a>';
                 $game->avatar = $avatar;
+            } else {
+                $avatar  = '<a href="javascript:void(0)">';
+                $avatar .= '<img src="/bildes/runescape/fallback.png" ';
+                $avatar .= 'title="'.$game->title.'" alt=""></a>';
+                $game->avatar = $avatar;
             }
 
             // D&D rakstiem vēl mēdz būt šāds prefix
@@ -87,15 +92,16 @@ class Minigames extends Controller {
                 $game->title = 
                     '<a href="/read/'.$game->strid.'">'.$game->title.'</a>';
             } else {
-                $game->title = '<strong>'.$game->title.'</strong>';
+                $game->title = 
+                    '<a class="placeholder">'.$game->title.'</a>';
             }
 
             $this->view->newBlock('minigame');
             $this->view->assignAll($game);
-            
-            // placeholderiem līnijas būs "izbalējušas"
+
             if ($game->page_id == '0') {
-                $this->view->assign('faded', ' class="is-faded"');
+                $this->view->assign('cluetip', 
+                    ' class="cluetip" title="Pamācība iztrūkst"');
             }
 
             if ($game->members_only) {

@@ -151,8 +151,8 @@ class Quests extends Controller {
                 $data->strid = '/read/'.$data->strid;
             } else {
                 $data->strid = 'javascript:void(0)';
-                $data->extra = ' class="cluetip" '.
-                    'title="|Šim kvestam pamācība iztrūkst"';
+                $data->extra = ' class="cluetip placeholder" '.
+                    'title="|Pamācība iztrūkst"';
             }
             $data->author = $author;
 
@@ -229,14 +229,16 @@ class Quests extends Controller {
             if ($quest->page_id == '0') {
                 $cluetip = '|Šim kvestam pamācība iztrūkst';
                 $clue_class = ' class="cluetip"';
-                $quest->clue = ' class="cluetip" title="|Šim kvestam pamācība iztrūkst"';
+                $quest->clue = ' class="cluetip placeholder"'.
+                    ' title="|Šim kvestam pamācība iztrūkst"';
             }
             if (empty($quest->image)) {
-                $image = '/bildes/runescape/miniquests/bar_crawl.png';
+                $image = '/bildes/runescape/fallback-wide.png';
             } else {
                 $image = '/bildes/runescape/'.$folder.'/'.$quest->image;
             }
-            $quest->image  = '<img src="'.$image.'"'.$clue_class.' title="'.$cluetip.'" alt="">';
+            $quest->image  = '<img src="'.$image.'"'.$clue_class.
+                ' title="'.$cluetip.'" alt="">';
             
             // sākotnēji nav paragrāfa tagu, lai nebūtu lieki tukšu rindu
             if (!empty($quest->description)) {
