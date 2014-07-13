@@ -1,132 +1,181 @@
 <?php
-
 /**
  * 	RuneScape prasmju sadaļa
  */
-!isset($sub_include) and die('No hacking, pls.');
 
-// izdrukā lapā ievadtekstu par prasmēm kā tādām
-$tpl->newBlock('skills-intro');
+class Skills extends Controller {
 
-// no datubāzes atlasa visas pievienotās prasmju sadaļas un
-// katrai no tām atlasa arī piesaistītos rakstus un papildinfo
-$pages = $db->get_results("
-    SELECT 
-        `cat`.`id`              AS `cat_id`,
-        `cat`.`title`           AS `cat_title`,
+    private $max_per_page;
+
+    public function index() {
+    
+        $this->max_per_page = 6;
+    
+        // jquery pieprasījums atgriezt citu prasmes rakstu lapu
+        if (isset($_GET['skill']) && isset($_GET['page'])) {
+            echo $this->get_skill_page();
+            exit;
         
-        IFNULL(`pages`.`id`, 0) AS `page_id`,
-        `pages`.`title`         AS `page_title`,
-        `pages`.`strid`         AS `page_strid`,
+        // tabula ar nepieciešamo xp skaitu katram līmenim
+        } else if (isset($_GET['var1']) && $_GET['var1'] === 'xp-table') {
+            $this->view->newBlock('list-tabs');
+            $this->view->assign('tab-xptable', 'active');
+            $this->view->newBlock('skills-xp-table');
         
-        IFNULL(`rs_classes`.`id`, 0)    AS `class_id`,
-        `rs_classes`.`img`              AS `class_img`,
-        `rs_classes`.`info`             AS `class_info`,
-        `rs_classes`.`members_only`     AS `members_only`
-    FROM `cat` 
-        LEFT JOIN `pages` ON `cat`.`id` = `pages`.`category`
-        LEFT JOIN `rs_classes` ON (
-            `cat`.`title`           = `rs_classes`.`title` AND
-            `rs_classes`.`category` = 'skills'
-        )
-    WHERE 
-        `cat`.`parent` = 4  
-    ORDER BY 
-        `cat`.`title` ASC
-");
+        // ar prasmēm saistīti fakti
+        } else if (isset($_GET['var1']) && $_GET['var1'] === 'facts') {
+            $this->view->newBlock('list-tabs');
+            $this->view->assign('tab-facts', 'active');        
+            $this->view->newBlock('skills-facts');
+        
+        // prasmju saraksts ar tām piesaistītiem rakstiem
+        } else {
+            $this->show_skill_blocks();
+        }
+    }
+    
+    /**
+     *  Saraksts ar RuneScape prasmēm
+     *
+     *  Pie katras prasmes ir tās attēls, neliels apraksts un blakus -
+     *  prasmes sadaļai pievienotie raksti
+     */
+    private function show_skill_blocks() {
+        
+        $this->view->newBlock('list-tabs');
+        $this->view->assign('tab-skills', 'active');
+        $this->view->newBlock('skills-intro-text');
 
-if ($pages) {
+        $this->model('models/guides');
+    
+        $pages = $this->guides->fetch_skills();        
+        if (!$pages) {
+            $this->view->newBlock('no-guides-found');
+            return;
+        }
+        
+        $this->view->newBlock('skills');
 
-	$tpl->newBlock('skills');
+        $skill_counter  = 0; 
+        $skill_id       = 0; // fiksē ciklā ejošo prasmi
+        $page_counter   = 0; // skaita rakstus katras prasmes iekšienē
+        
+        // fiksēs pašu pēdējo prasmi (tādējādi arī pēdējo spēlē izlaisto)
+        $largest_skill_id = 0;
+        $largest_skill = '';
 
-	$skill_counter = 0; // skaita izvadīto prasmju skaitu    
-	$skill_id = 0; // fiksē ciklā ejošo prasmi
-	$page_counter = 0; // skaita rakstus katras prasmes ietvarā
+        foreach ($pages as $skill) {
 
-	foreach ($pages as $skill) {
+            // constitution atsevišķi nebūs,
+            // jo jau parādās pie Melee, kas atzīmēta kā prasme/kategorija
+            if ($skill->cat_id == 191) {
+                continue;
+            }
 
-		// constitution atsevišķi nebūs,
-		// jo jau parādās pie Melee, kas atzīmēta kā prasme/kategorija
-		if ($skill->cat_id == 191) {
-			continue;
-		}
-
-		// mainoties prasmei, izveido jaunu prasmes bloku
-		if ($skill_id != $skill->cat_id) {
-
-			$skill_counter++;
-
-			// ja vairāk par 5 linkiem, izvada pogu uz nākamo lapu;
-			// pirms pirmās prasmes neizvadīs, jo skaitītājs ir 0,
-			// turpretī pēdējo prasmi izlaidīs, jo izies ārpus cikla,
-			// tāpēc tā jāpārbauda pēc cikla
-			if ($page_counter > 5) {
-				$tpl->gotoBlock('skill');
-				$addr = '<a class="skill-pager" href="/rs-skills/?skill=' . $skill_id . '&amp;page=2">';
-				$addr .= 'Tālāk &rsaquo;&rsaquo;</a>';
+            // mainoties prasmei, izveido jaunu prasmes bloku
+            if ($skill_id != $skill->cat_id) {            
                 
-                $tpl->newBlock('skill-pages');
-				$tpl->assign('next', $addr);
-			}
+                if ($skill->cat_id > $largest_skill_id) {
+                    $largest_skill_id = $skill->cat_id;
+                    $largest_skill = $skill->cat_title;
+                }
 
-			// pārbaude, vai izdevās pieprasījumā atlasīt
-			// papildinformāciju no rs klašu tabulas
-			if ($skill->class_id != '0') {
-				$skill->members_only = ($skill->members_only == 1) ?
-						' <img src="/bildes/runescape/p2p_small.png" title="members only">' : '';
-				$skill->class_img = '/bildes/runescape/skills/' . $skill->class_img;
-			} else {
-				$skill->members_only = '';
-				$skill->class_img = '';
-				$skill->class_info = '';
-			}
+                $skill_counter++;
 
-			$tpl->newBlock('skill');
-			$tpl->assign(array(
-				'title' => $skill->cat_title,
-				'img' => $skill->class_img,
-				'info' => $skill->class_info,
-				'members' => $skill->members_only
-			));
+                // ja vairāk par x linkiem, izvada pogu uz nākamo lapu
+                if ($page_counter > $this->max_per_page) {
+                    $this->view->gotoBlock('skill');
+                    $addr  = '<a class="skill-pager" ' .
+                        'href="/prasmes?skill='.$skill_id.'&amp;page=2">';
+                    $addr .= 'Tālāk &rsaquo;&rsaquo;</a>';
+                    
+                    $this->view->newBlock('skill-pages');
+                    $this->view->assign('next', $addr);
+                }
 
-			// pārmet jaunā rindā katru nepāra prasmi
-			if ($skill_counter % 2 != 0) {
-				$tpl->assign('linebreak', ' style="clear:left"');
-			} else {
-				$tpl->assign('linebreak', '');
-			}
+                if ((int)$skill->members_only === 1) {
+                    $skill->members_only = 
+                        '<img src="/bildes/runescape/star-p2p-small.png" ' .
+                        'title="Pieejama tikai maksājošajiem spēlētājiem">';
+                } else {
+                    $skill->members_only = '';
+                }
+                $skill->img = '/bildes/runescape/skills/'.$skill->img;
 
-			// Linux fontu dēļ Linux lietotājiem uzliek citu klasi ar citiem bloku izmēriem
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'inux') !== false) {
-				$tpl->assign('forlinux', '-2');
-			}
+                $this->view->newBlock('skill');
+                $this->view->assignAll($skill);
 
-			$skill_id = $skill->cat_id;
-			$page_counter = 0; // pie katras prasmes jāizvada tikai pirmie pieci raksti
-		}
+                // pārmet jaunā rindā katru nepāra prasmi
+                if ($skill_counter % 2 != 0) {
+                    $this->view->assign('linebreak', ' style="clear:left"');
+                } else {
+                    $this->view->assign('linebreak', '');
+                }
 
-		// jāzina pievienoto rakstu skaits, lai prasmes blokā
-		// pēc vajadzības izvadītu pārvietošanos pa rakstu lappusēm
-		$page_counter++;
+                $skill_id = $skill->cat_id;
+                $page_counter = 0;
+            }
 
-		// pie katras prasmes nebūs vairāk par 5 rakstiem
-		if ($page_counter > 5) {
-			continue;
-		}
+            $page_counter++;
+            if ($page_counter > $this->max_per_page) {
+                continue;
+            }
 
-		// izdrukā prasmes blokā rakstu
-		$skill->cat_title = textlimit($skill->cat_title, 30);
-		$tpl->newBlock('skill-link');
-		$tpl->assignAll($skill);
-	}
+            // izdrukā prasmes blokā rakstu
+            if ($skill->page_id != '0') {
+                $skill->cat_title = textlimit($skill->cat_title, 30);
+                $this->view->newBlock('new-skill-guide');
+                $this->view->assignAll($skill);
+            }
+        }
 
-	// ciklā pārbaude pēdējai prasmei tika izlaista, tāpēc jāpārbauda šeit
-	if ($page_counter > 5) {
-		$addr = '<a class="skill-pager" href="/rs-skills/?skill=' . $skill_id . '&amp;page=2">';
-		$addr .= 'Tālāk &rsaquo;&rsaquo;</a>';
-		$tpl->assign('next', $addr);
-	}
+        // ciklā pārbaude pēdējai prasmei tika izlaista, tāpēc jāpārbauda šeit
+        if ($page_counter > $this->max_per_page) {
+            $addr  = '<a class="skill-pager" ' .
+                'href="/prasmes?skill='.$skill_id.'&amp;page=2">' . 
+                'Tālāk &rsaquo;&rsaquo;</a>';
+            $this->view->assign('next', $addr);
+        }
+
+        $this->view->gotoBlock('skills-intro-text');
+        $this->view->assign(array(
+            'latest-skill' => $largest_skill,
+            'max-xp'       => number_format(($skill_counter + 3) * 200000000),
+            'skill-count'  => $skill_counter + 3 
+                // pieskaita arī Constitution un cmb prasmes
+        ));
+    }
+    
+    /**
+     *  Atgriež atbildi js pieprasījumam par prasmes rakstiem
+     *  noteiktā rakstu lappusē
+     */
+    private function get_skill_page() {
+
+        $this->model('models/guides');
+        
+        $pages = $this->guides->fetch_skill_pages($this->max_per_page);        
+        if (!$pages) {
+            return '';
+        }
+
+        if (($view = $this->view('submodules/skills')) === false) return '';
+        $view->newBlock('js-skill-pages');
+        
+        if ($_GET['page'] == 2) {
+            $view->newBlock('page-block-back');
+        } else {
+            $view->newBlock('page-block');
+        }        
+        $view->assign('skill-id', (int)$_GET['skill']);
+
+        foreach ($pages as $page) {
+            $short_title = textlimit($page->title, 40);
+            $view->newBlock('skill-page');
+            $view->assignAll($page);
+            $view->assign('short-title', $short_title);
+        }
+        
+        return $view->getOutputContent();
+    }
 }
-
-$tpl->newBlock('skills-facts');
-$tpl->newBlock('skills-xp-table');

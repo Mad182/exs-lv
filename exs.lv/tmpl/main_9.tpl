@@ -18,8 +18,8 @@
 			var c_url = "{page-url}";
 		</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},runescape.css" type="text/css">
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,runescape.js,j.js"></script>
+		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},runescape.css,jquery.cluetip.css" type="text/css">
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.cluetip.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,runescape.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -113,10 +113,10 @@
 							<li><a href="/rsfacts">RuneScape fakti</a></li>
 							<li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
 							<!-- START BLOCK : quest-management-link -->
-							<li><a href="/series">Quests' series</a></li>
+                            <li><a href="/all-quests">Pamācību saraksti</a></li>
+							<li><a href="/skills">Prasmju prasības</a></li>
+							<li><a href="/series">Kvestu sērijas</a></li>
 							<li><a href="/atkritne">Dzēstie raksti</a></li>
-							<li><a href="/info-quests">Quests' info</a></li>
-							<li><a href="/info-distractions">Distractions' info</a></li>
 							<!-- END BLOCK : quest-management-link -->
 							<li>&nbsp;</li>
 						</ul>
@@ -180,7 +180,7 @@
 			<div id="header-navig">
 				<ul class="nav-left">
                     <li>
-						<a href="http://tops.exs.lv/runescape" rel="nofollow">Tops <span class="new-link">new</span></a>&middot;
+						<a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a>&middot;
 					</li>
 					<li>
 						<a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>&middot;
@@ -215,7 +215,7 @@
 						<img src="/bildes/runescape/banners/banner-3.jpg" alt="">
 						<img src="/bildes/runescape/banners/banner-1.jpg" alt="">
 					</div>
-					<img class="rs-logo" src="/bildes/runescape/rs3-logo-sm.png">
+					<img class="rs-logo" src="/bildes/runescape/rs-logo-sm.png">
 					<img class="rs-logo right-logo" src="/bildes/runescape/osrs-logo-sm.png">
 				</a>
 			</div>
@@ -224,13 +224,23 @@
 					<li{cat_sel_1863}><a class="first" href="/">Lobby</a></li>
 					<li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a>
 						<ul>
+							<li><a href="/kvestu-pamacibas">Sērijas</a></li>
 							<li><a href="/p2p-kvesti">P2P kvesti</a></li>
 							<li><a href="/f2p-kvesti">F2P kvesti</a></li>
 							<li><a href="/mini-kvesti">Minikvesti</a></li>
+							<li><a href="/kvestu-pamacibas/stats">Statistika</a></li>
+							<li><a href="/kvestu-pamacibas/facts">Fakti</a></li>
+							<li><a href="/kvestu-pamacibas/skill-reqs">Prasmju prasības</a></li>
 						</ul>
 					</li>
 					<li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-					<li{cat-sel-4}><a href="/prasmes">Prasmes</a></li>
+					<li{cat-sel-4}><a href="/prasmes">Prasmes</a>
+                        <ul>
+							<li><a href="/prasmes">Prasmju saraksts</a></li>
+							<li><a href="/prasmes/xp-table">XP tabula</a></li>
+							<li><a href="/prasmes/facts">Fakti</a></li>
+						</ul>
+                    </li>
 					<li{cat-sel-194}><a href="/tasks">Achievements</a></li>
 					<li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
 					<li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
@@ -271,7 +281,7 @@
 			</div>
 			<div id="space" class="c"></div>
 			<!-- START BLOCK : flash-message-->
-			<div class="mbox {class}" id="flash-message">
+			<div class="mbox" id="flash-message">
 				<p>
 					<a id="close-flash-message" href="#">
 						<img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16">

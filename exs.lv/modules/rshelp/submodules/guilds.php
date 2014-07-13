@@ -1,76 +1,66 @@
 <?php
-
 /**
- * 	RuneScape ģildes
+ *  RuneScape ģilžu pamācību saraksta sadaļa
  */
-!isset($sub_include) and die('No hacking, pls.');
 
+class Guilds extends Controller {
 
-// atlasa runescape ģilžu rakstus un tiem piesaista
-// papildinformāciju, ja tāda atrodama `rs_pages` tabulā
-$guilds = $db->get_results("
-    SELECT 
-        `pages`.`id`                AS `page_id`,
-        `pages`.`strid`             AS `page_strid`,
-        `pages`.`title`             AS `page_title`,
-        `pages`.`author`            AS `page_author`,
-        `pages`.`category`          AS `page_category`,
+    /**
+     *  Parādīs lapā visas pievienotās ģildes
+     *
+     *  Katrai no tām būs attēls, bet zem tā - atrašanās vieta un prasības
+     */
+    public function index() {
+    
+        $this->view->newBlock('guilds-intro-text');
+    
+        $this->model('models/guides');
         
-        IFNULL(`rs_pages`.`id`,0)   AS `rspage_id`,
-        `rs_pages`.`img`            AS `rspage_img`,
-        `rs_pages`.`members_only`   AS `rspage_members_only`,
-        `rs_pages`.`location`       AS `rspage_location`,
-        `rs_pages`.`extra`          AS `rspage_extra`,
-        `rs_pages`.`is_old`         AS `rspage_is_old`
-    FROM `pages` 
-        LEFT JOIN `rs_pages` ON (
-            `pages`.`id`                = `rs_pages`.`page_id` AND
-            `rs_pages`.`deleted_by`     = 0 AND
-            `rs_pages`.`is_placeholder` = 0
-        )
-    WHERE 
-        `pages`.`category` = 791 
-    ORDER BY 
-        `pages`.`title` ASC
-");
+        $guilds = $this->guides->fetch_guilds();
+        if (!$guilds) {
+            $this->view->newBlock('no-guilds-found');
+            return;
+        }
 
-if ($guilds) {
+        $this->view->newBlock('guilds-block');
+        $this->view->newBlock('not-a-guild');
 
-	$tpl->newBlock('guilds');
-	$tpl->newBlock('guilds-not');
-
-	foreach ($guilds as $page) {
-
-		// pārbauda, vai pieprasījumā izdevās atlasīt papildinformāciju
-		if ($page->rspage_id != '0') {
-			/*$page->rspage_is_old = ($page->rspage_is_old == 1) ?
-					'<img class="guild-old" src="/bildes/runescape/info_yellow_sm.png" title="Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!" alt="">' :
-					'<img class="guild-old" src="/bildes/runescape/info_red_sm.png" title="Pamācību nepieciešams atjaunināt!" alt="">';*/
-			$page->rspage_members_only = ($page->rspage_members_only == 1) ?
-					'<img class="guild-icon" src="/bildes/runescape/p2p_small.png" title="Maksājošo spēlētāju ģilde" alt="">' : '';
-            $page->rspage_is_old = '';
-		} else {
+        foreach ($guilds as $page) {
+        
+            if ((int)$page->members_only === 1) {
+                $page->members_only = 
+                    '<img class="guide-p2p" src="/bildes/runescape/star-p2p-small.png"'.
+                    ' title="Pieejama tikai maksājošajiem spēlētājiem">';
+            } else {
+                $page->members_only = '';
+            }
             
-            $ins = $db->query("INSERT INTO `rs_pages` (page_id, category_id, created_by, created_at) VALUES(
-                ".(int)$page->page_id.",
-                ".(int)$page->page_category.",
-                ".(int)$auth->id.",
-                '".time()."'
-            )");
-        
-			$page->rspage_is_old = '';
-			$page->rspage_members_only = '';
-		}
+            // placeholder ģildēm papildikona
+            if ($page->page_id == '0') {
+                $page->cluetip = ' class="cluetip"';
+                $page->cluetip_title = '|Ģildei nav pamācības';
+            } else {
+                $page->placeholder = '';
+                $page->cluetip_title = $page->title;
+            }
+            
+            // adreses placeholderiem arī nav
+            if ($page->page_id != '0') {
+                $page->strid = '/read/'.$page->strid;
+            } else {
+                $page->strid = 'javascript:void(0);';
+            }
 
-		// ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
-		if ($page->rspage_img != '') {
-			$tpl->newBlock('guild');
-			$tpl->assignAll($page);
-		}
-		// pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
-		else {
-			$tpl->newBlock('guild-page');
-			$tpl->assignAll($page);
-		}
-	}
+            // ja rakstam ir pievienots attēls, to uzskata par ģildes rakstu
+            if (!empty($page->image)) {
+                $this->view->newBlock('guild');
+                $this->view->assignAll($page);
+
+            // pretējā gadījumā rakstu pievieno nekategorizētajiem rakstiem
+            } else {
+                $this->view->newBlock('not-guild-page');
+                $this->view->assignAll($page);
+            }
+        }
+    }
 }

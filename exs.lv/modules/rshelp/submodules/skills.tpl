@@ -1,39 +1,58 @@
-<h1 class="content-title">RuneScape prasmes</h1>
+<!-- START BLOCK : list-tabs -->
+<ul class="tabs">
+    <li><a class="{tab-skills}" href="/{category-url}">Prasmes</a></li>
+    <li><a class="{tab-xptable}" href="/{category-url}/xp-table">XP tabula</a></li>
+    <li><a class="{tab-facts}" href="/{category-url}/facts">Prasmju fakti</a></li>
+</ul>
+<!-- END BLOCK : list-tabs -->
 
-<!-- START BLOCK : skills-intro -->
-<div class="rs-intro" style="padding-bottom:5px">  
-
-    <img id="sage" src="/bildes/runescape/intro/lumby_sage.png" title="Lumbridge Sage">
-    <img id="wagtail" src="/bildes/runescape/intro/tropical_wagtail.png" title="Tropical Wagtail">
-
-    <p>Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā savu piemājas<br> dobīšu uzaršana un izravēšana, 
-		kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē<br>piedzīvojumus, 
-		cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti būtiskas.</p>        
-    <p>Prasmju attīstīšana un iemaņu uzlabošana paver daudz plašākas iespējas, un kādam, kurš vēlas kļūt par spēcīgu un prasmīgu vīru, 
-		jāapgūst tās visas. No vienkāršas ugunskura iekuršanas un ēdmaņas zvejošanas līdz nesalaužamu slēdzeņu atdarīšanai 
-		un nāvīgi maģisku virumu brūvēšanai. Un tas ir tikai sākums!</p>  
-    <p>Līdz ar <strong style="color:#012542">Divination</strong> izlaišanu spēlē pavisam pieejamas <strong style="color:#012542">26</strong> prasmes.</p>
+<!-- START BLOCK : skills-intro-text -->
+<div class="rs-intro">  
+    <span class="vc-ghost-item"></span>
+    <img id="sage" class="vc-item" src="/bildes/runescape/intro/lumby_sage.png" title="Lumbridge Sage">
+    <p class="vc-item" style="max-width:80%">Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā savu piemājas dobīšu uzaršana un izravēšana, kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē piedzīvojumus, cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti būtiskas.<br>&nbsp;&nbsp;&nbsp;No vienkāršas ugunskura iekuršanas un ēdmaņas zvejošanas līdz nesalaužamu slēdzeņu atdarīšanai un nāvīgi maģisku virumu brūvēšanai. Un tas ir tikai sākums!<br><br>Līdz ar <strong style="color:#012542">{latest-skill}</strong> izlaišanu spēlē pavisam pieejamas <strong style="color:#012542">{skill-count}</strong> prasmes (max xp: <strong>{max-xp}</strong>).</p>
 </div>
-<div class="rs_info">
-  <img style="margin-top:3px" src="/bildes/runescape/p2p_small.png" title="" alt="">Prasme pieejama tikai maksājošajiem spēlētājiem!
+<div class="simple-note">
+  <img style="margin:3px 7px 0 0" src="/bildes/runescape/star-p2p-small.png" alt="">Prasme pieejama tikai maksājošajiem spēlētājiem
 </div>
-<!-- END BLOCK : skills-intro -->
+<!-- END BLOCK : skills-intro-text -->
+
+<!-- START BLOCK : no-guides-found -->
+<p class="simple-note">
+    Sadaļai nav pievienota neviena prasme.
+</p>
+<!-- END BLOCK : no-guides-found -->
+
+<!-- START BLOCK : js-skill-pages -->
+    <!-- START BLOCK : skill-page -->
+        <a title="{title}" href="/read/{strid}">{short-title}</a><br>
+    <!-- END BLOCK : skill-page -->
+<div class="skill-pages">
+    <!-- START BLOCK : page-block -->
+    <a class="skill-pager" href="/prasmes?skill={skill-id}&amp;page=2">Tālāk &raquo;&raquo;</a>
+    <!-- END BLOCK : page-block -->
+    <!-- START BLOCK : page-block-back-->
+    <a class="skill-pager" href="/prasmes?skill={skill-id}&amp;page=1">&lsaquo;&lsaquo; Atpakaļ</a>
+    <!-- END BLOCK : page-block-back -->
+</div>
+<!-- END BLOCK : js-skill-pages -->
 
 <!-- START BLOCK : skills -->
 <div style="margin-left:20px">
+
 	<!-- START BLOCK : skill -->
-	<div class="skill-block{linux}"{linebreak}>
+	<div class="skill-block"{linebreak}>
 		<div class="skill-info" style="width:50%">
-			<img class="skill-icon" src="{img}" title="{title}" alt="">
-			<p class="skill-name">{title}{members}</p>
+			<img class="skill-icon" src="{img}" title="{cat_title}" alt="">
+			<p class="skill-name">{cat_title} {members_only}</p>
 			{info}
 		</div>
-		<div style="width:45%" class="skill-links{linux}">
+		<div class="skill-links" style="width:45%">
 			<p>Saistītie raksti</p>
 			<div>
-				<!-- START BLOCK : skill-link -->
-				<a title="{page_title}" href="/read/{page_strid}">{page_title}</a><br>
-				<!-- END BLOCK : skill-link -->
+				<!-- START BLOCK : new-skill-guide -->
+				<a title="{page_title}" href="/read/{strid}">{page_title}</a><br>
+				<!-- END BLOCK : new-skill-guide -->
                 <!-- START BLOCK : skill-pages -->   
 				<div class="skill-pages">{next}</div>
                 <!-- END BLOCK : skill-pages -->
@@ -41,13 +60,16 @@
 		</div>
 	</div>
 	<!-- END BLOCK : skill -->
+    
 </div>
 <div class="clearfix"></div>
 <!-- END BLOCK : skills -->
 
 <!-- START BLOCK : skills-facts -->
-<h1 class="content-title" style="margin-top:35px">Ar prasmēm saistīti, interesanti fakti</h1>
-<div id="skills_facts">
+<p class="simple-note">
+    Šajā sadaļā apkopoti dažādi ar prasmēm saistīti fakti.
+</p>
+<div id="skills-facts">
 	<ul>
 		<li>Katrā prasmē iespējams iegūt līdz pat <strong>200,000,000</strong> pieredzes punktiem.</li>
 		<li>Dungeoneering ir vienīgā prasme, kurā spēlētājs var uztrenēt <strong>120.</strong> līmeni. Citās prasmēs iespējams sasniegt tādu pašu 
@@ -56,6 +78,7 @@
 		<li>Sasniedzot 99. līmeni, spēlētājs pie prasmes skolotāja par 99,000gp var iegādāties attiecīgās prasmes apmetni.</li>
 		<li>120. līmenim nepieciešamais pieredzes punktu daudzums ir 8 reizes lielāks nekā 99. līmenim.</li>
 		<li>Sasniedzot 99. līmeni vairāk nekā vienā prasmē, visi iegūtie prasmju apmetņi iegūst apzeltītas maliņas.</li>
+        <li style="background-image:none"><img id="wagtail" src="/bildes/runescape/intro/tropical_wagtail.png" title="" alt=""></li>
 		<li>Apzeltītam apmetnim ir "boost" iespēja, ar kuru uz neilgu laiku attiecīgā prasme tiek palielināa līdz 100. līmenim.</li>
 		<li>Spēlētājam kādā prasmē sasniedzot 99. līmeni, par to uzzina visi spēlētāji, kuri atrodas tajā pašā spēles serverī.</li>
 		<li>Sasniedzot 120. Dungeoneering līmeni, 99. līmeni visās prasmēs vai iegūstot spēju valkāt Completitionist Cape, sasniegums tiek izziņots visos RuneScape serveros.</li> 
@@ -66,7 +89,10 @@
 <!-- END BLOCK : skills-facts -->
 
 <!-- START BLOCK : skills-xp-table -->
-<h1 class="content-title" style="margin-top:35px">RuneScape prasmju līmeņu un pieredzes punktu saistība</h1>
+<p class="simple-note">
+    Šajā tabulā redzams nepieciešamais XP punktu daudzums katram iespējamajam prasmes līmenim.<br>
+    Maksimālais iegūstamais XP punktu daudzums vienā prasmē ir 200,000,000.
+</p>
 <table class="rslist rslist-center xp-table">
 	<tr class="listhead">
 		<td style="width:80px">Līmenis</td>

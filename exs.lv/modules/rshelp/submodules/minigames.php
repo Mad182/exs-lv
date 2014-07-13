@@ -1,112 +1,140 @@
 <?php
-
 /**
- * 	RuneScape minispēļu un D&D sadaļa
+ *  RuneScape minispēļu un D&D pamācību sadaļa
  *
- *  /minispeles
- *  /distractions-diversions
+ *  Adreses:
+ *
+ *      /minispeles
+ *      /distractions-diversions
  */
-!isset($sub_include) and die('No hacking, pls.');
 
-$cat_id = ($category->textid == 'minispeles') ? 160 : 792;
-$title_1 = ($cat_id == 160) ? 'minispēles' : 'Distractions & Diversions';
-$title_2 = ($cat_id == 160) ? 'minispēļu' : 'Distractions & Diversions';
+class Minigames extends Controller {
 
-$tpl->newBlock('minigames');
-$tpl->assign('top-content-title', 'RuneScape ' . $title_1);
+    // sadaļu id
+    private $cat_minigames;
+    private $cat_distractions;
+    
+    // minispēļu īpašības
+    private $count_f2p;
+    private $count_p2p;
+    private $count_safe;
+    private $count_unsafe;
+    
+    public function __construct() {
 
-// moderatoriem redzama poga, kas aizved uz sadaļu, 
-// kur pamācību rakstiem var pievienot dažādu papildinformāciju
-if (im_mod()) {
-    $tpl->newBlock('mg-info-button');
-}
+        global $cat_minigames, $cat_distractions;
+        $this->cat_minigames =& $cat_minigames;
+        $this->cat_distractions =& $cat_distractions;
+        
+        $this->count_f2p = 0;
+        $this->count_p2p = 0;
+        $this->count_safe = 0;
+        $this->count_unsafe = 0;
+        
+        parent::__construct();
+    }
 
-// augšējais sadaļas intro teksts
-if ($cat_id == 160) {
-	$tpl->newBlock('minigames-intro');
-} else {
-	$tpl->newBlock('diversions-intro');
-}
+    /**
+     *  Atkarībā no sadaļas nosaka parādāmo saturu
+     */
+    public function index() {
 
-// no datubāzes atlasa sadaļas saistītos rakstus un izvada tabulas veidā
-$minigames = $db->get_results("
-    SELECT 
-        `pages`.`id`,
-        `pages`.`strid`     AS `page_strid`, 
-        `pages`.`title`     AS `page_title`,
-        `pages`.`author`    AS `page_author`, 
-        `pages`.`date`      AS `page_date`,
-        `pages`.`avatar`,
-        IFNULL(`rs_pages`.`id`, 0)      AS `rspage_id`,
-        `rs_pages`.`description`        AS `rspage_description`,
-        `rs_pages`.`location`           AS `rspage_location`,
-        `rs_pages`.`members_only`       AS `members_only`
-    FROM `pages`
-        LEFT JOIN `rs_pages` ON (
-            `pages`.`id`                = `rs_pages`.`page_id` AND
-            `rs_pages`.`deleted_by`     = 0 AND
-            `rs_pages`.`is_placeholder` = 0
-        )
-    WHERE 
-        `pages`.`category` = $cat_id
-    ORDER BY 
-        `pages`.`title` ASC
-");
+        $this->view->newBlock('minigames');
 
-if ($minigames) {
+        if ($this->category->textid === 'minispeles') {
 
-	foreach ($minigames as $game) {
+            $this->view->newBlock('mg-intro-text');
+            $this->show_list($this->cat_minigames);
 
-		// mainīgo raksturiezīmju pārveidošana
-		if ($user = get_user($game->page_author)) {
-			$game->page_author = '<a href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
-		}
-
-		$game->avatar = ($game->avatar != '') ?
-				'<a href="/read/' . $game->page_strid . '">
-                <img class="mg-av" src="http://img.exs.lv/' . $game->avatar . '" title="' . $game->page_title . '" alt="">
-            </a>' : '';
-
-		$game->page_date = date('d.m.Y', strtotime($game->page_date));
-		$game->page_title = str_replace('[D&amp;D] ', '', $game->page_title);
-
-		// ja izdevies atlasīt papildinfo par rakstu no `rs_pages` tabulas...
-		if ($game->rspage_id != '0') {
-
-			if ($game->members_only == 1) {
-                $game->members_only = 'Jā';
-            } else $game->members_only = 'Nē';
-
-			/*$title = ($game->rspage_old == 1) ?
-					'Pamācībai nepieciešamas jaunākas, labākas kvalitātes bildes!' :
-					'Pamācību nepieciešams atjaunināt!';
-
-			$picture = ($game->rspage_old == 1) ? 'info_yellow_sm.png' : 'info_red_sm.png';
-			$picture = '<img class="mg-old" src="/bildes/runescape/' . $picture . '" title="' . $title . '" alt="">';
-
-			$tpl->assign('warning', $picture);*/
-		} else {
-            $game->members_only = 'Nē';
-        }
-
-		$tpl->newBlock('minigame');
-		$tpl->assignAll($game);
-	}
-}
-
-// placeholderi neuzrakstītajām pamācībām...
-/*$get_ph = $db->get_results("SELECT * FROM `rs_placeholders` WHERE `cat` = '$catid' ORDER BY `title` ASC");
-if ($get_ph) {
-    $tpl->newBlock('minigames-placeholders');
-    $tpl->assign('type', $title_2);
-    foreach ($get_ph as $ph) {
-        $tpl->newBlock('minigame-ph');
-        //$ph->img = ($ph->img != '') ? '<a href="/write"><img class="mg-av" src="/bildes/rs/temp/'.$ph->img.'" title="Pamācība vēl nav uzrakstīta!" alt="" /></a>' : '';
-        $tpl->assignAll($ph);
-        $link2 = ($ph->url2 == '') ? '' : ' un <a href="' . $ph->url2 . '">šis raksts</a>';
-        $link1 = ($link2 == '') ? '<a href="' . $ph->url . '">šis raksts</a>' : '<a href="' . $ph->url . '">šis</a>';
-        if ($ph->url != '' || $ph->url2 != '') {
-            $tpl->assign('link', '<p>Pamācības veidošanas procesā Tev var noderēt ' . $link1 . $link2 . '.</p>');
+        } else {
+            $this->view->newBlock('dd-intro-text');
+            $this->show_list($this->cat_distractions);
         }
     }
-}*/
+    
+    /**
+     *  Saraksts ar minispēlēm vai D&D aktivitātēm
+     *
+     *  Katram ierakstam kreisajā pusē ir neliels attēls, bet blakus -
+     *  īss apraksts.
+     */
+    private function show_list($cat_id = 0) {
+    
+        $this->model('models/guides');
+    
+        $minigames = $this->guides->fetch_minigames($cat_id);
+        if (!$minigames) {
+            $this->view->newBlock('no-guides-found');
+            return;
+        }
+
+        $this->view->newBlock('minigames-list');
+        
+        foreach ($minigames as $game) {
+
+            if (!empty($game->avatar)) {
+                $avatar  = '<a href="/read/'.$game->strid.'">';
+                $avatar .= '<img src="http://img.exs.lv/'.$game->avatar.'" ';
+                $avatar .= 'title="'.$game->title.'" alt=""></a>';
+                $game->avatar = $avatar;
+            } else {
+                $avatar  = '<a href="javascript:void(0)">';
+                $avatar .= '<img src="/bildes/runescape/fallback.png" ';
+                $avatar .= 'title="'.$game->title.'" alt=""></a>';
+                $game->avatar = $avatar;
+            }
+
+            // D&D rakstiem vēl mēdz būt šāds prefix
+            $game->title = str_replace('[D&amp;D] ', '', $game->title);
+            
+            // placeholderiem adresi nevar norādīt...
+            if ($game->page_id != '0') {
+                $game->title = 
+                    '<a href="/read/'.$game->strid.'">'.$game->title.'</a>';
+            } else {
+                $game->title = 
+                    '<a class="cluetip placeholder" title="Pamācība iztrūkst">'
+                        .$game->title.'</a>';
+            }
+
+            $this->view->newBlock('minigame');
+            $this->view->assignAll($game);
+
+            if ($game->page_id == '0') {
+                $this->view->assign('cluetip', 
+                    ' class="cluetip" title="Pamācība iztrūkst"');
+            }
+
+            if ($game->members_only) {
+                $this->view->newBlock('p2p-only');
+                $this->count_p2p++;
+            } else {
+                $this->count_f2p++;
+            }
+           
+            // vai bīstama minispēle ar iespēju mirt?
+            if (!$game->safe) {
+                $this->view->newBlock('unsafe-minigame');
+                $this->count_unsafe++;
+            } else {
+                $this->count_safe++;
+            }
+        }
+
+        $this->show_stats();
+    }
+    
+    /**
+     *  Ievieto skatā bloku ar statistikas datiem par minispēlēm/d&d
+     */
+    private function show_stats() {
+
+        $this->view->newBlock('minigames-statistics');
+        $this->view->assign(array(
+            'f2p-only'  => $this->count_f2p,
+            'p2p-only'  => $this->count_p2p,
+            'safe'      => $this->count_safe,
+            'unsafe'    => $this->count_unsafe
+        ));
+    }
+}
