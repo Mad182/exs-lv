@@ -127,11 +127,18 @@
 </p>
 <div id="skills-facts" style="font-size:13px">
 	<ul>
+        <li>Par īpašiem no kvestiem atalgojumā iegūstamiem priekšmetiem <a href="http://runescape.wikia.com/wiki/Quest_item_rewards" rel="nofollow"><strong>šeit</strong></a>.</li>
+        <li style="margin-bottom:20px">Par slēptajiem atalgojumiem vairākos kvestos <a href="http://runescape.wikia.com/wiki/Quest_item_rewards/Hidden_rewards" rel="nofollow"><strong>šeit</strong></a>.</li>
+        <li>Spēlētāji, kuri ir izgājuši visus kvestus, no Wise Old Man par 99k var nopirkt Quest Point Cape - vienu no Capes of Accomplishment.</li>
+        <li>Spēlē izlaižot jaunu kvestu, Quest Cape nokļūst spēlētāja somā (vai bankā, ja soma pilna), līdz jaunais kvests netiek izpildīts.</li>
+        <li>50. kvests - <a href="/read/legends-quest-2">Legends' Quest</a>, 100. kvests - <a href="/read/recipe-for-disaster-3">Recipe for Disaster</a>, 150. kvests - <a href="/read/chosen-commander-the">The Chosen Commander</a>, 200. kvests - ?</li>        
+        <li>Visbiežāk kvesti vienā sērijā ir pildāmi lineārā veidā, kur katram nākamajam kvestam prasībās ir iepriekšējais, tomēr nereti no tā vērojamas arī novirzes, jo daudzi kvesti ietilpst vairākos atšķirīgos stāstos.</li>
+        <li>Daudzas teritorijas un vietas Gielinorā kļūst pieejamas tikai pēc kāda kvesta izpildīšanas vai vismaz iesākšanas, piemēram, West Ardougne vai Prifddinas.</li>
 		<li>Pirms EoC visu kvestu izpildīšanai bija nepieciešams vismaz 85. combat līmenis, bet, izejot tos, spēlētāja Combat pieauga līdz 105. līmenim.</li>
-        <li>Spēlētāji, kuri ir izgājuši visus kvestus, no Wise Old Man par 99,000gp var nopirkt Quest Point Cape - vienu no Capes of Accomplishment.</li>
-        <li>50. kvests - <a href="/read/legends-quest-2">Legends' Quest</a>, 100. kvests - <a href="/read/recipe-for-disaster-3">Recipe for Disaster</a>, 150. kvests - <a href="/read/chosen-commander-the">The Chosen Commander</a>, 200. kvests - ?</li>
-        <li><a href="/read/recipe-for-disaster-3">Recipe for Disaster</a> patiesībā sastāv no daudziem apakškvestiem.</li>
-        <li>Laika gaitā daži kvesti tikuši mainīti. Piemēram, Unstable Foundations un Learning the Ropes no spēles ir izņemti, Romeo & Juliet aizstāts ar <a href="/read/gunnar-s-ground">Gunnar's Ground</a>, bet <a href="/read/sheep-shearer">Sheep Shearer</a> atstāts kā minikvests.</li> 
+        <li style="margin-top:20px"><a href="/read/while-guthix-sleeps-2">While Guthix Sleeps</a> bija pats pirmais Grandmaster sarežģītības kvests.</li>
+        <li><a href="/read/one-piercing-note">One Piercing Note</a> bija pirmais kvests, kurā tēlu sarunas tika ierunātas.</li>
+        <li><a href="/read/recipe-for-disaster-3">Recipe for Disaster</a> kvests patiesībā sastāv no 10 īsiem kvestiem vienā, no kuriem 8 ir apakškvesti.</li>
+        <li>Laika gaitā ne viens vien kvests ticis uzlabots vai nomainīts. Piemēram, <em>Unstable Foundations</em> un <em>Learning the Ropes</em> no spēles ir izņemts, Romeo &amp; Juliet aizstāts ar <a href="/read/gunnar-s-ground">Gunnar's Ground</a>, bet <a href="/read/sheep-shearer">Sheep Shearer</a> atstāts kā minikvests. Tāpat pārstrādāti ir tādi kvesti kā Death Plateau, Druidic Ritual, Demon Slayer u.c.</li>
         <li>Jagex apgalvo, ka <a href="/read/cook-s-assistant">Cook's Assistant</a> ir pats pirmais kvests, kuru viņi bija sākuši izstrādāt.</li>
 	</ul>
 </div>

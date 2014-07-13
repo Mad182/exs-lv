@@ -227,10 +227,10 @@ class Quests extends Controller {
             $cluetip = $quest->title;
             $clue_class = '';
             if ($quest->page_id == '0') {
-                $cluetip = '|Šim kvestam pamācība iztrūkst';
+                $cluetip = '|Pamācība iztrūkst';
                 $clue_class = ' class="cluetip"';
                 $quest->clue = ' class="cluetip placeholder"'.
-                    ' title="|Šim kvestam pamācība iztrūkst"';
+                    ' title="|Pamācība iztrūkst"';
             }
             if (empty($quest->image)) {
                 $image = '/bildes/runescape/fallback-wide.png';

@@ -93,7 +93,8 @@ class Minigames extends Controller {
                     '<a href="/read/'.$game->strid.'">'.$game->title.'</a>';
             } else {
                 $game->title = 
-                    '<a class="placeholder">'.$game->title.'</a>';
+                    '<a class="cluetip placeholder" title="Pamācība iztrūkst">'
+                        .$game->title.'</a>';
             }
 
             $this->view->newBlock('minigame');

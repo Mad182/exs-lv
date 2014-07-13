@@ -162,25 +162,25 @@ class Model_Quests extends Model {
         if ($force || ($stats = $this->m->get('quests-stats')) === false) {
 
             // izlaisto kvestu skaits noteiktos gados
-            $stats['14'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 14 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['13'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 13 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['12'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 12 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['11'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 11 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['10'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` = 10 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['older'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `year` NOT IN (12,11,10,9,8) AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['14'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `year` = 14 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['13'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `year` = 13 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['12'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `year` = 12 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['11'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `year` = 11 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['10'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `year` = 10 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['older'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `year` NOT IN (14, 13, 12, 11, 10) AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
 
             // kvestu tips
-            $stats['p2p'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `members_only` = 1 AND `cat_id` = ".(int)$this->cat_p2p_quests);
-            $stats['f2p'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `members_only` = 0 AND `cat_id` = ".(int)$this->cat_f2p_quests);
-            $stats['miniquests'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `cat_id` = ".(int)$this->cat_miniquests);
+            $stats['p2p'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `members_only` = 1 AND `cat_id` = ".(int)$this->cat_p2p_quests);
+            $stats['f2p'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `members_only` = 0 AND `cat_id` = ".(int)$this->cat_f2p_quests);
+            $stats['miniquests'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `cat_id` = ".(int)$this->cat_miniquests);
 
             // kvestu sarežģītība
-            $stats['special'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 6 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['grandmaster'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 5 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['master'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 4 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['experienced'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 3 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['intermediate'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 2 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
-            $stats['novice'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `difficulty` = 1 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['special'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `difficulty` = 6 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['grandmaster'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `difficulty` = 5 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['master'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `difficulty` = 4 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['experienced'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `difficulty` = 3 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['intermediate'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `difficulty` = 2 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
+            $stats['novice'] = $this->db->get_var("SELECT count(*) FROM `rs_pages` WHERE `deleted_by` = 0 AND `is_hidden` = 0 AND `difficulty` = 1 AND `cat_id` IN (".implode(',', $this->cats_quests).") ");
 
             $this->m->set('quests-stats', $stats, false, 1800);
         }
