@@ -123,3 +123,54 @@
     * var pārvaldīt RuneScape faktus    
     
     
+    
+\\  Faili, kuriem ir saistība ar runescape.exs.lv apakšprojektu:
+
+    
+    /config/runescape.exs.lv.php
+    /includes/site_loader.php    
+    /includes/functions.runescape.php
+    
+    /includes/left_9.php
+    /includes/right_9.php
+    /tmpl/main_9.tpl
+    
+    /cache/runescape
+    /css/runescape.css    
+    /js/runescape.js
+    /bildes/runescape/*
+    
+    /modules/facts-admin
+    /modules/idb
+    /modules/rs-facts
+    /modules/rshelp
+    /modules/rsmod
+    /modules/runescape
+    /modules/core/runescape    
+    
+    // plato rakstu iespēja
+    // rs kategoriju izvēlne
+    // iespēja rs modiem labot savus rakstus
+        /modules/read/read.php/.tpl
+        /modules/approve/approve.php/.tpl
+        /modules/history/history.php
+        /modules/blogadmin/blogadmin.php/.tpl
+        
+    // ūdenszīme attēliem
+        /modules/imgupload.php/.tpl
+        /watermark-mini.png
+        /watermark-large.png
+    
+    /index.php
+    /json_mb.php                         - ziņošanas podziņa
+    visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)
+    
+    functions.awards.php
+        list_awards() - medaļas saistībā ar RS
+        update_awards() - saraksts ar sadaļām, kurās jābūt aktivitātei, lai piešķirtu medaļu
+        
+    functions.core.php  
+        get_latest_posts() - ->show_rs
+        get_latest_mbs() - ->show_rs  
+    
+    
