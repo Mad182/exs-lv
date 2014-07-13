@@ -241,7 +241,7 @@
 							<li><a href="/prasmes/facts">Fakti</a></li>
 						</ul>
                     </li>
-					<li{cat-sel-194}><a href="/tasks">Achievements</a></li>
+					<li{cat-sel-2046}><a href="/achievements">Achievements</a></li>
 					<li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
 					<li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
 					<li{cat-sel-599}><a href="/runescape">Ziņas</a></li>

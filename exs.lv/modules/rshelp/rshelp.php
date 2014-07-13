@@ -26,7 +26,7 @@ class Rshelp extends Controller {
         'distractions-diversions'   => 'minigames',
         'prasmes'                   => 'skills',
         'gildes'                    => 'guilds',
-        'tasks'                     => 'tasks'
+        'achievements'              => 'tasks'
     );
     
     public function __construct() {

@@ -50,7 +50,7 @@
 		193 mini-kvesti			(module = rshelp)
 
         
-    194 tasks					(module = rshelp)
+    2046 achievements           (module = rshelp)
 	160 minispeles				(module = rshelp)		
 	536 db 						(module = idb)		- priekšmetu datubāze
 	599 runescape 				(module = rshelp)	- jaunumu rakstu sadaļa
@@ -64,22 +64,18 @@
 
         
     // runescape pamācību sadaļu administrēšanas apakšsadaļas
+    // (module = rsmod)
     765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
-        1875 series         - kvestu sērija un kvestiem nepieciešamo prasmju līmeņu pārvaldība
-        1877 rsph           - šobrīd neizmantota
-        19xx all-quests
-        19xx all-miniquests
-        19xx all-minigames
-        19xx all-distractions
-        19xx all-guilds
-        19xx all-unlisted
-        19xx skills
-       
-    1916 info-quests
-    1917 info-distractions
+        1875 series         - kvestu sēriju pārvaldība
+        2045 skills         - prasmju prasības kvestiem
+        2039 all-quests
+        2040 all-miniquests
+        2041 all-minigames
+        2042 all-distractions
+        2044 all-guilds
+        2043 all-unlisted
 
-        
-    786  rs-skills 		(module = rsmod-skills)		- prasmju pamācību lappuses
+
     1866 rsfacts 		(module = rs-facts)			- runescape faktu pārvaldība
     1867 gallery		(module = gallery)			- runescape projekta galerijas
     1869 checkform		(module = checkform)		- lietotāju meklēšanas forma
@@ -97,6 +93,7 @@
 	85 runescape-tirgus 	(lang=1, redirect=/rs)
 	86 runescape-events 	(lang=1, redirect=/rs)
 	88 runescape-general 	(lang=1, redirect=/rs)
+    194 tasks               (lang=9, redirect=/achievements)
     346  prasmju_arhivs 	(lang=9, redirect=http://runescape.exs.lv/padomi)
     787  briesmonu-medisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
     788  trenesanas			(lang=9, redirect=http://runescape.exs.lv/padomi)
@@ -116,64 +113,6 @@
 		4, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 287
         
 		WHERE `parent` = 4 OR `id` = 4
-
-        
-        
-        
-        
-        
-\\  Faili, kuriem ir saistība ar runescape.exs.lv apakšprojektu:
-    (saraksts vēl nav gluži pilnīgs)
-
-    
-    /config/runescape.exs.lv.php
-    /includes/site_loader.php    
-    /includes/functions.runescape.php
-    
-    /includes/left_9.php
-    /includes/right_9.php
-    /tmpl/main_9.tpl
-    
-    /cache/runescape
-    /css/runescape.css    
-    /js/runescape.js
-    /bildes/runescape/*
-    
-    /modules/facts-admin
-    /modules/idb
-    /modules/rs-events
-    /modules/rs-facts
-    /modules/rs-info
-    /modules/rshelp
-    /modules/rsmod
-    /modules/rsmod-skills
-    /modules/runescape
-    /modules/core/runescape    
-    
-    // plato rakstu iespēja
-    // rs kategoriju izvēlne
-    // iespēja rs modiem labot savus rakstus
-        /modules/read/read.php/.tpl
-        /modules/approve/approve.php/.tpl
-        /modules/history/history.php
-        /modules/blogadmin/blogadmin.php/.tpl
-        
-    // ūdenszīme attēliem
-        /modules/imgupload.php/.tpl
-        /watermark-mini.png
-        /watermark-large.png
-    
-    /index.php
-    /json_mb.php                         - ziņošanas podziņa
-    visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)
-    
-    functions.awards.php
-        list_awards() - medaļas saistībā ar RS
-        update_awards() - saraksts ar sadaļām, kurās jābūt aktivitātei, lai piešķirtu medaļu
-        
-    functions.core.php  
-        get_latest_posts() - ->show_rs
-        get_latest_mbs() - ->show_rs  
     
     
 // runescape apakšprojekta satura moderatoriem pieejamās iespējas:
@@ -181,14 +120,6 @@
     * savus rakstus var rediģēt vienmēr bez laika ierobežojuma
     * pie raksta rediģēšanas to var pārvietot uz citu sadaļu
     * redz "RS Mod" izvēlni
-    * var pārvaldīt RuneScape faktus
-    
-    
-    
-    
-    
-    
-    
-    
+    * var pārvaldīt RuneScape faktus    
     
     
