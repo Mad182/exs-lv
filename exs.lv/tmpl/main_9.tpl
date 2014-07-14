@@ -448,7 +448,7 @@
 
 			<div id="footer">
 				<div id="online-users">
-					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px;">{page-onlineusers}</span>
+					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:12px">{page-onlineusers}</span>
 				</div>
 				<div class="infoblock">
 					<div class="inner">

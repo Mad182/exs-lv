@@ -107,6 +107,7 @@ body {
 #wrapper {
     position:relative;
     margin-top:31px;
+    margin-bottom:0;
     padding:0 0 10px 0;
     background:#CECFCF url('/bildes/runescape/pattern-wrapper.png');
     box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
@@ -262,9 +263,6 @@ div pre {
 }
 #exs-groups h3 {
     margin: 5px 0 2px;
-}
-#online-users span {
-    font-size:11px !important
 }
 .top-navig .red, .top-navig .r {
 	color: #ef6000;
