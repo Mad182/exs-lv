@@ -570,7 +570,7 @@ ul.nav-right {
 /* 7. RuneScape jaunumi, sākumlapa */
 .official-news {
     margin:5px 0 20px 0;
-    font-size:11px;
+    font-size:12px;
     padding:0
 }
     .official-news:after {
@@ -584,37 +584,33 @@ ul.nav-right {
         margin:10px 0 0;
         overflow:auto
     }
-    .official-news .news-image {
-        float:left;
-        margin-right:12px;
-        line-height:6em
+    .official-news li:hover {
+        background:rgb(244, 247, 252)
     }
     .official-news img {
+        margin-right:12px;
         max-width:125px;
-        max-height:88px;
-        vertical-align:middle
+        max-height:88px
     }
     .official-news p {
-        float:left;
         width:70%;
-        font-size: 11px;
         line-height:1.8;
         padding-top:0
     }
-    .official-news .news-title {
+    .official-news p > span:nth-child(1) {
+        color:#0a6eb1;
         display:block;
-        font-weight: 700;
-        float:none;
+        font-weight:700;
         margin-top:5px
     }
-    .official-news .news-date {
+    .official-news p > span:nth-child(2) {
         display:block;
-        color:#2385B3;
+        color:#2385B3
     }
-    .official-news .news-link {
+    .official-news .link {
         margin-top:0
     }
-    .official-news .news-link a {
+    .official-news .link a {
         padding:5px 10px;
         float:right;
     }

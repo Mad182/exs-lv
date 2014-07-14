@@ -1,4 +1,4 @@
-<h1 style="margin:-20px auto 20px">RuneScape jaunākie raksti</h1>
+<h1 style="margin:-20px auto 20px;font-size:18px">RuneScape jaunumi</h1>
 
 {runescape-news}
 

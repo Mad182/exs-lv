@@ -7,7 +7,7 @@ if ($auth->ok) {
 }
 
 // runescape oficiālo jaunumu virsraksti no RSS feed
-$tpl->assign('runescape-news', get_runescape_news());    
+$tpl->assign('runescape-news', read_runescape_news());    
     
 // sākumlapā 2 kolonnās parāda jaunākos un pēdējos komentētos rakstus;
 // pēc tā arī attiecīgi SQL pieprasījumā rakstus atlasa
