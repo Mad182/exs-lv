@@ -146,7 +146,8 @@
     /modules/rshelp
     /modules/rsmod
     /modules/runescape
-    /modules/core/runescape    
+    /modules/core/runescape
+    /modules/core/miniblog (tpl_options)
     
     // plato rakstu iespēja
     // rs kategoriju izvēlne

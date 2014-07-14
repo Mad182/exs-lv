@@ -180,6 +180,12 @@ if ($debug == true || ($tpl2 = $m->get('tpl_mb_' . $lang . '_' . intval($auth->m
 	$tpl = $tpl2;
 	unset($tpl2);
 }
+	
+// runescape apakšprojektā smukāk izskatās, 
+// ja miniblogam blakus ir tikai 1 kolonna
+if ($lang === 9) {
+	$tpl_options = 'no-right';
+}
 
 // visas turpmākās darbības tikai tad, ja ir zināms,
 // kura lietotāja miniblogs atvērts
@@ -368,33 +374,33 @@ if (!empty($inprofile)) {
 				if ($record->posts) {
 
 					$responses = $db->get_results("
-                        SELECT
-                            `miniblog`.`text` AS `text`,
-                            `miniblog`.`vote_value` AS `vote_value`,
-                            `miniblog`.`vote_users` AS `vote_users`,
-                            `miniblog`.`date` AS `date`,
-                            `miniblog`.`author` AS `author`,
-                            `miniblog`.`groupid` AS `groupid`,
-                            `miniblog`.`posts` AS `posts`,
-                            `miniblog`.`reply_to` AS `reply_to`,
-                            `miniblog`.`id` AS `id`,
-                            `miniblog`.`removed` AS `mb_removed`,
-                            `users`.`nick` AS `nick`,
-                            `users`.`decos` AS `decos`,
-                            `users`.`avatar` AS `avatar`,
-                            `users`.`av_alt` AS `av_alt`,
-                            `users`.`level` AS `level`,
-                            `users`.`deleted` AS `user_deleted`
-                        FROM
-                            `miniblog`,
-                            `users`
-                        WHERE
-                            `miniblog`.`parent` = '" . $record->id . "' AND
-                            `miniblog`.`type` = 'miniblog' AND
-                            `users`.`id` = `miniblog`.`author`
-                        ORDER BY
-                            `miniblog`.`id`
-                        ASC" . $limit
+						SELECT
+							`miniblog`.`text` AS `text`,
+							`miniblog`.`vote_value` AS `vote_value`,
+							`miniblog`.`vote_users` AS `vote_users`,
+							`miniblog`.`date` AS `date`,
+							`miniblog`.`author` AS `author`,
+							`miniblog`.`groupid` AS `groupid`,
+							`miniblog`.`posts` AS `posts`,
+							`miniblog`.`reply_to` AS `reply_to`,
+							`miniblog`.`id` AS `id`,
+							`miniblog`.`removed` AS `mb_removed`,
+							`users`.`nick` AS `nick`,
+							`users`.`decos` AS `decos`,
+							`users`.`avatar` AS `avatar`,
+							`users`.`av_alt` AS `av_alt`,
+							`users`.`level` AS `level`,
+							`users`.`deleted` AS `user_deleted`
+						FROM
+							`miniblog`,
+							`users`
+						WHERE
+							`miniblog`.`parent` = '" . $record->id . "' AND
+							`miniblog`.`type` = 'miniblog' AND
+							`users`.`id` = `miniblog`.`author`
+						ORDER BY
+							`miniblog`.`id`
+						ASC" . $limit
 					);
 
 					if ($responses) {
@@ -428,19 +434,19 @@ if (!empty($inprofile)) {
 
 					$tpl->newBlock('mb-tags-wrapper');
 					$tags = $db->get_results("
-                        SELECT
-                            `tags`.`name` AS `name`,
-                            `tags`.`slug` AS `slug`
-                        FROM
-                            `taged`,
-                            `tags`
-                        WHERE
-                            `taged`.`page_id` = '$record->id' AND
-                            `taged`.`type` = '2' AND
-                            `taged`.`lang` = '$lang' AND
-                            `tags`.`id` = `taged`.`tag_id`
-                        LIMIT 6
-                    ");
+						SELECT
+							`tags`.`name` AS `name`,
+							`tags`.`slug` AS `slug`
+						FROM
+							`taged`,
+							`tags`
+						WHERE
+							`taged`.`page_id` = '$record->id' AND
+							`taged`.`type` = '2' AND
+							`taged`.`lang` = '$lang' AND
+							`tags`.`id` = `taged`.`tag_id`
+						LIMIT 6
+					");
 
 					if ($tags) {
 						$tpl->newBlock('mb-tags');
