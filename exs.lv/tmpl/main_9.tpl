@@ -91,6 +91,7 @@
 		<div class="top-navig">
 			<nav>
 				<ul class="droplist">
+                    <li class="rs-logo"><img src="/bildes/runescape/rs-logo-sm.png"></li>
 					<li><a href="http://runescape.exs.lv" class="dropdown">runescape.exs.lv</a>
 						<span class="arrow-down"></span>
 						<ul>
@@ -102,7 +103,26 @@
 							<li>&nbsp;</li>
 						</ul>
 					</li>
-					<li{cat-sel-661}><a href="/rs">Forums</a></li>
+                    <li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
+                        <span class="arrow-down"></span>
+						<ul>
+							<li><a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a></li>
+							<li><a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a></li>
+							<li><a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a></li>
+                            <li>&nbsp;</li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:void(0)" class="dropdown">Cits</a>
+						<span class="arrow-down"></span>
+						<ul>
+							<li><a href="/img">eXs bilžu hostings</a></li>
+							<li><a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a></li>
+                            <li><a href="http://z8.invisionfree.com/lrc" rel="nofollow" target="_blank">LRC forums</a></li>
+							<li><a href="http://z13.invisionfree.com/Latvian_Archers" rel="nofollow" target="_blank">Latvian Archers</a></li>
+							<li><a href="http://z10.invisionfree.com/Janis_Vimba/" rel="nofollow" target="_blank">JV forums</a></li>
+							<li>&nbsp;</li>
+						</ul>
+					</li>
 				</ul>
 				<ul class="droplist nav-right">
 					<!-- START BLOCK : rsmod-nav -->
@@ -112,12 +132,10 @@
 						<ul>
 							<li><a href="/rsfacts">RuneScape fakti</a></li>
 							<li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
-							<!-- START BLOCK : quest-management-link -->
                             <li><a href="/all-quests">Pamācību saraksti</a></li>
 							<li><a href="/skills">Prasmju prasības</a></li>
 							<li><a href="/series">Kvestu sērijas</a></li>
 							<li><a href="/atkritne">Dzēstie raksti</a></li>
-							<!-- END BLOCK : quest-management-link -->
 							<li>&nbsp;</li>
 						</ul>
 					</li>
@@ -178,6 +196,7 @@
 		</div>
 		<div id="wrapper">
 			<div id="header-navig">
+                <!-- START BLOCK : top-navig-hidden -->
 				<ul class="nav-left">
                     <li>
 						<a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a>&middot;
@@ -206,17 +225,24 @@
 					<li><a rel="nofollow" href="http://runescape.com" target="_blank">runescape.com</a>&middot;</li>
 					<li><a rel="nofollow" href="http://oldschool.runescape.com" target="_blank">oldschool rs</a></li>
 				</ul>
+                <!-- END BLOCK : top-navig-hidden -->
 			</div>
 			<div id="header">
 				<div id="header-stuff">{ad-top}</div>
 				<a href="/">
-					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
-						<img src="/bildes/runescape/banners/banner-2.jpg" alt="">
-						<img src="/bildes/runescape/banners/banner-3.jpg" alt="">
-						<img src="/bildes/runescape/banners/banner-1.jpg" alt="">
+					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">
+                        <!-- START BLOCK : banner-images-1 -->
+						<img src="/bildes/runescape/banners/wilderness.jpg" alt="">
+						<img src="/bildes/runescape/banners/exchange.jpg" alt="">
+						<img src="/bildes/runescape/banners/north.jpg" alt="">
+                        <!-- END BLOCK : banner-images-1 -->
+                        <!-- START BLOCK : banner-images-2 -->                        
+						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
+						<img src="/bildes/runescape/banners/scorpions.jpg" alt="">
+						<img src="/bildes/runescape/banners/jungles.jpg" alt="">
+						<img src="/bildes/runescape/banners/musician.jpg" alt="">
+                        <!-- END BLOCK : banner-images-2 -->
 					</div>
-					<img class="rs-logo" src="/bildes/runescape/rs-logo-sm.png">
-					<img class="rs-logo right-logo" src="/bildes/runescape/osrs-logo-sm.png">
 				</a>
 			</div>
 			<div id="top-menu">
@@ -244,9 +270,9 @@
 					<li{cat-sel-2046}><a href="/achievements">Achievements</a></li>
 					<li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
 					<li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
-					<li{cat-sel-599}><a href="/runescape">Ziņas</a></li>
 					<li{cat-sel-1903}><a href="#">Arhīvs</a>
 						<ul>
+                            <li{cat-sel-599}><a href="/runescape">Ziņas</a></li>
 							<li{cat-sel-1087}><a href="/oss-guides">OSRS</a></li>
 							<li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
 							<li{cat-sel-5}><a href="/padomi">Dažādi raksti</a></li>
@@ -270,16 +296,19 @@
 					<!-- START BLOCK : user-approvelink-->
 					<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
 					<!-- END BLOCK : user-approvelink-->
+					<li{cat-sel-1867}><a href="/gallery/{currentuser-id}">Galerija</a></li>
+					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
 					<!-- START BLOCK : user-write-->
 					<li{cat-sel-116}><a href="/write">Raksti</a></li>
 					<!-- END BLOCK : user-write-->
-					<li{cat-sel-1867}><a href="/gallery/{currentuser-id}">Galerija</a></li>
 					<li{cat-sel-1905}><a href="/myblog">Blogs</a></li>
-					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+					<li{cat-sel-661}><a href="/rs">Forums</a></li>
 				</ul>
 				<!-- END BLOCK : user-menu-->
 			</div>
 			<div id="space" class="c"></div>
+            
+            <div id="outer_content">
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox" id="flash-message">
 				<p>
@@ -291,192 +320,194 @@
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
 
-			<div id="content" class="{layout-options}" style="float:left">
-				<div id="inner-content">
-					<!-- START BLOCK : page-path-->
-					<p id="breadcrumbs">{page-path}</p>
-					<!-- END BLOCK : page-path-->
-					<!-- START BLOCK : profile-menu-->
-					<h1>{user-nick}{user-menu-add}</h1>
+                <div id="content" class="{layout-options}" style="float:left">
+                    <div id="inner-content">
+                        <!-- START BLOCK : page-path-->
+                        <p id="breadcrumbs">{page-path}</p>
+                        <!-- END BLOCK : page-path-->
+                        <!-- START BLOCK : profile-menu-->
+                        <h1>{user-nick}{user-menu-add}</h1>
 
-					{ad-468}
+                        {ad-468}
 
-					<ul class="tabs">
-						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
-						<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-						<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
-						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
-						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
-					</ul>
+                        <ul class="tabs">
+                            <li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
+                            <li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
+                            <li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
+                            <li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
+                            <li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
+                            <li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+                        </ul>
 
-					<!-- END BLOCK : profile-menu-->
-					<!-- INCLUDE BLOCK : module-core-error -->
-					<div id="current-module">
-						<!-- INCLUDE BLOCK : module-currrent -->
-					</div>
-					<div class="c"></div>
+                        <!-- END BLOCK : profile-menu-->
+                        <!-- INCLUDE BLOCK : module-core-error -->
+                        <div id="current-module">
+                            <!-- INCLUDE BLOCK : module-currrent -->
+                        </div>
+                        <div class="c"></div>
 
-				</div>
-			</div>
+                    </div>
+                </div>
 
-			<div id="rs_columns">
+                <div id="rs_columns">
 
-				<!-- START BLOCK : main-layout-left-->
-				<div id="left">
+                    <!-- START BLOCK : main-layout-left-->
+                    <div id="left">
 
-					<!-- START BLOCK : profile-box-->
-					<h3>{profile-nick}</h3>
-					<div class="box">
-						<a href="{url}">
-							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
-						</a>
-						{profile-top-awards}
-						<!-- START BLOCK : profilebox-pm-link-->
-						<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br>
-						<!-- END BLOCK : profilebox-pm-link-->
-						<!-- START BLOCK : profilebox-warn-->
-						<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br>
-						<!-- END BLOCK : profilebox-warn-->
-						<!-- START BLOCK : profilebox-blog-link-->
-						<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br>
-						<!-- END BLOCK : profilebox-blog-link-->
-						<!-- START BLOCK : profilebox-twitter-link-->
-						<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br>
-						<!-- END BLOCK : profilebox-twitter-link-->
-						<!-- START BLOCK : profilebox-yt-link-->
-						<!-- END BLOCK : profilebox-yt-link-->
-						<div class="c"></div>
-					</div>
-					<!-- END BLOCK : profile-box-->
+                        <!-- START BLOCK : profile-box-->
+                        <h3>{profile-nick}</h3>
+                        <div class="box">
+                            <a href="{url}">
+                                <img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
+                            </a>
+                            {profile-top-awards}
+                            <!-- START BLOCK : profilebox-pm-link-->
+                            <a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br>
+                            <!-- END BLOCK : profilebox-pm-link-->
+                            <!-- START BLOCK : profilebox-warn-->
+                            <a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br>
+                            <!-- END BLOCK : profilebox-warn-->
+                            <!-- START BLOCK : profilebox-blog-link-->
+                            <a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br>
+                            <!-- END BLOCK : profilebox-blog-link-->
+                            <!-- START BLOCK : profilebox-twitter-link-->
+                            <a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br>
+                            <!-- END BLOCK : profilebox-twitter-link-->
+                            <!-- START BLOCK : profilebox-yt-link-->
+                            <!-- END BLOCK : profilebox-yt-link-->
+                            <div class="c"></div>
+                        </div>
+                        <!-- END BLOCK : profile-box-->
 
-					<!-- START BLOCK : friendssay-box-->
-					<h3>Miniblogi{miniblog-add}</h3>
-					<div class="box">
-						<!-- START BLOCK : friendssay-tabs-->
-						<ul class="tabs">
-							<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Ārpusē</span></a></li>
-							<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Grupās</span></a></li>
-						</ul>
-						<div class="c"></div>
-						<!-- END BLOCK : friendssay-tabs-->
-						<div id="miniblog-block" class="ajaxbox">{out}</div>
-					</div>
-					<!-- END BLOCK : friendssay-box-->
+                        <!-- START BLOCK : friendssay-box-->
+                        <h3>Miniblogi{miniblog-add}</h3>
+                        <div class="box">
+                            <!-- START BLOCK : friendssay-tabs-->
+                            <ul class="tabs">
+                                <li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Ārpusē</span></a></li>
+                                <li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Grupās</span></a></li>
+                            </ul>
+                            <div class="c"></div>
+                            <!-- END BLOCK : friendssay-tabs-->
+                            <div id="miniblog-block" class="ajaxbox">{out}</div>
+                        </div>
+                        <!-- END BLOCK : friendssay-box-->
 
-					<!-- START BLOCK : groups-l-list-->
-					<h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>
-					<div class="box new-groups">
-						<!-- START BLOCK : groups-l-node-->
-						<p>
-							<img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
-							<a href="{link}">{title}</a>
-						</p>
-						<!-- END BLOCK : groups-l-node-->
-						<a href="/grupas">Visas grupas &raquo;</a>
-					</div>
-					<!-- END BLOCK : groups-l-list-->
+                        <!-- START BLOCK : groups-l-list-->
+                        <h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>
+                        <div class="box new-groups">
+                            <!-- START BLOCK : groups-l-node-->
+                            <p>
+                                <img style="" src="{img-server}/userpic/medium/{avatar}" alt="">
+                                <a href="{link}">{title}</a>
+                            </p>
+                            <!-- END BLOCK : groups-l-node-->
+                            <a href="/grupas">Visas grupas &raquo;</a>
+                        </div>
+                        <!-- END BLOCK : groups-l-list-->
 
-				</div>
-				<!-- END BLOCK : main-layout-left-->
+                    </div>
+                    <!-- END BLOCK : main-layout-left-->
 
-				<!-- START BLOCK : main-layout-right-->
-				<div id="right">
+                    <!-- START BLOCK : main-layout-right-->
+                    <div id="right">
 
-					<!-- START BLOCK : notification-list-->
-					<h3>Tavi notikumi</h3>
-					<div class="box">
-						{out}
-					</div>
-					<!-- END BLOCK : notification-list-->
+                        <!-- START BLOCK : notification-list-->
+                        <h3>Tavi notikumi</h3>
+                        <div class="box">
+                            {out}
+                        </div>
+                        <!-- END BLOCK : notification-list-->
 
-					<h3>Jaunākais lapā</h3>
-					<div class="box">
-						<ul class="tabs">
-							<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-							<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-						</ul>
-						<div id="lat" class="ajaxbox">{latest-noscript}</div>
-					</div>
+                        <h3>Jaunākais lapā</h3>
+                        <div class="box">
+                            <ul class="tabs">
+                                <li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+                                <li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+                            </ul>
+                            <div id="lat" class="ajaxbox">{latest-noscript}</div>
+                        </div>
 
-					<!-- START BLOCK : poll-box-->
-					<h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
-					<div class="box poll-box">
-						<p><strong>{poll-title}</strong></p>
-						<!-- START BLOCK : poll-answers-->
-						<ol class="poll-answers">
-							<!-- START BLOCK : poll-answers-node-->
-							<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-							<!-- END BLOCK : poll-answers-node-->
-						</ol>
-						<span class="poll-text">
-							Balsojuši: {poll-totalvotes}<br />
-							<a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
-						</span>
-						<!-- END BLOCK : poll-answers-->
-						<!-- START BLOCK : poll-questions-->
-						<form name="poll" method="post" action="">
-							<fieldset>
-								<!-- START BLOCK : poll-error-->
-								<p>{poll-error}</p>
-								<!-- END BLOCK : poll-error-->
-								<!-- START BLOCK : poll-options-->
-								<ol id="poll-questions">
-									<!-- START BLOCK : poll-options-node-->
-									<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-									<!-- END BLOCK : poll-options-node-->
-								</ol>
-								<input type="submit" name="vote" value="Balsot!" class="button primary" />
-								<!-- END BLOCK : poll-options-->
-							</fieldset>
-						</form>
-						<!-- END BLOCK : poll-questions-->
-					</div>
-					<!-- END BLOCK : poll-box-->
+                        <!-- START BLOCK : poll-box-->
+                        <h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
+                        <div class="box poll-box">
+                            <p><strong>{poll-title}</strong></p>
+                            <!-- START BLOCK : poll-answers-->
+                            <ol class="poll-answers">
+                                <!-- START BLOCK : poll-answers-node-->
+                                <li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+                                <!-- END BLOCK : poll-answers-node-->
+                            </ol>
+                            <span class="poll-text">
+                                Balsojuši: {poll-totalvotes}<br />
+                                <a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
+                            </span>
+                            <!-- END BLOCK : poll-answers-->
+                            <!-- START BLOCK : poll-questions-->
+                            <form name="poll" method="post" action="">
+                                <fieldset>
+                                    <!-- START BLOCK : poll-error-->
+                                    <p>{poll-error}</p>
+                                    <!-- END BLOCK : poll-error-->
+                                    <!-- START BLOCK : poll-options-->
+                                    <ol id="poll-questions">
+                                        <!-- START BLOCK : poll-options-node-->
+                                        <li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+                                        <!-- END BLOCK : poll-options-node-->
+                                    </ol>
+                                    <input type="submit" name="vote" value="Balsot!" class="button primary" />
+                                    <!-- END BLOCK : poll-options-->
+                                </fieldset>
+                            </form>
+                            <!-- END BLOCK : poll-questions-->
+                        </div>
+                        <!-- END BLOCK : poll-box-->
 
-					<!-- START BLOCK : runescape-facts-box -->
-					<h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
-					<div class="box facts-box">{random-fact}</div>
-					<!-- END BLOCK : runescape-facts-box -->
+                        <!-- START BLOCK : runescape-facts-box -->
+                        <h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
+                        <div class="box facts-box">{random-fact}</div>
+                        <!-- END BLOCK : runescape-facts-box -->
 
-				</div>
-				<!-- END BLOCK : main-layout-right-->
-			</div>
-			<div class="c"></div>
+                    </div>
+                    <!-- END BLOCK : main-layout-right-->
+                </div>
+                <div class="c"></div>
 
-			{ad-bottom}
+                {ad-bottom}
 
-			<div id="footer">
-				<div id="online-users">
-					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:12px">{page-onlineusers}</span>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Jaunākie raksti: {footer-topics}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Jaunākais miniblogos: {footer-mb}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
-						<p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums</p>
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<ul id="internal-links">
-							<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-							<li><a href="/sitemap">Lapas karte</a></li>
-							<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="c"></div>
-			</div>
+                <div id="footer">
+                    <div id="online-users">
+                        Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:12px">{page-onlineusers}</span>
+                    </div>
+                    <div class="infoblock">
+                        <div class="inner">
+                            Jaunākie raksti: {footer-topics}
+                        </div>
+                    </div>
+                    <div class="infoblock">
+                        <div class="inner">
+                            Jaunākais miniblogos: {footer-mb}
+                        </div>
+                    </div>
+                    <div class="infoblock">
+                        <div class="inner">
+                            <p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
+                            <p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums</p>
+                        </div>
+                    </div>
+                    <div class="infoblock">
+                        <div class="inner">
+                            <ul id="internal-links">
+                                <li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+                                <li><a href="/sitemap">Lapas karte</a></li>
+                                <li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="c"></div>
+                </div>
+            
+            </div>
 		</div>
 
 		<script>
