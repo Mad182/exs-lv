@@ -33,7 +33,7 @@
  *  12. Here be dragons!
  */
 body {
-    background:url('/bildes/runescape/wallpapers/magic_1920x1080.jpg') no-repeat fixed 50% 0
+    background:url('/bildes/runescape/wallpapers/frostshatter_1920x1080.jpg') no-repeat fixed 50% 0
 }
 
 /* background fix lielajiem ekrāniem  */
@@ -106,13 +106,21 @@ body {
 /* 2. Pārrakstītie core.css elementi */
 #wrapper {
     position:relative;
-    margin-top:31px;
+    /*margin-top:31px;*/
+    margin-top:90px;
     margin-bottom:0;
-    padding:0 0 10px 0;
-    background:#CECFCF url('/bildes/runescape/pattern-wrapper.png');
+    padding:0;
+    background:transparent;
     box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
     -moz-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
     -webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+}
+#outer_content {
+    padding:0;
+    padding-bottom:10px;
+    margin:0;
+    overflow:auto;
+    background:url('/bildes/runescape/pattern-wrapper.png') 0 2%;
 }
 #left, #content, #right {
     float:left;
@@ -358,7 +366,12 @@ div pre {
     .top-navig ul li:hover {
         background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
     }
-
+    .top-navig .rs-logo:hover {
+        background:inherit
+    }
+    .top-navig .rs-logo > img {
+        max-height:30px
+    }
 ul.nav-left {
     float:left
 }
@@ -366,12 +379,15 @@ ul.nav-right {
     float:right
 }
 #header-navig {
-    overflow:hidden;
-    padding:0 0 0 20px;
+    min-height:15px;
     border-bottom:1px solid #424346;
-    font-size:11px;
-    background:#0E0F0F;
-    color:#6D93A5;
+    background:#0E0F0F url('/bildes/runescape/pattern-navig.png') repeat-x;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
     #header-navig ul {
        margin:0;
@@ -395,17 +411,11 @@ ul.nav-right {
 #header {
     margin:0;
     padding:0;
-    height:158px;
+    height:129px;
     position:relative
 }
-    .rs-logo {
-        max-height:65px;
-        position:absolute;
-        bottom:0;
-        z-index:100
-    }
-    .rs-logo.right-logo {
-        right:10px
+    #header-slider img {
+        max-height:130px
     }
 .new-groups p {
     display: block;
@@ -472,7 +482,7 @@ ul.nav-right {
 }
     .facts-box, .facts-box p {
         line-height: 1.8;
-        font-size: 11px;
+        font-size: 13px;
         text-indent: 10px;
     }
 .fetch-new-fact {
