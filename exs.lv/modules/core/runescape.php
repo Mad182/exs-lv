@@ -28,10 +28,6 @@ if ($category->id == 1863) {
 }
 
 
-// izvēlas lapas banneru komplektu
-$tpl->newBlock('banner-images-'.rand(1, 2));
-
-
 // index.php failā jau pēc noklusējuma neautorizēta statusa
 // gadījumā lapā tiek iekļauts bloks ar login formu,
 // tāpēc šajā navigācijā tas netiek pārbaudīts, jo strādā tāpat

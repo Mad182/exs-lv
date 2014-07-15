@@ -230,18 +230,12 @@
 			<div id="header">
 				<div id="header-stuff">{ad-top}</div>
 				<a href="/">
-					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">
-                        <!-- START BLOCK : banner-images-1 -->
-						<img src="/bildes/runescape/banners/wilderness.jpg" alt="">
+					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">                    
+						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
 						<img src="/bildes/runescape/banners/exchange.jpg" alt="">
 						<img src="/bildes/runescape/banners/north.jpg" alt="">
-                        <!-- END BLOCK : banner-images-1 -->
-                        <!-- START BLOCK : banner-images-2 -->                        
-						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
 						<img src="/bildes/runescape/banners/scorpions.jpg" alt="">
-						<img src="/bildes/runescape/banners/jungles.jpg" alt="">
 						<img src="/bildes/runescape/banners/musician.jpg" alt="">
-                        <!-- END BLOCK : banner-images-2 -->
 					</div>
 				</a>
 			</div>
