@@ -22,7 +22,7 @@ if (!isset($_SESSION['twitter_id']) && !isset($_GET['oauth_token']) && !isset($_
 				header('Location: ' . $url);
 				break;
 			default:
-				echo "Coonection with twitter Failed";
+				echo "Connection with twitter Failed";
 				break;
 		}
 	} else { //error receiving request token

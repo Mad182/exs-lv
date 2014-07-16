@@ -71,7 +71,7 @@
 			<label><input type="checkbox" name="agree" /> ar noteikumiem iepazinos un piekrītu tos ievērot</label>
 		</p>
 		<p>
-			<input class="button" type="submit" name="submit" id="submit" value="Reģistrēties" />
+			<input class="button primary" type="submit" name="submit" id="submit" value="Reģistrēties" />
 		</p>
 		<!-- END BLOCK : form-fields-->
 	</fieldset>
