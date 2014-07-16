@@ -106,8 +106,7 @@ body {
 /* 2. Pārrakstītie core.css elementi */
 #wrapper {
     position:relative;
-    /*margin-top:31px;*/
-    margin-top:90px;
+    margin-top:25px;
     margin-bottom:0;
     padding:0;
     background:transparent;
@@ -289,6 +288,12 @@ div pre {
 	margin-left: 12px;
 	margin-right: 0;
 	padding-right: 0;
+}
+#forum td h3 {
+    font-size:13px
+}
+#exs-groups h3 {
+    font-size:14px
 }
 
 /* raksta saturs */
