@@ -113,14 +113,13 @@ if (!$auth->ok) {
 
 		$mailer = Swift_Mailer::newInstance($transport);
 		$message = Swift_Message::newInstance();
-		$message->setCharset('UTF-8');
 		$message->setSubject('Reģistrācija portālā ' . $_SERVER['HTTP_HOST']);
 		$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
 		$message->setTo(stripslashes($regdata['mail']));
 		$message->setBody('<h4>Sveiki!</h4><p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '! Ceram, ka labi pavadīsi laiku :)</p>
 		<p>Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.</p>
 		<p><a href="http://' . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>
-		<p>__<br />' . $_SERVER['HTTP_HOST'] . ' adminu un moderatoru komanda!</p>', 'text/html', 'UTF-8');
+		<p>__<br />' . $_SERVER['HTTP_HOST'] . ' adminu un moderatoru komanda!</p>');
 		$message->setContentType("text/html");
 		$mailer->send($message);
 	} else {
