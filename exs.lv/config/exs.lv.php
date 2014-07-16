@@ -8,6 +8,10 @@ $fb_api_key = 'f6ac0e495e8b5a09ff2ea463383dc57c';
 $dr_api_id = 15005147;
 $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
+//twitter login
+$CONSUMER_KEY = 'r7Wjk5VoxlMVdDrkK7wN3X6q2';
+$CONSUMER_SECRET = 'axdLXZy6tm5pM1nB4VM2IZ9UvZKotH22xZlrvNPOKkge86UFen';
+
 $polls_cat = 2;
 
 //radamo profila skatijumu skaits
@@ -30,3 +34,4 @@ if (!empty($_SERVER['HTTPS'])) {
  * exs.lv specific functions
  */
 require(CORE_PATH . '/includes/functions.exs.php');
+
