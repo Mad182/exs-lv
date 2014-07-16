@@ -106,8 +106,7 @@ body {
 /* 2. Pārrakstītie core.css elementi */
 #wrapper {
     position:relative;
-    /*margin-top:31px;*/
-    margin-top:90px;
+    margin-top:25px;
     margin-bottom:0;
     padding:0;
     background:transparent;

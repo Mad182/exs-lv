@@ -232,6 +232,7 @@
 				<a href="/">
 					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">                    
 						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
+						<img src="/bildes/runescape/banners/wilderness.jpg" alt="">
 						<img src="/bildes/runescape/banners/exchange.jpg" alt="">
 						<img src="/bildes/runescape/banners/north.jpg" alt="">
 						<img src="/bildes/runescape/banners/scorpions.jpg" alt="">
