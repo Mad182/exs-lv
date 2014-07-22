@@ -31,9 +31,17 @@ if ($auth->ok) {
 
 	$vc = (int) $_GET['vc'];
 
-	$comment = $db->get_row("SELECT `id`,`vote_users`,`vote_value`,`author` FROM `" . $table . "` WHERE `id` = '$vc'");
+	$comment = $db->get_row("SELECT * FROM `" . $table . "` WHERE `id` = '$vc'");
 
 	if (!empty($comment)) {
+
+		//atsevišķās grupās var atslēgt ierakstu vērtēšanu
+		if (!empty($comment->groupid)) {
+			$disable_vote = $db->get_var("SELECT `disable_vote` FROM `clans` WHERE `id` = '$comment->groupid'");
+			if (!empty($disable_vote)) {
+				die('Šajā grupā ierakstu vērtēšana ir izslēgta!');
+			}
+		}
 
 		if ($comment->author == $auth->id) {
 			die('Par savu komentāru? Tiešām?');
@@ -55,7 +63,7 @@ if ($auth->ok) {
 
 			// balsojumu limits
 			$limit = (5 + $auth->karma / 30);
-			if(im_mod()) {
+			if (im_mod()) {
 				$limit += 50;
 			}
 
@@ -97,3 +105,4 @@ if ($auth->ok) {
 } else {
 	die('Jāielogojas');
 }
+

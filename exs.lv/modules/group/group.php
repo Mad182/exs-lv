@@ -1,21 +1,19 @@
 <?php
 
 /**
- *  Konkrētās grupas skats
+ * Konkrētās grupas skats
  */
-
 /**
- *  Aptuvens saturs pa galvenajiem blokiem:
- *  (CTRL + F -> <nr>.)
+ * Aptuvens saturs pa galvenajiem blokiem:
+ * (CTRL + F -> <nr>.)
  *
- *  1. grupas biedru cilne
- *  2. grupas miniblogu cilne
- *  3. specifiska grupas cilne
- *  4. grupas opcijas
- *  5. grupas meklēšanas cilne
- *  6. grupas sākumlapas cilne
+ * 1. grupas biedru cilne
+ * 2. grupas miniblogu cilne
+ * 3. specifiska grupas cilne
+ * 4. grupas opcijas
+ * 5. grupas meklēšanas cilne
+ * 6. grupas sākumlapas cilne
  */
-
 if (!empty($category->content)) {
 	$_GET['var5'] = esr($_GET['var4']);
 	$_GET['var4'] = esr($_GET['var3']);
@@ -206,9 +204,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 
 /**
- *  1. GRUPAS BIEDRU CILNE UN TĀS IESPĒJAS
- */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'members') {
+ * 1. GRUPAS BIEDRU CILNE UN TĀS IESPĒJAS
+ */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'members') {
 
 	$robotstag[] = 'noindex';
 
@@ -341,8 +338,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
 	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* confirm pending member */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod)) {
+/* confirm pending member */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod)) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -354,10 +350,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_
 
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
-
 }
-/* deny pendig member, remove pending status */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod)) {
+/* deny pendig member, remove pending status */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod)) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -447,7 +441,6 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->p
 			}
 		}
 	}
-
 }
 // izstāšanās no grupas
 elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
@@ -461,9 +454,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 
 
 /**
- *  2. GRUPAS MINIBLOGU CILNE UN TĀS IESPĒJAS
- */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
+ * 2. GRUPAS MINIBLOGU CILNE UN TĀS IESPĒJAS
+ */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->id) || isset($_GET['var2']) && $_GET['var2'] == 'forum' && !empty($group->id)) {
 
 	// iekrāso atvērto cilni
 	$tpl->assignGlobal('active-tab-community', 'active');
@@ -715,8 +707,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->i
 					'title' => $title
 				));
 
-				// no mobilās versijas nav pieejama vērtēšana (?)
-				if (!$auth->mobile) {
+				// atsevišķās grupās ierakstu vērtēšana ir atslēdzama
+				if (empty($group->disable_vote)) {
 					$tpl->assign(array(
 						'rater' => mb_rater($record, $url)
 					));
@@ -805,7 +797,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->i
 						}
 						$mlevel = 5;
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed, $group->disable_vote));
 					}
 				}
 
@@ -894,9 +886,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'community' && !empty($group->i
 
 
 /**
- *  3. SPECIFISKA GRUPAS CILNE UN TĀS IESPĒJAS
- */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3'])) {
+ * 3. SPECIFISKA GRUPAS CILNE UN TĀS IESPĒJAS
+ */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3'])) {
 	$tab = mkslug($_GET['var3']);
 
 	$tab = $db->get_row("SELECT * FROM clans_tabs WHERE slug = '$tab' AND clan_id = '$group->id'");
@@ -982,9 +973,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3'])) 
 
 
 /**
- *  4. GRUPAS OPCIJAS
- */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'options') {
+ * 4. GRUPAS OPCIJAS
+ */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'options') {
 
 	$tpl->assignGlobal('active-tab-options', 'active');
 	$tpl->newBlock('group-settings');
@@ -1083,17 +1073,14 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'options') {
 	}
 
 	$page_title = $group->title . ' - rīki';
-
-
 }
 
 
 
 
 /**
- *  5. GRUPAS MEKLĒŠANAS CILNE
- */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
+ * 5. GRUPAS MEKLĒŠANAS CILNE
+ */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
 	$tpl->assignGlobal('active-tab-search', 'active');
 	$tpl->newBlock('group-search');
@@ -1146,15 +1133,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 	}
 
 	$page_title = $group->title . ' - meklēšana';
-
 }
 
 
 
 /**
- *  6. GRUPAS SĀKUMLAPAS CILNE UN TĀS IESPĒJAS
- */
-else {
+ * 6. GRUPAS SĀKUMLAPAS CILNE UN TĀS IESPĒJAS
+ */ else {
 
 	$tpl->assignGlobal('active-tab-info', 'active');
 
@@ -1224,7 +1209,7 @@ else {
 	if ($poll) {
 		$title = $poll->name;
 
-		$responded = $db->get_var("SELECT count(*) FROM  `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid='" . $poll->id . "'");
+		$responded = $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid='" . $poll->id . "'");
 
 		if ($responded or !($is_mod or $is_admin or $is_member)) {
 			$total = $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `pid` = '" . $poll->id . "'");
@@ -1351,3 +1336,4 @@ else {
 
 	$page_title = $group->title;
 }
+

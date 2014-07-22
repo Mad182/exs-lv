@@ -30,22 +30,24 @@ if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
  */
 function as_class_name($name = '') {
 
-    $name = trim($name);
-    if (empty($name)) return '';
+	$name = trim($name);
+	if (empty($name))
+		return '';
 
-    // klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
-    $name = str_replace(array('-', ' '), '_', $name);
-    
-    $allowed = "/[^a-z0-9_]/i";
-	$name = preg_replace($allowed, '', $name);    
-    if (empty($name)) return '';
-    
-    // katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
-    $name = str_replace('_', ' ', $name);
-    $name = ucwords($name);
-    $name = str_replace(' ', '_', $name);
-    
-    return $name;
+	// klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
+	$name = str_replace(array('-', ' '), '_', $name);
+
+	$allowed = "/[^a-z0-9_]/i";
+	$name = preg_replace($allowed, '', $name);
+	if (empty($name))
+		return '';
+
+	// katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
+	$name = str_replace('_', ' ', $name);
+	$name = ucwords($name);
+	$name = str_replace(' ', '_', $name);
+
+	return $name;
 }
 
 /**
@@ -1387,7 +1389,7 @@ function return2mb($mb) {
 }
 
 //atgriez visas minibloga atbildes html formā, rekursīvi
-function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3, $closed = 0) {
+function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3, $closed = 0, $disable_vote = 0) {
 	global $auth, $min_post_edit, $lang;
 	$out = '<ul class="responses-' . $key . ' level-' . $level . '">';
 	if (!empty($data[$key])) {
@@ -1416,7 +1418,12 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {
 				$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 			}
-			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
+
+			// atslēdz ierakstu vērtēšanu
+			if (empty($disable_vote)) {
+				$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
+			}
+
 			$out .= '<p class="post-info">';
 			if (!$val->user_deleted) {
 				$out .= '<a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a>';
@@ -1458,7 +1465,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
 			}
 			if ($auth->ok === true || $val->posts) {
-				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit);
+				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote);
 				$out .= '<div class="c"></div>';
 			}
 			if ($auth->ok === true && !$closed) {
@@ -2178,3 +2185,4 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$page_title = $user->nick . ' ' . $title;
 }
+
