@@ -1035,6 +1035,26 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 		if ($group->auto_approve) {
 			$tpl->assign('auto_approve-sel', ' checked="checked"');
 		}
+		
+		//grupas settingi kas pieejami globālajiem adminiem
+		if($auth->level == 1) {
+
+			// saglabā
+			if (isset($_POST['submit-admin'])) {
+				$disable_vote = (bool) $_POST['admin-disable_vote'];
+				$hide_intro = (bool) $_POST['admin-hide_intro'];
+				$db->query("UPDATE `clans` SET `hide_intro` = '$hide_intro', `disable_vote` = '$disable_vote' WHERE `id` = '$group->id'");
+				redirect($group_link . '/options');
+			}
+		
+			$tpl->newBlock('group-settings-admin');
+			if ($group->disable_vote) {
+				$tpl->assign('disable_vote-sel', ' checked="checked"');
+			}
+			if ($group->hide_intro) {
+				$tpl->assign('hide_intro-sel', ' checked="checked"');
+			}
+		}
 
 		// grupas aptaujas
 		$tpl->newBlock('polls_admin-body');

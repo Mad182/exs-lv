@@ -483,11 +483,6 @@
 
 
 
-
-
-
-
-
 	<!-- END BLOCK : user-miniblog-->
 </div>
 
@@ -555,7 +550,7 @@
 				<!-- END BLOCK : group-settings-tab-->
 			</table>
 			<!--<p>
-			<input class="button" type="submit" name="submit-save" value="Saglabāt" />
+			<input class="button primary" type="submit" name="submit-save" value="Saglabāt" />
 			</p>-->
 		</fieldset>
 	</form>
@@ -572,7 +567,7 @@
 				<label class="checkbox"><input type="checkbox" name="public" value="1" checked="checked" /> sadaļa būs pieejama arī tiem, kuri nav grupas biedri</label>
 			</p>
 			<p>
-				<input class="button" type="submit" name="submit-new" value="Izveidot" />
+				<input class="button primary" type="submit" name="submit-new" value="Izveidot" />
 			</p>
 		</fieldset>
 	</form>
@@ -589,11 +584,28 @@
 				<label class="checkbox"><input type="checkbox" name="main-auto_approve" value="1"{auto_approve-sel} /> grupā var iestāties bez apstiprinājuma</label>
 			</p>
 			<p>
-				<input class="button" type="submit" name="submit-main" value="Saglabāt" />
+				<input class="button primary" type="submit" name="submit-main" value="Saglabāt" />
 			</p>
 		</fieldset>
 	</form>
 	<!-- END BLOCK : group-settings-main-->
+
+	<!-- START BLOCK : group-settings-admin-->
+	<form class="form" action="" method="post">
+		<fieldset>
+			<legend>Grupas opcijas (administratoriem)</legend>
+			<p>
+				<label class="checkbox"><input type="checkbox" name="admin-disable_vote" value="1"{disable_vote-sel} /> atslēgt komentāru vērtēšanu</label>
+			</p>
+			<p>
+				<label class="checkbox"><input type="checkbox" name="admin-hide_intro" value="1"{hide_intro-sel} /> paslēpt ierakstu tekstu no lietotāju darbībām</label>
+			</p>
+			<p>
+				<input class="button primary" type="submit" name="submit-admin" value="Saglabāt" />
+			</p>
+		</fieldset>
+	</form>
+	<!-- END BLOCK : group-settings-admin-->
 
 	<!-- START BLOCK : polls_admin-body-->
 
@@ -655,7 +667,7 @@
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<input class="button" type="submit" value="Izveidot" />
+				<input class="button primary" type="submit" value="Izveidot" />
 			</p>
 		</fieldset>
 	</form>
@@ -678,3 +690,4 @@
 
 </div>
 <!-- END BLOCK : group-settings-->
+
