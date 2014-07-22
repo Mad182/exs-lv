@@ -39,7 +39,7 @@ if ($auth->ok) {
 		if (!empty($comment->groupid)) {
 			$disable_vote = $db->get_var("SELECT `disable_vote` FROM `clans` WHERE `id` = '$comment->groupid'");
 			if (!empty($disable_vote)) {
-				die('Šajā grupā ierakstu vērtēšana ir izslēgta!');
+				die('Šajā grupā ierakstu vērtēšana ir atslēgta!');
 			}
 		}
 
