@@ -299,3 +299,11 @@ dl.list-attr dt {
 #wrapper .article-info li {
 	color: #aaa;
 }
+
+/* sākumlapas "wall" */
+
+#wall-posts li {
+	background: #333;
+	
+}
+

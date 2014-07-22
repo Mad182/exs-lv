@@ -87,7 +87,7 @@ foreach ($articles as $article) {
 		if (!empty($lastpost)) {
 
 			$last_post_html = '
-			<div class="last-post" style="margin: 4px 0 4px 60px;">
+			<div class="last-post">
 				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
 				<strong class="lastpost-author">' . $lastpost->nick . ':</strong>
 				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>

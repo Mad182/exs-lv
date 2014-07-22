@@ -3956,3 +3956,26 @@ li.view_more {
 #mta-monitor p.playerlist span.odd {
 	background: #faf8ff;
 }
+
+/* sākumlapas "wall" */
+#wall-posts {
+	list-style:none;
+	padding: 0;
+	margin: 10px 0;
+}
+
+#wall-posts li {
+	background: #fafafa;
+	margin: 8px 0;
+}
+
+#wall-posts li a {
+	display: block;
+	text-decoration: none;
+}
+
+#wall-posts .last-post {
+	font-size: 13px;
+	margin: 10px 0 4px 60px;
+}
+
