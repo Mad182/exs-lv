@@ -89,7 +89,7 @@ foreach ($articles as $article) {
 			$last_post_html = '
 			<div class="last-post">
 				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-				<strong class="lastpost-author">' . $lastpost->nick . ':</strong>
+				<strong class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</strong>
 				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
 
 			</div>
@@ -100,7 +100,7 @@ foreach ($articles as $article) {
 
 	$events[strtotime($article->bump) . '-' . $url] = array(
 		'url' => $url,
-		'author' => $article->nick,
+		'author' => usercolor($article->nick, $article->level),
 		'title' => $article->title,
 		'avatar' => $article->avatar,
 		'time' => $time,
@@ -146,6 +146,7 @@ $mbs = $db->get_results("SELECT
 	`users`.`avatar` AS `avatar`,
 	`users`.`deleted` AS `deleted`,
 	`users`.`av_alt` AS `av_alt`,
+	`users`.`level` AS `level`,
 	`users`.`nick` AS `nick`
 FROM
 	`miniblog` USE INDEX(`parent_2`),
@@ -218,7 +219,7 @@ if ($mbs) {
 				$last_post_html = '
 				<div class="last-post" style="margin: 4px 0 4px 60px;">
 					<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-					<strong class="lastpost-author">' . $lastpost->nick . ':</strong>
+					<strong class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</strong>
 					<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
 
 				</div>
@@ -229,7 +230,7 @@ if ($mbs) {
 
 		$events[$mb->bump . '-' . $url] = array(
 			'url' => $url,
-			'author' => $mb->nick,
+			'author' => usercolor($mb->nick, $mb->level),
 			'title' => $mb->text,
 			'avatar' => $mb->avatar,
 			'time' => $time,

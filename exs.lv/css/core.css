@@ -3972,6 +3972,7 @@ li.view_more {
 #wall-posts li a {
 	display: block;
 	text-decoration: none;
+	color: #444;
 }
 
 #wall-posts .last-post {
