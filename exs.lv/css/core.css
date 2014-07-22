@@ -3965,7 +3965,6 @@ li.view_more {
 }
 
 #wall-posts li {
-	background: #fafafa;
 	margin: 8px 0;
 }
 
@@ -3980,3 +3979,7 @@ li.view_more {
 	margin: 10px 0 4px 60px;
 }
 
+#wall-posts .av {
+	width:50px;
+	height:50px;
+}

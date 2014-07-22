@@ -302,11 +302,6 @@ dl.list-attr dt {
 
 /* sākumlapas "wall" */
 
-#wall-posts li {
-	background: #333;
-	
-}
-
 #wall-posts li a {
 	color: #ccc;
 }
