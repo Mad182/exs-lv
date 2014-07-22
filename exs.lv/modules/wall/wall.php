@@ -165,20 +165,22 @@ if ($mbs) {
 
 	foreach ($mbs as $mb) {
 
-		$mb->avatar = get_avatar($mb, 'm');
 
 		$mb->text = mb_get_title($mb->text);
 
 		if ($mb->groupid != 0) {
 			$group = $db->get_row("SELECT * FROM clans WHERE id = '$mb->groupid'");
 			if ($group->avatar) {
-				$mb->avatar = '/av/' . $group->avatar;
+				$mb->avatar = $group->avatar;
+				$mb->av_alt = 1;
 			}
 			$url = '/group/' . $mb->groupid . '/forum/' . base_convert($mb->id, 10, 36);
 		} else {
 			$url_title = mkslug(textlimit($mb->text, 36, ''));
 			$url = '/say/' . $mb->author . '/' . $mb->id . '-' . $url_title;
 		}
+
+		$mb->avatar = get_avatar($mb, 'm');
 
 		$mb->text = wordwrap(hide_spoilers($mb->text), 32, "\n", 1);
 		if ($mb->groupid != 0) {
