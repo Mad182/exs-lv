@@ -296,10 +296,10 @@
 				</div>
 				<!-- END BLOCK : user-top-->
 
-				<h3>Servera monitors</h3>
+				<!--<h3>Servera monitors</h3>
 				<div class="box">
 					{mta-monitor}
-				</div>
+				</div>-->
 
 				<!-- START BLOCK : poll-box-->
 				<h3>Aptauja</h3>

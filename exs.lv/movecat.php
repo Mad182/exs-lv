@@ -40,8 +40,13 @@ $source = (int)$argv[1];
 $destionation = (int)$argv[2];
 
 $db->query("DELETE FROM `cat` WHERE `id` = '$source' LIMIT 1");
+echo "deleted category...\n";
+$db->query("UPDATE `cat` SET `parent` = '$destionation' WHERE `parent` = '$source'");
+echo "changed parent for " . $db->affected_rows . " categories...\n";
 $db->query("UPDATE `pages` SET `category` = '$destionation' WHERE `category` = '$source'");
+echo "changed category for " . $db->affected_rows . " pages...\n";
 update_stats($destionation);
+echo "stats updated...\n";
 
-die('ok');
+die("finished!\n\n");
 

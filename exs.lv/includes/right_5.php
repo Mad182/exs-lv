@@ -13,15 +13,15 @@ function get_mta_monitor($force = false) {
 }
 
 $posts = get_latest_posts();
-$monitor = get_mta_monitor();
+//$monitor = get_mta_monitor();
 $tpl->newBlock('main-layout-right');
 $tpl->assign(array(
 	'latest-noscript' => $posts,
-	'mta-monitor' => $monitor
+	//'mta-monitor' => $monitor
 ));
 
 unset($posts);
-unset($monitor);
+//unset($monitor);
 
 //profile box
 if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
@@ -102,7 +102,7 @@ if ($auth->ok === true) {
 }
 
 //player online chart
-$chart_items = $db->get_results("SELECT `time`, `count` FROM `players_online` WHERE `game` = 'mta' AND `time` > '".date('Y-m-d H:i:s', strtotime('-1 day'))."' ORDER BY `time` ASC");
+/*$chart_items = $db->get_results("SELECT `time`, `count` FROM `players_online` WHERE `game` = 'mta' AND `time` > '".date('Y-m-d H:i:s', strtotime('-1 day'))."' ORDER BY `time` ASC");
 
 if($chart_items) {
 	$tpl->newBlock('google-chart');
@@ -124,4 +124,4 @@ if($chart_items) {
 }
 
 unset($chart_items);
-unset($items);
+unset($items);*/

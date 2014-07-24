@@ -75,8 +75,8 @@ function get_rss_youtube($url, $exs_userid = 17077, $exs_groupid = 0) {
 	sleep(1);
 }
 
-$mta_count = curl_get('http://mta.exs.lv/monitor/count.php');
-$db->query("INSERT INTO `players_online` (`time`, `count`, `game`) VALUES ('" . date('Y-m-d H:i') . ":00', '" . intval($mta_count) . "', 'mta')");
+//$mta_count = curl_get('http://mta.exs.lv/monitor/count.php');
+//$db->query("INSERT INTO `players_online` (`time`, `count`, `game`) VALUES ('" . date('Y-m-d H:i') . ":00', '" . intval($mta_count) . "', 'mta')");
 
 $csgo_count = curl_get('http://csgo.exs.lv/monitor/count.php');
 $db->query("INSERT INTO `players_online` (`time`, `count`, `game`) VALUES ('" . date('Y-m-d H:i') . ":00', '" . intval($csgo_count) . "', 'csgo')");
