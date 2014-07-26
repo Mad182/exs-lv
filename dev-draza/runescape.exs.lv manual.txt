@@ -51,8 +51,7 @@
 
         
     2046 achievements           (module = rshelp)
-	160 minispeles				(module = rshelp)		
-	536 db 						(module = idb)		- priekšmetu datubāze
+	160 minispeles				(module = rshelp)
 	599 runescape 				(module = rshelp)	- jaunumu rakstu sadaļa
 	791 gildes					(module = rshelp)
 	792 distractions-diversions	(module = rshelp)	
@@ -64,7 +63,6 @@
 
         
     // runescape pamācību sadaļu administrēšanas apakšsadaļas
-    // (module = rsmod)
     765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
         1875 series         - kvestu sēriju pārvaldība
         2045 skills         - prasmju prasības kvestiem
@@ -95,6 +93,7 @@
 	88 runescape-general 	(lang=1, redirect=/rs)
     194 tasks               (lang=9, redirect=/achievements)
     346  prasmju_arhivs 	(lang=9, redirect=http://runescape.exs.lv/padomi)
+    536  db                 (lang=9, redirect=http://runescape.exs.lv)
     787  briesmonu-medisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
     788  trenesanas			(lang=9, redirect=http://runescape.exs.lv/padomi)
     790  naudas-pelnisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
@@ -115,7 +114,7 @@
 		WHERE `parent` = 4 OR `id` = 4
     
     
-// runescape apakšprojekta satura moderatoriem pieejamās iespējas:
+\\ runescape apakšprojekta satura moderatoriem pieejamās iespējas:
 
     * savus rakstus var rediģēt vienmēr bez laika ierobežojuma
     * pie raksta rediģēšanas to var pārvietot uz citu sadaļu
@@ -141,7 +140,6 @@
     /bildes/runescape/*
     
     /modules/facts-admin
-    /modules/idb
     /modules/rs-facts
     /modules/rshelp
     /modules/rsmod
