@@ -11,9 +11,9 @@
 <h2>{report-title}</h2>
 <table class="mod-list-table" style="width:95%;margin-bottom:40px">
 	<tr class="">
-		<th style="width:25%">Iesaistītie</th>
-		<th style="width:48%">Pārkāpuma pamatojums</th>
-		<th style="width:20%;padding-left:2px;text-align:left">Iesniegšanas laiks</th>
+		<th style="width:22%">Iesaistītie</th>
+		<th style="width:52%">Pārkāpuma pamatojums</th>
+		<th style="width:19%;padding-left:2px;text-align:left">Iesniegšanas laiks</th>
         <!-- START BLOCK : archive-button-header -->
 		<th style="width:7%">&nbsp;</th>
         <!-- END BLOCK : archive-button-header -->

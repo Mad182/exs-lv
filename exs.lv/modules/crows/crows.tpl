@@ -3,8 +3,8 @@
 <table class="mod-list-table">
 	<tr class="">
 		<th style="width:3%">&nbsp;</td>
-		<th style="width:18%">Iesaistītie</th>
-		<th style="width:63%">Iemesls</th>
+		<th style="width:21%">Iesaistītie</th>
+		<th style="width:60%">Iemesls</th>
 		<th style="width:16%">Laiks</th>
 	</tr>
 	<!-- START BLOCK : single-warn -->
