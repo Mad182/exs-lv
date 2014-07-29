@@ -64,7 +64,7 @@ foreach ($articles as $article) {
 	$where = ' &raquo; <span class="where">' . $article->ctitle . '</span> &raquo; <span class="where">' . $article->title . '</span>';
 
 	$last_post_html = '';
-	if ($article->posts > 1) {
+	if ($article->posts > 0) {
 		$lastpost = $db->get_row(
 				"SELECT
 				comments.*,
@@ -156,7 +156,7 @@ foreach ($images as $image) {
 	$where = ' &raquo; <span class="where">galerija</span>';
 
 	$last_post_html = '';
-	if ($image->posts > 1) {
+	if ($image->posts > 0) {
 		$lastpost = $db->get_row(
 				"SELECT
 				galcom.*,
@@ -294,7 +294,7 @@ if ($mbs) {
 
 
 		$last_post_html = '';
-		if ($mb->posts > 1) {
+		if ($mb->posts > 0) {
 			$lastpost = $db->get_row(
 					"SELECT
 					miniblog.*,
