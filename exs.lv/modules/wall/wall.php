@@ -88,9 +88,8 @@ foreach ($articles as $article) {
 				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
 				<div class="post-info">
 					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
-					<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
 				</div>
-
+				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
 			</div>
 
 			';
@@ -220,8 +219,8 @@ if ($mbs) {
 					<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
 					<div class="post-info">
 						<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
-						<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
 					</div>
+					<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
 				</div>
 
 				';
