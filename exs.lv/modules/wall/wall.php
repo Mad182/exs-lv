@@ -12,6 +12,8 @@ if (!im_mod()) {
 	$mods_only = " `cat`.`mods_only` = 0 AND ";
 }
 
+############ ARTICLES
+
 $articles = $db->get_results("
 		SELECT
 			`pages`.`id` AS `id`,
@@ -107,6 +109,105 @@ foreach ($articles as $article) {
 		'lastpost' => $last_post_html
 	);
 }
+
+
+
+
+
+
+
+########### IMAGES 
+
+$images = $db->get_results("
+		SELECT
+			`images`.`id` AS `id`,
+			`images`.`text` AS `text`,
+			`images`.`date` AS `date`,
+			`images`.`uid` AS `author`,
+			`images`.`posts` AS `posts`,
+			`images`.`bump` AS `bump`,
+			`images`.`url` AS `url`,
+			`users`.`nick` AS `nick`,
+			`users`.`avatar` AS `avatar`,
+			`users`.`av_alt` AS `av_alt`,
+			`users`.`level` AS `level`
+		FROM
+			`images`,
+			`users`
+		WHERE
+			`users`.`id` = `images`.`uid` AND
+			`images`.`bump` != '0000-00-00 00:00:00' AND
+			`images`.`lang` = '$lang'
+		ORDER BY
+			`images`.`bump` DESC
+		LIMIT
+			10");
+
+foreach ($images as $image) {
+
+	$image->avatar = get_avatar($image, 'm');
+
+	$url = '/gallery/' . $image->author . '/' . $image->id;
+	$time = time_ago_m(strtotime($image->bump));
+
+	$image->text = wordwrap(hide_spoilers(strip_tags($image->text)), 32, "\n", 1);
+	$image->text = textlimit($image->text, 140, '...') . '<br /><img class="attels_centrets" style="width:200px;" src="'.$image->url.'" alt="" />';
+
+	$where = ' &raquo; <span class="where">galerija</span>';
+
+	$last_post_html = '';
+	if ($image->posts > 1) {
+		$lastpost = $db->get_row(
+				"SELECT
+				galcom.*,
+				`users`.`nick` AS `nick`,
+				`users`.`avatar` AS `avatar`,
+				`users`.`av_alt` AS `av_alt`,
+				`users`.`level` AS `level`
+			FROM
+				`galcom`,
+				`users`
+			WHERE
+				galcom.bid = $image->id AND
+				galcom.removed = 0 AND
+				users.id = galcom.author
+			ORDER BY galcom.id DESC
+			LIMIT 1"
+		);
+
+		if (!empty($lastpost)) {
+
+			$last_post_html = '
+			<div class="last-post">
+				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
+				<div class="post-info">
+					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
+				</div>
+				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+			</div>
+
+			';
+		}
+	}
+
+	$events[strtotime($image->bump) . '-' . $url] = array(
+		'url' => $url,
+		'author' => usercolor($image->nick, $image->level),
+		'title' => $image->text,
+		'avatar' => $image->avatar,
+		'time' => $time,
+		'where' => $where,
+		'posts' => $image->posts,
+		'lastpost' => $last_post_html
+	);
+}
+
+
+
+
+
+
+########### MINIBLOGS
 
 
 if ($auth->level == 1) {
