@@ -59,10 +59,7 @@ foreach ($articles as $article) {
 	$article->text = wordwrap(hide_spoilers(strip_tags($article->text)), 32, "\n", 1);
 	$article->text = textlimit($article->text, 140, '...');
 
-
-	$article->title = '<strong class="article-title">' . textlimit($article->title, 125, '...') . '</strong><br />' . $article->text;
-
-	$where = ' &raquo; <span class="where">' . $article->ctitle . '</span>';
+	$where = ' &raquo; <span class="where">' . $article->ctitle . '</span> &raquo; <span class="where">' . $article->title . '</span>';
 
 	$last_post_html = '';
 	if ($article->posts > 1) {
@@ -89,8 +86,10 @@ foreach ($articles as $article) {
 			$last_post_html = '
 			<div class="last-post">
 				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-				<strong class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</strong>
-				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+				<div class="post-info">
+					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
+					<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+				</div>
 
 			</div>
 
@@ -219,9 +218,10 @@ if ($mbs) {
 				$last_post_html = '
 				<div class="last-post" style="margin: 4px 0 4px 60px;">
 					<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-					<strong class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</strong>
-					<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
-
+					<div class="post-info">
+						<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
+						<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+					</div>
 				</div>
 
 				';

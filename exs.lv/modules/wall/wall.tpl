@@ -7,8 +7,10 @@
 		<li class="mbox">
 			<a href="{url}">
 				<span class="time-ago" style="float:right;color:#aaa;">{time}</span>
-				<img class="av" src="{avatar}" alt="" />
-				<span class="author" style="font-weight: bold;">{author} {where}</span><br />
+				<div class="post-info">
+					<img class="av" src="{avatar}" alt="" />
+					<span class="author">{author} {where}</span>
+				</div>
 				{title}&nbsp;[{posts}]<br style="clear: both;" />
 
 				{lastpost}
