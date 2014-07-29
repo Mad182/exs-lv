@@ -7,14 +7,18 @@
 		<li class="mbox">
 			<a href="{url}">
 				<span class="time-ago" style="float:right;color:#aaa;">{time}</span>
-				<div class="post-info">
-					<img class="av" src="{avatar}" alt="" />
-					<span class="author">{author} {where}</span>
+				<img class="av" src="{avatar}" alt="" />
+				<div class="post-wrapper">
+					<div class="post-info">
+						<span class="author">{author} {where}</span>
+					</div>
+					<div class="post-content">
+						{title}&nbsp;[{posts}]
+					</div>
+					{lastpost}
 				</div>
-				{title}&nbsp;[{posts}]<br style="clear: both;" />
-
-				{lastpost}
 			</a>
+			<div class="c"></div>
 		</li>
 		<!-- END BLOCK : wall-events-node-->
 	</ul>

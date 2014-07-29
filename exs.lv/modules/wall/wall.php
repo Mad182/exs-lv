@@ -216,7 +216,7 @@ if ($mbs) {
 			if (!empty($lastpost)) {
 
 				$last_post_html = '
-				<div class="last-post" style="margin: 4px 0 4px 60px;">
+				<div class="last-post">
 					<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
 					<div class="post-info">
 						<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
