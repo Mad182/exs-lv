@@ -3995,3 +3995,8 @@ li.view_more {
 #wall-posts .post-info {
 	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+#wall-posts .post-wrapper img {
+	max-width: 300px;
+}
+

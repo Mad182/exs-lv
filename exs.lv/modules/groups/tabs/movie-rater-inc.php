@@ -89,8 +89,10 @@ if (!empty($series)) {
 		}
 
 		$ratings = $db->get_results("SELECT
-						`movie_ratings`.`user_id`,
 						`movie_ratings`.`rating`,
+						`users`.`id`,
+						`users`.`avatar`,
+						`users`.`av_alt`,
 						`users`.`nick`,
 						`users`.`level`
 					FROM
@@ -107,16 +109,16 @@ if (!empty($series)) {
 		if (!empty($ratings)) {
 			foreach ($ratings as $rating) {
 				if ($rating->rating == 1) {
-					$likes[] = usercolor($rating->nick, $rating->level, false, $rating->user_id);
+					$likes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.htmlspecialchars($rating->nick).'" title="'.htmlspecialchars($rating->nick).'" />';
 				} elseif ($rating->rating == -1) {
-					$dislikes[] = usercolor($rating->nick, $rating->level, false, $rating->user_id);
+					$dislikes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.htmlspecialchars($rating->nick).'" title="'.htmlspecialchars($rating->nick).'" />';
 				}
 			}
 		}
 
 
-		$module_content .= '		<td>' . implode(', ', $likes) . $rate_like . '</td>';
-		$module_content .= '		<td>' . implode(', ', $dislikes) . $rate_dislike . '</td>';
+		$module_content .= '		<td>' . implode('', $likes) .'<div class="c"></div>'. $rate_like . '</td>';
+		$module_content .= '		<td>' . implode('', $dislikes) .'<div class="c"></div>'. $rate_dislike . '</td>';
 
 
 		$module_content .= '	</tr>';
