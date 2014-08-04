@@ -213,8 +213,11 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 		} else {
 			$skip = 0;
 		}
+        
+        // rs.exs.lv nerādīs citu projektu notifikācijas
+        $lang_var = ($lang == 9) ? ' AND `lang` = 9 ' : '';
 
-		if ($notify = $db->get_results("SELECT * FROM `notify` WHERE `user_id` = '$user_id' ORDER BY `bump` DESC LIMIT $skip,$end")) {
+		if ($notify = $db->get_results("SELECT * FROM `notify` WHERE `user_id` = '$user_id' $lang_var ORDER BY `bump` DESC LIMIT $skip,$end")) {
 
 			$out = '<ul id="user-notify">';
 			foreach ($notify as $notify) {
@@ -263,7 +266,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 			}
 			$out .= '</ul>';
 
-			$total = $db->get_var("SELECT count(*) FROM `notify` WHERE `user_id` = '$user_id' ORDER BY `bump` DESC LIMIT 25");
+			$total = $db->get_var("SELECT count(*) FROM `notify` WHERE `user_id` = '$user_id' $lang_var ORDER BY `bump` DESC LIMIT 25");
 			if ($total > 25) {
 				$total = 25;
 			}

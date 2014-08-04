@@ -401,18 +401,16 @@
                         </div>
                         <!-- END BLOCK : groups-l-list-->
 
+                        <!-- START BLOCK : runescape-facts-box -->
+                        <h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
+                        <div class="box facts-box">{random-fact}</div>
+                        <!-- END BLOCK : runescape-facts-box -->
+
                     </div>
                     <!-- END BLOCK : main-layout-left-->
 
                     <!-- START BLOCK : main-layout-right-->
                     <div id="right">
-
-                        <!-- START BLOCK : notification-list-->
-                        <h3>Tavi notikumi</h3>
-                        <div class="box">
-                            {out}
-                        </div>
-                        <!-- END BLOCK : notification-list-->
 
                         <h3>Jaunākais lapā</h3>
                         <div class="box">
@@ -422,6 +420,13 @@
                             </ul>
                             <div id="lat" class="ajaxbox">{latest-noscript}</div>
                         </div>
+                        
+                        <!-- START BLOCK : notification-list-->
+                        <h3>Tavi notikumi</h3>
+                        <div class="box">
+                            {out}
+                        </div>
+                        <!-- END BLOCK : notification-list-->
 
                         <!-- START BLOCK : poll-box-->
                         <h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
@@ -457,11 +462,6 @@
                             <!-- END BLOCK : poll-questions-->
                         </div>
                         <!-- END BLOCK : poll-box-->
-
-                        <!-- START BLOCK : runescape-facts-box -->
-                        <h3>RuneScape fakts <a class="fetch-new-fact" href="#" title="Atlasīt jaunu faktu"></a></h3>
-                        <div class="box facts-box">{random-fact}</div>
-                        <!-- END BLOCK : runescape-facts-box -->
 
                     </div>
                     <!-- END BLOCK : main-layout-right-->
