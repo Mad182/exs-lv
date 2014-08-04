@@ -333,7 +333,7 @@ if (!empty($inprofile)) {
 					}
 
 					// ieraksta rediģēšanas poga
-					if ((im_mod() || (!$record->closed && $auth->karma >= $min_post_edit && $record->author == $auth->id)) && (strtotime($record->date) > time() - 1800) || $auth->level == 1) {
+					if ((im_mod() || (!$record->closed && $auth->karma >= $min_post_edit && $record->author == $auth->id)) && (strtotime($record->date) > time() - 1800) || $auth->level == 1 || $auth->id == 115) {
 						$tpl->newBlock('mb-edit-main');
 						$tpl->assign(array(
 							'id' => $record->id,

@@ -721,7 +721,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 						$tpl->newBlock('mb-reply-main');
 					}
 
-					if ((im_mod() || (!$record->closed && $auth->karma > 99 && $record->author == $auth->id)) && (strtotime($record->date) > time() - 1800) || $auth->level == 1) {
+					if ((im_mod() || (!$record->closed && $auth->karma > 99 && $record->author == $auth->id)) && (strtotime($record->date) > time() - 1800) || $auth->level == 1 || $auth->id == 115) {
 						$tpl->newBlock('mb-edit-main');
 						$tpl->assign(array(
 							'id' => $record->id,
