@@ -9,7 +9,7 @@ $config_domains = array(
 		'domain' => 'exs.lv',
 		'prefix' => ''
 	),
-    2 => array(
+	2 => array(
 		'domain' => 'android.exs.lv',
 		'prefix' => 'android'
 	),
@@ -35,11 +35,16 @@ $config_domains = array(
 	)
 );
 
+// saīsinātais runescape projekta domēns
+if ($_SERVER['SERVER_NAME'] === 'rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.rs.exs.lv') {
+	redirect('http://' . str_replace('rs', 'runescape', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+}
+
 $found = false;
 foreach ($config_domains as $lang => $site) {
 
-    if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
-        require CORE_PATH . '/config/' . $site['domain'] . '.php';
+	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+		require CORE_PATH . '/config/' . $site['domain'] . '.php';
 		$found = true;
 		break;
 	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
@@ -49,7 +54,7 @@ foreach ($config_domains as $lang => $site) {
 
 //domain not found, redirect to exs.lv
 if (!$found) {
-    redirect('http://exs.lv' . $_SERVER['REQUEST_URI'], true);
+	redirect('http://exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 //remove index.php from urls
