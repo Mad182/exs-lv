@@ -23,27 +23,23 @@
 function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	global $lang;
 
-    // @coding.lv nerādīs smaidiņus, ja ierakstā ir koda gabals
+	// @coding.lv nerādīs smaidiņus, ja ierakstā ir koda gabals
 	if (strpos($txt, 'prettyprint') !== false && $lang == 3) {
 		$disable_emotions = true;
 	}
 
-    // smaidiņi
+	// smaidiņi
 	if (!$disable_emotions) {
 		$txt = insert_smilies($txt);
 	}
 
 	// pārveido vecās avataru adreses uz jaunajām
-	$txt = str_replace('="/dati/bildes/useravatar/',
-                       '="//img.exs.lv/userpic/medium/', $txt);
-	$txt = str_replace('="/dati/bildes/u_small/',
-                       '="//img.exs.lv/userpic/small/', $txt);
-	$txt = str_replace('="/dati/bildes/u_large/',
-                       '="//img.exs.lv/userpic/large/', $txt);
+	$txt = str_replace('="/dati/bildes/useravatar/', '="//img.exs.lv/userpic/medium/', $txt);
+	$txt = str_replace('="/dati/bildes/u_small/', '="//img.exs.lv/userpic/small/', $txt);
+	$txt = str_replace('="/dati/bildes/u_large/', '="//img.exs.lv/userpic/large/', $txt);
 
 	// visu iekš /dati/bildes lādē caur img.exs.lv cache
-	$txt = str_replace('="/dati/bildes',
-                       '="//img.exs.lv/dati/bildes', $txt);
+	$txt = str_replace('="/dati/bildes', '="//img.exs.lv/dati/bildes', $txt);
 
 	// absolūtie ceļi, lai viss no /upload un /bildes rādītos arī m.exs.lv
 	$txt = str_replace('="/upload/', '="//exs.lv/upload/', $txt);
@@ -54,7 +50,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$txt = str_replace(' href="http', ' rel="nofollow" href="http', $txt);
 
 
-    // draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
+	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_dofollow_sites();
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
@@ -74,7 +70,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		}
 	}
 
-    // adreses, kas atrodas blacklistē, tiek aizstātas ar "/ES_SPAMOJU_SUDUS"
+	// adreses, kas atrodas blacklistē, tiek aizstātas ar "/ES_SPAMOJU_SUDUS"
 	$blacklisted_sites = get_blacklisted_sites();
 	foreach ($blacklisted_sites as $site) {
 		if (strpos($txt, $site) !== false) {
@@ -104,28 +100,32 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			), '/ES_SPAMOJU_SUDUS/', $txt);
 
 
-    // paslēps spoilerus
+	// paslēps spoilerus
 	if (strpos($txt, 'spoiler') !== false) {
 		$txt = preg_replace_callback(
-			"/\[spoiler](.*?)\[\/spoiler]/isS",
-			'replace_spoiler', $txt
+				"/\[spoiler](.*?)\[\/spoiler]/isS", 'replace_spoiler', $txt
 		);
 	}
 
-    // ievietos ārējo mājaslapu widgets
-    if (!$disable_embed) {
-        $txt = embed_widgets($txt, $wide);
-    }
+	// ievietos ārējo mājaslapu widgets
+	if (!$disable_embed) {
+		$txt = embed_widgets($txt, $wide);
+	}
 
-    //http/https support
-    $txt = str_replace('http://img.exs', '//img.exs', $txt);
-    $txt = str_replace('http://puu.sh', '//puu.sh', $txt);
-    $txt = str_replace('http://i.imgur.com', '//i.imgur.com', $txt);
-    $txt = str_replace('http://upload.wikimedia.org', '//upload.wikimedia.org', $txt);
+	//http/https support
+	$https_enabled = array(
+		'img.exs.lv',
+		'i.gyazo.com',
+		'puu.sh',
+		'upload.wikimedia.org'
+	);
+
+	foreach ($https_enabled as $dom) {
+		$txt = str_replace('http://' . $dom, '//' . $dom, $txt);
+	}
 
 	return $txt;
 }
-
 
 /**
  *  Aizstās simbolu kombinācijas tekstā ar smaidiņiem
@@ -136,139 +136,138 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
  *  @return $txt
  */
 function insert_smilies($txt) {
-    global $img_server;
+	global $img_server;
 
-    $smilies = array(
-        ':sweat:' => 'smiley-sweat.png',
-        ':o:' => 'smiley-surprise.png',
-        ':eek:' => 'smiley-eek.png',
-        ':roll:' => 'smiley-roll.png',
-        ':confused:' => 'smiley-confuse.png',
-        ':nerd:' => 'smiley-nerd.png',
-        ':sleep:' => 'smiley-sleep.png',
-        ':fat:' => 'smiley-fat.png',
-        ':twist:' => 'smiley-twist.png',
-        ':slim:' => 'smiley-slim.png',
-        ':money:' => 'smiley-money.png',
-        ':android:' => 'android.png',
-        ':dog:' => 'animal-dog.png',
-        ':monkey:' => 'animal-monkey.png',
-        ':pingvins:' => 'animal-penguin.png',
-        ':linux:' => 'animal-penguin.png',
-        ':windows:' => 'windows.png',
-        ':mac:' => 'mac-os.png',
-        ':applefag:' => 'mac-os.png',
-        ':bug:' => 'bug.png',
-        ':star:' => 'star.png',
-        ':zvaigzne:' => 'star.png',
-        ':cookie:' => 'cookie.png',
-        ':cookies:' => 'cookies.png',
-        ':burger:' => 'hamburger.png',
-        ':burgers:' => 'hamburger.png',
-        ':game:' => 'game.png',
-        ':apple:' => 'fruit.png',
-        ':candle:' => 'candle.png',
-        ':candle-white:' => 'candle-white.png',
-        ':latvija:' => 'latvija.gif',
-        ':audi:' => 'kissmyrings.gif',
-        ':shura:' => 'shura.gif',
-        ':geek:' => 'icon_geek.gif',
-        ':tease:' => 'tease.gif',
-        ':slims:' => 'ill.gif',
-        ':zzz:' => 'lazy.gif',
-        ':shock:' => 'shok.gif',
-        ':beer:' => 'beer.gif',
-        ':alus:' => 'beer.gif',
-        ':pohas:' => 'pohas.gif',
-        ':cepure:' => 'cepure.gif',
-        ':crazy:' => 'crazy.gif',
-        ':rokas:' => 'rokas.gif',
-        ':facepalm:' => 'facepalm.gif',
-        ':hihi:' => 'hihi.gif',
-        ':ile:' => 'loveexs.gif',
-        ':ban:' => 'ban.gif',
-        ':mjau:' => 'mjau.gif',
-        ':rock:' => 'rock.gif',
-        //kolobok
-        ':drink:' => 'drink_mini.gif',
-        ':lol:' => 'lol_mini.gif',
-        ':happy:' => 'happy_mini.gif',
-        ':greeting:' => 'greeting_mini.gif',
-        ':cry:' => 'cray_mini.gif',
-        ':dance:' => 'dance_mini.gif',
-        ';(' => 'cray_mini2.gif',
-        ':acute:' => 'acute_mini.gif',
-        ':thumb:' => 'good_mini.gif',
-        ':aggressive:' => 'aggressive_mini.gif',
-        ':agresivs:' => 'aggressive_mini.gif',
-        ':beee:' => 'beee_mini.gif',
-        ':bomb:' => 'bomb_mini.gif',
-        ':puke:' => 'bo_mini.gif',
-        ':mrgreen:' => 'biggrin_mini.gif',
-        ':D' => 'biggrin_mini2.gif',
-        ':P' => 'blum_mini.gif',
-        ':blush:' => 'blush_mini.gif',
-        ':kiss:' => 'air_kiss_mini.gif',
-        ':angel:' => 'angel_mini.gif',
-        ':bored:' => 'boredom_mini.gif',
-        ':bye:' => 'bye_mini.gif',
-        ':chok:' => 'chok_mini.gif',
-        ':clap:' => 'clapping_mini.gif',
-        ':headbang:' => 'dash_mini.gif',
-        ':evil:' => 'diablo_mini.gif',
-        '8=)' => 'dirol_mini.gif',
-        ':cool:' => 'dirol_mini.gif',
-        ':fool:' => 'fool_mini.gif',
-        ':heart:' => 'heart_mini.gif',
-        ':sirds:' => 'heart_mini.gif',
-        ':help:' => 'help_mini.gif',
-        ':laugh:' => 'laugh_mini.gif',
-        ':mad:' => 'mad_mini.gif',
-        ':mail:' => 'mail1_mini.gif',
-        ':mamba:' => 'mamba_mini.gif',
-        ':inlove:' => 'man_in_love_mini.gif',
-        ':mocking:' => 'mocking_mini.gif',
-        ':music:' => 'music_mini.gif',
-        ':nea:' => 'nea_mini.gif',
-        ':fingers:' => 'new_russian_mini.gif',
-        ':ok:' => 'ok_mini.gif',
-        ':pardon:' => 'pardon_mini.gif',
-        ':rofl:' => 'rofl_mini.gif',
-        ':rolleyes' => 'rolleyes_mini.gif',
-        ':rose:' => 'rose_mini.gif',
-        ':(' => 'sad_mini.gif',
-        ':sad:' => 'sad_mini2.gif',
-        ':think:' => 'scratch_one-s_head_mini.gif',
-        ':secret:' => 'secret_mini.gif',
-        ':shout:' => 'shout_mini.gif',
-        ':)' => 'smile_mini.gif',
-        ':sorry:' => 'sorry_mini.gif',
-        ':|' => 'connie_mini_huh.gif',
-        ':stop:' => 'stop_mini.gif',
-        ':dunno:' => 'unknw_mini.gif',
-        ':unsure:' => 'unsure_mini.gif',
-        ':vava:' => 'vava_mini.gif',
-        ':wacko:' => 'wacko_mini.gif',
-        ';)' => 'wink_mini.gif',
-        ':wink:' => 'wink_mini.gif',
-        ':yahoo:' => 'yahoo_mini.gif',
-        ':yes:' => 'yes_mini.gif',
-        ':yell:' => 'shout_mini.gif',
-        ':cat:' => 'connie_mini_kitty.gif',
-        ':minka:' => 'connie_mini_kitty.gif',
-        ':buck:' => 'connie_mini_buck.gif',
-        ':bump:' => 'connie_mini_bump.gif',
-    );
+	$smilies = array(
+		':sweat:' => 'smiley-sweat.png',
+		':o:' => 'smiley-surprise.png',
+		':eek:' => 'smiley-eek.png',
+		':roll:' => 'smiley-roll.png',
+		':confused:' => 'smiley-confuse.png',
+		':nerd:' => 'smiley-nerd.png',
+		':sleep:' => 'smiley-sleep.png',
+		':fat:' => 'smiley-fat.png',
+		':twist:' => 'smiley-twist.png',
+		':slim:' => 'smiley-slim.png',
+		':money:' => 'smiley-money.png',
+		':android:' => 'android.png',
+		':dog:' => 'animal-dog.png',
+		':monkey:' => 'animal-monkey.png',
+		':pingvins:' => 'animal-penguin.png',
+		':linux:' => 'animal-penguin.png',
+		':windows:' => 'windows.png',
+		':mac:' => 'mac-os.png',
+		':applefag:' => 'mac-os.png',
+		':bug:' => 'bug.png',
+		':star:' => 'star.png',
+		':zvaigzne:' => 'star.png',
+		':cookie:' => 'cookie.png',
+		':cookies:' => 'cookies.png',
+		':burger:' => 'hamburger.png',
+		':burgers:' => 'hamburger.png',
+		':game:' => 'game.png',
+		':apple:' => 'fruit.png',
+		':candle:' => 'candle.png',
+		':candle-white:' => 'candle-white.png',
+		':latvija:' => 'latvija.gif',
+		':audi:' => 'kissmyrings.gif',
+		':shura:' => 'shura.gif',
+		':geek:' => 'icon_geek.gif',
+		':tease:' => 'tease.gif',
+		':slims:' => 'ill.gif',
+		':zzz:' => 'lazy.gif',
+		':shock:' => 'shok.gif',
+		':beer:' => 'beer.gif',
+		':alus:' => 'beer.gif',
+		':pohas:' => 'pohas.gif',
+		':cepure:' => 'cepure.gif',
+		':crazy:' => 'crazy.gif',
+		':rokas:' => 'rokas.gif',
+		':facepalm:' => 'facepalm.gif',
+		':hihi:' => 'hihi.gif',
+		':ile:' => 'loveexs.gif',
+		':ban:' => 'ban.gif',
+		':mjau:' => 'mjau.gif',
+		':rock:' => 'rock.gif',
+		//kolobok
+		':drink:' => 'drink_mini.gif',
+		':lol:' => 'lol_mini.gif',
+		':happy:' => 'happy_mini.gif',
+		':greeting:' => 'greeting_mini.gif',
+		':cry:' => 'cray_mini.gif',
+		':dance:' => 'dance_mini.gif',
+		';(' => 'cray_mini2.gif',
+		':acute:' => 'acute_mini.gif',
+		':thumb:' => 'good_mini.gif',
+		':aggressive:' => 'aggressive_mini.gif',
+		':agresivs:' => 'aggressive_mini.gif',
+		':beee:' => 'beee_mini.gif',
+		':bomb:' => 'bomb_mini.gif',
+		':puke:' => 'bo_mini.gif',
+		':mrgreen:' => 'biggrin_mini.gif',
+		':D' => 'biggrin_mini2.gif',
+		':P' => 'blum_mini.gif',
+		':blush:' => 'blush_mini.gif',
+		':kiss:' => 'air_kiss_mini.gif',
+		':angel:' => 'angel_mini.gif',
+		':bored:' => 'boredom_mini.gif',
+		':bye:' => 'bye_mini.gif',
+		':chok:' => 'chok_mini.gif',
+		':clap:' => 'clapping_mini.gif',
+		':headbang:' => 'dash_mini.gif',
+		':evil:' => 'diablo_mini.gif',
+		'8=)' => 'dirol_mini.gif',
+		':cool:' => 'dirol_mini.gif',
+		':fool:' => 'fool_mini.gif',
+		':heart:' => 'heart_mini.gif',
+		':sirds:' => 'heart_mini.gif',
+		':help:' => 'help_mini.gif',
+		':laugh:' => 'laugh_mini.gif',
+		':mad:' => 'mad_mini.gif',
+		':mail:' => 'mail1_mini.gif',
+		':mamba:' => 'mamba_mini.gif',
+		':inlove:' => 'man_in_love_mini.gif',
+		':mocking:' => 'mocking_mini.gif',
+		':music:' => 'music_mini.gif',
+		':nea:' => 'nea_mini.gif',
+		':fingers:' => 'new_russian_mini.gif',
+		':ok:' => 'ok_mini.gif',
+		':pardon:' => 'pardon_mini.gif',
+		':rofl:' => 'rofl_mini.gif',
+		':rolleyes' => 'rolleyes_mini.gif',
+		':rose:' => 'rose_mini.gif',
+		':(' => 'sad_mini.gif',
+		':sad:' => 'sad_mini2.gif',
+		':think:' => 'scratch_one-s_head_mini.gif',
+		':secret:' => 'secret_mini.gif',
+		':shout:' => 'shout_mini.gif',
+		':)' => 'smile_mini.gif',
+		':sorry:' => 'sorry_mini.gif',
+		':|' => 'connie_mini_huh.gif',
+		':stop:' => 'stop_mini.gif',
+		':dunno:' => 'unknw_mini.gif',
+		':unsure:' => 'unsure_mini.gif',
+		':vava:' => 'vava_mini.gif',
+		':wacko:' => 'wacko_mini.gif',
+		';)' => 'wink_mini.gif',
+		':wink:' => 'wink_mini.gif',
+		':yahoo:' => 'yahoo_mini.gif',
+		':yes:' => 'yes_mini.gif',
+		':yell:' => 'shout_mini.gif',
+		':cat:' => 'connie_mini_kitty.gif',
+		':minka:' => 'connie_mini_kitty.gif',
+		':buck:' => 'connie_mini_buck.gif',
+		':bump:' => 'connie_mini_bump.gif',
+	);
 
-    foreach ($smilies as $key => $val) {
-        if (strpos($txt, $key) !== false) { // speeds things up
-            $txt = str_replace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
-        }
-    }
+	foreach ($smilies as $key => $val) {
+		if (strpos($txt, $key) !== false) { // speeds things up
+			$txt = str_replace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
+		}
+	}
 
-    return $txt;
+	return $txt;
 }
-
 
 /**
  *  Aizstās noteiktas adreses tekstā ar ārēju lapu widgetiem
@@ -291,7 +290,7 @@ function insert_smilies($txt) {
  */
 function embed_widgets($txt, $wide = 0) {
 
-    // youtube videos
+	// youtube videos
 	if (strpos($txt, 'youtu') !== false) {
 		if ($wide) {
 			$fn = 'get_youtube_video';
@@ -299,75 +298,65 @@ function embed_widgets($txt, $wide = 0) {
 			$fn = 'get_youtube_video_small';
 		}
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im",
-            $fn, $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
+		);
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im",
-            $fn, $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
+		);
 	}
 
 	// twitter posts
 	if (strpos($txt, 'twitter') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im",
-            'embed_twitter', $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
+		);
 	}
 
 	// spotify
 	if (strpos($txt, 'spotify') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im",
-            'embed_spotify', $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_spotify', $txt
+		);
 	}
 
-    // deezer track or album, or even playlist
+	// deezer track or album, or even playlist
 	if (strpos($txt, 'deezer') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)((.*?)</a>)?#im",
-            'embed_deezer', $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)((.*?)</a>)?#im", 'embed_deezer', $txt
+		);
 	}
 
-    // vine videos
+	// vine videos
 	if (strpos($txt, 'vine') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?#im",
-            'embed_vine', $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?#im", 'embed_vine', $txt
+		);
 	}
 
-    // soundcloud tracks, users, and playlists
+	// soundcloud tracks, users, and playlists
 	if (strpos($txt, 'soundcloud') !== false ||
-        strpos($txt, 'snd.sc') !== false) {
+			strpos($txt, 'snd.sc') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9]+)(.*?))</a>#im",
-            'embed_soundcloud', $txt
-        );
+				"#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9]+)(.*?))</a>#im", 'embed_soundcloud', $txt
+		);
 	}
 
-    // instagram images
+	// instagram images
 	if (strpos($txt, 'instagram') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9]+)(.*?))</a>#im",
-            'embed_instagram', $txt
-        );
+				"#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9]+)(.*?))</a>#im", 'embed_instagram', $txt
+		);
 	}
 
-    // vimeo video
+	// vimeo video
 	if (strpos($txt, 'vimeo') !== false) {
 		$txt = preg_replace_callback(
-            "#(^|[\n ]|<a(.*?)>)https?:\/\/vimeo\.com\/([a-z0-9]+)\/?#im",
-            'embed_vimeo', $txt
-        );
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/vimeo\.com\/([a-z0-9]+)\/?#im", 'embed_vimeo', $txt
+		);
 	}
 
-    return $txt;
+	return $txt;
 }
-
 
 /**
  *  Atgriezīs iframe ar YouTube video
@@ -378,7 +367,6 @@ function get_youtube_video($matches) {
 	return embed_youtube($matches, 1);
 }
 
-
 /**
  *  Atgriezīs iframe ar mazāka izmēra YouTube video
  *
@@ -388,7 +376,6 @@ function get_youtube_video_small($matches) {
 	return embed_youtube($matches, 0);
 }
 
-
 /**
  *  Atgriezīs iframe ar YouTube video
  *
@@ -397,14 +384,13 @@ function get_youtube_video_small($matches) {
  */
 function embed_youtube($matches, $wide = 0) {
 
-    // $matches[4] - video id
+	// $matches[4] - video id
 
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
 
-	$title = str_replace("'", "&#39;",
-                         htmlspecialchars(textlimit(
-                                stripslashes($video->yt_title), 100)));
+	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(
+							stripslashes($video->yt_title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 
 	$width = 380;
@@ -414,34 +400,33 @@ function embed_youtube($matches, $wide = 0) {
 		$height = 290;
 	}
 
-    // izmanto htmlspecialchars, lai norādītu kā parametru javascriptā
-    $videocode  = '<div class="c"></div><div class="auto-embed" ';
-    $videocode .= 'style="width:' . $width . 'px;">';
-    $videocode .= '<iframe class="youtube-player" type="text/html" ';
-    $videocode .= 'width="' . $width . '" height="' . $height . '" ';
-    $videocode .= 'src="https://www.youtube.com/embed/' . $safe;
-    $videocode .= '?wmode=transparent&autoplay=1&origin=';
-    $videocode .= urlencode('http://exs.lv') . '" frameborder="0">';
-    $videocode .= '</iframe><br /><a title="Atvērt video mājas lapā" ';
-    $videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
-    $videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
-    $videocode .= '<strong>' . $title . '</strong><div class="c"></div></div>';
+	// izmanto htmlspecialchars, lai norādītu kā parametru javascriptā
+	$videocode = '<div class="c"></div><div class="auto-embed" ';
+	$videocode .= 'style="width:' . $width . 'px;">';
+	$videocode .= '<iframe class="youtube-player" type="text/html" ';
+	$videocode .= 'width="' . $width . '" height="' . $height . '" ';
+	$videocode .= 'src="https://www.youtube.com/embed/' . $safe;
+	$videocode .= '?wmode=transparent&autoplay=1&origin=';
+	$videocode .= urlencode('http://exs.lv') . '" frameborder="0">';
+	$videocode .= '</iframe><br /><a title="Atvērt video mājas lapā" ';
+	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
+	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
+	$videocode .= '<strong>' . $title . '</strong><div class="c"></div></div>';
 	$videocode = htmlspecialchars($videocode);
 
-    // saturs, uz kura nospiežot, caur javascript ielādēs $videocode
-    $return  = '<div><div class="auto-embed-placeholder">';
-    $return .= '<img width="240" height="180" ';
-    $return .= 'src="https://i4.ytimg.com/vi/' . $safe . '/0.jpg" ';
-    $return .= 'alt="' . $title . '" /><a class="play-button" ';
-    $return .= 'onclick="$(this).parent().parent().html(\''.$videocode.'\');';
-    $return .= 'return false;" title="Atskaņot ' . $title . '" ';
-    $return .= 'rel="nofollow" ';
-    $return .= 'href="https://www.youtube.com/watch?v=' . $safe . '"><span>';
-    $return .= '<span>' . $title . '</span></span></a></div></div>';
+	// saturs, uz kura nospiežot, caur javascript ielādēs $videocode
+	$return = '<div><div class="auto-embed-placeholder">';
+	$return .= '<img width="240" height="180" ';
+	$return .= 'src="https://i4.ytimg.com/vi/' . $safe . '/0.jpg" ';
+	$return .= 'alt="' . $title . '" /><a class="play-button" ';
+	$return .= 'onclick="$(this).parent().parent().html(\'' . $videocode . '\');';
+	$return .= 'return false;" title="Atskaņot ' . $title . '" ';
+	$return .= 'rel="nofollow" ';
+	$return .= 'href="https://www.youtube.com/watch?v=' . $safe . '"><span>';
+	$return .= '<span>' . $title . '</span></span></a></div></div>';
 
-    return $return;
+	return $return;
 }
-
 
 /**
  *  Atgriež YouTube video informāciju
@@ -453,7 +438,7 @@ function embed_youtube($matches, $wide = 0) {
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
 
-    // saglabā informāciju Memcached uz stundu
+	// saglabā informāciju Memcached uz stundu
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
 
 		$data = $db->get_row("
@@ -461,7 +446,7 @@ function get_youtube($videoid, $force = false) {
             WHERE `yt_id` = '" . sanitize($videoid) . "'
         ");
 
-        // saglabā info arī datubāzē, ja tādas tur nav
+		// saglabā info arī datubāzē, ja tādas tur nav
 		if (empty($data)) {
 
 			require_once(LIB_PATH . '/youtube/youtube.lib.php');
@@ -493,7 +478,6 @@ function get_youtube($videoid, $force = false) {
 	return $data;
 }
 
-
 /**
  *  Aizstāj YouTube video adreses ar video nosaukumiem
  *
@@ -508,7 +492,6 @@ function youtube_title($text) {
 	return $text;
 }
 
-
 /**
  *  Callback metode YouTube video nosaukumu iekļaušanai tekstā
  *
@@ -521,7 +504,6 @@ function youtube_title_callback($matches) {
 	return ' Video: ' . $video->yt_title . ' ';
 }
 
-
 /**
  *  Callback metode Twitter ierakstu iekļaušanai tekstā
  *
@@ -533,7 +515,7 @@ function youtube_title_callback($matches) {
 function embed_twitter($params) {
 	global $m, $tpl_options;
 
-    // $matches[5] - tvīta id
+	// $matches[5] - tvīta id
 
 	$maxwidth = 400;
 	if ($tpl_options === 'no-left') {
@@ -541,11 +523,11 @@ function embed_twitter($params) {
 	}
 
 	// nolasa no Memcached vai izveido iframe saturu
-    $tweet_unique = 'tweet_' . $params[5] . '_' . $maxwidth;
+	$tweet_unique = 'tweet_' . $params[5] . '_' . $maxwidth;
 	if (($tweet_html = $m->get($tweet_unique)) === false) {
 		$tweet_html = $params[0];
 
-		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id='.$params[5].'&align=center&maxwidth='.$maxwidth);
+		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id=' . $params[5] . '&align=center&maxwidth=' . $maxwidth);
 		if (!empty($response)) {
 			$tweet = json_decode($response);
 			if (empty($tweet->error) && !empty($tweet->html)) {
@@ -558,7 +540,6 @@ function embed_twitter($params) {
 	return $tweet_html;
 }
 
-
 /**
  *  Callback metode Spotify ierakstu iekļaušanai tekstā
  *
@@ -570,14 +551,13 @@ function embed_twitter($params) {
 function embed_spotify($params) {
 	global $m;
 
-    // $matches[0] - ieraksta adrese
-
+	// $matches[0] - ieraksta adrese
 	// nolasa no Memcached vai izveido iframe saturu
 	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
 		$spotify_html = $params[0];
 
 		$response = curl_get('http://api.embed.ly/1/oembed?url='
-                             . urlencode(strip_tags($params[0])));
+				. urlencode(strip_tags($params[0])));
 		if (!empty($response)) {
 			$spotify = json_decode($response);
 			if (empty($spotify->error) && !empty($spotify->html)) {
@@ -590,7 +570,6 @@ function embed_spotify($params) {
 	return $spotify_html;
 }
 
-
 /**
  *  Callback metode Deezer ierakstu iekļaušanai tekstā
  *
@@ -600,13 +579,12 @@ function embed_spotify($params) {
 function embed_deezer($params) {
 	global $m;
 
-    // $matches[4] - ieraksta veids
-    // $matches[5] - ieraksta id
+	// $matches[4] - ieraksta veids
+	// $matches[5] - ieraksta id
 
-    $type = 'tracks';
+	$type = 'tracks';
 	$height = 180; // izmērs pietiek, lai redzētu vienu dziesmu
-
-    // izmērs atbilst 6 dziesmām sarakstā
+	// izmērs atbilst 6 dziesmām sarakstā
 	if ($params[4] === 'album') {
 		$type = 'album';
 		$height = 375;
@@ -615,18 +593,17 @@ function embed_deezer($params) {
 		$height = 375;
 	}
 
-    $deezer_html  = '<p><iframe scrolling="no" frameborder="0" ';
-    $deezer_html .= 'allowTransparency="true" ';
-    $deezer_html .= 'src="https://www.deezer.com/plugins/player?';
-    $deezer_html .= 'autoplay=false&playlist=true&width=300';
-    $deezer_html .= '&height='.(int)$height.'&cover=false&type='.$type;
-    $deezer_html .= '&id='.(int)$params[5].'&title=&format=vertical';
-    $deezer_html .= '&app_id=undefined" width="300" ';
-    $deezer_html .= 'height="'.(int)$height.'"></iframe></p>';
+	$deezer_html = '<p><iframe scrolling="no" frameborder="0" ';
+	$deezer_html .= 'allowTransparency="true" ';
+	$deezer_html .= 'src="https://www.deezer.com/plugins/player?';
+	$deezer_html .= 'autoplay=false&playlist=true&width=300';
+	$deezer_html .= '&height=' . (int) $height . '&cover=false&type=' . $type;
+	$deezer_html .= '&id=' . (int) $params[5] . '&title=&format=vertical';
+	$deezer_html .= '&app_id=undefined" width="300" ';
+	$deezer_html .= 'height="' . (int) $height . '"></iframe></p>';
 
 	return $deezer_html;
 }
-
 
 /**
  *  Callback metode Vine video iekļaušanai tekstā
@@ -639,53 +616,49 @@ function embed_deezer($params) {
 function embed_vine($params) {
 	global $m;
 
-    // $params[0] - <a..href=".."..>http://vine.co/v/..
-    // $params[1] - <a..href="http://vine.co/v/..">
-    // $params[2] - rel=".." href="http://vine.co/v/.."
-    // $params[3] - video ID (tas, kas seko aiz /v/)
-
-    // nolasa no Memcached vai arī tajā ieraksta iframe saturu
+	// $params[0] - <a..href=".."..>http://vine.co/v/..
+	// $params[1] - <a..href="http://vine.co/v/..">
+	// $params[2] - rel=".." href="http://vine.co/v/.."
+	// $params[3] - video ID (tas, kas seko aiz /v/)
+	// nolasa no Memcached vai arī tajā ieraksta iframe saturu
 	if (($vine_html = $m->get('vine_' . md5($params[3]))) === false) {
 
-        $encoded_url = urlencode(strip_tags(
-            'https://vine.co/v/'.$params[3]));
-        $url = 'https://api.embed.ly/1/oembed?url=' .
-               $encoded_url . '&maxwidth=320&maxheight=320';
+		$encoded_url = urlencode(strip_tags(
+						'https://vine.co/v/' . $params[3]));
+		$url = 'https://api.embed.ly/1/oembed?url=' .
+				$encoded_url . '&maxwidth=320&maxheight=320';
 
-        $response = curl_get($url);
-        if (!empty($response)) {
-            $vine = json_decode($response);
-            if (isset($vine->html)) {
-                $vine_html = $vine->html;
-                // imho glītāk, ja iframe nav centrēts
-                $vine_html = str_replace(
-                    '></iframe>',
-                    ' style="margin-left:0"></iframe>',
-                    $vine_html);
-            }
-        }
+		$response = curl_get($url);
+		if (!empty($response)) {
+			$vine = json_decode($response);
+			if (isset($vine->html)) {
+				$vine_html = $vine->html;
+				// imho glītāk, ja iframe nav centrēts
+				$vine_html = str_replace(
+						'></iframe>', ' style="margin-left:0"></iframe>', $vine_html);
+			}
+		}
 
-        /*
-        Jaukāks variants, kur redzama arī video info,
-        bet pagaidām nemāku noņemt autoplay
-        (šķiet, ka tāda iespēja netiek piedāvāta)
+		/*
+		  Jaukāks variants, kur redzama arī video info,
+		  bet pagaidām nemāku noņemt autoplay
+		  (šķiet, ka tāda iespēja netiek piedāvāta)
 
-        $encoded_url = urlencode(strip_tags($params[3]));
+		  $encoded_url = urlencode(strip_tags($params[3]));
 
-        $vine_html  = '<iframe class="vine-embed" ';
-        $vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
-        $vine_html .= 'width="320" height="320" frameborder="0">';
-        $vine_html .= '</iframe><script async src="';
-        $vine_html .= '//platform.vine.co/static/scripts/embed.js"';
-        $vine_html .= 'charset="utf-8"></script>';
-        */
+		  $vine_html  = '<iframe class="vine-embed" ';
+		  $vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
+		  $vine_html .= 'width="320" height="320" frameborder="0">';
+		  $vine_html .= '</iframe><script async src="';
+		  $vine_html .= '//platform.vine.co/static/scripts/embed.js"';
+		  $vine_html .= 'charset="utf-8"></script>';
+		 */
 
 		$m->set('vine_' . md5($params[3]), $vine_html, false, 1800);
 	}
 
 	return $vine_html;
 }
-
 
 /**
  *  Callback metode Soundcloud dziesmu iekļaušanai tekstā
@@ -698,53 +671,52 @@ function embed_vine($params) {
 function embed_soundcloud($params) {
 	global $m;
 
-        // [2] adrese ir nesaīsinātā formā, jo atrodas iekš href=""
-    // $params[2] - https://../..
-        // [3] adrese var būt saīsināta, jo atrodas starp <a></a>
-    // $params[3] - https://../..
-    // $params[5] - lietotājvārds
-    // $params[6] - parametri aiz lietotājvārda (ņemti no saīsinātās adreses)
+	// [2] adrese ir nesaīsinātā formā, jo atrodas iekš href=""
+	// $params[2] - https://../..
+	// [3] adrese var būt saīsināta, jo atrodas starp <a></a>
+	// $params[3] - https://../..
+	// $params[5] - lietotājvārds
+	// $params[6] - parametri aiz lietotājvārda (ņemti no saīsinātās adreses)
 
-    $max_height = 320;
-    $max_width  = 450;
+	$max_height = 320;
+	$max_width = 450;
 
-    // ja norādīta specifiska dziesma, augstums nepieciešams visai neliels
-    if (isset($params[6]) && !empty($params[6])) {
-        $max_height = 130;
-    }
+	// ja norādīta specifiska dziesma, augstums nepieciešams visai neliels
+	if (isset($params[6]) && !empty($params[6])) {
+		$max_height = 130;
+	}
 
-    // nolasa no Memcached vai arī tajā ieraksta iframe saturu
-    if (($scloud_html = $m->get('scloud_' . md5($params[2]))) === false) {
+	// nolasa no Memcached vai arī tajā ieraksta iframe saturu
+	if (($scloud_html = $m->get('scloud_' . md5($params[2]))) === false) {
 
-        // izveido adresi, kas atgriež JSON formāta datus par ierakstā
-        // iekļauto adresi; no JSON var atlasīt iframe saturu
-        $url  = 'https://soundcloud.com/oembed?format=json';
-        $url .= '&maxwidth='.$max_width.'&maxheight='.$max_height;
-        $url .= '&url='.urlencode(strip_tags($params[2]));
+		// izveido adresi, kas atgriež JSON formāta datus par ierakstā
+		// iekļauto adresi; no JSON var atlasīt iframe saturu
+		$url = 'https://soundcloud.com/oembed?format=json';
+		$url .= '&maxwidth=' . $max_width . '&maxheight=' . $max_height;
+		$url .= '&url=' . urlencode(strip_tags($params[2]));
 
-        $data = '';
-        $response = curl_get($url);
+		$data = '';
+		$response = curl_get($url);
 		if (!empty($response)) {
 			$data = json_decode($response);
 		}
 
-        // šis paslēpj kvadrātformas attēlu dziesmas sānā
-        /*$data->html = str_replace('show_artwork=true',
-                                    'show_artwork=false',
-                                    $data->html);*/
+		// šis paslēpj kvadrātformas attēlu dziesmas sānā
+		/* $data->html = str_replace('show_artwork=true',
+		  'show_artwork=false',
+		  $data->html); */
 
-        // šis paslēpj fona attēlu
-        if ($data !== '') {
-            $scloud_html = str_replace(
-                'visual=true', 'visual=false', $data->html);
-        }
+		// šis paslēpj fona attēlu
+		if ($data !== '') {
+			$scloud_html = str_replace(
+					'visual=true', 'visual=false', $data->html);
+		}
 
 		$m->set('scloud_' . md5($params[2]), $scloud_html, false, 1800);
 	}
 
-    return $scloud_html;
+	return $scloud_html;
 }
-
 
 /**
  *  Callback metode Instagram attēlu iekļaušanai tekstā
@@ -755,16 +727,15 @@ function embed_soundcloud($params) {
 function embed_instagram($params) {
 	global $m;
 
-    // $params[4] - attēla ID
+	// $params[4] - attēla ID
 
-    $inst_html  = '<iframe src="//instagram.com/p/';
-    $inst_html .= urlencode($params[4]).'/embed/" ';
-    $inst_html .= 'width="350" height="450" frameborder="0" ';
-    $inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
+	$inst_html = '<iframe src="//instagram.com/p/';
+	$inst_html .= urlencode($params[4]) . '/embed/" ';
+	$inst_html .= 'width="350" height="450" frameborder="0" ';
+	$inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
 
 	return $inst_html;
 }
-
 
 /**
  *  Callback metode Vimeo video iekļaušanai tekstā
@@ -775,17 +746,16 @@ function embed_instagram($params) {
 function embed_vimeo($params) {
 	global $m;
 
-    // $params[3] - video id
+	// $params[3] - video id
 
-    $vimeo_html  = '<iframe src="//player.vimeo.com/video/';
-    $vimeo_html .= urlencode($params[3]).'?badge=0&byline=0" ';
-    $vimeo_html .= 'width="520" height="300" frameborder="0" ';
-    $vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
-    $vimeo_html .= 'allowfullscreen></iframe>';
+	$vimeo_html = '<iframe src="//player.vimeo.com/video/';
+	$vimeo_html .= urlencode($params[3]) . '?badge=0&byline=0" ';
+	$vimeo_html .= 'width="520" height="300" frameborder="0" ';
+	$vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
+	$vimeo_html .= 'allowfullscreen></iframe>';
 
 	return $vimeo_html;
 }
-
 
 /**
  *  Paslēpj [spoiler] tagos ievietoto saturu
@@ -795,18 +765,15 @@ function embed_vimeo($params) {
  */
 function replace_spoiler($text) {
 
-	$text = str_replace(array('<p>', '</p>'),
-                        array('<br />', '<br />'),
-                        $text[1]);
+	$text = str_replace(array('<p>', '</p>'), array('<br />', '<br />'), $text[1]);
 
-    $content  = '<span class="spoiler"><a href="javascript:void(0);" ';
-    $content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';
-    $content .= 'Rādīt spoileri</a><br /><span style="display:none" ';
-    $content .= 'class="spoiler-content">' . $text . '</span></span>';
+	$content = '<span class="spoiler"><a href="javascript:void(0);" ';
+	$content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';
+	$content .= 'Rādīt spoileri</a><br /><span style="display:none" ';
+	$content .= 'class="spoiler-content">' . $text . '</span></span>';
 
 	return $content;
 }
-
 
 /**
  *  Dzēš [spoiler] tagos ievietoto saturu
