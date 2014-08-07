@@ -34,15 +34,15 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	}
 
 	// pārveido vecās avataru adreses uz jaunajām
-	$txt = str_replace('="/dati/bildes/useravatar/', 
+	$txt = str_replace('="/dati/bildes/useravatar/',
                        '="//img.exs.lv/userpic/medium/', $txt);
-	$txt = str_replace('="/dati/bildes/u_small/', 
+	$txt = str_replace('="/dati/bildes/u_small/',
                        '="//img.exs.lv/userpic/small/', $txt);
-	$txt = str_replace('="/dati/bildes/u_large/', 
+	$txt = str_replace('="/dati/bildes/u_large/',
                        '="//img.exs.lv/userpic/large/', $txt);
 
 	// visu iekš /dati/bildes lādē caur img.exs.lv cache
-	$txt = str_replace('="/dati/bildes', 
+	$txt = str_replace('="/dati/bildes',
                        '="//img.exs.lv/dati/bildes', $txt);
 
 	// absolūtie ceļi, lai viss no /upload un /bildes rādītos arī m.exs.lv
@@ -53,7 +53,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$txt = str_replace(' rel="nofollow"', '', $txt);
 	$txt = str_replace(' href="http', ' rel="nofollow" href="http', $txt);
 
-    
+
     // draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_dofollow_sites();
 	foreach ($dofollow_sites as $site) {
@@ -321,7 +321,7 @@ function embed_widgets($txt, $wide = 0) {
             'embed_spotify', $txt
         );
 	}
-    
+
     // deezer track or album, or even playlist
 	if (strpos($txt, 'deezer') !== false) {
 		$txt = preg_replace_callback(
@@ -337,16 +337,16 @@ function embed_widgets($txt, $wide = 0) {
             'embed_vine', $txt
         );
 	}
-    
+
     // soundcloud tracks, users, and playlists
-	if (strpos($txt, 'soundcloud') !== false || 
+	if (strpos($txt, 'soundcloud') !== false ||
         strpos($txt, 'snd.sc') !== false) {
 		$txt = preg_replace_callback(
             "#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9]+)(.*?))</a>#im",
             'embed_soundcloud', $txt
         );
 	}
-    
+
     // instagram images
 	if (strpos($txt, 'instagram') !== false) {
 		$txt = preg_replace_callback(
@@ -354,7 +354,7 @@ function embed_widgets($txt, $wide = 0) {
             'embed_instagram', $txt
         );
 	}
-    
+
     // vimeo video
 	if (strpos($txt, 'vimeo') !== false) {
 		$txt = preg_replace_callback(
@@ -362,7 +362,7 @@ function embed_widgets($txt, $wide = 0) {
             'embed_vimeo', $txt
         );
 	}
-    
+
     return $txt;
 }
 
@@ -400,7 +400,7 @@ function embed_youtube($matches, $wide = 0) {
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
 
-	$title = str_replace("'", "&#39;", 
+	$title = str_replace("'", "&#39;",
                          htmlspecialchars(textlimit(
                                 stripslashes($video->yt_title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
@@ -417,26 +417,26 @@ function embed_youtube($matches, $wide = 0) {
     $videocode .= 'style="width:' . $width . 'px;">';
     $videocode .= '<iframe class="youtube-player" type="text/html" ';
     $videocode .= 'width="' . $width . '" height="' . $height . '" ';
-    $videocode .= 'src="http://www.youtube.com/embed/' . $safe;
+    $videocode .= 'src="https://www.youtube.com/embed/' . $safe;
     $videocode .= '?wmode=transparent&autoplay=1&origin=';
     $videocode .= urlencode('http://exs.lv') . '" frameborder="0">';
     $videocode .= '</iframe><br /><a title="Atvērt video mājas lapā" ';
-    $videocode .= 'href="http://www.youtube.com/watch?v=' . $safe . '" ';
+    $videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
     $videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
     $videocode .= '<strong>' . $title . '</strong><div class="c"></div></div>';
 	$videocode = htmlspecialchars($videocode);
-    
+
     // saturs, uz kura nospiežot, caur javascript ielādēs $videocode
     $return  = '<div><div class="auto-embed-placeholder">';
     $return .= '<img width="240" height="180" ';
-    $return .= 'src="http://i4.ytimg.com/vi/' . $safe . '/0.jpg" ';
+    $return .= 'src="https://i4.ytimg.com/vi/' . $safe . '/0.jpg" ';
     $return .= 'alt="' . $title . '" /><a class="play-button" ';
     $return .= 'onclick="$(this).parent().parent().html(\''.$videocode.'\');';
     $return .= 'return false;" title="Atskaņot ' . $title . '" ';
     $return .= 'rel="nofollow" ';
-    $return .= 'href="http://www.youtube.com/watch?v=' . $safe . '"><span>';
+    $return .= 'href="https://www.youtube.com/watch?v=' . $safe . '"><span>';
     $return .= '<span>' . $title . '</span></span></a></div></div>';
-    
+
     return $return;
 }
 
@@ -450,12 +450,12 @@ function embed_youtube($matches, $wide = 0) {
  */
 function get_youtube($videoid, $force = false) {
 	global $db, $m;
-    
+
     // saglabā informāciju Memcached uz stundu
 	if ($force || !($data = $m->get('yt_' . $videoid))) {
-    
+
 		$data = $db->get_row("
-            SELECT * FROM `ytlocal` 
+            SELECT * FROM `ytlocal`
             WHERE `yt_id` = '" . sanitize($videoid) . "'
         ");
 
@@ -509,10 +509,10 @@ function youtube_title($text) {
 
 /**
  *  Callback metode YouTube video nosaukumu iekļaušanai tekstā
- *  
+ *
  *  @param $matches YouTube video parametri
  *  @return string  video nosaukums
- */ 
+ */
 function youtube_title_callback($matches) {
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
@@ -522,7 +522,7 @@ function youtube_title_callback($matches) {
 
 /**
  *  Callback metode Twitter ierakstu iekļaušanai tekstā
- * 
+ *
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params        ieraksta parametri
@@ -559,7 +559,7 @@ function embed_twitter($params) {
 
 /**
  *  Callback metode Spotify ierakstu iekļaušanai tekstā
- * 
+ *
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params          ieraksta parametri
@@ -567,14 +567,14 @@ function embed_twitter($params) {
  */
 function embed_spotify($params) {
 	global $m;
-    
+
     // $matches[0] - ieraksta adrese
 
 	// nolasa no Memcached vai izveido iframe saturu
 	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
 		$spotify_html = $params[0];
 
-		$response = curl_get('http://api.embed.ly/1/oembed?url=' 
+		$response = curl_get('http://api.embed.ly/1/oembed?url='
                              . urlencode(strip_tags($params[0])));
 		if (!empty($response)) {
 			$spotify = json_decode($response);
@@ -615,7 +615,7 @@ function embed_deezer($params) {
 
     $deezer_html  = '<p><iframe scrolling="no" frameborder="0" ';
     $deezer_html .= 'allowTransparency="true" ';
-    $deezer_html .= 'src="http://www.deezer.com/plugins/player?';
+    $deezer_html .= 'src="https://www.deezer.com/plugins/player?';
     $deezer_html .= 'autoplay=false&playlist=true&width=300';
     $deezer_html .= '&height='.(int)$height.'&cover=false&type='.$type;
     $deezer_html .= '&id='.(int)$params[5].'&title=&format=vertical';
@@ -628,7 +628,7 @@ function embed_deezer($params) {
 
 /**
  *  Callback metode Vine video iekļaušanai tekstā
- * 
+ *
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params       video parametri
@@ -636,7 +636,7 @@ function embed_deezer($params) {
  */
 function embed_vine($params) {
 	global $m;
-    
+
     // $params[0] - <a..href=".."..>http://vine.co/v/..
     // $params[1] - <a..href="http://vine.co/v/..">
     // $params[2] - rel=".." href="http://vine.co/v/.."
@@ -644,10 +644,10 @@ function embed_vine($params) {
 
     // nolasa no Memcached vai arī tajā ieraksta iframe saturu
 	if (($vine_html = $m->get('vine_' . md5($params[3]))) === false) {
-        
+
         $encoded_url = urlencode(strip_tags(
-            'https://vine.co/v/'.$params[3]));    
-        $url = 'http://api.embed.ly/1/oembed?url=' .
+            'https://vine.co/v/'.$params[3]));
+        $url = 'https://api.embed.ly/1/oembed?url=' .
                $encoded_url . '&maxwidth=320&maxheight=320';
 
         $response = curl_get($url);
@@ -657,18 +657,18 @@ function embed_vine($params) {
                 $vine_html = $vine->html;
                 // imho glītāk, ja iframe nav centrēts
                 $vine_html = str_replace(
-                    '></iframe>', 
-                    ' style="margin-left:0"></iframe>', 
+                    '></iframe>',
+                    ' style="margin-left:0"></iframe>',
                     $vine_html);
             }
         }
-        
+
         /*
         Jaukāks variants, kur redzama arī video info,
-        bet pagaidām nemāku noņemt autoplay 
+        bet pagaidām nemāku noņemt autoplay
         (šķiet, ka tāda iespēja netiek piedāvāta)
-    
-        $encoded_url = urlencode(strip_tags($params[3]));  
+
+        $encoded_url = urlencode(strip_tags($params[3]));
 
         $vine_html  = '<iframe class="vine-embed" ';
         $vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
@@ -687,7 +687,7 @@ function embed_vine($params) {
 
 /**
  *  Callback metode Soundcloud dziesmu iekļaušanai tekstā
- * 
+ *
  *  Izveidoto HTML iekešo Memcached (30 min)
  *
  *  @param $params          dziesmas parametri
@@ -702,19 +702,19 @@ function embed_soundcloud($params) {
     // $params[3] - https://../..
     // $params[5] - lietotājvārds
     // $params[6] - parametri aiz lietotājvārda (ņemti no saīsinātās adreses)
-    
+
     $max_height = 320;
     $max_width  = 450;
-    
+
     // ja norādīta specifiska dziesma, augstums nepieciešams visai neliels
     if (isset($params[6]) && !empty($params[6])) {
         $max_height = 130;
     }
-    
+
     // nolasa no Memcached vai arī tajā ieraksta iframe saturu
     if (($scloud_html = $m->get('scloud_' . md5($params[2]))) === false) {
-    
-        // izveido adresi, kas atgriež JSON formāta datus par ierakstā 
+
+        // izveido adresi, kas atgriež JSON formāta datus par ierakstā
         // iekļauto adresi; no JSON var atlasīt iframe saturu
         $url  = 'https://soundcloud.com/oembed?format=json';
         $url .= '&maxwidth='.$max_width.'&maxheight='.$max_height;
@@ -724,22 +724,22 @@ function embed_soundcloud($params) {
         $response = curl_get($url);
 		if (!empty($response)) {
 			$data = json_decode($response);
-		}       
-        
-        // šis paslēpj kvadrātformas attēlu dziesmas sānā 
-        /*$data->html = str_replace('show_artwork=true', 
-                                    'show_artwork=false', 
+		}
+
+        // šis paslēpj kvadrātformas attēlu dziesmas sānā
+        /*$data->html = str_replace('show_artwork=true',
+                                    'show_artwork=false',
                                     $data->html);*/
-        
+
         // šis paslēpj fona attēlu
         if ($data !== '') {
             $scloud_html = str_replace(
                 'visual=true', 'visual=false', $data->html);
         }
-    
+
 		$m->set('scloud_' . md5($params[2]), $scloud_html, false, 1800);
-	}   
-    
+	}
+
     return $scloud_html;
 }
 
@@ -752,9 +752,9 @@ function embed_soundcloud($params) {
  */
 function embed_instagram($params) {
 	global $m;
-    
+
     // $params[4] - attēla ID
-        
+
     $inst_html  = '<iframe src="//instagram.com/p/';
     $inst_html .= urlencode($params[4]).'/embed/" ';
     $inst_html .= 'width="350" height="450" frameborder="0" ';
@@ -774,7 +774,7 @@ function embed_vimeo($params) {
 	global $m;
 
     // $params[3] - video id
-        
+
     $vimeo_html  = '<iframe src="//player.vimeo.com/video/';
     $vimeo_html .= urlencode($params[3]).'?badge=0&byline=0" ';
     $vimeo_html .= 'width="520" height="300" frameborder="0" ';
@@ -793,15 +793,15 @@ function embed_vimeo($params) {
  */
 function replace_spoiler($text) {
 
-	$text = str_replace(array('<p>', '</p>'), 
-                        array('<br />', '<br />'), 
+	$text = str_replace(array('<p>', '</p>'),
+                        array('<br />', '<br />'),
                         $text[1]);
-                        
+
     $content  = '<span class="spoiler"><a href="javascript:void(0);" ';
     $content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';
     $content .= 'Rādīt spoileri</a><br /><span style="display:none" ';
     $content .= 'class="spoiler-content">' . $text . '</span></span>';
-    
+
 	return $content;
 }
 

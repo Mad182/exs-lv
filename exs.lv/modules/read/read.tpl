@@ -39,7 +39,7 @@
 	<fieldset>
 		<legend>Filmas avatars</legend>
 		<!-- START BLOCK : edit-movie-avatar-->
-		<img src="http://img.exs.lv{url}" />
+		<img src="//img.exs.lv{url}" />
 		<div class="c"></div>
 		<!-- END BLOCK : edit-movie-avatar-->
 
@@ -102,7 +102,7 @@
 		<label for="edit-topic-body">Teksts:</label><br />
 		<textarea name="edit-topic-body" id="edit-topic-body" cols="94" rows="40" style="width: 100%; height: 500px;">{article-text}</textarea>
 		<!-- START BLOCK : edit-article-av-->
-		<p><a class="thb-image"><img src="http://exs.lv/{img}" alt="Avatars" /></a></p>
+		<p><a class="thb-image"><img src="//exs.lv/{img}" alt="Avatars" /></a></p>
 		<!-- END BLOCK : edit-article-av-->
 		<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
 		<!-- START BLOCK : edit-article-category -->
@@ -141,11 +141,11 @@
 <!-- END BLOCK : page-ad-dateks-->
 
 <!-- START BLOCK : article-avatar-box-->
-<img class="av" src="http://exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
+<img class="av" src="//exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
 <!-- END BLOCK : article-avatar-box-->
 
 <!-- START BLOCK : movie-avatar-->
-<a href="http://img.exs.lv{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="http://img.exs.lv{thb}" alt="{title}" /></a>
+<a href="//img.exs.lv{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="//img.exs.lv{thb}" alt="{title}" /></a>
 <!-- END BLOCK : movie-avatar-->
 
 <div id="full-story">

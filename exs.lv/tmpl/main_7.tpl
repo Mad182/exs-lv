@@ -93,7 +93,7 @@
 					<div id="tools-bar">
 						<ul id="site-links">
 							<li><a href="//exs.lv/">exs.lv community</a></li>
-							<li><a href="//m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+							<li><a href="http://m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
 						</ul>
