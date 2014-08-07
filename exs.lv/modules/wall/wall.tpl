@@ -9,7 +9,7 @@
 		<!-- START BLOCK : wall-events-node-->
 		<li class="mbox">
 			<a href="{url}">
-				<span class="time-ago" style="float:right;color:#aaa;">{time}</span>
+				<span class="time-ago" style="float:right;color:#aaa">{time}</span>
 				<img class="av" src="{avatar}" alt="" />
 				<div class="post-wrapper">
 					<div class="post-info">
@@ -30,4 +30,3 @@
 {ad-468}
 
 <!-- END BLOCK : wall-events-->
-

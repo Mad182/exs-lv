@@ -12,7 +12,7 @@
 		</ul>
 		<div class="c"></div>
 		<!-- START BLOCK : list-articles-node-avatar-->
-		<img class="av" src="{img-server}/{node-avatar-image}" alt="{node-avatar-alt}" />
+		<img class="av" src="//img.exs.lv/{node-avatar-image}" alt="{node-avatar-alt}" />
 		<!-- END BLOCK : list-articles-node-avatar-->
 		<div style="padding: 5px 0 10px">{articles-node-intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></div>
 		<div class="c"></div>

@@ -50,7 +50,7 @@ $articles = $db->get_results("
 foreach ($articles as $article) {
 
 	if ($article->article_avatar) {
-		$article->avatar = 'http://exs.lv/' . $article->article_avatar;
+		$article->avatar = '/' . $article->article_avatar;
 	} else {
 		$article->avatar = get_avatar($article, 'm');
 	}

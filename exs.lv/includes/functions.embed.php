@@ -119,7 +119,9 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
     //http/https support
     $txt = str_replace('http://img.exs', '//img.exs', $txt);
+    $txt = str_replace('http://puu.sh', '//puu.sh', $txt);
     $txt = str_replace('http://i.imgur.com', '//i.imgur.com', $txt);
+    $txt = str_replace('http://upload.wikimedia.org', '//upload.wikimedia.org', $txt);
 
 	return $txt;
 }

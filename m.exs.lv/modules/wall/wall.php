@@ -47,7 +47,7 @@ $articles = $db->get_results("
 foreach ($articles as $article) {
 
 	if ($article->sm_avatar) {
-		$article->avatar = 'http://exs.lv/' . $article->sm_avatar;
+		$article->avatar = '//exs.lv/' . $article->sm_avatar;
 	} elseif ($article->user_avatar) {
 		$article->avatar = '/av/' . $article->user_avatar;
 	} else {
