@@ -22,7 +22,7 @@
 	<tr>
 		<!-- START BLOCK : forum-item-avatar-->
 		<td class="forum-avatar">
-			<a href="/{textid}"><img width="48" height="48" src="http://exs.lv/{icon}" alt="" /></a>
+			<a href="/{textid}"><img width="48" height="48" src="/{icon}" alt="" /></a>
 		</td>
 		<!-- END BLOCK : forum-item-avatar-->
 		<td>

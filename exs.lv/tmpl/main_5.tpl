@@ -10,7 +10,6 @@
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="http://feeds.feedburner.com/exs_roleplay">
 		<script type="text/javascript">
 			var mb_refresh_limit = {mb-refresh-limit};
 			var current_user = {currentuser-id};
@@ -114,8 +113,8 @@
 					<a id="exs-logo" href="/" title="Multi Theft Auto forums">rp.exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
-							<li><a href="http://exs.lv/">exs.lv community</a></li>
-							<li><a href="http://m.rp.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+							<li><a href="//exs.lv/">exs.lv community</a></li>
+							<li><a href="//m.rp.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
 						</ul>
@@ -125,7 +124,6 @@
 				<div id="top-menu">
 					<ul id="top-menu-left">
 						<li{cat-sel-1194}><a class="first" href="/">Forums</a></li>
-						<li><a href="http://mta.exs.lv/" class="external">UCP</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
@@ -155,7 +153,7 @@
 							<!-- START BLOCK : mygroups-->
 							<ul id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+								<li><a href="/group/{id}"><img src="//img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
 								<!-- END BLOCK : myg-node-->
 							</ul>
 							<!-- END BLOCK : mygroups-->
@@ -196,7 +194,7 @@
 			<div class="c"></div>
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox {class}" id="flash-message">
-				<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+				<p><a id="close-flash-message" href="#"><img src="//img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 			</div>
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
@@ -249,7 +247,7 @@
 					<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
 					<!-- END BLOCK : profilebox-blog-link-->
 					<!-- START BLOCK : profilebox-twitter-link-->
-					<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+					<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
 					<!-- END BLOCK : profilebox-twitter-link-->
 					<!-- START BLOCK : profilebox-yt-link-->
 					<!-- END BLOCK : profilebox-yt-link-->
@@ -372,9 +370,9 @@
 				<div class="infoblock">
 					<div class="inner">
 						<ul id="internal-links">
-							<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+							<li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
-							<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+							<li><a href="//exs.lv/reklama">Reklāma portālā</a></li>
 						</ul>
 					</div>
 				</div>

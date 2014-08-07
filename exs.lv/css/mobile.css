@@ -14,7 +14,7 @@ body, html {
 	font-family: sans-serif;
 	font-size: 95%;
 	line-height: 1.2;
-	background: #f2f2f2 url('http://exs.lv/bildes/mobile/top-bg.png') repeat-x 0 0;
+	background: #f2f2f2 url('//img.exs.lv/bildes/mobile/top-bg.png') repeat-x 0 0;
 }
 
 ul {
@@ -75,7 +75,7 @@ html .banned {
 }
 
 #header {
-	background: #f2f2f2 url('http://exs.lv/bildes/mobile/top-bg.png') repeat-x 0 0;
+	background: #f2f2f2 url('//img.exs.lv/bildes/mobile/top-bg.png') repeat-x 0 0;
 	height: 45px;
 	padding: 0;
 	margin: 0;
@@ -736,12 +736,12 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: url('http://exs.lv/bildes/play.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/play.png') no-repeat 50% 50%;
 	text-decoration: none;
 }
 
 .auto-embed-placeholder .play-button:hover {
-	background: url('http://exs.lv/bildes/play_hover.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/play_hover.png') no-repeat 50% 50%;
 }
 
 .auto-embed-placeholder .play-button span {
@@ -784,59 +784,59 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 }
 /* tabs */
 #wrapper .group-profile {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 0;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 0;
 }
 
 #wrapper .profile {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -26px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -26px;
 }
 
 #wrapper .users {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -182px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -182px;
 }
 
 #wrapper .pages {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -208px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -208px;
 }
 
 #wrapper .search {
-	background: url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -338px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -338px;
 }
 
 #wrapper .tools {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -364px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -364px;
 }
 
 #wrapper .date {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -390px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -390px;
 }
 
 #wrapper .comments {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -416px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -416px;
 }
 
 #wrapper .views {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -442px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
 }
 
 #wrapper .inbox {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -520px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -520px;
 }
 
 #wrapper .outbox {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -546px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -546px;
 }
 
 #wrapper .compose {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -572px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -572px;
 }
 
 #wrapper .mail-search {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -598px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -598px;
 }
 
 a.tab {
-	background: #f6f6f6 url('http://exs.lv/bildes/i.png') repeat 0 -329px;
+	background: #f6f6f6 url('//img.exs.lv/bildes/i.png') repeat 0 -329px;
 	border: 1px solid #E4E4E4;
 	border-bottom: 0;
 	text-decoration: none;
@@ -863,7 +863,7 @@ a.tab, a.tab:visited {
 }
 
 a.tab:hover {
-	background: #f9f9f9 url('http://exs.lv/bildes/i.png') repeat 0 -363px;
+	background: #f9f9f9 url('//img.exs.lv/bildes/i.png') repeat 0 -363px;
 	color: #606060;
 	text-decoration: none;
 	border-color: #E6B800;
@@ -994,11 +994,11 @@ div.tabMain {
 }
 
 #wrapper #pm-table td.pm {
-	background: transparent url('http://exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
+	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
 }
 
 #wrapper #pm-table td.pm-read {
-	background: transparent url('http://exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
+	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
 }
 
 #pm-table th {
@@ -1111,7 +1111,7 @@ a.friend-right {
 }
 
 .mb-reply-to, .mb-reply-main {
-	background: url('http://exs.lv/bildes/icons.png') no-repeat 0 -412px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -412px;
 	outline: 0;
 	width: auto;
 	padding-left: 20px;
@@ -1313,7 +1313,7 @@ blockquote, .q, .quote {
 }
 
 #user-notify li a .notification-icon {
-	background: transparent url('http://img.exs.lv/bildes/icons-24.png') no-repeat 0 -526px;
+	background: transparent url('//img.exs.lv/bildes/icons-24.png') no-repeat 0 -526px;
 	width: 28px;
 	height: 28px;
 	margin: 2px;
@@ -1465,29 +1465,29 @@ blockquote, .q, .quote {
 }
 
 .plus {
-	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 0;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 0;
 	text-indent: -9999px;
 }
 
 .plus:hover {
-	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -64px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -64px;
 }
 
 .minus {
-	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -16px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -16px;
 	text-indent: -9999px;
 }
 
 .minus:hover {
-	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -80px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -80px;
 }
 
 .voted1 {
-	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -32px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -32px;
 }
 
 .voted2 {
-	background: url('http://img.exs.lv/bildes/vote.png') no-repeat 0 -48px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -48px;
 }
 
 .c-rate span.r-val {

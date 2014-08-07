@@ -7,12 +7,14 @@
 	padding: 0;
 	margin: 0
 }
+
 #junk-queue-list li {
 	background: transparent;
 	padding: 10px;
 	border-bottom: 1px dashed #aaa;
 	margin: 0
 }
+
 #junk-menu {
 	list-style: none;
 	padding: 0;
@@ -20,6 +22,7 @@
 	float: left;
 	height: 20px
 }
+
 #junk-menu li {
 	float: left;
 	background: transparent;
@@ -28,6 +31,7 @@
 	border-left: 1px solid #ddd;
 	height: 20px
 }
+
 #junk-menu li a {
 	float: left;
 	height: 20px;
@@ -37,11 +41,13 @@
 	background: #eee;
 	font-size: 11px
 }
+
 #junk-voter {
 	float: left;
 	height: 32px;
 	margin: 12px;
 }
+
 #junk-voter .uplink, #junk-voter .downlink {
 	float: left;
 	width: 32px;
@@ -49,24 +55,29 @@
 	text-indent: -9999px;
 	margin: 0 1px;
 }
+
 #junk-voter .uplink {
-	background: url('http://img.exs.lv/bildes/junk/upvote.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/junk/upvote.png') no-repeat 50% 50%;
 }
+
 #junk-voter .downlink {
-	background: url('http://img.exs.lv/bildes/junk/downvote.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/junk/downvote.png') no-repeat 50% 50%;
 }
+
 #junk-voter span.downlink, #junk-voter span.uplink {
 	filter: alpha(opacity=45);
 	-khtml-opacity: 0.35;
 	-moz-opacity: 0.35;
 	opacity: 0.35;
 }
+
 #junk-voter span.downlink.active, #junk-voter span.uplink.active {
 	filter: alpha(opacity=65);
 	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
 	opacity: 0.65;
 }
+
 #junk-voter .value {
 	float: left;
 	line-height: 32px;
@@ -75,6 +86,7 @@
 	font-size: 20px;
 	font-weight: bold;
 }
+
 #junk-voter .value small {
 	font-size: 11px;
 }

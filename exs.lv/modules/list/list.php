@@ -210,7 +210,7 @@ if (!$category->mods_only || im_mod()) {
 				$title_clear = $article->title;
 
 				if ($article->attach) {
-					$article->title = '<strong><img src="http://exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
+					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
 				} else {
 					$article->title = $article->title;
 				}
@@ -265,7 +265,7 @@ if (!$category->mods_only || im_mod()) {
 				$date = display_time(strtotime($article->date));
 
 				if ($article->attach) {
-					$article->title = '<strong><img src="http://exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
+					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
 				} else {
 					$article->title = $article->title;
 				}
@@ -295,7 +295,7 @@ if (!$category->mods_only || im_mod()) {
 				if ($article->avatar) {
 					$tpl->newBlock('list-avatar');
 					$tpl->assign(array(
-						'node-avatar-image' => 'http://exs.lv/' . trim($article->avatar),
+						'node-avatar-image' => '/' . trim($article->avatar),
 						'node-avatar-alt' => trim(htmlspecialchars($article->title))
 					));
 				}
@@ -315,7 +315,7 @@ if (!$category->mods_only || im_mod()) {
 				$tpl->newBlock('list-articles-short-node');
 
 				if ($article->attach) {
-					$article->title = '<strong><img src="http://exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" />' . $article->title . '</strong>';
+					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" />' . $article->title . '</strong>';
 				}
 
 				$tpl->assign(array(

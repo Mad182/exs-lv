@@ -34,9 +34,9 @@
 		<h4>Kā iegādāties 5 kredīta punktus?</h4>
 		<div class="box">
 			<ul class="tabs">
-				<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-				<li><a href="/payment-info/uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-				<li><a href="/payment-info/ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+				<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="//img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+				<li><a href="/payment-info/uk" class="ajax"><img src="//img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+				<li><a href="/payment-info/ie" class="ajax"><img src="//img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 			</ul>
 			<div id="pay" class="ajaxbox">
 			</div>
@@ -274,13 +274,13 @@
 		<!-- START BLOCK : members-node-->
 		<li class="{member-class}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />{member-nick}</a>
 			<!-- START BLOCK : member-delete-->
-			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="{group-link}/drop/{member-id}"><img src="http://img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
+			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="{group-link}/drop/{member-id}"><img src="//img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
 			<!-- END BLOCK : member-delete-->
 			<!-- START BLOCK : member-moderator-->
-			<a class="moderator confirm" href="{group-link}/setmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
+			<a class="moderator confirm" href="{group-link}/setmod/{member-id}"><img src="//img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
 			<!-- END BLOCK : member-moderator-->
 			<!-- START BLOCK : member-unmoderator-->
-			<a class="unmoderator confirm" href="{group-link}/unsetmod/{member-id}"><img src="http://img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
+			<a class="unmoderator confirm" href="{group-link}/unsetmod/{member-id}"><img src="//img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
 			<!-- END BLOCK : member-unmoderator-->
 		</li>
 		<!-- END BLOCK : members-node-->
@@ -382,22 +382,22 @@
 				<!-- END BLOCK : mb-reply-main-->
 				<!-- START BLOCK : mb-edit-main-->
 				<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit">
-					<img src="http://img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" />
+					<img src="//img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" />
 				</a>
 				<!-- START BLOCK : mb-edit-main-->
 				<!-- START BLOCK : mb-edit-close-->
 				<a href="{url}/close" id="close-{id}" class="mb-icon mb-close">
-					<img src="http://exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" />
+					<img src="//exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" />
 				</a>
 				<!-- START BLOCK : mb-edit-close-->
 				<!-- START BLOCK : mb-edit-unclose-->
 				<a href="{url}/open" id="unclose-{id}" class="mb-icon mb-unclose">
-					<img src="http://exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" />
+					<img src="//exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" />
 				</a>
 				<!-- START BLOCK : mb-edit-unclose-->
 				<!-- START BLOCK : mb-delete-->
 				<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}">
-					<img src="http://img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
+					<img src="//img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
 				</a>
 				<!-- END BLOCK : mb-delete-->
 				<div class="mb-rater">{rater}</div>
@@ -517,14 +517,13 @@
 		<!-- START BLOCK : res-search-node-->
 		<li style="border-bottom: 1px solid #ddd">
 			<p style="padding: 0;margin: 0;font-size: 90%">{text}</p>
-			<p style="padding: 2px 0 10px;margin:0"><a href="http://exs.lv{group-link}/forum/{link}">http://exs.lv{group-link}/forum/{link}</a></p>
+			<p style="padding: 2px 0 10px;margin:0"><a href="{group-link}/forum/{link}">{group-link}/forum/{link}</a></p>
 		</li>
 		<!-- END BLOCK : res-search-node-->
 	</ol>
 	<!-- END BLOCK : res-search-->
 </div>
 <!-- END BLOCK : group-search-->
-
 
 <!-- START BLOCK : group-gallery-->
 <div class="tabMain">

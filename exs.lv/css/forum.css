@@ -52,7 +52,7 @@
 	line-height: 14px;
 	height: 14px;
 	padding: 5px 10px;
-	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	background: #333 url('//img.exs.lv/m/a/mad/dark.png') repeat 0 0;
 	color: #eee;
 	border: 0
 }
@@ -79,7 +79,7 @@ ul.subcat-list li {
 	padding: 0 10px 0 15px;
 	float: left;
 	margin: 0;
-	background: url('http://img.exs.lv/bildes/subforum.png') no-repeat 0 0
+	background: url('//img.exs.lv/bildes/subforum.png') no-repeat 0 0
 }
 
 .forum-admin-tool {

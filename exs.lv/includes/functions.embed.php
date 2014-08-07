@@ -35,19 +35,19 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 	// pārveido vecās avataru adreses uz jaunajām
 	$txt = str_replace('="/dati/bildes/useravatar/', 
-                       '="http://img.exs.lv/userpic/medium/', $txt);
+                       '="//img.exs.lv/userpic/medium/', $txt);
 	$txt = str_replace('="/dati/bildes/u_small/', 
-                       '="http://img.exs.lv/userpic/small/', $txt);
+                       '="//img.exs.lv/userpic/small/', $txt);
 	$txt = str_replace('="/dati/bildes/u_large/', 
-                       '="http://img.exs.lv/userpic/large/', $txt);
+                       '="//img.exs.lv/userpic/large/', $txt);
 
 	// visu iekš /dati/bildes lādē caur img.exs.lv cache
 	$txt = str_replace('="/dati/bildes', 
-                       '="http://img.exs.lv/dati/bildes', $txt);
+                       '="//img.exs.lv/dati/bildes', $txt);
 
 	// absolūtie ceļi, lai viss no /upload un /bildes rādītos arī m.exs.lv
-	$txt = str_replace('="/upload/', '="http://exs.lv/upload/', $txt);
-	$txt = str_replace('="/bildes', '="http://exs.lv/bildes', $txt);
+	$txt = str_replace('="/upload/', '="//exs.lv/upload/', $txt);
+	$txt = str_replace('="/bildes', '="//exs.lv/bildes', $txt);
 
 	// saturā esošām adresēm pievieno "nofollow" atribūtu
 	$txt = str_replace(' rel="nofollow"', '', $txt);
@@ -116,6 +116,10 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
     if (!$disable_embed) {
         $txt = embed_widgets($txt, $wide);
     }
+
+    //http/https support
+    $txt = str_replace('http://img.exs', '//img.exs', $txt);
+    $txt = str_replace('http://i.imgur.com', '//i.imgur.com', $txt);
 
 	return $txt;
 }

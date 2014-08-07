@@ -45,11 +45,11 @@ if ($requested_json) {
 if (isset($_GET['kategorija']) && isset($_GET['id'])) {
 	//raksti
 	$redirect = $db->get_row("SELECT `strid` FROM `pages` WHERE `textid` = '" . sanitize($_GET['id']) . "'");
-	redirect('http://exs.lv/read/' . $redirect->strid, true);
+	redirect('https://exs.lv/read/' . $redirect->strid, true);
 } elseif (isset($_GET['id']) && !isset($_GET['viewcat'])) {
 	//kategorijas
 	$category = get_cat($_GET['id']);
-	redirect('http://exs.lv/' . $category->textid, true);
+	redirect('https://exs.lv/' . $category->textid, true);
 }
 
 $site_access = get_site_access();
@@ -267,17 +267,17 @@ if ($skin === 'main') {
 
 $persona = '';
 if (!empty($inprofile) && !empty($inprofile->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($ingroup) && !empty($ingroup->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($auth->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $auth->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $auth->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($category->persona)) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/' . $category->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $category->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif ($lang == 3) {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gear.png\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/gear.png\') repeat-x 0 0;background-size:cover;"';
 } else {
-	$persona = ' style="background:url(\'http://exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0;background-size:cover;"';
 }
 
 $in_level = 0;

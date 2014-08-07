@@ -124,9 +124,9 @@
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
-							<li><a href="http://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
-							<li><a href="http://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
-							<li><a href="http://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
+							<li><a href="//runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
+							<li><a href="//rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
+							<li><a href="//lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
 							<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
 							<li><a href="/statistika" title="Statistika">Statistika</a></li>
 							<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
@@ -159,7 +159,7 @@
 							<!-- START BLOCK : mygroups-->
 							<ul id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+								<li><a href="/group/{id}"><img src="//img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
 								<!-- END BLOCK : myg-node-->
 							</ul>
 							<!-- END BLOCK : mygroups-->
@@ -194,7 +194,7 @@
 						<!-- END BLOCK : user-write-->
 						<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
 						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+						<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="//img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
 						<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 					</ul>
 					<!-- END BLOCK : user-menu-->
@@ -220,7 +220,7 @@
 			<div class="c"></div>
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox {class}" id="flash-message">
-				<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+				<p><a id="close-flash-message" href="#"><img src="//img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 			</div>
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
@@ -390,7 +390,7 @@
 						<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
 						<!-- END BLOCK : profilebox-blog-link-->
 						<!-- START BLOCK : profilebox-twitter-link-->
-						<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+						<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
 						<!-- END BLOCK : profilebox-twitter-link-->
 						<!-- START BLOCK : profilebox-yt-link-->
 						<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
@@ -426,8 +426,8 @@
 					<h3>/junk</h3>
 					<div class="box junk-box">
 						<!-- START BLOCK : side-junk-node-->
-						<a href="http://exs.lv/junk/{id}" title="{title}">
-							<img src="http://img.exs.lv{thb}" alt="" class="av" />
+						<a href="/junk/{id}" title="{title}">
+							<img src="//img.exs.lv{thb}" alt="" class="av" />
 							<span style="">{posts}</span>
 						</a>
 						<!-- END BLOCK : side-junk-node-->
@@ -474,8 +474,8 @@
 					<!-- START BLOCK : daily-wallpaper-->
 					<h3>Dienas tapete</h3>
 					<div id="walpaper" class="box">
-						<a href="http://img.exs.lv/dati/wallpapers/{wallpaper-image}">
-							<img src="http://img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
+						<a href="//img.exs.lv/dati/wallpapers/{wallpaper-image}">
+							<img src="//img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
 						</a><br />
 						<a href="/wallpapers">Tapetes</a>
 					</div>

@@ -39,11 +39,11 @@ if (!empty($group->strid) && $group->strid != $category->textid) {
 set_action('grupas');
 
 if ($group->id == 65) {
-	redirect('http://lol.exs.lv/', true);
+	redirect('https://lol.exs.lv/', true);
 }
 // redirekts uz pareizo apakšprojektu, ja grupa pārvietota
 else if ($group->lang != $lang) {
-	redirect('http://' . $config_domains[$group->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
+	redirect('https://' . $config_domains[$group->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
 }
 
 // grupas avatars
@@ -589,7 +589,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 						$body = sanitize($topic->text . '<p>(<a href="' . $url . '">Tēmas</a> turpinājums)</p>');
 						$db->query("INSERT INTO miniblog (`groupid`, `author`,`date`,`text`,`ip`,`bump`,`lang`) VALUES ('$group->id', '$topic->author',NOW(),'$body','$topic->ip','" . time() . "','$topic->lang')");
 						$newurl = $group_link . '/forum/' . base_convert($db->insert_id, 10, 36);
-						$reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">http://' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
+						$reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">//' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
 						$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '17077' WHERE `id` = '$mainid'");
 						redirect($newurl);
 					}
@@ -670,7 +670,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 				// twitter ierakstu fīčas
 				$append = '';
 				if ($record->twitterid && $record->twitteruser != 'rssbot') {
-					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="http://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
+					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="https://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
 				}
 
 				// lietotāja apbalvojumu ikonas

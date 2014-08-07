@@ -6,7 +6,7 @@
  */
 
 body {
-	background: url('http://img.exs.lv/bildes/dark/body.jpg') repeat 0 0;
+	background: url('//img.exs.lv/bildes/dark/body.jpg') repeat 0 0;
 	color: #eee
 }
 
@@ -31,7 +31,7 @@ a:hover {
 }
 
 #left h3, #right h3 {
-	background: #333 url('http://img.exs.lv/m/a/mad/dark.png') repeat 0 0;
+	background: #333 url('//img.exs.lv/m/a/mad/dark.png') repeat 0 0;
 	color: #eee;
 	border-top: 1px solid #333;
 	border-bottom: 1px solid #333
@@ -305,4 +305,3 @@ dl.list-attr dt {
 #wall-posts li a {
 	color: #ccc;
 }
-

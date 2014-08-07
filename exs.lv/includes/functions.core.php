@@ -227,7 +227,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 
 				$domain = '';
 				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
-					$domain = 'http://' . $config_domains[$notify->lang]['domain'];
+					$domain = '//' . $config_domains[$notify->lang]['domain'];
 					$site = '&nbsp;<span class="site-name">' . $config_domains[$notify->lang]['domain'] . '</span>';
 				}
 
@@ -1323,6 +1323,7 @@ function htmlpost2db($text) {
 	$purifier = new HTMLPurifier($config);
 	$text = $purifier->purify($text);
 	$text = str_replace('href="http://' . $_SERVER['SERVER_NAME'] . '/', 'href="/', $text);
+	$text = str_replace('href="https://' . $_SERVER['SERVER_NAME'] . '/', 'href="/', $text);
 	$text = str_replace(' rel="nofollow"', '', $text);
 	$text = str_replace(' dateks.lv ', ' <a href="http://www.dateks.lv/ref/view.html">dateks.lv</a> ', $text);
 	$text = str_replace(' dateks ', ' <a href="http://www.dateks.lv/ref/view.html">Dateks</a> ', $text);
@@ -1617,7 +1618,7 @@ function get_latest_posts() {
 			$domain = '';
 			$prefix = '';
 			if ($late->lang != $lang) {
-				$domain = 'http://' . $config_domains[$late->lang]['domain'];
+				$domain = '//' . $config_domains[$late->lang]['domain'];
 				$prefix = '<span class="lp-prefix">' . $config_domains[$late->lang]['prefix'] . '</span> ';
 			}
 			$url = $domain . '/read/' . $late->strid;
@@ -1635,7 +1636,7 @@ function get_latest_posts() {
 					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
 				}
 			} else {
-				$out .= '<li><a href="' . $url . $skip . '"><img src="http://exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
+				$out .= '<li><a href="' . $url . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
 				$out .= '<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span>';
 
@@ -1681,7 +1682,7 @@ function get_index_events() {
 				$action->avatar = get_avatar($user, 's');
 			}
 
-			$action->avatar = str_replace('http://img.exs.lv/dati', $img_server . '/dati', $action->avatar);
+			$action->avatar = str_replace('//img.exs.lv/dati', $img_server . '/dati', $action->avatar);
 
 			$out .= '<li><img class="av" width="45" height="45" src="' . $action->avatar . '" alt="" /><div class="event-content"><span class="post-time">' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
 		}
@@ -1733,7 +1734,7 @@ function get_latest_images() {
 				if (file_exists(CORE_PATH . '/' . $late->thb)) {
 					$img = '/' . $late->thb;
 				} else {
-					$img = 'http://img.exs.lv/' . $late->thb;
+					$img = '//img.exs.lv/' . $late->thb;
 				}
 			} else {
 				$img = $img_server . '/' . $late->thb;
@@ -1872,7 +1873,7 @@ function get_latest_mbs($friends = false) {
 			$domain = '';
 			$prefix = '';
 			if ($mb->lang != $lang) {
-				$domain = 'http://' . $config_domains[$mb->lang]['domain'];
+				$domain = '//' . $config_domains[$mb->lang]['domain'];
 				$spec = ' class="linkcode"';
 				if ($mb->lang == 9) {
 					$spec = ' class="rs-linkcode"';
@@ -2077,7 +2078,7 @@ function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 				return '/dati/bildes/' . $real_path . '/' . $user->avatar;
 			} else {
 				//try to load from img.exs.lv anyway
-				return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
+				return '//img.exs.lv/userpic/' . $path . '/' . $user->avatar;
 			}
 		} else {
 			return $img_server . '/userpic/' . $path . '/' . $user->avatar;

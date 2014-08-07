@@ -3,7 +3,6 @@
 
 <p>Izskatās, ka Tu pirmo reizi esi ienācis izmantojot facebook. Ja Tev jau ir savs profils, Tu to vari savienot ar facebook pasi. Ja ne, izvēlies niku un nāc iekšā tā pat :)</p>
 
-
 <div>
 	<div class="half-left">
 		<h3>Izveidot profilu</h3>
@@ -57,7 +56,6 @@
 <!-- END BLOCK : fb-signup-->
 
 <!-- START BLOCK : fb-login-->
-<h2>Ienākt ar facebook.com</h2>
-<a href="{link}"><img src="http://exs.lv/bildes/fb-login.png" alt="login with facebook" /></a>
+<h1>Ienākt ar facebook.com</h1>
+<a href="{link}"><img src="//img.exs.lv/bildes/fb-login.png" alt="login with facebook" /></a>
 <!-- END BLOCK : fb-login-->
-

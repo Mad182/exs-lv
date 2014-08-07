@@ -92,8 +92,8 @@
 					<div id="header-stuff">{ad-top}</div>
 					<div id="tools-bar">
 						<ul id="site-links">
-							<li><a href="http://exs.lv/">exs.lv community</a></li>
-							<li><a href="http://m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+							<li><a href="//exs.lv/">exs.lv community</a></li>
+							<li><a href="//m.lol.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
 						</ul>
@@ -102,18 +102,18 @@
 
 					<a href="/" title="League of Legends portāls">
 						<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="9000" data-cycle-random="true">
-							<img src="http://img.exs.lv/lol-headers/header-1.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-2.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-3.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-4.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-5.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-6.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-7.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-8.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-9.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-10.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-11.jpg" alt="" />
-							<img src="http://img.exs.lv/lol-headers/header-12.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-1.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-2.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-3.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-4.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-5.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-6.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-7.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-8.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-9.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-10.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-11.jpg" alt="" />
+							<img src="//img.exs.lv/lol-headers/header-12.jpg" alt="" />
 						</div>
 					</a>
 
@@ -187,7 +187,7 @@
 			<div class="c"></div>
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox {class}" id="flash-message">
-				<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+				<p><a id="close-flash-message" href="#"><img src="//img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 			</div>
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
@@ -321,7 +321,7 @@
 					<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
 					<!-- END BLOCK : profilebox-blog-link-->
 					<!-- START BLOCK : profilebox-twitter-link-->
-					<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+					<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
 					<!-- END BLOCK : profilebox-twitter-link-->
 					<!-- START BLOCK : profilebox-yt-link-->
 					<!-- END BLOCK : profilebox-yt-link-->
@@ -429,27 +429,15 @@
 				<div class="infoblock">
 					<div class="inner">
 						<ul id="internal-links">
-							<li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+							<li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
-							<li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+							<li><a href="//exs.lv/reklama">Reklāma portālā</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="c"></div>
 			</div>
 		</div>
-
-		<!-- sekomums.lv -->
-		<script type="text/javascript" src="//sekomums.lv/cb.lv.js" charset="UTF-8"></script>
-		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-		<script type="text/javascript">
-								function r(f) {
-									/in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f()
-								}
-								r(function() {
-									new ConversionsBox("Tev%20pat%C4%ABk%20%C5%A1%C4%AB%20lapa%3F%20Seko%20mums%20Draugiem.lv!", "exs.lv");
-								});
-		</script>
 
 		<!-- google analytics -->
 		<script>

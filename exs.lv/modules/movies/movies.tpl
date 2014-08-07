@@ -12,7 +12,7 @@
 		</ul>
 		<div class="c"></div>
 		<!-- START BLOCK : list-avatar-->
-		<img class="av" src="http://img.exs.lv{image}" alt="{alt}" />
+		<img class="av" src="//img.exs.lv{image}" alt="{alt}" />
 		<!-- END BLOCK : list-avatar-->
 		<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
 			{year}
@@ -35,11 +35,10 @@
 <ul id="movie-list">
 	<!-- START BLOCK : movie-->
 	<li>
-		<div><a href="{node-url}"><img src="http://img.exs.lv{image}" alt="{alt}" /></a></div>
+		<div><a href="{node-url}"><img src="//img.exs.lv{image}" alt="{alt}" /></a></div>
 		<a href="{node-url}"><strong>{title}</strong></a>
 	</li>
 	<!-- END BLOCK : movie-->
 </ul>
 <div class="c"></div>
 <!-- END BLOCK : list-search-->
-

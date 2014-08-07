@@ -5,7 +5,7 @@
 	<p>Pavisam {total} apbalvojumi.</p>
 	<ul id="user-awards-current" class="usr-awards">
 		<!-- START BLOCK : user-awards-node-->
-		<li id="award-pos-{id}" style="{cursor}"><img src="http://img.exs.lv/dati/bildes/awards/{award}.png" alt="{award}" />{title}<div class="c"></div></li>
+		<li id="award-pos-{id}" style="{cursor}"><img src="//img.exs.lv/dati/bildes/awards/{award}.png" alt="{award}" />{title}<div class="c"></div></li>
 		<!-- END BLOCK : user-awards-node-->
 	</ul>
 	<div class="c"></div>
@@ -18,7 +18,7 @@
 	<!-- START BLOCK : user-awards-free-->
 	<ul id="user-awards-inactive" class="usr-awards">
 		<!-- START BLOCK : user-awards-free-node-->
-		<li><img src="http://img.exs.lv/dati/bildes/awards/{award}.png" alt="{award}" />{title}{add}<div class="c"></div></li>
+		<li><img src="//img.exs.lv/dati/bildes/awards/{award}.png" alt="{award}" />{title}{add}<div class="c"></div></li>
 		<!-- END BLOCK : user-awards-free-node-->
 	</ul>
 	<div class="c"></div>

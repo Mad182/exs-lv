@@ -92,13 +92,13 @@
 			<nav>
 				<ul class="droplist">
                     <li class="rs-logo"><img src="/bildes/runescape/rs-logo-sm.png"></li>
-					<li><a href="http://runescape.exs.lv" class="dropdown">runescape.exs.lv</a>
+					<li><a href="/" class="dropdown">runescape.exs.lv</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="http://exs.lv">exs.lv</a></li>
+							<li><a href="//exs.lv">exs.lv</a></li>
 							<li><a rel="nofollow" href="http://old.exs.lv/">old.exs.lv</a></li>
-							<li><a href="http://lol.exs.lv">lol.exs.lv</a></li>
-							<li><a href="http://rp.exs.lv">rp.exs.lv</a></li>
+							<li><a href="//lol.exs.lv">lol.exs.lv</a></li>
+							<li><a href="//rp.exs.lv">rp.exs.lv</a></li>
 							<li><a rel="nofollow" href="http://coding.lv">coding.lv</a></li>
 							<li>&nbsp;</li>
 						</ul>
@@ -281,7 +281,7 @@
 						<!-- START BLOCK : mygroups-->
 						<ul id="user-group-menu">
 							<!-- START BLOCK : myg-node-->
-							<li><a href="/group/{id}"><img src="http://img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+							<li><a href="/group/{id}"><img src="//img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
 							<!-- END BLOCK : myg-node-->
 						</ul>
 						<!-- END BLOCK : mygroups-->
@@ -308,7 +308,7 @@
 			<div class="mbox" id="flash-message">
 				<p>
 					<a id="close-flash-message" href="#">
-						<img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16">
+						<img src="//img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16">
 					</a> {message}
 				</p>
 			</div>
@@ -366,7 +366,7 @@
                             <a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br>
                             <!-- END BLOCK : profilebox-blog-link-->
                             <!-- START BLOCK : profilebox-twitter-link-->
-                            <a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br>
+                            <a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br>
                             <!-- END BLOCK : profilebox-twitter-link-->
                             <!-- START BLOCK : profilebox-yt-link-->
                             <!-- END BLOCK : profilebox-yt-link-->
@@ -493,9 +493,9 @@
                     <div class="infoblock">
                         <div class="inner">
                             <ul id="internal-links">
-                                <li><a href="http://exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+                                <li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
                                 <li><a href="/sitemap">Lapas karte</a></li>
-                                <li><a href="http://exs.lv/reklama">Reklāma portālā</a></li>
+                                <li><a href="//exs.lv/reklama">Reklāma portālā</a></li>
                             </ul>
                         </div>
                     </div>

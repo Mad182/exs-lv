@@ -108,15 +108,15 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'rs-pages-1' => array(
-			'title' => 'Uzrakstīja 1 rakstu <a href="http://exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'title' => 'Uzrakstīja 1 rakstu <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'rs-pages-5' => array(
-			'title' => 'Uzrakstīja 5 rakstus <a href="http://exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'title' => 'Uzrakstīja 5 rakstus <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'rs-pages-10' => array(
-			'title' => 'Uzrakstīja 10 rakstus <a href="http://exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'title' => 'Uzrakstīja 10 rakstus <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'film-pages-1' => array(
@@ -132,15 +132,15 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'music-pages-1' => array(
-			'title' => 'Raksts <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
+			'title' => 'Raksts <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'music-pages-5' => array(
-			'title' => '5 raksti <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
+			'title' => '5 raksti <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'music-pages-10' => array(
-			'title' => '10 raksti <a href="http://exs.lv/muzika">mūzikas</a> sadaļā',
+			'title' => '10 raksti <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		),
 		'history-pages-1' => array(
@@ -204,11 +204,11 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'desas' => array(
-			'title' => 'Uzvarēja 25 <a href="http://exs.lv/desas">desu</a> partijas',
+			'title' => 'Uzvarēja 25 <a href="//exs.lv/desas">desu</a> partijas',
 			'state' => 'inactive'
 		),
 		'mta-user' => array(
-			'title' => '<a href="http://rp.exs.lv/">rp.exs.lv lietotājs</a>',
+			'title' => '<a href="//rp.exs.lv/">rp.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		),
 		'coding-user' => array(
@@ -216,11 +216,11 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'lol-exs-lv' => array(
-			'title' => '<a href="http://lol.exs.lv/">lol.exs.lv lietotājs</a>',
+			'title' => '<a href="//lol.exs.lv/">lol.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		),
 		'runescape-exs-lv' => array(
-			'title' => '<a href="http://runescape.exs.lv/">runescape.exs.lv lietotājs</a>',
+			'title' => '<a href="//runescape.exs.lv/">runescape.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		),
 		'mobile' => array(
@@ -316,7 +316,7 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'hangman' => array(
-			'title' => '<a href="http://exs.lv/karatavas">Karātavu</a> dienas uzvarētājs',
+			'title' => '<a href="//exs.lv/karatavas">Karātavu</a> dienas uzvarētājs',
 			'state' => 'inactive'
 		)
 	);
@@ -355,7 +355,7 @@ function get_awards_list($user) {
  */
 function update_awards($user) {
 
-	global $db, $m;
+	global $db, $m, $img_server;
 	$user = (int) $user;
 	$awards_list = list_awards();
 	$existing_awards = get_awards_list($user);
@@ -698,7 +698,7 @@ function update_awards($user) {
 	//spēļu turnīri
 	if (in_array($user, array(655, 858, 1621, 1822, 4137, 5205, 5056, 9418, 10734, 11722, 12732, 13004, 13419, 14623, 15390, 16817, 18057, 18773, 20858, 20999, 21450, 21704, 22518, 23282, 24437, 25093, 25299, 25385, 26091, 26100, 31621, 1135, 1385, 3650, 4432, 5356, 12108, 19604, 24706, 25254, 29176))) {
 		$awards_list['futzals-3'] = array(
-			'title' => '<a href="http://exs.lv/read/ziemas-kauss-14">Ziemas kauss &apos;14</a> (futzāls)',
+			'title' => '<a href="//exs.lv/read/ziemas-kauss-14">Ziemas kauss &apos;14</a> (futzāls)',
 			'state' => 'active'
 		);
 	}
@@ -732,7 +732,7 @@ function update_awards($user) {
 			if (!in_array($key, $existing_awards)) {
 				$db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('$user','$key','" . $val['title'] . "',NOW())");
 				$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
-				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', 'http://img.exs.lv/dati/bildes/awards/' . $key . '.png');
+				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', $img_server . '/dati/bildes/awards/' . $key . '.png');
 				notify($user, 7);
 				$m->delete('aw_' . $user);
 			}

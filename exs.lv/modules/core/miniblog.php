@@ -142,7 +142,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				$newtitle = mb_get_title($newtopic->text);
 				$newstrid = mb_get_strid($newtitle, $new);
 				$newurl = '/say/' . $topic->author . '/' . $newtopic->id . '-' . $newstrid;
-				$reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">http://' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
+				$reason = sanitize('Sasniegts 500 atbilžu limits, slēgts automātiski. Tēmas tupinājums: <a href="' . $newurl . '">//' . $_SERVER['HTTP_HOST'] . $newurl . '</a>.');
 				$db->query("UPDATE `miniblog` SET `closed` = '1', `close_reason` = '$reason', `closed_by` = '17077' WHERE `id` = '$mainid'");
 				redirect($newurl);
 			}
@@ -286,7 +286,7 @@ if (!empty($inprofile)) {
 				// Twitter profila dati
 				$append = '';
 				if ($record->twitterid) {
-					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="http://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
+					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="https://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
 				}
 
 				// apbalvojumu ikonas pie lietotājvārda

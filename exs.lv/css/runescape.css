@@ -201,7 +201,7 @@ body {
         margin-top:6px
     }
     #login-block a.external-fb span {
-        background: url("http://img.exs.lv/bildes/login.png") no-repeat scroll 0px -58px transparent;
+        background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -58px transparent;
         width: 55px;
     }
     #login-block a.external-login span {
@@ -212,7 +212,7 @@ body {
         line-height: 18px;
     }
     #login-block a.external-dr span {
-        background: url("http://img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
+        background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
         width: 76px;
     }
 #header-stuff {
@@ -227,7 +227,7 @@ body {
     font-family:verdana,ubuntu,tahoma,arial;
 }
 #top-menu li.selected a, #top-menu li a:hover, #top-menu li:hover a {
-	background: #2090cc url('http://img.exs.lv/m/a/mad/blue.png') repeat 0 0;
+	background: #2090cc url('//img.exs.lv/m/a/mad/blue.png') repeat 0 0;
 	color: #222;
 	text-decoration: none;
 	margin: 0;
@@ -470,10 +470,10 @@ ul.nav-right {
     border-bottom: 1px solid #C7C7C7;
 }
 #left .comments {
-    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+    background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
 }
 #left .friends {
-    background:url('http://img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
+    background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
 }
 .box-icon {
     position:relative;

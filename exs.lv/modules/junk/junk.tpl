@@ -6,7 +6,7 @@
 
 <!-- START BLOCK : junk-->
 
-<a class="junk-button" href="/junk/random" title="random"><img style="float: right;margin: 5px 10px;" src="http://exs.lv/bildes/junk/random.png" alt="Random" /></a>
+<a class="junk-button" href="/junk/random" title="random"><img style="float: right;margin: 5px 10px;" src="//img.exs.lv/bildes/junk/random.png" alt="Random" /></a>
 
 <script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 <div style="float: right;margin: 20px 20px 0 0;" id="draugiemLike"></div>
@@ -23,7 +23,7 @@
 	<div class="c"></div>
 	<ul id="junk-list" style="margin:0;padding:10px 0">
 		<!-- START BLOCK : junk-item-->
-		<li style="float:left;background:transparent;padding:0;margin:0"><a href="/junk/{id}"><img src="http://img.exs.lv{thb}" alt="" style="float:left;margin:0 5px 10px" class="av" /></a></li>
+		<li style="float:left;background:transparent;padding:0;margin:0"><a href="/junk/{id}"><img src="//img.exs.lv{thb}" alt="" style="float:left;margin:0 5px 10px" class="av" /></a></li>
 		<!-- END BLOCK : junk-item-->
 	</ul>
 	<!-- END BLOCK : junk-item-date-->
@@ -46,15 +46,15 @@
 				<p style="text-align: center;margin: 10px auto;width: 300px;"">
 
 					<!-- START BLOCK : junk-next-->
-					<a class="junk-button" href="/junk/{id}#content" title="Jaunāka"><img style="float: left;margin: 0 10px;" src="http://exs.lv/bildes/junk/left.png" alt="Jaunāka" /></a>
+					<a class="junk-button" href="/junk/{id}#content" title="Jaunāka"><img style="float: left;margin: 0 10px;" src="//img.exs.lv/bildes/junk/left.png" alt="Jaunāka" /></a>
 					<!-- END BLOCK : junk-next-->
 
 					<!-- START BLOCK : junk-prev-->
 
-					<a class="junk-button" href="/junk/{id}#content" title="Vecāka"><img style="float: right;margin: 0 10px;" src="http://exs.lv/bildes/junk/right.png" alt="Vecāka" /></a>
+					<a class="junk-button" href="/junk/{id}#content" title="Vecāka"><img style="float: right;margin: 0 10px;" src="//img.exs.lv/bildes/junk/right.png" alt="Vecāka" /></a>
 					<!-- END BLOCK : junk-prev-->
 
-					<a class="junk-button" href="/junk/random" title="random"><img style="margin: 0 10px;" src="http://exs.lv/bildes/junk/random.png" alt="Random" /></a>
+					<a class="junk-button" href="/junk/random" title="random"><img style="margin: 0 10px;" src="//img.exs.lv/bildes/junk/random.png" alt="Random" /></a>
 
 				</p>
 
@@ -70,13 +70,13 @@
 						//-->
 					</script>
 					<script type="text/javascript"
-							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+							src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 					</script>
 				</div>
 
 
 				<p style="text-align: center;">{title}</p>
-				<p style="text-align: center;"><img src="http://img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float: none;" alt="" /></p>
+				<p style="text-align: center;"><img src="//img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float: none;" alt="" /></p>
 
 				<div class="c"></div>
 				<div style="padding: 5px 50px">
@@ -164,7 +164,7 @@
 	<!-- END BLOCK : junk-view-->
 
 	<!-- END BLOCK : junk-add-->
-	<a class="junk-button" href="/junk/random" title="random"><img style="float: right;margin: 5px 10px;" src="http://exs.lv/bildes/junk/random.png" alt="Random" /></a>
+	<a class="junk-button" href="/junk/random" title="random"><img style="float: right;margin: 5px 10px;" src="//img.exs.lv/bildes/junk/random.png" alt="Random" /></a>
 	<div class="c"></div>
 	<form class="form" action="{page-url}" method="post" enctype="multipart/form-data">
 		<fieldset>
