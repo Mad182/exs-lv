@@ -86,7 +86,6 @@ $(document).ready(function () {
     });
     $('body').on('click', '.show-series-quests', function(e) {
         e.preventDefault();
-        parent.$.fancybox.close();
         fancyContent($(this).attr('href') + '?_=1');
     });
     
@@ -95,7 +94,6 @@ $(document).ready(function () {
      */
     $('body').on('click', '.change-list', function(e) {     
         e.preventDefault();
-        parent.$.fancybox.close();
         fancyContent($(this).attr('href') + '?_=1');
     });
     
