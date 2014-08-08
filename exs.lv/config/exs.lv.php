@@ -24,7 +24,7 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0
 	ini_set("session.cookie_domain", ".exs.lv");
 
 	//redirect https links
-	if (empty($_SERVER['HTTPS']) && substr($_SERVER['HTTP_HOST'], 0, 1) !== 'm') {
+	if (empty($_SERVER['HTTPS'])) {
 		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 	}
 

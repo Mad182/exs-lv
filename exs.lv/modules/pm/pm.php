@@ -270,10 +270,7 @@ if (!$auth->ok) {
 				$pm = $db->get_row("SELECT * FROM pm WHERE id = ('" . $read . "') AND from_uid = ('" . $auth->id . "')");
 				if ($pm) {
 					$to = get_user($pm->to_uid);
-					//users avatar
-					if ($to->avatar == '') {
-						$to->avatar = 'none.png';
-					}
+
 					$tpl->newBlock('pm-read-outbox');
 					$tpl->assign(array(
 						'pm-title' => $pm->title,
@@ -282,7 +279,7 @@ if (!$auth->ok) {
 						'pm-date' => substr($pm->date, 0, 16),
 						'pm-to-nick' => usercolor($to->nick, $to->level, false, $to->id),
 						'pm-to-id' => $pm->to_uid,
-						'pm-to-avatar' => $to->avatar,
+						'avatar' => get_avatar($to),
 						'pm-to-title' => htmlspecialchars($to->nick),
 						'pm-read' => $pm->is_read,
 					));
@@ -425,10 +422,7 @@ if (!$auth->ok) {
 						}
 					}
 					$from = get_user($pm->from_uid);
-					//users avatar
-					if (empty($from->avatar)) {
-						$from->avatar = 'none.png';
-					}
+
 					$tpl->newBlock('pm-read-inbox');
 					$tpl->assign(array(
 						'pm-title' => $pm->title,
@@ -437,7 +431,7 @@ if (!$auth->ok) {
 						'pm-date' => substr($pm->date, 0, 16),
 						'pm-from-nick' => usercolor($from->nick, $from->level, false, $from->id),
 						'pm-from-id' => $pm->from_uid,
-						'pm-from-avatar' => $from->avatar,
+						'avatar' => get_avatar($from),
 						'pm-from-title' => htmlspecialchars($from->nick),
 						'pm-read' => $pm->is_read,
 					));
@@ -458,7 +452,7 @@ if (!$auth->ok) {
 							'pm-date' => substr($pm->date, 0, 16),
 							'pm-from-nick' => $nick,
 							'pm-from-id' => $pm->from_uid,
-							'pm-from-avatar' => $from->avatar,
+							'avatar' => get_avatar($from),
 							'pm-from-title' => htmlspecialchars($from->nick),
 							'pm-read' => $pm->is_read,
 						));

@@ -17,7 +17,7 @@
 	<!-- START BLOCK : pm-read-inbox-->
 	<!-- START BLOCK : pm-read-from-->
 	<a class="friend friend-right" href="/user/{pm-from-id}" title="{pm-from-title}">
-		<img src="http://exs.lv/dati/bildes/useravatar/{pm-from-avatar}" alt="" />
+		<img src="{avatar}" alt="" />
 		{pm-from-nick}
 	</a>
 	<!-- END BLOCK : pm-read-from-->
@@ -35,7 +35,7 @@
 
 	<!-- START BLOCK : pm-read-outbox-->
 	<a class="friend friend-right" href="/user/{pm-to-id}" title="{pm-to-title}">
-		<img src="http://exs.lv/dati/bildes/useravatar/{pm-to-avatar}" alt="" />
+		<img src="{avatar}" alt="" />
 		{pm-to-nick}
 	</a>
 	<h4>{pm-title}</h4>
