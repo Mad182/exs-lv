@@ -213,9 +213,9 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 		} else {
 			$skip = 0;
 		}
-        
-        // rs.exs.lv nerādīs citu projektu notifikācijas
-        $lang_var = ($lang == 9) ? ' AND `lang` = 9 ' : '';
+		
+		// rs.exs.lv nerādīs citu projektu notifikācijas
+		$lang_var = ($lang == 9) ? ' AND `lang` = 9 ' : '';
 
 		if ($notify = $db->get_results("SELECT * FROM `notify` WHERE `user_id` = '$user_id' $lang_var ORDER BY `bump` DESC LIMIT $skip,$end")) {
 
@@ -228,6 +228,9 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$domain = '';
 				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
 					$domain = '//' . $config_domains[$notify->lang]['domain'];
+					if ($notify->lang === 3) { // coding.lv
+						$domain = 'http:' . $domain;
+					}
 					$site = '&nbsp;<span class="site-name">' . $config_domains[$notify->lang]['domain'] . '</span>';
 				}
 
@@ -1874,9 +1877,9 @@ function get_latest_mbs($friends = false) {
 			$prefix = '';
 			if ($mb->lang != $lang) {
 				$domain = '//' . $config_domains[$mb->lang]['domain'];
-                if ($mb->lang === 3) { // coding.lv
-                    $domain = 'http:' . $domain;
-                }
+				if ($mb->lang === 3) { // coding.lv
+					$domain = 'http:' . $domain;
+				}
 				$spec = ' class="linkcode"';
 				if ($mb->lang == 9) {
 					$spec = ' class="rs-linkcode"';
