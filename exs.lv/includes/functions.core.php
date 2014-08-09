@@ -1874,6 +1874,9 @@ function get_latest_mbs($friends = false) {
 			$prefix = '';
 			if ($mb->lang != $lang) {
 				$domain = '//' . $config_domains[$mb->lang]['domain'];
+                if ($mb->lang === 3) { // coding.lv
+                    $domain = 'http:' . $domain;
+                }
 				$spec = ' class="linkcode"';
 				if ($mb->lang == 9) {
 					$spec = ' class="rs-linkcode"';
