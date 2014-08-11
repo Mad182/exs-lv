@@ -55,7 +55,12 @@ foreach ($config_domains as $lang => $site) {
 		$found = true;
 		break;
 	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
-		redirect('http://' . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+		if (empty($site['ssl'])) {
+			$proto = 'http://';
+		} else {
+			$proto = 'https://';
+		}
+		redirect($proto . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
 	}
 }
 
