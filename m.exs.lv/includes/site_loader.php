@@ -6,23 +6,28 @@
 $config_domains = array(
 	1 => array(
 		'domain' => 'm.exs.lv',
-		'prefix' => ''
+		'prefix' => '',
+		'ssl' => true
 	),
 	3 => array(
 		'domain' => 'm.coding.lv',
-		'prefix' => 'code'
+		'prefix' => 'code',
+		'ssl' => false
 	),
 	5 => array(
 		'domain' => 'm.rp.exs.lv',
-		'prefix' => 'mta'
+		'prefix' => 'mta',
+		'ssl' => false
 	),
 	7 => array(
 		'domain' => 'm.lol.exs.lv',
-		'prefix' => 'lol'
+		'prefix' => 'lol',
+		'ssl' => false
 	),
 	9 => array(
 		'domain' => 'm.runescape.exs.lv',
-		'prefix' => 'runescape'
+		'prefix' => 'runescape',
+		'ssl' => false
 	)
 );
 
