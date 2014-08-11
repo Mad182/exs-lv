@@ -213,7 +213,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 		} else {
 			$skip = 0;
 		}
-		
+
 		// rs.exs.lv nerādīs citu projektu notifikācijas
 		$lang_var = ($lang == 9) ? ' AND `lang` = 9 ' : '';
 
@@ -227,10 +227,12 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 
 				$domain = '';
 				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
+
 					$domain = '//' . $config_domains[$notify->lang]['domain'];
-					if ($notify->lang === 3) { // coding.lv
+					if (!empty($config_domains[$notify->lang]['ssl'])) {
 						$domain = 'http:' . $domain;
 					}
+
 					$site = '&nbsp;<span class="site-name">' . $config_domains[$notify->lang]['domain'] . '</span>';
 				}
 
@@ -1626,6 +1628,10 @@ function get_latest_posts() {
 			}
 			$url = $domain . '/read/' . $late->strid;
 
+			if (!empty($config_domains[$late->lang]['ssl'])) {
+				$url = 'http:' . $url;
+			}
+
 			if ($late->mods_only == 1) {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
@@ -1876,10 +1882,12 @@ function get_latest_mbs($friends = false) {
 			$domain = '';
 			$prefix = '';
 			if ($mb->lang != $lang) {
+
 				$domain = '//' . $config_domains[$mb->lang]['domain'];
-				if ($mb->lang === 3) { // coding.lv
+				if (!empty($config_domains[$mb->lang]['ssl'])) {
 					$domain = 'http:' . $domain;
 				}
+
 				$spec = ' class="linkcode"';
 				if ($mb->lang == 9) {
 					$spec = ' class="rs-linkcode"';
@@ -2195,4 +2203,3 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$page_title = $user->nick . ' ' . $title;
 }
-

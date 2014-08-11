@@ -7,31 +7,38 @@
 $config_domains = array(
 	1 => array(
 		'domain' => 'exs.lv',
-		'prefix' => ''
+		'prefix' => '',
+		'ssl' => true
 	),
 	2 => array(
 		'domain' => 'android.exs.lv',
-		'prefix' => 'android'
+		'prefix' => 'android',
+		'ssl' => true
 	),
 	3 => array(
 		'domain' => 'coding.lv',
-		'prefix' => 'code'
+		'prefix' => 'code',
+		'ssl' => false
 	),
 	5 => array(
 		'domain' => 'rp.exs.lv',
-		'prefix' => 'mta'
+		'prefix' => 'mta',
+		'ssl' => true
 	),
 	7 => array(
 		'domain' => 'lol.exs.lv',
-		'prefix' => 'lol'
+		'prefix' => 'lol',
+		'ssl' => true
 	),
 	8 => array(
 		'domain' => 'secure.exs.lv',
-		'prefix' => 'secure'
+		'prefix' => 'secure',
+		'ssl' => true
 	),
 	9 => array(
 		'domain' => 'runescape.exs.lv',
-		'prefix' => 'runescape'
+		'prefix' => 'runescape',
+		'ssl' => true
 	)
 );
 
