@@ -229,7 +229,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if ($notify->lang != $lang && !in_array($notify->type, array(5, 6, 7, 9, 10, 11))) {
 
 					$domain = '//' . $config_domains[$notify->lang]['domain'];
-					if (!empty($config_domains[$notify->lang]['ssl'])) {
+					if (empty($config_domains[$notify->lang]['ssl'])) {
 						$domain = 'http:' . $domain;
 					}
 
@@ -1628,7 +1628,7 @@ function get_latest_posts() {
 			}
 			$url = $domain . '/read/' . $late->strid;
 
-			if (!empty($config_domains[$late->lang]['ssl'])) {
+			if (empty($config_domains[$late->lang]['ssl'])) {
 				$url = 'http:' . $url;
 			}
 
@@ -1884,7 +1884,7 @@ function get_latest_mbs($friends = false) {
 			if ($mb->lang != $lang) {
 
 				$domain = '//' . $config_domains[$mb->lang]['domain'];
-				if (!empty($config_domains[$mb->lang]['ssl'])) {
+				if (empty($config_domains[$mb->lang]['ssl'])) {
 					$domain = 'http:' . $domain;
 				}
 
