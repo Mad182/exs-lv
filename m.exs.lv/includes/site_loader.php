@@ -46,7 +46,7 @@ foreach ($config_domains as $lang => $site) {
 
 //domain not found, redirect to exs.lv
 if (!$found) {
-	redirect('http://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
+	redirect('https://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 //remove index.php from urls
