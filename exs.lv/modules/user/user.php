@@ -3,7 +3,7 @@
 /**
  * Lietotāja profila apskatīšanas un labošanas modulis
  */
-$submodules = array('edit', 'avatar', 'settings', 'security', 'buytitle', 'changenick');
+$submodules = array('edit', 'avatar', 'settings', 'security', 'email', 'buytitle', 'changenick');
 
 if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 	$userid = (int) $_GET['var1'];

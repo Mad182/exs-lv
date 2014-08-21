@@ -149,17 +149,11 @@
 <!-- START BLOCK : user-profile-changenick-->
 <div class="tabMain">
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
-		<script type="text/javascript">
-			function UserExists() {
-				nick = document.getElementById('new-nick').value;
-				load("/?c=250&user=" + nick, 'userexists');
-			}
-		</script>
 		<fieldset>
 			<legend>Exs.lv nika maiņa</legend>
 			<p>
 				<label for="new-nick">Jaunais niks:</label><br />
-				<input type="text" class="text" name="new-nick" id="new-nick" value="" maxlength="14" onblur="UserExists();" onkeyup="UserExists();" /> <span id="userexists"></span>
+				<input type="text" class="text usercheck" name="new-nick" id="new-nick" value="" maxlength="14" o /> <span class="usercheck-response"></span>
 			</p>
 			<p>
 				<input type="submit" name="submit" id="submit" class="button primary" value="Saglabāt" />
@@ -289,13 +283,7 @@
 		<fieldset>
 			<legend>Profila drošības iestatījumi</legend>
 			<p>
-				<label for="edit-mail">E-pasta adrese:</label><br />
-				<input type="text" class="text" name="edit-mail" id="edit-mail" value="{user-mail}" maxlength="64" />
-			</p>
-
-			<h4>Paroles maiņa:</h4>
-			<p>
-				<label for="password-old">Vecā parole:</label><br />
+				<label for="password-old">Esošā parole:</label><br />
 				<input type="password" class="text" name="password-old" id="password-old" value="" />
 			</p>
 			<p>
@@ -313,6 +301,27 @@
 	</form>
 </div>
 <!-- END BLOCK : user-profile-security-->
+
+<!-- START BLOCK : user-profile-email-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
+		<fieldset>
+			<legend>Profila drošības iestatījumi</legend>
+			<p>
+				<label for="edit-mail">E-pasta adrese:</label><br />
+				<input type="text" class="text" name="edit-mail" id="edit-mail" value="{user-mail}" maxlength="64" />
+			</p>
+			<p>
+				<label for="password-old">Ievadi savu paroli:</label><br />
+				<input type="password" class="text" name="password-old" id="password-old" value="" />
+			</p>
+			<p>
+				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-email-->
 
 <!-- START BLOCK : user-profile-avatar-->
 <div class="tabMain">

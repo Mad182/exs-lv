@@ -163,7 +163,8 @@
 							<li><a href="/user/edit">Profila informācija</a></li>
 							<li><a href="/user/avatar">Mans avatars</a></li>
 							<li><a href="/user/settings">Mani iestatījumi</a></li>
-							<li><a href="/user/security">Parole un e-pasts</a></li>
+							<li><a href="/user/security">Paroles maiņa</a></li>
+							<li><a href="/user/email">E-pasta adreses maiņa</a></li>
 							<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
 							<li>&nbsp;</li>
 						</ul>
