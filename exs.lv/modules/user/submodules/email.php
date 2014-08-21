@@ -19,12 +19,12 @@ if (isset($_POST['submit'])) {
 
 			$auth->reset();
 			update_karma($auth->id, true);
-			set_flash('Izmaiņas saglabātas!', 'success');
+			set_flash('Izmaiņas veiksmīgi saglabātas!', 'success');
 		} else {
-			set_flash('Nederīga e-pasta adrese!', 'error');
+			set_flash('<strong>Kļūda:</strong> nederīga e-pasta adrese!', 'error');
 		}
 	} else {
-		set_flash('Paroles nesakrīt!', 'error');
+		set_flash('<strong>Kļūda:</strong> esošā parole ievadīta nepareizi!', 'error');
 	}
 
 	redirect('/user/email');
