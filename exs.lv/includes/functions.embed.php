@@ -117,7 +117,8 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'img.exs.lv',
 		'i.gyazo.com',
 		'puu.sh',
-		'upload.wikimedia.org'
+		'upload.wikimedia.org',
+		'i.imgur.com'
 	);
 
 	foreach ($https_enabled as $dom) {

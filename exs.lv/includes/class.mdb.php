@@ -10,7 +10,7 @@ class mdb extends mysqli {
 
 	function __construct($username, $password, $database, $hostname = 'localhost') {
 		parent::__construct($hostname, $username, $password, $database);
-		/** 
+		/**
 		 * atkomentē šo rindu ja tiek darbināts uz servera
 		 * kur mysql nav utf-8 savienojums pēc noklusējuma
 		 */
@@ -64,9 +64,9 @@ class mdb extends mysqli {
 
 	function update($table = null, $params = null, $data = null) {
 
-		if (empty($table) || empty($params) || empty($data)) 
+		if (empty($table) || empty($params) || empty($data))
 			return false;
-	
+
 		$criteria = array();
 		$updates = array();
         $limit = 'LIMIT 1';
@@ -79,16 +79,16 @@ class mdb extends mysqli {
 		} else {
 			if ((int)$params < 1) return false;
 			$criteria[] = "`id` = " . (int)$params;
-		}       
+		}
 
 		foreach ($data as $key => $val) {
-			if ($val != 'NOW()') {
+			if ($val != 'NOW()' && $val != 'NULL' && $val != 'null') {
 				$val = "'" . $val . "'";
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
 		}
         if (empty($updates) || empty($criteria)) return false;
-        
+
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);
 
