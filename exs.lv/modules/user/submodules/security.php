@@ -17,17 +17,17 @@ if (isset($_POST['submit'])) {
 				$db->update('users', $auth->id, array('pwd' => '', 'password' => $newpass));
 
 				$auth->login($inprofile->nick, $_POST['password-1']);
+				set_flash('Izmaiņas saglabātas!', 'success');
 			} else {
-				set_flash('Ievadītā parole ir pārāk īsa!', 'error');
-				redirect('/user/security');
+				set_flash('<strong>Kļūda:</strong> jaunā parole ir pārāk īsa!', 'error');
 			}
 		} else {
-			set_flash('Paroles nesakrīt!', 'error');
-			redirect('/user/security');
+			set_flash('<strong>Kļūda:</strong> esošā parole ievadīta nepareizi!', 'error');
 		}
+	} else {
+		set_flash('<strong>Kļūda:</strong> paroles nesakrīt!', 'error');
 	}
 
-	set_flash('Izmaiņas saglabātas!', 'success');
 	redirect('/user/security');
 }
 
