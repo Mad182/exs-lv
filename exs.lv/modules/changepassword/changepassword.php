@@ -13,8 +13,8 @@ if (!$auth->ok) {
 
 	if (isset($_GET['var1']) && strlen($_GET['var1']) == 64) {
 
-		$userdata = $db->get_row("SELECT * FROM `users` WHERE 
-					`reset_token` = '" . sanitize($_GET['var1']) . "' AND 
+		$userdata = $db->get_row("SELECT * FROM `users` WHERE
+					`reset_token` = '" . sanitize($_GET['var1']) . "' AND
 					`reset_time` > '" . date('Y-m-d H:i:s', strtotime('-6 hours')) . "' LIMIT 1");
 
 		if (!empty($userdata)) {
@@ -79,7 +79,7 @@ if (!$auth->ok) {
 				<p>
 					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
 					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.</p>
-				<p>__<br />Exs.lv adminu un moderatoru komanda!</p>
+				<p>__<br />Ar cieņu,<br />Exs.lv adminu un moderatoru komanda!</p>
 			');
 			$message->setContentType("text/html");
 

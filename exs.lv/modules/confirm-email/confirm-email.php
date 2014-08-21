@@ -30,7 +30,7 @@ if (isset($_GET['var1']) && strlen($_GET['var1']) == 64) {
 
 	} else {
 
-		set_flash('Kļūdais links vai beidzies tā derīguma termiņš!', 'error');
+		set_flash('Kļūdains links vai beidzies tā derīguma termiņš!', 'error');
 
 	}
 	redirect();
