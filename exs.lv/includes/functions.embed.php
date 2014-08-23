@@ -118,7 +118,8 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'i.gyazo.com',
 		'puu.sh',
 		'upload.wikimedia.org',
-		'i.imgur.com'
+		'i.imgur.com',
+		'image.playerauctions.com'
 	);
 
 	foreach ($https_enabled as $dom) {
