@@ -213,7 +213,13 @@ if (!empty($me)) {
 		}
 	}
 } else {
-	redirect($facebook->getLoginUrl(array('redirect_uri' => 'https://' . $_SERVER['SERVER_NAME'] . '/fb-login/', 'scope' => 'user_likes')));
+
+	$protocol = 'https://';
+	if (empty($config_domains[$lang]['ssl'])) {
+		$protocol = 'http://';
+	}
+
+	redirect($facebook->getLoginUrl(array('redirect_uri' => $protocol . $_SERVER['SERVER_NAME'] . '/fb-login/', 'scope' => 'user_likes')));
 	/* $loginUrl = $facebook->getLoginUrl();
 	  $tpl->newBlock('fb-login');
 	  $tpl->assign('link', $loginUrl); //Show the button */
