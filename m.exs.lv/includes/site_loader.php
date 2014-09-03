@@ -31,6 +31,10 @@ $config_domains = array(
 	)
 );
 
+// saīsinātais runescape projekta domēns
+if ($_SERVER['SERVER_NAME'] === 'm.rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.m.rs.exs.lv') {
+	redirect('http://' . str_replace('rs', 'runescape', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+}
 
 $found = false;
 foreach ($config_domains as $lang => $site) {
