@@ -119,11 +119,15 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'puu.sh',
 		'upload.wikimedia.org',
 		'i.imgur.com',
+		'reddit.com',
+		'www.reddit.com',
 		'image.playerauctions.com'
 	);
 
 	foreach ($https_enabled as $dom) {
-		$txt = str_replace('http://' . $dom, '//' . $dom, $txt);
+		if (strpos($txt, $dom) !== false) {
+			$txt = str_replace('http://' . $dom, 'https://' . $dom, $txt);
+		}
 	}
 
 	return $txt;
