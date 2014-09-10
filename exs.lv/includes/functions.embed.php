@@ -118,9 +118,20 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'i.gyazo.com',
 		'puu.sh',
 		'upload.wikimedia.org',
+		'en.wikipedia.org',
+		'lv.wikipedia.org',
 		'i.imgur.com',
 		'reddit.com',
 		'www.reddit.com',
+		'google.lv',
+		'www.google.lv',
+		'google.com',
+		'www.google.com',
+		'www.ziedot.lv',
+		'twitter.com',
+		'www.facebook.com',
+		'www.inbox.lv',
+		'steamcommunity.com',
 		'image.playerauctions.com'
 	);
 
