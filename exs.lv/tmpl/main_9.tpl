@@ -116,6 +116,7 @@
 						<span class="arrow-down"></span>
 						<ul>
 							<li><a href="/img">eXs bilžu hostings</a></li>
+							<li><a href="http://warbandtracker.com/schedule.php" rel="nofollow">Warbands taimeris</a></li>
 							<li><a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a></li>
                             <li><a href="http://z8.invisionfree.com/lrc" rel="nofollow" target="_blank">LRC forums</a></li>
 							<li><a href="http://z13.invisionfree.com/Latvian_Archers" rel="nofollow" target="_blank">Latvian Archers</a></li>
