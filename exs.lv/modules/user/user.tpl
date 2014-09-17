@@ -163,9 +163,9 @@
 			<h4>Kā iegādāties 5 kredīta punktus?</h4>
 			<div class="box">
 				<ul class="tabs">
-					<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-					<li><a href="/payment-info/uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-					<li><a href="/payment-info/ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+					<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="//img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+					<li><a href="/payment-info/uk" class="ajax"><img src="//img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+					<li><a href="/payment-info/ie" class="ajax"><img src="//img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 				</ul>
 				<div id="pay" class="ajaxbox">
 				</div>
@@ -191,9 +191,9 @@
 	<h4>Kā iegādāties 5 kredīta punktus?</h4>
 	<div class="box">
 		<ul class="tabs">
-			<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="http://img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-			<li><a href="/payment-info/uk" class="ajax"><img src="http://img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
-			<li><a href="/payment-info/ie" class="ajax"><img src="http://img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
+			<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="//img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
+			<li><a href="/payment-info/uk" class="ajax"><img src="//img.exs.lv/bildes/flags/gb.png" alt="" />&nbsp;Lielbritānijā</a></li>
+			<li><a href="/payment-info/ie" class="ajax"><img src="//img.exs.lv/bildes/flags/ie.png" alt="" />&nbsp;Īrijā</a></li>
 		</ul>
 		<div id="pay" class="ajaxbox">
 		</div>
@@ -461,3 +461,4 @@
 	</form>
 </div>
 <!-- END BLOCK : user-profile-give-->
+

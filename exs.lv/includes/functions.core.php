@@ -597,6 +597,20 @@ function get_blacklisted_sites() {
 	return $blacklisted_sites;
 }
 
+/**
+ * Adreses ar https protokola atbalstu
+ */
+function get_https_sites() {
+	global $db, $m, $https_sites;
+	if (empty($https_sites)) {
+		if (($https_sites = $m->get('https_sites')) === false) {
+			$https_sites = $db->get_col("SELECT `url` FROM `https_sites`");
+			$m->set('https_sites', $https_sites, false, 3600);
+		}
+	}
+	return $https_sites;
+}
+
 function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 
 	/* repleisojam bieži pieminētu lietotāju vārdus, lai būtu mazāk kļūdu */

@@ -113,31 +113,10 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	}
 
 	//http/https support
-	$https_enabled = array(
-		'img.exs.lv',
-		'i.gyazo.com',
-		'puu.sh',
-		'upload.wikimedia.org',
-		'en.wikipedia.org',
-		'lv.wikipedia.org',
-		'i.imgur.com',
-		'reddit.com',
-		'www.reddit.com',
-		'google.lv',
-		'www.google.lv',
-		'google.com',
-		'www.google.com',
-		'www.ziedot.lv',
-		'twitter.com',
-		'www.facebook.com',
-		'www.inbox.lv',
-		'steamcommunity.com',
-		'image.playerauctions.com'
-	);
-
-	foreach ($https_enabled as $dom) {
-		if (strpos($txt, $dom) !== false) {
-			$txt = str_replace('http://' . $dom, 'https://' . $dom, $txt);
+	$https_sites = get_https_sites();
+	foreach ($https_sites as $site) {
+		if (strpos($txt, $site) !== false) {
+			$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
 		}
 	}
 

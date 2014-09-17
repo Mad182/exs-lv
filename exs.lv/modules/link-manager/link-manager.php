@@ -11,6 +11,9 @@ $title = 'Draudzīgās lapas bez nofollow';
 if (isset($_GET['var1']) && $_GET['var1'] == 'blacklisted') {
 	$active = 'blacklisted';
 	$title = 'Bloķētās lapas';
+} elseif (isset($_GET['var1']) && $_GET['var1'] == 'https') {
+	$active = 'https';
+	$title = 'HTTPS atbalstošas lapas';
 }
 
 $tpl->assign(array(

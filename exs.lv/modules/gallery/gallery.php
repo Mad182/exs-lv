@@ -19,7 +19,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		$addcom->add_comment($page_id, $auth->id, $_POST['commenttext'], 1);
 		$img = $db->get_row("SELECT thb,text FROM images WHERE id = '$page_id'");
 		$url = '/gallery/' . $inprofile->id . '/' . $page_id;
-		push('Pievienoja komentāru <a href="' . $url . '">' . $inprofile->nick . ' attēlam ' . textlimit($img->text, 32, '...') . '</a>', 'http://img.exs.lv/' . $img->thb, 'img' . $page_id);
+		push('Pievienoja komentāru <a href="' . $url . '">' . $inprofile->nick . ' attēlam ' . textlimit($img->text, 32, '...') . '</a>', '//img.exs.lv/' . $img->thb, 'img' . $page_id);
 		notify($inprofile->id, 1, $page_id, $url);
 		redirect($url);
 	}
@@ -97,7 +97,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 				if (file_exists($file)) {
 					$db->query("INSERT INTO images (`id`,`uid`,`url`,`thb`,`text`,`date`,`bump`, `ip`, `interest_id`, `lang`) VALUES (NULL,'$auth->id','$file','$thb','$description',NOW(),NOW(),'$auth->ip','$interest_id', '$lang')");
-					push('Pievienoja <a href="/gallery/' . $auth->id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit($description, 32, '...') . '</a>', 'http://img.exs.lv/' . $thb);
+					push('Pievienoja <a href="/gallery/' . $auth->id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit($description, 32, '...') . '</a>', '//img.exs.lv/' . $thb);
 					update_karma($auth->id, true);
 				}
 			} else {
@@ -218,7 +218,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 		//redirektē uz pareizo adresi, ja bilde pārvietota uz citu apakšprojektu
 		if ($image->lang != $lang) {
-			redirect('http://' . $config_domains[$image->lang]['domain'] . '/gallery/' . $image->uid . '/' . $image->id, true);
+			redirect('https://' . $config_domains[$image->lang]['domain'] . '/gallery/' . $image->uid . '/' . $image->id, true);
 		}
 
 		$rating_users = unserialize($image->rating_users);
@@ -382,7 +382,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				));
 			} else {
 				$tpl->newBlock('image-view-video');
-				$str = add_smile('<p><a href="http://www.youtube.com/watch?v=' . $image->youtube_video . '">http://www.youtube.com/watch?v=' . $image->youtube_video . '</a></p>', 0);
+				$str = add_smile('<p><a href="https://www.youtube.com/watch?v=' . $image->youtube_video . '">https://www.youtube.com/watch?v=' . $image->youtube_video . '</a></p>', 0);
 				$tpl->assign('video', $str);
 			}
 
