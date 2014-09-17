@@ -167,3 +167,4 @@ if ($auth->ok) {
 	$tpl->newBlock('error-nologin');
 	$tpl->assign('xsrf', $auth->xsrf);
 }
+
