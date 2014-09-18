@@ -21,6 +21,10 @@ if (isset($_POST['id']) && isset($_POST['strid'])) {
 
 		$db->query("UPDATE `clans` SET `strid` = '$strid' WHERE `id` = '$id' LIMIT 1");
 
+		//nodzēš grupu sarakstu no memcache
+		$m->delete('latest_groups_' . $lang);
+
 		redirect('/' . $strid);
 	}
 }
+

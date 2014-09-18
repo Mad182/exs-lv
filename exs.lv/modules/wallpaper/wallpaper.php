@@ -41,3 +41,4 @@ $tpl->assignGlobal(array(
 	'pager-prev' => $pager['prev'],
 	'pager-numeric' => $pager['pages']
 ));
+
