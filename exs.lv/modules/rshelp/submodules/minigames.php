@@ -74,7 +74,7 @@ class Minigames extends Controller {
 
             if (!empty($game->avatar)) {
                 $avatar  = '<a href="/read/'.$game->strid.'">';
-                $avatar .= '<img src="http://img.exs.lv/'.$game->avatar.'" ';
+                $avatar .= '<img src="//img.exs.lv/'.$game->avatar.'" ';
                 $avatar .= 'title="'.$game->title.'" alt=""></a>';
                 $game->avatar = $avatar;
             } else {
@@ -138,3 +138,4 @@ class Minigames extends Controller {
         ));
     }
 }
+

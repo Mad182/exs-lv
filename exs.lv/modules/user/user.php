@@ -218,7 +218,7 @@ if ($inprofile) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Skype',
-				'value' => '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script><a href="skype:' . htmlspecialchars($inprofile->skype) . '?chat"><img src="http://download.skype.com/share/skypebuttons/buttons/chat_green_transparent_97x23.png" style="border: none;" width="97" height="23" alt="Chat with me" /></a>'
+				'value' => '<a href="skype:' . htmlspecialchars($inprofile->skype) . '?chat">' . htmlspecialchars($inprofile->skype) . '</a>'
 			));
 		}
 
@@ -358,12 +358,12 @@ if ($inprofile) {
 					$action->avatar = $action->avatar;
 				}
 				if (substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
-					$action->avatar = 'http://exs.lv' . $action->avatar;
+					$action->avatar = '//exs.lv' . $action->avatar;
 				}
 				if (substr($action->avatar, 0, 8) == '/bildes/') {
-					$action->avatar = 'http://img.exs.lv' . $action->avatar;
+					$action->avatar = $img_server . $action->avatar;
 				}
-				$out .= '<li><img class="av" src="' . $action->avatar . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
+				$out .= '<li><img class="av" src="' . str_replace(array('http://img.exs.lv', 'http://exs.lv'), array('//img.exs.lv', '//exs.lv'), $action->avatar) . '" alt="" /><span>Pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
 			}
 			$out .= '</ul>';
 		}

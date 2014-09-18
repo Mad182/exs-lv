@@ -56,6 +56,13 @@ if (!$auth->ok) {
 
 			$pwd_token = hash('sha256', uniqid() . $userdata->mail . $auth->ip);
 
+			//link protocol
+			if (empty($config_domains[$lang]['ssl'])) {
+				$proto = 'http://';
+			} else {
+				$proto = 'https://';
+			}
+
 			//suta e-pastu
 			require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
@@ -69,17 +76,17 @@ if (!$auth->ok) {
 			$message->setBody('
 				<h3>Sveiki!</h3>
 				<p>
-					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā exs.lv
+					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā ' . $_SERVER['HTTP_HOST'] . '
 				</p>
 				<p>
 					Lai apstiprinātu paroles maiņu, nospied uz zemāk redzamās saites, vai iekopē to pārlūkprogrammas adreses joslā:<br />
-					<a href="http://' . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">http://' . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a><br />
+					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a><br />
 					<br />
 				</p>
 				<p>
 					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
 					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.</p>
-				<p>__<br />Ar cieņu,<br />Exs.lv adminu un moderatoru komanda!</p>
+				<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>
 			');
 			$message->setContentType("text/html");
 
@@ -99,3 +106,4 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
+

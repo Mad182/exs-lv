@@ -106,6 +106,13 @@ if (!$auth->ok) {
 		$tpl->gotoBlock('registration-form');
 		$tpl->newBlock('greetings');
 
+		//link protocol
+		if (empty($config_domains[$lang]['ssl'])) {
+			$proto = 'http://';
+		} else {
+			$proto = 'https://';
+		}
+
 		//suta e-pastu
 		require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
@@ -118,8 +125,8 @@ if (!$auth->ok) {
 		$message->setTo(stripslashes($regdata['mail']));
 		$message->setBody('<h4>Sveiki!</h4><p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '! Ceram, ka labi pavadīsi laiku :)</p>
 		<p>Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.</p>
-		<p><a href="http://' . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>
-		<p>__<br />' . $_SERVER['HTTP_HOST'] . ' adminu un moderatoru komanda!</p>');
+		<p><a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>
+		<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>');
 		$message->setContentType("text/html");
 		$mailer->send($message);
 	} else {
@@ -138,3 +145,4 @@ if (!$auth->ok) {
 	set_flash("Tu jau esi reģistrējies :D");
 	redirect();
 }
+

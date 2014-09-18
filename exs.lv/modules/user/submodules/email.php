@@ -20,6 +20,13 @@ if (isset($_POST['submit'])) {
 
 				$email_token = hash('sha256', uniqid() . $inprofile->mail . $auth->ip);
 
+				//link protocol
+				if (empty($config_domains[$lang]['ssl'])) {
+					$proto = 'http://';
+				} else {
+					$proto = 'https://';
+				}
+
 				//suta e-pastu
 				require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
@@ -37,13 +44,13 @@ if (isset($_POST['submit'])) {
 				</p>
 				<p>
 					Lai apstiprinātu e-pasta maiņu, nospied uz zemāk redzamās saites, vai iekopē to pārlūkprogrammas adreses joslā:<br />
-					<a href="http://' . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">http://' . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br />
+					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br />
 					<br />
 				</p>
 				<p>
 					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
 					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.</p>
-				<p>__<br />Ar cieņu,<br />Exs.lv adminu un moderatoru komanda!</p>
+				<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>
 			');
 				$message->setContentType("text/html");
 
@@ -82,3 +89,4 @@ $tpl->assign(array(
 ));
 
 $page_title = 'E-pasta adreses maiņa';
+
