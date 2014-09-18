@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 
 				$inprofile->mail = email2db($_POST['edit-mail']);
 
-				$email_token = hash('sha256', uniqid() . $inprofile->mail . $auth->ip);
+				$email_token = substr(hash('sha256', uniqid() . $inprofile->mail . $auth->ip), 0, 16);
 
 				//link protocol
 				if (empty($config_domains[$lang]['ssl'])) {
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 				</p>
 				<p>
 					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.</p>
+					Ja neesi veicis šo darbību, lūdzam informēt par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>
 				<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>
 			');
 				$message->setContentType("text/html");

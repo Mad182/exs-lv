@@ -10,7 +10,7 @@ if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `ip` = '$auth->ip' AND 
 }
 
 
-if (isset($_GET['var1']) && strlen($_GET['var1']) == 64) {
+if (isset($_GET['var1']) && (strlen($_GET['var1']) === 64 || strlen($_GET['var1']) === 16)) {
 
 	$userdata = $db->get_row("SELECT * FROM `users` WHERE
 					`email_token` = '" . sanitize($_GET['var1']) . "' AND
