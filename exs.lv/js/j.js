@@ -552,7 +552,35 @@ $(document).ready(function() {
 		$(this).off('click').remove();
 		e.preventDefault();
 	});
+	
+	/* universāla funkcija satura parādīšanai iekš fancybox */
+	function open_fancy(content) {
+		var addr = $(content).attr('href');        
+		$.get(addr + '?_=1' , function(data) {
+			$.fancybox(data);
+		});
+	}
+	
+	/* profili - piesaistīto profilu saraksta atvēršana */
+	$('#profile-list').on('click', '.show-children', function(e) {  
+		$(this).parent().parent().next().toggle();    
+		e.preventDefault();
+	});    
+	/* profili - profila piesaistīšana */
+	$('#profile-list').on('click', '.connect-profile', function(e) {
+		open_fancy($(this));
+		e.preventDefault();
+	});    
+	/* profili - profilu grupas dzēšana */
+	$('#profile-list').on('click', '.delete-group', function(e) {    
+		open_fancy($(this));      
+		e.preventDefault();
+	});
+	/* profili - apraksta rediģēšana */
+	$('#profile-list').on('click', '.edit-description', function(e) {    
+		open_fancy($(this));      
+		e.preventDefault();
+	});
 
 	setTimeout('msgrr()', query_timeout);
-
 });

@@ -229,6 +229,19 @@ html .banned {
 	filter:alpha(opacity=100); /* For IE8 and earlier */
 }
 
+/* cits */
+.note {
+	margin:10px 3px;
+	padding:9px 15px;
+	background-color:#ECEFF5;
+	border:1px solid #DADDDF;
+	font-size:11px;
+	color:#4D5669
+}
+.pointer:hover {
+	cursor:pointer
+}
+
 /* layout */
 #wrapper {
 	position: relative;
@@ -2279,9 +2292,9 @@ a.left {
   vertical-align: middle;
   cursor: pointer;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+	 -moz-user-select: none;
+	  -ms-user-select: none;
+		  user-select: none;
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -2303,7 +2316,7 @@ a.left {
   background-image: none;
   outline: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		  box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 }
 .button.disabled,
 .button[disabled],
@@ -2312,7 +2325,7 @@ fieldset[disabled] .button {
   cursor: not-allowed;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
-          box-shadow: none;
+		  box-shadow: none;
   opacity: .65;
 }
 .button {
@@ -2573,7 +2586,7 @@ fieldset[disabled] .button-danger.active {
 fieldset[disabled] .button-link {
   background-color: transparent;
   -webkit-box-shadow: none;
-          box-shadow: none;
+		  box-shadow: none;
 }
 .button-link,
 .button-link:hover,
@@ -3655,6 +3668,9 @@ ul.taged {
 	text-align: center;
 	padding: 5px 0
 }
+.mod-list-table .centered {
+	text-align:center
+}
 
 
 .list-table {
@@ -4000,3 +4016,70 @@ li.view_more {
 	max-width: 300px;
 }
 
+/* Profilu sasaistes sadaļa */
+.new-main {
+	padding:10px 20px;
+	margin:10px 3px;
+	border:1px solid #EBEBEB;
+	background:rgb(252, 252, 252);
+}
+	.new-main .small-text {
+		font-weight:bold;
+		font-size:12px
+	}
+#profile-list tr.main-profile:nth-child(4n + 2) {
+	background:#FAFAFA
+}
+	.is-hidden {
+		display:none
+	}
+	.main-profile td:nth-child(2) {
+		position:relative
+	}
+	.show-children:hover {
+		cursor:pointer
+	}
+	.show-children {
+		padding:5px 15px 0;
+		position:absolute;
+		top:5px;
+		right:0
+	}
+	.show-children:hover {
+		background:rgb(243, 243, 243)
+	}
+.child-block {
+	background:#F7FBFF;
+	border:1px solid #E2E6F1;
+	margin-left:10px;
+	padding:20px
+}
+.fancy-container {
+	width:500px;
+	min-height:130px;
+	padding-bottom:7px;
+	overflow:auto;
+	margin:0 5px 5px;
+	font-size:12px
+}
+	.fancy-title {
+		margin:5px 0;
+		font-weight:bold;
+		font-size:14px;
+		color:#234C79;
+		padding:0 0 5px;
+		border-bottom:1px solid #ddd
+	}
+	.fancy-info {
+		float:right;
+		padding:5px;
+		margin-top:7px;
+		border:1px dotted #EBEBEB
+	}
+	.fancy-info i {
+		color:#95A4B3
+	}
+.profiles-description {
+	width:400px;
+	min-height:90px
+}
