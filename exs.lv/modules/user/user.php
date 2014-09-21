@@ -17,121 +17,27 @@ if ($inprofile) {
 	profile_menu($inprofile, 'profile', 'profils', 'profilu');
 
 	/**
-	 * 	Lietotāja bloķēšana
+	 * 	Lietotāja profilu bloķēšana
 	 */
-	if (isset($_GET['var2']) && $_GET['var2'] == 'block' && im_mod() && $inprofile->level != 1 && ($inprofile->level != 2 or $auth->level == 1)) {
+	if (isset($_GET['var2']) && $_GET['var2'] == 'block') {
 
-		// nosaka lietotāja aktīvo brīdinājumu skaitu
-		$warn_count = $db->get_var("
-			SELECT count(*) FROM `warns`
-			WHERE
-				`warns`.`user_id` 	= " . $inprofile->id . " AND
-				`warns`.`active` 	= 1	AND
-				`warns`.`site_id`	= " . $lang);
-
-		// iesniegti bloķēšanas dati
-		if (isset($_POST['block-reason'])) {
-
-			$reason = sanitize(htmlspecialchars($_POST['block-reason']));
-			$length = (int) $_POST['block-length'];
-
-			/**
-			 * Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu
-			 * Globālie admini var izvēlēties domēnu, vai visus domēnus (0)
-			 */
-			if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
-				$site = $lang;
-			} else {
-				$site = (int) $_POST['block-domain'];
-			}
-
-			$db->query("INSERT INTO `banned` (`user_id`,`reason`,`time`,`length`,`author`,`ip`,`lang`)
-				VALUES ('$inprofile->id','$reason','" . time() . "','$length','$auth->id','$inprofile->lastip', '$site')");
-			get_banlist(true);
-
-			// pārbauda, vai nav nepieciešams noņemt aktīvos brīdinājumus
-			if (isset($_POST['warn-removal-reason']) && isset($_POST['warn-removal'])) {
-
-				$removal_reason = post2db($_POST['warn-removal-reason']);
-				$remove_count = (int) $_POST['warn-removal'];
-				$remove_count = ($remove_count > $warn_count || $remove_count < 0) ? 0 : $remove_count;
-
-				// norādīts, ka vismaz viens brīdinājums jānoņem
-				if ($remove_count > 0) {
-
-					// atlasa visu noņemamo brīdinājumu ids
-					$get_ids = $db->get_results("
-						SELECT `id` FROM `warns`
-						WHERE `user_id` = '$inprofile->id' AND `active` = 1 AND `site_id` = $lang
-						ORDER BY `created` ASC
-						LIMIT $remove_count
-					");
-					if ($get_ids) {
-						foreach ($get_ids as $single_id) {
-							$ids[] = $single_id->id;
-						}
-						// noņem visus norādītos brīdinājumus
-						if (!empty($ids)) {
-							$db->query("
-								UPDATE `warns`
-								SET
-									`warns`.`active` 		= 0,
-									`warns`.`removed` 		= NOW(),
-									`warns`.`removed_by` 	= $auth->id,
-									`warns`.`remove_reason` = '$removal_reason'
-								WHERE `warns`.`id` IN(" . implode(',', $ids) . ")
-							");
-						}
-					}
-				}
-			}
-			redirect('/banned');
-		}
-
-		$tpl->newBlock('user-profile-block');
-
-		// izdrukā (vai neizdrukā) izvēlni ar brīdinājumu skaitu
-		if (!$warn_count) {
-			$tpl->newBlock('no-active-warns');
-		} else {
-			$tpl->newBlock('warn-removal');
-			for ($i = 1; $i <= $warn_count; $i++) {
-				$tpl->newBlock('warn-removal-option');
-				$tpl->assign('x', $i);
-			}
-		}
-
-		// globālajiem modiem rāda domēnu izvēli
-		if (!in_array($auth->id, $site_access[1]) && !in_array($auth->id, $site_access[2])) {
-			$tpl->newBlock('block-domain');
-
-			foreach ($config_domains as $key => $domain) {
-				if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
-					$tpl->newBlock('block-domain-node');
-					$tpl->assign(array(
-						'id' => $key,
-						'domain' => $domain['domain']
-					));
-				}
-			}
-		}
-
-		$page_title = 'Bloķēt lietotāju &quot;' . $inprofile->nick . '&quot;';
+		require CORE_PATH . '/modules/user/submodules/banning.php';
 	}
-
 	/**
 	 * 	Ielādē submoduli pēc GET[var1]
-	 */ elseif ($auth->ok && $auth->id == $inprofile->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
+	 */ 
+    elseif ($auth->ok && $auth->id == $inprofile->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
 
 		require CORE_PATH . '/modules/user/submodules/' . mkslug($_GET['var1']) . '.php';
 	}
 	/**
 	 * 	expts dāvināšana citam lietotājam
-	 */ elseif ($auth->ok && $auth->id != $inprofile->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
+	 */ 
+    elseif ($auth->ok && $auth->id != $inprofile->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
 
 		require CORE_PATH . '/modules/user/submodules/give.php';
 
-		//view profile
+    //view profile
 	} else {
 
 		include CORE_PATH . '/includes/class.friend.php';

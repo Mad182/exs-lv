@@ -15,7 +15,7 @@
     </div>
     <div style="float:right;width:45%">
         <form method="post" action="/{category-url}/add-main">
-            <p class="small-text">Pievieno galveno profilu, norādīt profila ID:</p>
+            <p class="small-text">Pievieno galveno profilu, norādot profila ID:</p>
             <p>
                 <input type="text" name="userid" value="{userid}">
                 <input type="submit" name="submit" class="danger button" value="Pievienot">
@@ -79,7 +79,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var aTag = $({main-id});
-        aTag.next().removeClass('is-hidden');
+        aTag.next().removeClass('is-hidden'); 
         $('html, body').animate({scrollTop: aTag.offset().top}, 'slow');
     });
 </script>
@@ -127,8 +127,8 @@
                 <!-- START BLOCK : no-children -->
                 <p style="font-weight:bold">Šim profilam citu piesaistītu profilu nav.</p>
                 <!-- END BLOCK : no-children -->
-                
-                <table class="child-table">
+
+                <table class="child-table clearfix">
                     <!-- START BLOCK : child-table-header -->
                     <tr style="font-weight:bold">
                         <td style="width:20px">ID</td>
@@ -136,6 +136,7 @@
                         <td style="width:120px">Redzēts</td>
                         <td style="width:120px">Pēdējā IP</td>
                         <td style="width:80px">&nbsp;</td>
+                    </tr>
                     <!-- END BLOCK : child-table-header -->
                     <!-- START BLOCK : a-child -->
                     <tr>

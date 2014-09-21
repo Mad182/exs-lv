@@ -10,6 +10,7 @@
         - stils uz dark skin
         - grupā pārmainot main profilu, būs jāpārbauda bloķētā grupa liegumu tabulā
         - apakšprojekti...
+        - pie bloķēšanas - pābaudot profila eksistenci kādā grupā, jāpārbauda arī, vai main profils nav dzēsts
 */
 
 if (!im_mod()) {
@@ -71,7 +72,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 } else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 
     if (!isset($_POST['userid']) || (int)$_POST['userid'] < 1) {
-        set_flash('Iesniegti kļūdaini dati!');
+        set_flash('Norādīti kļūdaini dati!');
         redirect('/'.$_GET['viewcat']);
     }
     
