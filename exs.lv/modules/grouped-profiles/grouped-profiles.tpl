@@ -98,7 +98,7 @@
     <tr id="profile-{user_id}" class="main-profile">
         <td>{counter}</td>
         <td>
-            {user_nick}
+            <a href="/user/{user_id}">{user_nick}</a>
             <a class="show-children" href="javascript:void(0);return false">
                 <img src="/bildes/fugue-icons/arrow-down.png" title="Skatīt piesaistītos profilus" alt="">
             </a>
@@ -108,6 +108,9 @@
         <td class="centered" style="position:relative">
             <a class="connect-profile" href="/{category-url}/add-child/{ug_id}">
                 <img src="/bildes/fugue-icons/sql-join-left.png" title="Piesaistīt profilu" alt="">
+            </a>
+            <a class="delete-group" href="/user/{user_id}/block">
+                <img src="/bildes/fugue-icons/auction-hammer.png" title="Skatīt bloķēšanas sadaļu" alt="">
             </a>
             <a class="edit-description" href="/{category-url}/edit/{ug_id}">
                 <img src="/bildes/fugue-icons/script--plus.png" title="Labot grupas komentāru" alt="">
@@ -141,12 +144,15 @@
                     <!-- START BLOCK : a-child -->
                     <tr>
                         <td>{child_id}</td>
-                        <td>{child_nick}</td>
+                        <td><a href="/user/{child_id}">{child_nick}</a></td>
                         <td>{child_seen}</td>
                         <td>{child_lastip}</td>
                         <td>
                             <a class="confirm" href="/{category-url}/change-main/{child_parent}">
                                 <img src="/bildes/fugue-icons/arrow-135-medium.png" title="Mainīt vietām ar galveno profilu" alt="">
+                            </a>
+                            <a class="confirm" href="/user/{main-profile-id}/block#profiles">
+                                <img src="/bildes/fugue-icons/auction-hammer.png" title="Skatīt bloķēšanas sadaļu" alt="">
                             </a>
                             <a class="confirm" href="/{category-url}/delete-child/{child_parent}/{user_id}">
                                 <img src="/bildes/fugue-icons/bin-full.png" title="Atsaistīt profilu" alt="">

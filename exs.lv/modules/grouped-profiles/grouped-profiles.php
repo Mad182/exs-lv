@@ -559,8 +559,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
                 $main_cnt++;
                 
                 // izveido jaunu rindu galvenajam profilam
-                $profile->user_nick = usercolor($profile->user_nick, $profile->user_level);
-                $profile->user_nick = '<a href="' . mkurl('user', $profile->user_id, $profile->user_nick) . '">' . $profile->user_nick . '</a>';
+                $profile->user_nick = usercolor($profile->user_nick, $profile->user_level, false, $profile->user_id);
                 $profile->user_seen = date('d.m.y, H:i', strtotime($profile->user_seen));
 
                 $tpl->newBlock('a-profile');
@@ -581,12 +580,12 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
             // main profilam var nebūt neviena child profila
             if ($profile->child_id != '0') {
 
-                $profile->child_nick = usercolor($profile->child_nick, $profile->child_level);
-                $profile->child_nick = '<a href="' . mkurl('user', $profile->child_id, $profile->child_nick) . '">' . $profile->child_nick . '</a>';
+                $profile->child_nick = usercolor($profile->child_nick, $profile->child_level, false, $profile->child_id);
                 $profile->child_seen = date('d.m.y, H:i', strtotime($profile->child_seen));
             
                 $tpl->newBlock('a-child');
                 $tpl->assignAll($profile);
+                $tpl->assign('main-profile-id', $profile->user_id);
                 
                 $children_cnt++;
             }
