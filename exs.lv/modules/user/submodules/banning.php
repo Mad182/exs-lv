@@ -343,10 +343,10 @@ if ($is_banned) {
 /**
  *  Piesaistīto profilu bloķēšanas forma
  *
- *  Pagaidām citus piesaistītos profilus rādīsim tikai galvenajā exs,
+ *  Pagaidām citus piesaistītos profilus rādīsim tikai galvenajā un rs.exs,
  *  izlaižot apakšprojektus un to spec. modus.
  */
-if (($auth->id == 115 || $auth->id == 1) && $lang == 1) {
+if (($auth->id == 115 || $auth->id == 1) && ($lang == 1 || $lang == 9)) {
     
     $tpl->newBlock('form-other-profiles');    
 
@@ -361,8 +361,11 @@ if (($auth->id == 115 || $auth->id == 1) && $lang == 1) {
             $tpl->assign('ban-start-time', date('d.m.Y, H:i', time()));
         }
         
-        $tpl->newBlock('goto-group');
-        $tpl->assign('group-parent', $main_profile);
+        // runescape.exs.lv profilu sasaistes sadaļa nav pieejama
+        if ($lang == 1) {
+            $tpl->newBlock('goto-group');
+            $tpl->assign('group-parent', $main_profile);
+        }
  
         // ja atvērtais profils ir banots, citiem profiliem atzīmēs
         // tādu pašu iemeslu un termiņu, tāpēc custom iemesla lauks

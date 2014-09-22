@@ -571,7 +571,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
                 $tpl->newBlock('all-children');
                 $tpl->assign(array(
                     'user_seen' => $profile->user_seen,
-                    'user_lastip' => $profile->user_lastip
+                    'user_lastip' => (empty($profile->user_lastip) ? '-' : $profile->user_lastip)
                 ));
                 if (!empty($profile->description)) {
                     $tpl->assign('description', '<p><strong>Komentārs:</strong></p><p>'.$profile->description.'</p>');
