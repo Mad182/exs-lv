@@ -109,7 +109,7 @@
             <a class="connect-profile" href="/{category-url}/add-child/{ug_id}">
                 <img src="/bildes/fugue-icons/sql-join-left.png" title="Piesaistīt profilu" alt="">
             </a>
-            <a class="delete-group" href="/user/{user_id}/block">
+            <a href="/user/{user_id}/block">
                 <img src="/bildes/fugue-icons/auction-hammer.png" title="Skatīt bloķēšanas sadaļu" alt="">
             </a>
             <a class="edit-description" href="/{category-url}/edit/{ug_id}">
@@ -151,7 +151,7 @@
                             <a class="confirm" href="/{category-url}/change-main/{child_parent}">
                                 <img src="/bildes/fugue-icons/arrow-135-medium.png" title="Mainīt vietām ar galveno profilu" alt="">
                             </a>
-                            <a class="confirm" href="/user/{main-profile-id}/block#profiles">
+                            <a href="/user/{main-profile-id}/block#profiles">
                                 <img src="/bildes/fugue-icons/auction-hammer.png" title="Skatīt bloķēšanas sadaļu" alt="">
                             </a>
                             <a class="confirm" href="/{category-url}/delete-child/{child_parent}/{user_id}">

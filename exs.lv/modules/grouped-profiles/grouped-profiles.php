@@ -1,17 +1,11 @@
 <?php
 /**
- *  Profilu sasaiste
+ *  Profilu sasaistes sadaļa
  *
- *  Moderatoriem paredzēta sadaļa lietotāju profilu sagrupēšanai.
+ *  Moderatoriem iespēja esošos viena lietotāja profilus sasaistīt kopā,
+ *  lai vienkāršā veidā monitorētu fake profilu lietošanu un 
+ *  vienlaicīgi varētu dāvāt liegumus veselām grupām profilu.
  */
-/**
-    TODO:
-    
-        - stils uz dark skin
-        - grupā pārmainot main profilu, būs jāpārbauda bloķētā grupa liegumu tabulā
-        - apakšprojekti...
-        - pie bloķēšanas - pābaudot profila eksistenci kādā grupā, jāpārbauda arī, vai main profils nav dzēsts
-*/
 
 if (!im_mod()) {
     set_flash('Pieeja liegta!');
@@ -34,7 +28,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
         redirect('/'.$_GET['viewcat']);
     }
     
-    // nepieciešams norādītā lietotāja parent id
+    // nepieciešams norādītā lietotāja parent id, jo jāritina līdz tam
     $get_parent = $db->get_row("
         SELECT
             `users_groups`.`user_id`,
@@ -81,6 +75,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
     $if_exists = get_user($user_id);
     if (!$if_exists) {
         set_flash('Norādītais lietotājs neeksistē!');
+        redirect('/'.$_GET['viewcat']);
+    } else if ($if_exists->level == 1 || $if_exists->level == 2) {
+        set_flash('Norādītais lietotājs nevar tikt pievienots!');
         redirect('/'.$_GET['viewcat']);
     }
     
@@ -177,6 +174,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
         $if_exists = get_user($child_id);        
         if (!$if_exists) {
             set_flash('Sasaistīt profilus neizdevās!');
+            redirect('/'.$_GET['viewcat']);
+        } else if ($if_exists->level == 1 || $if_exists->level == 2) {
+            set_flash('Norādītais lietotājs nevar tikt pievienots!');
             redirect('/'.$_GET['viewcat']);
         }
         
@@ -516,7 +516,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
             )
             LEFT JOIN `users` AS `child` ON (
                 `children`.`user_id` = `child`.`id` AND
-                `child`.`deleted` = 0
+                `child`.`deleted` = 0 AND
+                `child`.`level` NOT IN(1,2)
             )
         WHERE 
             `users_groups`.`parent_id` = 0 AND

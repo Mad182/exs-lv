@@ -102,7 +102,8 @@ if ($is_in_group) {
         FROM `users_groups`
             JOIN `users` ON (
                 `users_groups`.`user_id` = `users`.`id` AND
-                `users`.`deleted` = 0
+                `users`.`deleted` = 0 AND
+                `users`.`level` NOT IN(1,2)
             )
         WHERE
             `users_groups`.`deleted_by` = 0 AND
