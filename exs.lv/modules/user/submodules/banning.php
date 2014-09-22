@@ -422,7 +422,12 @@ if (($auth->id == 115 || $auth->id == 1) && $lang == 1) {
                 LIMIT 0, 1
             ");
             if ($ban_data) {
-                $single->time_left = strTime($ban_data->time + $ban_data->length - time());
+                $time_left = $ban_data->time + $ban_data->length - time();
+                if ($time_left > 0) {
+                    $single->time_left = strTime($time_left);
+                } else {                
+                    $single->time_left = '-';
+                }
                 $single->checked = '';
             } else {
                 $single->time_left = '-';

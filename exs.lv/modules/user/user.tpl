@@ -397,8 +397,12 @@
             </p>
             <!-- END BLOCK : has-active-ban -->
             
+            <!-- START BLOCK : no-active-warns -->
+            <p class="note">Šim profilam nav aktīvu, noņemamu brīdinājumu.</p>
+            <!-- END BLOCK : no-active-warns -->
+            
             <!-- START BLOCK : ban-form -->
-            <table class="form-table">
+            <table class="form-table" style="width:100%;margin-top:-15px">
                 <tr>
                     <td style="width:30%">&nbsp;</td>
                     <td style="width:70%">&nbsp;</td>
@@ -446,17 +450,10 @@
                     <td class="form-option"><label for="warn-reason">Noņemšanas<br>iemesls:</label></td>
                     <td><input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" /></td>
                 </tr>
-                <!-- END BLOCK : warn-removal -->
-                <!-- START BLOCK : no-active-warns -->
-                <tr>
-                    <td colspan="2">
-                        <p class="note">Šim profilam nav aktīvu, noņemamu brīdinājumu.</p>
-                    </td>
-                </tr>
-                <!-- END BLOCK : no-active-warns -->
+                <!-- END BLOCK : warn-removal -->                
                 <tr>
                     <td></td>
-                    <td><input class="button primary" type="submit" name="submit" value="Bloķēt" /></td>
+                    <td><input class="button primary" style="width:120px" type="submit" name="submit" value="Bloķēt" /></td>
                 </tr>
             </table>
             <!-- END BLOCK : ban-form -->
@@ -477,7 +474,7 @@
             <p class="note">Tabulā redzama tikai tā informācija, kas attiecas uz atvērto apakšprojektu. Piemērojot liegumu profilam kādā citā apakšprojektā, par darbības pareizību pārliecināties varēs <a href="/banned">šeit</a>.</p>     
             <p class="note">Ja profils jau ir bloķēts, atķeksējot to, tā iemesls un termiņš no esošā tiks mainīts uz norādīto.</p>
 
-            <table class="form-table">
+            <table class="form-table" style="width:100%">
                 <tr>
                     <td class="form-option" style="width:30%"><label for="reason-2">Iemesls:</label></td>
                     <td style="width:70%"><input type="text" class="text" name="reason-2" id="reason-2" value="{reason}" maxlength="256" /></td>
