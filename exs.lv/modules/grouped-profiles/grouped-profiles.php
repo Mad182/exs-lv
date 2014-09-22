@@ -586,7 +586,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
             
                 $tpl->newBlock('a-child');
                 $tpl->assignAll($profile);
-                $tpl->assign('main-profile-id', $profile->user_id);
                 
                 $children_cnt++;
             }

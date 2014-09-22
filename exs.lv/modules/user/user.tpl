@@ -467,11 +467,7 @@
     <!-- START BLOCK : form-other-profiles -->
     <form id="edit-profile" class="form" action="/user/{user-id}/block/other" method="post">
 		<fieldset id="profiles">
-			<legend><strong>Piesaistīto profilu bloķēšana</strong>
-            <!-- START BLOCK : goto-group -->
-            &nbsp;<a href="/grouped-profiles?scroll={group-parent}">(skatīt grupu)</a>
-            <!-- END BLOCK : goto-group -->
-            </legend>
+			<legend><strong>Piesaistīto profilu bloķēšana</strong></legend>
 
             <!-- START BLOCK : no-other-profiles -->
             <p class="note">Šim profilam nav citu piesaistītu profilu.</p>
@@ -535,9 +531,14 @@
                         <input type="checkbox" class="js-checkbox" name="block-{id}"{checked}>
                     </td>
                 </tr>
-                <!-- END BLOCK : other-profile -->
+                <!-- END BLOCK : other-profile -->                
                 <tr>
-                    <td colspan="5" style="text-align:right"><input class="confirm button primary" style="width:120px" type="submit" name="submit" value="Bloķēt" /></td>
+                    <td colspan="5" style="text-align:right">
+                        <!-- START BLOCK : goto-group -->
+                        <a class="button danger" style="float:left" href="/grouped-profiles?scroll={group-parent}">Skatīt profilu grupu</a>
+                        <!-- END BLOCK : goto-group -->
+                        <input class="confirm button primary" style="width:120px" type="submit" name="submit" value="Bloķēt">
+                    </td>
                 </tr>
             </table>
             

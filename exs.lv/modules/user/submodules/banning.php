@@ -352,18 +352,18 @@ if (($auth->id == 115 || $auth->id == 1) && $lang == 1) {
 
     if (!$has_profiles) {
         $tpl->newBlock('no-other-profiles');
-    } else {        
-    
-        $tpl->newBlock('goto-group');
-        $tpl->assign('group-parent', $main_profile);
+    } else {
     
         $tpl->newBlock('has-other-profiles');
         if ($is_banned) {
-            $tpl->assign('ban-start-time', date('d.m.Y, H:i:s', $find_ban->time).' (sakrīt ar atvērtā profila laiku)');
+            $tpl->assign('ban-start-time', date('d.m.Y, H:i:s', $find_ban->time).' (sakrīt ar atvērtā profila lieguma laiku)');
         } else {
             $tpl->assign('ban-start-time', date('d.m.Y, H:i', time()));
         }
-                
+        
+        $tpl->newBlock('goto-group');
+        $tpl->assign('group-parent', $main_profile);
+ 
         // ja atvērtais profils ir banots, citiem profiliem atzīmēs
         // tādu pašu iemeslu un termiņu, tāpēc custom iemesla lauks
         // jārāda tikai tad, kad nav iemesla, kuru paņemt
