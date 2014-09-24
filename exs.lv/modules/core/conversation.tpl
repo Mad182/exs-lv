@@ -16,6 +16,9 @@
 		<legend>Pievienot jaunu ierakstu</legend>
 		<input type="hidden" name="token" id="token" value="{token}" />
 		<textarea class="mb-textarea" rows="5" cols="42" name="newminiblog" id="newminiblog"></textarea>
+		<!-- START BLOCK : private-checkbox-->
+		<br /><label><input type="checkbox" name="private" value="1" /><small>&nbsp;nerādīt publiski (<abbr title="Ja atzīmēsi šo opciju, tavs minibloga ieraksts būs redzams tikai reģistrētajiem lietotājiem un netiks indeksēts google">?</abbr>)</small></label><br />
+		<!-- END BLOCK : private-checkbox-->
 		<p>
 			<input class="button primary" type="submit" name="submit" id="submit" value="Pievienot" />
 		</p>

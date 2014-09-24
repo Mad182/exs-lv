@@ -35,8 +35,14 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 	if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 15) {
 		$_SESSION["antiflood"] = time();
 
+		$private = 0;
+		if (isset($_POST['private'])) {
+			$private = 1;
+		}
+
 		$lastins = post_mb(array(
-			'text' => $body
+			'text' => $body,
+			'private' => $private
 		));
 
 		$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$lastins'");
@@ -216,6 +222,7 @@ if (!empty($inprofile)) {
 	if ($auth->ok && $auth->id == $inprofile->id && !isset($_GET['single'])) {
 		$tpl->newBlock('user-miniblog-form');
 		$tpl->assign('token', md5('mb' . $remote_salt . $auth->nick));
+		$tpl->newBlock('private-checkbox');
 	}
 
 	// saraksts ar visiem lietotāja miniblogiem

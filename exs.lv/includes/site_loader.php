@@ -73,3 +73,4 @@ if (!$found) {
 if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
+

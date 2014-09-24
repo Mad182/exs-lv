@@ -1061,7 +1061,21 @@ function get_footer_mb($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($html = $m->get('f_mb_' . $lang))) {
 		$html = '';
-		$latest = $db->get_results("SELECT `text`,`id`,`author` FROM `miniblog` WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1209600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang ORDER BY `id` DESC LIMIT 5");
+		
+		//miniblogi kas nav publiski pieejami
+		$priv = '';
+		if(!$auth->ok) {
+			$priv = ' AND `miniblog`.`private` = 0 ';
+		}
+
+		$latest = $db->get_results("
+			SELECT `text`,`id`,`author`
+			FROM `miniblog`
+			WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1209600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang $priv
+			ORDER BY `id` DESC
+			LIMIT 5
+		");
+
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
@@ -1858,7 +1872,12 @@ function get_latest_mbs($friends = false) {
 		$myfriends[] = $auth->id;
 		$friendsquery = 'AND `miniblog`.`author` IN(' . implode(',', $myfriends) . ')';
 	}
-
+	
+	//miniblogi kas nav publiski pieejami
+	$priv = '';
+	if(!$auth->ok) {
+		$priv = ' AND `miniblog`.`private` = 0 ';
+	}
 
 	$mbs = $db->get_results("SELECT
 		`miniblog`.`id` AS `id`,
@@ -1884,6 +1903,7 @@ function get_latest_mbs($friends = false) {
 		(" . $groupquery . ") AND
 		`users`.`id` = `miniblog`.`author`
 		$friendsquery
+		$priv
 	ORDER BY
 		`miniblog`.`bump`
 	DESC LIMIT $skip, 6");
@@ -2016,6 +2036,7 @@ function post_mb($post) {
 		'author' => $auth->id,
 		'date' => 'NOW()',
 		'text' => '',
+		'private' => 0,
 		'parent' => 0,
 		'reply_to' => 0,
 		'ip' => $auth->ip,

@@ -233,6 +233,12 @@ if ($auth->level == 1) {
 
 $addlang = "`miniblog`.`lang` = '$lang'";
 
+//miniblogi kas nav publiski pieejami
+$priv = '';
+if(!$auth->ok) {
+	$priv = ' AND `miniblog`.`private` = 0 ';
+}
+
 $mbs = $db->get_results("SELECT
 	`miniblog`.`id` AS `id`,
 	`miniblog`.`text` AS `text`,
@@ -257,6 +263,7 @@ WHERE
 	" . $addlang . " AND
 	(" . $groupquery . ") AND
 	`users`.`id` = `miniblog`.`author`
+	$priv
 ORDER BY
 	`miniblog`.`bump`
 DESC LIMIT 0, 20");

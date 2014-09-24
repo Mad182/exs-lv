@@ -35,3 +35,4 @@ if (isset($_GET['var1']) && (strlen($_GET['var1']) === 64 || strlen($_GET['var1'
 	}
 	redirect();
 }
+

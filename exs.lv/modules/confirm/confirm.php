@@ -11,8 +11,8 @@ if (isset($_GET['var1'])) {
 
 	if ($user) {
 
-		$db->query("INSERT INTO users (`id`,`nick`,`password`,`mail`,`date`,`lastseen`,`lastip`,`skin`,`user_agent`,`source_site`)
-		VALUES (NULL,'" . sanitize($user->nick) . "','" . $user->password . "','" . $user->mail . "','" . $user->created . "',NOW(),'" . sanitize($auth->ip) . "','3','" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', '$lang')");
+		$db->query("INSERT INTO users (`id`,`nick`,`password`,`mail`,`mail_confirmed`,`date`,`lastseen`,`lastip`,`skin`,`user_agent`,`source_site`)
+		VALUES (NULL,'" . sanitize($user->nick) . "','" . $user->password . "','" . $user->mail . "',NOW(),'" . $user->created . "',NOW(),'" . sanitize($auth->ip) . "','3','" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', '$lang')");
 
 		$newid = $db->insert_id;
 
@@ -29,7 +29,7 @@ if (isset($_GET['var1'])) {
 			$db->query("UPDATE `users` SET `show_rs` = '1' WHERE `id` = '$newid'");
 		}
 
-		$db->query("INSERT INTO visits (user_id,site_id,ip,lastseen) VALUES ('$newid','$lang','$auth->ip',NOW())");
+		$db->query("INSERT INTO `visits` (`user_id`,`site_id`,`ip`,`lastseen`) VALUES ('$newid','$lang','$auth->ip',NOW())");
 
 		$greet = '<h3>Čau!</h3><p>Sveicu Tevi ar pievienošanos ' . $_SERVER['HTTP_HOST'] . ' lietotāju pulkam!</p><p>Ceru uz Tavu aktivitāti mūsu komūnā.<br />Ja rodas kādas neskaidrības, apskaties <a href="http://exs.lv/read/buj">biežāk uzdotos jautājumus</a> vai arī droši jautā mums - administratoriem un moderatoriem (visi ar sarkaniem vai ziliem nikiem).</p><p>Lai Tev laba diena! :mjau:</p><p style="font-size:90%;color:#888">Šī ziņa ir nosūtīta automātiski.</p>';
 
@@ -47,7 +47,7 @@ if (isset($_GET['var1'])) {
 		update_karma($newid);
 
 		//remove user from temp table
-		$db->query("DELETE FROM users_tmp WHERE id = '$user->id'");
+		$db->query("DELETE FROM `users_tmp` WHERE `id` = '$user->id'");
 
 		//redirect to private messages, to read greet msg
 		redirect('/pm');
