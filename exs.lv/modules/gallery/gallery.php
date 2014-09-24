@@ -53,7 +53,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 			require(CORE_PATH . '/includes/class.upload.php');
 
-			ini_set('memory_limit', '160M');
+			ini_set('memory_limit', '180M');
 
 			$description = post2db($_POST['new-image-description']);
 
@@ -74,18 +74,18 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$foo->image_y = 720;
 			$foo->allowed = array('image/*');
 			$foo->image_ratio_no_zoom_in = true;
-			$foo->jpeg_quality = 97;
+			$foo->jpeg_quality = 98;
 			$foo->process($folder);
 
 			if ($foo->processed) {
 				$foo->file_new_name_body = 'thb_' . $text;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';
-				$foo->image_x = 56;
-				$foo->image_y = 56;
+				$foo->image_x = 72;
+				$foo->image_y = 72;
 				$foo->allowed = array('image/*');
 				$foo->image_ratio_crop = true;
-				$foo->jpeg_quality = 97;
+				$foo->jpeg_quality = 98;
 				$foo->process($folder);
 				$foo->clean();
 
