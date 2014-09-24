@@ -75,15 +75,16 @@
 		<!-- START BLOCK : image-list-empty-->
 
 		<!-- START BLOCK : image-view-->
-		<div id="gal-large" style="width:{width}px;height:{height}px" class="prew-next">
+		<div id="gal-large" class="prew-next">
 			<!-- START BLOCK : image-view-img-->
-			<img width="{width}" height="{height}" src="{img-server}/{image-url}" alt="attēls" title="{image-title}" />
+			<img src="{img-server}/{image-url}" alt="attēls" title="{image-title}" />
 			{newer}
 			{older}
 			<!-- END BLOCK : image-view-img-->
 			<!-- START BLOCK : image-view-video-->
 			{video}
 			<!-- END BLOCK : image-view-video-->
+			<div class="clear"></div>
 		</div>
 
 		{image-text}

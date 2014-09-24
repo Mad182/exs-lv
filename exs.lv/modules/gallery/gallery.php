@@ -70,11 +70,8 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$foo->file_new_name_body = 'large_' . $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';
-			$foo->image_x = 560;
-			if ($lang == 7) {
-				$foo->image_x = 540;
-			}
-			$foo->image_y = 700;
+			$foo->image_x = 960;
+			$foo->image_y = 720;
 			$foo->allowed = array('image/*');
 			$foo->image_ratio_no_zoom_in = true;
 			$foo->jpeg_quality = 97;

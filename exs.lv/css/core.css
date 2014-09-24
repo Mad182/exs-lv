@@ -2085,8 +2085,15 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 
 #gal-large {
 	margin: 0 auto;
-	padding: 5px 0;
+	padding: 10px 0;
 	position: relative;
+	text-align: center;
+}
+
+#gal-large img {
+	max-width: 100%;
+	width: auto;
+	height: auto;
 }
 
 #gal-large .img-newer, #gal-large .img-older {
