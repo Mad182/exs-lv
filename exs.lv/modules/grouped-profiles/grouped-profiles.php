@@ -11,7 +11,7 @@ if (!im_mod()) {
     set_flash('Pieeja liegta!');
     redirect();
     exit;
-} 
+}
 
 
 /**

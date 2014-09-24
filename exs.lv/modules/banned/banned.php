@@ -52,7 +52,7 @@ if (!$auth->ok) {
     }
     
     // pagaidām sadalījumu pa profilu grupām citos projektos nerādīsim
-    if ($lang == 1 && ($auth->id == 115 || $auth->id == 1)) {
+    if ($lang == 1 && ($auth->id == 115 || $auth->id == 1 || $auth->id == 4506)) {
 
         // bloķētie profili, kas atrodas kādā no profilu grupām; 
         // grupas ietvaros pirmais būs tas profils, kas bloķēts pēdējais,
