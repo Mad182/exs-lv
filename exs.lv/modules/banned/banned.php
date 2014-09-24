@@ -74,7 +74,10 @@ if (!$auth->ok) {
                     `banned`.`user_id` = `users_groups`.`user_id` AND
                     `banned`.`time` + `banned`.`length` > '" . time() . "'
                 )
-                JOIN `users` ON `users_groups`.`user_id` = `users`.`id`
+                JOIN `users` ON (
+                    `users_groups`.`user_id` = `users`.`id` AND
+                    `users`.`deleted` = 0
+                )
                 JOIN `users` AS `author` ON `banned`.`author` = `author`.`id`
             WHERE 
                 `users_groups`.`deleted_by` = 0
@@ -159,7 +162,10 @@ if (!$auth->ok) {
                 `author`.`nick` AS `author_nick`,
                 `author`.`level` AS `author_level`
             FROM `banned` 
-                JOIN `users` ON `banned`.`user_id` = `users`.`id`
+                JOIN `users` ON (
+                    `banned`.`user_id` = `users`.`id` AND
+                    `users`.`deleted` = 0
+                )
                 JOIN `users` AS `author` ON `banned`.`author` = `author`.`id`
                 LEFT JOIN `users_groups` ON (
                     `banned`.`user_id` = `users_groups`.`user_id` AND
