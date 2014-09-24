@@ -74,5 +74,4 @@
 <div class="c"></div>
 <!-- END BLOCK : img-upload-item-->
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev} </p>
-<!-- END BLOCK : iimg-upload-->
-
+<!-- END BLOCK : img-upload-->
