@@ -361,12 +361,6 @@ if (($auth->id == 115 || $auth->id == 1) && ($lang == 1 || $lang == 9)) {
             $tpl->assign('ban-start-time', date('d.m.Y, H:i', time()));
         }
         
-        // runescape.exs.lv profilu sasaistes sadaļa nav pieejama
-        if ($lang == 1) {
-            $tpl->newBlock('goto-group');
-            $tpl->assign('group-parent', $main_profile);
-        }
- 
         // ja atvērtais profils ir banots, citiem profiliem atzīmēs
         // tādu pašu iemeslu un termiņu, tāpēc custom iemesla lauks
         // jārāda tikai tad, kad nav iemesla, kuru paņemt
@@ -374,7 +368,7 @@ if (($auth->id == 115 || $auth->id == 1) && ($lang == 1 || $lang == 9)) {
             $tpl->assign(array(
                 'reason' => $find_ban->reason
             ));
-        }
+        }        
         
         // bana termiņu izvēlne
         foreach ($ban_lengths as $key => $value) {
@@ -405,6 +399,12 @@ if (($auth->id == 115 || $auth->id == 1) && ($lang == 1 || $lang == 9)) {
                     }
                 }
             }
+        }
+        
+        // runescape.exs.lv profilu sasaistes sadaļa nav pieejama
+        if ($lang == 1) {
+            $tpl->newBlock('goto-group');
+            $tpl->assign('group-parent', $main_profile);
         }
 
         $cnt_checked = 0;

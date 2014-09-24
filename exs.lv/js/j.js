@@ -597,6 +597,11 @@ $(document).ready(function() {
             $('.check-all').removeAttr('checked');
         } 
     });
+    
+    /* grupu toggle bloķēto profilu lapā */
+    $('.banned-list').on('click', '.show-banned', function() {
+        $('.child-of-' + $(this).attr('data-id')).toggle();
+    });
 
 	setTimeout('msgrr()', query_timeout);
 });
