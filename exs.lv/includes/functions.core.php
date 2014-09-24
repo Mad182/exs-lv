@@ -570,45 +570,22 @@ function mkurl($type, $id, $title, $add = '') {
 }
 
 /**
- * Adreses, kurām nelikt nofollow tagu
+ * Atrod sarakstu ar domēniem no dofollow_sites,
+ * https_sites un blacklisted_sites tabulām
  */
-function get_dofollow_sites() {
-	global $db, $m, $dofollow_sites;
-	if (empty($dofollow_sites)) {
-		if (($dofollow_sites = $m->get('dofollow_sites')) === false) {
-			$dofollow_sites = $db->get_col("SELECT `url` FROM `dofollow_sites`");
-			$m->set('dofollow_sites', $dofollow_sites, false, 3600);
-		}
-	}
-	return $dofollow_sites;
-}
+function get_sitelist($table) {
 
-/**
- * Atgriež masīvu ar bloķētiem mājas lapu domēniem
- */
-function get_blacklisted_sites() {
-	global $db, $m, $blacklisted_sites;
-	if (empty($blacklisted_sites)) {
-		if (($blacklisted_sites = $m->get('blacklisted_sites')) === false) {
-			$blacklisted_sites = $db->get_col("SELECT `url` FROM `blacklisted_sites`");
-			$m->set('blacklisted_sites', $blacklisted_sites, false, 1200);
-		}
-	}
-	return $blacklisted_sites;
-}
+	//variable name
+	$storage = $table . "_sites";
 
-/**
- * Adreses ar https protokola atbalstu
- */
-function get_https_sites() {
-	global $db, $m, $https_sites;
-	if (empty($https_sites)) {
-		if (($https_sites = $m->get('https_sites')) === false) {
-			$https_sites = $db->get_col("SELECT `url` FROM `https_sites`");
-			$m->set('https_sites', $https_sites, false, 3600);
+	global $db, $m, $$storage;
+	if (empty($$storage)) {
+		if (($$storage = $m->get($storage)) === false) {
+			$$storage = $db->get_col("SELECT `url` FROM `" . $storage . "`");
+			$m->set($storage, $$storage, false, 3600);
 		}
 	}
-	return $https_sites;
+	return $$storage;
 }
 
 function mention($text, $url = '#', $type = 'notype', $uniq = 0) {

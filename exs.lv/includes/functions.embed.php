@@ -51,7 +51,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 
 	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
-	$dofollow_sites = get_dofollow_sites();
+	$dofollow_sites = get_sitelist('dofollow');
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
 			$find = array(
@@ -71,7 +71,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	}
 
 	// adreses, kas atrodas blacklistē, tiek aizstātas ar "/ES_SPAMOJU_SUDUS"
-	$blacklisted_sites = get_blacklisted_sites();
+	$blacklisted_sites = get_sitelist('blacklisted');
 	foreach ($blacklisted_sites as $site) {
 		if (strpos($txt, $site) !== false) {
 			$replace = array(
@@ -113,7 +113,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	}
 
 	//http/https support
-	$https_sites = get_https_sites();
+	$https_sites = get_sitelist('https');
 	foreach ($https_sites as $site) {
 		if (strpos($txt, $site) !== false) {
 			$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
