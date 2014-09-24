@@ -1754,7 +1754,7 @@ function get_latest_images() {
 				$img = $img_server . '/' . $late->thb;
 			}
 
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '?reset" alt="" />';
+			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';

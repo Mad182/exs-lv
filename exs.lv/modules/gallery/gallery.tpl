@@ -48,7 +48,7 @@
 			<div class="scrollable imgs" id="images">
 				<div class="items">
 					<!-- START BLOCK : image-list-node-->
-					<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}?reset" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
+					<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
 					<!-- START BLOCK : image-list-node-->
 				</div>
 			</div>
