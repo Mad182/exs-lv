@@ -1058,13 +1058,13 @@ function get_banlist($force = false) {
  * Linki uz jaunākajiem miniblogiem lapas footerī
  */
 function get_footer_mb($force = false) {
-	global $db, $m, $lang;
+	global $db, $m, $lang, $auth;
 	if ($force || !($html = $m->get('f_mb_' . $lang))) {
 		$html = '';
-		
+
 		//miniblogi kas nav publiski pieejami
 		$priv = '';
-		if(!$auth->ok) {
+		if (!$auth->ok) {
 			$priv = ' AND `miniblog`.`private` = 0 ';
 		}
 
@@ -1872,10 +1872,10 @@ function get_latest_mbs($friends = false) {
 		$myfriends[] = $auth->id;
 		$friendsquery = 'AND `miniblog`.`author` IN(' . implode(',', $myfriends) . ')';
 	}
-	
+
 	//miniblogi kas nav publiski pieejami
 	$priv = '';
-	if(!$auth->ok) {
+	if (!$auth->ok) {
 		$priv = ' AND `miniblog`.`private` = 0 ';
 	}
 
