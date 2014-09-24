@@ -219,6 +219,8 @@ if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2']
         $domain = 0;
     }
 
+    $cnt_not_banned = 0;
+    
     foreach ($other_profiles as $profile) {
     
         // ja checkbox nav atzīmēts, profila sodu nealterē
@@ -242,36 +244,48 @@ if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2']
             ");
             
             // pielīdzina laiku atvērtā profila liegumam, ja tāds ir
-            $ban_time = ($is_banned) ? sanitize($find_ban->time) : time();
+            $ban_time = ($is_banned) ? $find_ban->time : time();
             
-            // liegums jau ir
-            if ($ban_data) {
+            // nav vērts bloķēt, ja laiks jau pagājis
+            if ($ban_time + $length > time()) {
+            
+                // liegums jau ir
+                if ($ban_data) {
+                    
+                    $db->query("
+                        UPDATE `banned`
+                        SET
+                            `reason` = '".$reason."',
+                            `time` = '".sanitize($ban_time)."',
+                            `length` = '".$length."',
+                            `author` = ".(int)$auth->id.",
+                            `lang` = ".$domain."
+                        WHERE `id` = ".(int)$ban_data->id."
+                    ");
                 
-                $db->query("
-                    UPDATE `banned`
-                    SET
-                        `reason` = '".$reason."',
-                        `time` = '".$ban_time."',
-                        `length` = '".$length."',
-                        `author` = ".(int)$auth->id.",
-                        `lang` = ".$domain."
-                    WHERE `id` = ".(int)$ban_data->id."
-                ");
-            
-            // lieguma vēl nav
+                // lieguma vēl nav
+                } else {
+                
+                    $data = array(
+                        'user_id' => $profile->id,
+                        'reason' => $reason,
+                        'time' => sanitize($ban_time),
+                        'length' => $length,
+                        'author' => (int)$auth->id,
+                        'ip' => sanitize($profile->lastip),
+                        'lang' => $domain
+                    );
+                    $db->insert('banned', $data);
+                }
             } else {
-            
-                $data = array(
-                    'user_id' => $profile->id,
-                    'reason' => $reason,
-                    'time' => $ban_time,
-                    'length' => $length,
-                    'author' => (int)$auth->id,
-                    'ip' => sanitize($profile->lastip),
-                    'lang' => $domain
-                );
-                $db->insert('banned', $data);
+                $cnt_not_banned++;
             }
+        }
+        
+        if ($cnt_not_banned > 0) {
+            set_flash('Kāds no profiliem netika bloķēts, jo tā lieguma sākuma laiks + izvēlētais termiņš jau pagājis!');
+            get_banlist(true);
+            redirect('/user/'.$inprofile->id.'/block');
         }
     }
     

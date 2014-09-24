@@ -523,7 +523,9 @@
                     <td><a href="/user/{id}">{nick}</a></td>
                     <td>{lastseen}</td>
                     <td class="centered">{time_left}</td>
-                    <td class="centered">{warns}</td>
+                    <td class="centered">
+                        <a href="/warns/{id}">{warns}</a>
+                    </td>
                     <td class="centered">
                         <input type="checkbox" class="js-checkbox" name="block-{id}"{checked}>
                     </td>
