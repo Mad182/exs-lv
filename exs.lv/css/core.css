@@ -1498,18 +1498,6 @@ a.friend img, .comments-avatar {
 	border: 1px solid #5D6A8C;
 }
 
-.imgs a {
-	float: left;
-	width: 55px;
-	height: 55px;
-	overflow: hidden;
-	display: inline;
-	border: 1px solid #fff;
-	position: relative;
-	background: #ccc;
-	margin: 1px 1px 0 0;
-}
-
 .imgs .items a {
 	float: left;
 	width: 72px;
@@ -1531,11 +1519,45 @@ a.friend img, .comments-avatar {
 	width: 18px;
 	background: #444;
 	color: #888;
-	display: block;
 	text-align: center;
 }
 
-.imgs a span.unread {
+.latest-imgs a {
+	float: left;
+	width: 33%;
+	height: auto;
+	overflow: hidden;
+	display: inline;
+	border: 0;
+	margin: 0;
+}
+
+.latest-imgs a span.container {
+	padding: 2px;
+	margin: 0;
+	position: relative;
+}
+
+.latest-imgs a span.container img {
+	max-width: 100%;
+	height: auto;
+}
+
+.latest-imgs a span.container span {
+	font-size: 11px;
+	position: absolute;
+	bottom: 6px;
+	right: 3px;
+	height: 14px;
+	line-height: 14px;
+	width: 18px;
+	background: #444;
+	color: #888;
+	text-align: center;
+	float: right;
+}
+
+.latest-imgs a span.container span.unread, .imgs a span.unread {
 	background: #ef6000;
 	color: #333;
 }

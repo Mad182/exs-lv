@@ -1739,7 +1739,7 @@ function get_latest_images() {
 		`images`.`bump`
 	DESC LIMIT $skip,15");
 
-	$out = '<p class="imgs">';
+	$out = '<p class="latest-imgs">';
 	if ($latest) {
 		foreach ($latest as $late) {
 
@@ -1754,7 +1754,7 @@ function get_latest_images() {
 				$img = $img_server . '/' . $late->thb;
 			}
 
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><img src="' . $img . '" alt="" />';
+			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
@@ -1762,7 +1762,7 @@ function get_latest_images() {
 				$out .= '<span class="r">' . $late->posts . '</span>';
 			}
 
-			$out .= '</a> ';
+			$out .= '</span></a> ';
 		}
 	}
 
