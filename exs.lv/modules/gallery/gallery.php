@@ -176,24 +176,19 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		$linkid = 1;
 		$total = count($images);
 		$i = 0;
-		$img_page = 0;
 		foreach ($images as $image) {
 			remake_thb($image->url, $image->thb);
 			if (!$image_id) {
 				$image_id = $image->id;
 			}
 			$block = '';
-			if ($i == 18) {
-				$block = '</div><div>';
-				$i = 0;
-				$img_page++;
-			}
 			if ($image_id == $image->id or (!$image_id && $total == $linkid)) {
 				$sel = 'sel';
-				$tpl->assignGlobal('current-img-page', $img_page);
+				$tpl->assignGlobal('current-img-page', $i-4);
 			} else {
 				$sel = '';
 			}
+
 			$tpl->newBlock('image-list-node');
 			$tpl->assign(array(
 				'image-list-id' => $image->id,

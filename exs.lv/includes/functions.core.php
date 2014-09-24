@@ -2125,8 +2125,9 @@ function remake_thb($large, $thb) {
 	$thb = CORE_PATH . '/' . $thb;
 	$large = CORE_PATH . '/' . $large;
 	$thb_size = getimagesize($thb);
-	if ($thb_size[0] != 58) {
-		$c1 = `convert $large -resize '58x58^' -gravity center -crop 58x58+0+0 +repage -strip $thb`;
+	$size = 72;
+	if ($thb_size[0] != $size) {
+		exec("convert " . $large . " -resize '" . $size . "x" . $size . "^' -gravity center -crop " . $size . "x" . $size . "+0+0 +repage -strip " . $thb);
 	}
 }
 

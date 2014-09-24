@@ -47,11 +47,9 @@
 			<a class="prev browse left gray">&laquo;</a>
 			<div class="scrollable imgs" id="images">
 				<div class="items">
-					<div>
-						<!-- START BLOCK : image-list-node-->
-						{imgblock-seperator}<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
-						<!-- START BLOCK : image-list-node-->
-					</div>
+					<!-- START BLOCK : image-list-node-->
+					<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}?reset" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
+					<!-- START BLOCK : image-list-node-->
 				</div>
 			</div>
 			<a class="next browse right gray">&raquo;</a>

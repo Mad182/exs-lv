@@ -175,11 +175,6 @@ body {
 	padding-right: 0;
 }
 
-#gallery-image-list {
-	width: 560px;
-	margin: 0 auto;
-}
-
 #left, #content, #right {
 	margin: 0;
 	padding: 0;

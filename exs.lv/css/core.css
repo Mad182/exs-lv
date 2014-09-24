@@ -1512,14 +1512,14 @@ a.friend img, .comments-avatar {
 
 .imgs .items a {
 	float: left;
-	width: 53px;
-	height: 53px;
+	width: 72px;
+	height: 72px;
 	overflow: hidden;
 	display: inline;
 	border: 1px solid #fff;
 	position: relative;
 	background: #ccc;
-	margin: 1px 1px 0 0;
+	margin: 1px;
 }
 
 .imgs a span {
@@ -2134,9 +2134,9 @@ a.mb-api-twitter {
 .scrollable {
 	position: relative;
 	overflow: hidden;
-	width: 506px;
-	height: 112px;
-	border: 1px solid #ccc;
+	width: 90%;
+	height: 72px;
+	border: 0;
 	float: left;
 	margin: 5px 0 10px;
 	padding: 0;
@@ -2146,12 +2146,6 @@ a.mb-api-twitter {
 	width: 20000em;
 	position: absolute;
 	clear: both;
-}
-
-.items div {
-	float: left;
-	width: 504px;
-	padding: 1px;
 }
 
 .scrollable .active {
@@ -2176,11 +2170,11 @@ a.mb-api-twitter {
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	line-height: 19px;
 	display: block;
-	width: 15px;
+	width: 4%;
 	height: 20px;
 	float: left;
-	padding: 46px 2px;
-	margin: 0 2px;
+	padding: 27px 0;
+	margin: 0;
 }
 
 a.right {
