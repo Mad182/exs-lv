@@ -305,3 +305,9 @@ dl.list-attr dt {
 #wall-posts li a {
 	color: #ccc;
 }
+
+/* galerijas thb */
+.imgs .items a {
+	border: 1px solid #333;
+	background: #444;
+}
