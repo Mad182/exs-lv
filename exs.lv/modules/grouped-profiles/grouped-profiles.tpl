@@ -124,7 +124,7 @@
         <td colspan="5">
             <!-- START BLOCK : all-children -->
             <div class="child-block">
-                <p style="float:right"><strong>Redzēts:</strong> {user_seen}, <strong>pēdējā IP:</strong> {user_lastip}</p>
+                <p style="float:right"><strong>Redzēts:</strong> {user_seen}, <strong>pēdējā IP:</strong> <a href="/findby?ip={user_lastip}">{user_lastip}</a></p>
                 {description}
                 
                 <!-- START BLOCK : no-children -->
@@ -146,7 +146,7 @@
                         <td>{child_id}</td>
                         <td><a href="/user/{child_id}">{child_nick}</a></td>
                         <td>{child_seen}</td>
-                        <td>{child_lastip}</td>
+                        <td><a href="/findby?ip={child_lastip}">{child_lastip}</a></td>
                         <td>
                             <a class="confirm" href="/{category-url}/change-main/{child_parent}">
                                 <img src="/bildes/fugue-icons/arrow-135-medium.png" title="Mainīt vietām ar galveno profilu" alt="">

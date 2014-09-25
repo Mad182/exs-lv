@@ -111,7 +111,12 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 			$content .= '<table id="all_ips" class="ip-table">';
 			$content .= '<tr><td><strong>Pēdējās IP</strong></td></tr>';
 			foreach ($all_ips as $ip) {
+            
+                if (!empty($ip->ip) && $ip->ip != '--') {
+                    $ip->ip = '<a href="http://whois.sc/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
+                }
 				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
+                                
 				$content .= '<tr' . $row_class . '><td>' . $ip->ip . ' (pirms ' . time_ago(strtotime($ip->lastseen)) . ')</td></tr>';
 				$counter++;
 			}
@@ -131,7 +136,12 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 			$content .= '<table id="unique_ips" class="ip-table">';
 			$content .= '<tr><td><strong>Unikālās IP</strong></td></tr>';
 			foreach ($unique_ips as $ip) {
+            
+                if (!empty($ip->ip) && $ip->ip != '--') {
+                    $ip->ip = '<a href="http://whois.sc/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
+                }
 				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
+                
 				$content .= '<tr' . $row_class . '><td>' . $ip->ip . '</td></tr>';
 				$counter++;
 			}
@@ -193,14 +203,20 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 					$len = time() - $active_ban->time;
 					if ($len < $active_ban->length) {
 						$banned = '<strong>' . floor(($active_ban->length - $len) / 60 / 60 / 24) . '</strong> dienas';
-					} else
+					} else {
 						$banned = ' -- ';
-				} else
+                    }
+				} else {
 					$banned = ' -- ';
+                }
 
 				$pwd->lastseen = time_ago(strtotime($pwd->lastseen));
 				$pwd->nick = usercolor($pwd->nick, $pwd->level, false, $pwd->id);
 				//$pwd->mail		= textlimit(substr($pwd->mail,0, strpos($pwd->mail, '@')),20);
+                
+                if (!empty($pwd->lastip) && $pwd->lastip != '--') {
+                    $pwd->lastip = '<a href="http://whois.sc/'.$pwd->lastip.'" rel="nofollow">'.$pwd->lastip.'</a>';
+                }
 
 				$content .= '<tr' . $add_class . '>
 								<td><a href="/user/' . $pwd->id . '" title="E-pasts: ' . $pwd->mail . '">' . $pwd->nick . '</a></td>
@@ -357,6 +373,10 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 		foreach ($results as $res) {
 
 			$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);
+            
+            if (!empty($res->lastip) && $res->lastip != '--') {
+                $res->lastip = '<a href="http://whois.sc/'.$res->lastip.'" rel="nofollow">'.$res->lastip.'</a>';
+            }
             
             // izceļ kādu no laukiem, ja pēc tāda tika veikta meklēšana;
             // ja laukā ļauts ievadīt "%", tos šeit vispirms izvāc,
