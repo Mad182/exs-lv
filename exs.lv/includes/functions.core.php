@@ -51,6 +51,23 @@ function as_class_name($name = '') {
 }
 
 /**
+ *  Atgriež objektu ar atvērtā moduļa template failu
+ *
+ *  Noder reizēs, kad ajax pieprasījumam jāatgriež html saturs. To var 
+ *  izveidot no tā paša moduļa template, nevis cieti iekodēt.
+ */
+function fetch_tpl() {
+	global $category;
+	
+	if (empty($category->module)) return false;
+	
+	$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
+	$tpl->prepare();
+	
+	return $tpl;
+}
+
+/**
  * Aprēķina un updeito lietotāja karmu
  *
  * @param int $userid

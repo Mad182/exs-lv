@@ -45,7 +45,7 @@ a:hover {
 	border-bottom: 1px dotted #3a3a3a
 }
 .mb-col li.rs-linkcode {
-    border-bottom: 1px solid #F1868A;
+	border-bottom: 1px solid #F1868A;
 }
 
 #player-mylist div, #player-playlist div, #user-notify li a:hover, #latest-topics li a:hover, .blockhref li a:hover {
@@ -161,28 +161,52 @@ dl.list-attr dt {
 	color: #bbb
 }
 
-/* MOD sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
-#mod_list_table th {
+.note {
+	background-color:#2C2E31;
+	border:1px solid #202020;
+	color:#C5C5C5;
+}
+
+/* Mod sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
+.mod-list-table th {
 	color:#CAD9E7;
 	border-bottom:2px solid #979899
 }
-#mod_list_table td {
+.mod-list-table td {
 	border-bottom:1px solid #595A5C
 }
-#mod_list_table .counter {
+.mod-list-table .counter {
 	color: #CACBCE;
 }
 .mod-table-list li .stronger {
 	color:#CECECE;
 }
 
-/* MOD brīdinājumu saraksta sadaļas stils */
+/* Mod sadaļās izmantots tabulas stils (#2) */
+.table-light {
+	border:1px solid #3D3B3B !important
+}
+.table-light tr td {
+	border:0;
+	border-bottom:1px solid #3D3B3B;
+	background:#524F4F
+}
+.table-light .light-header {
+	border:1px solid #353131 !important
+}
+.table-light .light-header th {
+	border:0 !important;
+	background:#3A3A3A;
+	color:#fff
+}
+
+/* Mod brīdinājumu saraksta sadaļas stils */
 .removed_warn td {
 	background:#4B4949;
 	border-bottom:1px solid #55585C !important
 }
 
-/* MOD lietotāju meklēšanas forma */
+/* Mod lietotāju meklēšanas forma */
 #checkform {
 	border:1px solid rgb(86, 90, 94);
 }
@@ -247,7 +271,7 @@ dl.list-attr dt {
 	color: #4FAC5A
 }
 
-/* MOD iesniegto sūdzību pārvaldības stili */
+/* Mod iesniegto sūdzību pārvaldības stili */
 .no-reports {
 	color: #DADBE7;
 	border-bottom: 1px solid #575252
@@ -268,6 +292,22 @@ dl.list-attr dt {
 }
 #archived_reports a {
 	border-bottom:0
+}
+
+/* Profilu sasaistes sadaļa */
+.new-main {
+	border:1px solid #2B2B2B;
+	background:#383838;
+}
+#profile-list tr.main-profile:nth-child(4n + 2) {
+	background:#3D3D3D
+}
+	.show-children:hover {
+		background:#312F2F
+	}
+.child-block {
+	background:#3D3E3F;
+	border:1px solid #323335;
 }
 
 /* mb postu pogas */
@@ -310,4 +350,15 @@ dl.list-attr dt {
 .imgs .items a {
 	border: 1px solid #333;
 	background: #444;
+}
+
+/* Neliela info daudzuma fancybox stili */
+.fancy-container {
+	color:#3C3C3C
+}
+.fancy-info {
+	border:1px dotted #EBEBEB
+}
+.fancy-info i {
+	color:#95A4B3
 }

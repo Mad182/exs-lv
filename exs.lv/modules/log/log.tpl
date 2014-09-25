@@ -16,8 +16,8 @@
 
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 
-<table class="table">
-	<tr>
+<table class="table table-light">
+	<tr class="light-header">
 		<th>Lietotājs</th>
 		<th>Vieta</th>
 		<th>Darbība</th>

@@ -552,7 +552,56 @@ $(document).ready(function() {
 		$(this).off('click').remove();
 		e.preventDefault();
 	});
+	
+	/* universāla funkcija satura parādīšanai iekš fancybox */
+	function open_fancy(content) {
+		var addr = $(content).attr('href');        
+		$.get(addr + '?_=1' , function(data) {
+			$.fancybox(data);
+		});
+	}
+	
+	/* profili - piesaistīto profilu saraksta atvēršana */
+	$('#profile-list').on('click', '.show-children', function(e) {  
+		$(this).parent().parent().next().toggle();    
+		e.preventDefault();
+	});    
+	/* profili - profila piesaistīšana */
+	$('#profile-list').on('click', '.connect-profile', function(e) {
+		open_fancy($(this));
+		e.preventDefault();
+	});    
+	/* profili - profilu grupas dzēšana */
+	$('#profile-list').on('click', '.delete-group', function(e) {    
+		open_fancy($(this));      
+		e.preventDefault();
+	});
+	/* profili - apraksta rediģēšana */
+	$('#profile-list').on('click', '.edit-description', function(e) {    
+		open_fancy($(this));      
+		e.preventDefault();
+	});
+	
+	/* checkbox pie lietotāja bloķēšanas iespējām */
+	$('.check-all').click(function() {
+		if ($(this).prop('checked')) {
+			$('.js-checkbox').attr('checked', 'checked');
+		} else {
+			$('.js-checkbox').removeAttr('checked');
+		}
+	});
+	$('.js-checkbox').click(function(){ 
+		if($('.js-checkbox').length == $('.js-checkbox:checked').length) {
+			$('.check-all').attr('checked', 'checked');
+		} else {
+			$('.check-all').removeAttr('checked');
+		} 
+	});
+	
+	/* grupu toggle bloķēto profilu lapā */
+	$('.table-banned').on('click', '.show-banned', function() {
+		$('.child-of-' + $(this).attr('data-id')).toggle();
+	});
 
 	setTimeout('msgrr()', query_timeout);
-
 });

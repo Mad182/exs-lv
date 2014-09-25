@@ -32,7 +32,7 @@
 		<dt>Vērtēja citus</dt><dd>{user-vote_total}x ({user-vote_others})</dd>
 		<!-- START BLOCK : user-modinfo-->
 		<dt><i>E-pasts</i></dt><dd><i>{mail}</i></dd>
-		<dt><i>Pēdējā IP</i></dt><dd><i><a href="/checkform?ip={lastip}">{lastip}</a></i></dd>
+		<dt><i>Pēdējā IP</i></dt><dd><i><a href="/findby?ip={lastip}">{lastip}</a></i></dd>
 		<dt><i>UserAgent</i></dt><dd><i>{user_agent}</i></dd>
 		<!-- END BLOCK : user-modinfo-->
 	</dl>
@@ -383,67 +383,172 @@
 <!-- END BLOCK : user-profile-settings-->
 
 
-
 <!-- START BLOCK : user-profile-block-->
 <div class="tabMain">
 	<form id="edit-profile" class="form" action="/user/{user-id}/block" method="post" enctype="multipart/form-data">
 		<fieldset>
-			<legend>Bloķēt pieeju lapai</legend>
-			<p>
-				<label for="block-reason">Iemesls:</label><br />
-				<input type="text" class="text" name="block-reason" id="block-reason" value="" maxlength="256" />
+			<legend><strong>Bloķēt pieeju lapai</strong></legend>
+			
+			<!-- START BLOCK : has-active-ban -->
+			<p class="note">
+				Šim profilam jau piemērots aktīvs liegums ar iemeslu:
+				<span class="clearfix" style="margin-top:5px;text-indent:7px">{reason}</span>
+				<span class="clearfix" style="margin-top:5px"><strong>Uzlicējs:</strong> <a href="/user/{id}">{author}</a>, <strong>no </strong> {from} <strong>līdz</strong> {until}</span>
 			</p>
-			<p>
-				<label for="block-length">Termiņš:</label><br />
-				<select name="block-length" id="block-length">
-					<option value="21600">6 stundas</option>
-					<option value="86400" selected="selected">1 diena</option>
-					<option value="259200">3 dienas</option>
-					<option value="604800">1 nedēļa</option>
-					<option value="1209600">2 nedēļas</option>
-					<option value="2629743">1 mēnesis</option>
-					<option value="5184000">2 mēneši</option>
-					<option value="7889231">3 mēneši</option>
-					<option value="15552000">6 mēneši</option>
-					<option value="31556926">1 gads</option>
-				</select>
-			</p>
-			<!-- START BLOCK : block-domain -->
-			<p>
-				<label for="block-domain">Vieta:</label><br />
-				<select name="block-domain" id="block-domain">
-					<option value="0" selected="selected">Visos domēnos</option>
-					<!-- START BLOCK : block-domain-node -->
-					<option value="{id}">{domain}</option>
-					<!-- START BLOCK : block-domain-node -->
-				</select>
-			</p>
-			<!-- END BLOCK : block-domain -->
-			<p>
+			<!-- END BLOCK : has-active-ban -->
+			
+			<!-- START BLOCK : no-active-warns -->
+			<p class="note">Šim profilam nav aktīvu, noņemamu brīdinājumu.</p>
+			<!-- END BLOCK : no-active-warns -->
+			
+			<!-- START BLOCK : ban-form -->
+			<table class="form-table" style="width:100%;margin-top:-15px">
+				<tr>
+					<td style="width:30%">&nbsp;</td>
+					<td style="width:70%">&nbsp;</td>
+				</tr>
+				<tr>
+					<td class="form-option"><label for="block-reason">Iemesls:</label></td>
+					<td><input type="text" class="text" name="block-reason" id="block-reason" value="" maxlength="256" /></td>
+				</tr>
+				<tr>
+					<td class="form-option"><label for="block-length">Termiņš:</label></td>
+					<td>
+						<select name="block-length" id="block-length">
+							<!-- START BLOCK : ban-length -->
+							<option value="{length}"{selected}>{title}</option>
+							<!-- END BLOCK : ban-length -->
+						</select>
+					</td>
+				</tr>
+				<!-- START BLOCK : block-domain -->
+				<tr>
+					<td class="form-option"><label for="block-domain">Vieta:</label></td>
+					<td>
+						<select name="block-domain" id="block-domain">
+							<option value="0" selected="selected">Visos domēnos</option>
+							<!-- START BLOCK : block-domain-node -->
+							<option value="{id}">{domain}</option>
+							<!-- START BLOCK : block-domain-node -->
+						</select>
+					</td>
+				</tr>
+				<!-- END BLOCK : block-domain -->
 				<!-- START BLOCK : warn-removal -->
-				<label for="warn-removal">Cik senākos brīdinājumus noņemt?</label><br />
-				<select name="warn-removal" id="warn-removal">
-					<option value="0">Nevienu</option>
-					<!-- START BLOCK : warn-removal-option -->
-					<option value="{x}">{x}</option>
-					<!-- END BLOCK : warn-removal-option -->
-				</select>
-			</p>
-			<p>
-				<label for="warn-reason">Brīdinājumu noņemšanas iemesls:</label><br />
-				<input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" />
-				<!-- END BLOCK : warn-removal -->
-				<!-- START BLOCK : no-active-warns -->
-				Šim lietotājam šobrīd nav aktīvu, noņemamu brīdinājumu.
-				<!-- END BLOCK : no-active-warns -->
-			</p>
-			<p>
-				<input class="button primary" type="submit" name="submit" value="OK" />
-			</p>
+				<tr>
+					<td class="form-option"><label for="warn-removal">Cik brīdinājumus<br>noņemt?</label></td>
+					<td>
+						<select name="warn-removal" id="warn-removal">
+							<option value="0">Nevienu</option>
+							<!-- START BLOCK : warn-removal-option -->
+							<option value="{x}">{x}</option>
+							<!-- END BLOCK : warn-removal-option -->
+						</select>
+					</td>
+				</tr>                
+				<tr>
+					<td class="form-option"><label for="warn-reason">Noņemšanas<br>iemesls:</label></td>
+					<td><input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" /></td>
+				</tr>
+				<!-- END BLOCK : warn-removal -->                
+				<tr>
+					<td></td>
+					<td><input class="button primary" style="width:120px" type="submit" name="submit" value="Bloķēt" /></td>
+				</tr>
+			</table>
+			<!-- END BLOCK : ban-form -->
+
 		</fieldset>
 	</form>
+	
+	<!-- START BLOCK : form-other-profiles -->
+	<form id="edit-profile" class="form" action="/user/{user-id}/block/other" method="post">
+		<fieldset id="profiles">
+			<legend><strong>Piesaistīto profilu bloķēšana</strong></legend>
+
+			<!-- START BLOCK : no-other-profiles -->
+			<p class="note">Šim profilam nav citu piesaistītu profilu.</p>
+			<!-- END BLOCK : no-other-profiles -->
+			
+			<!-- START BLOCK : has-other-profiles -->
+			<p class="note">Tabulā redzama tikai tā informācija, kas attiecas uz atvērto apakšprojektu. Piemērojot liegumu profilam kādā citā apakšprojektā, par darbības pareizību pārliecināties varēs <a href="/banned">šeit</a>.</p>     
+			<p class="note">Ja profils jau ir bloķēts, atķeksējot to, tā iemesls un termiņš no esošā tiks mainīts uz norādīto.</p>
+
+			<table class="form-table" style="width:100%">
+				<tr>
+					<td class="form-option" style="width:30%"><label for="reason-2">Iemesls:</label></td>
+					<td style="width:70%"><input type="text" class="text" name="reason-2" id="reason-2" value="{reason}" maxlength="256" /></td>
+				</tr>
+				<tr>
+					<td class="form-option"><label for="length-2">Termiņš:</label></td>
+					<td>
+						<select name="length-2" id="length-2">
+							<!-- START BLOCK : ban-length-2 -->
+							<option value="{length}"{selected}>{title}</option>
+							<!-- END BLOCK : ban-length-2 -->
+						</select>
+					</td>
+				</tr>
+				<!-- START BLOCK : block-domain-2 -->
+				<tr>
+					<td class="form-option"><label for="block-domain">Vieta:</label></td>
+					<td>
+						<select name="domain-2" id="block-domain">
+							<option value="0" selected="selected">Visos domēnos</option>
+							<!-- START BLOCK : block-domain-node-2 -->
+							<option value="{id}"{selected}>{domain}</option>
+							<!-- START BLOCK : block-domain-node-2 -->
+						</select>
+					</td>
+				</tr>
+				<!-- END BLOCK : block-domain-2 -->
+				<tr>
+					<td class="form-option"><label for="block-domain">Sākuma laiks:</label></td>
+					<td>{ban-start-time}</td>
+				</tr>
+			</table>
+			
+			<table class="mod-list-table clearfix">
+				<tr style="font-weight:bold">
+					<td style="width:120px">Lietotājvārds</td>
+					<td style="width:110px">Redzēts</td>
+					<td class="centered" style="width:110px">Atlikušais laiks</td>
+					<td class="centered" style="width:80px">Vārnas</td>
+					<td class="centered" style="width:50px">
+						<input class="check-all" type="checkbox"{top-checked}>
+					</td>
+				</tr>
+				<!-- START BLOCK : other-profile -->
+				<tr>
+					<td><a href="/user/{id}">{nick}</a></td>
+					<td>{lastseen}</td>
+					<td class="centered">{time_left}</td>
+					<td class="centered">
+						<a href="/warns/{id}">{warns}</a>
+					</td>
+					<td class="centered">
+						<input type="checkbox" class="js-checkbox" name="block-{id}"{checked}>
+					</td>
+				</tr>
+				<!-- END BLOCK : other-profile -->                
+				<tr>
+					<td colspan="5" style="text-align:right">
+						<!-- START BLOCK : goto-group -->
+						<a class="button danger" style="float:left" href="/grouped-profiles?scroll={group-parent}">Skatīt profilu grupu</a>
+						<!-- END BLOCK : goto-group -->
+						<input class="confirm button primary" style="width:120px" type="submit" name="submit" value="Bloķēt">
+					</td>
+				</tr>
+			</table>
+			
+			<!-- END BLOCK : has-other-profiles -->
+		</fieldset>
+	</form>
+	<!-- END BLOCK : form-other-profiles -->
 </div>
 <!-- END BLOCK : user-profile-block-->
+
+
 <!-- START BLOCK : user-profile-give-->
 <div class="tabMain">
 	<form id="give-profile" class="form" action="" method="post">
