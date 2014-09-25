@@ -97,27 +97,31 @@ if (!$auth->ok) {
             
                 $tpl->newBlock('by-group-outer');
             
+                // profilu var parādīt divos veidos: kā grupas main vai child
+
+                // šeit grupa mainās
                 if ($tmp_main_id != $banned->group_id) {
+
                     $tpl->newBlock('by-group');
                     $tpl->assign('group-id', $banned->group_id);
+
                     $tmp_main_id = $banned->group_id;
                     $tmp_rm_block = 'main';
+                    
+                // šeit grupa saglabājas, bet mainās child
                 } else {
                     $tpl->newBlock('by-group-child');
                     $tpl->assign('group-id', $tmp_main_id);
+
                     $tmp_rm_block = 'child';
                 }
 
-                if (!empty($banned->nick)) {
-                    $linkuser = '<a href="/user/' . $banned->user_id . '">' . htmlspecialchars($banned->nick) . '</a>';
-                } else {
-                    $linkuser = '--';
-                }
+                $banned->nick = '<a href="/user/' . $banned->user_id . '">' . htmlspecialchars($banned->nick) . '</a>';
 
                 $tpl->assign(array(
                     'banned-id' => $banned->id,
                     'banned-user_id' => $banned->user_id,
-                    'nick' => $linkuser,
+                    'nick' => $banned->nick,
                     'banned-ip' => $banned->ip,
                     'banned-reason' => wordwrap($banned->reason, 32, "\n", 1),
                     'banned-date' => date('Y-m-d H:i', $banned->time),
@@ -186,17 +190,13 @@ if (!$auth->ok) {
             foreach ($others as $banned) {
             
                 $tpl->newBlock('by-single');
-
-                if (!empty($banned->nick)) {
-                    $linkuser = '<a href="/user/' . $banned->user_id . '">' . htmlspecialchars($banned->nick) . '</a>';
-                } else {
-                    $linkuser = '--';
-                }
+                
+                $banned->nick = '<a href="/user/' . $banned->user_id . '">' . htmlspecialchars($banned->nick) . '</a>';
 
                 $tpl->assign(array(
                     'banned-id' => $banned->id,
                     'banned-user_id' => $banned->user_id,
-                    'nick' => $linkuser,
+                    'nick' => $banned->nick,
                     'banned-reason' => wordwrap($banned->reason, 32, "\n", 1),
                     'banned-date' => date('Y-m-d H:i', $banned->time),
                     'banned-until' => date('Y-m-d H:i', $banned->time + $banned->length),
@@ -210,6 +210,7 @@ if (!$auth->ok) {
                     $tpl->assign('where', $config_domains[$banned->lang]['domain']);
                 }
 
+                // @mad manuāli bloķētie nebūs dzēšami
                 if ($banned->reason != 'perm (ban evading)') {
                     $tpl->newBlock('rmban-single');
                     $tpl->assign('banned-id', $banned->id);
@@ -227,7 +228,7 @@ if (!$auth->ok) {
             }
         }
     
-    // pārējos apakšprojektos rādīs vienu tabulu (kā agrāk)
+    // apakšprojektos pēc noklusējuma rādīs vienu tabulu vecajā stilā
     } else {
     
         $getban = $db->get_results("
@@ -243,12 +244,14 @@ if (!$auth->ok) {
             
                 $tpl->newBlock('by-global');
 
+                // dzēstiem lietotājiem lietotājvārds var nebūt
                 $user = get_user($banned->user_id);
                 if (!empty($user->nick)) {
                     $linkuser = '<a href="/user/' . $user->id . '">' . htmlspecialchars($user->nick) . '</a>';
                 } else {
-                    $linkuser = '---';
+                    $linkuser = '--';
                 }
+
                 $author = get_user($banned->author);
                 $tpl->assign(array(
                     'banned-id' => $banned->id,
@@ -263,20 +266,15 @@ if (!$auth->ok) {
                 ));
 
                 if ($banned->lang == 0) {
-                    $tpl->assign(array(
-                        'where' => 'Globāls',
-                    ));
+                    $tpl->assign('where', 'Globāls');
                 } else {
-                    $tpl->assign(array(
-                        'where' => $config_domains[$banned->lang]['domain'],
-                    ));
+                    $tpl->assign('where', $config_domains[$banned->lang]['domain']);
                 }
 
+                // @mad manuāli bloķētie nebūs dzēšami
                 if ($banned->reason != 'perm (ban evading)') {
                     $tpl->newBlock('rmban-3');
-                    $tpl->assign(array(
-                        'banned-id' => $banned->id,
-                    ));
+                    $tpl->assign('banned-id', $banned->id);
                 }
             }            
         }        

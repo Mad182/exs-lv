@@ -6,9 +6,9 @@
 <h2>Bloķēto profilu grupas</h2>
 <table class="table banned-list" style="margin: 0 auto 50px;font-size:80%">
     <tr class="banned-header">
-        <td colspan="2" style="width:120px">Lietotājs</td>
-        <td style="width:250px">Iemesls</td>
-        <td style="width:20px"></td>
+        <td colspan="2" style="width:130px">Lietotājs</td>
+        <td style="width:310px">Iemesls</td>
+        <td style="width:30px"></td>
         <td style="width:15px"></td>
     </tr>
     <!-- START BLOCK : by-group-outer -->

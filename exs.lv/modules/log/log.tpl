@@ -16,7 +16,7 @@
 
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 
-<table class="table">
+<table class="table banned-list">
 	<tr>
 		<th>Lietotājs</th>
 		<th>Vieta</th>

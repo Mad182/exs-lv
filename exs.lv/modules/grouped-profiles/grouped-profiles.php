@@ -553,7 +553,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
                         $tpl->newBlock('child-table-header');
                     }
                     $tpl->gotoBlock('a-profile');
-                    $tpl->assign('profile_count', $children_cnt);
+                    $tpl->assign('profile_count', $children_cnt + 1);
                 }                
                 $children_cnt = 0;
                 
@@ -598,7 +598,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
             $tpl->newBlock('child-table-header');
         }
         $tpl->gotoBlock('a-profile');
-        $tpl->assign('profile_count', $children_cnt);
+        $tpl->assign('profile_count', $children_cnt + 1);
         
         // javascripts meklēs main profilu ar šādu id un 
         // aizritinās lapu līdz attiecīgajai rindai
