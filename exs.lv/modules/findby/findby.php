@@ -1,10 +1,10 @@
 <?php
-
 /**
  * 	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem
  *
- * 	Moduļa adrese: exs.lv/checkform
+ * 	Moduļa adrese: exs.lv/findby
  */
+
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
 	set_flash('Pieeja liegta!');
@@ -57,7 +57,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 	}
 
 
-	//$content = '<div><a class="clue" href="javascript:void()" rel="/checkform/?email=115" title="">115</a><div class="c"></div></div><div class="c"></div>';
+	//$content = '<div><a class="clue" href="javascript:void()" rel="/findby/?email=115" title="">115</a><div class="c"></div></div><div class="c"></div>';
 	// pārbauda, vai lietotājam ir aktīvs bans
 	$ban = $db->get_row("
 		SELECT
