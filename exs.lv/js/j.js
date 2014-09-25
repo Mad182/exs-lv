@@ -581,27 +581,27 @@ $(document).ready(function() {
 		open_fancy($(this));      
 		e.preventDefault();
 	});
-    
-    /* checkbox pie lietotāja bloķēšanas iespējām */
-    $('.check-all').click(function() {
-        if ($(this).prop('checked')) {
-            $('.js-checkbox').attr('checked', 'checked');
-        } else {
-            $('.js-checkbox').removeAttr('checked');
-        }
-    });
-    $('.js-checkbox').click(function(){ 
-        if($('.js-checkbox').length == $('.js-checkbox:checked').length) {
-            $('.check-all').attr('checked', 'checked');
-        } else {
-            $('.check-all').removeAttr('checked');
-        } 
-    });
-    
-    /* grupu toggle bloķēto profilu lapā */
-    $('.table-banned').on('click', '.show-banned', function() {
-        $('.child-of-' + $(this).attr('data-id')).toggle();
-    });
+	
+	/* checkbox pie lietotāja bloķēšanas iespējām */
+	$('.check-all').click(function() {
+		if ($(this).prop('checked')) {
+			$('.js-checkbox').attr('checked', 'checked');
+		} else {
+			$('.js-checkbox').removeAttr('checked');
+		}
+	});
+	$('.js-checkbox').click(function(){ 
+		if($('.js-checkbox').length == $('.js-checkbox:checked').length) {
+			$('.check-all').attr('checked', 'checked');
+		} else {
+			$('.check-all').removeAttr('checked');
+		} 
+	});
+	
+	/* grupu toggle bloķēto profilu lapā */
+	$('.table-banned').on('click', '.show-banned', function() {
+		$('.child-of-' + $(this).attr('data-id')).toggle();
+	});
 
 	setTimeout('msgrr()', query_timeout);
 });
