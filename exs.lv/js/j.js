@@ -599,7 +599,7 @@ $(document).ready(function() {
     });
     
     /* grupu toggle bloķēto profilu lapā */
-    $('.banned-list').on('click', '.show-banned', function() {
+    $('.table-banned').on('click', '.show-banned', function() {
         $('.child-of-' + $(this).attr('data-id')).toggle();
     });
 

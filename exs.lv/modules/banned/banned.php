@@ -1,13 +1,16 @@
 <?php
-
 /**
- * Bloķētie lietotaji
+ *  Bloķēto profilu sadaļa
  *
- * adminiem rāda sarakstu,
- * bet bloķētajam lietotājam viņa bloķēšanas iemeslu
+ *  Neautorizēts/bloķēts lietotājs redzēs lieguma paziņojumu.
+ *  Modi/admini redzēs sarakstu ar visiem bloķētajie profiliem.
  *
+ *  Bloķētie profili redzami divās tabulās:
+ *      - tie, kuri atrodas kādā no profilu grupām;
+ *      - tie, kuri nevienā grupā nav.
  *
- * Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu
+ *  Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, 
+ *  bans attiecas tikai uz to lapu.
  */
 $q_add = '';
 if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {

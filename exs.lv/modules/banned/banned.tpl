@@ -4,12 +4,12 @@
 
 <!-- START BLOCK : banned-by-group -->
 <h2>Bloķēto profilu grupas</h2>
-<table class="table banned-list" style="margin: 0 auto 50px;font-size:80%">
-    <tr class="banned-header">
-        <td colspan="2" style="width:130px">Lietotājs</td>
-        <td style="width:310px">Iemesls</td>
-        <td style="width:30px"></td>
-        <td style="width:15px"></td>
+<table class="table table-light table-banned" style="margin: 0 auto 50px;font-size:80%">
+    <tr class="light-header">
+        <th colspan="2" style="width:130px;text-align:left">Lietotājs</th>
+        <th style="width:310px;text-align:left">Iemesls</th>
+        <th style="width:30px"></th>
+        <th style="width:15px"></th>
     </tr>
     <!-- START BLOCK : by-group-outer -->
         <!-- START BLOCK : by-group -->
@@ -60,12 +60,12 @@
 
 <!-- START BLOCK : banned-by-single -->
 <h2>Atsevišķi bloķētie profili</h2>
-<table class="table banned-list" style="margin:0 auto;font-size:80%">
-    <tr class="banned-header">
-        <td style="width:120px">Lietotājs</td>
-        <td style="width:250px">Iemesls</td>
-        <td style="width:20px"></td>
-        <td style="width:15px"></td>
+<table class="table table-light" style="margin:0 auto;font-size:80%">
+    <tr class="light-header">
+        <th style="width:120px;text-align:left">Lietotājs</th>
+        <th style="width:250px;text-align:left">Iemesls</th>
+        <th style="width:20px"></th>
+        <th style="width:15px"></th>
     </tr>
     <!-- START BLOCK : by-single -->
     <tr>
