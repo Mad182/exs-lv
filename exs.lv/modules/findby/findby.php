@@ -372,11 +372,7 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 
 		foreach ($results as $res) {
 
-			$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);
-			
-			if (!empty($res->lastip) && $res->lastip != '--') {
-				$res->lastip = '<a href="http://whois.sc/'.$res->lastip.'" rel="nofollow">'.$res->lastip.'</a>';
-			}
+			$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);			
 			
 			// izceļ kādu no laukiem, ja pēc tāda tika veikta meklēšana;
 			// ja laukā ļauts ievadīt "%", tos šeit vispirms izvāc,
@@ -384,7 +380,9 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 			if ($field == 'vip') {
 				$escaped = str_replace('%', '', trim($_POST['vip']));
 				$res->lastip = $res->ip;
+				$tmp_ip = $res->lastip;
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
+				$res->lastip = '<a href="http://whois.sc/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
 			} 
 			else if ($field == 'mail') {
 				$escaped = trim($_POST['mail']);
@@ -392,8 +390,10 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 			} 
 			else if ($field == 'ip') {
 				$escaped = str_replace('%', '', trim($_REQUEST['ip']));
+				$tmp_ip = $res->lastip;
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-			}
+				$res->lastip = '<a href="http://whois.sc/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
+			}             
 			
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
 			$tpl->newBlock('search-result');
