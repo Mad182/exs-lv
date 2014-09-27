@@ -116,7 +116,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 	
 	
 /**
- *  Child profila piesaiste kādam main profilam
+ *  Child profilu piesaiste kādam main profilam
  *
  *  $_GET['var2'] - `users_groups`.`id` vērtība
  */
@@ -168,51 +168,74 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 		exit;
 	
 	// pievienos ierakstu datubāzei
-	} else if (isset($_POST['child_id'])) {
+	} else if (isset($_POST['child_ids'])) {
 
-		$child_id = (int)$_POST['child_id'];        
-		$if_exists = get_user($child_id);        
-		if (!$if_exists) {
-			set_flash('Sasaistīt profilus neizdevās!');
-			redirect('/'.$_GET['viewcat']);
-		} else if ($if_exists->level == 1 || $if_exists->level == 2) {
-			set_flash('Norādītais lietotājs nevar tikt pievienots!');
-			redirect('/'.$_GET['viewcat']);
+		$childs_not_added = 0;
+		$childs_added = 0;
+
+		// ievades laukā var būt norādīti vairāki profilu id, 
+		// atdalīti ar komatiem
+		$child_ids = explode(',', $_POST['child_ids']);
+		foreach ($child_ids as $child_id) {
+		
+			$child_id = trim($child_id);
+			$child_id = (int)$child_id;
+
+			if ($child_id > 0) {
+			
+				$if_exists = get_user($child_id);        
+				if (!$if_exists) {
+					$childs_not_added++;
+				// pievienot modus/adminus nebūs ļauts
+				} else if ($if_exists->level == 1 || $if_exists->level == 2) {
+					$childs_not_added++;
+				} else {
+					
+					// child vēl nedrīkst būt datubāzē, citādi 
+					// vienā brīdī būs dublikāti
+					$if_exists = $db->get_var("
+						SELECT count(*) FROM `users_groups`
+						JOIN `users` ON (
+							`users_groups`.`user_id` = `users`.`id` AND
+							`users`.`deleted` = 0
+						)
+						WHERE 
+							`users_groups`.`deleted_by` = 0 AND
+							`users_groups`.`user_id` = ".$child_id."
+					");
+					if ($if_exists > 0) {
+						$childs_not_added++;
+					} else {
+					
+						$data = array(
+							'user_id' => $child_id,
+							'parent_id' => $parent_id,
+							'created_by' => $auth->id,
+							'created_at' => time()
+						);
+						
+						$insert = $db->insert('users_groups', $data);
+						
+						if ($insert === false) {
+							$childs_not_added++;
+						} else {
+							$childs_added++;
+						}
+					}
+				}
+			} else {
+				$childs_not_added++;
+			}
 		}
 		
-		// norādītais child lietotājs vēl nedrīkst būt datubāzē, citādi 
-		// vienā brīdī būs dublikāti
-		$if_exists = $db->get_var("
-			SELECT count(*) FROM `users_groups`
-			JOIN `users` ON (
-				`users_groups`.`user_id` = `users`.`id` AND
-				`users`.`deleted` = 0
-			)
-			WHERE 
-				`users_groups`.`deleted_by` = 0 AND
-				`users_groups`.`user_id` = ".$child_id."
-		");
-		if ($if_exists > 0) {
-			set_flash('Norādītais lietotājs jau atrodas kādā no grupām!');
-			redirect('/'.$_GET['viewcat']);
+		if ($childs_not_added > 0) {
+			set_flash('Piesaistīti profili: '.$childs_added.'. Nepiesaistīti profili: '.$childs_not_added.'.');
+		} else {            
+			set_flash('Piesaistīti '.$childs_added.' profili.', 'success');
 		}
+		$auth->log('Piesaistīja '.$childs_added.' profilus', 'users', $parent_data->id);
 		
-		$data = array(
-			'user_id' => $child_id,
-			'parent_id' => $parent_id,
-			'created_by' => $auth->id,
-			'created_at' => time()
-		);
-		
-		$insert = $db->insert('users_groups', $data);
-		
-		if ($insert !== false) {
-			set_flash('Profils piesaistīts!', 'success');
-			redirect('/'.$_GET['viewcat'].'?scroll='.$parent_data->id);
-		} else {
-			set_flash('Piesaistīt profilu neizdevās!');
-			redirect('/'.$_GET['viewcat']);
-		}
+		redirect('/'.$_GET['viewcat'].'?scroll='.$parent_data->id);
 
 	} else {
 		set_flash('Kļūdaini norādīta adrese!');
@@ -379,6 +402,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 		
 		if ($update) {
 			set_flash('Profilu grupa dzēsta!', 'success');
+			$auth->log('Dzēsa profilu grupu', 'ug', $group_id);
 		} else {
 			set_flash('Profilu grupu dzēst neizdevās!');
 		}
@@ -410,6 +434,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 	
 	if ($update) {
 		set_flash('Profils atsaistīts!', 'success');
+		$auth->log('Atsaistīja profilu', 'ug', $child_id);
 		if (isset($_GET['var3'])) {
 			$var3 = (int)$_GET['var3'];
 			redirect('/'.$_GET['viewcat'].'?scroll='.$var3);

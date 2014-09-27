@@ -1,5 +1,5 @@
 <!-- START BLOCK : content-info -->
-<p class="note">Šī sadaļa paredzēta, lai kopā saistītu tos profilus, kurus izmanto viens lapas lietotājs. Sasaistot profilus kopā, pie kāda profila bloķēšanas varēs norādīt, lai uzreiz bloķēti tiktu visi šī lietotāja profili.<br><br>Arī pašiem ērtāk redzēt, kurš cik daudz profilus izveidojis, kā arī tos meklēt sarakstā.<br><br><strong>Nebūtu vēlams, ka informācija par šādas sistēmas esamību nonāktu ārpus moderatoru diskusijām.</strong></p>
+<p class="note">Šī sadaļa paredzēta, lai kopā saistītu tos profilus, kurus izmanto viens lapas lietotājs. Sasaistot profilus kopā, pie kāda profila bloķēšanas varēs norādīt, lai uzreiz bloķēti tiktu visi šī lietotāja profili.</p>
 <!-- END BLOCK : content-info -->
 
 <!-- START BLOCK : new-profile-form -->
@@ -28,16 +28,16 @@
 
 <!-- START BLOCK : new-child-form -->
 <div class="fancy-container">
-	<p class="fancy-title">Cita profila piesaiste</p>
+	<p class="fancy-title">Profilu piesaiste</p>
 	<p class="fancy-info" style="width:50%">
 		Lai iegūtu profila ID, atver šī lietotāja profilu un nokopē to no adreses.<br><br>
-		Piemēram, ja adrese ir <i>exs.lv/user/115</i>, tad ID ir <i>115</i>.
+		Piemēram, ja adrese ir <i>exs.lv/user/115</i>, tad ID ir <i>115</i>.<br><br>Laukā iespējams norādīt vairākus ID, atdalītus ar komatiem.
 	</p>
 	<p><strong>Galvenais profils:</strong>&nbsp;{main-profile}</p>
 	<form method="post" action="/{category-url}/add-child/{main-id}">
-		<label for="child_id" style="font-weight:bold">Piesaistāmā profila ID:</label><br>
-		<input id="child_id" style="position:relative;top:3px" type="text" name="child_id" value=""><br>
-		<input class="button primary" style="position:relative;top:6px" type="submit" name="submit" value="Pievienot">
+		<label for="child_id" style="font-weight:bold">Piesaistāmo profilu ID:</label><br>
+		<input id="child_id" style="position:relative;top:10px" type="text" name="child_ids" value="" placeholder="id1, id2, id3" autofocus><br>
+		<input class="button primary" style="position:relative;top:20px" type="submit" name="submit" value="Pievienot">
 	</form>
 </div>
 <!-- END BLOCK : new-child-form -->
