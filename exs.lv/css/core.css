@@ -4156,6 +4156,6 @@ img.show-banned {
 img.show-banned:hover {
 	opacity:1.0
 }
-.child-pattern {
-	background:url('/bildes/pattern_light.png')
+.child-padding {
+	background:#FCFCFC
 }

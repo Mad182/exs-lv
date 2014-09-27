@@ -36,7 +36,7 @@
 		<!-- END BLOCK : by-group -->
 		<!-- START BLOCK : by-group-child -->
 		<tr class="is-hidden child-of-{group-id}">
-			<td class="child-pattern" style="width:10px">&nbsp;</td>
+			<td class="child-padding" style="width:10px">&nbsp;</td>
 			<td>{nick}
 				<!-- START BLOCK : remove-ip-child -->
 				<br />{banned-ip} 
