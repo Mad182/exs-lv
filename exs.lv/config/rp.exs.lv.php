@@ -32,11 +32,16 @@ $page_title = 'MTA:SA roleplay serveris';
 
 //auto login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
-	ini_set("session.cookie_domain", ".exs.lv");
 
 	//redirect https links
 	if (empty($_SERVER['HTTPS']) && substr($_SERVER['HTTP_HOST'], 0, 1) !== 'm') {
 		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
+	} else {
+		//secure cookies
+		ini_set('session.cookie_domain', '.exs.lv');
+		ini_set('session.cookie_httponly', 1);
+		ini_set('session.cookie_secure', 1);
+		ini_set('session.use_only_cookies', 1);
 	}
 
 }
