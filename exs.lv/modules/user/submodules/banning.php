@@ -198,7 +198,7 @@ if (isset($_POST['block-reason'])) {
 
 	// piesaistīto profilu bloķēšana redzama tikai galvenajā exs,
 	// tāpēc tikai tajā ir vērts atgriezties uz to pašu lapu
-	if ($lang == 1 && ($auth->id == 115 || $auth->id == 1 || $auth->id == 4506)) {
+	if ($lang == 1) {
 		redirect('/user/'.(int)$_GET['var1'].'/block');
 	} else {
 		redirect('/banned');
@@ -370,7 +370,7 @@ if ($is_banned) {
  *  Pagaidām citus piesaistītos profilus rādīsim tikai galvenajā un rs.exs,
  *  izlaižot apakšprojektus un to spec. modus.
  */
-if (($auth->id == 115 || $auth->id == 1 || $auth->id == 4506) && ($lang == 1 || $lang == 9)) {
+if ($lang == 1 || $lang == 9) {
 	
 	$tpl->newBlock('form-other-profiles');    
 
@@ -384,10 +384,7 @@ if (($auth->id == 115 || $auth->id == 1 || $auth->id == 4506) && ($lang == 1 || 
 		} else {
 			$tpl->assign('ban-start-time', date('d.m.Y, H:i', time()));
 		}
-		
-		// ja atvērtais profils ir banots, citiem profiliem atzīmēs
-		// tādu pašu iemeslu un termiņu, tāpēc custom iemesla lauks
-		// jārāda tikai tad, kad nav iemesla, kuru paņemt
+
 		if ($is_banned) {
 			$tpl->assign(array(
 				'reason' => $find_ban->reason

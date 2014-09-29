@@ -171,6 +171,7 @@
 							<ul>
 								<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
 								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+								<li{cat-sel-2082}><a href="/grouped-profiles">Profilu sasaiste</a></li>
 								<li{cat-sel-1822}><a href="/crows">Atbrīvotās vārnas</a></li>
 								<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
 								<li{cat-sel-1132}><a href="/findby">Profilu meklētājs</a></li>
