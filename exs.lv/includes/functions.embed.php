@@ -573,7 +573,6 @@ function embed_spotify($params) {
  *  @return $deezer_html    iframe ar dziesmām
  */
 function embed_deezer($params) {
-	global $m;
 
 	// $matches[4] - ieraksta veids
 	// $matches[5] - ieraksta id
@@ -721,7 +720,6 @@ function embed_soundcloud($params) {
  *  @return $inst_html   iframe ar attēlu
  */
 function embed_instagram($params) {
-	global $m;
 
 	// $params[4] - attēla ID
 
@@ -740,7 +738,6 @@ function embed_instagram($params) {
  *  @return $vimeo_html   iframe ar video
  */
 function embed_vimeo($params) {
-	global $m;
 
 	// $params[3] - video id
 
@@ -787,3 +784,4 @@ function hide_spoilers($text) {
 	}
 	return $text;
 }
+

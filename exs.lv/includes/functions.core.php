@@ -1650,7 +1650,7 @@ function get_latest_posts() {
 			}
 			$url = $domain . '/read/' . $late->strid;
 
-			if (empty($config_domains[$late->lang]['ssl'])) {
+			if (empty($config_domains[$late->lang]['ssl']) && $late->lang != $lang) {
 				$url = 'http:' . $url;
 			}
 
