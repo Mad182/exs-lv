@@ -64,7 +64,7 @@ if ($logs) {
 		} elseif ($log->foreign_table == 'users' && ($user = get_user($log->foreign_key))) {
 			$place = '<a href="/user/' . $user->id . '">' . $log->foreign_table . ': ' . $user->nick . '</a>';
 		} elseif ($log->foreign_table == 'wallpapers' && $wp = $db->get_row("SELECT * FROM `wallpapers` WHERE `id` = $log->foreign_key")) {
-			$place = '<a href="https://img.exs.lv/dati/wallpapers/' . $wp->image . '"><img src="https://img.exs.lv/dati/wallpapers/thb/' . $wp->image . '" alt="' . $wp->image . '" /></a>';
+			$place = '<a class="lightbox" href="//img.exs.lv/dati/wallpapers/' . $wp->image . '"><img src="//img.exs.lv/dati/wallpapers/thb/' . $wp->image . '" alt="' . $wp->image . '" style="width:100px" /></a>';
 			$log->action .= ' (' . $wp->date . ')';
 		} elseif ($log->foreign_table == 'clans' && $group = $db->get_row("SELECT `title`, `strid` FROM `clans` WHERE `id` = $log->foreign_key")) {
 			if (!empty($group->strid)) {
@@ -73,7 +73,6 @@ if ($logs) {
 				$link = '/group/' . $log->foreign_key;
 			}
 			$place = '<a href="' . $link . '">group: ' . $group->title . '</a>';
-			$log->action .= ' (' . $wp->date . ')';
 		} else {
 			$place = $log->foreign_table . '-' . $log->foreign_key;
 		}

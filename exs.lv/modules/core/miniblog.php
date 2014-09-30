@@ -177,11 +177,12 @@ if ($auth->ok && im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) 
 }
 
 // iekešo minibloga template
-if ($debug == true || ($tpl2 = $m->get('tpl_mb_' . $lang . '_' . intval($auth->mobile) . $bootstrap_cache_key)) == false) {
+$key = md5('tpl_mb_' . $lang . '_' . intval($auth->mobile) . '_' . $_SERVER['HTTP_HOST']);
+if ($debug == true || ($tpl2 = $m->get($key)) == false) {
 	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/core/miniblog.tpl');
 	$tpl->assignInclude('conversation', CORE_PATH . '/modules/core/conversation.tpl');
 	$tpl->prepare();
-	$m->set('tpl_mb_' . $lang . '_' . intval($auth->mobile) . $bootstrap_cache_key, $tpl, false, 7200);
+	$m->set($key, $tpl, false, 3600);
 } else {
 	$tpl = $tpl2;
 	unset($tpl2);

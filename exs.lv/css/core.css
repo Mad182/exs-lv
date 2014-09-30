@@ -899,7 +899,7 @@ html .banned {
 	padding: 0 0 10px;
 }
 
-#mainlist li img, #full-story img {
+#full-story img {
 	max-width: 570px;
 }
 
@@ -907,8 +907,12 @@ html .banned {
 	max-width: 720px;
 }
 
-#miniblog-list img {
-	max-width: 520px;
+#miniblog-list li img {
+	max-width: 75%;
+}
+
+#miniblog-list li .auto-embed-placeholder img {
+	max-width: 100%;
 }
 
 #wrapper .article-info {
@@ -1271,26 +1275,6 @@ a.friend img, .comments-avatar {
 
 #miniblog-list li .post-info a, .responses li .post-info a {
 	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-#miniblog-list li img {
-	max-width: 460px;
-}
-
-#miniblog-list li ul li img {
-	max-width: 440px;
-}
-
-#miniblog-list li ul li ul li img {
-	max-width: 410px;
-}
-
-#miniblog-list li ul li ul li ul li img {
-	max-width: 390px;
-}
-
-#miniblog-list li ul li ul li ul li ul li img {
-	max-width: 370px;
 }
 
 .blockhref li a {

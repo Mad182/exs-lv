@@ -1,8 +1,8 @@
 <?php
 
 exit;
-$folder = 'futzals-22-02-2014';
-$user_id = 33698;
+$folder = 'exs_2014_party';
+$user_id = 35579;
 
 
 if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
@@ -11,7 +11,7 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 
 			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
 			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
-			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . ' - exs.lv Futzāla turnīrs #3. 22.02.2014. Autors: <a href="/user/1385">latvija18</a></p>');
+			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . " - EXS party '14</p>");
 
 			remake_thb($image, $thb);
 
@@ -33,3 +33,5 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 	update_karma($user_id, true);
 	update_karma($user_id, true);
 }
+
+exit;
