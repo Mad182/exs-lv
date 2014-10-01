@@ -443,7 +443,7 @@ class DraugiemApi {
 				}
 			}
 		}
-		$response = @file_get_contents($url); //Get API response (@ to avoid accidentaly displaying API keys in case of errors)
+		$response = curl_get($url);
 
 		if ($response === false) {//Request failed
 			$this->lastError = 1;
