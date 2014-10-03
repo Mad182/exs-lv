@@ -32,5 +32,5 @@ $polls_cat = 803;
 
 //redirect https links
 if (!empty($_SERVER['HTTPS'])) {
-	redirect("http://coding.lv" . $_SERVER['REQUEST_URI'], true);
+	//redirect("http://coding.lv" . $_SERVER['REQUEST_URI'], true);
 }

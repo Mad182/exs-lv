@@ -104,7 +104,7 @@
 					<a id="exs-logo" href="/" title="Uz sākumlapu">coding.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
-							<li><a href="http://exs.lv/" rel="nofollow">exs.lv community</a></li>
+							<li><a href="https://exs.lv/" rel="nofollow">exs.lv community</a></li>
 							<li><a href="http://m.coding.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
@@ -134,7 +134,7 @@
 						<!-- START BLOCK : user-modlink-->
 						<!--<li{cat-sel-83}><a href="#">Mod</a>
 							<ul>
-								<li{cat-sel-83}><a href="http://exs.lv/moderatoriem">Forums</a></li>
+								<li{cat-sel-83}><a href="https://exs.lv/moderatoriem">Forums</a></li>
 								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
 								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
 							</ul>
@@ -148,7 +148,7 @@
 
 						<!-- END BLOCK : user-write-->
 						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a class="notes" href="/piezimes"><img src="http://img.exs.lv/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
+						<li{cat-sel-585}><a class="notes" href="/piezimes"><img src="{img-server}/bildes/fugue-icons/notebook.png" alt="Piezīmes" /></a></li>
 						<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 					</ul>
 					<!-- END BLOCK : user-menu-->
@@ -172,7 +172,7 @@
 			<div class="c"></div>
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox {class}" id="flash-message">
-				<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+				<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 			</div>
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->
@@ -199,7 +199,7 @@
 						<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
 						<!-- END BLOCK : profilebox-blog-link-->
 						<!-- START BLOCK : profilebox-twitter-link-->
-						<a rel="nofollow" href="http://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+						<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
 						<!-- END BLOCK : profilebox-twitter-link-->
 						<!-- START BLOCK : profilebox-yt-link-->
 						<!-- END BLOCK : profilebox-yt-link-->
