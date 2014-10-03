@@ -53,7 +53,7 @@
 			<div id="header">
 				<a id="menu" href="#sidr">Toggle menu</a>
 				<div id="user-tools">
-					<a href="/mevents"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" />
+					<a href="/mevents"><img src="/av/{currentuser-avatar}" alt="" />
 					Čau,&nbsp;{currentuser-nick}!<br />Mani notikumi{new-messages}</a>
 				</div>
 				<a id="logo" href="/">eXs.lv</a>

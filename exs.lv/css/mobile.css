@@ -84,7 +84,7 @@ html .banned {
 #user-tools {
 	display: block;
 	float: right;
-	padding: 3px;
+	padding: 5px;
 	color: #fff;
 	width: 46%;
 	text-align: right;
@@ -94,6 +94,13 @@ html .banned {
 	color: #fff;
 }
 
+#user-tools img {
+	float: right;
+	margin: -2px 0 0 5px;
+	width:36px;
+	height:36px;
+}
+
 #logo {
 	float: left;
 	font-size: 26px;
@@ -101,7 +108,7 @@ html .banned {
 	color: #fff;
 	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 	text-shadow: 1px -1px 1px #222;
-	margin: 0 0 0 6px;
+	margin: 0 0 0 8px;
 	padding: 6px 8px 0 0;
 }
 
@@ -1684,10 +1691,13 @@ blockquote, .q, .quote {
 	background: url('//img.exs.lv/bildes/mobile-menu.png') no-repeat 50% 50%;
 	background-size: 100% 100%;
 	width: 46px;
-	height: 45px;
+	height: 44px;
 	cursor: pointer;
+	padding: 0;
 	vertical-align: top;
 	float: left;
 	text-indent: -9999px;
 	display: block;
+	border-right: 1px solid #386893;
+	border-left: 1px solid #386893;
 }
