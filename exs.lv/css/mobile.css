@@ -1607,7 +1607,7 @@ blockquote, .q, .quote {
 	box-shadow: inset 0 0 15px 3px #ebebeb;
 }
 
-.sidr ul li a,.sidr ul li span {
+.sidr ul li a {
 	padding: 0 15px;
 	display: block;
 	text-decoration: none;

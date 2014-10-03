@@ -66,7 +66,7 @@
 					<!-- START BLOCK : flash-message-->
 					<div class="c"></div>
 					<div class="mbox {class}" id="flash-message">
-						<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="AizvÄ“rt" title="AizvÄ“rt" width="16" height="16" /></a> {message}</p>
+						<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="AizvÄ“rt" title="AizvÄ“rt" width="16" height="16" /></a> {message}</p>
 					</div>
 					<div class="c"></div>
 					<!-- END BLOCK : flash-message-->

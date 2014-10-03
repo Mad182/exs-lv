@@ -6,7 +6,7 @@
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js,jquery.sidr.js,mobile.js"></script>
 		<script type="text/javascript">
 			var mb_refresh_limit = 12000;
 			var current_user = {currentuser-id};
@@ -32,31 +32,39 @@
 	</head>
 
 	<body>
+
+		<div id="sidr">
+		  <!-- Your content -->
+		  <ul>
+				<li><a href="/">Siena</a></li>
+				<!-- START BLOCK : user-menu-->
+				<li><a href="/pm">Vēstules{new-messages}</a></li>
+				<li><a href="/say/{currentuser-id}">Miniblogs</a></li>
+				<!-- END BLOCK : user-menu-->
+				<li><a href="/index">Forums</a></li>
+				<li><a href="/user/{currentuser-id}">Mans profils</li>
+				<li><a href="/logout/{logout-hash}">Iziet</a></li>
+		  </ul>
+		</div>
+
 		<div id="outer-wrapper">
 			<div id="header">
+				<a id="menu" href="#sidr">Toggle menu</a>
 				<div id="user-tools">
-					<a href="/user/{currentuser-id}"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
-					Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents">Tavi notikumi</a>
+					<a href="/mevents"><img src="/av/{currentuser-avatar}" alt="" />
+					Čau,&nbsp;{currentuser-nick}!<br />Mani notikumi{new-messages}</a>
 				</div>
 				<a id="logo" href="/">coding.lv</a>
 			</div>
-			<div id="buttons" class="quad">
-				<ul>
-					<li><a href="/">Siena</a></li>
-					<li><a href="/index">Forums</a></li>
-					<!-- START BLOCK : user-menu-->
-					<li><a href="/pm">PM{new-messages}</a></li>
-					<li><a href="/say/{currentuser-id}">M-blogs</a></li>
-					<!-- END BLOCK : user-menu-->
-				</ul>
-			</div>
+
 			<div id="wrapper">
+
 				<div id="current-module">
 
 					<!-- START BLOCK : flash-message-->
 					<div class="c"></div>
 					<div class="mbox {class}" id="flash-message">
-						<p><a id="close-flash-message" href="#"><img src="http://img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+						<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="AizvÄ“rt" title="AizvÄ“rt" width="16" height="16" /></a> {message}</p>
 					</div>
 					<div class="c"></div>
 					<!-- END BLOCK : flash-message-->
@@ -73,7 +81,9 @@
 					<!-- INCLUDE BLOCK : module-core-error -->
 					<!-- INCLUDE BLOCK : module-currrent -->
 					<div class="c"></div>
+
 				</div>
+
 				<!-- START BLOCK : events-->
 				{events-title}
 				<div class="box">
@@ -97,7 +107,7 @@
 				</div>
 				<!-- END BLOCK : mod-box-->
 			</div>
-			<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; coding.lv, {current-year} | <a href="/logout/{logout-hash}">Iziet</a></div>
+			<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; coding.lv, {current-year}</div>
 		</div>
 		<script type="text/javascript">
 
