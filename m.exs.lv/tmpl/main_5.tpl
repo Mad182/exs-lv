@@ -47,7 +47,7 @@
 					<!-- START BLOCK : user-menu-->
 					<li><a href="/pm">PM{new-messages}</a></li>
 					<li><a href="/say/{currentuser-id}">M-blogs</a></li>
-					<!-- END BLOCK : user-menu-->          
+					<!-- END BLOCK : user-menu-->
 				</ul>
 			</div>
 			<div id="wrapper">
@@ -116,9 +116,6 @@
 			})();
 
 		</script>
-
-		<!-- START BLOCK : sharethis-->
-		<!-- END BLOCK : sharethis-->
 
 	</body>
 </html>

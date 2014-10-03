@@ -37,14 +37,15 @@
 		  <!-- Your content -->
 		  <ul>
 				<li><a href="/">Siena</a></li>
-				<li><a href="/forums">Forums</a></li>
-				<li><a href="/raksti">Raksti</a></li>
 				<!-- START BLOCK : user-menu-->
 				<li><a href="/pm">Vēstules{new-messages}</a></li>
 				<li><a href="/say/{currentuser-id}">Miniblogs</a></li>
 				<!-- END BLOCK : user-menu-->
 				<li><a href="/grupas">Grupas</a></li>
+				<li><a href="/forums">Forums</a></li>
+				<li><a href="/raksti">Raksti</a></li>
 				<li><a href="/user/{currentuser-id}">Mans profils</li>
+				<li><a href="/logout/{logout-hash}">Iziet</a></li>
 		  </ul>
 		</div>
 
@@ -111,7 +112,7 @@
 				</div>
 				<!-- END BLOCK : mod-box-->
 			</div>
-			<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; exs.lv, {current-year} | <a href="/logout/{logout-hash}">Iziet</a></div>
+			<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; exs.lv, {current-year}</div>
 		</div>
 		<script type="text/javascript">
 
@@ -131,9 +132,5 @@
 
 		</script>
 
-		<!-- START BLOCK : sharethis-->
-		<!-- END BLOCK : sharethis-->
-
 	</body>
 </html>
-

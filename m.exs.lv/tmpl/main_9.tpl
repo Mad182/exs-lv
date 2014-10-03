@@ -47,7 +47,7 @@
 					<!-- START BLOCK : user-menu-->
 					<li><a href="/pm">PM{new-messages}</a></li>
 					<li><a href="/say/{currentuser-id}">M-blogs</a></li>
-					<!-- END BLOCK : user-menu-->          
+					<!-- END BLOCK : user-menu-->
 				</ul>
 			</div>
 			<div id="wrapper">
@@ -99,9 +99,6 @@
 			</div>
 			<div id="footer"><a href="/sitemap">Lapas karte</a> | &copy; runescape.exs.lv, {current-year} | <a href="/logout/{logout-hash}">Iziet</a></div>
 		</div>
-
-		<!-- START BLOCK : sharethis-->
-		<!-- END BLOCK : sharethis-->
 
 	</body>
 </html>

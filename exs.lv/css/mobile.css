@@ -106,7 +106,7 @@ html .banned {
 }
 
 #wrapper {
-	padding: 6px;
+	padding: 7px;
 }
 
 #comments {
@@ -380,11 +380,11 @@ table.table tr.hirank td {
 
 h1, h2, h3, h4 {
 	color: #444;
-	font-weight: 700;
-	font-size: 120%;
+	font-weight: normal;
+	font-size: 140%;
 	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 	text-shadow: 0 1px 1px #ddd;
-	margin: 7px 0 3px;
+	margin: .5em 0 .4em;
 	padding: 0;
 }
 

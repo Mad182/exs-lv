@@ -117,8 +117,5 @@
 
 		</script>
 
-		<!-- START BLOCK : sharethis-->
-		<!-- END BLOCK : sharethis-->
-
 	</body>
 </html>
