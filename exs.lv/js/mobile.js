@@ -174,4 +174,7 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
+	/* sidr menu */
+	 $('#menu').sidr();
+
 });

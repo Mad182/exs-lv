@@ -6,7 +6,7 @@
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js,jquery.sidr.js,mobile.js"></script>
 		<script type="text/javascript">
 			var mb_refresh_limit = 12000;
 			var current_user = {currentuser-id};
@@ -32,25 +32,30 @@
 	</head>
 
 	<body>
+
+		<div id="sidr">
+		  <!-- Your content -->
+		  <ul>
+				<li><a href="/">Siena</a></li>
+				<li><a href="/forums">Forums</a></li>
+				<li><a href="/raksti">Raksti</a></li>
+				<!-- START BLOCK : user-menu-->
+				<li><a href="/pm">Vēstules{new-messages}</a></li>
+				<li><a href="/say/{currentuser-id}">Miniblogs</a></li>
+				<!-- END BLOCK : user-menu-->
+				<li><a href="/grupas">Grupas</a></li>
+				<li><a href="/user/{currentuser-id}">Mans profils</li>
+		  </ul>
+		</div>
+
 		<div id="outer-wrapper">
 			<div id="header">
+				<a id="menu" href="#sidr">Toggle menu</a>
 				<div id="user-tools">
-					<a href="/user/{currentuser-id}" class="ajax-module"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
-					Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents" class="ajax-module">Tavi notikumi</a>
+					<a href="/mevents"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" />
+					Čau,&nbsp;{currentuser-nick}!<br />Mani notikumi{new-messages}</a>
 				</div>
 				<a id="logo" href="/">eXs.lv</a>
-			</div>
-			<div id="buttons">
-				<ul>
-					<li><a href="/" class="ajax-module">Siena</a></li>
-					<li><a href="/forums" class="ajax-module">Forums</a></li>
-					<li><a href="/raksti" class="ajax-module">Raksti</a></li>
-					<!-- START BLOCK : user-menu-->
-					<li><a href="/pm" class="ajax-module">PM{new-messages}</a></li>
-					<li><a href="/say/{currentuser-id}">M-blogs</a></li>
-					<!-- END BLOCK : user-menu-->          
-					<li><a href="/grupas" class="ajax-module">Grupas</a></li>
-				</ul>
 			</div>
 
 			<div id="wrapper">
