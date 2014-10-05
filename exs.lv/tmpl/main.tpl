@@ -122,12 +122,12 @@
 						<ul id="site-links">
 							<li><a href="/blogs">Blogi</a></li>
 							<li><a href="/img">Bilžu hostings</a></li>
-							<li><a href="http://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
+							<li><a href="https://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
-							<li><a href="//runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
-							<li><a href="//rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
-							<li><a href="//lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
-							<li><a href="http://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
+							<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
+							<li><a href="https://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
+							<li><a href="https://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
+							<li><a href="https://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
 							<li><a href="/statistika" title="Statistika">Statistika</a></li>
 							<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 						</ul>
@@ -160,7 +160,7 @@
 							<!-- START BLOCK : mygroups-->
 							<ul id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="//img.exs.lv/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+								<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
 								<!-- END BLOCK : myg-node-->
 							</ul>
 							<!-- END BLOCK : mygroups-->
@@ -196,7 +196,7 @@
 						<!-- END BLOCK : user-write-->
 						<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
 						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="//img.exs.lv/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+						<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="{img-server}/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
 						<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 					</ul>
 					<!-- END BLOCK : user-menu-->
@@ -222,7 +222,7 @@
 			<div class="c"></div>
 			<!-- START BLOCK : flash-message-->
 			<div class="mbox {class}" id="flash-message">
-				<p><a id="close-flash-message" href="#"><img src="//img.exs.lv/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+				<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 			</div>
 			<div class="c"></div>
 			<!-- END BLOCK : flash-message-->

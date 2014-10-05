@@ -18,7 +18,7 @@ $config_domains = array(
 	3 => array(
 		'domain' => 'coding.lv',
 		'prefix' => 'code',
-		'ssl' => false
+		'ssl' => true
 	),
 	5 => array(
 		'domain' => 'rp.exs.lv',

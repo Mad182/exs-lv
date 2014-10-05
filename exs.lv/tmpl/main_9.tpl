@@ -95,11 +95,11 @@
 					<li><a href="/" class="dropdown">runescape.exs.lv</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="//exs.lv">exs.lv</a></li>
+							<li><a href="https://exs.lv">exs.lv</a></li>
 							<li><a rel="nofollow" href="http://old.exs.lv/">old.exs.lv</a></li>
-							<li><a href="//lol.exs.lv">lol.exs.lv</a></li>
-							<li><a href="//rp.exs.lv">rp.exs.lv</a></li>
-							<li><a rel="nofollow" href="http://coding.lv">coding.lv</a></li>
+							<li><a href="https://lol.exs.lv">lol.exs.lv</a></li>
+							<li><a href="https://rp.exs.lv">rp.exs.lv</a></li>
+							<li><a rel="nofollow" href="https://coding.lv">coding.lv</a></li>
 							<li>&nbsp;</li>
 						</ul>
 					</li>
