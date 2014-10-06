@@ -694,11 +694,9 @@ function update_awards($user) {
 	  $awards_list['exs-cup']['state'] = 'active';
 	  } */
 
-
-	//spēļu turnīri
-	if (in_array($user, array(655, 858, 1621, 1822, 4137, 5205, 5056, 9418, 10734, 11722, 12732, 13004, 13419, 14623, 15390, 16817, 18057, 18773, 20858, 20999, 21450, 21704, 22518, 23282, 24437, 25093, 25299, 25385, 26091, 26100, 31621, 1135, 1385, 3650, 4432, 5356, 12108, 19604, 24706, 25254, 29176))) {
-		$awards_list['futzals-3'] = array(
-			'title' => '<a href="//exs.lv/read/ziemas-kauss-14">Ziemas kauss &apos;14</a> (futzāls)',
+	if (in_array($user, array(35081, 25709, 19780, 1621, 273, 703, 4438, 21411, 24437, 4432, 5969, 3650, 1, 1220, 14716, 27089))) {
+		$awards_list['exs-party-2014'] = array(
+			'title' => 'Exs.lv ballīte 2014',
 			'state' => 'active'
 		);
 	}
