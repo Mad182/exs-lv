@@ -30,7 +30,19 @@ $disable_emotions = 1;
 //aptauju sadaļa
 $polls_cat = 803;
 
-//redirect https links
-if (!empty($_SERVER['HTTPS'])) {
-	//redirect("http://coding.lv" . $_SERVER['REQUEST_URI'], true);
+//https
+if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
+
+	//redirect https links
+	if (empty($_SERVER['HTTPS'])) {
+		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
+	} else {
+		//secure cookies
+		ini_set('session.cookie_domain', '.coding.lv');
+		ini_set('session.cookie_httponly', 1);
+		ini_set('session.cookie_secure', 1);
+		ini_set('session.use_only_cookies', 1);
+	}
+
 }
+
