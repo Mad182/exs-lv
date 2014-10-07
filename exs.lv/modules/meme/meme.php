@@ -1,6 +1,6 @@
 <?php
 
-$data = json_decode(file_get_contents('http://meme.exs.lv/list.php'));
+$data = json_decode(curl_get('http://meme.exs.lv/list.php'));
 
 if (isset($_GET['var1']) && in_array($_GET['var1'], $data)) {
 	$tpl->newBlock('generator');
@@ -15,3 +15,4 @@ foreach ($data as $img) {
 		'file' => $img
 	));
 }
+

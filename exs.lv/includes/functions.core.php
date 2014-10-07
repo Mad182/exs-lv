@@ -2233,3 +2233,17 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$page_title = $user->nick . ' ' . $title;
 }
+
+/**
+ * Pieprasītā domēna ($lang) izmantoto protokolu (https/https)
+ */
+ function get_protocol($lang = 1) {
+ 	global $config_domains;
+
+	if (!empty($config_domains[$article->lang]['ssl'])) {
+		return 'https://';
+	}
+
+	return 'http://';
+ }
+ 

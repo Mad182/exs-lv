@@ -29,7 +29,7 @@ if (isset($_POST['new-image-id'])) {
 	$id = $_POST['new-image-id'];
 	$data = array_merge_recursive($get_wp->reddit(), $get_wp->imgur());
 
-	file_put_contents($temp_filename, file_get_contents($data[$id]['file']));
+	file_put_contents($temp_filename, curl_get($data[$id]['file']));
 
 	uploadFile($db, $auth, $temp_filename);
 	fclose($temp);

@@ -112,7 +112,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 //lai testētu jauno layoutu
 $use_bootstrap = false;
 $bootstrap_cache_key = '';
-if(false && $auth->id == 1 && $lang == 1) {
+if (false && $auth->id == 1 && $lang == 1) {
 	$use_bootstrap = true;
 	$bootstrap_cache_key = '_bootstrap';
 }
@@ -157,7 +157,7 @@ if ($lang !== 1 && $skin === 'main') {
 	$loadskin = $skin . '_' . $lang;
 }
 
-if($use_bootstrap) {
+if ($use_bootstrap) {
 	$loadskin = 'bootstrapped';
 }
 
@@ -213,7 +213,8 @@ if (isset($_GET['u'])) {
 			require_once(CORE_PATH . '/includes/class.controller.php');
 			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
 			$class_name = as_class_name($category->module);
-            if (empty($class_name)) die('Ooooops! Sadaļu neizdevās ielādēt. :)');
+			if (empty($class_name))
+				die('Ooooops! Sadaļu neizdevās ielādēt. :)');
 			$controller = new $class_name();
 			$controller->index();
 		} else {
@@ -226,6 +227,15 @@ if (isset($_GET['u'])) {
 			exit;
 		}
 	} else {
+	
+		//mēģinam apskatīties vai šāda sadaļa neeksistē citā domēnā, ja eksistē - redirekts
+		if (isset($_GET['viewcat'])) {
+			$cat = $db->get_row("SELECT `textid`, `lang` FROM `cat` WHERE `textid` = '".sanitize($_GET['viewcat'])."' ORDER BY `id` ASC LIMIT 1");
+			if (!empty($cat)) {
+				redirect(get_protocol($cat->lang) . $config_domains[$cat->lang]['domain'] . '/' . $cat->textid, true);	
+			}
+		}
+	
 		//404
 		set_flash('Pieprasītā lapa netika atrasta!', 'error');
 		redirect();
@@ -357,11 +367,11 @@ $tpl->assignGlobal(array(
 	'logout-hash' => $auth->logout_hash
 ));
 
-if($use_bootstrap) {
+if ($use_bootstrap) {
 	$content_cols = 6;
-	if($tpl_options == 'no-left' || $tpl_options == 'no-right') {
+	if ($tpl_options == 'no-left' || $tpl_options == 'no-right') {
 		$content_cols = 9;
-	} elseif($tpl_options == 'no-left-right') {
+	} elseif ($tpl_options == 'no-left-right') {
 		$content_cols = 12;
 	}
 	$tpl->assignGlobal('content_cols', $content_cols);
@@ -515,11 +525,11 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
-if($lang === 1) {
+if ($lang === 1) {
 	//smartad.eu, nerāda mobilajām ierīcēm
 	require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
 	$detect = new Mobile_Detect;
-	if(!$detect->isMobile()) {
+	if (!$detect->isMobile()) {
 		$tpl->newBlock('smartad-eu');
 	}
 }

@@ -11,7 +11,7 @@ if ($inprofile && $auth->id == 1) {
 
 	if (isset($_POST['url'])) {
 		$url = $_POST['url'];
-		$data = file_get_contents($url);
+		$data = curl_get($url);
 		if ($data) {
 
 			$nick = get_between($data, 'statistics and LolKing score for ', ', a summoner on');
@@ -38,3 +38,4 @@ if ($inprofile && $auth->id == 1) {
 		}
 	}
 }
+

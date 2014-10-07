@@ -233,7 +233,7 @@ if (!empty($inprofile)) {
 	// atvērts konkrēts miniblogs
 	else {
 		$single = (int) $_GET['single'];
-		$records = $db->get_results("SELECT * FROM `miniblog` WHERE `id` = '$single' AND `author` = " . $inprofile->id . " AND `groupid` = '0' AND `removed` = '0' AND `parent` = '0' AND `lang` = '$lang' LIMIT 1");
+		$records = $db->get_results("SELECT * FROM `miniblog` WHERE `id` = '$single' AND `author` = " . $inprofile->id . " AND `groupid` = '0' AND `removed` = '0' AND `parent` = '0' LIMIT 1");
 	}
 
 	if ($records) {
@@ -250,6 +250,11 @@ if (!empty($inprofile)) {
 
 				$title = textlimit(youtube_title($record->text), 64, '...');
 				$url = '/say/' . $record->author . '/' . $record->id . '-' . mb_get_strid($record->text, $record->id);
+
+				//ja pieprasīts raksts nepareizā subdomēnā
+				if ($record->lang != $lang) {
+					redirect(get_protocol($record->lang) . $config_domains[$record->lang]['domain'] . $url, true);
+				}
 
 				if (isset($_GET['single'])) {
 
@@ -538,3 +543,4 @@ if (!empty($inprofile)) {
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';
 }
+

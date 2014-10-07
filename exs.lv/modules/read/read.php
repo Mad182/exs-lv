@@ -7,7 +7,7 @@ if ($article) {
 
 	//redirektē uz pareizo adresi, ja kaut kādā veidā atvērts derīgs strid, bet nepareizā domēnā
 	if ($article->lang != $lang) {
-		redirect('http://' . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
+		redirect(get_protocol($article->lang) . $config_domains[$article->lang]['domain'] . '/read/' . $article->strid, true);
 	}
 
 	// runescape apakšprojektā eksistē raksti ar platām tabulām,
@@ -538,7 +538,7 @@ if ($article) {
 
 				if (isset($_POST['avatar-url']) && !empty($_POST['avatar-url']) && isset($_POST['submit'])) {
 
-					$data = file_get_contents($_POST['avatar-url']);
+					$data = curl_get($_POST['avatar-url']);
 					$ext = substr($_POST['avatar-url'], -4);
 					if ($data) {
 						//directory
@@ -639,7 +639,7 @@ if ($article) {
 
 					$q = urlencode($article->title . ' movie poster');
 					$jsonurl = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&tbs=iar:t&q=' . $q;
-					$result = json_decode(file_get_contents($jsonurl), true);
+					$result = json_decode(curl_get($jsonurl), true);
 					$images = array(
 						$result['responseData']['results'][0]['url'],
 						$result['responseData']['results'][1]['url'],
@@ -1365,3 +1365,4 @@ if ($article) {
 	set_flash('Raksts netika atrasts! Kļūdains links?', 'error');
 	redirect();
 }
+

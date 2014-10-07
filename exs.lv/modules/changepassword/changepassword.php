@@ -57,11 +57,7 @@ if (!$auth->ok) {
 			$pwd_token = hash('sha256', uniqid() . $userdata->mail . $auth->ip);
 
 			//link protocol
-			if (empty($config_domains[$lang]['ssl'])) {
-				$proto = 'http://';
-			} else {
-				$proto = 'https://';
-			}
+			$proto = get_protocol($lang);
 
 			//suta e-pastu
 			require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
