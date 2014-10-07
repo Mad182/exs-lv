@@ -2235,7 +2235,7 @@ function profile_menu($user, $active, $title, $action = null) {
 }
 
 /**
- * Pieprasītā domēna ($lang) izmantoto protokolu (https/https)
+ * Atgriež peprasītā domēna ($lang) izmantoto protokolu (http/https)
  */
  function get_protocol($lang = 1) {
  	global $config_domains;

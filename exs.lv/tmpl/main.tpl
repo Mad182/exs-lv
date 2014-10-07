@@ -230,6 +230,12 @@
 			<!-- START BLOCK : main-layout-left-->
 			<div id="left">
 				<div class="inner">
+				
+					<h3>#3 florbola turnīrs</h3>
+				
+					<div class="box">
+						<a href="/read/exs-lv-3-florbola-turnirs"><img src="//img.exs.lv/r/i/ridiculus/exsturniri_mazs.jpg" alt="" style="width:100%" /></a>
+					</div>
 
 					{ad-left}
 
