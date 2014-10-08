@@ -2172,6 +2172,7 @@ function get_cakeday() {
 }
 
 /**
+ * (E)mpty (S)afe (R)eturn
  * Atgriež vērtību vai $empty, ja $val nav definēts
  */
 function esr(&$val, $empty = '') {
@@ -2235,12 +2236,12 @@ function profile_menu($user, $active, $title, $action = null) {
 }
 
 /**
- * Atgriež peprasītā domēna ($lang) izmantoto protokolu (http/https)
+ * Atgriež pieprasītā domēna ($lang) izmantoto protokolu (http/https)
  */
  function get_protocol($lang = 1) {
  	global $config_domains;
 
-	if (!empty($config_domains[$article->lang]['ssl'])) {
+	if (!empty($config_domains[$lang]['ssl'])) {
 		return 'https://';
 	}
 
