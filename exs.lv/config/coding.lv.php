@@ -38,6 +38,7 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0
 		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 	} else {
 		//secure cookies
+		ini_set('session.name', 'CODING');
 		ini_set('session.cookie_domain', '.coding.lv');
 		ini_set('session.cookie_httponly', 1);
 		ini_set('session.cookie_secure', 1);
