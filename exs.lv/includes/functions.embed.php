@@ -73,7 +73,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	// adreses, kas atrodas blacklistē, tiek aizstātas ar "/ES_SPAMOJU_SUDUS"
 	$blacklisted_sites = get_sitelist('blacklisted');
 	foreach ($blacklisted_sites as $site) {
-		if (strpos($txt, $site) !== false) {
+		if (stripos($txt, $site) !== false) {
 			$replace = array(
 				'http://' . $site,
 				'http://www.' . $site
