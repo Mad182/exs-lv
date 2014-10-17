@@ -20,7 +20,6 @@
 </table>
 <!-- END BLOCK : listsubcats-->
 
-
 <!-- START BLOCK : list-articles-->
 <h1>{title}</h1>
 
@@ -35,7 +34,7 @@
 		</ul>
 		<div class="c"></div>
 		<!-- START BLOCK : list-avatar-->
-		<img class="av" src="{node-avatar-image}" alt="{node-avatar-alt}" />
+		<img class="av" src="{img-server}{node-avatar-image}" alt="{node-avatar-alt}" />
 		<!-- END BLOCK : list-avatar-->
 		<p>{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
 		<div class="c"></div>
@@ -83,3 +82,4 @@
 	<p>Hmmm... izskatās, ka šajā lapas sadaļā pagaidām nav neviena raksta :(</p>
 </div>
 <!-- END BLOCK : error-catempty-->
+
