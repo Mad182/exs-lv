@@ -173,7 +173,7 @@ function read_runescape_rss($force = false) {
  *  Izveido cache failu ar jaunākajām RuneScape ziņām
  */
 function generate_news_cache() {
-    global $db, $rsbot_id;
+    global $db, $rsbot_id, $img_server;
     
     $news_count = 12;
 
@@ -205,9 +205,9 @@ function generate_news_cache() {
         $image = '';
         if ($single->has_image &&
             file_exists(CORE_PATH.'/bildes/runescape/news/thumb-news-'.$single->mb_id.'.jpg') ) {
-            $image = '<img class="vc-item" src="/bildes/runescape/news/thumb-news-'.$single->mb_id.'.jpg" title="'.$single->title.'" alt="Logo">';
+            $image = '<img class="vc-item" src="'.$img_server.'/bildes/runescape/news/thumb-news-'.$single->mb_id.'.jpg" title="'.$single->title.'" alt="Logo">';
         } else {
-            $image = '<img class="vc-item" src="/bildes/runescape/fallback/'.get_fallback_image($single->category).'" title="'.$single->title.'" alt="Logo">';
+            $image = '<img class="vc-item" src="'.$img_server.'/bildes/runescape/fallback/'.get_fallback_image($single->category).'" title="'.$single->title.'" alt="Logo">';
         }
         
         $date = date("d.m.Y", strtotime($single->date));
