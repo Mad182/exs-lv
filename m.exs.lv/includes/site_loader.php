@@ -6,45 +6,49 @@
 $config_domains = array(
 	1 => array(
 		'domain' => 'm.exs.lv',
+		'include' => 'exs.lv',
 		'prefix' => '',
 		'ssl' => true
 	),
 	3 => array(
 		'domain' => 'm.coding.lv',
+		'include' => 'coding.lv',
 		'prefix' => 'code',
 		'ssl' => true
 	),
-	5 => array(
-		'domain' => 'm.rp.exs.lv',
-		'prefix' => 'mta',
-		'ssl' => false
-	),
 	7 => array(
-		'domain' => 'm.lol.exs.lv',
+		'domain' => 'mlol.exs.lv',
+		'include' => 'lol.exs.lv',
 		'prefix' => 'lol',
 		'ssl' => false
 	),
 	9 => array(
-		'domain' => 'm.runescape.exs.lv',
+		'domain' => 'mrs.exs.lv',
+		'include' => 'runescape.exs.lv',
 		'prefix' => 'runescape',
 		'ssl' => false
 	)
 );
 
 // saīsinātais runescape projekta domēns
-if ($_SERVER['SERVER_NAME'] === 'm.rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.m.rs.exs.lv') {
-	redirect('http://' . str_replace('rs', 'runescape', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+if ($_SERVER['SERVER_NAME'] === 'm.rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.m.rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'm.runescape.exs.lv') {
+	redirect('https://mrs.exs.lv' . $_SERVER['REQUEST_URI'], true);
+}
+
+// saīsinātais lol projekta domēns
+if ($_SERVER['SERVER_NAME'] === 'm.lol.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.m.lol.exs.lv') {
+	redirect('https://mlol.exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 $found = false;
 foreach ($config_domains as $lang => $site) {
 
 	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
-		require(CORE_PATH . '/config/' . str_replace(array('m.', 'dev.'), '', $site['domain']) . '.php');
+		require(CORE_PATH . '/config/' . $site['include'] . '.php');
 		$found = true;
 		break;
 	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
-		redirect('http://' . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+		redirect('https://' . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
 	}
 }
 
@@ -57,3 +61,4 @@ if (!$found) {
 if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
+
