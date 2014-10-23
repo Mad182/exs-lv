@@ -14,7 +14,7 @@ if ($user->yt_name) {
 		'user-nick' => htmlspecialchars($user->nick)
 	));
 
-	if (true or $user->yt_updated < time() - 7200) {
+	if ($user->yt_updated < time() - 7200) {
 		$rssurl = 'http://gdata.youtube.com/feeds/base/users/' . $user->yt_name . '/uploads?client=ytapi-youtube-user&v=2';
 		$loaded = simplexml_load_file($rssurl);
 		foreach ($loaded as $load) {
