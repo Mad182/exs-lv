@@ -8,14 +8,15 @@ class getImages {
 
 	function reddit() {
 		global $db;
-		$data = curl_get('http://www.reddit.com/r/comics+funny.json');
+		$data = curl_get('https://www.reddit.com/r/comics+funny.json');
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
 			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif'))) {
 				$file = $data->data->url;
 			} elseif (stristr($data->data->url, 'http://imgur.com/')) {
-				$addr = str_replace('http://imgur.com/', 'http://i.imgur.com/', $data->data->url);
+				$addr = str_replace('http://imgur.com/', 'https://i.imgur.com/', $data->data->url);
+				$addr = str_replace('http://i.imgur.com/', 'https://i.imgur.com/', $addr);
 				if (file_get_contents($addr . '.jpg')) {
 					$file = $addr . '.jpg';
 				} elseif (file_get_contents($addr . '.png')) {
@@ -36,7 +37,7 @@ class getImages {
 
 	function xkcd() {
 		global $db;
-		$data = curl_get('http://xkcd.com/info.0.json');
+		$data = curl_get('https://xkcd.com/info.0.json');
 		$junk = json_decode($data);
 
 		if ($this->can_add($junk->img)) {
@@ -59,3 +60,4 @@ class getImages {
 	}
 
 }
+
