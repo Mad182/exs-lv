@@ -17,8 +17,8 @@ $fact_type = 'facts';
 $fact_link = '?type=gaming';
 
 if (isset($_GET['type']) && $_GET['type'] == 'rs') {
-    redirect('http://runescape.exs.lv/rsfacts');
-    exit;
+	redirect('https://runescape.exs.lv/rsfacts');
+	exit;
 }
 
 // pievienotā fakta dzēšana
@@ -29,8 +29,6 @@ if (isset($_GET['delete']) && isset($_GET['type'])) {
 
 	redirect('/' . $category->textid . $fact_link);
 }
-
-
 
 // pievienotā fakta rediģēšana
 if (isset($_GET['edit']) && isset($_GET['type'])) {
@@ -103,3 +101,4 @@ if ($facts) {
 		));
 	}
 }
+

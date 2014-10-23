@@ -21,11 +21,7 @@ if (isset($_POST['submit'])) {
 				$email_token = substr(hash('sha256', uniqid() . $inprofile->mail . $auth->ip), 0, 16);
 
 				//link protocol
-				if (empty($config_domains[$lang]['ssl'])) {
-					$proto = 'http://';
-				} else {
-					$proto = 'https://';
-				}
+				$proto = get_protocol($lang);
 
 				//suta e-pastu
 				require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');

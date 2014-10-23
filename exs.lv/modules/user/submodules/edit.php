@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 
 	$inprofile->web = '';
 	if (!empty($_POST['edit-web'])) {
-		if (substr($_POST['edit-web'], 0, 4) == 'www.') {
+		if (substr($_POST['edit-web'], 0, 4) != 'http') {
 			$web = 'http://' . $_POST['edit-web'];
 		} else {
 			$web = $_POST['edit-web'];

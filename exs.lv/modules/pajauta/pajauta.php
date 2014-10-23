@@ -33,8 +33,7 @@ if ($auth->ok) {
 		  $db->query("INSERT INTO qgame_questions (slug,user_id,question,answ0,answ1,time)
 		  VALUES ('$slug',$auth->id,'$question','$answ0','$answ1',NOW())");
 		  userlog($auth->id,'Uzdeva jautājumu exs lietotājiem: &quot;<a href="/Pajauta/'.$slug.'">'.$question.'</a>&quot;');
-		  header('Location: http://exs.lv/Pajauta/'.$slug);
-		  exit;
+		  redirect('https://exs.lv/Pajauta/'.$slug);
 		  } else {
 		  $tpl->newBlock('pajauta-add');
 		  }
@@ -148,8 +147,7 @@ if ($auth->ok) {
 		$slug = $db->get_var("SELECT slug FROM qgame_questions $add ORDER BY RAND() LIMIT 1");
 
 		if ($slug) {
-			header('Location: http://exs.lv/pajauta/' . $slug);
-			exit;
+			redirect('https://exs.lv/pajauta/' . $slug);
 		} else {
 			$tpl->newBlock('pajauta-noq');
 		}

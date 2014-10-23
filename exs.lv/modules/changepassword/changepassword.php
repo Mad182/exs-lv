@@ -6,7 +6,7 @@
 if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `ip` = '$auth->ip' AND `time`+`length` > '" . time() . "' AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC LIMIT 1")) {
 	$auth->logout();
 	set_flash('Pieeja lapai ir liegta!', 'error');
-	redirect('http://exs.lv/?c=125&bid=' . $ban);
+	redirect('/?c=125&bid=' . $ban);
 }
 
 if (!$auth->ok) {

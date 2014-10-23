@@ -161,7 +161,7 @@ if (!$auth->ok) {
 							$message->setSubject('Tev pienākusi vēstule portālā exs.lv');
 							$message->setFrom(array('info@exs.lv' => 'Exs.lv community'));
 							$message->setTo($receiver->mail);
-							$message->setBody('<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . htmlspecialchars($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="http://exs.lv/pm/?act=inbox&read=' . $msgid . '">http://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>');
+							$message->setBody('<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . htmlspecialchars($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>');
 							$message->setContentType("text/html");
 							$mailer->send($message);
 						}

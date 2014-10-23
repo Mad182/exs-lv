@@ -10,10 +10,11 @@ foreach ($config_domains as $domain) {
 
 $host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
 if (!in_array($host, $allowed_domains)) {
-	$redirect = 'http://exs.lv/';
+	$redirect = 'https://exs.lv/';
 } else {
 	$redirect = $_SERVER['HTTP_REFERER'];
 }
 
 redirect($redirect);
 exit;
+
