@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Atvelk bildes noārējiem avotiem,
- * lai tās pēc tam at apstiprinājumi ievietotu /junk
+ * Atvelk bildes no ārējiem avotiem,
+ * lai pēc tam ar apstiprinājumu ievietotu /junk
  */
 class getImages {
 
@@ -12,10 +12,12 @@ class getImages {
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
-			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif'))) {
-				$file = $data->data->url;
-			} elseif (stristr($data->data->url, 'http://imgur.com/')) {
-				$addr = str_replace('http://imgur.com/', 'https://i.imgur.com/', $data->data->url);
+			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif', 'peg'))) {
+				$file = str_replace('http://i.imgur.com/', 'https://i.imgur.com/', $data->data->url);
+
+			} elseif (stristr($data->data->url, '//imgur.com/')) {
+
+				$addr = str_replace('//imgur.com/', '//i.imgur.com/', $data->data->url);
 				$addr = str_replace('http://i.imgur.com/', 'https://i.imgur.com/', $addr);
 				if (file_get_contents($addr . '.jpg')) {
 					$file = $addr . '.jpg';
