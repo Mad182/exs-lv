@@ -3,12 +3,11 @@
 /**
  * Blogu ierakstu statistika
  */
-$blogs = $db->get_results("SELECT * FROM cat WHERE isblog != '0'");
+ 
+//updato kategoriju statistiku
+update_blog_stats();
 
-foreach ($blogs as $blog) {
-	update_stats($blog->id);
-}
-
+//kārtošana
 $ord = 'stat_topics';
 if (isset($_GET['order'])) {
 	if ($_GET['order'] == 'views') {
@@ -18,19 +17,17 @@ if (isset($_GET['order'])) {
 	}
 }
 
-$blogs = $db->get_results("SELECT * FROM cat WHERE isblog != '0' ORDER BY " . $ord . " DESC");
+//parāda tās sadaļas, kurās ir viesmaz viens ieraksts
+$blogs = $db->get_results("SELECT * FROM `cat` WHERE `isblog` != '0' AND `stat_topics` > 0 ORDER BY " . $ord . " DESC");
 foreach ($blogs as $blog) {
+
 	$tpl->newBlock('bs-list-node');
-	if ($blog->newlink) {
-		$url = '/' . $blog->textid;
-	} else {
-		$url = '/?c=' . $blog->id;
-	}
 	$tpl->assign(array(
-		'url' => $url,
+		'url' => '/' . $blog->textid,
 		'title' => $blog->title,
 		'p_count' => $blog->stat_topics,
 		'c_count' => $blog->stat_com,
 		'w_count' => $blog->stat_views
 	));
 }
+

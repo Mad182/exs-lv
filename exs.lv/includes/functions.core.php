@@ -2236,15 +2236,23 @@ function profile_menu($user, $active, $title, $action = null) {
 }
 
 /**
- * Atgriež pieprasītā domēna ($lang) izmantoto protokolu (http/https)
+ * Atgriež pieprasītā domēna ($site_id) izmantoto protokolu (http/https)
  */
- function get_protocol($lang = 1) {
+ function get_protocol($site_id = 1) {
  	global $config_domains;
 
-	if (!empty($config_domains[$lang]['ssl'])) {
+	if (!empty($config_domains[$site_id]['ssl'])) {
 		return 'https://';
 	}
 
 	return 'http://';
+ }
+
+/**
+ * Atgriež domēnu pēc site_id ($lang)
+ */
+ function get_domain($site_id = 1) {
+ 	global $config_domains;
+	return $config_domains[$site_id]['domain'];
  }
  

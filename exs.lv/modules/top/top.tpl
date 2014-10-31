@@ -15,7 +15,7 @@
 			<!-- START BLOCK : top-views-->
 			<ul class="bloglist">
 				<!-- START BLOCK : top-views-node-->
-				<li><a href="{node-url}">{page-vievs-title}</a> ({page-vievs-views})</li>
+				<li><a href="{url}">{page-vievs-title}</a> ({page-vievs-views})</li>
 				<!-- END BLOCK : top-views-node-->
 			</ul>
 			<!-- END BLOCK : top-views-->
@@ -27,7 +27,7 @@
 			<!-- START BLOCK : top-comments-->
 			<ul class="bloglist">
 				<!-- START BLOCK : top-comments-node-->
-				<li><a href="{node-url}">{page-comments-title}</a> ({page-comments-posts})</li>
+				<li><a href="{url}">{page-comments-title}</a> ({page-comments-posts})</li>
 				<!-- END BLOCK : top-comments-node-->
 			</ul>
 			<!-- END BLOCK : top-comments-->
