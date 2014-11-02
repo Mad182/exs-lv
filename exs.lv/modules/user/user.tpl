@@ -69,6 +69,7 @@
 				<li><a href="/user/{id}" title="{nick} apskatījās {date}"><img src="{avatar}" alt="{nick}" width="45" height="45" /></a></li>
 				<!-- END BLOCK : user-profile-views-node-->
 			</ul>
+			<div class="c"></div>
 		</div>
 
 		<!-- END BLOCK : user-profile-views-->

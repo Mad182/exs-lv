@@ -199,6 +199,9 @@ class Auth {
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
+
+			$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
+
 			return true;
 		} else {
 			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
