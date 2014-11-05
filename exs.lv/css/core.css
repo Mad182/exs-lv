@@ -900,11 +900,7 @@ html .banned {
 }
 
 #full-story img {
-	max-width: 570px;
-}
-
-#content.no-left #full-story img {
-	max-width: 720px;
+	max-width: 100%;
 }
 
 #miniblog-list li img {
@@ -1039,10 +1035,6 @@ a.friend:hover {
 .half-right {
 	width: 49%;
 	float: right;
-}
-
-.tabMain .half-left, .tabMain .half-right {
-	width: 265px;
 }
 
 .bloglist li {

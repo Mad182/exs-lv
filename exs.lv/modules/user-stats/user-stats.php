@@ -20,9 +20,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 			}
 
 			$avatar = array(
-				'small' => get_avatar($user, 's'),
-				'medium' => get_avatar($user, 'm'),
-				'large' => get_avatar($user, 'l'),
+				'small' => 'https:' . get_avatar($user, 's'),
+				'medium' => 'https:' . get_avatar($user, 'm'),
+				'large' => 'https:' . get_avatar($user, 'l'),
 			);
 
 			$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
@@ -33,7 +33,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 				2 => 'moderator',
 				3 => 'journalist',
 				4 => 'vip',
-				5 => 'bot',
+				5 => 'bot'
 			);
 
 			$data = array(
