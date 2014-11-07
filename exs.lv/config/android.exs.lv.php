@@ -1,27 +1,17 @@
 <?php
+/**
+ *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
+ */
 
-//facebook login
-$fb_api_id = '';
-$fb_api_key = '';
+// nākotnē atbalstīs dažādus apakšprojektus
+$android_lang = 1;
 
-//draugiem pase
-$dr_api_id = 0;
-$dr_api_key = '';
+// auto-login visos subdomēnos
+if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
+	substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
+	!in_array($_SERVER['SERVER_NAME'], $android_local_ip)) {
 
-$polls_cat = 0;
-
-//radamo profila skatijumu skaits
-$profile_views_limit = 0;
-
-$android_lang  = 1; // nākotnē atbalstīs dažādus apakšprojektus
-
-// (testējot lokāli no telefona)
-$android_links = array('192.168.1.116');
-
-//auto login visos subdomēnos
-if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' && !in_array($_SERVER['SERVER_NAME'], $android_links)) {
-
-	//secure cookies
+	// secure cookies
 	ini_set('session.cookie_domain', '.exs.lv');
 	ini_set('session.cookie_httponly', 1);
 	ini_set('session.cookie_secure', 1);
@@ -29,8 +19,5 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0
 	$secure_login = true;
 }
 
-/*
- * exs.lv specific functions
- */
 require(CORE_PATH . '/includes/functions.exs.php');
 require(CORE_PATH . '/includes/functions.android.php');

@@ -1,11 +1,8 @@
 <?php 
-
-require CORE_PATH . '/config/android.exs.lv.php';
-
 /**
- *  Android lietotnes modulis
+ *  exs.lv Android lietotnes modulis
  *
- *  Apstrādā visus no Android saņemtos pieprasījumus
+ *  Apstrādā visus no Android saņemtos pieprasījumus.
  */
 
 $sub_include    = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
@@ -14,6 +11,7 @@ $android_lang   = 1;     // nākotnē atbalstīs dažādus apakšprojektus
 // ja androīds json formāta vietā saņems random kļūdas paziņojumu, 
 // kaut kas var nobrukt... skatoties logfailus, 
 // bez apstājas rakstās "GC_CONCURRENT freed [..]" paziņojums
+
 $debug = false;
 ini_set('display_errors', '0');
 error_reporting(NULL);
@@ -43,34 +41,33 @@ $json_page      = null;
 
 if ($auth->ok) {
 
-    // ja submodulis ir norādīts un eksistē, to atver
-    if (file_exists(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php')) {
-        include(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php');
-    } 
-    
-    else if (isset($_GET['logout'])) {
-    
-        $auth->logout();        
-        $json_user = a_fetch_user();
-    }
-}
-// vēlas autorizēties
-else if (isset($_GET['login'])) {
+	// atvērs pieprasīto moduli
+	if (file_exists(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php')) {
+		include(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php');
 
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-    }
-    $json_user = a_fetch_user();
+	} else if (isset($_GET['logout'])) {
+	
+		$auth->logout();        
+		$json_user = a_fetch_user();
+	}
+
+// vēlas autorizēties
+} else if (isset($_GET['login'])) {
+
+	if (isset($_POST['username']) && isset($_POST['password'])) {
+		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
+	}
+	$json_user = a_fetch_user();
 }
 
 
 
 $arr = array(
-    'state'     => $json_state,
-    'message'   => $json_message,
-    'auth'      => $auth->ok,
-    'userdata'  => $json_user,
-    'pagedata'  => $json_page
+	'state'     => $json_state,
+	'message'   => $json_message,
+	'auth'      => $auth->ok,
+	'userdata'  => $json_user,
+	'pagedata'  => $json_page
 );
 
 header('Content-Type: application/json');

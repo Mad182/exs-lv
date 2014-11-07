@@ -20,6 +20,11 @@ $mc_port = 11211;
 //formu tokenu salt
 $remote_salt = 'BgpgSvz21ku6C2tcEGVLqwWj8fXkeSA9';
 
+// ip adrese datoram, pie kura slēgsies no Android ierīces, kad tajā ieslēgta
+// lokālā vide; tai jābūt norādītai arī pašā lietotnē, un ir jāizveido
+// attiecīgs virtualhosts, lai pieprasījums vispār šeit nonāktu
+$android_local_ip = null; // piemēram, '192.168.88.5'
+
 //facebook login
 $fb_api_id = null;
 $fb_api_key = null;
@@ -60,11 +65,11 @@ $img_server = 'http://img.exs.lv';
 
 //cloudflare gadījums, vienalga vai ar vai bez varnish
 if(!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 
 //ja pieprasījums ir bez varnish
 } elseif(empty($_SERVER['HTTP_X_VARNISH'])) {
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
 
 }
 

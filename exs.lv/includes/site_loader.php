@@ -7,50 +7,56 @@
 $config_domains = array(
 	1 => array(
 		'domain' => 'exs.lv',
+		'alias' => null,
 		'prefix' => '',
 		'ssl' => true
 	),
 	2 => array(
 		'domain' => 'android.exs.lv',
+		'alias' => $android_local_ip,
 		'prefix' => 'android',
 		'ssl' => true
 	),
 	3 => array(
 		'domain' => 'coding.lv',
+		'alias' => null,
 		'prefix' => 'code',
 		'ssl' => true
 	),
 	5 => array(
 		'domain' => 'rp.exs.lv',
+		'alias' => null,
 		'prefix' => 'mta',
 		'ssl' => true
 	),
 	7 => array(
 		'domain' => 'lol.exs.lv',
+		'alias' => null,
 		'prefix' => 'lol',
 		'ssl' => true
 	),
 	8 => array(
 		'domain' => 'secure.exs.lv',
+		'alias' => null,
 		'prefix' => 'secure',
 		'ssl' => true
 	),
 	9 => array(
 		'domain' => 'runescape.exs.lv',
+		'alias' => 'rs.exs.lv',
 		'prefix' => 'runescape',
 		'ssl' => true
 	)
 );
 
-// saīsinātais runescape projekta domēns
-if ($_SERVER['SERVER_NAME'] === 'rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.rs.exs.lv') {
-	redirect('http://' . str_replace('rs', 'runescape', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
-}
-
 $found = false;
 foreach ($config_domains as $lang => $site) {
 
-	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+	if ($_SERVER['SERVER_NAME'] === $site['domain'] || 
+		(!is_null($site['alias']) && $_SERVER['SERVER_NAME'] === $site['alias']) || 
+		$_SERVER['SERVER_NAME'] === 'localhost' || 
+		$_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+
 		require CORE_PATH . '/config/' . $site['domain'] . '.php';
 		$found = true;
 		break;
@@ -73,4 +79,3 @@ if (!$found) {
 if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
-
