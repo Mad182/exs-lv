@@ -200,6 +200,10 @@ if (!$category->mods_only || im_mod()) {
 			
 			if($auth->ok) {
 				$tpl->newBlock('forum-new');
+				$tpl->assign(array(
+					'catid' => $category->id,
+					'strid' => $root_cat->textid
+				));
 			}
 
 			foreach ($articles as $article) {
