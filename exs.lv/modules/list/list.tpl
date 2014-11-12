@@ -54,10 +54,12 @@
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-short-->
 <!-- START BLOCK : list-forum-->
-<h1>
+
+	<!-- START BLOCK : forum-new-->
 	<a class="add-topic button primary" href="/{strid}/?cat={catid}#new">+ izveidot tēmu</a>
-	{title}
-</h1>
+	<!-- END BLOCK : forum-new-->
+
+<h1>{title}</h1>
 
 <table id="forum">
 	<tr>

@@ -197,6 +197,10 @@ if (!$category->mods_only || im_mod()) {
 				'catid' => $category->id,
 				'strid' => $root_cat->textid
 			));
+			
+			if($auth->ok) {
+				$tpl->newBlock('forum-new');
+			}
 
 			foreach ($articles as $article) {
 				if (!$article->nick) {
