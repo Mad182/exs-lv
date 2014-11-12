@@ -25,7 +25,7 @@
 			var c_url = "{page-url}";
 		</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}" type="text/css" />
+		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}?d" type="text/css" />
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
@@ -279,6 +279,13 @@
 						<div class="c"></div>
 						<div id="lat" class="ajaxbox">{latest-noscript}</div>
 					</div>
+
+					<!-- START BLOCK : dateks-ads-->
+					<h3>Jaunākie piedāvājumi no dateks.lv</h3>
+					<div class="box" id="dateks">
+						{out}
+					</div>
+					<!-- END BLOCK : dateks-ads-->
 
 					<h3>CS:GO monitors</h3>
 					<div class="box">

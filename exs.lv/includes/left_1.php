@@ -138,6 +138,13 @@ if ($auth->ok === true) {
 	}
 }
 
+//dateks reklāmas
+if ($html = show_dateks_view()) {
+	$tpl->newBlock('dateks-ads');
+	$tpl->assign('out', $html);
+	unset($html);
+}
+
 //filmu meklētājs
 if ($category->module == 'movies') {
 	$tpl->newBlock('movie-search');

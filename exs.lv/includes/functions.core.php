@@ -2256,3 +2256,82 @@ function profile_menu($user, $active, $title, $action = null) {
 	return $config_domains[$site_id]['domain'];
  }
  
+/**
+ * Dateks.lv reklāma, dabū xml
+ */
+ function get_dateks_xml() {
+	global $m;
+
+	if (!($data = $m->get('dateks_xml'))) {
+		$data = curl_get("http://www.dateks.lv/rss/new_products.php");
+		$m->set('dateks_xml', $data, false, 600);
+	}
+	return  simplexml_load_string($data);
+}
+
+/**
+ * Dateks.lv reklāma, parāda skatu
+ */
+function show_dateks_view() {
+	global $m;
+	
+	if (isset($_GET['pg'])) {
+		$id = (int) $_GET['pg'];
+	} else {
+		$id = 1;
+	}
+	
+	if (!($text = $m->get('dateks_pge_' . $id))) {
+
+		$data = get_dateks_xml();
+
+		$text = '';
+		$i = 0;
+		foreach($data->channel->item as $item) {
+
+			$i++;
+			if($i != $id) {
+				continue;
+			}
+
+			$text .= '<p class="core-pager ajax-pager">';
+			$page = 0;
+			while (5 - $page > 0) {
+				$page++;
+				$class = '';
+				if ($id === $page) {
+					$class = ' class="selected"';
+				}
+				$text .= ' <a href="/dateks-viewer/?pg=' . $page . '"' . $class . '>' . $page . '</a> ';
+			}
+			$text .= '</p>';
+
+			$item->description = str_replace('align="left"', 'class="dateks-productimage"', $item->description);
+			$text .= filterb4db('<div class="dateks-content"><a href="'.$item->link.'">'. $item->description.'</a></div>');
+		
+			$text = str_replace('http://www.dateks.lv/images/', 'https://www.dateks.lv/images/', $text);
+
+			require_once(LIB_PATH . '/htmlpurifier/library/HTMLPurifier.includes.php');
+			$config = HTMLPurifier_Config::createDefault();
+			$config->set('Cache.SerializerPath', CORE_PATH . '/cache/htmlpurifier');
+			$config->set('AutoFormat.Linkify', true);
+			$config->set('AutoFormat.AutoParagraph', true);
+			$config->set('AutoFormat.RemoveSpansWithoutAttributes', true);
+			$config->set('AutoFormat.RemoveEmpty', true);
+			$purifier = new HTMLPurifier($config);
+			$text = $purifier->purify($text);
+			$text = str_replace(' dateks.lv ', ' <a href="http://www.dateks.lv/ref/view.html">dateks.lv</a> ', $text);
+			$text = str_replace(' dateks ', ' <a href="http://www.dateks.lv/ref/view.html">Dateks</a> ', $text);
+			$text = str_replace(' dateksā ', ' <a href="http://www.dateks.lv/ref/view.html">dateksā</a> ', $text);
+			$text = str_replace(' dateksaa ', ' <a href="http://www.dateks.lv/ref/view.html">dateksā</a> ', $text);
+			$text = str_replace('dateks.lv/cenas', 'dateks.lv/p/view/cenas', $text);
+		}
+		
+		$m->set('dateks_pge_' . $id, $text, false, 300);
+		
+	}
+
+	return $text;
+}
+
+ 
