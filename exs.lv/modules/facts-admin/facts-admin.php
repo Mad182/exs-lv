@@ -5,6 +5,8 @@
  *
  *  Adrese: /facts_admin
  */
+$robotstag[] = 'noindex';
+
 if (!im_mod()) {
 	redirect();
 }

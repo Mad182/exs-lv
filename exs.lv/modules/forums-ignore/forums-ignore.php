@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Sadaļa, kur lietotājs var izvēlēties,
+ * no kurām foruma sadaļām nevēlas redzēt jaunumus
+ */
+$robotstag[] = 'noindex';
+
 if (!$auth->ok) {
 	set_flash('Jāielogojas!', 'error');
 	redirect();
@@ -70,3 +76,4 @@ if (!empty($cats)) {
 		}
 	}
 }
+

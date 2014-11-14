@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * CS serveru saraksts
+ */
+$robotstag[] = 'noindex';
+
 if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_online') {
 	$sid = (int) $_GET['var1'];
 
@@ -300,3 +305,4 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 
 $tpl->newBlock('meta-description');
 $tpl->assign('description', 'Populārāko Latvijas Counter Strike un Counter Strike Source serveru saraksts, pēc online spēlētāju skaita');
+

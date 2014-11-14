@@ -1,5 +1,7 @@
 <?php
 
+$robotstag[] = 'noindex';
+
 if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 
 	if (isset($_GET['var2'])) {
@@ -61,3 +63,4 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 	echo 'err: no format';
 	exit;
 }
+

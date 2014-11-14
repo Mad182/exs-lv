@@ -4135,3 +4135,42 @@ img.show-banned:hover {
 .child-padding {
 	background:#FCFCFC
 }
+
+/* Dateks.lv piedāvājumi */
+#dateks .dateks-content {
+	font-size: 85%;
+	text-align: center;
+}
+
+#dateks table {
+	width: 100%;
+}
+
+#dateks p {
+	padding: 3px 10px;
+	text-align: center;
+}
+
+#dateks table tr td {
+	font-size: 85%;
+	padding: 0 2px;
+	text-align: left;
+}
+
+#dateks table tr td:first-child {
+	text-align: right;
+	width: 45%;
+	color: #888;
+}
+
+#dateks table tr td:first-child::after {
+	content: ":";
+}
+
+#dateks img {
+	display: block;
+	max-width: 80%;
+	height: auto;
+	margin: 5px auto;
+}
+

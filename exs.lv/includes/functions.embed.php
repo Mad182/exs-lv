@@ -48,7 +48,10 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	// saturā esošām adresēm pievieno "nofollow" atribūtu
 	$txt = str_replace(' rel="nofollow"', '', $txt);
 	$txt = str_replace(' href="http', ' rel="nofollow" href="http', $txt);
-
+	
+	//populāri bilžu hosti, kas neatbalsta SSL
+	$txt = str_replace('src="http://www.bildites.lv', 'src="https://cache.exs.lv/?src=http://www.bildites.lv', $txt);
+	$txt = str_replace('src="http://i3.kym-cdn.com', 'src="https://cache.exs.lv/?src=http://i3.kym-cdn.com', $txt);
 
 	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_sitelist('dofollow');

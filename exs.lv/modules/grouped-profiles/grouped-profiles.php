@@ -6,6 +6,7 @@
  *  lai vienkāršā veidā monitorētu fake profilu lietošanu un 
  *  vienlaicīgi varētu dāvāt liegumus veselām grupām profilu.
  */
+$robotstag[] = 'noindex';
 
 if (!im_mod()) {
 	set_flash('Pieeja liegta!');

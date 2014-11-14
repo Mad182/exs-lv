@@ -3,6 +3,8 @@
 /**
  * Apskatīt raksta iepriekšējās versijas
  */
+$robotstag[] = 'noindex';
+
 if ($auth->ok) {
 	if (isset($_GET['page'])) {
 		$hpid = (int) $_GET['page'];
@@ -24,3 +26,4 @@ if ($auth->ok) {
 		die('Nav norādīta lapa!');
 	}
 }
+

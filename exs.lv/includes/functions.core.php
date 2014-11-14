@@ -1353,9 +1353,7 @@ function htmlpost2db($text) {
 	$text = str_replace('href="https://' . $_SERVER['SERVER_NAME'] . '/', 'href="/', $text);
 	$text = str_replace(' rel="nofollow"', '', $text);
 	$text = str_replace(' dateks.lv ', ' <a href="http://www.dateks.lv/ref/view.html">dateks.lv</a> ', $text);
-	$text = str_replace(' dateks ', ' <a href="http://www.dateks.lv/ref/view.html">Dateks</a> ', $text);
 	$text = str_replace(' dateksā ', ' <a href="http://www.dateks.lv/ref/view.html">dateksā</a> ', $text);
-	$text = str_replace(' dateksaa ', ' <a href="http://www.dateks.lv/ref/view.html">dateksā</a> ', $text);
 	$text = str_replace('dateks.lv/cenas', 'dateks.lv/p/view/cenas', $text);
 	$text = str_replace('<code>', '<code class="prettyprint">', $text);
 	$text = str_replace('<pre>', '<pre class="prettyprint">', $text);
@@ -2264,7 +2262,7 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	if (!($data = $m->get('dateks_xml'))) {
 		$data = curl_get("http://www.dateks.lv/rss/new_products.php");
-		$m->set('dateks_xml', $data, false, 600);
+		$m->set('dateks_xml', $data, false, 1000);
 	}
 	return  simplexml_load_string($data);
 }
@@ -2327,11 +2325,11 @@ function show_dateks_view() {
 			$text = str_replace('dateks.lv/cenas', 'dateks.lv/p/view/cenas', $text);
 		}
 		
-		$m->set('dateks_pge_' . $id, $text, false, 300);
+		$m->set('dateks_pge_' . $id, $text, false, 60);
 		
 	}
 
-	return $text;
+	return add_smile($text);
 }
 
  

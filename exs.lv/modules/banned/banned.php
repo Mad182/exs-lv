@@ -12,6 +12,8 @@
  *  Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, 
  *  bans attiecas tikai uz to lapu.
  */
+$robotstag[] = 'noindex';
+ 
 $q_add = '';
 if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 	$q_add = " AND `banned`.`lang` = '$lang'";
@@ -286,3 +288,4 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
+

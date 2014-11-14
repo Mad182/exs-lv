@@ -6,7 +6,8 @@
  *
  * 	Moduļa adrese: 	exs.lv/crows
  */
- 
+$robotstag[] = 'noindex';
+
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
 	set_flash('Error 403: Permission denied!');
@@ -117,3 +118,4 @@ if (!$warns) {
 		$counter++;
 	}
 }
+

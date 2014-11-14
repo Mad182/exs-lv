@@ -3,6 +3,8 @@
 /**
  * Pievieno grupai strid
  */
+$robotstag[] = 'noindex';
+
 if ($auth->id != 1) {
 	redirect();
 }

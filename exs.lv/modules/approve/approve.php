@@ -3,6 +3,7 @@
 /**
  * Rakstu iesniegšana un iesniegto rakstu apstiprināšana
  */
+$robotstag[] = 'noindex';
  
 // raksta pievienošana datubāzē
 if (isset($_POST['new-topic-body'])) {
