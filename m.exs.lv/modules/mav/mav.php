@@ -16,11 +16,11 @@ if (file_exists($original)) {
 	$foo = new Upload($original);
 	$foo->file_safe_name = false;
 	$foo->image_resize = true;
-	$foo->image_x = 45;
-	$foo->image_y = 45;
+	$foo->image_x = 90;
+	$foo->image_y = 90;
 	$foo->allowed = array('image/*');
 	$foo->image_ratio_crop = true;
-	$foo->jpeg_quality = 90;
+	$foo->jpeg_quality = 92;
 	$foo->file_auto_rename = false;
 	$foo->file_overwrite = true;
 	$foo->process('av/' . $path);
@@ -31,3 +31,4 @@ if (file_exists($original)) {
 	echo file_get_contents('av/none.png');
 }
 exit;
+
