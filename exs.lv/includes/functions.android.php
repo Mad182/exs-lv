@@ -1,6 +1,9 @@
 <?php
 /**
  *  Globālas funkcijas Android lietotnes pieprasījumiem.
+ *
+ *  Funkciju nosaukumiem izmantots "a_" prefix, lai citos failos tās
+ *  varētu atšķirt.
  */
 
 /**
@@ -694,4 +697,72 @@ function a_add_article_comment($article = null) {
 			update_stats($category->parent);
 		}
 	}
+}
+
+/**
+ *  Atgriezīs sarakstu masīva veidā ar lietotāja pēdējām notifikācijām.
+ *
+ *  TODO:
+ *      - vairāku apakšprojektu atbalsts
+ */
+function a_fetch_notifications() {
+    global $db, $auth, $config_domains;
+    global $json_page;
+    
+    if (!$auth->ok) {    
+        a_error('Lūdzu, autorizējies!');
+        return false;
+    }
+
+	$arr_notifs = array(); // atgriežamais notifikāciju masīvs
+    $notif_limit = 15; // cik pēdējos jaunumus atgriezt
+
+    // TODO: lietotnē, iespējams, nav vajadzīgi paziņojumi,
+    // kurus caur to nemaz nevar tuvāk apskatīt;
+    // vai arī rādīt paziņojumu bez iespējas skatīt sīkāk
+	$texts = array(
+		0 => 'atbilde komentāram',
+		1 => 'komentārs galerijā',
+		2 => 'komentārs rakstam',
+		3 => 'atbilde mb',
+		4 => 'jauns biedrs tavā grupā',
+		5 => 'tevi aicina draudzēties',
+		6 => 'tev ir jauns draugs',
+		7 => 'tu saņēmi medaļu',
+		8 => 'atbilde grupā',
+		9 => 'saņemta vēstule',
+		10 => 'brīdinājums!',
+		11 => 'noņemts brīdinājums',
+		12 => 'jaunumi no exs.lv',
+		13 => 'tevi pieminēja grupā',
+		14 => 'tevi pieminēja mb',
+		15 => 'tevi pieminēja',
+		16 => 'tevi pieminēja galerijā'
+	);
+    
+    $user_notifications = $db->get_results("
+        SELECT * FROM `notify` 
+        WHERE 
+            `user_id` = ".(int)$auth->id." AND
+            `lang` IN(0, 1)
+        ORDER BY `bump` DESC 
+        LIMIT 0, $notif_limit
+    ");
+    
+    if (!$user_notifications) {
+        a_error('Notikumu nav!');
+        return false;
+    }
+    
+    $inner_counter = 0;
+    foreach ($user_notifications as $notify) {    
+        $arr_notifs[] = [
+            'type' => $texts[$notify->type],
+            'text' => textlimit($notify->info, 45, ''),
+            'date' => 'pirms ' . time_ago(strtotime($notify->bump)),
+            'project' => $config_domains[$notify->lang]['domain']
+        ];
+    }
+
+    return $arr_notifs;
 }

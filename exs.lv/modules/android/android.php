@@ -56,10 +56,14 @@ if ($auth->ok) {
 
 	if (isset($_POST['username']) && isset($_POST['password'])) {
 		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-	}
+        
+    // lokālai testēšanai
+	} else if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
+        $auth->login('durvis', $mypasswd, $auth->xsrf);
+    }
+
 	$json_user = a_fetch_user();
 }
-
 
 
 $arr = array(
