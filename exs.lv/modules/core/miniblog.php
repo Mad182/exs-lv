@@ -535,6 +535,8 @@ if (!empty($inprofile)) {
 				'pager-numeric' => $pager['pages']
 			));
 		}
+	} elseif(!empty($_GET['single'])) {
+		http_response_code(404);
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');

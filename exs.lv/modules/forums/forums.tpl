@@ -1,11 +1,10 @@
 <!-- START BLOCK : forum-->
-<h1>
+
 	<!-- START BLOCK : forum-new-->
-	<a class="add-topic button primary" href="#new">+ izveidot tēmu</a>
+		<a class="add-topic button primary" href="#new">+ izveidot tēmu</a>
 	<!-- END BLOCK : forum-new-->
-	{title}
-</h1>
-<div class="clear"></div>
+
+<h1>{title}</h1>
 
 <table id="forum">
 	<!-- START BLOCK : forum-list-->

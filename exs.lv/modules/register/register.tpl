@@ -1,5 +1,13 @@
 <!-- START BLOCK : registration-form-->
 <h1>Jauna lietotāja reģistrācija</h1>
+
+<script>
+$(document).ready(function() {
+	/* reģistrāciajs formas javascript check */
+	$('#reg-www').val("{botstring}");
+});
+</script>
+
 <form id="edit-profile" class="form" action="" method="post">
 	<fieldset>
 		<legend>Reģistrēties lapā</legend>
@@ -60,6 +68,10 @@
 		<p>
 			<label for="url">Parole atkārtoti:</label><br />
 			<input type="password" class="text" name="url" id="url" />
+		</p>
+		<p id="required-registration-field">
+			<label for="reg-www">Homepage:</label><br />
+			<input type="text" class="text" name="www" id="reg-www" value="http://" />
 		</p>
 		<p>
 			<label for="password">desmit mīnus 1 ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />

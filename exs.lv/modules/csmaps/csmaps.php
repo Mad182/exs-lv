@@ -1,4 +1,8 @@
 <?php
+/**
+ * Trūkstošās CS kartes
+ */
+$robotstag[] = 'noindex';
 
 if ($auth->level > 0) {
 	$tpl->newBlock('image_upload-admin');
@@ -35,3 +39,4 @@ if ($auth->level > 0) {
 		}
 	}
 }
+

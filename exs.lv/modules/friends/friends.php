@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Lietotāja draugu saraksts
+ */
 $robotstag[] = 'noindex';
 
 if (isset($_GET['var1'])) {
@@ -90,3 +93,4 @@ if ($inprofile) {
 }
 
 $pagepath = '';
+

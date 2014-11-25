@@ -49,7 +49,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$txt = str_replace(' rel="nofollow"', '', $txt);
 	$txt = str_replace(' href="http', ' rel="nofollow" href="http', $txt);
 
-
 	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_sitelist('dofollow');
 	foreach ($dofollow_sites as $site) {

@@ -2,6 +2,8 @@
 /**
  * Ielogoties/reģistrēties ar draugiem.lv pasi
  */
+$robotstag[] = 'noindex';
+
 if ($auth->ok) {
 	redirect();
 }

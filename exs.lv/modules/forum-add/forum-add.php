@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Foruma sadaļas pievienošana (adminiem)
+ */
+$robotstag[] = 'noindex';
+
 if ($auth->level != 1) {
 	redirect();
 }
@@ -26,3 +31,4 @@ if (isset($_GET['var1'])) {
 		redirect('/' . $parent->textid);
 	}
 }
+

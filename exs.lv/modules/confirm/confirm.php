@@ -3,6 +3,8 @@
 /**
  * Reģistrācijas apstiprinājums (lietotājs nospiedis linku e-pastā)
  */
+$robotstag[] = 'noindex';
+
 if (isset($_GET['var1'])) {
 
 	$hash = sanitize($_GET['var1']);

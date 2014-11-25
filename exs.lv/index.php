@@ -290,6 +290,11 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 	$persona = ' style="background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 0 0;background-size:cover;"';
 }
 
+//Latvijas valsts svētki
+if(in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 0 0;background-size:cover;"';
+}
+
 $in_level = 0;
 $in_gender = 0;
 if (!empty($inprofile)) {
@@ -389,7 +394,8 @@ if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'))
 if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl')) {
 	$tpl->assignGlobal('ad-728', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'));
 }
-if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl')) {
+if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl') 
+	&& !in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
 	$tpl->assignGlobal('ad-top', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'));
 }
 if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl')) {

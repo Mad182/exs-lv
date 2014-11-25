@@ -1,5 +1,7 @@
 <?php
 
+$robotstag[] = 'noindex';
+
 if ($auth->ok) {
 
 	$user = $db->get_row("SELECT * FROM users WHERE id = '$auth->id'");
@@ -23,3 +25,4 @@ if ($auth->ok) {
 		'pay' => $pay
 	));
 }
+

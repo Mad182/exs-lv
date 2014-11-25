@@ -2,6 +2,8 @@
 
 if (!$auth->ok) {
 
+	$botstring = 'Es tiešām nēesmu ļauns spambots! ' . md5($auth->xsrf . '-' . 'neesmuspambots') . '!';
+
 	/* pārbauda vai lietotājs neizmanto tor */
 	$tor = Tor::getInstance();
 	if ($tor->setTarget($auth->ip)->isTorActive()) {
@@ -16,6 +18,7 @@ if (!$auth->ok) {
 	$field_nick = md5($auth->xsrf . '-' . 'nick');
 
 	$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 57753"));
+	$tpl->assignGlobal('botstring', $botstring);
 
 	$regdata = array();
 	$regdata['mail'] = '';
@@ -28,7 +31,7 @@ if (!$auth->ok) {
 	$regdata['botsok'] = false;
 	$regdata['agree'] = false;
 
-	if (isset($_POST[$field_nick])) {
+	if (isset($_POST[$field_nick]) && $_POST['www'] === $botstring) {
 
 		//check mail
 		if (filter_var($_POST[$field_mail], FILTER_VALIDATE_EMAIL)) {

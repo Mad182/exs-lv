@@ -3,6 +3,8 @@
 /**
  * Ielogošanās un profila izveide ar facebook autorizāciju
  */
+$robotstag[] = 'noindex';
+
 require(LIB_PATH . '/facebook-php-sdk/src/base_facebook.php');
 require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
 

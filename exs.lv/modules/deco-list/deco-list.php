@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Parāda lapu ar ikonām, ko var izmantot
+ * lai uzliktu uz lietotāja profila
+ */
+$robotstag[] = 'noindex';
+
 if (!$auth->ok) {
 	set_flash('Jāielogojas, lai piekļūtu šai sadaļai!');
 	redirect();
@@ -14,3 +20,4 @@ if ($handle = opendir('bildes/fugue-icons/')) {
 	}
 	closedir($handle);
 }
+

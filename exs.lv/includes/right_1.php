@@ -30,6 +30,7 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 		));
 	}
 
+	//pm links
 	if ($auth->ok === true && $auth->id != $inprofile->id) {
 		$tpl->newBlock('profilebox-pm-link');
 	}
@@ -84,16 +85,18 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 	));
 }
 
-$wallpaper = $db->get_var("SELECT image FROM wallpapers WHERE date <= '" . date('Y-m-d') . "' ORDER BY date DESC LIMIT 1");
+$wallpaper = $db->get_var("SELECT `image` FROM `wallpapers` WHERE `date` <= '" . date('Y-m-d') . "' ORDER BY `date` DESC LIMIT 1");
 if ($wallpaper) {
 	$tpl->newBlock('daily-wallpaper');
 	$tpl->assignGlobal('wallpaper-image', $wallpaper);
+	unset($wallpaper);
 }
 
-$bumps = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 4");
-if ($bumps) {
+//jaunākās junk bildes
+$junks = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 4");
+if ($junks) {
 	$tpl->newBlock('side-junk');
-	foreach ($bumps as $junk) {
+	foreach ($junks as $junk) {
 		$tpl->newBlock('side-junk-node');
 		$tpl->assign(array(
 			'id' => $junk->id,
@@ -102,6 +105,7 @@ if ($bumps) {
 			'posts' => $junk->posts
 		));
 	}
+	unset($junks);
 }
 
 include(CORE_PATH . '/modules/core/poll.php');
@@ -143,3 +147,4 @@ if ($auth->ok === true) {
 if ($auth->skin == 1) {
 	$tpl->assignGlobal('twitter-theme', ' data-theme="dark"');
 }
+

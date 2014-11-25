@@ -280,6 +280,13 @@
 						<div id="lat" class="ajaxbox">{latest-noscript}</div>
 					</div>
 
+					<!-- START BLOCK : dateks-ads-->
+					<h3>Jaunākie piedāvājumi no dateks.lv</h3>
+					<div class="box" id="dateks">
+						{out}
+					</div>
+					<!-- END BLOCK : dateks-ads-->
+
 					<h3>CS:GO monitors</h3>
 					<div class="box">
 						{csgo-monitor}

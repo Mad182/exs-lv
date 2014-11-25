@@ -3,6 +3,8 @@
 /**
  * Ielogošanās un profila izveide ar twitter autorizāciju
  */
+$robotstag[] = 'noindex';
+
 require(LIB_PATH . '/twitteroauth/twitteroauth/twitteroauth.php');
 
 if (!isset($_SESSION['twitter_id']) && !isset($_GET['oauth_token']) && !isset($_POST['submit'])) {

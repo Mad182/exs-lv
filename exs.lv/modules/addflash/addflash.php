@@ -3,6 +3,8 @@
 /**
  * Flash spēles augšupielāde
  */
+$robotstag[] = 'noindex';
+ 
 if ($auth->id != 1) {
 	redirect();
 }
@@ -45,3 +47,4 @@ if (isset($_POST['submit'])) {
 	userlog($auth->id, 'Pievienoja flash spēli <a href="/flash-speles/' . $slug . '" title="Spēle ' . htmlspecialchars($title) . '">' . $title . '</a>', '/upload/flash-games/thb/' . $thb_local);
 	redirect('/addflash');
 }
+

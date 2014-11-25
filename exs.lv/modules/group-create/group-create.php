@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Grupas izveide
+ */
+$robotstag[] = 'noindex';
+
 if (!in_array($lang, array(1, 5, 9))) {
 	set_Flash('Šobrīd nav pieejams!', 'error');
 	redirect('/grupas');
@@ -31,3 +36,4 @@ if ($auth->ok) {
 } else {
 	$tpl->newBlock('error-nologin');
 }
+

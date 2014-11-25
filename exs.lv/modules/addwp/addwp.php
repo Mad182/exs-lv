@@ -3,6 +3,8 @@
 /**
  * Wallpaper pievienošana (moderatoriem)
  */
+$robotstag[] = 'noindex';
+
 if (!im_mod()) {
 	redirect();
 }

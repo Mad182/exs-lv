@@ -3,6 +3,8 @@
 /**
  * Lietotāja bloga pārvaldība
  */
+$robotstag[] = 'noindex';
+
 if (!$auth->ok) {
 	$tpl->newBlock('error-nologin');
 } 
