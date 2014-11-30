@@ -6,7 +6,7 @@
  */
 
 $sub_include    = true;  // submoduļos ir pārbaude, vai šāds mainīgais definēts
-$android_lang   = 1;     // nākotnē atbalstīs dažādus apakšprojektus
+$android_lang   = 1;     // lietotnē skatāmi vairāki apakšprojekti
 
 // ja androīds json formāta vietā saņems random kļūdas paziņojumu, 
 // kaut kas var nobrukt... skatoties logfailus, 
@@ -36,7 +36,6 @@ $json_state     = 'success';
 $json_message   = '';
 $json_user      = a_fetch_user();
 $json_page      = null;
-
 
 
 if ($auth->ok) {

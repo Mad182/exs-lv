@@ -3,7 +3,7 @@
  *  Android miniblogu apakšmodulis
  */
 
-// pa tiešo šeit nebūs nekādas skatīšanās
+// nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
 
 

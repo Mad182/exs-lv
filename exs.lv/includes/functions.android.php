@@ -701,25 +701,14 @@ function a_add_article_comment($article = null) {
 
 /**
  *  Atgriezīs sarakstu masīva veidā ar lietotāja pēdējām notifikācijām.
- *
- *  TODO:
- *      - vairāku apakšprojektu atbalsts
  */
 function a_fetch_notifications() {
     global $db, $auth, $config_domains;
-    global $json_page;
-    
-    if (!$auth->ok) {    
-        a_error('Lūdzu, autorizējies!');
-        return false;
-    }
+    global $android_lang;
 
 	$arr_notifs = array(); // atgriežamais notifikāciju masīvs
     $notif_limit = 15; // cik pēdējos jaunumus atgriezt
 
-    // TODO: lietotnē, iespējams, nav vajadzīgi paziņojumi,
-    // kurus caur to nemaz nevar tuvāk apskatīt;
-    // vai arī rādīt paziņojumu bez iespējas skatīt sīkāk
 	$texts = array(
 		0 => 'atbilde komentāram',
 		1 => 'komentārs galerijā',
@@ -744,7 +733,7 @@ function a_fetch_notifications() {
         SELECT * FROM `notify` 
         WHERE 
             `user_id` = ".(int)$auth->id." AND
-            `lang` IN(0, 1)
+            `lang` = ".(int)$android_lang."
         ORDER BY `bump` DESC 
         LIMIT 0, $notif_limit
     ");
@@ -758,7 +747,7 @@ function a_fetch_notifications() {
     foreach ($user_notifications as $notify) {    
         $arr_notifs[] = [
             'type' => $texts[$notify->type],
-            'text' => textlimit($notify->info, 45, ''),
+            'text' => textlimit(trim($notify->info), 45, ''),
             'date' => 'pirms ' . time_ago(strtotime($notify->bump)),
             'project' => $config_domains[$notify->lang]['domain']
         ];

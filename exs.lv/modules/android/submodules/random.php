@@ -4,7 +4,7 @@
  *  kurus nav vērts iedalīt kādā specifiskā apakšgrupā.
  */
 
-// pa tiešo šeit nebūs nekādas skatīšanās
+// nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
  
 
