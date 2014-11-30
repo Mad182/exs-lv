@@ -7,16 +7,75 @@
  */
 
 /**
- *  Pievieno kļūdas paziņojumu nākamajai atbildei.
- *
- *  @param string   kļūdas paziņojums
+ *  Pievienos kļūdas paziņojumu nākamajai atbildei.
  */
 function a_error($string = '') {
 	global $json_state, $json_message;
 	
-	$json_state     = 'error';
-	$json_message   = $string;
-} 
+	$json_state   = 'error';
+	$json_message = $string;
+}
+
+/**
+ *  Android lietotnes formātā atgiež datus par lietotāju.
+ *
+ *  Ja tiek izmantoti noklusētie parametri, atgriezīs datus par to lietotāju,
+ *  kas šo funkciju izsauc. Norādot parametrus, dati atbildīs norādītajam
+ *  lietotājam.
+ */
+function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
+	global $auth, $online_users, $busers;
+
+	// atgriežamais masīvs
+	$data = array();
+
+	// dati par autorizēto lietotāju
+	if ($user_id == 0) {
+		$user_id    = $auth->id;
+		$user_nick  = $auth->nick;
+		$user_level = $auth->level;
+
+	// dati par norādīto lietotāju
+	} else {
+		$user_id    = (int)$user_id;
+		$user_nick  = $nick;
+		$user_level = $level;
+	}
+
+	$is_online = false;
+    $is_banned = false;
+    $device = 0; // dators, 1 - mob. tel.
+
+	// vai lietotājs ir tiešsaistē?
+	if ((!empty($online_users['onlineusers'][$user_id])) || 
+        (!empty($online_users['onlineusers']) && 
+        in_array($user_nick, $online_users['onlineusers']))) {
+	
+		$is_online = true;
+	}
+
+    // vai lietotājs lapu skatās caur telefonu?
+    if (!empty($online_users['mobileusers']) && 
+        in_array($user_nick, $online_users['mobileusers'])) {
+        $device = 1;
+    }
+
+	// vai lietotājs ir bloķēts un tā lietotājvārds jāpārsvītro?
+	if (!empty($busers) && !empty($busers[$user_id])) {
+		$is_banned = true;
+	}
+
+	$data = array(
+		'id'        => (int)$user_id, 
+		'nick'      => (string)$user_nick,
+		'level'     => (int)$user_level,
+		'is_online' => (bool)$is_online,
+        'is_banned' => (bool)$is_banned,
+		'device'    => (int)$device
+	);
+
+	return $data;
+}
  
 /**
  *  Atgriež JSON sarakstu ar jaunākajiem exs.lv rakstiem.
@@ -304,63 +363,6 @@ function a_get_user_avatar($user, $size = 'm') {
 	} else {
 		return $img_server . '/userpic/' . $path . '/' . $user->avatar;
 	}
-}
-
-/**
- *  Atgriež Android lietotnei nepieciešamos lietotāja datus.
- *
- *  @return array   masīvs ar lietotāja datiem
- */
-function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
-	global $auth, $online_users, $busers;
-	
-	// atgriežamais masīvs
-	$data = array();
-	
-	// ja parametri nav norādīti, jāatgriež dati par autorizēto lietotāju
-	if ($user_id == 0) {
-		$user_id    = $auth->id;
-		$user_nick  = $auth->nick;
-		$user_level = $auth->level;  
-	// pārējos gadījumos meklē datus par norādīto lietotāju
-	} else {
-		$user_id    = (int)$user_id;
-		$user_nick  = $nick;
-		$user_level = (int)$level;
-	}
-
-	$online_status  = false;
-	$online_type    = 0;
-	
-	
-	// vai lietotājs ir tiešsaistē?
-	if ( (!empty($user_id) && !empty($online_users['onlineusers'][$user_id])) || (!empty($online_users['onlineusers']) && in_array($user_nick, $online_users['onlineusers'])) ) {
-	
-		$online_status = true;
-		
-		// mob
-		if (!empty($online_users['mobileusers']) && in_array($user_nick, $online_users['mobileusers'])) {
-			$online_type = 1;
-		// cits
-		} else {
-			$online_type = 0;
-		}
-	}
-	
-	// bloķētie lietotāji
-	if (!empty($busers) && !empty($busers[$user_id])) {
-		$level = -1;
-	}
-	
-	$data = array(
-		'id'        => (int)$user_id, 
-		'nick'      => $user_nick,
-		'level'     => (int)$user_level,
-		'online'    => (bool)$online_status,
-		'type'      => (int)$online_type
-	);
-
-	return $data;
 }
 
 /**
@@ -839,7 +841,7 @@ function a_fetch_online($force = false) {
             'by_classes' => $classes
         );
         
-		$m->set('android-online-'.$android_lang, $data, false, 30);
+		$m->set('android-online-'.$android_lang, $data, false, 10);
 	}
     
 	return $data;

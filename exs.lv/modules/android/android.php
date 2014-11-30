@@ -23,7 +23,7 @@ error_reporting(NULL);
  *  $json = array(
  *      'state'     => string       // error/success
  *      'message'   => string,      // ziņa, kas lietotnē tiek izcelta, ja "state" == "error"
- *      'auth'      => bool,        // statuss, kas apzīmē, vai lietotājs ir autorizēts
+ *      'is_online' => bool,        // statuss, kas apzīmē, vai lietotājs ir autorizēts
  *      'userdata'  => array(),     // masīvs, kas satur datus par lietotāju (id, niks, līmenis, utt.)
  *      'pagedata'  => array()      // ar konkrēto sadaļu saistīta informācija
  *  );
@@ -68,7 +68,7 @@ if ($auth->ok) {
 $arr = array(
 	'state'     => $json_state,
 	'message'   => $json_message,
-	'auth'      => $auth->ok,
+	'is_online' => $auth->ok,
 	'userdata'  => $json_user,
 	'pagedata'  => $json_page
 );
