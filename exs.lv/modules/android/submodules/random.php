@@ -14,4 +14,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
     $json_page = array(
         'notifications' => a_fetch_notifications()
     );
+
+// atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem 
+} else if (isset($_GET['var1']) && $_GET['var1'] == 'online') {
+
+    $json_page = a_fetch_online();
 }

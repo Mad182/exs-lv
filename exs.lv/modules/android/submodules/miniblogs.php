@@ -163,12 +163,9 @@ if (isset($_GET['var1'])) {
     } else {
         a_error('Miniblogs nav atrasts');
     }
-}
 
 
 // jaunāko miniblogu saraksts
-else {
-
+} else {
     $json_page = a_fetch_miniblogs();
-
 }

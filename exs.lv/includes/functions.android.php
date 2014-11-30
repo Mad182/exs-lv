@@ -766,3 +766,92 @@ function a_fetch_notifications() {
 
     return $arr_notifs;
 }
+
+/**
+ *  Tiešsaistē esošie lietotāji.
+ *
+ *  Atgriež sarakstu ar tiešsaistē esošajiem lietotājiem 
+ *  atvērtajā apakšprojektā pēdējās x sekundēs.
+ *
+ *  Klāt pievieno arī informāciju par tiešsaistē esošiem lietotājiem
+ *  katrā klasē.
+ */
+function a_fetch_online($force = false) {
+	global $db, $m, $android_lang;
+    global $online_users, $busers;
+    
+    // laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
+    $online_seconds = 360;
+    
+	$data = array();
+    
+    // satura nolasīšana no memcached
+	if ($force || !($data = $m->get('android-online-'.$android_lang))) {
+
+        $online = null;
+        $classes = null;
+        
+		$lastseen = $db->get_results("
+            SELECT
+                DISTINCT(`visits`.`user_id`) AS `user_id`,
+                `users`.`nick`,
+                `users`.`level`
+            FROM `visits`
+                JOIN `users` ON `visits`.`user_id` = `users`.`id`
+            WHERE
+                `visits`.`site_id` = ".(int)$android_lang." AND
+                `visits`.`lastseen` > '".date('Y-m-d H:i:s', time() - $online_seconds)."'
+            ORDER BY
+                `users`.`level` ASC,
+                `users`.`nick` ASC
+        ");
+
+        if (!$lastseen) {
+            a_error('Šobrīd neviena lietotāja nav tiešsaistē');
+            return false;
+        }
+        
+        // visi tiešsaistes lietotāji tiek pievienoti masīvam
+        foreach ($lastseen as $user) {       
+
+            // nosaka ierīci, no kādas lietotājs pieslēdzies
+            $device = 0;
+            if (!empty($online_users['mobileusers']) && 
+                in_array($user->nick, $online_users['mobileusers'])) {
+                $device = 1; // mob. tel.
+            } else {
+                $device = 0; // dators
+            }
+            
+            // pārbauda, vai lietotājs ir bloķēts
+            $is_banned = false;
+            if (!empty($busers) && !empty($busers[$user->user_id])) {
+                $is_banned = true;
+            }
+        
+            $online[] = array(
+                'id' => (int)$user->user_id,
+                'nick' => (string)$user->nick,
+                'level' => (int)$user->level,
+                'is_banned' => (bool)$is_banned,
+                'device' => (int)$device
+            );
+            
+            // palielinās lietotāju skaitu šī lietotāja klasē
+            if (isset($classes[$user->level])) {
+                $classes[$user->level] += 1;
+            } else {
+                $classes[$user->level] = 1;
+            }
+        }
+
+        $data = array(
+            'online_users' => $online,
+            'by_classes' => $classes
+        );
+        
+		$m->set('android-online-'.$android_lang, $data, false, 30);
+	}
+    
+	return $data;
+}
