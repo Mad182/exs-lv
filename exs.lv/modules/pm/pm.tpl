@@ -65,9 +65,9 @@
 		<!-- START BLOCK : pm-list-inbox-node-->
 		<tr class="read-{pm-read}">
 			<td class="{type}">&nbsp;</td>
-			<td class="title"><a href="/pm/inbox/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-title}</a></td>
+			<td class="title"><a href="/pm/inbox/{pm-id}" title="{pm-title} - lasīt vēstuli">{pm-title}</a></td>
 			<td>{from}</td>
-			<td class="pmdate"><a href="/pm/inbox/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
+			<td class="pmdate"><a href="/pm/inbox/{pm-id}" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
 		</tr>
 		<!-- START BLOCK : pm-list-inbox-node-->
 
@@ -97,9 +97,9 @@
 		<!-- START BLOCK : pm-list-outbox-node-->
 		<tr class="read-{pm-read}">
 			<td class="{type}">&nbsp;</td>
-			<td class="title"><a href="/pm/sent/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-title}</a></td>
+			<td class="title"><a href="/pm/sent/{pm-id}" title="{pm-title} - lasīt vēstuli">{pm-title}</a></td>
 			<td>{to}</td>
-			<td class="pmdate"><a href="/pm/sent/{pm-id}" class="ajax-module" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
+			<td class="pmdate"><a href="/pm/sent/{pm-id}" title="{pm-title} - lasīt vēstuli">{pm-date}</a></td>
 		</tr>
 		<!-- START BLOCK : pm-list-outbox-node-->
 
