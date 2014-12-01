@@ -6,6 +6,13 @@
 // nākotnē atbalstīs dažādus apakšprojektus
 $android_lang = 1;
 
+// ja pieprasījums ir uz android.exs.lv, kur visas atbildes tiek gaidītas
+// json formātā, php kļūdas izvadīt nedrīkst, bet var gadīties, ka
+// iekš configdb.php tās jau ir iespējotas
+ini_set('display_errors', 0);
+error_reporting(0);
+$debug = false;
+
 // auto-login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
 	substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
