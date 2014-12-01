@@ -9,12 +9,6 @@
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
-// lietotnē iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
-// nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
-$android_lang = 1;
-// TODO: jāizdomā, kā kontrolēt situācijas gan šeit, gan lietotnē, 
-// kad liegums ir tikai kādā no apakšprojektiem
-
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:

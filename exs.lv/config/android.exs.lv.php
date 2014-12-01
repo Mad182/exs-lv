@@ -3,15 +3,18 @@
  *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
  */
 
-// nākotnē atbalstīs dažādus apakšprojektus
+// lietotnē iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
+// nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
 $android_lang = 1;
 
 // ja pieprasījums ir uz android.exs.lv, kur visas atbildes tiek gaidītas
 // json formātā, php kļūdas izvadīt nedrīkst, bet var gadīties, ka
 // iekš configdb.php tās jau ir iespējotas
-ini_set('display_errors', 0);
-error_reporting(0);
-$debug = false;
+if (!isset($android_local)) {
+    ini_set('display_errors', 0);
+    error_reporting(0);
+    $debug = false;
+}
 
 // auto-login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' &&

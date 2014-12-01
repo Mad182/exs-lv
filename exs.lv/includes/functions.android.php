@@ -78,7 +78,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 }
 
 /**
- *  Atgriež masīvu ar lietotāja lieguma informāciju.
+ *  Aizpilda atgriežamos datus ar informāciju par lietotāja liegumiem.
  *
  *  Izmanto Android moduļa sākuma pārbaudēs.
  *
@@ -769,63 +769,6 @@ function a_add_article_comment($article = null) {
 }
 
 /**
- *  Atgriezīs sarakstu masīva veidā ar lietotāja pēdējām notifikācijām.
- */
-function a_fetch_notifications() {
-    global $db, $auth, $config_domains;
-    global $android_lang;
-
-	$arr_notifs = array(); // atgriežamais notifikāciju masīvs
-    $notif_limit = 15; // cik pēdējos jaunumus atgriezt
-
-	$texts = array(
-		0 => 'atbilde komentāram',
-		1 => 'komentārs galerijā',
-		2 => 'komentārs rakstam',
-		3 => 'atbilde mb',
-		4 => 'jauns biedrs tavā grupā',
-		5 => 'tevi aicina draudzēties',
-		6 => 'tev ir jauns draugs',
-		7 => 'tu saņēmi medaļu',
-		8 => 'atbilde grupā',
-		9 => 'saņemta vēstule',
-		10 => 'brīdinājums!',
-		11 => 'noņemts brīdinājums',
-		12 => 'jaunumi no exs.lv',
-		13 => 'tevi pieminēja grupā',
-		14 => 'tevi pieminēja mb',
-		15 => 'tevi pieminēja',
-		16 => 'tevi pieminēja galerijā'
-	);
-    
-    $user_notifications = $db->get_results("
-        SELECT * FROM `notify` 
-        WHERE 
-            `user_id` = ".(int)$auth->id." AND
-            `lang` = ".(int)$android_lang."
-        ORDER BY `bump` DESC 
-        LIMIT 0, $notif_limit
-    ");
-    
-    if (!$user_notifications) {
-        a_error('Notikumu nav!');
-        return false;
-    }
-    
-    $inner_counter = 0;
-    foreach ($user_notifications as $notify) {    
-        $arr_notifs[] = [
-            'type' => $texts[$notify->type],
-            'text' => textlimit(trim($notify->info), 45, ''),
-            'date' => 'pirms ' . time_ago(strtotime($notify->bump)),
-            'project' => $config_domains[$notify->lang]['domain']
-        ];
-    }
-
-    return $arr_notifs;
-}
-
-/**
  *  Tiešsaistē esošie lietotāji.
  *
  *  Atgriež sarakstu ar tiešsaistē esošajiem lietotājiem 
@@ -869,6 +812,10 @@ function a_fetch_online($force = false) {
             return false;
         }
         
+        // ja masīvā vienmēr būs vismaz viens elements,
+        // to pārveidos par objektu, nevis atstās masīvu
+        $classes['-1'] = 0;
+        
         // visi tiešsaistes lietotāji tiek pievienoti masīvam
         foreach ($lastseen as $user) {       
 
@@ -908,7 +855,7 @@ function a_fetch_online($force = false) {
             'by_classes' => $classes
         );
         
-		$m->set('android-online-'.$android_lang, $data, false, 10);
+		$m->set('android-online-'.$android_lang, $data, false, 30);
 	}
     
 	return $data;
