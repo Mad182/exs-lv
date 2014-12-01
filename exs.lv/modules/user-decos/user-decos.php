@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Lietotāju apbalvojuma ikonas uz avatariem (admin)
+ */
 if (!im_mod()) {
 	redirect();
 }
@@ -21,13 +24,16 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 		);
 
 		$decos = serialize($decos);
-		$db->query("UPDATE users SET decos = '" . sanitize($decos) . "' WHERE id = '$user->id'");
+
+		$db->query("UPDATE `users` SET `decos` = '" . sanitize($decos) . "' WHERE `id` = '$user->id'");
+		$auth->log('Pievienoja profila ikonu (' . htmlspecialchars($_POST['icon']) . ')', 'users', $user->id);
+
 		header('Location: /' . $category->textid);
 		exit;
 	}
 }
 
-$listdecos = $db->get_results("SELECT * FROM users WHERE decos != ''");
+$listdecos = $db->get_results("SELECT * FROM `users` WHERE `decos` != ''");
 
 foreach ($listdecos as $decos) {
 	$images = unserialize($decos->decos);
@@ -53,7 +59,10 @@ foreach ($listdecos as $decos) {
 
 		if (isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove'])) {
 			$new = serialize($new);
-			$db->query("UPDATE users SET decos = '" . sanitize($new) . "' WHERE id = '$decos->id'");
+
+			$db->query("UPDATE `users` SET `decos` = '" . sanitize($new) . "' WHERE `id` = '$decos->id'");
+			$auth->log('Noņēma profila ikonu', 'users', $decos->id);
+
 			header('Location: /' . $category->textid);
 			exit;
 		}
@@ -61,3 +70,4 @@ foreach ($listdecos as $decos) {
 		$db->query("UPDATE users SET decos = '' WHERE id = '$decos->id'");
 	}
 }
+
