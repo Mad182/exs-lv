@@ -2,13 +2,6 @@
 /**
  *  Apstrādā random Android lietotnes pieprasījumus, 
  *  kurus nav vērts iedalīt kādā specifiskā apakšgrupā.
- *
- *  Realizētās iespējas:
- *
- *      /notifications
- *      /online
- *      /profile-data
- *      /mygroups
  */
 
 // nebūs iespējams skatīt failu pa tiešo
@@ -178,62 +171,103 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             'groups' => $groups
         ];
     }
-    
+
 /**
- *  Atgriezīs sarakstu ar visām grupām, grupējot tās pa kategorijām.
+ *  Atgriezīs sarakstu ar grupu kategorijām.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'allgroups') {
+} else if (isset($_GET['var1']) && $_GET['var1'] == 'group-cats') {
 
     $categories = $db->get_results("
-        SELECT `id`, `title` FROM `clans_categories`
-        ORDER BY `importance` DESC
+        SELECT 
+            `clans_categories`.`id`, 
+            `clans_categories`.`title`,
+            count(*) AS `clan_count`
+        FROM `clans_categories`
+            JOIN `clans` ON (
+                `clans_categories`.`id` = `clans`.`category_id`
+            )
+        GROUP BY `clans`.`category_id`
+        ORDER BY 
+            `clans_categories`.`importance` DESC
     ");
     
     if (!$categories) {
-        a_error('Nav izveidota neviena grupa');
+        a_error('Nav nevienas grupu kategorijas!');
     } else {
     
         $data = [];
-
-        foreach ($categories as $group_cat) {
+        $groups_total = 0;
         
-            $cat_data = [
+        foreach ($categories as $group_cat) {
+            $data[] = [
                 'id' => (int)$group_cat->id,
-                'title' => $group_cat->title
+                'title' => $group_cat->title,
+                'group_count' => (int)$group_cat->clan_count
             ];
+            $groups_total += $group_cat->clan_count;
+        }
+        
+        $json_page = [
+            'group_count' => (int)$groups_total,
+            'group_categories' => $data
+        ];
+    }
+
+/**
+ *  Atgriezīs norādītajā kategorijā ietilpstošās grupas.
+ */
+} else if (isset($_GET['var1']) && $_GET['var1'] == 'cat-groups' && 
+           isset($_GET['var2'])) {
+           
+    $cat_id = (int)$_GET['var2'];
+    
+    $get_cat = $db->get_row("
+        SELECT `id`, `title` FROM `clans_categories` WHERE `id` = ".$cat_id."
+    ");
+
+    if (!$get_cat) {
+        a_error('Kļūdaini norādīta kategorija!');
+    } else {
+    
+        $groups = $db->get_results("
+            SELECT 
+                `id`, `title`, `avatar`,
+                `owner`, `members`, `posts`
+            FROM `clans` 
+            WHERE 
+                `lang` = ".(int)$android_lang." AND
+                `category_id` = ".(int)$get_cat->id." 
+            ORDER BY `title` ASC
+        ");
+        
+        if (!$groups) {
+            a_error('Kategorijā nav nevienas grupas!');
+        } else {
+    
+            $data = [];
             
             $group_cnt = 0;
 
-            $groups = $db->get_results("
-                SELECT 
-                    `id`, `title`, `avatar`,
-                    `owner`, `members`, `posts`
-                FROM `clans` 
-                WHERE 
-                    `lang` = ".(int)$android_lang." AND
-                    `category_id` = ".(int)$group_cat->id." 
-                ORDER BY `title` ASC
-            ");            
-        
-            if ($groups) {
-                foreach ($groups as $group) {                
-                    $cat_data['groups'][] = [
-                        'id' => (int)$group->id,
-                        'title' => $group->title,
-                        'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
-                        'members' => (int)$group->members,
-                        'posts' => (int)$group->posts,
-                        
-                    ];
-                    $group_cnt++;
-                }
+            foreach ($groups as $group) {
+            
+                $data[] = [
+                    'id' => (int)$group->id,
+                    'title' => $group->title,
+                    'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+                    'members' => (int)$group->members,
+                    'posts' => (int)$group->posts                    
+                ];
+                
+                $group_cnt++;
             }
-
-            $cat_data['group_cnt'] = $group_cnt;
-            $data[] = $cat_data;
+            
+            $json_page = [
+                'cat_id' => (int)$get_cat->id,
+                'cat_title' => $get_cat->title,
+                'group_count' => (int)$group_cnt,
+                'groups' => $data
+            ];
         }
-        
-        $json_page = ['all_groups' => $data];
     }
 
 /**
