@@ -103,17 +103,11 @@ class Auth {
 
 			// android.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder
-			if (!isset($_GET['_']) && 
-				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
-				
+			if ($lang !== 2 && !isset($_GET['_']) && 
+				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {				
 				$this->logout();
-				
-				if ($lang !== 2) {
-					set_flash('Pieeja lapai ir liegta!', 'error');
-					redirect('http://exs.lv/?c=125&bid=' . $ban);
-				} else {
-					return false;
-				}
+				set_flash('Pieeja lapai ir liegta!', 'error');
+				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
 			return true;
@@ -202,16 +196,10 @@ class Auth {
 
 			// android.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder 
-			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
-			
+			if ($lang !== 2 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {			
 				$this->logout();
-			
-				if ($lang !== 2) {
-					set_flash('Pieeja lapai ir liegta!', 'error');
-					redirect('http://exs.lv/?c=125&bid=' . $ban);
-				} else {
-					return false;
-				}
+				set_flash('Pieeja lapai ir liegta!', 'error');
+				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
 			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
