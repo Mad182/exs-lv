@@ -79,3 +79,12 @@ if (!$found) {
 if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
+
+// ja pieprasījums ir uz android.exs.lv, kur visas atbildes tiek gaidītas
+// json formātā, php kļūdas izvadīt nedrīkst, bet var gadīties, ka
+// iekš configdb.php tās jau ir iespējotas
+if ($lang === 2) {
+	ini_set('display_errors', '0');
+	error_reporting(0);
+	$debug = false;
+}

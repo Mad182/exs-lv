@@ -34,7 +34,8 @@ $ss = new SiteStorage;
 
 $requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_GET['var1']) && $_GET['var1'] == 'json'));
 
-if ($requested_json) {
+// android.exs.lv adresēs neliks '.json', bet sagaidīs tikai un vienīgi json
+if ($requested_json || $lang === 2) {
 	header("Content-Type: application/json");
 } else {
 	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
@@ -236,9 +237,14 @@ if (isset($_GET['u'])) {
 			}
 		}
 	
-		//404
-		set_flash('Pieprasītā lapa netika atrasta!', 'error');
-		redirect();
+		// 404
+		// android.exs.lv nepatīk redirekti :(
+		if ($lang === 2) {
+			require(CORE_PATH . '/modules/android/android.php');
+		} else {
+			set_flash('Pieprasītā lapa netika atrasta!', 'error');
+			redirect();
+		}
 	}
 }
 
@@ -445,16 +451,16 @@ if ($skin === 'main') {
 
 		$g_owners = $db->get_results("SELECT title,id,avatar,owner_seenposts,posts FROM clans WHERE owner = '$auth->id' AND `lang` = '$lang' ORDER BY title ASC");
 		$g_members = $db->get_results("SELECT
-  		`clans_members`.`clan` AS `clan`,
-  		`clans_members`.`moderator` AS `moderator`,
-  		`clans_members`.`seenposts` AS `seenposts`,
-  		`clans`.`posts` AS `posts`,
-  		`clans`.`avatar` AS `avatar`,
-  		`clans`.`title` AS `title`
-  		FROM
-  		`clans_members`,
-  		`clans`
-  		WHERE `clans_members`.`user` = '$auth->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` AND `clans`.`lang` = '$lang' ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
+		`clans_members`.`clan` AS `clan`,
+		`clans_members`.`moderator` AS `moderator`,
+		`clans_members`.`seenposts` AS `seenposts`,
+		`clans`.`posts` AS `posts`,
+		`clans`.`avatar` AS `avatar`,
+		`clans`.`title` AS `title`
+		FROM
+		`clans_members`,
+		`clans`
+		WHERE `clans_members`.`user` = '$auth->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` AND `clans`.`lang` = '$lang' ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
 
 		if ($g_owners or $g_members) {
 			$tpl->newBlock('mygroups');

@@ -76,6 +76,73 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 	return $data;
 }
+
+/**
+ *  Atgriež masīvu ar lietotāja lieguma informāciju.
+ *
+ *  Izmanto Android moduļa sākuma pārbaudēs.
+ *
+ *  @param $type    1 - ip liegums, 2 - profila liegums
+ *  @param query    ja $type = 1, datus ņem no šī query
+ */
+function a_set_ban_info($type = 1, $ip_banned) {
+    global $db, $auth;
+    global $json_page;
+
+    $type = (int)$type;
+    if ($type !== 1 && $type !== 2) {
+        return false;
+    }
+    
+    // profila liegums
+    if ($type === 2) {
+    
+        $prof_banned = $db->get_row("
+            SELECT * FROM `banned` 
+            WHERE 
+                `active` = 1 AND 
+                `user_id` = ".(int)$auth->id."
+            LIMIT 1
+        ");
+        
+        if (!$prof_banned) {
+            a_error('Neizdevās atlasīt lieguma iemeslu');
+        } else {
+            $from_user = get_user($prof_banned->author);
+            $to_user = get_user($prof_banned->user_id);
+            
+            $json_page = [
+                'ip' => $prof_banned->ip,
+                'to_user' => a_fetch_user($to_user->id, 
+                    $to_user->nick, $to_user->level),
+                'reason' => $prof_banned->reason,
+                'from_user' => a_fetch_user($from_user->id, 
+                    $from_user->nick, $from_user->level),
+                'date' => date('d.m.Y, H:i', $prof_banned->time),
+                'remaining' => strTime($prof_banned->time + 
+                    $prof_banned->length - time())
+            ];
+        }
+        
+    // ip liegums
+    } else if ($type === 1) {
+    
+        $from_user = get_user($ip_banned->author);
+        $to_user = get_user($ip_banned->user_id);
+
+        $json_page = [
+            'ip' => $ip_banned->ip,
+            'to_user' => a_fetch_user($to_user->id, 
+                $to_user->nick, $to_user->level),
+            'reason' => $ip_banned->reason,
+            'from_user' => a_fetch_user($from_user->id, 
+                $from_user->nick, $from_user->level),
+            'date' => date('d.m.Y, H:i', $ip_banned->time),
+            'remaining' => strTime($ip_banned->time + 
+                $ip_banned->length - time())
+        ];
+    }
+}
  
 /**
  *  Atgriež JSON sarakstu ar jaunākajiem exs.lv rakstiem.

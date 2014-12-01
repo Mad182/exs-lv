@@ -58,6 +58,7 @@ class Auth {
 		global $db, $site_access, $lang;
 
 		if (!empty($_SESSION['auth_id'])) {
+
 			$userinfo = get_user($_SESSION['auth_id']);
 
 			if ($userinfo->deleted) {
@@ -94,15 +95,25 @@ class Auth {
 				$_SESSION['updvisits'] = time();
 			}
 
-			if ($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			// android.exs.lv redirekti neder
+			if ($lang != 2 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 				$this->logout();
 				redirect();
 			}
 
-			if (!isset($_GET['_']) && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			// android.exs.lv pats prot apstrādāt bloķētos profilus un
+			// redirekts kā tāds tam vispār neder
+			if (!isset($_GET['_']) && 
+				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+				
 				$this->logout();
-				set_flash('Pieeja lapai ir liegta!', 'error');
-				redirect('http://exs.lv/?c=125&bid=' . $ban);
+				
+				if ($lang !== 2) {
+					set_flash('Pieeja lapai ir liegta!', 'error');
+					redirect('http://exs.lv/?c=125&bid=' . $ban);
+				} else {
+					return false;
+				}
 			}
 
 			return true;
@@ -189,10 +200,18 @@ class Auth {
 			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			$this->error = 0;
 
+			// android.exs.lv pats prot apstrādāt bloķētos profilus un
+			// redirekts kā tāds tam vispār neder 
 			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			
 				$this->logout();
-				set_flash('Pieeja lapai ir liegta!', 'error');
-				redirect('http://exs.lv/?c=125&bid=' . $ban);
+			
+				if ($lang !== 2) {
+					set_flash('Pieeja lapai ir liegta!', 'error');
+					redirect('http://exs.lv/?c=125&bid=' . $ban);
+				} else {
+					return false;
+				}
 			}
 
 			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");

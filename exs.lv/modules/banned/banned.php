@@ -3,7 +3,7 @@
  *  Bloķēto profilu sadaļa
  *
  *  Neautorizēts/bloķēts lietotājs redzēs lieguma paziņojumu.
- *  Modi/admini redzēs sarakstu ar visiem bloķētajie profiliem.
+ *  Modi/admini redzēs sarakstu ar visiem bloķētajiem profiliem.
  *
  *  Bloķētie profili redzami divās tabulās:
  *      - tie, kuri atrodas kādā no profilu grupām;
