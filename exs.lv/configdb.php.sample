@@ -34,11 +34,7 @@ define('IMG_PATH', '/home/madars/www/exs-lv/img.exs.lv');
 define('LIB_PATH', '/home/madars/www/exs-lv/libs');
 
 //debug konfigurācija
-$dev_ips = array(
-	'127.0.0.1',
-	'85.9.218.21', //m work
-	'46.109.90.191'	// burvis
-);
+include('../developer_ips.php');
 
 //domēns no kura lādēt pseido-statiskos (/css, /js) failus
 //testējot lapu uz sava lokālā servera var aizvietot ar tukšumu
