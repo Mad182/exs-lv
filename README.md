@@ -1,10 +1,19 @@
-exs-lv
-======
+## Administrācijas rīki ##
 
-Exs.lv dev
+### PHPMyAdmin###
+https://secure.exs.lv/pmaexs/
 
+Lai piekļūtu phpmyadmin, IP adresei jābūt ieraksītai *developer_ips.php* failā!
 
-### mysql imports:
+###Munin serveru monitorings###
+https://secure.exs.lv/munin/
+
+* Lietotājs: exs
+* Parole: ZebraLAIF
+
+## Uzstādīšana ##
+
+### mysql imports: ###
 
     mysql -u exs -p exs < schema.sql
     mysql -u exs -p exs < cat.sql
@@ -14,34 +23,34 @@ Exs.lv dev
 
 ~/exs-lv/exs.lv/configdb.php
 obligāti jānorāda mysql, memcache konfigs un ceļi:
-CORE_PATH uz exs.lv folderi, 
-LIB_PATH uz libs folderi.
+* CORE_PATH uz exs.lv folderi, 
+* LIB_PATH uz libs folderi.
 
 
-### kas vajadzīgs, lai lapa būtu palaižama:
+### Kas vajadzīgs, lai lapa būtu palaižama ###
 
-php-gd
-php-memcache
-php-curl
-memcached
-mysql
-apache2 ar mod_rewrite un .htaccess atbalstu
+* php-gd
+* php-memcache
+* php-curl
+* memcached
+* mysql
+* apache2 ar mod_rewrite un .htaccess atbalstu
 
-### lai darbotos img.exs.lv:
+### Lai pilnvērtīgi darbotos img.exs.lv ###
 
-imagemagick
-advancecomp
-pngcrush
-optipng
-jpegoptim
+* imagemagick
+* advancecomp
+* pngcrush
+* optipng
+* jpegoptim
 
-uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
+Uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
 
-nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt.,
+Nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt.,
 ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
 
-## Arch
+## Arch ##
 
     sudo pacman -Su apache php php-apache php-gd php-memcache mariadb imagemagick memcached
     cd
