@@ -19,7 +19,7 @@ if (!isset($android_local)) {
 // auto-login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
 	substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
-	!in_array($_SERVER['SERVER_NAME'], $android_local_ip)) {
+	$_SERVER['SERVER_NAME'] !== $android_local_ip) {
 
 	// secure cookies
 	ini_set('session.cookie_domain', '.exs.lv');
