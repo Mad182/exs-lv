@@ -41,8 +41,28 @@ $ip_banned = $db->get_row("
     LIMIT 1
 ");
 
+// pieprasījums pēc informācijas par uzlikto liegumu;
+// šis nedrīkst atgriezt $json_state = 'error', citādi lietotne nevis
+// pārbaudīs, vai lietotājs vēl ir bloķēts, bet gan izvadīs kļūdas paziņojumu
+if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
+
+    if ($auth->ok) {        
+        if ($ip_banned) {
+            $json_banned = 1;
+            a_set_ban_info(1, $ip_banned);        
+        } else if (!empty($busers) && !empty($busers[$auth->id])) {
+            $json_banned = 2;
+            a_set_ban_info(2);            
+        }
+    } else {        
+        if ($ip_banned) {
+            $json_banned = 1;
+            a_set_ban_info(1, $ip_banned);
+        }
+    }
+
 // bloķēta IP
-if ($ip_banned) {
+} else if ($ip_banned) {
 
     // lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
     // paziņojumu ar lieguma datiem
@@ -77,20 +97,8 @@ if ($ip_banned) {
 // neautorizētu pieprasījumu apstrāde
 } else if (isset($_GET['login'])) {
     
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-    
-		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-        
-        if (!$auth->ok) {
-            a_error('Kļūdaini dati');
-
-        } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            $json_banned = 2;
-            a_set_ban_info(2);
-        }
-        
     // lokālai testēšanai
-	} else if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
+    /*if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
         $auth->login('durvis', $mypasswd, $auth->xsrf);
         
         if (!$auth->ok) {
@@ -100,8 +108,20 @@ if ($ip_banned) {
             $json_banned = 2;
             a_set_ban_info(2);
         }
-    }
+
+	} else */if (isset($_POST['username']) && isset($_POST['password'])) {
     
+		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
+        
+        if (!$auth->ok) {
+            a_error('Nepareizi ievadīti piekļuves dati');
+
+        } else if (!empty($busers) && !empty($busers[$auth->id])) {
+            $json_banned = 2;
+            a_set_ban_info(2);
+        }
+    }
+
 // citas situācijas, kādām teorētiski rasties nevajadzētu, ja vien android
 // adreses nesāk rakstīt no datora, jo autorizācijas aktivitātē vienīgais
 // pieprasījums tiek veikts ar pieteikšanās datiem ($_POST)

@@ -7,13 +7,25 @@
  */
 
 /**
- *  Pievienos kļūdas paziņojumu nākamajai atbildei.
+ *  Pievienos kļūdas paziņojumu nākamajai atbildei,
+ *  kuru lietotne izmetīs kā Toast ziņu.
  */
 function a_error($string = '') {
 	global $json_state, $json_message;
 	
 	$json_state   = 'error';
 	$json_message = $string;
+}
+
+/**
+ *  Pievienos atbildei tekstu, kas netiks uztverts kā kļūda,
+ *  bet kuru lietotne pēc vajadzības varēs kaut kur izvadīt,
+ *  paskaidrojot situāciju.
+ */
+function a_message($string = '') {
+    global $json_page;
+    
+    $json_page['message'] = $string;
 }
 
 /**
@@ -118,7 +130,9 @@ function a_set_ban_info($type = 1, $ip_banned) {
                 'reason' => $prof_banned->reason,
                 'from_user' => a_fetch_user($from_user->id, 
                     $from_user->nick, $from_user->level),
-                'date' => date('d.m.Y, H:i', $prof_banned->time),
+                'date_from' => date('d.m.Y, H:i', $prof_banned->time),
+                'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
+                    $prof_banned->length),
                 'remaining' => strTime($prof_banned->time + 
                     $prof_banned->length - time())
             ];
@@ -137,7 +151,9 @@ function a_set_ban_info($type = 1, $ip_banned) {
             'reason' => $ip_banned->reason,
             'from_user' => a_fetch_user($from_user->id, 
                 $from_user->nick, $from_user->level),
-            'date' => date('d.m.Y, H:i', $ip_banned->time),
+            'date_from' => date('d.m.Y, H:i', $ip_banned->time),
+            'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
+                    $ip_banned->length),
             'remaining' => strTime($ip_banned->time + 
                 $ip_banned->length - time())
         ];
