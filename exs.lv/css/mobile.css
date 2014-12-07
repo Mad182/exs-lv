@@ -1778,7 +1778,6 @@ a.friend-right {
 }
 
 /* filmu saraksts (thumbnail) */
-
 #movie-list {
 	list-style: none;
 	padding: 10px 0;
@@ -1801,5 +1800,43 @@ a.friend-right {
 	font-family: Ubuntu, sans-serif;
 	font-weight: 400;
 	font-size: 14px;
+}
+
+/* ikonas pie avatara */
+.user-deco {
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	left: -4px;
+	top: -5px;
+}
+
+.deco-pos-0 {
+	left: -4px;
+}
+
+.deco-pos-1 {
+	left: 14px;
+}
+
+.deco-pos-2 {
+	left: 32px;
+}
+
+.deco-pos-3 {
+	left: -4px;
+	top: 13px;
+}
+
+.deco-pos-4 {
+	left: 14px;
+	top: 13px;
+}
+
+.deco-pos-5 {
+	left: 32px;
+	top: 13px;
 }
 
