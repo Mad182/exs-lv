@@ -13,7 +13,7 @@ if (isset($_GET['var1'])) {
 		$gcat = $db->get_row("SELECT category,category_slug FROM flash_games WHERE category_slug = '" . sanitize($_GET['var1']) . "' LIMIT 1");
 		$tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 		$tpl->prepare();
-		$end = 48;
+		$end = 42;
 		if (isset($_GET['page'])) {
 			$skip = (int) $_GET['page'] * $end;
 		} else {
@@ -272,7 +272,7 @@ if (isset($_GET['var1'])) {
 
 	$tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 	$tpl->prepare();
-	$end = 48;
+	$end = 42;
 	if (isset($_GET['page'])) {
 		$skip = (int) $_GET['page'] * $end;
 	} else {

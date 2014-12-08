@@ -287,7 +287,7 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 } elseif ($lang == 3) {
 	$persona = ' style="background:url(\'//exs.lv/bildes/personas/gear.png\') repeat-x 0 0;background-size:cover;"';
 } else {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'//exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0;background-size:cover;"';
 }
 
 //Latvijas valsts svētki
