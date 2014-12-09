@@ -9,6 +9,8 @@
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
+
+
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:
@@ -72,6 +74,13 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
 
+    // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
+    // bet nonāk te, tad labāk izautorizēt
+    if (isset($_GET['login'])) {
+        $auth->logout();
+        //TODO: log this, bet it kā lietotnē problēma novērsta
+    }
+
     // primāri laikam jau ļaut izlogoties arī tad, ja ir profila liegums :)
     // bet lietotnē neesmu iestrādājis logout pogu lieguma skatā, mwhahaha
     if (isset($_GET['logout'])) {
@@ -87,18 +96,18 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 	} else if (file_exists(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php')) {
 		include(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php');
         
-    // citi gadījumi, kādiem teorētiski rasties nevajadzētu,
-    // ja vien fails mistisku iemeslu dēļ netiek dzēsts vai arī lietotājs
-    // android sadaļas neskatās datorā
+    // šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
+    // sasinhronizējies starp serveri un lietotni
 	} else {
         a_error('Kļūdains pieprasījums');
+        // TODO: log this
     }
 
 // neautorizētu pieprasījumu apstrāde
 } else if (isset($_GET['login'])) {
     
     // lokālai testēšanai
-    /*if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
+    if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
         $auth->login('durvis', $mypasswd, $auth->xsrf);
         
         if (!$auth->ok) {
@@ -109,7 +118,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
             a_set_ban_info(2);
         }
 
-	} else */if (isset($_POST['username']) && isset($_POST['password'])) {
+	} else if (isset($_POST['username']) && isset($_POST['password'])) {
     
 		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
         
