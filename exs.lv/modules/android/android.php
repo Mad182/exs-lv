@@ -33,8 +33,8 @@ $json_message   = '';
 $json_page      = null;
 
 
-// primāri ir noteikt, vai šai IP ir liegums neatkarīgi no tā, vai
-// lietotājs ir autorizējies, vai nē
+// primāri katrā pieprasījumā tiek noteikts, vai lietotājam ir IP liegums,
+// un tikai pēc tam interesējas par autorizācijas statusu u.c. info
 $ip_banned = $db->get_row("
     SELECT * FROM `banned` 
     WHERE 
@@ -43,33 +43,22 @@ $ip_banned = $db->get_row("
     LIMIT 1
 ");
 
-// pieprasījums pēc informācijas par uzlikto liegumu;
-// šis nedrīkst atgriezt $json_state = 'error', citādi lietotne nevis
-// pārbaudīs, vai lietotājs vēl ir bloķēts, bet gan izvadīs kļūdas paziņojumu
+
+// ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
+// info par lieguma statusu, lai noteiktu, vai tāds vēl pastāv, tāpēc šādai
+// info ir jābūt noskaidrojamai vienmēr
 if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 
-    if ($auth->ok) {        
-        if ($ip_banned) {
-            $json_banned = 1;
-            a_set_ban_info(1, $ip_banned);        
-        } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            $json_banned = 2;
-            a_set_ban_info(2);            
-        }
-    } else {        
-        if ($ip_banned) {
-            $json_banned = 1;
-            a_set_ban_info(1, $ip_banned);
-        }
+    if ($ip_banned) {
+        a_fetch_ban(1, $ip_banned);
+    } else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) { 
+        a_fetch_ban(2);
     }
 
-// bloķēta IP
+// lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
+// paziņojumu par liegumu
 } else if ($ip_banned) {
-
-    // lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
-    // paziņojumu ar lieguma datiem
-    $json_banned = 1;
-    a_set_ban_info(1, $ip_banned);    
+    a_fetch_ban(1, $ip_banned);    
     
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
@@ -88,9 +77,8 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
         // šeit nav jēgas rūpēties par atbildi, jo lietotne tādu negaidīs
 
     // pārbauda, vai ir profila liegums, lai lietotnē varētu parādīt paziņojumu
-	} else if (!empty($busers) && !empty($busers[$auth->id])) {
-		$json_banned = 2;        
-        a_set_ban_info(2);
+	} else if (!empty($busers) && !empty($busers[$auth->id])) {      
+        a_fetch_ban(2);
 
     // atvērs pieprasīto moduli un tajā izpildīs darbības
 	} else if (file_exists(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php')) {
@@ -103,7 +91,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
         // TODO: log this
     }
 
-// neautorizētu pieprasījumu apstrāde
+// neautorizēti var būt tikai autorizēšanās pieprasījumi
 } else if (isset($_GET['login'])) {
     
     // lokālai testēšanai
@@ -112,10 +100,8 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
         
         if (!$auth->ok) {
             a_error('Kļūdaini dati');
-
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            $json_banned = 2;
-            a_set_ban_info(2);
+            a_fetch_ban(2);
         }
 
 	} else if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -124,10 +110,8 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
         
         if (!$auth->ok) {
             a_error('Nepareizi ievadīti piekļuves dati');
-
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            $json_banned = 2;
-            a_set_ban_info(2);
+            a_fetch_ban(2);
         }
     }
 

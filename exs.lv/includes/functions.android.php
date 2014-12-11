@@ -97,14 +97,16 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
  */
-function a_set_ban_info($type = 1, $ip_banned) {
+function a_fetch_ban($type = 1, $ip_banned) {
     global $db, $auth;
-    global $json_page;
+    global $json_page, $json_banned;
 
     $type = (int)$type;
     if ($type !== 1 && $type !== 2) {
         return false;
     }
+    
+    $json_banned = $type;
     
     // profila liegums
     if ($type === 2) {
