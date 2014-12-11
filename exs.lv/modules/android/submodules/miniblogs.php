@@ -1,18 +1,27 @@
 <?php
 /**
- *  Android miniblogu apakšmodulis
+ *  Android miniblogu apakšmodulis.
  */
 
 // nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
 
 
+/**
+ *  Atgriezīs jaunāko miniblogu sarakstu.
+ */
+if (isset($_GET['var1']) && $_GET['var1'] == 'getlist') {
+
+    $json_page = a_fetch_miniblogs();
 
 
-// izvēlēts konkrēts miniblogs (der arī no grupām);
-// var1 - minibloga ID
-// TODO: pārbaudīt, vai attiecīgajam grupas mb lietotājam ir piekļuve
-if (isset($_GET['var1'])) {
+/**
+ *  Izvēlēts konkrēts miniblogs (der arī tie no grupām).
+ *  var1 - minibloga ID
+ *
+ *  TODO: pārbaudīt, vai attiecīgajam grupas mb lietotājam ir piekļuve
+ */
+} else if (isset($_GET['var1'])) {
 
     $parent_mb_id = (int)$_GET['var1'];
 
@@ -23,9 +32,9 @@ if (isset($_GET['var1'])) {
         FROM `miniblog`
         WHERE 
             `id`        = " . $parent_mb_id . " AND
-            `removed`   = '0' AND 
-            `parent`    = '0' AND 
-            `lang`      = '$android_lang' 
+            `removed`   = 0 AND 
+            `parent`    = 0 AND 
+            `lang`      = ".(int)$android_lang."
         ORDER BY `bump` DESC
     ");
     
@@ -47,18 +56,17 @@ if (isset($_GET['var1'])) {
                 } else {
                     a_rate_comment((int)$_GET['var3'], 'miniblog', false);
                 }
-            }
+
             // galvenā minibloga vērtēšana
-            else if ($_GET['var2'] == 'plus') {
+            } else if ($_GET['var2'] == 'plus') {
                 a_rate_comment($miniblog->id, 'miniblog', true);
-            }
-            else if ($_GET['var2'] == 'minus') {
+
+            } else if ($_GET['var2'] == 'minus') {
                 a_rate_comment($miniblog->id, 'miniblog', false);
             }
-        }
         
         // atbildes pievienošana
-        else if (isset($_POST['comment'])) {
+        } else if (isset($_POST['comment'])) {
             if (!empty($_POST['comment']) && isset($_POST['comment_id'])) {
                 a_add_mb_comment(array('id' => $author->id, 
                                        'nick' => $author->nick),
@@ -66,10 +74,9 @@ if (isset($_GET['var1'])) {
             } else {
                 a_error('Kļūdaini komentāra dati!');
             }
-        }
         
         // atgriež minibloga saturu
-        else {          
+        } else {          
             
             // paredzēts avataru funkcijai
             $miniblog->av_alt = 1;            
@@ -83,17 +90,14 @@ if (isset($_GET['var1'])) {
                 'text'      => strip_tags(add_smile($miniblog->text), 
                                           '<img><p><strong><b><i><em>'),
                 'date'      => display_time(strtotime($miniblog->date)),
-                'author'    => a_fetch_user($author->id, 
-                                            $author->nick, 
+                'author'    => a_fetch_user($author->id, $author->nick, 
                                             $author->level),
                 'vote'      => (int)$miniblog->vote_value,
-                'avatar'    => a_get_user_avatar($author, 's'),
-                'closed'    => (bool)$miniblog->closed,
+                'av_url'    => a_get_user_avatar($author, 's'),
+                'is_closed' => (bool)$miniblog->closed,
                 'safe'      => substr(md5($miniblog->id . $remote_salt . $auth->id), 0, 5)
             );
 
-            // galvenā minibloga komentāri
-            $array_comments = array();
             $json = array();
             
             if ($miniblog->posts) {
@@ -126,11 +130,11 @@ if (isset($_GET['var1'])) {
                         // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
                         if ($response->removed) {
                             $response->text = '<em>Ieraksts dzēsts!</em>';
-                        }
+
                         // smaidiņi, embbeds u.c. saturs;
                         // būtībā ir jēga, lai pievieno smaidiņu un attēlu adreses,
                         // kuras lietotnē varētu ielādēt
-                        else {
+                        } else {
                             $response->text = strip_tags(add_smile($response->text, 0, 0, 1), '<img><p><strong><b><i><em>');
                         }
                         
@@ -150,22 +154,17 @@ if (isset($_GET['var1'])) {
             // tā kā lietotne vienmēr gaida objektu, jāpievieno kāds papildobjekts,
             // kas lietotnē netiks uztverts kā komentārs
             $json[-1][] = 'safe';
-            
-            // šis tiek pievienots atgriežamajam saturam
-            $array_comments = $json;
-                    
-            // atgriežamais rezultāts
+
             $json_page = array(
                 'content'   => $array_miniblog,
-                'comments'  => $array_comments
+                'comments'  => $json
             );
         }
+
     } else {
         a_error('Miniblogs nav atrasts');
     }
 
-
-// jaunāko miniblogu saraksts
 } else {
-    $json_page = a_fetch_miniblogs();
+    a_error('Kļūdaini veikts pieprasījums');
 }

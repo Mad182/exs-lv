@@ -161,97 +161,98 @@ function a_fetch_ban($type = 1, $ip_banned) {
         ];
     }
 }
- 
+
 /**
- *  Atgriež JSON sarakstu ar jaunākajiem exs.lv rakstiem.
+ *  Tiešsaistē esošie lietotāji.
  *
- *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
+ *  Atgriež sarakstu ar tiešsaistē esošajiem lietotājiem 
+ *  atvērtajā apakšprojektā pēdējās x sekundēs.
+ *
+ *  Klāt pievieno arī informāciju par tiešsaistē esošiem lietotājiem
+ *  katrā klasē.
  */
-function a_get_news() {
-	global $auth, $db, $lang, $android_lang;
-	
-	// vienā lappusē redzamo rakstu skaits;
-	// lappušu saraksta lietotnē nav, tā vietā nākamās lapas ieraksti 
-	// pievienojas aiz iepriekšējiem    
-	$news_in_page = 20;
-	
-	// nosaka, cik rakstus SQL pieprasījumā izlaist
-	if (isset($_GET['page'])) {
-		$skip = $news_in_page * intval($_GET['page']);
-	} else {
-		$skip = 0;
-	}
-	
-	// tiek pievienoti kritēriji rakstu atlasei
-	$conditions = array();
-	
-	// redzami izvēlētā apakšprojekta vai $lang=0 raksti
-	$conditions[] = '(`pages`.`lang` = ' . (int)$android_lang . ' || `pages`.`lang` = 0)';
+function a_fetch_online($force = false) {
+	global $db, $m, $android_lang;
+    global $online_users, $busers;
+    
+    // laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
+    $online_seconds = 360;
+    
+	$data = array();
+    
+    // satura nolasīšana no memcached
+	if ($force || !($data = $m->get('android-online-'.$android_lang))) {
 
-	// atlasa sadaļas, kuras lietotājs vēlas ignorēt
-	if ($auth->ok) {
-		$ignores = $db->get_col("SELECT `category_id` FROM `cat_ignore` WHERE `user_id` = '$auth->id'");
-		if (!empty($ignores)) {
-			foreach ($ignores as $ignore) {
-				$conditions[] = "`category` != $ignore";
-			}
-		}
-	}
+        $online = null;
+        $classes = null;
+        
+		$lastseen = $db->get_results("
+            SELECT
+                DISTINCT(`visits`.`user_id`) AS `user_id`,
+                `users`.`nick`,
+                `users`.`level`
+            FROM `visits`
+                JOIN `users` ON `visits`.`user_id` = `users`.`id`
+            WHERE
+                `visits`.`site_id` = ".(int)$android_lang." AND
+                `visits`.`lastseen` > '".date('Y-m-d H:i:s', time() - $online_seconds)."'
+            ORDER BY
+                `users`.`level` ASC,
+                `users`.`nick` ASC
+        ");
 
-	// moderatoru sadaļu pārbaude
-	$mods_only = '';
-	if (!im_mod()) {
-		$mods_only = " AND `cat`.`mods_only` = 0";
-	}
+        if (!$lastseen) {
+            a_error('Šobrīd neviena lietotāja nav tiešsaistē');
+            return false;
+        }
+        
+        // ja masīvā vienmēr būs vismaz viens elements,
+        // to pārveidos par objektu, nevis atstās masīvu
+        $classes['-1'] = 0;
+        
+        // visi tiešsaistes lietotāji tiek pievienoti masīvam
+        foreach ($lastseen as $user) {       
 
-	// tiek atlasīti izvēlētie raksti
-	$latest = $db->get_results("
-		SELECT
-			`pages`.`id`,
-			`pages`.`strid`,
-			`pages`.`title`,
-			`pages`.`category`,
-			`pages`.`posts`,
-			`pages`.`readby`,
-			`pages`.`bump`,
-			`cat`.`mods_only`,
-			`cat`.`title` AS `cat_title`
-		FROM `pages`
-			JOIN `cat` ON `pages`.`category` = `cat`.`id`
-		WHERE
-			" . implode(' AND ', $conditions) . $mods_only . "            
-		ORDER BY
-			`pages`.`bump` DESC 
-		LIMIT $skip, $news_in_page
-	");
+            // nosaka ierīci, no kādas lietotājs pieslēdzies
+            $device = 0;
+            if (!empty($online_users['mobileusers']) && 
+                in_array($user->nick, $online_users['mobileusers'])) {
+                $device = 1; // mob. tel.
+            } else {
+                $device = 0; // dators
+            }
+            
+            // pārbauda, vai lietotājs ir bloķēts
+            $is_banned = false;
+            if (!empty($busers) && !empty($busers[$user->user_id])) {
+                $is_banned = true;
+            }
+        
+            $online[] = array(
+                'id' => (int)$user->user_id,
+                'nick' => (string)$user->nick,
+                'level' => (int)$user->level,
+                'is_banned' => (bool)$is_banned,
+                'device' => (int)$device
+            );
+            
+            // palielinās lietotāju skaitu šī lietotāja klasē
+            if (isset($classes[$user->level])) {
+                $classes[$user->level] += 1;
+            } else {
+                $classes[$user->level] = 1;
+            }
+        }
 
-	// masīvs, kas tiks atgriezts
-	$arr_news = array();
-	
-	if ( !$latest ) {
-		return $arr_news;
+        $data = array(
+            'online_users' => $online,
+            'by_classes' => $classes
+        );
+        
+		$m->set('android-online-'.$android_lang, $data, false, 30);
 	}
-	
-	foreach ($latest as $late) {
-	
-		// statuss, kas norādīs, vai lietotājs rakstu ir lasījis
-		$is_read = false;
-		if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
-		   $is_read = true;
-		}        
-	
-		$arr_news[] = array(
-			$late->id, 
-			$late->title, 
-			$late->cat_title,
-			$late->posts,
-			$late->mods_only,
-			$late->bump,
-			$is_read
-		);
-	}
-	
-	return $arr_news;
+    
+	return $data;
 }
 
 /**
@@ -265,12 +266,8 @@ function a_get_news() {
 function a_fetch_miniblogs() {
 	global $auth, $db, $android_lang;      
 	
-	// vienā lappusē redzamo miniblogu skaits;
-	// lappušu saraksta lietotnē nav, tā vietā nākamās lapas ieraksti 
-	// pievienojas aiz iepriekšējiem    
 	$mbs_in_page = 10;
 	
-	// nosaka, cik mbs SQL pieprasījumā izlaist
 	if (isset($_GET['page'])) {
 		$skip = $mbs_in_page * intval($_GET['page']);
 	} else {
@@ -307,32 +304,31 @@ function a_fetch_miniblogs() {
 		$groupquery = implode(' OR ', $usergroups);
 	}
 
-	// atlasa pašus miniblogus
 	$mbs = $db->get_results("
 		SELECT
-			`miniblog`.`id`         AS `id`,
-			`miniblog`.`text`       AS `text`,
-			`miniblog`.`date`       AS `date`,
-			`miniblog`.`author`     AS `author`,
-			`miniblog`.`posts`      AS `posts`,
-			`miniblog`.`groupid`    AS `groupid`,
-			`miniblog`.`closed`     AS `closed`,
-			`users`.`avatar`        AS `avatar`,
-			`users`.`deleted`       AS `deleted`,
-			`users`.`av_alt`        AS `av_alt`,
-			`users`.`id`            AS `user_id`,
-			`users`.`nick`          AS `nick`,
-			`users`.`level`         AS `level`
+			`miniblog`.`id` AS `mb_id`,
+			`miniblog`.`text`,
+			`miniblog`.`date`,
+			`miniblog`.`author`,
+			`miniblog`.`posts`,
+			`miniblog`.`groupid`,
+			`miniblog`.`closed`,
+			`users`.`avatar`,
+			`users`.`deleted`,
+			`users`.`av_alt`,
+			`users`.`id` AS `user_id`,
+			`users`.`nick`,
+			`users`.`level`
 		FROM
 			`miniblog`  USE INDEX(`parent_2`),
 			`users`     USE INDEX(`PRIMARY`)
 		WHERE
-			`miniblog`.`removed`    = '0' AND
-			`miniblog`.`parent`     = '0' AND
-			`miniblog`.`type`       = 'miniblog' AND
-			`miniblog`.`lang`       = '$android_lang' AND
+			`miniblog`.`removed` = 0 AND
+			`miniblog`.`parent` = 0 AND
+			`miniblog`.`type` = 'miniblog' AND
+			`miniblog`.`lang` = ".(int)$android_lang." AND
 			(" . $groupquery . ") AND
-			`users`.`id`            = `miniblog`.`author`
+			`users`.`id` = `miniblog`.`author`
 		ORDER BY
 			`miniblog`.`bump`
 		DESC LIMIT $skip, $mbs_in_page
@@ -349,20 +345,14 @@ function a_fetch_miniblogs() {
 
 		// kaut kas šeit tiek eskeipots
 		$mb->text = mb_get_title($mb->text);
+		$mb->text = textlimit($mb->text, 300, '...');
 
 		// paslēpj spoilerus
 		if (strpos($mb->text, 'spoiler') !== false) {
 			$mb->text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', "(spoiler)", $mb->text);
-		}
-		
-		// atkarībā no ekrāna orientācijas jāatgriež atšķirīgs garums
-		if (isset($_GET['length'])) {
-			$mb->text = textlimit($mb->text, 250, '...');
-		} else {
-			$mb->text = textlimit($mb->text, 100, '...');
-		}
+		}		
 
-		// aizstāj dzēsto profilu lietotājvārdus
+        // dzēstie lietotājvārdi
 		if (!empty($mb->deleted)) {
 			$mb->nick = 'dzēsts';
 		}
@@ -372,7 +362,11 @@ function a_fetch_miniblogs() {
 		$group_title = '';
 		// grupu miniblogiem rādīs grupas avatarus
 		if ($mb->groupid != 0) {
-			$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
+			$group = $db->get_row("
+                SELECT `title`, `avatar`, `strid` 
+                FROM `clans` 
+                WHERE `id` = ".(int)$mb->groupid
+            );
 			if ($group->avatar) {
 				$group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
 				$avatar = a_get_user_avatar($group, 's');
@@ -387,15 +381,15 @@ function a_fetch_miniblogs() {
 		
 		// atgriežamais masīvs
 		$arr_mbs[] = array(
-			'mb-id'             => $mb->id,
-			'mb-author'         => a_fetch_user($mb->user_id, $mb->nick, $mb->level),
-			'mb-text'           => $mb->text,
-			'mb-date'           => 'pirms ' . time_ago(strtotime($mb->date)),
-			'mb-avatar'         => $avatar,
-			'mb-posts'          => $mb->posts,
-			'mb-closed'         => (bool)$mb->closed,
-			'mb-group-id'       => $mb->groupid,
-			'mb-group-title'    => $group_title
+			'id' => (int)$mb->mb_id,
+			'text' => $mb->text,
+			'author' => a_fetch_user($mb->user_id, $mb->nick, $mb->level),
+			'date' => 'pirms ' . time_ago(strtotime($mb->date)),
+			'av_url' => $avatar,
+			'posts' => (int)$mb->posts,
+			'is_closed' => (bool)$mb->closed,
+			'group_id' => (int)$mb->groupid,
+			'group_title' => $group_title
 		);
 	}
 	
@@ -703,6 +697,95 @@ function a_add_mb_comment($inprofile, $android = false) {
 }
 
 /**
+ *  Atgriež JSON sarakstu ar jaunākajiem exs.lv rakstiem.
+ *
+ *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
+ */
+function a_get_news() {
+	global $auth, $db, $lang, $android_lang;
+	
+	// vienā lappusē redzamo rakstu skaits
+	$news_in_page = 20;
+
+	if (isset($_GET['page'])) {
+		$skip = $news_in_page * intval($_GET['page']);
+	} else {
+		$skip = 0;
+	}
+	
+	// tiek pievienoti kritēriji rakstu atlasei
+	$conditions = array();
+	
+	// redzami izvēlētā apakšprojekta vai $lang=0 raksti
+	$conditions[] = '(`pages`.`lang` = ' . (int)$android_lang . ' || `pages`.`lang` = 0)';
+
+	// atlasa sadaļas, kuras lietotājs vēlas ignorēt
+	if ($auth->ok) {
+		$ignores = $db->get_col("SELECT `category_id` FROM `cat_ignore` WHERE `user_id` = '$auth->id'");
+		if (!empty($ignores)) {
+			foreach ($ignores as $ignore) {
+				$conditions[] = "`category` != $ignore";
+			}
+		}
+	}
+
+	// moderatoru sadaļu pārbaude
+	$mods_only = '';
+	if (!im_mod()) {
+		$mods_only = " AND `cat`.`mods_only` = 0";
+	}
+
+	// tiek atlasīti izvēlētie raksti
+	$latest = $db->get_results("
+		SELECT
+			`pages`.`id`,
+			`pages`.`strid`,
+			`pages`.`title`,
+			`pages`.`category`,
+			`pages`.`posts`,
+			`pages`.`readby`,
+			`pages`.`bump`,
+			`cat`.`mods_only`,
+			`cat`.`title` AS `cat_title`
+		FROM `pages`
+			JOIN `cat` ON `pages`.`category` = `cat`.`id`
+		WHERE
+			" . implode(' AND ', $conditions) . $mods_only . "            
+		ORDER BY
+			`pages`.`bump` DESC 
+		LIMIT $skip, $news_in_page
+	");
+
+	// masīvs, kas tiks atgriezts
+	$arr_news = array();
+	
+	if ( !$latest ) {
+		return $arr_news;
+	}
+	
+	foreach ($latest as $late) {
+	
+		// statuss, kas norādīs, vai lietotājs rakstu ir lasījis
+		$is_read = false;
+		if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
+		   $is_read = true;
+		}        
+	
+		$arr_news[] = array(
+			$late->id, 
+			$late->title, 
+			$late->cat_title,
+			$late->posts,
+			$late->mods_only,
+			$late->bump,
+			$is_read
+		);
+	}
+	
+	return $arr_news;
+}
+
+/**
  *  Raksta komentāra vai tā atbildes pievienošana.
  *
  *  @param object   raksta dati no datubāzes
@@ -784,97 +867,4 @@ function a_add_article_comment($article = null) {
 			update_stats($category->parent);
 		}
 	}
-}
-
-/**
- *  Tiešsaistē esošie lietotāji.
- *
- *  Atgriež sarakstu ar tiešsaistē esošajiem lietotājiem 
- *  atvērtajā apakšprojektā pēdējās x sekundēs.
- *
- *  Klāt pievieno arī informāciju par tiešsaistē esošiem lietotājiem
- *  katrā klasē.
- */
-function a_fetch_online($force = false) {
-	global $db, $m, $android_lang;
-    global $online_users, $busers;
-    
-    // laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
-    $online_seconds = 360;
-    
-	$data = array();
-    
-    // satura nolasīšana no memcached
-	if ($force || !($data = $m->get('android-online-'.$android_lang))) {
-
-        $online = null;
-        $classes = null;
-        
-		$lastseen = $db->get_results("
-            SELECT
-                DISTINCT(`visits`.`user_id`) AS `user_id`,
-                `users`.`nick`,
-                `users`.`level`
-            FROM `visits`
-                JOIN `users` ON `visits`.`user_id` = `users`.`id`
-            WHERE
-                `visits`.`site_id` = ".(int)$android_lang." AND
-                `visits`.`lastseen` > '".date('Y-m-d H:i:s', time() - $online_seconds)."'
-            ORDER BY
-                `users`.`level` ASC,
-                `users`.`nick` ASC
-        ");
-
-        if (!$lastseen) {
-            a_error('Šobrīd neviena lietotāja nav tiešsaistē');
-            return false;
-        }
-        
-        // ja masīvā vienmēr būs vismaz viens elements,
-        // to pārveidos par objektu, nevis atstās masīvu
-        $classes['-1'] = 0;
-        
-        // visi tiešsaistes lietotāji tiek pievienoti masīvam
-        foreach ($lastseen as $user) {       
-
-            // nosaka ierīci, no kādas lietotājs pieslēdzies
-            $device = 0;
-            if (!empty($online_users['mobileusers']) && 
-                in_array($user->nick, $online_users['mobileusers'])) {
-                $device = 1; // mob. tel.
-            } else {
-                $device = 0; // dators
-            }
-            
-            // pārbauda, vai lietotājs ir bloķēts
-            $is_banned = false;
-            if (!empty($busers) && !empty($busers[$user->user_id])) {
-                $is_banned = true;
-            }
-        
-            $online[] = array(
-                'id' => (int)$user->user_id,
-                'nick' => (string)$user->nick,
-                'level' => (int)$user->level,
-                'is_banned' => (bool)$is_banned,
-                'device' => (int)$device
-            );
-            
-            // palielinās lietotāju skaitu šī lietotāja klasē
-            if (isset($classes[$user->level])) {
-                $classes[$user->level] += 1;
-            } else {
-                $classes[$user->level] = 1;
-            }
-        }
-
-        $data = array(
-            'online_users' => $online,
-            'by_classes' => $classes
-        );
-        
-		$m->set('android-online-'.$android_lang, $data, false, 30);
-	}
-    
-	return $data;
 }
