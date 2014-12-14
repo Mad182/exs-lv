@@ -70,7 +70,7 @@ if ($inprofile) {
 			'user-date' => $inprofile->date,
 			'user-days' => round($days),
 			'user-days-text' => lv_dsk($days, 'dienas', 'dienām'),
-			'user-web' => htmlspecialchars($inprofile->web),
+			'user-web' => add_smile($inprofile->web, 0, 1, 1), //add smile nofiltrē blacklistotās adreses
 			'user-lastseen' => $time,
 			'user-pages' => $db->get_var("SELECT count(*) FROM pages WHERE author = ('" . $inprofile->id . "') AND `lang` = '$lang'"),
 			'user-posts' => $posts,

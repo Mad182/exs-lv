@@ -1083,6 +1083,7 @@ a.friend img, .comments-avatar {
 	line-height: 1px;
 }
 
+/* ikonas pie avatara */
 .user-deco {
 	width: 16px;
 	height: 16px;
@@ -1903,7 +1904,6 @@ input, select, textarea {
 }
 
 /* user profile infobox in sidebar */
-
 #profile-awards {
 	margin: 6px 0 10px;
 	padding: 0;

@@ -6,9 +6,9 @@
  */
 class getImages {
 
-	function reddit() {
+	public function reddit() {
 		global $db;
-		$data = curl_get('https://www.reddit.com/r/comics+funny.json');
+		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs.json');
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
@@ -37,7 +37,7 @@ class getImages {
 		}
 	}
 
-	function xkcd() {
+	public function xkcd() {
 		global $db;
 		$data = curl_get('https://xkcd.com/info.0.json');
 		$junk = json_decode($data);
@@ -50,7 +50,7 @@ class getImages {
 		}
 	}
 
-	function can_add($url = null) {
+	private function can_add($url = null) {
 		global $db;
 		if (empty($url)) {
 			return false;

@@ -237,3 +237,17 @@ h3 {
 	overflow: hidden;
 	width: 100%;
 }
+
+/* pielāgo lapas platumu ekrāna izšķirtspējai */
+@media all and (max-width: 1200px) {
+	#wrapper {
+		width: 90%;
+	}
+}
+
+@media all and (max-width: 980px) {
+	#wrapper {
+		width: 100%;
+	}
+}
+

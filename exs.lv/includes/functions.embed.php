@@ -75,7 +75,9 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		if (stripos($txt, $site) !== false) {
 			$replace = array(
 				'http://' . $site,
-				'http://www.' . $site
+				'http://www.' . $site,
+				'https://' . $site,
+				'https://www.' . $site
 			);
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
