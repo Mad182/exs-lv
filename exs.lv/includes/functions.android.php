@@ -29,6 +29,30 @@ function a_message($string = '') {
 }
 
 /**
+ *  Saglabās ziņojumu Android log tabulā.
+ */
+function a_log($text) {
+    global $db, $auth;
+    
+    if (empty($text)) {
+        return;
+    }
+    
+    $uri = (isset($_SERVER['REQUEST_URI'])) ? 
+        $_SERVER['REQUEST_URI'] : '';
+    
+    $values = array(
+        'message' => sanitize($text),
+        'url' => sanitize($uri),
+        'created_by' => (int)$auth->id,
+        'created_at' => date('Y-m-d H:i:s', time()),
+        'created_ip' => sanitize($auth->ip)
+    );
+    
+    return $db->insert('android_logs', $values);
+}
+
+/**
  *  Android lietotnes formātā atgiež datus par lietotāju.
  *
  *  Ja tiek izmantoti noklusētie parametri, atgriezīs datus par to lietotāju,

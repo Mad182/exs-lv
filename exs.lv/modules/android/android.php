@@ -10,7 +10,6 @@
 $sub_include = true;
 
 
-
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:
@@ -43,7 +42,6 @@ $ip_banned = $db->get_row("
     LIMIT 1
 ");
 
-
 // ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
 // info par lieguma statusu, lai noteiktu, vai tāds vēl pastāv, tāpēc šādai
 // info ir jābūt noskaidrojamai vienmēr
@@ -64,10 +62,10 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 } else if ($auth->ok) {
 
     // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-    // bet nonāk te, tad labāk izautorizēt
+    // bet serveris domā pretēji un atved šeit, labāk izautorizēt
     if (isset($_GET['login'])) {
+        a_log('Kā pieteicies lietotājs centās pieteikties atkārtoti');
         $auth->logout();
-        //TODO: log this, bet it kā lietotnē problēma novērsta
     }
 
     // primāri laikam jau ļaut izlogoties arī tad, ja ir profila liegums :)
@@ -87,8 +85,8 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
     // šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
     // sasinhronizējies starp serveri un lietotni
 	} else {
+        a_log('Kā pieteicies lietotājs veica nezināmu pieprasījumu');
         a_error('Kļūdains pieprasījums');
-        // TODO: log this
     }
 
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
