@@ -188,7 +188,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             )
         GROUP BY `clans`.`category_id`
         ORDER BY 
-            `clans_categories`.`importance` DESC
+            `clans_categories`.`title` ASC
     ");
     
     if (!$categories) {
@@ -222,26 +222,55 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
     $cat_id = (int)$_GET['var2'];
     
     $get_cat = $db->get_row("
-        SELECT `id`, `title` FROM `clans_categories` WHERE `id` = ".$cat_id."
-    ");
+        SELECT `id`, `title` FROM `clans_categories` WHERE `id` = ".$cat_id
+    );
 
     if (!$get_cat) {
-        a_error('Kļūdaini norādīta kategorija!');
+        a_error('Kļūdaini norādīta sadaļa');
     } else {
+    
+        $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;        
+        if ($page < 1) {
+            $page = 1;
+        }
+        
+        $amount = 20; // vienā lapā atgriežamo grupu skaits
+        $limit = ($page - 1) * $amount;
     
         $groups = $db->get_results("
             SELECT 
-                `id`, `title`, `avatar`,
-                `owner`, `members`, `posts`
-            FROM `clans` 
+                `clans`.`id`, `clans`.`title`, `clans`.`avatar`,
+                `clans`.`owner`, `clans`.`members`, `clans`.`posts`,
+                
+                IFNULL(`owner`.`id`, 0) AS `owner_id`,
+                `owner`.`nick` AS `owner_nick`,
+                `owner`.`level` AS `owner_level`,
+                
+                IFNULL(`clans_members`.`moderator`, '-1') AS `is_moderator`,
+                `clans_members`.`seenposts` AS `posts_seen`
+            FROM `clans`
+                LEFT JOIN `users` AS `owner` ON (
+                    `clans`.`owner` = `owner`.`id` AND
+                    `owner`.`deleted` = 0
+                )
+                LEFT JOIN `clans_members` ON (
+                    `clans`.`id` = `clans_members`.`clan` AND
+                    `clans_members`.`user` = ".(int)$auth->id." AND
+                    `clans_members`.`approve` = 1
+                )
+                LEFT JOIN `users` AS `member` ON (
+                    `clans_members`.`user` = `member`.`id` AND
+                    `member`.`deleted` = 0
+                )
             WHERE 
                 `lang` = ".(int)$android_lang." AND
                 `category_id` = ".(int)$get_cat->id." 
             ORDER BY `title` ASC
+            LIMIT ".$limit.", ".$amount."
         ");
         
         if (!$groups) {
-            a_error('Kategorijā nav nevienas grupas!');
+            a_error('Sadaļā nav nevienas grupas');
         } else {
     
             $data = [];
@@ -249,13 +278,37 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             $group_cnt = 0;
 
             foreach ($groups as $group) {
+                
+                // jāpārbauda, vai grupas izveidotāja profils nav dzēsts
+                if ($group->owner_id != '0') {
+                    $owner_data = a_fetch_user($group->owner_id, $group->owner_nick, 
+                                               $group->owner_level);
+                } else {
+                    $owner_data = null;
+                }
+                
+                // jāpārbauda, vai lietotājs ir šajā grupā, lai lietotnē
+                // to varētu izcelt, norādot arī nelasīto ziņu skaitu
+                $in_group = false;
+                $is_moderator = false;
+                $unread_msgs = 0;
+                
+                if ($group->is_moderator != '-1') {
+                    $in_group = true;
+                    $is_moderator = (bool)$group->is_moderator;
+                    $unread_msgs = (int)($group->posts - $group->posts_seen);
+                }
             
                 $data[] = [
                     'id' => (int)$group->id,
-                    'title' => $group->title,
                     'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+                    'title' => $group->title,
                     'members' => (int)$group->members,
-                    'posts' => (int)$group->posts                    
+                    'posts' => (int)$group->posts,
+                    'owner' => $owner_data,
+                    'in_group' => $in_group,
+                    'is_moderator' => $is_moderator,
+                    'unread_msgs' => $unread_msgs
                 ];
                 
                 $group_cnt++;
