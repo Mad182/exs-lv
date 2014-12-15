@@ -66,3 +66,4 @@ function upload_user_avatar($post, $old_filename, $text) {
 	}
 	return $return;
 }
+

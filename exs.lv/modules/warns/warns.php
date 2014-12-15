@@ -10,9 +10,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 	$page_title = $inprofile->nick . ' brīdinājumi';
 
-	/*if (in_array($inprofile->level, $mod_levels)) {
-		$tpl->newBlock('warns-mod');
-	} else*/if ($auth->ok && (im_mod() || $auth->id == $inprofile->id)) {
+	/* if (in_array($inprofile->level, $mod_levels)) {
+	  $tpl->newBlock('warns-mod');
+	  } else */if ($auth->ok && (im_mod() || $auth->id == $inprofile->id)) {
 
 		$warns = $db->get_results("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `site_id` = '$lang' ORDER BY `active` DESC, `created` DESC");
 		//warnu saraksts
@@ -30,7 +30,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				$edit = '';
 				if (im_mod()) {
 					$edit = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/edit/' . $warn->id . '">labot</a>]';
-					$remove = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/remove/' . $warn->id . '">noņemt</a>]';
+					$remove = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/remove/' . $warn->id . '?token=' . make_token('remove') . '">noņemt</a>]';
 				}
 				$tpl->assign(array(
 					'date' => display_time(strtotime($warn->created)),
@@ -89,7 +89,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		if (im_mod()) {
 
 			//noņemt warnu
-			if (isset($_GET['var2']) && $_GET['var2'] == 'remove') {
+			if (isset($_GET['var2']) && $_GET['var2'] == 'remove' && check_token('remove', $_GET['token'])) {
 				$removable = (int) $_GET['var3'];
 				$remove = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$removable' AND `site_id` = '$lang'");
 				if ($remove) {
@@ -143,3 +143,4 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';
 }
+

@@ -43,7 +43,7 @@ if ($inprofile) {
 		include CORE_PATH . '/includes/class.friend.php';
 		$friend = new Friend();
 
-		if (isset($_GET['addfriend']) && $auth->level != 5) {
+		if (isset($_GET['addfriend']) && $auth->level != 5 && check_token('addfriend', $_GET['token'])) {
 			$friend->add_friend($auth->id, $inprofile->id);
 		}
 
@@ -91,7 +91,7 @@ if ($inprofile) {
 		}
 		if ($auth->level != 5 && $inprofile->level != 5 && $auth->ok && $auth->id != $inprofile->id && !$friend->pending_friendship($auth->id, $inprofile->id) && !$friend->get_friendship_id($auth->id, $inprofile->id)) {
 			$tpl->assign(array(
-				'friend-link' => '<a class="button primary" href="/user/' . $inprofile->id . '/?addfriend=true">Draudzēties</a><br />'
+				'friend-link' => '<a class="button primary" href="/user/' . $inprofile->id . '/?addfriend=true&amp;token=' . make_token('addfriend') . '">Draudzēties</a><br />'
 			));
 		}
 		if ($auth->ok && $auth->id != $inprofile->id && $auth->level != 5) {

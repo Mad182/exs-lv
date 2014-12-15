@@ -11,7 +11,7 @@
 <div class="tabMain">
 	<!-- START BLOCK : notepad-view-->
 	<p style="float:right;padding: 3px 3px 10px 20px">
-		<a href="/piezimes/edit/{id}" class="button primary">Labot</a> <a href="/piezimes/delete/{id}" class="button danger confirm">Dzēst</a>
+		<a href="/piezimes/edit/{id}" class="button primary">Labot</a> <a href="/piezimes/delete/{id}?token={token}" class="button danger confirm">Dzēst</a>
 	</p>
 	{content}
 	<!-- END BLOCK : notepad-view-->

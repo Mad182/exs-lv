@@ -32,7 +32,7 @@ if (!$auth->ok) {
 	}
 } elseif (im_mod()) {
 
-	if (isset($_GET['delete'])) {
+	if (isset($_GET['delete']) && check_token('remban', $_GET['token'])) {
 		$delete = (int) $_GET['delete'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
 		$db->query("DELETE FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
@@ -42,7 +42,7 @@ if (!$auth->ok) {
 		redirect('/' . $category->textid);
 	}
 
-	if (isset($_GET['delete_ip'])) {
+	if (isset($_GET['delete_ip']) && check_token('remban', $_GET['token'])) {
 		$delete = (int) $_GET['delete_ip'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
 		$db->query("UPDATE `banned` SET `ip` = '--' WHERE `id` = '$delete' " . $q_add . " LIMIT 1");
@@ -84,6 +84,7 @@ if (!$auth->ok) {
 				'banned-date' => date('Y-m-d H:i', $banned->time),
 				'banned-until' => date('Y-m-d H:i', $banned->time + $banned->length),
 				'banned-author' => $banned->author,
+				'token' => make_token('remban'),
 				'anick' => htmlspecialchars($author->nick)
 			));
 
@@ -96,7 +97,10 @@ if (!$auth->ok) {
 			// @mad manuāli bloķētie nebūs dzēšami
 			if ($banned->reason != 'perm (ban evading)') {
 				$tpl->newBlock('remove-ban');
-				$tpl->assign('banned-id', $banned->id);
+				$tpl->assign(array(
+					'banned-id' => $banned->id,
+					'token' => make_token('remban')
+				));
 			}
 		}            
 	}
@@ -104,3 +108,4 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
+

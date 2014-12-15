@@ -193,8 +193,8 @@
 	{article-text}
 
 	<!-- START BLOCK : page-ad-google-bottom-->
-	<div class="c"></div>
-	{ad-468}
+	<!--<div class="c"></div>
+	{disabled-ad-468} --!>
 	<!-- END BLOCK : page-ad-google-bottom-->
 
 </div>
@@ -405,8 +405,6 @@
 		<p class="inf">
 			<strong><a href="#c{comment-id}" id="c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong>{comment-date}
 			<!-- START BLOCK : comments-anon-adm-->
-			| <a href="?delanon={comment-id}" class="confirm red">dzēst</a> |
-			<a href="?blockanon={comment-ip}">bloķēt ({comment-ip})</a> |
 			<a href="?editcom={comment-id}">labot</a>
 			<!-- END BLOCK : comments-anon-adm-->
 		</p>

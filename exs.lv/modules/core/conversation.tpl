@@ -65,7 +65,7 @@
 			</a>
 			<!-- START BLOCK : mb-edit-unclose-->
 			<!-- START BLOCK : mb-delete-->
-			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}">
+			<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}?token={token}">
 				<img src="//exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
 			</a>
 			<!-- END BLOCK : mb-delete-->
