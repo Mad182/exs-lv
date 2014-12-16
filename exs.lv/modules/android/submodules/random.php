@@ -233,7 +233,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         if ($page < 1) {
             $page = 1;
         }
-        
+
         $amount = 20; // vienā lapā atgriežamo grupu skaits
         $limit = ($page - 1) * $amount;
     
@@ -242,17 +242,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
                 `clans`.`id`, `clans`.`title`, `clans`.`avatar`,
                 `clans`.`owner`, `clans`.`members`, `clans`.`posts`,
                 
-                IFNULL(`owner`.`id`, 0) AS `owner_id`,
-                `owner`.`nick` AS `owner_nick`,
-                `owner`.`level` AS `owner_level`,
-                
                 IFNULL(`clans_members`.`moderator`, '-1') AS `is_moderator`,
                 `clans_members`.`seenposts` AS `posts_seen`
             FROM `clans`
-                LEFT JOIN `users` AS `owner` ON (
-                    `clans`.`owner` = `owner`.`id` AND
-                    `owner`.`deleted` = 0
-                )
                 LEFT JOIN `clans_members` ON (
                     `clans`.`id` = `clans_members`.`clan` AND
                     `clans_members`.`user` = ".(int)$auth->id." AND
@@ -270,22 +262,16 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         ");
         
         if (!$groups) {
-            a_error('Sadaļā nav nevienas grupas');
+            $json_page = [
+                'cat_id' => (int)$get_cat->id,
+                'cat_title' => $get_cat->title,
+                'groups' => array()
+            ];            
         } else {
     
             $data = [];
-            
-            $group_cnt = 0;
 
             foreach ($groups as $group) {
-                
-                // jāpārbauda, vai grupas izveidotāja profils nav dzēsts
-                if ($group->owner_id != '0') {
-                    $owner_data = a_fetch_user($group->owner_id, $group->owner_nick, 
-                                               $group->owner_level);
-                } else {
-                    $owner_data = null;
-                }
                 
                 // jāpārbauda, vai lietotājs ir šajā grupā, lai lietotnē
                 // to varētu izcelt, norādot arī nelasīto ziņu skaitu
@@ -301,23 +287,19 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             
                 $data[] = [
                     'id' => (int)$group->id,
-                    'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+                    'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'title' => $group->title,
                     'members' => (int)$group->members,
                     'posts' => (int)$group->posts,
-                    'owner' => $owner_data,
                     'in_group' => $in_group,
                     'is_moderator' => $is_moderator,
                     'unread_msgs' => $unread_msgs
                 ];
-                
-                $group_cnt++;
             }
             
             $json_page = [
                 'cat_id' => (int)$get_cat->id,
                 'cat_title' => $get_cat->title,
-                'group_count' => (int)$group_cnt,
                 'groups' => $data
             ];
         }
