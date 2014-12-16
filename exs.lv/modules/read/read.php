@@ -123,8 +123,8 @@ if ($article) {
 	}
 
 	// komentāra dzēšana
-	if (im_mod() && isset($_GET['delanon'])) {
-		$del = (int) $_GET['delanon'];
+	if (im_mod() && isset($_GET['delcom']) && check_token('delcom', $_GET['token'])) {
+		$del = (int) $_GET['delcom'];
 		$comment = $db->get_row("SELECT * FROM comments WHERE id = '$del' AND `removed` = 0");
 		if ($del > 0 && $comment->pid == $article->id) {
 			$db->query("UPDATE `comments` SET `removed` = 1 WHERE `id` = '$del' AND `pid` = '$article->id'");
@@ -1144,7 +1144,7 @@ if ($article) {
 						if (im_mod()) {
 							$tpl->newBlock('comments-adm');
 							$tpl->assign(array(
-								'delete' => '?delanon=' . $comment->id,
+								'delete' => '?delcom=' . $comment->id . '&token=' . make_token('delcom'),
 								'edit' => '?editcom=' . $comment->id,
 							));
 						} elseif ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $comment->author) {
@@ -1242,7 +1242,7 @@ if ($article) {
 										$tpl->newBlock('reply-adm');
 										$tpl->assign(array(
 											'edit' => '?editcom=' . $reply->id,
-											'delete' => '?delanon=' . $reply->id
+											'delete' => '?delcom=' . $reply->id . '&token=' . make_token('delcom')
 										));
 									}
 

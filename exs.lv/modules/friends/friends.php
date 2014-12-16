@@ -18,13 +18,13 @@ if ($inprofile) {
 	$friend = new Friend();
 
 	//confirm friendship
-	if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['confirm'])) {
+	if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['confirm']) && check_token('friend', $_GET['token'])) {
 		$confirm = (int) $_GET['confirm'];
 		$friend->confirm_friendship($auth->id, $confirm);
 	}
 
 	//deny or delete friendship
-	if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['deny'])) {
+	if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['deny']) && check_token('friend', $_GET['token'])) {
 		$deny = (int) $_GET['deny'];
 		$friend->delete_friend($deny);
 	}
@@ -58,7 +58,10 @@ if ($inprofile) {
 			//cancel friendship
 			if ($auth->ok && $inprofile->id == $auth->id) {
 				$tpl->newBlock('user-friend-delete');
-				$tpl->assign('friendship-id', $friend->id);
+				$tpl->assign(array(
+					'friendship-id' => $friend->id,
+					'token' => make_token('friend')
+				));
 			}
 		}
 	}
@@ -82,7 +85,8 @@ if ($inprofile) {
 					'friendship-id' => $friend->id,
 					'friend-nick' => usercolor($friendinfo->nick, $friendinfo->level),
 					'friend-avatar' => $avatar,
-					'friend-title' => htmlspecialchars($friendinfo->nick)
+					'friend-title' => htmlspecialchars($friendinfo->nick),
+					'token' => make_token('friend')
 				));
 			}
 		}

@@ -159,7 +159,7 @@
 			<p>
 				<input type="submit" name="submit" id="submit" class="button primary" value="Saglabāt" />
 			</p>
-			<p>Nika maiņa ir maksas pakalpojums. Katra nika mainīšanas reize maksā <strong>5</strong> exs.lv kredīta punktus. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti. Apdomā labi, un raksti uzmainīgi, jo par 5 punktiem niku varēsi mainīt tikai vienu reizi. Pēc nika maiņas būs jāielogojas atkārtoti. Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Minka"><span class="admins">Minka</span></a>.</p>
+			<p>Nika maiņa ir maksas pakalpojums. Katra nika mainīšanas reize maksā <strong>5</strong> exs.lv kredīta punktus. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti. Apdomā labi, un raksti uzmainīgi, jo par 5 punktiem niku varēsi mainīt tikai vienu reizi. Pēc nika maiņas būs jāielogojas atkārtoti. Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Mad"><span class="admins">Mad</span></a>.</p>
 
 			<h4>Kā iegādāties 5 kredīta punktus?</h4>
 			<div class="box">

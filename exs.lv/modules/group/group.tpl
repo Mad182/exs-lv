@@ -78,11 +78,11 @@
 	</div>
 	<div style="float: right;width: 29%">
 		<!-- START BLOCK : group-info-apply-->
-		<p><a class="l-gmember" href="{group-link}/apply">Pieteikties</a></p>
+		<p><a class="l-gmember" href="{group-link}/apply?token={token}">Pieteikties</a></p>
 		<!-- END BLOCK : group-info-apply-->
 
 		<!-- START BLOCK : group-info-apply-paid-->
-		<p><a class="l-gmember" href="{group-link}/pay">Pieteikties</a></p>
+		<p><a class="l-gmember" href="{group-link}/pay?token={token}">Pieteikties</a></p>
 		<!-- END BLOCK : group-info-apply-paid-->
 
 		<!-- START BLOCK : glatest-box-->
@@ -149,11 +149,11 @@
 			Admins: {group-admin}
 		</p>
 		<!-- START BLOCK : group-info-cancel-->
-		<p><a class="l-gmember" href="{group-link}/cancel?hash={hash}">Dzēst pieteikumu</a></p>
+		<p><a class="l-gmember" href="{group-link}/cancel?token={token}">Dzēst pieteikumu</a></p>
 		<!-- END BLOCK : group-info-cancel-->
 
 		<!-- START BLOCK : group-info-quit-->
-		<p><a class="l-gmember confirm" href="{group-link}/cancel?hash={hash}">Pamest grupu</a></p>
+		<p><a class="l-gmember confirm" href="{group-link}/cancel?token={token}">Pamest grupu</a></p>
 		<!-- END BLOCK : group-info-quit-->
 	</div>
 	<div class="c"></div>
@@ -259,8 +259,8 @@
 		<li>
 			<a class="image" href="/user/{pending-uid}"><img src="{avatar}" alt="" /></a>
 			<h3><a href="/user/{pending-uid}">{pending-nick}</a> <span>{pending-date}</span></h3>
-			<a class="group-member-confirm" href="{group-link}/confirm/{pending-id}">Apstiprināt</a> |
-			<a class="group-member-deny" href="{group-link}/deny/{pending-id}">Noraidīt</a>
+			<a class="group-member-confirm" href="{group-link}/confirm/{pending-id}?token={confirm_token}">Apstiprināt</a> |
+			<a class="group-member-deny" href="{group-link}/deny/{pending-id}?token={deny_token}">Noraidīt</a>
 			<div class="c"></div>
 		</li>
 		<!-- END BLOCK : pending-node-->
@@ -274,13 +274,13 @@
 		<!-- START BLOCK : members-node-->
 		<li class="{member-class}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />{member-nick}</a>
 			<!-- START BLOCK : member-delete-->
-			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="{group-link}/drop/{member-id}"><img src="//img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
+			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="{group-link}/drop/{member-id}?token={token}"><img src="//img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
 			<!-- END BLOCK : member-delete-->
 			<!-- START BLOCK : member-moderator-->
-			<a class="moderator confirm" href="{group-link}/setmod/{member-id}"><img src="//img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
+			<a class="moderator confirm" href="{group-link}/setmod/{member-id}?token={token}"><img src="//img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>
 			<!-- END BLOCK : member-moderator-->
 			<!-- START BLOCK : member-unmoderator-->
-			<a class="unmoderator confirm" href="{group-link}/unsetmod/{member-id}"><img src="//img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
+			<a class="unmoderator confirm" href="{group-link}/unsetmod/{member-id}?token={token}"><img src="//img.exs.lv/bildes/icons/user_delete.png" alt="unmod" title="Noņemt moderatora statusu" /></a>
 			<!-- END BLOCK : member-unmoderator-->
 		</li>
 		<!-- END BLOCK : members-node-->
@@ -396,7 +396,7 @@
 				</a>
 				<!-- START BLOCK : mb-edit-unclose-->
 				<!-- START BLOCK : mb-delete-->
-				<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}">
+				<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}?token={token}">
 					<img src="//img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
 				</a>
 				<!-- END BLOCK : mb-delete-->

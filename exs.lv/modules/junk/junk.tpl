@@ -60,20 +60,7 @@
 
 				<div class="c"></div>
 
-				<div class="content-block" style="width:728px;">
-					<script type="text/javascript"><!--
-					google_ad_client = "ca-pub-9907860161851752";
-						/* junk 728x90 */
-						google_ad_slot = "4194683639";
-						google_ad_width = 728;
-						google_ad_height = 90;
-						//-->
-					</script>
-					<script type="text/javascript"
-							src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-					</script>
-				</div>
-
+				{ad-728}
 
 				<p style="text-align: center;">{title}</p>
 				<p style="text-align: center;"><img src="//img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float: none;" alt="" /></p>

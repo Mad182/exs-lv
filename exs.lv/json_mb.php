@@ -140,7 +140,7 @@ if ($resps) {
 
 		//dzēst (ja ieraksts jau nav dzēsts)
 		if ($resp->mb_removed == 0 && $auth->ok && ( ($auth->id == $resp->author && $auth->level == 3 && $resp->date > time() - 1800) || (im_mod() && $resp->date > time() - 86400) )) {
-			$out .= ' <a href="/delete/' . $resp->id . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
+			$out .= ' <a href="/delete/' . $resp->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 		}
 
 		$out .= '</p>';

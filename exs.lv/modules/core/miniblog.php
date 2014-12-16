@@ -368,7 +368,8 @@ if (!empty($inprofile)) {
 					if (im_mod() && strtotime($record->date) > time() - 86400) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign(array(
-							'id' => $record->id
+							'id' => $record->id,
+							'token' => make_token('delmb')
 						));
 					}
 

@@ -116,9 +116,9 @@
 		<form class="form" action="" method="post">
 			<fieldset>
 				<legend>Attēla rīki</legend>
-				<input type="hidden" value="{edit-image-id}" name="edit-image-id" />
+				<input type="hidden" value="{edit-id}" name="edit-image-id" />
 				<label for="edit-image-disablecomments">
-					<input class="ajax-checkbox" type="checkbox" name="edit-image-disablecomments" id="edit-image-disablecomments"{edit-image-closed} />Slēgt komentārus
+					<input class="ajax-checkbox" type="checkbox" name="edit-image-disablecomments" id="edit-image-disablecomments"{edit-closed} />Slēgt komentārus
 				</label>
 				<!-- START BLOCK : edit-image-interest -->
 				<p>
@@ -131,7 +131,7 @@
 					</select>
 				</p>
 				<!-- END BLOCK : edit-image-interest -->
-				[<a title="Dzēst attēlu un tā komentārus" href="/gallery/{user-id}/{edit-image-id}?mode=delete" class="confirm"><span class="red">dzēst</span></a>]
+				[<a title="Dzēst attēlu un tā komentārus" href="/gallery/{user-id}/{edit-id}?mode=delete&token={token}" class="confirm"><span class="red">dzēst</span></a>]
 			</fieldset>
 		</form>
 		<!-- START BLOCK : edit-image-form-->

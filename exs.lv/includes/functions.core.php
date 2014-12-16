@@ -1584,7 +1584,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 
 			//dzēst (ja ieraksts jau nav dzēsts)
 			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
-				$out .= ' <a href="/delete/' . $val->id . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
+				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 
 			$out .= '</p>';
@@ -2434,5 +2434,20 @@ function show_dateks_view() {
 	}
 
 	return add_smile($text);
+}
+
+/**
+ * Formas/linka xsrf tokena ģenerēšana
+ */
+function make_token($action) {
+	global $auth;
+	return md5($action . $auth->xsrf);
+}
+
+/**
+ * xsrf tokena pārbaude
+ */
+function check_token($action, $token) {
+	return (make_token($action) === $token);
 }
 

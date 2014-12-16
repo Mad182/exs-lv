@@ -64,7 +64,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 	}
 
 	//delete comment
-	if ($auth->ok && ($auth->level == 1 or $auth->level == 2) && isset($_GET['delcom'])) {
+	if ($auth->ok && ($auth->level == 1 or $auth->level == 2) && isset($_GET['delcom']) && check_token('delcom', $_GET['token'])) {
 		$del = (int) $_GET['delcom'];
 		$comment = $db->get_row("SELECT * FROM galcom WHERE id = '$del'");
 		if ($comment && $comment->bid == intval($_GET['var2'])) {
@@ -183,9 +183,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		} else {
 
 			//remove image, comments and rating, unlink image file
-			if ((isset($_GET['mode']) && $_GET['mode'] == 'delete') && ($auth->ok && $auth->id == $inprofile->id or $auth->ok && ($auth->level == 1 or $auth->level == 2))) {
-				$db->query("DELETE FROM images WHERE id = '$image->id' LIMIT 1");
-				$db->query("DELETE FROM galcom WHERE bid = '$image->id'");
+			if ((isset($_GET['mode']) && $_GET['mode'] == 'delete') && ($auth->ok && $auth->id == $inprofile->id or $auth->ok && ($auth->level == 1 or $auth->level == 2)) && check_token('delete', $_GET['token'])) {
+				$db->query("DELETE FROM `images` WHERE `id` = '$image->id' LIMIT 1");
+				$db->query("DELETE FROM `galcom` WHERE `bid` = '$image->id'");
 				if ($inprofile->id != '18696') { //gamevision bildes nedzēšam
 					@unlink($image->url);
 					@unlink($image->thb);
@@ -343,9 +343,9 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					$closemark = '';
 				}
 				$tpl->assign(array(
-					'edit-image-id' => $image->id,
-					'edit-image-closed' => $closemark,
-					'edit-image-text' => $image->text
+					'edit-id' => $image->id,
+					'edit-closed' => $closemark,
+					'token' => make_token('delete')
 				));
 
 				if ($lang == 1) {
@@ -483,7 +483,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					if ($auth->ok && ($auth->level == 1 or $auth->level == 2)) {
 						$tpl->newBlock('comments-adm');
 						$tpl->assign(array(
-							'delete' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?delcom=' . $comment->id,
+							'delete' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?delcom=' . $comment->id . '&token=' . make_token('delcom'),
 							'edit' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?editcom=' . $comment->id,
 						));
 					} elseif ($auth->ok && ($auth->level == 3 || $comment->karma >= 100) && $auth->id == $comment->author) {
@@ -530,3 +530,4 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 }
 
 $pagepath = '';
+

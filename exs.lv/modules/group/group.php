@@ -228,7 +228,9 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						'pending-uid' => $p_user->id,
 						'pending-date' => date('Y-m-d', $pending->date_added),
 						'avatar' => $avatar,
-						'pending-nick' => usercolor($p_user->nick, $p_user->level, false, $p_user->id)
+						'pending-nick' => usercolor($p_user->nick, $p_user->level, false, $p_user->id),
+						'deny_token' => make_token('deny'),
+						'confirm_token' => make_token('confirm')
 					));
 				}
 			}
@@ -294,6 +296,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$tpl->assign(array(
 					'group-id' => $group->id,
 					'member-id' => $m_user->id,
+					'token' => make_token('drop')
 				));
 			}
 
@@ -307,6 +310,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$tpl->assign(array(
 					'group-id' => $group->id,
 					'member-id' => $m_user->id,
+					'token' => make_token('mod')
 				));
 			}
 		}
@@ -324,7 +328,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 }
 
 // grupas biedra dzēšana
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod)) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod) && check_token('drop', $_GET['token'])) {
 	$drop = (int) $_GET['var3'];
 	$db->query("DELETE FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$drop'");
 	update_members($group->id);
@@ -332,20 +336,21 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod
 	redirect($group_link . '/members');
 }
 // uzliek biedram moderatora statusu
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin && check_token('mod', $_GET['token'])) {
 	$uid = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET moderator = '1' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Uzlika par moderatoru #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
 // noņem biedram moderatora statusu
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && check_token('mod', $_GET['token'])) {
 	$uid = (int) $_GET['var3'];
 	$db->query("UPDATE clans_members SET moderator = '0' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* confirm pending member */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod)) {
+/* confirm pending member */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod) && check_token('confirm', $_GET['token'])) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -358,7 +363,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* deny pendig member, remove pending status */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod)) {
+/* deny pendig member, remove pending status */
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod) && check_token('deny', $_GET['token'])) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -369,7 +375,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin) {
 	redirect($group_link . '/members');
 }
 // lietotājs piesakās būt par grupas biedru
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok && check_token('apply', $_GET['token'])) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
@@ -386,7 +392,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 &&
 elseif (isset($_GET['var2']) && $_GET['var2'] == 'submitpay' && $auth->ok && $group->paid) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 
-		$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
+		$credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = '$auth->id'");
 
 		if ($credit < 3) {
 			set_flash('Nepietiek exs.lv kredīta!', 'error');
@@ -401,7 +407,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'submitpay' && $auth->ok && $gr
 	}
 }
 // iestāšanās maksas grupā
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid && check_token('apply', $_GET['token'])) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 
 		$tpl->assignGlobal('active-tab-info', 'active');
@@ -450,7 +456,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->p
 	}
 }
 // izstāšanās no grupas
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md5($group->id . $auth->id . $remote_salt)) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel', $_GET['token'])) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
 		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true));
@@ -749,7 +755,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 					if (im_mod() && strtotime($record->date) > time() - 86400) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign(array(
-							'id' => $record->id
+							'id' => $record->id,
+							'token' => make_token('delmb')
 						));
 					}
 
@@ -1195,23 +1202,25 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $_GET['hash'] == md
 			$tpl->newBlock('group-info-apply');
 			$tpl->assign(array(
 				'group-id' => $group->id,
+				'token' => make_token('apply')
 			));
 		} elseif (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && !$group->archived) {
 			$tpl->newBlock('group-info-apply-paid');
 			$tpl->assign(array(
 				'group-id' => $group->id,
+				'token' => make_token('apply')
 			));
 		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '0'")) {
 			$tpl->newBlock('group-info-cancel');
 			$tpl->assign(array(
 				'group-id' => $group->id,
-				'hash' => md5($group->id . $auth->id . $remote_salt)
+				'token' => make_token('cancel')
 			));
 		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
 			$tpl->newBlock('group-info-quit');
 			$tpl->assign(array(
 				'group-id' => $group->id,
-				'hash' => md5($group->id . $auth->id . $remote_salt)
+				'token' => make_token('cancel')
 			));
 		}
 	}
