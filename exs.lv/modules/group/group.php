@@ -996,11 +996,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	if ($is_admin) {
 
 		// cilnes dzēšana
-		if (isset($_GET['deltab'])) {
+		if (isset($_GET['deltab']) && check_token('deltab', $_GET['token'])) {
 			$delete = intval($_GET['deltab']);
 			if ($delete && $delete != 303) {
 				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = '$group->id' AND `id` = '$delete' AND `module` = '' LIMIT 1");
 			}
+			$auth->log('Izdzēsa tabu', 'clans', $group->id);
 			redirect($group_link . '/options');
 		}
 
@@ -1014,6 +1015,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$db->query("INSERT INTO clans_tabs (clan_id,slug,title,date_modified,public)
 											VALUES ('$group->id','$slug','$title','" . time() . "','$public')");
 			}
+			$auth->log('Izveidoja tabu &quot;' . $title . '&quot;', 'clans', $group->id);
 			redirect($group_link . '/tab/' . $slug . '/edit');
 		}
 
@@ -1037,6 +1039,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'id' => $tab->id,
 					'slug' => $tab->slug,
 					'title' => $tab->title,
+					'token' => make_token('deltab')
 				));
 			}
 		}
@@ -1095,9 +1098,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$new_a = trim($new_a);
 				if (!empty($new_a)) {
 					$new_a = sanitize(htmlspecialchars($new_a));
-					$db->query("INSERT INTO questions (pid,question) VALUES ('$poll_id','$new_a')");
+					$db->query("INSERT INTO `questions` (`pid`,`question`) VALUES ('$poll_id','$new_a')");
 				}
 			}
+			$auth->log('Izveidoja aptauju &quot;'.htmlspecialchars(trim($_POST['new-poll-q'])).'&quot;', 'clans', $group->id);			
 			$tpl->newBlock('polls_admin-success');
 		} else {
 			$tpl->newBlock('polls_admin-add');
@@ -1108,7 +1112,6 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 	$page_title = $group->title . ' - rīki';
 }
-
 
 
 

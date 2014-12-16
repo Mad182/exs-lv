@@ -540,7 +540,7 @@
 				<!-- START BLOCK : group-settings-tab-->
 				<tr>
 					<td>
-						[<a href="?deltab={id}" class="red confirm">dzēst</a>]
+						[<a href="?deltab={id}&amp;token={token}" class="red confirm">dzēst</a>]
 					</td>
 					<td style="padding: 0 4px;">
 						{title}
