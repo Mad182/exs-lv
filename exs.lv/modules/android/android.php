@@ -9,6 +9,7 @@
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
+echo ' hello world! ';
 
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,
