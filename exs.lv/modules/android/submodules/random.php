@@ -51,15 +51,15 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
     
         $inner_counter = 0;
         foreach ($user_notifications as $notify) {    
-            $arr_notifs[] = [
+            $arr_notifs[] = array(
                 'type' => $texts[$notify->type],
                 'text' => textlimit(trim($notify->info), 45, ''),
                 'date' => 'pirms ' . time_ago(strtotime($notify->bump)),
                 'project' => $config_domains[$notify->lang]['domain']
-            ];
+            );
         }
         
-        $json_page = ['notifications' => $arr_notifs];
+        $json_page = array('notifications' => $arr_notifs);
     }
 
 /**
@@ -75,7 +75,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
  */
 } else if (isset($_GET['var1']) && $_GET['var1'] == 'profile-data') {
     
-    $data = [
+    $data = array(
         'id' => (int)$auth->id,
         'nick' => $auth->nick,
         'level' => (int)$auth->level,
@@ -83,9 +83,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         'usertitle' => $auth->custom_title,
         'karma' => (int)$auth->karma,
         'days_online' => (int)$auth->days_in_row
-    ];
+    );
     
-    $json_page = ['userdata' => $data];
+    $json_page = array('userdata' => $data);
     
 /**
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
@@ -138,7 +138,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         
         if ($own_groups) {
             foreach ($own_groups as $group) {
-                $groups[] = [
+                $groups[] = array(
                     'id' => (int)$group->id,
                     'title' => $group->title,
                     'is_admin' => true,
@@ -146,14 +146,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
                     'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'posts' => (int)$group->posts,
                     'posts_seen' => (int)$group->owner_seenposts
-                ];
+                );
                 $group_count++;
             }
         }
         
         if ($member_of) {
             foreach ($member_of as $group) {
-                $groups[] = [
+                $groups[] = array(
                     'id' => (int)$group->id,
                     'title' => $group->title,
                     'is_admin' => false,
@@ -161,15 +161,15 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
                     'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'posts' => $group->posts,
                     'posts_seen' => $group->seenposts
-                ];
+                );
                 $group_count++;
             }
         }
 
-        $json_page = [
+        $json_page = array(
             'group_count' => $group_count++,
             'groups' => $groups
-        ];
+        );
     }
 
 /**
@@ -199,18 +199,18 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         $groups_total = 0;
         
         foreach ($categories as $group_cat) {
-            $data[] = [
+            $data[] = array(
                 'id' => (int)$group_cat->id,
                 'title' => $group_cat->title,
                 'group_count' => (int)$group_cat->clan_count
-            ];
+            );
             $groups_total += $group_cat->clan_count;
         }
         
-        $json_page = [
+        $json_page = array(
             'group_count' => (int)$groups_total,
             'group_categories' => $data
-        ];
+        );
     }
 
 /**
@@ -269,7 +269,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             ];            
         } else {
     
-            $data = [];
+            $data = array();
 
             foreach ($groups as $group) {
                 
@@ -285,7 +285,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
                     $unread_msgs = (int)($group->posts - $group->posts_seen);
                 }
             
-                $data[] = [
+                $data[] = array(
                     'id' => (int)$group->id,
                     'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'title' => $group->title,
@@ -294,14 +294,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
                     'in_group' => $in_group,
                     'is_moderator' => $is_moderator,
                     'unread_msgs' => $unread_msgs
-                ];
+                );
             }
             
-            $json_page = [
+            $json_page = array(
                 'cat_id' => (int)$get_cat->id,
                 'cat_title' => $get_cat->title,
                 'groups' => $data
-            ];
+            );
         }
     }
 

@@ -9,8 +9,6 @@
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
-echo ' hello world! ';
-
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:

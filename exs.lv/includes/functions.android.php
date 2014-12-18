@@ -149,7 +149,7 @@ function a_fetch_ban($type = 1, $ip_banned) {
             $from_user = get_user($prof_banned->author);
             $to_user = get_user($prof_banned->user_id);
             
-            $json_page = [
+            $json_page = array(
                 'ip' => $prof_banned->ip,
                 'to_user' => a_fetch_user($to_user->id, 
                     $to_user->nick, $to_user->level),
@@ -161,7 +161,7 @@ function a_fetch_ban($type = 1, $ip_banned) {
                     $prof_banned->length),
                 'remaining' => strTime($prof_banned->time + 
                     $prof_banned->length - time())
-            ];
+            );
         }
         
     // ip liegums
@@ -170,7 +170,7 @@ function a_fetch_ban($type = 1, $ip_banned) {
         $from_user = get_user($ip_banned->author);
         $to_user = get_user($ip_banned->user_id);
 
-        $json_page = [
+        $json_page = array(
             'ip' => $ip_banned->ip,
             'to_user' => a_fetch_user($to_user->id, 
                 $to_user->nick, $to_user->level),
@@ -182,7 +182,7 @@ function a_fetch_ban($type = 1, $ip_banned) {
                     $ip_banned->length),
             'remaining' => strTime($ip_banned->time + 
                 $ip_banned->length - time())
-        ];
+        );
     }
 }
 
