@@ -36,6 +36,9 @@ $requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_G
 
 // android.exs.lv adresēs neliks '.json', bet sagaidīs tikai un vienīgi json
 if ($requested_json || $lang === 2) {
+    if ($lang === 2) {
+        echo ' hello ';
+    }
 	header("Content-Type: application/json");
 } else {
 	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
@@ -240,6 +243,7 @@ if (isset($_GET['u'])) {
 		// 404
 		// android.exs.lv nepatīk redirekti :(
 		if ($lang === 2) {
+            echo ' no redirects ';
 			require(CORE_PATH . '/modules/android/android.php');
 		} else {
 			set_flash('Pieprasītā lapa netika atrasta!', 'error');

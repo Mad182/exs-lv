@@ -11,15 +11,24 @@ $android_lang = 1;
 // json formātā, php kļūdas izvadīt nedrīkst, bet var gadīties, ka
 // iekš configdb.php tās jau ir iespējotas
 if (!isset($android_local)) {
-    ini_set('display_errors', 0);
+    /*ini_set('display_errors', 0);
     error_reporting(0);
-    $debug = false;
+    $debug = false;*/
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+    if ($auth->id == 115) {
+        $debug = true;
+    }
 }
+
+echo ' Ip: '. $android_local_ip . ' ';
 
 // auto-login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
 	substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
-	$_SERVER['SERVER_NAME'] !== $android_local_ip) {
+    $_SERVER['SERVER_NAME'] !== $android_local_ip) {
+    
+    echo ' cookies block ';
 
 	// secure cookies
 	ini_set('session.cookie_domain', '.exs.lv');
