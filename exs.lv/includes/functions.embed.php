@@ -82,6 +82,22 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
 	}
+	
+	// bilžu hostingi, kas neatbalsta HTTPS
+	$image_sites = get_sitelist('image');
+	foreach ($image_sites as $site) {
+		if (stripos($txt, $site) !== false) {
+			$find = array(
+				'src="http://' . $site,
+				'src="http://www.' . $site
+			);
+			$replace = array(
+				'src="https://images.weserv.nl/?url=' . $site,
+				'src="https://images.weserv.nl/?url=www.' . $site
+			);
+			$txt = str_ireplace($find, $replace, $txt);
+		}
+	}
 
 	$txt = str_replace(array(
 		'.space.lv',
