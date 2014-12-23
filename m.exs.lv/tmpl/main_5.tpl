@@ -26,6 +26,34 @@
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
 		<!-- START BLOCK : tinymce-enabled-->
+        <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+		<script type="text/javascript">
+			tinymce.init({
+				selector: "textarea",
+				plugins: [
+					"advlist autolink link image lists charmap preview hr anchor",
+					"searchreplace wordcount visualblocks visualchars code",
+					"table contextmenu paste"
+				],
+				toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect",
+				toolbar2: "cut copy paste | undo redo | bullist numlist | outdent indent blockquote | link unlink anchor image",
+				toolbar3: "table | hr removeformat | subscript superscript | charmap | searchreplace | visualchars visualblocks | code",
+				relative_urls: false,
+				remove_script_host: false,
+				menubar: false,
+				statusbar: false,
+				toolbar_items_size: 'small',
+				content_css: "{static-server}/css/style.css",
+				style_formats: [
+			{title: 'Sarkans', inline: 'span', classes: 'red'},
+			{title: 'Admins', inline: 'span', classes: 'admins'},
+			{title: 'Rakstu autors', inline: 'span', classes: 'rautors'},
+			{title: 'Mods', inline: 'span', classes: 'mods'},
+			{title: 'Lejupielāde', inline: 'a', classes: 'download'},
+			{title: 'Koda bloks', block: 'pre', classes: 'prettyprint'},
+			{title: 'Brīdinājuma teksts', block: 'p', classes: 'text-notice'}
+				]
+			});</script>
 		<!-- END BLOCK : tinymce-enabled-->
 		<!-- START BLOCK : tinymce-simple-->
 		<!-- END BLOCK : tinymce-simple-->

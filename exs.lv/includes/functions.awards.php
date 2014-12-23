@@ -708,6 +708,14 @@ function update_awards($user) {
 			'state' => 'active'
 		);
 	}
+    
+    // TODO, kad Jānis apkopos sarakstu ar apmeklētājiem :/
+    /*if (in_array($user, array(0))) {
+		$awards_list['floorball-3'] = array(
+			'title' => 'Exs 3. florbola turnīrs 01.11.2014',
+			'state' => 'active'
+		);
+	}*/
 
 	//ghetto games floorball
 	/* if (in_array($user, array(1822, 12382, 21450, 13004, 22518, 24437, 273, 11722, 19604, 23282, 6446, 10492))) {
@@ -721,13 +729,6 @@ function update_awards($user) {
 	/* if (in_array($user, array(1822, 13004, 858, 23282, 23715, 21450))) {
 	  $awards_list['ghetto-football'] = array(
 	  'title' => 'Piedalījās Ghetto Games (futbolā)',
-	  'state' => 'active'
-	  );
-	  } */
-
-	/* 	if(in_array($user,array(13004))) {
-	  $awards_list['db-1'] = array(
-	  'title' => 'aktīva dalība datubāzes tulkošanā',
 	  'state' => 'active'
 	  );
 	  } */
