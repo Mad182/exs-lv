@@ -9,6 +9,16 @@
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
+// ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
+// tas jāpievieno, lai Android atpazītu adreses
+if (isset($img_server) && substr($img_server, 0, 2) === '//') {
+    if (!empty($_SERVER['HTTPS'])) {
+        $img_server = 'https:'.$img_server;
+    } else {
+        $img_server = 'http:'.$img_server;
+    }
+}
+
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:

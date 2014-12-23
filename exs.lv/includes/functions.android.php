@@ -463,7 +463,7 @@ function a_get_user_avatar($user, $size = 'm') {
 			// tāpat mēģina nolasīt no img.exs.lv
 			return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
 		}
-	} else {
+	} else {    
 		return $img_server . '/userpic/' . $path . '/' . $user->avatar;
 	}
 }
