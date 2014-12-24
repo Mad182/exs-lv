@@ -11,23 +11,27 @@ $android_lang = 1;
 // json formātā, php kļūdas izvadīt nedrīkst, bet var gadīties, ka
 // iekš configdb.php tās jau ir iespējotas
 if (!isset($android_local)) {
-    ini_set('display_errors', 0);
-    error_reporting(0);
-    $debug = false;
+
+    // lai tomēr varētu kaut kādas kļūdas web versijā arī atrast
+    if ($auth->id != 115 || !isset($_GET['debug'])) {
+        ini_set('display_errors', 0);
+        error_reporting(0);
+        $debug = false;
+    }
 }
 
 // auto-login visos subdomēnos
 if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
-	substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
+    substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
     $_SERVER['SERVER_NAME'] !== $android_local_ip) {
-
-	// secure cookies
-	ini_set('session.cookie_domain', '.exs.lv');
-	ini_set('session.cookie_httponly', 1);
-	ini_set('session.cookie_secure', 1);
-	ini_set('session.use_only_cookies', 1);
-	$secure_login = true;
+    
+    // secure cookies
+    ini_set('session.cookie_domain', '.exs.lv');
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.cookie_secure', 1);
+    ini_set('session.use_only_cookies', 1);
+    $secure_login = true;
 }
 
-require(CORE_PATH . '/includes/functions.exs.php');
-require(CORE_PATH . '/includes/functions.android.php');
+require_once(CORE_PATH . '/includes/functions.exs.php');
+require_once(CORE_PATH . '/includes/functions.android.php');
