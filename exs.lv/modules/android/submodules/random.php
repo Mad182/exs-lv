@@ -262,11 +262,11 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         ");
         
         if (!$groups) {
-            $json_page = [
+            $json_page = array(
                 'cat_id' => (int)$get_cat->id,
                 'cat_title' => $get_cat->title,
                 'groups' => array()
-            ];            
+            );           
         } else {
     
             $data = array();
