@@ -195,7 +195,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
         a_error('Nav nevienas grupu kategorijas!');
     } else {
     
-        $data = [];
+        $data = array();
         $groups_total = 0;
         
         foreach ($categories as $group_cat) {
