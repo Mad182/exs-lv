@@ -13,7 +13,7 @@ $android_lang = 1;
 if (!isset($android_local)) {
 
     // lai tomēr varētu kaut kādas kļūdas web versijā arī atrast
-    if ($auth->id != 115 || !isset($_GET['debug'])) {
+    if ($debug === true && !isset($_GET['debug'])) {
         ini_set('display_errors', 0);
         error_reporting(0);
         $debug = false;
