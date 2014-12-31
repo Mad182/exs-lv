@@ -48,6 +48,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		'page-loginurl' => $login_url,
 		'page-title' => $page_title,
 		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
+		'current-year' => date('Y'),
 		'xsrf' => $auth->xsrf,
 		'static-server' => $static_server
 	));
