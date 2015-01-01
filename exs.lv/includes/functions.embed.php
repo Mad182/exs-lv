@@ -420,7 +420,8 @@ function embed_youtube($matches, $wide = 0) {
 	$videocode .= 'width="' . $width . '" height="' . $height . '" ';
 	$videocode .= 'src="https://www.youtube.com/embed/' . $safe;
 	$videocode .= '?wmode=transparent&autoplay=1&origin=';
-	$videocode .= urlencode('http://exs.lv') . '" frameborder="0">';
+	$videocode .= urlencode('http://exs.lv') . '" frameborder="0"';
+	$videocode .= ' webkitallowfullscreen mozallowfullscreen allowfullscreen>';
 	$videocode .= '</iframe><br /><a title="Atvērt video mājas lapā" ';
 	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
 	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
