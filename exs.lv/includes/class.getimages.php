@@ -13,6 +13,7 @@ class getImages {
 		foreach ($junk->data->children as $data) {
 			$file = false;
 			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif', 'peg'))) {
+				$addr = str_replace('//imgur.com/', '//i.imgur.com/', $data->data->url);
 				$file = str_replace('http://i.imgur.com/', 'https://i.imgur.com/', $data->data->url);
 
 			} elseif (stristr($data->data->url, '//imgur.com/')) {

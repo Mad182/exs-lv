@@ -195,7 +195,7 @@ $(document).ready(function() {
 		if (confirm("Vai tiešām vēlies veikt šo darbību?")) {
 			var link_element = $(this);
 			var content_element = $(this).parent().siblings('.post-content');
-			$.getJSON($(this).attr('href') + '?_=1', function(response) {
+			$.getJSON($(this).attr('href') + '&_=1', function(response) {
 				if (response.state == 'success') {
 					$(link_element).parent().after(response.message).show('slow');
 					$(link_element).siblings('.post-button:not(.comment-permalink)').andSelf().hide();

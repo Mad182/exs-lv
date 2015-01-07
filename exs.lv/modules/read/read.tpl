@@ -271,7 +271,7 @@
 	<!-- START BLOCK : post-tags-ul-->
 	<ul id="article-tags" class="list-tags">
 		<!-- START BLOCK : post-tags-node-->
-		<li><a href="/tag/{slug}" rel="tag">{tag-title}</a><!--{tag-remove}--></li>
+		<li><a href="/tag/{slug}" rel="tag">{tag-title}</a></li>
 		<!-- END BLOCK : post-tags-node-->
 	</ul>
 	<!-- END BLOCK : post-tags-ul-->

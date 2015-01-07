@@ -41,7 +41,7 @@ if (!empty($series)) {
 	<tr>
 		<td>
 			<a href="/read/' . $s->strid . '">
-				<img style="width:145px;min-width:145px;height:215px;margin:2px" src="http://img.exs.lv' . $s->thb . '" alt="' . htmlspecialchars($s->title) . '" />
+				<img style="width:145px;min-width:145px;height:215px;margin:2px" src="//img.exs.lv' . $s->thb . '" alt="' . htmlspecialchars($s->title) . '" />
 			</a>
 		</td>
 		<td style="vertical-align:top;padding: 20px 10px;width:115px;">

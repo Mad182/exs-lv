@@ -980,6 +980,7 @@ if ($article) {
 		LIMIT 16");
 			$tpl->newBlock('post-tags');
 			$tagcount = 0;
+
 			if ($article_tags) {
 				$tpl->newBlock('post-tags-ul');
 				foreach ($article_tags as $article_tag) {
@@ -989,11 +990,6 @@ if ($article) {
 						'tag-title' => $article_tag->name,
 						'slug' => $article_tag->slug,
 					));
-					if (im_mod()) {
-						$tpl->assign(array(
-							'tag-remove' => '&nbsp;[<a href="?untag=' . $article_tag->id . '"><span class="red">x</span></a>]',
-						));
-					}
 				}
 			}
 

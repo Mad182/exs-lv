@@ -16,6 +16,7 @@
 <div class="c"></div>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <p>Spēļu portāls exs.lv piedāvā bezmaksas online flash spēles. Šeit atrodamas auto, prāta, piedzīvojumu spēles, <strong>spēles bērniem</strong> un citas.<br />
-	Lai spēlētu tev, nepieciešama tikai Interneta pārlūkprogramma ar instalētu <a rel="nofollow" href="http://www.adobe.com/support/flashplayer/downloads.html" title="Lejupielādēt Adobe flash player spraudni">Adobe flash player</a> spraudni.<br />
+	Lai spēlētu tev, nepieciešama tikai Interneta pārlūkprogramma ar instalētu <a rel="nofollow" href="https://www.adobe.com/support/flashplayer/downloads.html" title="Lejupielādēt Adobe flash player spraudni">Adobe flash player</a> spraudni.<br />
 	Izmantot čatu un novērtēt spēles šobrīd var tikai portālā exs.lv reģistrētie lietotāji.</p>
 <!-- END BLOCK : games-list-->
+
