@@ -776,7 +776,7 @@ function embed_vimeo($params) {
  */
 function replace_spoiler($text) {
 
-	$text = str_replace(array('<p>', '</p>'), array('<br />', '<br />'), $text[1]);
+	$text = str_replace(array('<p>', '</p>', '%5B/spoiler%5D'), array('<br />', '<br />', ''), $text[1]);
 
 	$content = '<span class="spoiler"><a href="javascript:void(0);" ';
 	$content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';
