@@ -74,6 +74,7 @@ if ($user) {
 	$db->query("DELETE FROM `friends` WHERE `friend2` = '$user'");
 	$db->query("DELETE FROM `bookmarks` WHERE `userid` = '$user'");
 	$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$user'");
+	$db->query("DELETE FROM `userlogs` WHERE `user` = '$user'");
 
 	echo 'user #' . $user . " deleted\n\n";
 }
