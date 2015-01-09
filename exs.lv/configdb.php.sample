@@ -38,6 +38,10 @@ define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
 define('IMG_PATH', '/home/madars/www/exs-lv/img.exs.lv');
 define('LIB_PATH', '/home/madars/www/exs-lv/libs');
 
+// paziņojums ja lapā tiek veikti darbi un tā nav piejama
+//echo(file_get_contents(CORE_PATH . '/tmpl/maintenance.tpl'));
+//exit;
+
 //debug konfigurācija
 include('../developer_ips.php');
 
