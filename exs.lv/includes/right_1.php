@@ -112,10 +112,10 @@ include(CORE_PATH . '/modules/core/poll.php');
 
 $tpl->newBlock('friendssay-box');
 $sel = 'all';
-if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') {
+if (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') {
 	$mbs = get_latest_mbs('friends');
 	$sel = 'friends';
-} elseif ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'music') {
+} elseif (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'music') {
 	$mbs = get_latest_mbs('music');
 	$sel = 'music';
 } else {
@@ -126,10 +126,10 @@ $tpl->assign('out', $mbs);
 
 if ($auth->ok) {
 	$tpl->newBlock('friendssay-tabs');
-	$tpl->assignGlobal(array(
-		$sel . '-selected' => 'active '
-	));
 }
+$tpl->assignGlobal(array(
+	$sel . '-selected' => 'active '
+));
 
 if (im_mod()) {
 	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");
