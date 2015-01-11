@@ -17,6 +17,10 @@ $smtp_password = '***';
 $mc_host = 'localhost';
 $mc_port = 11211;
 
+//last.fm
+$lastfm_apikey = '';
+$lastfm_secret = '';
+
 //formu tokenu salt
 $remote_salt = 'BgpgSvz21ku6C2tcEGVLqwWj8fXkeSA9';
 
