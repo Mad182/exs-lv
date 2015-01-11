@@ -208,7 +208,7 @@
 							<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
 							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
 							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('http://api.draugiem.lv/authorize/?app=15005147&amp;hash=291e891358c8819a234e6d96b3a0d449&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=https%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
 							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
@@ -417,14 +417,14 @@
 
 					<div class="box">
 
-						<!-- START BLOCK : friendssay-tabs-->
 						<ul class="tabs" id="tabs-justified-3">
 							<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
+						<!-- START BLOCK : friendssay-tabs-->
 							<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
+						<!-- END BLOCK : friendssay-tabs-->
 							<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><span class="music">Klausās</span></a></li>
 						</ul>
 						<div class="c"></div>
-						<!-- END BLOCK : friendssay-tabs-->
 						<div id="miniblog-block" class="ajaxbox">{out}</div>
 					</div>
 
