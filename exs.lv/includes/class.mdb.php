@@ -9,13 +9,13 @@ class mdb extends mysqli {
 	var $num_queries = 0;
 
 	function __construct($username, $password, $database, $hostname = 'localhost') {
-	
+
 		//atslēdzam error reporting, lai ignorētu 
 		//"client library minor version mismatch" paziņojumu
 		//lietojot MariaDB 10
 		$err_level = error_reporting(0);
 		parent::__construct($hostname, $username, $password, $database);
-		error_reporting($err_level); 
+		error_reporting($err_level);
 		/**
 		 * atkomentē šo rindu ja tiek darbināts uz servera
 		 * kur mysql nav utf-8 savienojums pēc noklusējuma
@@ -75,16 +75,17 @@ class mdb extends mysqli {
 
 		$criteria = array();
 		$updates = array();
-        $limit = 'LIMIT 1';
+		$limit = 'LIMIT 1';
 
 		if (is_array($params)) {
 			foreach ($params as $key => $value) {
 				$criteria[] = "`" . $key . "` = '" . $value . "'";
 			}
-            $limit = '';
+			$limit = '';
 		} else {
-			if ((int)$params < 1) return false;
-			$criteria[] = "`id` = " . (int)$params;
+			if ((int) $params < 1)
+				return false;
+			$criteria[] = "`id` = " . (int) $params;
 		}
 
 		foreach ($data as $key => $val) {
@@ -93,18 +94,20 @@ class mdb extends mysqli {
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
 		}
-        if (empty($updates) || empty($criteria)) return false;
+		if (empty($updates) || empty($criteria))
+			return false;
 
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);
 
-        $this->query("UPDATE `$table` SET $updates WHERE $criteria $limit");
+		$this->query("UPDATE `$table` SET $updates WHERE $criteria $limit");
 		return ($this->affected_rows > 0);
 	}
 
 	function insert($table = null, $data = null) {
 
-		if (empty($data)) return false;
+		if (empty($data))
+			return false;
 
 		$keys = array();
 		$values = array();
@@ -113,13 +116,15 @@ class mdb extends mysqli {
 			$keys[] = $key;
 			$values[] = "'" . $val . "'";
 		}
-		if (empty($keys) || empty($values)) return false;
+		if (empty($keys) || empty($values))
+			return false;
 
 		$keys = implode(',', $keys);
 		$values = implode(',', $values);
 
-        $this->query("INSERT INTO `$table` ($keys) VALUES($values)");
+		$this->query("INSERT INTO `$table` ($keys) VALUES($values)");
 		return ($this->affected_rows > 0);
 	}
 
 }
+
