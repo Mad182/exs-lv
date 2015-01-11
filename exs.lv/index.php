@@ -101,7 +101,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 		$data['in-tabs'] = get_latest_posts();
 	}
 	if (isset($_GET['loadmb'])) {
-		$data['mb-latest'] = get_latest_mbs(!empty($_GET['friendmb']));
+		$data['mb-latest'] = get_latest_mbs($_GET['tab']);
 	}
 	if (isset($_GET['loadindex'])) {
 		$data['index-events'] = get_index_events();
@@ -264,7 +264,7 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 if ($skin === 'main') {
 	if ($auth->ok !== true) {
 		$tpl->newBlock('login-form');
-		$tpl->assign('xsrf', $auth->xsrf);
+		$tpl->assignGlobal('xsrf', $auth->xsrf);
 	} else {
 		$tpl->newBlock('user-menu');
 
