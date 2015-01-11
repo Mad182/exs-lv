@@ -239,6 +239,10 @@ function list_awards() {
 			'title' => 'Twitter.com <a href="https://twitter.com/exs_lv" rel="nofollow">sekotājs</a>',
 			'state' => 'inactive'
 		),
+		'lastfm' => array(
+			'title' => '<a href="https://exs.lv/lastfm">LastFM</a> lietotājs',
+			'state' => 'inactive'
+		),
 		'blogs-50' => array(
 			'title' => 'Veica 50 bloga ierakstus',
 			'state' => 'inactive'
@@ -399,6 +403,10 @@ function update_awards($user) {
 
 		if ($userr->posts >= 5) {
 			$awards_list['first-post']['state'] = 'active';
+		}
+
+		if (!empty($userr->lastfm_username)) {
+			$awards_list['lastfm']['state'] = 'active';
 		}
 
 		if (!empty($userr->avatar) && $userr->avatar != 'none.png') {
