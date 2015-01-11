@@ -1,20 +1,24 @@
 <?php
 
-if($auth->ok === true) {
+/**
+ * Last.fm profila autorizācija,
+ * lai varētu ievākt lietotāja klausītās dziesmas   
+ */
+if ($auth->ok === true) {
 	require_once(LIB_PATH . '/phplastfm/lastfmapi/lastfmapi.php');
 
 	//apstrādā no last.fm atgriezto autorizāciju
-	if(!empty($_GET['token'])) {
+	if (!empty($_GET['token'])) {
 
 		$vars = array(
 			'apiKey' => $lastfm_apikey,
 			'secret' => $lastfm_secret,
 			'token' => $_GET['token']
 		);
-	
+
 		$lastfm_auth = new lastfmApiAuth('getsession', $vars);
 
-		if(!empty($lastfm_auth->username)) {
+		if (!empty($lastfm_auth->username)) {
 			$db->update('users', $auth->id, array(
 				'lastfm_token' => $lastfm_auth->token,
 				'lastfm_username' => $lastfm_auth->username,
@@ -27,12 +31,11 @@ if($auth->ok === true) {
 		redirect('/lastfm');
 	}
 
-	if(!empty($auth->lastfm_username)) {
+	if (!empty($auth->lastfm_username)) {
 
 		//profils ir savienots ar lastfm, updatojam dziesmas un rādam ka viss ok
 		lastfm_update_tracks($auth->id);
 		$tpl->newBlock('lastfm-success');
-
 	} else {
 
 		//profils NAV savinots ar last.fm, rādam pogu

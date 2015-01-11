@@ -418,9 +418,10 @@
 					<div class="box">
 
 						<!-- START BLOCK : friendssay-tabs-->
-						<ul class="tabs">
-							<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
-							<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
+						<ul class="tabs" id="tabs-justified-3">
+							<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
+							<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
+							<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><span class="music">Klausās</span></a></li>
 						</ul>
 						<div class="c"></div>
 						<!-- END BLOCK : friendssay-tabs-->

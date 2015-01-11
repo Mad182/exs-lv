@@ -66,10 +66,10 @@ include(CORE_PATH . '/modules/core/poll.php');
 $tpl->newBlock('friendssay-box');
 $sel = 'all';
 if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] == 'friends') {
-	$mbs = get_latest_mbs(1);
+	$mbs = get_latest_mbs('friends');
 	$sel = 'friends';
 } else {
-	$mbs = get_latest_mbs();
+	$mbs = get_latest_mbs('all');
 }
 
 $tpl->assign('out', $mbs);

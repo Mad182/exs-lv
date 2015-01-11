@@ -334,8 +334,8 @@
 
 					<!-- START BLOCK : friendssay-tabs-->
 					<ul class="tabs">
-						<li><a href="/mb-latest?pg=0" class="{all-selected}mbs-all ajax"><span class="comments">Visi</span></a></li>
-						<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}mbs-friends ajax"><span class="friends">Draugu</span></a></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}mbs-all ajax"><span class="comments">Visi</span></a></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}mbs-friends ajax"><span class="friends">Draugu</span></a></li>
 					</ul>
 					<div class="c"></div>
 					<!-- END BLOCK : friendssay-tabs-->
