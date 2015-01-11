@@ -2451,3 +2451,58 @@ function check_token($action, $token) {
 	return (make_token($action) === $token);
 }
 
+/**
+ * Update last.fm last played tracks
+ */
+function lastfm_update_tracks($user_id) {
+	global $lastfm_apikey, $lastfm_secret, $db;
+
+	$user = get_user($user_id);
+
+	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-120) {
+		return false;
+	}
+
+	$authVars = array(
+		'apiKey' => $lastfm_apikey,
+		'secret' => $lastfm_secret,
+		'username' => $user->lastfm_username,
+		'sessionKey' => $user->lastfm_sessionkey,
+		'subscriber' => $user->lastfm_subscriber
+	);
+
+	$config = array(
+		'enabled' => false
+	);
+
+	$lastfm_auth = new lastfmApiAuth('setsession', $authVars);
+
+	$apiClass = new lastfmApi();
+	$userClass = $apiClass->getPackage($lastfm_auth, 'user', $config);
+
+	$methodVars = array(
+		'user' => $user->lastfm_username
+	);
+
+	$db->update('users', $user->id, array(
+		'lastfm_updated' => time()
+	));
+
+	if ( $tracks = $userClass->getRecentTracks($methodVars) ) {
+
+		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$user->id'");
+
+		foreach($tracks as $track) {
+
+			$db->query("INSERT INTO `lastfm_tracks` (`id`, `user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES (NULL, $user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
+
+		}
+
+		return true;
+
+	} else {
+
+		return false;
+	}
+}
+
