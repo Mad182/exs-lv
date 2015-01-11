@@ -2558,6 +2558,8 @@ function get_latest_music() {
 	WHERE
 		`users`.`id` = `lastfm_tracks`.`user_id`
 		$friendsquery
+	GROUP BY
+		`users`.`id`, `lastfm_tracks`.`name`
 	ORDER BY
 		`lastfm_tracks`.`date` DESC
 	LIMIT $skip, 6");
