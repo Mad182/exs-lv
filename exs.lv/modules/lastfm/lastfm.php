@@ -33,9 +33,28 @@ if ($auth->ok === true) {
 
 	if (!empty($auth->lastfm_username)) {
 
+		//saglabā iestatījumus
+		if (isset($_POST['friends-do'])) {
+
+			$db->update('users', $auth->id, array(
+				'lastfm_onlyfriends' => (bool) $_POST['friends']
+			));
+			get_user($auth->id, true);
+
+			die('ok');
+		}
+
 		//profils ir savienots ar lastfm, updatojam dziesmas un rādam ka viss ok
 		lastfm_update_tracks($auth->id);
 		$tpl->newBlock('lastfm-success');
+
+		//mark checkbox
+		$friendsmark = '';
+		if ($auth->lastfm_onlyfriends) {
+			$friendsmark = ' checked="checked"';
+		}
+		$tpl->assign('friendsmark', $friendsmark);
+
 	} else {
 
 		//profils NAV savinots ar last.fm, rādam pogu

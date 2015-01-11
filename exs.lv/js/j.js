@@ -25,8 +25,11 @@ function msgrr() {
 	if ($('#last-action-list').length > 0) {
 		query_string = query_string + '&loadindex=true';
 	}
-	if ($('.mbs-friends').hasClass('active')) {
-		query_string = query_string + '&friendmb=true';
+	if ($('.remember-friends').hasClass('active')) {
+		query_string = query_string + '&tab=friends';
+	}
+	if ($('.remember-music').hasClass('active')) {
+		query_string = query_string + '&tab=music';
 	}
 
 	$.getJSON('/get/updates.json' + query_string, function(data) {
@@ -430,7 +433,7 @@ $(document).ready(function() {
 		var tabs = {
 			'last-sidebar-tab': {tab1: 'pages', tab2: 'gallery'},
 			'last-facts-tab': {tab1: 'fact-all', tab2: 'fact-rs'},
-			'last-mbs-tab': {tab1: 'all', tab2: 'friends'}
+			'last-mbs-tab': {tab1: 'all', tab2: 'friends', tab3: 'music'}
 		};
 
 		$.each(tabs, function(position, values) {

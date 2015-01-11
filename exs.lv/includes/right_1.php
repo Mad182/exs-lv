@@ -126,7 +126,7 @@ $tpl->assign('out', $mbs);
 
 if ($auth->ok) {
 	$tpl->newBlock('friendssay-tabs');
-	$tpl->assign(array(
+	$tpl->assignGlobal(array(
 		$sel . '-selected' => 'active '
 	));
 }

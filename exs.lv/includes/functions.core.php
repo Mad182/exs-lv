@@ -2538,7 +2538,7 @@ function get_latest_music() {
 	}
 
 	$friendsquery = '';
-	if ($auth->ok) {
+	if ($auth->ok === true && $auth->lastfm_onlyfriends) {
 		$myfriends = get_friends_lastfm($auth->id);
 		if(!empty($myfriends)) {
 			$myfriends[] = $auth->id;
@@ -2567,11 +2567,19 @@ function get_latest_music() {
 
 			$time = time_ago($track->date);
 
-			$out .= '<li><a href="' . htmlspecialchars($track->url) . '" rel="nofollow" target="_blank"><img class="av" width="45" height="45" src="https://images.weserv.nl/?url=' . str_replace('http://', '', $track->images_small) . '" alt="' . htmlspecialchars($track->name) . '" /><span class="author">' . htmlspecialchars($track->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . htmlspecialchars($track->artist_name) . ' - ' . htmlspecialchars($track->name) . '</a></li>';
+			if(!empty($track->images_small)) {
+				$img = 'https://images.weserv.nl/?url=' . str_replace('http://', '', $track->images_small);
+			} else {
+				//ja last.fm nedod avataru, rādam lietotāju
+				$img = get_avatar($track, 's');
+			}
+
+			$out .= '<li><a href="' . htmlspecialchars($track->url) . '" rel="nofollow" target="_blank"><img class="av" width="45" height="45" src="' . $img . '" alt="' . htmlspecialchars($track->name) . '" /><span class="author">' . htmlspecialchars($track->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . htmlspecialchars($track->artist_name) . ' - ' . htmlspecialchars($track->name) . '</a></li>';
 
 
 		}
 	}
+
 	$out .= '</ul><p class="core-pager ajax-pager">';
 
 	for ($i = 1; $i <= 5; $i++) {
@@ -2589,8 +2597,8 @@ function get_latest_music() {
 	}
 	$out .= '</p>';
 
-	if($auth->ok === true && empty($auth->lastfm_username)) {
-		$out .= '<p stye="text-align:center"><a class="button button-xs primary" href="/lastfm">Pievienot savu last.fm profilu</a></p>';
+	if($auth->ok === true) {
+		$out .= '<p style="text-align:right"><a class="button button-xs primary" href="/lastfm">Iestatījumi</a></p>';
 	}
 
 	return $out;

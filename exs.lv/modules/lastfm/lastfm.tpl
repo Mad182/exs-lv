@@ -13,5 +13,12 @@
 <p>
 	Tavs profils ir veiksmīgi savienots ar last.fm!
 </p>
+<form class="form" action="" method="post">
+	<fieldset>
+		<legend>Last.fm iestatījumi</legend>
+		<label><input type="checkbox" name="friends" class="ajax-checkbox"{friendsmark} />Rādīt tikai draugu dziesmas</label>
+		<input type="hidden" name="friends-do" value="1" />
+	</fieldset>
+</form>
 <!-- END BLOCK : lastfm-success-->
 
