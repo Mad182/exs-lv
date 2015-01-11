@@ -357,7 +357,7 @@ function embed_widgets($txt, $wide = 0) {
 	// instagram images
 	if (strpos($txt, 'instagram') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9]+)(.*?))</a>#im", 'embed_instagram', $txt
+				"#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9_\-]+)(.*?))</a>#im", 'embed_instagram', $txt
 		);
 	}
 
