@@ -61,6 +61,13 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 		));
 	}
 
+	if (!empty($inprofile->lastfm_username)) {
+		$tpl->newBlock('profilebox-lastfm-link');
+		$tpl->assign(array(
+			'name' => $inprofile->lastfm_username
+		));
+	}
+
 	$isblog = get_blog_by_user($inprofile->id);
 	if ($isblog) {
 		$blog = get_cat($isblog);

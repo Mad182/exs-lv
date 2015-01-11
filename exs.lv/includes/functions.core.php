@@ -2551,11 +2551,13 @@ function get_latest_music() {
 		`users`.`avatar` AS `avatar`,
 		`users`.`deleted` AS `deleted`,
 		`users`.`av_alt` AS `av_alt`,
+		`users`.`level` AS `level`,
 		`users`.`nick` AS `nick`
 	FROM
 		`lastfm_tracks`,
 		`users`
 	WHERE
+		`lastfm_tracks`.`date` < " . time() . " AND
 		`users`.`id` = `lastfm_tracks`.`user_id`
 		$friendsquery
 	GROUP BY
@@ -2576,7 +2578,7 @@ function get_latest_music() {
 				$img = get_avatar($track, 's');
 			}
 
-			$out .= '<li><a href="' . htmlspecialchars($track->url) . '" rel="nofollow" target="_blank"><img class="av" width="45" height="45" src="' . $img . '" alt="' . htmlspecialchars($track->name) . '" /><span class="author">' . htmlspecialchars($track->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . htmlspecialchars($track->artist_name) . ' - ' . htmlspecialchars($track->name) . '</a></li>';
+			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . htmlspecialchars($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . htmlspecialchars($track->url) . '" rel="nofollow" target="_blank">' . htmlspecialchars($track->artist_name) . ' - ' . htmlspecialchars($track->name) . '</a></span></li>';
 
 
 		}
