@@ -2,8 +2,6 @@
 
 <h1>Jaunākais portālā</h1>
 
-{ad-468}
-
 <div id="wall">
 	<ul id="wall-posts">
 		<!-- START BLOCK : wall-events-node-->
@@ -27,6 +25,5 @@
 	</ul>
 </div>
 
-{ad-468}
-
 <!-- END BLOCK : wall-events-->
+

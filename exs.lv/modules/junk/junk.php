@@ -44,7 +44,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 				$db->query("INSERT INTO `junk_queue`
 					(image,title,source,created,ip,user_id) VALUES
-					('http://exs.lv/tmp/" . sanitize($foo->file_dst_name) . "','$title','user',NOW(),'$auth->ip','$auth->id')
+					('https://exs.lv/tmp/" . sanitize($foo->file_dst_name) . "','$title','user',NOW(),'$auth->ip','$auth->id')
 				");
 				set_flash('Attēls pievienots! Modi apskatīsies un ja būs OK, apstiprinās ;)', 'success');
 				redirect('/junk/add');

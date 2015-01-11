@@ -38,21 +38,7 @@ if ($mbs) {
 		$tpl->newBlock('miniblog-list-node');
 
 		$usr = get_user($mb->author);
-
-		if ($usr->avatar == '') {
-			$usr->avatar = 'none.png';
-		}
-		if ($usr->av_alt) {
-			$u_small_path = 'u_small';
-		} else {
-			$u_small_path = 'useravatar';
-		}
-
-		if ($auth->mobile) {
-			$av = 'http://m.exs.lv/av/' . $usr->avatar;
-		} else {
-			$av = 'http://exs.lv/dati/bildes/' . $u_small_path . '/' . $usr->avatar;
-		}
+		$av = get_avatar($usr, 's');
 
 		$url = mb_get_strid($mb->text, $mb->id);
 
@@ -71,7 +57,7 @@ if ($mbs) {
 	}
 
 	if ($lang == 1) {
-		$total = 100000;
+		$total = 1000;
 	} else {
 		$total = $db->get_var("
 			SELECT
@@ -93,3 +79,4 @@ if ($mbs) {
 		'pager-numeric' => $pager['pages']
 	));
 }
+

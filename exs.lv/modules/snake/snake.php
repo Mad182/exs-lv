@@ -1,6 +1,6 @@
 <?php
 
-if ($auth->ok && (isset($_GET['action']) && $_GET['action'] == 'push') && isset($_GET['score']) && ($_SERVER['HTTP_REFERER'] == 'http://exs.lv/Snake' OR $_SERVER['HTTP_REFERER'] == 'http://exs.lv/Snake/' OR $_SERVER['HTTP_REFERER'] == 'http://exs.lv/?c=355')) {
+if ($auth->ok && (isset($_GET['action']) && $_GET['action'] == 'push') && isset($_GET['score'])) {
 	$newscore = intval($_GET['score']);
 	$current = $db->get_row("SELECT * FROM gamescore WHERE game = 'snake' AND user_id = '$auth->id'");
 
@@ -33,3 +33,4 @@ if ($scores) {
 		));
 	}
 }
+

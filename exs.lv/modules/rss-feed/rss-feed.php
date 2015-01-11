@@ -1,21 +1,24 @@
 <?php
 
+/**
+ * RSS jaunumu (/rss)
+ */
 header('Content-type: text/xml; charset=utf-8');
 
 if ($lang == 3) {
 	$site_title = 'coding.lv jaunumi';
 	$site_description = 'Web programmēšanas forums';
-	$site_url = 'http://coding.lv/';
+	$site_url = 'https://coding.lv/';
 	$index_categories = array();
 } elseif ($lang == 5) {
 	$site_title = 'rp.exs.lv jaunumi';
 	$site_description = 'MTA:SA roleplay serveris';
-	$site_url = 'http://rp.exs.lv/';
+	$site_url = 'https://rp.exs.lv/';
 	$index_categories = array(948, 947);
 } else {
 	$site_title = 'exs.lv jaunumi';
 	$site_description = 'Spēļu portāls';
-	$site_url = 'http://exs.lv/';
+	$site_url = 'https://exs.lv/';
 	$index_categories = array(1, 81);
 }
 

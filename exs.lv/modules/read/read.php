@@ -1349,10 +1349,8 @@ if ($article) {
 
 		if (!empty($article->custom_ad) && $article->custom_ad == 'dateks') {
 			$tpl->newBlock('page-ad-dateks');
-		} else {
-			$tpl->newBlock('page-ad-google');
-			$tpl->newBlock('page-ad-google-bottom');
 		}
+
 	} else {
 		set_flash('Tev nav atļauts apskatīt šo sadaļu!', 'error');
 		redirect();

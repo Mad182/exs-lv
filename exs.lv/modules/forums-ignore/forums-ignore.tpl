@@ -10,7 +10,7 @@
 		<!-- START BLOCK : forum-item-->
 		<tr>
 			<td>
-				<a href="/{textid}"><img width="48" height="48" src="http://exs.lv/{icon}" alt="" /></a>
+				<a href="/{textid}"><img width="48" height="48" src="//exs.lv/{icon}" alt="" /></a>
 			</td>
 			<td>
 				<h3><a href="/{textid}">{title}</a></h3>
@@ -29,3 +29,4 @@
 		<input type="submit" name="submit-ignore" value="Saglabāt" class="button primary" />
 	</p>
 </form>
+

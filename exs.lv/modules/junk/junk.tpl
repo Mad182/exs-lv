@@ -60,10 +60,8 @@
 
 				<div class="c"></div>
 
-				{ad-728}
-
-				<p style="text-align: center;">{title}</p>
-				<p style="text-align: center;"><img src="//img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float: none;" alt="" /></p>
+				<p style="text-align:center">{title}</p>
+				<p style="text-align:center"><img src="//img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float:none" alt="" /></p>
 
 				<div class="c"></div>
 				<div style="padding: 5px 50px">

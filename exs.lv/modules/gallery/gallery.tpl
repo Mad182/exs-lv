@@ -152,7 +152,6 @@
 		</form>
 		<!-- END BLOCK : adm-edit-comment-->
 
-		{ad-468}
 	</div>
 	<!-- END BLOCK : user-gallery-->
 

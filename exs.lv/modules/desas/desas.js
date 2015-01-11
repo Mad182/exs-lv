@@ -52,7 +52,7 @@ function load_desas(url) {
 		}
 	});
 	if (timeout != true) {
-		desasRefreshId = setInterval("load_desas('http://exs.lv/desas_server?xmlhttprequest=true')", 1500);
+		desasRefreshId = setInterval("load_desas('/desas_server?xmlhttprequest=true')", 1500);
 	} else {
 		desas_timeout();
 	}

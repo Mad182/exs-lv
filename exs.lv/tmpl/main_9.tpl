@@ -230,7 +230,6 @@
                 <!-- END BLOCK : top-navig-hidden -->
 			</div>
 			<div id="header">
-				<div id="header-stuff">{ad-top}</div>
 				<a href="/">
 					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">                    
 						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
@@ -324,8 +323,6 @@
                         <!-- END BLOCK : page-path-->
                         <!-- START BLOCK : profile-menu-->
                         <h1>{user-nick}{user-menu-add}</h1>
-
-                        {ad-468}
 
                         <ul class="tabs">
                             <li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
@@ -469,8 +466,6 @@
                     <!-- END BLOCK : main-layout-right-->
                 </div>
                 <div class="c"></div>
-
-                {ad-bottom}
 
                 <div id="footer">
                     <div id="online-users">

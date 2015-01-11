@@ -4,23 +4,20 @@
 <p>{description}</p>
 <!-- END BLOCK : tags-description-->
 
-{ad-468}
-
 <!-- START BLOCK : tags-articles-->
 <h2>Raksti</h2>
 <ul class="taged blockhref mb-col" id="taged-articles">
 	<!-- START BLOCK : tags-articles-node-->
-	<li style="text-align:left;"><a href="{url}"><img src="http://exs.lv/dati/bildes/topic-av/{id}.jpg" class="av" alt="" /><strong>{title}</strong><span>no {author}</span><span style="color: #444;">{text}</span></a></li>
+	<li style="text-align:left;"><a href="{url}"><img src="//exs.lv/dati/bildes/topic-av/{id}.jpg" class="av" alt="" /><strong>{title}</strong><span>no {author}</span><span style="color:#444">{text}</span></a></li>
 	<!-- END BLOCK : tags-articles-node-->
 </ul>
 <!-- END BLOCK : tags-articles-->
-
 
 <!-- START BLOCK : tags-images-->
 <h2>Attēli</h2>
 <p class="taged imgs" style="padding:10px">
 	<!-- START BLOCK : node-img-->
-	<a href="/gallery/{uid}/{id}"><img src="http://img.exs.lv/{thb}" alt="Attēls {title}" /></a>
+	<a href="/gallery/{uid}/{id}"><img src="{static-server}/{thb}" alt="Attēls {title}" /></a>
 	<!-- END BLOCK : node-img-->
 </p>
 <div class="c"></div>
@@ -50,3 +47,4 @@
 <h2>Nejauši tagi</h2>
 {out}
 <!-- END BLOCK : tags-rand-->
+

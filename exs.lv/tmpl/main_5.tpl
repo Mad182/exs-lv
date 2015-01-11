@@ -222,8 +222,6 @@
 					</div>
 					<div class="c"></div>
 
-					{ad-728}
-
 					<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 				</div>
 			</div>

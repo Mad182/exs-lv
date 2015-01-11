@@ -33,7 +33,7 @@ if (isset($_GET['var1'])) {
 
 		$db->query("INSERT INTO `visits` (`user_id`,`site_id`,`ip`,`lastseen`) VALUES ('$newid','$lang','$auth->ip',NOW())");
 
-		$greet = '<h3>Čau!</h3><p>Sveicu Tevi ar pievienošanos ' . $_SERVER['HTTP_HOST'] . ' lietotāju pulkam!</p><p>Ceru uz Tavu aktivitāti mūsu komūnā.<br />Ja rodas kādas neskaidrības, apskaties <a href="http://exs.lv/read/buj">biežāk uzdotos jautājumus</a> vai arī droši jautā mums - administratoriem un moderatoriem (visi ar sarkaniem vai ziliem nikiem).</p><p>Lai Tev laba diena! :mjau:</p><p style="font-size:90%;color:#888">Šī ziņa ir nosūtīta automātiski.</p>';
+		$greet = '<h3>Čau!</h3><p>Sveicu Tevi ar pievienošanos ' . $_SERVER['HTTP_HOST'] . ' lietotāju pulkam!</p><p>Ceru uz Tavu aktivitāti mūsu komūnā.<br />Ja rodas kādas neskaidrības, apskaties <a href="//exs.lv/read/buj">biežāk uzdotos jautājumus</a> vai arī droši jautā mums - administratoriem un moderatoriem (visi ar sarkaniem vai ziliem nikiem).</p><p>Lai Tev laba diena! :mjau:</p><p style="font-size:90%;color:#888">Šī ziņa ir nosūtīta automātiski.</p>';
 
 		//send private message and add notification
 		$db->query("INSERT INTO pm (from_uid,to_uid,date,ip,title,text,is_read) VALUES ('1','$newid',NOW(),'127.0.0.1','Čau! Tikko piereģistrējies!? :)','$greet','0')");

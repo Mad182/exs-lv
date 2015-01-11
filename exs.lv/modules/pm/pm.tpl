@@ -1,8 +1,6 @@
 <!-- START BLOCK : pm-menu-->
 <h1>{pm-top-title}</h1>
 
-{ad-468}
-
 <ul class="tabs nav nav-tabs nav-justified">
 	<li class="{inbox-active}"><a title="Saņemtās vēstules" href="/pm" class="{inbox-active}"><span class="inbox">Saņemtās</span></a></li>
 	<li class="{outbox-active}"><a title="Sūtītās vēstules" href="/pm/sent" class="{outbox-active}"><span class="outbox">Sūtītās</span></a></li>

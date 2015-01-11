@@ -1,8 +1,6 @@
 <!-- START BLOCK : csservlist-->
-<a style="float: right;font-weight: bold;padding: 3px;margin:3px;" href="http://exs.lv/cs_servera_monitors/">Pievienot serveri&nbsp;&raquo;</a>
+<a style="float: right;font-weight: bold;padding: 3px;margin:3px" href="http://exs.lv/cs_servera_monitors/">Pievienot serveri&nbsp;&raquo;</a>
 <h1>Latvijas Counter-Strike serveri</h1>
-
-{ad-728}
 
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- START BLOCK : csserver-->
@@ -20,8 +18,6 @@
 
 <!-- START BLOCK : csview-->
 <h1>Server: {title}</h1>
-
-{ad-728}
 
 <div style="float:left;width:150px;padding:10px 0">
 	<iframe src="http://exs.lv/server.php?s={uid}&amp;color=333333&amp;bgcolor=FFFFFF&amp;padding=0&amp;players=true" hspace="0" vspace="0" border="0" frameborder="0" scrolling="no" width="150" height="640"></iframe>

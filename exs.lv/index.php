@@ -72,7 +72,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 }
 
 if ($auth->ok && $lang == 1 && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'interests') && empty($_POST) && !isset($_GET['_']) && !$db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")) {
-	redirect('/interests');
+	//redirect('/interests');
 }
 
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
@@ -387,31 +387,6 @@ if ($use_bootstrap) {
 	}
 	$tpl->assignGlobal('content_cols', $content_cols);
 }
-
-
-//reklāmas
-$ads_type = '_adsense';
-if (!empty($disable_adsense)) {
-	$ads_type = '';
-}
-if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl')) {
-	$tpl->assignGlobal('ad-468', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_468' . $ads_type . '.tpl'));
-}
-if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl')) {
-	$tpl->assignGlobal('ad-728', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728' . $ads_type . '.tpl'));
-}
-if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl') 
-	&& !in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
-	$tpl->assignGlobal('ad-top', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_top' . $ads_type . '.tpl'));
-}
-if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl')) {
-	$tpl->assignGlobal('ad-bottom', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_bottom' . $ads_type . '.tpl'));
-}
-//reklāma sidebarā tikai nereģistrētajiem, googles apmeklētājiem
-if (!$auth->ok && file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_left' . $ads_type . '.tpl')) {
-	$tpl->assignGlobal('ad-left', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_left' . $ads_type . '.tpl'));
-}
-
 
 if (!empty($pagepath) && $skin === 'main') {
 	$tpl->newBlock('page-path');

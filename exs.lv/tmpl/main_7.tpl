@@ -89,7 +89,6 @@
 		<div id="wrapper">
 			<div id="header">
 				<div id="logo">
-					<div id="header-stuff">{ad-top}</div>
 					<div id="tools-bar">
 						<ul id="site-links">
 							<li><a href="https://exs.lv/">exs.lv community</a></li>
@@ -200,8 +199,6 @@
 					<!-- END BLOCK : page-path-->
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
-
-					{ad-468}
 
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
@@ -404,8 +401,6 @@
 			</div>
 			<!-- END BLOCK : main-layout-right-->
 			<div class="c"></div>
-
-			{ad-bottom}
 
 			<div id="footer">
 				<div id="online-users">

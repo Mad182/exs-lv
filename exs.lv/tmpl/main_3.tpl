@@ -309,8 +309,6 @@
 					</div>
 					<div class="c"></div>
 
-					<div class="content-block">{ad-728}</div>
-
 					<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
 
 				</div>

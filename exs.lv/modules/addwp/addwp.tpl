@@ -6,7 +6,7 @@
 		<legend>Pievienot jaunu attēlu</legend>
 		<p>
 			<label for="new-image">Bilde:</label><br />
-		<ul id="wallpapers-external" style="display: none;"></ul>
+		<ul id="wallpapers-external" style="display:none"></ul>
 		<small><a href="#" data-addwp-action="load-external" data-target="#wallpapers-external" data-resource="/wallpaper_admin/catsite.json">Ielādēt ārējo resursu attēlus</a></small>
 		<input type="file" name="new-image" id="new-image" />
 		</p>
@@ -20,8 +20,9 @@
 
 <ul id="wallpapers">
 	<!-- START BLOCK : wallpaper-->
-	<li><a href="http://exs.lv/dati/wallpapers/{image}"><img src="http://exs.lv/dati/wallpapers/thb/{image}" alt="dienas ekrāntapete" /><span{style}>{date}</span></a></li>
+	<li><a href="//exs.lv/dati/wallpapers/{image}"><img src="//exs.lv/dati/wallpapers/thb/{image}" alt="dienas ekrāntapete" /><span{style}>{date}</span></a></li>
 	<!-- END BLOCK : wallpaper-->
 </ul>
 <div class="c"></div>
 <!-- END BLOCK : add-wp-form-->
+

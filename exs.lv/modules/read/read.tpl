@@ -130,13 +130,9 @@
 	<!-- END BLOCK : title-lv-->
 </h1>
 
-<!-- START BLOCK : page-ad-google-->
-{ad-468}
-<!-- END BLOCK : page-ad-google-->
-
 <!-- START BLOCK : page-ad-dateks-->
 <div class="content-block">
-	<script type="text/javascript" src="http://affiliate.dateks.lv/scripts/banner.php?a_aid=view&amp;a_bid=8872f56e"></script>
+	<script type="text/javascript" src="https://affiliate.dateks.lv/scripts/banner.php?a_aid=view&amp;a_bid=8872f56e"></script>
 </div>
 <!-- END BLOCK : page-ad-dateks-->
 
@@ -191,11 +187,6 @@
 	<p>&nbsp;</p>
 	<!-- END BLOCK : movie-info-->
 	{article-text}
-
-	<!-- START BLOCK : page-ad-google-bottom-->
-	<!--<div class="c"></div>
-	{disabled-ad-468} --!>
-	<!-- END BLOCK : page-ad-google-bottom-->
 
 </div>
 <!-- START BLOCK : post-stags-->

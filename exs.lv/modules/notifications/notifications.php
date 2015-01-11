@@ -42,14 +42,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 					echo '	<channel>', "\n";
 
 					echo '		<title>' . htmlspecialchars($user->nick . ' notifikācijas') . '</title>', "\n";
-					echo '		<link>http://exs.lv/user/' . $user->id . '</link>', "\n";
+					echo '		<link>https://exs.lv/user/' . $user->id . '</link>', "\n";
 					echo '		<description>Jaunākais ' . htmlspecialchars($user->nick) . ' profilā</description>', "\n";
 					echo '		<language>lv</language>', "\n";
 
 					foreach ($notify as $notify) {
 
 						$dom = '';
-						$domain = 'http://' . $config_domains[$notify->lang]['domain'];
+						$domain = 'https://' . $config_domains[$notify->lang]['domain'];
 						if ($notify->lang != $lang) {
 							$dom = ' (' . $config_domains[$notify->lang]['domain'] . ')';
 						}
@@ -114,7 +114,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 					foreach ($notify as $notify) {
 
-						$domain = 'http://' . $config_domains[$notify->lang]['domain'];
+						$domain = 'https://' . $config_domains[$notify->lang]['domain'];
 
 						if ($notify->type == 5 || $notify->type == 6) {
 							$notify->url = '/friends/' . $notify->user_id;
@@ -179,3 +179,4 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 	echo 'err: no format';
 	exit;
 }
+

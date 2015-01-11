@@ -1,7 +1,7 @@
 <h1>Kļūda 404 - pieprasītā lapa nav atrasta!</h1>
 <div id="full-story">
 	<p>Fails, kuru Tu mēģini apskatīt netika atrasts!</p>
-	<p style="text-align: center;"><img src="http://exs.lv/bildes/404kitten.jpg" alt="" /><br /></p>
+	<p style="text-align: center;"><img src="{static-server}/bildes/404kitten.jpg" alt="" /><br /></p>
 	<p>Saite, uz kuras Tu nospiedi ir nederīga, vai arī neesi ierakstījis pareizu adresi! Ja uzskati, ka tā ir mūsu kļūda, sazinies ar adminu rakstot uz info@exs.lv, bet viņš šo meilu parasti tā pat nelasa.</p>
 
 	<form class="form" action="/search/" id="cse-search-box" method="get">

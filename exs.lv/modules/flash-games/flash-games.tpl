@@ -33,8 +33,6 @@
 	<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fexs.lv%2F{category-url}%2F{slug}&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="overflow:hidden; width:100px; height:20px; border: 0;margin:0;" allowTransparency="true"></iframe>
 </div>
 
-{ad-728}
-
 <!-- START BLOCK : games-edit-->
 <h1>Labot spēli</h1>
 <form class="form" action="" method="post">
