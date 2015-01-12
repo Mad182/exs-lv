@@ -1,16 +1,3 @@
-## Administrācijas rīki ##
-
-### PHPMyAdmin###
-https://secure.exs.lv/pmaexs/
-
-Lai piekļūtu phpmyadmin, IP adresei jābūt ieraksītai *developer_ips.php* failā!
-
-###Munin serveru monitorings###
-https://secure.exs.lv/munin/
-
-* Lietotājs: exs
-* Parole: ZebraLAIF
-
 ## Uzstādīšana ##
 
 ### mysql imports: ###
