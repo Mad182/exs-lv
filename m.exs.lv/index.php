@@ -54,14 +54,9 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 
 	$tpl->assignGlobal(array(
-		'server-name' => htmlspecialchars(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
-		'page-loginurl' => $login_url,
-		'page-title' => $page_title,
-		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
-		'current-year' => date('Y'),
 		'xsrf' => $auth->xsrf,
-		'static-server' => $static_server
 	));
+
 } else {
 
 	//banoto lietotāju saraksts
@@ -170,17 +165,10 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 
 	$tpl->assignGlobal(array(
-		'server-name' => htmlspecialchars(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
-		'page-title' => $page_title,
-		'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
 		'currentuser-nick' => htmlspecialchars($auth->nick),
-		'current-year' => date('Y'),
 		'new-messages' => $new_msg_string,
 		'currentuser-id' => $auth->id,
 		'currentuser-avatar' => $auth->avatar,
-		'timestamp' => time(),
-		'static-server' => $static_server,
-		'img-server' => $img_server,
 		'logout-hash' => $auth->logout_hash
 	));
 
@@ -198,6 +186,16 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		}
 	}
 }
+
+$tpl->assignGlobal(array(
+	'server-name' => htmlspecialchars(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
+	'page-title' => $page_title,
+	'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
+	'current-year' => date('Y'),
+	'timestamp' => time(),
+	'static-server' => $static_server,
+	'img-server' => $img_server,
+));
 
 /* flash error or success message */
 if (!empty($_SESSION['flash_message'])) {
