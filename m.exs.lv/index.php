@@ -30,8 +30,18 @@ $site_access = get_site_access();
 
 $auth = new Auth();
 
+//login
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
+
+	if ($auth->error === 1) {
+		set_flash('Nepareizs niks vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
+	}
+
+	if ($auth->ok === true) {
+		update_karma($auth->id);
+	}
+
 }
 
 if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_GET['viewcat'] != 'forgot-password'))) {

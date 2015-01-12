@@ -1427,7 +1427,7 @@ blockquote, .q, .quote {
 
 /* flash message */
 #flash-message {
-	margin: 5px;
+	margin: 8px 0;
 }
 
 #flash-message p {
@@ -1435,6 +1435,24 @@ blockquote, .q, .quote {
 	margin: 2px 0;
 	line-height: 14px;
 	border-width: 1px;
+}
+
+#flash-message.success {
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+}
+
+#flash-message.warning {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+
+#flash-message.error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
 }
 
 #close-flash-message {
