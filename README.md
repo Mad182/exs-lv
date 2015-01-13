@@ -7,17 +7,19 @@
 
 ### mysql imports: ###
 
-    mysql -u exs -p exs < schema.sql
-    mysql -u exs -p exs < cat.sql
+    mysql -u exs -p exs < dev-draza/schema.sql
+    mysql -u exs -p exs < dev-draza/cat.sql
 
 
 ### mysql/smtp/memcache konfigurācija:
 
-~/exs-lv/exs.lv/configdb.php
+    cp exs.lv/configdb.php.sample exs.lv/configdb.php
+
+exs.lv/configdb.php
 obligāti jānorāda mysql, memcache konfigs un ceļi:
 
-* CORE_PATH uz exs.lv folderi, 
-* LIB_PATH uz libs folderi.
+* CORE_PATH uz exs.lv folderi
+* LIB_PATH uz libs folderi
 
 
 ### Kas vajadzīgs, lai lapa būtu palaižama ###
