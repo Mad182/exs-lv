@@ -1,6 +1,6 @@
 ## Uzstādīšana ##
 
-### lejupielādē srouces ###
+### lejupielādē sources ###
 
     git clone git@bitbucket.org:mad182/exs-lv.git && cd exs-lv
     git submodule init && git submodule update
@@ -15,6 +15,7 @@
 
 ~/exs-lv/exs.lv/configdb.php
 obligāti jānorāda mysql, memcache konfigs un ceļi:
+
 * CORE_PATH uz exs.lv folderi, 
 * LIB_PATH uz libs folderi.
 
