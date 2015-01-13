@@ -15,8 +15,7 @@
 
     cp exs.lv/configdb.php.sample exs.lv/configdb.php
 
-exs.lv/configdb.php
-obligāti jānorāda mysql, memcache konfigs un ceļi:
+Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūtie ceļi uz failiem:
 
 * CORE_PATH uz exs.lv folderi
 * LIB_PATH uz libs folderi
@@ -45,16 +44,15 @@ Nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dz
 ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
 
-## Arch ##
+## Nepieciešamo programmu uzstādīšana ##
+
+### Arch ###
 
     sudo pacman -Su apache php php-apache php-gd php-memcache mariadb imagemagick memcached
-    cd
-    mkdir projects && cd projects
-
-Turpināt ar db/Apache2 iestatījumiem (vienkāršākais - LIB_PATH, CORE_PATH iekš httpd.conf ar SetEnv)
 
 
-## OSX
+### PHP/MySQL uzstādīšana uz OSX ###
+
 Install homebrew
 
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
