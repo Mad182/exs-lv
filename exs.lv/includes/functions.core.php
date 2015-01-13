@@ -650,11 +650,9 @@ function mkslug($string, $lower = true, $remove_dashes = true) {
 	$allowed = "/[^a-z0-9\\-\\_\\\\]/i";
 	$string = preg_replace($allowed, '', $string);
 
-	//remove repeated dashes
-	$string = preg_replace('/-+/', '-', $string);
-
-	//remove dashes from ends of string
+	//remove dashes
 	if ($remove_dashes) {
+		$string = preg_replace('/-+/', '-', $string);
 		$string = trim($string, '-');
 	}
 
