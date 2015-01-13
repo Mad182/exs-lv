@@ -1,5 +1,10 @@
 ## Uzstādīšana ##
 
+### lejupielādē srouces ###
+
+    git clone git@bitbucket.org:mad182/exs-lv.git && cd exs-lv
+    git submodule init && git submodule update
+
 ### mysql imports: ###
 
     mysql -u exs -p exs < schema.sql
@@ -42,8 +47,6 @@ ip adreses un viss pārējais tiek redirektēts uz exs.lv
     sudo pacman -Su apache php php-apache php-gd php-memcache mariadb imagemagick memcached
     cd
     mkdir projects && cd projects
-    git clone git@github.com:Mad182/exs-lv.git exs && cd exs
-    git submodule init && git submodule update
 
 Turpināt ar db/Apache2 iestatījumiem (vienkāršākais - LIB_PATH, CORE_PATH iekš httpd.conf ar SetEnv)
 
