@@ -2474,7 +2474,7 @@ function lastfm_update_tracks($user_id) {
 
 	$user = get_user($user_id);
 
-	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-120) {
+	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-100) {
 		return false;
 	}
 
@@ -2509,7 +2509,7 @@ function lastfm_update_tracks($user_id) {
 
 		foreach($tracks as $track) {
 
-			$db->query("INSERT INTO `lastfm_tracks` (`id`, `user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES (NULL, $user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
+			$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES ($user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
 
 		}
 
