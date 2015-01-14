@@ -1,17 +1,24 @@
 ## Uzstādīšana ##
 
+### lejupielādē sources ###
+
+    git clone git@bitbucket.org:mad182/exs-lv.git && cd exs-lv
+    git submodule init && git submodule update
+
 ### mysql imports: ###
 
-    mysql -u exs -p exs < schema.sql
-    mysql -u exs -p exs < cat.sql
+    mysql -u exs -p exs < dev-draza/schema.sql
+    mysql -u exs -p exs < dev-draza/cat.sql
 
 
 ### mysql/smtp/memcache konfigurācija:
 
-~/exs-lv/exs.lv/configdb.php
-obligāti jānorāda mysql, memcache konfigs un ceļi:
-* CORE_PATH uz exs.lv folderi, 
-* LIB_PATH uz libs folderi.
+    cp exs.lv/configdb.php.sample exs.lv/configdb.php
+
+Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūtie ceļi uz failiem:
+
+* CORE_PATH uz exs.lv folderi
+* LIB_PATH uz libs folderi
 
 
 ### Kas vajadzīgs, lai lapa būtu palaižama ###
@@ -37,18 +44,15 @@ Nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dz
 ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
 
-## Arch ##
+## Nepieciešamo programmu uzstādīšana ##
+
+### Arch ###
 
     sudo pacman -Su apache php php-apache php-gd php-memcache mariadb imagemagick memcached
-    cd
-    mkdir projects && cd projects
-    git clone git@github.com:Mad182/exs-lv.git exs && cd exs
-    git submodule init && git submodule update
-
-Turpināt ar db/Apache2 iestatījumiem (vienkāršākais - LIB_PATH, CORE_PATH iekš httpd.conf ar SetEnv)
 
 
-## OSX
+### PHP/MySQL uzstādīšana uz OSX ###
+
 Install homebrew
 
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
