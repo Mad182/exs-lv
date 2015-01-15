@@ -184,8 +184,24 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 			//remove image, comments and rating, unlink image file
 			if ((isset($_GET['mode']) && $_GET['mode'] == 'delete') && ($auth->ok && $auth->id == $inprofile->id or $auth->ok && ($auth->level == 1 or $auth->level == 2)) && check_token('delete', $_GET['token'])) {
+                
+                // jāiziet cauri visiem attēla komentāriem un jāarhivē arī sūdzības,
+                // ja tādas par kādu no tiem bijušas
+                $img_comments = array();
+                $comments = $db->get_results("SELECT `id` FROM `galcom` WHERE `bid` = '$image->id'");
+                if ($comments) {
+                    foreach ($comments as $comment) {
+                        $img_comments[] = $comment->id;
+                    }
+                }
+                if (!empty($img_comments)) {
+                    $img_comments = implode(',', $img_comments);
+                    $db->query("UPDATE `reports` SET `archived` = 1 WHERE `type` = 2 AND `entry_id` IN(".$img_comments.")");
+                }
+                
 				$db->query("DELETE FROM `images` WHERE `id` = '$image->id' LIMIT 1");
 				$db->query("DELETE FROM `galcom` WHERE `bid` = '$image->id'");
+                
 				if ($inprofile->id != '18696') { //gamevision bildes nedzēšam
 					@unlink($image->url);
 					@unlink($image->thb);
