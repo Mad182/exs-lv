@@ -344,8 +344,17 @@ if ($auth->skin == 1 && $lang == 1 && !$use_bootstrap) {
 	$add_css .= ',dark.css';
 }
 
-$new_reports_count = $db->get_var("SELECT count(*) FROM `reports` WHERE `archived` = '0' AND `site_id` = $lang ");
-$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
+if (im_mod()) {
+    // TODO: tā kā attēli no galerijām var tikt brutāli dzēsti, nepieciešama pārbaude,
+    // vai, ja ziņots par galeriju komentāru, tāds vēl eksistē.
+    $new_reports_count = $db->get_var("
+        SELECT count(*) FROM `reports`
+        WHERE `reports`.`archived` = 0 AND `reports`.`site_id` = $lang AND `reports`.`removed` = 0
+    ");
+    $new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
+} else {
+    $new_reports_count = 0;
+}
 
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
