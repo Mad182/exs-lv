@@ -279,10 +279,10 @@
 					</div>
 
 					<!-- START BLOCK : dateks-ads-->
-					<!--<h3>Jaunākie piedāvājumi no dateks.lv</h3>
+					<h3>Jaunākie piedāvājumi no dateks.lv</h3>
 					<div class="box" id="dateks">
 						{out}
-					</div>-->
+					</div>
 					<!-- END BLOCK : dateks-ads-->
 
 					<h3>CS:GO monitors</h3>
@@ -392,15 +392,22 @@
 							<!-- START BLOCK : profilebox-warn-->
 							<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
 							<!-- END BLOCK : profilebox-warn-->
+
 							<!-- START BLOCK : profilebox-blog-link-->
 							<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
 							<!-- END BLOCK : profilebox-blog-link-->
+
 							<!-- START BLOCK : profilebox-twitter-link-->
 							<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
 							<!-- END BLOCK : profilebox-twitter-link-->
+
 							<!-- START BLOCK : profilebox-yt-link-->
 							<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
 							<!-- END BLOCK : profilebox-yt-link-->
+
+							<!-- START BLOCK : profilebox-lastfm-link-->
+							<a rel="nofollow" href="http://www.last.fm/user/{name}" id="l-lastfm">{name}</a><br />
+							<!-- END BLOCK : profilebox-lastfm-link-->
 						</div>
 						<div class="c"></div>
 					</div>
