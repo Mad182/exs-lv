@@ -10,7 +10,7 @@ class mdb extends mysqli {
 
 	function __construct($username, $password, $database, $hostname = 'localhost') {
 
-		//atslēdzam error reporting, lai ignorētu 
+		//atslēdzam error reporting, lai ignorētu
 		//"client library minor version mismatch" paziņojumu
 		//lietojot MariaDB 10
 		$err_level = error_reporting(0);

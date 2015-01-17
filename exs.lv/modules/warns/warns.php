@@ -108,6 +108,34 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				//pielikt & labot
 				$tpl->newBlock('warns-edit');
 
+                if(isset($_GET['var2']) && $_GET['var2'] == 'commentid'){
+                    $id = sanitize($_GET['var3']);
+
+                    $commentinfo = $db->get_row("SELECT parent,id,lang,groupid,type,text FROM miniblog WHERE id = $id");
+                    $parent = $commentinfo->parent;
+                    $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+                    $check = $body->author;
+                    $title = mb_get_title(stripslashes($body->text));
+                    $strid = mb_get_strid($title, $commentinfo->parent);
+
+                    if($commentinfo->groupid > 0){
+                        $url = '/group/' . $commentinfo->groupid . '/forum/' . base_convert($commentinfo->parent, 10, 36);
+                    }else{
+                        $url = '/say/' . $check . '/' . $parent . '-' . $strid;
+                    }
+                    if($commentinfo->type == 'junk'){
+                        $url = '/junk/'.$commentinfo->parent;
+                    }
+
+                    $reason = substr(strip_tags($commentinfo->text), 0, 1000);
+                    if (strlen(strip_tags($commentinfo->text)) > 1000){
+                        $reason.=" ... \r\n \r\n Tālāk lasi avotā.";
+                    }
+                    $reason = '<blockquote>'.$reason.'</blockquote>';
+
+                    $tpl->assign('reason', $reason.'Avots: '.get_protocol($commentinfo->lang).get_domain($commentinfo->lang).$url.'#m'.$id.'');
+                }
+
 				$edit = false;
 				if (isset($_GET['var2']) && $_GET['var2'] == 'edit') {
 					$editable = (int) $_GET['var3'];

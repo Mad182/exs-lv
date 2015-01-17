@@ -118,7 +118,7 @@ if (!$auth->ok) {
 		$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
 
 		$mailer = Swift_Mailer::newInstance($transport);
-		$message = Swift_Message::newInstance();
+		$message = Swift_Message::newInstance()->setCharset('UTF-8');
 		$message->setSubject('Reģistrācija portālā ' . $_SERVER['HTTP_HOST']);
 		$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
 		$message->setTo(stripslashes($regdata['mail']));

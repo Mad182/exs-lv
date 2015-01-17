@@ -71,10 +71,6 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 }
 
-if ($auth->ok && $lang == 1 && (!isset($_GET['viewcat']) || $_GET['viewcat'] != 'interests') && empty($_POST) && !isset($_GET['_']) && !$db->get_var("SELECT `interest_quiz` FROM `users` WHERE `id` = '$auth->id'")) {
-	//redirect('/interests');
-}
-
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
 if ($auth->ok === true) {
 	if ($new_messages = $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = " . $auth->id . " AND `is_read` = 0")) {
@@ -108,14 +104,6 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 	}
 	echo json_encode($data);
 	exit;
-}
-
-//lai testētu jauno layoutu
-$use_bootstrap = false;
-$bootstrap_cache_key = '';
-if (false && $auth->id == 1 && $lang == 1) {
-	$use_bootstrap = true;
-	$bootstrap_cache_key = '_bootstrap';
 }
 
 //banoto lietotāju saraksts
@@ -158,10 +146,6 @@ if ($lang !== 1 && $skin === 'main') {
 	$loadskin = $skin . '_' . $lang;
 }
 
-if ($use_bootstrap) {
-	$loadskin = 'bootstrapped';
-}
-
 $tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
 $tpl->assignInclude('module-core-error', CORE_PATH . '/modules/core/error.tpl');
 
@@ -193,9 +177,9 @@ if (isset($_GET['u'])) {
 
 			$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
-			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module . $bootstrap_cache_key)) === false || $debug === true) {
+			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
 				$tpl->prepare();
-				$m->set('tpl_' . $lang . '_' . $category->module . $bootstrap_cache_key, $tpl, false, 3600);
+				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, false, 3600);
 			} else {
 				$tpl = $tpl2;
 				unset($tpl2);
@@ -228,15 +212,15 @@ if (isset($_GET['u'])) {
 			exit;
 		}
 	} else {
-	
+
 		//mēģinam apskatīties vai šāda sadaļa neeksistē citā domēnā, ja eksistē - redirekts
 		if (isset($_GET['viewcat'])) {
-			$cat = $db->get_row("SELECT `textid`, `lang` FROM `cat` WHERE `textid` = '".sanitize($_GET['viewcat'])."' ORDER BY `id` ASC LIMIT 1");
+			$cat = $db->get_row("SELECT `textid`, `lang` FROM `cat` WHERE `textid` = '" . sanitize($_GET['viewcat']) . "' ORDER BY `id` ASC LIMIT 1");
 			if (!empty($cat)) {
-				redirect(get_protocol($cat->lang) . $config_domains[$cat->lang]['domain'] . '/' . $cat->textid, true);	
+				redirect(get_protocol($cat->lang) . $config_domains[$cat->lang]['domain'] . '/' . $cat->textid, true);
 			}
 		}
-	
+
 		// 404
 		// android.exs.lv nepatīk redirekti :(
 		if ($lang === 2) {
@@ -297,7 +281,7 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 }
 
 //Latvijas valsts svētki
-if(in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
+if (in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
 	$persona = ' style="background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 0 0;background-size:cover;"';
 }
 
@@ -340,12 +324,20 @@ if (!empty($secure_login)) {
 	$login_url = htmlspecialchars('https://secure.exs.lv/');
 }
 
-if ($auth->skin == 1 && $lang == 1 && !$use_bootstrap) {
+if ($auth->skin == 1 && $lang == 1) {
 	$add_css .= ',dark.css';
 }
 
-$new_reports_count = $db->get_var("SELECT count(*) FROM `reports` WHERE `archived` = '0' AND `site_id` = $lang ");
-$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
+// noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
+if (im_mod()) {
+	$new_reports_count = $db->get_var("
+        SELECT count(*) FROM `reports`
+        WHERE `archived` = 0 AND `site_id` = $lang AND `removed` = 0
+    ");
+	$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
+} else {
+	$new_reports_count = 0;
+}
 
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
@@ -377,16 +369,6 @@ $tpl->assignGlobal(array(
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash
 ));
-
-if ($use_bootstrap) {
-	$content_cols = 6;
-	if ($tpl_options == 'no-left' || $tpl_options == 'no-right') {
-		$content_cols = 9;
-	} elseif ($tpl_options == 'no-left-right') {
-		$content_cols = 12;
-	}
-	$tpl->assignGlobal('content_cols', $content_cols);
-}
 
 if (!empty($pagepath) && $skin === 'main') {
 	$tpl->newBlock('page-path');
@@ -523,7 +505,7 @@ if ($lang === 1 && !$auth->ok) {
 
 $tpl->printToScreen();
 
-if ($debug && !$requested_json && !$use_bootstrap) {
+if ($debug && !$requested_json) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
 	echo '<div><a id="debug-details-trigger" href="#" style="float:right;color: #ccf;">detaļas &raquo;</a>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';

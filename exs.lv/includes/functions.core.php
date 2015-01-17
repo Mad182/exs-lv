@@ -157,7 +157,7 @@ if (!function_exists('http_response_code')) {
 /**
  *  Atgriež objektu ar atvērtā moduļa template failu
  *
- *  Noder reizēs, kad ajax pieprasījumam jāatgriež html saturs. To var 
+ *  Noder reizēs, kad ajax pieprasījumam jāatgriež html saturs. To var
  *  izveidot no tā paša moduļa template, nevis cieti iekodēt.
  */
 function fetch_tpl() {
@@ -1585,6 +1585,11 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 
+            //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
+            if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
+                $out .= '<a href="/warns/'.$val->author.'/commentid/'.$val->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
+            }
+
 			$out .= '</p>';
 			if ($val->mb_removed == 1) {
 				$out .= '<p class="deleted-entry">Saturs dzēsts!';
@@ -2474,7 +2479,7 @@ function lastfm_update_tracks($user_id) {
 
 	$user = get_user($user_id);
 
-	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-120) {
+	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-100) {
 		return false;
 	}
 
@@ -2509,7 +2514,7 @@ function lastfm_update_tracks($user_id) {
 
 		foreach($tracks as $track) {
 
-			$db->query("INSERT INTO `lastfm_tracks` (`id`, `user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES (NULL, $user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
+			$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES ($user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
 
 		}
 
