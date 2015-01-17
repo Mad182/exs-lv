@@ -3,7 +3,7 @@ ErrorDocument 403 /index.php?c=241
 
 Options +FollowSymlinks
 RewriteEngine on
-#RewriteBase /
+RewriteBase /
 
 RewriteRule ^js/(.*\.js) combine.php?type=javascript&files=$1
 RewriteRule ^css/(.*\.css) combine.php?type=css&files=$1

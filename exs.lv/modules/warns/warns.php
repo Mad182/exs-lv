@@ -108,8 +108,8 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				//pielikt & labot
 				$tpl->newBlock('warns-edit');
 
-                if(isset($_GET['commentid'])){
-                    $id = sanitize($_GET['commentid']);
+                if(isset($_GET['var2']) && $_GET['var2'] == 'commentid'){
+                    $id = sanitize($_GET['var3']);
 
                     $commentinfo = $db->get_row("SELECT parent,id,lang FROM miniblog WHERE id = $id");
                     $parent = $commentinfo->parent;
