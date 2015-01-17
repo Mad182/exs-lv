@@ -108,6 +108,31 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				//pielikt & labot
 				$tpl->newBlock('warns-edit');
 
+                if(isset($_GET['commentid'])){
+                    $id = sanitize($_GET['commentid']);
+
+                    $commentinfo = $db->get_row("SELECT parent,id,lang FROM miniblog WHERE id = $id");
+                    $parent = $commentinfo->parent;
+                    $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+                    $check = $body->author;
+                    $title = mb_get_title(stripslashes($body->text));
+                    $strid = mb_get_strid($title, $commentinfo->parent);
+                    $url = '/say/' . $check . '/' . $parent . '-' . $strid;
+
+                    //lang - 1, 7, 9 ---> exs.lv, lol.exs.lv, runescape.exs.lv
+                    switch ($commentinfo->lang){
+                        case 1:
+                            $sub = '';
+                            break;
+                        case 7:
+                            $sub = 'lol.';
+                            break;
+                        case 9:
+                            $sub = 'runescape.';
+                    }
+                    $tpl->assign('reason', 'http://'.$sub.'exs.lv'.$url.'#m'.$id.'');
+                }
+
 				$edit = false;
 				if (isset($_GET['var2']) && $_GET['var2'] == 'edit') {
 					$editable = (int) $_GET['var3'];

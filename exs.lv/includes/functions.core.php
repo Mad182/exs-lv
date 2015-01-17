@@ -157,7 +157,7 @@ if (!function_exists('http_response_code')) {
 /**
  *  Atgriež objektu ar atvērtā moduļa template failu
  *
- *  Noder reizēs, kad ajax pieprasījumam jāatgriež html saturs. To var 
+ *  Noder reizēs, kad ajax pieprasījumam jāatgriež html saturs. To var
  *  izveidot no tā paša moduļa template, nevis cieti iekodēt.
  */
 function fetch_tpl() {
@@ -1584,6 +1584,11 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
 				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
+
+            //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
+            if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
+                $out .= '<a href="/warns/'.$val->author.'?commentid='.$val->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
+            }
 
 			$out .= '</p>';
 			if ($val->mb_removed == 1) {

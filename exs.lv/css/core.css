@@ -3993,6 +3993,10 @@ li.view_more {
 	color: #933;
 }
 
+.post-warn {
+    color: #fc850d;
+}
+
 .deleted-entry {
 	padding: 5px 15px;
 	font-size: 11px;
