@@ -1587,7 +1587,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 
             //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
             if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
-                $out .= '<a href="/warns/'.$val->author.'?commentid='.$val->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
+                $out .= '<a href="/warns/'.$val->author.'/commentid/'.$val->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
             }
 
 			$out .= '</p>';

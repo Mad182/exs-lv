@@ -20,7 +20,7 @@ class mdb extends mysqli {
 		 * atkomentē šo rindu ja tiek darbināts uz servera
 		 * kur mysql nav utf-8 savienojums pēc noklusējuma
 		 */
-		$this->query("set names utf8");
+		//$this->query("set names utf8");
 	}
 
 	function query($query = null) {

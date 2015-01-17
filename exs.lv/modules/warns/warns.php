@@ -118,19 +118,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
                     $title = mb_get_title(stripslashes($body->text));
                     $strid = mb_get_strid($title, $commentinfo->parent);
                     $url = '/say/' . $check . '/' . $parent . '-' . $strid;
-
-                    //lang - 1, 7, 9 ---> exs.lv, lol.exs.lv, runescape.exs.lv
-                    switch ($commentinfo->lang){
-                        case 1:
-                            $sub = '';
-                            break;
-                        case 7:
-                            $sub = 'lol.';
-                            break;
-                        case 9:
-                            $sub = 'runescape.';
-                    }
-                    $tpl->assign('reason', 'http://'.$sub.'exs.lv'.$url.'#m'.$id.'');
+                    $tpl->assign('reason', get_protocol($commentinfo->lang).get_domain($commentinfo->lang).$url.'#m'.$id.'');
                 }
 
 				$edit = false;

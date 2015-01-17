@@ -145,7 +145,7 @@ if ($resps) {
 
         //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
         if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
-            $out .= '<a href="/warns/'.$val->author.'?commentid='.$val->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
+            $out .= '<a href="/warns/'.$val->author.'/commentid/'.$val->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
         }
 
 		$out .= '</p>';
