@@ -142,6 +142,7 @@
 						<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
 						<li{cat-sel-323}><a href="/muzika">Mūzika</a></li>
 						<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
+						<li{cat-sel-2123}><a href="/steam-online">Steam</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
