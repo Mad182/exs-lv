@@ -111,13 +111,21 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
                 if(isset($_GET['var2']) && $_GET['var2'] == 'commentid'){
                     $id = sanitize($_GET['var3']);
 
-                    $commentinfo = $db->get_row("SELECT parent,id,lang FROM miniblog WHERE id = $id");
+                    $commentinfo = $db->get_row("SELECT parent,id,lang,groupid,type FROM miniblog WHERE id = $id");
                     $parent = $commentinfo->parent;
                     $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
                     $check = $body->author;
                     $title = mb_get_title(stripslashes($body->text));
                     $strid = mb_get_strid($title, $commentinfo->parent);
-                    $url = '/say/' . $check . '/' . $parent . '-' . $strid;
+
+                    if($commentinfo->groupid > 0){
+                        $url = '/group/' . $commentinfo->groupid . '/forum/' . base_convert($commentinfo->parent, 10, 36);
+                    }else{
+                        $url = '/say/' . $check . '/' . $parent . '-' . $strid;
+                    }
+                    if($commentinfo->type == 'junk'){
+                        $url = '/junk/'.$commentinfo->parent;
+                    }
                     $tpl->assign('reason', get_protocol($commentinfo->lang).get_domain($commentinfo->lang).$url.'#m'.$id.'');
                 }
 
