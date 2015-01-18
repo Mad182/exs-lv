@@ -143,10 +143,10 @@ if ($resps) {
 			$out .= ' <a href="/delete/' . $resp->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 		}
 
-        //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
-        if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
-            $out .= '<a href="/warns/'.$resp->author.'/commentid/'.$resp->id.'" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
-        }
+		//moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
+		if ($resp->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $resp->author) {
+			$out .= '<a href="/warns/' . $resp->author . '/commentid/' . $resp->id . '" class="post-button post-warn warn-fast" title="Brīdināt">brīdināt</a>';
+		}
 
 		$out .= '</p>';
 		if ($resp->mb_removed == 1) {
