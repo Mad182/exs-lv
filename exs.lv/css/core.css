@@ -4237,6 +4237,7 @@ img.show-banned:hover {
 	overflow: hidden;
 }
 
+/* Steam lapa */
 #steam-online {
 	width: 100%;
 	float: left;
@@ -4244,14 +4245,30 @@ img.show-banned:hover {
 	overflow: hidden;
 }
 
-#steam-online .game {
-	width: calc(33.33% - 20px);
-	padding: 0 10px;
+#steam-online .column {
+	width: 32%;
 	float: left;
+	display: block;
+	overflow: hidden;
+}
+
+#steam-online .column:nth-of-type(2) {
+	margin: 0 2%;
+}
+
+#steam-online .game {
+	margin: 10px 0;
+	border: 2px solid gray;
+	border-radius: 5px;
 }
 
 #steam-online .game .hero-image {
 	display: block;
+}
+
+#steam-online .game .hero-image  a {
+	display: block;
+	position: relative;
 }
 
 #steam-online .game .hero-image img{

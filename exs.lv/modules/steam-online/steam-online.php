@@ -27,16 +27,19 @@ foreach ($players_online as $player) {
 }
 
 //sadalam chunkos, lai glītāks layout
-$chunked_grouped = array_chunk($grouped, 3);
+$chunked_grouped = partition($grouped, 3);
+
+$tpl->newBlock('steam-game-wrapper');
 
 //izvadam lietotājus caur loopiem
 foreach ($chunked_grouped as $row) {
-    $tpl->newBlock('steam-game-row');
+    $tpl->newBlock('steam-game-col');
 
     foreach ($row as $game) {
 
         $tpl->newBlock('steam-game');
         $tpl->assign('game-id', $game[0]->gameid);
+        $tpl->assign('game-name', $game[0]->gameextrainfo);
 
         foreach ($game as $user) {
 
@@ -51,4 +54,28 @@ foreach ($chunked_grouped as $row) {
             ));
         }
     }
+}
+
+
+/**
+ * Splits array into equal parts
+ *
+ * @param Array $list
+ * @param int $p
+ * @return multitype:multitype:
+ * @link http://www.php.net/manual/en/function.array-chunk.php#75022
+ */
+function partition(Array $list, $p)
+{
+    $listlen = count($list);
+    $partlen = floor($listlen / $p);
+    $partrem = $listlen % $p;
+    $partition = array();
+    $mark = 0;
+    for ($px = 0; $px < $p; $px++) {
+        $incr = ($px < $partrem) ? $partlen + 1 : $partlen;
+        $partition[$px] = array_slice($list, $mark, $incr);
+        $mark += $incr;
+    }
+    return $partition;
 }
