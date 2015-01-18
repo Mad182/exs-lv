@@ -18,7 +18,7 @@ if ($auth->ok === true) {
 
 //            Redirekts uz steam login lapu
             if (isset($_GET['login'])) {
-                $openid->identity = 'http://steamcommunity.com/openid';
+                $openid->identity = 'https://steamcommunity.com/openid';
                 header('Location: ' . $openid->authUrl());
             }
 
