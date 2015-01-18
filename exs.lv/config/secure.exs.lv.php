@@ -12,3 +12,4 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0
 	ini_set('session.use_only_cookies', 1);
 	$secure_login = true;
 }
+

@@ -6,7 +6,7 @@
 <p>
     <form action="?login" method="post">
         <input type="image"
-               src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_large_noborder.png">
+               src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_large_noborder.png">
     </form>
 </p>
 <p>

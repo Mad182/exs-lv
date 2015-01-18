@@ -137,12 +137,12 @@
 				<div id="top-menu">
 					<ul id="top-menu-left">
 						<li{cat-sel-1}><a href="/" title="Uz sākumlapu">Jaunumi</a></li>
-						<li{cat-sel-101}><a href="/forums">Forums</a></li>
-						<li{cat-sel-81}><a href="/speles">Spēles</a></li>
-						<li{cat-sel-80}><a href="/filmas">Filmas</a></li>
-						<li{cat-sel-323}><a href="/muzika">Mūzika</a></li>
-						<li{cat-sel-247}><a href="/raksti">Raksti</a></li>
-						<li{cat-sel-2123}><a style="position:relative;padding-right:25px" href="/steam-online">Steam&nbsp;<span style="color:red;font-size:10px;position:absolute;top:-5px;right:0">NEW</span></a></li>
+						<li{cat-sel-forums}><a href="/forums">Forums</a></li>
+						<li{cat-sel-speles}><a href="/speles">Spēles</a></li>
+						<li{cat-sel-filmas}><a href="/filmas">Filmas</a></li>
+						<li{cat-sel-muzika}><a href="/muzika">Mūzika</a></li>
+						<li{cat-sel-raksti}><a href="/raksti">Raksti</a></li>
+						<li{cat-sel-steam-online}><a style="position:relative;padding-right:25px" href="/steam-online">Steam&nbsp;<span style="color:red;font-size:10px;position:absolute;top:-5px;right:0">NEW</span></a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
