@@ -15,7 +15,7 @@
         <!-- START BLOCK : steam-game-->
         <div class="game">
             <div class="hero-image">
-                <img src="http://cdn.akamai.steamstatic.com/steam/apps/{game-id}/header.jpg">
+                <img src="https://images.weserv.nl/?url=cdn.akamai.steamstatic.com/steam/apps/{game-id}/header.jpg" alt="" />
             </div>
             <div class="player-list">
                 <ul>
