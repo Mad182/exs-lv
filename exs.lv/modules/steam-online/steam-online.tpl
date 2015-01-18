@@ -1,21 +1,26 @@
 <!-- START BLOCK : steam-->
 <h1>Šobrīd spēlē spēles Steam</h1>
 
-    <!-- START BLOCK : steam-login-->
-    <p>
-        <a href="/steam-login">
-            Vai vēlies, lai arī citi redz tavu aktivitāti?
-        </a>
-    </p>
-    <!-- END BLOCK : steam-login-->
+<!-- START BLOCK : steam-login-->
+<p>
+    <a href="/steam-login">
+        Vai vēlies, lai arī citi redz tavu aktivitāti?
+    </a>
+</p>
+<!-- END BLOCK : steam-login-->
 
-    <!-- START BLOCK : steam-game-row-->
-    <div id="steam-online">
 
+<!-- START BLOCK : steam-game-wrapper-->
+<div id="steam-online">
+    <!-- START BLOCK : steam-game-col-->
+    <div class="column">
         <!-- START BLOCK : steam-game-->
         <div class="game">
             <div class="hero-image">
-                <img src="https://images.weserv.nl/?url=cdn.akamai.steamstatic.com/steam/apps/{game-id}/header.jpg" alt="" />
+                <a href="http://store.steampowered.com/app/{game-id}/" title="{game-name}">
+                    <img src="https://images.weserv.nl/?url=cdn.akamai.steamstatic.com/steam/apps/{game-id}/header.jpg"
+                         title="{game-name}"/>
+                </a>
             </div>
             <div class="player-list">
                 <ul>
@@ -35,8 +40,9 @@
             </div>
         </div>
         <!-- END BLOCK : steam-game-->
-
     </div>
-    <!-- END BLOCK : steam-game-row-->
+    <!-- END BLOCK : steam-game-col-->
+</div>
+<!-- END BLOCK : steam-game-wrapper-->
 
 <!-- END BLOCK : steam-->
