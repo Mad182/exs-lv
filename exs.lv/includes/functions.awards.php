@@ -243,6 +243,10 @@ function list_awards() {
 			'title' => '<a href="https://exs.lv/lastfm">LastFM</a> lietotājs',
 			'state' => 'inactive'
 		),
+		'steam' => array(
+			'title' => '<a href="https://exs.lv/steam-online">Steam</a> lietotājs',
+			'state' => 'inactive'
+		),
 		'blogs-50' => array(
 			'title' => 'Veica 50 bloga ierakstus',
 			'state' => 'inactive'
@@ -407,6 +411,10 @@ function update_awards($user) {
 
 		if (!empty($userr->lastfm_username)) {
 			$awards_list['lastfm']['state'] = 'active';
+		}
+
+		if (!empty($userr->steam_id)) {
+			$awards_list['steam']['state'] = 'active';
 		}
 
 		if (!empty($userr->avatar) && $userr->avatar != 'none.png') {
