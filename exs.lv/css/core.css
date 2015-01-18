@@ -4237,3 +4237,48 @@ img.show-banned:hover {
 	overflow: hidden;
 }
 
+#steam-online {
+	width: 100%;
+	float: left;
+	display: block;
+	overflow: hidden;
+}
+
+#steam-online .game {
+	width: calc(33.33% - 20px);
+	padding: 0 10px;
+	float: left;
+}
+
+#steam-online .game .hero-image {
+	display: block;
+}
+
+#steam-online .game .hero-image img{
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#steam-online .game .player-list ul {
+	margin: 10px 0;
+	padding: 0;
+}
+
+#steam-online .game .player-list ul li {
+	padding: 0;
+	list-style: none;
+	background: none;
+}
+
+#steam-online .game .player-list ul li .steam-link {
+	display: block;
+	float: left;
+	margin: 0 5px 0;
+}
+
+#steam-online .game .player-list ul li .steam-link img{
+	display: block;
+	width: 16px;
+	height: 16px;
+}

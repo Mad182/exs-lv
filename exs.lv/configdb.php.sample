@@ -37,6 +37,11 @@ $fb_api_key = null;
 $dr_api_id = null;
 $dr_api_key = null;
 
+//Steam login
+$steam_api_key = ""; 		//API atslēga
+$steam_domain_name = ""; 	//domēns, kas rādas steam lapā
+$steam_login_page = ""; 	//uz kurieni redirektēt pēc logina
+
 //include folderi
 define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
 define('IMG_PATH', '/home/madars/www/exs-lv/img.exs.lv');
