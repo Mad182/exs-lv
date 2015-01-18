@@ -380,6 +380,7 @@ if (isset($category) && !isset($_GET['u']) && !isset($_GET['g']) && !isset($_GET
 
 	$tpl->assignGlobal(array(
 		'cat-sel-' . $category->id => ' class="selected active"',
+		'cat-sel-' . $category->textid => ' class="selected active"',
 		'cat-sel-' . $category->parent => ' class="selected active"',
 	));
 	if ($category->parent) {
