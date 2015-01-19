@@ -128,12 +128,13 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
                     }
 
                     $reason = substr(strip_tags($commentinfo->text), 0, 1000);
-                    if (strlen(strip_tags($commentinfo->text)) > 1000){
-                        $reason.=" ... \r\n \r\n Tālāk lasi avotā.";
+                    if (strlen(strip_tags($commentinfo->text)) > 1000) {
+                        $reason .= '...'.PHP_EOL.PHP_EOL.'Tālāk lasi avotā.';
                     }
                     $reason = '<blockquote>'.$reason.'</blockquote>';
+                    $reason .= PHP_EOL.'Avots: '.get_protocol($commentinfo->lang).get_domain($commentinfo->lang).$url.'#m'.$id;
 
-                    $tpl->assign('reason', $reason.'Avots: '.get_protocol($commentinfo->lang).get_domain($commentinfo->lang).$url.'#m'.$id.'');
+                    $tpl->assign('reason', $reason);
                 }
 
 				$edit = false;
