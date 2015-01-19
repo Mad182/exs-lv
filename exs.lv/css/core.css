@@ -4061,22 +4061,23 @@ li.view_more {
 
 .gameserver p.gameserver-map .gameserver-mapname {
 	float: left;
-	padding: 3px 0 3px 8px;
+	padding: 3px 3px 3px 8px;
 }
 
 .gameserver p.gameserver-map .gameserver-online {
 	float: right;
-	padding: 3px 7px 3px 0;
+	padding: 3px 7px 3px 3px;
 }
 
 .gameserver p.gameserver-map .gameserver-online .gameserver-online-now {
-	font-size: 110%;
-	color: #2e7;
+	font-size: 115%;
+	color: #b4e818;
 	line-height: 16px;
+	margin: -1px 0 0;
 }
 
 .gameserver p.gameserver-map .gameserver-online .gameserver-online-max {
-	font-size: 90%;
+	font-size: 85%;
 	line-height: 16px;
 }
 
