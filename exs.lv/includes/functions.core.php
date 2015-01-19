@@ -2614,17 +2614,17 @@ function get_latest_music() {
 /**
  * Atgriež spēles monitora html (ar cache)
  */
-function get_game_monitor($url) {
+function get_game_monitor($url, $force = false) {
 	global $m;
-	
+
 	$cache_key = md5($url);
-	
-	if (!($html = $m->get($cache_key))) {
+
+	if ($force || !($html = $m->get($cache_key))) {
 		$html = curl_get($url);
 		if(!$html) {
 			$html = 'Offline';
 		}
-		$m->set($cache_key, $html, false, 45);
+		$m->set($cache_key, $html, false, 300);
 	}
 	return $html;
 }
