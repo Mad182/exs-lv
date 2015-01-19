@@ -89,27 +89,6 @@
 		</script>
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
-
-		<!-- START BLOCK : google-chart-->
-		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-		<script type="text/javascript">
-			google.load("visualization", "1", {packages: ["corechart"]});
-			google.setOnLoadCallback(drawChart);
-			function drawChart() {
-				var data = google.visualization.arrayToDataTable([['Time', 'Online'], {chart-items}]);
-
-				var options = {
-					chartArea: {width: 190, height: 110, left: 25},
-					legend: {position: 'none'},
-					vAxis: {minValue: 0},
-					hAxis: {textPosition: 'none'}
-				};
-
-				var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-				chart.draw(data, options);
-			}
-		</script>
-		<!-- END BLOCK : google-chart-->
 	</head>
 
 	<body{onload} class="{layout-options}">
@@ -280,15 +259,20 @@
 					</div>
 
 					<!-- START BLOCK : dateks-ads-->
-					<h3>Jaunākie piedāvājumi no dateks.lv</h3>
+					<!--<h3>Jaunākie piedāvājumi no dateks.lv</h3>
 					<div class="box" id="dateks">
 						{out}
-					</div>
+					</div>-->
 					<!-- END BLOCK : dateks-ads-->
 
-					<h3>CS:GO monitors</h3>
+					<h3>csgo.exs.lv</h3>
 					<div class="box">
 						{csgo-monitor}
+					</div>
+
+					<h3>ut.exs.lv</h3>
+					<div class="box">
+						{ut-monitor}
 					</div>
 
 					<!-- START BLOCK : groups-l-list-->

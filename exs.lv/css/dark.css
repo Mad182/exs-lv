@@ -354,11 +354,22 @@ dl.list-attr dt {
 
 /* Neliela info daudzuma fancybox stili */
 .fancy-container {
-	color:#3C3C3C
+	color: #3C3C3C
 }
 .fancy-info {
-	border:1px dotted #EBEBEB
+	border: 1px dotted #EBEBEB
 }
 .fancy-info i {
-	color:#95A4B3
+	color: #95A4B3
 }
+
+/* serveru monitors */
+
+.gameserver p.playerlist {
+	background: #414141
+}
+
+.gameserver p.playerlist span.odd {
+	background: #444
+}
+

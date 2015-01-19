@@ -4025,28 +4025,67 @@ li.view_more {
 }
 
 /* spēļu serveru monitorings */
-#mta-monitor {
+.gameserver {
 	padding: 3px 0;
 }
 
-#mta-monitor p {
+.gameserver p {
 	margin: 0;
 	padding: 1px 5px;
 	font-size: 12px;
 }
 
-#mta-monitor p.playerlist {
+.gameserver p.gameserver-map {
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+
+.gameserver p.gameserver-map .gameserver-mapinfo {
+	position: absolute;
+	bottom: 6px;
+	left: 0;
+	right: 0;
+	color: #fafafa;
+	width: 100%;
+	background: url('//img.exs.lv/bildes/black_35.png') repeat;
+	font-size: 90%;
+	line-height: 16px;
+}
+
+.gameserver p.gameserver-map .gameserver-mapname {
+	float: left;
+	padding: 3px 5px;
+}
+
+.gameserver p.gameserver-map .gameserver-online {
+	float: right;
+	padding: 3px 5px;
+}
+
+.gameserver p.gameserver-map .gameserver-online .gameserver-online-now {
+	font-size: 110%;
+	color: #2e7;
+	line-height: 16px;
+}
+
+.gameserver p.gameserver-map .gameserver-online .gameserver-online-max {
+	font-size: 90%;
+	line-height: 16px;
+}
+
+.gameserver p.playerlist {
 	padding: 5px;
 	background: #f5f2fc;
 }
 
-#mta-monitor p.playerlist span {
+.gameserver p.playerlist span {
 	display: block;
 	padding: 1px 8px;
 	font-size: 11px;
 }
 
-#mta-monitor p.playerlist span.odd {
+.gameserver p.playerlist span.odd {
 	background: #faf8ff;
 }
 
