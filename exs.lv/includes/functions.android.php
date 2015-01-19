@@ -1,6 +1,7 @@
 <?php
 /**
  *  Globālas funkcijas Android lietotnes pieprasījumiem.
+ *  Tiek izmantotas Android modulī (modules/android).
  *
  *  Funkciju nosaukumiem izmantots "a_" prefix, lai citos failos tās
  *  varētu atšķirt.
@@ -18,6 +19,28 @@ function a_error($string = '') {
 }
 
 /**
+ *  Atgriezīs XSRF tokenu, kāds izmantojams Android adresēs,
+ *  lai identificētu konkrēto lietotāju.
+ */
+function a_make_xsrf() {
+    global $auth;
+    // nav jēgas izmantot MD5 hashu visā garumā
+    return substr($auth->xsrf, 0, 7);
+}
+
+/**
+ *  Pārbaudīs, vai norādītā xsrf atslēga sakrīt ar 
+ *  konkrētajam lietotājam izveidoto.
+ */
+function a_check_xsrf($key = '') {
+    global $auth;
+    if (empty($key)) {
+        return false;
+    }
+    return (substr($auth->xsrf, 0, 7) === $key);
+}
+
+/**
  *  Pievienos atbildei tekstu, kas netiks uztverts kā kļūda,
  *  bet kuru lietotne pēc vajadzības varēs kaut kur izvadīt,
  *  paskaidrojot situāciju.
@@ -29,7 +52,8 @@ function a_message($string = '') {
 }
 
 /**
- *  Saglabās ziņojumu Android log tabulā.
+ *  Saglabās ziņojumu datubāzes `android_logs` tabulā,
+ *  piefiksējot atvērto adresi, lai zinātu, ko lietotājs centās atvērt.
  */
 function a_log($text) {
     global $db, $auth;
@@ -41,19 +65,20 @@ function a_log($text) {
     $uri = (isset($_SERVER['REQUEST_URI'])) ? 
         $_SERVER['REQUEST_URI'] : '';
     
-    $values = array(
+    return $db->insert('android_logs', array(
         'message' => sanitize($text),
         'url' => sanitize($uri),
         'created_by' => (int)$auth->id,
         'created_at' => date('Y-m-d H:i:s', time()),
         'created_ip' => sanitize($auth->ip)
-    );
-    
-    return $db->insert('android_logs', $values);
+    ));
 }
 
 /**
- *  Android lietotnes formātā atgiež datus par lietotāju.
+ *  Atgriezīs datus par norādīto lietotāju.
+ *
+ *  Android lietotnē tie ir nepieciešami specifiskā formātā (ne-HTML), lai
+ *  lietotne pēc tam spētu lietotājvārdu atbilstoši "izdaiļot" ar krāsām.
  *
  *  Ja tiek izmantoti noklusētie parametri, atgriezīs datus par to lietotāju,
  *  kas šo funkciju izsauc. Norādot parametrus, dati atbildīs norādītajam
@@ -61,9 +86,6 @@ function a_log($text) {
  */
 function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 	global $auth, $online_users, $busers;
-
-	// atgriežamais masīvs
-	$data = array();
 
 	// dati par autorizēto lietotāju
 	if ($user_id == 0) {
@@ -80,7 +102,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 	$is_online = false;
     $is_banned = false;
-    $device = 0; // dators, 1 - mob. tel.
+    $device = 0; // 0 - dators, 1 - mob. tel.
 
 	// vai lietotājs ir tiešsaistē?
 	if ((!empty($online_users['onlineusers'][$user_id])) || 
@@ -114,9 +136,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 }
 
 /**
- *  Aizpilda atgriežamos datus ar informāciju par lietotāja liegumiem.
- *
- *  Izmanto Android moduļa sākuma pārbaudēs.
+ *  Pievienos atbildei datus par lietotājam piemēroto liegumu, ja tāds ir.
  *
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
@@ -144,7 +164,7 @@ function a_fetch_ban($type = 1, $ip_banned) {
         ");
         
         if (!$prof_banned) {
-            a_error('Neizdevās atlasīt lieguma iemeslu');
+            a_error('Neizdevās atlasīt lieguma info');
         } else {
             $from_user = get_user($prof_banned->author);
             $to_user = get_user($prof_banned->user_id);
@@ -200,7 +220,7 @@ function a_fetch_online($force = false) {
     global $online_users, $busers;
     
     // laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
-    $online_seconds = 360;
+    $online_seconds = 300;
     
 	$data = array();
     
@@ -226,7 +246,7 @@ function a_fetch_online($force = false) {
         ");
 
         if (!$lastseen) {
-            a_error('Šobrīd neviena lietotāja nav tiešsaistē');
+            a_message('Šobrīd neviena lietotāja nav tiešsaistē');
             return false;
         }
         
