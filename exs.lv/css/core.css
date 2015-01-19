@@ -2145,111 +2145,12 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 	padding: 0 0 0 11px;
 }
 
-#gal-large {
-	margin: 0 auto;
-	padding: 10px;
-	position: relative;
-	text-align: center;
-}
-
-#gal-large img {
-	max-width: 100%;
-	width: auto;
-	height: auto;
-}
-
-#gal-large .img-newer, #gal-large .img-older {
-	position: absolute;
-	width: 33%;
-	height: 100%;
-	padding: 0;
-	margin: 0;
-	outline: none;
-	text-indent: -99999px;
-	top: 0;
-}
-
-#gal-large .img-newer {
-	left: 0;
-}
-
-#gal-large .img-older {
-	right: 0;
-}
-
-#gal-large .img-newer:hover {
-	background: url('//img.exs.lv/bildes/arrow-left.png') no-repeat 30% 50%;
-}
-
-#gal-large .img-older:hover {
-	background: url('//img.exs.lv/bildes/arrow-rgt.png') no-repeat 70% 50%;
-}
-
 a.mb-api-twitter {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -280px;
 	line-height: 17px;
 	font-size: 90%;
 	color: #888;
 	padding: 0 0 0 16px;
-}
-
-.scrollable {
-	position: relative;
-	overflow: hidden;
-	width: 90%;
-	height: 76px;
-	border: 0;
-	float: left;
-	margin: 5px 0 10px;
-	padding: 0;
-}
-
-.scrollable .items {
-	width: 20000em;
-	position: absolute;
-	clear: both;
-}
-
-.scrollable .active {
-	border: 2px solid #000;
-	position: relative;
-	cursor: default;
-}
-
-.browse {
-	vertical-align: baseline;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	font-size: 15px;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	line-height: 19px;
-	display: block;
-	width: 4%;
-	height: 20px;
-	float: left;
-	padding: 28px 0;
-	margin: 0;
-}
-
-a.right {
-	clear: right;
-	margin-right: 0;
-}
-
-a.left {
-	margin-left: 0;
-}
-
-.scrollable a.disabled {
-	visibility: hidden!important;
 }
 
 #exs-groups li {
@@ -2298,11 +2199,6 @@ a.left {
 
 .table .darker td {
 	background: #fafafa;
-}
-
-#forum td.stat {
-	text-align: right;
-	font-size: 12px;
 }
 
 .imgs, ul#mainlist, #downloads, .video-thb p, #latest-blogs, #wallpapers, .small-userlist, .responses li p, #miniblog-list, .mb-col, .bloglist {
@@ -4114,45 +4010,6 @@ li.view_more {
 	color: #aaa;
 }
 
-/* sākumlapas "wall" */
-#wall-posts {
-	list-style:none;
-	padding: 0;
-	margin: 10px 0;
-}
-
-#wall-posts li {
-	margin: 8px 0;
-}
-
-#wall-posts li a {
-	display: block;
-	text-decoration: none;
-	color: #444;
-}
-
-#wall-posts .last-post {
-	font-size: 13px;
-	margin: 12px 0 5px 0;
-}
-
-#wall-posts .av {
-	width:64px;
-	height:64px;
-}
-
-#wall-posts .post-wrapper {
-	margin-left: 74px;
-}
-
-#wall-posts .post-info {
-	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-#wall-posts .post-wrapper img {
-	max-width: 300px;
-}
-
 /* Profilu sasaistes sadaļa */
 .new-main {
 	padding:10px 20px;
@@ -4301,56 +4158,3 @@ img.show-banned:hover {
 	overflow: hidden;
 }
 
-/* Steam lapa */
-#steam-online {
-	width: 100%;
-	float: left;
-	display: block;
-	overflow: hidden;
-	position: relative;
-}
-
-#steam-online .game {
-	margin:0 0 10px;
-	border: 2px solid gray;
-	border-radius: 5px;
-	width: calc(33.33% - 11px);
-}
-
-#steam-online .game .hero-image {
-	display: block;
-}
-
-#steam-online .game .hero-image  a {
-	display: block;
-	position: relative;
-}
-
-#steam-online .game .hero-image img{
-	display: block;
-	margin: 0;
-	padding: 0;
-}
-
-#steam-online .game .player-list ul {
-	margin: 10px 0;
-	padding: 0;
-}
-
-#steam-online .game .player-list ul li {
-	padding: 0;
-	list-style: none;
-	background: none;
-}
-
-#steam-online .game .player-list ul li .steam-link {
-	display: block;
-	float: left;
-	margin: 0 5px 0;
-}
-
-#steam-online .game .player-list ul li .steam-link img{
-	display: block;
-	width: 16px;
-	height: 16px;
-}

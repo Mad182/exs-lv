@@ -1,0 +1,54 @@
+/* Steam lapa */
+#steam-online {
+	width: 100%;
+	float: left;
+	display: block;
+	overflow: hidden;
+	position: relative;
+}
+
+#steam-online .game {
+	margin:0 0 10px;
+	border: 2px solid gray;
+	border-radius: 5px;
+	width: calc(33.33% - 11px);
+}
+
+#steam-online .game .hero-image {
+	display: block;
+}
+
+#steam-online .game .hero-image  a {
+	display: block;
+	position: relative;
+}
+
+#steam-online .game .hero-image img{
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#steam-online .game .player-list ul {
+	margin: 10px 0;
+	padding: 0;
+}
+
+#steam-online .game .player-list ul li {
+	padding: 0;
+	list-style: none;
+	background: none;
+}
+
+#steam-online .game .player-list ul li .steam-link {
+	display: block;
+	float: left;
+	margin: 0 5px 0;
+}
+
+#steam-online .game .player-list ul li .steam-link img{
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+

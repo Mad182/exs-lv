@@ -1,5 +1,8 @@
 <?php
 
+//load css
+$add_css[] = 'wall.css';
+
 /**
  * Sākumlapa
  */

@@ -371,7 +371,7 @@ $tpl->assignGlobal(array(
 
 if(!empty($add_css)) {
 	$tpl->newBlock('additional-css');
-	$tpl->assign('filename', implode($add_css));
+	$tpl->assign('filename', implode(',', $add_css));
 }
 
 if (!empty($pagepath) && $skin === 'main') {

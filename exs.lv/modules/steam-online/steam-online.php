@@ -1,5 +1,8 @@
 <?php
 
+//load css
+$add_css[] = 'steam.css';
+
 $grouped = array();
 
 //lietotāji, kas šobrīd kaut ko spēlē

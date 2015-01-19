@@ -69,6 +69,11 @@
 	max-width: inherit
 }
 
+#forum td.stat {
+	text-align: right;
+	font-size: 12px;
+}
+
 ul.subcat-list {
 	padding: 0 0 2px;
 	margin: 0;

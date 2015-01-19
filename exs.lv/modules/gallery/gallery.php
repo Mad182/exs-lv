@@ -1,5 +1,8 @@
 <?php
 
+//load css
+$add_css[] = 'gallery.css';
+
 if ($inprofile = get_user(intval($_GET['var1']))) {
 
 	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');

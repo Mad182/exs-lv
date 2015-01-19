@@ -1,0 +1,39 @@
+/* sākumlapas "wall" */
+#wall-posts {
+	list-style:none;
+	padding: 0;
+	margin: 10px 0;
+}
+
+#wall-posts li {
+	margin: 8px 0;
+}
+
+#wall-posts li a {
+	display: block;
+	text-decoration: none;
+	color: #444;
+}
+
+#wall-posts .last-post {
+	font-size: 13px;
+	margin: 12px 0 5px 0;
+}
+
+#wall-posts .av {
+	width:64px;
+	height:64px;
+}
+
+#wall-posts .post-wrapper {
+	margin-left: 74px;
+}
+
+#wall-posts .post-info {
+	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#wall-posts .post-wrapper img {
+	max-width: 300px;
+}
+
