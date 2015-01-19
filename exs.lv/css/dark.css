@@ -365,11 +365,8 @@ dl.list-attr dt {
 
 /* serveru monitors */
 
-.gameserver p.playerlist {
-	background: #414141
-}
 
-.gameserver p.playerlist span.odd {
-	background: #444
+.gameserver p.playerlist span {
+	border-bottom: 1px dotted #555;
 }
 

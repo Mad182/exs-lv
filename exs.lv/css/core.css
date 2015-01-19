@@ -4026,6 +4026,7 @@ li.view_more {
 
 /* spēļu serveru monitorings */
 .gameserver {
+	margin: -1px;
 	padding: 3px 0;
 }
 
@@ -4097,18 +4098,19 @@ li.view_more {
 }
 
 .gameserver p.playerlist {
-	padding: 5px;
-	background: #f5f2fc;
+	padding: 0;
 }
 
 .gameserver p.playerlist span {
-	display: block;
-	padding: 1px 8px;
+	border-bottom: 1px dotted #eaeaea;
+	padding: 1px 8px 0;
 	font-size: 11px;
+	display: block;
 }
 
-.gameserver p.playerlist span.odd {
-	background: #faf8ff;
+.gameserver p.playerlist span .player-score {
+	float: right;
+	color: #aaa;
 }
 
 /* sākumlapas "wall" */
