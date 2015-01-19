@@ -4314,7 +4314,7 @@ img.show-banned:hover {
 	margin:0 0 10px;
 	border: 2px solid gray;
 	border-radius: 5px;
-	width: 31%;
+	width: calc(33.33% - 11px);
 }
 
 #steam-online .game .hero-image {

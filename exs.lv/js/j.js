@@ -234,14 +234,6 @@ $(document).ready(function() {
 		});
 	});
 
-        /* masonry priekš steam lapas, uztaisa glītu layoutu  */
-		var $container = $('#steam-online');
-	// initialize
-		$container.masonry({
-			gutter: 10,
-			itemSelector: '.game'
-		});
-
 	if (current_user > 0 && new_msg_count > 0) {
 		Tinycon.setBubble(new_msg_count);
 	}
@@ -626,4 +618,14 @@ $(document).ready(function() {
 	});
 
 	setTimeout('msgrr()', query_timeout);
+});
+
+$(window).load(function () {
+	/* masonry priekš steam lapas, uztaisa glītu layoutu  */
+	var $container = $('#steam-online');
+	// initialize
+	$container.masonry({
+		gutter: 10,
+		itemSelector: '.game'
+	});
 });
