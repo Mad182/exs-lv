@@ -265,14 +265,14 @@
 					</div>-->
 					<!-- END BLOCK : dateks-ads-->
 
-					<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
-					<div class="box">
-						{csgo-monitor}
-					</div>
-
 					<h3><strong>UT 2004</strong> ut.exs.lv</h3>
 					<div class="box">
 						{ut-monitor}
+					</div>
+
+					<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
+					<div class="box">
+						{csgo-monitor}
 					</div>
 
 					<!-- START BLOCK : groups-l-list-->
