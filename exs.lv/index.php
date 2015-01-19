@@ -325,7 +325,7 @@ if (!empty($secure_login)) {
 }
 
 if ($auth->skin == 1 && $lang == 1) {
-	$add_css .= ',dark.css';
+	$add_css[] = 'dark.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
@@ -364,11 +364,15 @@ $tpl->assignGlobal(array(
 	'mb-refresh-limit' => $mb_refresh_limit,
 	'footer-mb' => get_footer_mb(),
 	'footer-topics' => get_footer_topics(),
-	'add-css' => $add_css,
 	'static-server' => $static_server,
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash
 ));
+
+if(!empty($add_css)) {
+	$tpl->newBlock('additional-css');
+	$tpl->assign('filename', implode($add_css));
+}
 
 if (!empty($pagepath) && $skin === 'main') {
 	$tpl->newBlock('page-path');

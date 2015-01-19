@@ -4,7 +4,7 @@ if (!$auth->ok) {
 	$tpl->newBlock('error-nologin');
 } else {
 
-	$add_css .= ',pm.css';
+	$add_css[] = 'pm.css';
 
 	set_action('vēstules');
 

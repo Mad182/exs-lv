@@ -28,7 +28,7 @@ if (isset($_GET['_'])) {
 }
 
 if (!$ajax) {
-	$add_css .= ',hangman.css';
+	$add_css[] = 'hangman.css';
 	$tpl->newBlock('hm-gbody-top');
 	$tpl->assign(array(
 		'cat-id' => $category->id,
@@ -230,3 +230,4 @@ if (!$ajax) {
 	$tpl->printToScreen();
 	exit;
 }
+

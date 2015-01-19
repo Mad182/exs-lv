@@ -3,7 +3,7 @@
 /**
  * Lapas kartes skats
  */
-$add_css .= ',sitemap.css';
+$add_css[] = 'sitemap.css';
 
 $sitemap_modules = "'list','forums','rshelp','index','flash-games','raksti','groups','imgupload','items-db','listsub','miniblogs','polls','register','search','servers','snake','statistics','text','cs_monitor','kasnotiek','say','gifav'";
 

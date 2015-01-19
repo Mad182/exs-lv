@@ -1,6 +1,6 @@
 <?php
 
-$add_css .= ',ajax-comments.css';
+$add_css[] = 'ajax-comments.css';
 
 require_once(CORE_PATH . '/includes/ajax_comments.php');
 if (isset($_GET['ajax']) || isset($_POST['ajax'])) {
@@ -51,3 +51,4 @@ if (isset($_GET['edit']) && im_mod()) {
 		$tpl->newBlock('options');
 	}
 }
+

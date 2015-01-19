@@ -4,19 +4,19 @@
 		<meta charset="UTF-8">
 		<title>{page-title}</title>
 		<!-- START BLOCK : meta-description-->
-		<meta name="description" content="{description}" />
+		<meta name="description" content="{description}">
 		<!-- END BLOCK : meta-description-->
 		<!-- START BLOCK : opengraph-->
-		<meta property="og:title" content="{title}" />
-		<meta property="og:type" content="{type}" />
-		<meta property="og:url" content="{url}" />
-		<meta property="og:image" content="{image}" />
+		<meta property="og:title" content="{title}">
+		<meta property="og:type" content="{type}">
+		<meta property="og:url" content="{url}">
+		<meta property="og:image" content="{image}">
 		<!-- END BLOCK : opengraph-->
 		<!-- START BLOCK : robots-->
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
-		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes" />
+		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes">
 		<script type="text/javascript">
 			var mb_refresh_limit = {mb-refresh-limit};
 			var current_user = {currentuser-id};
@@ -25,7 +25,10 @@
 			var c_url = "{page-url}";
 		</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css{add-css}" type="text/css" />
+		<link rel="stylesheet" href="{static-server}/css/core.css,exs.css" type="text/css">
+		<!-- START BLOCK : additional-css-->
+		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
+		<!-- END BLOCK : additional-css-->
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,masonry.pkgd.min.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>

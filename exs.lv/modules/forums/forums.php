@@ -3,7 +3,7 @@
 /**
  * Foruma kategoriju saraksta skats
  */
-$add_css .= ',forum.css';
+$add_css[] = 'forum.css';
 
 $columns = 4;
 if ($auth->mobile) {

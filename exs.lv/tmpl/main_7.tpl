@@ -18,7 +18,10 @@
 			var c_url = "{page-url}";
 		</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-		<link rel="stylesheet" href="{static-server}/css/core.css{add-css},lol.css" type="text/css">
+		<link rel="stylesheet" href="{static-server}/css/core.css,lol.css" type="text/css">
+		<!-- START BLOCK : additional-css-->
+		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
+		<!-- END BLOCK : additional-css-->
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>

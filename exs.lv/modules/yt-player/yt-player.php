@@ -6,7 +6,7 @@ if (!$auth->ok) {
 }
 
 $pagepath = '';
-$add_css = ',player.css';
+$add_css[] = 'player.css';
 
 
 //get shared playlist in json format
@@ -89,3 +89,4 @@ $tpl->assignGlobal(array(
 	'player-now-position' => $now_playing['position'],
 	'player-now-duration' => $now_playing['duration'],
 ));
+

@@ -3,7 +3,7 @@
 /**
  * exs.lv/junk sadaļas apskate un attēlu iesniegšana
  */
-$add_css .= ',junk.css';
+$add_css[] = 'junk.css';
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 	echo 'top';

@@ -11,7 +11,7 @@ if (!$auth->ok) {
 	redirect();
 }
 
-$add_css .= ',forum.css';
+$add_css[] = 'forum.css';
 
 if (isset($_POST['submit-ignore'])) {
 	foreach ($_POST['forum'] as $forum => $status) {

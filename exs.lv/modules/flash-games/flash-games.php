@@ -2,8 +2,8 @@
 
 $page_title = 'Flash spēles - exs.lv spēļu portāls';
 
-$add_css .= ',ajax-comments.css';
-$add_css .= ',flash-games.css';
+$add_css[] = 'ajax-comments.css';
+$add_css[] = 'flash-games.css';
 
 if (isset($_GET['var1'])) {
 
@@ -373,3 +373,4 @@ if (isset($_GET['var1'])) {
 		$page_title = $page_title . ' | Lapa ' . (intval($_GET['page']) + 1);
 	}
 }
+
