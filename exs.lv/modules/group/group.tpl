@@ -75,6 +75,7 @@
 <div class="tabMain">
 	<div style="float: left;width: 69%;overflow: hidden">
 		{group-text}
+		{module_content}
 	</div>
 	<div style="float: right;width: 29%">
 		<!-- START BLOCK : group-info-apply-->

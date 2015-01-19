@@ -268,7 +268,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$m_user = get_user($member->user);
 
 			//clean up deleted users
-			if(empty($m_user)) {
+			if (empty($m_user)) {
 				$db->query("DELETE FROM `clans_members` WHERE `id` = '$member->id' LIMIT 1");
 				$db->query("UPDATE `clans` SET `members` = `members`-1 WHERE `id` = '$group->id' LIMIT 1");
 				continue;
@@ -349,8 +349,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && chec
 	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* confirm pending member */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod) && check_token('confirm', $_GET['token'])) {
+/* confirm pending member */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod) && check_token('confirm', $_GET['token'])) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -363,8 +362,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* deny pendig member, remove pending status */
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod) && check_token('deny', $_GET['token'])) {
+/* deny pendig member, remove pending status */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod) && check_token('deny', $_GET['token'])) {
 
 	$confirm = (int) $_GET['var3'];
 
@@ -1052,9 +1050,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		if ($group->auto_approve) {
 			$tpl->assign('auto_approve-sel', ' checked="checked"');
 		}
-		
+
 		//grupas settingi kas pieejami globālajiem adminiem
-		if($auth->level == 1) {
+		if ($auth->level == 1) {
 
 			// saglabā
 			if (isset($_POST['submit-admin'])) {
@@ -1063,7 +1061,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$db->query("UPDATE `clans` SET `hide_intro` = '$hide_intro', `disable_vote` = '$disable_vote' WHERE `id` = '$group->id'");
 				redirect($group_link . '/options');
 			}
-		
+
 			$tpl->newBlock('group-settings-admin');
 			if ($group->disable_vote) {
 				$tpl->assign('disable_vote-sel', ' checked="checked"');
@@ -1101,7 +1099,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$db->query("INSERT INTO `questions` (`pid`,`question`) VALUES ('$poll_id','$new_a')");
 				}
 			}
-			$auth->log('Izveidoja aptauju &quot;'.htmlspecialchars(trim($_POST['new-poll-q'])).'&quot;', 'clans', $group->id);			
+			$auth->log('Izveidoja aptauju &quot;' . htmlspecialchars(trim($_POST['new-poll-q'])) . '&quot;', 'clans', $group->id);
 			$tpl->newBlock('polls_admin-success');
 		} else {
 			$tpl->newBlock('polls_admin-add');
@@ -1183,11 +1181,20 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	// grupas statistika
 	$tpl->newBlock('group-info');
 	$owner = get_user($group->owner);
+
+	//cilnes moduli var iekļaut arī sākumlapā
+	$module_content = '';
+	if (!empty($group->firstpage_module)) {
+		include(CORE_PATH . '/modules/groups/tabs/' . $group->firstpage_module . '.php');
+		$module_content = '<div class="c"></div>' . $module_content . '<div class="c"></div>';
+	}
+
 	$tpl->assign(array(
 		'group-text' => add_smile($group->text, 0),
 		'group-posts' => $group->posts,
 		'group-members' => $group->members + 1,
-		'group-admin' => $owner->nick
+		'group-admin' => $owner->nick,
+		'module_content' => $module_content
 	));
 
 	// iespējas
