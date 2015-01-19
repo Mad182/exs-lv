@@ -24,11 +24,12 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
  *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:
  *
  *  $json = array(
- *      'banned'    => int,     // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
  *      'state'     => string   // error/success
  *      'message'   => string,  // ziņa, kas lietotnē tiek izcelta, ja "state" == "error"
+ *      'is_banned' => int,  // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
  *      'is_online' => bool,    // statuss, kas apzīmē, vai lietotājs ir autorizēts
- *      'pagedata'  => array()  // veiktā pieprasījuma atbilde
+ *      'xsrf'      => string,  // anti-xsrf atslēga, kas pievienojama adrešu galā
+ *      'response'  => array()  // veiktā pieprasījuma atbilde
  *  );
  */
 
@@ -130,11 +131,12 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 }
 
 $arr = array(
-    'banned'    => $json_banned,
 	'state'     => $json_state,
 	'message'   => $json_message,
+    'is_banned' => $json_banned,
 	'is_online' => $auth->ok,
-	'pagedata'  => $json_page
+    'xsrf'      => a_make_xsrf(),
+	'response'  => $json_page
 );
 
 echo json_encode($arr);
