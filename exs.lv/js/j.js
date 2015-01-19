@@ -293,6 +293,17 @@ $(document).ready(function() {
 		});
 		e.preventDefault();
 	});
+	
+	//spēļu servera monitora pārlādēšana
+	$('.gameserver-reload').live('click', function(e) {
+		e.preventDefault();
+
+		$(this).parent().parent().parent().fadeTo(250, 0.7);
+		$(this).parent().parent().parent().load($(this).attr('href'), function() {
+			$(this).fadeTo(150, 1);
+		});
+		
+	});
 
 	//mb komentara forma
 	$('#addresponse').live('submit', function(e) {

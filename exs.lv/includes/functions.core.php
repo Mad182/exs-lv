@@ -2611,3 +2611,21 @@ function get_latest_music() {
 	return $out;
 }
 
+/**
+ * Atgriež spēles monitora html (ar cache)
+ */
+function get_game_monitor($url, $force = false) {
+	global $m;
+
+	$cache_key = md5($url);
+
+	if ($force || !($html = $m->get($cache_key))) {
+		$html = curl_get($url);
+		if(!$html) {
+			$html = 'Offline';
+		}
+		$m->set($cache_key, $html, false, 300);
+	}
+	return $html;
+}
+

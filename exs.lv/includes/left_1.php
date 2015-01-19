@@ -19,30 +19,16 @@ if (!empty($_COOKIE['last-facts-tab']) && $_COOKIE['last-facts-tab'] == 'fact-rs
 	$fact = $db->get_var("SELECT `text` FROM `facts` LIMIT " . rand(0, 44) . ",1") . ' <a href="/fact" class="moar">Citu &raquo;</a>';
 }
 
-function get_csgo_monitor($force = false) {
-	global $m;
-	if ($force || !($html = $m->get('csgo_monitor'))) {
-		$html = curl_get('http://csgo.exs.lv/monitor/index.php');
-		if(!$html) {
-			$html = 'Offline';
-		}
-		$m->set('csgo_monitor', $html, false, 45);
-	}
-	return $html;
-}
-
-$monitor = get_csgo_monitor();
-
 $tpl->newBlock('main-layout-left');
 $tpl->assign(array(
 	'latest-noscript' => $out,
 	'random-fact' => $fact,
-	'csgo-monitor' => $monitor,
+	'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
+	'ut-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/ut.php'),
 	$sel . '-selected' => 'active ',
 	$fsel . '-selected' => 'active '
 ));
 unset($out);
-unset($monitor);
 
 //izvēlne
 $parent_id = get_top($category->id);
@@ -174,27 +160,3 @@ if ($category->module == 'movies') {
 	}
 }
 
-//player online chart
-$chart_items = $db->get_results("SELECT `time`, `count` FROM `players_online` WHERE `game` = 'csgo' AND `time` > '".date('Y-m-d H:i:s', strtotime('-1 day'))."' ORDER BY `time` ASC");
-
-if($chart_items) {
-	$tpl->newBlock('google-chart');
-
-	$items = array();
-	$last = null;
-	foreach($chart_items as $item) {
-
-		if($last === null) {
-			$last = $item->count;
-		} else {
-			$items[] = "['".substr($item->time,0,16)."', ".ceil(($item->count+$last)/2)."]";
-			$last = null;
-		}
-
-	}
-
-	$tpl->assign('chart-items', implode(',', $items));
-}
-
-unset($chart_items);
-unset($items);
