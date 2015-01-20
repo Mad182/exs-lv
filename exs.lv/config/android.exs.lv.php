@@ -7,12 +7,13 @@
 // nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
 $android_lang = 1;
 
-// ja pieprasījums ir uz android.exs.lv, kur visas atbildes tiek gaidītas
-// json formātā, php kļūdas izvadīt nedrīkst, bet var gadīties, ka
-// iekš configdb.php tās jau ir iespējotas
+// android pieprasījumos nedrīkst agriezt kļūdas (ja vien tās nav 
+// json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
+// lai kļūdas lokāli redzētu, var iekš configdb.php pievienot šādu mainīgo
 if (!isset($android_local)) {
 
-    // lai tomēr varētu kaut kādas kļūdas web versijā arī atrast
+    // ar $_GET['debug'] atstāsim variantu, 
+    // kā kļūdas tomēr apskatīt arī live versijā
     if ($debug === true && !isset($_GET['debug'])) {
         ini_set('display_errors', 0);
         error_reporting(0);
