@@ -3953,6 +3953,7 @@ li.view_more {
 	background: transparent url('//img.exs.lv/bildes/black_35.png') repeat;
 	font-size: 90%;
 	line-height: 16px;
+	text-shadow: 0 1px 0 #111;
 }
 
 .gameserver p.gameserver-map .gameserver-mapname {
