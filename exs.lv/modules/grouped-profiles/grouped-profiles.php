@@ -7,6 +7,7 @@
  *  vienlaicīgi varētu dāvāt liegumus veselām grupām profilu.
  */
 $robotstag[] = 'noindex';
+$add_css[] = 'grouped-profiles.css';
 
 if (!im_mod()) {
 	set_flash('Pieeja liegta!');
