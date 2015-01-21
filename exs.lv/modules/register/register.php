@@ -134,8 +134,8 @@ if (!$auth->ok) {
 		$tpl->gotoBlock('registration-form');
 		$tpl->newBlock('form-fields');
 		$tpl->assign(array(
-			'new-nick' => htmlspecialchars($regdata['nick']),
-			'new-mail' => htmlspecialchars($regdata['mail']),
+			'new-nick' => h($regdata['nick']),
+			'new-mail' => h($regdata['mail']),
 			'field_mail' => $field_mail,
 			'field_nick' => $field_nick
 		));

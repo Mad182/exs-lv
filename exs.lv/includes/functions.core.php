@@ -51,6 +51,13 @@ function as_class_name($name = '') {
 }
 
 /**
+ * htmlspecialchars() saīsinājums
+ */
+function h($str) {
+	return htmlspecialchars($str);
+}
+
+/**
  * For legacy php versions
  */
 if (!function_exists('http_response_code')) {
@@ -381,7 +388,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				}
 				$out .= '<li class="notification-' . $class . '"><a ';
 				if (!empty($notify->info) && $notify->info != 'twitter') {
-					$out .= 'title="' . htmlspecialchars($notify->info) . '" ';
+					$out .= 'title="' . h($notify->info) . '" ';
 				}
 				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-icon"></span><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
 
@@ -465,7 +472,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 		}
 	}
 
-	$nick = $star . htmlspecialchars($nick);
+	$nick = $star . h($nick);
 
 	$user_classes = array(1 => 'admins', 2 => 'mods', 3 => 'rautors', 5 => 'bot');
 
@@ -1198,7 +1205,7 @@ function get_footer_topics($force = false) {
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
-				$html .= '<li><a href="/read/' . $late->strid . '" title="' . htmlspecialchars($late->title) . '">' . textlimit($late->title, 36) . '</a></li>';
+				$html .= '<li><a href="/read/' . $late->strid . '" title="' . h($late->title) . '">' . textlimit($late->title, 36) . '</a></li>';
 			}
 			$html .= '</ul>';
 		}
@@ -1469,7 +1476,7 @@ function title2db($text) {
 	$text = str_replace('(', ' (', $text);
 	$text = str_replace(',', ', ', $text);
 	$text = str_replace(' ,', ',', $text);
-	$text = mb_ucfirst(substr(htmlspecialchars(strip_tags(trim($text))), 0, 80));
+	$text = mb_ucfirst(substr(h(strip_tags(trim($text))), 0, 80));
 	if (substr($text, -1) == '.' && substr($text, -3) != '...') {
 		$text = substr($text, 0, -1);
 	}
@@ -1486,7 +1493,7 @@ function title2db($text) {
 
 function input2db($text, $len = 30) {
 	$text = filterb4db($text);
-	$text = substr(htmlspecialchars(trim($text)), 0, $len);
+	$text = substr(h(trim($text)), 0, $len);
 	return sanitize($text);
 }
 
@@ -1531,7 +1538,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			$val->date = strtotime($val->date);
 			if (!$auth->mobile) {
 				$out .= '<div class="mb-av"><a id="m' . $val->id . '" href="/user/' . $val->author . '">';
-				$out .= '<img width="45" height="45" class="av" src="' . get_avatar($val, 's') . '" alt="' . htmlspecialchars($val->nick) . '" /></a>';
+				$out .= '<img width="45" height="45" class="av" src="' . get_avatar($val, 's') . '" alt="' . h($val->nick) . '" /></a>';
 				if (!empty($val->decos)) {
 					$decos = unserialize($val->decos);
 					if (!empty($decos)) {
@@ -1890,7 +1897,7 @@ function get_latest_images() {
 				$img = $img_server . '/' . $late->thb;
 			}
 
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
+			$out .= '<a title="' . h($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
@@ -2094,7 +2101,7 @@ function get_latest_mbs($tab = 'all') {
 				$mb->nick = 'dzēsts';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" /><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" /><span class="author">' . h($mb->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';
@@ -2351,7 +2358,7 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$tpl->assignGlobal(array(
 		'user-id' => $user->id,
-		'user-nick' => htmlspecialchars($user->nick),
+		'user-nick' => h($user->nick),
 		'active-tab-' . $active => 'active'
 	));
 
@@ -2581,7 +2588,7 @@ function get_latest_music() {
 				$img = get_avatar($track, 's');
 			}
 
-			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . htmlspecialchars($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . htmlspecialchars($track->url) . '" rel="nofollow" target="_blank">' . htmlspecialchars($track->artist_name) . ' - ' . htmlspecialchars($track->name) . '</a></span></li>';
+			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . h($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . h($track->url) . '" rel="nofollow" target="_blank">' . h($track->artist_name) . ' - ' . h($track->name) . '</a></span></li>';
 
 
 		}

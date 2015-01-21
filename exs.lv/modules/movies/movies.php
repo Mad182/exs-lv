@@ -120,7 +120,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			$tpl->newBlock('list-avatar');
 			$tpl->assign(array(
 				'image' => $avatar->thb,
-				'alt' => htmlspecialchars($avatar->title)
+				'alt' => h($avatar->title)
 			));
 		}
 	}
@@ -153,7 +153,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 	if (!empty($_GET['genres'])) {
 		$genres = array();
 		foreach ($_GET['genres'] as $genre) {
-			$genres[] = "'" . sanitize(htmlspecialchars(trim($genre))) . "'";
+			$genres[] = "'" . sanitize(h(trim($genre))) . "'";
 		}
 		$pages = $db->get_col("SELECT DISTINCT(`page_id`) FROM `movie_genres` WHERE `genre` IN(" . implode(',', $genres) . ")");
 		$genreq = " AND `pages`.`id` IN(" . implode(',', $pages) . ") ";
@@ -191,7 +191,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 	$tpl->newBlock('list-search');
 	$tpl->assign(array(
-		'title' => htmlspecialchars($page_title),
+		'title' => h($page_title),
 		'strid' => $category->textid
 	));
 
@@ -226,7 +226,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
 			$tpl->assign(array(
 				'image' => $avatar->thb,
-				'alt' => htmlspecialchars($avatar->title)
+				'alt' => h($avatar->title)
 			));
 		}
 	}

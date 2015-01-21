@@ -32,7 +32,7 @@ function player_get_list() {
 		$ids[] = "'" . $item->id . "'";
 
 		$out['likes'] = intval($item->likes);
-		$out['title'] = htmlspecialchars($item->title);
+		$out['title'] = h($item->title);
 		$out['duration'] = $item->duration;
 		$out['id'] = $item->id;
 
@@ -45,7 +45,7 @@ function player_get_list() {
 			foreach ($likers as $liker) {
 				$user = get_user($liker->user_id);
 				$avatar = get_avatar($user, 's');
-				$out['likers'] .= '<a style="float:left;margin: 0 3px 0 0;width:26px;height:26px;" title="' . htmlspecialchars($user->nick) . '" href="/user/' . $user->id . '" target="_blank"><img src="' . $avatar . '" alt="" /></a>';
+				$out['likers'] .= '<a style="float:left;margin: 0 3px 0 0;width:26px;height:26px;" title="' . h($user->nick) . '" href="/user/' . $user->id . '" target="_blank"><img src="' . $avatar . '" alt="" /></a>';
 			}
 		}
 
@@ -79,7 +79,7 @@ function player_get_list() {
 		foreach ($list as $item) {
 
 			$out['likes'] = intval($item->likes);
-			$out['title'] = htmlspecialchars($item->title);
+			$out['title'] = h($item->title);
 			$out['duration'] = $item->duration;
 			$out['id'] = $item->id;
 
@@ -92,7 +92,7 @@ function player_get_list() {
 				foreach ($likers as $liker) {
 					$user = get_user($liker->user_id);
 					$avatar = get_avatar($user, 's');
-					$out['likers'] .= '<a style="float:left;margin: 0 3px 0 0;width:26px;height:26px;" title="' . htmlspecialchars($user->nick) . '" href="/user/' . $user->id . '" target="_blank"><img src="' . $avatar . '" alt="" /></a>';
+					$out['likers'] .= '<a style="float:left;margin: 0 3px 0 0;width:26px;height:26px;" title="' . h($user->nick) . '" href="/user/' . $user->id . '" target="_blank"><img src="' . $avatar . '" alt="" /></a>';
 				}
 			}
 

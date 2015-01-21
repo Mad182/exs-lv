@@ -14,7 +14,7 @@ if (isset($_GET['skip'])) {
 $query_where = '';
 if (isset($_POST['criteria']) && isset($_POST['value'])) {
 
-	$value = htmlspecialchars(strip_tags(trim($_POST['value'])));
+	$value = h(strip_tags(trim($_POST['value'])));
 
 	switch ((int) $_POST['criteria']) {
 		// vieta

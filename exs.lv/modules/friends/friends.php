@@ -53,7 +53,7 @@ if ($inprofile) {
 				'friend-id' => $theother,
 				'friend-nick' => usercolor($friendinfo->nick, $friendinfo->level),
 				'friend-avatar' => $avatar,
-				'friend-title' => htmlspecialchars($friendinfo->nick)
+				'friend-title' => h($friendinfo->nick)
 			));
 			//cancel friendship
 			if ($auth->ok && $inprofile->id == $auth->id) {
@@ -85,7 +85,7 @@ if ($inprofile) {
 					'friendship-id' => $friend->id,
 					'friend-nick' => usercolor($friendinfo->nick, $friendinfo->level),
 					'friend-avatar' => $avatar,
-					'friend-title' => htmlspecialchars($friendinfo->nick),
+					'friend-title' => h($friendinfo->nick),
 					'token' => make_token('friend')
 				));
 			}

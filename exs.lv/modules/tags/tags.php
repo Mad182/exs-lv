@@ -65,7 +65,7 @@ if (isset($_GET['var1'])) {
 						$tpl->assign(array(
 							'id' => $article->id,
 							'thb' => $article->thb,
-							'title' => ucfirst(htmlspecialchars(substr(strip_tags($article->text), 0, 256))),
+							'title' => ucfirst(h(substr(strip_tags($article->text), 0, 256))),
 							'uid' => $article->uid
 						));
 					} else {
@@ -143,7 +143,7 @@ if (!$cache_created || (time() - $cache_created) > 43200) {
 		foreach ($tags as $tag) {
 			$count = $db->get_var("SELECT count(*) FROM `taged` WHERE `tag_id` = '$tag->id' AND `lang` = '$lang'");
 			$size = (7 + ceil(log($count + 1) * $multiplier));
-			$out .= '<a style="font-size:' . $size . 'px" href="/tag/' . $tag->slug . '">' . htmlspecialchars($tag->name) . '</a> ';
+			$out .= '<a style="font-size:' . $size . 'px" href="/tag/' . $tag->slug . '">' . h($tag->name) . '</a> ';
 		}
 	}
 	$handle = fopen(CORE_PATH . '/cache/tags-large/' . $lang . '-' . $cloud . '.html', 'wb');

@@ -17,7 +17,7 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
 		'url' => '/user/' . $inprofile->id,
-		'profile-nick' => htmlspecialchars($inprofile->nick),
+		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
@@ -108,7 +108,7 @@ if ($junks) {
 		$tpl->assign(array(
 			'id' => $junk->id,
 			'thb' => $junk->thb,
-			'title' => htmlspecialchars($junk->title),
+			'title' => h($junk->title),
 			'posts' => $junk->posts
 		));
 	}

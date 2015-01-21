@@ -18,7 +18,7 @@ function get_top_awards($user) {
 		if ($res) {
 			$data .= '<p id="profile-awards">';
 			foreach ($res as $award) {
-				$data .= '<img width="32" height="32" src="' . $img_server . '/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . htmlspecialchars(strip_tags($award->title)) . '" />&nbsp;';
+				$data .= '<img width="32" height="32" src="' . $img_server . '/dati/bildes/awards/' . $award->award . '.png" alt="' . $award->award . '" title="' . h(strip_tags($award->title)) . '" />&nbsp;';
 			}
 			$total = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user'");
 			if ($total > 4) {

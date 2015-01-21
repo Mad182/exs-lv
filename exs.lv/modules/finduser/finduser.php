@@ -14,7 +14,7 @@ if ($auth->ok) {
 			if ($results) {
 				$users = array();
 				foreach ($results as $result) {
-					$users[$result->id] = htmlspecialchars($result->nick);
+					$users[$result->id] = h($result->nick);
 				}
 				header("Content-type: application/json");
 				echo json_encode($users);

@@ -24,7 +24,7 @@ function create_sitemap($parent = 0, $sitemap_modules = 'list') {
 				$out .= ' <a style="float: right;padding: 0 2px;margin: 0;border: 0" href="?movedown=' . $cat->id . '">&#8595;</a> ';
 			}
 
-			$out .= '<a href="/' . $cat->textid . '" title="' . htmlspecialchars($description) . '">' . $cat->title . '</a>';
+			$out .= '<a href="/' . $cat->textid . '" title="' . h($description) . '">' . $cat->title . '</a>';
 
 			$out .= create_sitemap($cat->id, $sitemap_modules);
 			$out .= '</li>';

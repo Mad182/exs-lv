@@ -22,7 +22,7 @@ if (!empty($inprofile)) {
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
 		'url' => '/user/' . $inprofile->id,
-		'profile-nick' => htmlspecialchars($inprofile->nick),
+		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,

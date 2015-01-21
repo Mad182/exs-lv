@@ -46,7 +46,7 @@ class getImages {
 
 		if ($this->can_add($junk->img)) {
 			$file = sanitize($junk->img);
-			$title = sanitize(htmlspecialchars($junk->title . ' (' . $junk->alt . ')'));
+			$title = sanitize(h($junk->title . ' (' . $junk->alt . ')'));
 			$link = sanitize($junk->img);
 			$db->query("INSERT INTO `junk_queue` (`image`,`title`,`link`,`source`,`created`) VALUES ('" . $file . "','" . $title . "','" . $link . "','xkcd',NOW())");
 		}

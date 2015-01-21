@@ -319,9 +319,9 @@ if (strlen($page_title) < 55 && $lang != 4) {
 	$page_title .= ' - ' . $config_domains[$lang]['domain'];
 }
 
-$login_url = htmlspecialchars($_SERVER['REQUEST_URI']);
+$login_url = h($_SERVER['REQUEST_URI']);
 if (!empty($secure_login)) {
-	$login_url = htmlspecialchars('https://secure.exs.lv/');
+	$login_url = h('https://secure.exs.lv/');
 }
 
 if ($auth->skin == 1 && $lang == 1) {
@@ -344,10 +344,10 @@ $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
 	'page-loginurl' => $login_url,
 	'page-time' => time(),
-	'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
+	'page-url' => h($_SERVER['REQUEST_URI']),
 	'page-domain' => $_SERVER['HTTP_HOST'],
 	'category-url' => $category->textid,
-	'currentuser-nick' => htmlspecialchars($auth->nick),
+	'currentuser-nick' => h($auth->nick),
 	'inprofile-level' => $in_level,
 	'inprofile-gender' => $in_gender,
 	'new-messages' => $new_msg_html,

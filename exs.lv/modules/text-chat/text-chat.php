@@ -37,7 +37,7 @@ if (isset($_GET['edit']) && im_mod()) {
 	$tpl->newBlock('text-edit');
 	$tpl->assign(array(
 		'title' => $category->title,
-		'content' => htmlspecialchars($category->content),
+		'content' => h($category->content),
 	));
 } else {
 	$tpl->newBlock('text-body');

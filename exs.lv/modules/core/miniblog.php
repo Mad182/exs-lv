@@ -266,7 +266,7 @@ if (!empty($inprofile)) {
 						$tags = new tags;
 						foreach ($newtags as $newtag) {
 							if (strlen(trim($newtag)) > 1) {
-								$newtag = htmlspecialchars(ucfirst(strip_tags(trim($newtag))));
+								$newtag = h(ucfirst(strip_tags(trim($newtag))));
 								$nslug = mkslug($newtag);
 								if (!empty($newtag)) {
 									$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");

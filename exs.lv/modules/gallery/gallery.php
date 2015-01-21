@@ -177,7 +177,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 			$tpl->newBlock('adm-edit-comment');
 			$tpl->assign(array(
-				'comment-text' => htmlspecialchars($comment->text),
+				'comment-text' => h($comment->text),
 				'comment-id' => $comment->id
 			));
 
@@ -221,7 +221,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				$tags = new tags;
 				foreach ($newtags as $newtag) {
 					if (strlen(trim($newtag)) > 1) {
-						$newtag = htmlspecialchars(ucfirst(strip_tags(trim($newtag))));
+						$newtag = h(ucfirst(strip_tags(trim($newtag))));
 						$nslug = mkslug($newtag);
 						if (!empty($newtag)) {
 							$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
@@ -254,7 +254,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				}
 			}
 
-			$image_title = ucfirst(htmlspecialchars(substr(strip_tags($image->text), 0, 128)));
+			$image_title = ucfirst(h(substr(strip_tags($image->text), 0, 128)));
 
 			$date = display_time(strtotime($image->date));
 
@@ -443,7 +443,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						'aurl' => '/user/' . $comment->author,
 						'avatar' => get_avatar($comment),
 						'karma' => $comment->karma,
-						'title' => htmlspecialchars($comment->author_nick),
+						'title' => h($comment->author_nick),
 						'custom_title' => custom_user_title($comment),
 						'comment-editedby' => $editedby,
 					));

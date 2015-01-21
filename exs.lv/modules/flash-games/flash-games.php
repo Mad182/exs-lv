@@ -56,7 +56,7 @@ if (isset($_GET['var1'])) {
 					$tpl_cachable->assign(array(
 						'slug' => $game->slug,
 						'title' => $game->title,
-						'alt' => htmlspecialchars($game->title),
+						'alt' => h($game->title),
 						'thumbnail' => $thb,
 						'rating' => round($game->rating / $game->rating_count, 2),
 						'category' => $game->category
@@ -238,7 +238,7 @@ if (isset($_GET['var1'])) {
 					$tpl->assign(array(
 						'slug' => $game->slug,
 						'title' => $game->title,
-						'alt' => htmlspecialchars($game->title),
+						'alt' => h($game->title),
 						'thumbnail' => $thb,
 						'rating' => round($game->rating / $game->rating_count, 2),
 						'category' => $game->category
@@ -257,7 +257,7 @@ if (isset($_GET['var1'])) {
 					$tpl->assign(array(
 						'slug' => $game->slug,
 						'title' => $game->title,
-						'alt' => htmlspecialchars($game->title),
+						'alt' => h($game->title),
 						'thumbnail' => $thb,
 						'rating' => round($game->rating / $game->rating_count, 2),
 						'category' => $game->category
@@ -315,7 +315,7 @@ if (isset($_GET['var1'])) {
 				$tpl_cachable->assign(array(
 					'slug' => $game->slug,
 					'title' => $game->title,
-					'alt' => htmlspecialchars($game->title),
+					'alt' => h($game->title),
 					'thumbnail' => $thb,
 					'thb' => $thb,
 					'rating' => round($game->rating / $game->rating_count, 2),

@@ -119,7 +119,7 @@ if ($resps) {
 			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 		}
 		if ($auth->ok && isset($_GET['url'])) {
-			$out .= '<div class="mb-rater">' . mb_rater($resp, htmlspecialchars(strip_tags($_GET['url']))) . '</div>';
+			$out .= '<div class="mb-rater">' . mb_rater($resp, h(strip_tags($_GET['url']))) . '</div>';
 		}
 		$resp->date = strtotime($resp->date);
 		$out .= '<p class="post-info"><a href="/user/' . $resp->author . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time($resp->date);

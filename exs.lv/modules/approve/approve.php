@@ -182,7 +182,7 @@ if ($auth->ok) {
 		$tpl->assign(array(
 			'article-showtitle' => $article->title,
 			'article-title' => $article->title,
-			'article-text' => htmlspecialchars($article->text),
+			'article-text' => h($article->text),
 			'article-id' => $article->id,
 			'article-ip' => $article->ip,
 			'article-author' => $article->author,

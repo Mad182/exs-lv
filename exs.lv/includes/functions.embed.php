@@ -402,7 +402,7 @@ function embed_youtube($matches, $wide = 0) {
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
 
-	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(
+	$title = str_replace("'", "&#39;", h(textlimit(
 							stripslashes($video->yt_title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 
@@ -413,7 +413,7 @@ function embed_youtube($matches, $wide = 0) {
 		$height = 290;
 	}
 
-	// izmanto htmlspecialchars, lai norādītu kā parametru javascriptā
+	// izmanto h, lai norādītu kā parametru javascriptā
 	$videocode = '<div class="c"></div><div class="auto-embed" ';
 	$videocode .= 'style="width:' . $width . 'px;">';
 	$videocode .= '<iframe class="youtube-player" type="text/html" ';
@@ -426,7 +426,7 @@ function embed_youtube($matches, $wide = 0) {
 	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
 	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
 	$videocode .= '<strong>' . $title . '</strong><div class="c"></div></div>';
-	$videocode = htmlspecialchars($videocode);
+	$videocode = h($videocode);
 
 	// saturs, uz kura nospiežot, caur javascript ielādēs $videocode
 	$return = '<div><div class="auto-embed-placeholder">';

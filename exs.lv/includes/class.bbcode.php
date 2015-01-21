@@ -713,9 +713,9 @@ class BBCode {
 			// generate html
 			$html = '<' . $tag;
 			if (isset($item['params']['param'])) {
-				$html .= ' type="' . htmlspecialchars($item['params']['param']) . '"';
+				$html .= ' type="' . h($item['params']['param']) . '"';
 			} elseif (isset($item['params']['type'])) {
-				$html .= ' type="' . htmlspecialchars($item['params']['type']) . '"';
+				$html .= ' type="' . h($item['params']['type']) . '"';
 			}
 			$html .= $this->add_extras($item['params'], $extras) . '>';
 			return array(
@@ -763,7 +763,7 @@ class BBCode {
 			if ($color === false) {
 				return $error;
 			}
-			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? htmlspecialchars($this->valid_style($item['params']['style'], '')) : '') . 'color: ' . $color . ';"' . $this->add_extras($item['params'], $extras) . '>';
+			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . 'color: ' . $color . ';"' . $this->add_extras($item['params'], $extras) . '>';
 			return array(
 				'valid' => true,
 				'start' => $html,
@@ -830,7 +830,7 @@ class BBCode {
 			if ($color === false) {
 				return $error;
 			}
-			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? htmlspecialchars($this->valid_style($item['params']['style'], '')) : '') . 'background-color: ' . $color . ';"' . $this->add_extras($item['params'], $extras) . '>';
+			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . 'background-color: ' . $color . ';"' . $this->add_extras($item['params'], $extras) . '>';
 			return array(
 				'valid' => true,
 				'start' => $html,
@@ -869,7 +869,7 @@ class BBCode {
 			if ($size < 6 || $size > 36) {
 				return $error;
 			}
-			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? htmlspecialchars($this->valid_style($item['params']['style'], '')) : '') . 'font-size: ' . $size . 'px;"' . $this->add_extras($item['params'], $extras) . '>';
+			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . 'font-size: ' . $size . 'px;"' . $this->add_extras($item['params'], $extras) . '>';
 			return array(
 				'valid' => true,
 				'start' => $html,
@@ -893,7 +893,7 @@ class BBCode {
 					$bgcolor = ' background-color: ' . $bgcolor . ';';
 				}
 			}
-			$html = '<div style="' . ($this->allow_styling && isset($item['params']['style']) ? htmlspecialchars($this->valid_style($item['params']['style'], '')) : '') . $height . $width . $bgcolor . '"' . $this->add_extras($item['params'], $extras) . '>';
+			$html = '<div style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . $height . $width . $bgcolor . '"' . $this->add_extras($item['params'], $extras) . '>';
 			return array(
 				'valid' => true,
 				'start' => $html,
@@ -978,9 +978,9 @@ class BBCode {
 			// generate html
 			$extension = pathinfo($url);
 			if ($extension['extension'] != 'jpg' && $extension['extension'] != 'png' && $extension['extension'] != 'gif' or stristr($url, '?')) {
-				$html = '<a href="' . htmlspecialchars($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
+				$html = '<a href="' . h($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
 			} else {
-				$html = '<a class="lightbox" href="' . htmlspecialchars($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
+				$html = '<a class="lightbox" href="' . h($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
 			}
 			if ($show_content) {
 				return array(
@@ -1033,14 +1033,14 @@ class BBCode {
 			if (substr(strtolower($url), 0, 7) === 'mailto:') {
 				$url = substr($url, 7);
 			}
-			$email = '<a' . ($this->allow_styling && isset($item['params']['class']) ? '' : ' class="post-email"') . ' href="mailto:' . htmlspecialchars($url) . '"' . $this->add_extras($item['params'], $extras) . '>' . $content . '</a>';
+			$email = '<a' . ($this->allow_styling && isset($item['params']['class']) ? '' : ' class="post-email"') . ' href="mailto:' . h($url) . '"' . $this->add_extras($item['params'], $extras) . '>' . $content . '</a>';
 			$pos = strpos($url, '?');
 			if ($pos) {
 				$str = substr($url, 0, $pos);
 			} else {
 				$str = $url;
 			}
-			$noscript = '<noscript>' . htmlspecialchars(str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $str)) . '</noscript>';
+			$noscript = '<noscript>' . h(str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $str)) . '</noscript>';
 			// make javascript from it
 			$html = BBCODE_NOSMILIES_START . '<script language="JavaScript" type="text/javascript">' . "\n" . '' . "\n";
 			for ($i = 0; $i < strlen($email); $i+=5) {
@@ -1068,9 +1068,9 @@ class BBCode {
 			$user = '';
 			$post_rev = '';
 			if (isset($item['params']['param'])) {
-				$user = htmlspecialchars($item['params']['param']);
+				$user = h($item['params']['param']);
 			} elseif (isset($item['params']['user'])) {
-				$user = htmlspecialchars($item['params']['user']);
+				$user = h($item['params']['user']);
 				if (isset($item['params']['userid']) && intval($item['params']['userid'])) {
 					$user = '<a href="/user/' . intval($item['params']['userid']) . '">' . $user . '</a>';
 				}
@@ -1241,10 +1241,10 @@ class BBCode {
 				if ($extras[$i] === 'style') {
 					$style = $this->valid_style($params['style']);
 					if ($style !== false) {
-						$html .= ' style="' . htmlspecialchars($style) . '"';
+						$html .= ' style="' . h($style) . '"';
 					}
 				} else {
-					$html .= ' ' . $extras[$i] . '="' . htmlspecialchars($params[$extras[$i]]) . '"';
+					$html .= ' ' . $extras[$i] . '="' . h($params[$extras[$i]]) . '"';
 				}
 			}
 		}
@@ -1484,7 +1484,7 @@ class BBCode {
 					if (!$first)
 						echo ', ';
 					$first = false;
-					echo $var, '="', htmlspecialchars($value), '"';
+					echo $var, '="', h($value), '"';
 				}
 				echo ")<br />\n";
 				$this->debug($item['items']);
@@ -1534,7 +1534,7 @@ class BBCode {
 		$replace = array('', '', '', '');
 		$text = str_replace($search, $replace, $text);
 		if ($chars) {
-			$text = htmlspecialchars($text);
+			$text = h($text);
 			$text = str_replace('&amp;#', '&#', $text);
 		} else {
 			$text = str_replace(
@@ -1681,7 +1681,7 @@ class BBCode {
 			);
 			$text = str_replace($search, $replace, $text);
 			if ($id) {
-				$text = undo_htmlspecialchars($text);
+				$text = undo_h($text);
 			}
 		}
 		// reset variables
@@ -1744,14 +1744,14 @@ if (defined('SMILIES_TABLE')) {
 		for ($i = 0; $i < count($smilies); $i++) {
 			$arr = array(
 				'code' => $smilies[$i]['code'],
-				'replace' => '<img src="http://' . $_SERVER['HTTP_HOST'] . $board_config['script_path'] . 'images/smiles/' . $smilies[$i]['smile_url'] . '" alt="' . htmlspecialchars($smilies[$i]['emotion']) . '" />'
+				'replace' => '<img src="http://' . $_SERVER['HTTP_HOST'] . $board_config['script_path'] . 'images/smiles/' . $smilies[$i]['smile_url'] . '" alt="' . h($smilies[$i]['emotion']) . '" />'
 			);
 			$bbcode->allowed_smilies[] = $arr;
 		}
 	}
 }
 
-function undo_htmlspecialchars($input, $full_undo = false) {
+function undo_h($input, $full_undo = false) {
 	if ($full_undo) {
 		$input = str_replace('&nbsp;', '', $input);
 	}

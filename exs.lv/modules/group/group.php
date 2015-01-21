@@ -152,7 +152,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$tpl->assignGlobal('active-tab-info', 'active');
 	$tpl->newBlock('group-edit');
 	$tpl->assign(array(
-		'group-text' => htmlspecialchars($group->text),
+		'group-text' => h($group->text),
 		'group-title' => $group->title,
 	));
 
@@ -446,7 +446,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->p
 				$tpl->newBlock('nmembers-pay-node');
 				$tpl->assign(array(
 					'member-id' => $m_user->id,
-					'member-nick' => htmlspecialchars($m_user->nick),
+					'member-nick' => h($m_user->nick),
 					'avatar' => $avatar,
 				));
 			}
@@ -924,7 +924,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->newBlock('group-tab-edit');
 			$tpl->assign(array(
 				'tab-module' => $module_content,
-				'tab-text' => htmlspecialchars($tab->text)
+				'tab-text' => h($tab->text)
 			));
 			$page_title = $group->title . ' - labot &quot;' . $tab->title . '&quot;';
 		}
@@ -1089,17 +1089,17 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// jaunas aptaujas pievienošana
 		$tpl->assign('exist-active', 'active');
 		if (isset($_POST['new-poll-q']) && isset($_POST['new-poll-a'])) {
-			$new_q = sanitize(htmlspecialchars(trim($_POST['new-poll-q'])));
+			$new_q = sanitize(h(trim($_POST['new-poll-q'])));
 			$db->query("INSERT INTO poll (`name`,`topic`,`group`) VALUES ('$new_q','0','$group->id')");
 			$poll_id = $db->insert_id;
 			foreach ($_POST['new-poll-a'] as $new_a) {
 				$new_a = trim($new_a);
 				if (!empty($new_a)) {
-					$new_a = sanitize(htmlspecialchars($new_a));
+					$new_a = sanitize(h($new_a));
 					$db->query("INSERT INTO `questions` (`pid`,`question`) VALUES ('$poll_id','$new_a')");
 				}
 			}
-			$auth->log('Izveidoja aptauju &quot;' . htmlspecialchars(trim($_POST['new-poll-q'])) . '&quot;', 'clans', $group->id);
+			$auth->log('Izveidoja aptauju &quot;' . h(trim($_POST['new-poll-q'])) . '&quot;', 'clans', $group->id);
 			$tpl->newBlock('polls_admin-success');
 		} else {
 			$tpl->newBlock('polls_admin-add');
@@ -1130,7 +1130,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 			$q_string = str_replace(array(',', '.', '+', '-', '_'), ' ', $_GET['q']);
 			$q_string = strip_tags($q_string);
-			$tpl->assign('qstr', htmlspecialchars($q_string));
+			$tpl->assign('qstr', h($q_string));
 			$q_strings = explode(' ', $q_string);
 			$cond = '';
 			foreach ($q_strings as $str) {
@@ -1145,7 +1145,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$tpl->newBlock('res-search-node');
 					$result->text = strip_tags($result->text);
 					foreach ($q_strings as $str) {
-						$result->text = str_replace($str, '<strong>' . htmlspecialchars($str) . '</strong>', $result->text);
+						$result->text = str_replace($str, '<strong>' . h($str) . '</strong>', $result->text);
 					}
 					$link = base_convert($result->id, 10, 36);
 					if (!empty($result->parent)) {
@@ -1319,7 +1319,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$tpl->newBlock('nmembers-node');
 				$tpl->assign(array(
 					'member-id' => $m_user->id,
-					'member-nick' => htmlspecialchars($m_user->nick),
+					'member-nick' => h($m_user->nick),
 					'avatar' => $avatar,
 				));
 			}
@@ -1371,7 +1371,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'id' => $mb->id,
 					'author' => $mb->author,
 					'text' => $mb->text,
-					'nick' => htmlspecialchars($mb->nick),
+					'nick' => h($mb->nick),
 					'time' => $time,
 					'avatar' => $avatar,
 					'resp' => $mb->posts

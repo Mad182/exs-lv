@@ -41,9 +41,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 					echo '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">', "\n";
 					echo '	<channel>', "\n";
 
-					echo '		<title>' . htmlspecialchars($user->nick . ' notifikācijas') . '</title>', "\n";
+					echo '		<title>' . h($user->nick . ' notifikācijas') . '</title>', "\n";
 					echo '		<link>https://exs.lv/user/' . $user->id . '</link>', "\n";
-					echo '		<description>Jaunākais ' . htmlspecialchars($user->nick) . ' profilā</description>', "\n";
+					echo '		<description>Jaunākais ' . h($user->nick) . ' profilā</description>', "\n";
 					echo '		<language>lv</language>', "\n";
 
 					foreach ($notify as $notify) {
@@ -76,10 +76,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 						}
 
 						echo '		<item>', "\n";
-						echo '			<title>', htmlspecialchars(mb_ucfirst($texts[$notify->type])), '</title>', "\n";
-						echo '			<link>' . htmlspecialchars($domain . $notify->url) . '</link>' . "\n";
-						echo '			<guid>' . htmlspecialchars($domain . $notify->url . '?' . strtotime($notify->bump)) . '</guid>' . "\n";
-						echo '			<description>', htmlspecialchars(mb_ucfirst($texts[$notify->type]) . $dom), '</description>', "\n";
+						echo '			<title>', h(mb_ucfirst($texts[$notify->type])), '</title>', "\n";
+						echo '			<link>' . h($domain . $notify->url) . '</link>' . "\n";
+						echo '			<guid>' . h($domain . $notify->url . '?' . strtotime($notify->bump)) . '</guid>' . "\n";
+						echo '			<description>', h(mb_ucfirst($texts[$notify->type]) . $dom), '</description>', "\n";
 						echo '			<pubDate>', gmdate('r', strtotime($notify->bump)), '</pubDate>', "\n";
 						echo '			<dc:creator>exs.lv</dc:creator>' . "\n";
 						echo '		</item>', "\n";
@@ -139,7 +139,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 						$data[] = array(
 							'url' => $domain . $notify->url,
-							'title' => htmlspecialchars(mb_ucfirst($texts[$notify->type])),
+							'title' => h(mb_ucfirst($texts[$notify->type])),
 							'date' => $notify->bump,
 							'info' => $notify->info,
 							'type' => $notify->type

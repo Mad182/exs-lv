@@ -69,7 +69,7 @@ if (!$auth->ok) {
 			// dzēstiem lietotājiem lietotājvārds var nebūt
 			$user = get_user($banned->user_id);
 			if (!empty($user->nick)) {
-				$linkuser = '<a href="/user/' . $user->id . '">' . htmlspecialchars($user->nick) . '</a>';
+				$linkuser = '<a href="/user/' . $user->id . '">' . h($user->nick) . '</a>';
 			} else {
 				$linkuser = '--';
 			}
@@ -85,7 +85,7 @@ if (!$auth->ok) {
 				'banned-until' => date('Y-m-d H:i', $banned->time + $banned->length),
 				'banned-author' => $banned->author,
 				'token' => make_token('remban'),
-				'anick' => htmlspecialchars($author->nick)
+				'anick' => h($author->nick)
 			));
 
 			if ($banned->lang == 0) {

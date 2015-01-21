@@ -78,7 +78,7 @@ class Model_List_Minigames extends Model {
         $strid = '';
         $page_id = 0;
         if (isset($post_arr['strid'])) {
-            $strid = substr(htmlspecialchars(trim(strip_tags(
+            $strid = substr(h(trim(strip_tags(
                             $post_arr['strid']))), 0, 255);
         }
         // lauks drīkst būt tukšs, kas nozīmē, ka ieraksts būs placeholderis
@@ -143,7 +143,7 @@ class Model_List_Minigames extends Model {
     
         // pārbauda, vai raksts ar norādīto strid eksistē       
         if (isset($post_arr['strid'])) {
-            $entry->strid = substr(htmlspecialchars(trim(strip_tags(
+            $entry->strid = substr(h(trim(strip_tags(
                                    $post_arr['strid']))), 0, 255);
             if ($entry->strid !== '') {
                 $if_exists = $this->fetch_page($entry->strid);

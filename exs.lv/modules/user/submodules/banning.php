@@ -123,7 +123,7 @@ if ($is_in_group) {
  */
 if (isset($_POST['block-reason'])) {
 
-	$reason = sanitize(htmlspecialchars($_POST['block-reason']));
+	$reason = sanitize(h($_POST['block-reason']));
 	$length = (isset($_POST['block-length'])) ? (int)$_POST['block-length'] : 0;
 	if ($length < 1) {
 		$length = 259200; // 3 diennaktis

@@ -21,9 +21,9 @@ if ($auth->ok) {
 		  die('Tavām stulbībām te nav vietas :(');
 		  }
 
-		  $question = sanitize(htmlspecialchars(substr(strip_tags(trim($_POST['question'])),0,240)));
-		  $answ0 = 		sanitize(htmlspecialchars(substr(strip_tags(trim($_POST['answ0'])),0,200)));
-		  $answ1 = 		sanitize(htmlspecialchars(substr(strip_tags(trim($_POST['answ1'])),0,200)));
+		  $question = sanitize(h(substr(strip_tags(trim($_POST['question'])),0,240)));
+		  $answ0 = 		sanitize(h(substr(strip_tags(trim($_POST['answ0'])),0,200)));
+		  $answ1 = 		sanitize(h(substr(strip_tags(trim($_POST['answ1'])),0,200)));
 		  $slug = mkslug($_POST['question']);
 
 		  if(empty($slug)) {
@@ -92,7 +92,7 @@ if ($auth->ok) {
 						'answ0' => $question->answ0,
 						'answ1' => $question->answ1,
 						'answ1' => $question->answ1,
-						'nick' => htmlspecialchars($author->nick),
+						'nick' => h($author->nick),
 						'comments' => comments_block('qg-' . $question->id)
 					));
 				} else {
@@ -112,7 +112,7 @@ if ($auth->ok) {
 						'count1' => $answ1,
 						'percent0' => ceil(100 / $total * $answ0),
 						'percent1' => ceil(100 / $total * $answ1),
-						'nick' => htmlspecialchars($author->nick),
+						'nick' => h($author->nick),
 						'comments' => comments_block('qg-' . $question->id)
 					));
 				}
@@ -194,7 +194,7 @@ if ($auth->ok) {
 					'count1' => $answ1,
 					'percent0' => ceil(100 / $total * $answ0),
 					'percent1' => ceil(100 / $total * $answ1),
-					'nick' => htmlspecialchars($author->nick),
+					'nick' => h($author->nick),
 					'comments' => comments_block('qg-' . $question->id)
 				));
 

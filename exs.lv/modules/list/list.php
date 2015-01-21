@@ -90,7 +90,7 @@ if ($category->isforum) {
 				$author = get_user($topic->author);
 				$tpl->assign(array(
 					'date' => display_time(strtotime($topic->bump)),
-					'topic' => '<a href="/read/' . $topic->strid . '" title="' . htmlspecialchars($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
+					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
 					'author' => '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>'
 				));
 			}
@@ -304,7 +304,7 @@ if (!$category->mods_only || im_mod()) {
 					$tpl->newBlock('list-avatar');
 					$tpl->assign(array(
 						'node-avatar-image' => '/' . trim($article->avatar),
-						'node-avatar-alt' => trim(htmlspecialchars($article->title))
+						'node-avatar-alt' => trim(h($article->title))
 					));
 				}
 			}

@@ -66,7 +66,7 @@ if ($inprofile) {
 				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$inprofile->id'");
 
 		$tpl->assign(array(
-			'user-nick' => htmlspecialchars($inprofile->nick),
+			'user-nick' => h($inprofile->nick),
 			'user-date' => $inprofile->date,
 			'user-days' => round($days),
 			'user-days-text' => lv_dsk($days, 'dienas', 'dienām'),
@@ -116,7 +116,7 @@ if ($inprofile) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Mājaslapa',
-				'value' => add_smile('<a href="' . htmlspecialchars($inprofile->web) . '" rel="nofollow">' . htmlspecialchars($inprofile->web) . '</a>', 0, 1, 1)
+				'value' => add_smile('<a href="' . h($inprofile->web) . '" rel="nofollow">' . h($inprofile->web) . '</a>', 0, 1, 1)
 			));
 		}
 
@@ -124,7 +124,7 @@ if ($inprofile) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Skype',
-				'value' => '<a href="skype:' . htmlspecialchars($inprofile->skype) . '?chat">' . htmlspecialchars($inprofile->skype) . '</a>'
+				'value' => '<a href="skype:' . h($inprofile->skype) . '?chat">' . h($inprofile->skype) . '</a>'
 			));
 		}
 
@@ -240,7 +240,7 @@ if ($inprofile) {
 				$tpl->assign(array(
 					'id' => $view->viewer,
 					'date' => date('d.m.Y. H:i', $view->time),
-					'nick' => htmlspecialchars($view->nick),
+					'nick' => h($view->nick),
 					'avatar' => $avatar
 				));
 			}
