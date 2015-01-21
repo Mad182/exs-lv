@@ -1296,23 +1296,6 @@ a.friend img, .comments-avatar {
 	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* parastie bulleti iekš minibloga satura */
-#wrapper #miniblog-list li div.post-content ul {
-	overflow: hidden;
-	margin: 5px 10px 6px 20px;
-	padding: 0 0 0 20px;
-	list-style-type: disc;
-}
-
-#wrapper #miniblog-list li div.post-content li {
-	border: 0;
-	height: auto;
-	min-height: 0;
-	margin: 0;
-	padding: 3px 4px 0 0;
-}
-
-
 .blockhref li {
 	font-size: 12px;
 	text-decoration: none;
@@ -4174,5 +4157,26 @@ img.show-banned:hover {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+}
+
+/* parastie bulleti iekš postu satura */
+#wrapper #miniblog-list li div.post-content ul,
+#full-story ul,
+.response-content ul {
+	overflow: hidden;
+	margin: 6px 10px 6px 20px;
+	padding: 0 0 0 20px;
+	list-style-type: disc;
+}
+
+#wrapper #miniblog-list li div.post-content li,
+#full-story ul li,
+.response-content ul li {
+	border: 0;
+	height: auto;
+	min-height: 0;
+	margin: 0;
+	padding: 3px 4px 0 0;
+	background: transparent;
 }
 
