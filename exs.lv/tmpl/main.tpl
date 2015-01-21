@@ -400,23 +400,23 @@
 					</div>
 					<!-- END BLOCK : group-box-->
 
-					<!-- START BLOCK : friendssay-box-->
+					<!-- START BLOCK : mb-box-->
 					<h3>Miniblogi{miniblog-add}</h3>
 
 					<div class="box">
 
 						<ul class="tabs" id="tabs-justified-3">
 							<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
-							<!-- START BLOCK : friendssay-tabs-->
+							<!-- START BLOCK : mb-tabs-->
 							<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
-							<!-- END BLOCK : friendssay-tabs-->
+							<!-- END BLOCK : mb-tabs-->
 							<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><span class="music">Klausās</span></a></li>
 						</ul>
 						<div class="c"></div>
 						<div id="miniblog-block" class="ajaxbox">{out}</div>
 					</div>
 
-					<!-- END BLOCK : friendssay-box-->
+					<!-- END BLOCK : mb-box-->
 
 					<!-- START BLOCK : side-junk-->
 					<h3>/junk</h3>

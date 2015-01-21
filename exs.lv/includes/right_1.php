@@ -117,7 +117,7 @@ if ($junks) {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-$tpl->newBlock('friendssay-box');
+$tpl->newBlock('mb-box');
 $sel = 'all';
 if (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') {
 	$mbs = get_latest_mbs('friends');
@@ -132,7 +132,7 @@ if (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') 
 $tpl->assign('out', $mbs);
 
 if ($auth->ok) {
-	$tpl->newBlock('friendssay-tabs');
+	$tpl->newBlock('mb-tabs');
 }
 $tpl->assignGlobal(array(
 	$sel . '-selected' => 'active '
@@ -157,4 +157,3 @@ if ($auth->ok === true) {
 if ($auth->skin == 1) {
 	$tpl->assignGlobal('twitter-theme', ' data-theme="dark"');
 }
-

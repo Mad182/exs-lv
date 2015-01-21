@@ -330,22 +330,22 @@
 				</div>
 				<!-- END BLOCK : profile-box-->
 
-				<!-- START BLOCK : friendssay-box-->
+				<!-- START BLOCK : mb-box-->
 				<h3>Mini blogi{miniblog-add}</h3>
 
 				<div class="box">
 
-					<!-- START BLOCK : friendssay-tabs-->
+					<!-- START BLOCK : mb-tabs-->
 					<ul class="tabs">
 						<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}mbs-all ajax"><span class="comments">Visi</span></a></li>
 						<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}mbs-friends ajax"><span class="friends">Draugu</span></a></li>
 					</ul>
 					<div class="c"></div>
-					<!-- END BLOCK : friendssay-tabs-->
+					<!-- END BLOCK : mb-tabs-->
 					<div id="miniblog-block" class="ajaxbox">{out}</div>
 				</div>
 
-				<!-- END BLOCK : friendssay-box-->
+				<!-- END BLOCK : mb-box-->
 
 				<!-- START BLOCK : poll-box-->
 				<h3>Aptauja</h3>

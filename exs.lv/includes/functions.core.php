@@ -1820,7 +1820,7 @@ function get_latest_mbs($tab = 'all') {
 		return get_latest_music();
 	}
 
-	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
+	$out = '<ul id="mb-list" class="blockhref mb-col">';
 
 	if (isset($_GET['pg'])) {
 		$skip = 6 * intval($_GET['pg']);
@@ -2421,7 +2421,7 @@ function lastfm_update_tracks($user_id) {
 function get_latest_music() {
 	global $auth, $db, $lang, $config_domains, $img_server;
 
-	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
+	$out = '<ul id="mb-list" class="blockhref mb-col">';
 
 	if (isset($_GET['pg'])) {
 		$skip = 6 * intval($_GET['pg']);

@@ -62,7 +62,7 @@ if (!empty($inprofile)) {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-$tpl->newBlock('friendssay-box');
+$tpl->newBlock('mb-box');
 $tpl->assign('out', get_latest_mbs());
 
 //lietotāja notifikācijas
