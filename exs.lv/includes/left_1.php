@@ -35,7 +35,7 @@ $parent_id = get_top($category->id);
 if ($parent_id != 0) {
 	$menuitems = $db->get_results("SELECT `id`,`title`,`textid`,`parent` FROM `cat` WHERE `parent` = '" . $parent_id . "' AND `parent` != '110' AND `parent` != '101' AND `mods_only` = '0' ORDER BY `title` ASC");
 
-    if ($menuitems) {
+	if ($menuitems) {
 		$tpl->newBlock('menu-list');
 		$tpl->assign(array(
 			'topid' => $parent_id,
@@ -125,11 +125,11 @@ if ($auth->ok === true) {
 }
 
 //dateks reklāmas
-if ($html = show_dateks_view()) {
-	$tpl->newBlock('dateks-ads');
-	$tpl->assign('out', $html);
-	unset($html);
-}
+/* if ($html = show_dateks_view()) {
+  $tpl->newBlock('dateks-ads');
+  $tpl->assign('out', $html);
+  unset($html);
+  } */
 
 //filmu meklētājs
 if ($category->module == 'movies') {

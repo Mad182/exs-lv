@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Tekstuālās sadaļas
+ *
+ * Attēlo tekstu no content lauka cat tabulā
+ */
 if (isset($_GET['edit']) && im_mod()) {
 
 	if (isset($_POST['content'])) {
