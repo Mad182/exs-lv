@@ -4,26 +4,14 @@
  * functions.core.php
  * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
  */
-/**
- * Functions related to awards
- */
-include_once(CORE_PATH . '/includes/functions.awards.php');
-/**
- *  Functions related to widgets
- */
-include_once(CORE_PATH . '/includes/functions.embed.php');
+// functions related to awards
+require(CORE_PATH . '/includes/functions.awards.php');
 
-/**
- * utf-8 ucfirst
- */
-if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
+// functions related to widgets
+require(CORE_PATH . '/includes/functions.embed.php');
 
-	function mb_ucfirst($string) {
-		$string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
-		return $string;
-	}
-
-}
+// compatibility with older php versions
+require(CORE_PATH . '/includes/functions.legacy.php');
 
 /**
  *  Pārveido stringu par pieļaujamu klases nosaukumu
@@ -55,110 +43,6 @@ function as_class_name($name = '') {
  */
 function h($str) {
 	return htmlspecialchars($str);
-}
-
-/**
- * For legacy php versions
- */
-if (!function_exists('http_response_code')) {
-
-	function http_response_code($code = NULL) {
-
-		if ($code !== NULL) {
-
-			switch ($code) {
-				case 100: $text = 'Continue';
-					break;
-				case 101: $text = 'Switching Protocols';
-					break;
-				case 200: $text = 'OK';
-					break;
-				case 201: $text = 'Created';
-					break;
-				case 202: $text = 'Accepted';
-					break;
-				case 203: $text = 'Non-Authoritative Information';
-					break;
-				case 204: $text = 'No Content';
-					break;
-				case 205: $text = 'Reset Content';
-					break;
-				case 206: $text = 'Partial Content';
-					break;
-				case 300: $text = 'Multiple Choices';
-					break;
-				case 301: $text = 'Moved Permanently';
-					break;
-				case 302: $text = 'Moved Temporarily';
-					break;
-				case 303: $text = 'See Other';
-					break;
-				case 304: $text = 'Not Modified';
-					break;
-				case 305: $text = 'Use Proxy';
-					break;
-				case 400: $text = 'Bad Request';
-					break;
-				case 401: $text = 'Unauthorized';
-					break;
-				case 402: $text = 'Payment Required';
-					break;
-				case 403: $text = 'Forbidden';
-					break;
-				case 404: $text = 'Not Found';
-					break;
-				case 405: $text = 'Method Not Allowed';
-					break;
-				case 406: $text = 'Not Acceptable';
-					break;
-				case 407: $text = 'Proxy Authentication Required';
-					break;
-				case 408: $text = 'Request Time-out';
-					break;
-				case 409: $text = 'Conflict';
-					break;
-				case 410: $text = 'Gone';
-					break;
-				case 411: $text = 'Length Required';
-					break;
-				case 412: $text = 'Precondition Failed';
-					break;
-				case 413: $text = 'Request Entity Too Large';
-					break;
-				case 414: $text = 'Request-URI Too Large';
-					break;
-				case 415: $text = 'Unsupported Media Type';
-					break;
-				case 500: $text = 'Internal Server Error';
-					break;
-				case 501: $text = 'Not Implemented';
-					break;
-				case 502: $text = 'Bad Gateway';
-					break;
-				case 503: $text = 'Service Unavailable';
-					break;
-				case 504: $text = 'Gateway Time-out';
-					break;
-				case 505: $text = 'HTTP Version not supported';
-					break;
-				default:
-					exit('Unknown http status code "' . htmlentities($code) . '"');
-					break;
-			}
-
-			$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
-
-			header($protocol . ' ' . $code . ' ' . $text);
-
-			$GLOBALS['http_response_code'] = $code;
-		} else {
-
-			$code = (isset($GLOBALS['http_response_code']) ? $GLOBALS['http_response_code'] : 200);
-		}
-
-		return $code;
-	}
-
 }
 
 /**
@@ -1592,10 +1476,10 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 
-            //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
-            if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
-                $out .= ' <a href="/warns/'.$val->author.'/commentid/'.$val->id.'" class="post-button post-warn" title="Brīdināt">brīdināt</a>';
-            }
+			//moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
+			if ($val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author) {
+				$out .= ' <a href="/warns/' . $val->author . '/commentid/' . $val->id . '" class="post-button post-warn" title="Brīdināt">brīdināt</a>';
+			}
 
 			$out .= '</p>';
 			if ($val->mb_removed == 1) {
@@ -1932,7 +1816,7 @@ function get_latest_images() {
 function get_latest_mbs($tab = 'all') {
 	global $auth, $db, $lang, $config_domains, $img_server;
 
-	if($tab === 'music') {
+	if ($tab === 'music') {
 		return get_latest_music();
 	}
 
@@ -2486,7 +2370,7 @@ function lastfm_update_tracks($user_id) {
 
 	$user = get_user($user_id);
 
-	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-100) {
+	if (empty($user->lastfm_sessionkey) || $user->lastfm_updated > time() - 100) {
 		return false;
 	}
 
@@ -2515,18 +2399,16 @@ function lastfm_update_tracks($user_id) {
 		'lastfm_updated' => time()
 	));
 
-	if ( $tracks = $userClass->getRecentTracks($methodVars) ) {
+	if ($tracks = $userClass->getRecentTracks($methodVars)) {
 
 		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$user->id'");
 
-		foreach($tracks as $track) {
+		foreach ($tracks as $track) {
 
-			$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES ($user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
-
+			$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES ($user->id, '" . sanitize($track['name']) . "', '" . sanitize($track['mbid']) . "', '" . sanitize($track['url']) . "', " . intval($track['date']) . ", '" . sanitize($track['artist']['name']) . "', '" . sanitize($track['artist']['mbid']) . "', '" . sanitize($track['album']['name']) . "', '" . sanitize($track['album']['mbid']) . "', '" . sanitize($track['images']['small']) . "', '" . sanitize($track['images']['medium']) . "', '" . sanitize($track['images']['large']) . "', NOW())");
 		}
 
 		return true;
-
 	} else {
 
 		return false;
@@ -2550,7 +2432,7 @@ function get_latest_music() {
 	$friendsquery = '';
 	if ($auth->ok === true && $auth->lastfm_onlyfriends) {
 		$myfriends = get_friends_lastfm($auth->id);
-		if(!empty($myfriends)) {
+		if (!empty($myfriends)) {
 			$myfriends[] = $auth->id;
 			$friendsquery = 'AND `lastfm_tracks`.`user_id` IN(' . implode(',', $myfriends) . ')';
 		}
@@ -2581,7 +2463,7 @@ function get_latest_music() {
 
 			$time = time_ago($track->date);
 
-			if(!empty($track->images_small)) {
+			if (!empty($track->images_small)) {
 				$img = 'https://images.weserv.nl/?url=' . str_replace('http://', '', $track->images_medium);
 			} else {
 				//ja last.fm nedod avataru, rādam lietotāju
@@ -2589,8 +2471,6 @@ function get_latest_music() {
 			}
 
 			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . h($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . h($track->url) . '" rel="nofollow" target="_blank">' . h($track->artist_name) . ' - ' . h($track->name) . '</a></span></li>';
-
-
 		}
 	}
 
@@ -2611,7 +2491,7 @@ function get_latest_music() {
 	}
 	$out .= '</p>';
 
-	if($auth->ok === true) {
+	if ($auth->ok === true) {
 		$out .= '<p style="text-align:right"><a class="button button-xs primary" href="/lastfm">Iestatījumi</a></p>';
 	}
 
@@ -2628,11 +2508,10 @@ function get_game_monitor($url, $force = false) {
 
 	if ($force || !($html = $m->get($cache_key))) {
 		$html = curl_get($url);
-		if(!$html) {
+		if (!$html) {
 			$html = 'Offline';
 		}
 		$m->set($cache_key, $html, false, 300);
 	}
 	return $html;
 }
-
