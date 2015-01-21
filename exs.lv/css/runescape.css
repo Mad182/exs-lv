@@ -215,9 +215,7 @@ body {
         background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
         width: 76px;
     }
-#header-stuff {
-    top:7px
-}
+
 #top-menu {
     background:url('/bildes/runescape/pattern-navig.png') repeat-x;
     border-top: 1px solid #363535;

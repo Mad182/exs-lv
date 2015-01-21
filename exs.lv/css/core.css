@@ -255,14 +255,6 @@ html .banned {
 	height: 160px;
 }
 
-#header-stuff {
-	width: 728px;
-	height: 90px;
-	position: absolute;
-	right: 20px;
-	top: 28px;
-}
-
 #logo {
 	height: 118px;
 	position: relative;
@@ -3556,9 +3548,6 @@ ul.taged {
 }
 #logo {
 	height: 125px;
-}
-#header-stuff {
-	bottom: 7px;
 }
 
 #login-form input {
