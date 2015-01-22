@@ -52,6 +52,21 @@ function a_message($string = '') {
 }
 
 /**
+ *  Pievienos atbildei masīvā norādītās vērtības.
+ */
+function a_append($values) {
+    global $json_page;
+    
+    if (!is_array($values)) {
+        return;
+    }
+
+    foreach ($values as $key => $value) {
+        $json_page[$key] = $value;
+    }
+}
+
+/**
  *  Saglabās ziņojumu datubāzes `android_logs` tabulā,
  *  piefiksējot atvērto adresi, lai zinātu, ko lietotājs centās atvērt.
  */

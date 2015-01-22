@@ -239,7 +239,7 @@ function push($action, $avatar = '', $multi = '') {
 }
 
 /**
- * Veic ierakstu leitotāja pēdējās darbībās
+ * Veic ierakstu lietotāja pēdējās darbībās
  */
 function userlog($user, $action, $avatar = '', $multi = '') {
 	global $db, $lang;
