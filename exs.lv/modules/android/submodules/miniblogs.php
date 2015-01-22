@@ -1,19 +1,80 @@
 <?php
 /**
  *  Android miniblogu apakšmodulis.
+ *
+ *  Apstrādā pieprasījumus saistībā ar darbībām miniblogos, tai skaitā
+ *  jauna minibloga pievienošanu vai esoša komentēšanu, vērtēšanu u.c.
  */
 
 // nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
 
+// piegriezies rakstīt isset pārbaudi un neērto $_GET
+$var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
+
 
 /**
  *  Atgriezīs jaunāko miniblogu sarakstu.
  */
-if (isset($_GET['var1']) && $_GET['var1'] == 'getlist') {
+if ($var1 === 'getlist') {
 
     $json_page = a_fetch_miniblogs();
 
+/**
+ *  Iesniegti jauna minibloga pievienošanas dati.
+ */
+} else if ($var1 === 'new') {
+
+    // dažādas drošības pārbaudes
+    if (!isset($_GET['xsrf']) || !a_check_xsrf($_GET['xsrf'])) {
+        a_error('Hacking around?');
+        a_log('Pievienojot jaunu miniblogu, nenorādīja XSRF atslēgu');
+    } else if (!isset($_POST['mb_content'])) {
+        a_error('Pievienošanas kļūda');
+    } else if (empty($_POST['mb_content'])) {
+        a_error('Nevar pievienot tukšu miniblogu');
+        
+    // plūdu kontrole
+    } else if (isset($_SESSION['antiflood']) && 
+               $_SESSION['antiflood'] >= time() - 15) {
+        a_error('Pārāk bieža pievienošana, brīdi uzgaidi');
+    
+    // minibloga pievienošana
+    } else {
+        $_SESSION['antiflood'] = time();
+        
+        $mb_content = post2db($_POST['mb_content']);
+        
+        // vai miniblogs ir slēpjams no botiem un crawleriem?
+        $is_private = (isset($_POST['private'])) ? 1 : 0;
+        
+        // ja viss kārtībā, drīkst pievienot
+        $insert_id = post_mb(array(
+            'text' => $mb_content,
+            'private' => $is_private,
+            'lang' => $android_lang
+        ));
+        
+        // vēl tik jāpievieno pāris notifikācijas...
+        $inserted_mb = $db->get_row('
+            SELECT `id`, `text` FROM `miniblog` WHERE `id` = '.(int)$insert_id
+        );
+        $mb_title = mb_get_title($inserted_mb->text);
+		$mb_strid = mb_get_strid($mb_title, $inserted_mb->id);
+        
+        push('Izveidoja <a href="/say/'.$auth->id.'/'.$inserted_mb->id.'-'.$mb_strid.'">minibloga ierakstu &quot;'.textlimit(hide_spoilers($mb_title), 32, '...') . '&quot;</a>');
+        
+        // pieminēto lietotāju lietotājvārdu apstrāde
+        $inserted_mb->text = mention($inserted_mb->text, 
+                                     '/say/'.$auth->id.'/'.$inserted_mb->id.'-'.$mb_strid, 
+                                     'mb', $inserted_mb->id);
+        $db->update('miniblog', $inserted_mb->id, array(
+            'text' => sanitize($inserted_mb->text)
+        ));
+        
+        a_message('Miniblogs pievienots');
+        a_append(array('miniblog_id' => $insert_id));
+    }
 
 /**
  *  Izvēlēts konkrēts miniblogs (der arī tie no grupām).
@@ -21,7 +82,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'getlist') {
  *
  *  TODO: pārbaudīt, vai attiecīgajam grupas mb lietotājam ir piekļuve
  */
-} else if (isset($_GET['var1'])) {
+} else if (!empty($var1)) {
 
     $parent_mb_id = (int)$_GET['var1'];
 
