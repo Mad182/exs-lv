@@ -90,13 +90,19 @@ if ($var1 === 'getlist') {
 
     // atlasa minibloga informāciju
     $miniblog = $db->get_row("
-        SELECT * FROM `miniblog`
+        SELECT 
+            `miniblog`.*,
+            IFNULL(`clans`.`id`, 0) AS `clan_id`,
+            `clans`.`title` AS `clan_title`,
+            `clans`.`avatar` AS `clan_avatar`
+        FROM `miniblog`
+            LEFT JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
         WHERE 
-            `id`        = ".$parent_mb_id." AND
-            `removed`   = 0 AND 
-            `parent`    = 0 AND 
-            `lang`      = ".(int)$android_lang."
-        ORDER BY `bump` DESC
+            `miniblog`.`id`        = ".$parent_mb_id." AND
+            `miniblog`.`removed`   = 0 AND 
+            `miniblog`.`parent`    = 0 AND 
+            `miniblog`.`lang`      = ".(int)$android_lang."
+        ORDER BY `miniblog`.`bump` DESC
     ");
     
     if (!$miniblog) {
@@ -122,7 +128,6 @@ if ($var1 === 'getlist') {
             // galvenā minibloga vērtēšana
             } else if ($var2 == 'plus') {
                 a_rate_comment($miniblog->id, 'miniblog', true);
-
             } else if ($var2 == 'minus') {
                 a_rate_comment($miniblog->id, 'miniblog', false);
             }
@@ -140,9 +145,16 @@ if ($var1 === 'getlist') {
         } else {          
             
             // paredzēts avataru funkcijai
-            $miniblog->av_alt = 1;            
-                        
-            $key = substr(md5($miniblog->id . $remote_salt . $auth->id), 0, 5);
+            $miniblog->av_alt = 1;
+            
+            // miniblogs var būt un var nebūt no kādas grupas
+            $clan_id = 0;
+            $clan_title = $clan_av_url = '';
+            if (!empty($miniblog->clan_id)) {
+                $clan_id = (int)$miniblog->clan_id;
+                $clan_title = $miniblog->clan_title;
+                $clan_av_url = $img_server.'/userpic/large/'.$miniblog->clan_avatar;
+            }
             
             // galvenā minibloga informācija
             $array_miniblog = array(
@@ -150,10 +162,12 @@ if ($var1 === 'getlist') {
                 'text' => strip_tags(add_smile($miniblog->text), '<img><p><strong><b><i><em>'),
                 'date' => display_time(strtotime($miniblog->date)),
                 'author' => a_fetch_user($author->id, $author->nick, $author->level),
+                'author_av_url' => a_get_user_avatar($author, 's'),
                 'vote' => (int)$miniblog->vote_value,
-                'av_url' => a_get_user_avatar($author, 's'),
                 'is_closed' => (bool)$miniblog->closed,
-                'safe' => $key
+                'group_id' => $clan_id,
+                'group_title' => $clan_title,
+                'group_av_url' => $clan_av_url
             );
 
             $json = array();
@@ -167,7 +181,7 @@ if ($var1 === 'getlist') {
                         `removed`, `vote_value` AS `vote`
                     FROM `miniblog`
                     WHERE
-                        `parent` = '" . $miniblog->id . "' AND
+                        `parent` = " . (int)$miniblog->id . " AND
                         `type`   = 'miniblog'
                     ORDER BY `id` ASC
                 ");
@@ -196,12 +210,8 @@ if ($var1 === 'getlist') {
                             $response->text = strip_tags(add_smile($response->text, 0, 0, 1), '<img><p><strong><b><i><em>');
                         }
                         
-                        $response->date     = display_time(strtotime($response->date));
-                        $response->avatar   = a_get_user_avatar($author, 's');
-                        
-                        // drošības atslēga, ko lietotnē pievienos adreses galā,
-                        // lai novērstu xsrf-tipa uzbrukumus, ja android lapu skatās caur pārlūku
-                        $response->safe = substr(md5($response->id . $remote_salt . $auth->id), 0, 5);
+                        $response->date = display_time(strtotime($response->date));
+                        $response->avatar = a_get_user_avatar($author, 's');
                     
                         $json[$response->reply_to][] = $response;
                     }  
