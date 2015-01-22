@@ -96,7 +96,7 @@ if ($var1 === 'getlist') {
             `clans`.`avatar` AS `clan_avatar`,
             `clans`.`public` AS `clan_public`,
             `clans`.`owner` AS `clan_owner`,
-            IFNULL(`clans_members`.`id`, 0) AS `is_member`
+            IFNULL(`clans_members`.`approve`, 0) AS `is_member`
         FROM `miniblog`
             LEFT JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
             LEFT JOIN `clans_members` ON (
@@ -124,10 +124,10 @@ if ($var1 === 'getlist') {
             $clan_title = $miniblog->clan_title;
             $clan_av_url = $img_server.'/userpic/large/'.$miniblog->clan_avatar;
         }
-        
+
         // liedz darboties miniblogā, kas ir slēgtā grupā,
         // kurai lietotājam nav piekļuves
-        if ($clan_id !== 0 && $miniblog->is_member === 0) {
+        if ($clan_id !== 0 && $miniblog->is_member == '0' && $miniblog->clan_owner != $auth->id) {
             a_error('Nav pieejas');
             a_log('Mēģināja darboties miniblogā, kuram nav pieejas');           
         } else {    
