@@ -11,6 +11,8 @@
 
 // piegriezies rakstīt isset pārbaudi un neērto $_GET
 $var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
+$var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
+$var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 
 /**
@@ -66,7 +68,7 @@ if ($var1 === 'getlist') {
         
         // pieminēto lietotāju lietotājvārdu apstrāde
         $inserted_mb->text = mention($inserted_mb->text, 
-                                     '/say/'.$auth->id.'/'.$inserted_mb->id.'-'.$mb_strid, 
+                                     '/say/'.$auth->id.'/'.$inserted_mb->id.'-'.$mb_strid,
                                      'mb', $inserted_mb->id);
         $db->update('miniblog', $inserted_mb->id, array(
             'text' => sanitize($inserted_mb->text)
@@ -84,22 +86,22 @@ if ($var1 === 'getlist') {
  */
 } else if (!empty($var1)) {
 
-    $parent_mb_id = (int)$_GET['var1'];
+    $parent_mb_id = (int)$var1;
 
     // atlasa minibloga informāciju
     $miniblog = $db->get_row("
-        SELECT 
-            `miniblog`.*
-        FROM `miniblog`
+        SELECT * FROM `miniblog`
         WHERE 
-            `id`        = " . $parent_mb_id . " AND
+            `id`        = ".$parent_mb_id." AND
             `removed`   = 0 AND 
             `parent`    = 0 AND 
             `lang`      = ".(int)$android_lang."
         ORDER BY `bump` DESC
     ");
     
-    if ($miniblog) {
+    if (!$miniblog) {
+        a_error('Miniblogs nav atrasts');
+    } else {
     
         $author = get_user($miniblog->author);
         if ($author->deleted) {
@@ -107,33 +109,31 @@ if ($var1 === 'getlist') {
         }
     
         // minibloga vērtēšana
-        if (isset($_GET['var2']) && 
-            in_array($_GET['var2'], array('plus', 'minus'))) {
+        if (in_array($var2, array('plus', 'minus'))) {
         
             // miniblogā esoša komentāra vērtēšana
-            if (isset($_GET['var3'])) {
-                if ($_GET['var2'] == 'plus') {
-                    a_rate_comment((int)$_GET['var3'], 'miniblog', true);
+            if (!empty($var3)) {
+                if ($var2 === 'plus') {
+                    a_rate_comment((int)$var3, 'miniblog', true);
                 } else {
-                    a_rate_comment((int)$_GET['var3'], 'miniblog', false);
+                    a_rate_comment((int)$var3, 'miniblog', false);
                 }
 
             // galvenā minibloga vērtēšana
-            } else if ($_GET['var2'] == 'plus') {
+            } else if ($var2 == 'plus') {
                 a_rate_comment($miniblog->id, 'miniblog', true);
 
-            } else if ($_GET['var2'] == 'minus') {
+            } else if ($var2 == 'minus') {
                 a_rate_comment($miniblog->id, 'miniblog', false);
             }
         
         // atbildes pievienošana
-        } else if (isset($_POST['comment'])) {
-            if (!empty($_POST['comment']) && isset($_POST['comment_id'])) {
+        } else if (!empty($_POST['comment'])) {
+            if (isset($_POST['comment_id'])) {
                 a_add_mb_comment(array('id' => $author->id, 
-                                       'nick' => $author->nick),
-                                 true);
+                                       'nick' => $author->nick), true);
             } else {
-                a_error('Kļūdaini komentāra dati!');
+                a_error('Kļūdaini komentāra dati');
             }
         
         // atgriež minibloga saturu
@@ -142,21 +142,18 @@ if ($var1 === 'getlist') {
             // paredzēts avataru funkcijai
             $miniblog->av_alt = 1;            
                         
-            $key = substr(md5($miniblog->id . $remote_salt . $auth->id),
-                                  0, 5);
+            $key = substr(md5($miniblog->id . $remote_salt . $auth->id), 0, 5);
             
             // galvenā minibloga informācija
             $array_miniblog = array(
-                'id'        => (int)$miniblog->id,
-                'text'      => strip_tags(add_smile($miniblog->text), 
-                                          '<img><p><strong><b><i><em>'),
-                'date'      => display_time(strtotime($miniblog->date)),
-                'author'    => a_fetch_user($author->id, $author->nick, 
-                                            $author->level),
-                'vote'      => (int)$miniblog->vote_value,
-                'av_url'    => a_get_user_avatar($author, 's'),
+                'id' => (int)$miniblog->id,
+                'text' => strip_tags(add_smile($miniblog->text), '<img><p><strong><b><i><em>'),
+                'date' => display_time(strtotime($miniblog->date)),
+                'author' => a_fetch_user($author->id, $author->nick, $author->level),
+                'vote' => (int)$miniblog->vote_value,
+                'av_url' => a_get_user_avatar($author, 's'),
                 'is_closed' => (bool)$miniblog->closed,
-                'safe'      => substr(md5($miniblog->id . $remote_salt . $auth->id), 0, 5)
+                'safe' => $key
             );
 
             $json = array();
@@ -221,9 +218,6 @@ if ($var1 === 'getlist') {
                 'comments'  => $json
             );
         }
-
-    } else {
-        a_error('Miniblogs nav atrasts');
     }
 
 } else {
