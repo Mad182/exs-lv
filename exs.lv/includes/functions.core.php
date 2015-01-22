@@ -243,10 +243,15 @@ function push($action, $avatar = '', $multi = '') {
  */
 function userlog($user, $action, $avatar = '', $multi = '') {
 	global $db, $lang;
+    $tmp_lang = $lang;
+    if ($lang === 2) { // android.exs.lv
+        global $android_lang;
+        $tmp_lang = $android_lang;
+    }
 	if (!empty($multi)) {
-		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang' LIMIT 2");
+		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$tmp_lang' LIMIT 2");
 	}
-	$db->query("INSERT INTO `userlogs` (time,user,avatar,action,multi,lang) VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang')");
+	$db->query("INSERT INTO `userlogs` (time,user,avatar,action,multi,lang) VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$tmp_lang')");
 	return true;
 }
 
