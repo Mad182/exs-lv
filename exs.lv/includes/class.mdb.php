@@ -114,7 +114,7 @@ class mdb extends mysqli {
 
 		foreach ($data as $key => $val) {
 			$keys[] = $key;
-			$values[] = "'" . $val . "'";
+			$values[] = ($val === 'NOW()') ? "NOW()" : "'" . $val . "'";
 		}
 		if (empty($keys) || empty($values))
 			return false;
@@ -125,6 +125,4 @@ class mdb extends mysqli {
 		$this->query("INSERT INTO `$table` ($keys) VALUES($values)");
 		return ($this->affected_rows > 0);
 	}
-
 }
-
