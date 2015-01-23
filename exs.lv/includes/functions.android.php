@@ -35,6 +35,9 @@ function a_make_xsrf() {
 function a_check_xsrf($key = '') {
     global $auth;
     if (empty($key)) {
+        if (!empty($_GET['xsrf'])) {
+            return (substr($auth->xsrf, 0, 7) === $_GET['xsrf']);
+        }
         return false;
     }
     return (substr($auth->xsrf, 0, 7) === $key);
@@ -504,9 +507,9 @@ function a_get_user_avatar($user, $size = 'm') {
 }
 
 /**
- *  Komentāra vērtēšana.
+ *  Novērtēs norādīto komentāru ar plusu vai mīnusu.
  *
- *  Strādā rakstos, miniblogos un attēlos
+ *  Strādā rakstos, miniblogos un attēlos.
  *
  *  @param int      vērtējamā komentāra id
  *  @param string   'article'/'miniblog'/'image'
@@ -515,16 +518,19 @@ function a_get_user_avatar($user, $size = 'm') {
 function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 	global $db, $auth, $remote_salt, $json_page;
 	
+    $comment_id = (int)$comment_id;
+	$positive = ($positive) ? 'plus' : 'minus';
+    
+    // dažādas drošības pārbaudes
 	if ($comment_id == 0) {
 		a_error('Kļūda'); 
 		return;
-	}
-	
-	$comment_id  = (int)$comment_id;
-	$positive   = ($positive) ? 'plus' : 'minus';
-	
-	// vērtēt neļauj pārāk bieži
-	if (isset($_SESSION['antiflood_rate']) && 
+	} else if (!a_check_xsrf()) {
+        a_error('no hacking, pls');
+        return;
+        
+    // vērtēt pārāk bieži nav atļauts
+    } else if (isset($_SESSION['antiflood_rate']) && 
 		microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
 		
 		$_SESSION['antiflood_rate'] = microtime(true);
@@ -549,7 +555,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 		return;
 	}
 	
-	// nosaka datubāzes tabulu, kuras ieraksts jāvērtē
+	// noteiks datubāzes tabulu, kuras ieraksts jāvērtē
 	$table = 'comments';
 	if ($type === 'miniblog') {
 		$table = 'miniblog';
@@ -561,7 +567,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 	$comment = $db->get_row("
 		SELECT `id`, `vote_users`, `vote_value`, `author` 
 		FROM `" . $table . "` 
-		WHERE `id` = " . (int)$comment_id . "
+		WHERE `id` = " . $comment_id . "
 	");
 	if (!$comment || empty($comment)) {
 		a_error('Vērtēts neeksistējošs ieraksts'); 
@@ -573,15 +579,8 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 		a_error('Savu ierakstu nevar vērtēt'); 
 		return;
 	}
-	
-	// drošības atslēgas pārbaude xsrf tipa uzbrukumiem
-	$key = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
-	if (!isset($_GET['safe']) || $_GET['safe'] != $key) {
-		a_error('no hacking, pls'); 
-		return;
-	}
 
-	// pārbauda, vai šis lietotājs komentāru jau nav vērtējis
+	// pārbaudīs, vai šis lietotājs komentāru jau nav vērtējis
 	$voters = array();
 	if (!empty($comment->vote_users)) {
 		$voters = unserialize($comment->vote_users);
@@ -591,7 +590,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 		return;
 	}
 	
-	// pievieno šo lietotāju komentāra vērtētājiem
+	// pievienos šo lietotāju komentāra vērtētājiem
 	$voters[] = $auth->id;
 	$comment->vote_users = serialize($voters);
 
@@ -602,7 +601,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 			SET
 				`vote_value` = (`vote_value` + 1), 
 				`vote_users` = '" . $comment->vote_users . "' 
-			WHERE `id` = " . (int)$comment_id . "
+			WHERE `id` = " . $comment_id . "
 		");
 		$db->query("
 			UPDATE `users` 
@@ -614,15 +613,15 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 		");
 		$comment->vote_value++;
 		get_user($auth->id, true);
-	}
-	// mīnusiņš!
-	else {
+	
+    // mīnusiņš!
+    } else {
 		$db->query("
 			UPDATE `" . $table . "` 
 			SET 
 				`vote_value` = (`vote_value` - 1), 
 				`vote_users` = '" . $comment->vote_users . "' 
-			WHERE `id` = " . (int)$comment_id . "
+			WHERE `id` = " . $comment_id . "
 		");
 		$db->query("
 			UPDATE `users` 
@@ -637,9 +636,7 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 	}
 	
 	// atgriezīs lietotnei jauno vērtējumu
-	$json_page = array(
-		'vote_value' => (int)$comment->vote_value
-	);
+    a_append(array('vote_value' => (int)$comment->vote_value));
 }
 
 /**
@@ -649,22 +646,27 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
  */
 function a_add_mb_comment($inprofile, $android = false) {
 	global $db, $auth, $remote_salt;
- 
-	if (!isset($_POST['comment_id']) || !isset($_POST['comment'])) {
-		a_error('Kļūdains pieprasījums!'); return;
+    
+    // dažādas drošības pārbaudes
+    if (!a_check_xsrf()) {
+        a_error('no hacking, pls');
+        return;
+    } else if (!isset($_POST['comment_id']) || !isset($_POST['comment'])) {
+		a_error('Kļūdains pieprasījums!');
+        return;
 	}
+    
 	$to = intval($_POST['comment_id']);
-	
-	/*if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
-		a_error('Hacking around?'); return;
-	}*/
 
 	if (get_mb_level($to) > 1 && $auth->level != 1) {
-		a_error('Too deep ;('); return;
+		a_error('Too deep ;(');
+        return;
 	}
 
 	// parent komentāra dati
-	$reply_to = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$to' AND `removed` = '0' AND `groupid` = '0' ");
+	$reply_to = $db->get_row("
+        SELECT * FROM `miniblog` WHERE `id` = ".$to." AND `removed` = 0 AND `groupid` = 0"
+    );
 
 	$reply_to_id = 0;
 	$mainid = $to;
@@ -677,13 +679,19 @@ function a_add_mb_comment($inprofile, $android = false) {
 	$body = post2db($_POST['comment']);
 
 	// vai parents eksistē? vai tēma nav slēgta?
-	$check = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `removed` = '0' AND `groupid` = '0' ");
+	$check = $db->get_var("
+        SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `removed` = 0 AND `groupid` = 0
+    ");
 	if (!$check || $check != $inprofile['id']) {
-		a_error('Kļūdains parent id!'); return;
+		a_error('Kļūdains parent id!');
+        return;
 	}
-	$check2 = $db->get_var("SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `closed` = '1' ");
+	$check2 = $db->get_var("
+        SELECT `author` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `closed` = 1
+    ");
 	if ($check2) {
-		a_error('Miniblogs slēgts'); return;
+		a_error('Miniblogs slēgts');
+        return;
 	}
 	
 	// viss kārtībā, var pievienot
@@ -695,11 +703,12 @@ function a_add_mb_comment($inprofile, $android = false) {
 		}        
 		$_SESSION["antiflood"] = time();
 
-		// pievieno komentāru
+		// pievienos komentāru
 		$newid = post_mb(array(
 			'text' => $body,
 			'parent' => $mainid,
-			'reply_to' => $reply_to_id
+			'reply_to' => $reply_to_id,
+            'lang' => $android_lang
 		));
 
 		if ($check == $auth->id) {
@@ -707,7 +716,7 @@ function a_add_mb_comment($inprofile, $android = false) {
 		} else {
 			$str = $inprofile['nick'];
 		}
-		$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid' ");
+		$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
 
 		$title = mb_get_title(stripslashes($body));
 		$strid = mb_get_strid($title, $mainid);
