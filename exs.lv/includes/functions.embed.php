@@ -369,9 +369,19 @@ function embed_widgets($txt, $wide = 0) {
 	}
 
 	// gifv video
-	if (strpos($txt, 'gifv') !== false) {
+	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.gifv\/?#im", 'embed_gifv', $txt
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.(gifv|webm)\/?#im", 'embed_gifv_imgur', $txt
+		);
+	}
+	
+	//gfycat
+	if (strpos($txt, 'gfycat') !== false) {
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/fat\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/?#im", 'embed_gifv_gfycat', $txt
+		);
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/www\.gfycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
 		);
 	}
 
@@ -781,7 +791,23 @@ function embed_vimeo($params) {
  *  @param $params        video parametri
  *  @return $html   iframe ar video
  */
-function embed_gifv($params) {
+function embed_gifv_gfycat($params) {
+
+	$html = '<iframe class="embedded-iframe" src="//gfycat.com/ifr/'.h($params[3]).'" ';
+	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+	$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
+	$html .= 'width="520" height="300"></iframe>';
+
+	return $html;
+}
+
+/**
+ *  Callback metode imgur gifv failu embedošanai
+ *
+ *  @param $params        video parametri
+ *  @return $html   iframe ar video
+ */
+function embed_gifv_imgur($params) {
 
 	$html = '<iframe class="embedded-iframe" src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
 	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
