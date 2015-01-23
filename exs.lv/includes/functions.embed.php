@@ -82,7 +82,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
 	}
-	
+
 	// bilžu hostingi, kas neatbalsta HTTPS
 	$image_sites = get_sitelist('image');
 	foreach ($image_sites as $site) {
@@ -365,6 +365,13 @@ function embed_widgets($txt, $wide = 0) {
 	if (strpos($txt, 'vimeo') !== false) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a(.*?)>)https?:\/\/vimeo\.com\/([a-z0-9]+)\/?#im", 'embed_vimeo', $txt
+		);
+	}
+
+	// gifv video
+	if (strpos($txt, 'gifv') !== false) {
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.gifv\/?#im", 'embed_gifv', $txt
 		);
 	}
 
@@ -769,6 +776,21 @@ function embed_vimeo($params) {
 }
 
 /**
+ *  Callback metode imgur gifv failu embedošanai
+ *
+ *  @param $params        video parametri
+ *  @return $html   iframe ar video
+ */
+function embed_gifv($params) {
+
+	$html = '<iframe src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
+	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+	$html .= 'width="520" height="300"></iframe>';
+
+	return $html;
+}
+
+/**
  *  Paslēpj [spoiler] tagos ievietoto saturu
  *
  *  @param $text    apstrādājamais saturs
@@ -802,4 +824,3 @@ function hide_spoilers($text) {
 	}
 	return $text;
 }
-

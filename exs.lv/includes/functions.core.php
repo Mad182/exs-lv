@@ -1306,7 +1306,9 @@ function filterb4db($text) {
 		'&feature=youtu.be',
 		'&feature=player_embedded',
 		'&feature=video_response',
-		'&feature=player_profilepage'
+		'&feature=player_profilepage',
+		'[gifv]',
+		'[/gifv]'
 	);
 
 	if (strpos($text, 'code') === false) {
