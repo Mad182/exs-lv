@@ -1722,6 +1722,11 @@ input, select, textarea {
 }
 
 /* embeddojamie objekti - youtube, spotify... */
+.embedded-iframe {
+	margin: 5px auto;
+	display: block;
+}
+
 .auto-embed-placeholder {
 	width: 240px;
 	background: #f7f7f7;

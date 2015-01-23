@@ -613,7 +613,7 @@ function embed_deezer($params) {
 		$height = 375;
 	}
 
-	$deezer_html = '<p><iframe scrolling="no" frameborder="0" ';
+	$deezer_html = '<p><iframe class="embedded-iframe" scrolling="no" frameborder="0" ';
 	$deezer_html .= 'allowTransparency="true" ';
 	$deezer_html .= 'src="https://www.deezer.com/plugins/player?';
 	$deezer_html .= 'autoplay=false&playlist=true&width=300';
@@ -748,7 +748,7 @@ function embed_instagram($params) {
 
 	// $params[4] - attēla ID
 
-	$inst_html = '<iframe src="//instagram.com/p/';
+	$inst_html = '<iframe class="embedded-iframe" src="//instagram.com/p/';
 	$inst_html .= urlencode($params[4]) . '/embed/" ';
 	$inst_html .= 'width="350" height="450" frameborder="0" ';
 	$inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
@@ -766,7 +766,7 @@ function embed_vimeo($params) {
 
 	// $params[3] - video id
 
-	$vimeo_html = '<iframe src="//player.vimeo.com/video/';
+	$vimeo_html = '<iframe class="embedded-iframe" src="//player.vimeo.com/video/';
 	$vimeo_html .= urlencode($params[3]) . '?badge=0&byline=0" ';
 	$vimeo_html .= 'width="520" height="300" frameborder="0" ';
 	$vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
@@ -783,7 +783,7 @@ function embed_vimeo($params) {
  */
 function embed_gifv($params) {
 
-	$html = '<iframe src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
+	$html = '<iframe class="embedded-iframe" src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
 	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
 	$html .= 'width="520" height="300"></iframe>';
 
