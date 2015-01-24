@@ -286,7 +286,11 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	$url = sanitize($url);
 	$info = sanitize($info);
 
-	$nlang = $lang;
+	$nlang = $lang;    
+    if ($lang === 2) { // android.exs.lv
+        global $android_lang;
+        $nlang = $android_lang;
+    }    
 	if (in_array($type, array(5, 6, 7, 9, 10, 11))) {
 		$nlang = 1;
 	}
