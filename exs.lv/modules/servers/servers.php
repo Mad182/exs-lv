@@ -201,10 +201,10 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 		'maxplayers' => $server->maxplayers,
 		'players' => $server->players,
 		'mapimg' => $mapimg,
-		'address' => htmlspecialchars($server->address),
-		'map' => strtolower(htmlspecialchars(textlimit(trim($server->map), 30, '...'))),
-		'title' => htmlspecialchars(textlimit($server->title, 64, '...')),
-		'code' => htmlspecialchars('<iframe src="http://exs.lv/server.php?s=' . $server->uid . '&color=333333&bgcolor=FFFFFF&padding=4" hspace="0" vspace="0" border="0" frameborder="0" scrolling="no" width="170" height="200"><a href="http://exs.lv/servers/' . $server->id . '">CS serveris ' . htmlspecialchars(strip_tags($server->title)) . '</a></iframe>'),
+		'address' => h($server->address),
+		'map' => strtolower(h(textlimit(trim($server->map), 30, '...'))),
+		'title' => h(textlimit($server->title, 64, '...')),
+		'code' => h('<iframe src="http://exs.lv/server.php?s=' . $server->uid . '&color=333333&bgcolor=FFFFFF&padding=4" hspace="0" vspace="0" border="0" frameborder="0" scrolling="no" width="170" height="200"><a href="http://exs.lv/servers/' . $server->id . '">CS serveris ' . h(strip_tags($server->title)) . '</a></iframe>'),
 	));
 
 	$maps = $db->get_results("SELECT DISTINCT map FROM serverlist_log WHERE server_id = '$sid' AND map != '' LIMIT 40");
@@ -232,8 +232,8 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 		));
 	}
 
-	$pagepath = '<a href="/' . $category->textid . '">' . $category->title . '</a> / ' . htmlspecialchars(textlimit($server->title, 30, '...'));
-	$page_title = htmlspecialchars(textlimit($server->title, 30, '...')) . ' - CS Serveris';
+	$pagepath = '<a href="/' . $category->textid . '">' . $category->title . '</a> / ' . h(textlimit($server->title, 30, '...'));
+	$page_title = h(textlimit($server->title, 30, '...')) . ' - CS Serveris';
 } else {
 
 	$tpl->newBlock('csservlist');
@@ -260,10 +260,10 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 			'online' => $server->online,
 			'maxplayers' => $server->maxplayers,
 			'players' => $server->players,
-			'address' => htmlspecialchars($server->address),
+			'address' => h($server->address),
 			'mapimg' => $mapimg,
-			'map' => strtolower(htmlspecialchars(textlimit(trim($server->map), 30, '...'))),
-			'title' => htmlspecialchars(textlimit($server->title, 30, '...'))
+			'map' => strtolower(h(textlimit(trim($server->map), 30, '...'))),
+			'title' => h(textlimit($server->title, 30, '...'))
 		));
 	}
 

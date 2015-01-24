@@ -18,7 +18,7 @@ if (isset($_GET['var1'])) {
 		$title = title2db($_POST['title']);
 		$content = '';
 		if (!empty($_POST['content'])) {
-			$content = sanitize(htmlspecialchars(strip_tags($_POST['content'])));
+			$content = sanitize(h(strip_tags($_POST['content'])));
 		}
 		$textid = mkslug($title);
 

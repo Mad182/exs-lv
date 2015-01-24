@@ -48,9 +48,9 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	$tpl = new TemplatePower('tmpl/login.tpl');
 	$tpl->prepare();
 
-	$login_url = htmlspecialchars($_SERVER['REQUEST_URI']);
+	$login_url = h($_SERVER['REQUEST_URI']);
 	if (!empty($secure_login)) {
-		$login_url = htmlspecialchars('https://secure.exs.lv/');
+		$login_url = h('https://secure.exs.lv/');
 	}
 
 	$tpl->assignGlobal(array(
@@ -165,7 +165,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 
 	$tpl->assignGlobal(array(
-		'currentuser-nick' => htmlspecialchars($auth->nick),
+		'currentuser-nick' => h($auth->nick),
 		'new-messages' => $new_msg_string,
 		'currentuser-id' => $auth->id,
 		'currentuser-avatar' => $auth->avatar,
@@ -188,9 +188,9 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 }
 
 $tpl->assignGlobal(array(
-	'server-name' => htmlspecialchars(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
+	'server-name' => h(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
 	'page-title' => $page_title,
-	'page-url' => htmlspecialchars($_SERVER['REQUEST_URI']),
+	'page-url' => h($_SERVER['REQUEST_URI']),
 	'current-year' => date('Y'),
 	'timestamp' => time(),
 	'static-server' => $static_server,

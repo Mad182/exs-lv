@@ -177,8 +177,8 @@ else {
 				if (!isset($_POST['new-sidelink-url']) or $_POST['new-sidelink-url'] == 'http://') {
 					$tpl->newBlock('error-nolink');
 				} else {
-					$title = sanitize(substr(htmlspecialchars(trim($_POST['new-sidelink-title'])), 0, 64));
-					$url = sanitize(substr(htmlspecialchars(trim($_POST['new-sidelink-url'])), 0, 256));
+					$title = sanitize(substr(h(trim($_POST['new-sidelink-title'])), 0, 64));
+					$url = sanitize(substr(h(trim($_POST['new-sidelink-url'])), 0, 256));
 					$blogid = get_blog_by_user($auth->id);
 					$db->query("INSERT INTO sidelinks (category,title,url) VALUES ('$blogid','$title','$url')");
 				}
@@ -211,8 +211,8 @@ else {
 					if (!isset($_POST['edit-sidelink-url']) or $_POST['edit-sidelink-url'] == 'http://') {
 						$tpl->newBlock('error-nolink2');
 					} else {
-						$title = sanitize(substr(htmlspecialchars(trim($_POST['edit-sidelink-title'])), 0, 64));
-						$url = sanitize(substr(htmlspecialchars(trim($_POST['edit-sidelink-url'])), 0, 256));
+						$title = sanitize(substr(h(trim($_POST['edit-sidelink-title'])), 0, 64));
+						$url = sanitize(substr(h(trim($_POST['edit-sidelink-url'])), 0, 256));
 						$blogid = get_blog_by_user($auth->id);
 						$db->query("UPDATE sidelinks SET title = ('$title'), url = ('$url') WHERE id = '$editid' AND category = '$blogid'");
 						$edit->title = $title;

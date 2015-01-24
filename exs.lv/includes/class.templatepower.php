@@ -444,7 +444,7 @@ class TemplatePower extends TemplatePowerParser {
 		$assign = array();
 		foreach ($data as $key => $val) {
 			if ($html) {
-				$val = htmlspecialchars($val);
+				$val = h($val);
 			}
 			$assign[$key] = $val;
 		}

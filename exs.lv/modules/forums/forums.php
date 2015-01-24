@@ -47,7 +47,7 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 		/* nepazaudē satura laukā ierakstīto ja nav aizpildīts nosaukums */
 	} elseif (!empty($body) && empty($title)) {
 		set_flash('Lūdzu norādi tēmas nosaukumu!', 'error');
-		$tpl->assignGlobal('forum-content', htmlspecialchars(trim($_POST['new-topic-body'])));
+		$tpl->assignGlobal('forum-content', h(trim($_POST['new-topic-body'])));
 	}
 }
 
@@ -133,7 +133,7 @@ if (!empty($cats)) {
 				$author = get_user($topic->author);
 				$tpl->assign(array(
 					'date' => display_time(strtotime($topic->bump)),
-					'topic' => '<a href="/read/' . $topic->strid . '" title="' . htmlspecialchars($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
+					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
 					'author' => '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>'
 				));
 			}
@@ -258,6 +258,6 @@ if ($category->parent) {
 
 if ($category->textid == 'index' && !empty($category->content) && !$auth->mobile) {
 	$tpl->newBlock('meta-description');
-	$tpl->assign('description', htmlspecialchars($category->content));
+	$tpl->assign('description', h($category->content));
 }
 

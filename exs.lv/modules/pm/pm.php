@@ -80,7 +80,7 @@ if (!$auth->ok) {
 				$send_body = post2db($_POST['compose-body']);
 
 				if (!empty($send_body)) {
-					$send_title = sanitize(trim(stripslashes(htmlspecialchars(strip_tags($send_title)))));
+					$send_title = sanitize(trim(stripslashes(h(strip_tags($send_title)))));
 					if (!$send_title) {
 						$send_title = '[bez nosaukuma]';
 					}
@@ -132,7 +132,7 @@ if (!$auth->ok) {
 				$send_body = htmlpost2db($_POST['compose-body']);
 
 				if (get_user($send_to) && !empty($send_body)) {
-					$send_title = sanitize(trim(stripslashes(htmlspecialchars(strip_tags($send_title)))));
+					$send_title = sanitize(trim(stripslashes(h(strip_tags($send_title)))));
 					if (!$send_title) {
 						$send_title = '[bez nosaukuma]';
 					}
@@ -161,7 +161,7 @@ if (!$auth->ok) {
 							$message->setSubject('Tev pienākusi vēstule portālā exs.lv');
 							$message->setFrom(array('info@exs.lv' => 'Exs.lv community'));
 							$message->setTo($receiver->mail);
-							$message->setBody('<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . htmlspecialchars($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>');
+							$message->setBody('<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>');
 							$message->setContentType("text/html");
 							$mailer->send($message);
 						}
@@ -206,7 +206,7 @@ if (!$auth->ok) {
 				$tpl->newBlock('pm-compose-option');
 				$tpl->assign(array(
 					'friend-id' => $theother,
-					'friend-nick' => htmlspecialchars($friendinfo->nick),
+					'friend-nick' => h($friendinfo->nick),
 					'friend-sel' => $selected_to
 				));
 			}
@@ -218,7 +218,7 @@ if (!$auth->ok) {
 					$tpl->newBlock('pm-compose-option');
 					$tpl->assign(array(
 						'friend-id' => $toid,
-						'friend-nick' => htmlspecialchars($tonick),
+						'friend-nick' => h($tonick),
 						'friend-sel' => ' selected="selected"'
 					));
 				}
@@ -230,7 +230,7 @@ if (!$auth->ok) {
 					$tpl->newBlock('pm-compose-option');
 					$tpl->assign(array(
 						'friend-id' => $reply_user->id,
-						'friend-nick' => htmlspecialchars($reply_user->nick),
+						'friend-nick' => h($reply_user->nick),
 						'friend-sel' => ' selected="selected"'
 					));
 
@@ -280,7 +280,7 @@ if (!$auth->ok) {
 						'pm-to-nick' => usercolor($to->nick, $to->level, false, $to->id),
 						'pm-to-id' => $pm->to_uid,
 						'avatar' => get_avatar($to),
-						'pm-to-title' => htmlspecialchars($to->nick),
+						'pm-to-title' => h($to->nick),
 						'pm-read' => $pm->is_read,
 					));
 
@@ -323,9 +323,9 @@ if (!$auth->ok) {
 						}
 						if (!empty($pm->imap_uid)) {
 							if (!stristr($pm->imap_name, '?')) {
-								$from = wordwrap(textlimit(htmlspecialchars($pm->imap_name), 48, '...'), 20, "\n", 1);
+								$from = wordwrap(textlimit(h($pm->imap_name), 48, '...'), 20, "\n", 1);
 							} else {
-								$from = wordwrap(textlimit(htmlspecialchars($pm->imap_email), 48, '...'), 20, "\n", 1);
+								$from = wordwrap(textlimit(h($pm->imap_email), 48, '...'), 20, "\n", 1);
 							}
 							$type = 'email';
 						}
@@ -365,7 +365,7 @@ if (!$auth->ok) {
 			if (isset($_GET['q'])) {
 				$q_string = str_replace(array(',', '.', '+', '-', '_'), ' ', $_GET['q']);
 				$q_string = strip_tags($q_string);
-				$tpl->assign('qstr', htmlspecialchars($q_string));
+				$tpl->assign('qstr', h($q_string));
 				$q_strings = explode(' ', $q_string);
 				$cond = '';
 				foreach ($q_strings as $str) {
@@ -380,10 +380,10 @@ if (!$auth->ok) {
 						$result->text = textlimit($result->text, 250);
 						$result->title = textlimit($result->title, 64);
 						foreach ($q_strings as $str) {
-							$result->text = str_replace($str, '<strong>' . htmlspecialchars($str) . '</strong>', $result->text);
+							$result->text = str_replace($str, '<strong>' . h($str) . '</strong>', $result->text);
 						}
 						foreach ($q_strings as $str) {
-							$result->title = str_replace($str, '<strong>' . htmlspecialchars($str) . '</strong>', $result->title);
+							$result->title = str_replace($str, '<strong>' . h($str) . '</strong>', $result->title);
 						}
 						if ($result->to_uid == $auth->id) {
 							$link = '/' . $category->textid . '/inbox/' . $result->id;
@@ -432,7 +432,7 @@ if (!$auth->ok) {
 						'pm-from-nick' => usercolor($from->nick, $from->level, false, $from->id),
 						'pm-from-id' => $pm->from_uid,
 						'avatar' => get_avatar($from),
-						'pm-from-title' => htmlspecialchars($from->nick),
+						'pm-from-title' => h($from->nick),
 						'pm-read' => $pm->is_read,
 					));
 
@@ -453,7 +453,7 @@ if (!$auth->ok) {
 							'pm-from-nick' => $nick,
 							'pm-from-id' => $pm->from_uid,
 							'avatar' => get_avatar($from),
-							'pm-from-title' => htmlspecialchars($from->nick),
+							'pm-from-title' => h($from->nick),
 							'pm-read' => $pm->is_read,
 						));
 					}
@@ -496,9 +496,9 @@ if (!$auth->ok) {
 						}
 						if (!empty($pm->imap_uid)) {
 							if (!stristr($pm->imap_name, '?')) {
-								$from = wordwrap(textlimit(htmlspecialchars($pm->imap_name), 48, '...'), 20, "\n", 1);
+								$from = wordwrap(textlimit(h($pm->imap_name), 48, '...'), 20, "\n", 1);
 							} else {
-								$from = wordwrap(textlimit(htmlspecialchars($pm->imap_email), 48, '...'), 20, "\n", 1);
+								$from = wordwrap(textlimit(h($pm->imap_email), 48, '...'), 20, "\n", 1);
 							}
 							$type = 'email';
 						}

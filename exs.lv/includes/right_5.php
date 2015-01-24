@@ -20,7 +20,7 @@ if (!empty($inprofile)) {
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
 		'url' => '/user/' . $inprofile->id,
-		'profile-nick' => htmlspecialchars($inprofile->nick),
+		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
@@ -72,7 +72,7 @@ if (!empty($inprofile)) {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-$tpl->newBlock('friendssay-box');
+$tpl->newBlock('mb-box');
 $tpl->assign('out', get_latest_mbs());
 
 //lietotāja notifikācijas

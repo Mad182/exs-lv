@@ -43,7 +43,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 		$tpl->newBlock('mb-edit');
 		$tpl->assign(array(
 			'id' => $mb->id,
-			'text' => htmlspecialchars($mb->text),
+			'text' => h($mb->text),
 			'cat-url' => $category->textid
 		));
 		$tpl->newBlock('tinymce-enabled');

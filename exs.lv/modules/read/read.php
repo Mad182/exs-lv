@@ -156,7 +156,7 @@ if ($article) {
 		$tags = new tags;
 		foreach ($newtags as $newtag) {
 			if (strlen(trim($newtag)) > 1) {
-				$newtag = htmlspecialchars(ucfirst(strip_tags(trim($newtag))));
+				$newtag = h(ucfirst(strip_tags(trim($newtag))));
 				$nslug = mkslug($newtag);
 				if (!empty($newtag)) {
 					$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
@@ -178,7 +178,7 @@ if ($article) {
 	if (im_mod()) {
 		if (isset($_GET['remove_signature'])) {
 			$remove_signature = (int) $_GET['remove_signature'];
-			$message = sanitize(htmlspecialchars(strip_tags($_GET['message'])));
+			$message = sanitize(h(strip_tags($_GET['message'])));
 			$db->query("UPDATE `users` SET `signature` = ('<small>Noņēma: " . $auth->nick . ". Iemesls: " . $message . "</small>') WHERE `id` = '" . $remove_signature . "' LIMIT 1");
 			get_user($remove_signature, true);
 			$auth->log('Nodzēsa parakstu (' . $message . ')', 'users', $remove_signature);
@@ -314,7 +314,7 @@ if ($article) {
 			}
 			$tpl->newBlock('adm-edit-comment');
 			$tpl->assign(array(
-				'comment-text' => htmlspecialchars($comment->text),
+				'comment-text' => h($comment->text),
 				'comment-id' => $comment->id
 			));
 
@@ -479,17 +479,17 @@ if ($article) {
 			$tpl->assign(array(
 				'article-showtitle' => $article->title,
 				'article-title' => $article->title,
-				'article-text' => htmlspecialchars($article->text),
+				'article-text' => h($article->text),
 				'article-id' => $article->id
 			));
 
 			// izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
 			if ($lang == 9 && (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow']))) {
 				$tpl->newBlock('goto-wide-page');
-				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', htmlspecialchars($_SERVER['REQUEST_URI'])));
+				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', h($_SERVER['REQUEST_URI'])));
 			} else if ($lang == 9) {
 				$tpl->newBlock('goto-narrow-page');
-				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', htmlspecialchars($_SERVER['REQUEST_URI'])));
+				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', h($_SERVER['REQUEST_URI'])));
 			}
 
 
@@ -776,7 +776,7 @@ if ($article) {
 					if (!$auth->mobile) {
 						$tpl->newBlock('opengraph');
 						$tpl->assign(array(
-							'title' => htmlspecialchars($article->title),
+							'title' => h($article->title),
 							'type' => 'video.movie',
 							'url' => 'http://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
 							'image' => $img_server . $avatar->thb
@@ -927,7 +927,7 @@ if ($article) {
 					$tpl->newBlock('article-avatar-box');
 					$tpl->assign(array(
 						'article-avatar-image' => trim($article->avatar),
-						'article-avatar-alt' => trim(htmlspecialchars($article->title))
+						'article-avatar-alt' => trim(h($article->title))
 					));
 				}
 			}
@@ -1079,7 +1079,7 @@ if ($article) {
 							'aurl' => '/user/' . $comment->author,
 							'avatar' => get_avatar($author[$comment->author]),
 							'karma' => $author[$comment->author]->karma,
-							'title' => htmlspecialchars($author[$comment->author]->nick),
+							'title' => h($author[$comment->author]->nick),
 							'custom_title' => custom_user_title($author[$comment->author]),
 							'comment-editedby' => $editedby,
 						));

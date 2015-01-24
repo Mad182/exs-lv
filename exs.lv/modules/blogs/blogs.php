@@ -51,7 +51,7 @@ if ($articles) {
 			'aurl' => '/user/' . $article->authorid,
 			'newest-author-id' => $article->authorid,
 			'newest-author-avatar' => $article->avatar,
-			'newest-author-title' => htmlspecialchars($article->nick),
+			'newest-author-title' => h($article->nick),
 		));
 	}
 }

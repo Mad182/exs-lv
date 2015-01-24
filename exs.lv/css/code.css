@@ -1,6 +1,6 @@
 /**
  * code.css
- * (c) 2012-2014 exs.lv
+ * (c) 2012-2015 exs.lv
  *
  * coding.lv specifiskie stili
  */
@@ -55,10 +55,6 @@ body {
 
 #header {
 	height: 152px
-}
-
-#header-stuff {
-	right: 15px
 }
 
 #inner-content {

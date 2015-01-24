@@ -18,7 +18,7 @@ if (!empty($inprofile)) {
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
 		'url'                   => '/user/' . $inprofile->id,
-		'profile-nick'          => htmlspecialchars($inprofile->nick),
+		'profile-nick'          => h($inprofile->nick),
 		'profile-slug'          => mkslug($inprofile->nick),
 		'profile-id'            => $inprofile->id,
 		'avatar'                => $avatar,
@@ -85,7 +85,7 @@ if (!empty($inprofile)) {
 // saraksts ar jaunākajiem miniblogiem;
 // atkarībā no tā, kura cilne norādīta, redzami grupu vai ārpus tām esošie ieraksti;
 // friends šajā gadījumā nozīmē, ka skatīti tiek grupu ieraksti
-$tpl->newBlock('friendssay-box');
+$tpl->newBlock('mb-box');
 $sel = 'all';
 if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] == 'friends') {
 	$mbs = get_latest_mbs(1);
@@ -98,7 +98,7 @@ $tpl->assign('out', $mbs);
 // ciļņu izvēlne redzama tikai autorizētiem lietotājiem;
 // neautorizēts lietotājs vienkārši grupās nav
 if($auth->ok) {
-	$tpl->newBlock('friendssay-tabs');
+	$tpl->newBlock('mb-tabs');
 	$tpl->assign(array(
 		$sel . '-selected' => 'active '
 	));

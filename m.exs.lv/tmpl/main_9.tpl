@@ -111,7 +111,7 @@
 				{events-title}
 				<div class="box">
 					<div id="miniblog-block">
-						<ul id="friendssay-list" class="blockhref">
+						<ul id="mb-list" class="blockhref">
 							<!-- START BLOCK : events-node-->
 							<li><a href="{url}"><span class="time-ago">{time}</span> <img class="av" src="{avatar}" alt="" /> <span class="author">{author}{where}</span> {title}&nbsp;[{posts}]<br style="clear: both;" /></a></li>
 							<!-- END BLOCK : events-node-->

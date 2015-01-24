@@ -72,6 +72,7 @@ class mdb extends mysqli {
 
 		if (empty($table) || empty($params) || empty($data))
 			return false;
+        }
 
 		$criteria = array();
 		$updates = array();
@@ -83,8 +84,9 @@ class mdb extends mysqli {
 			}
 			$limit = '';
 		} else {
-			if ((int) $params < 1)
+			if ((int) $params < 1) {
 				return false;
+            }
 			$criteria[] = "`id` = " . (int) $params;
 		}
 
@@ -94,8 +96,9 @@ class mdb extends mysqli {
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
 		}
-		if (empty($updates) || empty($criteria))
+		if (empty($updates) || empty($criteria)) {
 			return false;
+        }
 
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);
@@ -106,8 +109,9 @@ class mdb extends mysqli {
 
 	function insert($table = null, $data = null) {
 
-		if (empty($data))
+		if (empty($data)) {
 			return false;
+        }
 
 		$keys = array();
 		$values = array();
@@ -116,8 +120,9 @@ class mdb extends mysqli {
 			$keys[] = $key;
 			$values[] = ($val === 'NOW()') ? "NOW()" : "'" . $val . "'";
 		}
-		if (empty($keys) || empty($values))
+		if (empty($keys) || empty($values)) {
 			return false;
+        }
 
 		$keys = implode(',', $keys);
 		$values = implode(',', $values);

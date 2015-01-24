@@ -41,7 +41,7 @@ if (!empty($series)) {
 	<tr>
 		<td>
 			<a href="/read/' . $s->strid . '">
-				<img style="width:145px;min-width:145px;height:215px;margin:2px" src="//img.exs.lv' . $s->thb . '" alt="' . htmlspecialchars($s->title) . '" />
+				<img style="width:145px;min-width:145px;height:215px;margin:2px" src="//img.exs.lv' . $s->thb . '" alt="' . h($s->title) . '" />
 			</a>
 		</td>
 		<td style="vertical-align:top;padding: 20px 10px;width:115px;">
@@ -109,9 +109,9 @@ if (!empty($series)) {
 		if (!empty($ratings)) {
 			foreach ($ratings as $rating) {
 				if ($rating->rating == 1) {
-					$likes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.htmlspecialchars($rating->nick).'" title="'.htmlspecialchars($rating->nick).'" />';
+					$likes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.h($rating->nick).'" title="'.h($rating->nick).'" />';
 				} elseif ($rating->rating == -1) {
-					$dislikes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.htmlspecialchars($rating->nick).'" title="'.htmlspecialchars($rating->nick).'" />';
+					$dislikes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.h($rating->nick).'" title="'.h($rating->nick).'" />';
 				}
 			}
 		}

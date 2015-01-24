@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 	$db->query("INSERT INTO flash_games (slug,title,thb_local,launch_date,category,category_slug,flash_file,width,height,description,gameplays,rating,rating_count)
 		VALUES ('$slug','$title','$thb_local','" . date('Y-m-d') . "','Dažādas','Dazadas','$flash_file','$width','$height','$description','1','4','1')
 	");
-	userlog($auth->id, 'Pievienoja flash spēli <a href="/flash-speles/' . $slug . '" title="Spēle ' . htmlspecialchars($title) . '">' . $title . '</a>', '/upload/flash-games/thb/' . $thb_local);
+	userlog($auth->id, 'Pievienoja flash spēli <a href="/flash-speles/' . $slug . '" title="Spēle ' . h($title) . '">' . $title . '</a>', '/upload/flash-games/thb/' . $thb_local);
 	redirect('/addflash');
 }
 

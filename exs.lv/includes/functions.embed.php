@@ -82,7 +82,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
 	}
-	
+
 	// bilžu hostingi, kas neatbalsta HTTPS
 	$image_sites = get_sitelist('image');
 	foreach ($image_sites as $site) {
@@ -368,6 +368,23 @@ function embed_widgets($txt, $wide = 0) {
 		);
 	}
 
+	// gifv video
+	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false) {
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.(gifv|webm)\/?#im", 'embed_gifv_imgur', $txt
+		);
+	}
+	
+	//gfycat
+	if (strpos($txt, 'gfycat') !== false) {
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/fat\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/?#im", 'embed_gifv_gfycat', $txt
+		);
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/www\.gfycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
+		);
+	}
+
 	return $txt;
 }
 
@@ -402,7 +419,7 @@ function embed_youtube($matches, $wide = 0) {
 	$safe = mkslug($matches[4], false, false);
 	$video = get_youtube($safe);
 
-	$title = str_replace("'", "&#39;", htmlspecialchars(textlimit(
+	$title = str_replace("'", "&#39;", h(textlimit(
 							stripslashes($video->yt_title), 100)));
 	$title = str_replace("&amp;amp;", "&amp;", $title);
 
@@ -413,7 +430,7 @@ function embed_youtube($matches, $wide = 0) {
 		$height = 290;
 	}
 
-	// izmanto htmlspecialchars, lai norādītu kā parametru javascriptā
+	// izmanto h, lai norādītu kā parametru javascriptā
 	$videocode = '<div class="c"></div><div class="auto-embed" ';
 	$videocode .= 'style="width:' . $width . 'px;">';
 	$videocode .= '<iframe class="youtube-player" type="text/html" ';
@@ -426,7 +443,7 @@ function embed_youtube($matches, $wide = 0) {
 	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
 	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
 	$videocode .= '<strong>' . $title . '</strong><div class="c"></div></div>';
-	$videocode = htmlspecialchars($videocode);
+	$videocode = h($videocode);
 
 	// saturs, uz kura nospiežot, caur javascript ielādēs $videocode
 	$return = '<div><div class="auto-embed-placeholder">';
@@ -606,7 +623,7 @@ function embed_deezer($params) {
 		$height = 375;
 	}
 
-	$deezer_html = '<p><iframe scrolling="no" frameborder="0" ';
+	$deezer_html = '<p><iframe class="embedded-iframe" scrolling="no" frameborder="0" ';
 	$deezer_html .= 'allowTransparency="true" ';
 	$deezer_html .= 'src="https://www.deezer.com/plugins/player?';
 	$deezer_html .= 'autoplay=false&playlist=true&width=300';
@@ -741,7 +758,7 @@ function embed_instagram($params) {
 
 	// $params[4] - attēla ID
 
-	$inst_html = '<iframe src="//instagram.com/p/';
+	$inst_html = '<iframe class="embedded-iframe" src="//instagram.com/p/';
 	$inst_html .= urlencode($params[4]) . '/embed/" ';
 	$inst_html .= 'width="350" height="450" frameborder="0" ';
 	$inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
@@ -759,13 +776,44 @@ function embed_vimeo($params) {
 
 	// $params[3] - video id
 
-	$vimeo_html = '<iframe src="//player.vimeo.com/video/';
+	$vimeo_html = '<iframe class="embedded-iframe" src="//player.vimeo.com/video/';
 	$vimeo_html .= urlencode($params[3]) . '?badge=0&byline=0" ';
 	$vimeo_html .= 'width="520" height="300" frameborder="0" ';
 	$vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
 	$vimeo_html .= 'allowfullscreen></iframe>';
 
 	return $vimeo_html;
+}
+
+/**
+ *  Callback metode imgur gifv failu embedošanai
+ *
+ *  @param $params        video parametri
+ *  @return $html   iframe ar video
+ */
+function embed_gifv_gfycat($params) {
+
+	$html = '<iframe class="embedded-iframe" src="//gfycat.com/ifr/'.h($params[3]).'" ';
+	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+	$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
+	$html .= 'width="520" height="300"></iframe>';
+
+	return $html;
+}
+
+/**
+ *  Callback metode imgur gifv failu embedošanai
+ *
+ *  @param $params        video parametri
+ *  @return $html   iframe ar video
+ */
+function embed_gifv_imgur($params) {
+
+	$html = '<iframe class="embedded-iframe" src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
+	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+	$html .= 'width="520" height="300"></iframe>';
+
+	return $html;
 }
 
 /**
@@ -802,4 +850,3 @@ function hide_spoilers($text) {
 	}
 	return $text;
 }
-

@@ -345,7 +345,7 @@ class DraugiemApi {
 	 * @return string HTML of Draugiem.lv Passport login button
 	 */
 	public function getLoginButton($redirect_url, $popup = true) {
-		$url = htmlspecialchars($this->getLoginUrl($redirect_url));
+		$url = h($this->getLoginUrl($redirect_url));
 
 		if ($popup) {
 			$js = "if(handle=window.open('$url&amp;popup=1','Dr_{$this->app_id}' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}";
@@ -396,7 +396,7 @@ class DraugiemApi {
 					<form name="cookieFix" method="get" action="">
 						<?php
 						foreach ($_GET as $key => $val) {
-							echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($val) . '" />';
+							echo '<input type="hidden" name="' . h($key) . '" value="' . h($val) . '" />';
 						}
 						?>
 						<input type="hidden" name="dr_cookie_fix" value="1" />

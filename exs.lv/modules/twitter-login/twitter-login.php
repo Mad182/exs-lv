@@ -196,8 +196,8 @@ if (!empty($_SESSION['twitter_id'])) {
 		}
 
 		$tpl->assign(array(
-			'nick' => htmlspecialchars($nick),
-			'avatar' => htmlspecialchars($_SESSION['image'])
+			'nick' => h($nick),
+			'avatar' => h($_SESSION['image'])
 		));
 	} else {
 

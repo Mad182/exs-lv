@@ -16,7 +16,7 @@ if (isset($_GET['var1'])) {
 	if ($edit->module == 'list' && $edit->isforum) {
 
 		if (isset($_POST['content']) && !empty($_POST['content'])) {
-			$content = sanitize(htmlspecialchars(strip_tags($_POST['content'])));
+			$content = sanitize(h(strip_tags($_POST['content'])));
 			$db->query("UPDATE `cat` SET `content` = '$content' WHERE `id` = '$edit->id'");
 
 			$parent = get_cat($edit->parent);

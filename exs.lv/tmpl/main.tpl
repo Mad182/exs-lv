@@ -124,7 +124,7 @@
 						<li{cat-sel-filmas}><a href="/filmas">Filmas</a></li>
 						<li{cat-sel-muzika}><a href="/muzika">Mūzika</a></li>
 						<li{cat-sel-raksti}><a href="/raksti">Raksti</a></li>
-						<li{cat-sel-steam-online}><a style="position:relative;padding-right:25px" href="/steam-online">Steam&nbsp;<span style="color:red;font-size:10px;position:absolute;top:-5px;right:0">NEW</span></a></li>
+						<li{cat-sel-steam-online}><a href="/steam-online">Steam</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
@@ -260,13 +260,6 @@
 						<div class="c"></div>
 						<div id="lat" class="ajaxbox">{latest-noscript}</div>
 					</div>
-
-					<!-- START BLOCK : dateks-ads-->
-					<!--<h3>Jaunākie piedāvājumi no dateks.lv</h3>
-					<div class="box" id="dateks">
-						{out}
-					</div>-->
-					<!-- END BLOCK : dateks-ads-->
 
 					<h3><strong>UT 2004</strong> ut.exs.lv</h3>
 					<div class="box">
@@ -407,23 +400,23 @@
 					</div>
 					<!-- END BLOCK : group-box-->
 
-					<!-- START BLOCK : friendssay-box-->
+					<!-- START BLOCK : mb-box-->
 					<h3>Miniblogi{miniblog-add}</h3>
 
 					<div class="box">
 
 						<ul class="tabs" id="tabs-justified-3">
 							<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
-						<!-- START BLOCK : friendssay-tabs-->
+							<!-- START BLOCK : mb-tabs-->
 							<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
-						<!-- END BLOCK : friendssay-tabs-->
+							<!-- END BLOCK : mb-tabs-->
 							<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><span class="music">Klausās</span></a></li>
 						</ul>
 						<div class="c"></div>
 						<div id="miniblog-block" class="ajaxbox">{out}</div>
 					</div>
 
-					<!-- END BLOCK : friendssay-box-->
+					<!-- END BLOCK : mb-box-->
 
 					<!-- START BLOCK : side-junk-->
 					<h3>/junk</h3>
@@ -485,7 +478,7 @@
 					<!-- END BLOCK : daily-wallpaper-->
 
 					<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
-					<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
+					<script>!function (d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
 								;</script>
 
 				</div>
@@ -549,13 +542,13 @@
 			if (!_smartad.prop) {
 				_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
 			}
-			(function() {
+			(function () {
 				if (_smartad.space) {
 					_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
 				} else {
 					_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
 					_smartad.type = 'onload';
-					var f = function() {
+					var f = function () {
 						var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
 						s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
 						s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
@@ -584,7 +577,7 @@
 			_gaq.push(['_setDomainName', 'exs.lv']);
 			_gaq.push(['_trackPageview']);
 
-			(function() {
+			(function () {
 				var ga = document.createElement('script');
 				ga.type = 'text/javascript';
 				ga.async = true;

@@ -11,7 +11,7 @@ if ($user->yt_name) {
 
 	$tpl->assignGlobal(array(
 		'user-id' => $user->id,
-		'user-nick' => htmlspecialchars($user->nick)
+		'user-nick' => h($user->nick)
 	));
 
 	if ($user->yt_updated < time() - 7200) {

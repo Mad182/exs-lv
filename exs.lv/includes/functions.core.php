@@ -4,26 +4,14 @@
  * functions.core.php
  * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
  */
-/**
- * Functions related to awards
- */
-include_once(CORE_PATH . '/includes/functions.awards.php');
-/**
- *  Functions related to widgets
- */
-include_once(CORE_PATH . '/includes/functions.embed.php');
+// functions related to awards
+require(CORE_PATH . '/includes/functions.awards.php');
 
-/**
- * utf-8 ucfirst
- */
-if (!function_exists('mb_ucfirst') && function_exists('mb_substr')) {
+// functions related to widgets
+require(CORE_PATH . '/includes/functions.embed.php');
 
-	function mb_ucfirst($string) {
-		$string = mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
-		return $string;
-	}
-
-}
+// compatibility with older php versions
+require(CORE_PATH . '/includes/functions.legacy.php');
 
 /**
  *  Pārveido stringu par pieļaujamu klases nosaukumu
@@ -51,107 +39,10 @@ function as_class_name($name = '') {
 }
 
 /**
- * For legacy php versions
+ * htmlspecialchars() saīsinājums
  */
-if (!function_exists('http_response_code')) {
-
-	function http_response_code($code = NULL) {
-
-		if ($code !== NULL) {
-
-			switch ($code) {
-				case 100: $text = 'Continue';
-					break;
-				case 101: $text = 'Switching Protocols';
-					break;
-				case 200: $text = 'OK';
-					break;
-				case 201: $text = 'Created';
-					break;
-				case 202: $text = 'Accepted';
-					break;
-				case 203: $text = 'Non-Authoritative Information';
-					break;
-				case 204: $text = 'No Content';
-					break;
-				case 205: $text = 'Reset Content';
-					break;
-				case 206: $text = 'Partial Content';
-					break;
-				case 300: $text = 'Multiple Choices';
-					break;
-				case 301: $text = 'Moved Permanently';
-					break;
-				case 302: $text = 'Moved Temporarily';
-					break;
-				case 303: $text = 'See Other';
-					break;
-				case 304: $text = 'Not Modified';
-					break;
-				case 305: $text = 'Use Proxy';
-					break;
-				case 400: $text = 'Bad Request';
-					break;
-				case 401: $text = 'Unauthorized';
-					break;
-				case 402: $text = 'Payment Required';
-					break;
-				case 403: $text = 'Forbidden';
-					break;
-				case 404: $text = 'Not Found';
-					break;
-				case 405: $text = 'Method Not Allowed';
-					break;
-				case 406: $text = 'Not Acceptable';
-					break;
-				case 407: $text = 'Proxy Authentication Required';
-					break;
-				case 408: $text = 'Request Time-out';
-					break;
-				case 409: $text = 'Conflict';
-					break;
-				case 410: $text = 'Gone';
-					break;
-				case 411: $text = 'Length Required';
-					break;
-				case 412: $text = 'Precondition Failed';
-					break;
-				case 413: $text = 'Request Entity Too Large';
-					break;
-				case 414: $text = 'Request-URI Too Large';
-					break;
-				case 415: $text = 'Unsupported Media Type';
-					break;
-				case 500: $text = 'Internal Server Error';
-					break;
-				case 501: $text = 'Not Implemented';
-					break;
-				case 502: $text = 'Bad Gateway';
-					break;
-				case 503: $text = 'Service Unavailable';
-					break;
-				case 504: $text = 'Gateway Time-out';
-					break;
-				case 505: $text = 'HTTP Version not supported';
-					break;
-				default:
-					exit('Unknown http status code "' . htmlentities($code) . '"');
-					break;
-			}
-
-			$protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
-
-			header($protocol . ' ' . $code . ' ' . $text);
-
-			$GLOBALS['http_response_code'] = $code;
-		} else {
-
-			$code = (isset($GLOBALS['http_response_code']) ? $GLOBALS['http_response_code'] : 200);
-		}
-
-		return $code;
-	}
-
+function h($str) {
+	return htmlspecialchars($str);
 }
 
 /**
@@ -390,7 +281,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				}
 				$out .= '<li class="notification-' . $class . '"><a ';
 				if (!empty($notify->info) && $notify->info != 'twitter') {
-					$out .= 'title="' . htmlspecialchars($notify->info) . '" ';
+					$out .= 'title="' . h($notify->info) . '" ';
 				}
 				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-icon"></span><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
 
@@ -474,7 +365,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 		}
 	}
 
-	$nick = $star . htmlspecialchars($nick);
+	$nick = $star . h($nick);
 
 	$user_classes = array(1 => 'admins', 2 => 'mods', 3 => 'rautors', 5 => 'bot');
 
@@ -560,7 +451,7 @@ function textlimit($string, $setlength, $replacer = '...') {
 	$string = str_replace('	 ', ' ', $string);
 	$length = $setlength;
 	if ($length < strlen($string)) {
-		while (($string{$length} != " ") AND ($length > 0)) {
+		while (($string{$length} != " ") AND ( $length > 0)) {
 			$length--;
 		}
 		if ($length == 0)
@@ -732,120 +623,22 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 	}
 
 	$text = str_replace('eval(', 'ev<span>a</span>l(', $text);
-	$text = preg_replace('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uime', 'get_mentions("\\1","' . $url . '","' . $type . '","' . $uniq . '")', $text);
 
-	if ($type == 'mb') {
-		$text = preg_replace('/\B#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uime', 'get_tags_mb("\\1", "' . $uniq . '")', $text);
+	/* apstrādā @mentions */
+	if (strpos($text, '@') !== false) {
+		include_once(CORE_PATH . '/includes/class.mention.php');
+		$mention = new Mention($url, $type, $uniq);
+		$text = preg_replace_callback('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uim', array($mention, 'mention'), $text);
+	}
+
+	/* miniblogu #tags */
+	if ($type == 'mb' && strpos($text, '#') !== false) {
+		include_once(CORE_PATH . '/includes/class.hashtag.php');
+		$hashtag = new Hashtag($uniq);
+		$text = preg_replace_callback('/\B#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', array($hashtag, 'hashtag'), $text);
 	}
 
 	return $text;
-}
-
-function get_tags_mb($tag, $mbid) {
-	global $db;
-
-	if ($mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mbid' AND `parent` = '0' AND `removed` = '0'")) {
-		include_once(CORE_PATH . '/includes/class.tags.php');
-		$tags = new tags;
-
-		if (strlen($tag) < 30 && strlen($tag) > 2) {
-			$newtag = sanitize(mb_ucfirst(strtolower(trim($tag))));
-			$nslug = mkslug($tag);
-			if (!empty($newtag)) {
-				$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-				if ($tagid) {
-					$tags->add_tag($mb->id, $tagid, 2);
-				} else {
-					$db->query("INSERT INTO tags (name,slug) VALUES ('$newtag','$nslug')");
-					$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-					$tags->add_tag($mb->id, $tagid, 2);
-				}
-			}
-			return '<a class="post-tag" href="/tag/' . $nslug . '" title="' . $newtag . '"><span class="hash-sign">#</span>' . $tag . '</a>';
-		}
-	}
-	return '#' . $tag;
-}
-
-function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
-	global $db, $auth, $mention_counter;
-
-	$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
-
-	if (empty($usr) && stristr($nick, '_')) {
-		$nick = str_replace('_', ' ', $nick);
-		$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
-	}
-
-	if (empty($usr) && stristr($nick, '-')) {
-		$nick = str_replace('-', ' ', $nick);
-		$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
-	}
-
-	if (!empty($usr) && !in_array($nick, array('exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail')) && $mention_counter <= 6) {
-		$mention_counter++;
-
-		if ($type == 'mb') {
-			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT `text`, `id`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
-				$title = mb_get_title($mb->text);
-				$strid = mb_get_strid($title, $mb->id);
-				$url = '/say/' . $mb->author . '/' . $mb->id . '-' . $strid;
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 14, $mb->id, $url, $title);
-				}
-			}
-		}
-
-		if ($type == 'group') {
-			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT `id`, `groupid`, `text`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
-				$group = $db->get_row("SELECT `title`, `strid`, `id` FROM `clans` WHERE `id` = '$mb->groupid'");
-				$title = mb_get_title($mb->text);
-				if (!empty($group->strid)) {
-					$url = '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
-				} else {
-					$url = '/group/' . $group->id . '/forum/' . base_convert($mb->id, 10, 36);
-				}
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 13, $mb->id, $url, $group->title . ': ' . $title);
-				}
-			}
-		}
-
-		if ($type == 'page') {
-			if (!empty($uniq)) {
-				$page = $db->get_row("SELECT `id`, `title`, `author` FROM `pages` WHERE `id` = '" . intval($uniq) . "'");
-				if ($page->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 15, $page->id, $url, $page->title);
-				}
-			}
-		}
-
-		if ($type == 'image') {
-			if (!empty($uniq)) {
-				$image = $db->get_row("SELECT `id`, `uid`, `text` FROM `images` WHERE `id` = '" . intval($uniq) . "'");
-				$url = '/gallery/' . $image->uid . '/' . $image->id;
-				if ($usr->id != $auth->id) {
-					notify($usr->id, 16, $image->id, $url, strip_tags($image->text));
-				}
-			}
-		}
-
-		if ($type == 'junk') {
-			if (!empty($uniq)) {
-				$junk = $db->get_row("SELECT `id`, `title` FROM `junk` WHERE `id` = '" . intval($uniq) . "'");
-				$url = '/junk/' . $junk->id;
-				if ($usr->id != $auth->id) {
-					notify($usr->id, 15, $junk->id, $url, strip_tags($junk->title));
-				}
-			}
-		}
-
-		return '<a class="post-mention" href="/user/' . $usr->id . '"><span class="at-sign">@</span>' . usercolor($usr->nick, $usr->level, 'disable', $usr->id) . '</a>';
-	} else {
-		return '@' . $nick;
-	}
 }
 
 function createPassword($length) {
@@ -1207,7 +1000,7 @@ function get_footer_topics($force = false) {
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
-				$html .= '<li><a href="/read/' . $late->strid . '" title="' . htmlspecialchars($late->title) . '">' . textlimit($late->title, 36) . '</a></li>';
+				$html .= '<li><a href="/read/' . $late->strid . '" title="' . h($late->title) . '">' . textlimit($late->title, 36) . '</a></li>';
 			}
 			$html .= '</ul>';
 		}
@@ -1424,7 +1217,9 @@ function filterb4db($text) {
 		'&feature=youtu.be',
 		'&feature=player_embedded',
 		'&feature=video_response',
-		'&feature=player_profilepage'
+		'&feature=player_profilepage',
+		'[gifv]',
+		'[/gifv]'
 	);
 
 	if (strpos($text, 'code') === false) {
@@ -1478,7 +1273,7 @@ function title2db($text) {
 	$text = str_replace('(', ' (', $text);
 	$text = str_replace(',', ', ', $text);
 	$text = str_replace(' ,', ',', $text);
-	$text = mb_ucfirst(substr(htmlspecialchars(strip_tags(trim($text))), 0, 80));
+	$text = mb_ucfirst(substr(h(strip_tags(trim($text))), 0, 80));
 	if (substr($text, -1) == '.' && substr($text, -3) != '...') {
 		$text = substr($text, 0, -1);
 	}
@@ -1495,7 +1290,7 @@ function title2db($text) {
 
 function input2db($text, $len = 30) {
 	$text = filterb4db($text);
-	$text = substr(htmlspecialchars(trim($text)), 0, $len);
+	$text = substr(h(trim($text)), 0, $len);
 	return sanitize($text);
 }
 
@@ -1540,7 +1335,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			$val->date = strtotime($val->date);
 			if (!$auth->mobile) {
 				$out .= '<div class="mb-av"><a id="m' . $val->id . '" href="/user/' . $val->author . '">';
-				$out .= '<img width="45" height="45" class="av" src="' . get_avatar($val, 's') . '" alt="' . htmlspecialchars($val->nick) . '" /></a>';
+				$out .= '<img width="45" height="45" class="av" src="' . get_avatar($val, 's') . '" alt="' . h($val->nick) . '" /></a>';
 				if (!empty($val->decos)) {
 					$decos = unserialize($val->decos);
 					if (!empty($decos)) {
@@ -1594,10 +1389,10 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 
-            //moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
-            if ( $val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author){
-                $out .= ' <a href="/warns/'.$val->author.'/commentid/'.$val->id.'" class="post-button post-warn" title="Brīdināt">brīdināt</a>';
-            }
+			//moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
+			if ($val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author) {
+				$out .= ' <a href="/warns/' . $val->author . '/commentid/' . $val->id . '" class="post-button post-warn" title="Brīdināt">brīdināt</a>';
+			}
 
 			$out .= '</p>';
 			if ($val->mb_removed == 1) {
@@ -1899,7 +1694,7 @@ function get_latest_images() {
 				$img = $img_server . '/' . $late->thb;
 			}
 
-			$out .= '<a title="' . htmlspecialchars($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
+			$out .= '<a title="' . h($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
@@ -1934,11 +1729,11 @@ function get_latest_images() {
 function get_latest_mbs($tab = 'all') {
 	global $auth, $db, $lang, $config_domains, $img_server;
 
-	if($tab === 'music') {
+	if ($tab === 'music') {
 		return get_latest_music();
 	}
 
-	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
+	$out = '<ul id="mb-list" class="blockhref mb-col">';
 
 	if (isset($_GET['pg'])) {
 		$skip = 6 * intval($_GET['pg']);
@@ -2103,7 +1898,7 @@ function get_latest_mbs($tab = 'all') {
 				$mb->nick = 'dzēsts';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . htmlspecialchars($mb->nick) . '" /><span class="author">' . htmlspecialchars($mb->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" /><span class="author">' . h($mb->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';
@@ -2360,7 +2155,7 @@ function profile_menu($user, $active, $title, $action = null) {
 
 	$tpl->assignGlobal(array(
 		'user-id' => $user->id,
-		'user-nick' => htmlspecialchars($user->nick),
+		'user-nick' => h($user->nick),
 		'active-tab-' . $active => 'active'
 	));
 
@@ -2488,7 +2283,7 @@ function lastfm_update_tracks($user_id) {
 
 	$user = get_user($user_id);
 
-	if(empty($user->lastfm_sessionkey) || $user->lastfm_updated > time()-100) {
+	if (empty($user->lastfm_sessionkey) || $user->lastfm_updated > time() - 100) {
 		return false;
 	}
 
@@ -2517,18 +2312,16 @@ function lastfm_update_tracks($user_id) {
 		'lastfm_updated' => time()
 	));
 
-	if ( $tracks = $userClass->getRecentTracks($methodVars) ) {
+	if ($tracks = $userClass->getRecentTracks($methodVars)) {
 
 		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$user->id'");
 
-		foreach($tracks as $track) {
+		foreach ($tracks as $track) {
 
-			$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES ($user->id, '".sanitize($track['name'])."', '".sanitize($track['mbid'])."', '".sanitize($track['url'])."', ".intval($track['date']).", '".sanitize($track['artist']['name'])."', '".sanitize($track['artist']['mbid'])."', '".sanitize($track['album']['name'])."', '".sanitize($track['album']['mbid'])."', '".sanitize($track['images']['small'])."', '".sanitize($track['images']['medium'])."', '".sanitize($track['images']['large'])."', NOW())");
-
+			$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_small`, `images_medium`, `images_large`, `created`) VALUES ($user->id, '" . sanitize($track['name']) . "', '" . sanitize($track['mbid']) . "', '" . sanitize($track['url']) . "', " . intval($track['date']) . ", '" . sanitize($track['artist']['name']) . "', '" . sanitize($track['artist']['mbid']) . "', '" . sanitize($track['album']['name']) . "', '" . sanitize($track['album']['mbid']) . "', '" . sanitize($track['images']['small']) . "', '" . sanitize($track['images']['medium']) . "', '" . sanitize($track['images']['large']) . "', NOW())");
 		}
 
 		return true;
-
 	} else {
 
 		return false;
@@ -2541,7 +2334,7 @@ function lastfm_update_tracks($user_id) {
 function get_latest_music() {
 	global $auth, $db, $lang, $config_domains, $img_server;
 
-	$out = '<ul id="friendssay-list" class="blockhref mb-col">';
+	$out = '<ul id="mb-list" class="blockhref mb-col">';
 
 	if (isset($_GET['pg'])) {
 		$skip = 6 * intval($_GET['pg']);
@@ -2552,7 +2345,7 @@ function get_latest_music() {
 	$friendsquery = '';
 	if ($auth->ok === true && $auth->lastfm_onlyfriends) {
 		$myfriends = get_friends_lastfm($auth->id);
-		if(!empty($myfriends)) {
+		if (!empty($myfriends)) {
 			$myfriends[] = $auth->id;
 			$friendsquery = 'AND `lastfm_tracks`.`user_id` IN(' . implode(',', $myfriends) . ')';
 		}
@@ -2583,16 +2376,14 @@ function get_latest_music() {
 
 			$time = time_ago($track->date);
 
-			if(!empty($track->images_small)) {
+			if (!empty($track->images_small)) {
 				$img = 'https://images.weserv.nl/?url=' . str_replace('http://', '', $track->images_medium);
 			} else {
 				//ja last.fm nedod avataru, rādam lietotāju
 				$img = get_avatar($track, 's');
 			}
 
-			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . htmlspecialchars($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . htmlspecialchars($track->url) . '" rel="nofollow" target="_blank">' . htmlspecialchars($track->artist_name) . ' - ' . htmlspecialchars($track->name) . '</a></span></li>';
-
-
+			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . h($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . h($track->url) . '" rel="nofollow" target="_blank">' . h($track->artist_name) . ' - ' . h($track->name) . '</a></span></li>';
 		}
 	}
 
@@ -2613,7 +2404,7 @@ function get_latest_music() {
 	}
 	$out .= '</p>';
 
-	if($auth->ok === true) {
+	if ($auth->ok === true) {
 		$out .= '<p style="text-align:right"><a class="button button-xs primary" href="/lastfm">Iestatījumi</a></p>';
 	}
 
@@ -2630,11 +2421,10 @@ function get_game_monitor($url, $force = false) {
 
 	if ($force || !($html = $m->get($cache_key))) {
 		$html = curl_get($url);
-		if(!$html) {
+		if (!$html) {
 			$html = 'Offline';
 		}
 		$m->set($cache_key, $html, false, 300);
 	}
 	return $html;
 }
-

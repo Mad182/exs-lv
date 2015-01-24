@@ -16,7 +16,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 			ini_set('memory_limit', '200M');
 
-			$title = sanitize(nl2br(htmlspecialchars($_POST['title'])));
+			$title = sanitize(nl2br(h($_POST['title'])));
 			require_once(CORE_PATH . '/includes/class.upload.php');
 
 			$foo = new Upload($_FILES['new-image']);
@@ -125,7 +125,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		$tpl->assign(array(
 			'voter' => junk_vote($pic->id, $auth->id),
 			'title' => $pic->title . $add,
-			'title-html' => htmlspecialchars($pic->title),
+			'title-html' => h($pic->title),
 			'image' => $pic->image,
 			'id' => $pic->id,
 		));
@@ -139,7 +139,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			));
 		}
 
-		$page_title = htmlspecialchars($pic->title);
+		$page_title = h($pic->title);
 
 		$next = $db->get_var("SELECT `id` FROM `junk` WHERE `removed` = 0 AND `id` > '$id' ORDER BY `id` ASC LIMIT 1");
 		if ($next) {

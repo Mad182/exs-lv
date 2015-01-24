@@ -14,7 +14,7 @@ if (!empty($inprofile)) {
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
 		'url' => '/user/' . $inprofile->id,
-		'profile-nick' => htmlspecialchars($inprofile->nick),
+		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
@@ -63,7 +63,7 @@ if (!empty($inprofile)) {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-$tpl->newBlock('friendssay-box');
+$tpl->newBlock('mb-box');
 $sel = 'all';
 if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] == 'friends') {
 	$mbs = get_latest_mbs('friends');
@@ -75,7 +75,7 @@ if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] ==
 $tpl->assign('out', $mbs);
 
 if($auth->ok) {
-	$tpl->newBlock('friendssay-tabs');
+	$tpl->newBlock('mb-tabs');
 	$tpl->assign(array(
 		$sel . '-selected' => 'active '
 	));

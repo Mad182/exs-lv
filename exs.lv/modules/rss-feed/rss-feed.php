@@ -35,10 +35,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'all' || !isset($_GET['var1']) && $
 
 $tpl->newBlock('feed');
 $tpl->assign(array(
-	'title' => htmlspecialchars($title),
-	'link' => htmlspecialchars($site_url),
-	'description' => htmlspecialchars($site_description),
-	'self' => htmlspecialchars(substr($site_url, 0, -1) . $_SERVER['REQUEST_URI'])
+	'title' => h($title),
+	'link' => h($site_url),
+	'description' => h($site_description),
+	'self' => h(substr($site_url, 0, -1) . $_SERVER['REQUEST_URI'])
 ));
 
 if (!empty($articles)) {
@@ -50,7 +50,7 @@ if (!empty($articles)) {
 		$text = add_smile($article->text);
 
 		if ($article->avatar) {
-			$text = '<p><a href="' . $url . '"><img style="border:0;float:left;margin: 6px 7px 0 0" src="' . $site_url . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a></p>' . $text;
+			$text = '<p><a href="' . $url . '"><img style="border:0;float:left;margin: 6px 7px 0 0" src="' . $site_url . $article->avatar . '" alt="' . h($article->title) . '" /></a></p>' . $text;
 		}
 
 		$text = str_replace('="/', '="' . $site_url, $text);
@@ -59,12 +59,12 @@ if (!empty($articles)) {
 
 		$tpl->newBlock('feed-item');
 		$tpl->assign(array(
-			'title' => htmlspecialchars($article->title),
-			'link' => htmlspecialchars($url),
-			'description' => htmlspecialchars($text),
+			'title' => h($article->title),
+			'link' => h($url),
+			'description' => h($text),
 			'date' => gmdate('r', strtotime($article->date)),
-			'creator' => htmlspecialchars($author->nick),
-			'category' => htmlspecialchars($cat->title)
+			'creator' => h($author->nick),
+			'category' => h($cat->title)
 		));
 	}
 }

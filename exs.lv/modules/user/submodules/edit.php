@@ -62,15 +62,15 @@ $tpl->assign(array(
 	'user-skype' => $inprofile->skype,
 	'user-yt_name' => $inprofile->yt_name,
 	'user-twitter' => $inprofile->twitter,
-	'user-web' => htmlspecialchars($inprofile->web),
+	'user-web' => h($inprofile->web),
 	'user-date' => $inprofile->date
 ));
 
 if (!empty($inprofile->allow_signature)) {
 	$tpl->newBlock('sig-about-edit');
 	$tpl->assign(array(
-		'user-signature' => htmlspecialchars($inprofile->signature),
-		'user-about' => htmlspecialchars($inprofile->about)
+		'user-signature' => h($inprofile->signature),
+		'user-about' => h($inprofile->about)
 	));
 } else {
 	$tpl->newBlock('sig-about-disabled');

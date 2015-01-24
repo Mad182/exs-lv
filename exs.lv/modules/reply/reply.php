@@ -27,7 +27,7 @@ if ($auth->ok) {
 	$tpl->assign(array(
 		'page' => $page->id,
 		'comment' => $comment->id,
-		'nick' => htmlspecialchars($author->nick),
+		'nick' => h($author->nick),
 	));
 } else {
 	die('Neesi ielogojies :/');

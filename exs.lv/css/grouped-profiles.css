@@ -1,0 +1,42 @@
+/* Profilu sasaistes sadaļa */
+.new-main {
+	padding:10px 20px;
+	margin:10px 3px;
+	border:1px solid #EBEBEB;
+	background:rgb(252, 252, 252);
+}
+	.new-main .small-text {
+		font-weight:bold;
+		font-size:12px
+	}
+#profile-list tr.main-profile:nth-child(4n + 2) {
+	background:#FAFAFA
+}
+	.is-hidden {
+		display:none
+	}
+	.main-profile td:nth-child(2) {
+		position:relative
+	}
+	.show-children:hover {
+		cursor:pointer
+	}
+	.show-children {
+		padding:5px 15px 0;
+		position:absolute;
+		top:5px;
+		right:0
+	}
+	.show-children:hover {
+		background:rgb(243, 243, 243)
+	}
+.child-block {
+	background:#F7FBFF;
+	border:1px solid #E2E6F1;
+	margin-left:10px;
+	padding:10px 20px
+}
+.profiles-description {
+	width:450px;
+	min-height:130px
+}

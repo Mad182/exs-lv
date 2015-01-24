@@ -35,7 +35,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'delete' && isset($_GET['var3'])) {
 }
 
 if (isset($_POST['submit-domain']) && !empty($_POST['domain']) && strlen(trim($_POST['domain'])) > 3) {
-	$domain = sanitize(htmlspecialchars(trim($_POST['domain'])));
+	$domain = sanitize(h(trim($_POST['domain'])));
 	$db->query("INSERT INTO `" . $active . "_sites` (`id`, `url`) VALUES (NULL, '$domain')");
 	$m->delete($active . '_sites');
 }
@@ -46,7 +46,7 @@ if (!empty($domains)) {
 	foreach ($domains as $domain) {
 		$tpl->newBlock('link-manager-item');
 		$tpl->assign(array(
-			'domain' => htmlspecialchars($domain->url),
+			'domain' => h($domain->url),
 			'id' => $domain->id,
 			'type' => $active
 		));

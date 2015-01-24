@@ -17,7 +17,7 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 	$tpl->newBlock('profile-box');
 	$tpl->assignGlobal(array(
 		'url' => '/user/' . $inprofile->id,
-		'profile-nick' => htmlspecialchars($inprofile->nick),
+		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
@@ -108,7 +108,7 @@ if ($junks) {
 		$tpl->assign(array(
 			'id' => $junk->id,
 			'thb' => $junk->thb,
-			'title' => htmlspecialchars($junk->title),
+			'title' => h($junk->title),
 			'posts' => $junk->posts
 		));
 	}
@@ -117,7 +117,7 @@ if ($junks) {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-$tpl->newBlock('friendssay-box');
+$tpl->newBlock('mb-box');
 $sel = 'all';
 if (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') {
 	$mbs = get_latest_mbs('friends');
@@ -132,7 +132,7 @@ if (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') 
 $tpl->assign('out', $mbs);
 
 if ($auth->ok) {
-	$tpl->newBlock('friendssay-tabs');
+	$tpl->newBlock('mb-tabs');
 }
 $tpl->assignGlobal(array(
 	$sel . '-selected' => 'active '
@@ -157,4 +157,3 @@ if ($auth->ok === true) {
 if ($auth->skin == 1) {
 	$tpl->assignGlobal('twitter-theme', ' data-theme="dark"');
 }
-

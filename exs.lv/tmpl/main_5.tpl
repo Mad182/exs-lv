@@ -250,10 +250,10 @@
 					<div id="lat" class="ajaxbox">{latest-noscript}</div>
 				</div>
 
-				<!-- START BLOCK : friendssay-box-->
+				<!-- START BLOCK : mb-box-->
 				<h3>Miniblogi{miniblog-add}</h3>
 				<div class="box"><div id="miniblog-block">{out}</div></div>
-				<!-- END BLOCK : friendssay-box-->
+				<!-- END BLOCK : mb-box-->
 
 				<!-- START BLOCK : notification-list-->
 				<h3>Tavi notikumi</h3>

@@ -9,7 +9,7 @@ if (im_mod() && isset($_GET['var1'])) {
 
 		if (isset($_POST['submit-changes']) && !empty($_POST['title'])) {
 
-			$title = sanitize(nl2br(htmlspecialchars(strip_tags($_POST['title']))));
+			$title = sanitize(nl2br(h(strip_tags($_POST['title']))));
 			$db->query("UPDATE `junk` SET
 					`title` = '$title',
 					`edit_time` = " . time() . ",
@@ -25,7 +25,7 @@ if (im_mod() && isset($_GET['var1'])) {
 		$tpl->newBlock('mb-edit');
 		$tpl->assign(array(
 			'id' => $mb->id,
-			'title' => htmlspecialchars($mb->title),
+			'title' => h($mb->title),
 			'cat-url' => $category->textid
 		));
 	}

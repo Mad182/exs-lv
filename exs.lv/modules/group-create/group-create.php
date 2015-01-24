@@ -19,7 +19,7 @@ if ($auth->ok) {
 		if ($credit < 3) {
 			set_flash('Nepietiek exs punktu!', 'error');
 		} else {
-			$title = sanitize(htmlspecialchars(trim($_POST['new-title'])));
+			$title = sanitize(h(trim($_POST['new-title'])));
 			$db->query("UPDATE users SET credit = credit-'3' WHERE id = ('" . $auth->id . "')");
 			$db->query("INSERT INTO clans (title,date_created,owner,lang) VALUES ('$title','" . time() . "','$auth->id','$lang')");
 			update_karma($auth->id, true);

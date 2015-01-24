@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Tekstuālās sadaļas
+ *
+ * Attēlo tekstu no content lauka cat tabulā
+ */
 if (isset($_GET['edit']) && im_mod()) {
 
 	if (isset($_POST['content'])) {
@@ -14,7 +19,7 @@ if (isset($_GET['edit']) && im_mod()) {
 	$tpl->newBlock('text-edit');
 	$tpl->assign(array(
 		'title' => $category->title,
-		'content' => htmlspecialchars($category->content)
+		'content' => h($category->content)
 	));
 	$tpl->newBlock('tinymce-enabled');
 } else {

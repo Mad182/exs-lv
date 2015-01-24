@@ -19,14 +19,14 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 		}
 
 		$decos[] = array(
-			'title' => htmlspecialchars($_POST['title']),
-			'icon' => htmlspecialchars($_POST['icon'])
+			'title' => h($_POST['title']),
+			'icon' => h($_POST['icon'])
 		);
 
 		$decos = serialize($decos);
 
 		$db->query("UPDATE `users` SET `decos` = '" . sanitize($decos) . "' WHERE `id` = '$user->id'");
-		$auth->log('Pievienoja profila ikonu (' . htmlspecialchars($_POST['icon']) . ')', 'users', $user->id);
+		$auth->log('Pievienoja profila ikonu (' . h($_POST['icon']) . ')', 'users', $user->id);
 
 		header('Location: /' . $category->textid);
 		exit;

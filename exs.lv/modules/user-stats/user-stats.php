@@ -15,7 +15,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 			if (!empty($usernames)) {
 				foreach ($usernames as $username) {
 					$history[] = array(
-						'nick' => htmlspecialchars($username->nick),
+						'nick' => h($username->nick),
 						'changed' => $username->changed
 					);
 				}
@@ -40,7 +40,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 
 			$data = array(
 				'id' => (int) $user->id,
-				'nick' => htmlspecialchars($user->nick),
+				'nick' => h($user->nick),
 				'posts' => (int) $user->posts,
 				'karma' => (int) $user->karma,
 				'days' => (int) $days,

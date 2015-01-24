@@ -210,10 +210,10 @@
 					</div>
 					<!-- END BLOCK : profile-box-->
 
-					<!-- START BLOCK : friendssay-box-->
+					<!-- START BLOCK : mb-box-->
 					<h3>Mini blogi{miniblog-add}</h3>
 					<div class="box"><div id="miniblog-block">{out}</div></div>
-					<!-- END BLOCK : friendssay-box-->
+					<!-- END BLOCK : mb-box-->
 
 					<h3>Jaunākais forumā</h3>
 					<div class="box">

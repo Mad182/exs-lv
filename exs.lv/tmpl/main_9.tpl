@@ -376,19 +376,19 @@
                         </div>
                         <!-- END BLOCK : profile-box-->
 
-                        <!-- START BLOCK : friendssay-box-->
+                        <!-- START BLOCK : mb-box-->
                         <h3>Miniblogi{miniblog-add}</h3>
                         <div class="box">
-                            <!-- START BLOCK : friendssay-tabs-->
+                            <!-- START BLOCK : mb-tabs-->
                             <ul class="tabs">
                                 <li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Ārpusē</span></a></li>
                                 <li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Grupās</span></a></li>
                             </ul>
                             <div class="c"></div>
-                            <!-- END BLOCK : friendssay-tabs-->
+                            <!-- END BLOCK : mb-tabs-->
                             <div id="miniblog-block" class="ajaxbox">{out}</div>
                         </div>
-                        <!-- END BLOCK : friendssay-box-->
+                        <!-- END BLOCK : mb-box-->
 
                         <!-- START BLOCK : groups-l-list-->
                         <h3><img class="box-icon" src="/bildes/fugue-icons/xfn-colleague.png" alt="Aptauja">Jaunākās grupas</h3>

@@ -94,7 +94,7 @@ if ($articles) {
 			$tpl->newBlock('list-articles-node-avatar');
 			$tpl->assign(array(
 				'node-avatar-image' => trim($article->avatar),
-				'node-avatar-alt' => trim(htmlspecialchars($article->title))
+				'node-avatar-alt' => trim(h($article->title))
 			));
 		}
 	}

@@ -249,7 +249,7 @@ p.comment-tools a {
 	width: 90%;
 }
 
-#miniblog-list li, #miniblog-list li li, #friendssay-list li, .responses li {
+#miniblog-list li, #miniblog-list li li, #mb-list li, .responses li {
 	padding: 0;
 	margin: 0;
 	height: auto !important;
@@ -262,7 +262,7 @@ p.comment-tools a {
 	padding: 3px 0 7px 0;
 }
 
-#friendssay-list li {
+#mb-list li {
 	border-bottom: 1px solid #eee;
 	padding: 3px 0;
 	margin: 0;
@@ -324,12 +324,12 @@ p.comment-tools a {
 	font-family: arial;
 }
 
-#friendssay-list li .author {
+#mb-list li .author {
 	color: #666;
 	font-weight: 700;
 }
 
-#friendssay-list li span.time-ago {
+#mb-list li span.time-ago {
 	display: inline;
 	font-weight: normal;
 	color: #999;
@@ -339,7 +339,7 @@ p.comment-tools a {
 	margin: 0 1px 2px 5px;
 }
 
-#friendssay-list li .author span {
+#mb-list li .author span {
 	display: inline;
 	font-weight: normal;
 	color: #999;

@@ -36,7 +36,7 @@ if ($auth->ok) {
 	if (isset($_GET['var1']) && ($_GET['var1'] == 'edit' || $_GET['var1'] == 'new')) {
 		$tpl->newBlock('notepad-edit');
 		if ($note) {
-			$tpl->assign('content', htmlspecialchars($note->content));
+			$tpl->assign('content', h($note->content));
 			$tpl->assign('id', $note->id);
 		} else {
 			$tpl->newBlock('notepad-title');

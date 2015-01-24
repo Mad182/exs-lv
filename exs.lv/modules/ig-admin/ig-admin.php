@@ -13,13 +13,13 @@ if (isset($_GET['game'])) {
 		$tpl->newBlock('ig-newimage');
 
 		if (isset($_POST['newimage-title'])) {
-			$newtitle = sanitize(htmlspecialchars(trim($_POST['newimage-title'])));
+			$newtitle = sanitize(h(trim($_POST['newimage-title'])));
 			$newdif = (int) $_POST['newimage-dif'];
 			if (!$newdif) {
 				$newdif = 2;
 			}
-			$newhint = sanitize(htmlspecialchars(trim($_POST['newimage-hint'])));
-			$newimage = sanitize(htmlspecialchars(trim($_POST['newimage-image'])));
+			$newhint = sanitize(h(trim($_POST['newimage-hint'])));
+			$newimage = sanitize(h(trim($_POST['newimage-image'])));
 			if ($db->query("INSERT INTO ig_items (game_id,image,title,hint,dif) VALUES ('$game->id','$newimage','$newtitle','$newhint','$newdif')")) {
 				$tpl->newBlock('ig-newimage-success');
 			}

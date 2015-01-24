@@ -190,7 +190,7 @@ if (!empty($me)) {
 			}
 
 			$tpl->assign(array(
-				'nick' => htmlspecialchars($nick),
+				'nick' => h($nick),
 				'avatar' => 'https://graph.facebook.com/' . $me['id'] . '/picture?type=large'
 			));
 		} else {
