@@ -442,7 +442,7 @@ function textlimit($string, $setlength, $replacer = '...') {
 	$string = str_replace('	 ', ' ', $string);
 	$length = $setlength;
 	if ($length < strlen($string)) {
-		while (($string{$length} != " ") AND ($length > 0)) {
+		while (($string{$length} != " ") AND ( $length > 0)) {
 			$length--;
 		}
 		if ($length == 0)
@@ -614,120 +614,22 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 	}
 
 	$text = str_replace('eval(', 'ev<span>a</span>l(', $text);
-	$text = preg_replace('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uime', 'get_mentions("\\1","' . $url . '","' . $type . '","' . $uniq . '")', $text);
 
-	if ($type == 'mb') {
-		$text = preg_replace('/\B#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uime', 'get_tags_mb("\\1", "' . $uniq . '")', $text);
+	/* apstrādā @mentions */
+	if (strpos($text, '@') !== false) {
+		include_once(CORE_PATH . '/includes/class.mention.php');
+		$mention = new Mention($url, $type, $uniq);
+		$text = preg_replace_callback('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uim', array($mention, 'mention'), $text);
+	}
+
+	/* miniblogu #tags */
+	if ($type == 'mb' && strpos($text, '#') !== false) {
+		include_once(CORE_PATH . '/includes/class.hashtag.php');
+		$hashtag = new Hashtag($uniq);
+		$text = preg_replace_callback('/\B#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', array($hashtag, 'hashtag'), $text);
 	}
 
 	return $text;
-}
-
-function get_tags_mb($tag, $mbid) {
-	global $db;
-
-	if ($mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mbid' AND `parent` = '0' AND `removed` = '0'")) {
-		include_once(CORE_PATH . '/includes/class.tags.php');
-		$tags = new tags;
-
-		if (strlen($tag) < 30 && strlen($tag) > 2) {
-			$newtag = sanitize(mb_ucfirst(strtolower(trim($tag))));
-			$nslug = mkslug($tag);
-			if (!empty($newtag)) {
-				$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-				if ($tagid) {
-					$tags->add_tag($mb->id, $tagid, 2);
-				} else {
-					$db->query("INSERT INTO tags (name,slug) VALUES ('$newtag','$nslug')");
-					$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-					$tags->add_tag($mb->id, $tagid, 2);
-				}
-			}
-			return '<a class="post-tag" href="/tag/' . $nslug . '" title="' . $newtag . '"><span class="hash-sign">#</span>' . $tag . '</a>';
-		}
-	}
-	return '#' . $tag;
-}
-
-function get_mentions($nick, $url = '#', $type = "notype", $uniq = 0) {
-	global $db, $auth, $mention_counter;
-
-	$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
-
-	if (empty($usr) && stristr($nick, '_')) {
-		$nick = str_replace('_', ' ', $nick);
-		$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
-	}
-
-	if (empty($usr) && stristr($nick, '-')) {
-		$nick = str_replace('-', ' ', $nick);
-		$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
-	}
-
-	if (!empty($usr) && !in_array($nick, array('exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail')) && $mention_counter <= 6) {
-		$mention_counter++;
-
-		if ($type == 'mb') {
-			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT `text`, `id`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
-				$title = mb_get_title($mb->text);
-				$strid = mb_get_strid($title, $mb->id);
-				$url = '/say/' . $mb->author . '/' . $mb->id . '-' . $strid;
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 14, $mb->id, $url, $title);
-				}
-			}
-		}
-
-		if ($type == 'group') {
-			if (!empty($uniq)) {
-				$mb = $db->get_row("SELECT `id`, `groupid`, `text`, `author` FROM `miniblog` WHERE `id` = '" . intval($uniq) . "'");
-				$group = $db->get_row("SELECT `title`, `strid`, `id` FROM `clans` WHERE `id` = '$mb->groupid'");
-				$title = mb_get_title($mb->text);
-				if (!empty($group->strid)) {
-					$url = '/' . $group->strid . '/forum/' . base_convert($mb->id, 10, 36);
-				} else {
-					$url = '/group/' . $group->id . '/forum/' . base_convert($mb->id, 10, 36);
-				}
-				if ($mb->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 13, $mb->id, $url, $group->title . ': ' . $title);
-				}
-			}
-		}
-
-		if ($type == 'page') {
-			if (!empty($uniq)) {
-				$page = $db->get_row("SELECT `id`, `title`, `author` FROM `pages` WHERE `id` = '" . intval($uniq) . "'");
-				if ($page->author != $usr->id && $usr->id != $auth->id) {
-					notify($usr->id, 15, $page->id, $url, $page->title);
-				}
-			}
-		}
-
-		if ($type == 'image') {
-			if (!empty($uniq)) {
-				$image = $db->get_row("SELECT `id`, `uid`, `text` FROM `images` WHERE `id` = '" . intval($uniq) . "'");
-				$url = '/gallery/' . $image->uid . '/' . $image->id;
-				if ($usr->id != $auth->id) {
-					notify($usr->id, 16, $image->id, $url, strip_tags($image->text));
-				}
-			}
-		}
-
-		if ($type == 'junk') {
-			if (!empty($uniq)) {
-				$junk = $db->get_row("SELECT `id`, `title` FROM `junk` WHERE `id` = '" . intval($uniq) . "'");
-				$url = '/junk/' . $junk->id;
-				if ($usr->id != $auth->id) {
-					notify($usr->id, 15, $junk->id, $url, strip_tags($junk->title));
-				}
-			}
-		}
-
-		return '<a class="post-mention" href="/user/' . $usr->id . '"><span class="at-sign">@</span>' . usercolor($usr->nick, $usr->level, 'disable', $usr->id) . '</a>';
-	} else {
-		return '@' . $nick;
-	}
 }
 
 function createPassword($length) {
