@@ -479,12 +479,13 @@ html .banned {
 	color: #2ba7d7;
 }
 
+/* login forma */
 #login-form {
 	float: right;
 	height: 16px;
 	color: #eee;
 	margin: 0;
-	padding: 10px 5px 0;
+	padding: 10px 0 0;
 }
 
 #login-form fieldset {
@@ -495,6 +496,7 @@ html .banned {
 	float: left;
 	display: inline;
 	margin: -1px 0 0;
+	font-weight: 400;
 }
 
 #login-form input {
@@ -505,6 +507,7 @@ html .banned {
 	display: inline;
 	margin: 0 3px 0 0;
 	padding: 2px 3px;
+	background: #EAEAEA url('//img.exs.lv/bildes/login.png');
 }
 
 #login-form input.login-submit {
@@ -3549,15 +3552,6 @@ ul.taged {
 	height: 125px;
 }
 
-#login-form input {
-	background: #EAEAEA url('//img.exs.lv/bildes/login.png');
-}
-#login-form {
-	padding-top: 9px;
-}
-#login-form label {
-	font-weight: 400;
-}
 #tools-bar {
 	margin: 0;
 	background: transparent url('//img.exs.lv/bildes/black_35.png') repeat
