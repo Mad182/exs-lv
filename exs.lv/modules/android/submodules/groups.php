@@ -8,6 +8,8 @@
 // nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
 
+require_once(CORE_PATH.'/modules/android/functions.miniblogs.php');
+
 // piegriezies rakstīt isset pārbaudi un neērto $_GET
 $var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
 $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
@@ -82,10 +84,17 @@ if (!$group_data) {
     ));
     
 /**
+ *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
+ *  /groups/{group_id}/getlist
+ */
+} else if ($var2 === 'getlist') {
+    a_fetch_miniblogs($group_data->clan_id);
+
+/**
  *  Atgriezīs sarakstu ar grupā esošajiem lietotājiem.
  *  /groups/{group_id}/members
  */
-} else if (!empty($var1) && $var2 === 'members') {
+} else if ($var2 === 'members') {
 
     // tā kā biedru grupā var būt pat > 1000,
     // to saraksts tiks ielādēts pa lappusēm

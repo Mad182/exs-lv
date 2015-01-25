@@ -21,7 +21,7 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
  *  Atgriezīs jaunāko miniblogu sarakstu.
  */
 if ($var1 === 'getlist') {
-    $json_page = a_fetch_miniblogs();
+    a_fetch_miniblogs();
 
 /**
  *  Jauna minibloga pievienošana vai esoša minibloga komentēšana.

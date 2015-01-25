@@ -4,54 +4,103 @@
  */
  
 /**
- *  Jaunāko miniblogu saraksts.
+ *  Atgriezīs sarakstu ar jaunākajiem miniblogiem.
  *
- *  Atlasa un atgriež JSON sarakstu ar jaunākajiem miniblogiem,
- *  kas pievienoti vai nu grupās, kurām lietotājs ir pieteicies, vai ārpus tām.
+ *  Norādot grupas ID, atgriezti tiks tikai šīs grupas miniblogi
+ *  (ja lietotājiem tiem ir piekļuve).
  *
- *  Šobrīd apakšprojektu miniblogi netiek ņemti vērā un ir izlaisti.
+ *  (Šobrīd apakšprojektu miniblogi netiek ņemti vērā un ir izlaisti.)
  */
-function a_fetch_miniblogs() {
+function a_fetch_miniblogs($group_id = 0) {
 	global $auth, $db, $android_lang;      
 	
-	$mbs_in_page = 10;
-	
-	if (isset($_GET['page'])) {
-		$skip = $mbs_in_page * intval($_GET['page']);
-	} else {
-		$skip = 0;
-	}
+    $group_id = (int)$group_id;
+    
+    // noteiks, vai lietotājam maz ir piekļuve norādītajai grupai
+    if ($group_id != 0) {
+        $group_data = $db->get_row("
+            SELECT
+                `clans`.*,
+                IFNULL(`clans_members`.`approve`, 0) AS `approved`
+            FROM `clans`
+            LEFT JOIN `clans_members` ON (
+                `clans`.`id` = `clans_members`.`clan` AND
+                `clans_members`.`user` = ".$auth->id." AND
+                `clans_members`.`approve` = 1
+            )
+            WHERE
+                `clans`.`id` = ".$group_id." AND
+                `clans`.`lang` = ".$android_lang."
+        ");
+        if (!$group_data) {
+            a_error('Grupa neeksistē');
+            a_log('Vēlējās atlasīt neeksistējošas grupas (id:'.$group_id.') miniblogus');
+            return;
+        } else if ($group_data->owner !== $auth->id && $group_data->approved == '0') {
+            a_append(array('message' => 'Pieeja grupai liegta'));
+            a_log('Vēlējās atlasīt miniblogus grupā, kurai nav pieejas (id:'.$group_id.')');
+            return;
+        }
+    }
+    
+    // lappušu iestatījumi  
+    $max_pages = 10;
+    $mbs_in_page = 20;
+    $current_page = 1;
+    
+    if (isset($_GET['page'])) {
+        $_GET['page'] = (int)$_GET['page'];
+        if ($_GET['page'] < 0 || $_GET['page'] > $max_pages) {
+            $_GET['page'] = 1;
+        }
+        $current_page = $_GET['page'];
+    }
+    $lim_start = ($current_page - 1) * $mbs_in_page;
 
-	// atlasa grupas, kurās lietotājs ir pieteicies;    
-	// iedomājos tās šausmas, ja būtu jāredz visi miniblogi :(
+    // izveidos query string ar atlasāmajiem miniblogiem
 	if ($auth->level == 1) {
+        // iedomājos tās šausmas, ja būtu jāredz visi miniblogi :(
 		$groupquery = '1 = 1';
 	} else {
 	
-		// visi ieraksti, kas atrodas ārpus grupām
-		$usergroups = array("`miniblog`.`groupid` = '0'");
-		
-		if ($auth->ok === true) {
-			// grupas, kurās lietotājs ir administrators
-			$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
-			if ($g_owners) {
-				foreach ($g_owners as $g_owner) {
-					$usergroups[] = "`miniblog`.`groupid` = '" . $g_owner . "'";
-				}
-			}
-			// grupas, kurās lietotājam ir parasts statuss
-			$g_members = $db->get_col("SELECT clan FROM clans_members WHERE user = '$auth->id' AND approve = '1'");
-			if ($g_members) {
-				foreach ($g_members as $g_member) {
-					$usergroups[] = "`miniblog`.`groupid` = '" . $g_member . "'";
-				}
-			}
-		}
-		
-		// sakonkatenē visus kritērijus vienā stringā, lai ievietotu query
-		$groupquery = implode(' OR ', $usergroups);
+		// visi ieraksti, kas atrodas norādītajā grupā
+        if ($group_id > 0) {
+            $usergroups = array("`miniblog`.`groupid` = ".$group_id);
+        
+        // ieraksti gan ārpus grupām, gan no grupām, kurās lietotājs ir
+        } else {
+
+            // ieraksti ārpus grupām
+            $usergroups = array("`miniblog`.`groupid` = 0");
+            
+            // grupas, kurās lietotājs ir administrators
+            $g_owners = $db->get_col("
+                SELECT `id` FROM `clans` WHERE `owner` = ".$auth->id
+            );
+            if ($g_owners) {
+                foreach ($g_owners as $g_owner) {
+                    $usergroups[] = "`miniblog`.`groupid` = ".(int)$g_owner;
+                }
+            }
+            
+            // grupas, kurās lietotājam ir parasts statuss
+            $g_members = $db->get_col("
+                SELECT `clan` FROM `clans_members` 
+                WHERE `user` = ".$auth->id." AND `approve` = 1
+            ");
+            if ($g_members) {
+                foreach ($g_members as $g_member) {
+                    $usergroups[] = "`miniblog`.`groupid` = ".(int)$g_member;
+                }
+            }
+        }
+        
+        // sakonkatenēs visus kritērijus vienā stringā,
+        // lai ievietotu pieprasījumā
+        $groupquery = implode(' OR ', $usergroups);
 	}
 
+    // atlasīs miniblogus, kas atbilst noteiktajiem kritērijiem
 	$mbs = $db->get_results("
 		SELECT
 			`miniblog`.`id` AS `mb_id`,
@@ -78,17 +127,21 @@ function a_fetch_miniblogs() {
 			(" . $groupquery . ") AND
 			`users`.`id` = `miniblog`.`author`
 		ORDER BY
-			`miniblog`.`bump`
-		DESC LIMIT $skip, $mbs_in_page
+			`miniblog`.`bump` DESC
+		LIMIT ".$lim_start.", ".$mbs_in_page."
 	");
 
-	// masīvs, kas tiks atgriezts
-	$arr_mbs = array();
-	
 	if (!$mbs) {
-		return $arr_mbs;
+        if ($group_id > 0) {
+            a_error('Grupā vēl nav neviena minibloga');
+        } else {
+            a_error('Neizdevās atlasīt jaunākos miniblogus');
+        }
+        return;
 	}
 	
+	$arr_mbs = array();	
+    
 	foreach ($mbs as $mb) {
 
 		// kaut kas šeit tiek eskeipots
@@ -97,35 +150,33 @@ function a_fetch_miniblogs() {
 
 		// paslēpj spoilerus
 		if (strpos($mb->text, 'spoiler') !== false) {
-			$mb->text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', "(spoiler)", $mb->text);
+			$mb->text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
+                "(spoiler)", $mb->text);
 		}		
 
         // dzēstie lietotājvārdi
 		if (!empty($mb->deleted)) {
 			$mb->nick = 'dzēsts';
 		}
-		
-		// iegūst pareizu avatara adresi un grupas nosaukumu
+
 		$avatar = '';
 		$group_title = '';
-		// grupu miniblogiem rādīs grupas avatarus
-		if ($mb->groupid != 0) {
-			$group = $db->get_row("
-                SELECT `title`, `avatar`, `strid` 
-                FROM `clans` 
+        
+        // grupu miniblogiem rādīs grupas avatarus
+        if ($group_id == 0 && $mb->groupid != 0) {
+            $group = $db->get_row("
+                SELECT `title`, `avatar`, `strid` FROM `clans` 
                 WHERE `id` = ".(int)$mb->groupid
             );
-			if ($group->avatar) {
-				$group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
-				$avatar = a_get_user_avatar($group, 's');
-			}
-			if ($group) {
-				$group_title = ' @ ' . $group->title;
-			}
-		// pārējiem miniblogiem - to autoru avatarus
-		} else {
-			$avatar = a_get_user_avatar($mb, 's');
-		}        
+            if ($group->avatar) {
+                $group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
+                $avatar = a_get_user_avatar($group, 's');
+            }
+            $group_title = ' @ ' . $group->title;
+        // pārējiem miniblogiem - to autoru avatarus
+        } else {
+            $avatar = a_get_user_avatar($mb, 's');
+        }
 		
 		// atgriežamais masīvs
 		$arr_mbs[] = array(
@@ -140,8 +191,8 @@ function a_fetch_miniblogs() {
 			'group_title' => $group_title
 		);
 	}
-	
-	return $arr_mbs;
+    
+    a_append(array('miniblogs' => $arr_mbs));
 }
 
 /**
@@ -187,7 +238,7 @@ function a_add_miniblog($data) {
     
     // noteiks, vai lietotājam maz ir piekļuve norādītajai grupai,
     // ja ieraksts tiešām tiek pievienots grupai
-    if ($group_id  != 0) {
+    if ($group_id != 0) {
         $group_data = $db->get_row("
             SELECT
                 `clans`.*,
