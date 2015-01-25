@@ -70,8 +70,9 @@ class mdb extends mysqli {
 
 	function update($table = null, $params = null, $data = null) {
 
-		if (empty($table) || empty($params) || empty($data))
+		if (empty($table) || empty($params) || empty($data)) {
 			return false;
+		}
 
 		$criteria = array();
 		$updates = array();
@@ -83,8 +84,9 @@ class mdb extends mysqli {
 			}
 			$limit = '';
 		} else {
-			if ((int) $params < 1)
+			if ((int) $params < 1) {
 				return false;
+			}
 			$criteria[] = "`id` = " . (int) $params;
 		}
 
@@ -94,34 +96,40 @@ class mdb extends mysqli {
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
 		}
-		if (empty($updates) || empty($criteria))
+
+		if (empty($updates) || empty($criteria)) {
 			return false;
+		}
 
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);
 
 		$this->query("UPDATE `$table` SET $updates WHERE $criteria $limit");
+
 		return ($this->affected_rows > 0);
 	}
 
 	function insert($table = null, $data = null) {
 
-		if (empty($data))
+		if (empty($data)) {
 			return false;
+		}
 
 		$keys = array();
 		$values = array();
 
 		foreach ($data as $key => $val) {
 			$keys[] = $key;
-            if ($val == 'NOW()') {
-                $values[] = 'NOW()';
-            } else {
-                $values[] = "'" . $val . "'";
-            }
+			if ($val == 'NOW()') {
+				$values[] = 'NOW()';
+			} else {
+				$values[] = "'" . $val . "'";
+			}
 		}
-		if (empty($keys) || empty($values))
+
+		if (empty($keys) || empty($values)) {
 			return false;
+		}
 
 		$keys = implode(',', $keys);
 		$values = implode(',', $values);
@@ -131,4 +139,3 @@ class mdb extends mysqli {
 	}
 
 }
-
