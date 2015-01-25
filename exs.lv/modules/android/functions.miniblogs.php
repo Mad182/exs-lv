@@ -177,7 +177,8 @@ function a_fetch_miniblog($miniblog_id = 0) {
             `miniblog`.*,
             IFNULL(`clans`.`id`, 0) AS `group_id`,
             `clans`.`title` AS `group_title`,
-            `clans`.`avatar` AS `group_avatar`
+            `clans`.`avatar` AS `group_avatar`,
+            `clans`.`posts` AS `group_posts`
         FROM `miniblog`
             LEFT JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
         WHERE 
@@ -264,6 +265,23 @@ function a_fetch_miniblog($miniblog_id = 0) {
             
                 $arr_comments[$comment->reply_to][] = $comment;
             }  
+        }
+    }
+    
+    // fiksēs, cik daudz komentāru attiecīgajā grupā lietotājs ir jau lasījis
+    if (!empty($miniblog->group_id)) {
+        if ($author->id == $auth->id) {
+            $db->query("
+                UPDATE `clans`
+                SET `owner_seenposts` = ".(int)$miniblog->group_posts."
+                WHERE `owner` = ".$auth->id." AND `id` = ".$group_id
+            );
+        } else {
+            $db->query("
+                UPDATE `clans_members`
+                SET `seenposts` = ".(int)$miniblog->group_posts."
+                WHERE `user` = ".$auth->id." AND `clan` = ".$group_id
+            );
         }
     }
         
