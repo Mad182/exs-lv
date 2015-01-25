@@ -24,21 +24,13 @@ $group_data = $db->get_row("
         `clans`.`posts`,
         `clans`.`members`,
         `clans`.`archived`,
-        `clans`.`owner_seenposts` AS `owner_seen`,
-        
+        `clans`.`owner`,
+        `clans`.`owner_seenposts` AS `owner_seen`,        
         IFNULL(`clans_members`.`id`, 0) AS `is_member`,
-        `clans_members`.`seenposts` AS `member_seen`,
-        
-        `users`.`deleted` AS `owner_deleted`,
-        `users`.`id` AS `owner_id`,
-        `users`.`nick` AS `owner_nick`,
-        `users`.`level` AS `owner_level`
+        `clans_members`.`seenposts` AS `member_seen`
     FROM `clans`
         JOIN `clans_categories` ON (
             `clans`.`category_id` = `clans_categories`.`id`
-        )
-        JOIN `users` ON (
-            `clans`.`owner` = `users`.`id`
         )
         LEFT JOIN `clans_members` ON (
             `clans`.`id` = `clans_members`.`clan` AND
@@ -58,12 +50,12 @@ if (!$group_data) {
  */
 } else if ($var2 === 'home') {
 
-    if (!empty($group_data->owner_deleted)) {
-        $group_data->owner_nick = 'dzēsts';
+    // dati par grupas autoru
+    $owner = get_user($group_data->owner);
+    if (!empty($owner->deleted)) {
+        $owner->nick = 'dzēsts';
     }
-
-    $owner_data = a_fetch_user($group_data->owner_id, 
-        $group_data->owner_nick, $group_data->owner_level);
+    $owner = a_fetch_user($owner->id, $owner->nick, $owner->level);
 
     $is_member = ($group_data->is_member != '0') ? true : false;
     
@@ -85,7 +77,7 @@ if (!$group_data) {
         'posts' => (int)$group_data->posts,
         'posts_seen' => (int)$posts_seen,
         'is_member' => $is_member,
-        'owner' => $owner_data,
+        'owner' => $owner,
         'is_archived' => ($group_data->archived ? 1 : 0)
     ));
     
@@ -122,14 +114,14 @@ if (!$group_data) {
     
     // jebkurā grupā ir vismaz administrators,
     // tāpēc to var pievienot jau uzreiz (ja skatīta tiek 1. lappuse)
-    if ($current_page == 1) {        
-        if (!empty($group_data->owner_deleted)) {
-            $group_data->owner_nick = 'dzēsts';
-        }        
+    if ($current_page == 1) {  
+        $owner = get_user($group_data->owner);
+        if (!empty($owner->deleted)) {
+            $owner->nick = 'dzēsts';
+        }
         $arr_members[] = array(
             'member_id' => 0,
-            'user' => a_fetch_user($group_data->owner_id,
-                $group_data->owner_nick, $group_data->owner_level),
+            'user' => a_fetch_user($owner->id, $owner->nick, $owner->level),
             'is_mod' => 0
         );
         $member_count = 1;
@@ -137,32 +129,21 @@ if (!$group_data) {
 
     // atlasīs un pievienos masīvam visus pārējos grupas biedrus, ja eksistē
     $all_members = $db->get_results("
-        SELECT
-            `clans_members`.`id` AS `member_id`,
-            `clans_members`.`moderator`,
-            `users`.`id` AS `user_id`,
-            `users`.`nick`,
-            `users`.`level`
-        FROM `clans_members`
-            JOIN `users` ON (
-                `clans_members`.`user` = `users`.`id` AND
-                `users`.`deleted` = 0
-            )
-        WHERE
-            `clans_members`.`clan` = ".(int)$group_data->clan_id." AND
-            `clans_members`.`approve` = 1
-        ORDER BY
-            `clans_members`.`moderator` DESC,
-            `users`.`nick` ASC
+        SELECT `id`, `user` AS `user_id`, `moderator` FROM `clans_members`
+        WHERE `clan` = ".(int)$group_data->clan_id." AND `approve` = 1
+        ORDER BY `moderator` DESC, `date_added` ASC
         LIMIT ".$limit_start.", ".$limit_end."
     ");
     
     if ($all_members) {
         foreach ($all_members as $member) {
+            $usr = get_user($member->user_id);
+            if ($usr->deleted == 1) {
+                $usr->nick = 'dzēsts';
+            }
             $arr_members[] = array(
-                'member_id' => (int)$member->member_id,
-                'user' => a_fetch_user($member->user_id,
-                    $member->nick, $member->level),
+                'member_id' => (int)$member->id,
+                'user' => a_fetch_user($usr->id, $usr->nick, $usr->level),
                 'is_mod' => (bool)$member->moderator
             );
             $member_count++;
