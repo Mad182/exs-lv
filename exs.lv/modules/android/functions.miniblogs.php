@@ -318,37 +318,12 @@ function a_add_miniblog($data) {
     }
     $_SESSION['antiflood'] = time();
     
-    // noteiks, vai lietotājam maz ir piekļuve norādītajai grupai,
-    // ja ieraksts tiešām tiek pievienots grupai
+    // lietotājam var nebūt piekļuves norādītajai grupai
     if ($group_id != 0) {
-        $group_data = $db->get_row("
-            SELECT
-                `clans`.*,
-                IFNULL(`clans_members`.`approve`, 0) AS `approved`
-            FROM `clans`
-            LEFT JOIN `clans_members` ON (
-                `clans`.`id` = `clans_members`.`clan` AND
-                `clans_members`.`user` = ".$auth->id." AND
-                `clans_members`.`approve` = 1
-            )
-            WHERE
-                `clans`.`id` = ".$group_id." AND
-                `clans`.`lang` = ".$android_lang."
-        ");
-        if (!$group_data) {
-            a_error('Grupa neeksistē');
-            a_log('Vēlējās pievienot ierakstu neeksistējošai grupai ('.$group_id.')');
-            return;
-        } else if ($group_data->owner !== $auth->id && $group_data->approved == '0') {
-            a_error('Pieeja grupai liegta');
-            a_log('Vēlējās pievienot ierakstu grupai ('.$group_id.'), kurai nav piekļuves');
-            return;
-        } else if ($group_data->archived == 1) {
-            a_error('Arhivētās grupās nevar veikt ierakstu');
-            a_log('Vēlējās pievienot ierakstu arhivētai grupai ('.$group_id.')');
+        $mb_level = 3; // kaut kāds dziļuma parametrs grupām
+        if (!a_member_of($group_id)) {
             return;
         }
-        $mb_level = 3; // kaut kāds dziļuma parametrs grupām
     }
     
     // vai norādītais parent miniblogs vispār eksistē? nav slēgts? nav dzēsts?
