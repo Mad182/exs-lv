@@ -164,6 +164,120 @@ function a_fetch_miniblogs($group_id = 0) {
 }
 
 /**
+ *  Atgriezīs norādītā minibloga info, kā arī komentārus.
+ */
+function a_fetch_miniblog($miniblog_id = 0) {
+    global $db, $auth, $android_lang, $img_server;
+    
+    $miniblog_id = (int)$miniblog_id;
+
+    // atlasīs minibloga informāciju
+    $miniblog = $db->get_row("
+        SELECT 
+            `miniblog`.*,
+            IFNULL(`clans`.`id`, 0) AS `group_id`,
+            `clans`.`title` AS `group_title`,
+            `clans`.`avatar` AS `group_avatar`
+        FROM `miniblog`
+            LEFT JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
+        WHERE 
+            `miniblog`.`id` = ".$miniblog_id." AND
+            `miniblog`.`removed` = 0 AND
+            `miniblog`.`type` = 'miniblog' AND
+            `miniblog`.`parent` = 0 AND 
+            `miniblog`.`lang` = ".(int)$android_lang."
+    ");
+    
+    if (!$miniblog) {
+        a_error('Atvērtais miniblogs neeksistē');
+        a_log('a_fetch_miniblog('.$miniblog_id.'): miniblogs neeksistē');
+        return;
+    }
+    
+    // lietotājam var nebūt piekļuves grupai, kurā ir šis miniblogs
+    if (!empty($miniblog->group_id) && !a_member_of($miniblog->group_id)) {
+        return;
+    }
+
+    $group_id = 0;
+    $group_title = '';
+    $group_av_url = '';
+    if (!empty($miniblog->group_id)) {
+        $group_id = (int)$miniblog->group_id;
+        $group_title = $miniblog->group_title;
+        $group_av_url = $img_server.'/userpic/large/'.$miniblog->group_avatar;
+    }
+    
+    $author = get_user($miniblog->author);
+    if ($author->deleted) {
+        $author->nick = 'dzēsts';
+    }
+    
+    // atgriežamā informācija par pašu miniblogu
+    $arr_miniblog = array(
+        'id' => (int)$miniblog->id,
+        'text' => strip_tags(add_smile($miniblog->text), '<img><p><strong><b><i><em>'),
+        'date' => display_time(strtotime($miniblog->date)),
+        'author' => a_fetch_user($author->id, $author->nick, $author->level),
+        'author_av_url' => a_get_user_avatar($author, 's'),
+        'vote' => (int)$miniblog->vote_value,
+        'is_closed' => (bool)$miniblog->closed,
+        'group_id' => $group_id,
+        'group_title' => $group_title,
+        'group_av_url' => $group_av_url
+    );
+   
+    // atlasīs miniblogam pievienotos komentārus
+    $arr_comments = array();   
+    if ($miniblog->posts) {
+
+        $comments = $db->get_results("
+            SELECT
+                `id`, `text`, `author`, `date`, `groupid`, `reply_to`,
+                `removed`, `vote_value`
+            FROM `miniblog`
+            WHERE
+                `parent` = ".(int)$miniblog->id." AND
+                `type` = 'miniblog'
+            ORDER BY `id` ASC
+        ");
+
+        if ($comments) {            
+            foreach ($comments as $comment) {
+            
+                $author = get_user($comment->author);
+                if ($author->deleted) {
+                    $author->nick = 'dzēsts';
+                }
+                $comment->author = a_fetch_user(
+                    $author->id, $author->nick, $author->level);
+
+                if ($comment->removed) {
+                    $comment->text = '<em>Ieraksts dzēsts!</em>';
+                } else {
+                    $comment->text = strip_tags(add_smile(
+                        $comment->text, 0, 0, 1), '<img><p><strong><b><i><em>');
+                }
+                
+                $comment->date = display_time(strtotime($comment->date));
+                $comment->avatar = a_get_user_avatar($author, 's');
+            
+                $arr_comments[$comment->reply_to][] = $comment;
+            }  
+        }
+    }
+        
+    // ja mb ir 1 komentārs, no objekta tas tiek pārveidots uz masīvu;
+    // lietotne vienmēr gaida objektu, tāpēc jāpievieno papildelements
+    $arr_comments[-1][] = 'safe';
+    
+    a_append(array(
+        'miniblog' => $arr_miniblog,
+        'comments' => $arr_comments
+    ));
+}
+
+/**
  *  Jauna minibloga pievienošana.
  *
  *  Ar miniblogu tiek saprasts ieraksts `miniblog` tabulā (t.i., gan miniblogs,

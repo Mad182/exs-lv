@@ -123,83 +123,9 @@ if ($var1 === 'getlist') {
                     a_rate_comment($miniblog->id, 'miniblog', false);
                 }
             
-            // atgriež minibloga saturu
-            } else {          
-                
-                // paredzēts avataru funkcijai
-                $miniblog->av_alt = 1;
-                
-                // galvenā minibloga informācija
-                $array_miniblog = array(
-                    'id' => (int)$miniblog->id,
-                    'text' => strip_tags(add_smile($miniblog->text), '<img><p><strong><b><i><em>'),
-                    'date' => display_time(strtotime($miniblog->date)),
-                    'author' => a_fetch_user($author->id, $author->nick, $author->level),
-                    'author_av_url' => a_get_user_avatar($author, 's'),
-                    'vote' => (int)$miniblog->vote_value,
-                    'is_closed' => (bool)$miniblog->closed,
-                    'group_id' => $clan_id,
-                    'group_title' => $clan_title,
-                    'group_av_url' => $clan_av_url
-                );
-
-                $json = array();
-                
-                if ($miniblog->posts) {
-
-                    // atlasa visus ierakstus, kuriem parent ir galvenais miniblogs
-                    $responses = $db->get_results("
-                        SELECT
-                            `id`, `text`, `author`, `date`, `groupid`, `reply_to`,
-                            `removed`, `vote_value` AS `vote`
-                        FROM `miniblog`
-                        WHERE
-                            `parent` = " . (int)$miniblog->id . " AND
-                            `type`   = 'miniblog'
-                        ORDER BY `id` ASC
-                    ");
-
-                    // ja miniblogam ir komentāri, tos visus ievieto masīvā
-                    if ($responses) {
-                        
-                        foreach ($responses as $response) {
-                        
-                            $author = get_user($response->author);
-                        
-                            // aizstāj dzēstu autora lietotājvārdu
-                            if ($author->deleted) {
-                                $response->nick = 'dzēsts';
-                            }
-                            $response->author = a_fetch_user($author->id, $author->nick, $author->level);
-                            
-                            // dzēstiem ierakstiem aizstāj saturu ar kaut ko citu
-                            if ($response->removed) {
-                                $response->text = '<em>Ieraksts dzēsts!</em>';
-
-                            // smaidiņi, embbeds u.c. saturs;
-                            // būtībā ir jēga, lai pievieno smaidiņu un attēlu adreses,
-                            // kuras lietotnē varētu ielādēt
-                            } else {
-                                $response->text = strip_tags(add_smile($response->text, 0, 0, 1), '<img><p><strong><b><i><em>');
-                            }
-                            
-                            $response->date = display_time(strtotime($response->date));
-                            $response->avatar = a_get_user_avatar($author, 's');
-                        
-                            $json[$response->reply_to][] = $response;
-                        }  
-                    }
-                }  
-                
-                // ja miniblogā ir tikai viens komentārs, no objekta tas tiek pārveidots uz masīvu;
-                // tā kā lietotne vienmēr gaida objektu, jāpievieno kāds papildobjekts,
-                // kas lietotnē netiks uztverts kā komentārs
-                $json[-1][] = 'safe';
-
-                $json_page = array(
-                    'content'   => $array_miniblog,
-                    'comments'  => $json
-                );
+            // atgriezīs minibloga saturu
+            } else {
+                a_fetch_miniblog($miniblog->id);
             }
         }
     }

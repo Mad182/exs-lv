@@ -13,6 +13,7 @@ require_once(CORE_PATH.'/modules/android/functions.miniblogs.php');
 // piegriezies rakstīt isset pārbaudi un neērto $_GET
 $var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
 $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
+$var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 // dati par grupu, kurā tiek veikta darbība;
 // fiksē arī to, vai aktīvais lietotājs ir šīs grupas biedrs
@@ -89,6 +90,13 @@ if (!$group_data) {
  */
 } else if ($var2 === 'getlist') {
     a_fetch_miniblogs($group_data->clan_id);
+
+/**
+ *  Atgriezīs grupas minibloga saturu.
+ *  /groups/{group_id}/getcontent/{miniblog_id}
+ */
+} else if ($var2 === 'getcontent' && !empty($var3)) {
+    a_fetch_miniblog($var3);
 
 /**
  *  Atgriezīs sarakstu ar grupā esošajiem lietotājiem.
