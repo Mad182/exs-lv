@@ -70,7 +70,7 @@ class mdb extends mysqli {
 
 	function update($table = null, $params = null, $data = null) {
 
-		if (empty($table) || empty($params) || empty($data))
+		if (empty($table) || empty($params) || empty($data)) {
 			return false;
         }
 
