@@ -311,24 +311,24 @@ function embed_widgets($txt, $wide = 0) {
 			$fn = 'get_youtube_video_small';
 		}
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
 		);
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
 		);
 	}
 
 	// twitter posts
 	if (strpos($txt, 'twitter') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
 		);
 	}
 
 	// spotify
 	if (strpos($txt, 'spotify') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_spotify', $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_spotify', $txt
 		);
 	}
 
@@ -414,9 +414,7 @@ function get_youtube_video_small($matches) {
  */
 function embed_youtube($matches, $wide = 0) {
 
-	// $matches[4] - video id
-
-	$safe = mkslug($matches[4], false, false);
+	$safe = mkslug($matches[6], false, false);
 	$video = get_youtube($safe);
 
 	$title = str_replace("'", "&#39;", h(textlimit(
@@ -546,19 +544,17 @@ function youtube_title_callback($matches) {
 function embed_twitter($params) {
 	global $m, $tpl_options;
 
-	// $matches[5] - tvīta id
-
 	$maxwidth = 400;
 	if ($tpl_options === 'no-left') {
 		$maxwidth = 520;
 	}
 
 	// nolasa no Memcached vai izveido iframe saturu
-	$tweet_unique = 'tweet_' . $params[5] . '_' . $maxwidth;
+	$tweet_unique = 'tweet_' . $params[7] . '_' . $maxwidth;
 	if (($tweet_html = $m->get($tweet_unique)) === false) {
 		$tweet_html = $params[0];
 
-		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id=' . $params[5] . '&align=center&maxwidth=' . $maxwidth);
+		$response = curl_get('https://api.twitter.com/1/statuses/oembed.json?id=' . $params[7] . '&align=center&maxwidth=' . $maxwidth);
 		if (!empty($response)) {
 			$tweet = json_decode($response);
 			if (empty($tweet->error) && !empty($tweet->html)) {
