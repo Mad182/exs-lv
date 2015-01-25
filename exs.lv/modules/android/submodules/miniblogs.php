@@ -94,7 +94,8 @@ if ($var1 === 'getlist') {
 
         // liedz darboties miniblogā, kas ir slēgtā grupā,
         // kurai lietotājam nav piekļuves
-        if ($clan_id !== 0 && $miniblog->is_member == '0' && $miniblog->clan_owner != $auth->id) {
+        if ($clan_id !== 0 && $miniblog->is_member == '0' &&
+            $miniblog->clan_owner != $auth->id) {
             a_error('Nav pieejas');
             a_log('Mēģināja darboties miniblogā, kuram nav pieejas');           
         } else {    

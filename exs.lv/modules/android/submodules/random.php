@@ -6,12 +6,14 @@
 
 // nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
- 
+
+$var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
+$var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 
 /**
  *  Pieprasītas lietotāja jaunākās notifikācijas.
  */
-if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
+if ($var1 === 'notifications') {
 
     $arr_notifs = array(); // atgriežamais notifikāciju masīvs
     $notif_limit = 15; // cik pēdējos jaunumus atgriezt
@@ -65,15 +67,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
 /**
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'online') {
-
+} else if ($var1 === 'online') {
     $json_page = a_fetch_online();
     
 /**
  *  Atgriezīs ar lietotāja profilu saistītu informāciju, no kuras daļa
  *  tiek rādīta arī iekš NavigationDrawer.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'profile-data') {
+} else if ($var1 === 'profile-data') {
     
     $data = array(
         'id' => (int)$auth->id,
@@ -90,16 +91,11 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
 /**
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'mygroups') {
+} else if ($var1 === 'mygroups') {
 
     // grupas, kurās lietotājs ir admins
     $own_groups = $db->get_results("
-        SELECT 
-            `id`,
-            `title`,
-            `avatar`,
-            `owner_seenposts`,
-            `posts`
+        SELECT `id`, `title`, `avatar`, `owner_seenposts`, `posts`
         FROM `clans`
         WHERE 
             `owner = ".(int)$auth->id." AND
@@ -166,16 +162,16 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             }
         }
 
-        $json_page = array(
+        a_append(array(
             'group_count' => $group_count++,
             'groups' => $groups
-        );
+        ));
     }
 
 /**
  *  Atgriezīs sarakstu ar grupu kategorijām.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'group-cats') {
+} else if ($var1 === 'group-cats') {
 
     $categories = $db->get_results("
         SELECT 
@@ -216,10 +212,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
 /**
  *  Atgriezīs norādītajā kategorijā ietilpstošās grupas.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'cat-groups' && 
-           isset($_GET['var2'])) {
+} else if ($var1 === 'cat-groups' && !empty($var2)) {
            
-    $cat_id = (int)$_GET['var2'];
+    $cat_id = (int)$var2;
     
     $get_cat = $db->get_row("
         SELECT `id`, `title` FROM `clans_categories` WHERE `id` = ".$cat_id
