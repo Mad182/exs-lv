@@ -19,12 +19,14 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 /**
  *  Atgriezīs jaunāko miniblogu sarakstu.
+ *  (/miniblogs/getlist)
  */
 if ($var1 === 'getlist') {
     a_fetch_miniblogs();
 
 /**
  *  Jauna minibloga pievienošana vai esoša minibloga komentēšana.
+ *  (/miniblogs/{new|comment})
  */
 } else if ($var1 === 'new' || $var1 === 'comment') {
     
@@ -46,90 +48,29 @@ if ($var1 === 'getlist') {
     }
 
 /**
- *  Izvēlēts konkrēts miniblogs (der arī tie no grupām).
- *  $var1 - minibloga ID
+ *  Minibloga vērtēšana ar plusu vai mīnusu.
+ *  (/miniblogs/{miniblog_id}/{plus|minus}/{comment_id|(optional)})
  */
-} else if (!empty($var1)) {
+} else if (!empty($var1) && !empty($var2) &&
+           in_array($var2, array('plus', 'minus'))) {
 
-    $mb_id = (int)$var1;
-
-    // atlasīs minibloga informāciju, pie reizes arī pārbaudot,
-    // vai tas ir kādā no grupām un vai lietotājam ir tam piekļuve
-    $miniblog = $db->get_row("
-        SELECT 
-            `miniblog`.*,
-            IFNULL(`clans`.`id`, 0) AS `clan_id`,
-            `clans`.`title` AS `clan_title`,
-            `clans`.`avatar` AS `clan_avatar`,
-            `clans`.`public` AS `clan_public`,
-            `clans`.`owner` AS `clan_owner`,
-            IFNULL(`clans_members`.`approve`, 0) AS `is_member`
-        FROM `miniblog`
-            LEFT JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
-            LEFT JOIN `clans_members` ON (
-                `clans`.`id` = `clans_members`.`clan` AND
-                `clans_members`.`user` = ".$auth->id." AND
-                `clans_members`.`approve` = 1
-            )
-        WHERE 
-            `miniblog`.`id`        = ".$mb_id." AND
-            `miniblog`.`removed`   = 0 AND 
-            `miniblog`.`parent`    = 0 AND 
-            `miniblog`.`lang`      = ".(int)$android_lang."
-        ORDER BY `miniblog`.`bump` DESC
-    ");
-    
-    if (!$miniblog) {
-        a_error('Miniblogs nav atrasts');
-    } else {
-    
-        // miniblogs var būt un var nebūt no kādas grupas
-        $clan_id = 0;
-        $clan_title = $clan_av_url = '';
-        if (!empty($miniblog->clan_id)) {
-            $clan_id = (int)$miniblog->clan_id;
-            $clan_title = $miniblog->clan_title;
-            $clan_av_url = $img_server.'/userpic/large/'.$miniblog->clan_avatar;
-        }
-
-        // liedz darboties miniblogā, kas ir slēgtā grupā,
-        // kurai lietotājam nav piekļuves
-        if ($clan_id !== 0 && $miniblog->is_member == '0' &&
-            $miniblog->clan_owner != $auth->id) {
-            a_error('Nav pieejas');
-            a_log('Mēģināja darboties miniblogā, kuram nav pieejas');           
-        } else {    
-    
-            $author = get_user($miniblog->author);
-            if ($author->deleted) {
-                $author->nick = 'dzēsts';
-            }
-        
-            // minibloga vērtēšana
-            if (in_array($var2, array('plus', 'minus'))) {
-            
-                // miniblogā esoša komentāra vērtēšana
-                if (!empty($var3)) {
-                    if ($var2 === 'plus') {
-                        a_rate_comment((int)$var3, 'miniblog', true);
-                    } else {
-                        a_rate_comment((int)$var3, 'miniblog', false);
-                    }
-
-                // galvenā minibloga vērtēšana
-                } else if ($var2 == 'plus') {
-                    a_rate_comment($miniblog->id, 'miniblog', true);
-                } else if ($var2 == 'minus') {
-                    a_rate_comment($miniblog->id, 'miniblog', false);
-                }
-            
-            // atgriezīs minibloga saturu
-            } else {
-                a_fetch_miniblog($miniblog->id);
-            }
-        }
+    // miniblogā esoša komentāra vērtēšana
+    if (!empty($var3)) {
+        a_rate_comment($var3, 'miniblog', ($var2 === 'plus'));
+    } else { // galvenā minibloga vērtēšana
+        a_rate_comment($var1, 'miniblog', ($var2 === 'plus'));
     }
 
+/**
+ *  Minibloga satura atgriešana ar visiem komentāriem.
+ *  (/miniblog/{miniblog_id})
+ */
+} else if (!empty($var1)) {
+    a_fetch_miniblog($var1);
+
+/**
+ *  Citi gadījumi.
+ */
 } else {
     a_error('Kļūdaini veikts pieprasījums');
 }
