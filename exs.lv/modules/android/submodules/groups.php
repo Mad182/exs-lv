@@ -17,10 +17,60 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 
 /**
+ *  Grupas minibloga vērtēšana ar plusu vai mīnusu.
+ *  (/groups/{group_id}/{plus|minus}/{entry_id})
+ */
+if (!empty($var1) && !empty($var2) && !empty($var3) &&
+           in_array($var2, array('plus', 'minus'))) {
+
+    // miniblogā esoša komentāra vērtēšana
+    if (!empty($var3)) {
+        a_rate_comment($var3, ($var2 === 'plus'));
+    } else { // paša minibloga vērtēšana
+        a_rate_comment($var1, ($var2 === 'plus'));
+    }
+
+/**
+ *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
+ *  /groups/{group_id}/getlist
+ */
+} else if (!empty($var1) && $var2 === 'getlist') {
+    a_fetch_miniblogs($var1);
+
+/**
+ *  Atgriezīs grupas minibloga saturu.
+ *  /groups/{group_id}/getcontent/{miniblog_id}
+ */
+} else if (!empty($var1) && $var2 === 'getcontent' && !empty($var3)) {
+    a_fetch_miniblog($var3);
+
+/**
+ *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
+ */
+} else if (!empty($var1) && ($var2 === 'new' || $var2 === 'comment')) {
+    
+    if (empty($_POST['group_id']) || empty($_POST['parent_id']) ||
+        empty($_POST['content']) || empty($_POST['is_private'])) {
+        a_error('Kļūdains pieprasījums');
+        if ($var1 === 'new') {
+            a_log('Netika iesniegti grupas minibloga ieraksta pievienošanas dati');
+        } else {
+            a_log('Netika iesniegti grupas minibloga komentēšanas dati');
+        }
+    } else {
+        a_add_miniblog(array(
+            'group_id' => $_POST['group_id'],
+            'parent_id' => $_POST['parent_id'],
+            'is_private' => $_POST['is_private'],
+            'content' => $_POST['content']
+        ));
+    }    
+
+/**
  *  Atgriezīs grupas informāciju, kādu rādīt grupas sākumlapā.
  *  /groups/{group_id}/home
  */
-if ($var2 === 'home') {
+} else if (!empty($var1) && $var2 === 'home') {
 
     $group_data = $db->get_row("
         SELECT 
@@ -84,26 +134,12 @@ if ($var2 === 'home') {
             'is_archived' => ($group_data->archived ? 1 : 0)
         ));
     }
-    
-/**
- *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
- *  /groups/{group_id}/getlist
- */
-} else if ($var2 === 'getlist') {
-    a_fetch_miniblogs($group_data->clan_id);
-
-/**
- *  Atgriezīs grupas minibloga saturu.
- *  /groups/{group_id}/getcontent/{miniblog_id}
- */
-} else if ($var2 === 'getcontent' && !empty($var3)) {
-    a_fetch_miniblog($var3);
 
 /**
  *  Atgriezīs sarakstu ar grupā esošajiem lietotājiem.
  *  /groups/{group_id}/members
  */
-} else if ($var2 === 'members') {
+} else if (!empty($var1) && $var2 === 'members') {
 
     $group_id = (int)$var1;
     
@@ -201,28 +237,6 @@ if ($var2 === 'home') {
             a_error('Neizdevās atlasīt biedru sarakstu');
             a_log('Datu apstrādes kļūda, atlasot grupas biedru sarakstu');
         }
-    }
-    
-/**
- *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
- */
-} else if ($var2 === 'new' || $var2 === 'comment') {
-    
-    if (empty($_POST['group_id']) || empty($_POST['parent_id']) ||
-        empty($_POST['content']) || empty($_POST['is_private'])) {
-        a_error('Kļūdains pieprasījums');
-        if ($var1 === 'new') {
-            a_log('Netika iesniegti grupas minibloga ieraksta pievienošanas dati');
-        } else {
-            a_log('Netika iesniegti grupas minibloga komentēšanas dati');
-        }
-    } else {
-        a_add_miniblog(array(
-            'group_id' => $_POST['group_id'],
-            'parent_id' => $_POST['parent_id'],
-            'is_private' => $_POST['is_private'],
-            'content' => $_POST['content']
-        ));
     }
 
 /**

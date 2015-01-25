@@ -56,9 +56,9 @@ if ($var1 === 'getlist') {
 
     // miniblogā esoša komentāra vērtēšana
     if (!empty($var3)) {
-        a_rate_comment($var3, 'miniblog', ($var2 === 'plus'));
+        a_rate_comment($var3, ($var2 === 'plus'));
     } else { // galvenā minibloga vērtēšana
-        a_rate_comment($var1, 'miniblog', ($var2 === 'plus'));
+        a_rate_comment($var1, ($var2 === 'plus'));
     }
 
 /**

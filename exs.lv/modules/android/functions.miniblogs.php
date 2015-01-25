@@ -528,41 +528,34 @@ function a_add_miniblog($data) {
 /**
  *  Novērtēs norādīto komentāru ar plusu vai mīnusu.
  *
- *  Strādā rakstos, miniblogos un attēlos.
- *
- *  @param int      vērtējamā komentāra id
- *  @param string   'article'/'miniblog'/'image'
- *  @param bool     vai vērtēt pozitīvi?
+ *  $type - 'miniblog'. Nākotnē plānots arī 'image' un 'article'.
+ *  $positive - vai vērtēt pozitīvi?
  */
-function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
-	global $db, $auth, $remote_salt, $json_page;
+function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
+	global $db, $auth;
 	
     $comment_id = (int)$comment_id;
 	$positive = ($positive) ? 'plus' : 'minus';
     
-    // dažādas drošības pārbaudes
-	if ($comment_id == 0) {
-		a_error('Kļūda'); 
-		return;
-	} else if (!a_check_xsrf()) {
-        a_error('no hacking, pls');
-        return;
-        
-    // vērtēt pārāk bieži nav atļauts
-    } else if (isset($_SESSION['antiflood_rate']) && 
-		microtime(true) - $_SESSION['antiflood_rate'] < 0.5) {
-		
-		$_SESSION['antiflood_rate'] = microtime(true);
-		$db->query("
+    // plūdu kontrole
+    if (isset($_SESSION['antiflood']) && 
+        microtime(true) - $_SESSION['antiflood'] < 0.5) {
+        $_SESSION['antiflood'] = microtime(true);        
+        $db->query("
 			UPDATE `users` 
 			SET `vote_today` = (`vote_today` + 3)
-			WHERE `id` = " . (int)$auth->id . "
-		");
-		
-		a_error('Hold your horses!'); 
-		return;
-	}
-	$_SESSION['antiflood_rate'] = microtime(true);
+			WHERE `id` = ".(int)$auth->id
+		);        
+        a_error('Hold your horses!');
+        return;
+    }
+    $_SESSION['antiflood'] = microtime(true);
+    
+    // xsrf aizsardzība
+	if (!a_check_xsrf()) {
+        a_error('no hacking, pls');
+        return;
+    }
 	
 	// vērtēšanas dienas limita pārbaude
 	$limit = (5 + $auth->karma / 30);
@@ -575,23 +568,31 @@ function a_rate_comment($comment_id = 0, $type = 'article', $positive = true) {
 	}
 	
 	// noteiks datubāzes tabulu, kuras ieraksts jāvērtē
-	$table = 'comments';
-	if ($type === 'miniblog') {
-		$table = 'miniblog';
+	$table = 'miniblog';
+	if ($type === 'article') {
+		$table = 'comments';
 	} else if ($type === 'image') {
 		$table = 'galcom';
 	}
 	
 	// parent ieraksta esamības pārbaude
+    $query_append = '';
+    if ($type === 'miniblog') {
+        $query_append = '`groupid`,';
+    }
 	$comment = $db->get_row("
-		SELECT `id`, `vote_users`, `vote_value`, `author` 
-		FROM `" . $table . "` 
-		WHERE `id` = " . $comment_id . "
+		SELECT ".$query_append." `id`, `vote_users`, `vote_value`, `author` 
+		FROM `".$table."` 
+		WHERE `id` = ".$comment_id."
 	");
 	if (empty($comment)) {
-		a_error('Vērtēts neeksistējošs ieraksts'); 
+		a_error('Vērtējamais ieraksts neeksistē'); 
 		return;
-	}
+    // vērtējot grupā esošu ierakstu, jāpārbauda lietotāja pieeja tam
+	} else if ($type === 'miniblog' && $comment->groupid != 0 &&
+               !a_member_of($comment->groupid, false)) {
+        return;
+    }
 	
 	// sevi plusot/mīnusot nav ļauts
 	if ($comment->author == $auth->id) {
