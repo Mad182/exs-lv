@@ -4010,7 +4010,7 @@ img.show-banned:hover {
 /* parastie bulleti iekš postu satura */
 #wrapper #miniblog-list li div.post-content ul,
 #full-story ul,
-.response-content ul {
+.comment-text .response-content ul {
 	overflow: hidden;
 	margin: 6px 10px 6px 20px;
 	padding: 0 0 0 20px;
@@ -4019,7 +4019,7 @@ img.show-banned:hover {
 
 #wrapper #miniblog-list li div.post-content li,
 #full-story ul li,
-.response-content ul li {
+.comment-text .response-content ul li {
 	border: 0;
 	height: auto;
 	min-height: 0;
