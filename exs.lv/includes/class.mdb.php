@@ -114,7 +114,11 @@ class mdb extends mysqli {
 
 		foreach ($data as $key => $val) {
 			$keys[] = $key;
-			$values[] = "'" . $val . "'";
+            if ($val == 'NOW()') {
+                $values[] = 'NOW()';
+            } else {
+                $values[] = "'" . $val . "'";
+            }
 		}
 		if (empty($keys) || empty($values))
 			return false;
