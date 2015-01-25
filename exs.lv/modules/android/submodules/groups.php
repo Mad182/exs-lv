@@ -16,7 +16,7 @@ $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 // fiksē arī to, vai aktīvais lietotājs ir šīs grupas biedrs
 $group_data = $db->get_row("
     SELECT 
-        `clans`.`id`,
+        `clans`.`id` AS `clan_id`,
         `clans`.`title`,
         `clans_categories`.`title` AS `cat_title`,
         `clans`.`text`,
@@ -76,7 +76,7 @@ if (!$group_data) {
     }
 
     a_append(array(
-        'id' => (int)$group_data->id,
+        'id' => (int)$group_data->clan_id,
         'cat_title' => mb_strtoupper($group_data->cat_title),
         'title' => mb_strtoupper($group_data->title),
         'text' => $group_data->text,
@@ -91,11 +91,104 @@ if (!$group_data) {
     
 /**
  *  Atgriezīs sarakstu ar grupā esošajiem lietotājiem.
- *
- *  var1 - grupas ID
+ *  /groups/{group_id}/members
  */
-} else if (!empty($var1) && $var2 === 'members') {    
-    $json_page = array('info' => 'not implemented, yet');
+} else if (!empty($var1) && $var2 === 'members') {
+
+    // tā kā biedru grupā var būt pat > 1000,
+    // to saraksts tiks ielādēts pa lappusēm
+    $total_members = $db->get_var("
+        SELECT count(*) FROM `clans_members` 
+        WHERE `approve` = 1 AND `clan` = ".(int)$var1
+    );
+    
+    // lappušu iestatījumi
+    $max_in_page = 30;
+    $current_page = 1;
+    $page_count = ceil($total_members / $max_in_page);
+    
+    if (isset($_GET['page'])) {
+        $_GET['page'] = (int)$_GET['page'];
+        if ($_GET['page'] < 0 || $_GET['page'] > $page_count) {
+            $_GET['page'] = 1;
+        }
+        $current_page = $_GET['page'];
+    }
+    $limit_start = ($current_page - 1) * $max_in_page;
+    $limit_end = $max_in_page;
+    
+    $arr_members = array();
+    $member_count = 0;
+    
+    // jebkurā grupā ir vismaz administrators,
+    // tāpēc to var pievienot jau uzreiz (ja skatīta tiek 1. lappuse)
+    if ($current_page == 1) {        
+        if (!empty($group_data->owner_deleted)) {
+            $group_data->owner_nick = 'dzēsts';
+        }        
+        $arr_members[] = array(
+            'member_id' => 0,
+            'user' => a_fetch_user($group_data->owner_id,
+                $group_data->owner_nick, $group_data->owner_level),
+            'is_mod' => 0
+        );
+        $member_count = 1;
+    }
+
+    // atlasīs un pievienos masīvam visus pārējos grupas biedrus, ja eksistē
+    $all_members = $db->get_results("
+        SELECT
+            `clans_members`.`id` AS `member_id`,
+            `clans_members`.`moderator`,
+            `users`.`id` AS `user_id`,
+            `users`.`nick`,
+            `users`.`level`
+        FROM `clans_members`
+            JOIN `users` ON (
+                `clans_members`.`user` = `users`.`id` AND
+                `users`.`deleted` = 0
+            )
+        WHERE
+            `clans_members`.`clan` = ".(int)$group_data->clan_id." AND
+            `clans_members`.`approve` = 1
+        ORDER BY
+            `clans_members`.`moderator` DESC,
+            `users`.`nick` ASC
+        LIMIT ".$limit_start.", ".$limit_end."
+    ");
+    
+    if ($all_members) {
+        foreach ($all_members as $member) {
+            $arr_members[] = array(
+                'member_id' => (int)$member->member_id,
+                'user' => a_fetch_user($member->user_id,
+                    $member->nick, $member->level),
+                'is_mod' => (bool)$member->moderator
+            );
+            $member_count++;
+        }
+    }
+    
+    // atgriezīs datus lietotnei
+    if (!empty($arr_members)) {
+    
+        $endoflist = false;
+    
+        // pēdējā lappusē ziņos par saraksta beigām,
+        // lai lietotne neturpinātu nākamo lappušu pieprasījumus
+        if ($member_count < $max_in_page) {
+            $endoflist = true;
+        }
+    
+        a_append(array(
+            'group_members' => $arr_members,
+            'endoflist' => $endoflist
+        ));
+        
+    } else {
+        a_error('Neizdevās atlasīt biedru sarakstu');
+        a_log('Datu apstrādes kļūda, atlasot grupas biedru sarakstu');
+    }
     
 /**
  *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
