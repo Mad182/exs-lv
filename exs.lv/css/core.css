@@ -4015,6 +4015,7 @@ img.show-banned:hover {
 	margin: 6px 10px 6px 20px;
 	padding: 0 0 0 20px;
 	list-style-type: disc;
+	clear: none;
 }
 
 #wrapper #miniblog-list li div.post-content li,
