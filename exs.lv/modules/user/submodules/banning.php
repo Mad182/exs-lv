@@ -139,7 +139,13 @@ if (isset($_POST['block-reason'])) {
 		$site = $lang;
 	} else {
 		$site = (isset($_POST['block-domain'])) ? (int)$_POST['block-domain'] : 0;
-		if ($site < 0) {
+        
+        // iegūs lielākā iespējamā indeksa vērtību
+        end($config_domains);
+        $last_key = key($config_domains);
+        reset($config_domains);
+        
+		if ($site < 1 || $site > $last_key) {
 			$site = $lang;
 		}
 	}
