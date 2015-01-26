@@ -18,17 +18,12 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 /**
  *  Grupas minibloga vērtēšana ar plusu vai mīnusu.
- *  (/groups/{group_id}/{plus|minus}/{entry_id})
+ *  (/groups/{plus|minus}/{entry_id})
  */
-if (!empty($var1) && !empty($var2) && !empty($var3) &&
-           in_array($var2, array('plus', 'minus'))) {
+if (!empty($var1) && !empty($var2) &&
+    in_array($var1, array('plus', 'minus'))) {
 
-    // miniblogā esoša komentāra vērtēšana
-    if (!empty($var3)) {
-        a_rate_comment($var3, ($var2 === 'plus'));
-    } else { // paša minibloga vērtēšana
-        a_rate_comment($var1, ($var2 === 'plus'));
-    }
+    a_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
@@ -39,10 +34,10 @@ if (!empty($var1) && !empty($var2) && !empty($var3) &&
 
 /**
  *  Atgriezīs grupas minibloga saturu.
- *  (/groups/{group_id}/getcontent/{miniblog_id})
+ *  (/groups/getcontent/{miniblog_id})
  */
-} else if (!empty($var1) && $var2 === 'getcontent' && !empty($var3)) {
-    a_fetch_miniblog($var3);
+} else if ($var1 === 'getcontent' && !empty($var2)) {
+    a_fetch_miniblog($var2);
 
 /**
  *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
@@ -72,22 +67,90 @@ if (!empty($var1) && !empty($var2) && !empty($var3) &&
  *  (/groups/{group_id}/apply)
  */
 } else if (!empty($var1) && $var2 === 'apply') {
-//isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok && check_token('apply', $_GET['token'])) {
-	
-    //$group_id = 
-    
-   /* if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
-		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
-		update_members($group->id);
 
-		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), 'gsign' . $group->id);
-		notify($group->owner, 4, $group->id, $group_link . '/members', $group->title);
+    $group_id = (int)$var1;
+
+    $group = $db->get_row("
+        SELECT
+            `clans`.*,
+            IFNULL(`clans_members`.`approve`, '-') AS `approved`
+        FROM `clans`
+        LEFT JOIN `clans_members` ON (
+            `clans`.`id` = `clans_members`.`clan` AND
+            `clans_members`.`user` = ".$auth->id."
+        )
+        WHERE
+            `clans`.`id` = ".$group_id." AND
+            `clans`.`lang` = ".$android_lang."
+    ");
+
+    $credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = ".$auth->id);
+
+    if (empty($group)) {
+        a_error('Neizdevās pārbaudīt grupas datus');
+        a_log('Norādīja neeksistējošas grupas id');
+    } else if (!a_check_xsrf()) {
+        a_error('no hacking, pls');
+        a_log('Piesakoties grupai, norādīja nepareizu xsrf atslēgu');
+    } else if ($group->owner == $auth->id) {
+        a_error('Tu jau esi šīs grupas administrators');
+        a_log('Grupas administrators centās pievienoties grupai');
+    } else if ($group->approved == '0') {
+        a_error('Grupai jau esi pieteicies, gaidi apstiprinājumu');
+        a_log('Centās pieteikties grupai, kurā jau gaida apstiprinājumu');
+    } else if ($group->approved == '1') {
+        a_error('Jau esi grupā');
+        a_log('Centās pieteikties grupai, kuras biedrs lietotājs jau ir');
+    } else if ($group->paid == 1 && $credit < 3) {
+        a_error('Nepietiek kredīta, lai pieteiktos grupai');
+        a_log('Pieteicās grupai, bet nepietika kredīta');
+    } else if ($group->archived) {
+        a_error('Arhivētai grupai pieteikties nav iespējams');
+        a_log('Centās pieteikties arhivētai grupai');
+    } else {
+    
+        $approved = (int)$group->auto_approve;
+        if ($group->paid == 1) {
+            $db->query("
+                UPDATE `users` SET `credit` = (`credit` - 3) WHERE `id` = ".$auth->id
+            );
+            $db->insert('clans_paid', array(
+                'clan_id' => $group_id,
+                'user_id' => $auth->id,
+                'time' => time()
+            ));
+            $approved = 1;
+        }
+    
+        $db->insert('clans_members', array(
+            'user' => $auth->id,
+            'clan' => $group_id,
+            'approve' => $approved,
+            'date_added' => time()
+        ));
+        
+        if (!empty($group->strid)) {
+            $group_link = '/'.$group->strid;
+        } else {
+            $group_link = '/group/'.(int)$group->id;
+        }
+        
+        $db->query("
+            UPDATE `clans` SET `members` = (
+                SELECT count(*) FROM `clans_members` WHERE `clan` = ".$group_id." AND `approve` = 1
+            ) WHERE `id` = ".$group_id
+        );
+        push('Pieteicās grupā &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true), 'gsign'.$group->id);
+        notify($group->owner, 4, $group->id, $group_link.'/members', $group->title);
+        
+        // piesakoties ar kodēšanu saistītām grupām, lietotājam pie jaunumiem
+        // sāks rādīt arī coding.lv ziņas
 		if ($group->id == 53 || $group->id == 89) {
-			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
+			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = ".(int)$auth->id);
 		}
-		redirect($group_link);
-	}*/
-}
+        
+        a_append(array('approved' => $approved));
+    }
 
 /**
  *  Atgriezīs grupas informāciju, kādu rādīt grupas sākumlapā.
