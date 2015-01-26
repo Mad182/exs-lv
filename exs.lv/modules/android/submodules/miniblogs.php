@@ -30,9 +30,9 @@ if ($var1 === 'getlist') {
  */
 } else if ($var1 === 'new' || $var1 === 'comment') {
     
-    if (empty($_POST['group_id']) || empty($_POST['parent_id']) ||
-        empty($_POST['content']) || empty($_POST['is_private'])) {
-        a_error('Kļūdains pieprasījums');
+    if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
+        !isset($_POST['content']) || !isset($_POST['is_private'])) {
+        a_error('Kļūdains pieprasījums z');
         if ($var1 === 'new') {
             a_log('Netika iesniegti minibloga ieraksta pievienošanas dati');
         } else {
@@ -49,21 +49,16 @@ if ($var1 === 'getlist') {
 
 /**
  *  Minibloga vērtēšana ar plusu vai mīnusu.
- *  (/miniblogs/{miniblog_id}/{plus|minus}/{comment_id|(optional)})
+ *  (/miniblogs/{plus|minus}/{entry_id})
  */
 } else if (!empty($var1) && !empty($var2) &&
-           in_array($var2, array('plus', 'minus'))) {
+           in_array($var1, array('plus', 'minus'))) {
 
-    // miniblogā esoša komentāra vērtēšana
-    if (!empty($var3)) {
-        a_rate_comment($var3, ($var2 === 'plus'));
-    } else { // galvenā minibloga vērtēšana
-        a_rate_comment($var1, ($var2 === 'plus'));
-    }
+    a_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Minibloga satura atgriešana ar visiem komentāriem.
- *  (/miniblog/{miniblog_id})
+ *  (/miniblogs/{miniblog_id})
  */
 } else if (!empty($var1)) {
     a_fetch_miniblog($var1);

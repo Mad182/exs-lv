@@ -91,13 +91,13 @@ function a_fetch_miniblogs($group_id = 0) {
 			`miniblog`.`removed` = 0 AND
 			`miniblog`.`parent` = 0 AND
 			`miniblog`.`type` = 'miniblog' AND
-			`miniblog`.`lang` = ".(int)$android_lang." AND
+			`miniblog`.`lang` = ".$android_lang." AND
             `miniblog`.`groupid` IN(".$groups.") AND
 			`users`.`id` = `miniblog`.`author`
 		ORDER BY
 			`miniblog`.`bump` DESC
-		LIMIT ".$lim_start.", ".$mbs_per_page."
-	");
+		LIMIT ".$lim_start.", ".$mbs_per_page
+	);
 
 	if (!$mbs) {
         if ($group_id > 0) {

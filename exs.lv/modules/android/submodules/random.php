@@ -95,7 +95,7 @@ if ($var1 === 'notifications') {
 
     // grupas, kurās lietotājs ir admins
     $own_groups = $db->get_results("
-        SELECT `id`, `title`, `avatar`, `owner_seenposts`, `posts`
+        SELECT `id`, `title`, `avatar`, `owner_seenposts`, `posts`, `members`
         FROM `clans`
         WHERE 
             `owner = ".(int)$auth->id." AND
@@ -110,6 +110,7 @@ if ($var1 === 'notifications') {
             `clans`.`posts`,
             `clans`.`avatar`,
             `clans`.`title`,
+            `clans`.`members`,
             `clans_members`.`moderator`,
             `clans_members`.`seenposts`
         FROM `clans_members`
@@ -136,12 +137,14 @@ if ($var1 === 'notifications') {
             foreach ($own_groups as $group) {
                 $groups[] = array(
                     'id' => (int)$group->id,
+                    'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'title' => $group->title,
+                    'members' => (int)$group->members,
+                    'posts' => (int)$group->posts,
+                    'in_group' => true,
                     'is_admin' => true,
                     'is_mod' => false,
-                    'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
-                    'posts' => (int)$group->posts,
-                    'posts_seen' => (int)$group->owner_seenposts
+                    'unread_msgs' => (int)($group->posts - $group->owner_seenposts)
                 );
                 $group_count++;
             }
@@ -151,12 +154,14 @@ if ($var1 === 'notifications') {
             foreach ($member_of as $group) {
                 $groups[] = array(
                     'id' => (int)$group->id,
+                    'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'title' => $group->title,
+                    'members' => (int)$group->members,
+                    'posts' => (int)$group->posts,
+                    'in_group' => true,
                     'is_admin' => false,
                     'is_mod' => (bool)($group->moderator ? true : false),
-                    'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
-                    'posts' => $group->posts,
-                    'posts_seen' => $group->seenposts
+                    'unread_msgs' => (int)($group->posts - $group->seenposts)
                 );
                 $group_count++;
             }
@@ -171,7 +176,7 @@ if ($var1 === 'notifications') {
 /**
  *  Atgriezīs sarakstu ar grupu kategorijām.
  */
-} else if ($var1 === 'group-cats') {
+} else if ($var1 === 'gcategories') {
 
     $categories = $db->get_results("
         SELECT 
@@ -180,7 +185,8 @@ if ($var1 === 'notifications') {
             count(*) AS `clan_count`
         FROM `clans_categories`
             JOIN `clans` ON (
-                `clans_categories`.`id` = `clans`.`category_id`
+                `clans_categories`.`id` = `clans`.`category_id` AND
+                `clans`.`lang` = ".$android_lang."
             )
         GROUP BY `clans`.`category_id`
         ORDER BY 
@@ -212,7 +218,7 @@ if ($var1 === 'notifications') {
 /**
  *  Atgriezīs norādītajā kategorijā ietilpstošās grupas.
  */
-} else if ($var1 === 'cat-groups' && !empty($var2)) {
+} else if ($var1 === 'groups' && !empty($var2)) {
            
     $cat_id = (int)$var2;
     
@@ -287,7 +293,8 @@ if ($var1 === 'notifications') {
                     'members' => (int)$group->members,
                     'posts' => (int)$group->posts,
                     'in_group' => $in_group,
-                    'is_moderator' => $is_moderator,
+                    'is_admin' => false,
+                    'is_mod' => $is_moderator,
                     'unread_msgs' => $unread_msgs
                 );
             }
