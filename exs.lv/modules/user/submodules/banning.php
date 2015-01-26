@@ -128,8 +128,8 @@ if (isset($_POST['block-reason'])) {
 	if ($length < 1) {
 		$length = 259200; // 3 diennaktis
 	} else if ($length > 31556926) {
-        $length = 31556926; // 1 gads
-    }
+		$length = 31556926; // 1 gads
+	}
 
 	/**
 	 * Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, bans attiecas tikai uz to lapu.
@@ -139,7 +139,13 @@ if (isset($_POST['block-reason'])) {
 		$site = $lang;
 	} else {
 		$site = (isset($_POST['block-domain'])) ? (int)$_POST['block-domain'] : 0;
-		if ($site < 0) {
+		
+		// iegūs lielākā iespējamā indeksa vērtību
+		end($config_domains);
+		$last_key = key($config_domains);
+		reset($config_domains);
+		
+		if ($site < 1 || $site > $last_key) {
 			$site = $lang;
 		}
 	}
@@ -218,8 +224,8 @@ if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2']
 	if ($length < 21600) { // 6h
 		$length = 21600;
 	} else if ($length > 31556926) {
-        $length = 31556926; // 1 gads
-    }
+		$length = 31556926; // 1 gads
+	}
 	$domain = (isset($_POST['domain-2'])) ? (int)$_POST['domain-2'] : 0;
 	if ($domain < 0 || $domain > count($config_domains)) {
 		$domain = 0;

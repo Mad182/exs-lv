@@ -185,7 +185,7 @@ if (!$category->mods_only || im_mod()) {
 
 		if ($category->isforum) {
 
-			$add_css .= ',forum.css';
+			$add_css[] = 'forum.css';
 
 			$page_title = $page_title . ' - forums';
 
@@ -351,3 +351,4 @@ if (!$category->mods_only || im_mod()) {
 	set_flash('Tu nevari apskatīt šo lapu!', 'error');
 	redirect();
 }
+

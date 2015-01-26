@@ -86,16 +86,17 @@ class mdb extends mysqli {
 		} else {
 			if ((int) $params < 1) {
 				return false;
-            }
+			}
 			$criteria[] = "`id` = " . (int) $params;
 		}
 
 		foreach ($data as $key => $val) {
-			if ($val != 'NOW()' && $val != 'NULL' && $val != 'null') {
+			if ($val !== 'NOW()' && $val !== 'NULL' && $val !== 'null') {
 				$val = "'" . $val . "'";
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
 		}
+
 		if (empty($updates) || empty($criteria)) {
 			return false;
         }
@@ -104,6 +105,7 @@ class mdb extends mysqli {
 		$criteria = implode(' AND ', $criteria);
 
 		$this->query("UPDATE `$table` SET $updates WHERE $criteria $limit");
+
 		return ($this->affected_rows > 0);
 	}
 
@@ -111,18 +113,23 @@ class mdb extends mysqli {
 
 		if (empty($data)) {
 			return false;
-        }
+		}
 
 		$keys = array();
 		$values = array();
 
 		foreach ($data as $key => $val) {
 			$keys[] = $key;
-			$values[] = ($val === 'NOW()') ? "NOW()" : "'" . $val . "'";
+			if ($val === 'NOW()') {
+				$values[] = 'NOW()';
+			} else {
+				$values[] = "'" . $val . "'";
+			}
 		}
+
 		if (empty($keys) || empty($values)) {
 			return false;
-        }
+		}
 
 		$keys = implode(',', $keys);
 		$values = implode(',', $values);

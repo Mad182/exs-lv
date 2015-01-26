@@ -117,6 +117,10 @@ if ($article) {
 				redirect('/read/' . $article->strid);
 			}
 		}
+
+		//@mention
+		$edit_comment_text = mention($edit_comment_text, '/read/' . $article->strid, 'page', $article->id);
+
 		$db->query("UPDATE comments SET text = ('$edit_comment_text'), edit_time = '" . time() . "', edit_user = '$auth->id', edit_times = edit_times+1 WHERE id = '$edit_comment_id' AND pid = '$article->id' LIMIT 1");
 		$auth->log('Laboja komentāru', 'comments', $edit_comment_id);
 		redirect('/read/' . $article->strid);
