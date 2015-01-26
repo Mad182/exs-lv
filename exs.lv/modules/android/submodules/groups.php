@@ -153,6 +153,64 @@ if (!empty($var1) && !empty($var2) &&
     }
 
 /**
+ *  Lietotājs izstājas no grupas.
+ *  (/groups/{group_id}/leave)
+ */
+} else if (!empty($var1) && $var2 === 'leave') {
+
+    $group_id = (int)$var1;
+
+    $group = $db->get_row("
+        SELECT
+            `clans`.*,
+            IFNULL(`clans_members`.`approve`, '-') AS `approved`
+        FROM `clans`
+        LEFT JOIN `clans_members` ON (
+            `clans`.`id` = `clans_members`.`clan` AND
+            `clans_members`.`user` = ".$auth->id."
+        )
+        WHERE
+            `clans`.`id` = ".$group_id." AND
+            `clans`.`lang` = ".$android_lang."
+    ");
+
+    if (empty($group)) {
+        a_error('Neizdevās pārbaudīt grupas datus');
+        a_log('Norādīja neeksistējošas grupas id');
+    } else if (!a_check_xsrf()) {
+        a_error('no hacking, pls');
+        a_log('Izstājoties no grupas, norādīja nepareizu xsrf atslēgu');
+    } else if ($group->owner == $auth->id) {
+        a_error('Tu esi grupas administrators');
+        a_log('Grupas administrators centās izstāties no grupas');
+    } else if ($group->approved == '-') {
+        a_error('Neesi pieteicies grupai');
+        a_log('Centās izstāties no grupas, kurs biedrs nemaz nav');
+    } else if ($group->approved == '0') {
+        a_error('Nevar izstāties, ja neesi apstiprināts');
+        a_log('Centās izstāties no grupas, kurā gaida apstiprinājumu');
+    } else {
+        
+        $db->query("
+            DELETE FROM `clans_members` WHERE `clan` = ".$group_id." AND `user` = ".$auth->id
+        );
+        $db->query("
+            UPDATE `clans` SET `members` = (
+                SELECT count(*) FROM `clans_members` WHERE `clan` = ".$group_id." AND `approve` = 1
+            ) WHERE `id` = ".$group_id
+        );
+        
+        if (!empty($group->strid)) {
+            $group_link = '/'.$group->strid;
+        } else {
+            $group_link = '/group/'.(int)$group->id;
+        }
+        push('Izstājās no grupas &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true));
+        
+        a_append(array('left' => 1));
+    }
+
+/**
  *  Atgriezīs grupas informāciju, kādu rādīt grupas sākumlapā.
  *  (/groups/{group_id}/home)
  */
