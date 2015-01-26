@@ -32,20 +32,21 @@ if (!empty($var1) && !empty($var2) && !empty($var3) &&
 
 /**
  *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
- *  /groups/{group_id}/getlist
+ *  (/groups/{group_id}/getlist)
  */
 } else if (!empty($var1) && $var2 === 'getlist') {
     a_fetch_miniblogs($var1);
 
 /**
  *  Atgriezīs grupas minibloga saturu.
- *  /groups/{group_id}/getcontent/{miniblog_id}
+ *  (/groups/{group_id}/getcontent/{miniblog_id})
  */
 } else if (!empty($var1) && $var2 === 'getcontent' && !empty($var3)) {
     a_fetch_miniblog($var3);
 
 /**
  *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
+ *  (/groups/{group_id}/{new|comment})
  */
 } else if (!empty($var1) && ($var2 === 'new' || $var2 === 'comment')) {
     
@@ -64,11 +65,33 @@ if (!empty($var1) && !empty($var2) && !empty($var3) &&
             'is_private' => $_POST['is_private'],
             'content' => $_POST['content']
         ));
-    }    
+    }
+
+/**
+ *  Lietotājs piesakās par biedru grupā.
+ *  (/groups/{group_id}/apply)
+ */
+} else if (!empty($var1) && $var2 === 'apply') {
+//isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok && check_token('apply', $_GET['token'])) {
+	
+    //$group_id = 
+    
+   /* if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
+		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
+		update_members($group->id);
+
+		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), 'gsign' . $group->id);
+		notify($group->owner, 4, $group->id, $group_link . '/members', $group->title);
+		if ($group->id == 53 || $group->id == 89) {
+			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
+		}
+		redirect($group_link);
+	}*/
+}
 
 /**
  *  Atgriezīs grupas informāciju, kādu rādīt grupas sākumlapā.
- *  /groups/{group_id}/home
+ *  (/groups/{group_id}/home)
  */
 } else if (!empty($var1) && $var2 === 'home') {
 
@@ -137,7 +160,7 @@ if (!empty($var1) && !empty($var2) && !empty($var3) &&
 
 /**
  *  Atgriezīs sarakstu ar grupā esošajiem lietotājiem.
- *  /groups/{group_id}/members
+ *  (/groups/{group_id}/members)
  */
 } else if (!empty($var1) && $var2 === 'members') {
 
