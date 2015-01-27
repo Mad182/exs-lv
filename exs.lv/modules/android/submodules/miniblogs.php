@@ -58,14 +58,15 @@ if ($var1 === 'getlist') {
 
 /**
  *  Minibloga satura atgriešana ar visiem komentāriem.
- *  (/miniblogs/{miniblog_id})
+ *  (/miniblogs/getcontent/{miniblog_id})
  */
-} else if (!empty($var1)) {
-    a_fetch_miniblog($var1);
+} else if ($var1 === 'getcontent' && !empty($var2)) {
+    a_fetch_miniblog($var2);
 
 /**
  *  Citi gadījumi.
  */
 } else {
-    a_error('Kļūdaini veikts pieprasījums');
+    a_error('Kļūdains pieprasījums (#4)');
+    a_log('Kļūdains pieprasījums miniblogu modulī');
 }

@@ -123,7 +123,7 @@ if ($var1 === 'notifications') {
             `clans_members`.`approve` = 1
         ORDER BY 
             `clans_members`.`moderator` DESC, 
-            `clans_members`.`date_added` ASC
+            `clans`.`title` ASC
     ");
     
     if (!$own_groups && !$member_of) {
@@ -299,11 +299,11 @@ if ($var1 === 'notifications') {
                 );
             }
             
-            $json_page = array(
+            a_append(array(
                 'cat_id' => (int)$get_cat->id,
                 'cat_title' => $get_cat->title,
                 'groups' => $data
-            );
+            ));
         }
     }
 
@@ -311,5 +311,6 @@ if ($var1 === 'notifications') {
  *  Citas situācijas.
  */
 } else {
-    a_error('Kļūdains pieprasījums');
+    a_error('Kļūdains pieprasījums (#3)');
+    a_log('Kļūdains pieprasījums random modulī');
 }

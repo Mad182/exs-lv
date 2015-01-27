@@ -41,12 +41,12 @@ if (!empty($var1) && !empty($var2) &&
 
 /**
  *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
- *  (/groups/{group_id}/{new|comment})
+ *  (/groups/{new|comment})
  */
-} else if (!empty($var1) && ($var2 === 'new' || $var2 === 'comment')) {
+} else if ($var1 === 'new' || $var1 === 'comment') {
     
-    if (empty($_POST['group_id']) || empty($_POST['parent_id']) ||
-        empty($_POST['content']) || empty($_POST['is_private'])) {
+    if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
+        !isset($_POST['content']) || !isset($_POST['is_private'])) {
         a_error('Kļūdains pieprasījums');
         if ($var1 === 'new') {
             a_log('Netika iesniegti grupas minibloga ieraksta pievienošanas dati');
@@ -140,7 +140,8 @@ if (!empty($var1) && !empty($var2) &&
                 SELECT count(*) FROM `clans_members` WHERE `clan` = ".$group_id." AND `approve` = 1
             ) WHERE `id` = ".$group_id
         );
-        push('Pieteicās grupā &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true), 'gsign'.$group->id);
+        $group->av_alt = 1;
+        push('Pieteicās grupā &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true));
         notify($group->owner, 4, $group->id, $group_link.'/members', $group->title);
         
         // piesakoties ar kodēšanu saistītām grupām, lietotājam pie jaunumiem
@@ -205,6 +206,7 @@ if (!empty($var1) && !empty($var2) &&
         } else {
             $group_link = '/group/'.(int)$group->id;
         }
+        $group->av_alt = 1;
         push('Izstājās no grupas &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true));
         
         a_append(array('left' => 1));
@@ -257,14 +259,14 @@ if (!empty($var1) && !empty($var2) &&
         
         // cik ierakstus lietotājs jau ir izlasījis, ja ir grupā?
         $posts_seen = 0;
-        if ($group_data->owner_id == $auth->id) {
+        if ($group_data->owner == $auth->id) {
             $posts_seen = $group_data->owner_seen;
         } else if ($is_member) {
             $posts_seen = $group_data->member_seen;
         }
 
         // atgriežamais masīvs ar datiem
-        a_append(array(
+        a_append(array('content' => array(
             'id' => (int)$group_data->clan_id,
             'cat_title' => mb_strtoupper($group_data->cat_title),
             'title' => mb_strtoupper($group_data->title),
@@ -275,8 +277,8 @@ if (!empty($var1) && !empty($var2) &&
             'posts_seen' => (int)$posts_seen,
             'is_member' => $is_member,
             'owner' => $owner,
-            'is_archived' => ($group_data->archived ? 1 : 0)
-        ));
+            'is_archived' => ($group_data->archived ? true : false)
+        )));
     }
 
 /**
@@ -387,6 +389,6 @@ if (!empty($var1) && !empty($var2) &&
  *  Citas situācijas.
  */
 } else {
-    a_log('Nepareizs pieprasījums uz /groups');
-    a_error('Kļūdains pieprasījums');
+    a_error('Kļūdains pieprasījums (#5)');
+    a_log('Kļūdains pieprasījums grupu modulī');
 }

@@ -95,8 +95,8 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
     // šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
     // sasinhronizējies starp serveri un lietotni
 	} else {
-        a_log('Kā pieteicies lietotājs veica nezināmu pieprasījumu');
-        a_error('Kļūdains pieprasījums');
+        a_log('Pieteicies lietotājs veica nezināmu pieprasījumu');
+        a_error('Kļūdains pieprasījums (#1)');
     }
 
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
@@ -127,7 +127,8 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 // adreses nesāk rakstīt no datora, jo autorizācijas aktivitātē vienīgais
 // pieprasījums tiek veikts ar pieteikšanās datiem ($_POST)
 } else {
-    a_error('Kļūdains pieprasījums');
+    a_error('Kļūdains pieprasījums (#2)');
+    a_log('Kļūdains pieprasījums android pamatmodulī');
 }
 
 $arr = array(
