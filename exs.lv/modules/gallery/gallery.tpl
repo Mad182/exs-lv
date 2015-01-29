@@ -9,6 +9,12 @@
 		</div>
 		<!-- START BLOCK : add-image-max-->
 
+		<!-- START BLOCK : add-image-karma-->
+		<div class="form">
+			<p class="notice">Lai ievietotu vairāk attēlus, nepieciešams sasniegt {x} karmas punktus!</p>
+		</div>
+		<!-- START BLOCK : add-image-karma-->
+
 		<!-- START BLOCK : add-image-form-->
 		<a id="addpic" href="#">Pievienot attēlu</a>
 		<div class="c"></div>
