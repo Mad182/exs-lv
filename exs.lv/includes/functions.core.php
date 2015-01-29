@@ -626,7 +626,7 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 	if ($type == 'mb' && strpos($text, '#') !== false) {
 		include_once(CORE_PATH . '/includes/class.hashtag.php');
 		$hashtag = new Hashtag($uniq);
-		$text = preg_replace_callback('/\B#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', array($hashtag, 'hashtag'), $text);
+		$text = preg_replace_callback('/([\s|>])#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', array($hashtag, 'hashtag'), $text);
 	}
 
 	return $text;
