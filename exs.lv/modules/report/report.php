@@ -1,10 +1,9 @@
 <?php
-
 /**
  * 	Atgriež fancybox saturu, kādu lietotāji redz, nospiežot nosūdzēšanas podziņu,
  * 	un apstrādā iesniegtās sūdzības.
  *
- * 	Moduļa adrese: 		exs.lv/report
+ * 	Moduļa adrese: exs.lv/report
  *
  *
  * 	0 - miniblogs (pats mb, mb komentārs, junk komentārs, ieraksti grupā)

@@ -7,7 +7,7 @@
 // nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
 $android_lang = 1;
 
-// android pieprasījumos nedrīkst agriezt kļūdas (ja vien tās nav 
+// android pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
 // json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
 // lai kļūdas lokāli redzētu, var iekš configdb.php pievienot šādu mainīgo
 if (!isset($android_local)) {

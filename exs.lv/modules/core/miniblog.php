@@ -52,7 +52,7 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 		$strid = mb_get_strid($title, $topic->id);
 		push('Izveidoja <a href="/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid . '">minibloga ierakstu &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>');
 
-		$topic->text = mention($topic->text, "/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid . '", 'mb', $topic->id);
+		$topic->text = mention($topic->text, '/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid, 'mb', $topic->id);
 		$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($topic->text) . "' WHERE id = '$topic->id'");
 
 		redirect('/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid);

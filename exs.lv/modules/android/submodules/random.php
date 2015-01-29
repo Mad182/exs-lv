@@ -6,12 +6,14 @@
 
 // nebūs iespējams skatīt failu pa tiešo
 !isset($sub_include) and die('Error loading page!');
- 
+
+$var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
+$var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 
 /**
  *  Pieprasītas lietotāja jaunākās notifikācijas.
  */
-if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
+if ($var1 === 'notifications') {
 
     $arr_notifs = array(); // atgriežamais notifikāciju masīvs
     $notif_limit = 15; // cik pēdējos jaunumus atgriezt
@@ -65,15 +67,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
 /**
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'online') {
-
+} else if ($var1 === 'online') {
     $json_page = a_fetch_online();
     
 /**
  *  Atgriezīs ar lietotāja profilu saistītu informāciju, no kuras daļa
  *  tiek rādīta arī iekš NavigationDrawer.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'profile-data') {
+} else if ($var1 === 'profile-data') {
     
     $data = array(
         'id' => (int)$auth->id,
@@ -90,16 +91,11 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
 /**
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'mygroups') {
+} else if ($var1 === 'mygroups') {
 
     // grupas, kurās lietotājs ir admins
     $own_groups = $db->get_results("
-        SELECT 
-            `id`,
-            `title`,
-            `avatar`,
-            `owner_seenposts`,
-            `posts`
+        SELECT `id`, `title`, `avatar`, `owner_seenposts`, `posts`, `members`
         FROM `clans`
         WHERE 
             `owner = ".(int)$auth->id." AND
@@ -114,6 +110,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             `clans`.`posts`,
             `clans`.`avatar`,
             `clans`.`title`,
+            `clans`.`members`,
             `clans_members`.`moderator`,
             `clans_members`.`seenposts`
         FROM `clans_members`
@@ -126,7 +123,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             `clans_members`.`approve` = 1
         ORDER BY 
             `clans_members`.`moderator` DESC, 
-            `clans_members`.`date_added` ASC
+            `clans`.`title` ASC
     ");
     
     if (!$own_groups && !$member_of) {
@@ -140,12 +137,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             foreach ($own_groups as $group) {
                 $groups[] = array(
                     'id' => (int)$group->id,
+                    'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'title' => $group->title,
+                    'members' => (int)$group->members,
+                    'posts' => (int)$group->posts,
+                    'in_group' => true,
                     'is_admin' => true,
                     'is_mod' => false,
-                    'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
-                    'posts' => (int)$group->posts,
-                    'posts_seen' => (int)$group->owner_seenposts
+                    'unread_msgs' => (int)($group->posts - $group->owner_seenposts)
                 );
                 $group_count++;
             }
@@ -155,27 +154,29 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             foreach ($member_of as $group) {
                 $groups[] = array(
                     'id' => (int)$group->id,
+                    'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
                     'title' => $group->title,
+                    'members' => (int)$group->members,
+                    'posts' => (int)$group->posts,
+                    'in_group' => true,
                     'is_admin' => false,
                     'is_mod' => (bool)($group->moderator ? true : false),
-                    'avatar_m' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
-                    'posts' => $group->posts,
-                    'posts_seen' => $group->seenposts
+                    'unread_msgs' => (int)($group->posts - $group->seenposts)
                 );
                 $group_count++;
             }
         }
 
-        $json_page = array(
+        a_append(array(
             'group_count' => $group_count++,
             'groups' => $groups
-        );
+        ));
     }
 
 /**
  *  Atgriezīs sarakstu ar grupu kategorijām.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'group-cats') {
+} else if ($var1 === 'gcategories') {
 
     $categories = $db->get_results("
         SELECT 
@@ -184,7 +185,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
             count(*) AS `clan_count`
         FROM `clans_categories`
             JOIN `clans` ON (
-                `clans_categories`.`id` = `clans`.`category_id`
+                `clans_categories`.`id` = `clans`.`category_id` AND
+                `clans`.`lang` = ".$android_lang."
             )
         GROUP BY `clans`.`category_id`
         ORDER BY 
@@ -216,10 +218,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
 /**
  *  Atgriezīs norādītajā kategorijā ietilpstošās grupas.
  */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'cat-groups' && 
-           isset($_GET['var2'])) {
+} else if ($var1 === 'groups' && !empty($var2)) {
            
-    $cat_id = (int)$_GET['var2'];
+    $cat_id = (int)$var2;
     
     $get_cat = $db->get_row("
         SELECT `id`, `title` FROM `clans_categories` WHERE `id` = ".$cat_id
@@ -292,16 +293,17 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
                     'members' => (int)$group->members,
                     'posts' => (int)$group->posts,
                     'in_group' => $in_group,
-                    'is_moderator' => $is_moderator,
+                    'is_admin' => false,
+                    'is_mod' => $is_moderator,
                     'unread_msgs' => $unread_msgs
                 );
             }
             
-            $json_page = array(
+            a_append(array(
                 'cat_id' => (int)$get_cat->id,
                 'cat_title' => $get_cat->title,
                 'groups' => $data
-            );
+            ));
         }
     }
 
@@ -309,5 +311,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'notifications') {
  *  Citas situācijas.
  */
 } else {
-    a_error('Kļūdains pieprasījums');
+    a_error('Kļūdains pieprasījums (#3)');
+    a_log('Kļūdains pieprasījums random modulī');
 }

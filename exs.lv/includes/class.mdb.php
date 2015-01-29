@@ -72,7 +72,7 @@ class mdb extends mysqli {
 
 		if (empty($table) || empty($params) || empty($data)) {
 			return false;
-		}
+        }
 
 		$criteria = array();
 		$updates = array();
@@ -99,7 +99,7 @@ class mdb extends mysqli {
 
 		if (empty($updates) || empty($criteria)) {
 			return false;
-		}
+        }
 
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);
@@ -137,5 +137,4 @@ class mdb extends mysqli {
 		$this->query("INSERT INTO `$table` ($keys) VALUES($values)");
 		return ($this->affected_rows > 0);
 	}
-
 }
