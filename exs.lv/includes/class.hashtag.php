@@ -14,16 +14,17 @@ class Hashtag {
 	public function hashtag($matches) {
 		global $db;
 
-		$tag = $matches[1];
+		$pre = $matches[1];
+		$tag = $matches[2];
 
 		//ignorē neatbilstošu garumu
 		if (strlen($tag) > 30 || strlen($tag) < 3) {
-			return '#' . $tag;
+			return $pre . '#' . $tag;
 		}
-		
+
 		//ignorē hex krāsas
 		if(strpos($tag, ';') !== false) {
-			return '#' . $tag;
+			return $pre . '#' . $tag;
 		}
 
 		if ($mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$this->mbid' AND `parent` = '0' AND `removed` = '0'")) {
@@ -42,11 +43,11 @@ class Hashtag {
 					$tagid = $db->get_var("SELECT `id` FROM `tags` WHERE `slug` = '$nslug'");
 					$tags->add_tag($mb->id, $tagid, 2);
 				}
-				return '<a class="post-tag" href="/tag/' . $nslug . '" title="' . $newtag . '"><span class="hash-sign">#</span>' . $tag . '</a>';
+				return $pre . '<a class="post-tag" href="/tag/' . $nslug . '" title="' . $newtag . '"><span class="hash-sign">#</span>' . $tag . '</a>';
 			}
 		}
 
-		return '#' . $tag;
+		return $pre . '#' . $tag;
 	}
 
 }

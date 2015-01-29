@@ -74,7 +74,22 @@ function gallery_upload() {
 		redirect('/gallery/' . $auth->id);
 	}
 
-	if ($auth->maximg <= $db->get_var("SELECT count(*) FROM `images` WHERE `uid` = '" . $auth->id . "'")) {
+	//attēlu pievienošanas ierobežojumi atkarībā no skaita
+	$img_count = intval($db->get_var("SELECT count(*) FROM `images` WHERE `uid` = '" . $auth->id . "'"));
+	
+	//atkarībā no karmas
+	if ($auth->karma < 20 && $img_count >= 1) {
+		$tpl->newBlock('add-image-karma');
+		$tpl->assign('x', 20);
+	} elseif ($auth->karma < 50 && $img_count >= 3) {
+		$tpl->newBlock('add-image-karma');
+		$tpl->assign('x', 50);
+	} elseif ($auth->karma < 100 && $img_count >= 5) {
+		$tpl->newBlock('add-image-karma');
+		$tpl->assign('x', 50);
+
+	//atkarībā no overall max limita
+	} elseif ($auth->maximg <= $img_count) {
 		$tpl->newBlock('add-image-max');
 		$tpl->assign('max', $auth->maximg);
 	} else {
@@ -91,3 +106,4 @@ function gallery_upload() {
 		}
 	}
 }
+

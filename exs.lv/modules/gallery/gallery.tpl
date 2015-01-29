@@ -1,15 +1,21 @@
 <div id="gallery-content">
 
-	<!-- START BLOCK : user-gallery-->
+<!-- START BLOCK : user-gallery-->
 	<div class="tabMain">
 
-		<!-- START BLOCK : add-image-max-->
+	<!-- START BLOCK : add-image-max-->
 		<div class="form">
 			<p class="notice">Tu esi sasniedzis {max} galerijas attēlu limitu. Lai pievienotu jaunas bildes, izdzēs kādu no vecajām, vai pasūti <a href="/extend-gallery">papildus galerijas bilžu vietas</a>.</p>
 		</div>
-		<!-- START BLOCK : add-image-max-->
+	<!-- END BLOCK : add-image-max-->
 
-		<!-- START BLOCK : add-image-form-->
+	<!-- START BLOCK : add-image-karma-->
+		<div class="form">
+			<p class="notice">Lai ievietotu vairāk attēlus, nepieciešams sasniegt {x} karmas punktus!</p>
+		</div>
+	<!-- END BLOCK : add-image-karma-->
+
+	<!-- START BLOCK : add-image-form-->
 		<a id="addpic" href="#">Pievienot attēlu</a>
 		<div class="c"></div>
 		<form id="newpic" class="form" action="{page-url}" method="post" enctype="multipart/form-data" style="display:none">
@@ -40,16 +46,16 @@
 				</p>
 			</fieldset>
 		</form>
-		<!-- START BLOCK : add-image-form-->
+	<!-- END BLOCK : add-image-form-->
 
-		<!-- START BLOCK : image-list-->
+	<!-- START BLOCK : image-list-->
 		<div id="gallery-image-list">
 			<a class="prev browse left gray">&laquo;</a>
 			<div class="scrollable imgs" id="images">
 				<div class="items">
 					<!-- START BLOCK : image-list-node-->
 					<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
-					<!-- START BLOCK : image-list-node-->
+					<!-- END BLOCK : image-list-node-->
 				</div>
 			</div>
 			<a class="next browse right gray">&raquo;</a>
@@ -64,15 +70,9 @@
 				api.move({current-img-page});
 			});
 		</script>
+	<!-- END BLOCK : image-list-->
 
-
-		<!-- START BLOCK : image-list-->
-
-		<!-- START BLOCK : image-list-empty-->
-		<p>Šis lietotājs pagaidām nav pievienojis nevienu attēlu :(</p>
-		<!-- START BLOCK : image-list-empty-->
-
-		<!-- START BLOCK : image-view-->
+	<!-- START BLOCK : image-view-->
 		<div id="gal-large" class="prew-next">
 			<!-- START BLOCK : image-view-img-->
 			<img src="{img-server}/{image-url}" alt="attēls" title="{image-title}" />
@@ -135,9 +135,9 @@
 			</fieldset>
 		</form>
 		<!-- START BLOCK : edit-image-form-->
-		<!-- END BLOCK : image-view-->
+	<!-- END BLOCK : image-view-->
 
-		<!-- START BLOCK : adm-edit-comment-->
+	<!-- START BLOCK : adm-edit-comment-->
 		<a name="virsraksts"></a>
 		<h2>Labot komentāru</h2>
 		<form action="{page-url}" id="comment-edit" class="form" method="post" enctype="multipart/form-data">
@@ -150,12 +150,12 @@
 				</p>
 			</fieldset>
 		</form>
-		<!-- END BLOCK : adm-edit-comment-->
+	<!-- END BLOCK : adm-edit-comment-->
 
 	</div>
-	<!-- END BLOCK : user-gallery-->
+<!-- END BLOCK : user-gallery-->
 
-	<!-- START BLOCK : comments-block-->
+<!-- START BLOCK : comments-block-->
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<dl id="comments">
 		<!-- START BLOCK : comments-node-->
@@ -228,6 +228,7 @@
 	<div class="form">
 		<p class="notice">Ielogojies vai <a href="/register">izveido profilu</a>, lai komentētu!</p>
 	</div>
-	<!-- END BLOCK : login-to-comment-->
+<!-- END BLOCK : login-to-comment-->
 
 </div>
+
