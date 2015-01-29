@@ -28,8 +28,14 @@ function a_fetch_miniblogs($group_id = 0) {
     // lappušu iestatījumi
     if (isset($_GET['page'])) {
         $_GET['page'] = (int)$_GET['page'];
-        if ($_GET['page'] < 1 || $_GET['page'] > $max_pages) {
+        if ($_GET['page'] < 1) {
             $_GET['page'] = 1;
+        } else if ($_GET['page'] > $max_pages) {
+            a_append(array(
+                'miniblogs' => array(),
+                'endoflist' => true
+            ));
+            return;
         }
         $current_page = $_GET['page'];
     }
@@ -747,8 +753,7 @@ function a_member_of($group_id = 0, $allow_archived = true) {
         return false;
     } else if ($group_data->owner !== $auth->id &&
                $group_data->approved == '0') {
-        a_error('Pieeja grupai liegta');
-        a_log('a_member_of('.$group_id.'): lietotājam grupai nav piekļuves');
+        a_error('Pieeja liegta');
         return false;
     } else if (!$allow_archived && $group_data->archived == 1) {
         a_error('Grupa ir arhivēta');

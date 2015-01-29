@@ -272,7 +272,7 @@ if (!empty($var1) && !empty($var2) &&
             'title' => mb_strtoupper($group_data->title),
             'text' => $group_data->text,
             'av_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
-            'members' => (int)$group_data->members,
+            'members' => (int)($group_data->members + 1), // + admins
             'posts' => (int)$group_data->posts,
             'posts_seen' => (int)$posts_seen,
             'is_member' => $is_member,
@@ -296,9 +296,6 @@ if (!empty($var1) && !empty($var2) &&
     if (empty($group_id) || !$group_owner) {
         a_error('Neizdevās atlasīt biedru sarakstu');
         a_log('Kļūdaini norādīta grupa, vai arī neizdevās noteikt tās autoru');
-    // lietotājam var nebūt piekļuves šai grupai
-    } else if (!a_member_of($group_id)) {
-        // funkcija jau pievienos atbildei kļūdu paziņojumus
     } else {
 
         // tā kā biedru grupā var būt pat > 1000,
@@ -309,14 +306,20 @@ if (!empty($var1) && !empty($var2) &&
         );
         
         // lappušu iestatījumi
-        $max_per_page = 30;
+        $max_per_page = 21;
         $current_page = 1;
         $page_count = ceil($total_members / $max_per_page);
         
         if (isset($_GET['page'])) {
             $_GET['page'] = (int)$_GET['page'];
-            if ($_GET['page'] < 0 || $_GET['page'] > $page_count) {
+            if ($_GET['page'] < 0) {
                 $_GET['page'] = 1;
+            } else if ($_GET['page'] > $page_count) {
+                a_append(array(
+                    'group_members' => array(),
+                    'endoflist' => true
+                ));
+                return;
             }
             $current_page = $_GET['page'];
         }
@@ -332,8 +335,10 @@ if (!empty($var1) && !empty($var2) &&
             if (!empty($owner->deleted)) {
                 $owner->nick = 'dzēsts';
             }
+            $avatar = a_get_user_avatar($owner, 'l');
             $arr_members[] = array(
                 'member_id' => 0,
+                'av_url' => $avatar,
                 'user' => a_fetch_user($owner->id, $owner->nick, $owner->level),
                 'is_mod' => 0
             );
@@ -354,8 +359,10 @@ if (!empty($var1) && !empty($var2) &&
                 if ($usr->deleted == 1) {
                     $usr->nick = 'dzēsts';
                 }
+                $avatar = a_get_user_avatar($usr, 'l');
                 $arr_members[] = array(
                     'member_id' => (int)$member->id,
+                    'av_url' => $avatar,
                     'user' => a_fetch_user($usr->id, $usr->nick, $usr->level),
                     'is_mod' => (bool)$member->moderator
                 );
@@ -380,8 +387,10 @@ if (!empty($var1) && !empty($var2) &&
             ));
             
         } else {
-            a_error('Neizdevās atlasīt biedru sarakstu');
-            a_log('Datu apstrādes kļūda, atlasot grupas biedru sarakstu');
+            a_append(array(
+                'group_members' => array(),
+                'endoflist' => true
+            ));
         }
     }
 
