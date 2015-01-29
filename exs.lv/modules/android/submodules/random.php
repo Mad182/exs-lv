@@ -16,7 +16,7 @@ $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 if ($var1 === 'notifications') {
 
     $arr_notifs = array(); // atgriežamais notifikāciju masīvs
-    $notif_limit = 15; // cik pēdējos jaunumus atgriezt
+    $notif_limit = 25; // cik pēdējos jaunumus atgriezt
 
 	$texts = array(
 		0 => 'atbilde komentāram',
@@ -41,27 +41,25 @@ if ($var1 === 'notifications') {
     $user_notifications = $db->get_results("
         SELECT * FROM `notify` 
         WHERE 
-            `user_id` = ".(int)$auth->id." AND
-            `lang` = ".(int)$android_lang."
+            `user_id` = ".$auth->id." AND
+            `lang` = ".$android_lang."
         ORDER BY `bump` DESC 
         LIMIT 0, $notif_limit
     ");
     
     if (!$user_notifications) {
-        a_error('Notikumu nav!');
+        a_error('Nav paziņojumu');
     } else {
-    
-        $inner_counter = 0;
+
         foreach ($user_notifications as $notify) {    
             $arr_notifs[] = array(
-                'type' => $texts[$notify->type],
+                'type' => (int)$notify->type,
                 'text' => textlimit(trim($notify->info), 45, ''),
-                'date' => 'pirms ' . time_ago(strtotime($notify->bump)),
-                'project' => $config_domains[$notify->lang]['domain']
+                'date' => 'pirms ' . time_ago(strtotime($notify->bump))
             );
         }
         
-        $json_page = array('notifications' => $arr_notifs);
+        a_append(array('notifications' => $arr_notifs));
     }
 
 /**
