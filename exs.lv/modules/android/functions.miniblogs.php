@@ -326,7 +326,9 @@ function a_add_miniblog($data) {
         !isset($data['is_private'])) {
         a_error('Pieprasījuma kļūda');
         return;
-    } else if (empty(trim($data['content']))) {
+    }
+    $data['content'] = trim($data['content']);
+    if (empty($data['content'])) {
         a_error('Nevar pievienot tukšu miniblogu');
         return;
     }
