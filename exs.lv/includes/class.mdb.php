@@ -91,7 +91,7 @@ class mdb extends mysqli {
 		}
 
 		foreach ($data as $key => $val) {
-			if ($val != 'NOW()' && $val != 'NULL' && $val != 'null') {
+			if ($val !== 'NOW()' && $val !== 'NULL' && $val !== 'null') {
 				$val = "'" . $val . "'";
 			}
 			$updates[] = '`' . $key . '` = ' . $val;
@@ -120,7 +120,11 @@ class mdb extends mysqli {
 
 		foreach ($data as $key => $val) {
 			$keys[] = $key;
-			$values[] = "'" . $val . "'";
+			if ($val === 'NOW()') {
+				$values[] = 'NOW()';
+			} else {
+				$values[] = "'" . $val . "'";
+			}
 		}
 
 		if (empty($keys) || empty($values)) {
