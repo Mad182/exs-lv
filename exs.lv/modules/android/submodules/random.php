@@ -66,7 +66,7 @@ if ($var1 === 'notifications') {
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
  */
 } else if ($var1 === 'online') {
-    $json_page = a_fetch_online();
+    a_fetch_online();
     
 /**
  *  Atgriezīs ar lietotāja profilu saistītu informāciju.
@@ -124,7 +124,7 @@ if ($var1 === 'notifications') {
         if (im_mod()) {
             $data['email'] = $profile_data->mail;
             $data['last_ip'] = $profile_data->lastip;
-            $data['useragent'] = $profile_data->useragent;        
+            $data['useragent'] = $profile_data->user_agent;        
         }
         
         a_append(array('userdata' => $data));

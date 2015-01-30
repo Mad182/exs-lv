@@ -248,6 +248,8 @@ function a_fetch_online($force = false) {
         $online = null;
         $classes = null;
         
+        $last_seen = date('Y-m-d H:i:s', time() - $online_seconds);
+        
 		$lastseen = $db->get_results("
             SELECT
                 DISTINCT(`visits`.`user_id`) AS `user_id`,
@@ -256,8 +258,8 @@ function a_fetch_online($force = false) {
             FROM `visits`
                 JOIN `users` ON `visits`.`user_id` = `users`.`id`
             WHERE
-                `visits`.`site_id` = ".(int)$android_lang." AND
-                `visits`.`lastseen` > '".date('Y-m-d H:i:s', time() - $online_seconds)."'
+                `visits`.`site_id` = ".$android_lang." AND
+                `visits`.`lastseen` > '".$last_seen."'
             ORDER BY
                 `users`.`level` ASC,
                 `users`.`nick` ASC
@@ -271,11 +273,10 @@ function a_fetch_online($force = false) {
         // ja masīvā vienmēr būs vismaz viens elements,
         // to pārveidos par objektu, nevis atstās masīvu
         $classes['-1'] = 0;
-        
-        // visi tiešsaistes lietotāji tiek pievienoti masīvam
+
         foreach ($lastseen as $user) {       
 
-            // nosaka ierīci, no kādas lietotājs pieslēdzies
+            // noteiks ierīci, no kādas lietotājs pieslēdzies
             $device = 0;
             if (!empty($online_users['mobileusers']) && 
                 in_array($user->nick, $online_users['mobileusers'])) {
@@ -294,6 +295,7 @@ function a_fetch_online($force = false) {
                 'id' => (int)$user->user_id,
                 'nick' => (string)$user->nick,
                 'level' => (int)$user->level,
+                'is_online' => true,
                 'is_banned' => (bool)$is_banned,
                 'device' => (int)$device
             );
@@ -307,14 +309,14 @@ function a_fetch_online($force = false) {
         }
 
         $data = array(
-            'online_users' => $online,
+            'users' => $online,
             'by_classes' => $classes
         );
         
 		$m->set('android-online-'.$android_lang, $data, false, 30);
 	}
     
-	return $data;
+	a_append(array('users_online' => $data));
 }
 
 /**
@@ -557,7 +559,7 @@ function a_fetch_awards($user_id, $award_count = 4) {
 	if (($data = $m->get($memcached_key)) === false) {
 		$awards = array();
 		$awards_list = $db->get_results("
-            SELECT `id`, `title` FROM `autoawards` 
+            SELECT `id`, `title`, `award` FROM `autoawards` 
             WHERE `user_id` = ".$user_id."
             ORDER BY `importance` DESC
             LIMIT ".$award_count
