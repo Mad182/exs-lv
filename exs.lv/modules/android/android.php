@@ -55,7 +55,7 @@ $ip_banned = $db->get_row("
 // ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
 // info par lieguma statusu, lai noteiktu, vai tāds vēl pastāv, tāpēc šādai
 // info ir jābūt noskaidrojamai vienmēr
-if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
+if (isset($_GET['banstatus'])) {
 
     if ($ip_banned) {
         a_fetch_ban(1, $ip_banned);
