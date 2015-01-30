@@ -227,10 +227,10 @@ function a_fetch_ban($type = 1, $ip_banned) {
 /**
  *  Tiešsaistē esošie lietotāji.
  *
- *  Atgriež sarakstu ar tiešsaistē esošajiem lietotājiem 
+ *  Atgriezīs sarakstu ar tiešsaistē esošajiem lietotājiem 
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
  *
- *  Klāt pievieno arī informāciju par tiešsaistē esošiem lietotājiem
+ *  Klāt pievienos arī informāciju par tiešsaistē esošiem lietotājiem
  *  katrā klasē.
  */
 function a_fetch_online($force = false) {
@@ -536,4 +536,50 @@ function a_add_article_comment($article = null) {
 			update_stats($category->parent);
 		}
 	}
+}
+
+/**
+ *  Atgriezīs x jaunākos apbalvojumus lietotāja profilā.
+ */
+function a_fetch_awards($user_id, $award_count = 4) {
+	global $db, $m, $img_server;
+    
+	$user_id = (int)$user_id;
+    $award_count = (int)$award_count;
+    
+    if ($user_id < 0 || $award_count < 0 || $award_count > 10) {
+        a_error('Kļūdaini apbalvojumu ielādes parametri');
+        return;
+    }
+    
+    $memcached_key = 'droid_awards_'.$user_id.'-'.$award_count;
+    
+	if (($data = $m->get($memcached_key)) === false) {
+		$awards = array();
+		$awards_list = $db->get_results("
+            SELECT `id`, `title` FROM `autoawards` 
+            WHERE `user_id` = ".$user_id."
+            ORDER BY `importance` DESC
+            LIMIT ".$award_count
+        );
+		if ($awards_list) {
+			foreach ($awards_list as $award) {
+				$awards[] = array(
+                    'img_url' => $img_server.'/dati/bildes/awards/'.$award->award.'.png',
+                    'title' => $award->title
+                );
+			}
+		}
+        // kopējais apbalvojumu skaits šim lietotājam
+        $total = $db->get_var("
+            SELECT count(*) FROM `autoawards` WHERE `user_id` = ".$user_id
+        );
+        $data = array(
+            'count' => (int)$total,
+            'list' => $awards
+        );
+		$m->set($memcached_key, $data, false, 3600);
+	}
+    
+	a_append(array('awards' => $data));
 }

@@ -26,7 +26,7 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
  *  $json = array(
  *      'state'     => string   // error/success
  *      'message'   => string,  // ziņa, kas lietotnē tiek izcelta, ja "state" == "error"
- *      'is_banned' => int,  // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
+ *      'is_banned' => int,     // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
  *      'is_online' => bool,    // statuss, kas apzīmē, vai lietotājs ir autorizēts
  *      'xsrf'      => string,  // anti-xsrf atslēga, kas pievienojama adrešu galā
  *      'response'  => array()  // veiktā pieprasījuma atbilde
