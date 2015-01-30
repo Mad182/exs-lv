@@ -66,3 +66,6 @@ $db->query("DELETE FROM `taged` WHERE `tag_id` IN(SELECT id FROM `tags` WHERE `n
 $db->query("DELETE FROM `tags` WHERE `name` LIKE '%;%'");
 echo "remve ugly tags... ok\n";
 
+
+//add miniblog column
+//$db->query("ALTER TABLE  `miniblog` ADD  `device` SMALLINT NOT NULL DEFAULT  '0'");
