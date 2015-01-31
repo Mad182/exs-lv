@@ -54,8 +54,9 @@ if ($var1 === 'notifications') {
         foreach ($user_notifications as $notify) {    
             $arr_notifs[] = array(
                 'type' => (int)$notify->type,
+                'foreign_key' => (int)$notify->foreign_key,
                 'text' => textlimit(trim($notify->info), 45, ''),
-                'date' => 'pirms ' . time_ago(strtotime($notify->bump))
+                'date' => time_ago(strtotime($notify->bump))
             );
         }
         
@@ -76,10 +77,10 @@ if ($var1 === 'notifications') {
 
     $user_id = (int)$var2;
     
-    $profile_data = $db->get_row("
+    $profile = $db->get_row("
         SELECT * FROM `users` WHERE `id` = ".$user_id
     );
-    if (!$profile_data) {
+    if (!$profile) {
         a_error('Šāds profils neeksistē');
     } else {
     
@@ -97,40 +98,39 @@ if ($var1 === 'notifications') {
                    $db->get_var("SELECT SUM(`vote_value`) FROM `miniblog` WHERE `author` = ".$user_id);
 
         // reģistrējās pirms x dienām
-        $days = ceil((time() - strtotime($profile_data->date)) / 60 / 60 / 24);
+        $days = ceil((time() - strtotime($profile->date)) / 60 / 60 / 24);
         
         // pēdējoreiz redzēts pirms...
-        $time_ago = time_ago(strtotime($profile_data->lastseen));
+        $time_ago = time_ago(strtotime($profile->lastseen));
         
         $data = array(
-            'id' => (int)$auth->id,
-            'nick' => $auth->nick,
-            'level' => (int)$auth->level,
-            'avatar' => 'https://img.exs.lv/userpic/large/'.$auth->avatar,
-            'days_online' => (int)$auth->days_in_row,
-            'days_registered' => (int)$days,
+            'formatted' => a_fetch_user($profile->id, $profile->nick, $profile->level),
+            'avatar' => 'https://img.exs.lv/userpic/large/'.$profile->avatar,
+            'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
+            'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
             'last_seen' => 'pirms '.$time_ago,
-            'usertitle' => $auth->custom_title,
-            'web' => $auth->web,
-            'karma' => (int)$auth->karma,
+            'usertitle' => $profile->custom_title,
+            'gender' => (int)$profile->gender,
+            'web' => $profile->web,
+            'karma' => (int)$profile->karma,
             'posts' => (int)$posts,
             'pages' => (int)$user_pages,
-            'voted_by_self_cnt' => (int)$profile_data->vote_total,
-            'voted_by_self_sum' => (int)$profile_data->vote_others,
+            'voted_by_self_cnt' => (int)$profile->vote_total,
+            'voted_by_self_sum' => (int)$profile->vote_others,
             'voted_by_others' => (int)$voteval
         );
         
         // moderatoriem redzama papildinformācija par lietotāju
-        if (im_mod()) {
-            $data['email'] = $profile_data->mail;
-            $data['last_ip'] = $profile_data->lastip;
-            $data['useragent'] = $profile_data->user_agent;        
-        }
+        /*if (im_mod()) {
+            $data['email'] = $profile->mail;
+            $data['last_ip'] = $profile->lastip;
+            $data['useragent'] = $profile->user_agent;        
+        }*/
         
         a_append(array('userdata' => $data));
         
         // pievienos klāt arī lietotāja pāris jaunākos apbalvojumus
-        a_fetch_awards($user_id);
+        a_fetch_awards($user_id, 6);
     }
     
 /**

@@ -724,9 +724,9 @@ function update_awards($user) {
 			'state' => 'active'
 		);
 	}
-    
-    // TODO, kad Jānis apkopos sarakstu ar apmeklētājiem :/
-    /*if (in_array($user, array(0))) {
+	
+	// TODO, kad Jānis apkopos sarakstu ar apmeklētājiem :/
+	/*if (in_array($user, array(0))) {
 		$awards_list['floorball-3'] = array(
 			'title' => 'Exs 3. florbola turnīrs 01.11.2014',
 			'state' => 'active'
@@ -758,6 +758,8 @@ function update_awards($user) {
 				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', $img_server . '/dati/bildes/awards/' . $key . '.png');
 				notify($user, 7);
 				$m->delete('aw_' . $user);
+				// 6 - pēdējie 6 svarīgākie apbalvojumi (tik daudz rāda lietotnes profilos)
+				$m->delete('android_awards_'.$user.'-6');
 			}
 		}
 	}

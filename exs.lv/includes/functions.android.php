@@ -554,7 +554,7 @@ function a_fetch_awards($user_id, $award_count = 4) {
         return;
     }
     
-    $memcached_key = 'droid_awards_'.$user_id.'-'.$award_count;
+    $memcached_key = 'android_awards_'.$user_id.'-'.$award_count;
     
 	if (($data = $m->get($memcached_key)) === false) {
 		$awards = array();
@@ -568,19 +568,19 @@ function a_fetch_awards($user_id, $award_count = 4) {
 			foreach ($awards_list as $award) {
 				$awards[] = array(
                     'img_url' => $img_server.'/dati/bildes/awards/'.$award->award.'.png',
-                    'title' => $award->title
+                    'title' => strip_tags($award->title)
                 );
 			}
 		}
         // kopējais apbalvojumu skaits šim lietotājam
-        $total = $db->get_var("
-            SELECT count(*) FROM `autoawards` WHERE `user_id` = ".$user_id
+        $total = $db->get_var(
+            "SELECT count(*) FROM `autoawards` WHERE `user_id` = ".$user_id
         );
         $data = array(
             'count' => (int)$total,
             'list' => $awards
         );
-		$m->set($memcached_key, $data, false, 3600);
+		$m->set($memcached_key, $data, false, 900);
 	}
     
 	a_append(array('awards' => $data));
