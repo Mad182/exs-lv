@@ -65,10 +65,53 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	if ($auth->error === 1) {
 		set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
 	}
-
-	if ($auth->ok === true) {
+	if ($auth->ok === true || $this->error === 3) {
 		update_karma($auth->id);
-	}
+
+        //Profilu sasaiste pēc cepumiem
+        //saglabā vai atjauno cookie data. Neloģisks vārds apjukumam
+        $securekey = "T3vN3bu5MusC4k4r3T!!!1";
+        $iv = mcrypt_create_iv(32);
+        $cookiename = '_steam';
+        if(!isset($_COOKIE[$cookiename])){
+            $id = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $securekey, $_SESSION['auth_id'], MCRYPT_MODE_ECB, $iv));
+            setcookie($cookiename, $id, time()+(86400*365), "/");
+
+        } else {
+            //pārbaudam, vai cepumā jau nav lietotāja ID
+            $ids_decrypted = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $securekey, base64_decode($_COOKIE[$cookiename]), MCRYPT_MODE_ECB, $iv));
+            $cookie_ids = explode(',', $ids_decrypted);
+
+            if(!in_array(($_SESSION['auth_id']), $cookie_ids)){
+                $cookie_crypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $securekey, $ids_decrypted.','.$_SESSION['auth_id'], MCRYPT_MODE_ECB, $iv));
+                setcookie($cookiename, $cookie_crypted, time()+(86400*365), "/");
+                $_COOKIE[$cookiename] = $cookie_crypted;
+            }
+        }
+        //cookie pārbaude, darbojamies ar datubāzi
+        if(isset($_COOKIE[$cookiename])){
+
+            $ids_decrypted = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $securekey, base64_decode($_COOKIE[$cookiename]), MCRYPT_MODE_ECB, $iv));
+            $cookie_ids = explode(',', $ids_decrypted);
+            //šim nevajadzētu būt smagi, jo visiem lietotājiem nav 100 profilu, kā arī ielogošanās lapā
+            //nenotiek katru sekundi
+            //ja tomēr par smagu, domāsim kaut ko citu
+
+            foreach($cookie_ids as $id){
+
+                //iegūstam profila, kurš ir cepumā, piesaistītos profilus
+                $connected_ids = explode(',', $db->get_var("SELECT `connected_profiles` FROM `users` WHERE `id` = $id"));
+                //piesaistam visus cepuma profilus, kuru datubāzē tieši šim profilam nav
+                foreach($cookie_ids as $id_connected){
+                    if(!in_array($id_connected, $connected_ids) && $id_connected != $id){
+                        $id_connected = $db->escape_string($id_connected);
+                        $db->query("UPDATE `users` SET `connected_profiles` = concat(`connected_profiles`, $id_connected, ',') WHERE `id` = $id");
+                    }
+                }
+            }
+
+        }
+    }
 }
 
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās

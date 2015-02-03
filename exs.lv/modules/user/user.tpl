@@ -34,6 +34,7 @@
 		<dt><i>E-pasts</i></dt><dd><i>{mail}</i></dd>
 		<dt><i>Pēdējā IP</i></dt><dd><i><a href="/findby?ip={lastip}">{lastip}</a></i></dd>
 		<dt><i>UserAgent</i></dt><dd><i>{user_agent}</i></dd>
+        <dt><i>Profili</i></dt><dd>{cookie_users}</dd>
 		<!-- END BLOCK : user-modinfo-->
 	</dl>
 	<!-- START BLOCK : user-profile-awards-->
@@ -389,7 +390,7 @@
 	<form id="edit-profile" class="form" action="/user/{user-id}/block" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend><strong>Bloķēt pieeju lapai</strong></legend>
-			
+
 			<!-- START BLOCK : has-active-ban -->
 			<p class="note">
 				Šim profilam jau piemērots aktīvs liegums ar iemeslu:
@@ -397,11 +398,11 @@
 				<span class="clearfix" style="margin-top:5px"><strong>Uzlicējs:</strong> <a href="/user/{id}">{author}</a>, <strong>no </strong> {from} <strong>līdz</strong> {until}</span>
 			</p>
 			<!-- END BLOCK : has-active-ban -->
-			
+
 			<!-- START BLOCK : no-active-warns -->
 			<p class="note">Šim profilam nav aktīvu, noņemamu brīdinājumu.</p>
 			<!-- END BLOCK : no-active-warns -->
-			
+
 			<!-- START BLOCK : ban-form -->
 			<table class="form-table" style="width:100%;margin-top:-15px">
 				<tr>
@@ -446,12 +447,12 @@
 							<!-- END BLOCK : warn-removal-option -->
 						</select>
 					</td>
-				</tr>                
+				</tr>
 				<tr>
 					<td class="form-option"><label for="warn-reason">Noņemšanas<br>iemesls:</label></td>
 					<td><input type="text" class="text" name="warn-removal-reason" id="warn-reason" value="" maxlength="256" /></td>
 				</tr>
-				<!-- END BLOCK : warn-removal -->                
+				<!-- END BLOCK : warn-removal -->
 				<tr>
 					<td></td>
 					<td><input class="button primary" style="width:120px" type="submit" name="submit" value="Bloķēt" /></td>
@@ -461,7 +462,7 @@
 
 		</fieldset>
 	</form>
-	
+
 	<!-- START BLOCK : form-other-profiles -->
 	<form id="edit-profile" class="form" action="/user/{user-id}/block/other" method="post">
 		<fieldset id="profiles">
@@ -470,9 +471,9 @@
 			<!-- START BLOCK : no-other-profiles -->
 			<p class="note">Šim profilam nav citu piesaistītu profilu.</p>
 			<!-- END BLOCK : no-other-profiles -->
-			
+
 			<!-- START BLOCK : has-other-profiles -->
-			<p class="note">Tabulā redzama tikai tā informācija, kas attiecas uz atvērto apakšprojektu. Piemērojot liegumu profilam kādā citā apakšprojektā, par darbības pareizību pārliecināties varēs <a href="/banned">šeit</a>.</p>     
+			<p class="note">Tabulā redzama tikai tā informācija, kas attiecas uz atvērto apakšprojektu. Piemērojot liegumu profilam kādā citā apakšprojektā, par darbības pareizību pārliecināties varēs <a href="/banned">šeit</a>.</p>
 			<p class="note">Ja profils jau ir bloķēts, atķeksējot to, tā iemesls un termiņš no esošā tiks mainīts uz norādīto.</p>
 
 			<table class="form-table" style="width:100%">
@@ -508,7 +509,7 @@
 					<td>{ban-start-time}</td>
 				</tr>
 			</table>
-			
+
 			<table class="mod-list-table clearfix">
 				<tr style="font-weight:bold">
 					<td style="width:120px">Lietotājvārds</td>
@@ -531,7 +532,7 @@
 						<input type="checkbox" class="js-checkbox" name="block-{id}"{checked}>
 					</td>
 				</tr>
-				<!-- END BLOCK : other-profile -->                
+				<!-- END BLOCK : other-profile -->
 				<tr>
 					<td colspan="5" style="text-align:right">
 						<!-- START BLOCK : goto-group -->
@@ -541,7 +542,7 @@
 					</td>
 				</tr>
 			</table>
-			
+
 			<!-- END BLOCK : has-other-profiles -->
 		</fieldset>
 	</form>
