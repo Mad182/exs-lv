@@ -259,5 +259,7 @@ class Auth {
 		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
 
+
+
 }
 
