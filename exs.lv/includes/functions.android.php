@@ -93,6 +93,30 @@ function a_log($text) {
 }
 
 /**
+ *  Atgriezīs info par lietotāju, kuru lietotne fonā pieprasīs samērā bieži,
+ *  lai atjaunotu gan NavigationDrawer notifikācijas,
+ *  gan veiktu citas darbības.
+ */
+function a_status_info() {
+    global $db, $auth, $img_server;
+    
+    // nelasīto vēstuļu skaits
+    $msgs = $db->get_var("
+        SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
+    ");
+    
+    a_append(array('status_info' => array(
+        'id' => (int)$auth->id,
+        'nick' => $auth->nick,
+        'level' => (int)$auth->level,
+        'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
+        'usertitle' => $auth->custom_title,
+        'cnt_online' => (int)$auth->hosts_online,
+        'cnt_unread_msgs' => (int)$msgs
+    )));
+}
+
+/**
  *  Atgriezīs datus par norādīto lietotāju.
  *
  *  Android lietotnē tie ir nepieciešami specifiskā formātā (ne-HTML), lai
@@ -234,7 +258,7 @@ function a_fetch_ban($type = 1, $ip_banned) {
  *  katrā klasē.
  */
 function a_fetch_online($force = false) {
-	global $db, $m, $android_lang;
+	global $db, $m, $auth, $android_lang;
     global $online_users, $busers;
     
     // laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
@@ -261,18 +285,19 @@ function a_fetch_online($force = false) {
                 `visits`.`site_id` = ".$android_lang." AND
                 `visits`.`lastseen` > '".$last_seen."'
             ORDER BY
-                `users`.`level` ASC,
                 `users`.`nick` ASC
         ");
 
         if (!$lastseen) {
-            a_message('Šobrīd neviena lietotāja nav tiešsaistē');
+            a_error('Neviena lietotāja nav tiešsaistē');
             return false;
         }
         
         // ja masīvā vienmēr būs vismaz viens elements,
         // to pārveidos par objektu, nevis atstās masīvu
         $classes['-1'] = 0;
+        
+        $cnt_registered = 0;
 
         foreach ($lastseen as $user) {       
 
@@ -306,9 +331,13 @@ function a_fetch_online($force = false) {
             } else {
                 $classes[$user->level] = 1;
             }
+            
+            $cnt_registered++;
         }
 
         $data = array(
+            'online' => (int)$auth->hosts_online,
+            'registered' => (int)$cnt_registered,
             'users' => $online,
             'by_classes' => $classes
         );
@@ -316,7 +345,7 @@ function a_fetch_online($force = false) {
 		$m->set('android-online-'.$android_lang, $data, false, 30);
 	}
     
-	a_append(array('users_online' => $data));
+	a_append($data);
 }
 
 /**
@@ -334,6 +363,10 @@ function a_fetch_online($force = false) {
 function a_get_user_avatar($user, $size = 'm') {
 	global $auth, $img_server;
 	
+    if (!$user || empty($user->av_alt) || empty($user->avatar)) {
+        return '';
+    }
+    
 	// pēc noklusējuma izveido vidēja izmēra attēla adresi
 	$path       = 'medium';
 	$real_path  = 'useravatar';

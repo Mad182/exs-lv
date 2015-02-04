@@ -110,6 +110,8 @@ if (isset($_GET['banstatus'])) {
             a_error('Kļūdaini dati');
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
+        } else {
+            a_status_info();
         }
 
 	} else if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -120,6 +122,8 @@ if (isset($_GET['banstatus'])) {
             a_error('Nepareizi ievadīti piekļuves dati');
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
+        } else {
+            a_status_info();
         }
     }
 

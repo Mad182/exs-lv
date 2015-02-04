@@ -64,6 +64,14 @@ if ($var1 === 'notifications') {
     }
 
 /**
+ *  Atgriezīs status info, kuru lietotne pieprasīs ik pēc laika, lai
+ *  varētu atjaunot gan notifikāciju skaitu dažādās vietās, gan veikt
+ *  citas darbības.
+ */
+} else if ($var1 == 'status') {
+    a_status_info();
+ 
+/**
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
  */
 } else if ($var1 === 'online') {
