@@ -183,7 +183,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
  */
-function a_fetch_ban($type = 1, $ip_banned) {
+function a_fetch_ban($type = 1, $ip_banned = null) {
     global $db, $auth;
     global $json_page, $json_banned;
 
@@ -211,40 +211,44 @@ function a_fetch_ban($type = 1, $ip_banned) {
             $from_user = get_user($prof_banned->author);
             $to_user = get_user($prof_banned->user_id);
             
-            $json_page = array(
-                'ip' => $prof_banned->ip,
-                'to_user' => a_fetch_user($to_user->id, 
-                    $to_user->nick, $to_user->level),
-                'reason' => $prof_banned->reason,
-                'from_user' => a_fetch_user($from_user->id, 
-                    $from_user->nick, $from_user->level),
-                'date_from' => date('d.m.Y, H:i', $prof_banned->time),
-                'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
-                    $prof_banned->length),
-                'remaining' => strTime($prof_banned->time + 
-                    $prof_banned->length - time())
-            );
+            if ($from_user && $to_user) {
+                a_append(array(
+                    'ip' => $prof_banned->ip,
+                    'to_user' => a_fetch_user($to_user->id, 
+                        $to_user->nick, $to_user->level),
+                    'reason' => $prof_banned->reason,
+                    'from_user' => a_fetch_user($from_user->id, 
+                        $from_user->nick, $from_user->level),
+                    'date_from' => date('d.m.Y, H:i', $prof_banned->time),
+                    'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
+                        $prof_banned->length),
+                    'remaining' => strTime($prof_banned->time + 
+                        $prof_banned->length - time())
+                ));
+            }
         }
         
     // ip liegums
-    } else if ($type === 1) {
+    } else if ($type === 1 && $ip_banned != null) {
     
         $from_user = get_user($ip_banned->author);
         $to_user = get_user($ip_banned->user_id);
-
-        $json_page = array(
-            'ip' => $ip_banned->ip,
-            'to_user' => a_fetch_user($to_user->id, 
-                $to_user->nick, $to_user->level),
-            'reason' => $ip_banned->reason,
-            'from_user' => a_fetch_user($from_user->id, 
-                $from_user->nick, $from_user->level),
-            'date_from' => date('d.m.Y, H:i', $ip_banned->time),
-            'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
-                    $ip_banned->length),
-            'remaining' => strTime($ip_banned->time + 
-                $ip_banned->length - time())
-        );
+        
+        if ($from_user && $to_user) {
+            a_append(array(
+                'ip' => $ip_banned->ip,
+                'to_user' => a_fetch_user($to_user->id, 
+                    $to_user->nick, $to_user->level),
+                'reason' => $ip_banned->reason,
+                'from_user' => a_fetch_user($from_user->id, 
+                    $from_user->nick, $from_user->level),
+                'date_from' => date('d.m.Y, H:i', $ip_banned->time),
+                'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
+                        $ip_banned->length),
+                'remaining' => strTime($ip_banned->time + 
+                    $ip_banned->length - time())
+            ));
+        }
     }
 }
 

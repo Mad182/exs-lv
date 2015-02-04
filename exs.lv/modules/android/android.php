@@ -66,7 +66,10 @@ if (isset($_GET['banstatus'])) {
 // lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
 // paziņojumu par liegumu
 } else if ($ip_banned) {
-    a_fetch_ban(1, $ip_banned);    
+    a_fetch_ban(1, $ip_banned);
+    if ($auth->ok) {
+        $auth->logout();
+    }
     
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
