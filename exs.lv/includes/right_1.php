@@ -35,6 +35,11 @@ if (!empty($inprofile) && !$inprofile->deleted) {
 		$tpl->newBlock('profilebox-pm-link');
 	}
 
+	//avatara maiņas links, ja nav avatara
+	if ($auth->id === $inprofile->id && empty($auth->avatar)) {
+		$tpl->newBlock('profilebox-updateavatar');
+	}
+
 	//warnu links un skaits
 	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1))) {
 		$tpl->newBlock('profilebox-warn');

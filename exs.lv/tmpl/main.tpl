@@ -365,6 +365,13 @@
 						<a href="{url}">
 							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
 						</a>
+						<!-- START BLOCK : profilebox-updateavatar-->
+						<div class="form">
+							<p class="notice">
+								Tavam profilam nav attēla. <a href="/user/avatar">Pievienot?</a>
+							</p>
+						</div>
+						<!-- END BLOCK : profilebox-updateavatar-->
 						{profile-top-awards}
 						<div style="padding:0 0 0 15px;">
 							<!-- START BLOCK : profilebox-pm-link-->

@@ -3,10 +3,6 @@
 /**
  * Avatara attēla maiņa
  */
-if ($inprofile->avatar == '') {
-	$inprofile->avatar = 'none.png';
-}
-
 //write changes
 if (isset($_POST['submit'])) {
 
@@ -80,23 +76,6 @@ if (isset($_POST['submit'])) {
 
 	$auth->reset();
 	update_karma($auth->id, true);
-
-	if (!empty($_POST['password-1']) && !empty($_POST['password-2']) && $_POST['password-1'] === $_POST['password-2']) {
-		if (pwd($_POST['password-old']) == $inprofile->pwd || ($inprofile->pwd == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id)))) {
-			if (strlen($_POST['password-1']) > 5) {
-
-				$db->update('users', $auth->id, array('pwd' => pwd($_POST['password-1'])));
-
-				$auth->login($inprofile->nick, $_POST['password-1']);
-
-				$tpl->newBlock('save-pwd');
-			} else {
-				$tpl->newBlock('invalid-pwdlen');
-			}
-		} else {
-			$tpl->newBlock('invalid-pwd');
-		}
-	}
 
 	set_flash('Izmaiņas saglabātas!', 'success');
 	redirect('/user/avatar');
