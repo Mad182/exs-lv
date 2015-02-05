@@ -66,7 +66,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	if ($auth->error === 1) {
 		set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
 	}
-	if ($auth->ok === true || $this->error === 3) {
+	if ($auth->ok === true || $auth->error === 3) {
 		update_karma($auth->id);
 		$cookies = new cookieTracker('_steam', 'T3vN3bu5MusC4k4r3T!!!1', $db);
 		$cookies->setCookie();
