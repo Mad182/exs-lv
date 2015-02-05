@@ -2453,7 +2453,7 @@ function send_email($to, $subject, $content) {
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()->setCharset('UTF-8');
 	$message->setSubject($subject);
-	$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
+	$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' kopiena'));
 	$message->setTo($to);
 	$message->setBody($tpl->getOutputContent());
 	$message->setContentType("text/html");
