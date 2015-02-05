@@ -3,7 +3,7 @@
  *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
  */
 
-// lietotnē iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
+// lietotnē būs iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
 // nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
 $android_lang = 1;
 
