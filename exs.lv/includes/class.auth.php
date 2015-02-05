@@ -103,8 +103,8 @@ class Auth {
 
 			// android.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder
-			if ($lang !== 2 && !isset($_GET['_']) && 
-				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {				
+			if ($lang !== 2 && !isset($_GET['_']) &&
+				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
 				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
@@ -195,9 +195,10 @@ class Auth {
 			$this->error = 0;
 
 			// android.exs.lv pats prot apstrādāt bloķētos profilus un
-			// redirekts kā tāds tam vispār neder 
-			if ($lang !== 2 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {			
+			// redirekts kā tāds tam vispār neder
+			if ($lang !== 2 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
+                $this->error = 3;
 				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
@@ -257,6 +258,8 @@ class Auth {
 		global $db;
 		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
+
+
 
 }
 

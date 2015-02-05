@@ -15,6 +15,7 @@ require(CORE_PATH . '/includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
 require(CORE_PATH . '/includes/class.templatepower.php');
 require(CORE_PATH . '/includes/class.site_storage.php');
+require(CORE_PATH . '/includes/class.cookie.tracking.php');
 
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
@@ -65,10 +66,11 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	if ($auth->error === 1) {
 		set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
 	}
-
-	if ($auth->ok === true) {
+	if ($auth->ok === true || $this->error === 3) {
 		update_karma($auth->id);
-	}
+        $cookies = new cookieTracker('_steam', 'T3vN3bu5MusC4k4r3T!!!1', $db);
+        $cookies->setCookie();
+    }
 }
 
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās

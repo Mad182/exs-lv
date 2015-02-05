@@ -25,14 +25,14 @@ if ($inprofile) {
 	}
 	/**
 	 * 	Ielādē submoduli pēc GET[var1]
-	 */ 
+	 */
     elseif ($auth->ok && $auth->id == $inprofile->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
 
 		require CORE_PATH . '/modules/user/submodules/' . mkslug($_GET['var1']) . '.php';
 	}
 	/**
 	 * 	expts dāvināšana citam lietotājam
-	 */ 
+	 */
     elseif ($auth->ok && $auth->id != $inprofile->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
 
 		require CORE_PATH . '/modules/user/submodules/give.php';
@@ -144,11 +144,23 @@ if ($inprofile) {
 		}
 
 		if (im_mod()) {
+            //dabū visus pievienoto (cookies) profilu nikus ar linkiem
+            $profiles = explode(',' , $inprofile->connected_profiles);
+            foreach($profiles as $key => $id){
+
+                $nick = $db->get_var("SELECT nick FROM `users` WHERE `id` = $id");
+                $profiles[$key] = "<a href='/user/".$id."'>".$nick."</a>";
+
+            }
+            array_splice($profiles, count($profiles)-1);
+            $profiles = implode(', ' , $profiles);
+            if(!$profiles) $profiles = 'nav!';
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
 				'lastip' => $inprofile->lastip,
 				'user_agent' => $inprofile->user_agent,
-				'mail' => $inprofile->mail
+				'mail' => $inprofile->mail,
+                'cookie_users' => $profiles
 			));
 		}
 
