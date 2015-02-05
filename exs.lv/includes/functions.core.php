@@ -2168,7 +2168,7 @@ function profile_menu($user, $active, $title, $action = null) {
 function get_protocol($site_id = 1) {
 	global $config_domains;
 
-	if (!empty($config_domains[$site_id]['ssl'])) {
+	if (!empty($config_domains[$site_id]['ssl']) && $_SERVER['HTTP_HOST'] !== 'dev.exs.lv') {
 		return 'https://';
 	}
 
