@@ -2,10 +2,10 @@
 <h1>Jauna lietotāja reģistrācija</h1>
 
 <script>
-$(document).ready(function() {
-	/* reģistrāciajs formas javascript check */
-	$('#reg-www').val("{botstring}");
-});
+	$(document).ready(function() {
+		/* reģistrāciajs formas javascript check */
+		$('#reg-www').val("{botstring}");
+	});
 </script>
 
 <form id="edit-profile" class="form" action="" method="post">
@@ -52,22 +52,22 @@ $(document).ready(function() {
 		<!-- START BLOCK : form-fields-->
 		<p>
 			<label for="{field_nick}">Iesauka:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
-			<input type="text" class="text usercheck" name="{field_nick}" id="{field_nick}" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
+			<input tabindex="1" type="text" class="text usercheck" name="{field_nick}" id="{field_nick}" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
 		</p>
 		<p>
 			<label for="{field_mail}">E-pasta adrese:<br />
 				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts<br />
 					reģistrācijas apstiprinājuma e-pasts.</span>
 			</label><br />
-			<input type="text" class="text" name="{field_mail}" id="{field_mail}" value="{new-mail}" maxlength="64" />
+			<input tabindex="2" type="text" class="text" name="{field_mail}" id="{field_mail}" value="{new-mail}" maxlength="64" />
 		</p>
 		<p>
 			<label for="omnomnom">Parole:</label><br />
-			<input type="password" class="text" name="omnomnom" id="omnomnom" />
+			<input tabindex="3" type="password" class="text" name="omnomnom" id="omnomnom" />
 		</p>
 		<p>
 			<label for="url">Parole atkārtoti:</label><br />
-			<input type="password" class="text" name="url" id="url" />
+			<input tabindex="4" type="password" class="text" name="url" id="url" />
 		</p>
 		<p id="required-registration-field">
 			<label for="reg-www">Homepage:</label><br />
@@ -75,15 +75,15 @@ $(document).ready(function() {
 		</p>
 		<p>
 			<label for="password">desmit mīnus 1 ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />
-			<input type="text" class="text" name="password" id="password" />
+			<input tabindex="5" type="text" class="text" name="password" id="password" />
 		</p>
 		<h2>Reģistrējoties tu piekrīti mājas lapas lietošanas noteikumiem:</h2>
 		<div class="box">{rules}</div>
 		<p>
-			<label><input type="checkbox" name="agree" /> ar noteikumiem iepazinos un piekrītu tos ievērot</label>
+			<label><input tabindex="6" type="checkbox" name="agree" /> ar noteikumiem iepazinos un piekrītu tos ievērot</label>
 		</p>
 		<p>
-			<input class="button primary" type="submit" name="submit" id="submit" value="Reģistrēties" />
+			<input tabindex="7" class="button primary" type="submit" name="submit" id="submit" value="Reģistrēties" />
 		</p>
 		<!-- END BLOCK : form-fields-->
 	</fieldset>

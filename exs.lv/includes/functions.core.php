@@ -2442,7 +2442,7 @@ function send_email($to, $subject, $content) {
 	$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
 
 	//add signature
-	$content .= '<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' komanda!</p>';
+	$content .= '<p>__<br />Ar cieņu,<br />' . $_SERVER['HTTP_HOST'] . ' komanda!</p>';
 
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()->setCharset('UTF-8');
