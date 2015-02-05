@@ -1963,7 +1963,8 @@ function post_mb($post) {
 		'ip' => $auth->ip,
 		'bump' => 0,
 		'type' => 'miniblog',
-		'lang' => $lang
+		'lang' => $lang,
+        'device' => 0
 	);
 
 	$post = array_merge($default, $post);
