@@ -20,26 +20,33 @@ if ($auth->ok) {
 	}
 
 	$pages = $db->get_results("SELECT `id`,`title` FROM `notes` WHERE `user_id` = '$auth->id' ORDER BY `weight` ASC");
-	foreach ($pages as $page) {
-		$tpl->newBlock('np-menu-node');
-		$sel = '';
-		if (!empty($note) && $note->id == $page->id) {
-			$sel = 'active';
+	if (!empty($pages)) {
+		foreach ($pages as $page) {
+			$tpl->newBlock('np-menu-node');
+			$sel = '';
+			if (!empty($note) && $note->id == $page->id) {
+				$sel = 'active';
+			}
+			$tpl->assign(array(
+				'id' => $page->id,
+				'sel' => $sel,
+				'title' => $page->title,
+			));
 		}
-		$tpl->assign(array(
-			'id' => $page->id,
-			'sel' => $sel,
-			'title' => $page->title,
-		));
 	}
 
-	if (isset($_GET['var1']) && ($_GET['var1'] == 'edit' || $_GET['var1'] == 'new')) {
+	if (isset($_GET['var1']) && ($_GET['var1'] === 'edit' || $_GET['var1'] === 'new')) {
 		$tpl->newBlock('notepad-edit');
 		if ($note) {
 			$tpl->assign('content', h($note->content));
 			$tpl->assign('id', $note->id);
 		} else {
 			$tpl->newBlock('notepad-title');
+		}
+
+		//iezīmē aktīvo tabu "+"
+		if ($_GET['var1'] === 'new') {
+			$tpl->assignGlobal('active-tab-new', 'active');
 		}
 
 		$tpl->newBlock('tinymce-enabled');
@@ -62,14 +69,15 @@ if ($auth->ok) {
 			redirect('/' . $category->textid . '/read/' . $id);
 		}
 	} else {
-		$tpl->newBlock('notepad-view');
-		$tpl->assign(array(
-			'content' => add_smile($note->content, 1),
-			'id' => $note->id,
-			'token' => make_token('delnote')
-		));
+		if (!empty($note)) {
+			$tpl->newBlock('notepad-view');
+			$tpl->assign(array(
+				'content' => add_smile($note->content, 1),
+				'id' => $note->id,
+				'token' => make_token('delnote')
+			));
+		}
 	}
 } else {
 	$tpl->newBlock('error-nologin');
 }
-

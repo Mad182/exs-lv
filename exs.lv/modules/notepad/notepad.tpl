@@ -3,9 +3,9 @@
 
 <ul class="tabs nav nav-pills">
 	<!-- START BLOCK : np-menu-node-->
-	<li class="{sel}"><a href="/piezimes/read/{id}">{title}</a></li>
+	<li><a href="/piezimes/read/{id}" class="{sel}">{title}</a></li>
 	<!-- END BLOCK : np-menu-node-->
-	<li class="{active-tab-new}"><a href="/piezimes/new"><span class="tools">+</span></a></li>
+	<li><a href="/piezimes/new" class="{active-tab-new}"><span class="tools">+</span></a></li>
 </ul>
 
 <div class="tabMain">
