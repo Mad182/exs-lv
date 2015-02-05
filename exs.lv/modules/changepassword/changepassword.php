@@ -66,7 +66,7 @@ if (!$auth->ok) {
 				<p>
 					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a>
 				</p>
-				<p style="font-size:90%;margin: 20px 0 0;color: #888">
+				<p style="font-size:90%;margin: 20px 0 10px;color: #888">
 					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
 					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.
 				</p>';

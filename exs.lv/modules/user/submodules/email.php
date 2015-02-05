@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 				<p>
 					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br />
 				</p>
-				<p style="font-size:90%;margin: 20px 0 0;color: #888">
+				<p style="font-size:90%;margin: 20px 0 10px;color: #888">
 					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
 					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.
 				</p>';

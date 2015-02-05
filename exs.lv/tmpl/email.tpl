@@ -1,4 +1,4 @@
-<div style="background: #fcfcfd; color: #676f76;padding: 20px 3%;margin: 25px 4.5% 20px 4.5%;border: 1px solid #e0e5e9;border-radius:4px;">
+<div style="background: #fcfcfd; color: #575f66;padding: 20px 3%;margin: 25px 4.5% 20px 4.5%;border: 1px solid #e0e5e9;border-radius:4px;">
 	{content}
 </div>
 
