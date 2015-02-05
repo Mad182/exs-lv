@@ -108,7 +108,9 @@ if (!$auth->ok) {
 
 							//send email
 							$subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
-							$message = '<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>';
+							$message = '<h3>Jauna vēstule portālā ' . $_SERVER['HTTP_HOST'] . '</h3>
+									<p>Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p>
+									<p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>';
 
 							send_email($receiver->mail, $subject, $message);
 						}

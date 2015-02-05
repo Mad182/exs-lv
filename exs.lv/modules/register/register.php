@@ -114,9 +114,10 @@ if (!$auth->ok) {
 
 		//send email
 		$subject = 'Reģistrācija portālā ' . $_SERVER['HTTP_HOST'];
-		$message = '<h4>Sveiki!</h4><p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '!<br />Ceram, ka labi pavadīsi laiku :)</p>
-		<p>Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.</p>
-		<p><a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>';
+		$message = '<h3>Sveiki!</h3>
+				<p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '!<br />Ceram, ka labi pavadīsi laiku :)</p>
+				<p>Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.</p>
+				<p><a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>';
 
 		send_email(stripslashes($regdata['mail']), $subject, $message);
 	} else {

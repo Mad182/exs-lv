@@ -17,10 +17,10 @@ error_reporting(0);
 ini_set('display_errors', 'Off');
 require('configdb.php');
 require(CORE_PATH . '/includes/class.mdb.php');
+require(CORE_PATH . '/includes/class.templatepower.php');
 require(CORE_PATH . '/includes/functions.core.php');
 
 $debug = true;
-
 
 $list = `netstat -atun | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' |sort | uniq -c | sort -n`;
 
@@ -42,24 +42,12 @@ foreach ($lines as $line) {
 }
 
 if (!empty($blocked)) {
-	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
-	$text = '<p>Bloķētas adreses:</p><p>';
-
+	$text = '<h3>Bloķētas adreses:</h3><p>';
 	foreach ($blocked as $addr) {
 		$text .= $addr['ip'] . ' (' . $addr['conn'] . ')<br />';
 	}
-
 	$text .= '</p><p>Laiks: ' . date('Y-m-d H:i:s') . '</p>';
 
-	$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
-
-	$mailer = Swift_Mailer::newInstance($transport);
-	$message = Swift_Message::newInstance();
-	$message->setSubject('bloķētas ip adreses');
-	$message->setFrom(array('info@exs.lv' => 'Exs.lv community'));
-	$message->setTo('mad182@gmail.com');
-	$message->setBody($text);
-	$message->setContentType("text/html");
-	$mailer->send($message);
+	send_email('mad182@gmail.com', 'Bloķētas ip adreses', $text);
 }
