@@ -11,7 +11,7 @@ if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `ip` = '$auth->ip' AND 
 
 if (!$auth->ok) {
 
-	if (isset($_GET['var1']) && strlen($_GET['var1']) == 64) {
+	if (isset($_GET['var1']) && strlen($_GET['var1']) > 15) {
 
 		$userdata = $db->get_row("SELECT * FROM `users` WHERE
 					`reset_token` = '" . sanitize($_GET['var1']) . "' AND
@@ -23,12 +23,12 @@ if (!$auth->ok) {
 
 			//send email
 			$subject = 'Tava jaunā parole ' . $_SERVER['HTTP_HOST'];
-			$message = '<p>Tava jaunā parole ir ' . $newpass . '</p>';
+			$message = '<h3>Parole nomainīta veiksmīgi!</h3><p>Tava jaunā parole ir ' . $newpass . '</p>';
 
 			if (send_email($userdata->mail, $subject, $message)) {
 				$db->query("UPDATE `users` SET `password` = '$newhash', `pwd` = '', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
 				$auth->log('Nomainīta parole (e-pasts nosūtīts)', 'users', $userdata->id);
-				set_flash('Parole nosūtīta uz e-pastu!', 'success');
+				set_flash('Tava jaunā parole nosūtīta uz e-pastu!', 'success');
 			} else {
 				$auth->log('Neveiksmīga paroles maiņa (neizdevās nosūtīt e-pastu)', 'users', $userdata->id);
 				set_flash('Paroles nosūtīšana uz e-pastu neizdevās. Nezināma kļūda :(', 'error');
@@ -44,15 +44,14 @@ if (!$auth->ok) {
 		$userdata = $db->get_row("SELECT * FROM `users` WHERE `nick` = '$nick' AND `mail` = '$mail' AND `pwd` != 'none_kirbis' AND `pwd` != 'fake'");
 		if ($userdata) {
 
-			$pwd_token = hash('sha256', uniqid() . $userdata->mail . $auth->ip);
+			$pwd_token = substr(hash('sha256', uniqid() . $userdata->mail . $auth->ip), 0, 16);
 
 			//link protocol
 			$proto = get_protocol($lang);
 
 			//send email
 			$subject = 'Paroles maiņa ' . $_SERVER['HTTP_HOST'];
-			$message = '
-				<h3>Sveiki!</h3>
+			$message = '<h3>Sveiki!</h3>
 				<p>
 					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā ' . $_SERVER['HTTP_HOST'] . '
 				</p>
@@ -63,8 +62,7 @@ if (!$auth->ok) {
 				</p>
 				<p>
 					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.
-				</p>';
+					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>';
 
 			if (send_email($userdata->mail, $subject, $message)) {
 				$db->query("UPDATE `users` SET `reset_token` = '$pwd_token', `reset_time` = NOW() WHERE `id` = '$userdata->id'");
@@ -81,4 +79,3 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
-

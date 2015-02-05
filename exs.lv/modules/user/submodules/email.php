@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 				</p>
 				<p>
 					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzam informēt par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>';
+					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>';
 
 				if (send_email($inprofile->mail, $subject, $message)) {
 

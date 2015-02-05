@@ -134,11 +134,11 @@ function push($action, $avatar = '', $multi = '') {
  */
 function userlog($user, $action, $avatar = '', $multi = '') {
 	global $db, $lang;
-    $tmp_lang = $lang;
-    if ($lang === 2) { // android.exs.lv
-        global $android_lang;
-        $tmp_lang = $android_lang;
-    }
+	$tmp_lang = $lang;
+	if ($lang === 2) { // android.exs.lv
+		global $android_lang;
+		$tmp_lang = $android_lang;
+	}
 	if (!empty($multi)) {
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$tmp_lang' LIMIT 2");
 	}
@@ -178,10 +178,10 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	$info = sanitize($info);
 
 	$nlang = $lang;
-    if ($lang === 2) { // android.exs.lv
-        global $android_lang;
-        $nlang = $android_lang;
-    }
+	if ($lang === 2) { // android.exs.lv
+		global $android_lang;
+		$nlang = $android_lang;
+	}
 	if (in_array($type, array(5, 6, 7, 9, 10, 11))) {
 		$nlang = 1;
 	}
@@ -2437,19 +2437,25 @@ function send_email($to, $subject, $content) {
 	//suta e-pastu
 	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
-	global $smtp_hostname, $smtp_port, $smtp_encryption, $smtp_account, $smtp_password;
+	global $smtp_hostname, $smtp_port, $smtp_encryption, $smtp_account, $smtp_password, $lang;
 
 	$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
 
-	//add signature
-	$content .= '<p>__<br />Ar cieņu,<br />' . $_SERVER['HTTP_HOST'] . ' komanda!</p>';
+	//load email template
+	$tpl = new TemplatePower(CORE_PATH . '/tmpl/email.tpl');
+	$tpl->prepare();
+	$tpl->assignGlobal(array(
+		'content' => $content,
+		'domain' => get_domain($lang),
+		'protocol' => get_protocol($lang)
+	));
 
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()->setCharset('UTF-8');
 	$message->setSubject($subject);
 	$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
 	$message->setTo($to);
-	$message->setBody($content);
+	$message->setBody($tpl->getOutputContent());
 	$message->setContentType("text/html");
 
 	return $mailer->send($message);
