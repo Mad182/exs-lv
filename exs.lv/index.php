@@ -68,9 +68,9 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 	if ($auth->ok === true || $this->error === 3) {
 		update_karma($auth->id);
-        $cookies = new cookieTracker('_steam', 'T3vN3bu5MusC4k4r3T!!!1', $db);
-        $cookies->setCookie();
-    }
+		$cookies = new cookieTracker('_steam', 'T3vN3bu5MusC4k4r3T!!!1', $db);
+		$cookies->setCookie();
+	}
 }
 
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
@@ -371,7 +371,7 @@ $tpl->assignGlobal(array(
 	'logout-hash' => $auth->logout_hash
 ));
 
-if(!empty($add_css)) {
+if (!empty($add_css)) {
 	$tpl->newBlock('additional-css');
 	$tpl->assign('filename', implode(',', $add_css));
 }
@@ -528,4 +528,3 @@ if ($debug && !$requested_json) {
 	pr($_POST);
 	echo '</div></div></div>';
 }
-
