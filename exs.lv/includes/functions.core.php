@@ -177,11 +177,11 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	$url = sanitize($url);
 	$info = sanitize($info);
 
-	$nlang = $lang;    
+	$nlang = $lang;
     if ($lang === 2) { // android.exs.lv
         global $android_lang;
         $nlang = $android_lang;
-    }    
+    }
 	if (in_array($type, array(5, 6, 7, 9, 10, 11))) {
 		$nlang = 1;
 	}
@@ -2427,4 +2427,30 @@ function get_game_monitor($url, $force = false) {
 		$m->set($cache_key, $html, false, 300);
 	}
 	return $html;
+}
+
+/**
+ * E-pastu izsūtīšana
+ */
+function send_email($to, $subject, $content) {
+
+	//suta e-pastu
+	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
+
+	global $smtp_hostname, $smtp_port, $smtp_encryption, $smtp_account, $smtp_password;
+
+	$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
+
+	//add signature
+	$content .= '<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' komanda!</p>';
+
+	$mailer = Swift_Mailer::newInstance($transport);
+	$message = Swift_Message::newInstance()->setCharset('UTF-8');
+	$message->setSubject($subject);
+	$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
+	$message->setTo($to);
+	$message->setBody($content);
+	$message->setContentType("text/html");
+
+	return $mailer->send($message);
 }

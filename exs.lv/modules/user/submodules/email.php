@@ -23,18 +23,9 @@ if (isset($_POST['submit'])) {
 				//link protocol
 				$proto = get_protocol($lang);
 
-				//suta e-pastu
-				require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
-
-				$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
-
-				$mailer = Swift_Mailer::newInstance($transport);
-				$message = Swift_Message::newInstance();
-				$message->setSubject('E-pasta adreses apstiprinājums ' . $_SERVER['HTTP_HOST']);
-				$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
-				$message->setTo($inprofile->mail);
-				$message->setBody('
-				<h3>Sveiki!</h3>
+				//send email
+				$subject = 'E-pasta adreses apstiprinājums ' . $_SERVER['HTTP_HOST'];
+				$message = '<h3>Sveiki!</h3>
 				<p>
 					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam e-pasta adreses maiņu, norādot šo adresi.
 				</p>
@@ -45,12 +36,9 @@ if (isset($_POST['submit'])) {
 				</p>
 				<p>
 					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzam informēt par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>
-				<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>
-			');
-				$message->setContentType("text/html");
+					Ja neesi veicis šo darbību, lūdzam informēt par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>';
 
-				if ($mailer->send($message)) {
+				if (send_email($inprofile->mail, $subject, $message)) {
 
 					$db->update('users', $auth->id, array(
 						'email_new' => $inprofile->mail,
@@ -85,4 +73,3 @@ $tpl->assign(array(
 ));
 
 $page_title = 'E-pasta adreses maiņa';
-

@@ -21,21 +21,11 @@ if (!$auth->ok) {
 			$newpass = createPassword(8);
 			$newhash = password_hash($newpass, PASSWORD_BCRYPT, array("cost" => 14));
 
-			//suta e-pastu
-			require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
+			//send email
+			$subject = 'Tava jaunā parole ' . $_SERVER['HTTP_HOST'];
+			$message = '<p>Tava jaunā parole ir ' . $newpass . '</p>';
 
-			$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
-
-			$mailer = Swift_Mailer::newInstance($transport);
-			$message = Swift_Message::newInstance();
-			$message->setSubject('Tava jaunā parole ' . $_SERVER['HTTP_HOST']);
-			$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
-			$message->setTo($userdata->mail);
-			$message->setBody('<p>Tava jaunā parole ir ' . $newpass . '</p><p>__<br />Exs.lv adminu un moderatoru komanda!</p>');
-			$message->setContentType("text/html");
-
-
-			if ($mailer->send($message)) {
+			if (send_email($userdata->mail, $subject, $message)) {
 				$db->query("UPDATE `users` SET `password` = '$newhash', `pwd` = '', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
 				$auth->log('Nomainīta parole (e-pasts nosūtīts)', 'users', $userdata->id);
 				set_flash('Parole nosūtīta uz e-pastu!', 'success');
@@ -59,17 +49,9 @@ if (!$auth->ok) {
 			//link protocol
 			$proto = get_protocol($lang);
 
-			//suta e-pastu
-			require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
-
-			$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
-
-			$mailer = Swift_Mailer::newInstance($transport);
-			$message = Swift_Message::newInstance();
-			$message->setSubject('Paroles maiņa ' . $_SERVER['HTTP_HOST']);
-			$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
-			$message->setTo($userdata->mail);
-			$message->setBody('
+			//send email
+			$subject = 'Paroles maiņa ' . $_SERVER['HTTP_HOST'];
+			$message = '
 				<h3>Sveiki!</h3>
 				<p>
 					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā ' . $_SERVER['HTTP_HOST'] . '
@@ -81,13 +63,10 @@ if (!$auth->ok) {
 				</p>
 				<p>
 					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.</p>
-				<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>
-			');
-			$message->setContentType("text/html");
+					Ja neesi veicis šo darbību, lūdzam informēt par to exs.lv administrāciju, norādot minēto IP adresi.
+				</p>';
 
-
-			if ($mailer->send($message)) {
+			if (send_email($userdata->mail, $subject, $message)) {
 				$db->query("UPDATE `users` SET `reset_token` = '$pwd_token', `reset_time` = NOW() WHERE `id` = '$userdata->id'");
 				$auth->log('Pieprasīja paroles maiņu (e-pasts nosūtīts)', 'users', $userdata->id);
 			} else {

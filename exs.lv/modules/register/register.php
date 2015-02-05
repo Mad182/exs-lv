@@ -112,22 +112,13 @@ if (!$auth->ok) {
 		//link protocol
 		$proto = get_protocol($lang);
 
-		//suta e-pastu
-		require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
-
-		$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
-
-		$mailer = Swift_Mailer::newInstance($transport);
-		$message = Swift_Message::newInstance()->setCharset('UTF-8');
-		$message->setSubject('Reģistrācija portālā ' . $_SERVER['HTTP_HOST']);
-		$message->setFrom(array('info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' community'));
-		$message->setTo(stripslashes($regdata['mail']));
-		$message->setBody('<h4>Sveiki!</h4><p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '! Ceram, ka labi pavadīsi laiku :)</p>
+		//send email
+		$subject = 'Reģistrācija portālā ' . $_SERVER['HTTP_HOST'];
+		$message = '<h4>Sveiki!</h4><p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '! Ceram, ka labi pavadīsi laiku :)</p>
 		<p>Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.</p>
-		<p><a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>
-		<p>__<br />Ar cieņu,<br />' . ucfirst($_SERVER['HTTP_HOST']) . ' adminu un moderatoru komanda!</p>');
-		$message->setContentType("text/html");
-		$mailer->send($message);
+		<p><a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>';
+
+		send_email(stripslashes($regdata['mail']), $subject, $message);
 	} else {
 
 		//fill form fields
@@ -144,4 +135,3 @@ if (!$auth->ok) {
 	set_flash("Tu jau esi reģistrējies :D");
 	redirect();
 }
-

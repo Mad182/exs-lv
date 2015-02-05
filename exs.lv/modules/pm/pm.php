@@ -65,53 +65,6 @@ if (!$auth->ok) {
 
 		$inprofile = get_user($auth->id);
 
-		if (isset($_POST['email'])) {
-
-			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) {
-				$_SESSION['antiflood'] = time();
-				$send_to = $_POST['email'];
-
-				if (!isset($_POST['die-motherfcker-wannabes']) or $_POST['die-motherfcker-wannabes'] != md5($category->title . $remote_salt . $auth->id)) {
-					set_flash('Kļūdains pieprasījums! Hacking around?');
-					redirect();
-				}
-
-				$send_title = $_POST['compose-title'];
-				$send_body = post2db($_POST['compose-body']);
-
-				if (!empty($send_body)) {
-					$send_title = sanitize(trim(stripslashes(h(strip_tags($send_title)))));
-					if (!$send_title) {
-						$send_title = '[bez nosaukuma]';
-					}
-					$send_title = str_replace('Re:Re:', 'Re:', $send_title);
-					$date = date('Y-m-d H:i:s');
-					$sender = $db->get_row("SELECT * FROM emails WHERE id = '" . intval($_POST['profile']) . "' AND user_id = '$auth->id'");
-					if (empty($sender)) {
-						die('err: nav izvēlēts sūtītāja profils');
-					}
-
-					require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
-					$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
-							->setUsername($sender->account)
-							->setPassword($sender->password);
-
-					$mailer = Swift_Mailer::newInstance($transport);
-					$message = Swift_Message::newInstance();
-					$message->setSubject(stripslashes($send_title));
-					$message->setFrom(array($sender->account => $auth->nick));
-					$message->setTo($send_to);
-					$message->setBody(stripslashes($send_body));
-					$message->setContentType("text/html");
-					$mailer->send($message);
-
-					update_gmail_outbox($auth->id, $sender->account, $sender->password, 1, 'SINCE "' . date("j F Y", strtotime('-1 month')) . '"');
-
-					redirect('/pm/sent');
-				}
-			}
-		}
-
 		if (isset($_POST['compose-to']) && $_POST['compose-to'] != 0) {
 
 			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 3) {
@@ -152,18 +105,12 @@ if (!$auth->ok) {
 
 						//suta meilu, ja lietotajs nav redzets 3 dienas
 						if (strtotime($receiver->lastseen) < time() - 259200) {
-							require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
-							$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
+							//send email
+							$subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
+							$message = '<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>';
 
-							$mailer = Swift_Mailer::newInstance($transport);
-							$message = Swift_Message::newInstance();
-							$message->setSubject('Tev pienākusi vēstule portālā exs.lv');
-							$message->setFrom(array('info@exs.lv' => 'Exs.lv community'));
-							$message->setTo($receiver->mail);
-							$message->setBody('<p><strong>Jauna vēstule portālā exs.lv</strong></p><p>Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;</p><p>To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msgid . '">https://exs.lv/pm/?act=inbox&read=' . $msgid . '</a></p>');
-							$message->setContentType("text/html");
-							$mailer->send($message);
+							send_email($receiver->mail, $subject, $message);
 						}
 					}
 
@@ -233,21 +180,6 @@ if (!$auth->ok) {
 						'friend-nick' => h($reply_user->nick),
 						'friend-sel' => ' selected="selected"'
 					));
-
-					if ($reply_content->imap_uid != '') {
-						$tpl->newBlock('pm-compose-email');
-						$tpl->assign(array(
-							'email' => $reply_content->imap_email,
-						));
-						$emails = $db->get_results("SELECT * FROM emails WHERE user_id = '$auth->id'");
-						foreach ($emails as $email) {
-							$tpl->newBlock('pm-compose-mails');
-							$tpl->assign(array(
-								'id' => $email->id,
-								'account' => $email->account,
-							));
-						}
-					}
 
 					$tpl->gotoBlock('pm-compose');
 					$tpl->assign(array(
