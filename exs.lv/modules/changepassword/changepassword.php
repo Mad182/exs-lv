@@ -23,7 +23,11 @@ if (!$auth->ok) {
 
 			//send email
 			$subject = 'Tava jaunā parole ' . $_SERVER['HTTP_HOST'];
-			$message = '<h3>Parole nomainīta veiksmīgi!</h3><p>Tava jaunā parole ir ' . $newpass . '</p>';
+			$message = '
+					<h3>Parole nomainīta veiksmīgi!</h3>
+					<p>
+						Tava jaunā parole ir <b>' . $newpass . '</b>
+					</p>';
 
 			if (send_email($userdata->mail, $subject, $message)) {
 				$db->query("UPDATE `users` SET `password` = '$newhash', `pwd` = '', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
@@ -51,18 +55,21 @@ if (!$auth->ok) {
 
 			//send email
 			$subject = 'Paroles maiņa ' . $_SERVER['HTTP_HOST'];
-			$message = '<h3>Sveiki!</h3>
+			$message = '
+				<h3>Sveicināts/-a!</h3>
 				<p>
 					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā ' . $_SERVER['HTTP_HOST'] . '
 				</p>
 				<p>
-					Lai apstiprinātu paroles maiņu, nospied uz zemāk redzamās saites, vai iekopē to pārlūkprogrammas adreses joslā:<br />
-					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a><br />
-					<br />
+					Lai apstiprinātu paroles maiņu, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.
 				</p>
 				<p>
+					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a>
+				</p>
+				<p style="font-size:90%;margin: 20px 0 0;color: #888">
 					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>';
+					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.
+				</p>';
 
 			if (send_email($userdata->mail, $subject, $message)) {
 				$db->query("UPDATE `users` SET `reset_token` = '$pwd_token', `reset_time` = NOW() WHERE `id` = '$userdata->id'");

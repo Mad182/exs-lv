@@ -114,10 +114,21 @@ if (!$auth->ok) {
 
 		//send email
 		$subject = 'Reģistrācija portālā ' . $_SERVER['HTTP_HOST'];
-		$message = '<h3>Sveiki!</h3>
-				<p>Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '!<br />Ceram, ka labi pavadīsi laiku :)</p>
-				<p>Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.</p>
-				<p><a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a></p>';
+		$message = '
+				<h3>Sveicināts/-a!</h3>
+				<p>
+					Paldies, ka reģistrējies portālā ' . $_SERVER['HTTP_HOST'] . '!<br />Ceram, ka labi pavadīsi laiku :)
+				</p>
+				<p>
+					Lai pabeigtu reģistrāciju, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.
+				</p>
+				<p>
+					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm/' . $hash . '</a>
+				</p>
+				<p style="font-size:90%;margin: 20px 0 0;color: #888">
+					Profils tika reģistrēts no IP adreses ' . $auth->ip . '.<br />
+					Ja neesi veicis šo darbību, ignorē šo vēstuli, un mēs Tevi vairs netraucēsim.
+				</p>';
 
 		send_email(stripslashes($regdata['mail']), $subject, $message);
 	} else {

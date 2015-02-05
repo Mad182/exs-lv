@@ -25,18 +25,20 @@ if (isset($_POST['submit'])) {
 
 				//send email
 				$subject = 'E-pasta adreses apstiprinājums ' . $_SERVER['HTTP_HOST'];
-				$message = '<h3>Sveiki!</h3>
+				$message = '<h3>Sveicināts/-a!</h3>
 				<p>
 					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam e-pasta adreses maiņu, norādot šo adresi.
 				</p>
 				<p>
-					Lai apstiprinātu e-pasta maiņu, nospied uz zemāk redzamās saites, vai iekopē to pārlūkprogrammas adreses joslā:<br />
-					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br />
-					<br />
+					Lai apstiprinātu e-pasta maiņu, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.
 				</p>
 				<p>
+					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br />
+				</p>
+				<p style="font-size:90%;margin: 20px 0 0;color: #888">
 					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.</p>';
+					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.
+				</p>';
 
 				if (send_email($inprofile->mail, $subject, $message)) {
 
