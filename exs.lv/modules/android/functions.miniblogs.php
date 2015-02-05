@@ -451,7 +451,8 @@ function a_add_miniblog($data) {
         'reply_to' => $reply_to,
         'text' => post2db($data['content']),
         'private' => (bool)$data['is_private'],
-        'lang' => $android_lang
+        'lang' => $android_lang,
+        'device' => 2
     ));
     
     // ārējā minibloga dati, kas nepieciešami notifikācijām
