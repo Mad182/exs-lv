@@ -356,17 +356,19 @@ if (!empty($var1) && !empty($var2) &&
         if ($all_members) {
             foreach ($all_members as $member) {
                 $usr = get_user($member->user_id);
-                if ($usr->deleted == 1) {
-                    $usr->nick = 'dzēsts';
+                if ($usr) {
+                    if ($usr->deleted == 1) {
+                        $usr->nick = 'dzēsts';
+                    }
+                    $avatar = a_get_user_avatar($usr, 'l');
+                    $arr_members[] = array(
+                        'member_id' => (int)$member->id,
+                        'av_url' => $avatar,
+                        'user' => a_fetch_user($usr->id, $usr->nick, $usr->level),
+                        'is_mod' => (bool)$member->moderator
+                    );
+                    $member_count++;
                 }
-                $avatar = a_get_user_avatar($usr, 'l');
-                $arr_members[] = array(
-                    'member_id' => (int)$member->id,
-                    'av_url' => $avatar,
-                    'user' => a_fetch_user($usr->id, $usr->nick, $usr->level),
-                    'is_mod' => (bool)$member->moderator
-                );
-                $member_count++;
             }
         }
         

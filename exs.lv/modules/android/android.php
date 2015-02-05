@@ -26,7 +26,7 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
  *  $json = array(
  *      'state'     => string   // error/success
  *      'message'   => string,  // ziņa, kas lietotnē tiek izcelta, ja "state" == "error"
- *      'is_banned' => int,  // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
+ *      'is_banned' => int,     // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
  *      'is_online' => bool,    // statuss, kas apzīmē, vai lietotājs ir autorizēts
  *      'xsrf'      => string,  // anti-xsrf atslēga, kas pievienojama adrešu galā
  *      'response'  => array()  // veiktā pieprasījuma atbilde
@@ -55,7 +55,7 @@ $ip_banned = $db->get_row("
 // ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
 // info par lieguma statusu, lai noteiktu, vai tāds vēl pastāv, tāpēc šādai
 // info ir jābūt noskaidrojamai vienmēr
-if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
+if (isset($_GET['banstatus'])) {
 
     if ($ip_banned) {
         a_fetch_ban(1, $ip_banned);
@@ -66,7 +66,10 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 // lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
 // paziņojumu par liegumu
 } else if ($ip_banned) {
-    a_fetch_ban(1, $ip_banned);    
+    a_fetch_ban(1, $ip_banned);
+    if ($auth->ok) {
+        $auth->logout();
+    }
     
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
@@ -101,25 +104,45 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] == 'ban-info') {
 
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
 } else if (isset($_GET['login'])) {
-    
+
+    // lietotāji vēl bez modiem, kuri lietotnē varēs autorizēties
+    $allowed_users = array(
+        6890, // Worst
+        140 // Hibs
+    );
+
     // lokālai testēšanai
     if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
         $auth->login('durvis', $mypasswd, $auth->xsrf);
         
-        if (!$auth->ok) {
+        if ($auth->ok && !im_mod() && !in_array($auth->id, $allowed_users)) {
+            $auth->logout();
+            a_error('Pieeja tikai ar zelta kontu');
+            a_log('Nesaņēma atļauju autorizēties');
+            
+        } else if (!$auth->ok) {
             a_error('Kļūdaini dati');
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
+        } else {
+            a_status_info();
         }
 
-	} else if (isset($_POST['username']) && isset($_POST['password'])) {
+    } else if (isset($_POST['username']) && isset($_POST['password'])) {
     
-		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
+        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
         
-        if (!$auth->ok) {
+        if ($auth->ok && !im_mod() && !in_array($auth->id, $allowed_users)) {
+            $auth->logout();
+            a_error('Pieeja tikai ar zelta kontu');
+            a_log('Nesaņēma atļauju autorizēties');
+            
+        } else if (!$auth->ok) {
             a_error('Nepareizi ievadīti piekļuves dati');
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
+        } else {
+            a_status_info();
         }
     }
 

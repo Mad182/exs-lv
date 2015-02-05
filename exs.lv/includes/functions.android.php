@@ -93,6 +93,30 @@ function a_log($text) {
 }
 
 /**
+ *  Atgriezīs info par lietotāju, kuru lietotne fonā pieprasīs samērā bieži,
+ *  lai atjaunotu gan NavigationDrawer notifikācijas,
+ *  gan veiktu citas darbības.
+ */
+function a_status_info() {
+    global $db, $auth, $img_server;
+    
+    // nelasīto vēstuļu skaits
+    $msgs = $db->get_var("
+        SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
+    ");
+    
+    a_append(array('status_info' => array(
+        'id' => (int)$auth->id,
+        'nick' => $auth->nick,
+        'level' => (int)$auth->level,
+        'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
+        'usertitle' => $auth->custom_title,
+        'cnt_online' => (int)$auth->hosts_online,
+        'cnt_unread_msgs' => (int)$msgs
+    )));
+}
+
+/**
  *  Atgriezīs datus par norādīto lietotāju.
  *
  *  Android lietotnē tie ir nepieciešami specifiskā formātā (ne-HTML), lai
@@ -159,7 +183,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
  */
-function a_fetch_ban($type = 1, $ip_banned) {
+function a_fetch_ban($type = 1, $ip_banned = null) {
     global $db, $auth;
     global $json_page, $json_banned;
 
@@ -187,54 +211,58 @@ function a_fetch_ban($type = 1, $ip_banned) {
             $from_user = get_user($prof_banned->author);
             $to_user = get_user($prof_banned->user_id);
             
-            $json_page = array(
-                'ip' => $prof_banned->ip,
-                'to_user' => a_fetch_user($to_user->id, 
-                    $to_user->nick, $to_user->level),
-                'reason' => $prof_banned->reason,
-                'from_user' => a_fetch_user($from_user->id, 
-                    $from_user->nick, $from_user->level),
-                'date_from' => date('d.m.Y, H:i', $prof_banned->time),
-                'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
-                    $prof_banned->length),
-                'remaining' => strTime($prof_banned->time + 
-                    $prof_banned->length - time())
-            );
+            if ($from_user && $to_user) {
+                a_append(array(
+                    'ip' => $prof_banned->ip,
+                    'to_user' => a_fetch_user($to_user->id, 
+                        $to_user->nick, $to_user->level),
+                    'reason' => $prof_banned->reason,
+                    'from_user' => a_fetch_user($from_user->id, 
+                        $from_user->nick, $from_user->level),
+                    'date_from' => date('d.m.Y, H:i', $prof_banned->time),
+                    'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
+                        $prof_banned->length),
+                    'remaining' => strTime($prof_banned->time + 
+                        $prof_banned->length - time())
+                ));
+            }
         }
         
     // ip liegums
-    } else if ($type === 1) {
+    } else if ($type === 1 && $ip_banned != null) {
     
         $from_user = get_user($ip_banned->author);
         $to_user = get_user($ip_banned->user_id);
-
-        $json_page = array(
-            'ip' => $ip_banned->ip,
-            'to_user' => a_fetch_user($to_user->id, 
-                $to_user->nick, $to_user->level),
-            'reason' => $ip_banned->reason,
-            'from_user' => a_fetch_user($from_user->id, 
-                $from_user->nick, $from_user->level),
-            'date_from' => date('d.m.Y, H:i', $ip_banned->time),
-            'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
-                    $ip_banned->length),
-            'remaining' => strTime($ip_banned->time + 
-                $ip_banned->length - time())
-        );
+        
+        if ($from_user && $to_user) {
+            a_append(array(
+                'ip' => $ip_banned->ip,
+                'to_user' => a_fetch_user($to_user->id, 
+                    $to_user->nick, $to_user->level),
+                'reason' => $ip_banned->reason,
+                'from_user' => a_fetch_user($from_user->id, 
+                    $from_user->nick, $from_user->level),
+                'date_from' => date('d.m.Y, H:i', $ip_banned->time),
+                'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
+                        $ip_banned->length),
+                'remaining' => strTime($ip_banned->time + 
+                    $ip_banned->length - time())
+            ));
+        }
     }
 }
 
 /**
  *  Tiešsaistē esošie lietotāji.
  *
- *  Atgriež sarakstu ar tiešsaistē esošajiem lietotājiem 
+ *  Atgriezīs sarakstu ar tiešsaistē esošajiem lietotājiem 
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
  *
- *  Klāt pievieno arī informāciju par tiešsaistē esošiem lietotājiem
+ *  Klāt pievienos arī informāciju par tiešsaistē esošiem lietotājiem
  *  katrā klasē.
  */
 function a_fetch_online($force = false) {
-	global $db, $m, $android_lang;
+	global $db, $m, $auth, $android_lang;
     global $online_users, $busers;
     
     // laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
@@ -248,6 +276,8 @@ function a_fetch_online($force = false) {
         $online = null;
         $classes = null;
         
+        $last_seen = date('Y-m-d H:i:s', time() - $online_seconds);
+        
 		$lastseen = $db->get_results("
             SELECT
                 DISTINCT(`visits`.`user_id`) AS `user_id`,
@@ -256,15 +286,14 @@ function a_fetch_online($force = false) {
             FROM `visits`
                 JOIN `users` ON `visits`.`user_id` = `users`.`id`
             WHERE
-                `visits`.`site_id` = ".(int)$android_lang." AND
-                `visits`.`lastseen` > '".date('Y-m-d H:i:s', time() - $online_seconds)."'
+                `visits`.`site_id` = ".$android_lang." AND
+                `visits`.`lastseen` > '".$last_seen."'
             ORDER BY
-                `users`.`level` ASC,
                 `users`.`nick` ASC
         ");
 
         if (!$lastseen) {
-            a_message('Šobrīd neviena lietotāja nav tiešsaistē');
+            a_error('Neviena lietotāja nav tiešsaistē');
             return false;
         }
         
@@ -272,10 +301,11 @@ function a_fetch_online($force = false) {
         // to pārveidos par objektu, nevis atstās masīvu
         $classes['-1'] = 0;
         
-        // visi tiešsaistes lietotāji tiek pievienoti masīvam
+        $cnt_registered = 0;
+
         foreach ($lastseen as $user) {       
 
-            // nosaka ierīci, no kādas lietotājs pieslēdzies
+            // noteiks ierīci, no kādas lietotājs pieslēdzies
             $device = 0;
             if (!empty($online_users['mobileusers']) && 
                 in_array($user->nick, $online_users['mobileusers'])) {
@@ -294,6 +324,7 @@ function a_fetch_online($force = false) {
                 'id' => (int)$user->user_id,
                 'nick' => (string)$user->nick,
                 'level' => (int)$user->level,
+                'is_online' => true,
                 'is_banned' => (bool)$is_banned,
                 'device' => (int)$device
             );
@@ -304,17 +335,21 @@ function a_fetch_online($force = false) {
             } else {
                 $classes[$user->level] = 1;
             }
+            
+            $cnt_registered++;
         }
 
         $data = array(
-            'online_users' => $online,
+            'online' => (int)$auth->hosts_online,
+            'registered' => (int)$cnt_registered,
+            'users' => $online,
             'by_classes' => $classes
         );
         
 		$m->set('android-online-'.$android_lang, $data, false, 30);
 	}
     
-	return $data;
+	a_append($data);
 }
 
 /**
@@ -332,6 +367,10 @@ function a_fetch_online($force = false) {
 function a_get_user_avatar($user, $size = 'm') {
 	global $auth, $img_server;
 	
+    if (!$user || empty($user->av_alt) || empty($user->avatar)) {
+        return '';
+    }
+    
 	// pēc noklusējuma izveido vidēja izmēra attēla adresi
 	$path       = 'medium';
 	$real_path  = 'useravatar';
@@ -536,4 +575,50 @@ function a_add_article_comment($article = null) {
 			update_stats($category->parent);
 		}
 	}
+}
+
+/**
+ *  Atgriezīs x jaunākos apbalvojumus lietotāja profilā.
+ */
+function a_fetch_awards($user_id, $award_count = 4) {
+	global $db, $m, $img_server;
+    
+	$user_id = (int)$user_id;
+    $award_count = (int)$award_count;
+    
+    if ($user_id < 0 || $award_count < 0 || $award_count > 10) {
+        a_error('Kļūdaini apbalvojumu ielādes parametri');
+        return;
+    }
+    
+    $memcached_key = 'android_awards_'.$user_id.'-'.$award_count;
+    
+	if (($data = $m->get($memcached_key)) === false) {
+		$awards = array();
+		$awards_list = $db->get_results("
+            SELECT `id`, `title`, `award` FROM `autoawards` 
+            WHERE `user_id` = ".$user_id."
+            ORDER BY `importance` DESC
+            LIMIT ".$award_count
+        );
+		if ($awards_list) {
+			foreach ($awards_list as $award) {
+				$awards[] = array(
+                    'img_url' => $img_server.'/dati/bildes/awards/'.$award->award.'.png',
+                    'title' => strip_tags($award->title)
+                );
+			}
+		}
+        // kopējais apbalvojumu skaits šim lietotājam
+        $total = $db->get_var(
+            "SELECT count(*) FROM `autoawards` WHERE `user_id` = ".$user_id
+        );
+        $data = array(
+            'count' => (int)$total,
+            'list' => $awards
+        );
+		$m->set($memcached_key, $data, false, 900);
+	}
+    
+	a_append(array('awards' => $data));
 }

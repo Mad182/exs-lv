@@ -16,7 +16,7 @@ $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 if ($var1 === 'notifications') {
 
     $arr_notifs = array(); // atgriežamais notifikāciju masīvs
-    $notif_limit = 15; // cik pēdējos jaunumus atgriezt
+    $notif_limit = 25; // cik pēdējos jaunumus atgriezt
 
 	$texts = array(
 		0 => 'atbilde komentāram',
@@ -41,52 +41,105 @@ if ($var1 === 'notifications') {
     $user_notifications = $db->get_results("
         SELECT * FROM `notify` 
         WHERE 
-            `user_id` = ".(int)$auth->id." AND
-            `lang` = ".(int)$android_lang."
+            `user_id` = ".$auth->id." AND
+            `lang` = ".$android_lang."
         ORDER BY `bump` DESC 
         LIMIT 0, $notif_limit
     ");
     
     if (!$user_notifications) {
-        a_error('Notikumu nav!');
+        a_error('Nav paziņojumu');
     } else {
-    
-        $inner_counter = 0;
+
         foreach ($user_notifications as $notify) {    
             $arr_notifs[] = array(
-                'type' => $texts[$notify->type],
+                'type' => (int)$notify->type,
+                'foreign_key' => (int)$notify->foreign_key,
                 'text' => textlimit(trim($notify->info), 45, ''),
-                'date' => 'pirms ' . time_ago(strtotime($notify->bump)),
-                'project' => $config_domains[$notify->lang]['domain']
+                'date' => time_ago(strtotime($notify->bump))
             );
         }
         
-        $json_page = array('notifications' => $arr_notifs);
+        a_append(array('notifications' => $arr_notifs));
     }
 
+/**
+ *  Atgriezīs status info, kuru lietotne pieprasīs ik pēc laika, lai
+ *  varētu atjaunot gan notifikāciju skaitu dažādās vietās, gan veikt
+ *  citas darbības.
+ */
+} else if ($var1 == 'status') {
+    a_status_info();
+ 
 /**
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
  */
 } else if ($var1 === 'online') {
-    $json_page = a_fetch_online();
+    a_fetch_online();
     
 /**
- *  Atgriezīs ar lietotāja profilu saistītu informāciju, no kuras daļa
- *  tiek rādīta arī iekš NavigationDrawer.
+ *  Atgriezīs ar lietotāja profilu saistītu informāciju.
+ *  /random/profile/{user_id}
  */
-} else if ($var1 === 'profile-data') {
+} else if ($var1 === 'profile' && !empty($var2)) {
+
+    $user_id = (int)$var2;
     
-    $data = array(
-        'id' => (int)$auth->id,
-        'nick' => $auth->nick,
-        'level' => (int)$auth->level,
-        'avatar' => 'https://img.exs.lv/userpic/large/'.$auth->avatar,
-        'usertitle' => $auth->custom_title,
-        'karma' => (int)$auth->karma,
-        'days_online' => (int)$auth->days_in_row
+    $profile = $db->get_row("
+        SELECT * FROM `users` WHERE `id` = ".$user_id
     );
+    if (!$profile) {
+        a_error('Šāds profils neeksistē');
+    } else {
     
-    $json_page = array('userdata' => $data);
+        // komentāru kopskaits dažādās tabulās
+        $posts = ($db->get_var("SELECT count(*) FROM `comments` WHERE `author` = ".$user_id." AND `removed` = 0") +
+                  $db->get_var("SELECT count(*) FROM `galcom` WHERE `author` = ".$user_id." AND `removed` = 0") +
+                  $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = ".$user_id." AND removed = 0"));
+
+        // lietotāja rakstu skaits atvērtajā apakšprojektā
+        $user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".$android_lang);
+        
+        // kā citi lietotāji vērtējuši šī lietotāja ierakstus
+        $voteval = $db->get_var("SELECT SUM(`vote_value`) FROM `comments` WHERE `author` = ".$user_id) +
+                   $db->get_var("SELECT SUM(`vote_value`) FROM `galcom` WHERE `author` = ".$user_id) +
+                   $db->get_var("SELECT SUM(`vote_value`) FROM `miniblog` WHERE `author` = ".$user_id);
+
+        // reģistrējās pirms x dienām
+        $days = ceil((time() - strtotime($profile->date)) / 60 / 60 / 24);
+        
+        // pēdējoreiz redzēts pirms...
+        $time_ago = time_ago(strtotime($profile->lastseen));
+        
+        $data = array(
+            'formatted' => a_fetch_user($profile->id, $profile->nick, $profile->level),
+            'avatar' => 'https://img.exs.lv/userpic/large/'.$profile->avatar,
+            'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
+            'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
+            'last_seen' => 'pirms '.$time_ago,
+            'usertitle' => $profile->custom_title,
+            'gender' => (int)$profile->gender,
+            'web' => $profile->web,
+            'karma' => (int)$profile->karma,
+            'posts' => (int)$posts,
+            'pages' => (int)$user_pages,
+            'voted_by_self_cnt' => (int)$profile->vote_total,
+            'voted_by_self_sum' => (int)$profile->vote_others,
+            'voted_by_others' => (int)$voteval
+        );
+        
+        // moderatoriem redzama papildinformācija par lietotāju
+        /*if (im_mod()) {
+            $data['email'] = $profile->mail;
+            $data['last_ip'] = $profile->lastip;
+            $data['useragent'] = $profile->user_agent;        
+        }*/
+        
+        a_append(array('userdata' => $data));
+        
+        // pievienos klāt arī lietotāja pāris jaunākos apbalvojumus
+        a_fetch_awards($user_id, 6);
+    }
     
 /**
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
