@@ -18,8 +18,8 @@ if ($var1 === 'notifications') {
     $arr_notifs = array(); // atgriežamais notifikāciju masīvs
     $notif_limit = 25; // cik pēdējos jaunumus atgriezt
 
-	$texts = array(
-		0 => 'atbilde komentāram',
+	/*$texts = array(
+		0 => 'atbilde komentāram', // rakstā
 		1 => 'komentārs galerijā',
 		2 => 'komentārs rakstam',
 		3 => 'atbilde mb',
@@ -34,9 +34,15 @@ if ($var1 === 'notifications') {
 		12 => 'jaunumi no exs.lv',
 		13 => 'tevi pieminēja grupā',
 		14 => 'tevi pieminēja mb',
-		15 => 'tevi pieminēja',
+		15 => 'tevi pieminēja rakstā',
 		16 => 'tevi pieminēja galerijā'
-	);
+	);*/
+    
+    // id tām notifikācijām, kas saistītas ar grupām, lai pēc tam varētu
+    // atsevišķi atlasīt grupu id
+    $group_notifs = array(
+        3, 8, 13, 14
+    );
     
     $user_notifications = $db->get_results("
         SELECT * FROM `notify` 
@@ -50,10 +56,43 @@ if ($var1 === 'notifications') {
     if (!$user_notifications) {
         a_error('Nav paziņojumu');
     } else {
+    
+        // atlasīs miniblogu id no tām notifikācijām, kas ir ierakstiem grupās
+        $mb_ids = array();
+        foreach ($user_notifications as $notify) {
+            if (in_array($notify->type, $group_notifs)) {
+                $mb_ids[] = (int)$notify->foreign_key;
+            }
+        }
+        
+        // šiem miniblogiem noteiks grupu ID, kas jānodod tālāk atbildē
+        $group_ids = array();
+        if (!empty($mb_ids)) {
+        
+            $ids = $db->get_results("
+                SELECT `id`, `groupid` FROM `miniblog`
+                WHERE `id` IN(".implode(',', $mb_ids).")
+            ");
+            if ($ids) {
+                foreach ($ids as $entry) {
+                    $group_ids[$entry->id] = $entry->groupid;
+                }
+            }
+        }
 
-        foreach ($user_notifications as $notify) {    
+        // sagatavos atbildi lietotnei
+        foreach ($user_notifications as $notify) {
+        
+            // noteiks pareizu notifikācijas grupas id
+            $group_id = 0;
+            if (in_array($notify->type, $group_notifs) &&
+                    !empty($group_ids[$notify->foreign_key])) {
+                $group_id = $group_ids[$notify->foreign_key];
+            }
+        
             $arr_notifs[] = array(
                 'type' => (int)$notify->type,
+                'group_id' => (int)$group_id,
                 'foreign_key' => (int)$notify->foreign_key,
                 'text' => textlimit(trim($notify->info), 45, ''),
                 'date' => time_ago(strtotime($notify->bump))
