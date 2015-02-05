@@ -214,7 +214,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 	// modiem / adminiem atlasa biedru pieteikumus
 	if ($is_admin || $is_mod) {
-		$pendings = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '0'");
+		$pendings = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '0' ORDER BY `id` DESC");
 		if ($pendings) {
 			$tpl->newBlock('pending');
 			foreach ($pendings as $pending) {
