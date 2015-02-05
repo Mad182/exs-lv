@@ -240,17 +240,23 @@ class Auth {
 
 	function update_counter() {
 		global $db, $m, $lang;
+        
+        $new_lang = $lang;
+        if ($lang === 2) { // iekš android.exs.lv $lang nekad nemainās
+            global $android_lang;
+            $new_lang = $android_lang;
+        }
 
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang")) {
-			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang");
+		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$new_lang)) {
+			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$new_lang);
 		} else {
-			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, $lang)");
+			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, ".$new_lang.")");
 		}
 
-		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
+		if (!($this->hosts_online = $m->get('online_count_' . $new_lang))) {
 			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
-			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = $lang");
-			$m->set('online_count_' . $lang, "$this->hosts_online", false, 10);
+			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$new_lang);
+			$m->set('online_count_' . $new_lang, "$this->hosts_online", false, 10);
 		}
 	}
 
