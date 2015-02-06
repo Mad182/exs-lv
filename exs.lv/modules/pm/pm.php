@@ -103,8 +103,8 @@ if (!$auth->ok) {
 						notify($receiver->id, 9);
 						update_karma($auth->id);
 
-						//suta meilu, ja lietotajs nav redzets 3 dienas
-						if (strtotime($receiver->lastseen) < time() - 259200) {
+						//suta meilu, atbilstoši notifikāciju iestatījumiem
+						if ($receiver->pm_notify_email == 2 || ($receiver->pm_notify_email == 1 && strtotime($receiver->lastseen) < time() - 259200)) {
 
 							//send email
 							$subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
@@ -471,6 +471,9 @@ if (!$auth->ok) {
 	}
 }
 
-$tpl->assignGlobal(array(
-	'pm-top-title' => $pm_title,
-));
+if (!empty($pm_title)) {
+	$tpl->assignGlobal(array(
+		'pm-top-title' => $pm_title,
+	));
+}
+

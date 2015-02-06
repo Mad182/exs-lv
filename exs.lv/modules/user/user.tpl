@@ -34,7 +34,7 @@
 		<dt><i>E-pasts</i></dt><dd><i>{mail}</i></dd>
 		<dt><i>Pēdējā IP</i></dt><dd><i><a href="/findby?ip={lastip}">{lastip}</a></i></dd>
 		<dt><i>UserAgent</i></dt><dd><i>{user_agent}</i></dd>
-        <dt><i>Profili</i></dt><dd>{cookie_users}</dd>
+		<dt><i>Profili</i></dt><dd>{cookie_users}</dd>
 		<!-- END BLOCK : user-modinfo-->
 	</dl>
 	<!-- START BLOCK : user-profile-awards-->
@@ -348,6 +348,15 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Tavi lapas iestatījumi</legend>
+
+			<p>
+				<label for="edit-pm_notify_email">Saņemt paziņojumu uz e-pastu par saņemtām vēstulēm:</label>
+				<select name="edit-pm_notify_email" id="edit-pm_notify_email">
+					<option value="0"{user-pm_notify_email-0}>Nekad</option>
+					<option value="1"{user-pm_notify_email-1}>Ja neesmu bijis online vairākas dienas</option>
+					<option value="2"{user-pm_notify_email-2}>Vienmēr</option>
+				</select>
+			</p>
 
 			<h3>Sekot līdzi jaunākajām tēmām</h3>
 			<p>

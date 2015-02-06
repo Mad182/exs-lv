@@ -11,6 +11,7 @@ if (isset($_POST['submit'])) {
 	$inprofile->show_rs = (bool) $_POST['edit-show_rs'];
 	$inprofile->showsig = (bool) $_POST['edit-enablesig'];
 	$inprofile->skin = (int) $_POST['edit-skin'];
+	$inprofile->pm_notify_email = (int) $_POST['edit-pm_notify_email'];
 
 	$db->update('users', $auth->id, array(
 		'show_code' => $inprofile->show_code,
@@ -19,6 +20,7 @@ if (isset($_POST['submit'])) {
 		'show_rs' => $inprofile->show_rs,
 		'showsig' => $inprofile->showsig,
 		'skin' => $inprofile->skin,
+		'pm_notify_email' => $inprofile->pm_notify_email
 	));
 
 	$auth->reset();
@@ -62,6 +64,8 @@ $tpl->assign(array(
 	'edit-show_rp-mark' => $show_rpmark,
 	'edit-show_rs-mark' => $show_rsmark,
 	'user-skin-' . $inprofile->skin => ' selected="selected"',
+	'user-pm_notify_email-' . $inprofile->pm_notify_email => ' selected="selected"',
 ));
 
 $page_title = 'Tavi lapas iestatījumi';
+
