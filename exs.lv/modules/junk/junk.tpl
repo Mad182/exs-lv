@@ -8,16 +8,12 @@
 
 <a class="junk-button" href="/junk/random" title="random"><img style="float: right;margin: 5px 10px;" src="//img.exs.lv/bildes/junk/random.png" alt="Random" /></a>
 
-<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-<div style="float: right;margin: 20px 20px 0 0;" id="draugiemLike"></div>
-<script type="text/javascript">
-	new DApi.Like().append('draugiemLike');
-</script>
+
+<!-- INCLUDE BLOCK : share-block -->
 
 <div class="c"></div>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
-<!-- START BLOCK : junk-item-date-->
-<ul id="junk-list" style="margin:0;padding:10px 0">
+	<!-- START BLOCK : junk-item-date-->
 	<div class="c"></div>
 	<h3>{date}</h3>
 	<div class="c"></div>
@@ -27,9 +23,9 @@
 		<!-- END BLOCK : junk-item-->
 	</ul>
 	<!-- END BLOCK : junk-item-date-->
-	<div class="c"></div>
-	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
-	<!-- END BLOCK : junk-->
+<div class="c"></div>
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
+<!-- END BLOCK : junk-->
 
 
 	<!-- START BLOCK : junk-view-->
@@ -64,47 +60,9 @@
 				<p style="text-align:center"><img src="//img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float:none" alt="" /></p>
 
 				<div class="c"></div>
-				<div style="padding: 5px 50px">
 
-					<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-					<div style="float: left; margin: 1px 12px 0 0;z-index: 3" id="draugiemLike"></div>
-					<script type="text/javascript">
-						var p = {
-							title: "{title-html}",
-							titlePrefix: "{page-domain}",
-							name: "{page-domain}"
-						};
-						new DApi.Like(p).append('draugiemLike');
-					</script>
+				<!-- INCLUDE BLOCK : share-block -->
 
-					<div style="width: 90px;float: left; margin: 0"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-						<script>!function(d, s, id) {
-								var js, fjs = d.getElementsByTagName(s)[0];
-								if (!d.getElementById(id)) {
-									js = d.createElement(s);
-									js.id = id;
-									js.src = "//platform.twitter.com/widgets.js";
-									fjs.parentNode.insertBefore(js, fjs);
-								}
-							}(document, "script", "twitter-wjs");</script></div>
-
-					<div id="fb-root"></div>
-					<script>(function(d, s, id) {
-							var js, fjs = d.getElementsByTagName(s)[0];
-							if (d.getElementById(id))
-								return;
-							js = d.createElement(s);
-							js.id = id;
-							js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1";
-							fjs.parentNode.insertBefore(js, fjs);
-						}(document, 'script', 'facebook-jssdk'));</script>
-
-					<div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
-
-					<div class="c"></div>
-
-				</div>
-				<div class="c"></div>
 				<!-- START BLOCK : junk-view-author-->
 				<p>Pievienoja: <a href="/user/{id}">{nick}</a></p>
 				<!-- END BLOCK : junk-view-author-->

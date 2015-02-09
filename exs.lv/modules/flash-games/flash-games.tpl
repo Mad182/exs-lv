@@ -27,11 +27,7 @@
 	swfobject.embedSWF("{flash_file}", "swf-content", "{width}", "{height}", "9", flashvars, attributes);
 </script>
 
-<div id="game-recommend">
-	<iframe style="border: 0;margin:0;" height="20" width="84" frameborder="0" src="//www.draugiem.lv/say/ext/like.php?title={title-encoded}&amp;url=https://exs.lv/{category-url}/{slug}&amp;titlePrefix=Flash"></iframe>
-	<a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-	<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fexs.lv%2F{category-url}%2F{slug}&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="overflow:hidden; width:100px; height:20px; border: 0;margin:0;" allowTransparency="true"></iframe>
-</div>
+<!-- INCLUDE BLOCK : share-block -->
 
 <!-- START BLOCK : games-edit-->
 <h1>Labot spēli</h1>

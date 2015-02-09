@@ -188,9 +188,12 @@
 	<!-- END BLOCK : movie-info-->
 	{article-text}
 
+	<!-- INCLUDE BLOCK : share-block -->
+
 </div>
 <!-- START BLOCK : post-stags-->
 <div class="c"></div>
+
 <div id="related-topics">
 	<div class="mbox">
 		<h4>Saistītie raksti:</h4>
@@ -206,45 +209,6 @@
 <div class="mbox" style="margin: 5px 0" id="like-rate-box">
 	<div id="post-rating">Lasītāju vērtējums: <span class="current-rating">{rating}</span> ({rating_count} balsis)</div>
 	<div id="star"></div>
-
-	<div style="padding: 5px;">
-		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-		<div style="float: left; margin: 0 12px 0 0" id="draugiemLike"></div>
-		<script type="text/javascript">
-			var p = {
-				titlePrefix: "{page-domain}",
-				name: "{page-domain}"
-			};
-			new DApi.Like(p).append('draugiemLike');
-		</script>
-
-		<div style="width: 90px;float: left; margin: 0"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-			<script>!function(d, s, id) {
-					var js, fjs = d.getElementsByTagName(s)[0];
-					if (!d.getElementById(id)) {
-						js = d.createElement(s);
-						js.id = id;
-						js.src = "//platform.twitter.com/widgets.js";
-						fjs.parentNode.insertBefore(js, fjs);
-					}
-				}(document, "script", "twitter-wjs");</script></div>
-
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id))
-					return;
-				js = d.createElement(s);
-				js.id = id;
-				js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));</script>
-
-		<div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
-
-		<div class="c"></div>
-	</div>
-
 </div>
 <div class="c"></div>
 <ul class="article-info">

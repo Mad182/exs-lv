@@ -150,6 +150,7 @@ if ($lang !== 1 && $skin === 'main') {
 
 $tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
 $tpl->assignInclude('module-core-error', CORE_PATH . '/modules/core/error.tpl');
+$tpl->assignInclude('share-block', CORE_PATH . '/tmpl/share.tpl');
 
 //izdomā, ko tad īsti rādīsim :)
 //redirekti no veco moduļu versijām

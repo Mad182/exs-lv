@@ -4030,3 +4030,27 @@ img.show-banned:hover {
 	background: transparent;
 }
 
+/* socialo mediju share pogas */
+#share-block {
+	margin: 30px auto 20px;
+	width: 440px;
+}
+
+.social-button {
+	float: left;
+	width: 105px;
+	height: 25px;
+}
+
+.social-button.draugiem {
+	width: 115px;
+}
+
+.social-button.gplus {
+	width: 90px;
+}
+
+.social-button.facebook {
+	width: 110px;
+}
+

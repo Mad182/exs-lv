@@ -15,6 +15,7 @@ if (!im_mod()) {
 	$mods_only = " `cat`.`mods_only` = 0 AND ";
 }
 
+
 ############ ARTICLES
 
 $articles = $db->get_results("
@@ -114,11 +115,6 @@ foreach ($articles as $article) {
 }
 
 
-
-
-
-
-
 ########### IMAGES 
 
 $images = $db->get_results("
@@ -206,12 +202,7 @@ foreach ($images as $image) {
 }
 
 
-
-
-
-
 ########### MINIBLOGS
-
 
 if ($auth->level == 1) {
 	$groupquery = '1 = 1';

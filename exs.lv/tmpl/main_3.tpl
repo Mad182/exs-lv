@@ -30,6 +30,9 @@
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css" />
 		<!-- END BLOCK : additional-css-->
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js,prettify/prettify.js"></script>
+		<!-- START BLOCK : additional-js-->
+		<script type="text/javascript" src="{static-server}/js/{filename}"></script>
+		<!-- END BLOCK : additional-js-->
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">

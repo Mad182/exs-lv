@@ -27,3 +27,5 @@
 
 <!-- END BLOCK : wall-events-->
 
+<!-- INCLUDE BLOCK : share-block -->
+
