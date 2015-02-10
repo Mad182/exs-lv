@@ -323,6 +323,13 @@ function embed_widgets($txt, $wide = 0) {
 		$txt = preg_replace_callback(
 				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
 		);
+
+		if (strpos($txt, 'mobile.twitter') !== false) {
+			$txt = preg_replace_callback(
+					"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(mobile\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
+			);
+		}
+
 	}
 
 	// spotify
