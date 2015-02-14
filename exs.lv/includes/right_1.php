@@ -11,7 +11,6 @@ if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 }
 
 if (!empty($inprofile) && !$inprofile->deleted) {
-
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
@@ -142,6 +141,42 @@ if ($auth->ok) {
 $tpl->assignGlobal(array(
 	$sel . '-selected' => 'active '
 ));
+
+
+// Dienas labākā komentāra bloks
+$responses = $db->get_results("SELECT `id`,`author`,`text`,`parent`,`vote_value`,`lang` FROM `miniblog` WHERE
+                                `removed` = 0 AND DATE(`date`) = CURDATE() AND vote_value > 0 AND groupid = 0
+                                AND `type` = 'miniblog' ");
+if($responses){
+    $tpl->newBlock('daily-best');
+    $maxkey = $responses[0];
+    // Dabū komentāru ar lielāko plusiņu skaitu
+    foreach($responses as $row => $column){
+        if( $column->vote_value > $maxkey->vote_value ) $maxkey = $responses[$row];
+    }
+    $user = get_user($maxkey->author);
+    $parent = $maxkey->parent;
+    $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+    $title = mb_get_title(stripslashes($body->text));
+    $check = $body->author;
+    $strid = mb_get_strid($title, $maxkey->parent);
+
+    $url = '/say/' . $check . '/' . $parent . '-' . $strid. '#m' .$maxkey->id;
+    $avatar = get_avatar($user, 's');
+    $nick = $user->nick;
+    $rating = '+ '.$maxkey->vote_value;
+    $content = strip_tags($maxkey->text);
+    if(strlen($content)>100) $content = substr($content, 0, 100).'...';
+
+    $tpl->assign(array(
+           'best-link' => $url,
+           'best-avatar' => $avatar,
+           'best-nick' => $nick,
+           'best-rating' => $rating,
+           'best-comment' => $content
+        ));
+}
+
 
 if (im_mod()) {
 	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");

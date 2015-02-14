@@ -1317,6 +1317,10 @@ a.friend img, .comments-avatar {
 	display: block;
 }
 
+.blockhref li span.post-rating {
+    color: green;
+}
+
 .blockhref li span.wrap a {
 	display: inline;
 	height: auto !important;
