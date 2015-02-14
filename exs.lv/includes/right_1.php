@@ -156,10 +156,19 @@ if($responses){
     }
     $user = get_user($maxkey->author);
     $parent = $maxkey->parent;
-    $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
-    $title = mb_get_title(stripslashes($body->text));
-    $check = $body->author;
-    $strid = mb_get_strid($title, $maxkey->parent);
+
+    if($parent > 0){
+        // Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
+        $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+        $title = mb_get_title(stripslashes($body->text));
+        $check = $body->author;
+        $strid = mb_get_strid($title, $maxkey->parent);
+    }else{
+        $title = mb_get_title(stripslashes($maxkey->text));
+        $check = $maxkey->author;
+        $strid = mb_get_strid($title, $check);
+        $parent = $maxkey->id;
+    }
 
     $url = '/say/' . $check . '/' . $parent . '-' . $strid. '#m' .$maxkey->id;
     $avatar = get_avatar($user, 's');
