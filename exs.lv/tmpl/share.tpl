@@ -21,20 +21,6 @@
 			}(document, 'script', 'twitter-wjs');</script>
 	</div>
 
-	<div class="social-button gplus">
-		<g:plusone size="medium"></g:plusone>
-		<script type="text/javascript">
-			(function() {
-				var po = document.createElement('script');
-				po.type = 'text/javascript';
-				po.async = true;
-				po.src = 'https://apis.google.com/js/plusone.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(po, s);
-			})();
-		</script>
-	</div>
-
 	<div class="social-button facebook">
 		<div class="fb-share-button" data-width="110" data-type="button_count"></div>
 		<div id="fb-root"></div>

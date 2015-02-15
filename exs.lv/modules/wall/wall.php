@@ -95,7 +95,7 @@ foreach ($articles as $article) {
 				<div class="post-info">
 					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
 				</div>
-				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+				<div class="lastpost-text">' . add_smile($lastpost->text) . '</div>
 			</div>
 
 			';
@@ -182,7 +182,7 @@ foreach ($images as $image) {
 				<div class="post-info">
 					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
 				</div>
-				<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+				<div class="lastpost-text">' . add_smile($lastpost->text) . '</div>
 			</div>
 
 			';
@@ -322,7 +322,7 @@ if ($mbs) {
 					<div class="post-info">
 						<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
 					</div>
-					<span class="lastpost-text">' . add_smile($lastpost->text) . '</span>
+					<div class="lastpost-text">' . add_smile($lastpost->text) . '</div>
 				</div>
 
 				';
@@ -356,12 +356,12 @@ if (!empty($events)) {
 		$tpl->assign(array(
 			'url' => $event['url'],
 			'author' => $event['author'],
-			'title' => $event['title'],
+			'title' => strip_selected_tags($event['title'], array('a', 'p')),
 			'avatar' => $event['avatar'],
 			'time' => $event['time'],
 			'where' => $event['where'],
 			'posts' => $event['posts'],
-			'lastpost' => $event['lastpost']
+			'lastpost' => strip_selected_tags($event['lastpost'], array('a', 'p'))
 		));
 	}
 }
