@@ -226,7 +226,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
     // atgriežamā informācija par pašu miniblogu
     $arr_miniblog = array(
         'id' => (int)$miniblog->id,
-        'text' => strip_tags(add_smile($miniblog->text), '<img><p><strong><b><i><em>'),
+        'text' => strip_tags(add_smile($miniblog->text), '<img><br><p><strong><b><i><em>'),
         'date' => display_time(strtotime($miniblog->date)),
         'author' => a_fetch_user($author->id, $author->nick, $author->level),
         'author_av_url' => a_get_user_avatar($author, 's'),
@@ -266,7 +266,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
                     $comment->text = '<em>Ieraksts dzēsts!</em>';
                 } else {
                     $comment->text = strip_tags(add_smile(
-                        $comment->text, 0, 0, 1), '<img><p><strong><b><i><em>');
+                        $comment->text, 0, 0, 1), '<img><br><p><strong><b><i><em>');
                 }
                 
                 $comment->date = display_time(strtotime($comment->date));
