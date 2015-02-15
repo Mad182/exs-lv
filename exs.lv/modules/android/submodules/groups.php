@@ -30,6 +30,7 @@ if (!empty($var1) && !empty($var2) &&
  *  (/groups/{group_id}/getlist)
  */
 } else if (!empty($var1) && $var2 === 'getlist') {
+    set_action('grupas miniblogus');
     a_fetch_miniblogs($var1);
 
 /**
@@ -37,6 +38,7 @@ if (!empty($var1) && !empty($var2) &&
  *  (/groups/getcontent/{miniblog_id})
  */
 } else if ($var1 === 'getcontent' && !empty($var2)) {
+    set_action('grupas miniblogu');
     a_fetch_miniblog($var2);
 
 /**
@@ -248,6 +250,8 @@ if (!empty($var1) && !empty($var2) &&
         a_error('Kļūdaini norādīta grupa');
         a_log('Norādīja neeksistējošas grupas id ('.(int)$var1.')');
     } else {
+    
+        set_action('grupas informāciju');
 
         $owner = get_user($group_data->owner);
         if (!empty($owner->deleted)) {
@@ -297,6 +301,8 @@ if (!empty($var1) && !empty($var2) &&
         a_error('Neizdevās atlasīt biedru sarakstu');
         a_log('Kļūdaini norādīta grupa, vai arī neizdevās noteikt tās autoru');
     } else {
+    
+        set_action('grupas biedru sarakstu');
 
         // tā kā biedru grupā var būt pat > 1000,
         // to saraksts tiks ielādēts pa lappusēm

@@ -221,6 +221,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
     if ($author->deleted) {
         $author->nick = 'dzēsts';
     }
+    set_action($author->nick.' miniblogu');
     
     // atgriežamā informācija par pašu miniblogu
     $arr_miniblog = array(

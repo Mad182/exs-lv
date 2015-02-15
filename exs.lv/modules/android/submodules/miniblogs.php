@@ -22,6 +22,7 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
  *  (/miniblogs/getlist)
  */
 if ($var1 === 'getlist') {
+    set_action('jaunākos miniblogus');
     a_fetch_miniblogs();
 
 /**

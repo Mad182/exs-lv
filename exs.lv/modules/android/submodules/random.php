@@ -17,6 +17,8 @@ if ($var1 === 'notifications') {
 
     $arr_notifs = array(); // atgriežamais notifikāciju masīvs
     $notif_limit = 25; // cik pēdējos jaunumus atgriezt
+    
+    set_action('jaunākās notifikācijas');
 
 	/*$texts = array(
 		0 => 'atbilde komentāram', // rakstā
@@ -114,6 +116,7 @@ if ($var1 === 'notifications') {
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
  */
 } else if ($var1 === 'online') {
+    set_action('tiešsaistē esošo lietotāju sarakstu');
     a_fetch_online();
     
 /**
@@ -152,6 +155,9 @@ if ($var1 === 'notifications') {
 				$db->update('viewprofile', $viewed, array('time' => $date));
 			}
 		}
+        
+        $user_nick = (empty($profile->nick)) ? '<i>dzēsts</i>' : $profile->nick;
+        set_action($user_nick.' profilu');
     
         // komentāru kopskaits dažādās tabulās
         $posts = ($db->get_var("SELECT count(*) FROM `comments` WHERE `author` = ".$user_id." AND `removed` = 0") +
@@ -206,6 +212,8 @@ if ($var1 === 'notifications') {
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
  */
 } else if ($var1 === 'mygroups') {
+
+    set_action('jaunāko grupās');
 
     // grupas, kurās lietotājs ir admins
     $own_groups = $db->get_results("
@@ -292,6 +300,8 @@ if ($var1 === 'notifications') {
  */
 } else if ($var1 === 'gcategories') {
 
+    set_action('grupu sarakstu');
+
     $categories = $db->get_results("
         SELECT 
             `clans_categories`.`id`, 
@@ -333,7 +343,9 @@ if ($var1 === 'notifications') {
  *  Atgriezīs norādītajā kategorijā ietilpstošās grupas.
  */
 } else if ($var1 === 'groups' && !empty($var2)) {
-           
+
+    set_action('grupu sarakstu');
+
     $cat_id = (int)$var2;
     
     $get_cat = $db->get_row("
