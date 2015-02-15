@@ -131,6 +131,28 @@ if ($var1 === 'notifications') {
         a_error('Šāds profils neeksistē');
     } else {
     
+        // skatot cita lietotāja profilu, skatījums jāatzīmē
+        if ($auth->id != $profile->id && $auth->level != 5) {
+
+			$date = time();
+			$viewed = $db->get_var("
+                SELECT `id` FROM `viewprofile`
+                WHERE 
+                    `profile` = ".$profile->id." AND
+                    `viewer` = ".$auth->id." AND
+                    `time` > '".($date - 3600)."'"
+            );
+			if (!$viewed) {
+                $db->insert('viewprofile', array(
+                    'profile' => $profile->id,
+                    'viewer' => $auth->id,
+                    'time' => sanitize($date)
+                ));
+			} else {
+				$db->update('viewprofile', $viewed, array('time' => $date));
+			}
+		}
+    
         // komentāru kopskaits dažādās tabulās
         $posts = ($db->get_var("SELECT count(*) FROM `comments` WHERE `author` = ".$user_id." AND `removed` = 0") +
                   $db->get_var("SELECT count(*) FROM `galcom` WHERE `author` = ".$user_id." AND `removed` = 0") +
