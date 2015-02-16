@@ -90,7 +90,7 @@
 		<h3>Jaunākais</h3>
 		<ul class="blockhref mb-col">
 			<!-- START BLOCK : glatest-box-node-->
-			<li style="font-size:90%;text-align:left"><a href="{url}"><img class="av" src="{avatar}" alt="{nick}" /> <span class="author">{nick}</span> <span>pirms {time}</span> {text}&nbsp;[{resp}]</a><div class="c"></div></li>
+			<li style="font-size:90%;text-align:left"><a href="{url}"><img class="av" src="{avatar}" alt="{nick}" /> <span class="author">{nick}</span> <span class="post-time">{time}</span> {text}&nbsp;[{resp}]</a><div class="c"></div></li>
 			<!-- END BLOCK : glatest-box-node-->
 		</ul>
 		<!-- END BLOCK : glatest-box-->

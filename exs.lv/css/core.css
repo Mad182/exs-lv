@@ -1317,7 +1317,7 @@ a.friend img, .comments-avatar {
 	display: block;
 }
 
-.blockhref li span.post-time:before, .notification-date:before {
+.post-time:before, .notification-date:before {
 	content: "pirms ";
 }
 
