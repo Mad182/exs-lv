@@ -434,7 +434,7 @@
 									<a href="{best-link}">
 										<img class="av" src="{best-avatar}" width="45px" height="45px" alt=""/>
 										<span class="author">{best-nick}</span>
-										<span class="post-time post-rating">{best-rating}</span>
+										<span class="post-time post-rating">+{best-rating}</span>
 										{best-comment}
 									</a>
 								</li>

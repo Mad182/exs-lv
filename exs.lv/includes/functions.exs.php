@@ -69,7 +69,7 @@ function translate_genres($en) {
 }
 
 /**
- * Atgriež dienas labākā komentāra html
+ * Atgriež dienas labākā komentāra masīvu
  */
 function get_todays_top_comment() {
 	global $db, $m;
@@ -116,7 +116,7 @@ function get_todays_top_comment() {
 				'best-link' => $url,
 				'best-avatar' => $avatar,
 				'best-nick' => $user->nick,
-				'best-rating' => '+ ' . $best->vote_value,
+				'best-rating' => $best->vote_value,
 				'best-comment' => $content
 			);
 		}
