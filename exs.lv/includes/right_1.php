@@ -147,15 +147,15 @@ $tpl->assignGlobal(array(
 $best = $db->get_row("SELECT `id`,`author`,`text`,`parent`,`vote_value`,`lang` FROM `miniblog` WHERE
                                 `removed` = 0 AND DATE(`date`) = CURDATE() AND vote_value > 0 AND groupid = 0
                                 AND `type` = 'miniblog' ORDER BY `vote_value` DESC LIMIT 1");
+
 if (!empty($best)) {
 	$tpl->newBlock('daily-best');
 
 	$user = get_user($best->author);
-	$parent = $best->parent;
 
-	if ($parent > 0) {
+	if ($best->parent > 0) {
 		// Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
-		$body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+		$body = $db->get_row("SELECT `text`, `author` FROM `miniblog` WHERE `id` = $best->parent");
 		$title = mb_get_title(stripslashes($body->text));
 		$check = $body->author;
 		$strid = mb_get_strid($title, $best->parent);
@@ -163,13 +163,12 @@ if (!empty($best)) {
 		$title = mb_get_title(stripslashes($best->text));
 		$check = $best->author;
 		$strid = mb_get_strid($title, $check);
-		$parent = $best->id;
+		$best->parent = $best->id;
 	}
 
-	$url = '/say/' . $check . '/' . $parent . '-' . $strid . '#m' . $best->id;
+	$url = '/say/' . $check . '/' . $best->parent . '-' . $strid . '#m' . $best->id;
 	$avatar = get_avatar($user, 's');
-	$nick = $user->nick;
-	$rating = '+ ' . $best->vote_value;
+
 	$content = strip_tags($best->text);
 	if (strlen($content) > 100) {
 		$content = substr($content, 0, 100) . '...';
@@ -178,12 +177,13 @@ if (!empty($best)) {
 	$tpl->assign(array(
 		'best-link' => $url,
 		'best-avatar' => $avatar,
-		'best-nick' => $nick,
-		'best-rating' => $rating,
+		'best-nick' => $user->nick,
+		'best-rating' => '+ ' . $best->vote_value,
 		'best-comment' => $content
 	));
 }
 
+//neapstiprināto junk bilžu skaits modiem
 if (im_mod()) {
 	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");
 	$iappstr = '';
