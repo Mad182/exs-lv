@@ -142,54 +142,11 @@ $tpl->assignGlobal(array(
 	$sel . '-selected' => 'active '
 ));
 
-
-// Dienas labākā komentāra bloks
-$best = $db->get_row("SELECT
-					`id`, `author`, `text`, `parent`, `vote_value`
-				FROM
-					`miniblog`
-				WHERE
-					`date` BETWEEN '".date('Y-m-d 00:00:00')."' AND '".date('Y-m-d 23:59:59')."' AND
-					`removed` = 0 AND
-					`groupid` = 0 AND
-					`type` = 'miniblog' AND
-					`lang` = 1
-				ORDER BY
-					`vote_value` DESC LIMIT 1");
-
+//dienas labākā komentāra bloks
+$best = get_todays_top_comment();
 if (!empty($best)) {
 	$tpl->newBlock('daily-best');
-
-	$user = get_user($best->author);
-
-	if ($best->parent > 0) {
-		// Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
-		$body = $db->get_row("SELECT `text`, `author` FROM `miniblog` WHERE `id` = $best->parent");
-		$title = mb_get_title(stripslashes($body->text));
-		$check = $body->author;
-		$strid = mb_get_strid($title, $best->parent);
-	} else {
-		$title = mb_get_title(stripslashes($best->text));
-		$check = $best->author;
-		$strid = mb_get_strid($title, $check);
-		$best->parent = $best->id;
-	}
-
-	$url = '/say/' . $check . '/' . $best->parent . '-' . $strid . '#m' . $best->id;
-	$avatar = get_avatar($user, 's');
-
-	$content = strip_tags($best->text);
-	if (strlen($content) > 100) {
-		$content = substr($content, 0, 100) . '...';
-	}
-
-	$tpl->assign(array(
-		'best-link' => $url,
-		'best-avatar' => $avatar,
-		'best-nick' => $user->nick,
-		'best-rating' => '+ ' . $best->vote_value,
-		'best-comment' => $content
-	));
+	$tpl->assign($best);
 }
 
 //neapstiprināto junk bilžu skaits modiem
