@@ -147,45 +147,48 @@ $tpl->assignGlobal(array(
 $responses = $db->get_results("SELECT `id`,`author`,`text`,`parent`,`vote_value`,`lang` FROM `miniblog` WHERE
                                 `removed` = 0 AND DATE(`date`) = CURDATE() AND vote_value > 0 AND groupid = 0
                                 AND `type` = 'miniblog' ");
-if($responses){
-    $tpl->newBlock('daily-best');
-    $maxkey = $responses[0];
-    // Dabū komentāru ar lielāko plusiņu skaitu
-    foreach($responses as $row => $column){
-        if( $column->vote_value > $maxkey->vote_value ) $maxkey = $responses[$row];
-    }
-    $user = get_user($maxkey->author);
-    $parent = $maxkey->parent;
+if ($responses) {
+	$tpl->newBlock('daily-best');
+	$maxkey = $responses[0];
+	// Dabū komentāru ar lielāko plusiņu skaitu
+	foreach ($responses as $row => $column) {
+		if ($column->vote_value > $maxkey->vote_value) {
+			$maxkey = $responses[$row];
+		}
+	}
+	$user = get_user($maxkey->author);
+	$parent = $maxkey->parent;
 
-    if($parent > 0){
-        // Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
-        $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
-        $title = mb_get_title(stripslashes($body->text));
-        $check = $body->author;
-        $strid = mb_get_strid($title, $maxkey->parent);
-    }else{
-        $title = mb_get_title(stripslashes($maxkey->text));
-        $check = $maxkey->author;
-        $strid = mb_get_strid($title, $check);
-        $parent = $maxkey->id;
-    }
+	if ($parent > 0) {
+		// Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
+		$body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+		$title = mb_get_title(stripslashes($body->text));
+		$check = $body->author;
+		$strid = mb_get_strid($title, $maxkey->parent);
+	} else {
+		$title = mb_get_title(stripslashes($maxkey->text));
+		$check = $maxkey->author;
+		$strid = mb_get_strid($title, $check);
+		$parent = $maxkey->id;
+	}
 
-    $url = '/say/' . $check . '/' . $parent . '-' . $strid. '#m' .$maxkey->id;
-    $avatar = get_avatar($user, 's');
-    $nick = $user->nick;
-    $rating = '+ '.$maxkey->vote_value;
-    $content = strip_tags($maxkey->text);
-    if(strlen($content)>100) $content = substr($content, 0, 100).'...';
+	$url = '/say/' . $check . '/' . $parent . '-' . $strid . '#m' . $maxkey->id;
+	$avatar = get_avatar($user, 's');
+	$nick = $user->nick;
+	$rating = '+ ' . $maxkey->vote_value;
+	$content = strip_tags($maxkey->text);
+	if (strlen($content) > 100) {
+		$content = substr($content, 0, 100) . '...';
+	}
 
-    $tpl->assign(array(
-           'best-link' => $url,
-           'best-avatar' => $avatar,
-           'best-nick' => $nick,
-           'best-rating' => $rating,
-           'best-comment' => $content
-        ));
+	$tpl->assign(array(
+		'best-link' => $url,
+		'best-avatar' => $avatar,
+		'best-nick' => $nick,
+		'best-rating' => $rating,
+		'best-comment' => $content
+	));
 }
-
 
 if (im_mod()) {
 	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");

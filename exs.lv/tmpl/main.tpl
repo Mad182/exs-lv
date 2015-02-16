@@ -422,27 +422,26 @@
 						<div class="c"></div>
 						<div id="miniblog-block" class="ajaxbox">{out}</div>
 					</div>
-
 					<!-- END BLOCK : mb-box-->
 
-                    <!-- START BLOCK : daily-best-->
-                    <h3>Dienas komentārs</h3>
+					<!-- START BLOCK : daily-best-->
+					<h3>Dienas komentārs</h3>
 
-                    <div class="box">
-                        <div id="miniblog-block">
-                            <ul id="mb-list" class="blockhref mb-col">
-                                <li>
-                                    <a href="{best-link}">
-                                        <img class="av" src="{best-avatar}" width="45px" height="45px" alt=""/>
-                                        <span class="author">{best-nick}</span>
-                                        <span class="post-time post-rating">{best-rating}</span>
-                                        {best-comment}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- END BLOCK : daily-best-->
+					<div class="box">
+						<div id="miniblog-block">
+							<ul id="mb-list" class="blockhref mb-col">
+								<li>
+									<a href="{best-link}">
+										<img class="av" src="{best-avatar}" width="45px" height="45px" alt=""/>
+										<span class="author">{best-nick}</span>
+										<span class="post-time post-rating">{best-rating}</span>
+										{best-comment}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- END BLOCK : daily-best-->
 
 					<!-- START BLOCK : side-junk-->
 					<h3>/junk</h3>
