@@ -11,7 +11,6 @@ if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 }
 
 if (!empty($inprofile) && !$inprofile->deleted) {
-
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
@@ -143,6 +142,14 @@ $tpl->assignGlobal(array(
 	$sel . '-selected' => 'active '
 ));
 
+//dienas labākā komentāra bloks
+$best = get_todays_top_comment();
+if (!empty($best)) {
+	$tpl->newBlock('daily-best');
+	$tpl->assign($best);
+}
+
+//neapstiprināto junk bilžu skaits modiem
 if (im_mod()) {
 	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");
 	$iappstr = '';
