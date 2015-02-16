@@ -428,18 +428,16 @@
 					<h3>Dienas komentārs</h3>
 
 					<div class="box">
-						<div id="miniblog-block">
-							<ul id="mb-list" class="blockhref mb-col">
-								<li>
-									<a href="{best-link}">
-										<img class="av" src="{best-avatar}" width="45px" height="45px" alt=""/>
-										<span class="author">{best-nick}</span>
-										<span class="post-rating">+{best-rating}</span>
-										{best-comment}
-									</a>
-								</li>
-							</ul>
-						</div>
+						<ul class="blockhref mb-col">
+							<li>
+								<a href="{best-link}">
+									<img class="av" src="{best-avatar}" width="45" height="45" alt=""/>
+									<span class="author">{best-nick}</span>
+									<span class="post-rating">+{best-rating}</span>
+									{best-comment}
+								</a>
+							</li>
+						</ul>
 					</div>
 					<!-- END BLOCK : daily-best-->
 
