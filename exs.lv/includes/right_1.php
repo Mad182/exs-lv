@@ -144,9 +144,18 @@ $tpl->assignGlobal(array(
 
 
 // Dienas labākā komentāra bloks
-$best = $db->get_row("SELECT `id`,`author`,`text`,`parent`,`vote_value`,`lang` FROM `miniblog` WHERE
-                                `removed` = 0 AND DATE(`date`) = CURDATE() AND vote_value > 0 AND groupid = 0
-                                AND `type` = 'miniblog' ORDER BY `vote_value` DESC LIMIT 1");
+$best = $db->get_row("SELECT
+					`id`, `author`, `text`, `parent`, `vote_value`
+				FROM
+					`miniblog`
+				WHERE
+					`date` BETWEEN '".date('Y-m-d 00:00:00')."' AND '".date('Y-m-d 23:59:59')."' AND
+					`removed` = 0 AND
+					`groupid` = 0 AND
+					`type` = 'miniblog' AND
+					`lang` = 1
+				ORDER BY
+					`vote_value` DESC LIMIT 1");
 
 if (!empty($best)) {
 	$tpl->newBlock('daily-best');
