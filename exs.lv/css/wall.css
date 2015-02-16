@@ -20,9 +20,20 @@
 	margin: 12px 0 5px 0;
 }
 
+#wall-posts .time-ago {
+	float: right;
+	color: #aaa
+}
+
 #wall-posts .av {
-	width:64px;
-	height:64px;
+	width: 64px;
+	height: 64px;
+}
+
+#wall-posts .last-post .av {
+	float: left;
+	width: 32px;
+	height: 32px
 }
 
 #wall-posts .post-wrapper {
@@ -36,4 +47,3 @@
 #wall-posts .post-wrapper img {
 	max-width: 300px;
 }
-
