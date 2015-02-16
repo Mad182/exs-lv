@@ -1317,6 +1317,10 @@ a.friend img, .comments-avatar {
 	display: block;
 }
 
+.blockhref li span.post-time:before, .notification-date:before {
+	content: "pirms ";
+}
+
 .blockhref li span.post-rating {
     color: green;
 }
