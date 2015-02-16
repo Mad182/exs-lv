@@ -144,39 +144,33 @@ $tpl->assignGlobal(array(
 
 
 // Dienas labākā komentāra bloks
-$responses = $db->get_results("SELECT `id`,`author`,`text`,`parent`,`vote_value`,`lang` FROM `miniblog` WHERE
+$best = $db->get_row("SELECT `id`,`author`,`text`,`parent`,`vote_value`,`lang` FROM `miniblog` WHERE
                                 `removed` = 0 AND DATE(`date`) = CURDATE() AND vote_value > 0 AND groupid = 0
-                                AND `type` = 'miniblog' ");
-if ($responses) {
+                                AND `type` = 'miniblog' ORDER BY `vote_value` DESC LIMIT 1");
+if (!empty($best)) {
 	$tpl->newBlock('daily-best');
-	$maxkey = $responses[0];
-	// Dabū komentāru ar lielāko plusiņu skaitu
-	foreach ($responses as $row => $column) {
-		if ($column->vote_value > $maxkey->vote_value) {
-			$maxkey = $responses[$row];
-		}
-	}
-	$user = get_user($maxkey->author);
-	$parent = $maxkey->parent;
+
+	$user = get_user($best->author);
+	$parent = $best->parent;
 
 	if ($parent > 0) {
 		// Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
 		$body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
 		$title = mb_get_title(stripslashes($body->text));
 		$check = $body->author;
-		$strid = mb_get_strid($title, $maxkey->parent);
+		$strid = mb_get_strid($title, $best->parent);
 	} else {
-		$title = mb_get_title(stripslashes($maxkey->text));
-		$check = $maxkey->author;
+		$title = mb_get_title(stripslashes($best->text));
+		$check = $best->author;
 		$strid = mb_get_strid($title, $check);
-		$parent = $maxkey->id;
+		$parent = $best->id;
 	}
 
-	$url = '/say/' . $check . '/' . $parent . '-' . $strid . '#m' . $maxkey->id;
+	$url = '/say/' . $check . '/' . $parent . '-' . $strid . '#m' . $best->id;
 	$avatar = get_avatar($user, 's');
 	$nick = $user->nick;
-	$rating = '+ ' . $maxkey->vote_value;
-	$content = strip_tags($maxkey->text);
+	$rating = '+ ' . $best->vote_value;
+	$content = strip_tags($best->text);
 	if (strlen($content) > 100) {
 		$content = substr($content, 0, 100) . '...';
 	}
