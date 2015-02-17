@@ -22,9 +22,6 @@ function msgrr() {
 	if ($('.default-minibog-tab').hasClass('selected')) {
 		query_string = query_string + '&loadmb=true';
 	}
-	if ($('#last-action-list').length > 0) {
-		query_string = query_string + '&loadindex=true';
-	}
 	if ($('.remember-friends').hasClass('active')) {
 		query_string = query_string + '&tab=friends';
 	}
@@ -48,9 +45,6 @@ function msgrr() {
 			}
 			if (key == 'mb-latest') {
 				$('#miniblog-block').html(val);
-			}
-			if (key == 'index-events') {
-				$('#last-action-list').html(val);
 			}
 
 		});

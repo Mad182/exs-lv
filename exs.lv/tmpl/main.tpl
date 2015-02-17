@@ -422,8 +422,24 @@
 						<div class="c"></div>
 						<div id="miniblog-block" class="ajaxbox">{out}</div>
 					</div>
-
 					<!-- END BLOCK : mb-box-->
+
+					<!-- START BLOCK : daily-best-->
+					<h3>Dienas komentārs</h3>
+
+					<div class="box">
+						<ul class="blockhref mb-col">
+							<li>
+								<a href="{best-link}">
+									<img class="av" src="{best-avatar}" width="45" height="45" alt=""/>
+									<span class="author">{best-nick}</span>
+									<span class="post-rating">+{best-rating}</span>
+									{best-comment}
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!-- END BLOCK : daily-best-->
 
 					<!-- START BLOCK : side-junk-->
 					<h3>/junk</h3>
@@ -485,7 +501,7 @@
 					<!-- END BLOCK : daily-wallpaper-->
 
 					<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
-					<script>!function (d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
+					<script>!function(d, s, id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); }}(document, "script", "twitter-wjs")
 								;</script>
 
 				</div>
@@ -549,13 +565,13 @@
 			if (!_smartad.prop) {
 				_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
 			}
-			(function () {
+			(function() {
 				if (_smartad.space) {
 					_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
 				} else {
 					_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
 					_smartad.type = 'onload';
-					var f = function () {
+					var f = function() {
 						var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
 						s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
 						s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
@@ -576,23 +592,16 @@
 			/* ]]> */</script>
 		<!-- END BLOCK : smartad-eu-->
 
-		<!-- google analytics -->
 		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-4190387-2']);
-			_gaq.push(['_setDomainName', 'exs.lv']);
-			_gaq.push(['_trackPageview']);
-
-			(function () {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
+		  ga('create', 'UA-4190387-2', 'auto');
+		  ga('send', 'pageview');
 
 		</script>
+
 	</body>
 </html>

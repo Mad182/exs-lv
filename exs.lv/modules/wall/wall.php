@@ -67,7 +67,7 @@ foreach ($articles as $article) {
 
 	$where = ' &raquo; <span class="where">' . $article->ctitle . '</span> &raquo; <span class="where">' . $article->title . '</span>';
 
-	$last_post_html = '';
+	$lastpost = array();
 	if ($article->posts > 0) {
 		$lastpost = $db->get_row(
 				"SELECT
@@ -86,20 +86,6 @@ foreach ($articles as $article) {
 			ORDER BY comments.id DESC
 			LIMIT 1"
 		);
-
-		if (!empty($lastpost)) {
-
-			$last_post_html = '
-			<div class="last-post">
-				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-				<div class="post-info">
-					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
-				</div>
-				<div class="lastpost-text">' . add_smile($lastpost->text) . '</div>
-			</div>
-
-			';
-		}
 	}
 
 	$events[strtotime($article->bump) . '-' . $url] = array(
@@ -110,12 +96,12 @@ foreach ($articles as $article) {
 		'time' => $time,
 		'where' => $where,
 		'posts' => $article->posts,
-		'lastpost' => $last_post_html
+		'lastpost' => $lastpost
 	);
 }
 
 
-########### IMAGES 
+########### IMAGES
 
 $images = $db->get_results("
 		SELECT
@@ -150,11 +136,11 @@ foreach ($images as $image) {
 	$time = time_ago_m(strtotime($image->bump));
 
 	$image->text = wordwrap(hide_spoilers(strip_tags($image->text)), 32, "\n", 1);
-	$image->text = textlimit($image->text, 140, '...') . '<br /><img class="attels_centrets" style="width:200px;" src="'.$image->url.'" alt="" />';
+	$image->text = textlimit($image->text, 140, '...') . '<br /><img class="attels_centrets" style="width:200px;" src="' . $image->url . '" alt="" />';
 
 	$where = ' &raquo; <span class="where">galerija</span>';
 
-	$last_post_html = '';
+	$lastpost = array();
 	if ($image->posts > 0) {
 		$lastpost = $db->get_row(
 				"SELECT
@@ -173,20 +159,6 @@ foreach ($images as $image) {
 			ORDER BY galcom.id DESC
 			LIMIT 1"
 		);
-
-		if (!empty($lastpost)) {
-
-			$last_post_html = '
-			<div class="last-post">
-				<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-				<div class="post-info">
-					<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
-				</div>
-				<div class="lastpost-text">' . add_smile($lastpost->text) . '</div>
-			</div>
-
-			';
-		}
 	}
 
 	$events[strtotime($image->bump) . '-' . $url] = array(
@@ -197,10 +169,9 @@ foreach ($images as $image) {
 		'time' => $time,
 		'where' => $where,
 		'posts' => $image->posts,
-		'lastpost' => $last_post_html
+		'lastpost' => $lastpost
 	);
 }
-
 
 ########### MINIBLOGS
 
@@ -229,7 +200,7 @@ $addlang = "`miniblog`.`lang` = '$lang'";
 
 //miniblogi kas nav publiski pieejami
 $priv = '';
-if(!$auth->ok) {
+if (!$auth->ok) {
 	$priv = ' AND `miniblog`.`private` = 0 ';
 }
 
@@ -266,7 +237,6 @@ if ($mbs) {
 
 	foreach ($mbs as $mb) {
 
-
 		$mb->text = mb_get_title($mb->text);
 
 		if ($mb->groupid != 0) {
@@ -286,15 +256,15 @@ if ($mbs) {
 		$mb->text = wordwrap(hide_spoilers($mb->text), 32, "\n", 1);
 		if ($mb->groupid != 0) {
 			$mb->text = textlimit($mb->text, 140, '...');
-			$where = '  &raquo; <span class="where">' . $group->title . '</span>';
+			$where = ' &raquo; <span class="where">' . $group->title . '</span>';
 		} else {
 			$mb->text = textlimit($mb->text, 140, '...');
-			$where = '  &raquo; <span class="where">miniblogs</span>';
+			$where = ' &raquo; <span class="where">miniblogs</span>';
 		}
 		$time = time_ago_m($mb->bump);
 
 
-		$last_post_html = '';
+		$lastpost = array();
 		if ($mb->posts > 0) {
 			$lastpost = $db->get_row(
 					"SELECT
@@ -313,20 +283,6 @@ if ($mbs) {
 				ORDER BY miniblog.id DESC
 				LIMIT 1"
 			);
-
-			if (!empty($lastpost)) {
-
-				$last_post_html = '
-				<div class="last-post">
-					<img src="' . get_avatar($lastpost, 's') . '" alt="" class="av" style="float:left;width: 32px;height:32px;" />
-					<div class="post-info">
-						<span class="lastpost-author">' . usercolor($lastpost->nick, $lastpost->level) . ':</span>
-					</div>
-					<div class="lastpost-text">' . add_smile($lastpost->text) . '</div>
-				</div>
-
-				';
-			}
 		}
 
 		$events[$mb->bump . '-' . $url] = array(
@@ -337,7 +293,7 @@ if ($mbs) {
 			'time' => $time,
 			'where' => $where,
 			'posts' => $mb->posts,
-			'lastpost' => $last_post_html
+			'lastpost' => $lastpost
 		);
 	}
 }
@@ -346,13 +302,13 @@ ksort($events);
 $events = array_reverse($events);
 
 if (!empty($events)) {
-	$tpl->newBlock('wall-events');
+	$tpl->newBlock('wall');
 	$i = 0;
 	foreach ($events as $event) {
 		if ($i++ >= 20) {
 			break;
 		}
-		$tpl->newBlock('wall-events-node');
+		$tpl->newBlock('wall-node');
 		$tpl->assign(array(
 			'url' => $event['url'],
 			'author' => $event['author'],
@@ -360,9 +316,16 @@ if (!empty($events)) {
 			'avatar' => $event['avatar'],
 			'time' => $event['time'],
 			'where' => $event['where'],
-			'posts' => $event['posts'],
-			'lastpost' => strip_selected_tags($event['lastpost'], array('a', 'p'))
+			'posts' => $event['posts']
 		));
+
+		if (!empty($event['lastpost'])) {
+			$tpl->newBlock('wall-lastpost');
+			$tpl->assign(array(
+				'av' => get_avatar($event['lastpost'], 's'),
+				'user' => usercolor($event['lastpost']->nick, $event['lastpost']->level),
+				'txt' => strip_selected_tags(add_smile($event['lastpost']->text), array('a', 'p'))
+			));
+		}
 	}
 }
-

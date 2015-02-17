@@ -283,7 +283,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= 'title="' . h($notify->info) . '" ';
 				}
-				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-icon"></span><span class="notification-date">pirms ' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
+				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-icon"></span><span class="notification-date">' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
 
 				if (!empty($notify->info) && $notify->info != 'twitter') {
 					$out .= ' - <span class="info-content">' . strip_tags(textlimit($notify->info, 45, '')) . '...</span>';
@@ -1585,14 +1585,14 @@ function get_latest_posts() {
 				$out .= '<li><a href="' . $url . $skip . '">';
 
 				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
-					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
+					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span></a></li>';
 				} else {
-					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span></a></li>';
+					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span></a></li>';
 				}
 			} else {
 				$out .= '<li><a href="' . $url . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
-				$out .= '<span class="post-time">pirms ' . time_ago(strtotime($late->bump)) . '</span>';
+				$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span>';
 
 				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']</a></li>';
@@ -1618,29 +1618,6 @@ function get_latest_posts() {
 			}
 		}
 		$out .= '</p>';
-	}
-	return $out;
-}
-
-function get_index_events() {
-	global $db, $lang, $img_server;
-	$out = '';
-	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ORDER BY `time` DESC LIMIT 5");
-
-	if ($actions) {
-		$out .= '<ul class="user-actions">';
-		foreach ($actions as $action) {
-
-			$user = get_user($action->user);
-			if (!$action->avatar) {
-				$action->avatar = get_avatar($user, 's');
-			}
-
-			$action->avatar = str_replace('//img.exs.lv/dati', $img_server . '/dati', $action->avatar);
-
-			$out .= '<li><img class="av" width="45" height="45" src="' . $action->avatar . '" alt="" /><div class="event-content"><span class="post-time">' . $user->nick . ' pirms ' . time_ago($action->time) . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
-		}
-		$out .= '</ul>';
 	}
 	return $out;
 }
@@ -1898,7 +1875,7 @@ function get_latest_mbs($tab = 'all') {
 				$mb->nick = 'dzēsts';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" /><span class="author">' . h($mb->nick) . '</span> <span class="post-time">pirms ' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" /><span class="author">' . h($mb->nick) . '</span> <span class="post-time">' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';
@@ -2384,7 +2361,7 @@ function get_latest_music() {
 				$img = get_avatar($track, 's');
 			}
 
-			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . h($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">pirms ' . $time . '</span> <a href="' . h($track->url) . '" rel="nofollow" target="_blank">' . h($track->artist_name) . ' - ' . h($track->name) . '</a></span></li>';
+			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . h($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">' . $time . '</span> <a href="' . h($track->url) . '" rel="nofollow" target="_blank">' . h($track->artist_name) . ' - ' . h($track->name) . '</a></span></li>';
 		}
 	}
 

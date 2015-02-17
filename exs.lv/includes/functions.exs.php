@@ -67,3 +67,62 @@ function translate_genres($en) {
 	}
 	return $en;
 }
+
+/**
+ * Atgriež dienas labākā komentāra masīvu
+ */
+function get_todays_top_comment() {
+	global $db, $m;
+
+	if (($out = $m->get('todays_top_comment_' . date('Y-m-d'))) === false) {
+
+		$out = array();
+
+		$best = $db->get_row("SELECT
+						`id`, `author`, `text`, `parent`, `vote_value`
+					FROM
+						`miniblog`
+					WHERE
+						`date` BETWEEN '" . date('Y-m-d 00:00:00') . "' AND '" . date('Y-m-d 23:59:59') . "' AND
+						`removed` = 0 AND
+						`groupid` = 0 AND
+						`type` = 'miniblog' AND
+						`lang` = 1
+					ORDER BY
+						`vote_value` DESC LIMIT 1");
+
+		if (!empty($best)) {
+
+			$user = get_user($best->author);
+
+			if ($best->parent > 0) {
+				// Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
+				$parent = $db->get_row("SELECT `text`, `author` FROM `miniblog` WHERE `id` = $best->parent");
+				$strid = mb_get_strid(mb_get_title($parent->text), $best->parent);
+				$url = '/say/' . $parent->author . '/' . $best->parent . '-' . $strid . '#m' . $best->id;
+			} else {
+				$strid = mb_get_strid(mb_get_title($best->text), $best->author);
+				$url = '/say/' . $best->author . '/' . $best->id . '-' . $strid;
+			}
+
+			$avatar = get_avatar($user, 's');
+
+			$content = strip_tags($best->text);
+			if (strlen($content) > 100) {
+				$content = substr($content, 0, 100) . '...';
+			}
+
+			$out = array(
+				'best-link' => $url,
+				'best-avatar' => $avatar,
+				'best-nick' => $user->nick,
+				'best-rating' => $best->vote_value,
+				'best-comment' => $content
+			);
+		}
+
+		$m->set('todays_top_comment_' . date('Y-m-d'), $out, false, 20);
+	}
+
+	return $out;
+}

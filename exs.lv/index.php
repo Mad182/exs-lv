@@ -101,9 +101,6 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 	if (isset($_GET['loadmb'])) {
 		$data['mb-latest'] = get_latest_mbs($_GET['tab']);
 	}
-	if (isset($_GET['loadindex'])) {
-		$data['index-events'] = get_index_events();
-	}
 	echo json_encode($data);
 	exit;
 }
