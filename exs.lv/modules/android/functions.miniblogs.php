@@ -194,7 +194,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
             `miniblog`.`removed` = 0 AND
             `miniblog`.`type` = 'miniblog' AND
             `miniblog`.`parent` = 0 AND 
-            `miniblog`.`lang` = ".(int)$android_lang."
+            `miniblog`.`lang` = ".$android_lang."
     ");
     
     if (!$miniblog) {
@@ -208,6 +208,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
         return;
     }
 
+    // info par grupu, kurā miniblogs ievietots
     $group_id = 0;
     $group_title = '';
     $group_av_url = '';
@@ -222,11 +223,17 @@ function a_fetch_miniblog($miniblog_id = 0) {
         $author->nick = 'dzēsts';
     }
     set_action($author->nick.' miniblogu');
+
+    // apstrādās teksta HTML saturu atbilstoši droīda iespējām
+    $miniblog->text = add_smile($miniblog->text, false, true, true);
+    $miniblog->text = strip_tags($miniblog->text, '<img><br><p><strong><b><i><em>');
+    $arr_images = a_replace_images($miniblog->text);
     
     // atgriežamā informācija par pašu miniblogu
     $arr_miniblog = array(
         'id' => (int)$miniblog->id,
-        'text' => strip_tags(add_smile($miniblog->text), '<img><br><p><strong><b><i><em>'),
+        'text' => $miniblog->text,
+        'text_images' => $arr_images,
         'date' => display_time(strtotime($miniblog->date)),
         'author' => a_fetch_user($author->id, $author->nick, $author->level),
         'author_av_url' => a_get_user_avatar($author, 's'),
@@ -243,7 +250,8 @@ function a_fetch_miniblog($miniblog_id = 0) {
 
         $comments = $db->get_results("
             SELECT
-                `id`, `text`, `author`, `date`, `groupid` AS `group_id`, `reply_to`,
+                `id`, `text`, `author`, `date`,
+                `groupid` AS `group_id`, `reply_to`,
                 `removed`, `vote_value`
             FROM `miniblog`
             WHERE
@@ -253,6 +261,8 @@ function a_fetch_miniblog($miniblog_id = 0) {
         ");
 
         if ($comments) {            
+        
+            // katru komentāru pievienos masīvam
             foreach ($comments as $comment) {
             
                 $author = get_user($comment->author);
@@ -262,17 +272,18 @@ function a_fetch_miniblog($miniblog_id = 0) {
                 $comment->author = a_fetch_user(
                     $author->id, $author->nick, $author->level);
 
+                // saturs tiek pārveidots atbilstoši droīda iespējām
                 if ($comment->removed) {
                     $comment->text = '<em>Ieraksts dzēsts!</em>';
-                } else {
-                    $comment->text = strip_tags(add_smile(
-                        $comment->text, 0, 0, 1), '<img><br><p><strong><b><i><em>');
+                    $comment->text_images = array();
+                } else {                
+                    $comment->text = add_smile($comment->text, false, true, true);
+                    $comment->text = strip_tags($comment->text, '<img><br><p><strong><b><i><em>');
+                    $comment->text_images = a_replace_images($comment->text);
                 }
                 
                 $comment->date = display_time(strtotime($comment->date));
                 $comment->avatar = a_get_user_avatar($author, 's');
-                
-                // lietotne visus saņemtos datos pieprasa striktā formātā
                 $comment->id = (int)$comment->id;
                 $comment->group_id = (int)$comment->group_id;
                 $comment->reply_to = (int)$comment->reply_to;

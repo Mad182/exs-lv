@@ -117,6 +117,54 @@ function a_status_info() {
 }
 
 /**
+ *  Aizstās tekstā esošos attēlus (HTML <img/> tagos) ar informāciju, ka
+ *  attiecīgajā vietā bija attēls, un atgriezīs masīvu ar visu atrasto
+ *  attēlu adresēm secībā, kādā tās tika atrastas.
+ *
+ *  Izmantojams miniblogiem, lai lietotnei attēlu saites aizsūtītu atsevišķi un
+ *  tā tos ielādētu atsevišķi AIZ teksta lauka kā pielikumus, nevis pašā
+ *  teksta laukā, kas ir tehniski sarežģīti un arī nesniedz patīkamu rezultātu.
+ */
+function a_replace_images(&$mb_text) {
+
+    $arr_images = array();
+    
+    // lai novērstu kodējumu kļūdas
+    // (https://stackoverflow.com/questions/11309194/php-domdocument-failing-to-handle-utf-8-characters-%E2%98%86)
+    $mb_text = mb_convert_encoding($mb_text, 'HTML-ENTITIES', 'UTF-8');
+
+    $dom = new DOMDocument();    
+    $dom->loadHTML($mb_text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $images = $dom->getElementsByTagName('img');
+    
+    // aizstājot elementu ar citu, mainās kaut kas ar indeksiem un foreach
+    // vienā brīdī pārtrauc strādāt, tāpēc jāizmanto regressive loop
+    for ($i = $images->length; $i > 0; $i--) {    
+        $image = $images->item($i - 1);
+        
+        // http/https pirms "//"
+        $image_link = $image->getAttribute('src');
+        if (substr($image_link, 0, 2) === '//') {
+            if (!empty($_SERVER['HTTPS'])) {
+                $image_link = 'https:'.$image_link;
+            } else {
+                $image_link = 'http:'.$image_link;
+            }
+        }
+        $arr_images[] = $image_link;
+        
+        $element = $dom->createElement('span', '(attēls #'.$i.')');
+        $element->setAttribute('class', 'img_replacement');
+        $image->parentNode->replaceChild($element, $image);
+    }
+    
+    $mb_text = $dom->saveHTML();
+    
+    // pretēja secība, jo regressive loop masīvā tos saglabāja pretēji
+    return array_reverse($arr_images);
+}
+
+/**
  *  Atgriezīs datus par norādīto lietotāju.
  *
  *  Android lietotnē tie ir nepieciešami specifiskā formātā (ne-HTML), lai
