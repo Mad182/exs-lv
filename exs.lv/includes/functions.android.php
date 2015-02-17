@@ -159,6 +159,7 @@ function a_replace_images(&$mb_text) {
     }
     
     $mb_text = $dom->saveHTML();
+    $mb_text = mb_substr($mb_text, 0, -1);
     
     // pretēja secība, jo regressive loop masīvā tos saglabāja pretēji
     return array_reverse($arr_images);
