@@ -273,7 +273,7 @@ if (!empty($var1) && !empty($var2) &&
         a_append(array('content' => array(
             'id' => (int)$group_data->clan_id,
             'cat_title' => mb_strtoupper($group_data->cat_title),
-            'title' => mb_strtoupper($group_data->title),
+            'title' => $group_data->title,
             'text' => $group_data->text,
             'av_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
             'members' => (int)($group_data->members + 1), // + admins
