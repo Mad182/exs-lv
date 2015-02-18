@@ -146,7 +146,7 @@ if (isset($_POST['block-reason'])) {
 		$last_key = key($config_domains);
 		reset($config_domains);
 
-		if ($site < 1 || $site > $last_key) {
+		if ($site < 0 || $site > $last_key) {
 			$site = $lang;
 		}
 	}
