@@ -229,6 +229,17 @@ function a_fetch_miniblog($miniblog_id = 0) {
     $miniblog->text = strip_tags($miniblog->text, '<img><br><p><strong><b><i><em>');
     $arr_images = a_replace_images($miniblog->text);
     
+    // vai lietotājs jau ir novērtējis miniblogu?
+    $voters = array();
+    if (!empty($miniblog->vote_users)) {
+        $voters = unserialize($miniblog->vote_users);
+    }   
+    if (in_array($auth->id, $voters)) {
+        $miniblog->voted = true;
+    } else {
+        $miniblog->voted = false;
+    }
+    
     // atgriežamā informācija par pašu miniblogu
     $arr_miniblog = array(
         'id' => (int)$miniblog->id,
@@ -238,6 +249,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
         'author' => a_fetch_user($author->id, $author->nick, $author->level),
         'author_av_url' => a_get_user_avatar($author, 's'),
         'vote_value' => (int)$miniblog->vote_value,
+        'voted' => $miniblog->voted,
         'is_closed' => (bool)$miniblog->closed,
         'group_id' => $group_id,
         'group_title' => $group_title,
@@ -252,7 +264,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
             SELECT
                 `id`, `text`, `author`, `date`,
                 `groupid` AS `group_id`, `reply_to`,
-                `removed`, `vote_value`
+                `removed`, `vote_value`, `vote_users`
             FROM `miniblog`
             WHERE
                 `parent` = ".(int)$miniblog->id." AND
@@ -289,6 +301,17 @@ function a_fetch_miniblog($miniblog_id = 0) {
                 $comment->reply_to = (int)$comment->reply_to;
                 $comment->removed = (int)$comment->removed;
                 $comment->vote_value = (int)$comment->vote_value;
+                
+                // pārbaudīs, vai šis lietotājs komentāru jau vērtējis
+                $voters = array();
+                if (!empty($comment->vote_users)) {
+                    $voters = unserialize($comment->vote_users);
+                }   
+                if (in_array($auth->id, $voters)) {
+                    $comment->voted = true;
+                } else {
+                    $comment->voted = false;
+                }
             
                 $arr_comments[$comment->reply_to][] = $comment;
             }  
