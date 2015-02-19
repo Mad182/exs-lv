@@ -240,6 +240,10 @@ function a_fetch_miniblog($miniblog_id = 0) {
         $miniblog->voted = false;
     }
     
+    // jāzina attēlu skaits, lai pie liela skaita miniblogos tos
+    // neielādētu kā thumbnails, ja izmanto mobilo tīklu
+    $cnt_images = count($arr_images);
+    
     // atgriežamā informācija par pašu miniblogu
     $arr_miniblog = array(
         'id' => (int)$miniblog->id,
@@ -292,6 +296,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
                     $comment->text = add_smile($comment->text, false, true, true);
                     $comment->text = strip_tags($comment->text, '<img><br><p><strong><b><i><em>');
                     $comment->text_images = a_replace_images($comment->text);
+                    $cnt_images += count($comment->text_images);
                 }
                 
                 $comment->date = display_time(strtotime($comment->date));
@@ -341,6 +346,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
     
     a_append(array(
         'miniblog' => $arr_miniblog,
+        'image_count' => (int)$cnt_images,
         'comments' => $arr_comments
     ));
 }
