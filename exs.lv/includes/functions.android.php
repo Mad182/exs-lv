@@ -202,7 +202,7 @@ function a_format_text(&$mb_text) {
             
             if ($do_replace) {
                 $addr = a_fill_link($link->getAttribute('href'));          
-                $element = $dom->createElement('a', $addr);
+                $element = $dom->createTextNode($addr);
                 $link->parentNode->replaceChild($element, $link);
             }
         }
