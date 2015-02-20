@@ -176,7 +176,7 @@ function a_format_text(&$mb_text) {
     }
     
     // saformatēs adreses uz tādām, kādas Androīdā atpazīst
-    // "<a href="https://exs.lv">spied šeit</a>" -> "<a>https://exs.lv</a>"
+    // "<a href="https://exs.lv">spied šeit</a>" -> "https://exs.lv"
     if (strpos($mb_text, 'href') !== false) {    
         $links = $dom->getElementsByTagName('a');        
         for ($i = $links->length; $i > 0; $i--) {        
