@@ -243,7 +243,7 @@ function a_fill_link($string) {
         $string = $before.$string;
         
     // ja adrese ir formā, piemēram, "/user/115"
-    } else if ($second_sym !== '/') {
+    } else if ($first_sym === '/' && $second_sym !== '/') {
         $string = $before.'//'.$project.$string;
     }
     
