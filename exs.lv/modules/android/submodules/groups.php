@@ -268,6 +268,8 @@ if (!empty($var1) && !empty($var2) &&
         } else if ($is_member) {
             $posts_seen = $group_data->member_seen;
         }
+        
+        $arr_images = a_format_text($group_data->text);
 
         // atgriežamais masīvs ar datiem
         a_append(array('content' => array(
@@ -275,6 +277,7 @@ if (!empty($var1) && !empty($var2) &&
             'cat_title' => mb_strtoupper($group_data->cat_title),
             'title' => $group_data->title,
             'text' => $group_data->text,
+            'text_images' => $arr_images,
             'av_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
             'members' => (int)($group_data->members + 1), // + admins
             'posts' => (int)$group_data->posts,
