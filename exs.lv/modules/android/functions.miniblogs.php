@@ -223,11 +223,6 @@ function a_fetch_miniblog($miniblog_id = 0) {
         $author->nick = 'dzēsts';
     }
     set_action($author->nick.' miniblogu');
-
-    // apstrādās teksta HTML saturu atbilstoši droīda iespējām
-    $miniblog->text = add_smile($miniblog->text, false, true, true);
-    $miniblog->text = strip_tags($miniblog->text, '<img><br><p><strong><b><i><em>');
-    $arr_images = a_replace_images($miniblog->text);
     
     // vai lietotājs jau ir novērtējis miniblogu?
     $voters = array();
@@ -240,6 +235,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
         $miniblog->voted = false;
     }
     
+    $arr_images = a_format_text($miniblog->text);
     // jāzina attēlu skaits, lai pie liela skaita miniblogos tos
     // neielādētu kā thumbnails, ja izmanto mobilo tīklu
     $cnt_images = count($arr_images);
@@ -247,8 +243,8 @@ function a_fetch_miniblog($miniblog_id = 0) {
     // atgriežamā informācija par pašu miniblogu
     $arr_miniblog = array(
         'id' => (int)$miniblog->id,
-        'text' => $miniblog->text,
-        'text_images' => $arr_images,
+        'text' => $miniblog->text,   
+        'text_images' => $arr_images,     
         'date' => display_time(strtotime($miniblog->date)),
         'author' => a_fetch_user($author->id, $author->nick, $author->level),
         'author_av_url' => a_get_user_avatar($author, 's'),
@@ -292,10 +288,8 @@ function a_fetch_miniblog($miniblog_id = 0) {
                 if ($comment->removed) {
                     $comment->text = '<em>Ieraksts dzēsts!</em>';
                     $comment->text_images = array();
-                } else {                
-                    $comment->text = add_smile($comment->text, false, true, true);
-                    $comment->text = strip_tags($comment->text, '<img><br><p><strong><b><i><em>');
-                    $comment->text_images = a_replace_images($comment->text);
+                } else {
+                    $comment->text_images = a_format_text($comment->text);
                     $cnt_images += count($comment->text_images);
                 }
                 
