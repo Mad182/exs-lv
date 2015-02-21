@@ -16,11 +16,22 @@ $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 if ($var1 === 'received') {
 
     set_action('pastkastīti');
+
+    // lappušu iestatījumi
+    $msg_per_page = 20;
+    $current_page = 1;
+    if (isset($_GET['page'])) {
+        $current_page = (int)$_GET['page'];
+        if ($current_page < 1) {
+            $current_page = 1;
+        }
+    }
+    $lim_start = ($current_page - 1) * $msg_per_page;
     
-    if (isset($_GET['skip'])) {
-        $skip = (int) $_GET['skip'];
-    } else {
-        $skip = 0;
+    // intereses pēc pielogosim, ka lietotājs sarakstu
+    // lietotnē aizritinājis tik tālu
+    if ($current_page > 100) { // 2000 vēstuļu
+        a_log('Ielādējis briesmīgi daudz vēstuļu (lpp: '.$current_page.')');
     }
 
     // atlasīs lietotāja jaunākās vēstules
@@ -39,11 +50,11 @@ if ($var1 === 'received') {
         ORDER BY
             `pm`.`date` DESC
         LIMIT
-            $skip, 50
-    ");
+            ".$lim_start.", ".$msg_per_page
+    );
     
     if (!$pms) {
-        a_error('Nav saņemtu vēstuļu');
+        a_append(array('endoflist' => true));
     } else {
 
         $messages = array();
@@ -78,12 +89,15 @@ if ($var1 === 'received') {
             );
         }
         
-        a_append(array('messages' => $messages));
+        a_append(array(
+            'endoflist' => false,
+            'messages' => $messages
+        ));
     }
 
 /**
  *  Vēstules nosūtīšana.
- *  (/inbox/send)
+ *  (/inbox/send?xsrf={..} + $_POST)
  */
 } else if ($var1 === 'send') {
 
@@ -224,10 +238,21 @@ if ($var1 === 'received') {
  */
 } else if ($var1 === 'sent') {
 
-    if (isset($_GET['skip'])) {
-        $skip = (int) $_GET['skip'];
-    } else {
-        $skip = 0;
+    // lappušu iestatījumi
+    $msg_per_page = 20;
+    $current_page = 1;
+    if (isset($_GET['page'])) {
+        $current_page = (int)$_GET['page'];
+        if ($current_page < 1) {
+            $current_page = 1;
+        }
+    }
+    $lim_start = ($current_page - 1) * $msg_per_page;
+    
+    // intereses pēc pielogosim, ka lietotājs sarakstu
+    // lietotnē aizritinājis tik tālu
+    if ($current_page > 100) { // 2000 vēstuļu
+        a_log('Ielādējis briesmīgi daudz vēstuļu (lpp: '.$current_page.')');
     }
 
     // saraksts ar nosūtītajām vēstulēm
@@ -246,11 +271,11 @@ if ($var1 === 'received') {
         ORDER BY
             `pm`.`date` DESC
         LIMIT
-            $skip, 50
-    ");
+            ".$lim_start.", ".$msg_per_page
+    );
     
     if (!$pms) {
-        a_error('Nav nosūtītu vēstuļu');
+        a_append(array('endoflist' => true));
     } else {
     
         $messages = array();
@@ -284,7 +309,10 @@ if ($var1 === 'received') {
                 'is_read' => (bool)$pm->is_read
             );
         }
+        
+        a_append(array(
+            'endoflist' => false,
+            'messages' => $messages
+        ));
     }
-    
-    a_append(array('messages' => $messages));
 }
