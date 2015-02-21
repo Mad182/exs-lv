@@ -82,6 +82,93 @@ if ($var1 === 'received') {
     }
 
 /**
+ *  Vēstules nosūtīšana.
+ *  (/inbox/send)
+ */
+} else if ($var1 === 'send') {
+
+    // kļūdu pārbaudes
+    if (!isset($_POST['msg_title']) || !isset($_POST['msg_content']) ||
+        !isset($_POST['msg_to'])) {
+        a_error('Kļūdaini iesniegti dati');
+        a_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju');        
+    } else if (!a_check_xsrf()) {
+        a_error('no hacking, pls');
+        a_log('Sūtot vēstuli, konstatēts XSRF uzbrukums');        
+    } else if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] >= time() - 3) {
+        a_error('exā plūdi. :( Brīdi uzgaidi!');        
+    } else if ((int)$_POST['msg_to'] == $auth->id) {
+        a_error('Tik vientuļi, ka raksti sev? :(');
+
+    // viss šķietami kārtībā un vēstuli var sūtīt
+    } else {
+    
+        $_SESSION['antiflood'] = time();
+        
+        $send_to = (int)$_POST['msg_to'];
+        $send_title = sanitize(trim(stripslashes(h(strip_tags($_POST['msg_title'])))));
+        $send_title = (!$send_title) ? '[bez nosaukuma]' : $send_title;
+        $send_title = str_replace('Re:Re:', 'Re:', $send_title);
+        $send_body = htmlpost2db($_POST['msg_content']);
+        
+        $receiver = get_user($send_to, true);
+
+        if (!get_user($receiver)) {
+            a_error('Norādītais saņēmējs neeksistē');
+            a_log('Centās nosūtīt vēstuli neeksistējošam lietotājam (id:'.$send_to.')');
+        } else if (empty($send_body)) {
+            a_error('Tukšu vēstuli nosūtīt nevar');
+        } else {
+        
+            // vēstules virsraksta apstrāde
+            $send_title = sanitize(trim(stripslashes(h(strip_tags($send_title)))));
+            if (!$send_title) {
+                $send_title = '[bez nosaukuma]';
+            }
+            $send_title = str_replace('Re:Re:', 'Re:', $send_title);
+
+            // citas vērtības
+            $date = date('Y-m-d H:i:s');
+            
+            $db->insert('pm', array(
+                'from_uid' => $auth->id,
+                'to_uid' => $receiver->id,
+                'date' => $date,
+                'ip' => $auth->ip,
+                'title' => $send_title,
+                'text' => $send_body
+            ));
+            
+            $msg_id = $db->insert_id;
+
+            notify($receiver->id, 9);
+            update_karma($auth->id);
+
+            // atbilstoši notifikāciju iestatījumiem,
+            // sūtīs e-pastu par saņemtu vēstuli
+            if ($receiver->pm_notify_email == 2 ||
+                ($receiver->pm_notify_email == 1 && strtotime($receiver->lastseen) < time() - 259200)) {
+
+                $subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
+                $message = '
+                        <h3>Saņemta vēstule portālā ' . $_SERVER['HTTP_HOST'] . '</h3>
+                        <p>
+                            Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;
+                        </p>
+                        <p>
+                            To vari izlasīt šeit: <a href="https://exs.lv/pm/?act=inbox&read=' . $msg_id . '">https://exs.lv/pm/?act=inbox&read=' . $msg_id . '</a>
+                        </p>';
+
+                send_email($receiver->mail, $subject, $message);
+            }
+            
+            a_append(array(
+                'sent' => true
+            ));
+        }
+    }
+
+/**
  *  Vēstules (gan saņemtas, gan nosūtītas) lasīšana.
  *  (/inbox/read/{id})
  */
