@@ -207,6 +207,44 @@ if ($var1 === 'notifications') {
         // pievienos klāt arī lietotāja pāris jaunākos apbalvojumus
         a_fetch_awards($user_id, 6);
     }
+
+/**
+ *  Atgriezīs sarakstu ar lietotāja "draugiem".
+ */
+} else if ($var1 === 'friends') {
+
+    $contacts = $db->get_results("
+        SELECT 
+            `friend1`, `friend2`
+        FROM `friends`
+        WHERE 
+            (`friend1` = (".$auth->id.") OR `friend2` = (".$auth->id.")) AND
+            `confirmed` = 1
+        ORDER BY `date_confirmed` DESC
+    ");
+    
+    $friends = array();
+    
+    if ($contacts) {    
+        foreach ($contacts as $contact) {
+        
+            if ($contact->friend1 == $auth->id) {
+                $the_other = $contact->friend2;
+            } else {
+                $the_other = $contact->friend1;
+            }
+            
+            $info = get_user($the_other);
+            if ($info) {
+                if ($info->deleted) {
+                    $info->nick = '<em>dzēsts</em>';
+                }
+                $friends[] = a_fetch_user($info->id, $info->nick, $info->level);
+            }
+        }
+    }
+    
+    a_append(array('contacts' => $friends));
     
 /**
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
