@@ -4062,3 +4062,8 @@ img.show-banned:hover {
 	width: 110px;
 }
 
+table .quote {
+	word-wrap: break-word;
+	max-width: 500px;
+}
+

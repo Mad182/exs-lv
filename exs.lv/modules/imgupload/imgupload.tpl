@@ -35,7 +35,7 @@
 			<input type="file" name="new-image" />
 		</p>
 		<p>
-			<label><input type="checkbox" name="resize" /> samazināt, lai liktu rakstā (540px)</label>
+			<label><input type="checkbox" name="resize" /> samazināt, lai liktu rakstā (640px)</label>
 		</p>
         <!-- START BLOCK : rs-watermark-checkbox -->
         <p>
