@@ -147,12 +147,10 @@ if (isset($_GET['banstatus'])) {
         }
     }
 
-// citas situācijas, kādām teorētiski rasties nevajadzētu, ja vien android
-// adreses nesāk rakstīt no datora, jo autorizācijas aktivitātē vienīgais
-// pieprasījums tiek veikts ar pieteikšanās datiem ($_POST)
+// ja lietotājs pēc ilgākas pauzes atkal atver lietotni un sūta pieprasījumu,
+// bet serveris jau dzēsis sesiju, nonāks šeit
 } else {
-    a_error('Kļūdains pieprasījums (#2)');
-    a_log('Kļūdains pieprasījums android pamatmodulī');
+    a_error('Lūdzu, autorizējies');
 }
 
 $arr = array(

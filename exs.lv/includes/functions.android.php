@@ -131,7 +131,7 @@ function a_status_info() {
  *  atpazītu un būtu nospiežamas, tiks paslēpti spoileri un veikti
  *  vēl citi pārveidojumi.
  */
-function a_format_text(&$mb_text) {
+function a_format_text(&$mb_text, $return_img = true) {
 
     // paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
     if (strpos($mb_text, 'spoiler') !== false) {
@@ -214,7 +214,9 @@ function a_format_text(&$mb_text) {
     $mb_text = mb_substr($mb_text, 0, -1);
     
     // regressive loop masīvā attēlus saglabāja pretēja secībā
-    return array_reverse($arr_images);
+    if ($return_img) {
+        return array_reverse($arr_images);
+    }
 }
 
 /**
