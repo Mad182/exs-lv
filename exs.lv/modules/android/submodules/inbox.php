@@ -27,12 +27,6 @@ if ($var1 === 'received') {
         }
     }
     $lim_start = ($current_page - 1) * $msg_per_page;
-    
-    // intereses pēc pielogosim, ka lietotājs sarakstu
-    // lietotnē aizritinājis tik tālu
-    if ($current_page > 100) { // 2000 vēstuļu
-        a_log('Ielādējis briesmīgi daudz vēstuļu (lpp: '.$current_page.')');
-    }
 
     // atlasīs lietotāja jaunākās vēstules
     $pms = $db->get_results("
@@ -52,6 +46,10 @@ if ($var1 === 'received') {
         LIMIT
             ".$lim_start.", ".$msg_per_page
     );
+    // vēl nelasīto vēstuļu skaits
+    $unread = $db->get_var("
+        SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
+    ");
     
     if (!$pms) {
         a_append(array('endoflist' => true));
@@ -78,7 +76,7 @@ if ($var1 === 'received') {
             }
             
             $pm_title = wordwrap(textlimit(
-                strip_tags($pm->title), 48, '...'), 20, '\n', 1);
+                strip_tags($pm->title), 48, '...'), 20, ' ', 1);
             
             $messages[] = array(
                 'id' => (int)$pm->id,
@@ -89,8 +87,13 @@ if ($var1 === 'received') {
             );
         }
         
+        $endoflist = (count($messages) < $msg_per_page) ? true : false;
+        
+        $unread = ($unread) ? (int)$unread : 0;
+        
         a_append(array(
-            'endoflist' => false,
+            'endoflist' => $endoflist,
+            'unread' => $unread,
             'messages' => $messages
         ));
     }
@@ -248,12 +251,6 @@ if ($var1 === 'received') {
         }
     }
     $lim_start = ($current_page - 1) * $msg_per_page;
-    
-    // intereses pēc pielogosim, ka lietotājs sarakstu
-    // lietotnē aizritinājis tik tālu
-    if ($current_page > 100) { // 2000 vēstuļu
-        a_log('Ielādējis briesmīgi daudz vēstuļu (lpp: '.$current_page.')');
-    }
 
     // saraksts ar nosūtītajām vēstulēm
     $pms = $db->get_results("
@@ -305,7 +302,7 @@ if ($var1 === 'received') {
                 'id' => (int)$pm->id,
                 'title' => $pm_title,
                 'date' => display_time(strtotime($pm->date)),
-                'to' => $to,
+                'from' => $to,
                 'is_read' => (bool)$pm->is_read
             );
         }
