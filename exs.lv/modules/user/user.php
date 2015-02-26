@@ -10,6 +10,7 @@ if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 } else {
 	$userid = $auth->id;
 }
+
 $inprofile = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
 
 if ($inprofile) {
@@ -83,10 +84,7 @@ if ($inprofile) {
 
 		if ($auth->ok && $auth->id == $inprofile->id) {
 			$tpl->assign(array(
-				'edit' => '<p>[<a href="/user/edit">labot profilu</a>]
-								[<a href="/user/changenick">mainīt niku</a>]
-								[<a href="/subscribe">sekot/nesekot foruma sadaļām</a>]
-								[<a href="/interests">interešu kategorijas</a>]</p>',
+				'edit' => '<p><a class="button primary" href="/user/edit">labot profilu</a> <a class="button primary" href="/user/changenick">mainīt niku</a> <a class="button primary" href="/subscribe">sekot/nesekot foruma sadaļām</a> <a class="button primary" href="/interests">interešu kategorijas</a></p>',
 			));
 		}
 		if ($auth->level != 5 && $inprofile->level != 5 && $auth->ok && $auth->id != $inprofile->id && !$friend->pending_friendship($auth->id, $inprofile->id) && !$friend->get_friendship_id($auth->id, $inprofile->id)) {
