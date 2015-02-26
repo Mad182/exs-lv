@@ -154,7 +154,7 @@ if ($inprofile) {
 					$nick = get_user($id);
 
 					if(!empty($nick) && !$nick->deleted) {
-						$profiles[$key] = "<a href='/user/" . $id . "'>" . $nick->nick . "</a>";
+						$profiles[$key] = '<a href="/user/' . $id . '">' . $nick->nick . '</a>';
 					} else {
 						unset($profiles[$key]);
 					}
