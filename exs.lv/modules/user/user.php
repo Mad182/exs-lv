@@ -146,14 +146,19 @@ if ($inprofile) {
 		if (im_mod()) {
 			//dabū visus pievienoto (cookies) profilu nikus ar linkiem
 			$profiles = explode(',', $inprofile->connected_profiles);
+
 			foreach ($profiles as $key => $id) {
 
-				$nick = get_user($id);
+				if(!empty($id)) {
 
-				if(!empty($nick) && !$nick->deleted) {
-					$profiles[$key] = "<a href='/user/" . $id . "'>" . $nick->nick . "</a>";
-				} else {
-					unset($profiles[$key]);
+					$nick = get_user($id);
+
+					if(!empty($nick) && !$nick->deleted) {
+						$profiles[$key] = "<a href='/user/" . $id . "'>" . $nick->nick . "</a>";
+					} else {
+						unset($profiles[$key]);
+					}
+				
 				}
 			}
 
