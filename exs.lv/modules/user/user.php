@@ -148,13 +148,21 @@ if ($inprofile) {
 			$profiles = explode(',', $inprofile->connected_profiles);
 			foreach ($profiles as $key => $id) {
 
-				$nick = $db->get_var("SELECT nick FROM `users` WHERE `id` = $id");
-				$profiles[$key] = "<a href='/user/" . $id . "'>" . $nick . "</a>";
+				$nick = get_user($id);
+
+				if(!empty($nick) && !$nick->deleted) {
+					$profiles[$key] = "<a href='/user/" . $id . "'>" . $nick->nick . "</a>";
+				} else {
+					unset($profiles[$key]);
+				}
 			}
+
 			array_splice($profiles, count($profiles) - 1);
 			$profiles = implode(', ', $profiles);
-			if (!$profiles)
+			if (!$profiles) {
 				$profiles = 'nav!';
+			}
+
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
 				'lastip' => $inprofile->lastip,

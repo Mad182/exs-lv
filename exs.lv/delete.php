@@ -43,7 +43,9 @@ if ($user) {
 	$db->query("UPDATE users SET 
 			`nick` = 'Dzēsts #" . $user . "',
 			`pwd` = '',
+			`password` = '',
 			`mail` = '',
+			`mail_confirmed` = null,
 			`lastseen` = `date`,
 			`avatar` = '',
 			`av_alt` = '0',
@@ -62,6 +64,8 @@ if ($user) {
 			`persona` = '',
 			`token` = '',
 			`reset_token` = '',
+			`city` = 0,
+			`connected_profiles` = '',
 			`deleted` = 1
 			WHERE id = '$user'");
 
