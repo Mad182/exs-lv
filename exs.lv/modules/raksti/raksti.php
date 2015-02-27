@@ -40,7 +40,7 @@ $articles = $db->get_results("
 		`pages`,
 		`users`
 	WHERE
-		`pages`.`category` IN (10,11,80,323,565,611,651) AND
+		`pages`.`category` IN (11,80,323,565,611,651) AND
 		`users`.`id` = `pages`.`author`
 	ORDER BY
 		`pages`.`date` DESC
