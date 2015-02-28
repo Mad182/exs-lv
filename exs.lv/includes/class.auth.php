@@ -45,7 +45,8 @@ class Auth {
 	}
 
 	function update_visits() {
-		global $db, $lang;
+		global $db;
+		$lang = get_lang();
 		$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = $this->id AND `ip` = '$this->ip' AND `site_id` = $lang");
 		if ($exists) {
 			$db->query("UPDATE `visits` SET `lastseen` = NOW() WHERE `id` = $exists");
@@ -96,7 +97,7 @@ class Auth {
 			}
 
 			// android.exs.lv redirekti neder
-			if ($lang != 2 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			if ($lang !== 2 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 				$this->logout();
 				redirect();
 			}
@@ -221,7 +222,8 @@ class Auth {
 	}
 
 	function logout() {
-		global $db, $lang;
+		global $db;
+		$lang = get_lang();
 		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0 WHERE `id` = '$this->id' LIMIT 1");
 		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
 		$this->id = 0;
@@ -239,24 +241,19 @@ class Auth {
 	}
 
 	function update_counter() {
-		global $db, $m, $lang;
-        
-        $new_lang = $lang;
-        if ($lang === 2) { // iekš android.exs.lv $lang nekad nemainās
-            global $android_lang;
-            $new_lang = $android_lang;
-        }
+		global $db, $m;
+		$lang = get_lang();
 
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$new_lang)) {
-			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$new_lang);
+		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$lang)) {
+			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$lang);
 		} else {
-			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, ".$new_lang.")");
+			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, ".$lang.")");
 		}
 
-		if (!($this->hosts_online = $m->get('online_count_' . $new_lang))) {
+		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
 			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
-			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$new_lang);
-			$m->set('online_count_' . $new_lang, "$this->hosts_online", false, 10);
+			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$lang);
+			$m->set('online_count_' . $lang, "$this->hosts_online", false, 10);
 		}
 	}
 
@@ -264,5 +261,4 @@ class Auth {
 		global $db;
 		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
-
 }
