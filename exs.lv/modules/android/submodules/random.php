@@ -224,6 +224,7 @@ if ($var1 === 'notifications') {
     ");
     
     $friends = array();
+    $cnt_friends = 0;
     
     if ($contacts) {    
         foreach ($contacts as $contact) {
@@ -239,12 +240,26 @@ if ($var1 === 'notifications') {
                 if ($info->deleted) {
                     $info->nick = '<em>dzēsts</em>';
                 }
-                $friends[] = a_fetch_user($info->id, $info->nick, $info->level);
+                
+                // lietotnē ir dropdowns, kuros lietotājvārdus neizkrāsos ar stiliem
+                if ($var2 === 'simple') {
+                    $friends[] = array(
+                        'id' => (int)$info->id,
+                        'nick' => $info->nick
+                    );
+                } else {
+                    $friends[] = a_fetch_user($info->id, $info->nick, $info->level);
+                }
             }
+            
+            $cnt_friends++;
         }
     }
     
-    a_append(array('contacts' => $friends));
+    a_append(array(
+        'count' => (int)$cnt_friends,
+        'contacts' => $friends
+    ));
     
 /**
  *  Atgriezīs sarakstu ar visām grupām, kurām lietotājs ir pieteicies.
