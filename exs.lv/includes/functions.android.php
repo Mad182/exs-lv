@@ -393,9 +393,6 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
  *
  *  Atgriezīs sarakstu ar tiešsaistē esošajiem lietotājiem 
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
- *
- *  Klāt pievienos arī informāciju par tiešsaistē esošiem lietotājiem
- *  katrā klasē.
  */
 function a_fetch_online($force = false) {
 	global $db, $m, $auth, $android_lang;
@@ -429,13 +426,13 @@ function a_fetch_online($force = false) {
         ");
 
         if (!$lastseen) {
-            a_error('Neviena lietotāja nav tiešsaistē');
+            a_append(array(
+                'online' => 0,
+                'registered' => 0,
+                'users' => array()
+            ));
             return false;
         }
-        
-        // ja masīvā vienmēr būs vismaz viens elements,
-        // to pārveidos par objektu, nevis atstās masīvu
-        $classes['-1'] = 0;
         
         $cnt_registered = 0;
 
@@ -465,21 +462,13 @@ function a_fetch_online($force = false) {
                 'device' => (int)$device
             );
             
-            // palielinās lietotāju skaitu šī lietotāja klasē
-            if (isset($classes[$user->level])) {
-                $classes[$user->level] += 1;
-            } else {
-                $classes[$user->level] = 1;
-            }
-            
             $cnt_registered++;
         }
 
         $data = array(
             'online' => (int)$auth->hosts_online,
             'registered' => (int)$cnt_registered,
-            'users' => $online,
-            'by_classes' => $classes
+            'users' => $online
         );
         
 		$m->set('android-online-'.$android_lang, $data, false, 30);
