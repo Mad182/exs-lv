@@ -14,6 +14,35 @@ require(CORE_PATH . '/includes/functions.embed.php');
 require(CORE_PATH . '/includes/functions.legacy.php');
 
 /**
+ *  Atgriezīs pareizu apakšprojekta $lang vērtību.
+ */
+function get_lang() {
+	
+	$tmp_lang = get_global('lang', 1);
+	
+	// android.exs.lv vienmēr būs 2, lai kādu apakšprojektu caur to skatītu,
+	// bet pareizai datu atlasei jāzina tieši skatītā apakšprojekta vērtība
+	if ($tmp_lang === 2) {
+		$tmp_lang = get_global('android_lang', 1);
+	}
+	
+	return $tmp_lang;
+}
+
+/**
+ *  Atgriezīs globālo vērtību ar norādīto atslēgu vai noklusēto vērtību,
+ *  ja atslēga netiks atrasta.
+ */
+function get_global($key_name, $default_value = null) {
+
+	if (array_key_exists($key_name, $GLOBALS)) {
+		return $GLOBALS[$key_name];
+	}
+
+	return $default_value;
+}
+
+/**
  *  Pārveido stringu par pieļaujamu klases nosaukumu
  */
 function as_class_name($name = '') {
@@ -1941,7 +1970,7 @@ function post_mb($post) {
 		'bump' => 0,
 		'type' => 'miniblog',
 		'lang' => $lang,
-        'device' => 0
+		'device' => 0
 	);
 
 	$post = array_merge($default, $post);
