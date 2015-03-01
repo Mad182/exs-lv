@@ -217,10 +217,14 @@ if ($var1 === 'notifications') {
         SELECT 
             `friend1`, `friend2`
         FROM `friends`
+            JOIN `users` ON (
+                `users`.`id` = CASE WHEN `friend1` = ".$auth->id." THEN `friend2` ELSE `friend1` END AND
+                `users`.`deleted` = 0
+            )
         WHERE 
             (`friend1` = (".$auth->id.") OR `friend2` = (".$auth->id.")) AND
             `confirmed` = 1
-        ORDER BY `date_confirmed` DESC
+        ORDER BY `users`.`nick` ASC
     ");
     
     $friends = array();
