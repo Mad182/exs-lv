@@ -11,17 +11,18 @@ if (isset($_GET['skip'])) {
 	$skip = 0;
 }
 
-$sfilter = '';
+$sfilter = ' WHERE `deleted` = 0 ';
 if (isset($_GET['var1']) && $_GET['var1'] == 'klase') {
 	$showclass = (int) $_GET['var2'];
-	$sfilter = " WHERE level = '" . $showclass . "' ";
 
+	$sfilter .= " AND (`level` = '" . $showclass . "' ";
 	if (!empty($site_access[$showclass])) {
 		$sfilter .= " OR `id` IN(" . implode(',', $site_access[$showclass]) . ")";
 	}
+	$sfilter .= ")";
 }
 
-$users = $db->get_results("SELECT nick,level,id FROM users " . $sfilter . " ORDER BY id ASC LIMIT $skip,$end");
+$users = $db->get_results("SELECT `nick`, `level`, `id` FROM `users` " . $sfilter . " ORDER BY id ASC LIMIT $skip,$end");
 if ($users) {
 
 	$page_title = $page_title . ' | lapa ' . ($skip / $end + 1);
