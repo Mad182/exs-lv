@@ -557,41 +557,6 @@
 
 		</div>
 
-		<!-- START BLOCK : smartad-eu-->
-		<!-- smartad.eu -->
-		<script type='text/javascript'>/* <![CDATA[ */
-			var _smartad = _smartad || new Object();
-			_smartad.page_id = Math.floor(Math.random() * 10000001);
-			if (!_smartad.prop) {
-				_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
-			}
-			(function() {
-				if (_smartad.space) {
-					_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-				} else {
-					_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-					_smartad.type = 'onload';
-					var f = function() {
-						var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
-						s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
-						s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
-						n ? b.insertBefore(s, n) : b.appendChild(s);
-					};
-					if (document.readyState === 'complete') {
-						f();
-						delete _smartad.space;
-					} else {
-						if (window.addEventListener) {
-							window.addEventListener('load', f, false);
-						} else if (window.attachEvent) {
-							window.attachEvent('onload', f);
-						}
-					}
-				}
-			})();
-			/* ]]> */</script>
-		<!-- END BLOCK : smartad-eu-->
-
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

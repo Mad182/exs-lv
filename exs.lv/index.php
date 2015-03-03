@@ -499,15 +499,6 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
-if ($lang === 1 && !$auth->ok) {
-	//smartad.eu, nerāda mobilajām ierīcēm
-	require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
-	$detect = new Mobile_Detect;
-	if (!$detect->isMobile()) {
-		$tpl->newBlock('smartad-eu');
-	}
-}
-
 $tpl->printToScreen();
 
 if ($debug && !$requested_json) {
