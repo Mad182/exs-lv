@@ -10,10 +10,11 @@
 <h1>{title}</h1>
 <form action="" method="post" class="form">
 	<fieldset>
-		<textarea name="content" cols="40" rows="8" style="width: 100%;height: 400px;">{content}</textarea>
+		<textarea name="content" cols="40" rows="8" style="width:100%;height:500px">{content}</textarea>
 		<p>
-			<input type="submit" value="Saglabāt" />
+			<input type="submit" class="button submit primary" value="Saglabāt" />
 		</p>
 	</fieldset>
 </form>
 <!-- END BLOCK : text-edit-->
+

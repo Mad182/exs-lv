@@ -18,18 +18,19 @@ if (isset($_GET['edit']) && im_mod()) {
 
 	$tpl->newBlock('text-edit');
 	$tpl->assign(array(
-		'title' => $category->title,
+		'title' => h($category->title),
 		'content' => h($category->content)
 	));
 	$tpl->newBlock('tinymce-enabled');
 } else {
 	$tpl->newBlock('text-body');
 	$tpl->assign(array(
-		'title' => $category->title,
-		'content' => $category->content
+		'title' => h($category->title),
+		'content' => add_smile($category->content, 1)
 	));
 
 	if (im_mod()) {
 		$tpl->newBlock('options');
 	}
 }
+
