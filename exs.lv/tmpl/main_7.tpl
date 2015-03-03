@@ -438,7 +438,6 @@
 			</div>
 		</div>
 
-		<!-- google analytics -->
 		<script>
 			(function(i, s, o, g, r, a, m) {
 				i['GoogleAnalyticsObject'] = r;
@@ -459,3 +458,4 @@
 
 	</body>
 </html>
+
