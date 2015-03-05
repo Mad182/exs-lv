@@ -108,6 +108,7 @@ if (isset($_GET['banstatus'])) {
     // lietotāji vēl bez modiem, kuri lietotnē varēs autorizēties
     $allowed_users = array(
         6890, // Worst
+        14887, // Danalabi
         140, // Hibs
         21018 // mokšķis
     );
