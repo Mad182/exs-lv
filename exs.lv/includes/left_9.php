@@ -3,10 +3,11 @@
  *  RuneScape apakšprojekta kreisā kolonna.
  *  Redzama gandrīz katrā sadaļā, satur jaunākos miniblogus.
  */
+
 $tpl->newBlock('main-layout-left');
 
 
-// kriesajā kolonnā redzama informācija par lietotāju, 
+// kreisajā kolonnā redzama informācija par lietotāju, 
 // ar kuru saistīta skatāmā informācija
 if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 	$inprofile = get_user($category->isblog);
@@ -88,10 +89,10 @@ if (!empty($inprofile)) {
 $tpl->newBlock('mb-box');
 $sel = 'all';
 if ($auth->ok && !empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] == 'friends') {
-	$mbs = get_latest_mbs(1);
+	$mbs = get_latest_mbs('friends');
 	$sel = 'friends';
 } else {
-	$mbs = get_latest_mbs();
+	$mbs = get_latest_mbs('all');
 }
 $tpl->assign('out', $mbs);
 

@@ -384,8 +384,8 @@
 						<div class="box">
 							<!-- START BLOCK : mb-tabs-->
 							<ul class="tabs">
-								<li><a href="/mb-latest?pg=0" class="{all-selected}remember-all ajax"><span class="comments">Ārpusē</span></a></li>
-								<li><a href="/mb-latest?pg=0&amp;friendmb=true" class="{friends-selected}remember-friends ajax"><span class="friends">Grupās</span></a></li>
+								<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Ārpusē</span></a></li>
+								<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Grupās</span></a></li>
 							</ul>
 							<div class="c"></div>
 							<!-- END BLOCK : mb-tabs-->
