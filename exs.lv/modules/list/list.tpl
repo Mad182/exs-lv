@@ -30,7 +30,7 @@
 		<ul class="article-info">
 			<li class="date">{date}</li>
 			<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
-			<li class="profile user-level-{level} user-gender-{gender}"><a href="/user/{author-id}">{author}</a></li>
+			<li class="profile user-level-{level} user-gender-{gender}">{author}</li>
 		</ul>
 		<div class="c"></div>
 		<!-- START BLOCK : list-avatar-->
@@ -48,7 +48,7 @@
 <h1>{title}</h1>
 <ul>
 	<!-- START BLOCK : list-articles-short-node-->
-	<li><a href="{node-url}">{title}</a> no <a href="/user/{author-id}">{author}</a></li>
+	<li><a href="{node-url}">{title}</a> no {author}</li>
 	<!-- END BLOCK : list-articles-short-node-->
 </ul>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>

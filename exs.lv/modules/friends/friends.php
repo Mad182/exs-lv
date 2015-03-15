@@ -4,6 +4,7 @@
  * Lietotāja draugu saraksts
  */
 $robotstag[] = 'noindex';
+$robotstag[] = 'nofollow';
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];

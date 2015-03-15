@@ -1398,6 +1398,10 @@ blockquote, .q, .quote {
 	display: inline;
 }
 
+.notification-date:before {
+	content: "pirms ";
+}
+
 /* lapu pārslēgs */
 .core-pager {
 	margin: 10px 0;

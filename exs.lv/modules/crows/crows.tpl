@@ -2,7 +2,7 @@
 <!-- START BLOCK : warns-list -->
 <table class="mod-list-table">
 	<tr class="">
-		<th style="width:3%">&nbsp;</td>
+		<th style="width:3%">&nbsp;</th>
 		<th style="width:21%">Iesaistītie</th>
 		<th style="width:60%">Iemesls</th>
 		<th style="width:16%">Laiks</th>
@@ -14,9 +14,9 @@
 			<ul class="list-table">
 				<li><span class="stronger" style="margin-left:11px">No:</span>{creator_nick}</li>
 				<li><span class="stronger">Kam:</span>{offender_nick}</li>
-                <!-- START BLOCK : warn-site -->
+				<!-- START BLOCK : warn-site -->
 				<li><span class="stronger">Vieta:</span>{site}</li>
-                <!-- END BLOCK : warn-site -->
+				<!-- END BLOCK : warn-site -->
 			</ul>
 		</td>
 		<td>{warn_reason} {removal-reason}</td>
@@ -34,3 +34,4 @@
 <!-- START BLOCK : no-warns-found -->
 <p>Nav neviena izteikta brīdinājuma! Vai tā var būt?</p>
 <!-- END BLOCK : no-warns-found -->
+

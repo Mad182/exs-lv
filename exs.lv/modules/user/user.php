@@ -10,6 +10,7 @@ if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 } else {
 	$userid = $auth->id;
 }
+
 $inprofile = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
 
 if ($inprofile) {
@@ -83,10 +84,7 @@ if ($inprofile) {
 
 		if ($auth->ok && $auth->id == $inprofile->id) {
 			$tpl->assign(array(
-				'edit' => '<p>[<a href="/user/edit">labot profilu</a>]
-								[<a href="/user/changenick">mainīt niku</a>]
-								[<a href="/subscribe">sekot/nesekot foruma sadaļām</a>]
-								[<a href="/interests">interešu kategorijas</a>]</p>',
+				'edit' => '<p><a class="button primary" href="/user/edit">labot profilu</a> <a class="button primary" href="/user/changenick">mainīt niku</a> <a class="button primary" href="/subscribe">sekot/nesekot foruma sadaļām</a> <a class="button primary" href="/interests">interešu kategorijas</a></p>',
 			));
 		}
 		if ($auth->level != 5 && $inprofile->level != 5 && $auth->ok && $auth->id != $inprofile->id && !$friend->pending_friendship($auth->id, $inprofile->id) && !$friend->get_friendship_id($auth->id, $inprofile->id)) {
@@ -146,15 +144,28 @@ if ($inprofile) {
 		if (im_mod()) {
 			//dabū visus pievienoto (cookies) profilu nikus ar linkiem
 			$profiles = explode(',', $inprofile->connected_profiles);
+
 			foreach ($profiles as $key => $id) {
 
-				$nick = $db->get_var("SELECT nick FROM `users` WHERE `id` = $id");
-				$profiles[$key] = "<a href='/user/" . $id . "'>" . $nick . "</a>";
+				if(!empty($id)) {
+
+					$nick = get_user($id);
+
+					if(!empty($nick) && !$nick->deleted) {
+						$profiles[$key] = '<a href="/user/' . $id . '">' . $nick->nick . '</a>';
+					} else {
+						unset($profiles[$key]);
+					}
+				
+				}
 			}
+
 			array_splice($profiles, count($profiles) - 1);
 			$profiles = implode(', ', $profiles);
-			if (!$profiles)
+			if (!$profiles) {
 				$profiles = 'nav!';
+			}
+
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
 				'lastip' => $inprofile->lastip,

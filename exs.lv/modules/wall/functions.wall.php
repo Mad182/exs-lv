@@ -13,6 +13,10 @@ function strip_selected_tags($text, $tags = array()) {
 			$text = str_replace($found[0], $found[1], $text);
 		}
 	}
+	
+	//sākumlapā visas bildes lādējam caur https proxy, lai pārlūki nerāda ssl erroru
+	$text = str_ireplace('src="http://', 'src="https://images.weserv.nl/?w=300&url=', $text);
 
 	return $text;
 }
+

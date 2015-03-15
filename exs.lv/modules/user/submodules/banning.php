@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Lietotāja profila apakšmodulis
  *
@@ -40,7 +41,7 @@ if (in_array($inprofile->id, $busers)) {
 	$find_ban = $db->get_row("
 		SELECT * FROM `banned` 
 		WHERE 
-			`user_id` = ".$inprofile->id." AND
+			`user_id` = " . $inprofile->id . " AND
 			`active` = 1 AND
 			(`lang` = 0 OR `lang` = '$lang') 
 		ORDER BY `time` DESC
@@ -50,7 +51,7 @@ if (in_array($inprofile->id, $busers)) {
 		$is_banned = true;
 	}
 }
- 
+
 // jāzina brīdinājumu skaits, lai varētu piedāvāt noteiktu skaitu 
 // noņemt reizē ar lieguma uzlikšanu atvērtajam profilam
 $warn_cnt = $db->get_var("
@@ -77,15 +78,15 @@ $is_in_group = $db->get_row("
 		)
 	WHERE 
 		`users_groups`.`deleted_by` = 0 AND 
-		`users_groups`.`user_id` = ".(int)$inprofile->id."
+		`users_groups`.`user_id` = " . (int) $inprofile->id . "
 ");
 if ($is_in_group) {
 
 	if ($is_in_group->parent_id == 0) { // šis ir grupas main profils
-		$sql = '`users_groups`.`parent_id` = '.(int)$is_in_group->id;
+		$sql = '`users_groups`.`parent_id` = ' . (int) $is_in_group->id;
 		$main_profile = $is_in_group->user_id;
 	} else {
-		$sql = '(`users_groups`.`parent_id` = '.(int)$is_in_group->parent_id.' OR `users_groups`.`id` = '.(int)$is_in_group->parent_id.')';
+		$sql = '(`users_groups`.`parent_id` = ' . (int) $is_in_group->parent_id . ' OR `users_groups`.`id` = ' . (int) $is_in_group->parent_id . ')';
 		$main_profile = $is_in_group->parent_user_id;
 	}
 
@@ -107,8 +108,8 @@ if ($is_in_group) {
 			)
 		WHERE
 			`users_groups`.`deleted_by` = 0 AND
-			".$sql." AND
-			`users_groups`.`id` != ".$is_in_group->id."
+			" . $sql . " AND
+			`users_groups`.`id` != " . $is_in_group->id . "
 		ORDER BY `users`.`nick` ASC
 	");
 
@@ -124,7 +125,7 @@ if ($is_in_group) {
 if (isset($_POST['block-reason'])) {
 
 	$reason = sanitize(h($_POST['block-reason']));
-	$length = (isset($_POST['block-length'])) ? (int)$_POST['block-length'] : 0;
+	$length = (isset($_POST['block-length'])) ? (int) $_POST['block-length'] : 0;
 	if ($length < 1) {
 		$length = 259200; // 3 diennaktis
 	} else if ($length > 31556926) {
@@ -138,14 +139,14 @@ if (isset($_POST['block-reason'])) {
 	if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 		$site = $lang;
 	} else {
-		$site = (isset($_POST['block-domain'])) ? (int)$_POST['block-domain'] : 0;
-		
+		$site = (isset($_POST['block-domain'])) ? (int) $_POST['block-domain'] : 0;
+
 		// iegūs lielākā iespējamā indeksa vērtību
 		end($config_domains);
 		$last_key = key($config_domains);
 		reset($config_domains);
-		
-		if ($site < 1 || $site > $last_key) {
+
+		if ($site < 0 || $site > $last_key) {
 			$site = $lang;
 		}
 	}
@@ -162,7 +163,7 @@ if (isset($_POST['block-reason'])) {
 	$insert = $db->insert('banned', $values);
 	if (!$insert) {
 		set_flash('Bloķēt lietotāju neizdevās!');
-		redirect('/user/'.$inprofile->id.'/block');
+		redirect('/user/' . $inprofile->id . '/block');
 	}
 	$auth->log('Bloķēja lietotāju', 'users', $inprofile->id);
 	get_banlist(true);
@@ -179,9 +180,9 @@ if (isset($_POST['block-reason'])) {
 			// atlasa visu noņemamo brīdinājumu ids
 			$get_ids = $db->get_results("
 				SELECT `id` FROM `warns`
-				WHERE `user_id` = ".$inprofile->id." AND `active` = 1 AND `site_id` = ".$lang."
+				WHERE `user_id` = " . $inprofile->id . " AND `active` = 1 AND `site_id` = " . $lang . "
 				ORDER BY `created` ASC
-				LIMIT ".$remove_count."
+				LIMIT " . $remove_count . "
 			");
 			if ($get_ids) {
 				foreach ($get_ids as $single_id) {
@@ -198,7 +199,7 @@ if (isset($_POST['block-reason'])) {
 							`warns`.`remove_reason` = '$removal_reason'
 						WHERE `warns`.`id` IN(" . implode(',', $ids) . ")
 					");
-					$auth->log('Atbrīvoja '.count($ids).' vārnas', 'users', $inprofile->id);
+					$auth->log('Atbrīvoja ' . count($ids) . ' vārnas', 'users', $inprofile->id);
 				}
 			}
 		}
@@ -207,7 +208,7 @@ if (isset($_POST['block-reason'])) {
 	// piesaistīto profilu bloķēšana redzama tikai galvenajā exs,
 	// tāpēc tikai tajā ir vērts atgriezties uz to pašu lapu
 	if ($lang == 1) {
-		redirect('/user/'.(int)$_GET['var1'].'/block');
+		redirect('/user/' . (int) $_GET['var1'] . '/block');
 	} else {
 		redirect('/banned');
 	}
@@ -220,26 +221,26 @@ if (isset($_POST['block-reason'])) {
 if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2'])) {
 
 	$reason = (isset($_POST['reason-2'])) ? input2db($_POST['reason-2'], 1000) : '-';
-	$length = (isset($_POST['length-2'])) ? (int)$_POST['length-2'] : 0;
+	$length = (isset($_POST['length-2'])) ? (int) $_POST['length-2'] : 0;
 	if ($length < 21600) { // 6h
 		$length = 21600;
 	} else if ($length > 31556926) {
 		$length = 31556926; // 1 gads
 	}
-	$domain = (isset($_POST['domain-2'])) ? (int)$_POST['domain-2'] : 0;
+	$domain = (isset($_POST['domain-2'])) ? (int) $_POST['domain-2'] : 0;
 	if ($domain < 0 || $domain > count($config_domains)) {
 		$domain = 0;
 	}
 
 	$cnt_not_banned = 0;
 	$cnt_banned = 0;
-	
+
 	if ($other_profiles) {
 		foreach ($other_profiles as $profile) {
-		
+
 			// ja checkbox nav atzīmēts, profila sodu nealterē
-			if (isset($_POST['block-'.$profile->id])) {
-		
+			if (isset($_POST['block-' . $profile->id])) {
+
 				// atkarībā no tā, vai profilam jau ir aktīvs liegums,
 				// tādu vainu izveido, vai arī pamaina tā termiņu un iemeslu
 				$ban_data = $db->get_row("
@@ -250,68 +251,67 @@ if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2']
 						`banned`.`time`
 					FROM `banned` 
 					WHERE 
-						`banned`.`user_id` = ".(int)$profile->id." AND
+						`banned`.`user_id` = " . (int) $profile->id . " AND
 						`banned`.`active` = 1 AND
-						(`banned`.`lang` = 0 OR `banned`.`lang` = ".(int)$lang.") 
+						(`banned`.`lang` = 0 OR `banned`.`lang` = " . (int) $lang . ") 
 					ORDER BY `banned`.`time` DESC
 					LIMIT 0, 1
 				");
-				
+
 				// pielīdzina laiku atvērtā profila liegumam, ja tāds ir
 				$ban_time = ($is_banned) ? $find_ban->time : time();
-				
+
 				// nav vērts bloķēt, ja laiks jau pagājis
 				if ($ban_time + $length > time()) {
-				
+
 					// liegums jau ir
 					if ($ban_data) {
-						
+
 						$db->query("
 							UPDATE `banned`
 							SET
-								`reason` = '".$reason."',
-								`time` = '".sanitize($ban_time)."',
-								`length` = '".$length."',
-								`author` = ".(int)$auth->id.",
-								`lang` = ".$domain."
-							WHERE `id` = ".(int)$ban_data->id."
+								`reason` = '" . $reason . "',
+								`time` = '" . sanitize($ban_time) . "',
+								`length` = '" . $length . "',
+								`author` = " . (int) $auth->id . ",
+								`lang` = " . $domain . "
+							WHERE `id` = " . (int) $ban_data->id . "
 						");
-					
-					// lieguma vēl nav
+
+						// lieguma vēl nav
 					} else {
-					
+
 						$data = array(
 							'user_id' => $profile->id,
 							'reason' => $reason,
 							'time' => sanitize($ban_time),
 							'length' => $length,
-							'author' => (int)$auth->id,
+							'author' => (int) $auth->id,
 							'ip' => sanitize($profile->lastip),
 							'lang' => $domain
 						);
 						$db->insert('banned', $data);
 					}
-					
+
 					$cnt_banned++;
-					
 				} else {
 					$cnt_not_banned++;
 				}
 			}
-			
+
 			if ($cnt_not_banned > 0) {
 				set_flash('Kāds no profiliem netika bloķēts, jo tā lieguma sākuma laiks + izvēlētais termiņš jau pagājis!');
 				get_banlist(true);
-				redirect('/user/'.$inprofile->id.'/block');
+				redirect('/user/' . $inprofile->id . '/block');
 			}
 		}
-		
-		$auth->log('Bloķēja '.$cnt_banned.' piesaistītos profilus', 'users', $inprofile->id);
+
+		$auth->log('Bloķēja ' . $cnt_banned . ' piesaistītos profilus', 'users', $inprofile->id);
 	}
-	
+
 	get_banlist(true);
-	
-	redirect('/user/'.$inprofile->id.'/block#profiles');
+
+	redirect('/user/' . $inprofile->id . '/block#profiles');
 }
 
 
@@ -335,7 +335,7 @@ if ($is_banned) {
 	));
 } else {
 	$tpl->newBlock('ban-form');
-	
+
 	foreach ($ban_lengths as $key => $value) {
 		$tpl->newBlock('ban-length');
 		$tpl->assign(array(
@@ -356,10 +356,10 @@ if ($is_banned) {
 			$tpl->assign('x', $i);
 		}
 	}
-	
+
 	// globālajiem modiem rāda domēnu izvēli
 	if (!in_array($auth->id, $site_access[1]) && !in_array($auth->id, $site_access[2])) {
-		
+
 		$tpl->newBlock('block-domain');
 
 		foreach ($config_domains as $key => $domain) {
@@ -381,16 +381,16 @@ if ($is_banned) {
  *  izlaižot apakšprojektus un to spec. modus.
  */
 if ($lang == 1 || $lang == 9) {
-	
-	$tpl->newBlock('form-other-profiles');    
+
+	$tpl->newBlock('form-other-profiles');
 
 	if (!$has_profiles) {
 		$tpl->newBlock('no-other-profiles');
 	} else {
-	
+
 		$tpl->newBlock('has-other-profiles');
 		if ($is_banned) {
-			$tpl->assign('ban-start-time', date('d.m.Y, H:i:s', $find_ban->time).' (sakrīt ar atvērtā profila lieguma laiku)');
+			$tpl->assign('ban-start-time', date('d.m.Y, H:i:s', $find_ban->time) . ' (sakrīt ar atvērtā profila lieguma laiku)');
 		} else {
 			$tpl->assign('ban-start-time', date('d.m.Y, H:i', time()));
 		}
@@ -399,8 +399,8 @@ if ($lang == 1 || $lang == 9) {
 			$tpl->assign(array(
 				'reason' => $find_ban->reason
 			));
-		}        
-		
+		}
+
 		// bana termiņu izvēlne
 		foreach ($ban_lengths as $key => $value) {
 			$tpl->newBlock('ban-length-2');
@@ -412,10 +412,10 @@ if ($lang == 1 || $lang == 9) {
 				$tpl->assign('selected', ' selected="selected"');
 			}
 		}
-		
+
 		// globālajiem modiem rāda domēnu izvēli
 		if (!in_array($auth->id, $site_access[1]) && !in_array($auth->id, $site_access[2])) {
-			
+
 			$tpl->newBlock('block-domain-2');
 
 			foreach ($config_domains as $key => $domain) {
@@ -431,7 +431,7 @@ if ($lang == 1 || $lang == 9) {
 				}
 			}
 		}
-		
+
 		// runescape.exs.lv profilu sasaistes sadaļa nav pieejama
 		if ($lang == 1) {
 			$tpl->newBlock('goto-group');
@@ -441,7 +441,7 @@ if ($lang == 1 || $lang == 9) {
 		$cnt_checked = 0;
 
 		foreach ($other_profiles as $single) {
-		
+
 			// nepieciešams aprēķināt atlikušo bana laiku
 			$ban_data = $db->get_row("
 				SELECT
@@ -449,7 +449,7 @@ if ($lang == 1 || $lang == 9) {
 					`banned`.`time`
 				FROM `banned` 
 				WHERE 
-					`banned`.`user_id` = ".(int)$single->id." AND
+					`banned`.`user_id` = " . (int) $single->id . " AND
 					`banned`.`active` = 1 AND
 					(`banned`.`lang` = 0 OR `banned`.`lang` = '$lang') 
 				ORDER BY `banned`.`time` DESC
@@ -459,7 +459,7 @@ if ($lang == 1 || $lang == 9) {
 				$time_left = $ban_data->time + $ban_data->length - time();
 				if ($time_left > 0) {
 					$single->time_left = strTime($time_left);
-				} else {                
+				} else {
 					$single->time_left = '-';
 				}
 				$single->checked = '';
@@ -468,15 +468,15 @@ if ($lang == 1 || $lang == 9) {
 				$single->checked = ' checked="checked"';
 				$cnt_checked++;
 			}
-			
+
 			$single->lastseen = date('d.m.y, H:i', strtotime($single->lastseen));
 			$single->nick = usercolor($single->nick, $single->level, false, $single->id);
 			$single->warns = $single->warn_count;
-		
+
 			$tpl->newBlock('other-profile');
 			$tpl->assignAll($single);
 		}
-		
+
 		// augšējais checkbox būs atzīmēts tad, 
 		// ja atzīmēts būs vismaz viens no pārējiem
 		if ($cnt_checked > 0) {
@@ -487,3 +487,4 @@ if ($lang == 1 || $lang == 9) {
 }
 
 $page_title = 'Bloķēt lietotāju &quot;' . $inprofile->nick . '&quot;';
+

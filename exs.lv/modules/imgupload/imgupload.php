@@ -60,9 +60,9 @@ if ($auth->ok) {
 		if (!empty($_POST['resize'])) {
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';
-			$foo->image_x = 540;
+			$foo->image_x = 640;
 			$foo->image_ratio_no_zoom_in = true;
-			$foo->jpeg_quality = 97;
+			$foo->jpeg_quality = 98;
 		}
 
 		// runescape.exs.lv ūdenszīme

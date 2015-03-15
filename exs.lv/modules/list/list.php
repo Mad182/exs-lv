@@ -285,15 +285,20 @@ if (!$category->mods_only || im_mod()) {
 					$article->intro = sanitize($article->text);
 					$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 				}
+				
+				if (!$article->author_deleted) {
+					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+				} else {
+					$author_link = '<em>dzēsts</em>';
+				}
 
 				$tpl->assign(array(
 					'id' => $article->id,
 					'node-url' => '/read/' . $article->strid,
-					'author-id' => $article->author,
 					'title' => $article->title,
 					'views' => $article->views,
 					'date' => $date,
-					'author' => usercolor($article->nick, $article->level, false, $article->author),
+					'author' => $author_link,
 					'posts' => $article->posts,
 					'level' => $article->level,
 					'gender' => $article->gender,
@@ -325,14 +330,19 @@ if (!$category->mods_only || im_mod()) {
 				if ($article->attach) {
 					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" />' . $article->title . '</strong>';
 				}
+				
+				if (!$article->author_deleted) {
+					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+				} else {
+					$author_link = '<em>dzēsts</em>';
+				}
 
 				$tpl->assign(array(
 					'id' => $article->id,
 					'node-url' => '/read/' . $article->strid,
-					'author-id' => $article->author,
 					'title' => $article->title,
 					'date' => $article->date,
-					'author' => usercolor($article->nick, $article->level, false, $article->author)
+					'author' => $author_link
 				));
 			}
 		}

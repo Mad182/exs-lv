@@ -22,9 +22,6 @@
 [submodule "libs/twitteroauth"]
 	path = libs/twitteroauth
 	url = https://github.com/abraham/twitteroauth.git
-[submodule "libs/Mobile-Detect"]
-	path = libs/Mobile-Detect
-	url = https://github.com/serbanghita/Mobile-Detect.git
 [submodule "libs/phplastfm"]
 	path = libs/phplastfm
 	url = https://github.com/matto1990/PHP-Last.fm-API.git
