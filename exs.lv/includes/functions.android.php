@@ -93,26 +93,24 @@ function a_log($text) {
 }
 
 /**
- *  Atgriezīs info par lietotāju, kuru lietotne fonā pieprasīs samērā bieži,
- *  lai atjaunotu gan NavigationDrawer notifikācijas,
- *  gan veiktu citas darbības.
+ *  Ielādēs informāciju, kādu lietotne vēlas saņemt pie veiksmīgas autorizācijas.
  */
-function a_status_info() {
+function a_load_profile() {
     global $db, $auth, $img_server;
     
     // nelasīto vēstuļu skaits
     $msgs = $db->get_var("
         SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
     ");
-    
-    a_append(array('status_info' => array(
+
+    a_append(array('profile' => array(
         'id' => (int)$auth->id,
         'nick' => $auth->nick,
         'level' => (int)$auth->level,
         'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
         'usertitle' => $auth->custom_title,
-        'cnt_online' => (int)$auth->hosts_online,
-        'cnt_unread_msgs' => (int)$msgs
+        'users_online' => (int)$auth->hosts_online,
+        'inbox_unread' => (int)$msgs
     )));
 }
 

@@ -126,7 +126,7 @@ if (isset($_GET['banstatus'])) {
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
         } else {
-            a_status_info();
+            a_load_profile();
         }
 
     } else if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -143,7 +143,7 @@ if (isset($_GET['banstatus'])) {
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
         } else {
-            a_status_info();
+            a_load_profile();
         }
     }
 

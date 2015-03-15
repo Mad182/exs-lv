@@ -9,6 +9,7 @@
 
 $var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
 $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
+$var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 /**
  *  Pieprasītas lietotāja jaunākās notifikācijas.
@@ -93,6 +94,7 @@ if ($var1 === 'notifications') {
             }
         
             $arr_notifs[] = array(
+                'id' => (int)$notify->id,
                 'type' => (int)$notify->type,
                 'group_id' => (int)$group_id,
                 'foreign_key' => (int)$notify->foreign_key,
@@ -105,12 +107,57 @@ if ($var1 === 'notifications') {
     }
 
 /**
- *  Atgriezīs status info, kuru lietotne pieprasīs ik pēc laika, lai
- *  varētu atjaunot gan notifikāciju skaitu dažādās vietās, gan veikt
- *  citas darbības.
+ *  Šo informāciju lietotne fonā pieprasīs samērā bieži, lai varētu izziņot
+ *  jaunākās notifikācijas, parādīt nelasīto vēstuļu skaitu utt.
+ *
+ *  /status/{last_bump}
  */
 } else if ($var1 == 'status') {
-    a_status_info();
+
+    // pēdējās redzētās notifikācijas laiks sekundēs
+    $last_bump = 0;
+    if (!empty($var2)) {
+        $last_bump = (int)$var2;
+    }
+
+    // noteiks vēl neredzēto notifikāciju skaitu
+    $user_notifications = $db->get_results("
+        SELECT `bump` FROM `notify` 
+        WHERE 
+            `user_id` = ".$auth->id." AND
+            `lang` = ".$android_lang." AND
+            `bump` > '".date('Y-m-d H:i:s', $last_bump)."'
+        ORDER BY `bump` DESC 
+        LIMIT 0, 25
+    ");
+    
+    $unseen_notifs = 0;
+    $latest_bump = 0;
+    
+    if ($user_notifications) {
+        foreach ($user_notifications as $notif) {
+            if ($latest_bump == 0) {
+                $latest_bump = strtotime($notif->bump);
+            }
+            $unseen_notifs++;
+        }
+    }
+    
+    if ($latest_bump == 0) {
+        $latest_bump = $last_bump;
+    }
+    
+    // nelasīto vēstuļu skaits
+    $inbox = $db->get_var("
+        SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
+    ");
+    
+    a_append(array('numbers' => array(
+        'users_online' => (int)$auth->hosts_online,
+        'inbox_unread' => (int)$inbox,
+        'notifs_new' => (int)$unseen_notifs,
+        'bump_time' => $latest_bump
+    )));
  
 /**
  *  Atgriezīs sarakstu ar tiešsaistē esošiem lietotājiem.
