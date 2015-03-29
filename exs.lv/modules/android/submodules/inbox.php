@@ -150,7 +150,8 @@ if ($var1 === 'received') {
                 'date' => date('Y-m-d H:i:s'),
                 'ip' => $auth->ip,
                 'title' => $send_title,
-                'text' => $send_body
+                'text' => $send_body,
+                'device' => 2
             ));
             
             $msg_id = $db->insert_id;
