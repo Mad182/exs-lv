@@ -31,6 +31,11 @@ class Auth {
 		$this->flood = 8;
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->ok = false;
+		
+		// lai vēlāk iekš `visits` (un varbūt kur citur) varētu fiksēt tos,
+		// kas saturu ielādē caur Android appu
+		$this->via_android = (((int)$lang === 2) ? 1 : 0);
+		
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
@@ -58,62 +63,62 @@ class Auth {
 	function check_session() {
 		global $db, $site_access, $lang;
 
-
-			$userinfo = get_user($_SESSION['auth_id']);
-
-			if ($userinfo->deleted) {
-				return $this->logout();
-			}
-
-			foreach ($userinfo as $key => $val) {
-				$this->$key = $val;
-			}
-
-			$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
-
-			if (in_array($this->id, $site_access[1])) {
-				$this->level = 1;
-			}
-
-			if (in_array($this->id, $site_access[2])) {
-				$this->level = 2;
-			}
-
-			if ($this->level == 1 || $this->level == 2) {
-				$this->flood = 3;
-			}
-
-			$this->ok = true;
-
-			if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 480) {
-				$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `seen_today` = 1 WHERE `id` = '$this->id'");
-				$_SESSION['lastseen'] = time();
-			}
-
-			if (empty($_SESSION['updvisits']) || $_SESSION['updvisits'] < time() - 30) {
-				$this->update_visits();
-				$_SESSION['updvisits'] = time();
-			}
-
-			// android.exs.lv redirekti neder
-			if ($lang !== 2 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
-				$this->logout();
-				redirect();
-			}
-
-			// android.exs.lv pats prot apstrādāt bloķētos profilus un
-			// redirekts kā tāds tam vispār neder
-			if ($lang !== 2 && !isset($_GET['_']) &&
-					$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
-				$this->logout();
-				set_flash('Pieeja lapai ir liegta!', 'error');
-				redirect('http://exs.lv/?c=125&bid=' . $ban);
-			}
-
-			return true;
-		} else {
+		if (empty($_SESSION['auth_id'])) {
 			return false;
 		}
+
+		$userinfo = get_user($_SESSION['auth_id']);
+
+		if ($userinfo->deleted) {
+			return $this->logout();
+		}
+
+		foreach ($userinfo as $key => $val) {
+			$this->$key = $val;
+		}
+
+		$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
+
+		if (in_array($this->id, $site_access[1])) {
+			$this->level = 1;
+		}
+
+		if (in_array($this->id, $site_access[2])) {
+			$this->level = 2;
+		}
+
+		if ($this->level == 1 || $this->level == 2) {
+			$this->flood = 3;
+		}
+
+		$this->ok = true;
+
+		if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 480) {
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `android` = ".$this->via_android.", `seen_today` = 1 WHERE `id` = '$this->id'");
+			$_SESSION['lastseen'] = time();
+		}
+
+		if (empty($_SESSION['updvisits']) || $_SESSION['updvisits'] < time() - 30) {
+			$this->update_visits();
+			$_SESSION['updvisits'] = time();
+		}
+
+		// android.exs.lv redirekti neder
+		if (!$this->via_android && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			$this->logout();
+			redirect();
+		}
+
+		// android.exs.lv pats prot apstrādāt bloķētos profilus un
+		// redirekts kā tāds tam vispār neder
+		if ($this->via_android && !isset($_GET['_']) &&
+				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			$this->logout();
+			set_flash('Pieeja lapai ir liegta!', 'error');
+			redirect('http://exs.lv/?c=125&bid=' . $ban);
+		}
+
+		return true;
 	}
 
 	function reset() {
