@@ -278,7 +278,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 	$is_online = false;
     $is_banned = false;
-    $device = 0; // 0 - dators, 1 - mob. tel.
+    $device = 0; // 0 - dators, 1 - mob. tel., 2 - androīda app
 
 	// vai lietotājs ir tiešsaistē?
 	if ((!empty($online_users['onlineusers'][$user_id])) || 
@@ -288,8 +288,11 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 		$is_online = true;
 	}
 
-    // vai lietotājs lapu skatās caur telefonu?
-    if (!empty($online_users['mobileusers']) && 
+    // caur kādu ierīci lietotājs ielādējis saturu?
+    if (!empty($online_users['androidusers']) && 
+        in_array($user_nick, $online_users['androidusers'])) {
+        $device = 2;
+    } else if (!empty($online_users['mobileusers']) && 
         in_array($user_nick, $online_users['mobileusers'])) {
         $device = 1;
     }
@@ -438,7 +441,10 @@ function a_fetch_online($force = false) {
 
             // noteiks ierīci, no kādas lietotājs pieslēdzies
             $device = 0;
-            if (!empty($online_users['mobileusers']) && 
+            if (!empty($online_users['androidusers']) && 
+                in_array($user->nick, $online_users['androidusers'])) {
+                $device = 2; // androīda apps
+            } else if (!empty($online_users['mobileusers']) && 
                 in_array($user->nick, $online_users['mobileusers'])) {
                 $device = 1; // mob. tel.
             } else {
@@ -469,7 +475,7 @@ function a_fetch_online($force = false) {
             'users' => $online
         );
         
-		$m->set('android-online-'.$android_lang, $data, false, 30);
+		$m->set('android-online-'.$android_lang, $data, false, 15);
 	}
     
 	a_append($data);
