@@ -914,6 +914,11 @@ html .banned {
 	color: #60ef00;
 }
 
+/* light blue for android app */
+#wrapper .lb {
+    color: #28D8EF
+}
+
 #mainlist li {
 	background: transparent;
 	margin: 0;

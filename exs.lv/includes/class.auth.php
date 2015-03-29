@@ -15,7 +15,7 @@ class Auth {
 	 * Inicializē lietotāja objektu
 	 */
 	function Auth() {
-		global $remote_salt;
+		global $remote_salt, $lang;
 
 		$this->id = 0;
 		$this->avatar = 'none.png';
@@ -40,7 +40,7 @@ class Auth {
 		$this->check_session();
 		$this->update_counter();
 		$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
-		$this->mobile = 0;
+		$this->mobile = 0;        
 		return $this->ok;
 	}
 
@@ -58,7 +58,6 @@ class Auth {
 	function check_session() {
 		global $db, $site_access, $lang;
 
-		if (!empty($_SESSION['auth_id'])) {
 
 			$userinfo = get_user($_SESSION['auth_id']);
 
@@ -197,14 +196,14 @@ class Auth {
 
 			// android.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder
-			if ($lang !== 2 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			if (!$this->via_android && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
 				$this->error = 3;
 				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = ".$this->via_android.", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
@@ -224,7 +223,7 @@ class Auth {
 	function logout() {
 		global $db;
 		$lang = get_lang();
-		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0 WHERE `id` = '$this->id' LIMIT 1");
+		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0, `android` = 0 WHERE `id` = '$this->id' LIMIT 1");
 		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
 		$this->id = 0;
 		$this->nick = "Guest";

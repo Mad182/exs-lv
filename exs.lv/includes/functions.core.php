@@ -379,7 +379,9 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	if ($online !== 'disable') {
 		if ($online || (!empty($userid) && !empty($online_users['onlineusers'][$userid])) || (!empty($online_users['onlineusers']) && in_array($nick, $online_users['onlineusers']))) {
-			if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
+			/*if (!empty($online_users['androidusers']) && in_array($nick, $online_users['androidusers'])) {
+				$star = '<span class="lb">*</span>';
+			} else*/ if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
 				$star = '<span class="g">*</span>';
 			} else {
 				$star = '<span class="r">*</span>';
@@ -1047,7 +1049,8 @@ function get_online($force = false) {
 		$lastseen = $db->get_results("SELECT
 			`users`.`id`,
 			`users`.`nick`,
-			`users`.`mobile`
+			`users`.`mobile`,
+			`users`.`android`
 		FROM
 			`users`,
 			`visits`
@@ -1058,12 +1061,15 @@ function get_online($force = false) {
 
 		$data = array(
 			'onlineusers' => array(),
-			'mobileusers' => array()
+			'mobileusers' => array(),
+			'androidusers' => array()
 		);
 		if ($lastseen) {
 			foreach ($lastseen as $usr) {
 				$data['onlineusers'][$usr->id] = $usr->nick;
-				if ($usr->mobile) {
+				if ($usr->android) {
+					$data['androidusers'][$usr->id] = $usr->nick;
+				} else if ($usr->mobile) {
 					$data['mobileusers'][$usr->id] = $usr->nick;
 				}
 			}
