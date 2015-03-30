@@ -104,14 +104,14 @@ class Auth {
 		}
 
 		// android.exs.lv redirekti neder
-		if (!$this->via_android && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+		if ($this->via_android === 0 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 			$this->logout();
 			redirect();
 		}
 
 		// android.exs.lv pats prot apstrādāt bloķētos profilus un
 		// redirekts kā tāds tam vispār neder
-		if ($this->via_android && !isset($_GET['_']) &&
+		if ($this->via_android === 0 && !isset($_GET['_']) &&
 				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 			$this->logout();
 			set_flash('Pieeja lapai ir liegta!', 'error');
@@ -201,7 +201,7 @@ class Auth {
 
 			// android.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder
-			if (!$this->via_android && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			if ($this->via_android === 0 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
 				$this->error = 3;
 				set_flash('Pieeja lapai ir liegta!', 'error');
