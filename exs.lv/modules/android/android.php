@@ -105,45 +105,24 @@ if (isset($_GET['banstatus'])) {
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
 } else if (isset($_GET['login'])) {
 
-    // lietotāji vēl bez modiem, kuri lietotnē varēs autorizēties
-    $allowed_users = array(
-        6890, // Worst
-        14887, // Danalabi
-        140, // Hibs
-        21018 // mokšķis
-    );
-
-    // lokālai testēšanai
-    if (isset($mypasswd) && isset($auto_login) && $auto_login === true) {
-        $auth->login('durvis', $mypasswd, $auth->xsrf);
-        
-        if ($auth->ok && !im_mod() && !in_array($auth->id, $allowed_users)) {
-            $auth->logout();
-            a_error('Pieeja tikai ar zelta kontu');
-            a_log('Nesaņēma atļauju autorizēties');
-            
-        } else if (!$auth->ok) {
-            a_error('Kļūdaini dati');
-        } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            a_fetch_ban(2);
-        } else {
-            a_load_profile();
-        }
-
-    } else if (isset($_POST['username']) && isset($_POST['password'])) {
+    if (isset($_POST['username']) && isset($_POST['password'])) {
     
         $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
         
-        if ($auth->ok && !im_mod() && !in_array($auth->id, $allowed_users)) {
-            $auth->logout();
-            a_error('Pieeja tikai ar zelta kontu');
-            a_log('Nesaņēma atļauju autorizēties');
-            
-        } else if (!$auth->ok) {
+        if (!$auth->ok) {
             a_error('Nepareizi ievadīti piekļuves dati');
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             a_fetch_ban(2);
         } else {
+        
+            // atzīmēs kā android lietotāju, lai saņemtu medaļu
+            if ($auth->android_seen == 0) {
+                $db->update('users', $auth->id, array(
+                    'android_seen' => 1
+                ));
+                $auth->android_seen = 1;
+            }
+        
             a_load_profile();
         }
     }
