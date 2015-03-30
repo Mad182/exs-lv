@@ -12,11 +12,11 @@ $sub_include = true;
 // ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
 // tas jāpievieno, lai Android atpazītu adreses
 if (isset($img_server) && substr($img_server, 0, 2) === '//') {
-    if (!empty($_SERVER['HTTPS'])) {
-        $img_server = 'https:'.$img_server;
-    } else {
-        $img_server = 'http:'.$img_server;
-    }
+	if (!empty($_SERVER['HTTPS'])) {
+		$img_server = 'https:'.$img_server;
+	} else {
+		$img_server = 'http:'.$img_server;
+	}
 }
 
 /**
@@ -45,11 +45,11 @@ $json_page      = null;
 // primāri katrā pieprasījumā tiek noteikts, vai lietotājam ir IP liegums,
 // un tikai pēc tam interesējas par autorizācijas statusu u.c. info
 $ip_banned = $db->get_row("
-    SELECT * FROM `banned` 
-    WHERE 
-        `active` = 1 AND 
-        `ip` = '".sanitize($auth->ip)."'
-    LIMIT 1
+	SELECT * FROM `banned` 
+	WHERE 
+		`active` = 1 AND 
+		`ip` = '".sanitize($auth->ip)."'
+	LIMIT 1
 ");
 
 // ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
@@ -57,88 +57,88 @@ $ip_banned = $db->get_row("
 // info ir jābūt noskaidrojamai vienmēr
 if (isset($_GET['banstatus'])) {
 
-    if ($ip_banned) {
-        a_fetch_ban(1, $ip_banned);
-    } else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) { 
-        a_fetch_ban(2);
-    }
+	if ($ip_banned) {
+		a_fetch_ban(1, $ip_banned);
+	} else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) { 
+		a_fetch_ban(2);
+	}
 
 // lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
 // paziņojumu par liegumu
 } else if ($ip_banned) {
-    a_fetch_ban(1, $ip_banned);
-    if ($auth->ok) {
-        $auth->logout();
-    }
-    
+	a_fetch_ban(1, $ip_banned);
+	if ($auth->ok) {
+		$auth->logout();
+	}
+	
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
 
-    // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-    // bet serveris domā pretēji un atved šeit, labāk izautorizēt
-    if (isset($_GET['login'])) {
-        a_log('Kā pieteicies lietotājs centās pieteikties atkārtoti');
-        $auth->logout();
-    }
+	// ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
+	// bet serveris domā pretēji un atved šeit, labāk izautorizēt
+	if (isset($_GET['login'])) {
+		a_log('Kā pieteicies lietotājs centās pieteikties atkārtoti');
+		$auth->logout();
+	}
 
-    // primāri laikam jau ļaut izlogoties arī tad, ja ir profila liegums :)
-    // bet lietotnē neesmu iestrādājis logout pogu lieguma skatā, mwhahaha
-    if (isset($_GET['logout'])) {
-        $auth->logout();        
-        // šeit nav jēgas rūpēties par atbildi, jo lietotne tādu negaidīs
+	// primāri laikam jau ļaut izlogoties arī tad, ja ir profila liegums :)
+	// bet lietotnē neesmu iestrādājis logout pogu lieguma skatā, mwhahaha
+	if (isset($_GET['logout'])) {
+		$auth->logout();        
+		// šeit nav jēgas rūpēties par atbildi, jo lietotne tādu negaidīs
 
-    // pārbauda, vai ir profila liegums, lai lietotnē varētu parādīt paziņojumu
+	// pārbauda, vai ir profila liegums, lai lietotnē varētu parādīt paziņojumu
 	} else if (!empty($busers) && !empty($busers[$auth->id])) {      
-        a_fetch_ban(2);
+		a_fetch_ban(2);
 
-    // atvērs pieprasīto moduli un tajā izpildīs darbības
+	// atvērs pieprasīto moduli un tajā izpildīs darbības
 	} else if (file_exists(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php')) {
 		include(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php');
-        
-    // šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
-    // sasinhronizējies starp serveri un lietotni
+		
+	// šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
+	// sasinhronizējies starp serveri un lietotni
 	} else {
-        a_log('Pieteicies lietotājs veica nezināmu pieprasījumu');
-        a_error('Kļūdains pieprasījums (#1)');
-    }
+		a_log('Pieteicies lietotājs veica nezināmu pieprasījumu');
+		a_error('Kļūdains pieprasījums (#1)');
+	}
 
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
 } else if (isset($_GET['login'])) {
 
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-    
-        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-        
-        if (!$auth->ok) {
-            a_error('Nepareizi ievadīti piekļuves dati');
-        } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            a_fetch_ban(2);
-        } else {
-        
-            // atzīmēs kā android lietotāju, lai saņemtu medaļu
-            if ($auth->android_seen == 0) {
-                $db->update('users', $auth->id, array(
-                    'android_seen' => 1
-                ));
-                $auth->android_seen = 1;
-            }
-        
-            a_load_profile();
-        }
-    }
+	if (isset($_POST['username']) && isset($_POST['password'])) {
+	
+		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
+		
+		if (!$auth->ok) {
+			a_error('Nepareizi ievadīti piekļuves dati');
+		} else if (!empty($busers) && !empty($busers[$auth->id])) {
+			a_fetch_ban(2);
+		} else {
+		
+			// atzīmēs kā android lietotāju, lai saņemtu medaļu
+			if ($auth->android_seen == 0) {
+				$db->update('users', $auth->id, array(
+					'android_seen' => 1
+				));
+				$auth->android_seen = 1;
+			}
+		
+			a_load_profile();
+		}
+	}
 
 // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un sūta pieprasījumu,
 // bet serveris jau dzēsis sesiju, nonāks šeit
 } else {
-    a_error('Lūdzu, autorizējies');
+	a_error('Lūdzu, autorizējies');
 }
 
 $arr = array(
 	'state'     => $json_state,
 	'message'   => $json_message,
-    'is_banned' => $json_banned,
+	'is_banned' => $json_banned,
 	'is_online' => $auth->ok,
-    'xsrf'      => a_make_xsrf(),
+	'xsrf'      => a_make_xsrf(),
 	'response'  => $json_page
 );
 
