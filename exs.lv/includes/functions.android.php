@@ -93,26 +93,24 @@ function a_log($text) {
 }
 
 /**
- *  Atgriezīs info par lietotāju, kuru lietotne fonā pieprasīs samērā bieži,
- *  lai atjaunotu gan NavigationDrawer notifikācijas,
- *  gan veiktu citas darbības.
+ *  Ielādēs informāciju, kādu lietotne vēlas saņemt pie veiksmīgas autorizācijas.
  */
-function a_status_info() {
+function a_load_profile() {
     global $db, $auth, $img_server;
     
     // nelasīto vēstuļu skaits
     $msgs = $db->get_var("
         SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
     ");
-    
-    a_append(array('status_info' => array(
+
+    a_append(array('profile' => array(
         'id' => (int)$auth->id,
         'nick' => $auth->nick,
         'level' => (int)$auth->level,
         'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
         'usertitle' => $auth->custom_title,
-        'cnt_online' => (int)$auth->hosts_online,
-        'cnt_unread_msgs' => (int)$msgs
+        'users_online' => (int)$auth->hosts_online,
+        'inbox_unread' => (int)$msgs
     )));
 }
 
@@ -280,7 +278,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 	$is_online = false;
     $is_banned = false;
-    $device = 0; // 0 - dators, 1 - mob. tel.
+    $device = 0; // 0 - dators, 1 - mob. tel., 2 - androīda app
 
 	// vai lietotājs ir tiešsaistē?
 	if ((!empty($online_users['onlineusers'][$user_id])) || 
@@ -290,8 +288,11 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 		$is_online = true;
 	}
 
-    // vai lietotājs lapu skatās caur telefonu?
-    if (!empty($online_users['mobileusers']) && 
+    // caur kādu ierīci lietotājs ielādējis saturu?
+    if (!empty($online_users['androidusers']) && 
+        in_array($user_nick, $online_users['androidusers'])) {
+        $device = 2;
+    } else if (!empty($online_users['mobileusers']) && 
         in_array($user_nick, $online_users['mobileusers'])) {
         $device = 1;
     }
@@ -393,9 +394,6 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
  *
  *  Atgriezīs sarakstu ar tiešsaistē esošajiem lietotājiem 
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
- *
- *  Klāt pievienos arī informāciju par tiešsaistē esošiem lietotājiem
- *  katrā klasē.
  */
 function a_fetch_online($force = false) {
 	global $db, $m, $auth, $android_lang;
@@ -429,13 +427,13 @@ function a_fetch_online($force = false) {
         ");
 
         if (!$lastseen) {
-            a_error('Neviena lietotāja nav tiešsaistē');
+            a_append(array(
+                'online' => 0,
+                'registered' => 0,
+                'users' => array()
+            ));
             return false;
         }
-        
-        // ja masīvā vienmēr būs vismaz viens elements,
-        // to pārveidos par objektu, nevis atstās masīvu
-        $classes['-1'] = 0;
         
         $cnt_registered = 0;
 
@@ -443,7 +441,10 @@ function a_fetch_online($force = false) {
 
             // noteiks ierīci, no kādas lietotājs pieslēdzies
             $device = 0;
-            if (!empty($online_users['mobileusers']) && 
+            if (!empty($online_users['androidusers']) && 
+                in_array($user->nick, $online_users['androidusers'])) {
+                $device = 2; // androīda apps
+            } else if (!empty($online_users['mobileusers']) && 
                 in_array($user->nick, $online_users['mobileusers'])) {
                 $device = 1; // mob. tel.
             } else {
@@ -465,24 +466,16 @@ function a_fetch_online($force = false) {
                 'device' => (int)$device
             );
             
-            // palielinās lietotāju skaitu šī lietotāja klasē
-            if (isset($classes[$user->level])) {
-                $classes[$user->level] += 1;
-            } else {
-                $classes[$user->level] = 1;
-            }
-            
             $cnt_registered++;
         }
 
         $data = array(
             'online' => (int)$auth->hosts_online,
             'registered' => (int)$cnt_registered,
-            'users' => $online,
-            'by_classes' => $classes
+            'users' => $online
         );
         
-		$m->set('android-online-'.$android_lang, $data, false, 30);
+		$m->set('android-online-'.$android_lang, $data, false, 15);
 	}
     
 	a_append($data);

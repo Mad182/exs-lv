@@ -52,7 +52,11 @@ if ($var1 === 'received') {
     ");
     
     if (!$pms) {
-        a_append(array('endoflist' => true));
+        a_append(array(
+            'endoflist' => true,
+            'unread' => 0,
+            'messages' => array()
+        ));
     } else {
 
         $messages = array();
@@ -123,14 +127,10 @@ if ($var1 === 'received') {
         $_SESSION['antiflood'] = time();
         
         $send_to = (int)$_POST['msg_to'];
-        $send_title = sanitize(trim(stripslashes(h(strip_tags($_POST['msg_title'])))));
-        $send_title = (!$send_title) ? '[bez nosaukuma]' : $send_title;
-        $send_title = str_replace('Re:Re:', 'Re:', $send_title);
-        $send_body = htmlpost2db($_POST['msg_content']);
-        
+        $send_body = htmlpost2db($_POST['msg_content']);        
         $receiver = get_user($send_to, true);
 
-        if (!get_user($receiver)) {
+        if (!$receiver) {
             a_error('Norādītais saņēmējs neeksistē');
             a_log('Centās nosūtīt vēstuli neeksistējošam lietotājam (id:'.$send_to.')');
         } else if (empty($send_body)) {
@@ -138,22 +138,20 @@ if ($var1 === 'received') {
         } else {
         
             // vēstules virsraksta apstrāde
-            $send_title = sanitize(trim(stripslashes(h(strip_tags($send_title)))));
+            $send_title = sanitize(trim(stripslashes(h(strip_tags($_POST['msg_title'])))));
             if (!$send_title) {
                 $send_title = '[bez nosaukuma]';
             }
-            $send_title = str_replace('Re:Re:', 'Re:', $send_title);
-
-            // citas vērtības
-            $date = date('Y-m-d H:i:s');
+            $send_title = str_replace(array('Re:Re:', 'Re: Re:'), 'Re:', $send_title);
             
             $db->insert('pm', array(
                 'from_uid' => $auth->id,
                 'to_uid' => $receiver->id,
-                'date' => $date,
+                'date' => date('Y-m-d H:i:s'),
                 'ip' => $auth->ip,
                 'title' => $send_title,
-                'text' => $send_body
+                'text' => $send_body,
+                'device' => 2
             ));
             
             $msg_id = $db->insert_id;
@@ -163,8 +161,8 @@ if ($var1 === 'received') {
 
             // atbilstoši notifikāciju iestatījumiem,
             // sūtīs e-pastu par saņemtu vēstuli
-            if ($receiver->pm_notify_email == 2 ||
-                ($receiver->pm_notify_email == 1 && strtotime($receiver->lastseen) < time() - 259200)) {
+            if (!isset($android_local) && ($receiver->pm_notify_email == 2 ||
+                ($receiver->pm_notify_email == 1 && strtotime($receiver->lastseen) < time() - 259200))) {
 
                 $subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
                 $message = '
@@ -272,7 +270,10 @@ if ($var1 === 'received') {
     );
     
     if (!$pms) {
-        a_append(array('endoflist' => true));
+        a_append(array(
+            'endoflist' => true,
+            'messages' => array()
+        ));
     } else {
     
         $messages = array();

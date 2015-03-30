@@ -14,6 +14,41 @@ require(CORE_PATH . '/includes/functions.embed.php');
 require(CORE_PATH . '/includes/functions.legacy.php');
 
 /**
+ *  Atgriezīs pareizu apakšprojekta $lang vērtību.
+ */
+function get_lang($get_super_lang = false) {
+	
+	$tmp_lang = get_global('lang', 1);
+	
+	// uzreiz atgriezīs atvērtā projekta vērtību, nepārbaudot, vai
+	// projektā ir definēti "apakšprojekti"
+	if ($get_super_lang) {
+		return $tmp_lang;
+	}
+	
+	// android.exs.lv vienmēr būs 2, lai kādu projektu caur to skatītu,
+	// bet pareizai datu atlasei jāzina tieši skatītā apakšprojekta vērtība
+	if ($tmp_lang === 2) {
+		$tmp_lang = get_global('android_lang', 1);
+	}
+	
+	return $tmp_lang;
+}
+
+/**
+ *  Atgriezīs globālo vērtību ar norādīto atslēgu vai noklusēto vērtību,
+ *  ja atslēga netiks atrasta.
+ */
+function &get_global($key_name, $default_value = null) {
+
+	if (array_key_exists($key_name, $GLOBALS)) {
+		return $GLOBALS[$key_name];
+	}
+
+	return $default_value;
+}
+
+/**
  *  Pārveido stringu par pieļaujamu klases nosaukumu
  */
 function as_class_name($name = '') {
@@ -133,16 +168,13 @@ function push($action, $avatar = '', $multi = '') {
  * Veic ierakstu lietotāja pēdējās darbībās
  */
 function userlog($user, $action, $avatar = '', $multi = '') {
-	global $db, $lang;
-	$tmp_lang = $lang;
-	if ($lang === 2) { // android.exs.lv
-		global $android_lang;
-		$tmp_lang = $android_lang;
-	}
+	global $db;
+	$lang = get_lang();
+
 	if (!empty($multi)) {
-		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$tmp_lang' LIMIT 2");
+		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang' LIMIT 2");
 	}
-	$db->query("INSERT INTO `userlogs` (time,user,avatar,action,multi,lang) VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$tmp_lang')");
+	$db->query("INSERT INTO `userlogs` (time,user,avatar,action,multi,lang) VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang')");
 	return true;
 }
 
@@ -150,7 +182,7 @@ function userlog($user, $action, $avatar = '', $multi = '') {
  * Pievieno lietotāja notifikāciju
  */
 function notify($user_id, $type, $place = 0, $url = '', $info = '') {
-	global $db, $lang;
+	global $db;
 	/*
 	  tipi:
 	  0 - atbilde komentaram
@@ -177,24 +209,21 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	$url = sanitize($url);
 	$info = sanitize($info);
 
-	$nlang = $lang;
-	if ($lang === 2) { // android.exs.lv
-		global $android_lang;
-		$nlang = $android_lang;
-	}
+	$lang = get_lang();
+
 	if (in_array($type, array(5, 6, 7, 9, 10, 11))) {
 		$nlang = 1;
 	}
 
 	if (!empty($user_id)) {
-		if ($id = $db->get_var("SELECT `id` FROM `notify` WHERE `user_id` = '$user_id' AND `type` = '$type' AND `foreign_key` = '$place' AND `lang` = '$nlang'")) {
+		if ($id = $db->get_var("SELECT `id` FROM `notify` WHERE `user_id` = '$user_id' AND `type` = '$type' AND `foreign_key` = '$place' AND `lang` = '$lang'")) {
 			$db->update('notify', $id, array('bump' => 'NOW()'));
 			if (!empty($info)) {
 				$db->update('notify', $id, array('info' => $info));
 			}
 			return 2;
 		} else {
-			$db->query("INSERT INTO `notify` (`user_id`,`type`,`foreign_key`,`bump`,`url`,`info`,`lang`) VALUES ('$user_id','$type','$place',NOW(),'$url','$info','$nlang')");
+			$db->query("INSERT INTO `notify` (`user_id`,`type`,`foreign_key`,`bump`,`url`,`info`,`lang`) VALUES ('$user_id','$type','$place',NOW(),'$url','$info','$lang')");
 			return 1;
 		}
 	}
@@ -350,7 +379,9 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	if ($online !== 'disable') {
 		if ($online || (!empty($userid) && !empty($online_users['onlineusers'][$userid])) || (!empty($online_users['onlineusers']) && in_array($nick, $online_users['onlineusers']))) {
-			if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
+			/*if (!empty($online_users['androidusers']) && in_array($nick, $online_users['androidusers'])) {
+				$star = '<span class="lb">*</span>';
+			} else*/ if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
 				$star = '<span class="g">*</span>';
 			} else {
 				$star = '<span class="r">*</span>';
@@ -1018,7 +1049,8 @@ function get_online($force = false) {
 		$lastseen = $db->get_results("SELECT
 			`users`.`id`,
 			`users`.`nick`,
-			`users`.`mobile`
+			`users`.`mobile`,
+			`users`.`android`
 		FROM
 			`users`,
 			`visits`
@@ -1029,12 +1061,15 @@ function get_online($force = false) {
 
 		$data = array(
 			'onlineusers' => array(),
-			'mobileusers' => array()
+			'mobileusers' => array(),
+			'androidusers' => array()
 		);
 		if ($lastseen) {
 			foreach ($lastseen as $usr) {
 				$data['onlineusers'][$usr->id] = $usr->nick;
-				if ($usr->mobile) {
+				if ($usr->android) {
+					$data['androidusers'][$usr->id] = $usr->nick;
+				} else if ($usr->mobile) {
 					$data['mobileusers'][$usr->id] = $usr->nick;
 				}
 			}
@@ -1941,7 +1976,7 @@ function post_mb($post) {
 		'bump' => 0,
 		'type' => 'miniblog',
 		'lang' => $lang,
-        'device' => 0
+		'device' => 0
 	);
 
 	$post = array_merge($default, $post);

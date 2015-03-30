@@ -96,8 +96,10 @@ if (!$auth->ok) {
 
 					if ($receiver) {
 
+						$device_type = ($auth->via_android) ? 2 : 0;
+
 						//write into database
-						$db->query("INSERT INTO pm (id,from_uid,to_uid,date,ip,title,text) VALUES (NULL,'$auth->id','$receiver->id','$date','$auth->ip','$send_title','$send_body')");
+						$db->query("INSERT INTO pm (id,from_uid,to_uid,date,ip,title,text,device) VALUES (NULL,'$auth->id','$receiver->id','$date','$auth->ip','$send_title','$send_body','$device_type')");
 						$msgid = $db->insert_id;
 
 						notify($receiver->id, 9);
