@@ -324,7 +324,7 @@ if ($var1 === 'notifications') {
         SELECT `id`, `title`, `avatar`, `owner_seenposts`, `posts`, `members`
         FROM `clans`
         WHERE 
-            `owner = ".(int)$auth->id." AND
+            `owner` = ".(int)$auth->id." AND
             `lang` = ".(int)$android_lang." 
         ORDER BY `title` ASC
     ");
