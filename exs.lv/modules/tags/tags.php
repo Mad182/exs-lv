@@ -35,7 +35,7 @@ if (isset($_GET['var1'])) {
 			$tpl->newBlock('tags-articles');
 			foreach ($findtaged as $taged) {
 				if ($taged->type == 0) {
-					$article = $db->get_row("SELECT `id`,`title`,`strid`,`author`,`text` FROM `pages` WHERE `id` = '" . $taged->page_id . "' ORDER BY `date` DESC");
+					$article = $db->get_row("SELECT `id`,`title`,`strid`,`author`,`text`,`date` FROM `pages` WHERE `id` = '" . $taged->page_id . "' ORDER BY `date` DESC");
 					//pr($article->text);
 					if ($article) {
 						$author = get_user($article->author);
@@ -45,7 +45,8 @@ if (isset($_GET['var1'])) {
 							'text' => textlimit($article->text, 170),
 							'title' => $article->title,
 							'id' => $article->id,
-							'author' => $author->nick
+							'author' => $author->nick,
+							'date' => time_ago(strtotime($article->date))
 						));
 					} else {
 						//clean database from broken tags
@@ -54,12 +55,12 @@ if (isset($_GET['var1'])) {
 				}
 			}
 		}
-		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 27");
+		$findtaged = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$tag->id' AND `type` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 30");
 		if ($findtaged) {
 			$tpl->newBlock('tags-images');
 			foreach ($findtaged as $taged) {
 				if ($taged->type == 1) {
-					$article = $db->get_row("SELECT `id`, `text`, `thb`, `uid` FROM images WHERE `id` = " . $taged->page_id);
+					$article = $db->get_row("SELECT `id`, `text`, `thb`, `uid` FROM `images` WHERE `id` = " . $taged->page_id);
 					if ($article) {
 						$tpl->newBlock('node-img');
 						$tpl->assign(array(
@@ -80,18 +81,24 @@ if (isset($_GET['var1'])) {
 			$tpl->newBlock('tags-miniblogs');
 			foreach ($findtaged as $taged) {
 				if ($taged->type == 2) {
-					$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = ('" . $taged->page_id . "') AND `removed` = '0'");
+					$mb = $db->get_row("SELECT `id`, `text`, `author`, `date` FROM `miniblog` WHERE `id` = '" . $taged->page_id . "' AND `removed` = '0'");
 
 					if ($mb) {
 						$mb->text = mb_get_title($mb->text);
 						$url_title = mkslug(textlimit($mb->text, 36, ''));
-						$text = textlimit(hide_spoilers($mb->text), 64, '');
+						$text = textlimit(hide_spoilers($mb->text), 128, '');
 						$tpl->newBlock('tags-articles-node-mb');
+						
+						$user = get_user($mb->author);
+						
 						$tpl->assign(array(
 							'uid' => $mb->author,
 							'id' => $mb->id,
+							'av' => get_avatar($user),
 							'url' => $url_title,
-							'text' => $text
+							'text' => $text,
+							'author' => $user->nick,
+							'date' => time_ago(strtotime($mb->date))
 						));
 					} else {
 						//clean database from broken tags
@@ -105,7 +112,7 @@ if (isset($_GET['var1'])) {
 			$tpl->newBlock('tags-groups');
 			foreach ($findtaged as $taged) {
 				if ($taged->type == 3) {
-					$group = $db->get_row("SELECT id,title FROM clans WHERE `id` = ('" . $taged->page_id . "')");
+					$group = $db->get_row("SELECT `id`, `title` FROM `clans` WHERE `id` = '" . $taged->page_id . "'");
 
 					if ($group) {
 						$tpl->newBlock('tags-articles-node-group');

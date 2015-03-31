@@ -58,11 +58,11 @@ if ($auth->ok) {
 				$title = title2db($_POST['title']);
 			}
 			if ($note) {
-				$db->query("UPDATE notes SET content = '$body', modified = NOW() WHERE id = '$note->id'");
+				$db->query("UPDATE `notes` SET `content` = '$body', `modified` = NOW(), `ip` = '$auth->ip' WHERE `id` = '$note->id'");
 				$id = $note->id;
 			} else {
-				$db->query("INSERT INTO notes (user_id,title,content,created,modified)
-				    VALUES ('$auth->id','$title','$body',NOW(),NOW())");
+				$db->query("INSERT INTO `notes` (`user_id`,`title`,`content`,`ip`,`created`,`modified`)
+				    VALUES ('$auth->id','$title','$body','$auth->ip',NOW(),NOW())");
 				$id = $db->insert_id;
 			}
 

@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2015 at 01:49 PM
--- Server version: 10.0.15-MariaDB-1~precise
--- PHP Version: 5.3.10-1ubuntu3.15
+-- Generation Time: Mar 27, 2015 at 03:06 PM
+-- Server version: 10.0.17-MariaDB-1~precise
+-- PHP Version: 5.5.22-1+deb.sury.org~precise+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `exs`
@@ -31,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `ajax_comments` (
   `user_id` mediumint(9) DEFAULT '0',
   `parent` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
   `time` int(11) NOT NULL DEFAULT '0',
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `text` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -52,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `android_logs` (
   `created_at` datetime NOT NULL,
   `created_ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=110 ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `animations` (
   `added_by` mediumint(9) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `image` (`image`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=191 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=198 ;
 
 -- --------------------------------------------------------
 
@@ -82,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `approve` (
   `title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   `author` mediumint(9) NOT NULL,
   `date` datetime NOT NULL,
-  `ip` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `is_wide` tinyint(1) NOT NULL DEFAULT '0',
   `lang` tinyint(4) NOT NULL DEFAULT '1',
@@ -91,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `approve` (
   KEY `lang` (`lang`),
   KEY `removed` (`removed`),
   KEY `author` (`author`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=2663 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=2732 ;
 
 -- --------------------------------------------------------
 
@@ -107,10 +101,11 @@ CREATE TABLE IF NOT EXISTS `autoawards` (
   `importance` mediumint(9) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_3` (`user_id`,`award`),
   KEY `user_id` (`user_id`),
   KEY `importance` (`importance`),
   KEY `user_id_2` (`user_id`,`importance`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=72736 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=74707 ;
 
 -- --------------------------------------------------------
 
@@ -125,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `avatar_history` (
   `changed` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8819 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9181 ;
 
 -- --------------------------------------------------------
 
@@ -159,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `banned` (
   `time` int(11) NOT NULL DEFAULT '0',
   `length` int(11) NOT NULL DEFAULT '1',
   `author` mediumint(9) NOT NULL,
-  `ip` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `lang` smallint(6) NOT NULL DEFAULT '0',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
@@ -169,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `banned` (
   KEY `length` (`length`),
   KEY `lang` (`lang`),
   KEY `active` (`active`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=9605 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=9741 ;
 
 -- --------------------------------------------------------
 
@@ -182,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `blacklisted_sites` (
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=162 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=173 ;
 
 -- --------------------------------------------------------
 
@@ -199,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `bookmarks` (
   KEY `userid` (`userid`),
   KEY `pageid` (`pageid`),
   KEY `foreign_table` (`foreign_table`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=6479 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=6512 ;
 
 -- --------------------------------------------------------
 
@@ -247,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `cat` (
   KEY `textid_lang` (`textid`,`lang`),
   KEY `id_lang` (`id`,`lang`),
   KEY `textid` (`textid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=2125 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=2224 ;
 
 -- --------------------------------------------------------
 
@@ -263,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `cat_ignore` (
   KEY `category_id` (`category_id`),
   KEY `user_id` (`user_id`),
   KEY `user_category` (`user_id`,`category_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1908 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1978 ;
 
 -- --------------------------------------------------------
 
@@ -276,6 +271,7 @@ CREATE TABLE IF NOT EXISTS `cat_moderators` (
   `category_id` mediumint(9) NOT NULL DEFAULT '0',
   `user_id` mediumint(9) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq` (`category_id`,`user_id`),
   KEY `category_id` (`category_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1080 ;
@@ -305,6 +301,7 @@ CREATE TABLE IF NOT EXISTS `clans` (
   `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `text` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'none.png',
+  `firstpage_module` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_created` int(10) NOT NULL,
   `date_modified` int(10) NOT NULL,
   `owner` mediumint(6) NOT NULL,
@@ -332,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `clans` (
   KEY `owner_2` (`owner`,`title`),
   KEY `interest_id` (`interest_id`),
   KEY `lang` (`lang`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=561 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=568 ;
 
 -- --------------------------------------------------------
 
@@ -363,11 +360,11 @@ CREATE TABLE IF NOT EXISTS `clans_members` (
   `moderator` tinyint(1) NOT NULL DEFAULT '0',
   `seenposts` mediumint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `user_clan` (`user`,`clan`),
   KEY `clan` (`clan`),
   KEY `user` (`user`),
-  KEY `date_added` (`date_added`),
-  KEY `user_clan` (`user`,`clan`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=63832 ;
+  KEY `date_added` (`date_added`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=64863 ;
 
 -- --------------------------------------------------------
 
@@ -405,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `clans_tabs` (
   KEY `slug` (`slug`),
   KEY `clan_id` (`clan_id`),
   KEY `public` (`public`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=685 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=701 ;
 
 -- --------------------------------------------------------
 
@@ -421,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `author` mediumint(9) NOT NULL,
   `text` text COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `vote_value` smallint(6) NOT NULL DEFAULT '0',
   `vote_users` text COLLATE utf8_unicode_ci NOT NULL,
   `mail` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
@@ -437,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `pid_parent` (`pid`,`parent`,`removed`),
   KEY `author_removed` (`author`,`removed`),
   KEY `vote_value` (`vote_value`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=751108 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=755061 ;
 
 -- --------------------------------------------------------
 
@@ -446,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
 --
 
 CREATE TABLE IF NOT EXISTS `counter_ip` (
-  `ip_addr` char(30) COLLATE utf8_unicode_ci NOT NULL,
+  `ip_addr` char(45) COLLATE utf8_unicode_ci NOT NULL,
   `last_hit` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `site_id` tinyint(4) NOT NULL DEFAULT '1',
   UNIQUE KEY `ip_addr_site_id` (`ip_addr`,`site_id`),
@@ -497,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `desas` (
   KEY `winner` (`winner`),
   KEY `user_1_winner` (`user_1`,`winner`),
   KEY `user_2_winner` (`user_2`,`winner`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=49115 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=49166 ;
 
 -- --------------------------------------------------------
 
@@ -522,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `dofollow_sites` (
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=202 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=216 ;
 
 -- --------------------------------------------------------
 
@@ -563,7 +560,7 @@ CREATE TABLE IF NOT EXISTS `email_blacklist` (
   `domain` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain` (`domain`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=731 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=743 ;
 
 -- --------------------------------------------------------
 
@@ -587,9 +584,9 @@ CREATE TABLE IF NOT EXISTS `failed_logins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
   `username` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=56334 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59957 ;
 
 -- --------------------------------------------------------
 
@@ -641,11 +638,12 @@ CREATE TABLE IF NOT EXISTS `friends` (
   `date_confirmed` datetime NOT NULL,
   `confirmed` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `friend1_2` (`friend1`,`friend2`),
   KEY `friend1` (`friend1`),
   KEY `friend2` (`friend2`),
   KEY `confirmed` (`confirmed`),
   KEY `date_confirmed` (`date_confirmed`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=59560 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=60309 ;
 
 -- --------------------------------------------------------
 
@@ -659,7 +657,7 @@ CREATE TABLE IF NOT EXISTS `galcom` (
   `author` mediumint(9) NOT NULL,
   `text` text COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
-  `ip` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `vote_value` smallint(6) NOT NULL DEFAULT '0',
   `vote_users` text COLLATE utf8_unicode_ci NOT NULL,
   `edit_time` int(11) NOT NULL DEFAULT '0',
@@ -673,7 +671,7 @@ CREATE TABLE IF NOT EXISTS `galcom` (
   KEY `author_removed` (`author`,`removed`),
   KEY `vote_value` (`vote_value`),
   KEY `author_vote` (`author`,`vote_value`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=542017 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=543495 ;
 
 -- --------------------------------------------------------
 
@@ -689,7 +687,7 @@ CREATE TABLE IF NOT EXISTS `gamescore` (
   `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=246 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=258 ;
 
 -- --------------------------------------------------------
 
@@ -702,7 +700,7 @@ CREATE TABLE IF NOT EXISTS `https_sites` (
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=160 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=186 ;
 
 -- --------------------------------------------------------
 
@@ -719,7 +717,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   `text` text COLLATE utf8_unicode_ci NOT NULL,
   `date` datetime NOT NULL,
   `bump` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `posts` mediumint(9) NOT NULL DEFAULT '0',
   `closed` tinyint(1) NOT NULL DEFAULT '0',
   `views` mediumint(9) NOT NULL,
@@ -740,7 +738,7 @@ CREATE TABLE IF NOT EXISTS `images` (
   KEY `lang` (`lang`),
   KEY `uid_lang` (`uid`,`lang`),
   KEY `lang_interest` (`lang`,`interest_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=65740 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=65949 ;
 
 -- --------------------------------------------------------
 
@@ -753,7 +751,7 @@ CREATE TABLE IF NOT EXISTS `image_sites` (
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59 ;
 
 -- --------------------------------------------------------
 
@@ -765,13 +763,13 @@ CREATE TABLE IF NOT EXISTS `imgupload` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(128) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'img',
   `user_id` mediumint(9) NOT NULL DEFAULT '0',
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `created` datetime NOT NULL,
   `file` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `path` (`path`,`file`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=46066 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47799 ;
 
 -- --------------------------------------------------------
 
@@ -811,7 +809,7 @@ CREATE TABLE IF NOT EXISTS `junk` (
   `edit_user` int(11) NOT NULL DEFAULT '0',
   `edit_times` int(11) NOT NULL DEFAULT '0',
   `lang` tinyint(4) NOT NULL DEFAULT '1',
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `removed` tinyint(1) NOT NULL DEFAULT '0',
   `source` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -822,7 +820,7 @@ CREATE TABLE IF NOT EXISTS `junk` (
   KEY `posts` (`posts`),
   KEY `source` (`source`),
   KEY `removed` (`removed`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15210 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15644 ;
 
 -- --------------------------------------------------------
 
@@ -838,13 +836,13 @@ CREATE TABLE IF NOT EXISTS `junk_queue` (
   `source` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `approved` tinyint(2) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `user_id` mediumint(9) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `image` (`image`(333)),
   KEY `source` (`source`),
   KEY `approved` (`approved`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=83090 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=87384 ;
 
 -- --------------------------------------------------------
 
@@ -862,7 +860,7 @@ CREATE TABLE IF NOT EXISTS `junk_votes` (
   KEY `junk_id` (`junk_id`),
   KEY `user_id` (`user_id`),
   KEY `created` (`created`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=81483 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=85159 ;
 
 -- --------------------------------------------------------
 
@@ -899,13 +897,13 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `action` text COLLATE utf8_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `foreign_table` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `foreign_key` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `created` (`created`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=254933 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=269963 ;
 
 -- --------------------------------------------------------
 
@@ -988,7 +986,7 @@ CREATE TABLE IF NOT EXISTS `miniblog` (
   `parent` int(11) NOT NULL DEFAULT '0',
   `type` enum('miniblog','junk') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'miniblog',
   `reply_to` int(11) NOT NULL DEFAULT '0',
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `removed` tinyint(1) NOT NULL DEFAULT '0',
   `bump` int(11) NOT NULL DEFAULT '0',
   `posts` smallint(4) NOT NULL DEFAULT '0',
@@ -1004,6 +1002,7 @@ CREATE TABLE IF NOT EXISTS `miniblog` (
   `edit_times` smallint(6) NOT NULL DEFAULT '0',
   `lang` tinyint(4) NOT NULL DEFAULT '1',
   `private` tinyint(1) NOT NULL DEFAULT '0',
+  `device` smallint(6) NOT NULL DEFAULT '0' COMMENT '0-web, 1-m.exs.lv, 2-android',
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`),
   KEY `groupid` (`groupid`),
@@ -1020,7 +1019,7 @@ CREATE TABLE IF NOT EXISTS `miniblog` (
   KEY `author_removed` (`author`,`removed`) COMMENT 'Karma update',
   KEY `author_removed_posts` (`author`,`removed`,`posts`) COMMENT 'Karma update',
   KEY `miniblog_list` (`parent`,`groupid`,`removed`,`lang`,`bump`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4142564 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4251794 ;
 
 -- --------------------------------------------------------
 
@@ -1098,7 +1097,7 @@ CREATE TABLE IF NOT EXISTS `movie_ratings` (
   KEY `user_id` (`user_id`),
   KEY `rating` (`rating`),
   KEY `page_user` (`page_id`,`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11161 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11233 ;
 
 -- --------------------------------------------------------
 
@@ -1113,7 +1112,7 @@ CREATE TABLE IF NOT EXISTS `nick_history` (
   `changed` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=396 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=407 ;
 
 -- --------------------------------------------------------
 
@@ -1126,11 +1125,12 @@ CREATE TABLE IF NOT EXISTS `notes` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `title` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `weight` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2302 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2367 ;
 
 -- --------------------------------------------------------
 
@@ -1155,7 +1155,7 @@ CREATE TABLE IF NOT EXISTS `notify` (
   KEY `user_id_2` (`user_id`,`bump`),
   KEY `lang` (`lang`),
   KEY `user_id_type` (`user_id`,`type`) COMMENT 'Karma update'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=914271 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=947781 ;
 
 -- --------------------------------------------------------
 
@@ -1174,7 +1174,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `author` mediumint(6) NOT NULL,
   `date` datetime NOT NULL,
   `bump` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sm_avatar` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `posts` mediumint(9) NOT NULL DEFAULT '0',
@@ -1215,7 +1215,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   KEY `category_id` (`category`,`id`),
   KEY `lang_bump` (`lang`,`bump`),
   KEY `movies_index` (`category`,`lang`,`date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT AUTO_INCREMENT=66112 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT AUTO_INCREMENT=66483 ;
 
 -- --------------------------------------------------------
 
@@ -1235,24 +1235,7 @@ CREATE TABLE IF NOT EXISTS `pages_ver` (
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
   KEY `time` (`time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44514 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `players_online`
---
-
-CREATE TABLE IF NOT EXISTS `players_online` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` datetime NOT NULL,
-  `count` int(11) NOT NULL DEFAULT '0',
-  `game` varchar(12) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'mta',
-  PRIMARY KEY (`id`),
-  KEY `time` (`time`),
-  KEY `game` (`game`),
-  KEY `game_2` (`game`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=64341 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=45187 ;
 
 -- --------------------------------------------------------
 
@@ -1271,7 +1254,7 @@ CREATE TABLE IF NOT EXISTS `player_likes` (
   KEY `video_id` (`video_id`),
   KEY `user_id` (`user_id`),
   KEY `created` (`created`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8295 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8298 ;
 
 -- --------------------------------------------------------
 
@@ -1284,7 +1267,7 @@ CREATE TABLE IF NOT EXISTS `pm` (
   `from_uid` mediumint(6) NOT NULL,
   `to_uid` mediumint(6) NOT NULL,
   `date` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `title` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `text` text COLLATE utf8_unicode_ci NOT NULL,
   `is_read` tinyint(1) NOT NULL DEFAULT '0',
@@ -1302,7 +1285,7 @@ CREATE TABLE IF NOT EXISTS `pm` (
   KEY `from_uid_2` (`from_uid`,`date`),
   KEY `to_uid_is_read` (`to_uid`,`is_read`),
   KEY `from_to` (`from_uid`,`to_uid`,`date`) COMMENT 'Sarakstes vēsturei'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=646432 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=660168 ;
 
 -- --------------------------------------------------------
 
@@ -1318,7 +1301,7 @@ CREATE TABLE IF NOT EXISTS `poll` (
   `lang` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `group` (`group`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1143 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1152 ;
 
 -- --------------------------------------------------------
 
@@ -1368,7 +1351,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `question` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=4520 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=4557 ;
 
 -- --------------------------------------------------------
 
@@ -1409,7 +1392,7 @@ CREATE TABLE IF NOT EXISTS `reports` (
   KEY `deleted_by` (`deleted_by`),
   KEY `site_id` (`site_id`),
   KEY `entry_id` (`entry_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1320 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1482 ;
 
 -- --------------------------------------------------------
 
@@ -1424,7 +1407,7 @@ CREATE TABLE IF NOT EXISTS `responses` (
   PRIMARY KEY (`id`),
   KEY `qid` (`qid`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=76949 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=77538 ;
 
 -- --------------------------------------------------------
 
@@ -1484,7 +1467,7 @@ CREATE TABLE IF NOT EXISTS `rs_news` (
   PRIMARY KEY (`id`),
   KEY `hash_value` (`hash_value`),
   KEY `deleted_by` (`deleted_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=402 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=449 ;
 
 -- --------------------------------------------------------
 
@@ -1668,7 +1651,7 @@ CREATE TABLE IF NOT EXISTS `site_admins` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `site_id` (`site_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Site specific user access level' AUTO_INCREMENT=47 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Site specific user access level' AUTO_INCREMENT=49 ;
 
 -- --------------------------------------------------------
 
@@ -1700,7 +1683,7 @@ CREATE TABLE IF NOT EXISTS `sms` (
   `suspended` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `message_id` (`message_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1144 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1156 ;
 
 -- --------------------------------------------------------
 
@@ -1730,7 +1713,7 @@ CREATE TABLE IF NOT EXISTS `steam_player_info` (
   `loccityid` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=207 ;
 
 -- --------------------------------------------------------
 
@@ -1751,7 +1734,7 @@ CREATE TABLE IF NOT EXISTS `taged` (
   KEY `page_id_type` (`page_id`,`type`),
   KEY `lang` (`lang`),
   KEY `tag_id_lang` (`tag_id`,`lang`) COMMENT 'Random makona generesanai'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=354669 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=355168 ;
 
 -- --------------------------------------------------------
 
@@ -1768,7 +1751,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=53601 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=53853 ;
 
 -- --------------------------------------------------------
 
@@ -1802,7 +1785,7 @@ CREATE TABLE IF NOT EXISTS `userlogs` (
   KEY `time` (`time`),
   KEY `user_lang` (`user`,`lang`),
   KEY `lang_time` (`lang`,`time`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4714140 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4834707 ;
 
 -- --------------------------------------------------------
 
@@ -1827,7 +1810,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `posts` mediumint(9) NOT NULL DEFAULT '0',
   `karma` int(11) NOT NULL DEFAULT '0',
   `karma_bonus` smallint(6) NOT NULL DEFAULT '0',
-  `lastip` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `lastip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `connected_profiles` text COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
   `skin` tinyint(4) NOT NULL DEFAULT '3',
   `signature` text COLLATE utf8_unicode_ci NOT NULL,
@@ -1878,6 +1862,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `gender` tinyint(1) NOT NULL DEFAULT '0',
   `mobile` tinyint(1) NOT NULL DEFAULT '0',
   `mobile_seen` tinyint(1) NOT NULL DEFAULT '0',
+  `pm_notify_email` tinyint(4) NOT NULL DEFAULT '1',
   `warn_count` mediumint(9) NOT NULL DEFAULT '0',
   `source_site` tinyint(4) NOT NULL DEFAULT '1',
   `decos` text COLLATE utf8_unicode_ci NOT NULL,
@@ -1904,7 +1889,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `mail` (`mail`),
   KEY `lastfm_username` (`lastfm_username`),
   KEY `steam_id` (`steam_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT AUTO_INCREMENT=36340 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT AUTO_INCREMENT=36940 ;
 
 -- --------------------------------------------------------
 
@@ -1925,7 +1910,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   KEY `user_id` (`user_id`),
   KEY `parent_id` (`parent_id`),
   KEY `deleted_by` (`deleted_by`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=178 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=195 ;
 
 -- --------------------------------------------------------
 
@@ -1944,7 +1929,7 @@ CREATE TABLE IF NOT EXISTS `users_tmp` (
   UNIQUE KEY `nick` (`nick`),
   UNIQUE KEY `hash` (`hash`),
   KEY `mail` (`mail`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3145 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3625 ;
 
 -- --------------------------------------------------------
 
@@ -1974,7 +1959,7 @@ CREATE TABLE IF NOT EXISTS `viewprofile` (
   KEY `profile` (`profile`),
   KEY `time` (`time`),
   KEY `viewer` (`viewer`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=1478677 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=FIXED AUTO_INCREMENT=1508216 ;
 
 -- --------------------------------------------------------
 
@@ -1986,7 +1971,7 @@ CREATE TABLE IF NOT EXISTS `visits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(9) NOT NULL DEFAULT '0',
   `site_id` tinyint(4) NOT NULL DEFAULT '1',
-  `ip` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `lastseen` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -1994,7 +1979,7 @@ CREATE TABLE IF NOT EXISTS `visits` (
   KEY `ip` (`ip`),
   KEY `user_lookup` (`user_id`,`ip`,`site_id`),
   KEY `lastseen` (`lastseen`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=319892 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=340720 ;
 
 -- --------------------------------------------------------
 
@@ -2044,7 +2029,7 @@ CREATE TABLE IF NOT EXISTS `wallpapers` (
   `author` mediumint(9) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `date` (`date`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1170 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1179 ;
 
 -- --------------------------------------------------------
 
@@ -2069,7 +2054,7 @@ CREATE TABLE IF NOT EXISTS `warns` (
   KEY `user_id` (`user_id`),
   KEY `active` (`active`),
   KEY `site_id` (`site_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9444 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9759 ;
 
 -- --------------------------------------------------------
 
@@ -2085,7 +2070,7 @@ CREATE TABLE IF NOT EXISTS `wg_games` (
   `user_id` mediumint(9) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=124293 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=125242 ;
 
 -- --------------------------------------------------------
 
@@ -2104,7 +2089,7 @@ CREATE TABLE IF NOT EXISTS `wg_results` (
   KEY `date` (`date`),
   KEY `points` (`points`),
   KEY `games` (`games`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4657 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4702 ;
 
 -- --------------------------------------------------------
 
@@ -2134,7 +2119,7 @@ CREATE TABLE IF NOT EXISTS `ytlocal` (
   `yt_time` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `yt_id` (`yt_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=65194 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=80565 ;
 
 -- --------------------------------------------------------
 
@@ -2153,8 +2138,5 @@ CREATE TABLE IF NOT EXISTS `ytrss` (
   UNIQUE KEY `url` (`url`),
   KEY `user_id` (`user_id`),
   KEY `time` (`time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3335 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3742 ;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -726,15 +726,17 @@ function update_awards($user) {
 	  $awards_list['exs-cup']['state'] = 'active';
 	  } */
 
-	if (in_array($user, array(35081, 25709, 19780, 1621, 273, 703, 4438, 21411, 24437, 4432, 5969, 3650, 1, 1220, 14716, 27089))) {
+	/*if (in_array($user, array(35081, 25709, 19780, 1621, 273, 703, 4438, 21411, 24437, 4432, 5969, 3650, 1, 1220, 14716, 27089))) {
 		$awards_list['exs-party-2014'] = array(
 			'title' => 'Exs.lv ballīte 2014',
 			'state' => 'active'
 		);
-	}
+	}*/
 	
-	// TODO, kad Jānis apkopos sarakstu ar apmeklētājiem :/
-	/*if (in_array($user, array(0))) {
+	// 3. florbola turnīrs
+	/*if (in_array($user, array(1,1135,1621,1822,2357,3650,4137,4226,5056,5205,6214,6963,9418,10345,10595,11807,12108,12304,12382,
+	13004,13179,13419,14532,14782,14887,15390,16809,18057,19889,20858,21450,22518,23282,23512,24437,24822,25299,25385,25709,26091,
+	28117,31621,34075,35081,35539))) {
 		$awards_list['floorball-3'] = array(
 			'title' => 'Exs 3. florbola turnīrs 01.11.2014',
 			'state' => 'active'
