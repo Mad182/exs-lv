@@ -212,7 +212,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	$lang = get_lang();
 
 	if (in_array($type, array(5, 6, 7, 9, 10, 11))) {
-		$nlang = 1;
+		$lang = 1;
 	}
 
 	if (!empty($user_id)) {
