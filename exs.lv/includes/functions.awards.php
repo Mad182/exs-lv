@@ -227,6 +227,10 @@ function list_awards() {
 			'title' => 'Apmeklēja m.exs.lv',
 			'state' => 'inactive'
 		),
+		'android' => array(
+			'title' => '<a href="https://play.google.com/store/apps/details?id=lv.exs.android">exs.lv android lietotājs</a>',
+			'state' => 'inactive'
+		),
 		'draugiem-follow' => array(
 			'title' => 'Draugiem.lv sekotājs',
 			'state' => 'inactive'
@@ -623,6 +627,10 @@ function update_awards($user) {
 
 		if ($userr->mobile_seen == 1) {
 			$awards_list['mobile']['state'] = 'active';
+		}
+		
+		if ($userr->android_seen == 1) {
+			$awards_list['android']['state'] = 'active';
 		}
 
 		if ($userr->year_first == 1) {

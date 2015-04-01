@@ -379,9 +379,9 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	if ($online !== 'disable') {
 		if ($online || (!empty($userid) && !empty($online_users['onlineusers'][$userid])) || (!empty($online_users['onlineusers']) && in_array($nick, $online_users['onlineusers']))) {
-			/*if (!empty($online_users['androidusers']) && in_array($nick, $online_users['androidusers'])) {
+			if (!empty($online_users['androidusers']) && in_array($nick, $online_users['androidusers'])) {
 				$star = '<span class="lb">*</span>';
-			} else*/ if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
+			} else if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
 				$star = '<span class="g">*</span>';
 			} else {
 				$star = '<span class="r">*</span>';

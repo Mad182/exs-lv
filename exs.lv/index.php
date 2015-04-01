@@ -331,9 +331,9 @@ if ($auth->skin == 1 && $lang == 1) {
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
 if (im_mod()) {
 	$new_reports_count = $db->get_var("
-        SELECT count(*) FROM `reports`
-        WHERE `archived` = 0 AND `site_id` = $lang AND `removed` = 0
-    ");
+		SELECT count(*) FROM `reports`
+		WHERE `archived` = 0 AND `site_id` = $lang AND `removed` = 0
+	");
 	$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
 } else {
 	$new_reports_count = 0;
