@@ -43,6 +43,7 @@ class Auth {
 		$this->check_session();
 		$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
 		$this->mobile = 1;
+		$this->via_android = 0;
 		return $this->ok;
 	}
 
@@ -59,44 +60,43 @@ class Auth {
 	function check_session() {
 		global $db, $lang;
 
-		if (!empty($_SESSION['auth_id'])) {
-			$userinfo = get_user($_SESSION['auth_id']);
-
-			if ($userinfo->deleted) {
-				return $this->logout();
-			}
-
-			foreach ($userinfo as $key => $val) {
-				$this->$key = $val;
-			}
-			$this->ok = true;
-
-			if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 360) {
-				if (empty($_SESSION['admin_simulate'])) {
-					$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 1, `mobile_seen` = 1, `seen_today` = 1 WHERE `id` = '$this->id'");
-				}
-				$_SESSION['lastseen'] = time();
-			}
-
-			if (empty($_SESSION['admin_simulate'])) {
-				$this->update_visits();
-			}
-
-			if ($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
-				$this->logout();
-				redirect();
-			}
-
-			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
-				$this->logout();
-				set_flash('Pieeja lapai ir liegta!', 'error');
-				redirect('http://exs.lv/?c=125&bid=' . $ban);
-			}
-
-			return true;
-		} else {
+		if (empty($_SESSION['auth_id'])) {
 			return false;
 		}
+		$userinfo = get_user($_SESSION['auth_id']);
+
+		if ($userinfo->deleted) {
+			return $this->logout();
+		}
+
+		foreach ($userinfo as $key => $val) {
+			$this->$key = $val;
+		}
+		$this->ok = true;
+
+		if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 360) {
+			if (empty($_SESSION['admin_simulate'])) {
+				$db->query("UPDATE `users` SET `lastseen` = NOW(), `android` = 0, `mobile` = 1, `mobile_seen` = 1, `seen_today` = 1 WHERE `id` = '$this->id'");
+			}
+			$_SESSION['lastseen'] = time();
+		}
+
+		if (empty($_SESSION['admin_simulate'])) {
+			$this->update_visits();
+		}
+
+		if ($_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+			$this->logout();
+			redirect();
+		}
+
+		if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			$this->logout();
+			set_flash('Pieeja lapai ir liegta!', 'error');
+			redirect('http://exs.lv/?c=125&bid=' . $ban);
+		}
+
+		return true;
 	}
 
 	function reset() {
@@ -170,7 +170,7 @@ class Auth {
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE users SET `lastseen` = NOW(), `lastip` = ('" . sanitize($this->ip) . "'), `user_agent` = ('" . sanitize($_SERVER['HTTP_USER_AGENT']) . "'), `mobile` = 1, `mobile_seen` = 1, `seen_today` = 1 WHERE id = '$userinfo->id'");
+			$db->query("UPDATE users SET `lastseen` = NOW(), `lastip` = ('" . sanitize($this->ip) . "'), `user_agent` = ('" . sanitize($_SERVER['HTTP_USER_AGENT']) . "'), `android` = 0, `mobile` = 1, `mobile_seen` = 1, `seen_today` = 1 WHERE id = '$userinfo->id'");
 			$this->update_visits();
 
 			update_karma($this->id, true);
@@ -185,7 +185,7 @@ class Auth {
 
 	function logout() {
 		global $db, $lang;
-		$db->query("UPDATE users SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 1 WHERE id = '$this->user_id' LIMIT 1");
+		$db->query("UPDATE users SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `android` = 0, `mobile` = 1 WHERE id = '$this->user_id' LIMIT 1");
 		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
 		$this->user_id = 0;
 		$this->username = "Guest";

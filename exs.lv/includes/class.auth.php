@@ -109,8 +109,7 @@ class Auth {
 			redirect();
 		}
 
-		// android.exs.lv pats prot apstrādāt bloķētos profilus un
-		// redirekts kā tāds tam vispār neder
+		// android.exs.lv pats prot apstrādāt bloķētos profilus
 		if ($this->via_android === 0 && !isset($_GET['_']) &&
 				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 			$this->logout();
