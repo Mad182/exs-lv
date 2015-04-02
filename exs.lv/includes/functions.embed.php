@@ -87,15 +87,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$image_sites = get_sitelist('image');
 	foreach ($image_sites as $site) {
 		if (stripos($txt, $site) !== false) {
-			$find = array(
-				'src="http://' . $site,
-				'src="http://www.' . $site
-			);
-			$replace = array(
-				'src="https://images.weserv.nl/?url=' . $site,
-				'src="https://images.weserv.nl/?url=www.' . $site
-			);
-			$txt = str_ireplace($find, $replace, $txt);
+			$txt = str_ireplace('src="http://' . $site, 'src="https://images.weserv.nl/?url=' . $site, $txt);
 		}
 	}
 

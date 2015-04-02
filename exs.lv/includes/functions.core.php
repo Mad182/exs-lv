@@ -1360,7 +1360,7 @@ function return2mb($mb) {
 }
 
 //atgriez visas minibloga atbildes html formā, rekursīvi
-function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3, $closed = 0, $disable_vote = 0) {
+function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3, $closed = 0, $disable_vote = 0, $pic_heavy = 0) {
 	global $auth, $min_post_edit, $lang;
 	$out = '<ul class="responses-' . $key . ' level-' . $level . '">';
 	if (!empty($data[$key])) {
@@ -1438,10 +1438,16 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				}
 				$out .= '</p>';
 			} else {
+
+				//samazina attēlus
+				if ($pic_heavy && stripos($val->text, 'src="http') !== false) {
+					$val->text = resize_html_images($val->text);
+				}
+
 				$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
 			}
 			if ($auth->ok === true || $val->posts) {
-				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote);
+				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote, $pic_heavy);
 				$out .= '<div class="c"></div>';
 			}
 			if ($auth->ok === true && !$closed) {
@@ -1454,6 +1460,15 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 	}
 	$out .= '</ul>';
 	return $out;
+}
+
+/**
+ * Lādē bildes caur weserv cdn un samazina to maksimālo izmēru
+ */
+function resize_html_images($text) {
+	$text = str_ireplace('src="http://', 'src="https://images.weserv.nl/?w=560&amp;h=600&amp;url=', $text);
+	$text = str_ireplace('src="https://', 'src="https://images.weserv.nl/?w=560&amp;h=600&amp;url=', $text);
+	return $text;
 }
 
 /**

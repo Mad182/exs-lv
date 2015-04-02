@@ -704,6 +704,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$author = '<em>dzēsts</em>';
 				}
 
+				// samazina attēlus
+				if ($record->pic_heavy && stripos($record->text, 'src="http') !== false) {
+					$record->text = resize_html_images($record->text);
+				}
+
 				$tpl->assign(array(
 					'url' => $url,
 					'text' => add_smile($record->text) . $append,
@@ -809,7 +814,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						}
 						$mlevel = 5;
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed, $group->disable_vote));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed, $group->disable_vote, $record->pic_heavy));
 					}
 				}
 
