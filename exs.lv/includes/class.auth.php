@@ -278,17 +278,20 @@ class Auth {
 	function is_tor_exit() {
 		global $m;
 
-		$is_tor = 0;
-		if ($is_tor = $m->get('tor-'.$this->ip) === false) {
+		$is_tor = 'n';
+		if (($is_tor = $m->get('t-'.$this->ip)) === false) {
 			if (gethostbyname($this->reverse($this->ip).".".$_SERVER['SERVER_PORT'].".".$this->reverse($this->ip).".ip-port.exitlist.torproject.org")=="127.0.0.2") {
-				$is_tor = 1;
+				$is_tor = 'y';
 			} else {
-				$is_tor = 0;
+				$is_tor = 'n';
 			}
-			$m->set('tor-'.$this->ip, $is_tor, false, 9000);
+			$m->set('t-'.$this->ip, $is_tor, false, 9000);
 		}
 
-		return $is_tor;
+		if($is_tor === 'y') {
+			return true;
+		}
+		return false;
 	}
 
 	function reverse($inputip) {
