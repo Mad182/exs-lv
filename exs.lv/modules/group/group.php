@@ -970,6 +970,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				';
 			}
 
+			// samazina attēlus
+			if ($tab->pic_heavy && stripos($tab->text, 'src="http') !== false) {
+				$tab->text = resize_html_images($tab->text);
+			}
+
 			$tpl->newBlock('group-tab');
 			$tpl->assign(array(
 				'tab-module' => $module_content,

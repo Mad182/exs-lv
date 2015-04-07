@@ -2488,3 +2488,4 @@ function send_email($to, $subject, $content) {
 
 	return $mailer->send($message);
 }
+
