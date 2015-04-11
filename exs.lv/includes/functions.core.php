@@ -2452,7 +2452,7 @@ function get_game_monitor($url, $force = false) {
 		if (!$html) {
 			$html = 'Offline';
 		}
-		$m->set($cache_key, $html, false, 300);
+		$m->set($cache_key, $html, false, 180);
 	}
 	return $html;
 }

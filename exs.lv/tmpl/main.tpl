@@ -98,6 +98,9 @@
 		<div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
 			<div id="header"{page-persona}>
+				<div style="position:absolute;right:20px;top:25px;width:728px;height:90px">
+
+				</div>
 				<div id="logo">
 					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 					<div id="tools-bar">
@@ -269,6 +272,11 @@
 					<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
 					<div class="box">
 						{csgo-monitor}
+					</div>
+
+					<h3><strong>MTA</strong> mta.exs.lv</h3>
+					<div class="box">
+						{mta-monitor}
 					</div>
 
 					<!-- START BLOCK : groups-l-list-->
@@ -566,6 +574,13 @@
 		  ga('send', 'pageview');
 
 		</script>
+
+		<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+		<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
+		<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
+		<noscript>
+		<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
+		</noscript>
 
 	</body>
 </html>
