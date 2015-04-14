@@ -15,8 +15,7 @@
 	<div class="game">
 		<div class="hero-image">
 			<a href="http://store.steampowered.com/app/{game-id}/" title="{game-name}">
-				<img src="https://images.weserv.nl/?url=cdn.akamai.steamstatic.com/steam/apps/{game-id}/header.jpg"
-					 title="{game-name}"/>
+				<img src="https://steamcdn-a.akamaihd.net/steam/apps/{game-id}/header.jpg" title="{game-name}"/>
 			</a>
 		</div>
 		<div class="player-list">
@@ -24,7 +23,7 @@
 				<!-- START BLOCK : steam-player-->
 				<li>
 					<a href="{profile-url}" class="steam-link">
-						<img src="/bildes/steam-ico.png" alt="steam profils">
+						<img src="{img-server}/bildes/steam-ico.png" alt="steam profils">
 					</a>
 					<a href="/user/{id}">
 						{nick}
