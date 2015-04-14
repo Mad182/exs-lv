@@ -29,7 +29,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,masonry.pkgd.min.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -98,8 +98,18 @@
 		<div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
 			<div id="header"{page-persona}>
-				<div style="position:absolute;right:20px;top:25px;width:728px;height:90px">
-
+				<div style="position:absolute;right:20px;top:27px;width:728px;height:90px">
+					<script type="text/javascript" id="position_2919">
+					  var ads_positions = ads_positions || [];
+					  ads_positions.push(["2919", "", "document"]);
+					  (function() {
+					    if (!document.getElementById("ads_loader")) {
+					      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
+					      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
+					      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+					    }
+					  })();
+					</script>
 				</div>
 				<div id="logo">
 					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
@@ -338,6 +348,20 @@
 
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
+					
+					<div style="width:468px;margin:10px auto">
+						<script type="text/javascript" id="position_2918">
+						  var ads_positions = ads_positions || [];
+						  ads_positions.push(["2918", "", "document"]);
+						  (function() {
+						    if (!document.getElementById("ads_loader")) {
+						      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
+						      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
+						      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+						    }
+						  })();
+						</script>
+					</div>
 
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
