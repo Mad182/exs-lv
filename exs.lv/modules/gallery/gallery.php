@@ -400,7 +400,8 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		`users`.`avatar`,
 		`users`.`av_alt`,
 		`users`.`custom_title`,
-		`users`.`karma`
+		`users`.`karma`,
+		`users`.`deleted` AS `author_deleted`
 	FROM
 		`galcom`,
 		`users`
@@ -431,6 +432,17 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					}
 
 					$comment->date = display_time(strtotime($comment->date));
+					
+					if (!$comment->author_deleted) {
+						$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
+						$author_box .= usercolor($comment->author_nick, $comment->author_level, false, $comment->author) . '</a>';
+						$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($comment) . '" alt="" /></a>';
+						$author_box .= '<span class="custom-title">' . custom_user_title($comment) . '</span>';
+						$author_box .= '<span class="author-info">Karma: ' . $comment->karma . '</span>';
+					} else {
+						$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
+						$author_box .= '<img class="comments-avatar" src="' . get_avatar($comment) . '" alt="{title}" />';
+					}
 
 					//assign comment variables
 					$tpl->assign(array(
@@ -438,13 +450,10 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						'comment-number' => $comment_number,
 						'comment-text' => add_smile($comment->text),
 						'comment-date' => $comment->date,
-						'comment-author' => usercolor($comment->author_nick, $comment->author_level, false, $comment->author),
 						'comment-author-id' => $comment->author,
-						'aurl' => '/user/' . $comment->author,
+						'author' => $author_box,
 						'avatar' => get_avatar($comment),
-						'karma' => $comment->karma,
 						'title' => h($comment->author_nick),
-						'custom_title' => custom_user_title($comment),
 						'comment-editedby' => $editedby,
 					));
 
