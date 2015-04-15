@@ -3,9 +3,9 @@
 /**
  * Updato grupas apstiprināto lietotāju skaitu grupu tabulā
  */
-function update_members($group) {
+function update_members($group_id) {
 	global $db;
-	return $db->query("UPDATE `clans` SET `members` = (SELECT count(*) FROM `clans_members` WHERE `clan` = " . intval($group) . " AND `approve` = 1) WHERE `id` = " . intval($group) . " LIMIT 1");
+	return $db->query("UPDATE `clans` SET `members` = (SELECT count(*) FROM `clans_members` WHERE `clan` = " . intval($group_id) . " AND `approve` = 1) WHERE `id` = " . intval($group_id) . " LIMIT 1");
 }
 
 /**
@@ -67,5 +67,13 @@ function upload_user_avatar($post, $old_filename, $text) {
 		}
 	}
 	return $return;
+}
+
+/**
+ * Updato grupas postu skaitu
+ */
+function update_post_count($group_id) {
+	global $db;
+	return $db->query("UPDATE `clans` SET `posts` = '" . $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = " . intval($group_id)) . "', `posts_today` = `posts_today`+1 WHERE `id` = " . intval($group_id));
 }
 

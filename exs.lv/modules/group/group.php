@@ -506,7 +506,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				));
 
 				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', get_avatar($group, 's', true), 'g' . $ins);
-				$db->query("UPDATE `clans` SET `posts` = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "', `posts_today` = `posts_today`+1 WHERE `id` = '$group->id'");
+
+				update_post_count($group->id);
 
 				$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$ins'");
 				$topic->text = mention($topic->text, $group_link . '/forum/' . base_convert($ins, 10, 36), 'group', $topic->id);
@@ -591,8 +592,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						notify($reply_to->author, 8, $mainid, $url, textlimit($group->title . ' - ' . $title, 64));
 					}
 
-					$db->query("UPDATE `clans` SET `posts` = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "', `posts_today` = `posts_today`+1 WHERE `id` = '$group->id'");
-
+					update_post_count($group->id);
 
 					/* auto close after 500 posts */
 					$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mainid'");
