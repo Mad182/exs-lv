@@ -42,6 +42,7 @@ $db->query("UPDATE `users` SET `days_in_row` = `days_in_row`+1 WHERE `seen_today
 $db->query("UPDATE `users` SET `max_in_row` = `days_in_row` WHERE `days_in_row` > `max_in_row`");
 $db->query("UPDATE `users` SET `days_in_row` = 0 WHERE `seen_today` = 0");
 $db->query("UPDATE `users` SET `seen_today` = 0, `vote_today` = 0, `today` = 0");
+$db->query("UPDATE `clans` SET `posts_today` = 0");
 
 ######################### Vecie warni automātiki noņemas pēc 2 mēnešiem
 
@@ -74,11 +75,6 @@ if ($user) {
 	$db->query("UPDATE users SET daily_hangman = daily_hangman+1 WHERE id = '$user->user_id'");
 	update_karma($user->user_id, true);
 }
-
-######################### wos
-$db->query("TRUNCATE TABLE `async_ip`");
-
-
 
 ############################ draugiem.lv sekotāji
 $str = curl_get('http://www.draugiem.lv/exs.lv/js/fans/?count=1000');
