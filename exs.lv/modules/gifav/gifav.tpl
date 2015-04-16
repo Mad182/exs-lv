@@ -1,4 +1,4 @@
-<h1>Animētie avatari</h1>
+<h1>Animētie GIF avatari</h1>
 
 <!-- START BLOCK : import-->
 <form class="form" action="" method="post">
@@ -17,9 +17,10 @@
 	<fieldset>
 		<ul style="padding:0;margin:0">
 			<!-- START BLOCK : av-node-->
-			<li style="background:transparent;float:left;width:90px;padding:4px;margin:3px;height:110px;text-align:center;{owned}">
-				<label for="av-{id}">
-					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" />
+			<li style="background:transparent;float:left;width:130px;padding:4px 0;margin:3px 1px;height:130px;text-align:center;{owned}">
+				<label for="av-{id}" style="font-size:90%;font-weight:normal">
+					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" /><br />
+					{title}
 				</label>
 				<br />
 				<input id="av-{id}" type="radio" name="avatarid" value="{id}" />

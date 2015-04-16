@@ -22,6 +22,7 @@ if ($avs) {
 		$tpl->assign(array(
 			'id' => $av->id,
 			'image' => $av->image,
+			'title' => ucwords(str_replace(array('.gif', '-', '_'), array('', ' ', ' '), $av->image)),
 			'owned' => $own,
 		));
 	}
