@@ -1,5 +1,5 @@
 /**
- *  RuneScape apakšprojekta CSS stili
+ *  RuneScape apakšprojekta CSS stili.
  *
  *  Satura rādītājs. (CTRL + F = {nr.})
  *
@@ -10,30 +10,30 @@
  *  5. Dropdown izvēlnes
  *  6. --
  *  7. RuneScape jaunumi, sākumlapa
-    8.0 RuneScape faktu pārvaldība
-    8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas
-    8.2 rsmod - kvestu pārvaldība
-    8.3 rsmod - prasmju prasības
+	8.0 RuneScape faktu pārvaldība
+	8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas
+	8.2 rsmod - kvestu pārvaldība
+	8.3 rsmod - prasmju prasības
  *
  *  9.0 RuneScape pamācību sadaļu stili
-    9.1 RS tabulas
-    9.2 RuneScape kvestu sadaļa
-        9.2.1 Kvestu sērijas
-        9.2.2 Kvestu statistika
-        9.2.3 Prasmju prasības
-    9.3 freeplay & miniquests
-    9.4 minigames & D&D
-    9.5 prasmes
-        9.5.1 Fakti
-        9.5.2 XP tabula
-    9.6 tasks un ģildes
+	9.1 RS tabulas
+	9.2 RuneScape kvestu sadaļa
+		9.2.1 Kvestu sērijas
+		9.2.2 Kvestu statistika
+		9.2.3 Prasmju prasības
+	9.3 freeplay & miniquests
+	9.4 minigames & D&D
+	9.5 prasmes
+		9.5.1 Fakti
+		9.5.2 XP tabula
+	9.6 tasks un ģildes
  *
  *  10. Aptaujas
  *  11. tinyMCE uzliekamie stili
  *  12. Here be dragons!
  */
 body {
-    background:url('/bildes/runescape/wallpapers/frostshatter_1920x1080.jpg') no-repeat fixed 50% 0
+	background:url('/bildes/runescape/wallpapers/frostshatter_1920x1080.jpg') no-repeat fixed 50% 0
 }
 
 /* background fix lielajiem ekrāniem  */
@@ -45,115 +45,115 @@ body {
 
 /* vertically center */
 .vc-ghost-item {
-    display:inline-block; 
-    height:100%; 
-    vertical-align:middle
+	display:inline-block; 
+	height:100%; 
+	vertical-align:middle
 }
 .vc-item {
-    vertical-align:middle;
-    display: inline-block
+	vertical-align:middle;
+	display: inline-block
 }
 
 #scroll-up {
-    background:rgba(86, 105, 136, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-    border: 2px solid #000
+	background:rgba(86, 105, 136, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+	border: 2px solid #000
 }
-    #scroll-up:hover {
-        border:2px solid #1B1C1D;
-        background:rgba(94, 130, 189, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-    }
+	#scroll-up:hover {
+		border:2px solid #1B1C1D;
+		background:rgba(94, 130, 189, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+	}
 .clearfix {
-    margin:0;
-    padding:0;
-    clear:both;
-    display:block
+	margin:0;
+	padding:0;
+	clear:both;
+	display:block
 }
 .break {
-    width:80%;
-    height:0;
-    border:1px solid #E7E6E6;
-    margin:20px auto
+	width:80%;
+	height:0;
+	border:1px solid #E7E6E6;
+	margin:20px auto
 }
 #cluetip {
-    font-size:12px    
+	font-size:12px    
 }
 .is-right-aligned {
-    position:absolute;
-    right:10px
+	position:absolute;
+	right:10px
 }
 .is-centered {
-    text-align:center
+	text-align:center
 }
 .is-left {
-    text-align:left
+	text-align:left
 }
 .is-smaller {
-    font-size:11px
+	font-size:11px
 }
 .is-faded {
-    opacity:0.5
+	opacity:0.5
 }
 .is-faded:hover {
-    opacity:1
+	opacity:1
 }
 .required {
-    color:orangered
+	color:orangered
 }
 .is-pointer:hover {
-    cursor:pointer
+	cursor:pointer
 }
 
 /* 2. Pārrakstītie core.css elementi */
 #wrapper {
-    position:relative;
-    margin-top:25px;
-    margin-bottom:0;
-    padding:0;
-    background:transparent;
-    box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
-    -moz-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
-    -webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+	position:relative;
+	margin-top:25px;
+	margin-bottom:0;
+	padding:0;
+	background:transparent;
+	box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+	-moz-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+	-webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
 }
 #outer_content {
-    padding:0;
-    padding-bottom:10px;
-    margin:0;
-    overflow:auto;
-    background:url('/bildes/runescape/pattern-wrapper.png') 0 2%;
+	padding:0;
+	padding-bottom:10px;
+	margin:0;
+	overflow:auto;
+	background:url('/bildes/runescape/pattern-wrapper.png') 0 2%;
 }
 #left, #content, #right {
-    float:left;
-    left:0
+	float:left;
+	left:0
 }
 #left {
-    margin-left:0;
-    width:200px
+	margin-left:0;
+	width:200px
 }
 #right {
-    width:186px
+	width:186px
 }
 #content {
-    margin-left:10px;
-    width:550px
+	margin-left:10px;
+	width:550px
 }
 #content.no-left-right {
-    width:95%
+	width:95%
 }
 #content.no-left {
-    width:766px
+	width:766px
 }
 #content.no-right {
-    width:744px
+	width:744px
 }
 .no-right #left {
-    left:0 !important
+	left:0 !important
 }
 #top-menu #top-menu-right li ul#user-group-menu {
-    width:330px;
-    left:-100px
+	width:330px;
+	left:-100px
 }
 #top-menu #top-menu-right li ul#user-group-menu li {
-    width:160px
+	width:160px
 }
 #top-menu #top-menu-right li ul#user-group-menu li a {
 	background: transparent;
@@ -167,62 +167,62 @@ body {
 	line-height: 14px;
 }
 #login-block {
-    margin:0 10px 0 0;
-    padding:0;
-    float:right
+	margin:0 10px 0 0;
+	padding:0;
+	float:right
 }
 #login-block li {
-    margin:0
+	margin:0
 }
 #login-block .less-padding a {
-    padding:4px 0;
-    margin: 2px 5px;
+	padding:4px 0;
+	margin: 2px 5px;
 }
 #login-form {
-    padding-top:0;
-    height:auto;
-    padding-bottom:2px
+	padding-top:0;
+	height:auto;
+	padding-bottom:2px
 }
-    #login-form input {
-        background:#293446;
-        border:1px solid #373A53;
-        color:#CEDDEC;
-        font-size:11px;
-        padding:2px 7px;
-        margin-top:6px;
-        width:90px;
-        font-family:verdana, tahoma, arial;
-    }
-    #login-form input:focus {
-        outline:0;
-        border:1px solid #484C74
-    }
-    #login-form input.login-submit {
-        margin-top:6px
-    }
-    #login-block a.external-fb span {
-        background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -58px transparent;
-        width: 55px;
-    }
-    #login-block a.external-login span {
-        height: 18px;
-        float: left;
-        text-indent: -9999px;
-        outline: 0px none;
-        line-height: 18px;
-    }
-    #login-block a.external-dr span {
-        background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
-        width: 76px;
-    }
+	#login-form input {
+		background:#293446;
+		border:1px solid #373A53;
+		color:#CEDDEC;
+		font-size:11px;
+		padding:2px 7px;
+		margin-top:6px;
+		width:90px;
+		font-family:verdana, tahoma, arial;
+	}
+	#login-form input:focus {
+		outline:0;
+		border:1px solid #484C74
+	}
+	#login-form input.login-submit {
+		margin-top:6px
+	}
+	#login-block a.external-fb span {
+		background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -58px transparent;
+		width: 55px;
+	}
+	#login-block a.external-login span {
+		height: 18px;
+		float: left;
+		text-indent: -9999px;
+		outline: 0px none;
+		line-height: 18px;
+	}
+	#login-block a.external-dr span {
+		background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
+		width: 76px;
+	}
 
 #top-menu {
-    background:url('/bildes/runescape/pattern-navig.png') repeat-x;
-    border-top: 1px solid #363535;
-    border-bottom: 1px solid #363535;
-    z-index:100;
-    width:inherit;
-    font-family:verdana,ubuntu,tahoma,arial;
+	background:url('/bildes/runescape/pattern-navig.png') repeat-x;
+	border-top: 1px solid #363535;
+	border-bottom: 1px solid #363535;
+	z-index:100;
+	width:inherit;
+	font-family:verdana,ubuntu,tahoma,arial;
 }
 #top-menu li.selected a, #top-menu li a:hover, #top-menu li:hover a {
 	background: #2090cc url('//img.exs.lv/m/a/mad/blue.png') repeat 0 0;
@@ -234,40 +234,40 @@ body {
 	text-shadow: 0 1px 0 #59add2;
 }
 #tools-bar {
-    background:#111010;
-    padding:0 8px
+	background:#111010;
+	padding:0 8px
 }
 #wrapper #pm-table th.pmdate {
-    width:25%
+	width:25%
 }
 div pre {
-    font-size:11px
+	font-size:11px
 }
 #exs-groups li {
-    width:30%
+	width:30%
 }
 #user-group-menu li {
-    font-size:10px
+	font-size:10px
 }
 #top-menu-right li ul#user-group-menu li {
-    width:150px;
-    padding-left:0
+	width:150px;
+	padding-left:0
 }
 #top-menu-right li li a {
-    padding-left:2px
+	padding-left:2px
 }
 #top-menu-right li ul#user-group-menu {
-    left:-157px;
-    width:465px
+	left:-157px;
+	width:465px
 }
 #top-menu li ul li a, #wrapper #top-menu li.selected ul li a, #wrapper #top-menu li:hover ul li a {
-    width:150px
+	width:150px
 }
 #top-menu li:hover ul {
-    display: block
+	display: block
 }
 #exs-groups h3 {
-    margin: 5px 0 2px;
+	margin: 5px 0 2px;
 }
 .top-navig .red, .top-navig .r {
 	color: #ef6000;
@@ -288,59 +288,59 @@ div pre {
 	padding-right: 0;
 }
 #forum td h3 {
-    font-size:13px
+	font-size:13px
 }
 #exs-groups h3 {
-    font-size:14px
+	font-size:14px
 }
 
 /* raksta saturs */
 #full-story img {
-    max-width:550px
+	max-width:550px
 }
 #full-story ul li {
-    padding:2px 0 2px 20px
+	padding:2px 0 2px 20px
 }
 #full-story tr th {
-    border: 1px solid #999797;
-    padding: 3px 7px;
-    font-weight: 700;
-    text-align: center;
-    font-family: tahoma,verdana,Ubuntu,arial;
+	border: 1px solid #999797;
+	padding: 3px 7px;
+	font-weight: 700;
+	text-align: center;
+	font-family: tahoma,verdana,Ubuntu,arial;
 }
 #full-story tr td {
-    border: 1px solid #C3C8CA;
-    border-collapse: collapse;
-    padding: 3px 7px;
-    vertical-align: middle;
-    text-align:center
+	border: 1px solid #C3C8CA;
+	border-collapse: collapse;
+	padding: 3px 7px;
+	vertical-align: middle;
+	text-align:center
 }
 .text-notice li {
-    background: none;
-    padding-left: 0;
+	background: none;
+	padding-left: 0;
 }
 #full-story table img {
-    vertical-align: middle;
-    margin:0 3px
+	vertical-align: middle;
+	margin:0 3px
 }
 #full-story table ul {
-    margin-left:0
+	margin-left:0
 }
 #full-story table ul li {
-    background: none;
-    padding-left: 0;
+	background: none;
+	padding-left: 0;
 }
 
 /* 3. Jaunie lapas pamatbloki */
 .top-navig {
-    background:#000 url('/bildes/runescape/nav-pattern-blue.png') repeat-x;
-    border-bottom:2px solid #000;
-    color:#6D93A5;
-    height:30px;
-    width:100%;
-    position:fixed;
-    top:0;
-    z-index:300
+	background:#000 url('/bildes/runescape/nav-pattern-blue.png') repeat-x;
+	border-bottom:2px solid #000;
+	color:#6D93A5;
+	height:30px;
+	width:100%;
+	position:fixed;
+	top:0;
+	z-index:300
 }
 .top-navig nav {
    width:996px;
@@ -350,507 +350,514 @@ div pre {
    border-right:1px solid #2D2E2E;
    font-size: 11px;
 }
-    .top-navig ul, .top-navig li {
-        margin:0;
-        padding:0;
-        float:left;
-        background-image:none
-    }
-    .top-navig ul a {
-        color:#A5BCCE;
-        font-family:verdana, tahoma, arial;
-        padding:7px 14px;
-        display:inline-block;
-    }
-    .top-navig ul a:hover {
-        color:#8DB2EB;
-        text-decoration:none
-    }
-    .top-navig ul li:hover {
-        background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
-    }
-    .top-navig .rs-logo:hover {
-        background:inherit
-    }
-    .top-navig .rs-logo > img {
-        max-height:30px
-    }
+	.top-navig ul, .top-navig li {
+		margin:0;
+		padding:0;
+		float:left;
+		background-image:none
+	}
+	.top-navig ul a {
+		color:#A5BCCE;
+		font-family:verdana, tahoma, arial;
+		padding:7px 14px;
+		display:inline-block;
+	}
+	.top-navig ul a:hover {
+		color:#8DB2EB;
+		text-decoration:none
+	}
+	.top-navig ul li:hover {
+		background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+	}
+	.top-navig .rs-logo:hover {
+		background:inherit
+	}
+	.top-navig .rs-logo > img {
+		max-height:30px
+	}
 ul.nav-left {
-    float:left
+	float:left
 }
 ul.nav-right {
-    float:right
+	float:right
 }
 #header-navig {
-    min-height:15px;
-    border-bottom:1px solid #424346;
-    background:#0E0F0F url('/bildes/runescape/pattern-navig.png') repeat-x;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+	min-height:15px;
+	border-bottom:1px solid #424346;
+	background:#0E0F0F url('/bildes/runescape/pattern-navig.png') repeat-x;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
-    #header-navig ul {
-       margin:0;
-       padding:0
-    }
-    #header-navig li {
-        margin:0;
-        float:left;
-        background:none;
-        padding:0
-    }
-    #header-navig a {
-        color:#9AADBB;
-        padding:6px;
-        display:inline-block
-    }
-    #header-navig a:hover {
-        color:#96C7EB;
-        text-decoration:none
-    }
+	#header-navig ul {
+	   margin:0;
+	   padding:0
+	}
+	#header-navig li {
+		margin:0;
+		float:left;
+		background:none;
+		padding:0
+	}
+	#header-navig a {
+		color:#9AADBB;
+		padding:6px;
+		display:inline-block
+	}
+	#header-navig a:hover {
+		color:#96C7EB;
+		text-decoration:none
+	}
 #header {
-    margin:0;
-    padding:0;
-    height:129px;
-    position:relative
+	margin:0;
+	padding:0;
+	height:129px;
+	position:relative
 }
-    #header-slider img {
-        max-height:130px
-    }
+	#header-slider img {
+		max-height:130px
+	}
 .new-groups p {
-    display: block;
-    clear: both;
-    overflow: auto;
-    border-bottom: 1px solid #F3EEEE;
-    padding: 2px 0;
+	display: block;
+	clear: both;
+	overflow: auto;
+	border-bottom: 1px solid #F3EEEE;
+	padding: 2px 0;
 }
 .new-groups img {
-    float:left;
-    margin:0 5px 0 0;
-    max-width:40px;
-    max-height:40px
+	float:left;
+	margin:0 5px 0 0;
+	max-width:40px;
+	max-height:40px
 }
 .new-groups a {
-    margin-top: 11px;
-    margin-left:5px;
-    display: inline-block
+	margin-top: 11px;
+	margin-left:5px;
+	display: inline-block
 }
 
 /* 4. Lapas šaurās kolonnas */
 #rs_columns {
-    overflow:auto;
-    background-image:url('/bildes/runescape/pattern-cols.png');
+	overflow:auto;
+	background-image:url('/bildes/runescape/pattern-cols.png');
 }
 .box {
-    background:#FCFCFD
+	background:#FCFCFD
 }
 .col-box {
-    clear:both;
-    overflow:auto;
-    padding: 5px;
-    margin:0 0 5px;
-    background-color:rgba(253, 253, 253, 0.7);
-    border: 2px solid #D3D0D0;
-    font-size: 11px;
+	clear:both;
+	overflow:auto;
+	padding: 5px;
+	margin:0 0 5px;
+	background-color:rgba(253, 253, 253, 0.7);
+	border: 2px solid #D3D0D0;
+	font-size: 11px;
 }
 .col-box-title {
-    display: inline-block;
-    margin-left: 20px;
-    margin-top: 10px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #C8CED5;
-    padding: 3px 12px;
-    background: #232527;
-    border-bottom: 1px solid #C7C7C7;
+	display: inline-block;
+	margin-left: 20px;
+	margin-top: 10px;
+	font-size: 11px;
+	font-weight: 700;
+	color: #C8CED5;
+	padding: 3px 12px;
+	background: #232527;
+	border-bottom: 1px solid #C7C7C7;
 }
 #left .comments {
-    background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
 }
 #left .friends {
-    background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
+	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
 }
 .box-icon {
-    position:relative;
-    top:3px;
-    margin-right:7px
+	position:relative;
+	top:3px;
+	margin-right:7px
 }
 /* random fact box  */
 .facts-box {
-    min-height:100px;
-    padding:5px 10px
+	min-height:100px;
+	padding:5px 10px
 }
-    .facts-box, .facts-box p {
-        line-height: 1.8;
-        font-size: 13px;
-        text-indent: 10px;
-    }
+	.facts-box, .facts-box p {
+		line-height: 1.8;
+		font-size: 13px;
+		text-indent: 10px;
+	}
 .fetch-new-fact {
-    background:url('/bildes/fugue-icons/arrow-circle-225.png') no-repeat center center;
-    float:right;
-    height:16px;
-    width:16px;
-    padding:2px
+	background:url('/bildes/fugue-icons/arrow-circle-225.png') no-repeat center center;
+	float:right;
+	height:16px;
+	width:16px;
+	padding:2px
 }
 .fetch-new-fact:hover {
-    background-color:#C8D9EC
+	background-color:#C8D9EC
 }
 
 /* 5. dropdown izvēlnes */
 .droplist li {
-    position:relative
+	position:relative
 }
-    /* visi līmeņi, ieskaitot pirmo */
-    .droplist ul {
-        display:none;
-        position:absolute;
-        top:100%
-    }
-        .droplist ul li {
-            background: #212B3C;
-            border-bottom: 1px solid #2E3853;
-        }
-        .droplist ul li:hover {
-            background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat
-        }
-        .droplist ul a, .droplist ul a:hover {
-            width:150px;
-            padding:7px 14px 7px 30px;
-            background:url('/bildes/fugue-icons/blue-document-hf-select-footer.png') no-repeat 5px 60%
-        }
-    /* dziļāki līmeņi, neskaitot pirmo; novietojas labajā pusē */
-    .droplist ul ul {
-        position: absolute;
-        left: 100%;
-        top:0;
-    }
-        .droplist ul ul li {
-            border-left:1px solid #2e3853
-        }
-        .droplist ul ul a, .droplist ul ul a:hover {
-            background:url('/bildes/fugue-icons/flask.png') no-repeat 5px 60%
-        }
-        /* novietojums pretējā pusē (kreisajā) */
-        .droplist ul ul.flip-side {
-            left:-100%
-        }
-        .droplist ul ul.flip-side li {
-            border-right:1px solid #2e3853;
-            border-left:0
-        }
-    .droplist li:hover > ul {
-        display:block
-    }
-    .droplist ul li:last-child {
-        width:194px;
-        height:5px;
-        background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
-    }
-    .droplist ul ul li:first-child {
-        border-top:1px solid #2e3853;
-        margin-top:-1px
-    }
-    .droplist a.dropdown {
-        padding-right:20px
-    }
-    .dropdown.active-page, .droplist li.selected {
-        background:#2D455F
-    }
-    .droplist .arrow-down {
-        background:url('/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
-        position:absolute;
-        right:8px;
-        top:25%;
-        width:16px;
-        height:16px
-    }
-    .droplist .arrow-right {
-        background:url('/bildes/fugue-icons/control-arrow-right.png') no-repeat right 50%;
-        position:absolute;
-        right:5px;
-        top:25%;
-        width:16px;
-        height:16px
-    }
+	/* visi līmeņi, ieskaitot pirmo */
+	.droplist ul {
+		display:none;
+		position:absolute;
+		top:100%
+	}
+		.droplist ul li {
+			background: #212B3C;
+			border-bottom: 1px solid #2E3853;
+		}
+		.droplist ul li:hover {
+			background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat
+		}
+		.droplist ul a, .droplist ul a:hover {
+			width:150px;
+			padding:7px 14px 7px 30px;
+			background:url('/bildes/fugue-icons/blue-document-hf-select-footer.png') no-repeat 5px 60%
+		}
+	/* dziļāki līmeņi, neskaitot pirmo; novietojas labajā pusē */
+	.droplist ul ul {
+		position: absolute;
+		left: 100%;
+		top:0;
+	}
+		.droplist ul ul li {
+			border-left:1px solid #2e3853
+		}
+		.droplist ul ul a, .droplist ul ul a:hover {
+			background:url('/bildes/fugue-icons/flask.png') no-repeat 5px 60%
+		}
+		/* novietojums pretējā pusē (kreisajā) */
+		.droplist ul ul.flip-side {
+			left:-100%
+		}
+		.droplist ul ul.flip-side li {
+			border-right:1px solid #2e3853;
+			border-left:0
+		}
+	.droplist li:hover > ul {
+		display:block
+	}
+	.droplist ul li:last-child {
+		width:194px;
+		height:5px;
+		background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+	}
+	.droplist ul ul li:first-child {
+		border-top:1px solid #2e3853;
+		margin-top:-1px
+	}
+	.droplist a.dropdown {
+		padding-right:20px
+	}
+	.dropdown.active-page, .droplist li.selected {
+		background:#2D455F
+	}
+	.droplist .arrow-down {
+		background:url('/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
+		position:absolute;
+		right:8px;
+		top:25%;
+		width:16px;
+		height:16px
+	}
+	.droplist .arrow-right {
+		background:url('/bildes/fugue-icons/control-arrow-right.png') no-repeat right 50%;
+		position:absolute;
+		right:5px;
+		top:25%;
+		width:16px;
+		height:16px
+	}
 
 /* 6. -- */
 
 /* 7. RuneScape jaunumi, sākumlapa */
-.official-news {
-    margin:5px 0 20px 0;
-    font-size:12px;
-    padding:0
+.rsnews-header {
+	margin:0 auto 10px;
+	font-size:18px
 }
-    .official-news:after {
-        content:"";
-        display:table
-    }
-    .official-news li {
-        background:#fff;
-        border-bottom:2px solid rgb(235, 232, 232);
-        padding:0;
-        margin:10px 0 0;
-        overflow:auto
-    }
-    .official-news li:hover {
-        background:rgb(244, 247, 252)
-    }
-    .official-news img {
-        margin-right:12px;
-        max-width:125px;
-        max-height:88px
-    }
-    .official-news p {
-        width:70%;
-        line-height:1.8;
-        padding-top:0
-    }
-    .official-news p > span:nth-child(1) {
-        color:#0a6eb1;
-        display:block;
-        font-weight:700;
-        margin-top:5px
-    }
-    .official-news p > span:nth-child(2) {
-        display:block;
-        color:#2385B3
-    }
-    .official-news .link {
-        margin-top:0
-    }
-    .official-news .link a {
-        padding:5px 10px;
-        float:right;
-    }
-    .official-news .goto-mb {
-        float: right;
-        width: 20px;
-        display: table;
-        padding:0
-    }
-    .official-news .goto-mb a {
-        vertical-align: middle;
-        display: table-cell;
-        width: 20px;
-        height: 68px;
-        background: #E5EBFA;
-        padding-left: 5px;
-    }
-    .official-news .goto-mb a:hover {
-        background:#C0D7E6
-    }
-    /* specifisko miniblogu stils */
-    .rsmb-title {
-        color:#38405A;
-        font-weight: 700;
-        padding-bottom:0;
-        font-size:15px
-    }
-    .rsmb-text {
-        margin:9px 5px 0 0
-    }
-        .rsmb-text a {
-            margin-top:7px
-        }
-    .rsmb-fade {
-        color: #1f4fa3
-    }
+.rsnews-tabs li {
+	float:right
+}
+.official-news {
+	margin:0 0 20px 0;
+	font-size:12px;
+	padding:0
+}
+	.official-news:after {
+		content:"";
+		display:table
+	}
+	.official-news li {
+		background:#fff;
+		border-bottom:2px solid rgb(235, 232, 232);
+		padding:0;
+		margin:10px 0 0;
+		overflow:auto
+	}
+	.official-news li:hover {
+		background:rgb(244, 247, 252)
+	}
+	.official-news img {
+		margin-right:12px;
+		max-width:125px;
+		max-height:88px
+	}
+	.official-news p {
+		width:70%;
+		line-height:1.8;
+		padding-top:0
+	}
+	.official-news p > span:nth-child(1) {
+		color:#0a6eb1;
+		display:block;
+		font-weight:700;
+		margin-top:5px
+	}
+	.official-news p > span:nth-child(2) {
+		display:block;
+		color:#2385B3
+	}
+	.official-news .link {
+		margin-top:0
+	}
+	.official-news .link a {
+		padding:5px 10px;
+		float:right;
+	}
+	.official-news .goto-mb {
+		float: right;
+		width: 20px;
+		display: table;
+		padding:0
+	}
+	.official-news .goto-mb a {
+		vertical-align: middle;
+		display: table-cell;
+		width: 20px;
+		height: 68px;
+		background: #E5EBFA;
+		padding-left: 5px;
+	}
+	.official-news .goto-mb a:hover {
+		background:#C0D7E6
+	}
+	/* specifisko miniblogu stils */
+	.rsmb-title {
+		color:#38405A;
+		font-weight: 700;
+		padding-bottom:0;
+		font-size:15px
+	}
+	.rsmb-text {
+		margin:9px 5px 0 0
+	}
+		.rsmb-text a {
+			margin-top:7px
+		}
+	.rsmb-fade {
+		color: #1f4fa3
+	}
 
 /* 8.0 RuneScape faktu pārvaldība */
 table.facts-table th, table.facts-table td {
-    padding:5px 10px;
+	padding:5px 10px;
 }
 table.facts-table th {
-    font-weight: 700
+	font-weight: 700
 }
 table.facts-table td {
-    font-size:11px;
-    background:#fff
+	font-size:11px;
+	background:#fff
 }
 table.facts-table .row-center {
-    text-align:center
+	text-align:center
 }
 table.facts-table .row-center img {
-    position: relative;
-    top: 3px;
+	position: relative;
+	top: 3px;
 }
 table.facts-table .row-counter {
-    padding:5px;
-    font-weight: 700;
-    text-align:center
+	padding:5px;
+	font-weight: 700;
+	text-align:center
 }
 
 /* 8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas */
 .list-intro, .list-text, .simple-note {
-    background-color:#f4f5f7;
-    margin:10px 3px;
-    border:1px solid #e2e6ec;
-    font-size:12px
+	background-color:#f4f5f7;
+	margin:10px 3px;
+	border:1px solid #e2e6ec;
+	font-size:12px
 }
-    .list-intro {
-        background:#f4f5f7 url('/bildes/notice.png') no-repeat 1% 10%;
-        padding:7px 12px 7px 45px;
-        text-indent:10px
-    }
-    .list-text, .simple-note {
-        padding:7px 12px;
-    }
+	.list-intro {
+		background:#f4f5f7 url('/bildes/notice.png') no-repeat 1% 10%;
+		padding:7px 12px 7px 45px;
+		text-indent:10px
+	}
+	.list-text, .simple-note {
+		padding:7px 12px;
+	}
 .list-no-pages {
-    margin:10px 3px;
-    padding-bottom:3px;
-    border-bottom:1px solid #eee;
-    font-style:italic;
-    font-size:12px
+	margin:10px 3px;
+	padding-bottom:3px;
+	border-bottom:1px solid #eee;
+	font-style:italic;
+	font-size:12px
 }
 .list-table {
-    margin-left:10px;
-    margin-top:15px;
-    width:97%
+	margin-left:10px;
+	margin-top:15px;
+	width:97%
 }
 .is-splitted {
-    border-top:2px solid #ccc
+	border-top:2px solid #ccc
 }
 .field-title, .field-example {
-    padding-bottom:0
+	padding-bottom:0
 }
 .list-form textarea {
-    width:600px;
-    min-height:100px;
-    height:auto
+	width:600px;
+	min-height:100px;
+	height:auto
 }
 
 /* 8.2 rsmod - kvestu pārvaldība */
 .rslist.series-list {
-    background:#fff;
-    float:left;
-    margin-left:20px
+	background:#fff;
+	float:left;
+	margin-left:20px
 }
 .series-input {
-    border:1px solid #E4E4E4;
-    height:20px;
-    width:220px;
-    font-family:tahoma,verdana,arial;
-    font-size:11px;
-    padding:2px 7px
+	border:1px solid #E4E4E4;
+	height:20px;
+	width:220px;
+	font-family:tahoma,verdana,arial;
+	font-size:11px;
+	padding:2px 7px
 }
-    .series-input:hover {
-        border:1px solid #BAD2E9
-    }
+	.series-input:hover {
+		border:1px solid #BAD2E9
+	}
 .series-quests {
-    padding-left:0;
-    font-size:11px;
-    margin:10px
+	padding-left:0;
+	font-size:11px;
+	margin:10px
 }
-    .series-quests select {
-        margin-right:8px;
-        float:right;
-        position:relative;
-        bottom:6px
-    }
-    .series-quests li {
-        background:transparent;
-        border-bottom:1px solid #eee;
-        padding:3px 10px
-    }
+	.series-quests select {
+		margin-right:8px;
+		float:right;
+		position:relative;
+		bottom:6px
+	}
+	.series-quests li {
+		background:transparent;
+		border-bottom:1px solid #eee;
+		padding:3px 10px
+	}
 .list-all {
-    float:right;
-    margin-top:1px
+	float:right;
+	margin-top:1px
 }
 .no-quests {
-    font-size:12px
+	font-size:12px
 }
 .response {
-    display:inline-block;
-    margin-left:7px;
-    font-weight:bold;
-    font-size:12px;
-    color:red
+	display:inline-block;
+	margin-left:7px;
+	font-weight:bold;
+	font-size:12px;
+	color:red
 }
 .fancy-list {
-    width:750px;
-    max-height:400px;
-    font-size:11px;
-    overflow-y:visible;
-    overflow-x:hidden
+	width:750px;
+	max-height:400px;
+	font-size:11px;
+	overflow-y:visible;
+	overflow-x:hidden
 }
-    .fancy-list ul {
-        padding-left:0;
-        column-count:4;
-        -moz-column-count:4; /* Firefox */
-        -webkit-column-count:4 /* Safari and Chrome */
-    }
-    .fancy-list ul li {
-        background:transparent;
-        border-bottom:1px solid #E4F1F8;
-        padding:0;
-        position:relative
-    }
-    .fancy-list li a {
-        padding:2px 12px;
-        display:inline-block;
-        width:100%
-    }
-    .fancy-list .mark-added {
-        background:#9CE597
-    }
-    .fancy-list .mark-neutral {
-        background:rgb(250, 250, 253)
-    }
-    .fancy-list .mark-removed {
-        background:rgb(250, 207, 214)
-    }
+	.fancy-list ul {
+		padding-left:0;
+		column-count:4;
+		-moz-column-count:4; /* Firefox */
+		-webkit-column-count:4 /* Safari and Chrome */
+	}
+	.fancy-list ul li {
+		background:transparent;
+		border-bottom:1px solid #E4F1F8;
+		padding:0;
+		position:relative
+	}
+	.fancy-list li a {
+		padding:2px 12px;
+		display:inline-block;
+		width:100%
+	}
+	.fancy-list .mark-added {
+		background:#9CE597
+	}
+	.fancy-list .mark-neutral {
+		background:rgb(250, 250, 253)
+	}
+	.fancy-list .mark-removed {
+		background:rgb(250, 207, 214)
+	}
 
 /* 8.3 rsmod - prasmju prasības */
 table.skill-reqs {
-    float:left;
-    width:47%;
-    margin-left:10px;
-    background:#fff
+	float:left;
+	width:47%;
+	margin-left:10px;
+	background:#fff
 }
 .skill-reqs tr td {
-    font-size:11px
+	font-size:11px
 }
 .level-input, .quest-input {
-    border:1px solid #E4E4E4;
-    height:20px;
-    font-family:tahoma,verdana,arial;
-    font-size:11px;
-    padding:2px 7px
+	border:1px solid #E4E4E4;
+	height:20px;
+	font-family:tahoma,verdana,arial;
+	font-size:11px;
+	padding:2px 7px
 }
 .level-input {
-    width:25px;
-    text-align:center
+	width:25px;
+	text-align:center
 }
 .quest-input {
-    width:160px
+	width:160px
 }
 .is-special-input td {
-    background:#e0f5fd
+	background:#e0f5fd
 }
 .is-not-set .quest-input {
-    border:1px solid #fcb7bd
+	border:1px solid #fcb7bd
 }
 
 /* 9.0 RuneScape pamācību sadaļu stili */
 .rs-intro {
-    margin:10px 20px 20px;
-    padding:7px 15px;
-    border:1px solid #ddd;
-    border-bottom:2px solid #bbb;
-    border-top:2px solid #bbb;
-    position:relative
+	margin:10px 20px 20px;
+	padding:7px 15px;
+	border:1px solid #ddd;
+	border-bottom:2px solid #bbb;
+	border-top:2px solid #bbb;
+	position:relative
 }
 .rs-intro img {
-    position:relative;
-    left:-7px
+	position:relative;
+	left:-7px
 }
 .rs-intro p {
-    text-indent:10px;
-    font-size:13px;
-    line-height:1.5
+	text-indent:10px;
+	font-size:13px;
+	line-height:1.5
 }
 
 /* 9.1 RS tabulas */
@@ -859,8 +866,8 @@ table.skill-reqs {
   margin:10px auto
 }
 .rslist.col-list {
-    float:left;
-    margin-left:10px
+	float:left;
+	margin-left:10px
 }
 .rslist .listhead {
   border-bottom:2px solid #ddd;
@@ -873,131 +880,131 @@ table.skill-reqs {
   border-bottom:1px solid #ddd
 }
   .rslist tr.listhead:hover td {
-    background:transparent url('bildes/runescape/table-bg.png') repeat-x top
+	background:transparent url('bildes/runescape/table-bg.png') repeat-x top
   }
   .rslist tr td.center, .rslist-center td {
-    text-align:center
+	text-align:center
   }
   .rslist tr td.right {
-    text-align:right
+	text-align:right
   }
   .rslist tr.letter td {
-    font-weight: 700
+	font-weight: 700
   }
   .rslist .number {
-    color:#333;
-    font-weight: 700
+	color:#333;
+	font-weight: 700
   }
   .rslist .border {
-    border-top:2px solid #bbb
+	border-top:2px solid #bbb
   }
 
 /* 9.2 RuneScape kvestu sadaļa */
 .placeholder {
-    color:#8993a0
+	color:#8993a0
 }
 
 /* 9.2.1 Kvestu sērijas */
 #khazard {
-    max-height:120px;
-    padding-right:10px
+	max-height:120px;
+	padding-right:10px
 }
 #series {
-    margin-left:20px
+	margin-left:20px
 }
-    .series {
-        background:#f8f8f8;
-        width:200px;
-        min-height:150px;
-        float:left;
-        padding:5px 10px 8px;
-        margin:0 7px 20px 0;
-        border:1px solid #ddd;
-        font-size:12px
-    }
-    .series > h3 {
-        margin:0 auto 5px;
-        padding:0 0 3px 5px;
-        font-weight:700;
-        font-size:13px;
-        color:#FF0D0D;
-        border-bottom:1px solid #E6E6E6
-    }
-    .series img {
-        margin:5px auto;
-        max-width:200px
-    }
-    .series a {
-        margin:2px 0;
-        padding-left:20px;
-        display:block;
-        background:url('/bildes/runescape/li.png') no-repeat;
-    }
+	.series {
+		background:#f8f8f8;
+		width:200px;
+		min-height:150px;
+		float:left;
+		padding:5px 10px 8px;
+		margin:0 7px 20px 0;
+		border:1px solid #ddd;
+		font-size:12px
+	}
+	.series > h3 {
+		margin:0 auto 5px;
+		padding:0 0 3px 5px;
+		font-weight:700;
+		font-size:13px;
+		color:#FF0D0D;
+		border-bottom:1px solid #E6E6E6
+	}
+	.series img {
+		margin:5px auto;
+		max-width:200px
+	}
+	.series a {
+		margin:2px 0;
+		padding-left:20px;
+		display:block;
+		background:url('/bildes/runescape/li.png') no-repeat;
+	}
 /* 9.2.2 Kvestu statistika */
 #balance {
-    border-bottom:1px solid #ccc;
-    max-height:220px;
-    padding-bottom:5px;
-    margin:0 80px
+	border-bottom:1px solid #ccc;
+	max-height:220px;
+	padding-bottom:5px;
+	margin:0 80px
 }
 .quest-stats-block {
-    width:80%;
-    margin:auto
+	width:80%;
+	margin:auto
 }
 .stats-left {
-    margin:20px;
-    position:relative;
-    top:15px
+	margin:20px;
+	position:relative;
+	top:15px
 }
 .stats-left tr td {
-    padding:0 0 5px 5px;
-    color:#374e5b
+	padding:0 0 5px 5px;
+	color:#374e5b
 }
 .stats-left td.left {
-    text-align:right;
-    color:#000000
+	text-align:right;
+	color:#000000
 }
 .stats-left tr.space td {
-    padding-top:17px
+	padding-top:17px
 }
 /* 9.2.3 Prasmju prasības */
 .skill-req {
-    margin:20px auto
+	margin:20px auto
 }
 .skill-req table td {
-    font-size: 12px
+	font-size: 12px
 }
 .skill-req .name {
-    text-align:right
+	text-align:right
 }
 .skill-req .level {
-    text-align:center;
-    color:#495d90
+	text-align:center;
+	color:#495d90
 }
 
 /* 9.3 freeplay & miniquests */
 .simple-quests {
-    margin:20px 50px 20px 20px;
-    width:95%
+	margin:20px 50px 20px 20px;
+	width:95%
 }
-    .simple-quests tr td {
-        padding:1px 3px;
-        border:1px solid #ccc;
-        min-height:15px
-    }
-    .simple-quests a > img {
-        vertical-align:middle;
-        width:150px;
-        max-width:150px
-    }
-    .simple-quests p {
-        margin-left:7px
-    }
-    .simple-quests td > p:nth-child(1) {
-        margin:0 0 0 7px;
-        padding:0;
-        color:#7e888a
-    }
+	.simple-quests tr td {
+		padding:1px 3px;
+		border:1px solid #ccc;
+		min-height:15px
+	}
+	.simple-quests a > img {
+		vertical-align:middle;
+		width:150px;
+		max-width:150px
+	}
+	.simple-quests p {
+		margin-left:7px
+	}
+	.simple-quests td > p:nth-child(1) {
+		margin:0 0 0 7px;
+		padding:0;
+		color:#7e888a
+	}
 
 /* 9.4 minigames & D&D */
 #logo-minigames {
@@ -1007,308 +1014,308 @@ table.skill-reqs {
   max-height:140px
 }
 .stats-block {
-    list-style:none;
-    margin:0 20px 20px;
-    background:#f3f4f6;
-    border:1px solid #e3e5e9
+	list-style:none;
+	margin:0 20px 20px;
+	background:#f3f4f6;
+	border:1px solid #e3e5e9
 }
 .stats-block li {
-    display:inline-block;
-    background-image:none;
-    width:10%;
-    padding:0;
-    margin:0
+	display:inline-block;
+	background-image:none;
+	width:10%;
+	padding:0;
+	margin:0
 }
 .stats-block img {
-    position:relative;
-    top:2px
+	position:relative;
+	top:2px
 }
 .minigame-list {
-    clear:both
+	clear:both
 }
 .minigame-list tr td:nth-child(1) {
-    padding:2px 3px
+	padding:2px 3px
 }
 .minigame-list a > img {
-    max-width:90px;
+	max-width:90px;
 	max-height:90px;
-    vertical-align:middle
+	vertical-align:middle
 }
 .minigame-list p {
-    margin:3px 0 0;
-    padding:0
+	margin:3px 0 0;
+	padding:0
 }
 .minigame-list p:nth-child(1) {
-    margin-bottom:3px
+	margin-bottom:3px
 }
 .minigame-list p span {
-    float:right;
-    margin-right:7px;
-    color:#6f7987;
-    font-size:11px
+	float:right;
+	margin-right:7px;
+	color:#6f7987;
+	font-size:11px
 }
 .minigame-list tr:hover td {
-    background:#f1f1f1
+	background:#f1f1f1
 }
 
 /* 9.5 prasmes */
 #sage {
-    margin:5px;
-    position:relative;
-    left:-15px;
-    max-height:145px
+	margin:5px;
+	position:relative;
+	left:-15px;
+	max-height:145px
 }
 .skill-block {
-    border:1px solid #ddd;
-    border-bottom:2px solid #a4aeb9;
-    width:345px;
-    height:210px;
-    float:left;
-    margin:10px 15px 10px 0
+	border:1px solid #ddd;
+	border-bottom:2px solid #a4aeb9;
+	width:345px;
+	height:210px;
+	float:left;
+	margin:10px 15px 10px 0
 }
 .skill-info {
-    padding:5px;
-    float:left;
-    display:inline;
-    font-size:12px
+	padding:5px;
+	float:left;
+	display:inline;
+	font-size:12px
 }
 .skill-icon {
-    margin:5px;
-    float:left;
-    vertical-align:middle
+	margin:5px;
+	float:left;
+	vertical-align:middle
 }
 .skill-name {
-    font-weight: 700;
-    color:#3e5265;
-    font-size:13px
+	font-weight: 700;
+	color:#3e5265;
+	font-size:13px
 }    
 .skill-links {
-    padding-top:5px;
-    width:15%;
-    float:left;
-    height:205px;
-    position:relative;
-    border-left:1px solid #ddd;
-    font-size:11px
+	padding-top:5px;
+	width:15%;
+	float:left;
+	height:205px;
+	position:relative;
+	border-left:1px solid #ddd;
+	font-size:11px
 }
-    .skill-links p {
-        font-weight: 700;
-        color:#5b6b7b;
-        padding-left:7px
-    }
-    .skill-links a {
-        border-bottom:1px dotted #E4E1E1;
-        padding:1px 5px 4px 8px;
-        margin:2px 0 0 8px;
-        display:inline-block
-    }
+	.skill-links p {
+		font-weight: 700;
+		color:#5b6b7b;
+		padding-left:7px
+	}
+	.skill-links a {
+		border-bottom:1px dotted #E4E1E1;
+		padding:1px 5px 4px 8px;
+		margin:2px 0 0 8px;
+		display:inline-block
+	}
 .skill-pages {
-    background:#F8F8F8;
-    border-top:1px solid #E0E0E0;
-    position:absolute;
-    bottom:0;
-    width:96%;
-    padding:0 6px
+	background:#F8F8F8;
+	border-top:1px solid #E0E0E0;
+	position:absolute;
+	bottom:0;
+	width:96%;
+	padding:0 6px
 }
-    .skill-pages, .skill-pages a, .skill-pages a:visited, .skill-pages a:active, .skill-pages a:focus {
-        border-bottom:0
-    }
+	.skill-pages, .skill-pages a, .skill-pages a:visited, .skill-pages a:active, .skill-pages a:focus {
+		border-bottom:0
+	}
 .skill-page-title {
-    font-size:20px;
-    margin-top:35px;
-    margin-bottom:15px
+	font-size:20px;
+	margin-top:35px;
+	margin-bottom:15px
 }
 /* 9.5.1 Fakti */
 #skills-facts {
-    margin:20px 70px 10px 30px;
-    clear:both;
-    position:relative
+	margin:20px 70px 10px 30px;
+	clear:both;
+	position:relative
 }
-    #skills-facts ul {
-        margin:0;
-        padding:0
-    }
-    #skills-facts ul li {
-        background:transparent url('/bildes/runescape/li.png') no-repeat;
-        padding-left:20px
-    }
-    #wagtail {
-        margin:15px auto 0;
-        display:block
-    }
+	#skills-facts ul {
+		margin:0;
+		padding:0
+	}
+	#skills-facts ul li {
+		background:transparent url('/bildes/runescape/li.png') no-repeat;
+		padding-left:20px
+	}
+	#wagtail {
+		margin:15px auto 0;
+		display:block
+	}
 /* 9.5.2 XP tabula */
 .xp-table tr td {
-    font-size:12px
+	font-size:12px
 }
 .xp-table .number-2 {
-    color:#274d73;
-    font-weight: 700;
-    border-left:1px solid #ccc;
-    border-right:1px solid #ccc
+	color:#274d73;
+	font-weight: 700;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc
 }
 .rslist-center {
-    margin-left:15px
+	margin-left:15px
 }
 
 /* 9.6 tasks un ģildes */
 #trollis {
-    max-height:110px;
-    margin:0 10px 5px 0
+	max-height:110px;
+	margin:0 10px 5px 0
 }
-    #montai {
-        max-height:80px;
-        float:left;
-        margin:0 10px 5px 0
-    }
-    #wise-old-man {
-        max-height:100px;
-        margin:0 10px 5px 0
-    }
+	#montai {
+		max-height:80px;
+		float:left;
+		margin:0 10px 5px 0
+	}
+	#wise-old-man {
+		max-height:100px;
+		margin:0 10px 5px 0
+	}
 .newline {
-    clear:left
+	clear:left
 }
 .guide-block {
-    float:left;
-    padding:5px 0 0;
-    margin:0 7px 20px 10px;
-    border:1px solid #cccdcd;
-    border-bottom:1px solid #b3b8bc;
-    background:#f4f3f3;
-    font-size:11px;
-    width:218px
+	float:left;
+	padding:5px 0 0;
+	margin:0 7px 20px 10px;
+	border:1px solid #cccdcd;
+	border-bottom:1px solid #b3b8bc;
+	background:#f4f3f3;
+	font-size:11px;
+	width:218px
 }
-    .guide-block p {
-        margin:2px 7px 3px 7px;
-        padding:0;
-        line-height:1.3
-    }
-    p.guide-title {
-        font-weight: 700;
-        color:#374e5b;
-        display:block;
-        padding:0 3px 3px;
-        border-bottom:1px solid #E9E4E4
-    }
-    .guide-block p span {
-        font-weight:700;
-        color:#355575
-    }
-    .guide-block > a img {
-        margin:3px 8px 0;
-        max-width:200px;
-        opacity:0.95
-    }
-        .guide-block > a img:hover {
-            opacity:1.0
-        }
-    .guide-p2p {
-        position:relative;
-        left:3px
-    }
+	.guide-block p {
+		margin:2px 7px 3px 7px;
+		padding:0;
+		line-height:1.3
+	}
+	p.guide-title {
+		font-weight: 700;
+		color:#374e5b;
+		display:block;
+		padding:0 3px 3px;
+		border-bottom:1px solid #E9E4E4
+	}
+	.guide-block p span {
+		font-weight:700;
+		color:#355575
+	}
+	.guide-block > a img {
+		margin:3px 8px 0;
+		max-width:200px;
+		opacity:0.95
+	}
+		.guide-block > a img:hover {
+			opacity:1.0
+		}
+	.guide-p2p {
+		position:relative;
+		left:3px
+	}
 .guide-block ul {
-    padding:0;
-    margin:0
+	padding:0;
+	margin:0
 }
-    .guide-block ul li {
-        overflow:auto;
-        background:transparent;
-        padding:0;
-        margin:0
-    }
-    .guide-block ul li a.page {
-        padding:4px 5px 4px 10px;
-        border-bottom:0 solid #d9e4f4;
-        border-top:1px solid #dadada;
-        margin:0;
-        display:block
-    }
-    .guide-block li:hover {
-        background:#eaebec
-    }
-    .guide-block li:hover a.page {
-        text-decoration:none;
-        color:#0059A7
-    }
+	.guide-block ul li {
+		overflow:auto;
+		background:transparent;
+		padding:0;
+		margin:0
+	}
+	.guide-block ul li a.page {
+		padding:4px 5px 4px 10px;
+		border-bottom:0 solid #d9e4f4;
+		border-top:1px solid #dadada;
+		margin:0;
+		display:block
+	}
+	.guide-block li:hover {
+		background:#eaebec
+	}
+	.guide-block li:hover a.page {
+		text-decoration:none;
+		color:#0059A7
+	}
 
 /* 10. Aptaujas */
 .poll-box strong {
-    color:#344669
+	color:#344669
 }
 .poll-box input[type=submit] {
-    margin: 5px 0 0 10px
+	margin: 5px 0 0 10px
 }
 #poll-questions li {
-    border-bottom:1px solid #F2F4FD;
-    padding:2px
+	border-bottom:1px solid #F2F4FD;
+	padding:2px
 }
 #poll-questions li:hover {
-    background: #F0F2F5
+	background: #F0F2F5
 }
 #poll-questions li:hover label {
-    color:#4577E2;
-    cursor:pointer
+	color:#4577E2;
+	cursor:pointer
 }
 #poll-questions input[type=radio] {
-    position: relative;
-    top: 2px;
+	position: relative;
+	top: 2px;
 }
 #poll-questions label {
-    color:#2A486F;
-    display:block
+	color:#2A486F;
+	display:block
 }
 .poll-answers li {
-    color:#2A486F;
-    border-bottom:1px solid #F2F4FD;
-    padding-left:3px
+	color:#2A486F;
+	border-bottom:1px solid #F2F4FD;
+	padding-left:3px
 }
 .poll-answers li div div {
-    background:#A8CBEC
+	background:#A8CBEC
 }
 .poll-answers li span {
-    color:#477EAA
+	color:#477EAA
 }
 .poll-text {
-    font-size:12px
+	font-size:12px
 }
 .poll-text a {
-    color:#3B729B
+	color:#3B729B
 }
 /* aptaujas - mb */
 #miniblog-list li .mb-poll-question {
-    color:#294268
+	color:#294268
 }
 #miniblog-list li .mb-poll-li {
-    padding-left:56px
+	padding-left:56px
 }
 #miniblog-list li .mb-poll-li li {
-    min-height: 15px;
-    border-bottom: 1px solid #D3D7DD;
-    color: #2A486F;
-    padding: 3px 7px;
-    width:75%
+	min-height: 15px;
+	border-bottom: 1px solid #D3D7DD;
+	color: #2A486F;
+	padding: 3px 7px;
+	width:75%
 }
 #miniblog-list li .mb-poll-vote {
-    color:#1F4FA3;
-    margin-left:20px
+	color:#1F4FA3;
+	margin-left:20px
 }
 
 /* 11. tinyMCE uzliekamie stili */
 .rs-image-left {
-    float:left;
-    margin:5px 7px 7px 0;
-    position:relative;
-    top:5px
+	float:left;
+	margin:5px 7px 7px 0;
+	position:relative;
+	top:5px
 }
 .rs-image-right {
-    float:right;
-    margin:5px 0 7px 7px;
-    position:relative;
-    top:5px
+	float:right;
+	margin:5px 0 7px 7px;
+	position:relative;
+	top:5px
 }
 .text-notice {
 	color: #CF651D
 }
 .simple-links a {
-    color:inherit
+	color:inherit
 }
 /* 12. Sadly no dragons here... */
