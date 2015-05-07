@@ -114,7 +114,11 @@ function read_rss($force = false) {
 		foreach (array_reverse($reversed_objects) as $single) {
 
 			// izveidos ierakstu `miniblog` tabulā
-			$mb_text  = '<p class="rsmb-title">'.$single->title.'</p>'.
+            $append = '';
+            if ((int)$single->is_oldschool) {
+                $append = '&nbsp;<span class="rsmb-oldschool">(Oldschool)</span>';
+            }            
+			$mb_text  = '<p class="rsmb-title">'.$single->title.$append.'</p>'.
 						'<p class="rsmb-text">'.$single->description.'<br>'.
 						'Oriģinālraksts: <a href="'.$single->link.'" '.
 						'rel="nofollow" target="_blank">'.$single->link.'</a></p>'.
@@ -192,6 +196,7 @@ function create_news($type = 'rs3') {
 			`rs_news`.`news_date`           AS `date`,
 			`rs_news`.`news_category`       AS `category`,
 			`rs_news`.`news_link`           AS `link`,
+			`miniblog`.`removed`,
 			`miniblog`.`text`
 		FROM `rs_news`
 			JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
@@ -208,6 +213,9 @@ function create_news($type = 'rs3') {
 	$out = '<ul class="official-news">';
 
 	foreach ($news as $single) { // izies cauri atlasītajiem ierakstiem
+	
+		// ja ierakstam dzēsts miniblogs, to šeit neiekļaus
+		if ($single->removed) continue;
 		
 		$img_path = '/bildes/runescape/news/'.$img_prefix.$single->mb_id.'.jpg';
 		if ($type === 'oldschool') {

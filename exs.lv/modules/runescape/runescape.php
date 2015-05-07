@@ -10,13 +10,17 @@ if ($auth->ok) {
 }
 
 // mod opšns
-if ($auth->id === 115) {
+if ($auth->id == 115) {
 
-	if (isset($_GET['action']) && $_GET['action'] == 'swaptitles') {
+	if (isset($_GET['magic']) && $_GET['magic'] == 'swaptitles') {
 		swap_titles();
 	}
 	
-	if (isset($_GET['action']) && $_GET['action'] == 'recreate') {
+	if (isset($_GET['magic']) && $_GET['magic'] == 'readrss') {
+		read_rss(true);
+	}
+	
+	if (isset($_GET['magic']) && $_GET['magic'] == 'recreate') {
 		create_news('rs3');
 		create_news('oldschool');
 	}
