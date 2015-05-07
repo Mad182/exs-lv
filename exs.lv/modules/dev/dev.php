@@ -1,5 +1,7 @@
 <?php
 
+pr($_SERVER);
+
 exit;
 $folder = 'florbols-01-11-2014';
 $user_id = 35809;

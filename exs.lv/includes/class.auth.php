@@ -139,6 +139,11 @@ class Auth {
 
 	function login($username, $password, $xsrf = null) {
 		global $db, $site_access, $lang;
+		
+		if($this->is_tor_exit()) {
+			$this->logout();
+			return false;
+		}
 
 		session_regenerate_id(true);
 
@@ -264,4 +269,34 @@ class Auth {
 		global $db;
 		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
+	
+
+	/**
+	 * Pārbauda, vai IP nāk no tor
+	 */
+	function is_tor_exit() {
+		global $m;
+
+		$is_tor = 'n';
+		if (($is_tor = $m->get('t-'.$this->ip)) === false) {
+			if (gethostbyname($this->reverse($this->ip).".".$_SERVER['SERVER_PORT'].".".$this->reverse($this->ip).".ip-port.exitlist.torproject.org")=="127.0.0.2") {
+				$is_tor = 'y';
+			} else {
+				$is_tor = 'n';
+			}
+			$m->set('t-'.$this->ip, $is_tor, false, 9000);
+		}
+
+		if($is_tor === 'y') {
+			return true;
+		}
+		return false;
+	}
+
+	function reverse($inputip) {
+		$ipoc = explode(".",$inputip);
+		return $ipoc[3].".".$ipoc[2].".".$ipoc[1].".".$ipoc[0];
+	}
+
 }
+

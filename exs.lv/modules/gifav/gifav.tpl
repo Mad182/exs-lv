@@ -1,9 +1,9 @@
-<h1>Animētie avatari</h1>
+<h1>Animētie GIF avatari</h1>
 
 <!-- START BLOCK : import-->
 <form class="form" action="" method="post">
 	<fieldset>
-		<legend>Importēt avataru no <a href="http://gif-avatars.com/" target="_blank">gif-avatars.com</a></legend>
+		<legend>Importēt avataru no <a href="https://gif-avatars.com/" target="_blank">gif-avatars.com</a></legend>
 		<p>
 			<label>Avatara ID:</label><br />
 			<input type="text" name="gif_avatars_id" class="text number" style="width: 50px;" />
@@ -17,9 +17,10 @@
 	<fieldset>
 		<ul style="padding:0;margin:0">
 			<!-- START BLOCK : av-node-->
-			<li style="background:transparent;float:left;width:80px;padding:8px;margin:3px;height:110px;text-align:center;{owned}">
-				<label for="av-{id}">
-					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" />
+			<li style="background:transparent;float:left;width:130px;padding:4px 0;margin:3px 1px;height:130px;text-align:center;{owned}">
+				<label for="av-{id}" style="font-size:90%;font-weight:normal">
+					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" /><br />
+					{title}
 				</label>
 				<br />
 				<input id="av-{id}" type="radio" name="avatarid" value="{id}" />
@@ -27,9 +28,17 @@
 			<!-- END BLOCK : av-node-->
 		</ul>
 		<div class="c"></div>
-		<p>Bez avatariem kas redzami šeit, vari izvēlēties arī jebkuru avataru no <a href="http://gif-avatars.com/">http://gif-avatars.com/</a>, tur ir visi vajadzīgie izmēri. Tādā gadījumā sūti PM ar linku uz avataru kādam modiņam vai adminam :)</p>
+		<p>
+			Papildus avatariem, kas redzami šeit, Tu vari izvēlēties arī jebkuru avataru no mājas lapas 
+			<a href="https://gif-avatars.com/" target="_blank">https://gif-avatars.com/</a>,
+			tur ir visi vajadzīgie izmēri.
+			Tādā gadījumā sūti PM ar linku uz avataru kādam modiņam vai adminam :)
+		</p>
 
-		<p>Animētais avatars maksā 5 exs.lv kredīta punktus. Par to tu iegūsti vienu avataru, ko izvēlies. Citiem šis avatars vairs nebūs pieejams.</p>
+		<p>
+			Animētais avatars &quot;maksā&quot; 5 exs.lv kredīta punktus.<br />
+			Par to tu iegūsti vienu avataru, ko izvēlies. Citiem šis avatars vairs nebūs pieejams, un Tu to jebkurā brīdī varēsi uzlikt atpakaļ, ja būsi nomainijis.
+		</p>
 
 		<!-- START BLOCK : av-buy-->
 		<input type="submit" class="button primary" value="Nosūtīt" />

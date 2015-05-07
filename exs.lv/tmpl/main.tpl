@@ -29,7 +29,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,masonry.pkgd.min.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -98,6 +98,19 @@
 		<div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
 			<div id="header"{page-persona}>
+				<div style="position:absolute;right:20px;top:27px;width:728px;height:90px">
+					<script type="text/javascript" id="position_2919">
+					  var ads_positions = ads_positions || [];
+					  ads_positions.push(["2919", "", "document"]);
+					  (function() {
+					    if (!document.getElementById("ads_loader")) {
+					      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
+					      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
+					      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+					    }
+					  })();
+					</script>
+				</div>
 				<div id="logo">
 					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 					<div id="tools-bar">
@@ -271,6 +284,11 @@
 						{csgo-monitor}
 					</div>
 
+					<h3><strong>MTA</strong> mta.exs.lv</h3>
+					<div class="box">
+						{mta-monitor}
+					</div>
+
 					<!-- START BLOCK : groups-l-list-->
 					<h3>Jaunākās grupas</h3>
 					<div class="box">
@@ -330,6 +348,20 @@
 
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
+					
+					<div style="width:468px;margin:10px auto">
+						<script type="text/javascript" id="position_2918">
+						  var ads_positions = ads_positions || [];
+						  ads_positions.push(["2918", "", "document"]);
+						  (function() {
+						    if (!document.getElementById("ads_loader")) {
+						      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
+						      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
+						      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+						    }
+						  })();
+						</script>
+					</div>
 
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
@@ -566,6 +598,13 @@
 		  ga('send', 'pageview');
 
 		</script>
+
+		<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+		<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
+		<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
+		<noscript>
+		<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
+		</noscript>
 
 	</body>
 </html>

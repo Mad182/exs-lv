@@ -506,7 +506,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				));
 
 				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', get_avatar($group, 's', true), 'g' . $ins);
-				$db->query("UPDATE clans SET posts = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "' WHERE id = '$group->id'");
+
+				update_post_count($group->id);
 
 				$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$ins'");
 				$topic->text = mention($topic->text, $group_link . '/forum/' . base_convert($ins, 10, 36), 'group', $topic->id);
@@ -591,8 +592,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						notify($reply_to->author, 8, $mainid, $url, textlimit($group->title . ' - ' . $title, 64));
 					}
 
-					$db->query("UPDATE clans SET posts = '" . $db->get_var("SELECT count(*) FROM miniblog WHERE groupid = '$group->id'") . "' WHERE id = '$group->id'");
-
+					update_post_count($group->id);
 
 					/* auto close after 500 posts */
 					$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mainid'");
@@ -704,6 +704,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$author = '<em>dzēsts</em>';
 				}
 
+				// samazina attēlus
+				if ($record->pic_heavy && stripos($record->text, 'src="http') !== false) {
+					$record->text = resize_html_images($record->text);
+				}
+
 				$tpl->assign(array(
 					'url' => $url,
 					'text' => add_smile($record->text) . $append,
@@ -809,7 +814,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						}
 						$mlevel = 5;
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed, $group->disable_vote));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed, $group->disable_vote, $record->pic_heavy));
 					}
 				}
 
@@ -963,6 +968,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						</div>
 					</div>
 				';
+			}
+
+			// samazina attēlus
+			if ($tab->pic_heavy && stripos($tab->text, 'src="http') !== false) {
+				$tab->text = resize_html_images($tab->text);
 			}
 
 			$tpl->newBlock('group-tab');

@@ -5,6 +5,8 @@
 /exs.lv/dati/bildes/u*
 /exs.lv/configdb.php
 /exs.lv/bildes/runescape/news/*
+/exs.lv/modules/approve/av_l/*
+/exs.lv/modules/approve/av_sm/*
 .idea
 .gitignore
 .DS_Store

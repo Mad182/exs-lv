@@ -5,8 +5,7 @@ if (!$auth->ok) {
 	$botstring = 'Es tiešām nēesmu ļauns spambots! ' . md5($auth->xsrf . '-' . 'neesmuspambots') . '!';
 
 	/* pārbauda vai lietotājs neizmanto tor */
-	$tor = Tor::getInstance();
-	if ($tor->setTarget($auth->ip)->isTorActive()) {
+	if ($auth->is_tor_exit()) {
 		set_flash('Reģistrācija no tavas IP adreses šobrīd nav iespējama ;(', 'error');
 		redirect();
 	}
@@ -147,3 +146,4 @@ if (!$auth->ok) {
 	set_flash("Tu jau esi reģistrējies :D");
 	redirect();
 }
+

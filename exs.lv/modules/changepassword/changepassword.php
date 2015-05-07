@@ -11,6 +11,12 @@ if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `ip` = '$auth->ip' AND 
 
 if (!$auth->ok) {
 
+	/* pārbauda vai lietotājs neizmanto tor */
+	if ($auth->is_tor_exit()) {
+		set_flash('Paroles maiņa no tavas IP adreses šobrīd nav iespējama ;(', 'error');
+		redirect();
+	}
+
 	if (isset($_GET['var1']) && strlen($_GET['var1']) > 15) {
 
 		$userdata = $db->get_row("SELECT * FROM `users` WHERE
@@ -86,3 +92,4 @@ if (!$auth->ok) {
 } else {
 	redirect();
 }
+

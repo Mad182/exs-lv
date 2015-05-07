@@ -161,12 +161,7 @@
 		<!-- START BLOCK : comments-node-->
 		<!-- START BLOCK : comments-node-user-->
 		<dt>
-		<a class="username" id="c{comment-id}" href="{aurl}">{comment-author}</a>
-		<a href="{aurl}">
-			<img class="comments-avatar" src="{avatar}" alt="{title}" />
-		</a>
-		<span class="custom-title">{custom_title}</span>
-		<span class="author-info">Karma: {karma}</span>
+		{author}
 		</dt>
 		<dd>
 			<p class="inf">
