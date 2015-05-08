@@ -615,12 +615,3 @@ $(document).ready(function() {
 	setTimeout('msgrr()', query_timeout);
 });
 
-$(window).load(function () {
-	/* masonry priekš steam lapas, uztaisa glītu layoutu  */
-	var $container = $('#steam-online');
-	// initialize
-	$container.masonry({
-		gutter: 10,
-		itemSelector: '.game'
-	});
-});
