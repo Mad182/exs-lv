@@ -316,7 +316,10 @@ if ($auth->hosts_online > $ss->get('most_online')) {
 
 $page_title = hide_spoilers($page_title);
 if (strlen($page_title) < 55 && $lang != 4) {
-	$page_title .= ' - ' . $config_domains[$lang]['domain'];
+	if (!empty($page_title)) {
+		$page_title .= ' - ';
+	}
+	$page_title .= $config_domains[$lang]['domain'];
 }
 
 $login_url = h($_SERVER['REQUEST_URI']);

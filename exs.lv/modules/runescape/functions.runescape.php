@@ -10,25 +10,6 @@
 
 
 /**
- *  temp funkcija attēlu nosaukumu izmaiņām.
- */
-function swap_titles() {
-
-	$directory = CORE_PATH.'/bildes/runescape/news/';
-	$images = glob($directory . '*.jpg');
-
-	foreach($images as $image) {
-		$newimage = str_replace('thumb-news', 'rs3', $image);
-		$newimage = str_replace('news-os', 'os', $newimage);
-		rename($image, $newimage);
-	}
-	
-	create_news('rs3');
-	create_news('oldschool');
-}
-
-
-/**
  *  Atgriež HTML ar RuneScape jaunākajām ziņām, kas
  *  no runescape.com RSS saglabāts cache failā.
  */
@@ -119,7 +100,7 @@ function read_rss($force = false) {
                 $append = '&nbsp;<span class="rsmb-oldschool">(Oldschool)</span>';
             }            
 			$mb_text  = '<p class="rsmb-title">'.$single->title.$append.'</p>'.
-						'<p class="rsmb-text">'.$single->description.'<br>'.
+						'<p class="rsmb-text">'.$single->description.'<br><br>'.
 						'Oriģinālraksts: <a href="'.$single->link.'" '.
 						'rel="nofollow" target="_blank">'.$single->link.'</a></p>'.
 						'<p class="rsmb-fade">Ieraksts izveidots automātiski.</p>';
