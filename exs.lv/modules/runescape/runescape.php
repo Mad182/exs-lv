@@ -35,7 +35,7 @@ if (isset($_COOKIE['last-rsnews-tab']) &&
 	$news_type = 'oldschool';
 }
 
-read_rss(); // iekšēji funkcija nolasīs tikai reizi x minūtēs
+//read_rss(); // iekšēji funkcija nolasīs tikai reizi x minūtēs
 
 $tpl->newBlock('news-tabs');
 $tpl->assign($news_type.'-selected', 'active '); 
