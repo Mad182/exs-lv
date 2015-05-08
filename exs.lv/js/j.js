@@ -438,7 +438,8 @@ $(document).ready(function() {
 		var tabs = {
 			'last-sidebar-tab': {tab1: 'pages', tab2: 'gallery'},
 			'last-facts-tab': {tab1: 'fact-all', tab2: 'fact-rs'},
-			'last-mbs-tab': {tab1: 'all', tab2: 'friends', tab3: 'music'}
+			'last-mbs-tab': {tab1: 'all', tab2: 'friends', tab3: 'music'},
+			'last-rsnews-tab' : {tab1: 'runescape', tab2: 'oldschool'}
 		};
 
 		$.each(tabs, function(position, values) {
