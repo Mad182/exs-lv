@@ -688,7 +688,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 		return;
 	// vērtējot grupā esošu ierakstu, jāpārbauda lietotāja pieeja tam
 	} else if ($type === 'miniblog' && $comment->groupid != 0 &&
-			   !a_member_of($comment->groupid, false)) {
+			   !a_member_of($comment->groupid, false, true)) {
 		return;
 	}
 	
@@ -758,11 +758,12 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 }
 
 /**
- *  Noteiks, vai lietotājam ir piekļuve norādītajam grupai.
+ *  Noteiks, vai lietotājam ir piekļuve norādītajai grupai.
  *
- *  @param $allow_archived  - vai arhivēta grupa ir pieļaujama
+ *  @param $allow_archived  vai arhivēta grupa ir pieļaujama
+ *  @param $allow_voting    vai pārbaudīt, vai ierakstu vērtēšana ir iespējota?
  */
-function a_member_of($group_id = 0, $allow_archived = true) {
+function a_member_of($group_id = 0, $allow_archived = true, $check_voting = false) {
 	global $db, $auth, $android_lang;
 	
 	$group_id = (int)$group_id;
@@ -797,7 +798,10 @@ function a_member_of($group_id = 0, $allow_archived = true) {
 		a_error('Grupa ir arhivēta');
 		a_log('a_member_of('.$group_id.'): norādītā grupa ir arhivēta');
 		return false;
-	}
+	} else if ($check_voting && $group_data->disable_vote) {
+        a_error('Vērtēšana šajā grupā nav atļauta');
+		return false;
+    }
 	
 	return true;
 }

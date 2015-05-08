@@ -33,7 +33,7 @@ if ($var1 === 'getlist') {
 	
 	if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
 		!isset($_POST['content']) || !isset($_POST['is_private'])) {
-		a_error('Kļūdains pieprasījums z');
+		a_error('Kļūdains pieprasījums');
 		if ($var1 === 'new') {
 			a_log('Netika iesniegti minibloga ieraksta pievienošanas dati');
 		} else {
