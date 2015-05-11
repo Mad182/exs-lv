@@ -223,7 +223,7 @@ if (isset($_GET['u'])) {
 
 		// 404
 		// android.exs.lv nepatīk redirekti :(
-		if ($lang === 2) {
+		if ($auth->via_android === 1) {
 			require(CORE_PATH . '/modules/android/android.php');
 		} else {
 			set_flash('Pieprasītā lapa netika atrasta!', 'error');
