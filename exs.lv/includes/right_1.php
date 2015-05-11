@@ -169,3 +169,4 @@ if ($auth->ok === true) {
 if ($auth->skin == 1) {
 	$tpl->assignGlobal('twitter-theme', ' data-theme="dark"');
 }
+

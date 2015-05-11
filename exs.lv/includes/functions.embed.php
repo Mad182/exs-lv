@@ -467,41 +467,36 @@ function get_youtube($videoid, $force = false) {
 	global $db, $m;
 
 	// saglabā informāciju Memcached uz stundu
-	if ($force || !($data = $m->get('yt_' . $videoid))) {
+	if ($force || !($data = $m->get($videoid))) {
 
 		$data = $db->get_row("
-            SELECT * FROM `ytlocal`
-            WHERE `yt_id` = '" . sanitize($videoid) . "'
-        ");
+			SELECT * FROM `ytlocal`
+			WHERE `yt_id` = '" . sanitize($videoid) . "'
+		");
 
 		// saglabā info arī datubāzē, ja tādas tur nav
 		if (empty($data)) {
 
-			require_once(LIB_PATH . '/youtube/youtube.lib.php');
-			$yt = new Youtube(array('user' => 'google', 'limit' => 5));
-			$video = $yt->getSingleVideo($videoid);
-
+			$json = curl_get('https://www.googleapis.com/youtube/v3/videos?id='.$videoid.'&key=AIzaSyAY_u1YzIGq8jeDufkmsNGRKbJ4_bea0AI&part=snippet');
+			$ytdata = json_decode($json);
 			$data = new Stdclass;
-			$data->yt_title = esr($video['title'], 'youtube.com');
-			$data->yt_description = esr($video['description'], '');
-			$data->yt_time = esr($video['duration'], '0:00');
+			$data->yt_title = esr($ytdata->items[0]->snippet->title, 'youtube.com');
+			$data->yt_description = esr($ytdata->items[0]->snippet->description, '');
 			$data->yt_restricted = 0;
 			$data->yt_id = $videoid;
 
 			$db->query("
-                INSERT INTO `ytlocal`
-                    (yt_id, yt_title, yt_description, yt_restricted, yt_time)
-                VALUES(
-                    '" . sanitize($videoid) . "',
-                    '" . sanitize($data->yt_title) . "',
-                    '" . sanitize($data->yt_description) . "',
-                    '" . $data->yt_restricted . "',
-                    '" . sanitize($data->yt_time) . "'
-                )
-            ");
+				INSERT INTO `ytlocal`
+					(yt_id, yt_title, yt_description, yt_restricted)
+				VALUES(
+					'" . sanitize($videoid) . "',
+					'" . sanitize($data->yt_title) . "',
+					'" . sanitize($data->yt_description) . "',
+					'" . $data->yt_restricted . "'
+				)");
 		}
 
-		$m->set('yt_' . $videoid, $data, false, 3600);
+		$m->set($videoid, $data, false, 3600);
 	}
 	return $data;
 }
