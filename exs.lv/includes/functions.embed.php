@@ -482,17 +482,15 @@ function get_youtube($videoid, $force = false) {
 			$data = new Stdclass;
 			$data->yt_title = esr($ytdata->items[0]->snippet->title, 'youtube.com');
 			$data->yt_description = esr($ytdata->items[0]->snippet->description, '');
-			$data->yt_restricted = 0;
 			$data->yt_id = $videoid;
 
 			$db->query("
 				INSERT INTO `ytlocal`
-					(yt_id, yt_title, yt_description, yt_restricted)
+					(yt_id, yt_title, yt_description)
 				VALUES(
 					'" . sanitize($videoid) . "',
 					'" . sanitize($data->yt_title) . "',
-					'" . sanitize($data->yt_description) . "',
-					'" . $data->yt_restricted . "'
+					'" . sanitize($data->yt_description) . "'
 				)");
 		}
 
