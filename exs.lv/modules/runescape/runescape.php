@@ -6,24 +6,20 @@
  */
 
 if ($auth->ok) {
-	set_action('sākumlapu');
+    set_action('sākumlapu');
 }
 
 // mod opšns
-if ($auth->id == 115) {
-
-	if (isset($_GET['magic']) && $_GET['magic'] == 'swaptitles') {
-		swap_titles();
-	}
-	
-	if (isset($_GET['magic']) && $_GET['magic'] == 'readrss') {
-		read_rss(true);
-	}
-	
-	if (isset($_GET['magic']) && $_GET['magic'] == 'recreate') {
-		create_news('rs3');
-		create_news('oldschool');
-	}
+if (in_array($auth->id, array(1,115))) {
+    
+    if (isset($_GET['magic']) && $_GET['magic'] == 'readrss') {
+        read_rss(true);
+    }
+    
+    if (isset($_GET['magic']) && $_GET['magic'] == 'recreate') {
+        create_news('rs3');
+        create_news('oldschool');
+    }
 }
 
 // sākumlapā rādīs ierakstus no runescape.com RSS feed
@@ -31,11 +27,11 @@ if ($auth->id == 115) {
 
 $news_type = 'rs3';
 if (isset($_COOKIE['last-rsnews-tab']) &&
-	$_COOKIE['last-rsnews-tab'] === 'oldschool') {
-	$news_type = 'oldschool';
+    $_COOKIE['last-rsnews-tab'] === 'oldschool') {
+    $news_type = 'oldschool';
 }
 
-//read_rss(); // iekšēji funkcija nolasīs tikai reizi x minūtēs
+read_rss(); // iekšēji funkcija nolasīs tikai reizi x minūtēs
 
 $tpl->newBlock('news-tabs');
 $tpl->assign($news_type.'-selected', 'active '); 

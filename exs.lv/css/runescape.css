@@ -654,7 +654,8 @@ ul.nav-right {
 		color:#38405A;
 		font-weight: 700;
 		padding-bottom:0;
-		font-size:15px
+		font-size:15px;
+		margin-top:2px
 	}
 	.rsmb-text {
 		margin:9px 5px 0 0
@@ -665,9 +666,9 @@ ul.nav-right {
 	.rsmb-fade {
 		color: #1f4fa3
 	}
-    .rsmb-oldschool {
-        color: rgb(249, 63, 91)
-    }
+	.rsmb-oldschool {
+		color: rgb(249, 63, 91)
+	}
 
 /* 8.0 RuneScape faktu pārvaldība */
 table.facts-table th, table.facts-table td {
