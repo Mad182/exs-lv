@@ -710,7 +710,7 @@ function update_awards($user) {
 		}
 
 		$user_age = user_age($userr->date);
-		for ($i = 1; $i < 10; $i++) {
+		for ($i = 1; $i < 13; $i++) {
 			if ($user_age >= $i) {
 				$awards_list['cake-' . $i] = array(
 					'title' => $i . ' ' . lv_dsk($i, 'gads', 'gadi') . ' exā ;)',
