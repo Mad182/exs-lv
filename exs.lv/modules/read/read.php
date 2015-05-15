@@ -1072,20 +1072,26 @@ if ($article) {
 						}
 
 						$comment->date = display_time(strtotime($comment->date));
+						
+						if (!$author[$comment->author]->deleted) {
+							$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
+							$author_box .= usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author) . '</a>';
+							$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="" /></a>';
+							$author_box .= '<span class="custom-title">' . custom_user_title($author[$comment->author]) . '</span>';
+							$author_box .= '<span class="author-info">Karma: ' . $author[$comment->author]->karma . '</span>';
+						} else {
+							$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
+							$author_box .= '<img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="{title}" />';
+						}
+						
 
 						$tpl->assign(array(
 							'comment-id' => $comment->id,
 							'comment-number' => $comment_number,
 							'comment-text' => add_smile($comment->text),
 							'comment-date' => $comment->date,
-							'comment-author' => usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author),
-							'comment-author-id' => $comment->author,
-							'aurl' => '/user/' . $comment->author,
-							'avatar' => get_avatar($author[$comment->author]),
-							'karma' => $author[$comment->author]->karma,
-							'title' => h($author[$comment->author]->nick),
-							'custom_title' => custom_user_title($author[$comment->author]),
-							'comment-editedby' => $editedby,
+							'author' => $author_box,
+							'comment-editedby' => $editedby
 						));
 
 						if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {

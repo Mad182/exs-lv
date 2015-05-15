@@ -160,9 +160,7 @@
 	<dl id="comments">
 		<!-- START BLOCK : comments-node-->
 		<!-- START BLOCK : comments-node-user-->
-		<dt>
-		{author}
-		</dt>
+		<dt>{author}</dt>
 		<dd>
 			<p class="inf">
 				<!-- START BLOCK : comments-vote-->
