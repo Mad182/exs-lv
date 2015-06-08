@@ -1446,9 +1446,13 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 
 				$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
 			}
-			if ($auth->ok === true || $val->posts) {
+			if (($auth->ok === true || $val->posts) && !$val->hidden) {
 				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote, $pic_heavy);
 				$out .= '<div class="c"></div>';
+			} elseif ($val->posts && $val->hidden) {
+				$out .= '<a class="toggle-replies" href="#">&raquo;&nbsp;parādīt atbildes...</a><div class="more-replies" style="display:none">';
+				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote, $pic_heavy);
+				$out .= '</div><div class="c"></div>';
 			}
 			if ($auth->ok === true && !$closed) {
 				$out .= '<div class="reply-ph"></div>';

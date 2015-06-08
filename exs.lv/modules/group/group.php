@@ -789,6 +789,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 							`miniblog`.`posts` AS `posts`,
 							`miniblog`.`reply_to` AS `reply_to`,
 							`miniblog`.`removed` AS `mb_removed`,
+							`miniblog`.`hidden` AS `hidden`,
 							`users`.`nick` AS `nick`,
 							`users`.`decos` AS `decos`,
 							`users`.`avatar` AS `avatar`,
