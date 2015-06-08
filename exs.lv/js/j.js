@@ -611,6 +611,14 @@ $(document).ready(function() {
 	$('.table-banned').on('click', '.show-banned', function() {
 		$('.child-of-' + $(this).attr('data-id')).toggle();
 	});
+	
+	/* paslēptie miniblogu posti */
+	$('.toggle-replies').click(function(e){   
+		console.log('clickety');
+		e.preventDefault();
+		$(this).hide();
+		$(this).siblings('.more-replies').show();
+	});
 
 	setTimeout('msgrr()', query_timeout);
 });
