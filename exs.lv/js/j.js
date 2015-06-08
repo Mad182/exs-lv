@@ -614,7 +614,6 @@ $(document).ready(function() {
 	
 	/* paslēptie miniblogu posti */
 	$('.toggle-replies').click(function(e){   
-		console.log('clickety');
 		e.preventDefault();
 		$(this).hide();
 		$(this).siblings('.more-replies').show();
