@@ -569,14 +569,15 @@ function embed_twitter($params) {
  */
 function embed_spotify($params) {
 	global $m;
+	global $embed_ly_key;
 
 	// $matches[0] - ieraksta adrese
 	// nolasa no Memcached vai izveido iframe saturu
 	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
 		$spotify_html = $params[0];
 
-		$response = curl_get('http://api.embed.ly/1/oembed?url='
-				. urlencode(strip_tags($params[0])));
+		$response = curl_get('http://api.embed.ly/1/oembed?key=' . $embed_ly_key .
+			'&url=' . urlencode(strip_tags($params[0])));
 		if (!empty($response)) {
 			$spotify = json_decode($response);
 			if (empty($spotify->error) && !empty($spotify->html)) {
@@ -633,6 +634,7 @@ function embed_deezer($params) {
  */
 function embed_vine($params) {
 	global $m;
+	global $embed_ly_key;
 
 	// $params[0] - <a..href=".."..>http://vine.co/v/..
 	// $params[1] - <a..href="http://vine.co/v/..">
@@ -643,8 +645,8 @@ function embed_vine($params) {
 
 		$encoded_url = urlencode(strip_tags(
 						'https://vine.co/v/' . $params[3]));
-		$url = 'https://api.embed.ly/1/oembed?url=' .
-				$encoded_url . '&maxwidth=320&maxheight=320';
+		$url = 'https://api.embed.ly/1/oembed?key=' . $embed_ly_key .
+			'&url=' . $encoded_url . '&maxwidth=320&maxheight=320';
 
 		$response = curl_get($url);
 		if (!empty($response)) {
