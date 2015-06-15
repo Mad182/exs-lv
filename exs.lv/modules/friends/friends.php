@@ -13,7 +13,7 @@ if (isset($_GET['var1'])) {
 	$inprofile = get_user($auth->id);
 }
 
-if ($inprofile) {
+if ($inprofile && !$inprofile->deleted) {
 
 	include(CORE_PATH . '/includes/class.friend.php');
 	$friend = new Friend();

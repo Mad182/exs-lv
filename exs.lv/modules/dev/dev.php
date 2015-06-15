@@ -1,6 +1,10 @@
 <?php
 
-pr($_SERVER);
+
+$json = curl_get('https://www.googleapis.com/youtube/v3/videos?id=JIsmQPX6sAM&key=AIzaSyAY_u1YzIGq8jeDufkmsNGRKbJ4_bea0AI&part=snippet');
+$data = json_decode($json);
+
+pr($data->items[0]->snippet);
 
 exit;
 $folder = 'florbols-01-11-2014';

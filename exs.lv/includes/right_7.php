@@ -7,7 +7,7 @@ if (isset($category) && $category->isblog != 0 && empty($inprofile)) {
 	$inprofile = get_user($category->isblog);
 }
 
-if (!empty($inprofile)) {
+if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inprofile->private)) {
 
 	$avatar = get_avatar($inprofile, 'l');
 

@@ -231,6 +231,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		`miniblog`.`reply_to` AS `reply_to`,
 		`miniblog`.`id` AS `id`,
 		`miniblog`.`removed` AS `mb_removed`,
+		`miniblog`.`hidden` AS `hidden`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,
 		`users`.`avatar` AS `avatar`,

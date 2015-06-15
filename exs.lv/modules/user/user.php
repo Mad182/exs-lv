@@ -13,7 +13,7 @@ if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 
 $inprofile = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
 
-if ($inprofile) {
+if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 	profile_menu($inprofile, 'profile', 'profils', 'profilu');
 
@@ -440,8 +440,13 @@ if ($inprofile) {
 		}
 	}
 } else {
+
+	$robotstag[] = 'noindex';
+	$robotstag[] = 'nofollow';
+
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';
 }
 
 $pagepath = '';
+
