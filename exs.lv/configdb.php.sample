@@ -42,6 +42,9 @@ $steam_api_key = ""; 		//API atslēga
 $steam_domain_name = ""; 	//domēns, kas rādas steam lapā
 $steam_login_page = ""; 	//uz kurieni redirektēt pēc logina
 
+//embed.ly API key
+$embed_ly_key = 'your_key';
+
 //include folderi
 define('CORE_PATH', '/home/madars/www/exs-lv/exs.lv');
 define('IMG_PATH', '/home/madars/www/exs-lv/img.exs.lv');
@@ -110,6 +113,7 @@ $cat = 'index';
 $skin = 'main';
 $idb_count = '';
 $add_css = array();
+$add_js = array();
 $users_cache = array();
 $mention_counter = 0;
 $hashtag_counter = 0;
