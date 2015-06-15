@@ -3,7 +3,7 @@
 $strid = sanitize($_GET['var1']);
 $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' LIMIT 1");
 
-if ($article) {
+if ($article && ($auth->ok === true || !$article->private)) {
 
 	//redirektē uz pareizo adresi, ja kaut kādā veidā atvērts derīgs strid, bet nepareizā domēnā
 	if ($article->lang != $lang) {
