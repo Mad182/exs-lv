@@ -502,6 +502,10 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
+if(!$auth->mobile) {
+	$tpl->newBlock('smartad-eu');
+}
+
 $tpl->printToScreen();
 
 if ($debug && !$requested_json) {
