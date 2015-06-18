@@ -502,7 +502,7 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
-if(!$auth->mobile) {
+if(!$auth->mobile && $lang === 1) {
 	$tpl->newBlock('smartad-eu');
 }
 
