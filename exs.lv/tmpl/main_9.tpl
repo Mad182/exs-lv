@@ -489,7 +489,7 @@
 					</div>
 					<div class="infoblock">
 						<div class="inner">
-							<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
+							<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
 							<p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums</p>
 						</div>
 					</div>

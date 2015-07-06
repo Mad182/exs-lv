@@ -29,7 +29,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js?aaaeW"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -98,7 +98,7 @@
 		<div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
 			<div id="header"{page-persona}>
-				<div style="position:absolute;right:20px;top:27px;width:728px;height:90px">
+				<div style="position:absolute;right:20px;top:27px;width:728px;height:90px;z-index:4">
 					<script type="text/javascript" id="position_2919">
 					  var ads_positions = ads_positions || [];
 					  ads_positions.push(["2919", "", "document"]);
@@ -227,6 +227,14 @@
 			<div id="left">
 				<div class="inner">
 
+					<p style="text-align:left;font-family:Ubuntu;padding: 10px 0 20px;font-size:90%">
+						<a href="/pica">
+							<img src="https://img.exs.lv/m/a/mad/lulu.png" alt="lulu.png" style="float:left;margin:-10px 2px 0 0;" />
+							<strong>Pica 49 minūšu laikā!</strong>
+							<br />Ērtāk pasūtīt internetā.
+						</a>
+					</p>
+
 					<!-- START BLOCK : movie-search-->
 					<h3>Meklēt filmu</h3>
 					<div class="box">
@@ -349,7 +357,7 @@
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
 					
-					<div style="width:468px;margin:10px auto">
+					<div style="width:468px;height:60px;margin:8px auto">
 						<script type="text/javascript" id="position_2918">
 						  var ads_positions = ads_positions || [];
 						  ads_positions.push(["2918", "", "document"]);
@@ -566,7 +574,7 @@
 				</div>
 				<div class="infoblock">
 					<div class="inner">
-						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
+						<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
 						<p>
 							E-pasts: info@exs.lv<br />
 							Tālrunis: <span id="noindex-phone"></span><br />
@@ -587,6 +595,41 @@
 				<div class="c"></div>
 			</div>
 		</div>
+		
+		<!-- START BLOCK : smartad-eu-->
+		<!-- smartad.eu -->
+		<script type='text/javascript'>/* <![CDATA[ */
+			var _smartad = _smartad || new Object();
+			_smartad.page_id = Math.floor(Math.random() * 10000001);
+			if (!_smartad.prop) {
+				_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
+			}
+			(function() {
+				if (_smartad.space) {
+					_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
+				} else {
+					_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
+					_smartad.type = 'onload';
+					var f = function() {
+						var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
+						s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
+						s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
+						n ? b.insertBefore(s, n) : b.appendChild(s);
+					};
+					if (document.readyState === 'complete') {
+						f();
+						delete _smartad.space;
+					} else {
+						if (window.addEventListener) {
+							window.addEventListener('load', f, false);
+						} else if (window.attachEvent) {
+							window.attachEvent('onload', f);
+						}
+					}
+				}
+			})();
+			/* ]]> */</script>
+		<!-- END BLOCK : smartad-eu-->
 
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

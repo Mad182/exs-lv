@@ -309,6 +309,22 @@
 					<div id="current-module">
 						<!-- INCLUDE BLOCK : module-currrent -->
 					</div>
+
+					<div style="margin:20px auto">
+
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- coding.lv -->
+						<ins class="adsbygoogle"
+						     style="display:block"
+						     data-ad-client="ca-pub-0844454810885567"
+						     data-ad-slot="1099049027"
+						     data-ad-format="auto"></ins>
+						<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					
+					</div>
+
 					<div class="c"></div>
 
 					<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>
@@ -341,7 +357,7 @@
 				</div>
 				<div class="infoblock">
 					<div class="inner">
-						<p>&copy; <a href="http://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2012-{current-year}</p>
+						<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2012-{current-year}</p>
 						<p>
 							E-pasts: info@exs.lv<br />
 							Tālrunis: <span id="noindex-phone"></span><br />

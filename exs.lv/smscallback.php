@@ -15,7 +15,16 @@ $m->connect($mc_host, $mc_port);
 header('Content-Type: text/plain; charset=utf-8');
 
 // check that the request comes from Fortumo server
-if (!in_array($_SERVER['HTTP_X_FORWARDED_FOR'], array('79.125.125.1', '79.125.5.205', '79.125.5.95'))) {
+if (!in_array($_SERVER['HTTP_X_FORWARDED_FOR'],
+		array(
+			'54.72.6.126',
+			'54.72.6.27',
+			'54.72.6.17',
+			'54.72.6.23',
+			'79.125.125.1',
+			'79.125.5.95',
+			'79.125.5.205'
+		))) {
 	die("Error: Unknown IP");
 }
 
