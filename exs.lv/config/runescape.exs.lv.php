@@ -42,7 +42,7 @@ $cat_padomi = 5;
 
 
 // auto login visos subdomēnos
-if ($_SERVER['SERVER_NAME'] !== 'localhost') {
+if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
 
 	//redirect https links
 	if (empty($_SERVER['HTTPS'])) {
