@@ -20,13 +20,13 @@ $config_domains = array(
 		'domain' => 'mlol.exs.lv',
 		'include' => 'lol.exs.lv',
 		'prefix' => 'lol',
-		'ssl' => false
+		'ssl' => true
 	),
 	9 => array(
 		'domain' => 'mrs.exs.lv',
 		'include' => 'runescape.exs.lv',
 		'prefix' => 'runescape',
-		'ssl' => false
+		'ssl' => true
 	)
 );
 

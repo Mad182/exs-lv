@@ -42,10 +42,10 @@ $cat_padomi = 5;
 
 
 // auto login visos subdomēnos
-if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
+if ($_SERVER['SERVER_NAME'] !== 'localhost') {
 
 	//redirect https links
-	if (empty($_SERVER['HTTPS']) && substr($_SERVER['HTTP_HOST'], 0, 1) !== 'm') {
+	if (empty($_SERVER['HTTPS'])) {
 		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 	} else {
 		//secure cookies
