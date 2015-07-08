@@ -14,7 +14,7 @@ class Auth extends AuthBase {
 	/**
 	 * Inicializē lietotāja objektu
 	 */
-	function Auth() {
+	function __construct() {
 		global $remote_salt;
 
 		$this->id = 0;

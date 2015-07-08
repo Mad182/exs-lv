@@ -14,7 +14,7 @@ class AuthBase {
 	/**
 	 * Inicializē lietotāja objektu
 	 */
-	function Auth() {
+	function __construct() {
 		global $remote_salt, $lang;
 
 		$this->id = 0;
