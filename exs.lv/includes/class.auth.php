@@ -5,7 +5,6 @@
  *
  * paroles tiek glabātas izmantojot bcrypt
  */
-require(LIB_PATH . '/bcrypt/lib/password.php');
 require(CORE_PATH . '/includes/class.authbase.php');
 
 class Auth extends AuthBase {
