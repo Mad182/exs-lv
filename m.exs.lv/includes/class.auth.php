@@ -8,8 +8,9 @@
  * paroles tiek glabātas izmantojot bcrypt
  */
 require(LIB_PATH . '/bcrypt/lib/password.php');
+require(CORE_PATH . '/includes/class.authbase.php');
 
-class Auth {
+class Auth extends AuthBase {
 
 	var $error = 0;
 
@@ -25,7 +26,6 @@ class Auth {
 		$this->level = 0;
 		$this->persona = '';
 		$this->karma = 0;
-		$this->mobile = 1;
 		$this->skin = 3;
 		$this->vote_today = 0;
 		$this->transfer = '';
@@ -45,16 +45,6 @@ class Auth {
 		$this->mobile = 1;
 		$this->via_android = 0;
 		return $this->ok;
-	}
-
-	function update_visits() {
-		global $db, $lang;
-		$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = $this->id AND `ip` = '$this->ip' AND `site_id` = $lang");
-		if ($exists) {
-			$db->query("UPDATE `visits` SET `lastseen` = NOW() WHERE `id` = $exists");
-		} else {
-			$db->query("INSERT INTO `visits` (`user_id`, `site_id`, `ip`, `lastseen`) VALUES ($this->id, $lang, '$this->ip', NOW())");
-		}
 	}
 
 	function check_session() {
@@ -99,26 +89,15 @@ class Auth {
 		return true;
 	}
 
-	function reset() {
-		global $db;
-		if (!empty($_SESSION['auth_id'])) {
-			$userinfo = get_user($_SESSION['auth_id'], true);
-
-			session_regenerate_id(true);
-
-			foreach ($userinfo as $key => $val) {
-				$this->$key = $val;
-			}
-			$_SESSION['auth_id'] = $userinfo->id;
-			$this->ok = true;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	function login($username, $password, $xsrf = null) {
 		global $db, $lang;
+		
+		if($this->is_tor_exit()) {
+			$this->logout();
+			return false;
+		}
+
+		session_regenerate_id(true);
 
 		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
 			sleep(rand(2, 4));
@@ -201,27 +180,6 @@ class Auth {
 		$_SESSION['auth_id'] = '';
 		session_regenerate_id(true);
 		session_destroy();
-	}
-
-	function update_counter() {
-		global $db, $m, $lang;
-
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang")) {
-			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = $lang");
-		} else {
-			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, $lang)");
-		}
-
-		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
-			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
-			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = $lang");
-			$m->set('online_count_' . $lang, "$this->hosts_online", false, 10);
-		}
-	}
-
-	function log($action, $foreign_table = '', $foreign_key = 0) {
-		global $db;
-		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
 
 }
