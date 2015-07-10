@@ -3,7 +3,7 @@
 /**
  * Lietotāja grāmatzīmes (raksti)
  */
-$robotstag[] = 'noindex';
+$robotstag = array('noindex', 'follow');
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];

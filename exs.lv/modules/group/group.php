@@ -1128,6 +1128,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
  * 5. GRUPAS MEKLĒŠANAS CILNE
  */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
+	$robotstag = array('noindex', 'follow');
 	$tpl->assignGlobal('active-tab-search', 'active');
 	$tpl->newBlock('group-search');
 
