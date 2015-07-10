@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Visu miniblogu saraksts
+ */
+$robotstag = array('noindex', 'follow');
+
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
 } else {
