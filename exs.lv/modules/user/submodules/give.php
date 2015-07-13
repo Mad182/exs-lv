@@ -3,6 +3,11 @@
 /**
  * Uzdāvināt exs kredītu citam lietotājam
  */
+ 
+$robotstag[] = 'noindex';
+
+deny_proxies();
+
 $credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 if ($credit) {
 
@@ -33,3 +38,4 @@ if ($credit) {
 }
 
 $page_title = 'Dāvināt exs kredītu';
+

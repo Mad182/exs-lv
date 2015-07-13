@@ -1,14 +1,14 @@
 <?php
 
+/**
+ * Jauna lietotāja reģistrācija
+ */
+
+deny_proxies();
+
 if (!$auth->ok) {
 
 	$botstring = 'Es tiešām nēesmu ļauns spambots! ' . md5($auth->xsrf . '-' . 'neesmuspambots') . '!';
-
-	/* pārbauda vai lietotājs neizmanto tor */
-	if ($auth->is_tor_exit()) {
-		set_flash('Reģistrācija no tavas IP adreses šobrīd nav iespējama ;(', 'error');
-		redirect();
-	}
 
 	/* show registration form */
 	$tpl->newBlock('registration-form');

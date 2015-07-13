@@ -3,6 +3,11 @@
 /**
  * Nika maiņa
  */
+
+$robotstag[] = 'noindex';
+
+deny_proxies();
+
 if (isset($_POST['new-nick'])) {
 
 	if ($inprofile->credit < 5) {
@@ -42,3 +47,4 @@ $tpl->assign(array(
 ));
 
 $page_title = 'Exs.lv nika maiņa';
+

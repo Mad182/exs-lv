@@ -5,6 +5,8 @@
  */
 $robotstag[] = 'noindex';
 
+deny_proxies();
+
 if (isset($_GET['var1'])) {
 
 	$hash = sanitize($_GET['var1']);

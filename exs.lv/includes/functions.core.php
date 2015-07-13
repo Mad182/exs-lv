@@ -2493,3 +2493,23 @@ function send_email($to, $subject, $content) {
 	return $mailer->send($message);
 }
 
+/**
+ * Pāradresē lietotāju uz sākumlapu, ja aizdomas par proxy serveri vai citu shady darbību
+ * f-ja paredzēta izmantošanai reģistrācijas, paroles atjaunošanas u.c. sensitīvās sadaļās
+ */
+ function deny_proxies() {
+ 	global $auth, $debug;
+ 	
+ 	/* pārbauda vai lietotājs neizmanto tor */
+	if ($auth->is_tor_exit()) {
+		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
+		redirect();
+	}
+
+	/* ja nav ieslēgts debug (lokāla testēšana) vai lietotājs nenāk caur cloudflare, neļaujam reģistrēties */
+	if(!$debug && empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
+		redirect();
+	}
+ }
+ 

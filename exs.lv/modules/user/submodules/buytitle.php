@@ -3,6 +3,11 @@
 /**
  * Nopirkt iespēju izmantot custom title
  */
+
+$robotstag[] = 'noindex';
+
+deny_proxies();
+
 if (isset($_GET['buytitle_pay']) && $_GET['buytitle_pay'] == 'true') {
 
 	if ($inprofile->credit < 3) {
@@ -27,3 +32,4 @@ $tpl->assign(array(
 ));
 
 $page_title = 'Lietotāja nosaukuma maiņa';
+

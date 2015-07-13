@@ -3,6 +3,10 @@
 /**
  * e-pasta adreses maiņa
  */
+$robotstag[] = 'noindex';
+
+deny_proxies();
+
 $tpl->newBlock('user-profile-email');
 
 //write changes
@@ -75,3 +79,4 @@ $tpl->assign(array(
 ));
 
 $page_title = 'E-pasta adreses maiņa';
+

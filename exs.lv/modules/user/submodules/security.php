@@ -3,6 +3,10 @@
 /**
  * Lietotāja paroles maiņa
  */
+$robotstag[] = 'noindex';
+
+deny_proxies();
+
 $tpl->newBlock('user-profile-security');
 
 //write changes
@@ -32,3 +36,4 @@ if (isset($_POST['submit'])) {
 }
 
 $page_title = 'Tava parole';
+
