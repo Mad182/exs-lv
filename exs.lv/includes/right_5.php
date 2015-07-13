@@ -3,8 +3,7 @@
 $posts = get_latest_posts();
 $tpl->newBlock('main-layout-right');
 $tpl->assign(array(
-	'latest-noscript' => $posts,
-	'mta-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/mta.php'),
+	'latest-noscript' => $posts
 ));
 
 unset($posts);

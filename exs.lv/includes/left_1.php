@@ -25,7 +25,6 @@ $tpl->assign(array(
 	'random-fact' => $fact,
 	'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
 	'ut-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/ut.php'),
-	'mta-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/mta.php'),
 	$sel . '-selected' => 'active ',
 	$fsel . '-selected' => 'active '
 ));

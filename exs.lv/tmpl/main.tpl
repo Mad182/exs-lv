@@ -29,7 +29,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js?aaaeW"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -290,11 +290,6 @@
 					<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
 					<div class="box">
 						{csgo-monitor}
-					</div>
-
-					<h3><strong>MTA</strong> mta.exs.lv</h3>
-					<div class="box">
-						{mta-monitor}
 					</div>
 
 					<!-- START BLOCK : groups-l-list-->

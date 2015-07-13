@@ -274,11 +274,6 @@
 				</div>
 				<!-- END BLOCK : user-top-->
 
-				<!--<h3><strong>MTA</strong> mta.exs.lv</h3>
-				<div class="box">
-					{mta-monitor}
-				</div>-->
-
 				<!-- START BLOCK : poll-box-->
 				<h3>Aptauja</h3>
 				<div class="box">
