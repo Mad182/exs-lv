@@ -2507,9 +2507,9 @@ function send_email($to, $subject, $content) {
 	}
 
 	/* ja nav ieslēgts debug (lokāla testēšana) vai lietotājs nenāk caur cloudflare, neļaujam reģistrēties */
-	if(!$debug && empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+	/*if(!$debug && empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
 		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
 		redirect();
-	}
+	}*/
  }
  
