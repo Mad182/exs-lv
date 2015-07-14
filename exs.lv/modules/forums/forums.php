@@ -131,10 +131,17 @@ if (!empty($cats)) {
 
 			if (!empty($topic)) {
 				$author = get_user($topic->author);
+				
+				if (!$author->deleted) {
+					$author = '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>';
+				} else {
+					$author = '<em>dzēsts</em>';
+				}
+				
 				$tpl->assign(array(
 					'date' => display_time(strtotime($topic->bump)),
 					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
-					'author' => '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>'
+					'author' => $author
 				));
 			}
 
