@@ -277,16 +277,16 @@ class AuthBase {
 		global $m;
 
 		$is_tor = 'n';
-		if (($is_tor = $m->get('t-'.$this->ip)) === false) {
+		if (($is_tor = $m->get('t-'.md5($this->ip))) === false) {
 		
 			$value = curl_get('http://check.getipintel.net/check.php?ip=' . $this->ip);
 
-			if ($value === "1") {
+			if ($value == "1") {
 				$is_tor = 'y';
 			} else {
 				$is_tor = 'n';
 			}
-			$m->set('t-'.$this->ip, $is_tor, false, 9000);
+			$m->set('t-'.md5($this->ip), $is_tor, false, 9000);
 
 		}
 

@@ -115,8 +115,7 @@ if (!empty($cats)) {
 				$add = '<br />Moderatori: ';
 				$mods = array();
 				foreach ($finfo->mods as $mod) {
-					$minfo = get_user($mod);
-					$mods[] = '<a href="/user/' . $minfo->id . '">' . usercolor($minfo->nick, $minfo->level, false, $minfo->id) . '</a>';
+					$mods[] = userlink($mod);
 				}
 				$add .= implode(', ', $mods);
 			}
@@ -130,18 +129,11 @@ if (!empty($cats)) {
 			));
 
 			if (!empty($topic)) {
-				$author = get_user($topic->author);
-				
-				if (!$author->deleted) {
-					$author = '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>';
-				} else {
-					$author = '<em>dzēsts</em>';
-				}
-				
+
 				$tpl->assign(array(
 					'date' => display_time(strtotime($topic->bump)),
 					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
-					'author' => $author
+					'author' => userlink($topic->author)
 				));
 			}
 

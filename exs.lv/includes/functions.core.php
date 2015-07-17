@@ -416,6 +416,25 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 }
 
 /**
+ * Atgriež lietotāja linku vai "<em>dzēsts</em>"
+ *
+ * param $user - lietotāja objekts VAI id
+ */
+function userlink($user) {
+
+	//ja padots id, atrodam lietotāja datus
+	if(is_numeric($user)) {
+		$user = get_user($user);
+	}
+
+	if (!empty($user) && empty($user->deleted)) {
+		return '<a href="/user/' . $user->id . '">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+	}
+
+	return '<em>dzēsts</em>';
+}
+
+/**
  * Parbauda vai aktīvais lietotājs ir moderators (vai admins)
  */
 function im_mod() {
@@ -1757,7 +1776,10 @@ function get_latest_images() {
 	return $out;
 }
 
-function get_latest_mbs($tab = 'all') {
+/**
+ * Parāda pēdējos miniblogus
+ */
+function get_latest_mbs($tab = 'all', $group_id = null) {
 	global $auth, $db, $lang, $config_domains, $img_server;
 
 	if ($tab === 'music') {
@@ -1771,26 +1793,30 @@ function get_latest_mbs($tab = 'all') {
 	} else {
 		$skip = 0;
 	}
-
-	if ($auth->level == 1) {
-		$groupquery = '1 = 1';
+	
+	if(!empty($group_id)) {
+		$groupquery = "`miniblog`.`groupid` = " . intval($group_id);
 	} else {
-		$usergroups = array("`miniblog`.`groupid` = '0'");
-		if ($auth->ok === true) {
-			$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
-			if ($g_owners) {
-				foreach ($g_owners as $g_owner) {
-					$usergroups[] = "`miniblog`.`groupid` = '" . $g_owner . "'";
+		if ($auth->level == 1) {
+			$groupquery = '1 = 1';
+		} else {
+			$usergroups = array("`miniblog`.`groupid` = '0'");
+			if ($auth->ok === true) {
+				$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
+				if ($g_owners) {
+					foreach ($g_owners as $g_owner) {
+						$usergroups[] = "`miniblog`.`groupid` = '" . $g_owner . "'";
+					}
+				}
+				$g_members = $db->get_col("SELECT clan FROM clans_members WHERE user = '$auth->id' AND approve = '1'");
+				if ($g_members) {
+					foreach ($g_members as $g_member) {
+						$usergroups[] = "`miniblog`.`groupid` = '" . $g_member . "'";
+					}
 				}
 			}
-			$g_members = $db->get_col("SELECT clan FROM clans_members WHERE user = '$auth->id' AND approve = '1'");
-			if ($g_members) {
-				foreach ($g_members as $g_member) {
-					$usergroups[] = "`miniblog`.`groupid` = '" . $g_member . "'";
-				}
-			}
+			$groupquery = implode(' OR ', $usergroups);
 		}
-		$groupquery = implode(' OR ', $usergroups);
 	}
 
 	if ($lang == 1) {
@@ -1881,12 +1907,17 @@ function get_latest_mbs($tab = 'all') {
 			}
 
 			if ($mb->groupid != 0) {
-				$spec = ' class="group"';
+			
+				if(empty($group_id)) {
+					$spec = ' class="group"';
+				}
 				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
 
-				if ($group->avatar) {
+				if ($group->avatar && empty($group_id)) {
 					$group->av_alt = 1;
 					$avatar = get_avatar($group, 's');
+				} else {
+					$avatar = get_avatar($mb, 's');
 				}
 
 				if (!empty($group->strid)) {
@@ -1908,7 +1939,7 @@ function get_latest_mbs($tab = 'all') {
 			$mb->text = wordwrap($mb->text, 36, "\n", 1);
 			$mb->text = str_replace('/', "/<wbr />", $mb->text);
 
-			if ($mb->groupid != 0) {
+			if ($mb->groupid != 0 && empty($group_id)) {
 				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88, '...');
 			} elseif ($mb->lang != $lang) {
 				$mb->text = '<em><span>' . $config_domains[$mb->lang]['domain'] . '</span></em>' . textlimit($mb->text, 88, '...');
@@ -1919,17 +1950,16 @@ function get_latest_mbs($tab = 'all') {
 			$mb->text = str_replace('.', ".<wbr />", $mb->text);
 			$mb->text = str_replace('-', "-<wbr />", $mb->text);
 
-			if ($lang == 1) {
-				$time = time_ago(strtotime($mb->date));
-			} else {
-				$time = time_ago($mb->bump);
-			}
-
 			if (!empty($mb->deleted)) {
 				$mb->nick = 'dzēsts';
 			}
 
-			$out .= '<li' . $spec . '><a href="' . $url . '"><img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" /><span class="author">' . h($mb->nick) . '</span> <span class="post-time">' . $time . '</span> ' . $mb->text . '&nbsp;[' . $mb->posts . ']</a></li>';
+			$out .= '<li' . $spec . '><a href="' . $url . '">';
+			$out .= '<img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
+			$out .= '<span class="author">' . h($mb->nick) . '</span> ';
+			$out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
+			$out .= $mb->text . '&nbsp;[' . $mb->posts . ']';
+			$out .= '</a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';
@@ -1937,6 +1967,11 @@ function get_latest_mbs($tab = 'all') {
 	$tablink = 'all';
 	if ($tab === 'friends') {
 		$tablink = 'friends';
+	}
+	
+	$grouplink = '';
+	if(!empty($group_id)) {
+		$grouplink = '&amp;group=' . intval($group_id);
 	}
 
 	for ($i = 1; $i <= 5; $i++) {
@@ -1947,7 +1982,7 @@ function get_latest_mbs($tab = 'all') {
 		if ((isset($_GET['pg']) && $_GET['pg'] == ($i - 1)) || (!isset($_GET['pg']) && $i == 1)) {
 			$out .= 'selected';
 		}
-		$out .= '" href="/mb-latest?pg=' . ($i - 1) . '&amp;tab=' . $tablink . '">' . $i . '</a>';
+		$out .= '" href="/mb-latest?pg=' . ($i - 1) . '&amp;tab=' . $tablink . $grouplink . '">' . $i . '</a>';
 		if ($i != 5) {
 			$out .= ' <span>-</span>';
 		}
@@ -2497,10 +2532,10 @@ function send_email($to, $subject, $content) {
  * Pāradresē lietotāju uz sākumlapu, ja aizdomas par proxy serveri vai citu shady darbību
  * f-ja paredzēta izmantošanai reģistrācijas, paroles atjaunošanas u.c. sensitīvās sadaļās
  */
- function deny_proxies() {
- 	global $auth, $debug;
- 	
- 	/* pārbauda vai lietotājs neizmanto tor */
+function deny_proxies() {
+	global $auth, $debug;
+
+	/* pārbauda vai lietotājs neizmanto tor */
 	if ($auth->is_tor_exit()) {
 		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
 		redirect();
@@ -2511,5 +2546,5 @@ function send_email($to, $subject, $content) {
 		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
 		redirect();
 	}*/
- }
- 
+}
+

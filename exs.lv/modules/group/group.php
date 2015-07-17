@@ -1340,56 +1340,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 	// jaunāko miniblogu fragmenti, ja tie nav slēpti
 	if (!$group->hide_intro || im_mod()) {
-
-		$mbs = $db->get_results("
-			SELECT
-				`miniblog`.`id` AS `id`,
-				`miniblog`.`text` AS `text`,
-				`miniblog`.`bump` AS `bump`,
-				`miniblog`.`author` AS `author`,
-				`miniblog`.`posts` AS `posts`,
-				`users`.`avatar` AS `avatar`,
-				`users`.`av_alt` AS `av_alt`,
-				`users`.`nick` AS `nick`
-			FROM
-				`miniblog`,
-				`users`
-			WHERE
-				`miniblog`.`removed` = '0' AND
-				`miniblog`.`parent` = '0' AND
-				`miniblog`.`groupid` = '$group->id' AND
-				`users`.`id` = `miniblog`.`author`
-			ORDER BY
-				`miniblog`.`bump`
-			DESC LIMIT 5
-		");
-
-		if ($mbs) {
-			$tpl->newBlock('glatest-box');
-			foreach ($mbs as $mb) {
-				$tpl->newBlock('glatest-box-node');
-
-				$avatar = get_avatar($mb, 's');
-
-				$mb->text = mb_get_title($mb->text);
-
-				$url = $group_link . '/forum/' . base_convert($mb->id, 10, 36);
-
-				$mb->text = wordwrap($mb->text, 15, "\n", 1);
-				$mb->text = textlimit($mb->text, 48, '...');
-				$time = time_ago($mb->bump);
-				$tpl->assign(array(
-					'url' => $url,
-					'id' => $mb->id,
-					'author' => $mb->author,
-					'text' => $mb->text,
-					'nick' => h($mb->nick),
-					'time' => $time,
-					'avatar' => $avatar,
-					'resp' => $mb->posts
-				));
-			}
-		}
+		$tpl->newBlock('glatest-box');
+		$tpl->assign('out', get_latest_mbs('all', $group->id));
 	}
 
 	$page_title = $group->title;
