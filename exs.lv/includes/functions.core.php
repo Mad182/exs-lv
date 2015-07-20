@@ -1299,7 +1299,7 @@ function post2db($text, $type = "notype", $mbid = "0") {
 	return htmlpost2db($text);
 }
 
-function htmlpost2db($text) {
+function htmlpost2db($text, $sanitize = true) {
 	$text = filterb4db($text);
 	require_once(LIB_PATH . '/htmlpurifier/library/HTMLPurifier.includes.php');
 	$config = HTMLPurifier_Config::createDefault();
@@ -1318,7 +1318,12 @@ function htmlpost2db($text) {
 	$text = str_replace('dateks.lv/cenas', 'dateks.lv/p/view/cenas', $text);
 	$text = str_replace('<code>', '<code class="prettyprint">', $text);
 	$text = str_replace('<pre>', '<pre class="prettyprint">', $text);
-	return sanitize($text);
+	
+	if($sanitize) {
+		$text = sanitize($text);
+	}
+	
+	return $text;
 }
 
 function title2db($text) {
