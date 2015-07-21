@@ -28,3 +28,5 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 	require(CORE_PATH . '/modules/wall/tab-news.php');
 }
 
+$pagepath = '';
+
