@@ -13,6 +13,7 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 	if(!empty($_GET['var1']) && $auth->ok && $auth->firstpage !== 'wall') {
 		$db->update('users', $auth->id, array('firstpage' => 'wall'));
 		$auth->reset();
+		$auth->mobile = 0;
 	}
 
 	require(CORE_PATH . '/modules/wall/tab-wall.php');
@@ -21,6 +22,7 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 	if(!empty($_GET['var1']) && $auth->ok && $auth->firstpage !== 'news') {
 		$db->update('users', $auth->id, array('firstpage' => 'news'));
 		$auth->reset();
+		$auth->mobile = 0;
 	}
 
 	require(CORE_PATH . '/modules/wall/tab-news.php');
