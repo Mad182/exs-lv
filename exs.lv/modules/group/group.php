@@ -1336,6 +1336,32 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				));
 			}
 		}
+		
+		//grupas admina maiņa
+		if($auth->level == 1) {
+		
+			if(isset($_POST['group-chown'])) {
+				$newuser = get_user($_POST['group-chown']);
+				
+				if(!empty($newuser) && $newuser->deleted == 0 && $newuser->id != $group->owner) {
+					$db->query("UPDATE `clans` SET `owner` = ".intval($newuser->id).", `owner_seenposts` = 0 WHERE `id` = " . intval($group->id));
+					$db->query("DELETE FROM `clans_members` WHERE `user` = ".intval($newuser->id)." AND `clan` = " . intval($group->id));
+					$olduser = get_user($group->owner);
+					
+					if(!empty($olduser) && $olduser->deleted == 0) {
+						$db->query("INSERT INTO `clans_members` (`user`, `clan`, `approve`, `date_added`) VALUES (".intval($group->owner).", " . intval($group->id) .", 1, ".intval($group->date_created).")");
+					}
+					
+					$auth->log('Nomainija grupas administratoru ('.$olduser->nick.' &raquo; '.$newuser->nick.')', 'clans', $group->id);
+					redirect($group_link);
+				}
+			
+			}
+		
+		
+			$tpl->newBlock('group-chown');
+		}
+		
 	}
 
 	// jaunāko miniblogu fragmenti, ja tie nav slēpti

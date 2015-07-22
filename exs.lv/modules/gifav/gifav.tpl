@@ -6,7 +6,7 @@
 		<legend>Importēt avataru no <a href="https://gif-avatars.com/" target="_blank">gif-avatars.com</a></legend>
 		<p>
 			<label>Avatara ID:</label><br />
-			<input type="text" name="gif_avatars_id" class="text number" style="width: 50px;" />
+			<input type="text" name="gif_avatars_id" class="text number" />
 			<input type="submit" name="gif_avatars_import" class="button primary" value="Importēt" />
 		</p>
 	</fieldset>

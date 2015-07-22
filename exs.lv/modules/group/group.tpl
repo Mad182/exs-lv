@@ -152,6 +152,22 @@
 		<!-- START BLOCK : group-info-quit-->
 		<p><a class="l-gmember confirm" href="{group-link}/cancel?token={token}">Pamest grupu</a></p>
 		<!-- END BLOCK : group-info-quit-->
+
+		<!-- START BLOCK : group-chown-->
+		<form action="{page-url}" class="form" method="post">
+			<fieldset>
+				<legend>Mainīt grupas īpašnieku</legend>
+				<p>
+					<label for="group-chown">Junā īpašnieka ID:</label><br />
+					<input type="text" name="group-chown" id="group-chown" class="text number" value="" maxlength="10" />
+				</p>
+				<p>
+					<input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" />
+				</p>
+			</fieldset>
+		</form>
+		<!-- START BLOCK : group-chown-->
+
 	</div>
 	<div class="c"></div>
 </div>
@@ -184,7 +200,7 @@
 				<textarea name="tab-text" id="tab-text" cols="94" rows="40" style="width: 100%; height: 700px">{tab-text}</textarea>
 			</p>
 			<p>
-				<input type="submit" name="submit" value="Saglabāt izmaiņas" class="button" />
+				<input type="submit" name="submit" value="Saglabāt izmaiņas" class="button button primary" />
 			</p>
 		</fieldset>
 	</form>
@@ -238,7 +254,7 @@
 			</p>
 			<!-- END BLOCK : group-edit-interest-->
 			<p>
-				<input type="submit" name="submit" value="Saglabāt izmaiņas" class="submit" />
+				<input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" />
 			</p>
 		</fieldset>
 	</form>
