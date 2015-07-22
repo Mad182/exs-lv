@@ -113,7 +113,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 			foreach ($all_ips as $ip) {
 			
 				if (!empty($ip->ip) && $ip->ip != '--') {
-					$ip->ip = '<a href="http://whois.sc/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
+					$ip->ip = '<a href="https://whois.domaintools.com/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
 				}
 				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
 								
@@ -138,7 +138,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 			foreach ($unique_ips as $ip) {
 			
 				if (!empty($ip->ip) && $ip->ip != '--') {
-					$ip->ip = '<a href="http://whois.sc/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
+					$ip->ip = '<a href="https://whois.domaintools.com/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
 				}
 				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
 				
@@ -215,7 +215,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 				//$pwd->mail		= textlimit(substr($pwd->mail,0, strpos($pwd->mail, '@')),20);
 				
 				if (!empty($pwd->lastip) && $pwd->lastip != '--') {
-					$pwd->lastip = '<a href="http://whois.sc/'.$pwd->lastip.'" rel="nofollow">'.$pwd->lastip.'</a>';
+					$pwd->lastip = '<a href="https://whois.domaintools.com/'.$pwd->lastip.'" rel="nofollow">'.$pwd->lastip.'</a>';
 				}
 
 				$content .= '<tr' . $add_class . '>
@@ -382,7 +382,7 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 				$res->lastip = $res->ip;
 				$tmp_ip = $res->lastip;
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-				$res->lastip = '<a href="http://whois.sc/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
+				$res->lastip = '<a href="https://whois.domaintools.com/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
 			} 
 			else if ($field == 'mail') {
 				$escaped = trim($_POST['mail']);
@@ -392,7 +392,7 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 				$escaped = str_replace('%', '', trim($_REQUEST['ip']));
 				$tmp_ip = $res->lastip;
 				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-				$res->lastip = '<a href="http://whois.sc/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
+				$res->lastip = '<a href="https://whois.domaintools.com/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
 			}             
 			
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
