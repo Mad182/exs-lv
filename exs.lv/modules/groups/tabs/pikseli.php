@@ -24,7 +24,7 @@ foreach ($files as $file) {
 	list($id, $title) = explode('-', $title);
 
 	$module_content .= '<td>';
-	$module_content .= '<img src="http://img' . alternator(1, 2, 0) . '.exs.lv/pikseli-atbildes/' . $file . '" alt="' . $title . '" title="' . $title . '" style="width:240px;" />';
+	$module_content .= '<img src="//img.exs.lv/pikseli-atbildes/' . $file . '" alt="' . $title . '" title="' . $title . '" style="width:240px;" />';
 	$module_content .= '<p style="text-align: center;"><strong>' . ucfirst($title) . '</strong></p>';
 	$module_content .= '</td>';
 	if ($ti == 2) {
@@ -37,3 +37,4 @@ foreach ($files as $file) {
 }
 
 $module_content .= '</table>';
+

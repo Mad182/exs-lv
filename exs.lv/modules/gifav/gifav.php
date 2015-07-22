@@ -66,7 +66,7 @@ if (im_mod()) {
 	if (isset($_POST['gif_avatars_import'])) {
 		$id = (int) $_POST['gif_avatars_id'];
 
-		$contents = curl_get('http://gif-avatars.com/avatar/' . $id . '/json');
+		$contents = curl_get('https://gif-avatars.com/avatar/' . $id . '/json');
 		if (empty($contents)) {
 			set_flash('Neizdevās iegūt datus no gif-avatars.com!', 'error');
 			redirect('/' . $category->textid);

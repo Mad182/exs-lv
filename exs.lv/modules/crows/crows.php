@@ -82,12 +82,12 @@ if (!$warns) {
 			$warn->removed_nick = '';
 
 		// pārveido iemeslos norādītās adreses, ja tās nāk no apakšprojekta
-		if (strpos($warn->warn_reason, 'http://rp.exs.lv') !== false) {
-			$warn->warn_reason = str_replace('href="/', 'href="http://rp.exs.lv/', $warn->warn_reason);
-		} else if (strpos($warn->warn_reason, 'http://runescape.exs.lv') !== false) {
-			$warn->warn_reason = str_replace('href="/', 'href="http://runescape.exs.lv/', $warn->warn_reason);
-		} else if (strpos($warn->warn_reason, 'http://lol.exs.lv') !== false) {
-			$warn->warn_reason = str_replace('href="/', 'href="http://lol.exs.lv/', $warn->warn_reason);
+		if (strpos($warn->warn_reason, 'https://rp.exs.lv') !== false) {
+			$warn->warn_reason = str_replace('href="/', 'href="https://rp.exs.lv/', $warn->warn_reason);
+		} else if (strpos($warn->warn_reason, 'https://runescape.exs.lv') !== false) {
+			$warn->warn_reason = str_replace('href="/', 'href="https://runescape.exs.lv/', $warn->warn_reason);
+		} else if (strpos($warn->warn_reason, 'https://lol.exs.lv') !== false) {
+			$warn->warn_reason = str_replace('href="/', 'href="https://lol.exs.lv/', $warn->warn_reason);
 		}
 
 		$tpl->newBlock('single-warn');
