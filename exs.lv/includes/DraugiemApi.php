@@ -27,15 +27,15 @@ class DraugiemApi {
 	 * Draugiem.lv API URL
 	 */
 
-	const API_URL = 'http://api.draugiem.lv/php/';
+	const API_URL = 'https://api.draugiem.lv/php/';
 	/**
 	 * Draugiem.lv passport login URL
 	 */
-	const LOGIN_URL = 'http://api.draugiem.lv/authorize/';
+	const LOGIN_URL = 'https://api.draugiem.lv/authorize/';
 	/**
 	 * Iframe scripts URL
 	 */
-	const JS_URL = 'http://ifrype.com/applications/external/draugiem.js';
+	const JS_URL = 'https://ifrype.com/applications/external/draugiem.js';
 
 	/**
 	 * Timeout in seconds for session_check requests

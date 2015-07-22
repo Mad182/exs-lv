@@ -225,3 +225,4 @@ if ($session) {//Authentication successful
 	$redirect = 'https://' . $_SERVER['SERVER_NAME'] . '/draugiem-signup/'; //Where to redirect after authorization
 	$tpl->assign('button', $draugiem->getLoginButton($redirect)); //Show the button
 }
+
