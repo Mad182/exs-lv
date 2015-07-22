@@ -169,6 +169,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
 				'lastip' => $inprofile->lastip,
+				'asn' => get_asn($inprofile->lastip),
 				'user_agent' => $inprofile->user_agent,
 				'mail' => $inprofile->mail,
 				'cookie_users' => $profiles

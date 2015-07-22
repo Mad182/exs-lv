@@ -2553,3 +2553,21 @@ function deny_proxies() {
 	}*/
 }
 
+/**
+ * Atrod ISP pēc IP
+ */
+function get_asn($ip) {
+	global $m;
+	if(strlen($ip) <5) {
+		return '';
+	}
+	
+	if (($asn = $m->get('asn_' . md5($ip))) === false) {
+		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}"));
+		$asn = $details->org;
+		$m->set('asn_' . md5($ip), $asn, false, 432000);
+	}
+
+	return '<br /><small>' . $asn . '</small>';
+}
+

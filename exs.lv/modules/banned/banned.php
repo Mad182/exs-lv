@@ -8,7 +8,7 @@
  *  Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, 
  *  bans attiecas tikai uz to lapu.
  */
-$robotstag[] = 'noindex';
+$robotstag = array('noindex', 'nofollow');
  
 $q_add = '';
 if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
@@ -79,7 +79,8 @@ if (!$auth->ok) {
 				'banned-id' => $banned->id,
 				'banned-user_id' => $banned->user_id,
 				'nick' => $linkuser,
-				'banned-ip' => $banned->ip,
+				'ip' => $banned->ip,
+				'asn' => get_asn($banned->ip),
 				'banned-reason' => wordwrap($banned->reason, 32, "\n", 1),
 				'banned-date' => date('Y-m-d H:i', $banned->time),
 				'banned-until' => date('Y-m-d H:i', $banned->time + $banned->length),
