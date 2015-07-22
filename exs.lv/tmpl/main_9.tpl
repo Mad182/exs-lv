@@ -99,7 +99,6 @@
 						<span class="arrow-down"></span>
 						<ul>
 							<li><a href="https://exs.lv">exs.lv</a></li>
-							<li><a rel="nofollow" href="http://old.exs.lv/">old.exs.lv</a></li>
 							<li><a href="https://lol.exs.lv">lol.exs.lv</a></li>
 							<li><a href="https://rp.exs.lv">rp.exs.lv</a></li>
 							<li><a rel="nofollow" href="https://coding.lv">coding.lv</a></li>
