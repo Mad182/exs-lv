@@ -1318,7 +1318,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 	// jaunāko biedru saraksts grupas sākumlapā
 	if (!$auth->mobile) {
-		$members = $db->get_results("SELECT user,moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
+		$members = $db->get_results("SELECT user,moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 20");
 		if ($members) {
 			$tpl->newBlock('nmembers');
 			foreach ($members as $member) {
@@ -1335,7 +1335,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$tpl->assign(array(
 					'member-id' => $m_user->id,
 					'member-nick' => h($m_user->nick),
-					'avatar' => $avatar,
+					'avatar' => $avatar
 				));
 			}
 		}

@@ -553,7 +553,7 @@ function embed_twitter($params) {
 				$tweet_html = $tweet->html;
 			}
 		}
-		$m->set($tweet_unique, $tweet_html, false, 1800);
+		$m->set($tweet_unique, $tweet_html, false, 3600);
 	}
 
 	return $tweet_html;
@@ -697,7 +697,7 @@ function embed_soundcloud($params) {
 					'visual=true', 'visual=false', $data->html);
 		}
 
-		$m->set('scloud_' . md5($params[2]), $scloud_html, false, 1800);
+		$m->set('scloud_' . md5($params[2]), $scloud_html, false, 3600);
 	}
 
 	return $scloud_html;
@@ -805,3 +805,4 @@ function hide_spoilers($text) {
 	}
 	return $text;
 }
+

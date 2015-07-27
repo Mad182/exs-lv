@@ -74,6 +74,10 @@ function upload_user_avatar($post, $old_filename, $text) {
  */
 function update_post_count($group_id) {
 	global $db;
-	return $db->query("UPDATE `clans` SET `posts` = '" . $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = " . intval($group_id)) . "', `posts_today` = `posts_today`+1 WHERE `id` = " . intval($group_id));
+	
+	$posts_total = (int) $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = " . intval($group_id) . " AND `removed` = 0");
+	$posts_today = (int) $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = " . intval($group_id) . " AND `date` > '" . date('Y-m-d') . " 00:00:00' AND `removed` = 0");
+	
+	return $db->update('clans', $group_id, array('posts' => $posts_total, 'posts_today' => $posts_today));
 }
 
