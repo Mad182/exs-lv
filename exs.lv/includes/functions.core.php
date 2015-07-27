@@ -1823,6 +1823,21 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$groupquery = implode(' OR ', $usergroups);
 		}
 	}
+	
+	//liedz iespēju skatīt grupu sarakstes tiem, uz kuriem tās neattiecas
+	if(!empty($group_id)) {
+		$group = $db->get_row("SELECT `id`, `public`, `owner` FROM `clans` WHERE `id` = '" . intval($group_id) . "'");
+		if(empty($group) || (!$group->public && !$auth->ok)) {
+			return '';
+		}
+		
+		if(!$group->public) {
+			$member = $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' AND `approve` = 1");
+			if(empty($member) && $auth->id != $group->owner && $auth->level != 1) {
+				return '';
+			}
+		}
+	}
 
 	if ($lang == 1) {
 		$add_langs = array("`miniblog`.`lang` = '1'");
