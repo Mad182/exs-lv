@@ -196,6 +196,7 @@
 	<form action="{page-url}" class="form" method="post">
 		<fieldset>
 			<legend>Labot saturu</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<textarea name="tab-text" id="tab-text" cols="94" rows="40" style="width: 100%; height: 700px">{tab-text}</textarea>
 			</p>
@@ -211,10 +212,10 @@
 <!-- START BLOCK : group-edit-->
 <div class="tabMain">
 
-
 	<form action="{page-url}" class="form" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Labot grupas informāciju</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="edit-group-title">Nosaukums:</label><br />
 				<input type="text" name="edit-group-title" id="edit-group-title" class="text" value="{group-title}" maxlength="64" disabled="disabled" />

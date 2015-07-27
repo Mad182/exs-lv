@@ -8,11 +8,12 @@ $robotstag[] = 'noindex';
 deny_proxies();
 
 $tpl->newBlock('user-profile-security');
+$tpl->assign('xsrf', make_token('passwd'));
 
 //write changes
 if (isset($_POST['submit'])) {
 
-	if (!empty($_POST['password-1']) && !empty($_POST['password-2']) && $_POST['password-1'] === $_POST['password-2']) {
+	if (!empty($_POST['password-1']) && !empty($_POST['password-2']) && $_POST['password-1'] === $_POST['password-2'] && check_token('passwd', $_POST['xsrf_token'])) {
 		if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id)))) {
 			if (strlen($_POST['password-1']) > 5) {
 

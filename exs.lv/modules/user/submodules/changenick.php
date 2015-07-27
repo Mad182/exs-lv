@@ -8,7 +8,7 @@ $robotstag[] = 'noindex';
 
 deny_proxies();
 
-if (isset($_POST['new-nick'])) {
+if (isset($_POST['new-nick']) && check_token('changenick', $_POST['xsrf_token'])) {
 
 	if ($inprofile->credit < 5) {
 		set_flash('Nepietiek exs.lv kredīta!', 'error');
@@ -43,7 +43,8 @@ if (isset($_POST['new-nick'])) {
 
 $tpl->newBlock('user-profile-changenick');
 $tpl->assign(array(
-	'user-credit' => $inprofile->credit
+	'user-credit' => $inprofile->credit,
+	'xsrf' => make_token('changenick')
 ));
 
 $page_title = 'Exs.lv nika maiņa';

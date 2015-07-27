@@ -153,6 +153,7 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Exs.lv nika maiņa</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="new-nick">Jaunais niks:</label><br />
 				<input type="text" class="text usercheck" name="new-nick" id="new-nick" value="" maxlength="14" o /> <span class="usercheck-response"></span>
@@ -215,6 +216,7 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Publiskā profila informācija</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 
 			<!-- START BLOCK : custom_title-->
 			<p>
@@ -284,6 +286,7 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Profila drošības iestatījumi</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="password-old">Esošā parole:</label><br />
 				<input type="password" class="text" name="password-old" id="password-old" value="" />
@@ -309,6 +312,7 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Profila drošības iestatījumi</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="edit-mail">E-pasta adrese:</label><br />
 				<input type="text" class="text" name="edit-mail" id="edit-mail" value="{user-mail}" maxlength="64" />
@@ -330,6 +334,7 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Avatara maiņa</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="edit-avatar">Profila attēls: (<a href="/animacijas">Vēlies kustīgu?</a>)</label><br />
 				<input type="file" class="text" name="edit-avatar" id="edit-avatar" />
@@ -348,7 +353,7 @@
 	<form id="edit-profile" class="form" action="{page-url}" method="post">
 		<fieldset>
 			<legend>Tavi lapas iestatījumi</legend>
-
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="edit-pm_notify_email">Saņemt paziņojumu uz e-pastu par saņemtām vēstulēm:</label>
 				<select name="edit-pm_notify_email" id="edit-pm_notify_email">
@@ -565,6 +570,7 @@
 	<form id="give-profile" class="form" action="" method="post">
 		<fieldset>
 			<legend>Dāvināt exs kredītu</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<select name="exs-amount">
 					<!-- START BLOCK : give-am-->

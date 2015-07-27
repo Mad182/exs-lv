@@ -4,7 +4,7 @@
  * Avatara attēla maiņa
  */
 //write changes
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 
 	/* load libraries */
 	require(CORE_PATH . '/includes/class.upload.php');
@@ -82,5 +82,7 @@ if (isset($_POST['submit'])) {
 }
 
 $tpl->newBlock('user-profile-avatar');
+$tpl->assign('xsrf', make_token('avatar'));
 
 $page_title = 'Avatara attēla maiņa';
+

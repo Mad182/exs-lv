@@ -2,6 +2,7 @@
 <form class="form" action="" method="post" style="padding: 10px">
 	<fieldset>
 		<legend>Atbildot <strong>{nick}</strong></legend>
+		<input type="hidden" name="xsrf_token" value="{xsrf}" />
 		<p>
 			<textarea name="rpl-txt" cols="30" rows="4" style="width: 400px;height:120px;"></textarea>
 		</p>
@@ -11,3 +12,4 @@
 	</fieldset>
 </form>
 <!-- END BLOCK : rpl-form-->
+

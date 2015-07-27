@@ -12,8 +12,9 @@ $credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 if ($credit) {
 
 	$tpl->newBlock('user-profile-give');
+	$tpl->assign('xsrf', make_token('givepoints'));
 
-	if (isset($_POST['submit']) && isset($_POST['exs-amount']) && !empty($_POST['exs-amount'])) {
+	if (isset($_POST['submit']) && isset($_POST['exs-amount']) && !empty($_POST['exs-amount']) && check_token('givepoints', $_POST['xsrf_token'])) {
 		$amount = intval($_POST['exs-amount']);
 		if ($credit >= $amount && $amount > 0) {
 			$db->query("UPDATE users SET credit = credit+'" . $amount . "' WHERE id = ('" . $inprofile->id . "')");

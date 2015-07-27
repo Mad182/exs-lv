@@ -128,7 +128,7 @@ if ($is_admin) {
 // grupas apraksta rediģēšana
 if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || im_mod())) {
 
-	if (isset($_POST['edit-group-text'])) {
+	if (isset($_POST['edit-group-text']) && check_token('groupedit', $_POST['xsrf_token'])) {
 		$edit_text = htmlpost2db($_POST['edit-group-text']);
 
 		if (isset($_FILES['edit-avatar'])) {
@@ -154,6 +154,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$tpl->assign(array(
 		'group-text' => h($group->text),
 		'group-title' => $group->title,
+		'xsrf' => make_token('groupedit')
 	));
 
 	// grupas kategorijas mainīšanas forma
@@ -920,7 +921,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// cilnes satura rediģēšana
 		if (isset($_GET['var4']) && $_GET['var4'] == 'edit' && ($is_admin || $is_mod)) {
 
-			if (isset($_POST['tab-text'])) {
+			if (isset($_POST['tab-text']) && check_token('tabedit', $_POST['xsrf_token'])) {
 				$tab_text = htmlpost2db($_POST['tab-text']);
 				$db->query("UPDATE clans_tabs SET `text` = '$tab_text' WHERE id = '$tab->id'");
 				redirect($group_link . '/tab/' . $tab->slug);
@@ -930,8 +931,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->newBlock('group-tab-edit');
 			$tpl->assign(array(
 				'tab-module' => $module_content,
-				'tab-text' => h($tab->text)
+				'tab-text' => h($tab->text),
+				'xsrf' => make_token('tabedit')
 			));
+
 			$page_title = $group->title . ' - labot &quot;' . $tab->title . '&quot;';
 		}
 		// cilnes satura skatīšana

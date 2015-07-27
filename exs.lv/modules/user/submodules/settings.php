@@ -3,7 +3,7 @@
 /**
  * Lietotāja personalizētie lapas iestatījumi
  */
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])) {
 
 	$inprofile->show_code = (bool) $_POST['edit-show_code'];
 	$inprofile->show_lol = (bool) $_POST['edit-show_lol'];
@@ -65,6 +65,7 @@ $tpl->assign(array(
 	'edit-show_rs-mark' => $show_rsmark,
 	'user-skin-' . $inprofile->skin => ' selected="selected"',
 	'user-pm_notify_email-' . $inprofile->pm_notify_email => ' selected="selected"',
+	'xsrf' => make_token('usersettings')
 ));
 
 $page_title = 'Tavi lapas iestatījumi';

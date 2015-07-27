@@ -92,10 +92,15 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			if (isset($_GET['var2']) && $_GET['var2'] == 'remove' && check_token('remove', $_GET['token'])) {
 				$removable = (int) $_GET['var3'];
 				$remove = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$removable' AND `site_id` = '$lang'");
+
 				if ($remove) {
 					$tpl->newBlock('warns-remove');
-					$tpl->assign('reason', add_smile($remove->reason));
-					if (isset($_POST['remove_warn']) && !empty($_POST['remove_reason'])) {
+					$tpl->assign(array(
+						'reason' => add_smile($remove->reason),
+						'xsrf' => make_token('removewarn')
+					));
+
+					if (isset($_POST['remove_warn']) && !empty($_POST['remove_reason']) && check_token('removewarn', $_POST['xsrf_token'])) {
 						$reason = post2db($_POST['remove_reason']);
 						$db->query("UPDATE `warns` SET `removed_by` = '$auth->id', `remove_reason` = '$reason', `modified` = NOW(), `removed` = NOW(), `active` = '0' WHERE `id` = '$remove->id'");
 						notify($inprofile->id, 11);
@@ -107,35 +112,36 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 				//pielikt & labot
 				$tpl->newBlock('warns-edit');
+				$tpl->assign('xsrf', make_token('editwarn'));
 
-                if(isset($_GET['var2']) && $_GET['var2'] == 'commentid'){
-                    $id = sanitize($_GET['var3']);
+				if (isset($_GET['var2']) && $_GET['var2'] == 'commentid') {
+					$id = sanitize($_GET['var3']);
 
-                    $commentinfo = $db->get_row("SELECT parent,id,lang,groupid,type,text FROM miniblog WHERE id = $id");
-                    $parent = $commentinfo->parent;
-                    $body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
-                    $check = $body->author;
-                    $title = mb_get_title(stripslashes($body->text));
-                    $strid = mb_get_strid($title, $commentinfo->parent);
+					$commentinfo = $db->get_row("SELECT parent,id,lang,groupid,type,text FROM miniblog WHERE id = $id");
+					$parent = $commentinfo->parent;
+					$body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
+					$check = $body->author;
+					$title = mb_get_title(stripslashes($body->text));
+					$strid = mb_get_strid($title, $commentinfo->parent);
 
-                    if($commentinfo->groupid > 0){
-                        $url = '/group/' . $commentinfo->groupid . '/forum/' . base_convert($commentinfo->parent, 10, 36);
-                    }else{
-                        $url = '/say/' . $check . '/' . $parent . '-' . $strid;
-                    }
-                    if($commentinfo->type == 'junk'){
-                        $url = '/junk/'.$commentinfo->parent;
-                    }
+					if ($commentinfo->groupid > 0) {
+						$url = '/group/' . $commentinfo->groupid . '/forum/' . base_convert($commentinfo->parent, 10, 36);
+					} else {
+						$url = '/say/' . $check . '/' . $parent . '-' . $strid;
+					}
+					if ($commentinfo->type == 'junk') {
+						$url = '/junk/' . $commentinfo->parent;
+					}
 
-                    $reason = substr(strip_tags($commentinfo->text), 0, 1000);
-                    if (strlen(strip_tags($commentinfo->text)) > 1000) {
-                        $reason .= '...'.PHP_EOL.PHP_EOL.'Tālāk lasi avotā.';
-                    }
-                    $reason = '<blockquote>'.$reason.'</blockquote>';
-                    $reason .= PHP_EOL.'Avots: '.get_protocol($commentinfo->lang).get_domain($commentinfo->lang).$url.'#m'.$id;
+					$reason = substr(strip_tags($commentinfo->text), 0, 1000);
+					if (strlen(strip_tags($commentinfo->text)) > 1000) {
+						$reason .= '...' . PHP_EOL . PHP_EOL . 'Tālāk lasi avotā.';
+					}
+					$reason = '<blockquote>' . $reason . '</blockquote>';
+					$reason .= PHP_EOL . 'Avots: ' . get_protocol($commentinfo->lang) . get_domain($commentinfo->lang) . $url . '#m' . $id;
 
-                    $tpl->assign('reason', $reason);
-                }
+					$tpl->assign('reason', $reason);
+				}
 
 				$edit = false;
 				if (isset($_GET['var2']) && $_GET['var2'] == 'edit') {
@@ -146,7 +152,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				//labot esoso iemeslu
 				if (!empty($edit)) {
 					$tpl->assign('reason', $edit->reason);
-					if (isset($_POST['submit_warn'])) {
+					if (isset($_POST['submit_warn']) && check_token('editwarn', $_POST['xsrf_token'])) {
 						$reason = htmlpost2db($_POST['reason']);
 						$db->query("UPDATE `warns` SET `edited_by` = '$auth->id', `reason` = '$reason', `modified` = NOW() WHERE `id` = '$edit->id'");
 						$auth->log('Laboja brīdinājumu', 'users', $inprofile->id);
@@ -155,7 +161,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 					//jauns warns
 				} else {
-					if (isset($_POST['submit_warn']) && !empty($_POST['reason'])) {
+					if (isset($_POST['submit_warn']) && !empty($_POST['reason']) && check_token('editwarn', $_POST['xsrf_token'])) {
 						$reason = post2db($_POST['reason']);
 						$db->query("INSERT INTO `warns` (user_id,created_by,created,modified,reason,active,`site_id`) VALUES ('$inprofile->id','$auth->id',NOW(),NOW(),'$reason',1,'$lang')");
 						notify($inprofile->id, 10);

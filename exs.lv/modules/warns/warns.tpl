@@ -22,6 +22,7 @@
 <form action="" method="post" class="form">
 	<fieldset>
 		<legend>Pievienot brīdinājumu</legend>
+		<input type="hidden" name="xsrf_token" value="{xsrf}" />
 		<p>
 			<textarea cols="20" rows="3" name="reason" style="height: 80px;">{reason}</textarea>
 		</p>
@@ -36,7 +37,8 @@
 <form action="" method="post" class="form">
 	<fieldset>
 		<legend>Noņemt brīdinājumu</legend>
-		<p class="notice">{reason}</p>
+		<input type="hidden" name="xsrf_token" value="{xsrf}" />
+		<div class="notice">{reason}</div>
 		<p>
 			<label>Iemesls noņemšanai</label><br />
 			<textarea cols="20" rows="3" name="remove_reason" style="height: 80px;"></textarea>

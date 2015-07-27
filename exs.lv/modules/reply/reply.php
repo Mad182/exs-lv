@@ -28,6 +28,7 @@ if ($auth->ok) {
 		'page' => $page->id,
 		'comment' => $comment->id,
 		'nick' => h($author->nick),
+		'xsrf' => make_token('reply')
 	));
 } else {
 	die('Neesi ielogojies :/');
@@ -36,3 +37,4 @@ if ($auth->ok) {
 
 $tpl->printToScreen();
 exit;
+

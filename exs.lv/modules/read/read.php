@@ -72,7 +72,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 
 	// atbildes komentāram pievienošana
-	if (!$article->closed && isset($_POST['rpl-comment']) && !empty($_POST['rpl-txt']) && $auth->ok && $_POST['rpl-page'] == $article->id) {
+	if (!$article->closed && isset($_POST['rpl-comment']) && !empty($_POST['rpl-txt']) && $auth->ok && $_POST['rpl-page'] == $article->id && check_token('reply', $_POST['xsrf_token'])) {
 		$comment = (int) $_POST['rpl-comment'];
 		$comment = $db->get_row("SELECT * FROM `comments` WHERE `id` = '$comment' AND `pid` = '$article->id' AND `parent` = 0");
 		if (!$comment) {

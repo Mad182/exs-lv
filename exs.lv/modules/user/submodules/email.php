@@ -12,7 +12,7 @@ $tpl->newBlock('user-profile-email');
 //write changes
 if (isset($_POST['submit'])) {
 
-	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id)))) {
+	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id))) && check_token('email', $_POST['xsrf_token'])) {
 
 		if (filter_var($_POST['edit-mail'], FILTER_VALIDATE_EMAIL)) {
 
@@ -75,7 +75,8 @@ if (isset($_POST['submit'])) {
 //show form
 $tpl->gotoBlock('user-profile-email');
 $tpl->assign(array(
-	'user-mail' => $inprofile->mail
+	'user-mail' => $inprofile->mail,
+	'xsrf' => make_token('email')
 ));
 
 $page_title = 'E-pasta adreses maiņa';

@@ -6,7 +6,7 @@
 $tpl->newBlock('user-profile-edit');
 
 //write changes
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 
 	$inprofile->skype = input2db($_POST['edit-skype'], 20);
 	$inprofile->yt_name = input2db($_POST['edit-yt_name'], 20);
@@ -63,7 +63,8 @@ $tpl->assign(array(
 	'user-yt_name' => $inprofile->yt_name,
 	'user-twitter' => $inprofile->twitter,
 	'user-web' => h($inprofile->web),
-	'user-date' => $inprofile->date
+	'user-date' => $inprofile->date,
+	'xsrf' => make_token('edituser')
 ));
 
 if (!empty($inprofile->allow_signature)) {
