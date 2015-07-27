@@ -79,7 +79,7 @@ Install memcached
 
 add 
 
-    extension=/usr/local/Cellar/php54-memcached/2.1.0/memcached.so
+    extension=/usr/local/Cellar/php55-memcache/2.2.7/memcached.so
 to /etc/php.ini
 
 add
