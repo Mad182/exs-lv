@@ -144,10 +144,10 @@ function update_karma($userid, $force_award = false) {
 			//nav jēgas pārskaitīt šodienas postus, ja nav mainijies kopējais postu skaits
 			return false;
 		}
-		$topics = $db->get_var("SELECT count(*) FROM pages WHERE author = '" . $user->id . "' AND date > '" . date('Y-m-d') . " 00:00:00'");
-		$images = $db->get_var("SELECT count(*) FROM images WHERE uid = '" . $user->id . "' AND date > '" . date('Y-m-d') . " 00:00:00'");
-		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND removed = '0' AND date > '" . date('Y-m-d') . " 00:00:00'") + $db->get_var("SELECT count(*) FROM galcom WHERE author = '$user->id' AND removed = '0' AND date > '" . date('Y-m-d') . " 00:00:00'"));
-		$miniblog = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = '" . $user->id . "' AND removed = '0' AND date > '" . date('Y-m-d') . " 00:00:00'");
+		$topics = $db->get_var("SELECT count(*) FROM pages WHERE author = '" . $user->id . "' AND `date` > '" . date('Y-m-d') . " 00:00:00'");
+		$images = $db->get_var("SELECT count(*) FROM images WHERE uid = '" . $user->id . "' AND `date` > '" . date('Y-m-d') . " 00:00:00'");
+		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND removed = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00'") + $db->get_var("SELECT count(*) FROM `galcom` WHERE `author` = '$user->id' AND `removed` = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00'"));
+		$miniblog = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = '" . $user->id . "' AND removed = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00'");
 		$today = $posts + $miniblog + $topics + $images;
 		if ($today != $user->today) {
 			$db->update('users', $user->id, array('today' => $today));

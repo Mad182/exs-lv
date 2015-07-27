@@ -576,7 +576,7 @@ function embed_spotify($params) {
 	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
 		$spotify_html = $params[0];
 
-		$response = curl_get('http://api.embed.ly/1/oembed?key=' . $embed_ly_key .
+		$response = curl_get('https://api.embed.ly/1/oembed?key=' . $embed_ly_key .
 			'&url=' . urlencode(strip_tags($params[0])));
 		if (!empty($response)) {
 			$spotify = json_decode($response);
@@ -584,7 +584,7 @@ function embed_spotify($params) {
 				$spotify_html = $spotify->html;
 			}
 		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 1800);
+		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 3600);
 	}
 
 	return $spotify_html;
@@ -627,55 +627,20 @@ function embed_deezer($params) {
 /**
  *  Callback metode Vine video iekļaušanai tekstā
  *
- *  Izveidoto HTML iekešo Memcached (30 min)
- *
  *  @param $params       video parametri
  *  @return $vine_html   iframe ar video
  */
 function embed_vine($params) {
 	global $m;
-	global $embed_ly_key;
 
-	// $params[0] - <a..href=".."..>http://vine.co/v/..
-	// $params[1] - <a..href="http://vine.co/v/..">
-	// $params[2] - rel=".." href="http://vine.co/v/.."
-	// $params[3] - video ID (tas, kas seko aiz /v/)
-	// nolasa no Memcached vai arī tajā ieraksta iframe saturu
-	if (($vine_html = $m->get('vine_' . md5($params[3]))) === false) {
+	$encoded_url = urlencode(strip_tags($params[3]));
 
-		$encoded_url = urlencode(strip_tags(
-						'https://vine.co/v/' . $params[3]));
-		$url = 'https://api.embed.ly/1/oembed?key=' . $embed_ly_key .
-			'&url=' . $encoded_url . '&maxwidth=320&maxheight=320';
-
-		$response = curl_get($url);
-		if (!empty($response)) {
-			$vine = json_decode($response);
-			if (isset($vine->html)) {
-				$vine_html = $vine->html;
-				// imho glītāk, ja iframe nav centrēts
-				$vine_html = str_replace(
-						'></iframe>', ' style="margin-left:0"></iframe>', $vine_html);
-			}
-		}
-
-		/*
-		  Jaukāks variants, kur redzama arī video info,
-		  bet pagaidām nemāku noņemt autoplay
-		  (šķiet, ka tāda iespēja netiek piedāvāta)
-
-		  $encoded_url = urlencode(strip_tags($params[3]));
-
-		  $vine_html  = '<iframe class="vine-embed" ';
-		  $vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
-		  $vine_html .= 'width="320" height="320" frameborder="0">';
-		  $vine_html .= '</iframe><script async src="';
-		  $vine_html .= '//platform.vine.co/static/scripts/embed.js"';
-		  $vine_html .= 'charset="utf-8"></script>';
-		 */
-
-		$m->set('vine_' . md5($params[3]), $vine_html, false, 1800);
-	}
+	$vine_html  = '<iframe class="embedded-iframe vine-embed" ';
+	$vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
+	$vine_html .= 'width="320" height="320" frameborder="0">';
+	$vine_html .= '</iframe><script async src="';
+	$vine_html .= '//platform.vine.co/static/scripts/embed.js"';
+	$vine_html .= 'charset="utf-8"></script>';
 
 	return $vine_html;
 }

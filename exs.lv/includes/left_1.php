@@ -92,8 +92,33 @@ if ($tusers) {
 			'avatar' => get_avatar($tuser, 's')
 		));
 	}
+	unset($tusers);
 }
-unset($tusers);
+
+//top groups
+$tgroups = $db->get_results("SELECT `id`,`title`,`strid`,`avatar`,`posts_today` FROM `clans` WHERE `posts_today` > 0 ORDER BY `posts_today` DESC LIMIT 9");
+if ($tgroups) {
+	$tpl->newBlock('group-top');
+	foreach ($tgroups as $group) {
+		$tpl->newBlock('group-top-node');
+		
+		if (!empty($group->strid)) {
+			$group->link = '/' . $group->strid;
+		} else {
+			$group->link = '/group/' . $group->id;
+		}
+		
+		$group->av_alt = 1;
+
+		$tpl->assign(array(
+			'title' => $group->title,
+			'link' => $group->link,
+			'today' => $group->posts_today,
+			'avatar' => get_avatar($group, 's')
+		));
+	}
+	unset($tgroups);
+}
 
 //grupas
 if ($groups = get_latest_groups()) {
