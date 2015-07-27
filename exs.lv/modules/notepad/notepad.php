@@ -30,13 +30,15 @@ if ($auth->ok) {
 			$tpl->assign(array(
 				'id' => $page->id,
 				'sel' => $sel,
-				'title' => $page->title,
+				'title' => $page->title
 			));
 		}
 	}
 
 	if (isset($_GET['var1']) && ($_GET['var1'] === 'edit' || $_GET['var1'] === 'new')) {
 		$tpl->newBlock('notepad-edit');
+		$tpl->assign('xsrf', make_token('editnote'));
+
 		if ($note) {
 			$tpl->assign('content', h($note->content));
 			$tpl->assign('id', $note->id);
@@ -51,7 +53,7 @@ if ($auth->ok) {
 
 		$tpl->newBlock('tinymce-enabled');
 
-		if (isset($_POST['note-text'])) {
+		if (isset($_POST['note-text']) && check_token('editnote', $_POST['xsrf_token'])) {
 			$body = htmlpost2db($_POST['note-text']);
 			$title = 'Piezīmes';
 			if (!empty($_POST['title'])) {
@@ -68,6 +70,7 @@ if ($auth->ok) {
 
 			redirect('/' . $category->textid . '/read/' . $id);
 		}
+
 	} else {
 		if (!empty($note)) {
 			$tpl->newBlock('notepad-view');
@@ -81,3 +84,4 @@ if ($auth->ok) {
 } else {
 	$tpl->newBlock('error-nologin');
 }
+

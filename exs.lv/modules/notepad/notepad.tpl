@@ -17,19 +17,22 @@
 	<!-- END BLOCK : notepad-view-->
 	<!-- START BLOCK : notepad-edit-->
 	<form class="form" action="" method="post">
-		<div id="autosave-status"></div>
-		<!-- START BLOCK : notepad-title-->
-		<p>
-			<label>Nosaukums:</label><br />
-			<input type="text" name="title" value="" class="text" />
-		</p>
-		<!-- END BLOCK : notepad-title-->
-		<p>
-			<textarea name="note-text" id="note-text" cols="94" rows="40" style="width: 100%;height:700px">{content}</textarea>
-		</p>
-		<p>
-			<input type="submit" name="submit" value="Saglabāt" class="button" />
-		</p>
+		<fieldset>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
+			<div id="autosave-status"></div>
+			<!-- START BLOCK : notepad-title-->
+			<p>
+				<label>Nosaukums:</label><br />
+				<input type="text" name="title" value="" class="text" />
+			</p>
+			<!-- END BLOCK : notepad-title-->
+			<p>
+				<textarea name="note-text" id="note-text" cols="94" rows="40" style="width: 100%;height:700px">{content}</textarea>
+			</p>
+			<p>
+				<input type="submit" name="submit" value="Saglabāt" class="button" />
+			</p>
+		</fieldset>
 	</form>
 	<!-- END BLOCK : notepad-edit-->
 </div>
