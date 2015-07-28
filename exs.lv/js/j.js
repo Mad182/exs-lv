@@ -341,11 +341,12 @@ $(document).ready(function() {
 	});
 
 	$('#random-fact .moar').live('click', function(e) {
+		e.preventDefault();
+
 		$('#random-fact').fadeTo(250, 0.5);
 		$('#random-fact').load($(this).attr('href'), function() {
 			$(this).fadeTo(150, 1);
 		});
-		e.preventDefault();
 	});
 
 	$('#addpic').live('click', function(e) {
@@ -374,30 +375,33 @@ $(document).ready(function() {
 	});
 
 	$('.plus, .minus').live('click', function(e) {
+		e.preventDefault();
+
 		var elem = $(this).parent();
 		elem.fadeTo(250, 0.5);
 		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(150, 1);
 		});
-		e.preventDefault();
 	});
 
 	$('.ajax-pager a').live('click', function(e) {
+		e.preventDefault();
+
 		var elem = $(this).parent().parent();
 		elem.fadeTo(250, 0.5);
 		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(150, 1);
 		});
-		e.preventDefault();
 	});
 
 	$('.jaunk-queue-ajax').live('click', function(e) {
+		e.preventDefault();
+
 		var elem = $(this).parent().parent();
 		elem.fadeTo(250, 0.3);
 		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(250, 0.3);
 		});
-		e.preventDefault();
 	});
 
 	$('.mb-rater, .mb-icon').hover(
@@ -432,6 +436,7 @@ $(document).ready(function() {
 	});
 
 	$('.tabs li a.ajax').live('click', function(e) {
+		e.preventDefault();
 
 		var clicked = $(this);
 
@@ -460,16 +465,16 @@ $(document).ready(function() {
 		});
 		clicked.parent().siblings().children('a').removeClass('active');
 		clicked.addClass('active');
-		e.preventDefault();
 	});
 
 	$('.movie-liker a').live('click', function(e) {
+		e.preventDefault();
+
 		var elem = $(this).parent();
 		elem.fadeTo(250, 0.3);
 		elem.load($(this).attr('href'), function() {
 			elem.fadeTo(250, 0.3);
 		});
-		e.preventDefault();
 	});
 
 	/* vertesana */
@@ -498,6 +503,7 @@ $(document).ready(function() {
 
 
 	$('.ajax-module').live('click', function(e) {
+		e.preventDefault();
 
 		var href = $(this).attr("href");
 		var title = $(this).attr("title");
@@ -513,36 +519,40 @@ $(document).ready(function() {
 		});
 
 		history.pushState('', title, href);
-		e.preventDefault();
 	});
 
 
 	/* pm vesture */
 	$('#reply-history').live('click', function(e) {
+		e.preventDefault();
+
 		$('#pm-history-container').load($(this).attr('href'));
 		$('#reply-history').addClass('disabled');
-		e.preventDefault();
 	});
 
 
 	/* junk vote */
 	$('#junk-vote-wrap a').live('click', function(e) {
-		$('#junk-vote-wrap').load($(this).attr('href'));
 		e.preventDefault();
+
+		$('#junk-vote-wrap').load($(this).attr('href'));
 	});
 
 
 	/* auto piemeklētie filmu avatari */
 	$('.imgselect').live('click', function(e) {
+		e.preventDefault();
+
 		$('.imgselect').removeClass('clicked');
 		$(this).addClass('clicked');
 		$('#avatar-url').val($(this).attr('href'));
-		e.preventDefault();
 	});
 
 
 	/* wp admin */
 	$('[data-addwp-action="load-external"]').on('click', function(e) {
+		e.preventDefault();
+
 		var target = $(this).data('target');
 		var resource = $(this).data('resource');
 
@@ -559,7 +569,6 @@ $(document).ready(function() {
 		$(target).show();
 		$('#new-image').remove();
 		$(this).off('click').remove();
-		e.preventDefault();
 	});
 	
 	/* universāla funkcija satura parādīšanai iekš fancybox */

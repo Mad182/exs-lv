@@ -3,6 +3,7 @@
 <form action="/{cat-url}/{id}" class="form" method="post">
 	<fieldset>
 		<legend>Labot tekstu</legend>
+		<input type="hidden" name="xsrf_token" value="{xsrf}" />
 		<textarea name="text" id="text" cols="94" rows="40" style="width:100%;height:400px">{text}</textarea>
 		<p>
 			<input type="submit" name="submit-changes" value="Saglabāt" class="button primary" />
@@ -10,3 +11,4 @@
 	</fieldset>
 </form>
 <!-- END BLOCK : mb-edit-->
+

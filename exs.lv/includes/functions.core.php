@@ -1862,7 +1862,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	}
 
 	$friendsquery = '';
-	if ($lang == 9) { // rs projektā cilnes sadalās: mb ārpus grupām un grupās
+	if ($lang == 9 && empty($group_id)) { // rs projektā cilnes sadalās: mb ārpus grupām un grupās
 		if ($tab === 'friends') {
 			$friendsquery = 'AND `miniblog`.`groupid` != 0';
 		} else {
@@ -1908,6 +1908,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	ORDER BY
 		`miniblog`.`bump`
 	DESC LIMIT $skip, 6");
+	
 
 	if ($mbs) {
 		foreach ($mbs as $mb) {

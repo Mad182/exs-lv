@@ -1368,7 +1368,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	}
 
 	// jaunāko miniblogu fragmenti, ja tie nav slēpti
-	if (!$group->hide_intro || im_mod()) {
+	if (!$group->hide_intro || $is_member || $is_admin) {
 		$tpl->newBlock('glatest-box');
 		$tpl->assign('out', get_latest_mbs('all', $group->id));
 	}

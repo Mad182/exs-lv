@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Minibloga ieraksta labošana
+ */
 if ($auth->ok && isset($_GET['var1'])) {
 
 	$mbid = intval($_GET['var1']);
@@ -9,7 +12,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 			(strtotime($mb->date) > time() - 1860 || $auth->level == 1 || $auth->id == 115) &&
 			(im_mod() || (!$mb->closed && $auth->karma >= $min_post_edit && $mb->author == $auth->id))) {
 
-		if (isset($_POST['submit-changes']) && !empty($_POST['text'])) {
+		if (isset($_POST['submit-changes']) && !empty($_POST['text']) && check_token('editmb', $_POST['xsrf_token'])) {
 			$text = htmlpost2db($_POST['text']);
 			$db->query("UPDATE `miniblog` SET
 					`text` = '$text',
@@ -20,7 +23,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 
 			$auth->log('Laboja miniblogu', 'miniblog', $mb->id);
 
-			$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$mb->id'");
+			$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mb->id'");
 			if (!empty($newpost->parent)) {
 				$parentid = $newpost->parent;
 			} else {
@@ -44,9 +47,11 @@ if ($auth->ok && isset($_GET['var1'])) {
 		$tpl->assign(array(
 			'id' => $mb->id,
 			'text' => h($mb->text),
-			'cat-url' => $category->textid
+			'cat-url' => $category->textid,
+			'xsrf' => make_token('editmb')
 		));
 		$tpl->newBlock('tinymce-enabled');
+
 	} else {
 		if (strtotime($mb->date) < time() - 1860) {
 			set_flash('Šo ierakstu vairs nevar labot!', 'error');
@@ -61,3 +66,4 @@ if ($auth->ok && isset($_GET['var1'])) {
 	}
 	redirect();
 }
+
