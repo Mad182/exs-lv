@@ -11,22 +11,24 @@ if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gal
 	$out = get_latest_posts();
 }
 
-$fsel = 'fact-all';
-if (!empty($_COOKIE['last-facts-tab']) && $_COOKIE['last-facts-tab'] == 'fact-rs') {
-	$fact = $db->get_var("SELECT `text` FROM `facts_rs` LIMIT " . rand(0, 172) . ",1") . ' <a href="/fact/rs" class="moar">Citu &raquo;</a>';
-	$fsel = 'fact-rs';
-} else {
-	$fact = $db->get_var("SELECT `text` FROM `facts` LIMIT " . rand(0, 44) . ",1") . ' <a href="/fact" class="moar">Citu &raquo;</a>';
-}
+$fact = $db->get_var("SELECT `text` FROM `facts` LIMIT " . rand(0, 44) . ",1") . ' <a href="/fact" class="moar" rel="nofollow">Citu &raquo;</a>';
 
 $tpl->newBlock('main-layout-left');
 $tpl->assign(array(
 	'latest-noscript' => $out,
 	'random-fact' => $fact,
-	'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
+
+	//'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
+	/*
+	<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
+	<div class="box">
+		{csgo-monitor}
+	</div>
+	*/
+
 	'ut-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/ut.php'),
-	$sel . '-selected' => 'active ',
-	$fsel . '-selected' => 'active '
+	'user-top' => user_top(),
+	$sel . '-selected' => 'active '
 ));
 unset($out);
 
@@ -77,47 +79,6 @@ if ($parent_id != 0) {
 			}
 		}
 	}
-}
-
-//top users
-$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
-if ($tusers) {
-	$tpl->newBlock('user-top');
-	foreach ($tusers as $tuser) {
-		$tpl->newBlock('user-top-node');
-		$tpl->assign(array(
-			'user' => usercolor($tuser->nick, $tuser->level, false, $tuser->id),
-			'url' => '/user/' . $tuser->id,
-			'today' => $tuser->today,
-			'avatar' => get_avatar($tuser, 's')
-		));
-	}
-	unset($tusers);
-}
-
-//top groups
-$tgroups = $db->get_results("SELECT `id`,`title`,`strid`,`avatar`,`posts_today` FROM `clans` WHERE `posts_today` > 0 ORDER BY `posts_today` DESC LIMIT 9");
-if ($tgroups) {
-	$tpl->newBlock('group-top');
-	foreach ($tgroups as $group) {
-		$tpl->newBlock('group-top-node');
-		
-		if (!empty($group->strid)) {
-			$group->link = '/' . $group->strid;
-		} else {
-			$group->link = '/group/' . $group->id;
-		}
-		
-		$group->av_alt = 1;
-
-		$tpl->assign(array(
-			'title' => $group->title,
-			'link' => $group->link,
-			'today' => $group->posts_today,
-			'avatar' => get_avatar($group, 's')
-		));
-	}
-	unset($tgroups);
 }
 
 //grupas

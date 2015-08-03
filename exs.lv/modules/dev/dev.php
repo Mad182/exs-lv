@@ -1,6 +1,30 @@
 <?php
+exit;
+$number_of_days_from_now = 3299;
+$now = time();
+
+$arr_days = array();
+
+$i = 0;
+while($i <> $number_of_days_from_now){
+	$str_stamp = "- $i day";
+	$arr_days[] = date('Y-m-d',strtotime($str_stamp,$now));
+	$i ++;
+}
+
+foreach($arr_days as $day) {
+	$arr = get_todays_top_comment($day);
+	if(!empty($arr['best-rating']) && $arr['best-rating'] > 1) {
+		echo '<p>'.$day.' <strong><a href="'.$arr['best-link'].'">'.$arr['best-nick']. '</a> ('.$arr['best-rating'].')</strong>: ' . add_smile($arr['best-comment']).'</p>';
+	}
+}
 
 
+
+//get_todays_top_comment();
+
+
+exit;
 $json = curl_get('https://www.googleapis.com/youtube/v3/videos?id=JIsmQPX6sAM&key=AIzaSyAY_u1YzIGq8jeDufkmsNGRKbJ4_bea0AI&part=snippet');
 $data = json_decode($json);
 

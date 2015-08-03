@@ -48,21 +48,22 @@ if (!empty($user)) {
 		case 'music-pages-1':
 		case 'music-pages-5':
 		case 'music-pages-10':
-			$out = 'Tev ir ' . $db->get_var("SELECT count(*) FROM pages WHERE author = '$user->id' AND category = '323'") . ' rakstus mūzikas sadaļā';
+			$cnt = $db->get_var("SELECT count(*) FROM pages WHERE raksti = '$user->id' AND category = '323'");
+			$out = 'Tev ir ' . intval($cnt) . ' ' . lv_dsk($cnt, 'raksts', 'raksti') . ' mūzikas sadaļā';
 			break;
 
 		case 'film-pages-1':
 		case 'film-pages-5':
 		case 'film-pages-10':
 			$cnt = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user->id' AND `category` = '80'");
-			$out = 'Tev ir ' . $cnt . ' filmu ' . lv_dsk($cnt, 'apskats', 'apskati');
+			$out = 'Tev ir ' . intval($cnt) . ' filmu ' . lv_dsk($cnt, 'apskats', 'apskati');
 			break;
 
 		case 'history-pages-1':
 		case 'history-pages-5':
 		case 'history-pages-10':
 			$cnt = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '$user->id' AND `category` = '565'");
-			$out = 'Tev ir ' . $cnt . ' ' . lv_dsk($cnt, 'raksts', 'raksti') . ' vēstures sadaļā';
+			$out = 'Tev ir ' . intval($cnt) . ' ' . lv_dsk($cnt, 'raksts', 'raksti') . ' vēstures sadaļā';
 			break;
 
 		case 'rs-pages-1':
@@ -95,6 +96,8 @@ if (!empty($user)) {
 		case 'online-30days':
 		case 'online-100days':
 		case 'online-year':
+		case 'online-year-2':
+		case 'online-year-3':
 			$out = 'Šobrīd tu esi bijis online ' . ($user->days_in_row + $user->seen_today) . ' dienas pēc kārtas';
 			break;
 

@@ -71,10 +71,16 @@ function translate_genres($en) {
 /**
  * Atgriež dienas labākā komentāra masīvu
  */
-function get_todays_top_comment() {
+function get_todays_top_comment($date = null) {
 	global $db, $m;
+	
+	if(!empty($date)) {
+		$time = strtotime($date);
+	} else {
+		$time = time();
+	}
 
-	if (($out = $m->get('todays_top_comment_' . date('Y-m-d'))) === false) {
+	if (($out = $m->get('todays_top_comment_' . date('Y-m-d', $time))) === false) {
 
 		$out = array();
 
@@ -83,7 +89,7 @@ function get_todays_top_comment() {
 					FROM
 						`miniblog`
 					WHERE
-						`date` BETWEEN '" . date('Y-m-d 00:00:00') . "' AND '" . date('Y-m-d 23:59:59') . "' AND
+						`date` BETWEEN '" . date('Y-m-d 00:00:00', $time) . "' AND '" . date('Y-m-d 23:59:59', $time) . "' AND
 						`removed` = 0 AND
 						`groupid` = 0 AND
 						`type` = 'miniblog' AND
@@ -121,7 +127,7 @@ function get_todays_top_comment() {
 			);
 		}
 
-		$m->set('todays_top_comment_' . date('Y-m-d'), $out, false, 20);
+		$m->set('todays_top_comment_' . date('Y-m-d', $time), $out, false, 20);
 	}
 
 	return $out;

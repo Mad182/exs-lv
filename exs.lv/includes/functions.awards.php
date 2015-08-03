@@ -303,6 +303,10 @@ function list_awards() {
 			'title' => '2 gadi online',
 			'state' => 'inactive'
 		),
+		'online-year-3' => array(
+			'title' => '3 gadi online',
+			'state' => 'inactive'
+		),
 		'thumbs-up-100' => array(
 			'title' => 'Atzītais (saņēma 100 plusiņus)',
 			'state' => 'inactive'
@@ -615,6 +619,10 @@ function update_awards($user) {
 						
 						if ($userr->days_in_row >= 730 || ($userr->days_in_row >= 729 && $userr->seen_today == 1)) {
 							$awards_list['online-year-2']['state'] = 'active';
+
+							if ($userr->days_in_row >= 1096 || ($userr->days_in_row >= 1095 && $userr->seen_today == 1)) {
+								$awards_list['online-year-3']['state'] = 'active';
+							}
 						}
 					}
 				}
