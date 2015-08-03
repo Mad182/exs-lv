@@ -227,14 +227,6 @@
 			<div id="left">
 				<div class="inner">
 
-					<p style="text-align:left;font-family:Ubuntu;padding: 10px 0 20px;font-size:90%">
-						<a href="/pica">
-							<img src="https://img.exs.lv/m/a/mad/lulu.png" alt="lulu.png" style="float:left;margin:-10px 2px 0 0;" />
-							<strong>Pica 49 minūšu laikā!</strong>
-							<br />Ērtāk pasūtīt internetā.
-						</a>
-					</p>
-
 					<!-- START BLOCK : movie-search-->
 					<h3>Meklēt filmu</h3>
 					<div class="box">
@@ -287,11 +279,6 @@
 						{ut-monitor}
 					</div>
 
-					<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
-					<div class="box">
-						{csgo-monitor}
-					</div>
-
 					<!-- START BLOCK : groups-l-list-->
 					<h3>Jaunākās grupas</h3>
 					<div class="box">
@@ -317,25 +304,18 @@
 						</form>
 					</div>
 
-					<!-- START BLOCK : user-top-->
 					<h3>Šodien aktīvākie</h3>
 					<div class="box">
-						<ul id="today-top">
-							<!-- START BLOCK : user-top-node-->
-							<li><a href="{url}"><img class="av" src="{avatar}" alt="" />{user}</a><span class="count">({today})</span></li>
-							<!-- END BLOCK : user-top-node-->
+						<ul class="tabs">
+							<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
+							<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
 						</ul>
 						<div class="c"></div>
+						<div id="daily-top" class="ajaxbox">{user-top}</div>
 					</div>
-					<!-- END BLOCK : user-top-->
 
 					<h3>Nejaušs fakts</h3>
 					<div class="box">
-						<ul class="tabs">
-							<li><a href="/fact" class="{fact-all-selected} remember-fact-all ajax"><span class="fact-all">Spēles</span></a></li>
-							<li><a href="/fact/rs" class="{fact-rs-selected} remember-fact-rs ajax"><span class="fact-rs">RS</span></a></li>
-						</ul>
-						<div class="c"></div>
 						<div id="random-fact" class="ajaxbox">{random-fact}</div>
 					</div>
 
