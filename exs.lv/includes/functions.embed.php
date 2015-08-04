@@ -422,9 +422,11 @@ function embed_youtube($matches, $wide = 0) {
 
 	$width = 380;
 	$height = 240;
+	$vq = 'large';
 	if ($wide) {
 		$width = 520;
 		$height = 290;
+		$vq = 'hd720';
 	}
 
 	// izmanto h, lai norādītu kā parametru javascriptā
@@ -433,7 +435,7 @@ function embed_youtube($matches, $wide = 0) {
 	$videocode .= '<iframe class="youtube-player" type="text/html" ';
 	$videocode .= 'width="' . $width . '" height="' . $height . '" ';
 	$videocode .= 'src="https://www.youtube.com/embed/' . $safe;
-	$videocode .= '?wmode=transparent&autoplay=1&origin=';
+	$videocode .= '?wmode=transparent&autoplay=1&autohide=1&hl=lv_LV&vq=' . $vq . '&origin=';
 	$videocode .= urlencode('http://exs.lv') . '" frameborder="0"';
 	$videocode .= ' webkitallowfullscreen mozallowfullscreen allowfullscreen>';
 	$videocode .= '</iframe><br /><a title="Atvērt video mājas lapā" ';
