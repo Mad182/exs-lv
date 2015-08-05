@@ -11,6 +11,8 @@ if (isset($_GET['skip'])) {
 
 $end = 10;
 
+$date = display_time(time());
+
 $tpl->newBlock('news');
 $tpl->newBlock('cindex-list');
 
