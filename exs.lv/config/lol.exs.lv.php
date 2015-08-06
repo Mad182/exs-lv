@@ -46,7 +46,7 @@ $page_title = 'League of Legends forums';
 |--------------------------------------------------------------------------
 */
 
-if (!$auth->is_local) {
+if (!$is_mobile) {
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
 		redirect('https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);

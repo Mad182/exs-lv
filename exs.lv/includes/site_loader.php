@@ -6,6 +6,19 @@
  *  ielādētu tieši tam paredzētu saturu.
  */
 
+/*
+|--------------------------------------------------------------------------
+|   Globālie projekta vides mainīgie.
+|--------------------------------------------------------------------------
+*/
+
+// vai atvērta lokālā izstrādes vide?
+$is_local = 0;
+
+// vai atvērta mobilā versija, ar to saprotot
+// kādu no "m." apakšprojektiem, nevis Android vai citas OS lietotni?
+$is_mobile = 0;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -105,10 +118,10 @@ if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {
 	$lang = $arr_domains[$_SERVER['SERVER_NAME']];
 	
 	if (substr($_SERVER['SERVER_NAME'], -4) === '.dev') {
-		$auth->is_local = 1;
+		$is_local = 1;
 	}
 	if (strpos($_SERVER['SERVER_NAME'], 'm') === 0) {
-		$auth->mobile = 1;
+		$is_mobile = 1;
 	}
 	
 // valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'
@@ -136,7 +149,7 @@ if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {
 if ($lang > 0) {
 	require CORE_PATH . '/config/' . $config_domains[$lang]['domain'] . '.php';
 } else {
-	if ($auth->mobile) {
+	if ($is_mobile) {
 		redirect('https://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
 	}
 	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);

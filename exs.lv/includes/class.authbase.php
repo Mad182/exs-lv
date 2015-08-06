@@ -35,10 +35,6 @@ class AuthBase {
 		// "m." apakšprojektus, nevis Android vai citas OS lietotni
 		$this->mobile = 0;
 		
-		// vai lapa ielādēta lokālā izstrādes vidē;
-		// šī vērtība tiek pārrakstīta iekš site_loader.php
-		$this->is_local = 0;
-		
 		// lai vēlāk iekš `visits` (un varbūt kur citur) varētu fiksēt tos,
 		// kas saturu ielādē caur Android appu
 		$this->via_android = (($lang === 2) ? 1 : 0);
@@ -52,7 +48,7 @@ class AuthBase {
 		$this->check_session();
 		$this->update_counter();
 		$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
-		$this->mobile = 0;        
+        
 		return $this->ok;
 	}
 
