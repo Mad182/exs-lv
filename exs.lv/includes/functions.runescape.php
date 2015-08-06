@@ -6,21 +6,6 @@
  */
 
 /**
- *  Testēšanas nolūkiem, lai pārbaudītu Models (un ne tikai) rezultātus kā json
- *  @see https://github.com/callumlocke/json-formatter
- */
-function as_json($content) {
-	header('Content-Type: application/json');
-	
-	if (is_string($content) || is_integer($content)) {
-		$content = array($content);
-	}
-	
-	echo json_encode($content);
-	exit;
-}
-
-/**
  *  Atgriež objektu ar template faila saturu
  *
  *  @param string $file     faila nosaukums

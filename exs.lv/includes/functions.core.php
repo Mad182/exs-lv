@@ -14,6 +14,22 @@ require(CORE_PATH . '/includes/functions.embed.php');
 require(CORE_PATH . '/includes/functions.legacy.php');
 
 /**
+ *	"var_dump" līdzinieks, bet uzskatāmāks, saturu izdrukājot
+ *	JSON formātā, kas savukārt ērti pārskatāms ar kādu
+ *	paplašinājumu, piemēram, JSON Formatter.
+ *
+ *  @see https://github.com/callumlocke/json-formatter
+ */
+function as_json($content) {
+    header('Content-Type: application/json');
+    if (is_string($content) || is_integer($content)) {
+        $content = array($content);
+    }
+    echo json_encode($content);
+    exit;
+}
+
+/**
  *  Atgriezīs pareizu apakšprojekta $lang vērtību.
  */
 function get_lang($get_super_lang = false) {
