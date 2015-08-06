@@ -21,12 +21,12 @@ require(CORE_PATH . '/includes/functions.legacy.php');
  *  @see https://github.com/callumlocke/json-formatter
  */
 function as_json($content) {
-    header('Content-Type: application/json');
-    if (is_string($content) || is_integer($content)) {
-        $content = array($content);
-    }
-    echo json_encode($content);
-    exit;
+	header('Content-Type: application/json');
+	if (is_string($content) || is_integer($content)) {
+		$content = array($content);
+	}
+	echo json_encode($content);
+	exit;
 }
 
 /**
@@ -1008,7 +1008,8 @@ function get_page_strid($id = null) {
 }
 
 function get_banlist($force = false) {
-	global $db, $m, $lang;
+	global $db, $m;
+	$lang = get_lang();
 	if ($force || !($busers = $m->get('banlist_' . $lang))) {
 		$data = $db->get_results("SELECT `user_id` FROM `banned` WHERE `user_id` != 0 AND `time`+`length` > " . time() . " AND (`lang` = 0 OR `lang` = '$lang') ORDER BY `time` DESC");
 		$busers = array();
