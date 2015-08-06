@@ -4,7 +4,7 @@ $robotstag[] = 'noodp noindex nofollow';
 
 // drošam savienojumam nepieciešamie uzstādījumi, kas pie reizes
 // arī autorizēs lietotāju visos subdomēnos
-if (!$is_mobile) {
+if (!$is_local) {
     ini_set('session.cookie_domain', '.exs.lv');
     ini_set('session.cookie_httponly', 1);
     ini_set('session.cookie_secure', 1);

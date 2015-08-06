@@ -51,7 +51,7 @@ $cat_padomi = 5;
 |--------------------------------------------------------------------------
 */
 
-if (!$is_mobile) {
+if (!$is_local) {
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
 		redirect('https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);

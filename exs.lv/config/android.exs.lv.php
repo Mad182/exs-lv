@@ -30,7 +30,7 @@ if (!isset($android_local)) {
 |--------------------------------------------------------------------------
 */
 
-if (!$is_mobile && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
+if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
 
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
