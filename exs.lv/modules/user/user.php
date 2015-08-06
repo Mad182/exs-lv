@@ -27,18 +27,18 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 	/**
 	 * 	Ielādē submoduli pēc GET[var1]
 	 */
-    elseif ($auth->ok && $auth->id == $inprofile->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
+	elseif ($auth->ok && $auth->id == $inprofile->id && isset($_GET['var1']) && in_array($_GET['var1'], $submodules)) {
 
 		require CORE_PATH . '/modules/user/submodules/' . mkslug($_GET['var1']) . '.php';
 	}
 	/**
 	 * 	expts dāvināšana citam lietotājam
 	 */
-    elseif ($auth->ok && $auth->id != $inprofile->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
+	elseif ($auth->ok && $auth->id != $inprofile->id && isset($_GET['var2']) && $_GET['var2'] == 'give') {
 
 		require CORE_PATH . '/modules/user/submodules/give.php';
 
-    //view profile
+	//view profile
 	} else {
 
 		include CORE_PATH . '/includes/class.friend.php';
@@ -169,11 +169,13 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign(array(
 				'lastip' => $inprofile->lastip,
-				'asn' => get_asn($inprofile->lastip),
 				'user_agent' => $inprofile->user_agent,
 				'mail' => $inprofile->mail,
 				'cookie_users' => $profiles
 			));
+			if ($inprofile->lastip != '127.0.0.1') {
+				$tpl->assign('asn', get_asn($inprofile->lastip));
+			}
 		}
 
 		if (im_mod() && $inprofile->level != 1 && $inprofile->level != 2) {
