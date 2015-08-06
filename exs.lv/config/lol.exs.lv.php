@@ -58,4 +58,6 @@ if (!$is_local) {
 		ini_set('session.cookie_secure', 1);
 		ini_set('session.use_only_cookies', 1);
 	}
+} else {
+    ini_set('session.cookie_domain', '.exs.dev');
 }
