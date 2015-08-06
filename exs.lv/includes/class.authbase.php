@@ -23,7 +23,6 @@ class AuthBase {
 		$this->level = 0;
 		$this->persona = '';
 		$this->karma = 0;
-		$this->mobile = 0;
 		$this->skin = 3;
 		$this->vote_today = 0;
 		$this->showsig = 1;
@@ -32,9 +31,17 @@ class AuthBase {
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->ok = false;
 		
+		// vai lapa ielādēta mobilā versijā, ar to saprotot visus
+		// "m." apakšprojektus, nevis Android vai citas OS lietotni
+		$this->mobile = 0;
+		
+		// vai lapa ielādēta lokālā izstrādes vidē;
+		// šī vērtība tiek pārrakstīta iekš site_loader.php
+		$this->is_local = 0;
+		
 		// lai vēlāk iekš `visits` (un varbūt kur citur) varētu fiksēt tos,
 		// kas saturu ielādē caur Android appu
-		$this->via_android = (((int)$lang === 2) ? 1 : 0);
+		$this->via_android = (($lang === 2) ? 1 : 0);
 		
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];

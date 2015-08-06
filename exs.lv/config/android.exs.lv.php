@@ -1,11 +1,13 @@
 <?php
-
 /**
  *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
  */
+
+
 // lietotnē būs iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
 // nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
 $android_lang = 1;
+
 
 // android pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
 // json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
@@ -21,16 +23,21 @@ if (!isset($android_local)) {
 	}
 }
 
-// auto-login visos subdomēnos
-if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
-	substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.' &&
-	$_SERVER['SERVER_NAME'] !== $android_local_ip) {
 
-	//redirect https links
+/*
+|--------------------------------------------------------------------------
+|   HTTPS, sesiju un cepumu uzstādījumi.
+|--------------------------------------------------------------------------
+*/
+
+if (!$auth->is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
+
+    // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
-		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
+		redirect('https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 	} else {
-		//secure cookies
+        // drošam savienojumam nepieciešamie uzstādījumi, kas pie reizes
+        // arī autorizēs lietotāju visos subdomēnos
 		ini_set('session.cookie_domain', '.exs.lv');
 		ini_set('session.cookie_httponly', 1);
 		ini_set('session.cookie_secure', 1);
@@ -42,4 +49,3 @@ if ($_SERVER['SERVER_NAME'] !== 'localhost' &&
 
 require_once(CORE_PATH . '/includes/functions.exs.php');
 require_once(CORE_PATH . '/includes/functions.android.php');
-

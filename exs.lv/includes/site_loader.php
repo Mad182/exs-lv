@@ -1,82 +1,148 @@
 <?php
-
 /**
- * Info par domēniem, kuri atbilst katram $lang
- * (lai veidotu linkus starp projektiem u.c.)
+ *  exs.lv projektu un apakšprojektu konfigurācijas fails.
+ *
+ *  Veic atvērtā projekta noteikšanu, lai turpmāk lapā
+ *  ielādētu tieši tam paredzētu saturu.
  */
+
+
+/*
+|--------------------------------------------------------------------------
+|   Lapā izmantoto domēnu dati.
+|--------------------------------------------------------------------------
+*/
+
 $config_domains = array(
 	1 => array(
 		'domain' => 'exs.lv',
-		'alias' => null,
 		'prefix' => '',
 		'ssl' => true
 	),
 	2 => array(
 		'domain' => 'android.exs.lv',
-		'alias' => $android_local_ip,
 		'prefix' => 'android',
 		'ssl' => true
 	),
 	3 => array(
 		'domain' => 'coding.lv',
-		'alias' => null,
 		'prefix' => 'code',
 		'ssl' => true
 	),
 	5 => array(
 		'domain' => 'rp.exs.lv',
-		'alias' => null,
 		'prefix' => 'mta',
 		'ssl' => true
 	),
 	7 => array(
 		'domain' => 'lol.exs.lv',
-		'alias' => null,
 		'prefix' => 'lol',
 		'ssl' => true
 	),
 	8 => array(
 		'domain' => 'secure.exs.lv',
-		'alias' => null,
 		'prefix' => 'secure',
 		'ssl' => true
 	),
 	9 => array(
 		'domain' => 'runescape.exs.lv',
-		'alias' => 'rs.exs.lv',
 		'prefix' => 'runescape',
 		'ssl' => true
 	)
 );
 
-$found = false;
-foreach ($config_domains as $lang => $site) {
+// saraksts ar visiem ieviestajiem domēniem/subdomēniem un to atslēgām;
+// ar tā palīdzību izvairāmies no liekas iepriekšējā masīva pārstaigāšanas.
+$arr_domains = array(
 
-	if ($_SERVER['SERVER_NAME'] === $site['domain'] || 
-		(!is_null($site['alias']) && $_SERVER['SERVER_NAME'] === $site['alias']) || 
-		$_SERVER['SERVER_NAME'] === 'localhost' || 
-		$_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+	'localhost' => 1,
+	'exs.lv' => 1,    
+	'coding.lv' => 3,
+	'secure.exs.lv' => 8,    
+	
+	// apakšprojekti
+	'android.exs.lv' => 2,
+	$android_local_ip => 2,    
+	'rp.exs.lv' => 5,
+	'lol.exs.lv' => 7,
+	'runescape.exs.lv' => 9,
+	'rs.exs.lv' => 9,
+	
+	// mobilās versijas
+	// (cloudflāres dēļ neveidojam vēl vairāk domēna līmeņu)
+	'm.exs.lv' => 1,
+	'm.coding.lv' => 3,
+	'mlol.exs.lv' => 7,
+	'mrs.exs.lv' => 9,
+	
+	// izstrādes versijas, kas pieejamas tikai lokālā vidē;
+	// apzināti izvairāmies no tā paša "exs.lv" domēna izmantošanas,
+	// lai lokāli nerastos problēmas ar pārlūkiem un HSTS
+	// (https://stackoverflow.com/questions/25277457/google-chrome-redirecting-localhost-to-https)
+	'exs.dev' => 1,
+	'android.exs.dev' => 2,
+	'coding.dev' => 3,
+	'rp.exs.dev' => 5,
+	'lol.exs.dev' => 7,
+	'rs.exs.dev' => 9,
+	
+	// mobilās izstrādes versijas
+	'm.exs.dev' => 1,
+	'm.coding.dev' => 3,
+	'mlol.exs.dev' => 7,
+	'mrs.exs.dev' => 9
+);
 
-		require CORE_PATH . '/config/' . $site['domain'] . '.php';
-		$found = true;
-		break;
-	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
-		if (empty($site['ssl'])) {
+
+/*
+|--------------------------------------------------------------------------
+|   Atvērtā projekta noteikšana.
+|--------------------------------------------------------------------------
+*/
+
+if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {  
+  
+	$lang = $arr_domains[$_SERVER['SERVER_NAME']];
+	
+	if (substr($_SERVER['SERVER_NAME'], -4) === '.dev') {
+		$auth->is_local = 1;
+	}
+	if (strpos($_SERVER['SERVER_NAME'], 'm') === 0) {
+		$auth->mobile = 1;
+	}
+	
+// valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'
+} else if (strpos($_SERVER['SERVER_NAME'], 'www.') === 0) {
+
+	$name = substr($_SERVER['SERVER_NAME'], 0, 4);   
+	
+	if (!empty($name) && isset($arr_domains[$name])) {
+		$proto = 'https://';
+		if (empty($config_domains[$arr_domains[$name]]['ssl'])) {
 			$proto = 'http://';
-		} else {
-			$proto = 'https://';
 		}
-		redirect($proto . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+		redirect($proto . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], true);
 	}
 }
 
-//domain not found, redirect to exs.lv
-if (!$found) {
+
+/*
+|--------------------------------------------------------------------------
+|   Projekta konfigurācijas ielāde.
+|--------------------------------------------------------------------------
+*/
+
+// ja neizdosies noteikt apakšprojektu, pārvirzīs uz exs.lv
+if ($lang > 0) {
+	require CORE_PATH . '/config/' . $config_domains[$lang]['domain'] . '.php';
+} else {
+	if ($auth->mobile) {
+		redirect('https://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
+	}
 	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
-//remove index.php from urls
-if ($_SERVER['REQUEST_URI'] == '/index.php' && empty($_POST)) {
+// dzēsīs 'index.php' no saitēm, lai tās būtu glītākas
+if ($_SERVER['REQUEST_URI'] === '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }
-

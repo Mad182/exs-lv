@@ -1,9 +1,13 @@
 <?php
 /**
- *  RuneScape apakšprojekta konfigurācijas fails
- *
- *  Satur ar apakšprojektu saistītus globālos mainīgos
+ *  RuneScape apakšprojekta konfigurācija.
  */
+
+/*
+|--------------------------------------------------------------------------
+|   Projekta globālie mainīgie.
+|--------------------------------------------------------------------------
+*/
 
 $tpl_options = '';
 $page_title = 'King Black Dragon\'s Lair';
@@ -22,7 +26,7 @@ $robotstag[] = 'noodp';
 $polls_cat = 0;
 
 // bot user id
-$rsbot_id = 33342;
+$rsbot_id = 33342; // "Wise Old Man"
 
 // sadaļu id, kas tiek izmantoti /rsmod un /rshelp modulī
 $cat_f2p_quests = 99;
@@ -41,23 +45,24 @@ $cat_rsnews = 599;
 $cat_padomi = 5;
 
 
-// auto login visos subdomēnos
-if ($_SERVER['SERVER_NAME'] !== 'localhost' && substr($_SERVER['SERVER_NAME'], 0, 4) !== 'dev.') {
+/*
+|--------------------------------------------------------------------------
+|   HTTPS, sesiju un cepumu uzstādījumi.
+|--------------------------------------------------------------------------
+*/
 
-	//redirect https links
+if (!$auth->is_local) {
+    // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
-		redirect("https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
+		redirect('https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], true);
 	} else {
-		//secure cookies
+        // drošam savienojumam nepieciešamie uzstādījumi, kas pie reizes
+        // arī autorizēs lietotāju visos subdomēnos
 		ini_set('session.cookie_domain', '.exs.lv');
 		ini_set('session.cookie_httponly', 1);
 		ini_set('session.cookie_secure', 1);
 		ini_set('session.use_only_cookies', 1);
 	}
-
 }
 
-/*
- * runescape.exs.lv specific functions
- */
 require(CORE_PATH . '/includes/functions.runescape.php');

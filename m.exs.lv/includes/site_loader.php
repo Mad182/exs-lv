@@ -1,4 +1,7 @@
 <?php
+/**
+ *  FAILS ŠOBRĪD NETIEK IZMANTOTS!
+ */
 
 /**
  * Info par domēniem, kuri atbilst katram $lang (lai veidotu linkus starp projektiem u.c.)
