@@ -46,7 +46,8 @@ $json_page      = null;
 // un tikai pēc tam interesējas par autorizācijas statusu u.c. info
 $ip_banned = $db->get_row("
 	SELECT * FROM `banned` 
-	WHERE `active` = 1 AND `ip` = '".sanitize($auth->ip)."'
+	WHERE `active` = 1 AND `ip` = '".sanitize($auth->ip)."' AND
+	(`lang` = 0 OR `lang` = ".(int)$android_lang.")
 	LIMIT 1
 ");
 
