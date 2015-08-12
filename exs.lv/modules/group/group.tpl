@@ -518,6 +518,9 @@
 			<p>
 				<label for="search-q">Meklējamais vārds vai frāze</label><br />
 				<input type="text" name="q" id="search-q" class="text" value="{qstr}" />
+				<!-- START BLOCK : form-search-mine-->
+				<br /><label class="checkbox"><input type="checkbox" name="mine" value="1"{mine-sel} /> meklēt tikai manis rakstīto</label><br />
+				<!-- END BLOCK : form-search-mine-->
 			</p>
 			<p>
 				<input type="submit" value="Meklēt" class="button" />
@@ -530,7 +533,7 @@
 	<ol>
 		<!-- START BLOCK : res-search-node-->
 		<li style="border-bottom: 1px solid #ddd">
-			<p style="padding: 0;margin: 0;font-size: 90%">{text}</p>
+			<p style="padding: 0;margin: 0;font-size: 90%">{author}: {text}</p>
 			<p style="padding: 2px 0 10px;margin:0"><a href="{group-link}/forum/{link}">{group-link}/forum/{link}</a></p>
 		</li>
 		<!-- END BLOCK : res-search-node-->

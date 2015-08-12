@@ -1148,12 +1148,17 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->assign('qstr', h($q_string));
 			$q_strings = explode(' ', $q_string);
 			$cond = '';
+
+			if(isset($_GET['mine'])) {
+				$cond .= " AND `author` = '$auth->id'";
+			}
+
 			foreach ($q_strings as $str) {
 				$cond .= " AND `text` LIKE '%" . sanitize($str) . "%'";
 			}
 
 			// atlasa meklēšanas rezultātus un izvada lapā
-			$results = $db->get_results("SELECT * FROM miniblog WHERE `groupid` = '$group->id' $cond ORDER BY id DESC LIMIT 50");
+			$results = $db->get_results("SELECT `id`,`author`,`parent`,`text` FROM `miniblog` WHERE `groupid` = '$group->id' AND `removed` = 0 $cond ORDER BY `id` DESC LIMIT 60");
 			if ($results) {
 				$tpl->newBlock('res-search');
 				foreach ($results as $result) {
@@ -1166,7 +1171,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					if (!empty($result->parent)) {
 						$link = base_convert($result->parent, 10, 36) . '#m' . $result->id;
 					}
+					$author = get_user($result->author);
 					$tpl->assign(array(
+						'author' => userlink($author),
 						'text' => $result->text,
 						'group-id' => $group->id,
 						'link' => $link,
@@ -1174,6 +1181,14 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				}
 			}
 		}
+
+		if($auth->ok === true) {
+			 $tpl->newBlock('form-search-mine');
+			 if(isset($_GET['mine'])) {
+			 	$tpl->assign('mine-sel', ' checked="checked"');
+			 }
+		}
+
 	}
 	// nav tiesību izmantot meklētāju
 	else {
