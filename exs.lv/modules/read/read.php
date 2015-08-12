@@ -1025,7 +1025,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$tpl->assign('edit-page-disabled', $closemark);
 
 					//attach page in forum view
-					if ($category->isforum) {
+					if ($category->isforum || $category->id == 1) {
 						$tpl->newBlock('post-attach');
 						$atachmark = '';
 						if ($article->attach) {
