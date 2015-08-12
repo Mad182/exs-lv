@@ -162,24 +162,24 @@ dl.list-attr dt {
 }
 
 .note {
-	background-color:#2C2E31;
-	border:1px solid #202020;
-	color:#C5C5C5;
+	background-color: #2C2E31;
+	border: 1px solid #202020;
+	color: #C5C5C5
 }
 
 /* Mod sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
 .mod-list-table th {
-	color:#CAD9E7;
-	border-bottom:2px solid #979899
+	color: #CAD9E7;
+	border-bottom: 2px solid #979899
 }
 .mod-list-table td {
-	border-bottom:1px solid #595A5C
+	border-bottom: 1px solid #595A5C
 }
 .mod-list-table .counter {
-	color: #CACBCE;
+	color: #CACBCE
 }
 .mod-table-list li .stronger {
-	color:#CECECE;
+	color:#CECECE
 }
 
 /* Mod sadaļās izmantots tabulas stils (#2) */
@@ -307,23 +307,23 @@ dl.list-attr dt {
 	}
 .child-block {
 	background:#3D3E3F;
-	border:1px solid #323335;
+	border:1px solid #323335
 }
 
 /* mb postu pogas */
 .post-button {
 	background: #444;
 	color: #b4b4b7;
-	border-color: #373737;
+	border-color: #373737
 }
 
 .post-delete {
-	color: #933;
+	color: #933
 }
 
 .deleted-entry {
 	color: #E6E4E4;
-	background: #313131;
+	background: #313131
 }
 
 #noindex-phone {
@@ -333,23 +333,23 @@ dl.list-attr dt {
 #wrapper .article-info {
 	background: #3a3a3a;
 	border-top: 1px dotted #222;
-	border-bottom: 1px dotted #222;
+	border-bottom: 1px dotted #222
 }
 
 #wrapper .article-info li {
-	color: #aaa;
+	color: #aaa
 }
 
 /* sākumlapas "wall" */
 
 #wall-posts li a {
-	color: #ccc;
+	color: #ccc
 }
 
 /* galerijas thb */
 .imgs .items a {
 	border: 1px solid #333;
-	background: #444;
+	background: #444
 }
 
 /* Neliela info daudzuma fancybox stili */
@@ -367,6 +367,11 @@ dl.list-attr dt {
 
 
 .gameserver p.playerlist span {
-	border-bottom: 1px dotted #555;
+	border-bottom: 1px dotted #555
+}
+
+/* sticky jaunums */
+#wrapper .index-list li.sticky {
+	background: #222
 }
 

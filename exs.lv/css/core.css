@@ -584,6 +584,7 @@ html .banned {
 	z-index: 2;
 	position: relative;
 	left: 196px;
+	word-wrap: break-word;
 }
 
 #content.no-right {
@@ -1663,10 +1664,14 @@ input, select, textarea {
 	padding: 5px;
 }
 
-.form input.text.tiny {
+.form input.tiny {
 	width: 45px;
 	padding: 2px 3px;
 	font-size: 11px;
+}
+
+.form input.number {
+	width: 50px;
 }
 
 .form input.title {
@@ -1689,10 +1694,15 @@ input, select, textarea {
 	height: 62px;
 }
 
-.form .error, .form .notice, .form .success {
+.form .error, .form .notice, .form .success, .toggle-replies {
 	margin-bottom: 1em;
 	border: 2px solid #ddd;
 	padding: .8em;
+}
+
+.toggle-replies {
+	margin: 8px 0;
+	display: block;
 }
 
 .form .error {
@@ -2017,6 +2027,9 @@ input, select, textarea {
 	padding: 0 0 0 19px;
 }
 
+/**
+ * jaunumu saraksts sākumlapā
+ */
 .index-list {
 	list-style: none;
 	margin: 0;
@@ -2026,12 +2039,29 @@ input, select, textarea {
 .index-list li {
 	background: transparent;
 	margin: 0;
-	padding: 0 0 8px;
+	padding: 5px;
+	margin: 5px 0;
+}
+
+/* sticky jaunums */
+.index-list li.sticky {
+	background: #e6f0fb;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 5px 10px;
+	margin: 5px -5px;
 }
 
 .index-list li p {
 	font-size: 13px;
 }
+
+.index-list li h3 {
+	padding: 5px 0 2px;
+	margin: 0;
+}
+
 
 body.mceContentBody {
 	color: #000;
@@ -2941,6 +2971,10 @@ a.friend-right {
 	margin: 0 0 3px 0;
 	font-size: 12px;
 	text-align: left;
+}
+
+#comments dt em.username {
+	color: #777;
 }
 
 .inf {

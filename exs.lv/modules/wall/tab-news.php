@@ -27,6 +27,7 @@ $articles = $db->get_results("
 			`pages`.`text` AS `text`,
 			`pages`.`sm_avatar` AS `sm_avatar`,
 			`pages`.`intro` AS `intro`,
+			`pages`.`attach` AS `attach`,
 			`users`.`nick` AS `nick`,
 			`users`.`level` AS `level`
 		FROM
@@ -36,6 +37,7 @@ $articles = $db->get_results("
 			`pages`.`category` = '1' AND
 			`users`.`id` = `pages`.`author`
 		ORDER BY
+			`pages`.`attach` DESC,
 			`pages`.`id` DESC
 		LIMIT
 			$skip,$end");
@@ -55,6 +57,12 @@ if(!empty($articles)) {
 		if ($article->sm_avatar == '') {
 			$article->sm_avatar = '/dati/bildes/useravatar/none.png';
 		}
+		
+		$class = '';
+		
+		if($article->attach) {
+			$class = 'sticky';
+		}
 
 		$date = display_time(strtotime($article->date));
 		$tpl->assign(array(
@@ -66,7 +74,8 @@ if(!empty($articles)) {
 			'posts' => $article->posts,
 			'level' => $article->level,
 			'intro' => textlimit($article->text, 330),
-			'avatar' => trim($article->sm_avatar)
+			'avatar' => trim($article->sm_avatar),
+			'class' => $class
 		));
 	}
 
