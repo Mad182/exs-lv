@@ -372,6 +372,7 @@ dl.list-attr dt {
 
 /* sticky jaunums */
 #wrapper .index-list li.sticky {
-	background: #222
+	background: #272727;
+	border: 1px solid #222;
 }
 

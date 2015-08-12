@@ -12,6 +12,10 @@ class getImages {
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
+
+			//temp hack for imgur gifvs
+			$data->data->url = str_replace('.gifv', '.gif', $data->data->url);
+
 			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif', 'peg'))) {
 
 				$addr = str_replace('//imgur.com/', '//i.imgur.com/', $data->data->url);

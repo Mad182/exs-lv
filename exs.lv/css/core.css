@@ -2046,11 +2046,11 @@ input, select, textarea {
 /* sticky jaunums */
 .index-list li.sticky {
 	background: #e6f0fb;
+	border: 1px solid #d6e0eb;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	padding: 5px 10px;
-	margin: 5px -5px;
 }
 
 .index-list li p {
