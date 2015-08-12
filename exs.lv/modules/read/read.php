@@ -35,17 +35,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 		redirect('/read/' . $article->strid . '/com_page/' . $skip / $comments_per_page);
 	}
 
-	// raksta "pielīmēšana"
-	if ((im_mod() || im_cat_mod()) && isset($_GET['attach'])) {
-		$db->query("UPDATE pages SET attach = '1' WHERE id = '$article->id'");
-		redirect('/read/' . $article->strid);
-	}
-
-	if ((im_mod() || im_cat_mod()) && isset($_GET['detach'])) {
-		$db->query("UPDATE pages SET attach = '0' WHERE id = '$article->id'");
-		redirect('/read/' . $article->strid);
-	}
-
 	// komentāra pievienošana
 	if (!$article->closed && isset($_POST['comment-pid']) && !empty($_POST['commenttext']) && $auth->ok && $_POST['comment-pid'] == $article->id) {
 		if (!isset($_POST['checksrc']) or $_POST['checksrc'] != substr(md5($article->id . $remote_salt . $auth->id), 0, 8)) {
@@ -281,7 +270,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				die('ok');
 			}
 
-			if (isset($_POST['attach-do']) && $category->isforum) {
+			if (isset($_POST['attach-do']) && ($category->isforum || $category->id == 1)) {
 				$attach = (bool) $_POST['attach'];
 				$db->query("UPDATE `pages` SET `attach` = '$attach' WHERE `id` = '$article->id'");
 				if ($attach) {
