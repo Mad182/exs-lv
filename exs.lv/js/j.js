@@ -316,6 +316,7 @@ $(document).ready(function() {
 
 	//atbildet uz minibloga komentaru
 	$('.mb-reply-to').live('click', function(e) {
+		e.preventDefault();
 		if ($(this).siblings('.reply-ph').html() != '') {
 			return false;
 		}
@@ -324,11 +325,11 @@ $(document).ready(function() {
 		$('.reply-ph-current').html('').removeClass('reply-ph-current');
 		$(this).siblings('.reply-ph').addClass('reply-ph-current').fadeIn('fast');
 		$('#response-to').val($(this).attr('href'));
-		e.preventDefault();
 	});
 
 	//atpakaļ uz atbildēšanu galvenajam mb
 	$('.mb-reply-main').live('click', function(e) {
+		e.preventDefault();
 		if ($('.reply-ph-default').html() != '') {
 			return false;
 		}
@@ -337,12 +338,10 @@ $(document).ready(function() {
 		$('.reply-ph-current').html('').removeClass('reply-ph-current');
 		$('.reply-ph-default').addClass('reply-ph-current').fadeIn('fast');
 		$('#response-to').val(mbid);
-		e.preventDefault();
 	});
 
 	$('#random-fact .moar').live('click', function(e) {
 		e.preventDefault();
-
 		$('#random-fact').fadeTo(250, 0.5);
 		$('#random-fact').load($(this).attr('href'), function() {
 			$(this).fadeTo(150, 1);
@@ -350,18 +349,18 @@ $(document).ready(function() {
 	});
 
 	$('#addpic').live('click', function(e) {
-		$('#newpic').toggle(200);
 		e.preventDefault();
+		$('#newpic').toggle(200);
 	});
 
 	$('.spoiler-title').live('click', function(e) {
-		$(this).siblings('.spoiler-content').toggle(200);
 		e.preventDefault();
+		$(this).siblings('.spoiler-content').toggle(200);
 	});
 
 	$('#debug-details-trigger').live('click', function(e) {
-		$('#debug-details').toggle(200);
 		e.preventDefault();
+		$('#debug-details').toggle(200);
 	});
 
 	$(".rpl").fancybox({
