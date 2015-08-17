@@ -127,14 +127,13 @@ if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {
 // valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'
 } else if (strpos($_SERVER['SERVER_NAME'], 'www.') === 0) {
 
-	$name = substr($_SERVER['SERVER_NAME'], 0, 4);   
-	
+	$name = str_replace('www.', '', $_SERVER['SERVER_NAME']);   
 	if (!empty($name) && isset($arr_domains[$name])) {
 		$proto = 'https://';
 		if (empty($config_domains[$arr_domains[$name]]['ssl'])) {
 			$proto = 'http://';
 		}
-		redirect($proto . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], true);
+		redirect($proto . $name . $_SERVER['REQUEST_URI'], true);
 	}
 }
 
