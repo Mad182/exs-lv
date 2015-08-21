@@ -40,11 +40,9 @@ if (!empty($series)) {
 		$module_content .= '
 	<tr>
 		<td>
-			<a href="/read/' . $s->strid . '">
-				<img style="width:145px;min-width:145px;height:215px;margin:2px" src="//img.exs.lv' . $s->thb . '" alt="' . h($s->title) . '" />
-			</a>
+			<a href="/read/' . $s->strid . '"><img class="mr-av" src="//img.exs.lv' . $s->thb . '" alt="' . h($s->title) . '" /></a>
 		</td>
-		<td style="vertical-align:top;padding: 20px 10px;width:115px;">
+		<td class="mr-inf">
 			<strong>' . $s->title . '</strong>
 			<br />' . $s->title_lv . '
 			<br />
@@ -102,23 +100,57 @@ if (!empty($series)) {
 						`movie_ratings`.`page_id` = '$s->id' AND
 						`users`.`id` = `movie_ratings`.`user_id`
 					ORDER BY
-					`movie_ratings`.`id` ASC");
+					`movie_ratings`.`id` DESC");
 
+		$max_show = 30; //maksimālais lietotāju avataru skaits, ko parādīt
+		$more_likes = 0;
+		$more_dislikes = 0;
+		$i_like = 0;
+		$i_dislike = 0;
 		$likes = array();
 		$dislikes = array();
 		if (!empty($ratings)) {
 			foreach ($ratings as $rating) {
 				if ($rating->rating == 1) {
-					$likes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.h($rating->nick).'" title="'.h($rating->nick).'" />';
+					if($i_like < $max_show) {
+					
+						if (empty($rating->avatar)) {
+							$rating->avatar = 'none.png';
+						}
+
+						$likes[] = '<img src="https://m.exs.lv/av/' . $rating->avatar . '" alt="'.h($rating->nick).'" title="'.h($rating->nick).'" />';
+					} else {
+						$more_likes++;
+					}
+					$i_like++;
 				} elseif ($rating->rating == -1) {
-					$dislikes[] = '<img src="'.get_avatar($rating, 's').'" style="float:left;width:24px;height:24px;margin:1px" alt="'.h($rating->nick).'" title="'.h($rating->nick).'" />';
+					if($i_dislike < $max_show) {
+
+						if (empty($rating->avatar)) {
+							$rating->avatar = 'none.png';
+						}
+
+						$dislikes[] = '<img src="https://m.exs.lv/av/' . $rating->avatar . '" alt="'.h($rating->nick).'" title="'.h($rating->nick).'" />';
+					} else {
+						$more_dislikes++;
+					}
+					$i_dislike++;
 				}
 			}
 		}
 
+		$more_likes_txt = '';
+		if($more_likes > 0) {
+			$more_likes_txt = '<br style="clear:both" /> un ' . $more_likes . ' ' . lv_dsk($more_likes, 'cits', 'citi') . '...';
+		}
 
-		$module_content .= '		<td>' . implode('', $likes) .'<div class="c"></div>'. $rate_like . '</td>';
-		$module_content .= '		<td>' . implode('', $dislikes) .'<div class="c"></div>'. $rate_dislike . '</td>';
+		$more_dislikes_txt = '';
+		if($more_dislikes > 0) {
+			$more_dislikes_txt = '<br style="clear:both" /> un ' . $more_dislikes . ' ' . lv_dsk($more_likes, 'cits', 'citi') . '...';
+		}
+
+		$module_content .= '		<td class="mr-us">' . implode('', $likes) . $more_likes_txt . '<div class="c"></div>'. $rate_like . '</td>';
+		$module_content .= '		<td class="mr-us">' . implode('', $dislikes) . $more_dislikes_txt . '<div class="c"></div>'. $rate_dislike . '</td>';
 
 
 		$module_content .= '	</tr>';
@@ -127,3 +159,4 @@ if (!empty($series)) {
 
 	$module_content .= '</table>';
 }
+

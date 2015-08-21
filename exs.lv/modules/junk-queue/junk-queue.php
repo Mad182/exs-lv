@@ -8,6 +8,8 @@ if (!im_mod()) {
 	redirect();
 }
 
+ini_set('memory_limit', '256M');
+
 function make_thumb($data, $path, $id) {
 	require_once(CORE_PATH . '/includes/class.upload.php');
 	$foo = new Upload($data);
@@ -32,7 +34,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'lol') {
 	$id = (int) $_GET['var1'];
 	if ($pic = $db->get_row("SELECT * FROM `junk_queue` WHERE `approved` = 0 AND `id` = '$id'")) {
 
-		$data = curl_get($pic->image, 4, 10);
+		$data = curl_get($pic->image, 5, 15);
 		$ext = substr($pic->image, -4);
 		if ($data) {
 			$dir1 = substr($pic->id, -1);
