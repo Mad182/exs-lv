@@ -4197,3 +4197,45 @@ table .quote {
 	color: #aaa;
 }
 
+/**
+ *  Geocaching grupas ciļņu specifiskie stili.
+ *
+ *  Daļēji ieviesti tāpēc, ka dažus no inline sarakstītajiem stiliem
+ *  teksta redaktors automātiski aizvāc.
+ *
+ *  @see https://exs.lv/geocaching/tab/pasakumi
+ */
+.geotab-event {
+    margin:0 0 4em;
+}
+
+.geotab-event h2 {
+    font-weight:bold;
+}
+
+.event-row {
+    min-width:100%;
+    max-width:980px;
+    overflow:auto;
+    clear:both;
+}
+
+.event-image {
+    max-width:70%;
+    display:inline-block;
+    box-sizing:border-box;
+    float:left;
+    padding-right:1.5em;
+}
+
+.event-image img {
+    max-width:100%;
+}
+
+.event-data {
+    width:30%;
+    display:inline-block;
+    box-sizing:border-box;
+    vertical-align:middle;
+    padding-top:1em;
+}
