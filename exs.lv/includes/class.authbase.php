@@ -142,16 +142,13 @@ class AuthBase {
 
 	function login($username, $password, $xsrf = null) {
 		global $db, $site_access, $lang;
-		
-		if($this->is_tor_exit()) {
-			$this->logout();
-			return false;
-		}
 
 		session_regenerate_id(true);
 
 		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
-			sleep(rand(2, 4));
+			$this->log('Neizdevies login mēģinājums (CSRF check failed)');
+			set_flash('Ielogoties neizdevās! Mēģini vēlreiz!', 'error');
+			sleep(rand(1, 3));
 			$this->error = 2;
 			return false;
 		}
@@ -185,6 +182,12 @@ class AuthBase {
 
 		if ($found) {
 			$userinfo = get_user($found, true);
+
+			if($this->is_tor_exit()) {
+				$this->log('Neizdevies login mēģinājums (IS_TOR_EXIT = true)', 'users', $userinfo->id);
+				$this->logout();
+				return false;
+			}
 
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
