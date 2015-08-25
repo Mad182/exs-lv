@@ -228,7 +228,7 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'android' => array(
-			'title' => '<a href="https://play.google.com/store/apps/details?id=lv.exs.android">exs.lv android lietotājs</a>',
+			'title' => '<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow">exs.lv android lietotājs</a>',
 			'state' => 'inactive'
 		),
 		'draugiem-follow' => array(
@@ -236,7 +236,7 @@ function list_awards() {
 			'state' => 'inactive'
 		),
 		'facebook-like' => array(
-			'title' => 'Facebook.com <a href="https://www.facebook.com/exs.lv">like</a>',
+			'title' => 'Facebook.com <a href="https://www.facebook.com/exs.lv" rel="nofollow">like</a>',
 			'state' => 'inactive'
 		),
 		'twitter-follower' => array(
