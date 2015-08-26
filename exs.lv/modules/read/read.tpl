@@ -39,7 +39,7 @@
 	<fieldset>
 		<legend>Filmas avatars</legend>
 		<!-- START BLOCK : edit-movie-avatar-->
-		<img src="//img.exs.lv{url}" />
+		<img src="{img-server}{url}" />
 		<div class="c"></div>
 		<!-- END BLOCK : edit-movie-avatar-->
 
@@ -124,27 +124,48 @@
 
 <!-- START BLOCK : read-article-->
 
-<h1>{article-title}
-	<!-- START BLOCK : title-lv-->
-	<span class="slash">/</span> <small>{title}</small>
-	<!-- END BLOCK : title-lv-->
-</h1>
 
-<!-- START BLOCK : page-ad-dateks-->
-<div class="content-block">
-	<script type="text/javascript" src="https://affiliate.dateks.lv/scripts/banner.php?a_aid=view&amp;a_bid=8872f56e"></script>
-</div>
-<!-- END BLOCK : page-ad-dateks-->
+<article class="post" id="full-story">
+	<h2 class="entry-title">
+		<span class="the_title">{title}
+			<!-- START BLOCK : title-lv-->
+			<span class="slash">/</span> <small>{title}</small>
+			<!-- END BLOCK : title-lv-->
+		</span>
+		<span class="entry-cat"><a href="#" title="View all posts in Game News" rel="category tag">{category-title}</a></span>
+	</h2>
+	<div class="entry-meta row-fluid">
+		<ul class="clearfix">
+			<li><img alt='' src='/responsive/images/avatar.png' height='15' width='15' />{author}</li>
+			<li><img src="/responsive/images/time.png" alt="">{date}</li>
+			<li><img src="/responsive/images/view-bg.png" alt="">{views}</li>
+			<li><img src="/responsive/images/komen.png" alt=""><a href="#" title="Comment on Donec consectetuer ligula vulputate sem tristique cursus">{posts} komentāri</a></li>
 
+			<!-- START BLOCK : add-bookmark-->
+			<li class="bookmark">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
+			<!-- END BLOCK : add-bookmark-->
+			
+			<!-- START BLOCK : post-tags-->
+			<li class="tagz"><img src="/responsive/images/tags-icon.png" alt="">
+				<!-- START BLOCK : post-tags-node-->
+				<a href="/tag/{slug}" rel="tag">{tag-title}</a>, 
+				<!-- END BLOCK : post-tags-node-->
+			<br /></li>
+			<!-- END BLOCK : post-tags-->
+			
+		</ul>
+	</div>
+
+	<div class="entry-content">
 <!-- START BLOCK : article-avatar-box-->
 <img class="av" src="//exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
 <!-- END BLOCK : article-avatar-box-->
 
 <!-- START BLOCK : movie-avatar-->
-<a href="//img.exs.lv{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="//img.exs.lv{thb}" alt="{title}" /></a>
+<a href="{img-server}{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="{img-server}{thb}" alt="{title}" /></a>
 <!-- END BLOCK : movie-avatar-->
 
-<div id="full-story">
+
 	<!-- START BLOCK : movie-info-->
 	<div id="movie-info">
 
@@ -186,86 +207,72 @@
 	<div class="c"></div>
 	<p>&nbsp;</p>
 	<!-- END BLOCK : movie-info-->
-	{article-text}
+	{text}
 
-	<!-- INCLUDE BLOCK : share-block -->
+	<!-- START BLOCK : post-stags-->
+	<div class="c"></div>
 
-</div>
-<!-- START BLOCK : post-stags-->
-<div class="c"></div>
-
-<div id="related-topics">
-	<div class="mbox">
-		<h4>Saistītie raksti:</h4>
-		<ul>
-			<!-- START BLOCK : post-stags-node-->
-			<li><a href="{url}">{title}</a></li>
-			<!-- END BLOCK : post-stags-node-->
-		</ul>
+	<div id="related-topics">
+		<div class="mbox">
+			<h4>Saistītie raksti:</h4>
+			<ul>
+				<!-- START BLOCK : post-stags-node-->
+				<li><a href="{url}">{title}</a></li>
+				<!-- END BLOCK : post-stags-node-->
+			</ul>
+		</div>
 	</div>
-</div>
-<!-- END BLOCK : post-stags-->
-<div class="c"></div>
-<div class="mbox" style="margin: 5px 0" id="like-rate-box">
-	<div id="post-rating">Lasītāju vērtējums: <span class="current-rating">{rating}</span> ({rating_count} balsis)</div>
-	<div id="star"></div>
-</div>
-<div class="c"></div>
-<ul class="article-info">
-	<li class="date">{article-date}</li>
-	<li class="profile user-level-{level} user-gender-{gender}">{author}</li>
-	<li class="comments">{article-posts}x</li>
-	<li class="views">{article-views}x</li>
-	<!-- START BLOCK : add-bookmark-->
-	<li class="attach">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
-	<!-- END BLOCK : add-bookmark-->
-</ul>
-<div class="c"></div>
-<!-- START BLOCK : post-tags-->
-<div id="post-tags-wrapper">
-	<!-- START BLOCK : post-tags-ul-->
-	<ul id="article-tags" class="list-tags">
-		<!-- START BLOCK : post-tags-node-->
-		<li><a href="/tag/{slug}" rel="tag">{tag-title}</a></li>
-		<!-- END BLOCK : post-tags-node-->
-	</ul>
-	<!-- END BLOCK : post-tags-ul-->
-</div>
-<!-- START BLOCK : post-newtags-->
-<div class="c"></div>
-<form action="{page-url}" id="new-tags" class="form" method="post" style="padding: 12px 0 4px">
-	<fieldset>
-		<legend>Tagi, atdalīti ar komatu</legend>
-		<input style="width:340px" type="text" class="text" name="newtags" id="post-tags-input" /> <input class="button" type="submit" value="Pielikt" />
-	</fieldset>
-</form>
-<!-- END BLOCK : post-newtags-->
-<div class="c"></div>
-<!-- END BLOCK : post-tags-->
-<!-- START BLOCK : post-tools-->
-<form class="simple-form" action="" method="post">
-	<fieldset>
-		<label><input type="checkbox" name="close" class="ajax-checkbox"{edit-page-closed}{edit-page-disable-closing} />Slēgt komentārus</label>
-		<input type="hidden" name="close-do" value="1" />
-	</fieldset>
-</form>
-<!-- START BLOCK : post-disableclose-->
-<form class="simple-form" action="" method="post">
-	<fieldset>
-		<label><input type="checkbox" name="disable-close" class="ajax-checkbox"{edit-page-disabled} />Neļaut autoram atslēgt/aizslēgt rakstu</label>
-		<input type="hidden" name="disable-close-do" value="1" />
-	</fieldset>
-</form>
-<!-- END BLOCK : post-disableclose-->
-<!-- START BLOCK : post-attach-->
-<form class="simple-form" action="" method="post">
-	<fieldset>
-		<label><input type="checkbox" name="attach" class="ajax-checkbox"{edit-page-attached} />Piespraust rakstu</label>
-		<input type="hidden" name="attach-do" value="1" />
-	</fieldset>
-</form>
-<!-- END BLOCK : post-attach-->
-<!-- END BLOCK : post-tools-->
+	<!-- END BLOCK : post-stags-->
+	<div class="c"></div>
+	<div class="mbox" style="margin: 5px 0" id="like-rate-box">
+		<div id="post-rating">Lasītāju vērtējums: <span class="current-rating">{rating}</span> ({rating_count} balsis)</div>
+		<div id="star"></div>
+	</div>
+
+	<div class="c"></div>
+
+	<!-- START BLOCK : post-newtags-->
+	<div class="c"></div>
+	<form action="{page-url}" id="new-tags" class="form" method="post" style="padding: 12px 0 4px">
+		<fieldset>
+			<legend>Tagi, atdalīti ar komatu</legend>
+			<input style="width:340px" type="text" class="text" name="newtags" id="post-tags-input" /> <input class="button" type="submit" value="Pielikt" />
+		</fieldset>
+	</form>
+	<!-- END BLOCK : post-newtags-->
+
+	<!-- START BLOCK : post-tools-->
+	<form class="simple-form" action="" method="post">
+		<fieldset>
+			<label><input type="checkbox" name="close" class="ajax-checkbox"{edit-page-closed}{edit-page-disable-closing} />Slēgt komentārus</label>
+			<input type="hidden" name="close-do" value="1" />
+		</fieldset>
+	</form>
+	<!-- START BLOCK : post-disableclose-->
+	<form class="simple-form" action="" method="post">
+		<fieldset>
+			<label><input type="checkbox" name="disable-close" class="ajax-checkbox"{edit-page-disabled} />Neļaut autoram atslēgt/aizslēgt rakstu</label>
+			<input type="hidden" name="disable-close-do" value="1" />
+		</fieldset>
+	</form>
+	<!-- END BLOCK : post-disableclose-->
+	<!-- START BLOCK : post-attach-->
+	<form class="simple-form" action="" method="post">
+		<fieldset>
+			<label><input type="checkbox" name="attach" class="ajax-checkbox"{edit-page-attached} />Piespraust rakstu</label>
+			<input type="hidden" name="attach-do" value="1" />
+		</fieldset>
+	</form>
+	<!-- END BLOCK : post-attach-->
+	<!-- END BLOCK : post-tools-->
+
+
+		
+		<!-- INCLUDE BLOCK : share-block -->
+	</div>
+</article>
+
+
 
 <!-- END BLOCK : read-article-->
 

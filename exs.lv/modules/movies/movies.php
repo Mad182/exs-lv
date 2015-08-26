@@ -72,6 +72,9 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
 		}
+		
+		$user = get_user($article->author);
+		$avatar = get_avatar($user, 's');
 
 		$tpl->assign(array(
 			'id' => $article->id,
@@ -84,7 +87,8 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'posts' => $article->posts,
 			'level' => $article->level,
 			'gender' => $article->gender,
-			'intro' => $article->text
+			'intro' => $article->text,
+			'avatar' => $avatar
 		));
 
 

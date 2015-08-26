@@ -60,13 +60,14 @@ if ($articles) {
 		'articles-title' => $category->title,
 		'articles-catid' => $category->id
 	));
+	
 
 	foreach ($articles as $article) {
 		if (!$article->nick) {
 			$article->nick = 'Nezināms';
 			$article->level = 0;
 		}
-		$tpl->newBlock('list-articles-node');
+		$tpl->newBlock('list-node');
 
 		$date = display_time(strtotime($article->date));
 
@@ -81,21 +82,22 @@ if ($articles) {
 		$tpl->assign(array(
 			'cat' => get_cat($article->category)->title,
 			'articles-node-id' => $article->id,
-			'node-url' => '/read/' . $article->strid,
+			'url' => '/read/' . $article->strid,
 			'aurl' => mkurl('user', $article->author, $article->nick),
-			'articles-node-title' => $article->title,
-			'articles-node-views' => $article->views,
-			'articles-node-date' => $date,
-			'articles-node-author' => usercolor($article->nick, $article->level),
-			'articles-node-posts' => $article->posts,
-			'articles-node-intro' => $article->text
+			'title' => $article->title,
+			'views' => $article->views,
+			'date' => $date,
+			'author' => usercolor($article->nick, $article->level),
+			'posts' => $article->posts,
+			'intro' => $article->text
 		));
 		if ($article->avatar) {
-			$tpl->newBlock('list-articles-node-avatar');
+			$tpl->newBlock('list-avatar');
 			$tpl->assign(array(
-				'node-avatar-image' => trim($article->avatar),
-				'node-avatar-alt' => trim(h($article->title))
+				'image' => trim($article->avatar),
+				'alt' => trim(h($article->title))
 			));
 		}
 	}
 }
+

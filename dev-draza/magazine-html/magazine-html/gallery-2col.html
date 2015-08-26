@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+
+<!--[if IE 9]>
+<html class="ie ie9" lang="en-US">
+<![endif]-->
+
+<!--[if !(IE 7) | !(IE 8) | !(IE 9)  ]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+
+<head>
+<title>Gallery | Magazine</title>
+<meta charset="UTF-8" />
+<link rel="shortcut icon" href="images/favicon.png" title="Favicon"/>
+<meta name="viewport" content="width=device-width" />
+
+<link rel='stylesheet' id='magz-style-css'  href='style.css' type='text/css' media='all' />
+<link rel='stylesheet' id='swipemenu-css'  href='css/swipemenu.css' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap-css'  href='css/bootstrap.css' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap-responsive-css'  href='css/bootstrap-responsive.css' type='text/css' media='all' />
+<link rel='stylesheet' id='simplyscroll-css'  href='css/jquery.simplyscroll.css' type='text/css' media='all' />
+<link rel='stylesheet' id='jPages-css'  href='css/jPages.css' type='text/css' media='all' />
+<link rel='stylesheet' id='rating-css'  href='css/jquery.rating.css' type='text/css' media='all' />
+<link rel='stylesheet' id='ie-styles-css'  href='css/ie.css' type='text/css' media='all' />
+<link rel='stylesheet' id='Roboto-css'  href='http://fonts.googleapis.com/css?family=Roboto' type='text/css' media='all' />
+<link rel='stylesheet' id='pretty-photo-css'  href='css/prettyPhoto.css' type='text/css' media='screen' />
+
+<script type='text/javascript' src="js/jquery-1.10.2.min.js"></script>
+<script type='text/javascript' src='js/html5.js'></script>
+<script type='text/javascript' src='js/bootstrap.min.js'></script>
+<script type='text/javascript' src='js/jquery.rating.js'></script>
+<script type='text/javascript' src='js/jquery.idTabs.min.js'></script>
+<script type='text/javascript' src='js/jquery.simplyscroll.js'></script>
+<script type='text/javascript' src='js/fluidvids.min.js'></script>
+<script type='text/javascript' src='js/jPages.js'></script>
+<script type='text/javascript' src='js/jquery.sidr.min.js'></script>
+<script type='text/javascript' src='js/jquery.touchSwipe.min.js'></script>
+<script type='text/javascript' src='js/jquery.swipemenu.init.js'></script>
+<script type='text/javascript' src='js/custom.js'></script>
+<script type='text/javascript' src='js/jquery.prettyPhoto.js'></script>
+
+<script>
+	jQuery(document).ready(function() {
+	    jQuery("a[rel^='prettyPhoto']").prettyPhoto({
+			social_tools : false,
+			show_title : false
+	    });
+	});
+</script>
+
+		<!-- END -->
+
+</head>
+
+<body>
+
+<div id="page">
+
+	<header id="header" class="container">
+		<div id="mast-head">
+			<div id="logo">
+			<a href="index.html" title="Magazine" rel="home"><img src="images/logo.png" alt="Magazine" /></a>
+			</div>
+		</div>
+
+				
+        <nav class="navbar navbar-inverse clearfix nobot">
+						
+			<a id="responsive-menu-button" href="#swipe-menu">
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>		
+			</a>	
+
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse" id="swipe-menu-responsive">
+
+			<ul class="nav">
+				
+				<li>
+				<span id="close-menu">
+					<a href="#" class="close-this-menu">Close</a>
+						<script type="text/javascript">
+							jQuery('a.sidr-class-close-this-menu').click(function(){
+								jQuery('div.sidr').css({
+									'right': '-476px'
+								});
+								jQuery('body').css({
+								'right': '0'
+								});							
+							});
+						</script>
+					
+				</span>
+				</li>
+								
+				<li><a href="index.html"><img src="images/home.png" alt="Magazine"></a></li>
+				<li class="dropdown"><a href="index.html">Home</a>
+					<ul class="sub-menu">
+						<li><a href="magazine2.html">Homepage 2</a></li>
+						<li><a href="blog.html">Homepage 3</a></li>
+					</ul>
+				</li>
+				<li><a href="about.html">About</a></li>
+				<li class="dropdown"><a href="##">Page Templates</a>
+					<ul class="sub-menu">
+						<li><a href="blog.html">Blog</a></li>
+						<li><a href="contact.html">Contact</a></li>
+						<li><a href="index.html">Default</a></li>
+						<li><a href="404.html">Error 404</a></li>
+						<li><a href="fullwidth.html">Full Width</a></li>
+						<li><a href="gallery-2col.html">Galleries &#8211; 2 Columns</a></li>
+						<li><a href="gallery-3col.html">Galleries &#8211; 3 Columns</a></li>
+						<li><a href="gallery-4col.html">Galleries &#8211; 4 Columns</a></li>
+						<li><a href="index.html">Magazine 1</a></li>
+						<li><a href="magazine2.html">Magazine 2</a></li>
+					</ul>
+				</li>
+				<li class="dropdown"><a href="blog.html">Blog</a>
+					<ul class="sub-menu">
+						<li><a href="fashion-news.html">Fashion News</a></li>
+						<li><a href="#">Game News</a></li>
+						<li><a href="#">Sport News</a></li>
+						<li class="dropdown"><a href="#">Technology</a>
+							<ul class="sub-menu">
+								<li><a href="fashion-news.html">Fashion News</a></li>
+								<li><a href="#">Game News</a></li>
+								<li><a href="#">Sport News</a></li>
+								<li><a href="#">Technology</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="single-post.html">Single Post</a></li>
+				<li><a href="documentation/">Documentation</a></li>
+			</ul>
+
+            </div><!--/.nav-collapse -->
+			
+        </nav><!-- /.navbar -->
+			
+	</header><!-- #masthead -->
+
+	<div id="headline" class="container">
+	<div class="row-fluid">
+		
+		<div class="span3">
+			<article class="post">
+				<a href="#" title="Permalink to Donec consectetuer ligula vulputate sem tristique cursus" rel="bookmark">
+				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
+				</a>
+				<div class="entry">
+					<h3><a href="#" title="Permalink to Donec consectetuer ligula vulputate sem tristique cursus" rel="bookmark">Donec consectetuer ligula vulputate...</a></h3>
+					<p>5 months ago </p>
+				</div>
+				<div class="clearfix"></div>
+			</article>
+		</div>
+		
+		<div class="span3">
+			<article class="post">
+				<a href="#" title="Permalink to Nam nibh arcu tristique eget pretium vitae libero ac risus" rel="bookmark">
+				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
+				</a>
+				<div class="entry">
+					<h3><a href="#" title="Permalink to Nam nibh arcu tristique eget pretium vitae libero ac risus" rel="bookmark">Nam nibh arcu tristique eget pretiu...</a></h3>
+					<p>5 months ago </p>
+				</div>
+				<div class="clearfix"></div>
+			</article>
+		</div>
+
+		<div class="span3">
+			<article class="post">
+				<a href="#" title="Permalink to Aliquam quam lectus pulvinar urna leo dignissim lorem" rel="bookmark">
+				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
+				</a>
+				<div class="entry">
+					<h3><a href="#" title="Permalink to Aliquam quam lectus pulvinar urna leo dignissim lorem" rel="bookmark">Aliquam quam lectus pulvinar urna l...</a></h3>
+					<p>6 months ago </p>
+				</div>
+				<div class="clearfix"></div>
+			</article>
+		</div>
+
+		<div class="span3">
+			<article class="post">
+				<a href="#" title="Permalink to Phasellus scelerisque massa molestie iaculis lectus pulvinar" rel="bookmark">
+				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
+				</a>
+				<div class="entry">
+					<h3><a href="#" title="Permalink to Phasellus scelerisque massa molestie iaculis lectus pulvinar" rel="bookmark">Phasellus scelerisque massa molesti...</a></h3>
+					<p>6 months ago </p>
+				</div>
+				<div class="clearfix"></div>
+			</article>
+		</div>	
+		
+	</div>
+	</div>
+
+	<div id="intr" class="container">
+		<div class="row-fluid">
+			<div class="brnews span9">
+				<h3>Breaking News</h3>
+				<ul id="scroller">
+					<li><p><a href="#" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark"><span class="title">Lectus non rutrum pu...</span> Nam nibh arcu, tristique eget pretium sed, porta i...</a></p></li>
+					<li><p><a href="#" title="Permalink to Suspen disse auctor dapibus neque pulvinar urna leo" rel="bookmark"><span class="title">Suspen disse auctor ...</span> Fusce aliquet non ipsum vitae scelerisque. Nullam ...</a></p></li>
+					<li><p><a href="#" title="Permalink to Porta lorem ipsum dolor sit amet, consectetur adipiscing risus" rel="bookmark"><span class="title">Porta lorem ipsum do...</span> Lorem ipsum dolor sit amet, consectetur adipiscing...</a></p></li>
+				</ul>
+			</div>
+		
+		<div class="search span3"><div class="offset1">
+			<form method="get" id="searchform" action="#">
+				<p><input type="text" value="Search here..." onfocus="if ( this.value == 'Search here...' ) { this.value = ''; }" onblur="if ( this.value == '' ) { this.value = 'Search here...'; }" name="s" id="s" />
+				<input type="submit" id="searchsubmit" value="Search" /></p>
+			</form>
+		</div></div>
+		</div>
+	</div>
+
+	<div id="content" class="container">
+
+		<div id="main" class="row-fluid">
+
+	<header class="entry-header">
+		<h1 class="entry-title"><span>Galleries &#8211; 2 Columns</span></h1>
+	</header><!-- .entry-header -->
+		
+					
+		<div class="row-fluid">
+	      
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Fusce pellentesque suscipit nibh massa porta molestie iaculis" rel="bookmark">Fusce pellentesque suscipit nibh massa porta molestie iaculi...</a></h3>
+				</article>
+			</div>
+			
+		 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Praesent placerat risus quis pellentesque suscipit nibh ultricies nulla" rel="bookmark">Praesent placerat risus quis pellentesque suscipit nibh ultr...</a></h3>
+				</article>
+			</div>
+	 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Integer malesuada commodo nulla ligula vulputate sem tristique" rel="bookmark">Integer malesuada commodo nulla ligula vulputate sem tristiq...</a></h3>
+				</article>
+			</div>
+		 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Vestibulum volutpat tortor libero sodales leo mauris ut lectus" rel="bookmark">Vestibulum volutpat tortor libero sodales leo mauris ut lect...</a></h3>
+				</article>
+			</div>
+		 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Fusce accumsan mollis eros amet interdum consectetuer" rel="bookmark">Fusce accumsan mollis eros amet interdum consectetuer...</a></h3>
+				</article>
+			</div>
+		 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Quisque fermentum penatibus et magnis dis parturient montes" rel="bookmark">Quisque fermentum penatibus et magnis dis parturient montes...</a></h3>
+				</article>
+			</div>
+		 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Proin malesuada adipiscing lacus imperdiet nibh feugiat" rel="bookmark">Proin malesuada adipiscing lacus imperdiet nibh feugiat...</a></h3>
+				</article>
+			</div>
+		 
+			<div class="kontengal2 span6">
+				<article class="galleries">
+					<a href="http://placehold.it/770x364" title="" rel="prettyPhoto"><img width="570" height="360" src="http://placehold.it/570x360" alt="" /></a>
+					<h3 class="gal-title"><a href="#" title="Permalink to Vivamus ultrices luctus nunc sem sit amet interdum consectetuer" rel="bookmark">Vivamus ultrices luctus nunc sem sit amet interdum consectet...</a></h3>
+				</article>
+			</div>
+					
+		</div>
+		
+			<div class="clearfix"></div>
+		</div><!-- #main -->
+
+	</div><!-- #content -->
+
+	<footer id="footer" class="row-fluid">
+		<div id="footer-widgets" class="container">
+			<div class="footer-widget span3 block1">
+				<div class="widget widget_latestpost">
+					<h3 class="title"><span>Latest News</span></h3>
+					<div class="latest-posts widget">
+						<div class="latest-post clearfix">
+							<a href="#"><img width="225" height="136" src="http://placehold.it/225x136" class="thumb fl" alt="" title="" /></a>
+							<h4><a href="#" rel="bookmark" title="Lectus non rutrum pulvinar urna leo dignissim lorem">Lectus non rutrum pulvinar urna leo...</a></h4>
+							<div class="post-time">August 12, 2013</div>
+							<div class="ratings" style="float: none">
+								<input class="star" type="radio" name="footer-latest-post-1" value="1" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-1" value="2" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-1" value="3" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-1" value="4" disabled="disabled" checked="checked"/>
+								<input class="star" type="radio" name="footer-latest-post-1" value="5" disabled="disabled"/>
+							</div>
+						</div>
+
+						<div class="latest-post clearfix">
+						<a href="#"><img width="225" height="136" src="http://placehold.it/225x136" class="thumb fl" alt="" title="" /></a>
+						<h4><a href="#" rel="bookmark" title="Suspen disse auctor dapibus neque pulvinar urna leo">Suspen disse auctor dapibus neque p...</a></h4>
+						<div class="post-time">August 11, 2013</div>
+							<div class="ratings" style="float: none">
+								<input class="star" type="radio" name="footer-latest-post-2" value="1" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-2" value="2" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-2" value="3" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-2" value="4" disabled="disabled" checked="checked"/>
+								<input class="star" type="radio" name="footer-latest-post-2" value="5" disabled="disabled"/>
+							</div>
+						</div>
+
+						<div class="latest-post clearfix">
+						<a href="#"><img width="225" height="136" src="http://placehold.it/225x136" class="thumb fl" alt="" title="" /></a>
+						<h4><a href="#" rel="bookmark" title="Porta lorem ipsum dolor sit amet, consectetur adipiscing risus">Porta lorem ipsum dolor sit amet, c...</a></h4>
+						<div class="post-time">August 2, 2013</div>
+							<div class="ratings" style="float: none">
+								<input class="star" type="radio" name="footer-latest-post-3" value="1" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-3" value="2" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-3" value="3" disabled="disabled"/>
+								<input class="star" type="radio" name="footer-latest-post-3" value="4" disabled="disabled" checked="checked"/>
+								<input class="star" type="radio" name="footer-latest-post-3" value="5" disabled="disabled"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer-widget span3 block2">
+				<div class="widget">
+					<h3 class="title"><span>Latest Tweets</span></h3>
+					<div class="magz-twitter-tweet">
+						<a href="http://twitter.com/envato"><img class="twit-pic" src="images/envato.png" alt=""></a>
+						<div class="twit-entry">&quot;RT <a href="http://twitter.com/SayersM">@SayersM</a> "Envato is here <a href="http://twitter.com/#!/search?q=%23YOW13">#YOW13</a>! http://t.co/FqARi13BlN" <a href="http://twitter.com/#!/search?q=%23lanyardlife">#lanyardlife</a>&quot;<div class="magz-twitter-tweet-time" id="magz-twitter-tweet-time-1">4 hours ago</div></div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="magz-twitter-tweet">
+						<a href="http://twitter.com/envato"><img class="twit-pic" src="images/envato.png" alt=""></a><div class="twit-entry">&quot;RT <a href="http://twitter.com/MicrolancerBeta">@MicrolancerBeta</a>: Want a cool t-shirt? Of course you do! We're giving away Microlancer t-shirts while stocks last. Learn more: http://t.…&quot;<div class="magz-twitter-tweet-time" id="magz-twitter-tweet-time-2">4 hours ago</div></div>
+						<div class="clearfix"></div>
+					</div>
+				
+					<div id="magz-twitter-follow-link"><a target="_blank" href="http://twitter.com/envato">Follow Twitter</a></div>
+				</div>
+			</div>
+			
+			<div class="footer-widget span3 block3">
+				<div class="widget">
+					<h3 class="title"><span>Tag Cloud</span></h3>
+					<div class="tagcloud">
+						<a href='#'>Blog</a>
+						<a href='#'>Framework</a>
+						<a href='#'>Grid</a>
+						<a href='#'>Magazine</a>
+						<a href='#'>Mobile</a>
+						<a href='#'>Responsive</a>
+						<a href='#'>Sidebar</a>
+						<a href='#'>Themes</a>
+						<a href='#'>WordPress</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer-widget span3 block4">
+				<div class="widget">
+					<h3 class="title"><span>Social Media</span></h3>
+						<div class="socmed clearfix">		
+							<ul>
+								<li>
+									<a href="#"><img src="images/rss-icon.png" alt=""></a>
+									<h4>RSS</h4>
+									<p>Subscribe</p>
+								</li>
+								<li>
+									<a href="#"><img src="images/twitter-icon.png" alt=""></a>
+									<h4>37005</h4>
+									<p>Followers</p>
+								</li>
+								<li>
+									<a href="#"><img src="images/fb-icon.png" alt=""></a>
+									<h4>109</h4>
+									<p>Fans</p>
+								</li>
+							</ul>
+						</div>
+				</div>
+			</div>
+			
+			<div class="footer-widget span6 block5">
+				<img class="footer-logo" src="images/footer-logo.png" alt="Magazine">
+					<div class="footer-text">
+						<h4>About Magazine</h4>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius mod tempor incididu... </p>
+					</div><div class="clearfix"></div>
+			</div>
+
+		</div><!-- footer-widgets -->
+
+	
+		<div id="site-info" class="container">
+		
+			<div id="footer-nav" class="fr">
+				<ul class="menu">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="blog.html">Blog</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</div>
+
+			<div id="credit" class="fl">
+				<p>All Right Reserved by minimalthemes</p>
+			</div>
+
+		</div><!-- .site-info -->
+		
+	</footer>
+
+</div><!-- #wrapper -->
+
+</body>
+</html>

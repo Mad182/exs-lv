@@ -1,31 +1,43 @@
 <!-- START BLOCK : list-articles-->
 <h1>{title}</h1>
 
-<ul id="mainlist">
-	<!-- START BLOCK : list-->
-	<li>
-		<h2><a href="{node-url}">{title-prefix}{title}{title-lv}</a></h2>
-		<ul class="article-info">
-			<li class="date">{date}</li>
-			<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
-			<li class="profile user-level-{level} user-gender-{gender}"><a href="/user/{author-id}">{author}</a></li>
+<!-- START BLOCK : list-->
+<article class="post">
+	
+	<h2 class="entry-title">
+		<a href="{node-url}" title="{title}" rel="bookmark">{title-prefix}{title}{title-lv}</a>
+		<span class="entry-cat"><a href="/movies" title="Skatīt visas filmas" rel="category tag">Filmas</a></span>
+	</h2>
+	
+	<div class="entry-meta row-fluid">
+		<ul class="clearfix">
+			<li><img alt="" src="{avatar}" style="width:16px;height:16px" /><a href="/user/{author-id}" title="Apskatīt profilu" rel="author">{author}</a></li>
+			<li><img src="/responsive/images/time.png" alt="">{date}</li>
+			<li><img src="/responsive/images/view-bg.png" alt="">{views}</li>
+			<li><img src="/responsive/images/komen.png" alt=""><a href="{node-url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts} komentāri</a></li>
+			<li class="tagz"><img src="/responsive/images/tags-icon.png" alt=""><a href="#" rel="tag">Grid</a><br /></li>
 		</ul>
-		<div class="c"></div>
+	</div>
+	
+	<div class="entry-content">
 		<!-- START BLOCK : list-avatar-->
-		<img class="av" src="//img.exs.lv{image}" alt="{alt}" />
+		<a href="#" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
+			<img src="{img-server}{image}" alt="{alt}" />
+		</a>
 		<!-- END BLOCK : list-avatar-->
 		<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
 			{year}
 			{genres}
 			{runtime}
 		</p>
-		<p style="text-align:left;">{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
-		<div class="c"></div>
-	</li>
-	<!-- END BLOCK : list-->
-</ul>
-<div class="c"></div>
-<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
+		<p>{intro}</p>
+		<p class="moretag"><a href="{node-url}"> Lasīt tālāk</a></p>
+	</div>
+
+</article>
+<!-- END BLOCK : list-->
+
+<div class="pagination magz-pagination">{pager-next} {pager-numeric} {pager-prev}</div>
 <!-- END BLOCK : list-articles-->
 
 

@@ -1206,13 +1206,13 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 			} else {
 				$iepriekseja = 0;
 			}
-			$pager_next = '<a class="pager-next" title="Iepriekšējā lapa" href="' . $url . $iepriekseja . '">&laquo;</a> <span>-</span>';
+			$pager_next = '<a class="pager-next next" title="Iepriekšējā lapa" href="' . $url . $iepriekseja . '">&laquo;</a> <span>-</span>';
 		} else {
 			$pager_next = '';
 		}
 		$pager_prev = '';
 		if ($total > $skip + $end) {
-			$pager_prev = '<span>-</span> <a class="pager-prev" title="Nākamā lapa" href="' . $url . ($skip + $end) . '">&raquo;</a>';
+			$pager_prev = '<span>-</span> <a class="pager-prev prev" title="Nākamā lapa" href="' . $url . ($skip + $end) . '">&raquo;</a>';
 		}
 		$startnext = 0;
 		$page_number = 0;
@@ -1221,9 +1221,9 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 			$page_number++;
 			$class = '';
 			if ($skip === $startnext) {
-				$class = ' class="' . $ajax_class . 'selected"';
+				$class = ' class="' . $ajax_class . 'selected page-numbers"';
 			} elseif ($ajax) {
-				$class = ' class="' . $ajax_class . '"';
+				$class = ' class="' . $ajax_class . ' page-numbers"';
 			}
 			if ($total / $end < 10 || $page_number < 4 || $page_number > $total / $end - 2 || $startnext === $skip || $startnext === $skip + $end || $startnext === $skip - $end) {
 				if ($page_number != 1) {

@@ -733,22 +733,22 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			}
 
 			if (!$author->deleted) {
-				$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
+				$author_link = '<a rel="author" href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
 			} else {
 				$author_link = '<em>dzēsts</em>';
 			}
 
 			$tpl->newBlock('read-article');
 			$tpl->assign(array(
-				'article-title' => $article->title,
-				'article-text' => $article_text,
-				'article-id' => $article->id,
-				'article-views' => $article->views + 1,
-				'article-date' => $date,
+				'title' => $article->title,
+				'text' => $article_text,
+				'id' => $article->id,
+				'views' => $article->views + 1,
+				'date' => $date,
 				'author' => $author_link,
 				'level' => $author->level,
 				'gender' => $author->gender,
-				'article-posts' => $article->posts,
+				'posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count
 			));
@@ -971,11 +971,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			`taged`.`lang` = '$lang' AND
 			`tags`.`id` = `taged`.`tag_id`
 		LIMIT 16");
-			$tpl->newBlock('post-tags');
 			$tagcount = 0;
 
 			if ($article_tags) {
-				$tpl->newBlock('post-tags-ul');
+				$tpl->newBlock('post-tags');
 				foreach ($article_tags as $article_tag) {
 					$tagcount++;
 					$tpl->newBlock('post-tags-node');
@@ -1345,10 +1344,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			'page-sel-' . $article->id => ' class="selected"',
 			'cur-url' => '/read/' . $article->strid
 		));
-
-		if (!empty($article->custom_ad) && $article->custom_ad == 'dateks') {
-			$tpl->newBlock('page-ad-dateks');
-		}
 
 	} else {
 		set_flash('Tev nav atļauts apskatīt šo sadaļu!', 'error');
