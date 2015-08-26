@@ -55,7 +55,7 @@ if(!empty($articles)) {
 		}
 
 		if ($article->sm_avatar == '') {
-			$article->sm_avatar = '/dati/bildes/useravatar/none.png';
+			$article->sm_avatar = $img_server . '/dati/bildes/useravatar/none.png';
 		}
 		
 		$class = '';
@@ -129,7 +129,7 @@ foreach ($articles as $article) {
 
 	$av = '';
 	if (!empty($article->avatar)) {
-		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	}
 
 	$tpl->assign(array(
@@ -182,7 +182,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 		$av = '';
 		if (!empty($article->avatar)) {
-			$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+			$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 		}
 
 		$tpl->assign(array(

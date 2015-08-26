@@ -35,7 +35,7 @@
 		<link rel='stylesheet' id='jPages-css'  href='{static-server}/responsive/css/jPages.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='rating-css'  href='{static-server}/responsive/css/jquery.rating.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='Roboto-css'  href='http://fonts.googleapis.com/css?family=Roboto' type='text/css' media='all' />
+		<link rel='stylesheet' id='Roboto-css'  href='//fonts.googleapis.com/css?family=Roboto' type='text/css' media='all' />
 
 		<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
@@ -172,7 +172,7 @@
 				</li>
 				<li class="dropdown"><a href="/grupas">Grupas</a>
 					<!-- START BLOCK : mygroups-->
-					<ul id="sub-menu" class="user-group-menu">
+					<ul id="user-group-menu" class="sub-menu">
 						<!-- START BLOCK : myg-node-->
 						<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
 						<!-- END BLOCK : myg-node-->
@@ -334,6 +334,12 @@
 		<div id="main" class="row-fluid">
 			<div id="main-left" class="span8">
 
+				<!-- START BLOCK : flash-message-->
+				<div class="mbox {class}" id="flash-message">
+					<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
+				</div>
+				<div class="c"></div>
+				<!-- END BLOCK : flash-message-->
 
 				<!-- START BLOCK : page-path-->
 				<p id="breadcrumbs">{page-path}</p>
@@ -547,25 +553,21 @@
 			
 			<div class="footer-widget span3 block4">
 				<div class="widget">
-					<h3 class="title"><span>Social Media</span></h3>
-						<div class="socmed clearfix">		
-							<ul>
-								<li>
-									<a href="#"><img src="/responsive/images/rss-icon.png" alt=""></a>
-									<h4>RSS</h4>
-									<p>Subscribe</p>
-								</li>
-								<li>
-									<a href="#"><img src="/responsive/images/twitter-icon.png" alt=""></a>
-									<h4>37005</h4>
-									<p>Followers</p>
-								</li>
-								<li>
-									<a href="#"><img src="/responsive/images/fb-icon.png" alt=""></a>
-									<h4>109</h4>
-									<p>Fans</p>
-								</li>
-							</ul>
+					<h3 class="title"><span>Lietotāji tiešsaitē</span></h3>
+						<div class="onlusers clearfix">		
+							<div id="online-users">
+								<ul id="ucl">
+									<li id="ucd"></li>
+									<li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li>
+									<li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li>
+									<li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li>
+									<li class="admin"><a href="/lietotaji/klase/1">Administrators</a>
+									</li>
+								</ul>
+								<div class="c"></div>
+								Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
+								<span id="online-list">{page-onlineusers}</span>
+							</div>
 						</div>
 				</div>
 			</div>
@@ -624,28 +626,9 @@
 	
 	
 	
-	
-	
-	
-	
-		<div id="scroll-up" title="Uz augšu"></div>
 		<div id="wrapper">
 			<div id="header"{page-persona}>
-				<div style="position:absolute;right:20px;top:27px;width:728px;height:90px;z-index:4">
-					<script type="text/javascript" id="position_2919">
-					  var ads_positions = ads_positions || [];
-					  ads_positions.push(["2919", "", "document"]);
-					  (function() {
-					    if (!document.getElementById("ads_loader")) {
-					      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
-					      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
-					      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-					    }
-					  })();
-					</script>
-				</div>
 				<div id="logo">
-					<a id="exs-logo" href="/" title="Uz sākumlapu">exs.lv</a>
 					<div id="tools-bar">
 						<ul id="site-links">
 							<li><a href="/blogs">Blogi</a></li>
@@ -662,20 +645,9 @@
 						{current-date}
 					</div>
 				</div>
-				<div id="top-menu">
-					<ul id="top-menu-left">
-
-					</ul>
-
-				</div>
 			</div>
 			<div class="c"></div>
-			<!-- START BLOCK : flash-message-->
-			<div class="mbox {class}" id="flash-message">
-				<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
-			</div>
-			<div class="c"></div>
-			<!-- END BLOCK : flash-message-->
+
 
 			<!-- START BLOCK : main-layout-left-->
 			<div id="left">
@@ -835,18 +807,7 @@
 			<div class="c"></div>
 
 			<div id="footer">
-				<div id="online-users">
-					<ul id="ucl">
-						<li id="ucd"></li>
-						<li class="user"><a href="/lietotaji/klase/0">Lietotājs</a></li>
-						<li class="editor"><a href="/lietotaji/klase/3">Rakstu autors</a></li>
-						<li class="moder"><a href="/lietotaji/klase/2">Moderators</a></li>
-						<li class="admin"><a href="/lietotaji/klase/1">Administrators</a>
-						</li>
-					</ul>
-					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
-					<span id="online-list">{page-onlineusers}</span>
-				</div>
+
 				<div class="infoblock">
 					<div class="inner">
 						Jaunākie raksti: {footer-topics}
@@ -882,57 +843,7 @@
 		</div>
 		
 		<!-- START BLOCK : smartad-eu-->
-		<!-- smartad.eu -->
-		<script type='text/javascript'>/* <![CDATA[ */
-			var _smartad = _smartad || new Object();
-			_smartad.page_id = Math.floor(Math.random() * 10000001);
-			if (!_smartad.prop) {
-				_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
-			}
-			(function() {
-				if (_smartad.space) {
-					_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-				} else {
-					_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-					_smartad.type = 'onload';
-					var f = function() {
-						var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
-						s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
-						s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
-						n ? b.insertBefore(s, n) : b.appendChild(s);
-					};
-					if (document.readyState === 'complete') {
-						f();
-						delete _smartad.space;
-					} else {
-						if (window.addEventListener) {
-							window.addEventListener('load', f, false);
-						} else if (window.attachEvent) {
-							window.attachEvent('onload', f);
-						}
-					}
-				}
-			})();
-			/* ]]> */</script>
 		<!-- END BLOCK : smartad-eu-->
-
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		  ga('create', 'UA-4190387-2', 'auto');
-		  ga('send', 'pageview');
-
-		</script>
-
-		<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-		<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-		<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
-		<noscript>
-		<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
-		</noscript>
 
 	</body>
 </html>
