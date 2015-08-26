@@ -1703,7 +1703,7 @@ function get_latest_posts() {
 		$out .= '</ul><p class="core-pager ajax-pager">';
 
 		for ($i = 1; $i <= 5; $i++) {
-			$out .= ' <a class="';
+			$out .= ' <a class="page-numbers ';
 			if ($i == 1) {
 				$out .= 'default-posts-tab ';
 			}

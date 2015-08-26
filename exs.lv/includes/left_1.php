@@ -11,12 +11,8 @@ if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gal
 	$out = get_latest_posts();
 }
 
-$fact = $db->get_var("SELECT `text` FROM `facts` LIMIT " . rand(0, 44) . ",1") . ' <a href="/fact" class="moar" rel="nofollow">Citu &raquo;</a>';
-
-$tpl->newBlock('main-layout-left');
-$tpl->assign(array(
+$tpl->assignGlobal(array(
 	'latest-noscript' => $out,
-	'random-fact' => $fact,
 
 	//'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
 	/*
@@ -26,7 +22,6 @@ $tpl->assign(array(
 	</div>
 	*/
 
-	'ut-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/ut.php'),
 	'user-top' => user_top(),
 	$sel . '-selected' => 'active '
 ));

@@ -362,64 +362,101 @@
 			</div><!-- #main-left -->
 
 		<div id="sidebar" class="span4">
+			
+			<!-- START BLOCK : movie-search-->
+			<h3 class="title"><span>Meklēt filmu</span></h3>
+			<div class="box">
+				<form id="movie-search" method="get" action="/filmas/search">
+					<!-- START BLOCK : genre-node-->
+					<label style="font-size: 10px;line-height: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
+					<!-- START BLOCK : genre-node-->
 
-
-
-
-					<!-- START BLOCK : mb-box-->
-
-					<h3 class="title"><span>Miniblogi{miniblog-add}</h3>
-			<div id="tabwidget" class="widget tab-container box"> 
-				<ul id="tabnav" class="clearfix"> 
-					<li><h3><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><img src="/responsive/images/view-white-bg.png" alt="Visi">Visi</a></h3></li>
-					<!-- START BLOCK : mb-tabs-->
-					<li><h3><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><img src="/responsive/images/time-white.png" alt="Draugu">Draugu</a></h3></li>
-					<!-- END BLOCK : mb-tabs-->
-					<li><h3><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><img src="/responsive/images/komen-putih.png" alt="Klausās">Klausās</a></h3></li>
-				</ul> 
-
-			<div id="tab-content miniblog-block" class="ajaxbox">
-	 			{out}
+					<input type="submit" value="Meklēt" class="button primary small" />
+				</form>
 			</div>
-					<!-- END BLOCK : mb-box-->
+			<!-- END BLOCK : movie-search-->
 
-			<div class="widget widget_latestpost"><h3 class="title"><span>Technology News</span></h3>
-				<div class="latest-posts">
-					<article class="post">
-						<a class="image_thumb_zoom" href="#" title="Permalink to Porta lorem ipsum dolor sit amet, consectetur adipiscing risus" rel="bookmark">
-						<img width="371" height="177" src="http://placehold.it/371x177" alt="" />
-						</a>
-						<h4 class="post-title">
-						<a href="#" title="Permalink to Porta lorem ipsum dolor sit amet, consectetur adipiscing risus" rel="bookmark">Porta lorem ipsum dolor sit amet, c...</a>
-						<span class="date">August 2, 2013</span>
-						</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer placerat id augue non dapibus. Morbi ut ipsum cond...</p>
-					</article>
-				
-					<article class="post">
-						<div class="entry clearfix">
-							<a href="#" title="Permalink to Donec consectetuer ligula vulputate sem tristique cursus" rel="bookmark">
-							<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
-							<h4 class="post-title">Donec consectetuer ligula vulputate...</h4>
-							</a>
-							<p>Nam nibh arcu, tristique eget pretium se...</p>
-							<div class="meta">
-								<span class="date">July 11, 2013</span>
-							</div>
-						</div>
-					</article>
 
-					<article class="post">
-						<div class="entry clearfix">
-							<a href="#" title="Permalink to Quisque sodales viverra ornare vitae libero ac risus" rel="bookmark">
-							<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
-							<h4 class="post-title">Quisque sodales viverra ornare vita...</h4></a>
-							<p>Quisque sodales viverra ornare. Aenean p...</p>
-							<div class="meta">
-								<span class="date">July 2, 2013</span>
-							</div>
-						</div>
-					</article>
+			<!-- START BLOCK : mb-box-->
+				<div class="widget">
+				<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
+				<div id="tabwidget" class="widget tab-container box"> 
+					<ul id="tabnav" class="clearfix"> 
+						<li><h3><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><img src="/responsive/images/view-white-bg.png" alt="Visi">Visi</a></h3></li>
+						<!-- START BLOCK : mb-tabs-->
+						<li><h3><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><img src="/responsive/images/time-white.png" alt="Draugu">Draugu</a></h3></li>
+						<!-- END BLOCK : mb-tabs-->
+						<li><h3><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><img src="/responsive/images/komen-putih.png" alt="Klausās">Klausās</a></h3></li>
+					</ul> 
+
+					<div id="tab-content miniblog-block" class="ajaxbox">
+			 			{out}
+					</div>
+				</div>
+			</div>
+			<!-- END BLOCK : mb-box-->
+			
+			<!-- START BLOCK : menu-list-->
+			<h3 class="title"><span>{title}</span></h3>
+			<ul class="menu" id="nav-{topid}">
+				<!-- START BLOCK : menu-node-->
+				<li{sel}><a href="{url}">{title}</a>
+					<!-- START BLOCK : menu-list-sub-->
+					<ul>
+						<!-- START BLOCK : menu-node-sub-->
+						<li{sel}><a href="{url}">{title}</a></li>
+						<!-- END BLOCK : menu-node-sub-->
+					</ul>
+					<!-- END BLOCK : menu-list-sub-->
+				</li>
+				<!-- END BLOCK : menu-node-->
+			</ul>
+			<!-- END BLOCK : menu-list-->
+
+			<!-- START BLOCK : notification-list-->
+			<div class="widget">
+				<h3 class="title"><span>Tavi notikumi</span></h3>
+				<div class="box">
+					{out}
+				</div>
+			</div>
+			<!-- END BLOCK : notification-list-->
+
+			<div class="widget">
+				<h3 class="title"><span>Jaunākais portālā</span></h3>
+				<div class="box">
+					<ul class="tabs">
+						<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+						<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+					</ul>
+					<div class="c"></div>
+					<div id="lat" class="ajaxbox">{latest-noscript}</div>
+				</div>
+			</div>
+
+			<!-- START BLOCK : groups-l-list-->
+			<div class="widget">
+				<h3 class="title"><span>Jaunākās grupas</span></h3>
+				<div class="box">
+					<p>
+						<!-- START BLOCK : groups-l-node-->
+						<a href="{link}">{title}</a><br />
+						<!-- END BLOCK : groups-l-node-->
+					</p>
+					<a href="/grupas">Visas grupas &raquo;</a>
+				</div>
+			</div>
+			<!-- END BLOCK : groups-l-list-->
+
+			<div class="widget">
+				<h3 class="title"><span>Šodien aktīvākie</span></h3>
+				<div class="box">
+					<ul class="tabs">
+						<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
+						<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
+					</ul>
+					<div class="c"></div>
+					<div id="daily-top" class="ajaxbox">{user-top}</div>
 				</div>
 			</div>
 	
@@ -644,85 +681,7 @@
 			<div id="left">
 				<div class="inner">
 
-					<!-- START BLOCK : movie-search-->
-					<h3>Meklēt filmu</h3>
-					<div class="box">
-						<form id="movie-search" method="get" action="/filmas/search">
-							<!-- START BLOCK : genre-node-->
-							<label style="font-size: 10px;line-height: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
-							<!-- START BLOCK : genre-node-->
 
-							<input type="submit" value="Meklēt" class="button primary small" />
-						</form>
-					</div>
-					<!-- END BLOCK : movie-search-->
-
-					<!-- START BLOCK : menu-list-->
-					<h3>{title}</h3>
-					<ul class="menu" id="nav-{topid}">
-						<!-- START BLOCK : menu-node-->
-						<li{sel}><a href="{url}">{title}</a>
-							<!-- START BLOCK : menu-list-sub-->
-							<ul>
-								<!-- START BLOCK : menu-node-sub-->
-								<li{sel}><a href="{url}">{title}</a></li>
-								<!-- END BLOCK : menu-node-sub-->
-							</ul>
-							<!-- END BLOCK : menu-list-sub-->
-						</li>
-						<!-- END BLOCK : menu-node-->
-					</ul>
-					<!-- END BLOCK : menu-list-->
-
-					<!-- START BLOCK : notification-list-->
-					<h3>Tavi notikumi</h3>
-					<div class="box">
-						{out}
-					</div>
-					<!-- END BLOCK : notification-list-->
-
-					<h3>Jaunākais portālā</h3>
-					<div class="box">
-						<ul class="tabs">
-							<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-							<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-						</ul>
-						<div class="c"></div>
-						<div id="lat" class="ajaxbox">{latest-noscript}</div>
-					</div>
-
-					<h3><strong>UT 2004</strong> ut.exs.lv</h3>
-					<div class="box">
-						{ut-monitor}
-					</div>
-
-					<!-- START BLOCK : groups-l-list-->
-					<h3>Jaunākās grupas</h3>
-					<div class="box">
-						<p>
-							<!-- START BLOCK : groups-l-node-->
-							<a href="{link}">{title}</a><br />
-							<!-- END BLOCK : groups-l-node-->
-						</p>
-						<a href="/grupas">Visas grupas &raquo;</a>
-					</div>
-					<!-- END BLOCK : groups-l-list-->
-
-
-					<h3>Šodien aktīvākie</h3>
-					<div class="box">
-						<ul class="tabs">
-							<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
-							<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
-						</ul>
-						<div class="c"></div>
-						<div id="daily-top" class="ajaxbox">{user-top}</div>
-					</div>
-
-					<h3>Nejaušs fakts</h3>
-					<div class="box">
-						<div id="random-fact" class="ajaxbox">{random-fact}</div>
-					</div>
 
 				</div>
 			</div>
