@@ -8,7 +8,7 @@
 </p>
 
 <!-- START BLOCK : groups-cat-->
-<h3>{title}</h3>
+<h2>{title}</h2>
 <!-- START BLOCK : list-groups-node-->
 <ul id="exs-groups">
 	<li>

@@ -59,3 +59,6 @@ foreach ($categories as $group_category) {
 		}
 	}
 }
+
+unset($pagepath);
+

@@ -143,7 +143,7 @@
 			<!-- START BLOCK : add-bookmark-->
 			<li class="bookmark">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
 			<!-- END BLOCK : add-bookmark-->
-			
+			<!--
 			<!-- START BLOCK : post-tags-->
 			<li class="tagz"><img src="/responsive/images/tags-icon.png" alt="">
 				<!-- START BLOCK : post-tags-node-->
@@ -151,7 +151,7 @@
 				<!-- END BLOCK : post-tags-node-->
 			<br /></li>
 			<!-- END BLOCK : post-tags-->
-			
+			-->
 		</ul>
 	</div>
 

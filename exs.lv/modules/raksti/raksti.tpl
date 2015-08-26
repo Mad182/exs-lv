@@ -22,7 +22,7 @@
 	
 	<div class="entry-content">
 		<!-- START BLOCK : list-avatar-->
-		<a href="#" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
+		<a href="{url}" title="Atvērt rakstu" rel="bookmark">
 			<img class="av" src="{img-server}/{image}" alt="{alt}" />
 		</a>
 		<!-- END BLOCK : list-avatar-->

@@ -1224,6 +1224,8 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 				$class = ' class="' . $ajax_class . 'selected page-numbers"';
 			} elseif ($ajax) {
 				$class = ' class="' . $ajax_class . ' page-numbers"';
+			} else {
+				$class = ' class="page-numbers"';
 			}
 			if ($total / $end < 10 || $page_number < 4 || $page_number > $total / $end - 2 || $startnext === $skip || $startnext === $skip + $end || $startnext === $skip - $end) {
 				if ($page_number != 1) {

@@ -35,7 +35,7 @@
 		<link rel='stylesheet' id='jPages-css'  href='{static-server}/responsive/css/jPages.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='rating-css'  href='{static-server}/responsive/css/jquery.rating.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='Roboto-css'  href='//fonts.googleapis.com/css?family=Roboto' type='text/css' media='all' />
+		<link rel='stylesheet' id='Roboto-css'  href='//fonts.googleapis.com/css?family=Roboto&amp;subset=latin,cyrillic,latin-ext' type='text/css' media='all' />
 
 		<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
@@ -170,6 +170,7 @@
 						<li><a href="/speles">Spēles</a></li>
 					</ul>
 				</li>
+				<li><a href="/blogs">Blogi</a></li>
 				<li class="dropdown"><a href="/grupas">Grupas</a>
 					<!-- START BLOCK : mygroups-->
 					<ul id="user-group-menu" class="sub-menu">
@@ -180,6 +181,7 @@
 					<!-- END BLOCK : mygroups-->
 				</li>
 				<li><a href="/steam-online">Steam</a></li>
+				<li><a href="/img">Bilžu hostings</a></li>
 			</ul>
 
             </div><!--/.nav-collapse -->
@@ -631,8 +633,6 @@
 				<div id="logo">
 					<div id="tools-bar">
 						<ul id="site-links">
-							<li><a href="/blogs">Blogi</a></li>
-							<li><a href="/img">Bilžu hostings</a></li>
 							<li><a href="https://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
 							<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
 							<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>

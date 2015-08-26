@@ -65,6 +65,7 @@
 				</a>
 				<p>{intro}</p>
 				<p class="moretag"><a href="{url}"> Lasīt tālāk</a></p>
+				<div class="c"></div>
 			</div>
 
 		</article>

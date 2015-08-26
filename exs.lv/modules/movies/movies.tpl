@@ -15,14 +15,14 @@
 			<li><img src="/responsive/images/time.png" alt="">{date}</li>
 			<li><img src="/responsive/images/view-bg.png" alt="">{views}</li>
 			<li><img src="/responsive/images/komen.png" alt=""><a href="{node-url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts} komentāri</a></li>
-			<li class="tagz"><img src="/responsive/images/tags-icon.png" alt=""><a href="#" rel="tag">Grid</a><br /></li>
+			<!--<li class="tagz"><img src="/responsive/images/tags-icon.png" alt=""><a href="#" rel="tag">Grid</a><br /></li>-->
 		</ul>
 	</div>
 	
 	<div class="entry-content">
 		<!-- START BLOCK : list-avatar-->
 		<a href="#" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
-			<img src="{img-server}{image}" alt="{alt}" />
+			<img class="av" src="{img-server}{image}" alt="{alt}" />
 		</a>
 		<!-- END BLOCK : list-avatar-->
 		<p style="font-size:90%;padding: 12px 20px;margin:0;overflow: hidden;">
