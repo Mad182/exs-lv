@@ -479,3 +479,6 @@ if (!empty($pm_title)) {
 	));
 }
 
+unset($pagepath);
+
+

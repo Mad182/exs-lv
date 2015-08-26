@@ -143,27 +143,30 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 		if (im_mod()) {
 			//dabū visus pievienoto (cookies) profilu nikus ar linkiem
-			$profiles = explode(',', $inprofile->connected_profiles);
+			$profiles = 'nav!';
+			if(!empty($inprofile->connected_profiles)) {
+				$profiles = explode(',', $inprofile->connected_profiles);
 
-			foreach ($profiles as $key => $id) {
+				foreach ($profiles as $key => $id) {
 
-				if(!empty($id)) {
+					if(!empty($id)) {
 
-					$nick = get_user($id);
+						$nick = get_user($id);
 
-					if(!empty($nick) && !$nick->deleted) {
-						$profiles[$key] = '<a href="/user/' . $id . '">' . $nick->nick . '</a>';
-					} else {
-						unset($profiles[$key]);
-					}
+						if(!empty($nick) && !$nick->deleted) {
+							$profiles[$key] = '<a href="/user/' . $id . '">' . $nick->nick . '</a>';
+						} else {
+							unset($profiles[$key]);
+						}
 				
+					}
 				}
-			}
 
-			array_splice($profiles, count($profiles) - 1);
-			$profiles = implode(', ', $profiles);
-			if (!$profiles) {
-				$profiles = 'nav!';
+				array_splice($profiles, count($profiles) - 1);
+				$profiles = implode(', ', $profiles);
+				if (!$profiles) {
+					$profiles = 'nav!';
+				}
 			}
 
 			$tpl->newBlock('user-modinfo');

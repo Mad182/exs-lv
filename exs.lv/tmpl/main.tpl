@@ -341,20 +341,6 @@
 
 				<!-- START BLOCK : profile-menu-->
 				<h1>{user-nick}{user-menu-add}</h1>
-				
-				<div style="width:468px;height:60px;margin:8px auto">
-					<script type="text/javascript" id="position_2918">
-					  var ads_positions = ads_positions || [];
-					  ads_positions.push(["2918", "", "document"]);
-					  (function() {
-					    if (!document.getElementById("ads_loader")) {
-					      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
-					      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
-					      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-					    }
-					  })();
-					</script>
-				</div>
 
 				<ul class="tabs">
 					<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>

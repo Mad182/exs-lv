@@ -2286,11 +2286,13 @@ miniblogi
 	padding: 4px 6px 4px 26px;
 	margin: 0;
 	clear: both;
+	list-style: none;
 }
 
 #miniblog-list li ul ul {
 	padding: 1px 0;
 	margin: 0 0 0 -30px;
+	list-style: none;
 }
 
 .miniblog-response {
@@ -2553,7 +2555,7 @@ a.friend img, .comments-avatar {
 
 /* parastie bulleti iekš postu satura */
 #miniblog-list li div.post-content ul,
-#full-story ul,
+.entry-content ul,
 .comment-text .response-content ul {
 	overflow: hidden;
 	margin: 6px 10px 6px 20px;
@@ -2563,7 +2565,7 @@ a.friend img, .comments-avatar {
 }
 
 #miniblog-list li div.post-content li,
-#full-story ul li,
+.entry-content ul li,
 .comment-text .response-content ul li {
 	border: 0;
 	height: auto;
@@ -3262,3 +3264,111 @@ a.external-twitter span {
 	margin: 0 5px 0 0;
 	padding: 0 5px 0 0;
 }
+
+/* april fools joke texts */
+.wtf-txt {
+	font-style: italic;
+}
+
+#page-options {
+	background: transparent;
+	float: right;
+	margin: 0;
+	padding: 3px;
+	list-style: none;
+}
+
+#page-options li {
+	float: left;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+}
+
+#page-options li a {
+	float: left;
+	margin: 0 4px 0 0;
+	padding: 1px 3px 1px 20px;
+}
+
+#page-options .option-edit a {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -100px;
+}
+
+#page-options .option-history a {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -144px;
+}
+
+#ucl {
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+
+#ucl li {
+	float: left;
+	background: transparent;
+	font-size: 90%;
+	color: #555;
+	margin: 0;
+	padding: 0;
+}
+
+#ucl a {
+	float: left;
+	border: 1px solid #ccc;
+	text-indent: -99999px;
+	outline: none;
+	width: 12px;
+	height: 12px;
+	margin: 0 2px;
+	padding: 0;
+}
+
+#ucl .user a {
+	background: #238;
+}
+
+#ucl .editor a {
+	background: #070;
+}
+
+#ucl .moder a {
+	background: #00b;
+}
+
+#ucl .admin a {
+	background: #700;
+}
+
+.video-thb {
+	font-size: 90%;
+	margin: 3px 0;
+	padding: 3px 0;
+}
+
+#full-story .video-thb {
+	background: #fafafa;
+	border: 1px dashed #ccc;
+	margin: 8px auto;
+	padding: 5px;
+}
+
+.video-thb img {
+	float: left;
+	border: 1px solid #ccc;
+	background: #eee;
+	margin: 0 6px 0 0;
+	padding: 4px;
+}
+
+.video-thb strong {
+	font-size: 110%;
+}
+
+
+#breadcrumbs {
+	color: #777;
+	text-align: right;
+}
+

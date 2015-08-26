@@ -1,7 +1,7 @@
 <!-- START BLOCK : approve-body-->
 <h1>Raksta iesniegšana</h1>
 
-<ul class="tabs nav nav-tabs">
+<ul class="tabs">
 	<li class="{new-active}"><a href="/write" class="{new-active}">Jauns raksts</a></li>
 	<li class="{edit-active}"><a href="/write/list" class="{edit-active}">Iesniegtie</a></li>
 </ul>

@@ -132,7 +132,6 @@
 			<span class="slash">/</span> <small>{title}</small>
 			<!-- END BLOCK : title-lv-->
 		</span>
-		<span class="entry-cat"><a href="#" title="View all posts in Game News" rel="category tag">{category-title}</a></span>
 	</h2>
 	<div class="entry-meta row-fluid">
 		<ul class="clearfix">
