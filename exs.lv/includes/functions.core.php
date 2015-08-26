@@ -2016,7 +2016,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	}
 
 	for ($i = 1; $i <= 5; $i++) {
-		$out .= ' <a class="';
+		$out .= ' <a class="page-numbers ';
 		if ($i == 1) {
 			$out .= 'default-minibog-tab ';
 		}

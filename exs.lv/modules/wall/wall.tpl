@@ -1,19 +1,5 @@
 <h1>Jaunākais portālā</h1>
 
-<div style="width:468px;height:60px;margin:8px auto">
-	<script type="text/javascript" id="position_2918">
-	  var ads_positions = ads_positions || [];
-	  ads_positions.push(["2918", "", "document"]);
-	  (function() {
-	    if (!document.getElementById("ads_loader")) {
-	      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
-	      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
-	      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-	    }
-	  })();
-	</script>
-</div>
-
 <ul class="tabs">
 	<li><a href="/index/news"{newsactive}>Jaunumi</a></li>
 	<li><a href="/index/wall"{wallactive}>Siena</a></li>
@@ -59,17 +45,34 @@
 	<h1>Jaunumi</h1>
 	<ul class="index-list main">
 		<!-- START BLOCK : index-news-node-->
-		<li class="{class}"><h3><a href="{node-url}">{title}</a></h3>
-			<ul class="article-info"><li class="date">{date}</li><li class="comments"><a href="{node-url}#comments">{posts}x</a></li><li class="profile user-level-{level}"><a href="{aurl}">{author}</a></li></ul>
-			<div class="c"></div>
-			<a href="{node-url}"><img class="av index-av" width="75" height="75" src="//img.exs.lv/{avatar}" alt="{title}" /></a>
-			<p>{intro}</p>
-			<div class="c"></div>
-		</li>
+		<article class="post">
+	
+			<h2 class="entry-title">
+				<a href="{url}" title="{title}" rel="bookmark">{title}</a>
+			</h2>
+	
+			<div class="entry-meta row-fluid">
+				<ul class="clearfix">
+					<li><img alt="" src="{avatar}" style="width:16px;height:16px" /><a href="/user/{author-id}" title="Apskatīt profilu" rel="author">{author}</a></li>
+					<li><img src="/responsive/images/time.png" alt="">{date}</li>
+					<li><img src="/responsive/images/komen.png" alt=""><a href="{node-url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts} komentāri</a></li>
+				</ul>
+			</div>
+	
+			<div class="entry-content">
+				<a href="{url}" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
+					<img class="av index-av" width="75" height="75" src="{img-server}/{avatar}" alt="{title}" />
+				</a>
+				<p>{intro}</p>
+				<p class="moretag"><a href="{url}"> Lasīt tālāk</a></p>
+			</div>
+
+		</article>
 		<!-- END BLOCK : index-news-node-->
 	</ul>
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<!-- END BLOCK : cindex-list-->
+
 
 </div>
 

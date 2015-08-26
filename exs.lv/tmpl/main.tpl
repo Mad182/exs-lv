@@ -170,6 +170,15 @@
 						<li><a href="/speles">Spēles</a></li>
 					</ul>
 				</li>
+				<li class="dropdown"><a href="/grupas">Grupas</a>
+					<!-- START BLOCK : mygroups-->
+					<ul id="sub-menu" class="user-group-menu">
+						<!-- START BLOCK : myg-node-->
+						<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+						<!-- END BLOCK : myg-node-->
+					</ul>
+					<!-- END BLOCK : mygroups-->
+				</li>
 				<li><a href="/steam-online">Steam</a></li>
 			</ul>
 
@@ -241,7 +250,7 @@
 		<div class="row-fluid">
 			<div class="brnews span9">
 					<!-- START BLOCK : user-menu-->
-					<ul id="top-menu-right">
+					<ul id="user-menu">
 						<li{profile-sel}>
 							<a href="/user/{currentuser-id}">Profils</a>
 							<ul>
@@ -252,15 +261,6 @@
 								<li><a href="/user/email">E-pasta adreses maiņa</a></li>
 								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
 							</ul>
-						</li>
-						<li{cat-sel-319}><a href="/grupas">Grupas</a>
-							<!-- START BLOCK : mygroups-->
-							<ul id="user-group-menu">
-								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-								<!-- END BLOCK : myg-node-->
-							</ul>
-							<!-- END BLOCK : mygroups-->
 						</li>
 						<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
 						<!-- START BLOCK : user-modlink-->

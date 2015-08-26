@@ -37,7 +37,7 @@
 </article>
 <!-- END BLOCK : list-->
 
-<div class="pagination magz-pagination">{pager-next} {pager-numeric} {pager-prev}</div>
+<p class="pagination core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-->
 
 

@@ -23,7 +23,7 @@
 	<div class="entry-content">
 		<!-- START BLOCK : list-avatar-->
 		<a href="#" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
-			<img src="{img-server}/{image}" alt="{alt}" />
+			<img class="av" src="{img-server}/{image}" alt="{alt}" />
 		</a>
 		<!-- END BLOCK : list-avatar-->
 		<p>{intro}</p>
@@ -33,6 +33,6 @@
 </article>
 <!-- END BLOCK : list-node-->
 
-<div class="pagination magz-pagination">{pager-next} {pager-numeric} {pager-prev}</div>
+<p class="pagination core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-->
 
