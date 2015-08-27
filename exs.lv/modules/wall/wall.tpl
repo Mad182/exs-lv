@@ -74,19 +74,17 @@
 	</ul>
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<!-- END BLOCK : cindex-list-->
-
-
 </div>
 
-<div class="right span5">
+<div class="right span5" id="home-middle">
 
-	<h2>Pēdējās aktivitātes</h2>
+	<h2 class="title"><a href="/kasnotiek"><span>Pēdējās aktivitātes</span></a></h2>
 	<div id="last-action-list">
 		{index-log}
 	</div>
 	
 	<!-- START BLOCK : poll-box-->
-	<h2>Aptauja</h2>
+	<h2 class="title"><a href="/aptaujas"><span>Aptauja</span></a></h2>
 	<h3 class="poll-q">{poll-title}</h3>
 	<!-- START BLOCK : poll-answers-->
 	<ol class="poll-answers">
@@ -95,7 +93,7 @@
 		<!-- END BLOCK : poll-answers-node-->
 	</ol>
 	Balsojuši: {poll-totalvotes}<br />
-	<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+	<a href="{ppage-id}">Komentāri</a>
 	<!-- END BLOCK : poll-answers-->
 	<!-- START BLOCK : poll-questions-->
 	<form name="poll" method="post" action="">
@@ -117,7 +115,8 @@
 	<!-- END BLOCK : poll-box-->
 
 	<!-- START BLOCK : cindex-right-->
-	<h2>Jaunākais blogos</h2>
+
+	<h2 class="title"><a href="/blogs"><span>Jaunākais blogos</span></a></h2>
 	<ul class="index-list secondary">
 		<!-- START BLOCK : index-blogs-node-->
 		<li>
@@ -128,7 +127,8 @@
 		</li>
 		<!-- END BLOCK : index-blogs-node-->
 	</ul>
-	<h2>Spēļu apskati</h2>
+
+	<h2 class="title"><a href="/speles"><span>Spēļu apskati</span></a></h2>
 	<ul class="index-list secondary">
 		<!-- START BLOCK : index-games-node-->
 		<li>
@@ -139,7 +139,8 @@
 		</li>
 		<!-- END BLOCK : index-games-node-->
 	</ul>
-	<h2>Filmu apskati</h2>
+
+	<h2 class="title"><a href="/filmas"><span>Filmu apskati</span></a></h2>
 	<ul class="index-list secondary">
 		<!-- START BLOCK : index-movies-node-->
 		<li>
@@ -150,7 +151,8 @@
 		</li>
 		<!-- END BLOCK : index-movies-node-->
 	</ul>
-	<h2>Mūzikas apskati</h2>
+
+	<h2 class="title"><a href="/muzika"><span>Mūzikas apskati</span></a></h2>
 	<ul class="index-list secondary">
 		<!-- START BLOCK : index-music-node-->
 		<li>

@@ -169,15 +169,6 @@
 					</ul>
 				</li>
 				<li><a href="/blogs">Blogi</a></li>
-				<li class="dropdown"><a href="/grupas">Grupas</a>
-					<!-- START BLOCK : mygroups-->
-					<ul id="user-group-menu" class="sub-menu">
-						<!-- START BLOCK : myg-node-->
-						<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-						<!-- END BLOCK : myg-node-->
-					</ul>
-					<!-- END BLOCK : mygroups-->
-				</li>
 				<li><a href="/steam-online">Steam</a></li>
 				<li><a href="/img">Bilžu hostings</a></li>
 				<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
@@ -218,6 +209,15 @@
 								<li><a href="/user/email">E-pasta adreses maiņa</a></li>
 								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
 							</ul>
+						</li>
+						<li{cat-sel-319}><a href="/grupas">Grupas</a>
+							<!-- START BLOCK : mygroups-->
+							<ul id="user-group-menu">
+								<!-- START BLOCK : myg-node-->
+								<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+								<!-- END BLOCK : myg-node-->
+							</ul>
+							<!-- END BLOCK : mygroups-->
 						</li>
 						<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
 						<!-- START BLOCK : user-modlink-->
@@ -386,11 +386,11 @@
 				<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
 				<div id="tabwidget" class="widget tab-container box"> 
 					<ul id="tabnav" class="clearfix"> 
-						<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><img src="/responsive/images/view-white-bg.png" alt="Visi">Visi</a></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
 						<!-- START BLOCK : mb-tabs-->
-						<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><img src="/responsive/images/time-white.png" alt="Draugu">Draugu</a></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
 						<!-- END BLOCK : mb-tabs-->
-						<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><img src="/responsive/images/komen-putih.png" alt="Klausās">Klausās</a></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><span class="music">last.fm</span></a></li>
 					</ul> 
 
 					<div id="tab-content miniblog-block" class="ajaxbox">
@@ -417,19 +417,13 @@
 			</ul>
 			<!-- END BLOCK : menu-list-->
 
-			<!-- START BLOCK : notification-list-->
-			<div class="widget">
-				<h3 class="title"><span>Tavi notikumi</span></h3>
-				<div class="box">
-					{out}
-				</div>
-			</div>
-			<!-- END BLOCK : notification-list-->
-
 			<div class="widget">
 				<h3 class="title"><span>Jaunākais portālā</span></h3>
-				<div class="box">
-					<ul class="tabs">
+				<div id="tabwidget" class="widget tab-container box"> 
+					<ul id="tabnav" class="clearfix"> 
+			<!-- START BLOCK : notification-list-->
+						<li><a href="/events-pager?events-page=0" class="{events-selected}remember-events ajax"><span class="profile">Notikumi</span></a></li>
+			<!-- END BLOCK : notification-list-->
 						<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
 						<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
 					</ul>

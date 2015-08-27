@@ -169,11 +169,19 @@ if ($auth->skin == 1) {
  * exs.lv kreisais sidebar
  */
 $sel = 'pages';
-if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
+if($auth->ok === true && empty($_COOKIE['last-sidebar-tab']) || $_COOKIE['last-sidebar-tab'] == 'events') {
+	$out = get_notify($auth->id);
+	$sel = 'events';
+} elseif (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
 	$out = get_latest_images();
 	$sel = 'gallery';
 } else {
 	$out = get_latest_posts();
+}
+
+//lietotāja notifikācijas
+if ($auth->ok === true) {
+	$tpl->newBlock('notification-list');
 }
 
 $tpl->assignGlobal(array(
@@ -259,15 +267,6 @@ if ($groups = get_latest_groups()) {
 		));
 	}
 	unset($groups);
-}
-
-//lietotāja notifikācijas
-if ($auth->ok === true) {
-	if ($html = get_notify($auth->id)) {
-		$tpl->newBlock('notification-list');
-		$tpl->assign('out', $html);
-		unset($html);
-	}
 }
 
 //filmu meklētājs

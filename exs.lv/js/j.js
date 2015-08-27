@@ -16,6 +16,9 @@ function msgrr() {
 	if ($('.remember-pages').hasClass('active')) {
 		query_string = query_string + '&loadposts=true';
 	}
+	if ($('.remember-events').hasClass('active')) {
+		query_string = query_string + '&loadevents=true';
+	}
 	if ($('.remember-gallery').hasClass('active')) {
 		query_string = query_string + '&loadgallery=true';
 	}
@@ -438,11 +441,9 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		var clicked = $(this);
-		
-		console.log('click');
 
 		var tabs = {
-			'last-sidebar-tab': {tab1: 'pages', tab2: 'gallery'},
+			'last-sidebar-tab': {tab1: 'events', tab2: 'pages', tab3: 'gallery'},
 			'last-facts-tab': {tab1: 'fact-all', tab2: 'fact-rs'},
 			'last-mbs-tab': {tab1: 'all', tab2: 'friends', tab3: 'music'},
 			'last-rsnews-tab' : {tab1: 'runescape', tab2: 'oldschool'}

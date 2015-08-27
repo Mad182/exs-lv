@@ -314,22 +314,22 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				} else {
 					$iepriekseja = 0;
 				}
-				$pager_next = '<a class="pager-next" title="Iepriekšējā lapa" href="/user/' . $inprofile->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
+				$pager_next = '<a class="pager-next next" title="Iepriekšējā lapa" href="/user/' . $inprofile->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
 			} else {
 				$pager_next = '';
 			}
 			$pager_prev = '';
 			if ($total > $skip + $end) {
-				$pager_prev = '<span>-</span> <a class="pager-prev" title="Nākamā lapa" href="/user/' . $inprofile->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
+				$pager_prev = '<span>-</span> <a class="pager-prev prev" title="Nākamā lapa" href="/user/' . $inprofile->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
 			}
 			$startnext = 0;
 			$page_number = 0;
 			$pager_numeric = '';
 			while ($total - $startnext > 0) {
 				$page_number++;
-				$class = '';
+				$class = ' class="page-numbers"';
 				if ($skip == $startnext) {
-					$class = ' class="selected"';
+					$class = ' class="page-numbers selected"';
 				}
 				$pager_numeric .= '<span>-</span> <a href="/user/' . $inprofile->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 				$startnext = $startnext + $end;
