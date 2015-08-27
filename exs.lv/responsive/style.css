@@ -12,7 +12,7 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 body {
   background-color:#09151f;
   background: url("images/background-new.jpg") no-repeat top center fixed;
-  color: #555;
+  color: #444;
   font-family: Roboto, sans-serif;
   font-weight: normal;
   font-size: 13px;
@@ -307,7 +307,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 #headline {
   background:#ebebeb;
-  padding:30px 40px 0;
+  padding:0 40px;
 }
 
 #headline .post {
@@ -632,15 +632,21 @@ h3.title,
 h1.entry-title {
   color:#3E4548;
   border-bottom:1px solid #eee;
-  /* font-family:Noticia Text,serif;
-  */
-
   font-weight:normal;
   margin:0 0 30px;
   line-height:2em;
 }
 
 h3.title {
+  font-size:14px;
+}
+
+h3.poll-q {
+  font-weight:normal;
+  margin:10px 0;
+  line-height:1.2;
+  color:#3E4548;
+  border-bottom:1px solid #eee;
   font-size:14px;
 }
 
@@ -862,6 +868,12 @@ h2.entry-title {
   vertical-align:top;
 }
 
+.entry-meta ul li img.userav {
+  width:20px;
+  height:20px;
+  padding: 0;
+}
+
 .single-rate {
   display:none;
 }
@@ -889,13 +901,13 @@ h2.entry-title {
 
 .core-pager {
   border-top:1px solid #eee;
-  padding:10px 0 0;
+  padding:12px 0;
   text-align:center;
 }
 
 .core-pager .page-numbers {
   color:#767B7E;
-  margin-right:15px;
+  margin:0 7px;
 }
 
 .core-pager .selected {
@@ -2164,7 +2176,7 @@ img.twit-pic {
 
 .user-actions {
 	padding: 0;
-	margin: 0;
+	margin: 0 0 20px;
 	list-style: none;
 }
 
@@ -2251,6 +2263,13 @@ miniblogi
 	padding: 3px 0 7px;
 }
 
+.imgs, ul#mainlist, #downloads, .video-thb p, #latest-blogs, #wallpapers, .small-userlist, .responses li p, #miniblog-list, .mb-col, .bloglist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+
 .mb-col li {
 	border-bottom: 1px solid #eee;
 	height: 55px;
@@ -2330,10 +2349,6 @@ miniblogi
 	margin: 0;
 	padding: 0;
 	background: transparent;
-}
-
-#miniblog-list li .post-info a, .responses li .post-info a {
-	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .blockhref li {
@@ -2449,7 +2464,7 @@ a.friend:hover {
 .poll-answers, #poll-questions {
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 10px;
 }
 
 .poll-answers li, #poll-questions li {
@@ -3013,13 +3028,10 @@ ol li.code-row {
 	padding: 5px 10px;
 }
 
-.index-list li p {
-	font-size: 13px;
-}
-
 .index-list li h3 {
-	padding: 5px 0 2px;
+	padding: 3px 0;
 	margin: 0;
+	line-height: 1.2;
 }
 
 
@@ -3947,45 +3959,6 @@ a.friend-right {
 	filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='//img.exs.lv/bildes/fancy_shadow_nw.png',sizingMethod='scale');
 }
 
-/* aptaujas */
-.poll-answers, #poll-questions {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.poll-answers li, #poll-questions li {
-	background: transparent;
-	font-size: 90%;
-	margin: 0;
-	padding: 1px 0;
-}
-
-.poll-answers li span {
-	position: absolute;
-	font-size: 10px;
-	line-height: 10px;
-	z-index: 10;
-	right: 1px;
-	top: 0;
-	color: #777;
-}
-
-.poll-answers li div {
-	height: 10px;
-	font-size: 1px;
-	line-height: 1px;
-	position: relative;
-	margin: 0 0 2px;
-}
-
-.poll-answers li div div {
-	background: #5FA9F0;
-	height: 10px;
-	z-index: 1;
-	margin: 0;
-}
-
 #latest-topics.blockhref li span.r, #latest-topics.blockhref li span.lp-prefix {
 	display: inline;
 }
@@ -4114,3 +4087,770 @@ a.friend-right {
 	color: #369;
 	text-decoration: none;
 }
+
+/* grupu saraksts */
+#exs-groups {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#exs-groups li {
+	background: transparent;
+	height: 87px;
+	width: 32%;
+	float: left;
+	margin: 0;
+	padding: 5px;
+}
+
+#exs-groups li p {
+	font-size: 90%;
+	color: #888;
+	line-height: 1.2;
+}
+
+#exs-groups li h3 {
+	line-height: 1.2;
+}
+
+/** comments */
+#comments {
+	margin: 10px 0;
+	padding: 0;
+}
+
+#comments dt {
+	border-top: 4px solid #B5C0CF;
+	float: left;
+	width: 117px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#comments dd {
+	margin: 0 0 0 115px;
+	padding: 0;
+	border-top: 4px solid #B5C0CF;
+	text-align: left;
+}
+
+#comments dt .username {
+	font-weight: 700;
+	display: block;
+	line-height: 14px;
+	background: #ECEFF5;
+	padding: 3px;
+	margin: 0 0 3px 0;
+	font-size: 12px;
+	text-align: left;
+}
+
+#comments dt em.username {
+	color: #777;
+}
+
+.inf {
+	display: block;
+	height: 18px;
+	background: #ECEFF5;
+	margin: 0;
+	padding: 1px 0;
+	color: #445;
+}
+
+.comment-text {
+	height: auto !important;
+	min-height: 120px;
+	height: 120px;
+	margin: 0;
+	padding: 5px 3px;
+}
+
+p.comment-tools {
+	border-top: 1px solid #ECEFF5;
+	margin: 0;
+	padding: 2px 0;
+	height: 16px;
+}
+
+p.comment-tools a {
+	font-size: 85%;
+	color: #fff;
+	background: #444;
+	width: 50px;
+	text-align: right;
+	height: 15px;
+	line-height: 15px;
+	padding: 0 3px;
+	float: left;
+	margin: 0 4px 0 0;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.lp-prefix {
+	font-size: 9px;
+	color: #fff;
+	background: #555;
+	color: #ccc;
+	padding: 1px 2px;
+	margin: 0;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+a:hover .lp-prefix {
+	background: #333;
+	color: #ddd;
+	text-decoration: none;
+}
+
+/* exs.css*/
+/* junk box in sidebar */
+.junk-box a {
+	float: left;
+	position: relative;
+	width: 33%;
+	padding: 0;
+	margin: 0;
+	text-align: center
+}
+
+.junk-box a img {
+	width: 90%
+}
+
+.junk-box a span {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	color: #fff;
+	background: #555;
+	padding: 1px 4px
+}
+
+/* filmu infobox */
+#movie-info {
+	margin: 5px 15px 15px;
+	padding: 8px 15px;
+	border: 1px solid #ddd;
+	float: right;
+	min-width: 350px;
+	width: 40%;
+	text-align: left;
+}
+
+#movie-info .title {
+	font-size: 115%;
+}
+
+#movie-info .icon {
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin: 2px;
+	border: 0;
+	padding: 0;
+}
+
+/* filmu saraksts (thumbnail) */
+
+#movie-list {
+	list-style: none;
+	padding: 10px 0;
+	margin: 0
+}
+
+#movie-list li {
+	float: left;
+	width: 33%;
+	height: 262px;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	background: transparent
+}
+
+#movie-list strong {
+	display: block;
+	padding: 2px 10px 0;
+	font-weight: 400;
+	font-size: 14px;
+}
+
+/* latest blogs */
+
+#latest-blogs li {
+	background: transparent;
+	border-bottom: 1px solid #E3E3E3;
+	margin: 0;
+	padding: 5px 0;
+}
+
+#latest-blogs li div.author {
+	float: left;
+	width: 90px;
+	height: 100px;
+	text-align: center;
+	line-height: 13px;
+}
+
+#latest-blogs .author img {
+	width: 75px;
+	height: 75px;
+	display: inline;
+	float: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* wallpaper */
+
+#walpaper a img {
+	border: 1px solid #fff;
+	width: 120px;
+	height: 100px
+}
+
+#wallpapers li, #wallpapers-external li {
+	background: transparent;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+
+#wallpapers-external {
+	clear: both;
+	padding: 0;
+}
+
+#wallpapers-external li {
+	float: none;
+	display: inline-block;
+	text-align: center;
+	margin: 0 10px 10px 0
+}
+
+#wallpapers a {
+	display: inline;
+	float: left;
+	width: 110px;
+	height: 90px;
+	position: relative;
+	overflow: hidden;
+	text-decoration: none;
+	border: 1px solid #fff;
+	margin: 0;
+	padding: 0
+}
+
+#wallpapers a span {
+	position: absolute;
+	bottom: 1px;
+	right: 1px;
+	height: 14px;
+	width: 68px;
+	background: #333;
+	font-size: 10px;
+	color: #888;
+	text-align: center;
+	display: block
+}
+
+.no-right #left {
+	left: 0;
+}
+
+.inf {
+	font-size: 90%;
+}
+
+
+/* lietotaju klases */
+.admins, .blockhref li span.admins {
+	color: #700;
+}
+
+.mods, .blockhref li span.mods {
+	color: #00b;
+}
+
+.rautors, .blockhref li span.rautors {
+	color: #070;
+}
+
+.bot {
+	color: #777;
+}
+
+html .banned {
+	text-decoration: line-through;
+	color: #000;
+}
+
+/* Mod sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
+.mod-list-table {
+	margin: 10px 20px
+}
+.mod-list-table th {
+	font-weight: 700;
+	padding: 8px 10px 8px 2px;
+	font-size: 12px;
+	text-align: left;
+	color: #284C6D;
+	border-bottom: 2px solid #404449
+}
+.mod-list-table td {
+	padding: 7px 10px;
+	border-bottom: 1px solid #EEF0F3;
+	font-size: 12px
+}
+.mod-list-table .counter {
+	font-weight: 700;
+	color:  #235A96;
+	text-align: center;
+	padding: 5px 0
+}
+.mod-list-table .centered {
+	text-align:center
+}
+
+.list-table {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.list-table li {
+	margin:3px 0 0 0;
+	padding:0;
+	background:transparent
+}
+.list-table li .stronger {
+	color:#515152;
+	font-weight: 700;
+	margin-right:7px
+}
+
+/* Mod sadaļās izmantots tabulas stils (#2) */
+.table-light {
+	border:1px solid rgb(235, 235, 235) !important
+}
+.table-light tr td {
+	border:0;
+	border-bottom:1px solid #E7E7E7;
+	padding:5px 7px
+}
+.table-light .light-header {
+	border:1px solid #E4E2E2 !important
+}
+.table-light .light-header th {
+	font-weight:bold;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	border:0 !important;
+	background:#F5F5F5;
+	padding:5px 7px
+}
+
+/* Mod brīdinājumu saraksta sadaļas stils */
+.removed_warn td {
+	background:#E6E6E6;
+	border-bottom:1px solid #fff !important
+}
+li.view_more {
+	margin-top:5px
+}
+
+/* Mod lietotāju meklēšanas forma */
+#checkform {
+	padding:20px;
+	border:1px solid #ddd;
+	margin:20px auto 10px;
+	width:90%
+}
+#checkform th {
+	padding:5px 8px;
+	border-bottom:2px solid #ccc;
+	color:rgb(255, 112, 76)
+}
+.form-input-box {
+	border-bottom:2px solid #ddd;
+	padding-bottom:10px;
+	margin-bottom:7px;
+	display:block
+}
+#checkform input[type=text] {
+	width:250px;
+	padding:3px 5px;
+	border:1px solid #bbb;
+	box-shadow:1px 1px 6px #ddd;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+#user-results {
+	margin-top:10px
+}
+#user-results th, #user-results td {
+	padding:3px 12px;
+	border-bottom:1px solid #ddd;
+}
+#user-results td {
+	padding:4px 8px;
+	border-top:none
+}
+#user-results th {
+	color:rgb(73, 81, 90);
+	text-align:center
+}
+#user-results p a {
+	margin-left:10px
+}
+#user-results .centered-result {
+	text-align:center
+}
+#checkform .hide-rows {
+	display:none
+}
+#checkform .toggle-rows {
+	text-align:center;
+	font-weight: 700
+}
+#checkform .res-info {
+	color:rgb(63, 67, 119)
+}
+#checkform .old-nicks {
+	background:none;
+	margin-left:0;
+	padding:5px 7px;
+	border-bottom:1px dotted #ddd;
+}
+#checkform .data-explanation {
+	position: relative;
+	top: 7px;
+	left: 10px;
+}
+#user-results .hide-userdata {
+	display:none
+}
+#user-results .wider-row {
+	padding-left:30px !important
+}
+#user-results .wider-row p {
+	margin:5px 0
+}
+#ip_block {
+	clear:both;
+	margin-bottom:10px;
+	overflow:auto
+}
+.infop {
+	margin:0;
+	padding:0;
+	clear:left
+}
+.infop strong {
+	color:rgb(226, 62, 62)
+}
+.ip-table {
+	float:left;
+	margin-right:25px
+}
+.ip-table strong {
+	color:#45505C
+}
+#checkform .hidden-row {
+	display:none
+}
+#show_more_all, #show_more_unique {
+	text-align:center
+}
+
+/* sūdzību iesniegšanas fancybox stili */
+.report-button {
+	margin: 0 3px;
+}
+.fancy-close {
+	padding:4px 10px 5px
+}
+#report-title {
+	font-size:14px;
+	font-weight:700;
+	padding:0 10px 3px;
+	border-bottom:1px dotted #eee;
+	margin:5px 20px 10px;
+	color:#FF6E5A
+}
+#outer-form-block {
+	overflow:auto
+}
+#form-block {
+	margin:15px;
+	padding:10px;
+	border:1px solid #eee;
+	width:400px;
+	overflow:auto;
+	float:left
+}
+#report-description {
+	width:250px;
+	float:left;
+	margin:15px 15px 0 20px;
+	border:1px solid #eee;
+	padding:10px
+}
+.report-item {
+	color:#3E5661
+}
+#report-txtarea {
+	width:400px;
+	height:120px;
+	border:1px solid #DFD6D6
+}
+.report-error, .report-response, .report-response-good {
+	font-weight:700;
+	margin:10px 20px;
+	line-height:1.3
+}
+.report-error {
+	color:orangered;
+}
+.report-response {
+	color: #FF3F3F;
+	padding-left: 25px;
+	margin:0 0 5px 20px;
+	background: url('/bildes/fugue-icons/exclamation-red.png') no-repeat left;
+}
+.report-response-good {
+	color: #4FAC5A;
+	padding-left: 25px;
+	background: url('/bildes/fugue-icons/tick.png') no-repeat left;
+}
+
+/* Mod iesniegto sūdzību pārvaldības stili */
+.no-reports {
+	margin: 10px 20px;
+	padding: 0 10px 7px;
+	color: #4C507C;
+	display: block;
+	border-bottom: 1px solid #eee;
+}
+.report-addr {
+	display:block;
+	margin:3px 10px 3px 0
+}
+.report-mb {
+	position:relative;
+	top:2px
+}
+.report-outer-block {
+	float:left;
+	width:300px;
+	min-height:150px;
+	border:1px solid #eee;
+	padding:0 10px 10px 10px;
+	margin-right:10px;
+	font-size:11px
+}
+.reported-content {
+	border-bottom: 1px solid #F3F2F2;
+	color: #FF4737;
+	margin: 7px 0;
+	font-size:12px
+}
+.report-notice {
+	padding:0 0 0 7px;
+	margin-bottom:5px;
+	border-left:3px solid #6C7592
+}
+
+
+/* zinot/labot/dzest pogas miniblogos */
+.post-button {
+	display: inline-block;
+	padding: 0 5px;
+	margin: 0 0 0 1px;
+	background: #efefef;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 11px;
+	line-height: 12px;
+	color: #777;
+	border: 1px solid #dfdfdf;
+}
+
+.post-delete {
+	color: #933;
+}
+
+.post-warn {
+    color: #fc850d;
+}
+
+.deleted-entry {
+	padding: 5px 15px;
+	font-size: 11px;
+	margin-top: 3px;
+	color: #962d2d;
+	background: #F5F3F3
+}
+.deleted-mb-content {
+	padding: 7px 15px;
+	width: 450px;
+	border: 1px solid #F0EDED;
+	font-size:11px;
+	min-height:70px;
+}
+
+#player-mylist div, #player-playlist div {
+	border: 1px dotted #ddd;
+	background: #eee;
+}
+
+#noindex-phone {
+	width: 90px;
+	height: 11px;
+	display: inline-block;
+	background: url('/bildes/number-light.gif') no-repeat 0 0;
+}
+
+/* Neliela info daudzuma fancybox stili */
+.fancy-container {
+	width:500px;
+	min-height:130px;
+	padding-bottom:7px;
+	overflow:auto;
+	margin:0 5px 5px;
+	font-size:12px
+}
+.fancy-title {
+	margin:5px 0;
+	font-weight:bold;
+	font-size:14px;
+	color:#234C79;
+	padding:0 0 5px;
+	border-bottom:1px solid #ddd
+}
+.fancy-info {
+	float:right;
+	padding:5px;
+	margin-top:7px;
+	border:1px dotted #EBEBEB
+}
+.fancy-info i {
+	color:#95A4B3
+}
+
+/* Lietotāja bloķēšanas sadaļa */
+.form-table .form-option {
+	text-align:right;
+	padding-right:12px
+}
+.form-table td {
+	padding-bottom:7px
+}
+
+
+/* Bloķēto profilu sadaļa */
+.delete-ban {
+	opacity:0.7
+}
+.delete-ban:hover {
+	opacity:1.0
+}
+.banned-ip {
+	position:relative;
+	top:3px
+}
+img.show-banned {
+	position:relative;
+	top:7px;
+	opacity:0.5
+}
+img.show-banned:hover {
+	opacity:1.0
+}
+.child-padding {
+	background:#FCFCFC
+}
+
+/* user profile infobox in sidebar */
+#profile-awards {
+	margin: 6px 0 10px;
+	padding: 0;
+	text-align: center;
+}
+
+#profile-awards a {
+	color: #777;
+}
+
+#l-blog {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -14px;
+	padding: 0 0 0 19px;
+}
+
+#l-pm {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -124px;
+	padding: 0 0 0 19px;
+}
+
+#l-twitter {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -168px;
+	padding: 0 0 0 19px;
+}
+
+#l-lastfm {
+	background: url('//img.exs.lv/bildes/fugue-icons/audioscrobbler.png') no-repeat 0 50%;
+	padding: 0 0 0 19px;
+}
+
+#l-warn {
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+	padding: 0 0 0 19px;
+}
+
+#l-warn.active {
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -806px;
+	padding: 0 0 0 19px;
+}
+
+#l-yt {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -444px;
+	padding: 0 0 0 19px;
+}
+
+.l-gmember {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -190px;
+	padding: 0 0 0 19px;
+}
+
+.l-gmod {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -212px;
+	padding: 0 0 0 19px;
+}
+
+.l-gadmin {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -234px;
+	padding: 0 0 0 19px;
+}
+
+html .red, html .r {
+	color: #ef6000;
+}
+
+html .green, html .g {
+	color: #60ef00;
+}
+
+/* light blue for android app */
+html .lb {
+    color: #28D8EF
+}
+

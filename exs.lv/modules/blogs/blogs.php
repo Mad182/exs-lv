@@ -55,3 +55,6 @@ if ($articles) {
 		));
 	}
 }
+
+unset($pagepath);
+

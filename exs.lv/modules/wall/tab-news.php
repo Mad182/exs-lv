@@ -9,7 +9,7 @@ if (isset($_GET['skip'])) {
 	$skip = 0;
 }
 
-$end = 10;
+$end = 8;
 
 $date = display_time(time());
 
@@ -25,17 +25,13 @@ $articles = $db->get_results("
 			`pages`.`strid` AS `strid`,
 			`pages`.`posts` AS `posts`,
 			`pages`.`text` AS `text`,
-			`pages`.`sm_avatar` AS `sm_avatar`,
+			`pages`.`avatar` AS `avatar`,
 			`pages`.`intro` AS `intro`,
-			`pages`.`attach` AS `attach`,
-			`users`.`nick` AS `nick`,
-			`users`.`level` AS `level`
+			`pages`.`attach` AS `attach`
 		FROM
-			`pages`,
-			`users`
+			`pages`
 		WHERE
-			`pages`.`category` = '1' AND
-			`users`.`id` = `pages`.`author`
+			`pages`.`category` = '1'
 		ORDER BY
 			`pages`.`attach` DESC,
 			`pages`.`id` DESC
@@ -53,30 +49,43 @@ if(!empty($articles)) {
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
-
-		if ($article->sm_avatar == '') {
-			$article->sm_avatar = $img_server . '/dati/bildes/useravatar/none.png';
-		}
 		
 		$class = '';
 		
 		if($article->attach) {
 			$class = 'sticky';
 		}
+		
+		$user = get_user($article->author);
+		
+		if (!$user->deleted) {
+			$author_link = '<a rel="author" href="/user/' . $user->id . '" rel="author">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+		} else {
+			$author_link = '<em>dzēsts</em>';
+		}
 
 		$date = display_time(strtotime($article->date));
 		$tpl->assign(array(
 			'url' => '/read/' . $article->strid,
-			'aurl' => '/user/' . $article->author,
+			'aurl' => '/user/' . $user->id,
 			'title' => $article->title,
 			'date' => $date,
-			'author' => usercolor($article->nick, $article->level, false, $article->author),
+			'author' => $author_link,
 			'posts' => $article->posts,
-			'level' => $article->level,
 			'intro' => textlimit($article->text, 330),
-			'avatar' => trim($article->sm_avatar),
-			'class' => $class
+			'class' => $class,
+			'avatar' => get_avatar($user, 's')
 		));
+
+		if (!empty($article->avatar)) {
+			$tpl->newBlock('news-av');
+			$tpl->assign(array(
+				'url' => '/read/' . $article->strid,
+				'title' => $article->title,
+				'image' => trim($article->avatar)
+			));
+		}
+		
 	}
 
 }
@@ -197,4 +206,6 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 $tpl->assignGlobal('index-log', get_index_events());
 $tpl->assignGlobal('newsactive', ' class="active"');
+
+include(CORE_PATH . '/modules/core/poll.php');
 

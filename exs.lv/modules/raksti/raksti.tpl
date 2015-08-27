@@ -7,16 +7,16 @@
 	
 	<h2 class="entry-title">
 		<a href="{url}" title="{title}" rel="bookmark">{title}</a>
-		<span class="entry-cat"><a href="/movies" title="Skatīt visau kateogirju {cat}" rel="category tag">{cat}</a></span>
+		<span class="entry-cat"><a href="/{cat-strid}" title="Skatīt visau kateogirju {cat}" rel="category tag">{cat}</a></span>
 	</h2>
 	
 	<div class="entry-meta row-fluid">
 		<ul class="clearfix">
-			<li><img alt="" src="{avatar}" style="width:16px;height:16px" /><a href="/user/{author-id}" title="Apskatīt profilu" rel="author">{author}</a></li>
+			<li><img alt="" src="{avatar}" class="userav" />{author}</li>
 			<li><img src="/responsive/images/time.png" alt="">{date}</li>
 			<li><img src="/responsive/images/view-bg.png" alt="">{views}</li>
-			<li><img src="/responsive/images/komen.png" alt=""><a href="{node-url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts} komentāri</a></li>
-			<li class="tagz"><img src="/responsive/images/tags-icon.png" alt=""><a href="#" rel="tag">Grid</a><br /></li>
+			<li><img src="/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts} komentāri</a></li>
+			<!--<li class="tagz"><img src="/responsive/images/tags-icon.png" alt=""><a href="#" rel="tag">Grid</a><br /></li>-->
 		</ul>
 	</div>
 	

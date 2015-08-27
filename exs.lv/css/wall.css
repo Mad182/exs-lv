@@ -16,7 +16,6 @@
 }
 
 #wall-posts .last-post {
-	font-size: 13px;
 	margin: 12px 0 5px 0;
 }
 
@@ -32,16 +31,12 @@
 
 #wall-posts .last-post .av {
 	float: left;
-	width: 32px;
-	height: 32px
+	width: 36px;
+	height: 36px
 }
 
 #wall-posts .post-wrapper {
 	margin-left: 74px;
-}
-
-#wall-posts .post-info {
-	font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #wall-posts .post-wrapper img {

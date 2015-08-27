@@ -40,7 +40,7 @@
 
 <!-- START BLOCK : news-->
 
-<div class="half-left" style="width: 52%;text-align:left;padding:0 3px;">
+<div class="left span7">
 	<!-- START BLOCK : cindex-list-->
 	<h1>Jaunumi</h1>
 	<ul class="index-list main">
@@ -53,16 +53,18 @@
 	
 			<div class="entry-meta row-fluid">
 				<ul class="clearfix">
-					<li><img alt="" src="{avatar}" style="width:16px;height:16px" /><a href="/user/{author-id}" title="Apskatīt profilu" rel="author">{author}</a></li>
+					<li><img alt="" src="{avatar}" class="userav" />{author}</li>
 					<li><img src="/responsive/images/time.png" alt="">{date}</li>
-					<li><img src="/responsive/images/komen.png" alt=""><a href="{node-url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts}</a></li>
+					<li><img src="/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts}</a></li>
 				</ul>
 			</div>
 	
 			<div class="entry-content">
+				<!-- START BLOCK : news-av-->
 				<a href="{url}" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
-					<img class="av index-av" width="75" height="75" src="{img-server}/{avatar}" alt="{title}" />
+					<img class="av index-av" width="75" height="75" src="{img-server}/{image}" alt="{title}" />
 				</a>
+				<!-- END BLOCK : news-av-->
 				<p>{intro}</p>
 				<p class="moretag"><a href="{url}"> Lasīt tālāk</a></p>
 				<div class="c"></div>
@@ -77,12 +79,43 @@
 
 </div>
 
-<div class="half-right" style="width: 41%;text-align:left;padding:0 3px;">
+<div class="right span5">
 
 	<h2>Pēdējās aktivitātes</h2>
 	<div id="last-action-list">
 		{index-log}
 	</div>
+	
+	<!-- START BLOCK : poll-box-->
+	<h2>Aptauja</h2>
+	<h3 class="poll-q">{poll-title}</h3>
+	<!-- START BLOCK : poll-answers-->
+	<ol class="poll-answers">
+		<!-- START BLOCK : poll-answers-node-->
+		<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+		<!-- END BLOCK : poll-answers-node-->
+	</ol>
+	Balsojuši: {poll-totalvotes}<br />
+	<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+	<!-- END BLOCK : poll-answers-->
+	<!-- START BLOCK : poll-questions-->
+	<form name="poll" method="post" action="">
+		<fieldset>
+			<!-- START BLOCK : poll-error-->
+			<p>{poll-error}</p>
+			<!-- END BLOCK : poll-error-->
+			<!-- START BLOCK : poll-options-->
+			<ol id="poll-questions">
+				<!-- START BLOCK : poll-options-node-->
+				<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+				<!-- END BLOCK : poll-options-node-->
+			</ol>
+			<input type="submit" name="vote" value="Balsot!" class="button primary" />
+			<!-- END BLOCK : poll-options-->
+		</fieldset>
+	</form>
+	<!-- END BLOCK : poll-questions-->
+	<!-- END BLOCK : poll-box-->
 
 	<!-- START BLOCK : cindex-right-->
 	<h2>Jaunākais blogos</h2>

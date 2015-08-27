@@ -245,7 +245,7 @@ if (!$category->mods_only || im_mod()) {
 
 				$tpl->assign(array(
 					'id' => $article->id,
-					'node-url' => '/read/' . $article->strid,
+					'url' => '/read/' . $article->strid,
 					'title' => $article->title,
 					'timg' => $timg,
 					'date' => $date,
@@ -287,28 +287,30 @@ if (!$category->mods_only || im_mod()) {
 				}
 				
 				if (!$article->author_deleted) {
-					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+					$author_link = '<a rel="author" href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
 				} else {
 					$author_link = '<em>dzēsts</em>';
 				}
+				
+				$user = get_user($article->author);
 
 				$tpl->assign(array(
 					'id' => $article->id,
-					'node-url' => '/read/' . $article->strid,
+					'url' => '/read/' . $article->strid,
 					'title' => $article->title,
 					'views' => $article->views,
 					'date' => $date,
 					'author' => $author_link,
 					'posts' => $article->posts,
-					'level' => $article->level,
-					'gender' => $article->gender,
-					'intro' => $article->text
+					'intro' => $article->text,
+					'avatar' => get_avatar($user, 's')
 				));
 
 				if ($article->avatar) {
 					$tpl->newBlock('list-avatar');
 					$tpl->assign(array(
-						'node-avatar-image' => '/' . trim($article->avatar),
+						'url' => '/read/' . $article->strid,
+						'image' => '/' . trim($article->avatar),
 						'node-avatar-alt' => trim(h($article->title))
 					));
 				}
@@ -339,7 +341,7 @@ if (!$category->mods_only || im_mod()) {
 
 				$tpl->assign(array(
 					'id' => $article->id,
-					'node-url' => '/read/' . $article->strid,
+					'url' => '/read/' . $article->strid,
 					'title' => $article->title,
 					'date' => $article->date,
 					'author' => $author_link

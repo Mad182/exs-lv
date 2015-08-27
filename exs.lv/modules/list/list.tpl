@@ -23,32 +23,46 @@
 <!-- START BLOCK : list-articles-->
 <h1>{title}</h1>
 
-<ul id="mainlist">
-	<!-- START BLOCK : list-->
-	<li>
-		<h2><a href="{node-url}">{title}</a></h2>
-		<ul class="article-info">
-			<li class="date">{date}</li>
-			<li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
-			<li class="profile user-level-{level} user-gender-{gender}">{author}</li>
+
+<!-- START BLOCK : list-->
+
+<article class="post">
+
+	<h2 class="entry-title">
+		<a href="{url}" title="{title}" rel="bookmark">{title}</a>
+	</h2>
+
+	<div class="entry-meta row-fluid">
+		<ul class="clearfix">
+			<li><img alt="" src="{avatar}" class="userav" />{author}</li>
+			<li><img src="/responsive/images/time.png" alt="">{date}</li>
+			<li><img src="/responsive/images/view-bg.png" alt="">{views}</li>
+			<li><img src="/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts} komentāri</a></li>
+			<!--<li class="tagz"><img src="/responsive/images/tags-icon.png" alt=""><a href="#" rel="tag">Grid</a><br /></li>-->
 		</ul>
-		<div class="c"></div>
+	</div>
+
+	<div class="entry-content">
 		<!-- START BLOCK : list-avatar-->
-		<img class="av" src="{img-server}{node-avatar-image}" alt="{node-avatar-alt}" />
+		<a href="{url}" title="Atvērt rakstu" rel="bookmark">
+			<img class="av" src="{img-server}/{image}" alt="{alt}" />
+		</a>
 		<!-- END BLOCK : list-avatar-->
-		<p>{intro} <a href="{node-url}" class="read-more">Lasīt&nbsp;tālāk&nbsp;&raquo;</a></p>
+		<p>{intro}</p>
+		<p class="moretag"><a href="{url}"> Lasīt tālāk</a></p>
 		<div class="c"></div>
-	</li>
-	<!-- END BLOCK : list-->
-</ul>
-<div class="c"></div>
+	</div>
+
+</article>
+<!-- END BLOCK : list-->
+
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-->
 <!-- START BLOCK : list-articles-short-->
 <h1>{title}</h1>
 <ul>
 	<!-- START BLOCK : list-articles-short-node-->
-	<li><a href="{node-url}">{title}</a> no {author}</li>
+	<li><a href="{url}">{title}</a> no {author}</li>
 	<!-- END BLOCK : list-articles-short-node-->
 </ul>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
@@ -70,7 +84,7 @@
 	<!-- START BLOCK : list-forum-node-->
 	<tr>
 		<td><img width="19" height="18" src="//img.exs.lv/bildes/{timg}" alt="" /></td>
-		<td><h3><a href="{node-url}">{title}</a></h3></td>
+		<td><h3><a href="{url}">{title}</a></h3></td>
 		<td class="center">{posts}</td>
 		<td class="last">{date}<br />no:&nbsp;{author}</td>
 	</tr>

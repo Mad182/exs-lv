@@ -138,7 +138,6 @@
 			  <span class="icon-bar"></span>		
 			</a>	
 
-            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
             <div class="nav-collapse" id="swipe-menu-responsive">
 
 			<ul class="nav">
@@ -182,6 +181,17 @@
 				</li>
 				<li><a href="/steam-online">Steam</a></li>
 				<li><a href="/img">Bilžu hostings</a></li>
+				<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
+				<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
+				<li class="dropdown"><a href="/">exs.lv</a>
+					<ul class="sub-menu">
+						<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
+						<li><a href="https://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
+						<li><a href="https://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
+						<li><a href="https://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
+					</ul>
+				</li>
+				
 			</ul>
 
             </div><!--/.nav-collapse -->
@@ -190,62 +200,8 @@
 			
 	</header><!-- #masthead -->
 
-	<div id="headline" class="container">
-	<div class="row-fluid">
-		
-		<div class="span3">
-			<article class="post">
-				<a href="#" title="Permalink to Donec consectetuer ligula vulputate sem tristique cursus" rel="bookmark">
-				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
-				</a>
-				<div class="entry">
-					<h3><a href="#" title="Permalink to Donec consectetuer ligula vulputate sem tristique cursus" rel="bookmark">Donec consectetuer ligula vulputate...</a></h3>
-					<p>5 months ago </p>
-				</div>
-				<div class="clearfix"></div>
-			</article>
-		</div>
-		
-		<div class="span3">
-			<article class="post">
-				<a href="#" title="Permalink to Nam nibh arcu tristique eget pretium vitae libero ac risus" rel="bookmark">
-				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
-				</a>
-				<div class="entry">
-					<h3><a href="#" title="Permalink to Nam nibh arcu tristique eget pretium vitae libero ac risus" rel="bookmark">Nam nibh arcu tristique eget pretiu...</a></h3>
-					<p>5 months ago </p>
-				</div>
-				<div class="clearfix"></div>
-			</article>
-		</div>
-
-		<div class="span3">
-			<article class="post">
-				<a href="#" title="Permalink to Aliquam quam lectus pulvinar urna leo dignissim lorem" rel="bookmark">
-				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
-				</a>
-				<div class="entry">
-					<h3><a href="#" title="Permalink to Aliquam quam lectus pulvinar urna leo dignissim lorem" rel="bookmark">Aliquam quam lectus pulvinar urna l...</a></h3>
-					<p>6 months ago </p>
-				</div>
-				<div class="clearfix"></div>
-			</article>
-		</div>
-
-		<div class="span3">
-			<article class="post">
-				<a href="#" title="Permalink to Phasellus scelerisque massa molestie iaculis lectus pulvinar" rel="bookmark">
-				<img width="225" height="136" src="http://placehold.it/225x136" class="thumb" alt="" />
-				</a>
-				<div class="entry">
-					<h3><a href="#" title="Permalink to Phasellus scelerisque massa molestie iaculis lectus pulvinar" rel="bookmark">Phasellus scelerisque massa molesti...</a></h3>
-					<p>6 months ago </p>
-				</div>
-				<div class="clearfix"></div>
-			</article>
-		</div>	
-		
-	</div>
+	<div id="headline" class="container"{page-persona}>
+		<a href="/"><img src="https://img.exs.lv/bildes/logos/logo_exs.png" alt="Logo" /></a>
 	</div>
 
 	<div id="intr" class="container">
@@ -384,6 +340,47 @@
 			</div>
 			<!-- END BLOCK : movie-search-->
 
+			<!-- START BLOCK : profile-box-->
+			<div class="widget">
+				<h3 class="title"><span>{profile-nick}{custom_title}</span></h3>
+				<a href="{url}">
+					<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
+				</a>
+				<!-- START BLOCK : profilebox-updateavatar-->
+				<div class="form">
+					<p class="notice">
+						Tavam profilam nav attēla. <a href="/user/avatar">Pievienot?</a>
+					</p>
+				</div>
+				<!-- END BLOCK : profilebox-updateavatar-->
+				{profile-top-awards}
+				<div style="padding:0 0 0 15px;">
+					<!-- START BLOCK : profilebox-pm-link-->
+					<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt ziņu</a><br />
+					<!-- END BLOCK : profilebox-pm-link-->
+					<!-- START BLOCK : profilebox-warn-->
+					<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
+					<!-- END BLOCK : profilebox-warn-->
+
+					<!-- START BLOCK : profilebox-blog-link-->
+					<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
+					<!-- END BLOCK : profilebox-blog-link-->
+
+					<!-- START BLOCK : profilebox-twitter-link-->
+					<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+					<!-- END BLOCK : profilebox-twitter-link-->
+
+					<!-- START BLOCK : profilebox-yt-link-->
+					<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
+					<!-- END BLOCK : profilebox-yt-link-->
+
+					<!-- START BLOCK : profilebox-lastfm-link-->
+					<a rel="nofollow" href="http://www.last.fm/user/{name}" id="l-lastfm">{name}</a><br />
+					<!-- END BLOCK : profilebox-lastfm-link-->
+				</div>
+				<div class="c"></div>
+			</div>
+			<!-- END BLOCK : profile-box-->
 
 			<!-- START BLOCK : mb-box-->
 				<div class="widget">
@@ -467,7 +464,62 @@
 					<div id="daily-top" class="ajaxbox">{user-top}</div>
 				</div>
 			</div>
+			
 	
+			<!-- START BLOCK : junk-info-->
+			<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
+			<!-- END BLOCK : junk-info-->
+
+
+			<!-- START BLOCK : group-box-->
+			<h3>{group-title}</h3>
+			<div class="box">
+				<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
+			</div>
+			<!-- END BLOCK : group-box-->
+
+
+
+			<!-- START BLOCK : daily-best-->
+			<h3>Dienas komentārs</h3>
+
+			<div class="box">
+				<ul class="blockhref mb-col">
+					<li>
+						<a href="{best-link}">
+							<img class="av" src="{best-avatar}" width="45" height="45" alt=""/>
+							<span class="author">{best-nick}</span>
+							<span class="post-rating">+{best-rating}</span>
+							{best-comment}
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- END BLOCK : daily-best-->
+
+			<!-- START BLOCK : side-junk-->
+			<h3>/junk</h3>
+			<div class="box junk-box">
+				<!-- START BLOCK : side-junk-node-->
+				<a href="/junk/{id}" title="{title}">
+					<img src="//img.exs.lv{thb}" alt="" class="av" />
+					<span style="">{posts}</span>
+				</a>
+				<!-- END BLOCK : side-junk-node-->
+				<div class="c"></div>
+			</div>
+			<!-- END BLOCK : side-junk-->
+
+			<!-- START BLOCK : daily-wallpaper-->
+			<h3>Dienas tapete</h3>
+			<div id="walpaper" class="box">
+				<a href="//img.exs.lv/dati/wallpapers/{wallpaper-image}">
+					<img src="//img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
+				</a><br />
+				<a href="/wallpapers">Tapetes</a>
+			</div>
+			<!-- END BLOCK : daily-wallpaper-->
+					
         				
 		</div><!-- sidebar -->
 		
@@ -481,47 +533,11 @@
 		<div id="footer-widgets" class="container">
 			<div class="footer-widget span3 block1">
 				<div class="widget widget_latestpost">
-					<h3 class="title"><span>Latest News</span></h3>
-					<div class="latest-posts widget">
-						<div class="latest-post clearfix">
-							<a href="#"><img width="225" height="136" src="http://placehold.it/225x136" class="thumb fl" alt="" title="" /></a>
-							<h4><a href="#" rel="bookmark" title="Lectus non rutrum pulvinar urna leo dignissim lorem">Lectus non rutrum pulvinar urna leo...</a></h4>
-							<div class="post-time">August 12, 2013</div>
-							<div class="ratings" style="float: none">
-								<input class="star" type="radio" name="footer-latest-post-1" value="1" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-1" value="2" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-1" value="3" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-1" value="4" disabled="disabled" checked="checked"/>
-								<input class="star" type="radio" name="footer-latest-post-1" value="5" disabled="disabled"/>
-							</div>
-						</div>
-
-						<div class="latest-post clearfix">
-						<a href="#"><img width="225" height="136" src="http://placehold.it/225x136" class="thumb fl" alt="" title="" /></a>
-						<h4><a href="#" rel="bookmark" title="Suspen disse auctor dapibus neque pulvinar urna leo">Suspen disse auctor dapibus neque p...</a></h4>
-						<div class="post-time">August 11, 2013</div>
-							<div class="ratings" style="float: none">
-								<input class="star" type="radio" name="footer-latest-post-2" value="1" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-2" value="2" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-2" value="3" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-2" value="4" disabled="disabled" checked="checked"/>
-								<input class="star" type="radio" name="footer-latest-post-2" value="5" disabled="disabled"/>
-							</div>
-						</div>
-
-						<div class="latest-post clearfix">
-						<a href="#"><img width="225" height="136" src="http://placehold.it/225x136" class="thumb fl" alt="" title="" /></a>
-						<h4><a href="#" rel="bookmark" title="Porta lorem ipsum dolor sit amet, consectetur adipiscing risus">Porta lorem ipsum dolor sit amet, c...</a></h4>
-						<div class="post-time">August 2, 2013</div>
-							<div class="ratings" style="float: none">
-								<input class="star" type="radio" name="footer-latest-post-3" value="1" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-3" value="2" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-3" value="3" disabled="disabled"/>
-								<input class="star" type="radio" name="footer-latest-post-3" value="4" disabled="disabled" checked="checked"/>
-								<input class="star" type="radio" name="footer-latest-post-3" value="5" disabled="disabled"/>
-							</div>
-						</div>
-					</div>
+					<h3 class="title"><span>Jaunākie raksti</span></h3>
+					{footer-topics}
+					
+					<h3 class="title"><span>Jaunākie miniblogi</span></h3>
+					{footer-mb}
 				</div>
 			</div>
 			
@@ -536,24 +552,7 @@
 				</div>
 			</div>
 			
-			<div class="footer-widget span3 block3">
-				<div class="widget">
-					<h3 class="title"><span>Tag Cloud</span></h3>
-					<div class="tagcloud">
-						<a href='#'>Blog</a>
-						<a href='#'>Framework</a>
-						<a href='#'>Grid</a>
-						<a href='#'>Magazine</a>
-						<a href='#'>Mobile</a>
-						<a href='#'>Responsive</a>
-						<a href='#'>Sidebar</a>
-						<a href='#'>Themes</a>
-						<a href='#'>WordPress</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="footer-widget span3 block4">
+			<div class="footer-widget span6 block4">
 				<div class="widget">
 					<h3 class="title"><span>Lietotāji tiešsaitē</span></h3>
 						<div class="onlusers clearfix">		
@@ -576,275 +575,48 @@
 			
 			<div class="footer-widget span6 block5">
 				<img class="footer-logo" src="/responsive/images/footer-logo.png" alt="Magazine">
-					<div class="footer-text">
-						<h4>About Magazine</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eius mod tempor incididu... </p>
-					</div><div class="clearfix"></div>
+				<div class="footer-text">
+					<h4>Par exs.lv</h4>
+					<p>
+						E-pasts: info@exs.lv<br />
+						Tālrunis: <span id="noindex-phone"></span><br />
+						Teamspeak 3: ts.exs.lv
+					</p>
+				</div>
+				<div class="clearfix"></div>
 			</div>
 
-		</div><!-- footer-widgets -->
+		</div>
 
 	
 		<div id="site-info" class="container">
 		
 			<div id="footer-nav" class="fr">
 				<ul class="menu">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="blog.html">Blog</a></li>
-					<li><a href="contact.html">Contact</a></li>
+					<li><a href="/">Sākumlapa</a></li>
+					<li><a href="/statistika">Statistika</a></li>
+					<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
+					<li><a href="/sitemap">Lapas karte</a></li>
+					<li><a href="/reklama">Reklāma portālā</a></li>
 				</ul>
 			</div>
 
 			<div id="credit" class="fl">
-				<p>All Right Reserved by minimalthemes</p>
+				<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2015 - mājas lapas izstrāde un uzturēšana.</p>
 			</div>
 
-		</div><!-- .site-info -->
+		</div>
 		
 	</footer>
 
-</div><!-- #wrapper -->
+</div>
+
+
+
+<!-- START BLOCK : smartad-eu-->
+<!-- END BLOCK : smartad-eu-->
 
 </body>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		<div id="wrapper">
-			<div id="header"{page-persona}>
-				<div id="logo">
-					<div id="tools-bar">
-						<ul id="site-links">
-							<li><a href="https://m.exs.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-							<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
-							<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
-							<li><a href="https://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
-							<li><a href="https://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
-							<li><a href="https://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
-							<li><a href="/statistika" title="Statistika">Statistika</a></li>
-							<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
-						</ul>
-						{current-date}
-					</div>
-				</div>
-			</div>
-			<div class="c"></div>
 
-
-			<!-- START BLOCK : main-layout-left-->
-			<div id="left">
-				<div class="inner">
-
-
-
-				</div>
-			</div>
-			<!-- END BLOCK : main-layout-left-->
-
-			<div id="content" class="{layout-options}">
-				<div class="inner">
-
-				</div>
-			</div>
-
-			<!-- START BLOCK : main-layout-right-->
-			<div id="right">
-				<div class="inner">
-
-					<!-- START BLOCK : junk-info-->
-					<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
-					<!-- END BLOCK : junk-info-->
-
-					<!-- START BLOCK : profile-box-->
-					<h3>{profile-nick}{custom_title}</h3>
-					<div class="box">
-						<a href="{url}">
-							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
-						</a>
-						<!-- START BLOCK : profilebox-updateavatar-->
-						<div class="form">
-							<p class="notice">
-								Tavam profilam nav attēla. <a href="/user/avatar">Pievienot?</a>
-							</p>
-						</div>
-						<!-- END BLOCK : profilebox-updateavatar-->
-						{profile-top-awards}
-						<div style="padding:0 0 0 15px;">
-							<!-- START BLOCK : profilebox-pm-link-->
-							<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt ziņu</a><br />
-							<!-- END BLOCK : profilebox-pm-link-->
-							<!-- START BLOCK : profilebox-warn-->
-							<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
-							<!-- END BLOCK : profilebox-warn-->
-
-							<!-- START BLOCK : profilebox-blog-link-->
-							<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />
-							<!-- END BLOCK : profilebox-blog-link-->
-
-							<!-- START BLOCK : profilebox-twitter-link-->
-							<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
-							<!-- END BLOCK : profilebox-twitter-link-->
-
-							<!-- START BLOCK : profilebox-yt-link-->
-							<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a><br />
-							<!-- END BLOCK : profilebox-yt-link-->
-
-							<!-- START BLOCK : profilebox-lastfm-link-->
-							<a rel="nofollow" href="http://www.last.fm/user/{name}" id="l-lastfm">{name}</a><br />
-							<!-- END BLOCK : profilebox-lastfm-link-->
-						</div>
-						<div class="c"></div>
-					</div>
-					<!-- END BLOCK : profile-box-->
-					<!-- START BLOCK : group-box-->
-					<h3>{group-title}</h3>
-					<div class="box">
-						<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
-					</div>
-					<!-- END BLOCK : group-box-->
-
-
-
-					<!-- START BLOCK : daily-best-->
-					<h3>Dienas komentārs</h3>
-
-					<div class="box">
-						<ul class="blockhref mb-col">
-							<li>
-								<a href="{best-link}">
-									<img class="av" src="{best-avatar}" width="45" height="45" alt=""/>
-									<span class="author">{best-nick}</span>
-									<span class="post-rating">+{best-rating}</span>
-									{best-comment}
-								</a>
-							</li>
-						</ul>
-					</div>
-					<!-- END BLOCK : daily-best-->
-
-					<!-- START BLOCK : side-junk-->
-					<h3>/junk</h3>
-					<div class="box junk-box">
-						<!-- START BLOCK : side-junk-node-->
-						<a href="/junk/{id}" title="{title}">
-							<img src="//img.exs.lv{thb}" alt="" class="av" />
-							<span style="">{posts}</span>
-						</a>
-						<!-- END BLOCK : side-junk-node-->
-						<div class="c"></div>
-					</div>
-					<!-- END BLOCK : side-junk-->
-
-					<!-- START BLOCK : blog-latest-list-->
-					{html}
-					<!-- END BLOCK : blog-latest-list-->
-					<!-- START BLOCK : poll-box-->
-					<h3>Aptauja</h3>
-					<div class="box">
-						<p><strong>{poll-title}</strong></p>
-						<!-- START BLOCK : poll-answers-->
-						<ol class="poll-answers">
-							<!-- START BLOCK : poll-answers-node-->
-							<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-							<!-- END BLOCK : poll-answers-node-->
-						</ol>
-						Balsojuši: {poll-totalvotes}<br />
-						<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
-						<!-- END BLOCK : poll-answers-->
-						<!-- START BLOCK : poll-questions-->
-						<form name="poll" method="post" action="">
-							<fieldset>
-								<!-- START BLOCK : poll-error-->
-								<p>{poll-error}</p>
-								<!-- END BLOCK : poll-error-->
-								<!-- START BLOCK : poll-options-->
-								<ol id="poll-questions">
-									<!-- START BLOCK : poll-options-node-->
-									<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-									<!-- END BLOCK : poll-options-node-->
-								</ol>
-								<input type="submit" name="vote" value="Balsot!" class="button primary" />
-								<!-- END BLOCK : poll-options-->
-							</fieldset>
-						</form>
-						<!-- END BLOCK : poll-questions-->
-					</div>
-					<!-- END BLOCK : poll-box-->
-
-					<!-- START BLOCK : daily-wallpaper-->
-					<h3>Dienas tapete</h3>
-					<div id="walpaper" class="box">
-						<a href="//img.exs.lv/dati/wallpapers/{wallpaper-image}">
-							<img src="//img.exs.lv/dati/wallpapers/thb/{wallpaper-image}" alt="dienas ekrāntapete" />
-						</a><br />
-						<a href="/wallpapers">Tapetes</a>
-					</div>
-					<!-- END BLOCK : daily-wallpaper-->
-
-					
-
-				</div>
-			</div>
-			<!-- END BLOCK : main-layout-right-->
-			<div class="c"></div>
-
-			<div id="footer">
-
-				<div class="infoblock">
-					<div class="inner">
-						Jaunākie raksti: {footer-topics}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Pēdējie miniblogi: {footer-mb}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-{current-year}</p>
-						<p>
-							E-pasts: info@exs.lv<br />
-							Tālrunis: <span id="noindex-phone"></span><br />
-							Mājas lapu izstrāde un hostings.
-						</p>
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<ul id="internal-links">
-							<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-							<li><a href="/sitemap">Lapas karte</a></li>
-							<li><a href="/reklama">Reklāma portālā</a></li>
-						</ul>
-						<p>Teamspeak 3:<br />ts.exs.lv</p>
-					</div>
-				</div>
-				<div class="c"></div>
-			</div>
-		</div>
-		
-		<!-- START BLOCK : smartad-eu-->
-		<!-- END BLOCK : smartad-eu-->
-
-	</body>
 </html>
 

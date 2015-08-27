@@ -33,15 +33,11 @@ $articles = $db->get_results("
 		`pages`.`views` AS `views`,
 		`pages`.`attach` AS `attach`,
 		`pages`.`category` AS `category`,
-		`pages`.`intro` AS `intro`,
-		`users`.`nick` AS `nick`,
-		`users`.`level` AS `level`
+		`pages`.`intro` AS `intro`
 	FROM
-		`pages`,
-		`users`
+		`pages`
 	WHERE
-		`pages`.`category` IN (11,80,323,565,611,651) AND
-		`users`.`id` = `pages`.`author`
+		`pages`.`category` IN (11,80,323,565,611,651)
 	ORDER BY
 		`pages`.`date` DESC
 	LIMIT
@@ -63,10 +59,9 @@ if ($articles) {
 	
 
 	foreach ($articles as $article) {
-		if (!$article->nick) {
-			$article->nick = 'Nezināms';
-			$article->level = 0;
-		}
+
+		$user = get_user($article->author);
+
 		$tpl->newBlock('list-node');
 
 		$date = display_time(strtotime($article->date));
@@ -79,17 +74,27 @@ if ($articles) {
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
 
+		$cat = get_cat($article->category);
+
+		if (!$user->deleted) {
+			$author_link = '<a rel="author" href="/user/' . $user->id . '" rel="author">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+		} else {
+			$author_link = '<em>dzēsts</em>';
+		}
+
 		$tpl->assign(array(
-			'cat' => get_cat($article->category)->title,
+			'cat' => $cat->title,
+			'cat-strid' => $cat->textid,
 			'articles-node-id' => $article->id,
 			'url' => '/read/' . $article->strid,
-			'aurl' => mkurl('user', $article->author, $article->nick),
+			'aurl' => '/user/' . $user->id,
 			'title' => $article->title,
 			'views' => $article->views,
 			'date' => $date,
-			'author' => usercolor($article->nick, $article->level),
+			'author' => $author_link,
 			'posts' => $article->posts,
-			'intro' => $article->text
+			'intro' => $article->text,
+			'avatar' => get_avatar($user, 's')
 		));
 		if ($article->avatar) {
 			$tpl->newBlock('list-avatar');
@@ -100,4 +105,6 @@ if ($articles) {
 		}
 	}
 }
+
+unset($pagepath);
 
