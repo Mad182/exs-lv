@@ -351,9 +351,9 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$page_number = 0;
 				while ($total - $startnext > 0) {
 					$page_number++;
-					$class = '';
+					$class = ' class="page-numbers "';
 					if ($skip === $startnext) {
-						$class = ' class="selected"';
+						$class = ' class="page-numbers selected"';
 					}
 					$out .= ' <a href="' . $base . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 					$startnext = $startnext + $end;

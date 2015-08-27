@@ -34,13 +34,6 @@ jQuery(document).ready(function($) {
     $('.dropdown .sub-menu').addClass('dropdown-menu');
 });
 
-
-jQuery(document).ready(function($) {
-  
-	$("#tabnav").idTabs(); 	
- 
-});
-
 /* Swipe menu initial js */
 jQuery(document).ready(function($) {
 

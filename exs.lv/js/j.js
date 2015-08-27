@@ -373,7 +373,7 @@ $(document).ready(function() {
 		'titleShow': false
 	});
 
-	$('.plus, .minus').live('click', function(e) {
+	$('.c-rate').on('click', '.plus, .minus', function(e) {
 		e.preventDefault();
 
 		var elem = $(this).parent();
@@ -434,10 +434,12 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
-	$('.tabs li a.ajax').live('click', function(e) {
+	$('.tabs li a.ajax, #tabnav li a.ajax').live('click', function(e) {
 		e.preventDefault();
 
 		var clicked = $(this);
+		
+		console.log('click');
 
 		var tabs = {
 			'last-sidebar-tab': {tab1: 'pages', tab2: 'gallery'},

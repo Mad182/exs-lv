@@ -1,4 +1,3 @@
-<h1>Jaunākais portālā</h1>
 
 <ul class="tabs">
 	<li><a href="/index/news"{newsactive}>Jaunumi</a></li>
