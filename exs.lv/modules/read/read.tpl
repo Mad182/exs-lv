@@ -126,13 +126,13 @@
 
 
 <article class="post" id="full-story">
-	<h2 class="entry-title">
+	<h1>
 		<span class="the_title">{title}
 			<!-- START BLOCK : title-lv-->
 			<span class="slash">/</span> <small>{title}</small>
 			<!-- END BLOCK : title-lv-->
 		</span>
-	</h2>
+	</h1>
 	<div class="entry-meta row-fluid">
 		<ul class="clearfix">
 			<li><img alt='' src='/responsive/images/avatar.png' height='15' width='15' />{author}</li>

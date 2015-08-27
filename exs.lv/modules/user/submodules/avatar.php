@@ -45,7 +45,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 			$foo->file_new_name_body = $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';
-			$foo->image_x = 220;
+			$foo->image_x = 260;
 			$foo->image_y = 260;
 			$foo->allowed = array('image/*');
 			$foo->image_ratio_crop = false;

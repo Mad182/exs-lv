@@ -1786,7 +1786,7 @@ function get_latest_images() {
 	$out .= '</p><div class="clear"></div><p class="core-pager ajax-pager">';
 
 	for ($i = 1; $i <= 5; $i++) {
-		$out .= ' <a class="';
+		$out .= ' <a class="page-numbers ';
 		if ($i == 1) {
 			$out .= 'default-gallery-tab ';
 		}
@@ -2500,7 +2500,7 @@ function get_latest_music() {
 	$out .= '</ul><p class="core-pager ajax-pager">';
 
 	for ($i = 1; $i <= 5; $i++) {
-		$out .= ' <a class="';
+		$out .= ' <a class="page-numbers ';
 		if ($i == 1) {
 			$out .= 'default-minibog-tab ';
 		}

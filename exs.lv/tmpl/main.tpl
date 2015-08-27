@@ -41,7 +41,6 @@
 		<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/bootstrap.min.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/jquery.rating.js'></script>
-		<script type='text/javascript' src='{static-server}/responsive/js/jquery.idTabs.min.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/jquery.simplyscroll.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/fluidvids.min.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/jPages.js'></script>
@@ -53,7 +52,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.raty.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,swfobject.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -251,7 +250,7 @@
 						<!-- END BLOCK : user-write-->
 						<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
 						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a class="notes" href="/piezimes" title="Piezīmes"><img src="{img-server}/bildes/fugue-icons/notebook.png" width="16" height="16" alt="Piezīmes" /></a></li>
+						<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
 						<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
 					</ul>
 					<!-- END BLOCK : user-menu-->
@@ -332,7 +331,7 @@
 			<div class="box">
 				<form id="movie-search" method="get" action="/filmas/search">
 					<!-- START BLOCK : genre-node-->
-					<label style="font-size: 10px;line-height: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label><br />
+					<label style="font-size: 10px;line-height: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label>
 					<!-- START BLOCK : genre-node-->
 
 					<input type="submit" value="Meklēt" class="button primary small" />
@@ -387,11 +386,11 @@
 				<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
 				<div id="tabwidget" class="widget tab-container box"> 
 					<ul id="tabnav" class="clearfix"> 
-						<li><h3><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><img src="/responsive/images/view-white-bg.png" alt="Visi">Visi</a></h3></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><img src="/responsive/images/view-white-bg.png" alt="Visi">Visi</a></li>
 						<!-- START BLOCK : mb-tabs-->
-						<li><h3><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><img src="/responsive/images/time-white.png" alt="Draugu">Draugu</a></h3></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><img src="/responsive/images/time-white.png" alt="Draugu">Draugu</a></li>
 						<!-- END BLOCK : mb-tabs-->
-						<li><h3><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><img src="/responsive/images/komen-putih.png" alt="Klausās">Klausās</a></h3></li>
+						<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><img src="/responsive/images/komen-putih.png" alt="Klausās">Klausās</a></li>
 					</ul> 
 
 					<div id="tab-content miniblog-block" class="ajaxbox">
@@ -574,7 +573,7 @@
 			</div>
 			
 			<div class="footer-widget span6 block5">
-				<img class="footer-logo" src="/responsive/images/footer-logo.png" alt="Magazine">
+				<img class="footer-logo" src="/bildes/exs_dark_160.png" alt="exs.lv">
 				<div class="footer-text">
 					<h4>Par exs.lv</h4>
 					<p>
@@ -602,7 +601,7 @@
 			</div>
 
 			<div id="credit" class="fl">
-				<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2005-2015 - mājas lapas izstrāde un uzturēšana.</p>
+				<p>&copy; 2005-2015, <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a> - mājas lapas izstrāde un uzturēšana.</p>
 			</div>
 
 		</div>
@@ -610,7 +609,6 @@
 	</footer>
 
 </div>
-
 
 
 <!-- START BLOCK : smartad-eu-->
