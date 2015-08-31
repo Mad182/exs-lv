@@ -27,7 +27,7 @@
 			<textarea cols="20" rows="3" name="reason" style="height: 80px;">{reason}</textarea>
 		</p>
 		<p>
-			<input class="button" type="submit" name="submit_warn" value="Saglabāt" />
+			<input class="button primary" type="submit" name="submit_warn" value="Saglabāt" />
 		</p>
 	</fieldset>
 </form>
@@ -44,63 +44,72 @@
 			<textarea cols="20" rows="3" name="remove_reason" style="height: 80px;"></textarea>
 		</p>
 		<p>
-			<input class="button" type="submit" name="remove_warn" value="Noņemt" />
+			<input class="button primary" type="submit" name="remove_warn" value="Noņemt" />
 		</p>
 	</fieldset>
 </form>
 <!-- END BLOCK : warns-remove-->
+<div class="tabMain">
+<div class="left span6">
 
-<!-- START BLOCK : warns-list-->
-<div class="form">
-	<h3>Aktīvie brīdinājumi</h3>
-	<!-- START BLOCK : warns-active-->
-	<div class="error">
-		<span style="font-size:90%">
-			<a href="{aurl}">{author}</a> {date} {edit} {remove}
-		</span><br />
-		<strong>Iemesls:</strong> {reason}    
-		<div class="c"></div>
+	<!-- START BLOCK : warns-list-->
+	<div class="form">
+		<h3 class="title">Aktīvie brīdinājumi</h3>
+		<!-- START BLOCK : warns-active-->
+		<div class="error">
+			<span style="font-size:90%">
+				<a href="{aurl}">{author}</a> {date} {edit} {remove}
+			</span><br />
+			<strong>Iemesls:</strong> {reason}    
+			<div class="c"></div>
+		</div>
+		<!-- END BLOCK : warns-active-->
+		<h3 class="title">Brīdinājumu arhīvs</h3>
+		<!-- START BLOCK : warns-inactive-->
+		<div class="notice">
+			<span style="font-size:90%">
+				<a href="{aurl}">{author}</a> {date}
+			</span><br />
+			<strong>Iemesls:</strong> {reason}
+			<strong>Noņemšanas iemesls:</strong> {remove_reason}
+			<div class="c"></div>
+		</div>
+		<!-- END BLOCK : warns-inactive-->
 	</div>
-	<!-- END BLOCK : warns-active-->
-	<h3>Brīdinājumu arhīvs</h3>
-	<!-- START BLOCK : warns-inactive-->
-	<div class="notice">
-		<span style="font-size:90%">
-			<a href="{aurl}">{author}</a> {date}
-		</span><br />
-		<strong>Iemesls:</strong> {reason}
-		<strong>Noņemšanas iemesls:</strong> {remove_reason}
-		<div class="c"></div>
-	</div>
-	<!-- END BLOCK : warns-inactive-->
+	<!-- END BLOCK : warns-list-->
+
 </div>
-<!-- END BLOCK : warns-list-->
 
-<h3>Banu vēsture</h3>
-<div class="form">
+<div class="right span6">
 
-	<!-- START BLOCK : bans-active-->
-	<p class="error">
-		<span style="font-size:90%">
-			<a href="{aurl}">{author}</a> {date}
-		</span><br />
-		<strong>Ilgums:</strong> {length}<br />
-		<strong>Iemesls:</strong> {reason}
-	</p>
-	<!-- END BLOCK : bans-active-->
+	<h3 class="title">Banu vēsture</h3>
+	<div class="form">
 
-	<!-- START BLOCK : bans-inactive-->
-	<p class="notice">
-		<span style="font-size:90%">
-			<a href="{aurl}">{author}</a> {date}
-		</span><br />
-		<strong>Ilgums:</strong> {length}<br />
-		<strong>Iemesls:</strong> {reason}
-	</p>
-	<!-- END BLOCK : bans-inactive-->
+		<!-- START BLOCK : bans-active-->
+		<p class="error">
+			<span style="font-size:90%">
+				<a href="{aurl}">{author}</a> {date}
+			</span><br />
+			<strong>Ilgums:</strong> {length}<br />
+			<strong>Iemesls:</strong> {reason}
+		</p>
+		<!-- END BLOCK : bans-active-->
 
-	<!-- START BLOCK : bans-no-->
-	<p class="success">Nav saglabātu banu :)</p>
-	<!-- END BLOCK : bans-no-->
+		<!-- START BLOCK : bans-inactive-->
+		<p class="notice">
+			<span style="font-size:90%">
+				<a href="{aurl}">{author}</a> {date}
+			</span><br />
+			<strong>Ilgums:</strong> {length}<br />
+			<strong>Iemesls:</strong> {reason}
+		</p>
+		<!-- END BLOCK : bans-inactive-->
 
+		<!-- START BLOCK : bans-no-->
+		<p class="success">Nav saglabātu banu :)</p>
+		<!-- END BLOCK : bans-no-->
+
+	</div>
+
+</div>
 </div>

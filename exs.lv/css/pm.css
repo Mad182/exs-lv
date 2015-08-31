@@ -14,7 +14,7 @@
 	line-height: 16px
 }
 #pm-table tr:hover td {
-	background: #F5F5F6
+	background-color: #F5F5F6
 }
 #pm-table td.title {
 	font-weight: 700
@@ -45,7 +45,7 @@
 	text-align: center
 }
 #pm-table tr.read-0 td {
-	background: #fbe6f3
+	background-color: #fbe6f3
 }
 #pm-read-footer {
 	border-top: 1px solid #eee;

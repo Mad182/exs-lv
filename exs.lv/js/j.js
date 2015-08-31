@@ -106,7 +106,7 @@ Tinycon.setOptions({
 	fallback: true
 });
 
-$(document).ready(function() {
+jQuery(document).ready(function($) {
 
 	$.ajaxSetup({
 		cache: false
@@ -114,7 +114,7 @@ $(document).ready(function() {
 
 	/* 	tiek izsaukta, nospiežot uz lietotāja nosūdzēšanas podziņas;
 	 atver fancybox ar pārkāpuma aprakstīšanas formu */
-	$('.report-user').live('click', function(e) {
+	$('.report-user').on('click', function(e) {
 		$.ajax({
 			dataType: "json",
 			url: $(this).attr('href') + '?_=1',
@@ -126,7 +126,7 @@ $(document).ready(function() {
 	});
 
 	/*	izmanto moderatoru sadaļā, lai apskatītu iesniegtās sūdzības saturu */
-	$('.get-report-content').live('click', function(e) {
+	$('.get-report-content').on('click', function(e) {
 		$.getJSON(($(this).attr('href') + '?_=1'), function(response) {
 			$.fancybox(response.message);
 		});
@@ -135,7 +135,7 @@ $(document).ready(function() {
 
 	/* 	izmanto sūdzību iesūtīšanai; tiek izsaukta,
 	 nospiežot submit pogu fancybox logā */
-	$('#report-form').live('submit', function() {
+	$('#report-form').on('submit', function() {
 		$.ajax({
 			type: "POST",
 			dataType: "json",
@@ -158,7 +158,7 @@ $(document).ready(function() {
 	});
 
 	/* aizver atvērto fancybox, nospiežot uz "Pārdomāju" podziņas */
-	$('.fancy-close').live('click', function() {
+	$('.fancy-close').on('click', function() {
 		$.fancybox.close();
 		return false;
 	});
@@ -176,7 +176,7 @@ $(document).ready(function() {
 	});
 
 	/* ļauj apskatīt dzēsto miniblogu ierakstu bijušo saturu */
-	$('.deleted-content').live('click', function(e) {
+	$('.deleted-content').on('click', function(e) {
 		$.get(($(this).attr('href')), function(response) {
 			$.fancybox(response);
 		});
@@ -184,14 +184,14 @@ $(document).ready(function() {
 	});
 
 	/* paslēpj/parāda iesniegto sūdzību paziņojumu pilno saturu */
-	$('.report-full').live('click', function(e) {
+	$('.report-full').on('click', function(e) {
 		$content = $(this).siblings('.report-full-content').html();
 		$(this).parent().html($content);
 		e.preventDefault();
 	});
 
 	/* dzēš minibloga ierakstu bez lapas pārlādes */
-	$('.delete-fast').live('click', function(e) {
+	$('.delete-fast').on('click', function(e) {
 		if (confirm("Vai tiešām vēlies veikt šo darbību?")) {
 			var link_element = $(this);
 			var content_element = $(this).parent().siblings('.post-content');
@@ -235,11 +235,11 @@ $(document).ready(function() {
 		Tinycon.setBubble(new_msg_count);
 	}
 
-	$('.confirm').live('click', function() {
+	$('.confirm').on('click', function() {
 		return confirm("Vai tiešām vēlies veikt šo darbību?");
 	});
 
-	$('#new-tags').live('submit', function(e) {
+	$('#new-tags').on('submit', function(e) {
 		$.ajax({
 			type: "POST",
 			url: $(this).attr('action'),
@@ -256,7 +256,7 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
-	$('#new-tags-mb').live('submit', function(e) {
+	$('#new-tags-mb').on('submit', function(e) {
 		$.ajax({
 			type: "POST",
 			url: $(this).attr('action'),
@@ -274,7 +274,7 @@ $(document).ready(function() {
 	});
 
 	//lapu slēgšana
-	$('.ajax-checkbox').live('change', function(e) {
+	$('.ajax-checkbox').on('change', function(e) {
 		$.ajax({
 			type: "POST",
 			url: $(this).parent().parent().parent().attr('action'),
@@ -284,7 +284,7 @@ $(document).ready(function() {
 	});
 	
 	//spēļu servera monitora pārlādēšana
-	$('.gameserver-reload').live('click', function(e) {
+	$('.gameserver-reload').on('click', function(e) {
 		e.preventDefault();
 
 		$(this).parent().parent().parent().fadeTo(250, 0.7);
@@ -295,7 +295,7 @@ $(document).ready(function() {
 	});
 
 	//mb komentara forma
-	$('#addresponse').live('submit', function(e) {
+	$('#addresponse').on('submit', function(e) {
 		clearInterval(mbRefreshId);
 		mbRefreshId = '';
 		$('#mbresponse-submit').hide();
@@ -318,7 +318,7 @@ $(document).ready(function() {
 	});
 
 	//atbildet uz minibloga komentaru
-	$('.mb-reply-to').live('click', function(e) {
+	$('.mb-reply-to').on('click', function(e) {
 		e.preventDefault();
 		if ($(this).siblings('.reply-ph').html() != '') {
 			return false;
@@ -331,7 +331,7 @@ $(document).ready(function() {
 	});
 
 	//atpakaļ uz atbildēšanu galvenajam mb
-	$('.mb-reply-main').live('click', function(e) {
+	$('.mb-reply-main').on('click', function(e) {
 		e.preventDefault();
 		if ($('.reply-ph-default').html() != '') {
 			return false;
@@ -343,7 +343,7 @@ $(document).ready(function() {
 		$('#response-to').val(mbid);
 	});
 
-	$('#random-fact .moar').live('click', function(e) {
+	$('#random-fact .moar').on('click', function(e) {
 		e.preventDefault();
 		$('#random-fact').fadeTo(250, 0.5);
 		$('#random-fact').load($(this).attr('href'), function() {
@@ -351,17 +351,17 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#addpic').live('click', function(e) {
+	$('#addpic').on('click', function(e) {
 		e.preventDefault();
 		$('#newpic').toggle(200);
 	});
 
-	$('.spoiler-title').live('click', function(e) {
+	$('.spoiler-title').on('click', function(e) {
 		e.preventDefault();
 		$(this).siblings('.spoiler-content').toggle(200);
 	});
 
-	$('#debug-details-trigger').live('click', function(e) {
+	$('#debug-details-trigger').on('click', function(e) {
 		e.preventDefault();
 		$('#debug-details').toggle(200);
 	});
@@ -386,7 +386,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.ajax-pager a').live('click', function(e) {
+	$('body').on('click', '.ajax-pager a', function(e) {
 		e.preventDefault();
 
 		var elem = $(this).parent().parent();
@@ -396,7 +396,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.jaunk-queue-ajax').live('click', function(e) {
+	$('.jaunk-queue-ajax').on('click', function(e) {
 		e.preventDefault();
 
 		var elem = $(this).parent().parent();
@@ -427,17 +427,17 @@ $(document).ready(function() {
 	);
 
 	/* pārbauda vai lietotājs eksistē, piemēram pie reģistrācijas vai nika maiņas */
-	$('.usercheck').live('change', function() {
+	$('.usercheck').on('change', function() {
 		$('.usercheck-response').load('/userexists/?user=' + encodeURIComponent($(this).val()));
 	});
 
 	/* flash message (brīdinājumu un paziņojumu) aizvēršana */
-	$('#close-flash-message').live('click', function(e) {
+	$('#close-flash-message').on('click', function(e) {
 		$('#flash-message').fadeOut(500);
 		e.preventDefault();
 	});
 
-	$('.tabs li a.ajax, #tabnav li a.ajax').live('click', function(e) {
+	$('.tabs li a.ajax, #tabnav li a.ajax').on('click', function(e) {
 		e.preventDefault();
 
 		var clicked = $(this);
@@ -469,7 +469,7 @@ $(document).ready(function() {
 		clicked.addClass('active');
 	});
 
-	$('.movie-liker a').live('click', function(e) {
+	$('.movie-liker a').on('click', function(e) {
 		e.preventDefault();
 
 		var elem = $(this).parent();
@@ -503,29 +503,8 @@ $(document).ready(function() {
 		}
 	});
 
-
-	$('.ajax-module').live('click', function(e) {
-		e.preventDefault();
-
-		var href = $(this).attr("href");
-		var title = $(this).attr("title");
-
-		if (typeof (title) == 'undefined') {
-			title = '';
-		}
-
-		$('#current-module').fadeTo(120, 0.7);
-		$('#current-module').load(href, function() {
-			$('#current-module').fadeTo(150, 1);
-			document.title = title;
-		});
-
-		history.pushState('', title, href);
-	});
-
-
 	/* pm vesture */
-	$('#reply-history').live('click', function(e) {
+	$('#reply-history').on('click', function(e) {
 		e.preventDefault();
 
 		$('#pm-history-container').load($(this).attr('href'));
@@ -534,7 +513,7 @@ $(document).ready(function() {
 
 
 	/* junk vote */
-	$('#junk-vote-wrap a').live('click', function(e) {
+	$('#junk-vote-wrap a').on('click', function(e) {
 		e.preventDefault();
 
 		$('#junk-vote-wrap').load($(this).attr('href'));
@@ -542,7 +521,7 @@ $(document).ready(function() {
 
 
 	/* auto piemeklētie filmu avatari */
-	$('.imgselect').live('click', function(e) {
+	$('.imgselect').on('click', function(e) {
 		e.preventDefault();
 
 		$('.imgselect').removeClass('clicked');

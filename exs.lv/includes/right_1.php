@@ -81,15 +81,6 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 			'count' => $count
 		));
 	}
-} elseif (!empty($ingroup)) {
-	$tpl->newBlock('group-box');
-	$ingroup->av_alt = 1;
-	$av = get_avatar($ingroup, 'l');
-	$tpl->assign(array(
-		'group-id' => $ingroup->id,
-		'group-title' => $ingroup->title,
-		'group-av' => $av
-	));
 }
 
 /*$wallpaper = $db->get_var("SELECT `image` FROM `wallpapers` WHERE `date` <= '" . date('Y-m-d') . "' ORDER BY `date` DESC LIMIT 1");

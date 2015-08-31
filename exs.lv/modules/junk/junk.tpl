@@ -1,4 +1,4 @@
-<ul class="tabs nav nav-tabs">
+<ul class="tabs">
 	<li><a href="/junk">Jaunākie</a></li>
 	<li><a href="/junk/commented">Pēdējie komentētie</a></li>
 	<li><a href="/junk/add">Pievienot savu</a></li>

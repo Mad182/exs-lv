@@ -52,7 +52,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,swfobject.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/swfobject.js{jquery-tools},tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -172,6 +172,9 @@
 				<li><a href="/steam-online">Steam</a></li>
 				<li><a href="/img">Bilžu hostings</a></li>
 				<li><a href="/junk" title="Bilžu sadaļa">/junk</a></li>
+				<!-- START BLOCK : junk-info-->
+				<li><a href="/adm">Junk admin{count}</a></li>
+				<!-- END BLOCK : junk-info-->
 				<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 				<li class="dropdown"><a href="/">exs.lv</a>
 					<ul class="sub-menu">
@@ -432,6 +435,7 @@
 				</div>
 			</div>
 
+			<!--
 			<!-- START BLOCK : groups-l-list-->
 			<div class="widget">
 				<h3 class="title"><span>Jaunākās grupas</span></h3>
@@ -445,6 +449,7 @@
 				</div>
 			</div>
 			<!-- END BLOCK : groups-l-list-->
+			-->
 
 			<div class="widget">
 				<h3 class="title"><span>Šodien aktīvākie</span></h3>
@@ -457,21 +462,6 @@
 					<div id="daily-top" class="ajaxbox">{user-top}</div>
 				</div>
 			</div>
-			
-	
-			<!-- START BLOCK : junk-info-->
-			<p><a href="/adm">Attēlu apstiprināšana{count}</a></p>
-			<!-- END BLOCK : junk-info-->
-
-
-			<!-- START BLOCK : group-box-->
-			<h3>{group-title}</h3>
-			<div class="box">
-				<a href="/group/{group-id}"><img id="profile-image" src="{group-av}" alt="{group-alt}" /></a>
-			</div>
-			<!-- END BLOCK : group-box-->
-
-
 
 			<!-- START BLOCK : daily-best-->
 			<h3>Dienas komentārs</h3>

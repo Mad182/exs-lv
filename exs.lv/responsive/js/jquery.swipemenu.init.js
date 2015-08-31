@@ -1,6 +1,3 @@
-/* Swipe menu initial js */
-
-
 jQuery(document).ready(function($) {
 
 	jQuery('#responsive-menu-button').sidr({

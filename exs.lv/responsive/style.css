@@ -24,6 +24,11 @@ body {
 	line-height: 0;
 }
 
+img {
+	max-width:100%;
+	height: auto;
+}
+
 .entry-content img,
 .comment-content img,
 .widget img {
@@ -1261,7 +1266,7 @@ ul#menu-footer {
 /* tab widget */
 
 #tabwidget ul {
-  margin:0;
+  margin:0 0 5px 0;
   list-style:none;
 }
 
@@ -1911,6 +1916,7 @@ img.twit-pic {
 }
 
 @media (min-width:768px) and (max-width:979px) {
+
   .navbar .nav > li > a {
     border-right:none;
   }
@@ -1980,6 +1986,32 @@ img.twit-pic {
 }
 
 @media (max-width:767px) {
+
+	#exs-groups li {
+		width: 50% !important;
+	}
+	
+	#exs-groups li h3 {
+		font-size: 90%; !important;
+	}
+	body {
+		padding: 0 !important;
+	}
+	
+	  #header,
+	  #headline,
+	  #intr,
+	  #content,
+	  #footer-widgets,
+	  #site-info {
+	    padding-left:10px;
+	    padding-right:10px;
+	  }
+	
+	#page {
+		margin: 0;
+	}
+	
   .navbar .nav > li > a {
     border-right:none;
   }
@@ -2219,6 +2251,10 @@ miniblogi
 #miniblog-list li {
 	padding: 3px 0 7px;
 }
+#miniblog-list li .av {
+	width: 45px;
+	height: 45px;
+}
 
 .imgs, ul#mainlist, #downloads, .video-thb p, #latest-blogs, #wallpapers, .small-userlist, .responses li p, #miniblog-list, .mb-col, .bloglist {
 	margin: 0;
@@ -2397,7 +2433,7 @@ miniblogi
 }
 
 .comment-signature img {
-	max-width: 460px;
+	max-width: 90%;
 }
 
 #add-comment-form {
@@ -2542,7 +2578,6 @@ a.friend img, .comments-avatar {
 /* socialo mediju share pogas */
 #share-block {
 	margin: 30px auto 20px;
-	width: 340px;
 }
 
 .social-button {
@@ -3034,6 +3069,11 @@ user-menu */
 	color: #444;
 }
 
+#user-menu li a:hover {
+	border-bottom: 3px solid #3d4c54
+}
+
+
 #user-menu li.selected a {
 	border-bottom: 3px solid #81b752
 }
@@ -3125,7 +3165,6 @@ user-menu */
 	margin: 0;
 	margin-top: -1px;
 	padding-top: 1px;
-	text-shadow: 0 1px 0 #59add2;
 }
 
 #user-menu li ul li a, #user-menu li.selected ul li a, #user-menu li:hover ul li a {
@@ -4065,10 +4104,10 @@ a.friend-right {
 #exs-groups li {
 	background: transparent;
 	height: 87px;
-	width: 32%;
+	width: 33.32%;
 	float: left;
 	margin: 0;
-	padding: 5px;
+	padding: 5px 0;
 }
 
 #exs-groups li p {
@@ -4090,7 +4129,7 @@ a.friend-right {
 #comments dt {
 	border-top: 4px solid #B5C0CF;
 	float: left;
-	width: 117px;
+	width: 127px;
 	margin: 0;
 	padding: 0;
 	text-align: center;
@@ -4098,20 +4137,18 @@ a.friend-right {
 }
 
 #comments dd {
-	margin: 0 0 0 115px;
+	margin: 0 0 0 125px;
 	padding: 0;
 	border-top: 4px solid #B5C0CF;
 	text-align: left;
 }
 
 #comments dt .username {
-	font-weight: 700;
 	display: block;
 	line-height: 14px;
 	background: #ECEFF5;
 	padding: 3px;
-	margin: 0 0 3px 0;
-	font-size: 12px;
+	margin: 0 0 5px 0;
 	text-align: left;
 }
 
@@ -4809,11 +4846,11 @@ img.show-banned:hover {
 	padding: 0 0 0 19px;
 }
 
-html .red, html .r {
+html .red, html .r, .blockhref li span.r, body #content .r {
 	color: #ef6000;
 }
 
-html .green, html .g {
+html .green, html .g, body #content .g {
 	color: #60ef00;
 }
 
@@ -4934,6 +4971,47 @@ html .lb {
 	height: 62px;
 }
 
+.form .error, .form .notice, .form .success, .toggle-replies {
+	margin-bottom: 1em;
+	border: 2px solid #ddd;
+	padding: .8em;
+}
+
+.toggle-replies {
+	margin: 8px 0;
+	display: block;
+}
+
+.form .error {
+	background: #FBE3E4;
+	color: #8a1f11;
+	border-color: #FBC2C4;
+}
+
+.form .notice {
+	background: #FFF6BF;
+	color: #514721;
+	border-color: #FFD324;
+}
+
+.form .success {
+	background: #E6EFC2;
+	color: #264409;
+	border-color: #C6D880;
+}
+
+.form .error a {
+	color: #369;
+}
+
+.form .notice a {
+	color: #369;
+}
+
+.form .success a {
+	color: #369;
+}
+
 
 .imgs .items a {
 	float: left;
@@ -4955,7 +5033,7 @@ html .lb {
 	height: 14px;
 	width: 18px;
 	background: #444;
-	color: #888;
+	color: #999;
 	text-align: center;
 }
 
@@ -4968,31 +5046,34 @@ html .lb {
 	margin: 0;
 }
 
-.latest-imgs a span.container {
+.latest-imgs a span.c {
 	margin: 0;
 	position: relative;
+	width: 72px;
+	height: 72px;
+	display: block;
 }
 
-.latest-imgs a span.container img {
+.latest-imgs a span.c img {
 	max-width: 100%;
 	height: auto;
 }
 
-.latest-imgs a span.container span {
-	font-size: 11px;
+.latest-imgs a span.c span {
+	font-size: 12px;
 	position: absolute;
-	top: 3px;
+	bottom: 3px;
 	right: 3px;
-	height: 14px;
-	line-height: 14px;
+	height: 16px;
+	line-height: 16px;
 	width: 18px;
 	background: #444;
-	color: #888;
+	color: #bbb;
 	text-align: center;
 	float: right;
 }
 
-.latest-imgs a span.container span.unread, .imgs a span.unread {
+.latest-imgs a span.c span.unread, .imgs a span.unread {
 	background: #ef6000;
 	color: #333;
 }
@@ -5509,4 +5590,7 @@ input[type="button"].button-block {
   border-width: 0;
 }
 
+a.lightbox img {
+	margin: 2px 0;
+}
 

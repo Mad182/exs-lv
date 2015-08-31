@@ -4,7 +4,6 @@
  *
  */
 
-jQuery.noConflict(); 
  
 (function($) {
 	$(function() {

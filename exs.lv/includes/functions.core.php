@@ -1416,7 +1416,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			$val->date = strtotime($val->date);
 			if (!$auth->mobile) {
 				$out .= '<div class="mb-av"><a id="m' . $val->id . '" href="/user/' . $val->author . '">';
-				$out .= '<img width="45" height="45" class="av" src="' . get_avatar($val, 's') . '" alt="' . h($val->nick) . '" /></a>';
+				$out .= '<img class="av" src="' . get_avatar($val, 's') . '" alt="' . h($val->nick) . '" /></a>';
 				if (!empty($val->decos)) {
 					$decos = unserialize($val->decos);
 					if (!empty($decos)) {
@@ -1681,25 +1681,16 @@ function get_latest_posts() {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
 
-			if ($lang == 1) {
-				$out .= '<li><a href="' . $url . $skip . '">';
+			$out .= '<li><a href="' . $url . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
-				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
-					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span></a></li>';
-				} else {
-					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span></a></li>';
-				}
+			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span>';
+
+			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
+				$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']</a></li>';
 			} else {
-				$out .= '<li><a href="' . $url . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
-
-				$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span>';
-
-				if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
-					$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']</a></li>';
-				} else {
-					$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]</a></li>';
-				}
+				$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]</a></li>';
 			}
+
 		}
 
 		$out .= '</ul><p class="core-pager ajax-pager">';
@@ -1771,7 +1762,7 @@ function get_latest_images() {
 				$img = $img_server . '/' . $late->thb;
 			}
 
-			$out .= '<a title="' . h($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="container"><img src="' . $img . '" alt="" />';
+			$out .= '<a title="' . h($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="c"><img src="' . $img . '" alt="" />';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= '<span>' . $late->posts . '</span>';
