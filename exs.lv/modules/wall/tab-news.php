@@ -9,7 +9,7 @@ if (isset($_GET['skip'])) {
 	$skip = 0;
 }
 
-$end = 8;
+$end = 6;
 
 $date = display_time(time());
 
@@ -26,6 +26,7 @@ $articles = $db->get_results("
 			`pages`.`posts` AS `posts`,
 			`pages`.`text` AS `text`,
 			`pages`.`avatar` AS `avatar`,
+			`pages`.`image` AS `image`,
 			`pages`.`intro` AS `intro`,
 			`pages`.`attach` AS `attach`
 		FROM
@@ -77,7 +78,14 @@ if(!empty($articles)) {
 			'avatar' => get_avatar($user, 's')
 		));
 
-		if (!empty($article->avatar)) {
+		if (!empty($article->image)) {
+			$tpl->newBlock('news-image');
+			$tpl->assign(array(
+				'url' => '/read/' . $article->strid,
+				'title' => $article->title,
+				'image' => trim($article->image)
+			));
+		} elseif (!empty($article->avatar)) {
 			$tpl->newBlock('news-av');
 			$tpl->assign(array(
 				'url' => '/read/' . $article->strid,

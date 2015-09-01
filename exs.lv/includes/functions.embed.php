@@ -446,7 +446,7 @@ function embed_youtube($matches, $wide = 0) {
 
 	// saturs, uz kura nospiežot, caur javascript ielādēs $videocode
 	$return = '<div><div class="auto-embed-placeholder">';
-	$return .= '<img width="240" height="180" ';
+	$return .= '<img style="width:240px;height:180px" ';
 	$return .= 'src="https://i4.ytimg.com/vi/' . $safe . '/0.jpg" ';
 	$return .= 'alt="' . $title . '" /><a class="play-button" ';
 	$return .= 'onclick="$(this).parent().parent().html(\'' . $videocode . '\');';

@@ -15,8 +15,8 @@
 </div>
 <h4>HTML (sīkbilde ar linku)</h4>
 <div class="box">
-	<code>&lt;a href=&quot;https://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox post-url thb-image&quot;&gt;
-		&lt;img src=&quot;https://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;
+	<code>&lt;a href=&quot;https://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox post-url thb-image&quot;&gt;<br />
+		&lt;img src=&quot;https://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;<br />
 		&lt;/a&gt;</code>
 </div>
 <h4>Tiešais links</h4>

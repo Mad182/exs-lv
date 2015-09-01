@@ -705,6 +705,15 @@ span.date,
   border-bottom:none;
 }
 
+.topic-image img {
+	width:100%;
+}
+
+.topic-image {
+	display:block;
+	margin: -22px 0 5px 0;
+}
+
 #home-middle .entry h4,
 #home-bottom .entry h4,
 .latest-posts .entry h4 {
@@ -5604,5 +5613,15 @@ input[type="button"].button-block {
 
 a.lightbox img {
 	margin: 2px 0;
+}
+
+/* lietotaja apbalvojumi profilā */
+
+#listsub-list {
+	list-style: none;
+}
+
+#listsub-list li {
+	padding: 2px 20px;
 }
 

@@ -39,7 +39,7 @@
 
 <!-- START BLOCK : news-->
 
-<div class="left span7">
+<div class="left span6">
 	<!-- START BLOCK : cindex-list-->
 	<h1>Jaunumi</h1>
 	<ul class="index-list main">
@@ -59,8 +59,13 @@
 			</div>
 	
 			<div class="entry-content">
+				<!-- START BLOCK : news-image-->
+				<a class="topic-image image_thumb_zoom" href="{url}" title="{title}" rel="bookmark">
+					<img width="75" height="75" src="{img-server}/topics/frontpage/{image}" alt="{title}" />
+				</a>
+				<!-- END BLOCK : news-image-->
 				<!-- START BLOCK : news-av-->
-				<a href="{url}" title="Permalink to Lectus non rutrum pulvinar urna leo dignissim lorem" rel="bookmark">
+				<a href="{url}" title="{title}" rel="bookmark">
 					<img class="av index-av" width="75" height="75" src="{img-server}/{image}" alt="{title}" />
 				</a>
 				<!-- END BLOCK : news-av-->
@@ -76,7 +81,7 @@
 	<!-- END BLOCK : cindex-list-->
 </div>
 
-<div class="right span5" id="home-middle">
+<div class="right span6" id="home-middle">
 
 	<h2 class="title"><a href="/kasnotiek"><span>Pēdējās aktivitātes</span></a></h2>
 	<div id="last-action-list">

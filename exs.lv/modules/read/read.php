@@ -354,6 +354,64 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$foo->file_overwrite = true;
 						$foo->process('dati/bildes/avatari/');
 						if ($foo->processed) {
+						
+						
+						
+							//new article images
+							$dir1 = substr($article->id, -1);
+							if (!$dir1) {
+								$dir1 = 0;
+							}
+							$dir2 = substr($article->id, -2, 1);
+							if (!$dir2) {
+								$dir2 = 0;
+							}
+							$path = $dir1 . '/' . $dir2;
+							rmkdir(IMG_PATH . '/topics/large/' . $path . '/');
+							rmkdir(IMG_PATH . '/topics/thb/' . $path . '/');
+
+							$file_title = mkslug($article->title . '-image');
+							$foo->allowed = array('image/*');
+							$foo->image_resize = true;
+							$foo->image_ratio_crop = true;
+							$foo->image_y = 215;
+							$foo->image_x = 145;
+							$foo->file_new_name_body = $file_title;
+							$foo->image_ratio_no_zoom_in = false;
+							$foo->image_ratio_crop = true;
+							$foo->jpeg_quality = 98;
+							$foo->file_overwrite = true;
+							$foo->image_convert = 'jpg';
+							$foo->process(IMG_PATH . '/topics/thb/' . $path . '/');
+							$foo->file_new_name_body = $file_title;
+							$foo->image_resize = true;
+							$foo->image_convert = 'jpg';
+							$foo->image_x = 800;
+							$foo->image_y = 800;
+							$foo->allowed = array('image/*');
+							$foo->image_ratio_crop = false;
+							$foo->image_ratio_no_zoom_in = true;
+							$foo->jpeg_quality = 98;
+							$foo->file_auto_rename = false;
+							$foo->file_overwrite = true;
+							$foo->process(IMG_PATH . '/topics/large/' . $path . '/');
+							$foo->file_new_name_body = $file_title;
+							$foo->image_resize = true;
+							$foo->image_convert = 'jpg';
+							$foo->image_x = 600;
+							$foo->image_y = 240;
+							$foo->allowed = array('image/*');
+							$foo->image_ratio_crop = true;
+							$foo->image_ratio_no_zoom_in = true;
+							$foo->jpeg_quality = 98;
+							$foo->file_auto_rename = false;
+							$foo->file_overwrite = true;
+							$foo->process(IMG_PATH . '/topics/frontpage/' . $path . '/');
+							$article->image = $path . '/' . $foo->file_dst_name;
+							
+							
+							
+
 							$foo->file_new_name_body = $topicid;
 							$foo->image_resize = true;
 							$foo->image_convert = 'jpg';
@@ -394,6 +452,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						title = ('$title'),
 						avatar = ('$article->avatar'),
 						sm_avatar = ('$article->sm_avatar'),
+						image = ('$article->image'),
 						category = ('$topiccat'),
 						edit_time = ('" . time() . "'),
 						edit_user = ('$auth->id'),
