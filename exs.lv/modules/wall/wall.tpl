@@ -1,7 +1,7 @@
 
 <ul class="tabs">
-	<li><a href="/index/news"{newsactive}>Jaunumi</a></li>
-	<li><a href="/index/wall"{wallactive}>Siena</a></li>
+	<li><a href="/index/news"{newsactive}><span class="news">Jaunumi</a></span></li>
+	<li><a href="/index/wall"{wallactive}><span class="wall">Siena</a></span></li>
 </ul>
 
 <div class="tabMain">

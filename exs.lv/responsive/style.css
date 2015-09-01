@@ -2701,6 +2701,14 @@ vecie tabi (pagaidu variantā */
 	background: url('//img.exs.lv/bildes/fugue-icons/audioscrobbler.png') no-repeat 0 50%;
 }
 
+.news {
+	background: url('//img.exs.lv/bildes/fugue-icons/newspaper.png') no-repeat 0 50%;
+}
+
+.wall {
+	background: url('//img.exs.lv/bildes/fugue-icons/direction.png') no-repeat 0 50%;
+}
+
 .tabs {
 	list-style: none;
 	line-height: 24px;
@@ -3565,15 +3573,19 @@ a.friend-right {
 	padding: 0;
 	float: left;
 	width: 33.2%;
-	height: 84px;
+	height: 95px;
 	text-align: center;
 	background: transparent;
 	line-height: 1.1;
 }
 
 #today-top img {
-	width: 45px;
-	height: 45px;
+	max-width: 90px;
+	max-height: 90px;
+	min-width: 50px;
+	min-height: 50px;
+	width: 55%;
+	height: auto;
 	float: none;
 	margin: 0 auto;
 	display: block;

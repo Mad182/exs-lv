@@ -2609,7 +2609,7 @@ function user_top() {
 	$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
 	if ($tusers) {
 		foreach ($tusers as $tuser) {
-			$out .= '<li><a href="/user/'. $tuser->id.'"><img class="av" src="'.get_avatar($tuser, 's').'" alt="" />';
+			$out .= '<li><a href="/user/'. $tuser->id.'"><img class="av" src="'.get_avatar($tuser).'" alt="" />';
 			$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id).'</a><span class="count">('.$tuser->today.')</span></li>';
 		}
 	}
@@ -2637,7 +2637,7 @@ function group_top() {
 
 			$group->av_alt = 1;
 			
-			$out .= '<li><a href="'.$group->link.'"><img class="av" src="'. get_avatar($group, 's').'" alt="" />';
+			$out .= '<li><a href="'.$group->link.'"><img class="av" src="'. get_avatar($group).'" alt="" />';
 			$out .= '<small>'.$group->title.'</small></a><span class="count">('.$group->posts_today.')</span></li>';
 		}
 
