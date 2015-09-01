@@ -143,15 +143,15 @@ class AuthBase {
 	function login($username, $password, $xsrf = null) {
 		global $db, $site_access, $lang;
 
-		session_regenerate_id(true);
-
 		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
-			$this->log('Neizdevies login mēģinājums (CSRF check failed)');
+			$this->log('Neizdevies login mēģinājums (CSRF check failed, user: ' . h($username) . ', ref: ' . h($_SERVER['HTTP_REFERER']) . ')');
 			set_flash('Ielogoties neizdevās! Mēģini vēlreiz!', 'error');
-			sleep(rand(1, 3));
+			sleep(1);
 			$this->error = 2;
 			return false;
 		}
+
+		session_regenerate_id(true);
 
 		$login = sanitize($username);
 
@@ -283,6 +283,15 @@ class AuthBase {
 		global $m;
 
 		$is_tor = 'n';
+
+		$wl = array(
+			'212.93.100.40'
+		);
+
+		if(in_array($this->ip, $wl)) {
+			return false;
+		}
+
 		if (($is_tor = $m->get('t-'.md5($this->ip))) === false) {
 		
 			$value = curl_get('http://check.getipintel.net/check.php?ip=' . $this->ip);

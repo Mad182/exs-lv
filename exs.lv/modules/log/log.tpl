@@ -21,7 +21,7 @@
 		<th>Lietotājs</th>
 		<th>Vieta</th>
 		<th>Darbība</th>
-		<th>Laiks</th>
+		<th style="width:126px">Laiks</th>
 		<th>IP</th>
 	</tr>
 	<!-- START BLOCK : logs-list-node-->

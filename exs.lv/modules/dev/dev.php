@@ -1,4 +1,5 @@
 <?php
+
 exit;
 $number_of_days_from_now = 3299;
 $now = time();

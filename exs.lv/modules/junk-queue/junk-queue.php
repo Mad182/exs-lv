@@ -91,3 +91,4 @@ if (!empty($junks)) {
 		$tpl->assignAll($junk);
 	}
 }
+
