@@ -53,6 +53,8 @@ if ($logs) {
 		if ($log->user_id) {
 			$who = get_user($log->user_id);
 			$log->user_id = '<a href="/user/' . $who->id . '">' . usercolor($who->nick, $who->level, false, $who->id) . '</a>';
+		} else {
+			$log->user_id = '';
 		}
 
 		$place = '';
@@ -73,7 +75,7 @@ if ($logs) {
 				$link = '/group/' . $log->foreign_key;
 			}
 			$place = '<a href="' . $link . '">group: ' . $group->title . '</a>';
-		} else {
+		} elseif(!empty($log->foreign_table) && !empty($log->foreign_key)) {
 			$place = $log->foreign_table . '-' . $log->foreign_key;
 		}
 
@@ -83,7 +85,7 @@ if ($logs) {
 			'log-who' => $log->user_id,
 			'log-place' => $place,
 			'log-action' => $log->action,
-			'log-time' => $log->created,
+			'log-time' => str_replace('-', '.', $log->created),
 		));
 	}
 }
