@@ -27,15 +27,15 @@
 		
 		<meta name="viewport" content="width=device-width" />
 
-		<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='swipemenu-css'  href='{static-server}/responsive/css/swipemenu.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='simplyscroll-css'  href='{static-server}/responsive/css/jquery.simplyscroll.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='jPages-css'  href='{static-server}/responsive/css/jPages.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='rating-css'  href='{static-server}/responsive/css/jquery.rating.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='Roboto-css'  href='//fonts.googleapis.com/css?family=Roboto&amp;subset=latin,cyrillic,latin-ext' type='text/css' media='all' />
+		<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic&subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500&subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
 
 		<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>

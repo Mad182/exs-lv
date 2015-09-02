@@ -208,8 +208,9 @@ ul.author-social li {
 
 h1, h2, h3, h4, h5 {
   color:#939ead;
-  font-family:Roboto, sans-serif;
-  font-weight:bold;
+  font-family: 'Ubuntu', Roboto, sans-serif !important;
+  font-weight: 500;
+  line-height: 1.2;
 }
 h1 { font-size: 24px }
 h2 { font-size: 20px }
@@ -333,7 +334,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 #scroller li .title {
-  font-weight:bold;
+  font-weight:500;
 }
 
 #scroller li .title:after {
@@ -756,7 +757,6 @@ span.date,
 /* Single post */
 
 .entry-content {
-  font-size:13px;
   padding:20px 0 40px;
 }
 
@@ -781,7 +781,7 @@ h2.entry-title {
 .entry-cat {
   border-bottom:5px solid #FA8484;
   font-size:13px;
-  font-weight:bold;
+  font-weight:500;
   line-height:30px;
   height: 30px;
   overflow: hidden;
@@ -1507,7 +1507,7 @@ a.jp-next:hover {
 .holder a.jp-current,
 a.jp-current:hover {
   color:#FF4242;
-  font-weight:bold;
+  font-weight:500;
 }
 
 .holder a.jp-disabled,
@@ -1572,7 +1572,7 @@ a.jp-disabled:hover {
 .holder2 a.jp-current,
 a.jp-current:hover {
   color:#FF4242;
-  font-weight:bold;
+  font-weight:500;
 }
 
 .holder2 a.jp-disabled,
@@ -3029,7 +3029,7 @@ ol li.code-row {
 	padding: 3px 0;
 	margin: 0;
 	line-height: 1.2;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 .index-list li h3 a {
@@ -3489,7 +3489,7 @@ a.friend-right {
 }
 
 #flash-message a {
-	font-weight: bold;
+	font-weight: 500;
 }
 
 #flash-message.success {
@@ -4351,7 +4351,7 @@ html .banned {
 	border:1px solid #E4E2E2 !important
 }
 .table-light .light-header th {
-	font-weight:bold;
+	font-weight:500;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	border:0 !important;
 	background:#F5F5F5;
@@ -4632,7 +4632,7 @@ li.view_more {
 }
 .fancy-title {
 	margin:5px 0;
-	font-weight:bold;
+	font-weight:500;
 	font-size:14px;
 	color:#234C79;
 	padding:0 0 5px;

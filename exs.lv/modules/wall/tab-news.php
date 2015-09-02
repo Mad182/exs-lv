@@ -204,7 +204,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 		$tpl->assign(array(
 			'node-url' => '/read/' . $article->strid,
-			'title' => $article->title,
+			'title' => textlimit($article->title, 30, '...'),
 			'date' => $date,
 			'intro' => trim_intro($article->text),
 			'av' => $av
