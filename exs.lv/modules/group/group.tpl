@@ -26,7 +26,7 @@
 
 <!-- START BLOCK : group-pay-->
 <div class="tabMain">
-	<div style="float: left;width: 69%;overflow: hidden">
+	<div class="span7" style="overflow: hidden">
 
 		<p>Iestāšanās šajā grupā maksā 3 exs kredītpunktus. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti.</p>
 		{pay}
@@ -49,7 +49,7 @@
 		</script>
 
 	</div>
-	<div style="float: right;width: 29%">
+	<div class="span5">
 
 		<!-- START BLOCK : nmembers-pay-->
 		<h3>Jaunākie biedri</h3>
@@ -73,11 +73,11 @@
 
 <!-- START BLOCK : group-info-->
 <div class="tabMain">
-	<div style="float: left;width: 69%;overflow: hidden">
+	<div class="span7" style="overflow: hidden">
 		{group-text}
 		{module_content}
 	</div>
-	<div style="float: right;width: 29%">
+	<div class="span5">
 		<!-- START BLOCK : group-info-apply-->
 		<p><a class="l-gmember" href="{group-link}/apply?token={token}">Pieteikties</a></p>
 		<!-- END BLOCK : group-info-apply-->

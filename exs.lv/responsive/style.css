@@ -3047,13 +3047,13 @@ user-menu */
 }
 
 #user-menu li ul#user-group-menu {
-	width: 453px;
+	width: 483px;
 }
 
 #user-menu li ul#user-group-menu li {
 	float: left;
-	width: 142px;
-	padding: 3px 4px;
+	width: 152px;
+	padding: 3px;
 	height: 28px;
 }
 
