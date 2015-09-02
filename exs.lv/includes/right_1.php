@@ -136,10 +136,10 @@ if (!empty($best)) {
 
 //neapstiprināto junk bilžu skaits modiem
 if (im_mod()) {
-	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");
+	$newimgs = 3;
 	$iappstr = '';
 	if ($newimgs) {
-		$iappstr = '&nbsp;(<span class="r">' . $newimgs . '</span>)';
+		$iappstr = '&nbsp;(<strong class="r">' . $newimgs . '</strong>)';
 	}
 	$tpl->newBlock('junk-info');
 	$tpl->assign(array(
@@ -160,7 +160,7 @@ if ($auth->skin == 1) {
  * exs.lv kreisais sidebar
  */
 $sel = 'pages';
-if($auth->ok === true && empty($_COOKIE['last-sidebar-tab']) || $_COOKIE['last-sidebar-tab'] == 'events') {
+if($auth->ok === true && empty($_COOKIE['last-sidebar-tab']) || !empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'events') {
 	$out = get_notify($auth->id);
 	$sel = 'events';
 } elseif (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {

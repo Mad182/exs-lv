@@ -199,81 +199,81 @@
 
 	<div id="intr" class="container">
 		<div class="row-fluid">
-			<div class="brnews span9">
-					<!-- START BLOCK : user-menu-->
-					<ul id="user-menu">
-						<li{profile-sel}>
-							<a href="/user/{currentuser-id}">Profils</a>
-							<ul>
-								<li><a href="/user/edit">Publiskā profila informācija</a></li>
-								<li><a href="/user/avatar">Mans avatars</a></li>
-								<li><a href="/user/settings">Mani iestatījumi</a></li>
-								<li><a href="/user/security">Paroles maiņa</a></li>
-								<li><a href="/user/email">E-pasta adreses maiņa</a></li>
-								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
-							</ul>
-						</li>
-						<li{cat-sel-319}><a href="/grupas">Grupas</a>
-							<!-- START BLOCK : mygroups-->
-							<ul id="user-group-menu">
-								<!-- START BLOCK : myg-node-->
-								<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
-								<!-- END BLOCK : myg-node-->
-							</ul>
-							<!-- END BLOCK : mygroups-->
-						</li>
-						<li{gal-sel}><a href="/gallery/{currentuser-id}">Galerija</a></li>
-						<!-- START BLOCK : user-modlink-->
-						<li{cat-sel-83}><a href="#">Mod</a>
-							<ul>
-								<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
-								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-								<li{cat-sel-2082}><a href="/grouped-profiles">Profilu sasaiste</a></li>
-								<li{cat-sel-1822}><a href="/crows">Atbrīvotās vārnas</a></li>
-								<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
-								<li{cat-sel-1132}><a href="/findby">Profilu meklētājs</a></li>
-								<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
-								<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
-								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-								<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
-								<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
-								<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
-								<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
-								<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
-								<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
-							</ul>
-						</li>
-						<!-- END BLOCK : user-modlink-->
-						<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-						<!-- START BLOCK : user-approvelink-->
-						<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
-						<!-- END BLOCK : user-approvelink-->
-						<!-- START BLOCK : user-write-->
-						<li{cat-sel-116}><a href="/write">Raksti</a></li>
-						<!-- END BLOCK : user-write-->
-						<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
-						<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
-						<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
-						<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
-					</ul>
-					<!-- END BLOCK : user-menu-->
-					<!-- START BLOCK : login-form-->
-					<form id="login-form" action="{page-loginurl}" method="post">
-						<fieldset>
-							<input type="hidden" name="xsrf_token" value="{xsrf}" />
-							<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
-							<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=https%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
+			<div class="span9">
+				<!-- START BLOCK : user-menu-->
+				<ul id="user-menu" class="nav nav-pills nav-justified">
+					<li class="dropdown">
+						<a href="/user/{currentuser-id}">Profils</a>
+						<ul class="dropdown-menu">
+							<li{gal-sel}><a href="/gallery/{currentuser-id}">Mana galerija</a></li>
+							<li><a href="/user/edit">Publiskā profila informācija</a></li>
+							<li><a href="/user/avatar">Mans avatars</a></li>
+							<li><a href="/user/settings">Mani iestatījumi</a></li>
+							<li><a href="/user/security">Paroles maiņa</a></li>
+							<li><a href="/user/email">E-pasta adreses maiņa</a></li>
+							<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a href="/grupas">Grupas</a>
+						<!-- START BLOCK : mygroups-->
+						<ul class="dropdown-menu" id="user-group-menu">
+							<!-- START BLOCK : myg-node-->
+							<li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="" />{title}{add}</a></li>
+							<!-- END BLOCK : myg-node-->
+						</ul>
+						<!-- END BLOCK : mygroups-->
+					</li>
+					<!-- START BLOCK : user-modlink-->
+					<li class="dropdown"><a href="#">Mod</a>
+						<ul class="dropdown-menu">
+							<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
+							<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
+							<li{cat-sel-2082}><a href="/grouped-profiles">Profilu sasaiste</a></li>
+							<li{cat-sel-1822}><a href="/crows">Atbrīvotās vārnas</a></li>
+							<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
+							<li{cat-sel-1132}><a href="/findby">Profilu meklētājs</a></li>
+							<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
+							<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
+							<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+							<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
+							<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
+							<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
+							<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
+							<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
+							<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
+						</ul>
+					</li>
+					<!-- END BLOCK : user-modlink-->
+					<li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
+					<!-- START BLOCK : user-approvelink-->
+					<li{cat-sel-116}><a href="/write/list">Raksti{new-approve}</a></li>
+					<!-- END BLOCK : user-approvelink-->
+					<!-- START BLOCK : user-write-->
+					<li{cat-sel-116}><a href="/write">Raksti</a></li>
+					<!-- END BLOCK : user-write-->
+					<li{cat-sel-111}><a href="/myblog">Blogs</a></li>
+					<li{mb-sel}><a href="/say/{currentuser-id}">Miniblogs</a></li>
+					<li{cat-sel-585}><a href="/piezimes">Piezīmes</a></li>
+					<li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
+				</ul>
+				<!-- END BLOCK : user-menu-->
+				<!-- START BLOCK : login-form-->
+				<form id="login-form" action="{page-loginurl}" method="post">
+					<fieldset>
+						<input type="hidden" name="xsrf_token" value="{xsrf}" />
+						<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
+						<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+						<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+						<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+						<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=https%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
 
-							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+						<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
-							<a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Log in</span></a>
+						<a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Log in</span></a>
 
-						</fieldset>
-					</form>
-					<!-- END BLOCK : login-form-->
+					</fieldset>
+				</form>
+				<!-- END BLOCK : login-form-->
 			</div>
 		
 		

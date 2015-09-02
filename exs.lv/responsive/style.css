@@ -325,33 +325,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
   background:#f7f7f7;
   border-bottom:1px solid #d4d4d4;
   border-top:1px solid #d4d4d4;
-  height:41px;
   padding:0 40px;
-}
-
-.brnews {
-  max-height:45px;
-  padding:7px 0;
-}
-
-.brnews a {
-  color:#555E6B;
-}
-
-.brnews .entry {
-  display:inline-block;
-}
-
-.brnews h3 {
-  background:url("images/brnews-bg1.png") no-repeat;
-  background-size:110px;
-  color:#FFF;
-  float:left;
-  font-size:11px;
-  line-height:1;
-  margin:0;
-  padding:6px 7px 7px;
-  width:115px;
 }
 
 #scroller li {
@@ -400,6 +374,14 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 #intr input#searchsubmit {
   position:absolute;
   right:0;
+}
+
+#intr form, #intr form p {
+	margin: 0;
+}
+
+#intr ul.nav {
+	margin-bottom: 0;
 }
 
 /* searchform */
@@ -2070,9 +2052,6 @@ img.twit-pic {
 
 @media (max-width:479px) {
 
-  .brnews h3 {
-    float:none;
-  }
   #intr .search {
     margin-top:20px;
   }
@@ -2604,7 +2583,7 @@ a.friend img, .comments-avatar {
 }
 
 .social-button.facebook {
-	width: 110px;
+	width: 100px;
 }
 
 table .quote {
@@ -3051,74 +3030,10 @@ ol li.code-row {
 user-menu */
 
 #user-menu {
-	padding: 0;
+	padding: 5px 0 0;
 	float: left;
 	list-style: none;
 	margin: 0;
-}
-
-
-#user-menu li {
-	background: transparent;
-	float: left;
-	position: relative;
-	margin: 0;
-	padding: 0;
-}
-
-#user-menu li a {
-	float: left;
-	outline: none;
-	line-height: 32px;
-	height: 32px;
-	margin: 0;
-	padding: 0 11px;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-	-webkit-border-top-left-radius: 2px;
-	-webkit-border-top-right-radius: 2px;
-	-moz-border-radius-topleft: 2px;
-	-moz-border-radius-topright: 2px;
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	text-shadow: 0 1px 0 #fff;
-	color: #444;
-}
-
-#user-menu li a:hover {
-	border-bottom: 3px solid #3d4c54
-}
-
-
-#user-menu li.selected a {
-	border-bottom: 3px solid #81b752
-}
-
-#user-menu li.selected li a {
-	border-bottom: 0;
-}
-
-
-#user-menu li ul {
-	position: absolute;
-	display: none;
-	z-index: 100;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	background: #111;
-	border: 2px solid #2090cc;
-	-webkit-border-radius:2px;
-	-moz-border-radius:2px;
-	-ms-border-radius:2px;
-	-o-border-radius:2px;
-	border-radius:2px;
-	top: 30px;
-}
-#user-menu li ul li {
-	background: #333 url('//img.exs.lv/m/a/mad/dark.png') repeat 0 0;
-	margin: 0 1px 1px 0;
 }
 
 #user-menu li ul#user-group-menu {
@@ -3152,62 +3067,12 @@ user-menu */
 	height: 28px;
 }
 
-#user-menu li:hover ul {
-	display: block;
-}
-
-#user-menu li li {
-	background: transparent;
-	display: inline;
-	padding: 0;
-	margin: 0;
-}
-
-#user-menu li li a {
-	display: block;
-	height: auto;
-	width: 170px;
-	margin: 1px 0 0;
-	padding: 1px 6px;
-}
-
-#user-menu li a:hover {
-	color: #4ab0d7;
-}
-
-#user-menu li.selected a, #user-menu li a:hover, #user-menu li:hover a {
-	background: #fff;
-	color: #222;
-	text-decoration: none;
-	margin: 0;
-	margin-top: -1px;
-	padding-top: 1px;
-}
-
-#user-menu li ul li a, #user-menu li.selected ul li a, #user-menu li:hover ul li a {
-	background: transparent;
-	height: 30px;
-	margin: 0;
-	line-height: 30px;
-	text-shadow: 0 1px 0 #111;
-	color: #fff;
-	-webkit-border-radius:0;
-	-moz-border-radius:0;
-	-ms-border-radius:0;
-	-o-border-radius:0;
-	border-radius:0;
-}
-
-#user-menu li ul li:hover a {
-	color: #2ba7d7;
-}
-
 /* login forma */
 #login-form {
 	float: right;
 	height: 16px;
 	margin: 0;
-	padding: 4px 0 0;
+	padding: 9px 0 0;
 }
 
 #login-form fieldset {
