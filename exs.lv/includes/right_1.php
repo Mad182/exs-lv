@@ -136,7 +136,7 @@ if (!empty($best)) {
 
 //neapstiprināto junk bilžu skaits modiem
 if (im_mod()) {
-	$newimgs = 3;
+	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");;
 	$iappstr = '';
 	if ($newimgs) {
 		$iappstr = '&nbsp;(<strong class="r">' . $newimgs . '</strong>)';
@@ -288,4 +288,7 @@ if ($category->module == 'movies') {
 		}
 	}
 }
+
+
+include(CORE_PATH . '/modules/core/poll.php');
 

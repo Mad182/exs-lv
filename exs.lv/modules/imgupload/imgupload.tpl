@@ -3,21 +3,21 @@
 <!-- START BLOCK : img-upload-success-->
 <h4>BBCODE</h4>
 <div class="box">
-	<code>[img]https://img.exs.lv/{path}/{file}[/img]</code>
+	<pre>[img]https://img.exs.lv/{path}/{file}[/img]</pre>
 </div>
 <h4>BBCODE (sīkbilde ar linku)</h4>
 <div class="box">
-	<code>[url=&quot;https://img.exs.lv/{path}/{file}&quot;][img]https://img.exs.lv/{path}/small/{file}[/img][/url]</code>
+	<pre>[url=&quot;https://img.exs.lv/{path}/{file}&quot;][img]https://img.exs.lv/{path}/small/{file}[/img][/url]</pre>
 </div>
 <h4>HTML</h4>
 <div class="box">
-	<code>&lt;img src=&quot;https://img.exs.lv/{path}/{file}&quot; alt=&quot;{file}&quot; /&gt;</code>
+	<pre>&lt;img src=&quot;https://img.exs.lv/{path}/{file}&quot; alt=&quot;{file}&quot; /&gt;</pre>
 </div>
 <h4>HTML (sīkbilde ar linku)</h4>
 <div class="box">
-	<code>&lt;a href=&quot;https://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox post-url thb-image&quot;&gt;<br />
-		&lt;img src=&quot;https://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;<br />
-		&lt;/a&gt;</code>
+	<pre>&lt;a href=&quot;https://img.exs.lv/{path}/{file}&quot; class=&quot;lightbox post-url thb-image&quot;&gt;
+		&lt;img src=&quot;https://img.exs.lv/{path}/small/{file}&quot; alt=&quot;{file}&quot; /&gt;
+		&lt;/a&gt;</pre>
 </div>
 <h4>Tiešais links</h4>
 <div class="box">

@@ -9,7 +9,7 @@ if (isset($_GET['skip'])) {
 	$skip = 0;
 }
 
-$end = 6;
+$end = 4;
 
 $date = display_time(time());
 
@@ -60,12 +60,12 @@ if(!empty($articles)) {
 		$user = get_user($article->author);
 		
 		if (!$user->deleted) {
-			$author_link = '<a rel="author" href="/user/' . $user->id . '" rel="author">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+			$author_link = '<a href="/user/' . $user->id . '" rel="author" title="Autora profils">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
 		} else {
 			$author_link = '<em>dzēsts</em>';
 		}
 
-		$date = display_time(strtotime($article->date));
+		$date = display_time(strtotime($article->date), false);
 		$tpl->assign(array(
 			'url' => '/read/' . $article->strid,
 			'aurl' => '/user/' . $user->id,
@@ -151,7 +151,7 @@ foreach ($articles as $article) {
 
 	$tpl->assign(array(
 		'node-url' => '/read/' . $article->strid,
-		'title' => textlimit($article->title, 26, '...'),
+		'title' => textlimit($article->title, 30, '...'),
 		'date' => $date,
 		'intro' => trim_intro($article->text),
 		'av' => $av
@@ -199,7 +199,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 		$av = '';
 		if (!empty($article->avatar)) {
-			$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+			$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 		}
 
 		$tpl->assign(array(
@@ -214,6 +214,4 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 $tpl->assignGlobal('index-log', get_index_events());
 $tpl->assignGlobal('newsactive', ' class="active"');
-
-include(CORE_PATH . '/modules/core/poll.php');
 

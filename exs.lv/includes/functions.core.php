@@ -785,16 +785,31 @@ function date_lv($date, $time = '') {
  * @param int $time Unix timestamp
  * @return string Human readable datetime
  */
-function display_time($time) {
+function display_time($time, $include_hours = true) {
 	if (!$time) {
 		$out = '';
-	} elseif ($time >= strtotime('today')) {
-		$out = 'Šodien, ' . date('G:i', $time);
-	} elseif ($time >= strtotime('yesterday')) {
-		$out = 'Vakar, ' . date('G:i', $time);
+	} elseif($include_hours) {
+	
+		if ($time >= strtotime('today')) {
+			$out = 'Šodien, ' . date('G:i', $time);
+		} elseif ($time >= strtotime('yesterday')) {
+			$out = 'Vakar, ' . date('G:i', $time);
+		} else {
+			$out = date('d.m.Y. H:i', $time);
+		}
+	
 	} else {
-		$out = date('d.m.Y. H:i', $time);
+	
+		if ($time >= strtotime('today')) {
+			$out = 'Šodien, ' . date('G:i', $time);
+		} elseif ($time >= strtotime('yesterday')) {
+			$out = 'Vakar, ' . date('G:i', $time);
+		} else {
+			$out = date('d.m.Y', $time);
+		}
+	
 	}
+	
 	return $out;
 }
 

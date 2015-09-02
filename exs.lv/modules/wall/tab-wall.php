@@ -297,7 +297,7 @@ if (!empty($events)) {
 	$tpl->newBlock('wall');
 	$i = 0;
 	foreach ($events as $event) {
-		if ($i++ >= 20) {
+		if ($i++ >= 15) {
 			break;
 		}
 		$tpl->newBlock('wall-node');

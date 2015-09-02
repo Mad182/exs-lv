@@ -973,15 +973,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$tpl->assign('like', $like);
 					}
 				}
-			} elseif ($article->avatar) {
-
-				if (in_array($article->category, array(81, 1))) {
-					$tpl->newBlock('article-avatar-box');
-					$tpl->assign(array(
-						'article-avatar-image' => trim($article->avatar),
-						'article-avatar-alt' => trim(h($article->title))
-					));
-				}
 			}
 
 			if ($auth->ok) {

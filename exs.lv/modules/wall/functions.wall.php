@@ -23,7 +23,7 @@ function strip_selected_tags($text, $tags = array()) {
 /**
  * Sagatavo raksta tekstu lai to varētu rādīt kā ievadu
  */
-function trim_intro($text, $len = 140) {
+function trim_intro($text, $len = 110) {
 
 	//get rid of smilies, will strip images later
 	$text = add_smile($text);
@@ -56,7 +56,7 @@ function get_index_events() {
 
 			$action->avatar = str_replace('http://img.exs.lv/dati', $img_server . '/dati', $action->avatar);
 
-			$out .= '<li><img class="av" style="width:45px;height:45px" src="' . $action->avatar . '" alt="" /><div class="event-content"><span class="post-time">' . time_ago($action->time) . ', ' . $user->nick . '</span><br />' . $action->action . '</div><div class="c"></div></li>';
+			$out .= '<li><img class="av" style="width:45px;height:45px" src="' . $action->avatar . '" alt="" /><div class="event-content"><span class="post-time">' . time_ago($action->time) . ', ' . $user->nick . '</span>' . $action->action . '</div><div class="c"></div></li>';
 		}
 		$out .= '</ul>';
 	}

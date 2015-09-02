@@ -39,7 +39,7 @@
 
 <!-- START BLOCK : news-->
 
-<div class="left span6">
+<div class="left span7">
 	<!-- START BLOCK : cindex-list-->
 	<h1>Jaunumi</h1>
 	<ul class="index-list main">
@@ -54,7 +54,7 @@
 				<ul class="clearfix">
 					<li><img alt="" src="{avatar}" class="userav" />{author}</li>
 					<li><img src="/responsive/images/time.png" alt="">{date}</li>
-					<li><img src="/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Comment on Lectus non rutrum pulvinar urna leo dignissim lorem">{posts}</a></li>
+					<li><img src="/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Komentāri">{posts}</a></li>
 				</ul>
 			</div>
 	
@@ -81,43 +81,12 @@
 	<!-- END BLOCK : cindex-list-->
 </div>
 
-<div class="right span6" id="home-middle">
+<div class="right span5" id="home-middle">
 
 	<h2 class="title"><a href="/kasnotiek"><span>Pēdējās aktivitātes</span></a></h2>
-	<div id="last-action-list">
+	<div id="last-action-list" class="mbox">
 		{index-log}
 	</div>
-	
-	<!-- START BLOCK : poll-box-->
-	<h2 class="title"><a href="/aptaujas"><span>Aptauja</span></a></h2>
-	<h3 class="poll-q">{poll-title}</h3>
-	<!-- START BLOCK : poll-answers-->
-	<ol class="poll-answers">
-		<!-- START BLOCK : poll-answers-node-->
-		<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-		<!-- END BLOCK : poll-answers-node-->
-	</ol>
-	Balsojuši: {poll-totalvotes}<br />
-	<a href="{ppage-id}">Komentāri</a>
-	<!-- END BLOCK : poll-answers-->
-	<!-- START BLOCK : poll-questions-->
-	<form name="poll" method="post" action="">
-		<fieldset>
-			<!-- START BLOCK : poll-error-->
-			<p>{poll-error}</p>
-			<!-- END BLOCK : poll-error-->
-			<!-- START BLOCK : poll-options-->
-			<ol id="poll-questions">
-				<!-- START BLOCK : poll-options-node-->
-				<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-				<!-- END BLOCK : poll-options-node-->
-			</ol>
-			<input type="submit" name="vote" value="Balsot!" class="button primary" />
-			<!-- END BLOCK : poll-options-->
-		</fieldset>
-	</form>
-	<!-- END BLOCK : poll-questions-->
-	<!-- END BLOCK : poll-box-->
 
 	<!-- START BLOCK : cindex-right-->
 

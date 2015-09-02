@@ -12,7 +12,7 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 body {
   background-color:#09151f;
   background: url("images/background-new.jpg") no-repeat top center fixed;
-  color: #444;
+  color: #535e7d;
   font-family: Roboto, sans-serif;
   font-weight: normal;
   font-size: 13px;
@@ -813,7 +813,7 @@ h2.entry-title {
 .entry-meta ul li {
   float:left;
   border-right:1px solid #eee;
-  padding:10px 15px;
+  padding:8px 10px;
 }
 
 .entry-meta ul li:last-child {
@@ -829,7 +829,7 @@ h2.entry-title {
 
 .entry-meta ul li img {
   margin-right:10px;
-  padding:3px 0 0;
+  padding: 0;
   vertical-align:top;
 }
 
@@ -2153,7 +2153,7 @@ img.twit-pic {
 
 .user-actions {
 	padding: 0;
-	margin: 0 0 20px;
+	margin: 0 0 5px;
 	list-style: none;
 }
 
@@ -2161,15 +2161,21 @@ img.twit-pic {
 	margin: 0;
 	background: transparent;
 	background: transparent;
-	padding: 3px;
+	padding: 3px 3px 3px 3px;
 	line-height: 14px;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #ddd;
 	width: auto;
 	overflow: hidden;
 }
 
-.user-actions li span {
-	color: #777;
+.user-actions li:last-child {
+	border: 0;
+	padding-bottom: 0;
+}
+
+.user-actions li span.post-time {
+	display: block;
+	padding: 2px 0;
 }
 
 #profile-user-actions li {
@@ -2207,10 +2213,7 @@ img.twit-pic {
 }
 
 .mbox {
-	background: #EFF1F4;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	background: #f2f2f2;
 	padding: 5px 10px;
 }
 
@@ -3008,6 +3011,8 @@ ol li.code-row {
 	margin: 0;
 	padding: 5px;
 	margin: 5px 0;
+	line-height: 1.4;
+	color: #737e9d;
 }
 
 /* sticky jaunums */
@@ -3024,6 +3029,11 @@ ol li.code-row {
 	padding: 3px 0;
 	margin: 0;
 	line-height: 1.2;
+	font-size: 13px;
+}
+
+.index-list li h3 a {
+	color: #555e6b;
 }
 
 /**
@@ -3037,14 +3047,13 @@ user-menu */
 }
 
 #user-menu li ul#user-group-menu {
-	width: 423px;
+	width: 453px;
 }
 
 #user-menu li ul#user-group-menu li {
 	float: left;
-	width: 132px;
+	width: 142px;
 	padding: 3px 4px;
-	margin: 0 1px 1px 0;
 	height: 28px;
 }
 
@@ -3063,6 +3072,7 @@ user-menu */
 	float: left;
 	display: inline;
 	padding: 0 3px 0 1px;
+	margin: -6px 0 0;
 	width: 28px;
 	height: 28px;
 }
