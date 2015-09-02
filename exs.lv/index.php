@@ -416,16 +416,24 @@ if ($skin === 'main') {
 
 		$g_owners = $db->get_results("SELECT title,id,avatar,owner_seenposts,posts FROM clans WHERE owner = '$auth->id' AND `lang` = '$lang' ORDER BY title ASC");
 		$g_members = $db->get_results("SELECT
-		`clans_members`.`clan` AS `clan`,
-		`clans_members`.`moderator` AS `moderator`,
-		`clans_members`.`seenposts` AS `seenposts`,
-		`clans`.`posts` AS `posts`,
-		`clans`.`avatar` AS `avatar`,
-		`clans`.`title` AS `title`
+			`clans_members`.`clan` AS `clan`,
+			`clans_members`.`moderator` AS `moderator`,
+			`clans_members`.`seenposts` AS `seenposts`,
+			`clans`.`posts` AS `posts`,
+			`clans`.`avatar` AS `avatar`,
+			`clans`.`title` AS `title`
 		FROM
-		`clans_members`,
-		`clans`
-		WHERE `clans_members`.`user` = '$auth->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` AND `clans`.`lang` = '$lang' ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
+			`clans_members`,
+			`clans`
+		WHERE
+			`clans_members`.`user` = '$auth->id' AND
+			`clans_members`.`approve` = '1' AND
+			`clans`.`id` = `clans_members`.`clan` AND
+			`clans`.`lang` = '$lang' AND
+			DATE(`clans`.`last_activity`) >= DATE(NOW() - INTERVAL 12 MONTH)
+		ORDER BY
+			`clans_members`.`moderator` DESC,
+			`clans_members`.`date_added` ASC");
 
 		if ($g_owners or $g_members) {
 			$tpl->newBlock('mygroups');
