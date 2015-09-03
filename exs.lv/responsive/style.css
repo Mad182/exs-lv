@@ -26,7 +26,6 @@ body {
 
 img {
 	max-width:100%;
-	height: auto;
 }
 
 .entry-content img,
@@ -167,7 +166,7 @@ ul.author-social li {
 }
 
 #page {
-  margin:40px auto;
+  margin:30px auto;
 }
 
 .nobot {
@@ -183,8 +182,12 @@ ul.author-social li {
 }
 
 #header {
-  background:#3D4C54;
+  background:#3b5157;
   padding:0 40px;
+}
+
+#header .nav {
+	float: right;
 }
 
 #main {
@@ -236,9 +239,10 @@ h2.site-description {
 }
 
 .navbar .nav > li > a {
-  color: #fff !important;
-  border-right:1px solid #485a63;
-  padding:15px !important;
+	color: #fff !important;
+	border-right:1px solid #485a63;
+	padding:15px !important;
+	font-family: 'Ubuntu', Roboto, sans-serif !important;
 }
 
 /* Dropdown menu style starts */
@@ -314,6 +318,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 #headline {
   background:#ebebeb;
   padding:0 40px;
+  position: relative;
 }
 
 #headline img {
@@ -324,28 +329,113 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 #intr {
   background:#f7f7f7;
-  border-bottom:1px solid #d4d4d4;
-  border-top:1px solid #d4d4d4;
-  padding:0 40px;
+  padding: 0 40px;
 }
 
-#scroller li {
-  list-style:none;
+#intr {
+	background: #3b5157;
+	border-top: 1px solid #2d3e42;
+	border-bottom: 1px solid #2d3e42;
 }
 
-#scroller li .title {
-  font-weight:500;
+#user-menu {
+	padding: 0;
+	float: left;
+	list-style: none;
+	margin: 0;
 }
 
-#scroller li .title:after {
-  content:"»";
-  font-weight:normal;
-  margin:0 3px 0 15px;
+#user-menu li {
+	margin: 0;
+	padding: 0;
+	height: 40px;
+	margin: 0;
+	float: left;
 }
 
-#scroller li p {
-  display:inline-block;
-  margin:2px 0 0;
+#user-menu li a {
+	float: left;
+	background: #3b5157;
+	color: #fff;
+	border-right: 1px solid #485a63;
+	border-radius: 0;
+	margin: 0;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 16px;
+	margin: 0;
+	font-family: 'Ubuntu', Roboto, sans-serif !important;
+}
+
+#user-menu li:last-child {
+	border-right: 0;
+}
+
+#user-menu li a:hover {
+	background: url('/responsive/images/bg.png') repeat-x 0 -38px;
+}
+
+#user-menu li ul#user-group-menu {
+	width: 483px;
+}
+
+#user-menu li ul#user-group-menu li {
+	float: left;
+	width: 152px;
+	padding: 3px;
+	height: 28px;
+}
+
+#user-menu li ul li {
+	float: none;
+}
+
+#user-menu li ul li a {
+	float: none;
+	background: transparent;
+	display: block;
+	padding: 0 10px;
+	line-height: 1.2;
+	margin: 0;
+	height: auto;
+	width: auto;
+	border: 0;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	text-shadow: 1px 1px 1px #152124;
+	font-weight: 500;
+}
+#user-menu li ul#user-group-menu li a {
+	font-size: 11px;
+	height: auto;
+	line-height: 14px;
+	border: 0;
+	margin: 0;
+	padding: 0 3px 0 0;
+}
+
+#user-menu li ul#user-group-menu li .gm-logo {
+	float: left;
+	padding: 0;
+	margin: -6px 6px 0 2px;
+	width: 28px;
+	height: 28px;
+	position: relative;
+}
+
+#user-menu li ul#user-group-menu li .gm-logo .gm-unread {
+	font-size: 11px;
+	font-weight: normal;
+	position: absolute;
+	top: -2px;
+	right: -2px;
+	height: 13px;
+	line-height: 13px;
+	padding: 0 3px;
+	text-align: center;
+	background: #ef6000;
+	color: #fff;
+	text-shadow: none;
 }
 
 #intr .search {
@@ -477,7 +567,7 @@ input#searchsubmit {
 /* Slide right content */
 
 #slide-right h3 {
-  background:#3d4c54;
+  background:#3b5157;
   color:#FFF;
   font-size:16px;
   font-weight:normal;
@@ -598,7 +688,7 @@ h3.poll-q {
 }
 
 .widget h3.title {
-	margin-bottom: 0
+	margin-bottom: 10px
 }
 
 .title span,
@@ -769,6 +859,7 @@ h2.entry-title {
   border-bottom:1px solid #eee;
   font-weight:normal;
   margin:0;
+  padding: 3px 0;
   position:relative;
   line-height: 1.2;
 }
@@ -1151,7 +1242,7 @@ h3.kontak {
 }
 
 #site-info {
-  background:#23323f;
+  background:#3b5157;
   font-size:12px;
   padding:15px 40px;
   color: #aaa;
@@ -1179,7 +1270,7 @@ ul#menu-footer {
 }
 
 #footer-nav li a {
-  color:#555e6b;
+  color:#959cab;
   padding:0 0.5em;
   transition:all 0.8s linear 0s;
   -webkit-transition:all 0.8s linear 0s;
@@ -1272,10 +1363,10 @@ ul#tabnav li img {
 
 ul#tabnav li a {
   color:#FFF;
-  background:#3d4c54;
+  background:#3b5157;
   border-right:1px solid #485A63;
   display:block;
-  padding:8px 0;
+  padding:10px 0;
   text-align:center;
   line-height: 18px;
 }
@@ -1295,10 +1386,6 @@ ul#tabnav li a.active,
 ul#tabnav li a.selected {
   background:#81b752;
   text-decoration:none;
-}
-
-#tab-content {
-  border:1px solid #eee;
 }
 
 ul.recent-tab li {
@@ -1408,6 +1495,11 @@ ul.recent-tab h4 {
 .onlusers p {
   color:#758188;
   font-size:13px;
+}
+
+.onlusers-widget {
+	margin: 0;
+	min-height: 180px;
 }
 
 .video-box h3 {
@@ -1758,48 +1850,6 @@ a.image_thumb_zoom:hover img {
 .headline-ad  {
   background: #ebebeb;
   padding: 30px 40px;
-}
-
-.page-template-magazine-home-php .flex-direction-nav a, .single-galleries  .flex-direction-nav a{
-  background: url("images/bx-bg.png") no-repeat;
-  opacity: 1;
-  right: 0;
-  margin: 0;
-  top: auto;
-}
-.page-template-magazine-home-php .flex-direction-nav a {
-  bottom: 73px;
-}
-.single-galleries  .flex-direction-nav a {
-  bottom: 17px;
-}
-.page-template-magazine-home-php .flex-direction-nav .flex-next, .single-galleries  .flex-direction-nav .flex-next  {
-  background-position: 93% 0;
-}
-.page-template-magazine-home-php .flexslider:hover .flex-next, .single-galleries .flexslider:hover .flex-next {
-  right: 0;
-}
-.page-template-magazine-home-php .flex-direction-nav .flex-prev, .single-galleries .flex-direction-nav .flex-prev {
-  opacity: 1;
-  left: auto;
-  right: 30px;
-}
-.page-template-magazine-home-php .flexslider:hover .flex-prev, .single-galleries .flexslider:hover .flex-prev {
-  left: auto;
-  right: 30px;
-}
-.page-template-magazine-home-php .flex-next:hover, .page-template-magazine-home-php .flex-prev:hover, .single-galleries .flex-next:hover, .single-galleries .flex-prev:hover {
-  background: url("images/bx-bg-hover.png") no-repeat;
-}
-.page-template-magazine-home-php .flex-next:hover, .single-galleries .flex-next:hover {
-  background-position: -30px 0;
-}
-#slide .entry {
-  background: #f8f8f8;
-  padding: 18px 10px;
-}
-#slide .entry h4, #slide .entry p {
-  color: #3d4c54;
 }
 
 .error404 .not-found-header {
@@ -2163,19 +2213,22 @@ img.twit-pic {
 	background: transparent;
 	padding: 3px 3px 3px 3px;
 	line-height: 14px;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #eee;
 	width: auto;
 	overflow: hidden;
 }
 
-.user-actions li:last-child {
+.mbox .user-actions li {
+	border-bottom: 1px solid #fff;
+}
+
+.user-actions li:last-child, .mbox .user-actions li:last-child {
 	border: 0;
 	padding-bottom: 0;
 }
 
-.user-actions li span.post-time {
-	display: block;
-	padding: 2px 0;
+.mbox .user-actions li span.post-time {
+	padding: 3px 0 2px;
 }
 
 #profile-user-actions li {
@@ -2205,7 +2258,9 @@ img.twit-pic {
 	background: url('//img.exs.lv/bildes/icons/image_add.png') no-repeat 3px 50%;
 }
 
-
+.mb-col li:last-child {
+	border-bottom: 0;
+}
 
 .mb-col li .author {
 	color: #888;
@@ -2260,10 +2315,6 @@ miniblogi
 	min-height: 55px;
 	margin: 0;
 	padding: 1px 0;
-}
-
-.mb-col li.group {
-	border-bottom: 1px solid #E6B800;
 }
 
 .mb-col li.linkcode {
@@ -2356,7 +2407,12 @@ miniblogi
 	background: #f5f5f6;
 }
 
-.blockhref li span {
+.blockhref li span.entry {
+	margin-left: 56px;
+	display:block;
+}
+
+.blockhref li span span {
 	display: block;
 	color: #888;
 	line-height: 1.2;
@@ -2366,7 +2422,7 @@ miniblogi
 	display: inline;
 }
 
-.blockhref li span.wrap span.post-time {
+.post-time, .blockhref li span.wrap span.post-time {
 	display: block;
 }
 
@@ -2594,6 +2650,39 @@ table .quote {
 	max-width: 500px;
 }
 
+.socmed {
+  padding:10px 0;
+}
+
+.socmed ul {
+  margin:0;
+  list-style:none;
+}
+
+.socmed ul li {
+  border-left:1px solid #e3e3e3;
+  float:left;
+  text-align:center;
+  width:32.7%;
+}
+
+.socmed ul li:first-child {
+  margin-left:0;
+}
+
+.socmed ul li:last-child {
+  border-right:1px solid #e3e3e3;
+}
+
+.socmed h4 {
+  margin:10px 0 0;
+}
+
+.socmed p {
+  color:#758188;
+  font-size:13px;
+}
+
 /**
 vecie tabi (pagaidu variantā */
 .group-profile {
@@ -2707,7 +2796,7 @@ vecie tabi (pagaidu variantā */
 	z-index: 2;
 	background: #f3f3f3;
 	padding: 6px 5px 0;
-	margin: 0 3px;
+	margin: 0;
 	overflow: hidden;
 }
 
@@ -3036,47 +3125,6 @@ ol li.code-row {
 	color: #555e6b;
 }
 
-/**
-user-menu */
-
-#user-menu {
-	padding: 5px 0 0;
-	float: left;
-	list-style: none;
-	margin: 0;
-}
-
-#user-menu li ul#user-group-menu {
-	width: 483px;
-}
-
-#user-menu li ul#user-group-menu li {
-	float: left;
-	width: 152px;
-	padding: 3px;
-	height: 28px;
-}
-
-#user-menu li ul#user-group-menu li a {
-	background: transparent;
-	display: block;
-	padding: 0 3px 0 0;
-	margin: 0;
-	height: auto;
-	width: auto;
-	font-size: 11px;
-	line-height: 14px;
-}
-
-#user-menu li ul#user-group-menu li img {
-	float: left;
-	display: inline;
-	padding: 0 3px 0 1px;
-	margin: -6px 0 0;
-	width: 28px;
-	height: 28px;
-}
-
 /* login forma */
 #login-form {
 	float: right;
@@ -3285,11 +3333,15 @@ ul#user-notify {
 	border-bottom: 1px solid #eee;
 }
 
+#user-notify li:last-child {
+	border: 0;
+}
+
 #user-notify li a .notification-icon {
 	background: transparent url('//img.exs.lv/bildes/icons-24.png') no-repeat 0 -526px;
 	width: 28px;
 	height: 28px;
-	margin: 2px;
+	margin: 2px 5px 4px 2px;
 	float: left;
 }
 
@@ -3340,9 +3392,8 @@ ul#user-notify {
 #user-notify li a {
 	display: block;
 	text-decoration: none;
-	font-size: 12px;
 	line-height: 1.3;
-	padding: 3px;
+	padding: 4px;
 	height: auto !important;
 	height: 28px;
 	min-height: 28px;
@@ -3445,10 +3496,8 @@ a.friend-right {
 
 /** dienas tops */
 #today-top {
-	padding: 12px 0;
+	padding: 15px 0;
 	margin: 0;
-	font-size: 12px;
-	line-height: 12px;
 	list-style: none;
 }
 
@@ -3457,10 +3506,11 @@ a.friend-right {
 	padding: 0;
 	float: left;
 	width: 33.2%;
-	height: 95px;
+	height: 107px;
 	text-align: center;
 	background: transparent;
-	line-height: 1.1;
+	line-height: 1.2;
+	font-size: 12px;
 }
 
 #today-top img {
@@ -3873,7 +3923,7 @@ a.friend-right {
 
 #latest-topics li {
 	background: transparent;
-	padding: 1px;
+	padding: 3px;
 	margin: 0;
 	height: auto !important;
 	height: 30px;
@@ -4090,6 +4140,39 @@ p.comment-tools a {
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+}
+
+.rpl-avatar {
+	height: 45px;
+	width: 45px;
+	float: left;
+	margin: 0 10px 0 0;
+}
+
+.rpl-list {
+	list-style: none;
+	margin: 12px;
+	padding: 0 6px 10px 10px;
+}
+
+.rpl-list li {
+	border-bottom: 1px solid #ddd;
+	height: auto!important;
+	min-height: 45px;
+	background: transparent;
+	margin: 0;
+	padding: 10px 3px 8px;
+}
+
+.rpl-list li:last-child {
+	border: 0;
+}
+
+.rpl-list li p.comment-author {
+	font-size: 90%;
+	color: #888;
+	margin: 0;
+	padding: 0 0 5px;
 }
 
 .lp-prefix {
@@ -4692,39 +4775,44 @@ img.show-banned:hover {
 	color: #777;
 }
 
+#pb-links {
+	text-align: center;
+	padding: 10px;
+}
+
 #l-blog {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -14px;
-	padding: 0 0 0 19px;
+	padding: 0 4px 0 19px;
 }
 
 #l-pm {
-	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -124px;
-	padding: 0 0 0 19px;
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -126px;
+	padding: 0 4px 0 19px;
 }
 
 #l-twitter {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -168px;
-	padding: 0 0 0 19px;
+	padding: 0 4px 0 19px;
 }
 
 #l-lastfm {
 	background: url('//img.exs.lv/bildes/fugue-icons/audioscrobbler.png') no-repeat 0 50%;
-	padding: 0 0 0 19px;
+	padding: 0 4px 0 19px;
 }
 
 #l-warn {
 	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
-	padding: 0 0 0 19px;
+	padding: 0 4px 0 19px;
 }
 
 #l-warn.active {
 	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -806px;
-	padding: 0 0 0 19px;
+	padding: 0 4px 0 19px;
 }
 
 #l-yt {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -444px;
-	padding: 0 0 0 19px;
+	padding: 0 4px 0 19px;
 }
 
 .l-gmember {
@@ -4933,13 +5021,20 @@ html .lb {
 	text-align: center;
 }
 
+.latest-imgs {
+	padding: 5px 0 8px;
+	margin: 0;
+	overflow: auto;
+	width: 100%
+}
+
 .latest-imgs a {
 	float: left;
 	height: auto;
 	overflow: hidden;
 	display: inline;
 	border: 0;
-	margin: 0;
+	margin: 1px;
 }
 
 .latest-imgs a span.c {
@@ -4969,9 +5064,9 @@ html .lb {
 	float: right;
 }
 
-.latest-imgs a span.c span.unread, .imgs a span.unread {
+body #content .latest-imgs a span.c span.r, body #content .imgs a span.r {
 	background: #ef6000;
-	color: #333;
+	color: #fff;
 }
 
 .imgs a.sel {
@@ -5232,44 +5327,44 @@ fieldset[disabled] .button.warning.active {
 	color: #f0ad4e;
 	background-color: #fff;
 }
-.button-danger {
+.button.danger {
 	color: #fff;
 	background-color: #d9534f;
 	border-color: #d43f3a;
 }
-.button-danger:hover,
-.button-danger:focus,
-.button-danger:active,
-.button-danger.active,
-.open .dropdown-toggle.button-danger {
+.button.danger:hover,
+.button.danger:focus,
+.button.danger:active,
+.button.danger.active,
+.open .dropdown-toggle.button.danger {
 	color: #fff;
 	background-color: #d2322d;
 	border-color: #ac2925;
 }
-.button-danger:active,
-.button-danger.active,
-.open .dropdown-toggle.button-danger {
+.button.danger:active,
+.button.danger.active,
+.open .dropdown-toggle.button.danger {
 	background-image: none;
 }
-.button-danger.disabled,
-.button-danger[disabled],
-fieldset[disabled] .button-danger,
-.button-danger.disabled:hover,
-.button-danger[disabled]:hover,
-fieldset[disabled] .button-danger:hover,
-.button-danger.disabled:focus,
-.button-danger[disabled]:focus,
-fieldset[disabled] .button-danger:focus,
-.button-danger.disabled:active,
-.button-danger[disabled]:active,
-fieldset[disabled] .button-danger:active,
-.button-danger.disabled.active,
-.button-danger[disabled].active,
-fieldset[disabled] .button-danger.active {
+.button.danger.disabled,
+.button.danger[disabled],
+fieldset[disabled] .button.danger,
+.button.danger.disabled:hover,
+.button.danger[disabled]:hover,
+fieldset[disabled] .button.danger:hover,
+.button.danger.disabled:focus,
+.button.danger[disabled]:focus,
+fieldset[disabled] .button.danger:focus,
+.button.danger.disabled:active,
+.button.danger[disabled]:active,
+fieldset[disabled] .button.danger:active,
+.button.danger.disabled.active,
+.button.danger[disabled].active,
+fieldset[disabled] .button.danger.active {
 	background-color: #d9534f;
 	border-color: #d43f3a;
 }
-.button-danger .badge {
+.button.danger .badge {
 	color: #d9534f;
 	background-color: #fff;
 }
@@ -5389,10 +5484,6 @@ input[type="button"].button-block {
 .tables {
   margin: 0 0 30px;
 }
-.table {
-  float: left;
-  width: 25%;
-}
 .table p {
   margin: 0;
 }
@@ -5498,5 +5589,12 @@ a.lightbox img {
 
 #listsub-list li {
 	padding: 2px 20px;
+}
+
+/* junk admin */
+#junk-queue-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 

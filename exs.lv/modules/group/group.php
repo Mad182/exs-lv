@@ -1375,6 +1375,20 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				}
 			
 			}
+			
+			if(false && isset($_POST['group-delete']) && $_POST['group-delete'] === 'jā') {
+				$db->query("DELETE FROM `clans` WHERE `id` = " . intval($group->id) . " LIMIT 1");
+				$db->query("DELETE FROM `clans_members` WHERE `clan` = " . intval($group->id));
+				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = " . intval($group->id));
+				$db->query("DELETE FROM `miniblog` WHERE `groupid` = " . intval($group->id));
+				
+				if(!empty($group->strid)) {
+					$db->query("DELETE FROM `cat` WHERE `textid` = '" . intval($group->strid) . "' AND module = 'group' LIMIT 1");
+				}
+				
+				$auth->log('Izdzēsa grupu ('.$group->title.')', 'clans', $group->id);
+				redirect('/grupas');
+			}
 		
 		
 			$tpl->newBlock('group-chown');

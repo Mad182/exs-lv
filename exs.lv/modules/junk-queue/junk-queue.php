@@ -88,6 +88,13 @@ if (!empty($junks)) {
 	$tpl->newBlock('junk-queue');
 	foreach ($junks as $junk) {
 		$tpl->newBlock('junk-queue-item');
+		
+		if(substr($junk->image, -3) == 'gif') {
+			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="/bildes/gif-icon.png" alt="" style="width: 128px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
+		} else {
+			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="'.$junk->image.'" alt="" style="width: 200px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
+		}
+		
 		$tpl->assignAll($junk);
 	}
 }

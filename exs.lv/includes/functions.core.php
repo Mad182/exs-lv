@@ -2005,10 +2005,10 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 
 			$out .= '<li' . $spec . '><a href="' . $url . '">';
 			$out .= '<img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
-			$out .= '<span class="author">' . h($mb->nick) . '</span> ';
+			$out .= '<span class="entry"><span class="author">' . h($mb->nick) . '</span> ';
 			$out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
 			$out .= $mb->text . '&nbsp;[' . $mb->posts . ']';
-			$out .= '</a></li>';
+			$out .= '</span></a></li>';
 		}
 	}
 	$out .= '</ul><p class="core-pager ajax-pager">';

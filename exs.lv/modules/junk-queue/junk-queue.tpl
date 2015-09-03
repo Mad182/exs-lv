@@ -3,7 +3,7 @@
 <ul id="junk-queue-list">
 	<!-- START BLOCK : junk-queue-item-->
 	<li>
-		<a href="{image}" class="lightbox"><img src="{image}" alt="" style="width: 200px;float: left;margin: 0 10px 10px 0;" class="av" /></a>
+		{html}
 
 		<p><strong>{title}</strong></p>
 

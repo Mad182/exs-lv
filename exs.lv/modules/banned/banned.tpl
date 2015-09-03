@@ -4,8 +4,8 @@
 
 <!-- START BLOCK : table-of-banned -->
 	<h2>Bloķētie lietotāji</h2>
-	<table class="table table-light" style="margin:0 auto;font-size:80%">
-		<tr class="light-header" style="text-align:center">
+	<table class="table">
+		<tr>
 			<th style="width:120px">Lietotājs</th>
 			<th>Iemesls</th>
 			<th style="width:150px;text-align:right">Datums</th>

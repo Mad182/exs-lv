@@ -298,7 +298,8 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				if (substr($action->avatar, 0, 8) == '/bildes/') {
 					$action->avatar = $img_server . $action->avatar;
 				}
-				$out .= '<li><img class="av" src="' . str_replace(array('http://img.exs.lv', 'http://exs.lv'), array('//img.exs.lv', '//exs.lv'), $action->avatar) . '" alt="" /><span class="post-time">' . time_ago($action->time) . '</span><br />' . $action->action . '</li>';
+				$out .= '<li><img class="av" src="' . str_replace(array('http://img.exs.lv', 'http://exs.lv'), array('//img.exs.lv', '//exs.lv'), $action->avatar) . '" alt="" />';
+				$out .= '<span class="post-time">' . time_ago($action->time) . '</span>' . $action->action . '</li>';
 			}
 			$out .= '</ul>';
 		}

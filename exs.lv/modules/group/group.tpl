@@ -166,6 +166,19 @@
 				</p>
 			</fieldset>
 		</form>
+		
+		<!--<form action="{page-url}" class="form" method="post">
+			<fieldset>
+				<legend>Dzēst grupu</legend>
+				<p>
+					<label for="group-delete">Ieraksti "jā":</label><br />
+					<input type="text" name="group-delete" id="group-delete" class="text number" value="" maxlength="2" />
+				</p>
+				<p>
+					<input type="submit" name="submit" value="Dzēst grupu" class="button danger" />
+				</p>
+			</fieldset>
+		</form>-->
 		<!-- START BLOCK : group-chown-->
 
 	</div>

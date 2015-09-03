@@ -295,7 +295,7 @@ jQuery(document).ready(function($) {
 	});
 
 	//mb komentara forma
-	$('#addresponse').on('submit', function(e) {
+	$('body').on('submit', '#addresponse', function(e) {
 		clearInterval(mbRefreshId);
 		mbRefreshId = '';
 		$('#mbresponse-submit').hide();
@@ -318,7 +318,7 @@ jQuery(document).ready(function($) {
 	});
 
 	//atbildet uz minibloga komentaru
-	$('.mb-reply-to').on('click', function(e) {
+	$('body').on('click', '.mb-reply-to', function(e) {
 		e.preventDefault();
 		if ($(this).siblings('.reply-ph').html() != '') {
 			return false;

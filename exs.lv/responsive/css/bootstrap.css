@@ -93,7 +93,6 @@ sub {
 }
 
 img {
-  width: auto;
   height: auto;
   max-width: 100%;
   vertical-align: middle;
