@@ -75,7 +75,9 @@
 				<a class="post-button report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">ziņot</a>
 				<!-- END BLOCK : report-mb -->
 			</p>
-			{text}
+			<div class="post-content">
+				{text}
+			</div>
 			<div class="c"></div>
 			<!-- START BLOCK : mb-tags-wrapper-->
 			<div id="mb-tags-wrapper">

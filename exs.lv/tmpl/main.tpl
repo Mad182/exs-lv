@@ -583,7 +583,7 @@
 
 					<div class="footer-widget span3 block2">
 						<div class="widget" style="min-height:400px">
-							<h3 class="title"><span>Latest Tweets</span></h3>
+							<h3 class="title"><span>Jaunākais no twitter</span></h3>
 							<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
 							<script>!function(d, s, id) {
 									var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
@@ -623,21 +623,21 @@
 
 					<div class="footer-widget span3 block5">
 
-						<div id="socialmedia-2" class="widget widget_social"><h3 class="title"><span>Exs sociālajos tīklos</span></h3>
+						<div id="socialmedia-2" class="widget widget_social"><h3 class="title"><span>Exs.lv citur</span></h3>
 							<div class="socmed textwidget clearfix">		
 								<ul>
 									<li>
-										<a href="https://feeds.feedburner.com/runes" rel="nofollow"><img src="/responsive/images/social/feed.png" alt=""></a>
-										<h4>RSS</h4>
-										<p>Pierakstīties</p>
+										<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank"><img src="/responsive/images/social/android.png" alt=""></a>
+										<h4>Android</h4>
+										<p>Aplikācija</p>
 									</li>
 									<li>
-										<a href="https://twitter.com/exs_lv" rel="nofollow"><img src="/responsive/images/social/twitter.png" alt=""></a>
+										<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
 										<h4>301</h4>
 										<p>Sekotāji</p>
 									</li>
 									<li>
-										<a href="https://www.facebook.com/exs.lv" rel="nofollow"><img src="/responsive/images/social/facebook.png" alt=""></a>
+										<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/facebook.png" alt=""></a>
 										<h4>323</h4>
 										<p>Fani</p>
 									</li>
@@ -652,7 +652,7 @@
 					<div class="footer-widget span3 block6">
 
 						<div class="footer-text">
-							<h3 class="title"><span>Kontaktinformācija</span></h3>
+							<h3 class="title"><span>Kontakti</span></h3>
 							<p>
 								E-pasts: info@exs.lv<br />
 								Tālrunis: <span id="noindex-phone"></span><br />

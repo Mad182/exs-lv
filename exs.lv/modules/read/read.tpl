@@ -156,13 +156,14 @@
 	</div>
 
 	<div class="entry-content">
-<!-- START BLOCK : article-avatar-box-->
-<img class="av" src="//exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
-<!-- END BLOCK : article-avatar-box-->
 
-<!-- START BLOCK : movie-avatar-->
-<a href="{img-server}{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="{img-server}{thb}" alt="{title}" /></a>
-<!-- END BLOCK : movie-avatar-->
+	<!-- START BLOCK : article-avatar-box-->
+	<img class="av" src="//exs.lv/{article-avatar-image}" alt="{article-avatar-alt}" title="{article-avatar-alt}" />
+	<!-- END BLOCK : article-avatar-box-->
+
+	<!-- START BLOCK : movie-avatar-->
+	<a href="{img-server}{image}" class="lightbox" title="{title}"><img class="av" id="post-avatar" src="{img-server}{thb}" alt="{title}" /></a>
+	<!-- END BLOCK : movie-avatar-->
 
 
 	<!-- START BLOCK : movie-info-->
@@ -206,7 +207,10 @@
 	<div class="c"></div>
 	<p>&nbsp;</p>
 	<!-- END BLOCK : movie-info-->
-	{text}
+	
+	<div id="full-story" class="post-content">
+		{text}
+	</div>
 
 	<!-- START BLOCK : post-stags-->
 	<div class="c"></div>

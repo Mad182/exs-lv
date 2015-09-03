@@ -61,12 +61,12 @@
 			<div class="entry-content">
 				<!-- START BLOCK : news-image-->
 				<a class="topic-image image_thumb_zoom" href="{url}" title="{title}" rel="bookmark">
-					<img width="75" height="75" src="{img-server}/topics/frontpage/{image}" alt="{title}" />
+					<img src="{img-server}/topics/frontpage/{image}" alt="{title}" />
 				</a>
 				<!-- END BLOCK : news-image-->
 				<!-- START BLOCK : news-av-->
 				<a href="{url}" title="{title}" rel="bookmark">
-					<img class="av index-av" width="75" height="75" src="{img-server}/{image}" alt="{title}" />
+					<img class="av index-av" src="{img-server}/{image}" alt="{title}" />
 				</a>
 				<!-- END BLOCK : news-av-->
 				<p>{intro}</p>

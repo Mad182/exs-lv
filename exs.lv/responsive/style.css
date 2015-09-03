@@ -293,8 +293,8 @@ ul.dropdown-menu {
 ul.dropdown-menu a {
   color:#a9b9c1 !important;
   border-bottom:1px solid #37474f;
-  padding-top:10px !important;
-  padding-bottom:9px !important;
+  padding-top:10px;
+  padding-bottom:9px;
 }
 
 ul.dropdown-menu a:hover,
@@ -376,14 +376,14 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 #user-menu li ul#user-group-menu {
-	width: 483px;
+	width: 500px;
 }
 
 #user-menu li ul#user-group-menu li {
 	float: left;
-	width: 152px;
+	width: 159px;
 	padding: 3px;
-	height: 28px;
+	height: 30px;
 }
 
 #user-menu li ul li {
@@ -394,7 +394,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	float: none;
 	background: transparent;
 	display: block;
-	padding: 0 10px;
+	padding: 10px;
 	line-height: 1.2;
 	margin: 0;
 	height: auto;
@@ -407,17 +407,17 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 #user-menu li ul#user-group-menu li a {
 	font-size: 11px;
-	height: auto;
-	line-height: 14px;
+	height: 28px;
+	line-height: 28px;
 	border: 0;
 	margin: 0;
-	padding: 0 3px 0 0;
+	padding: 2px 3px;
 }
 
 #user-menu li ul#user-group-menu li .gm-logo {
 	float: left;
 	padding: 0;
-	margin: -6px 6px 0 2px;
+	margin: 0 6px 0 2px;
 	width: 28px;
 	height: 28px;
 	position: relative;
@@ -2346,7 +2346,7 @@ miniblogi
 	height: 60px;
 	min-height: 60px;
 	margin: 0;
-	padding: 3px 4px 0 0;
+	padding: 6px 4px 2px 0;
 }
 
 #miniblog-list li ul li ul li {
@@ -2476,7 +2476,10 @@ miniblogi
 }
 
 .comment-signature {
+	padding: 6px;
 	border-top: 1px solid #ECEFF5;
+	font-size: 90%;
+	color: #737e9d;
 }
 
 .comment-signature img {
@@ -2620,6 +2623,11 @@ a.friend img, .comments-avatar {
 	margin: 0;
 	padding: 3px 4px 0 0;
 	background: transparent;
+}
+
+.post-content {
+	font-size: 14px;
+	padding: 4px 0;
 }
 
 /* socialo mediju share pogas */
@@ -4107,7 +4115,7 @@ a.friend-right {
 	height: 18px;
 	background: #ECEFF5;
 	margin: 0;
-	padding: 1px 0;
+	padding: 1px 6px;
 	color: #445;
 }
 
@@ -4116,7 +4124,7 @@ a.friend-right {
 	min-height: 120px;
 	height: 120px;
 	margin: 0;
-	padding: 5px 3px;
+	padding: 6px;
 }
 
 p.comment-tools {
@@ -4156,8 +4164,8 @@ p.comment-tools a {
 }
 
 .rpl-list li {
-	border-bottom: 1px solid #ddd;
-	height: auto!important;
+	border-bottom: 1px solid #fff;
+	height: auto !important;
 	min-height: 45px;
 	background: transparent;
 	margin: 0;
@@ -5073,6 +5081,39 @@ body #content .latest-imgs a span.c span.r, body #content .imgs a span.r {
 	border: 1px solid #f55;
 }
 
+/* spotify embed */
+.embedly-embed {
+	margin: 8px auto;
+	display: block;
+}
+
+/* related topics (links in /read/page) */
+#related-topics {
+	margin: 10px 0 0;
+}
+
+#related-topics li {
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 6px;
+}
+
+.inliner-link {
+	font-size: 90%;
+	padding: 2px;
+}
+
+.comment-edited-by {
+	font-size: 12px;
+	color: #555;
+	font-style: italic;
+	text-align: right;
+	padding: 12px 0 0;
+}
+
+/* april fools joke texts */
+.wtf-txt {
+	font-style: italic;
+}
+
 
 /* pogas */
 .button {
@@ -5596,5 +5637,12 @@ a.lightbox img {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+}
+
+form.simple-form {
+	margin: 0;
+}
+form.simple-form label {
+	font-size: 13px;
 }
 
