@@ -167,7 +167,7 @@
 			</fieldset>
 		</form>
 		
-		<!--<form action="{page-url}" class="form" method="post">
+		<form action="{page-url}" class="form" method="post">
 			<fieldset>
 				<legend>Dzēst grupu</legend>
 				<p>
@@ -178,7 +178,7 @@
 					<input type="submit" name="submit" value="Dzēst grupu" class="button danger" />
 				</p>
 			</fieldset>
-		</form>-->
+		</form>
 		<!-- START BLOCK : group-chown-->
 
 	</div>

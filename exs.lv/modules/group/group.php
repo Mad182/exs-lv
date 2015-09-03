@@ -1376,7 +1376,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			
 			}
 			
-			if(false && isset($_POST['group-delete']) && $_POST['group-delete'] === 'jā') {
+			if(isset($_POST['group-delete']) && $_POST['group-delete'] === 'jā') {
 				$db->query("DELETE FROM `clans` WHERE `id` = " . intval($group->id) . " LIMIT 1");
 				$db->query("DELETE FROM `clans_members` WHERE `clan` = " . intval($group->id));
 				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = " . intval($group->id));

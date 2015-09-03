@@ -1927,6 +1927,12 @@ img.twit-pic {
 }
 
 @media (min-width:980px) and (max-width:1199px) {
+
+
+	.exs-groups li h3 {
+		font-size: 14px;
+	}
+	
   #header,
   #headline,
   #intr,
@@ -1957,6 +1963,14 @@ img.twit-pic {
 }
 
 @media (min-width:768px) and (max-width:979px) {
+
+	.exs-groups li {
+		width: 50% !important;
+	}
+	.exs-groups li h3 {
+		font-size: 15px;
+	}
+
 
   .navbar .nav > li > a {
     border-right:none;
@@ -2010,6 +2024,7 @@ img.twit-pic {
     padding-left:10px;
     padding-right:10px;
   }
+
   .footer-widget {
     float:none !important;
     width:95.6% !important;
@@ -2028,11 +2043,11 @@ img.twit-pic {
 
 @media (max-width:767px) {
 
-	#exs-groups li {
+	.exs-groups li {
 		width: 50% !important;
 	}
 	
-	#exs-groups li h3 {
+	.exs-groups li h3 {
 		font-size: 90%; !important;
 	}
 	body {
@@ -2329,6 +2344,11 @@ miniblogi
 	margin: 0;
 	clear: both;
 	list-style: none;
+}
+
+#miniblog-list li ul#mb-tags li {
+	height: auto;
+	min-height: 0;
 }
 
 #miniblog-list li ul ul {
@@ -3150,17 +3170,18 @@ ol li.code-row {
 	display: inline;
 	margin: -1px 0 0;
 	font-weight: 400;
+	color: #fff;
+	font-size: 13px;
 }
 
 #login-form input {
 	color: #555;
-	font-size: 11px;
 	border: 0;
 	width: 72px;
 	display: inline;
 	margin: 0 3px 0 0;
 	padding: 2px 3px;
-	background: #EAEAEA url('//img.exs.lv/bildes/login.png');
+	background: #EAEAEA;
 }
 
 #login-form input.login-submit {
@@ -3169,7 +3190,7 @@ ol li.code-row {
 	height: 20px;
 	color: #fff;
 	text-align: center;
-	font-size: 10px;
+	font-size: 11px;
 	line-height: 16px;
 	margin: 0 3px 0 0;
 	padding: 0;
@@ -4015,13 +4036,13 @@ a.friend-right {
 	float: right;
 }
 
-.list-tags {
+body #content .list-tags {
 	padding: 0;
 	margin: 5px 0;
 	list-style: none;
 }
 
-.list-tags li {
+body #content .list-tags li {
 	float: left;
 	margin: 3px 4px;
 	height: 20px;
@@ -4039,23 +4060,23 @@ a.friend-right {
 	border-bottom-right-radius: 2px;
 }
 
-.list-tags li a {
+body #content .list-tags li a {
 	color: #656565;
 }
 
-.list-tags li a:hover {
+body #content .list-tags li a:hover {
 	color: #369;
 	text-decoration: none;
 }
 
 /* grupu saraksts */
-#exs-groups {
+.exs-groups {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-#exs-groups li {
+.exs-groups li {
 	background: transparent;
 	height: 87px;
 	width: 33.32%;
@@ -4064,13 +4085,13 @@ a.friend-right {
 	padding: 5px 0;
 }
 
-#exs-groups li p {
+.exs-groups li p {
 	font-size: 90%;
 	color: #888;
 	line-height: 1.2;
 }
 
-#exs-groups li h3 {
+.exs-groups li h3 {
 	line-height: 1.2;
 }
 

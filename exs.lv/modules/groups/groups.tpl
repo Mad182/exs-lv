@@ -10,7 +10,7 @@
 <!-- START BLOCK : groups-cat-->
 <h2>{title}</h2>
 <!-- START BLOCK : list-groups-node-->
-<ul id="exs-groups">
+<ul class="exs-groups">
 	<li>
 		<a href="{link}">
 			<img {style} class="av" src="{avatar}" alt="" />
