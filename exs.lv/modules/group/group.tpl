@@ -404,59 +404,61 @@
 					</a>
 					{add_deco}
 				</div>
-				<!-- START BLOCK : mb-reply-main-->
-				<a href="#" class="mb-reply-main mb-icon">Atbildēt</a>
-				<!-- END BLOCK : mb-reply-main-->
-				<!-- START BLOCK : mb-edit-main-->
-				<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit">
-					<img src="//img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" />
-				</a>
-				<!-- START BLOCK : mb-edit-main-->
-				<!-- START BLOCK : mb-edit-close-->
-				<a href="{url}/close" id="close-{id}" class="mb-icon mb-close">
-					<img src="//exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" />
-				</a>
-				<!-- START BLOCK : mb-edit-close-->
-				<!-- START BLOCK : mb-edit-unclose-->
-				<a href="{url}/open" id="unclose-{id}" class="mb-icon mb-unclose">
-					<img src="//exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" />
-				</a>
-				<!-- START BLOCK : mb-edit-unclose-->
-				<!-- START BLOCK : mb-delete-->
-				<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}?token={token}">
-					<img src="//img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
-				</a>
-				<!-- END BLOCK : mb-delete-->
-				<div class="mb-rater">{rater}</div>
-				<p class="post-info">{author} <span class="date-time" title="{date-title}">{date}</span> teica:
-					<!-- START BLOCK : report-mb -->
-					<a class="post-button report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">ziņot</a>
-					<!-- END BLOCK : report-mb -->
-				</p>
-				<div class="post-content">
-					{text}
-				</div>
-				<div class="c"></div>
-				<!-- START BLOCK : mb-tags-wrapper-->
-				<div id="mb-tags-wrapper">
-					<!-- START BLOCK : mb-tags-->
-					<ul id="mb-tags" class="list-tags">
-						<!-- START BLOCK : mb-tags-node-->
-						<li><a href="/tag/{slug}" rel="tag">{name}</a></li>
-						<!-- END BLOCK : mb-tags-node-->
-					</ul>
+				<div id="op-content">
+					<!-- START BLOCK : mb-reply-main-->
+					<a href="#" class="mb-reply-main mb-icon">Atbildēt</a>
+					<!-- END BLOCK : mb-reply-main-->
+					<!-- START BLOCK : mb-edit-main-->
+					<a href="/edit/{id}" id="edit-{id}" class="mb-icon mb-edit">
+						<img src="//img.exs.lv/bildes/fugue-icons/balloon--pencil.png" alt="Labot" title="Labot" width="16" height="16" />
+					</a>
+					<!-- START BLOCK : mb-edit-main-->
+					<!-- START BLOCK : mb-edit-close-->
+					<a href="{url}/close" id="close-{id}" class="mb-icon mb-close">
+						<img src="//exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" />
+					</a>
+					<!-- START BLOCK : mb-edit-close-->
+					<!-- START BLOCK : mb-edit-unclose-->
+					<a href="{url}/open" id="unclose-{id}" class="mb-icon mb-unclose">
+						<img src="//exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" />
+					</a>
+					<!-- START BLOCK : mb-edit-unclose-->
+					<!-- START BLOCK : mb-delete-->
+					<a class="mb-icon delete confirm" title="Dzēst" href="/delete/{id}?token={token}">
+						<img src="//img.exs.lv/bildes/fugue-icons/cross-octagon-frame.png" alt="Dzēst" title="Dzēst" width="16" height="16" />
+					</a>
+					<!-- END BLOCK : mb-delete-->
+					<div class="mb-rater">{rater}</div>
+					<p class="post-info">{author} <span class="date-time" title="{date-title}">{date}</span> teica:
+						<!-- START BLOCK : report-mb -->
+						<a class="post-button report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">ziņot</a>
+						<!-- END BLOCK : report-mb -->
+					</p>
+					<div class="post-content">
+						{text}
+					</div>
 					<div class="c"></div>
-					<!-- END BLOCK : mb-tags-->
+					<!-- START BLOCK : mb-tags-wrapper-->
+					<div id="mb-tags-wrapper">
+						<!-- START BLOCK : mb-tags-->
+						<ul id="mb-tags" class="list-tags">
+							<!-- START BLOCK : mb-tags-node-->
+							<li><a href="/tag/{slug}" rel="tag">{name}</a></li>
+							<!-- END BLOCK : mb-tags-node-->
+						</ul>
+						<div class="c"></div>
+						<!-- END BLOCK : mb-tags-->
+					</div>
+					<!-- START BLOCK : mb-newtags-->
+					<div class="c"></div>
+					<form action="{page-url}" id="new-tags-mb" class="form" method="post" style="float:right;padding:0;margin:-4px 0 0">
+						<input style="width:140px;font-size:10px;padding:3px 1px 2px" type="text" class="text" name="newtags" id="post-tags-input" />
+						<input style="padding:1px" class="button" type="submit" value="Tag" />
+					</form>
+					<div class="c"></div>
+					<!-- END BLOCK : mb-newtags-->
+					<!-- END BLOCK : mb-tags-wrapper-->
 				</div>
-				<!-- START BLOCK : mb-newtags-->
-				<div class="c"></div>
-				<form action="{page-url}" id="new-tags-mb" class="form" method="post" style="float:right;padding:0;margin:-4px 0 0">
-					<input style="width:140px;font-size:10px;padding:3px 1px 2px" type="text" class="text" name="newtags" id="post-tags-input" />
-					<input style="padding:1px" class="button" type="submit" value="Tag" />
-				</form>
-				<div class="c"></div>
-				<!-- END BLOCK : mb-newtags-->
-				<!-- END BLOCK : mb-tags-wrapper-->
 			</div>
 
 			<!-- START BLOCK : miniblog-posts-->
