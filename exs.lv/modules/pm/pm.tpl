@@ -19,8 +19,10 @@
 		{pm-from-nick}
 	</a>
 	<!-- END BLOCK : pm-read-from-->
-	<h4>{pm-title}</h4>
-	{pm-text}
+	<h3>{pm-title}</h3>
+	<div class="post-content">
+		{pm-text}
+	</div>
 
 	<div class="c"></div>
 	<p id="pm-read-footer">
@@ -36,8 +38,10 @@
 		<img src="{avatar}" alt="" />
 		{pm-to-nick}
 	</a>
-	<h4>{pm-title}</h4>
-	{pm-text}
+	<h3>{pm-title}</h3>
+	<div class="post-content">
+		{pm-text}
+	</div>
 
 	<div class="c"></div>
 	<p id="pm-read-footer">
@@ -174,8 +178,8 @@
 	<ol>
 		<!-- START BLOCK : res-search-node-->
 		<li style="border-bottom: 1px solid #ddd;padding:8px 2px">
-			<p style="padding:0;margin:0"><a href="{link}">{title}</a></p>
-			<p style="padding:0;margin:0;font-size: 90%">{text}</p>
+			<p style="padding:0"><a href="{link}">{title}</a></p>
+			<p style="padding:0;font-size:90%">{text}</p>
 		</li>
 		<!-- END BLOCK : res-search-node-->
 	</ol>

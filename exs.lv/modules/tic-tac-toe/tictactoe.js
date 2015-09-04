@@ -60,7 +60,7 @@ function load_desas(url) {
 
 $(document).ready(function() {
 
-	$('#desas a, #desas-drop').live('click', function() {
+	$('#desas a, #desas-drop').on('click', function() {
 		load_desas($(this).attr('href'));
 		return false;
 	});

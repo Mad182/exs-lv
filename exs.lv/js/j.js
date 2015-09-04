@@ -106,7 +106,7 @@ Tinycon.setOptions({
 	fallback: true
 });
 
-jQuery(document).ready(function($) {
+$(document).ready(function($) {
 
 	$.ajaxSetup({
 		cache: false

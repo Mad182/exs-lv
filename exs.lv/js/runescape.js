@@ -25,12 +25,12 @@ $(document).ready(function () {
         showTitle: false,
         width: '300px'
     });
-    
+
     /**
      *  RuneScape random fakta atjaunotājs
      */
     var $fact_box = $('.facts-box');
-    $('.fetch-new-fact').live('click', function(e) {
+    $('.fetch-new-fact').on('click', function(e) {
         
         $fact_box.children('p').fadeTo(150, 0.5);
         
@@ -41,7 +41,7 @@ $(document).ready(function () {
         });        
         e.preventDefault();
     });
-    
+
     /**
      *  Pielīmēs RuneScape projekta augšējo navigāciju
      */
@@ -68,7 +68,7 @@ $(document).ready(function () {
     /**
      *  Prasmju sadaļas pārvietošanās pa lapām
      */
-    $('a.skill-pager').live('click', function() {
+    $('a.skill-pager').on('click', function() {
         var elem = $(this).parent().parent();
         elem.fadeTo(250, 0.5);
         elem.load($(this).attr('href'), function() {
@@ -76,7 +76,7 @@ $(document).ready(function () {
         });
         return false;
     });    
-    
+
     /**
      *  Parāda sērijai piesaistītos kvestus
      */
@@ -88,7 +88,7 @@ $(document).ready(function () {
         e.preventDefault();
         fancyContent($(this).attr('href') + '?_=1');
     });
-    
+
     /**
      *  Parāda izvēlni ar visiem piesaistāmajiem kvestiem
      */
@@ -104,7 +104,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         $form = $(this);
-        
+
         $.ajax({
 			type: "POST",
 			dataType: "json",
@@ -123,16 +123,16 @@ $(document).ready(function () {
 			}
 		});
     });
-    
+
     /**
      *  Pievieno/dzēš sērijai piesaistītu kvestu
      */
     $('body').on('click', '.set-quest', function(e) {    
         e.preventDefault();
-        
+
         $a_clicked = $(this);
         $li_parent = $(this).parent();
-        
+ 
         $.ajax({
             url: $(this).attr('href') + '?_=1',
             dataType: 'json',
@@ -155,11 +155,11 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     /**
      * Dzēš ierakstu par RuneScape pamācību
      */
-    $('.del-page').live('click', function(e) {
+    $('.del-page').on('click', function(e) {
 
         e.preventDefault();
         
@@ -176,14 +176,14 @@ $(document).ready(function () {
             });
         }
     });
-    
+
     /**
      * Slēpj/parāda ierakstu par RuneScape pamācību
      */
-    $('.hide-page').live('click', function(e) {
+    $('.hide-page').on('click', function(e) {
 
         $elem = $(this);
-        
+
         $.getJSON($elem.attr('href') + '?_=1', function(response) {
             if (response.state == 'success') {
                 if (response.content == 'hidden') {
@@ -195,7 +195,8 @@ $(document).ready(function () {
                 alert(response.content);
             }
         });
-        
+
         e.preventDefault();
     });
 });
+
