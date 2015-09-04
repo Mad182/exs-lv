@@ -30,8 +30,6 @@
 		<link rel='stylesheet' id='swipemenu-css'  href='{static-server}/responsive/css/swipemenu.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='simplyscroll-css'  href='{static-server}/responsive/css/jquery.simplyscroll.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='jPages-css'  href='{static-server}/responsive/css/jPages.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic&subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
@@ -40,14 +38,10 @@
 		<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/bootstrap.min.js'></script>
-		<script type='text/javascript' src='{static-server}/responsive/js/jquery.rating.js'></script>
-		<script type='text/javascript' src='{static-server}/responsive/js/jquery.simplyscroll.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/fluidvids.min.js'></script>
-		<script type='text/javascript' src='{static-server}/responsive/js/jPages.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/jquery.sidr.min.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/jquery.touchSwipe.min.js'></script>
 		<script type='text/javascript' src='{static-server}/responsive/js/jquery.swipemenu.init.js'></script>
-		<script type='text/javascript' src='{static-server}/responsive/js/custom.js'></script>
 
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
