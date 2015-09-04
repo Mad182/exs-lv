@@ -734,9 +734,9 @@ function update_awards($user) {
 	  $awards_list['exs-cup']['state'] = 'active';
 	  } */
 
-	/*if (in_array($user, array(35081, 25709, 19780, 1621, 273, 703, 4438, 21411, 24437, 4432, 5969, 3650, 1, 1220, 14716, 27089))) {
-		$awards_list['exs-party-2014'] = array(
-			'title' => 'Exs.lv ballīte 2014',
+	/*if (in_array($user, array(25709,1621,4506,7272,5969,23583,27552,12108,16705,23107,24437,1306,5965,1,34877,4432,22051,23282,16261,11807,655,2145,15978))) {
+		$awards_list['exs-party-2015'] = array(
+			'title' => 'Exs.lv ballīte 2015',
 			'state' => 'active'
 		);
 	}*/
