@@ -8,7 +8,7 @@
 /* spēļu saraksts */
 #games-list {
 	margin:0;
-	padding:0;
+	padding:0
 }
 
 #games-list li {
@@ -16,7 +16,7 @@
 	float:left;
 	background:transparent;
 	margin:0;
-	padding:0;
+	padding:0
 }
 
 #games-list li a {
@@ -30,72 +30,72 @@
 	overflow:hidden;
 	color:#369;
 	margin:3px;
-	padding:4px 1px 4px 5px;
+	padding:4px 1px 4px 5px
 }
 
 #games-list.related li a {
-	height:116px;
+	height:116px
 }
 
 #games-list li a:hover {
 	background:#fafafa;
 	border:1px solid #ddd;
-	text-decoration:none;
+	text-decoration:none
 }
 
 #games-list li a span {
 	display:block;
 	color:#888;
-	font-size:10px;
+	font-size:10px
 }
 
 #games-list li img {
 	border:5px solid #ddd;
 	width:93px;
-	height:74px;
+	height:74px
 }
 
 /* atvērta spēle */
 #game-wrapper {
 	background:#eee;
 	border:1px solid #ccc;
-	padding:10px 0;
+	padding:10px 0
 }
 
 #game-wrapper p {
 	margin:6px;
-	padding:0;
+	padding:0
 }
 
 #game {
 	background:#fafafa;
 	border:1px solid #ccc;
 	margin:0 auto;
-	padding:3px;
+	padding:3px
 }
 
 #game-instructions {
 	color:#444;
-	font-size:11px;
+	font-size:11px
 }
 
 #game-description {
 	color:#888;
-	font-size:11px;
+	font-size:11px
 }
 
 #games-list-categories {
 	height:22px;
 	list-style:none;
 	margin:0;
-	padding:6px 0;
+	padding:6px 0
 }
 
 #games-list-categories li {
 	float:left;
 	background:transparent;
 	margin:0;
-	padding:0;
+	padding:0
 }
 
 #games-list-categories li a {
@@ -110,10 +110,10 @@
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 	margin:0 4px 0 0;
-	padding:2px 5px;
+	padding:2px 5px
 }
 
 p.related {
-	font-size:90%;
+	font-size:90%
 }
 

@@ -14,63 +14,63 @@ body, html {
 	font-family: sans-serif;
 	font-size: 95%;
 	line-height: 1.2;
-	background: #f2f2f2 url('//img.exs.lv/bildes/mobile/top-bg.png') repeat-x 0 0;
+	background: #f2f2f2 url('//img.exs.lv/bildes/mobile/top-bg.png') repeat-x 0 0
 }
 
 ul {
 	padding: 0;
 	margin: 0;
-	list-style: none;
+	list-style: none
 }
 
 dt, dd {
-	font-weight: normal;
+	font-weight: normal
 }
 
 a {
 	color: #369;
-	text-decoration: none;
+	text-decoration: none
 }
 
 img {
 	max-width: 100%;
 	height: auto;
-	border: 0;
+	border: 0
 }
 
 p {
 	padding: 3px 0;
-	margin: 0;
+	margin: 0
 }
 
 .admins {
-	color: #700;
+	color: #700
 }
 
 .mods {
-	color: #00b;
+	color: #00b
 }
 
 .rautors {
-	color: #070;
+	color: #070
 }
 
 .bot {
-	color: #777;
+	color: #777
 }
 
 .banned {
-	text-decoration: line-through;
+	text-decoration: line-through
 }
 
 html .banned {
-	color: #000;
+	color: #000
 }
 
 #outer-wrapper {
 	min-width: 300px;
 	margin: 0 auto;
-	background: #fff;
+	background: #fff
 }
 
 #header {
@@ -78,7 +78,7 @@ html .banned {
 	height: 45px;
 	padding: 0;
 	margin: 0;
-	width: 100%;
+	width: 100%
 }
 
 #user-tools {
@@ -87,18 +87,18 @@ html .banned {
 	padding: 5px;
 	color: #fff;
 	width: 46%;
-	text-align: right;
+	text-align: right
 }
 
 #user-tools a {
-	color: #fff;
+	color: #fff
 }
 
 #user-tools img {
 	float: right;
 	margin: -2px 0 0 5px;
 	width:36px;
-	height:36px;
+	height:36px
 }
 
 #logo {
@@ -109,16 +109,16 @@ html .banned {
 	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 	text-shadow: 1px -1px 1px #222;
 	margin: 0 0 0 8px;
-	padding: 6px 8px 0 0;
+	padding: 6px 8px 0 0
 }
 
 #wrapper {
-	padding: 7px;
+	padding: 7px
 }
 
 #comments {
 	margin: 10px 0;
-	padding: 0;
+	padding: 0
 }
 
 #comments dt {
@@ -126,13 +126,13 @@ html .banned {
 	float: left;
 	width: 80px;
 	margin: 0;
-	padding: 0;
+	padding: 0
 }
 
 #comments dd {
 	margin: 0 0 0 80px;
 	padding: 0;
-	border-top: 4px solid #B5C0CF;
+	border-top: 4px solid #B5C0CF
 }
 
 #comments dt .username {
@@ -142,7 +142,7 @@ html .banned {
 	height: 16px;
 	background: #ECEFF5;
 	padding: 2px;
-	margin: 0 0 3px;
+	margin: 0 0 3px
 }
 
 .inf {
@@ -152,11 +152,11 @@ html .banned {
 	margin: 0;
 	padding: 2px 0;
 	font-size: 85%;
-	color: #445;
+	color: #445
 }
 
 .inf strong a {
-	display: none;
+	display: none
 }
 
 .comment-text {
@@ -164,14 +164,14 @@ html .banned {
 	min-height: 76px;
 	height: 76px;
 	margin: 0;
-	padding: 3px 0;
+	padding: 3px 0
 }
 
 p.comment-tools {
 	border-top: 1px solid #ECEFF5;
 	margin: 0;
 	padding: 2px 0;
-	height: 16px;
+	height: 16px
 }
 
 p.comment-tools a {
@@ -186,18 +186,18 @@ p.comment-tools a {
 	margin: 0 4px 0 0;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	-webkit-border-radius: 2px
 }
 
 .author-info {
-	display: none;
+	display: none
 }
 
 .custom-title {
 	font-size: 85%;
 	text-align: center;
 	display: block;
-	color: #999;
+	color: #999
 }
 
 .comments-avatar {
@@ -209,11 +209,11 @@ p.comment-tools a {
 	border: 1px solid #eee;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	-webkit-border-radius: 3px
 }
 
 .response-content {
-	margin: 0 0 0 15px;
+	margin: 0 0 0 15px
 }
 
 .av, .blogtopics-avatar, .mb-av {
@@ -223,30 +223,30 @@ p.comment-tools a {
 	margin: 3px 6px 2px 0;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+	-webkit-border-radius: 3px
 }
 
 .mb-av {
 	position: relative;
-	line-height: 1px;
+	line-height: 1px
 }
 
 .responses .av {
 	width: 36px;
-	height: 36px;
+	height: 36px
 }
 
 #miniblog-list {
-	padding: .5em 0;
+	padding: .5em 0
 }
 
 .responses, .miniblog-response {
 	padding: 0;
-	margin: 0;
+	margin: 0
 }
 
 .mb-textarea {
-	width: 90%;
+	width: 90%
 }
 
 #miniblog-list li, #miniblog-list li li, #mb-list li, .responses li {
@@ -255,11 +255,11 @@ p.comment-tools a {
 	height: auto !important;
 	height: 64px;
 	min-height: 64px;
-	background: transparent;
+	background: transparent
 }
 
 #miniblog-list li {
-	padding: 3px 0 7px 0;
+	padding: 3px 0 7px 0
 }
 
 #mb-list li {
@@ -267,12 +267,12 @@ p.comment-tools a {
 	padding: 3px 0;
 	margin: 0;
 	height: 55px;
-	min-height: 55px;
+	min-height: 55px
 }
 
 #miniblog-list li ul {
 	padding: 1px 0 1px 5px;
-	clear: both;
+	clear: both
 }
 
 #miniblog-list li ul li {
@@ -280,18 +280,18 @@ p.comment-tools a {
 	padding: 4px 0;
 	margin: 0;
 	height: 45px;
-	min-height: 45px;
+	min-height: 45px
 }
 
 #miniblog-list li ul li li {
-	border: 0;
+	border: 0
 }
 
 #miniblog-list li ul li.more {
 	height: auto !important;
 	height: 20px;
 	min-height: 20px;
-	margin: 3px 0 0 0;
+	margin: 3px 0 0 0
 }
 
 #miniblog-list li .post-info, .responses li .post-info {
@@ -300,33 +300,33 @@ p.comment-tools a {
 	color: #aaa;
 	background: transparent;
 	font-size: 90%;
-	line-height: 14px;
+	line-height: 14px
 }
 
 .blockhref li a {
 	padding: 4px 2px;
 	display: block;
-	text-decoration: none;
+	text-decoration: none
 }
 
 .blockhref li a:hover {
-	background: #f5f5f6;
+	background: #f5f5f6
 }
 
 .blockhref li a:active {
-	background: #f5f7f9;
+	background: #f5f7f9
 }
 
 .blockhref li a span {
 	display: block;
 	font-weight: normal;
 	color: #aaa;
-	font-family: arial;
+	font-family: arial
 }
 
 #mb-list li .author {
 	color: #666;
-	font-weight: 700;
+	font-weight: 700
 }
 
 #mb-list li span.time-ago {
@@ -336,7 +336,7 @@ p.comment-tools a {
 	font-family: arial;
 	font-size: 90%;
 	float: right;
-	margin: 0 1px 2px 5px;
+	margin: 0 1px 2px 5px
 }
 
 #mb-list li .author span {
@@ -344,7 +344,7 @@ p.comment-tools a {
 	font-weight: normal;
 	color: #999;
 	font-family: arial;
-	font-size: 90%;
+	font-size: 90%
 }
 
 .mbox {
@@ -352,14 +352,14 @@ p.comment-tools a {
 	padding: 2px 6px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	-webkit-border-radius: 4px
 }
 
 table.table, table.table {
 	border: 1px solid #ccc;
 	margin: 8px auto;
 	padding: 0;
-	border-collapse: collapse;
+	border-collapse: collapse
 }
 
 table.table th, table.table td, table.table td {
@@ -382,7 +382,7 @@ table.table tr.darker td, table.table tr.r2 td {
 }
 
 table.table tr.hirank td {
-	background: #fbe6f3;
+	background: #fbe6f3
 }
 
 h1, h2, h3, h4 {
@@ -392,19 +392,19 @@ h1, h2, h3, h4 {
 	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 	text-shadow: 0 1px 1px #ddd;
 	margin: .5em 0 .4em;
-	padding: 0;
+	padding: 0
 }
 
 .clear, .c {
-	clear: both;
+	clear: both
 }
 
 fieldset {
-	border: 1px solid #ddd;
+	border: 1px solid #ddd
 }
 
 tr.read-0 td a {
-	color: red;
+	color: red
 }
 
 #footer {
@@ -413,21 +413,21 @@ tr.read-0 td a {
 	padding: 5px 3px;
 	border-top: 1px solid #30516F;
 	margin: 10px auto 0;
-	text-align: center;
+	text-align: center
 }
 
 #footer a {
-	color: #bbf;
+	color: #bbf
 }
 
 .form label.checkbox {
-	font-weight: normal;
+	font-weight: normal
 }
 
 .form fieldset {
 	border: 1px solid #eee;
 	margin: .5em 0 1.5em;
-	padding: 1em;
+	padding: 1em
 }
 
 .form legend {
@@ -435,7 +435,7 @@ tr.read-0 td a {
 	font-size: 13px;
 	font-family: 'Trebuchet MS', sans-serif, tahoma, verdana, arial;
 	color: #555;
-	text-shadow: 0 1px 1px #ddd;
+	text-shadow: 0 1px 1px #ddd
 }
 
 .form input.text, .form input.title, .form textarea, .form select {
@@ -444,33 +444,33 @@ tr.read-0 td a {
 	margin: .5em 0;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	-webkit-border-radius: 2px
 }
 
 .form input.text:focus, .form input.smtext:focus, .form input.title:focus, .form textarea:focus, .form select:focus {
-	border: 1px solid #666;
+	border: 1px solid #666
 }
 
 .form input.text, .form input.title {
 	width: 160px;
-	padding: 5px;
+	padding: 5px
 }
 
 .form input.title {
-	font-size: 1.5em;
+	font-size: 1.5em
 }
 
 .button.danger, .button.danger:hover, .button.error, .button.error:hover, .button.success, .button.success:hover, .button.info, .button.info:hover, .alert-message.danger, .alert-message.danger:hover, .alert-message.error, .alert-message.error:hover, .alert-message.success, .alert-message.success:hover, .alert-message.info, .alert-message.info:hover {
-	color: #fff;
+	color: #fff
 }
 /* pogas */
 .button.danger, .button.danger:hover, .button.error, .button.error:hover, .button.success, .button.success:hover, .button.info, .button.info:hover, .alert-message.danger, .alert-message.danger:hover, .alert-message.error, .alert-message.error:hover, .alert-message.success, .alert-message.success:hover, .alert-message.info, .alert-message.info:hover {
-	color: #fff;
+	color: #fff
 }
 
 .button .close, .alert-message .close {
 	font-family: Arial, sans-serif;
-	line-height: 18px;
+	line-height: 18px
 }
 
 .button.danger, .button.error, .alert-message.danger, .alert-message.error {
@@ -485,7 +485,7 @@ tr.read-0 td a {
 	background-image: linear-gradient(top,#ee5f5b,#c43c35);
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #c43c35 #c43c35 #882a25;
-	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%)
 }
 
 .button.success, .alert-message.success {
@@ -500,7 +500,7 @@ tr.read-0 td a {
 	background-image: linear-gradient(top,#62c462,#57a957);
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #57a957 #57a957 #3d773d;
-	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%)
 }
 
 .button.info, .alert-message.info {
@@ -515,7 +515,7 @@ tr.read-0 td a {
 	background-image: linear-gradient(top,#5bc0de,#339bb9);
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	border-color: #339bb9 #339bb9 #22697d;
-	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%)
 }
 
 .button {
@@ -547,17 +547,17 @@ tr.read-0 td a {
 	-moz-transition: 0.1s linear all;
 	-ms-transition: 0.1s linear all;
 	-o-transition: 0.1s linear all;
-	transition: 0.1s linear all;
+	transition: 0.1s linear all
 }
 
 .button:hover {
 	background-position: 0 -15px;
 	color: #333;
-	text-decoration: none;
+	text-decoration: none
 }
 
 .button:focus {
-	outline: 1px dotted #666;
+	outline: 1px dotted #666
 }
 
 .button.primary {
@@ -573,13 +573,13 @@ tr.read-0 td a {
 	background-image: linear-gradient(top,#049cdb,#0064cd);
 	text-shadow: 0 -1px 0 #444;
 	border-color: #0064cd #0064cd #003f81;
-	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%);
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) fadein(rgba(0,0,0,0.1), 15%)
 }
 
 .button:active, .button.active {
 	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05);
 	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05);
-	box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.05)
 }
 
 .button.disabled {
@@ -591,7 +591,7 @@ tr.read-0 td a {
 	opacity: 0.65;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
-	box-shadow: none;
+	box-shadow: none
 }
 
 .button[disabled] {
@@ -602,7 +602,7 @@ tr.read-0 td a {
 	opacity: 0.65;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
-	box-shadow: none;
+	box-shadow: none
 }
 
 .button.large {
@@ -611,43 +611,43 @@ tr.read-0 td a {
 	padding: 9px 14px 9px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
-	border-radius: 6px;
+	border-radius: 6px
 }
 
 .button.small {
 	padding: 7px 9px 7px;
-	font-size: 11px;
+	font-size: 11px
 }
 
 :root .alert-message,:root .button {
-	border-radius: 0 \0;
+	border-radius: 0 \0
 }
 
 button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	padding: 0;
-	border: 0;
+	border: 0
 }
 
 .form legend {
-	font-size: 13px;
+	font-size: 13px
 }
 
 .form fieldset {
-	padding-top: 1em;
+	padding-top: 1em
 }
 
 .red {
-	color: #ef6000;
+	color: #ef6000
 }
 
 .green {
-	color: #60ef00;
+	color: #60ef00
 }
 
 #buttons {
 	padding: 5px 4px;
 	width: auto;
-	height: 56px;
+	height: 56px
 }
 
 #buttons ul {
@@ -655,10 +655,10 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	list-style: none;
+	list-style: none
 }
 #buttons.quad ul, #buttons.quad {
-	height: 32px;
+	height: 32px
 }
 #buttons li {
 	float: left;
@@ -667,12 +667,12 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	padding: 0;
 	height: 28px;
 	text-align: center;
-	overflow: hidden;
+	overflow: hidden
 }
 
 #buttons.quad li {
 	width: 25%;
-	height: 32px;
+	height: 32px
 }
 #buttons li a {
 	display: block;
@@ -697,24 +697,24 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	border: solid 1px #b7b7b7;
 	background: #fff;
 	background: -webkit-gradient(linear,left top,left bottom,from(#fff), to(#ededed));
-	background: -moz-linear-gradient(top,#fff,#ededed);
+	background: -moz-linear-gradient(top,#fff,#ededed)
 }
 
 #buttons.quad li a {
 	line-height: 27px;
-	height: 27px;
+	height: 27px
 }
 
 #buttons li a:hover {
 	background: #ededed;
 	background: -webkit-gradient(linear,left top,left bottom,from(#fff), to(#dcdcdc));
-	background: -moz-linear-gradient(top,#fff,#dcdcdc);
+	background: -moz-linear-gradient(top,#fff,#dcdcdc)
 }
 
 #buttons li a:active {
 	color: #999;
 	background: -webkit-gradient(linear,left top,left bottom,from(#ededed), to(#fff));
-	background: -moz-linear-gradient(top,#ededed,#fff);
+	background: -moz-linear-gradient(top,#ededed,#fff)
 }
 
 .auto-embed-placeholder {
@@ -733,7 +733,7 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	-moz-box-shadow: 2px 2px 4px #ccc;
 	-webkit-box-shadow: 2px 2px 4px #ccc;
 	box-shadow: 2px 2px 4px #ccc;
-	position: relative;
+	position: relative
 }
 
 .auto-embed-placeholder .play-button {
@@ -743,11 +743,11 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	width: 100%;
 	height: 100%;
 	background: url('//img.exs.lv/bildes/play.png') no-repeat 50% 50%;
-	text-decoration: none;
+	text-decoration: none
 }
 
 .auto-embed-placeholder .play-button:hover {
-	background: url('//img.exs.lv/bildes/play_hover.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/play_hover.png') no-repeat 50% 50%
 }
 
 .auto-embed-placeholder .play-button span {
@@ -756,7 +756,7 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	margin: 6px 20px 0 8px;
 	line-height: 13px;
 	text-decoration: none;
-	float: left;
+	float: left
 }
 
 .auto-embed-placeholder .play-button span span {
@@ -764,11 +764,11 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	color: #eee;
 	float: none;
 	margin: 0;
-	padding: 0 1px;
+	padding: 0 1px
 }
 
 .auto-embed-placeholder .play-button:hover span span {
-	color: #fff;
+	color: #fff
 }
 
 .auto-embed {
@@ -786,59 +786,59 @@ button.button::-moz-focus-inner, input[type=submit].button::-moz-focus-inner {
 	-webkit-border-radius: 3px;
 	-moz-box-shadow: 2px 2px 4px #ccc;
 	-webkit-box-shadow: 2px 2px 4px #ccc;
-	box-shadow: 2px 2px 4px #ccc;
+	box-shadow: 2px 2px 4px #ccc
 }
 /* tabs */
 #wrapper .group-profile {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 0;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 0
 }
 
 #wrapper .profile {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -26px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -26px
 }
 
 #wrapper .users {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -182px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -182px
 }
 
 #wrapper .pages {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -208px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -208px
 }
 
 #wrapper .search {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -338px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -338px
 }
 
 #wrapper .tools {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -364px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -364px
 }
 
 #wrapper .date {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -390px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -390px
 }
 
 #wrapper .comments {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -416px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -416px
 }
 
 #wrapper .views {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px
 }
 
 #wrapper .inbox {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -520px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -520px
 }
 
 #wrapper .outbox {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -546px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -546px
 }
 
 #wrapper .compose {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -572px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -572px
 }
 
 #wrapper .mail-search {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -598px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -598px
 }
 
 a.tab {
@@ -860,19 +860,19 @@ a.tab {
 	-moz-border-radius-topleft: 2px;
 	-moz-border-radius-topright: 2px;
 	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
+	border-top-right-radius: 2px
 }
 
 a.tab, a.tab:visited {
 	color: gray;
-	border-top: 1px solid #E3E3E3;
+	border-top: 1px solid #E3E3E3
 }
 
 a.tab:hover {
 	background: #f9f9f9 url('//img.exs.lv/bildes/i.png') repeat 0 -363px;
 	color: #606060;
 	text-decoration: none;
-	border-color: #E6B800;
+	border-color: #E6B800
 }
 
 a.activeTab, a.activeTab:hover {
@@ -880,7 +880,7 @@ a.activeTab, a.activeTab:hover {
 	z-index: 3;
 	background: #fff;
 	border-color: 0 solid #E4E4E4;
-	padding: 4px 5px;
+	padding: 4px 5px
 }
 
 .tabs {
@@ -893,14 +893,14 @@ a.activeTab, a.activeTab:hover {
 	padding: 6px 5px 0;
 	margin: 0 -4px;
 	width: 100%;
-	overflow: hidden;
+	overflow: hidden
 }
 
 .tabs li {
 	display: inline;
 	padding: 0;
 	margin: 0;
-	float: left;
+	float: left
 }
 
 .tabs li a {
@@ -935,14 +935,14 @@ a.activeTab, a.activeTab:hover {
 	-moz-transition: 0.1s linear all;
 	-ms-transition: 0.1s linear all;
 	-o-transition: 0.1s linear all;
-	transition: 0.1s linear all;
+	transition: 0.1s linear all
 }
 
 .tabs li a span {
 	padding: 0 0 0 20px;
 	line-height: 16px;
 	float: left;
-	height: 16px;
+	height: 16px
 }
 
 .tabs li a span.red {
@@ -952,96 +952,96 @@ a.activeTab, a.activeTab:hover {
 
 .tabs li a {
 	color: gray;
-	border-top: 1px solid #E3E3E3;
+	border-top: 1px solid #E3E3E3
 }
 
 .tabs li a:hover {
 	background-position: 0 -15px;
 	color: #333;
 	text-decoration: none;
-	border-color: #E6B800;
+	border-color: #E6B800
 }
 
 .tabs li a.active, .tabs li a.active:hover {
 	color: #000;
 	z-index: 3;
 	background: #fcfcfc;
-	padding: 4px 5px;
+	padding: 4px 5px
 }
 
 div.tabMain {
 	padding: 3px 0;
-	text-align: left;
+	text-align: left
 }
 
 #pm-table {
 	border: 0;
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: collapse
 }
 
 #pm-table td {
 	border-bottom: 1px solid #eee;
 	border-top: 1px solid #eee;
 	padding: 3px 7px;
-	background: #fff;
+	background: #fff
 }
 
 #pm-table tr:hover td {
-	background: #F5F5F6;
+	background: #F5F5F6
 }
 
 #pm-table td.title {
-	font-weight: bold;
+	font-weight: bold
 }
 
 #pm-table td.title a {
-	display: block;
+	display: block
 }
 
 #wrapper #pm-table td.pm {
-	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
+	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%
 }
 
 #wrapper #pm-table td.pm-read {
-	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
+	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%
 }
 
 #pm-table th {
 	text-align: center;
-	font-weight: 700;
+	font-weight: 700
 }
 
 #wrapper #pm-table th.pmdate {
 	width: 100px;
-	padding: 3px 7px;
+	padding: 3px 7px
 }
 
 #wrapper #pm-table td.pmdate {
 	font-size: 90%;
-	text-align: right;
+	text-align: right
 }
 
 #pm-table th.isread, #pm-table td.isread {
-	text-align: center;
+	text-align: center
 }
 
 #pm-table tr.read-0 td {
-	background: #fbe6f3;
+	background: #fbe6f3
 }
 
 #pm-read-footer {
 	border-top: 1px solid #eee;
 	margin: 6px 0 0;
-	padding: 5px 0 0;
+	padding: 5px 0 0
 }
 
 #reply-history {
-	display: none;
+	display: none
 }
 
 #pm-h {
-	padding: 6px 0;
+	padding: 6px 0
 }
 
 #pm-h h3 {
@@ -1052,17 +1052,17 @@ div.tabMain {
 	margin: 10px 0 3px;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	-webkit-border-radius: 2px
 }
 
 #pm-h h3 span {
 	float: right;
 	font-size: 100%;
-	color: #999;
+	color: #999
 }
 
 .pm-h-content {
-	padding: 3px 10px;
+	padding: 3px 10px
 }
 
 a.friend {
@@ -1072,21 +1072,21 @@ a.friend {
 	display: inline;
 	float: left;
 	margin: 3px;
-	padding: 5px;
+	padding: 5px
 }
 
 a.friend:hover {
-	border: 1px solid #ddd;
+	border: 1px solid #ddd
 }
 
 a.friend-right {
-	float: right;
+	float: right
 }
 
 #wrapper .article-info {
 	margin: 12px 0 5px;
 	height: 18px;
-	overflow: hidden;
+	overflow: hidden
 }
 
 #wrapper .article-info li {
@@ -1095,11 +1095,11 @@ a.friend-right {
 	line-height: 18px;
 	height: 18px;
 	margin: 0;
-	padding: 0 6px 0 17px;
+	padding: 0 6px 0 17px
 }
 
 #wrapper .article-info .attach {
-	display: none;
+	display: none
 }
 
 .mb-rater, .mb-icon {
@@ -1108,38 +1108,38 @@ a.friend-right {
 	opacity: 0.45;
 	float: right;
 	padding: 3px 0;
-	margin: 0 2px;
+	margin: 0 2px
 }
 
 .mb-icon {
 	width: 16px;
-	height: 16px;
+	height: 16px
 }
 
 .mb-reply-to, .mb-reply-main {
 	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -412px;
 	outline: 0;
 	width: auto;
-	padding-left: 20px;
+	padding-left: 20px
 }
 /* site map */
 div#sitemap ul {
 	list-style: none outside none;
 	margin: 0;
-	padding: 0;
+	padding: 0
 }
 
 div#sitemap ul li {
-	margin: 0;
+	margin: 0
 }
 
 div#sitemap ul li a {
 	padding: 0;
-	text-decoration: none;
+	text-decoration: none
 }
 
 div#sitemap ul li li {
-	padding: 0 0 0 20px;
+	padding: 0 0 0 20px
 }
 
 code, pre, .code, span.c, .codebox {
@@ -1152,7 +1152,7 @@ code, pre, .code, span.c, .codebox {
 	font-size: 11px;
 	margin: .5em 1em;
 	padding: 5px;
-	white-space: pre;
+	white-space: pre
 }
 
 blockquote, .q, .quote {
@@ -1163,20 +1163,20 @@ blockquote, .q, .quote {
 	-webkit-border-radius: 4px;
 	display: block;
 	margin: .5em 1.5em;
-	padding: 3px 8px 3px 25px;
+	padding: 3px 8px 3px 25px
 }
 
 .rpl-avatar {
 	height: 45px;
 	width: 45px;
 	float: left;
-	margin: 0 6px 0 0;
+	margin: 0 6px 0 0
 }
 
 .rpl-list {
 	list-style: none;
 	margin: 8px 4px;
-	padding: 0 6px 8px;
+	padding: 0 6px 8px
 }
 
 .rpl-list li {
@@ -1185,20 +1185,20 @@ blockquote, .q, .quote {
 	min-height: 45px;
 	background: transparent;
 	margin: 0;
-	padding: 5px 0;
+	padding: 5px 0
 }
 
 .rpl-list li p.comment-author {
 	font-size: 90%;
 	color: #888;
 	margin: 0;
-	padding: 0 0 5px;
+	padding: 0 0 5px
 }
 
 #wrapper .list-tags {
 	padding: 0;
 	margin: 5px 0;
-	list-style: none;
+	list-style: none
 }
 
 #wrapper .list-tags li {
@@ -1214,46 +1214,46 @@ blockquote, .q, .quote {
 	font-family: helvetica, arial, sans-serif;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: 3px
 }
 
 #wrapper .list-tags li a {
-	color: #656565;
+	color: #656565
 }
 
 #wrapper .list-tags li a:hover {
 	color: #369;
-	text-decoration: none;
+	text-decoration: none
 }
 
 #forum td {
 	padding: 4px 2px;
-	border-bottom: 1px solid #f3f3f3;
+	border-bottom: 1px solid #f3f3f3
 }
 
 #forum td.stat, #new-tags, #post-rating, #star, #like-rate-box {
-	display: none;
+	display: none
 }
 
 #forum td.last {
 	font-size: 90%;
 	min-width: 110px;
-	text-align: right;
+	text-align: right
 }
 
 #forum td h3 {
 	padding: 4px 0 1px;
-	margin: 0;
+	margin: 0
 }
 
 .add-topic {
 	float: right;
-	font-size: 90%;
+	font-size: 90%
 }
 
 .user-actions {
 	padding: 0;
-	margin: 0;
+	margin: 0
 }
 
 .user-actions li {
@@ -1263,21 +1263,21 @@ blockquote, .q, .quote {
 	padding: 3px;
 	font-size: 11px;
 	line-height: 14px;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #eee
 }
 
 .user-actions li span {
 	color: #777;
-	font-size: 10px;
+	font-size: 10px
 }
 
 #profile-user-actions li {
-	height: 42px;
+	height: 42px
 }
 
 #profile-user-actions li .av {
 	width: 32px;
-	height: 32px;
+	height: 32px
 }
 
 /* spoileri */
@@ -1289,7 +1289,7 @@ blockquote, .q, .quote {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	overflow: hidden;
+	overflow: hidden
 }
 
 .spoiler-title {
@@ -1298,24 +1298,24 @@ blockquote, .q, .quote {
 	padding: 0 10px;
 	display: inline-block;
 	width: auto;
-	font-size: 90%;
+	font-size: 90%
 }
 
 .spoiler-content {
 	padding: 10px;
-	display: block;
+	display: block
 }
 /* notifikacijas */
 #user-notify {
 	padding: 0;
-	margin: 0;
+	margin: 0
 }
 
 #user-notify li {
 	padding: 1px 0;
 	margin: 0;
 	background: transparent;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #eee
 }
 
 #user-notify li a .notification-icon {
@@ -1323,51 +1323,51 @@ blockquote, .q, .quote {
 	width: 28px;
 	height: 28px;
 	margin: 2px;
-	float: left;
+	float: left
 }
 
 #user-notify li.notification-1 a .notification-icon {
-	background-position: 0 -42px;
+	background-position: 0 -42px
 }
 
 #user-notify li.notification-2 a .notification-icon {
-	background-position: 0 -86px;
+	background-position: 0 -86px
 }
 
 #user-notify li.notification-3 a .notification-icon {
-	background-position: 0 -130px;
+	background-position: 0 -130px
 }
 
 #user-notify li.notification-4 a .notification-icon {
-	background-position: 0 -174px;
+	background-position: 0 -174px
 }
 
 #user-notify li.notification-5 a .notification-icon {
-	background-position: 0 -218px;
+	background-position: 0 -218px
 }
 
 #user-notify li.notification-6 a .notification-icon {
-	background-position: 0 -262px;
+	background-position: 0 -262px
 }
 
 #user-notify li.notification-7 a .notification-icon {
-	background-position: 0 -306px;
+	background-position: 0 -306px
 }
 
 #user-notify li.notification-9 a .notification-icon {
-	background-position: 0 -350px;
+	background-position: 0 -350px
 }
 
 #user-notify li.notification-10 a .notification-icon {
-	background-position: 0 -394px;
+	background-position: 0 -394px
 }
 
 #user-notify li.notification-11 a .notification-icon {
-	background-position: 0 -438px;
+	background-position: 0 -438px
 }
 
 #user-notify li.notification-12 a .notification-icon {
-	background-position: 0 -482px;
+	background-position: 0 -482px
 }
 
 #user-notify li a {
@@ -1378,11 +1378,11 @@ blockquote, .q, .quote {
 	height: auto !important;
 	height: 28px;
 	min-height: 28px;
-	overflow: hidden;
+	overflow: hidden
 }
 
 #user-notify li a:hover {
-	background-color: #f5f5f6;
+	background-color: #f5f5f6
 }
 
 #user-notify li span {
@@ -1391,25 +1391,25 @@ blockquote, .q, .quote {
 	font-size: 90%;
 	display: block;
 	color: #888;
-	font-family: arial;
+	font-family: arial
 }
 
 #user-notify li span.site-name, #user-notify li span.info-content {
-	display: inline;
+	display: inline
 }
 
 .notification-date:before {
-	content: "pirms ";
+	content: "pirms "
 }
 
 /* lapu pārslēgs */
 .core-pager {
 	margin: 10px 0;
-	text-align: center;
+	text-align: center
 }
 
 .core-pager span {
-	display: none;
+	display: none
 }
 
 .core-pager a {
@@ -1420,43 +1420,43 @@ blockquote, .q, .quote {
 	background: #eee;
 	margin: 0 1px;
 	padding: 4px 10px;
-	display: inline-block;
+	display: inline-block
 }
 
 .core-pager a.selected {
 	border: 1px solid #ccc;
 	background: #dadada;
-	font-weight: 700;
+	font-weight: 700
 }
 
 /* flash message */
 #flash-message {
-	margin: 8px 0;
+	margin: 8px 0
 }
 
 #flash-message p {
 	padding: 6px 10px;
 	margin: 2px 0;
 	line-height: 14px;
-	border-width: 1px;
+	border-width: 1px
 }
 
 #flash-message.success {
 	color: #3c763d;
 	background-color: #dff0d8;
-	border-color: #d6e9c6;
+	border-color: #d6e9c6
 }
 
 #flash-message.warning {
 	color: #8a6d3b;
 	background-color: #fcf8e3;
-	border-color: #faebcc;
+	border-color: #faebcc
 }
 
 #flash-message.error {
 	color: #a94442;
 	background-color: #f2dede;
-	border-color: #ebccd1;
+	border-color: #ebccd1
 }
 
 #close-flash-message {
@@ -1485,43 +1485,43 @@ blockquote, .q, .quote {
 }
 
 .positive {
-	color: #4a4;
+	color: #4a4
 }
 
 .negative {
-	color: #a44;
+	color: #a44
 }
 
 .plus {
 	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 0;
-	text-indent: -9999px;
+	text-indent: -9999px
 }
 
 .plus:hover {
-	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -64px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -64px
 }
 
 .minus {
 	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -16px;
-	text-indent: -9999px;
+	text-indent: -9999px
 }
 
 .minus:hover {
-	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -80px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -80px
 }
 
 .voted1 {
-	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -32px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -32px
 }
 
 .voted2 {
-	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -48px;
+	background: url('//img.exs.lv/bildes/vote.png') no-repeat 0 -48px
 }
 
 .c-rate span.r-val {
 	line-height: 16px;
 	width: 30px;
-	text-align: right;
+	text-align: right
 }
 
 .deleted-entry {
@@ -1529,7 +1529,7 @@ blockquote, .q, .quote {
     font-size: 11px;
     margin: 7px 0 5px 40px;
     color: #962d2d;
-    background: #f5f3f3;
+    background: #f5f3f3
 }
 
 /* sidr menu */
@@ -1549,26 +1549,26 @@ blockquote, .q, .quote {
 	color: #333;
 	-webkit-box-shadow: inset 0 0 5px 5px #ebebeb;
 	-moz-box-shadow: inset 0 0 5px 5px #ebebeb;
-	box-shadow: inset 0 0 5px 5px #ebebeb;
+	box-shadow: inset 0 0 5px 5px #ebebeb
 }
 
 .sidr .sidr-inner {
-	padding: 0 0 15px;
+	padding: 0 0 15px
 }
 
 .sidr .sidr-inner>p {
 	margin-left: 15px;
-	margin-right: 15px;
+	margin-right: 15px
 }
 
 .sidr.right {
 	left: auto;
-	right: -260px;
+	right: -260px
 }
 
 .sidr.left {
 	left: -260px;
-	right: auto;
+	right: auto
 }
 
 .sidr h1,.sidr h2,.sidr h3,.sidr h4,.sidr h5,.sidr h6 {
@@ -1585,21 +1585,21 @@ blockquote, .q, .quote {
 	background-image: linear-gradient(#ffffff,#dfdfdf);
 	-webkit-box-shadow: 0 5px 5px 3px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0 5px 5px 3px rgba(0,0,0,0.2);
-	box-shadow: 0 5px 5px 3px rgba(0,0,0,0.2);
+	box-shadow: 0 5px 5px 3px rgba(0,0,0,0.2)
 }
 
 .sidr p {
 	font-size: 13px;
-	margin: 0 0 12px;
+	margin: 0 0 12px
 }
 
 .sidr p a {
-	color: rgba(51,51,51,0.9);
+	color: rgba(51,51,51,0.9)
 }
 
 .sidr>p {
 	margin-left: 15px;
-	margin-right: 15px;
+	margin-right: 15px
 }
 
 .sidr ul {
@@ -1607,7 +1607,7 @@ blockquote, .q, .quote {
 	margin: 0 0 15px;
 	padding: 0;
 	border-top: 1px solid #dfdfdf;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #fff
 }
 
 .sidr ul li {
@@ -1615,63 +1615,63 @@ blockquote, .q, .quote {
 	margin: 0;
 	line-height: 48px;
 	border-top: 1px solid #fff;
-	border-bottom: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf
 }
 
 .sidr ul li:hover,.sidr ul li.active,.sidr ul li.sidr-class-active {
 	border-top: none;
-	line-height: 49px;
+	line-height: 49px
 }
 
 .sidr ul li:hover>a,.sidr ul li:hover>span,.sidr ul li.active>a,.sidr ul li.active>span,.sidr ul li.sidr-class-active>a,.sidr ul li.sidr-class-active>span {
 	-webkit-box-shadow: inset 0 0 15px 3px #ebebeb;
 	-moz-box-shadow: inset 0 0 15px 3px #ebebeb;
-	box-shadow: inset 0 0 15px 3px #ebebeb;
+	box-shadow: inset 0 0 15px 3px #ebebeb
 }
 
 .sidr ul li a {
 	padding: 0 15px;
 	display: block;
 	text-decoration: none;
-	color: #333;
+	color: #333
 }
 
 .sidr ul li ul {
 	border-bottom: none;
-	margin: 0;
+	margin: 0
 }
 
 .sidr ul li ul li {
 	line-height: 40px;
-	font-size: 13px;
+	font-size: 13px
 }
 
 .sidr ul li ul li:last-child {
-	border-bottom: none;
+	border-bottom: none
 }
 
 .sidr ul li ul li:hover,.sidr ul li ul li.active,.sidr ul li ul li.sidr-class-active {
 	border-top: none;
-	line-height: 41px;
+	line-height: 41px
 }
 
 .sidr ul li ul li:hover>a,.sidr ul li ul li:hover>span,.sidr ul li ul li.active>a,.sidr ul li ul li.active>span,.sidr ul li ul li.sidr-class-active>a,.sidr ul li ul li.sidr-class-active>span {
 	-webkit-box-shadow: inset 0 0 15px 3px #ebebeb;
 	-moz-box-shadow: inset 0 0 15px 3px #ebebeb;
-	box-shadow: inset 0 0 15px 3px #ebebeb;
+	box-shadow: inset 0 0 15px 3px #ebebeb
 }
 
 .sidr ul li ul li a,.sidr ul li ul li span {
 	color: rgba(51,51,51,0.8);
-	padding-left: 30px;
+	padding-left: 30px
 }
 
 .sidr form {
-	margin: 0 15px;
+	margin: 0 15px
 }
 
 .sidr label {
-	font-size: 13px;
+	font-size: 13px
 }
 
 .sidr input[type="text"],.sidr input[type="password"],.sidr input[type="date"],.sidr input[type="datetime"],.sidr input[type="email"],.sidr input[type="number"],.sidr input[type="search"],.sidr input[type="tel"],.sidr input[type="time"],.sidr input[type="url"],.sidr textarea,.sidr select {
@@ -1691,22 +1691,22 @@ blockquote, .q, .quote {
 	background: rgba(0,0,0,0.1);
 	color: rgba(51,51,51,0.6);
 	display: block;
-	clear: both;
+	clear: both
 }
 
 .sidr input[type=checkbox] {
 	width: auto;
 	display: inline;
-	clear: none;
+	clear: none
 }
 
 .sidr input[type=button],.sidr input[type=submit] {
 	color: #f8f8f8;
-	background: #333;
+	background: #333
 }
 
 .sidr input[type=button]:hover,.sidr input[type=submit]:hover {
-	background: rgba(51,51,51,0.9);
+	background: rgba(51,51,51,0.9)
 }
 
 #menu {
@@ -1721,35 +1721,35 @@ blockquote, .q, .quote {
 	text-indent: -9999px;
 	display: block;
 	border-right: 1px solid #386893;
-	border-left: 1px solid #386893;
+	border-left: 1px solid #386893
 }
 
 /* draugu saraksts un grupas biedri */
 #friends-pending, #friend-list {
 	padding: 0;
-	margin: 0;
+	margin: 0
 }
 
 #friends-pending li {
 	background: transparent;
 	border: 1px solid #f3f3f3;
 	margin: 3px 0;
-	padding: 3px;
+	padding: 3px
 }
 
 #friends-pending li a.image {
 	float: left;
-	margin: 0 5px 0 0;
+	margin: 0 5px 0 0
 }
 
 #friends-pending li a.image img {
 	width: 47px;
-	height: 47px;
+	height: 47px
 }
 
 #friends-pending li h3 {
 	color: #bbb;
-	font-weight: 400;
+	font-weight: 400
 }
 
 ul#friend-list li {
@@ -1762,20 +1762,20 @@ ul#friend-list li {
 	text-align: center;
 	width: 80px;
 	height: 70px;
-	font-size: 90%;
+	font-size: 90%
 }
 
 ul#friend-list li.owner {
-	border: 1px solid #911;
+	border: 1px solid #911
 }
 
 ul#friend-list li.mod {
-	border: 1px solid #119;
+	border: 1px solid #119
 }
 
 ul#friend-list li a.profile-link img {
 	width: 45px;
-	height: 45px;
+	height: 45px
 }
 
 ul#friend-list li a.delete {
@@ -1786,17 +1786,17 @@ ul#friend-list li a.delete {
 	font-size: 0;
 	-moz-opacity: 0.90;
 	opacity: .90;
-	filter: alpha(opacity=90);
+	filter: alpha(opacity=90)
 }
 
 ul#friend-list li a.delete:hover {
 	-moz-opacity: 1.00;
 	opacity: 1.00;
-	filter: alpha(opacity=100);
+	filter: alpha(opacity=100)
 }
 
 a.friend-right {
-	float: right;
+	float: right
 }
 
 /* filmu saraksts (thumbnail) */
@@ -1821,7 +1821,7 @@ a.friend-right {
 	padding: 2px 10px 0;
 	font-family: Ubuntu, sans-serif;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 14px
 }
 
 /* ikonas pie avatara */
@@ -1832,33 +1832,33 @@ a.friend-right {
 	margin: 0;
 	position: absolute;
 	left: -4px;
-	top: -5px;
+	top: -5px
 }
 
 .deco-pos-0 {
-	left: -4px;
+	left: -4px
 }
 
 .deco-pos-1 {
-	left: 14px;
+	left: 14px
 }
 
 .deco-pos-2 {
-	left: 32px;
+	left: 32px
 }
 
 .deco-pos-3 {
 	left: -4px;
-	top: 13px;
+	top: 13px
 }
 
 .deco-pos-4 {
 	left: 14px;
-	top: 13px;
+	top: 13px
 }
 
 .deco-pos-5 {
 	left: 32px;
-	top: 13px;
+	top: 13px
 }
 

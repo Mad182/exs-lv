@@ -23,10 +23,10 @@
 	display: block
 }
 #pm-table td.pm {
-	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%;
+	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail.png') no-repeat 50% 50%
 }
 #pm-table td.pm-read {
-	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%;
+	background: transparent url('//img.exs.lv/bildes/fugue-icons/mail-open.png') no-repeat 50% 50%
 }
 #pm-table th {
 	text-align: center;
@@ -83,5 +83,5 @@
 	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -572px
 }
 .mail-search {
-	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -598px;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -598px
 }

@@ -45,7 +45,7 @@
 #junk-voter {
 	float: left;
 	height: 32px;
-	margin: 12px;
+	margin: 12px
 }
 
 #junk-voter .uplink, #junk-voter .downlink {
@@ -53,29 +53,29 @@
 	width: 32px;
 	height: 32px;
 	text-indent: -9999px;
-	margin: 0 1px;
+	margin: 0 1px
 }
 
 #junk-voter .uplink {
-	background: url('//img.exs.lv/bildes/junk/upvote.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/junk/upvote.png') no-repeat 50% 50%
 }
 
 #junk-voter .downlink {
-	background: url('//img.exs.lv/bildes/junk/downvote.png') no-repeat 50% 50%;
+	background: url('//img.exs.lv/bildes/junk/downvote.png') no-repeat 50% 50%
 }
 
 #junk-voter span.downlink, #junk-voter span.uplink {
 	filter: alpha(opacity=45);
 	-khtml-opacity: 0.35;
 	-moz-opacity: 0.35;
-	opacity: 0.35;
+	opacity: 0.35
 }
 
 #junk-voter span.downlink.active, #junk-voter span.uplink.active {
 	filter: alpha(opacity=65);
 	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
-	opacity: 0.65;
+	opacity: 0.65
 }
 
 #junk-voter .value {
@@ -84,9 +84,9 @@
 	height: 32px;
 	padding: 0 4px;
 	font-size: 20px;
-	font-weight: bold;
+	font-weight: bold
 }
 
 #junk-voter .value small {
-	font-size: 11px;
+	font-size: 11px
 }

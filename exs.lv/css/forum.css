@@ -11,7 +11,7 @@
 	border: 0;
 	border-top: 0;
 	margin: 8px auto;
-	padding: 0;
+	padding: 0
 }
 
 #forum td {
@@ -31,13 +31,13 @@
 
 #forum td.last {
 	border-right: 0;
-	min-width: 120px;
+	min-width: 120px
 }
 
 #forum td h3 {
 	margin: .5em 0 0;
 	line-height: 1.2;
-	font-size: 15px;
+	font-size: 15px
 }
 
 #forum td p {
@@ -70,7 +70,7 @@
 }
 
 #forum td.stat {
-	text-align: right;
+	text-align: right
 }
 
 ul.subcat-list {
@@ -89,14 +89,12 @@ ul.subcat-list li {
 .forum-admin-tool {
 	font-size: 10px;
 	filter: alpha(opacity=65);
-	-khtml-opacity: 0.65;
 	-moz-opacity: 0.65;
 	opacity: 0.65
 }
 
 .forum-admin-tool:hover {
 	filter: alpha(opacity=100);
-	-khtml-opacity: 1;
 	-moz-opacity: 1;
 	opacity: 1
 }

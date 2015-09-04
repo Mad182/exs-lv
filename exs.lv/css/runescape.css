@@ -112,14 +112,14 @@ body {
 	background:transparent;
 	box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
 	-moz-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
-	-webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6);
+	-webkit-box-shadow: 0 9px 0 0 transparent, 0 9px 15px -4px rgba(6, 6, 14, 0.6), 12px 0 15px -4px rgba(6, 6, 14, 0.6), -12px 0 15px -4px rgba(6, 6, 14, 0.6)
 }
 #outer_content {
 	padding:0;
 	padding-bottom:10px;
 	margin:0;
 	overflow:auto;
-	background:url('/bildes/runescape/pattern-wrapper.png') 0 2%;
+	background:url('/bildes/runescape/pattern-wrapper.png') 0 2%
 }
 #left, #content, #right {
 	float:left;
@@ -164,7 +164,7 @@ body {
 	width: auto;
 	font-family: Arial;
 	font-size: 11px;
-	line-height: 14px;
+	line-height: 14px
 }
 #login-block {
 	margin:0 10px 0 0;
@@ -176,7 +176,7 @@ body {
 }
 #login-block .less-padding a {
 	padding:4px 0;
-	margin: 2px 5px;
+	margin: 2px 5px
 }
 #login-form {
 	padding-top:0;
@@ -222,7 +222,7 @@ body {
 	border-bottom: 1px solid #363535;
 	z-index:100;
 	width:inherit;
-	font-family:verdana,ubuntu,tahoma,arial;
+	font-family:verdana,ubuntu,tahoma,arial
 }
 #top-menu li.selected a, #top-menu li a:hover, #top-menu li:hover a {
 	background: #2090cc url('//img.exs.lv/m/a/mad/blue.png') repeat 0 0;
@@ -231,7 +231,7 @@ body {
 	margin: 0;
 	margin-top: -1px;
 	padding-top: 1px;
-	text-shadow: 0 1px 0 #59add2;
+	text-shadow: 0 1px 0 #59add2
 }
 #tools-bar {
 	background:#111010;
@@ -267,25 +267,25 @@ div pre {
 	display: block
 }
 #exs-groups h3 {
-	margin: 5px 0 2px;
+	margin: 5px 0 2px
 }
 .top-navig .red, .top-navig .r {
-	color: #ef6000;
+	color: #ef6000
 }
 .top-navig .green, .top-navig .g {
-	color: #60ef00;
+	color: #60ef00
 }
 #wrapper .article-info {
 	background: #f4f5f6;
 	padding: 3px 0 2px;
 	border-top: 1px dotted #ddd;
 	border-bottom: 1px dotted #ddd;
-	margin: 5px 0;
+	margin: 5px 0
 }
 #wrapper .article-info li {
 	margin-left: 12px;
 	margin-right: 0;
-	padding-right: 0;
+	padding-right: 0
 }
 #forum td h3 {
 	font-size:13px
@@ -306,7 +306,7 @@ div pre {
 	padding: 3px 7px;
 	font-weight: 700;
 	text-align: center;
-	font-family: tahoma,verdana,Ubuntu,arial;
+	font-family: tahoma,verdana,Ubuntu,arial
 }
 #full-story tr td {
 	border: 1px solid #C3C8CA;
@@ -317,7 +317,7 @@ div pre {
 }
 .text-notice li {
 	background: none;
-	padding-left: 0;
+	padding-left: 0
 }
 #full-story table img {
 	vertical-align: middle;
@@ -328,7 +328,7 @@ div pre {
 }
 #full-story table ul li {
 	background: none;
-	padding-left: 0;
+	padding-left: 0
 }
 
 /* 3. Jaunie lapas pamatbloki */
@@ -348,7 +348,7 @@ div pre {
    padding:0;
    border-left:1px solid #2D2E2E;
    border-right:1px solid #2D2E2E;
-   font-size: 11px;
+   font-size: 11px
 }
 	.top-navig ul, .top-navig li {
 		margin:0;
@@ -390,7 +390,7 @@ ul.nav-right {
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
 	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-top-right-radius: 5px
 }
 	#header-navig ul {
 	   margin:0;
@@ -425,7 +425,7 @@ ul.nav-right {
 	clear: both;
 	overflow: auto;
 	border-bottom: 1px solid #F3EEEE;
-	padding: 2px 0;
+	padding: 2px 0
 }
 .new-groups img {
 	float:left;
@@ -442,7 +442,7 @@ ul.nav-right {
 /* 4. Lapas šaurās kolonnas */
 #rs_columns {
 	overflow:auto;
-	background-image:url('/bildes/runescape/pattern-cols.png');
+	background-image:url('/bildes/runescape/pattern-cols.png')
 }
 .box {
 	background:#FCFCFD
@@ -454,7 +454,7 @@ ul.nav-right {
 	margin:0 0 5px;
 	background-color:rgba(253, 253, 253, 0.7);
 	border: 2px solid #D3D0D0;
-	font-size: 11px;
+	font-size: 11px
 }
 .col-box-title {
 	display: inline-block;
@@ -465,13 +465,13 @@ ul.nav-right {
 	color: #C8CED5;
 	padding: 3px 12px;
 	background: #232527;
-	border-bottom: 1px solid #C7C7C7;
+	border-bottom: 1px solid #C7C7C7
 }
 #left .comments {
-	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px;
+	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px
 }
 #left .friends {
-	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px;
+	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -442px
 }
 .box-icon {
 	position:relative;
@@ -672,7 +672,7 @@ ul.nav-right {
 
 /* 8.0 RuneScape faktu pārvaldība */
 table.facts-table th, table.facts-table td {
-	padding:5px 10px;
+	padding:5px 10px
 }
 table.facts-table th {
 	font-weight: 700
@@ -686,7 +686,7 @@ table.facts-table .row-center {
 }
 table.facts-table .row-center img {
 	position: relative;
-	top: 3px;
+	top: 3px
 }
 table.facts-table .row-counter {
 	padding:5px;
@@ -1261,7 +1261,7 @@ table.skill-reqs {
 }
 #poll-questions input[type=radio] {
 	position: relative;
-	top: 2px;
+	top: 2px
 }
 #poll-questions label {
 	color:#2A486F;
