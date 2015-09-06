@@ -104,7 +104,15 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$block = '';
 			if ($image_id == $image->id or (!$image_id && $total == $linkid)) {
 				$sel = 'sel';
-				$tpl->assignGlobal('current-img-page', $i - 4);
+				$offset = ($i-4)*76;
+
+				if($i > $total-5) {
+					$offset = $offset-(5-($total-$i))*76;
+				}
+
+				if($total > 7 && $offset > 0) {
+					$tpl->assignGlobal('offset', 'left:-' . $offset . 'px');
+				}
 			} else {
 				$sel = '';
 			}
@@ -277,7 +285,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				$rating = 0;
 			}
 
-			$im_size = getimagesize(CORE_PATH . '/' . $image->url);
+			$im_size = @getimagesize(CORE_PATH . '/' . $image->url);
 			if (!empty($image->youtube_video)) {
 				$im_size[1] = 280;
 				$im_size[0] = 560;
@@ -551,7 +559,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		$tpl->assignGlobal('gal-sel', ' class="selected"');
 	}
 
-	$tpl->assignGlobal('jquery-tools', ',jquery.tools.min.js');
 } else {
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';

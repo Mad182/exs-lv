@@ -52,7 +52,7 @@
 		<div id="gallery-image-list">
 			<a class="prev browse left gray">&laquo;</a>
 			<div class="scrollable imgs" id="images">
-				<div class="items">
+				<div style="{offset}" class="items">
 					<!-- START BLOCK : image-list-node-->
 					<a class="{image-list-sel}" href="/gallery/{user-id}/{image-list-id}#images"><img src="{img-server}/{image-list-thb}" alt="{image-list-linkid}" /><span>{image-list-posts}</span></a>
 					<!-- END BLOCK : image-list-node-->
@@ -61,15 +61,6 @@
 			<a class="next browse right gray">&raquo;</a>
 			<div class="c"></div>
 		</div>
-
-		<script type="text/javascript">
-			$().ready(function() {
-				$("#images").scrollable();
-				/* parvietojam augsejo attelu navigaciju uz lapu kur atrodas bilde */
-				var api = $("#images").data("scrollable");
-				api.move({current-img-page});
-			});
-		</script>
 	<!-- END BLOCK : image-list-->
 
 	<!-- START BLOCK : image-view-->

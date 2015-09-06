@@ -73,7 +73,7 @@
 
 <!-- START BLOCK : group-info-->
 <div class="tabMain">
-	<div class="span7" style="overflow: hidden">
+	<div class="span7" style="overflow:hidden">
 		{group-text}
 		{module_content}
 	</div>

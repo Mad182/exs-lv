@@ -1,6 +1,6 @@
-jQuery(document).ready(function($) {
+$(document).ready(function($) {
 
-	jQuery('#responsive-menu-button').sidr({
+	$('#responsive-menu-button').sidr({
 		name: 'sidr-right',
 		speed: 50,
 		side: 'right',

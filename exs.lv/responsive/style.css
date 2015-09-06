@@ -2473,7 +2473,7 @@ miniblogi
 	max-width: 100%
 }
 
-#miniblog-list li img {
+#miniblog-list li .post-content img {
 	max-width: 75%
 }
 
