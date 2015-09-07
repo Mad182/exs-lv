@@ -119,7 +119,7 @@
 		<header id="header" class="container">
 			<div id="mast-head">
 				<div id="logo">
-					<a href="/" title="Magazine" rel="home"><img src="/responsive/images/logo.png" alt="Magazine" /></a>
+					<a href="/" title="Magazine" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="Magazine" /></a>
 				</div>
 			</div>
 
@@ -188,7 +188,6 @@
 		</header><!-- #masthead -->
 
 		<div id="headline" class="container"{page-persona}>
-			<a href="/"><img src="https://img.exs.lv/bildes/logos/logo_exs.png" alt="Logo" /></a>
 			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
 				<script type="text/javascript" id="position_2919">
 				  var ads_positions = ads_positions || [];

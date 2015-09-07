@@ -170,7 +170,7 @@ ul.author-social li {
 }
 
 #page {
-	margin:30px auto
+	margin:20px auto
 }
 
 .nobot {
@@ -210,7 +210,7 @@ ul.author-social li {
 }
 
 #logo {
-	padding:14px 0
+	padding: 12px 0 0;
 }
 
 h1, h2, h3, h4, h5 {
@@ -322,7 +322,8 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 #headline {
 	background:#ebebeb;
 	padding:0 40px;
-	position: relative
+	position: relative;
+	height: 104px
 }
 
 #headline img {
