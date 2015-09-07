@@ -638,6 +638,30 @@ $(document).ready(function($) {
 		side: 'right',
 		source: '#swipe-menu-responsive'	
 	});
+	
+	/* galerijas attēlu slaideris */
+	$('#gallery-image-list').on('click', '.left', function(e) {
+		e.preventDefault();
 
+		var off = parseInt($('#images .items').css('left').replace(/[^-\d\.]/g, ''));
+		off = off+76;
+		if(off < 0) {
+			$('#images .items').animate({left: off + 'px'}, 100);
+		} else {
+			$('#images .items').animate({left: '0px'}, 100);
+		}
+	});
+	
+	$('#gallery-image-list').on('click', '.right', function(e) {
+		e.preventDefault();
+
+		var off = parseInt($('#images .items').css('left').replace(/[^-\d\.]/g, ''));
+		off = off-76;
+		if(off < 0) {
+			$('#images .items').animate({left: off + 'px'}, 100);
+		} else {
+			$('#images .items').animate({left: '0px'}, 100);
+		}
+	});
 });
 
