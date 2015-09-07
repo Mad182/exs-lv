@@ -328,7 +328,7 @@ if (!empty($secure_login)) {
 }
 
 if ($auth->skin == 1 && $lang == 1) {
-	$add_css[] = 'dark.css';
+	//$add_css[] = 'dark.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
@@ -442,9 +442,9 @@ if ($skin === 'main') {
 					$tpl->newBlock('myg-node');
 					$class = 'l-gadmin';
 					$newposts = $g_owner->posts - $g_owner->owner_seenposts;
-					$add = '';
+					$unread = '';
 					if ($newposts > 0) {
-						$add = ' [<span class="r">' . $newposts . '</span>]';
+						$unread = '<span class="gm-unread">' . $newposts . '</span>';
 					}
 					if (empty($g_owner->avatar)) {
 						$g_owner->avatar = 'none.png';
@@ -454,7 +454,7 @@ if ($skin === 'main') {
 						'class' => $class,
 						'title' => $g_owner->title,
 						'avatar' => $g_owner->avatar,
-						'add' => $add,
+						'unread' => $unread
 					));
 				}
 			}
@@ -467,9 +467,9 @@ if ($skin === 'main') {
 						$class = 'l-gmember';
 					}
 					$newposts = $g_member->posts - $g_member->seenposts;
-					$add = '';
+					$unread = '';
 					if ($newposts > 0) {
-						$add = ' [<span class="r">' . $newposts . '</span>]';
+						$unread = '<span class="gm-unread">' . $newposts . '</span>';
 					}
 					if (empty($g_member->avatar)) {
 						$g_member->avatar = 'none.png';
@@ -477,7 +477,7 @@ if ($skin === 'main') {
 					$tpl->assign(array(
 						'id' => $g_member->clan,
 						'class' => $class,
-						'add' => $add,
+						'unread' => $unread,
 						'title' => $g_member->title,
 						'avatar' => $g_member->avatar,
 					));
