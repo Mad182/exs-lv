@@ -251,3 +251,24 @@ body {
 	font-size: 90%;
 }
 
+/* filmu un seriālu vērtēšanas tabul grupā */
+.mr-av {
+	width:145px;
+	min-width:145px;
+	height:215px;
+	margin:2px
+}
+
+.mr-inf {
+	vertical-align:top;
+	padding: 20px 10px;
+	width:115px
+}
+
+.mr-us img {
+	float:left;
+	width:27px;
+	height:27px;
+	margin:1px
+}
+
