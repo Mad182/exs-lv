@@ -126,7 +126,7 @@
 						<input type="hidden" name="response-to" id="response-to" value="{id}" />
 						<input type="hidden" name="token" id="token" value="{token}" />
 						<!-- START BLOCK : resp-tools-->
-						<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br />
+						<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label>
 						<!-- END BLOCK : resp-tools-->
 						<textarea class="mb-textarea" tabindex="1" rows="5" cols="42" name="responseminiblog" id="responseminiblog"></textarea>
 						<p>

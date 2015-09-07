@@ -1,7 +1,7 @@
 
 <ul class="tabs">
-	<li><a href="/index/news"{newsactive}><span class="news">Jaunumi</a></span></li>
-	<li><a href="/index/wall"{wallactive}><span class="wall">Siena</a></span></li>
+	<li><a href="/index/news"{newsactive}><span class="news">Jaunumi</span></a></li>
+	<li><a href="/index/wall"{wallactive}><span class="wall">Siena</span></a></li>
 </ul>
 
 <div class="tabMain">
@@ -42,7 +42,7 @@
 <div class="left span7">
 	<!-- START BLOCK : cindex-list-->
 	<h1>Jaunumi</h1>
-	<ul class="index-list main">
+	<div class="index-list main">
 		<!-- START BLOCK : index-news-node-->
 		<article class="post">
 	
@@ -53,8 +53,8 @@
 			<div class="entry-meta row-fluid">
 				<ul class="clearfix">
 					<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-					<li><img src="/responsive/images/time.png" alt="">{date}</li>
-					<li><img src="/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Komentāri">{posts}</a></li>
+					<li><img src="//exs.lv/responsive/images/time.png" alt="">{date}</li>
+					<li><img src="//exs.lv/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Komentāri">{posts}</a></li>
 				</ul>
 			</div>
 	
@@ -76,7 +76,7 @@
 
 		</article>
 		<!-- END BLOCK : index-news-node-->
-	</ul>
+	</div>
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<!-- END BLOCK : cindex-list-->
 </div>

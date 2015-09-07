@@ -792,7 +792,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			}
 
 			if (!$author->deleted) {
-				$author_link = '<a rel="author" href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
+				$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
 			} else {
 				$author_link = '<em>dzēsts</em>';
 			}
@@ -809,7 +809,8 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'gender' => $author->gender,
 				'posts' => $article->posts,
 				'rating' => $rat,
-				'rating_count' => $article->rating_count
+				'rating_count' => $article->rating_count,
+				'avatar' => get_avatar($author, 's')	
 			));
 
 

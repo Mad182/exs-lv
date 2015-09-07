@@ -32,8 +32,8 @@
 	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic&subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500&subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500&amp;subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
 
 	<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 	<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
@@ -46,7 +46,7 @@
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
+	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js?reload"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script type="text/javascript">
@@ -119,12 +119,12 @@
 		<header id="header" class="container">
 			<div id="mast-head">
 				<div id="logo">
-					<a href="/" title="Magazine" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="Magazine" /></a>
+					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="Magazine" /></a>
 				</div>
 			</div>
 
 
-			<nav class="navbar navbar-inverse clearfix nobot">
+			<nav class="navbar clearfix nobot">
 
 				<a id="responsive-menu-button" href="#swipe-menu">
 					<span class="icon-bar"></span>
@@ -139,21 +139,9 @@
 						<li>
 							<span id="close-menu">
 								<a href="#" class="close-this-menu">Close</a>
-								<script type="text/javascript">
-									jQuery('a.sidr-class-close-this-menu').click(function() {
-										jQuery('div.sidr').css({
-											'right': '-476px'
-										});
-										jQuery('body').css({
-											'right': '0'
-										});
-									});
-								</script>
-
 							</span>
 						</li>
 
-						<li><a href="/">Jaunumi</a></li>
 						<li><a href="/forums">Forums</a></li>
 						<li class="dropdown"><a href="/raksti">Raksti</a>
 							<ul class="sub-menu">
@@ -207,7 +195,7 @@
 			<div class="row-fluid">
 				<div class="span9">
 					<!-- START BLOCK : user-menu-->
-					<ul id="user-menu" class="nav nav-pills nav-justified">
+					<ul id="user-menu" class="nav nav-pills">
 						<li><a href="/"><img src="/responsive/images/home.png" alt="Sākumlapa"></a></li>
 						<li class="dropdown">
 							<a href="/user/{currentuser-id}">Profils</a>
@@ -410,8 +398,8 @@
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
 						<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
-						<div id="tabwidget" class="widget tab-container box"> 
-							<ul id="tabnav" class="clearfix"> 
+						<div class="tabwidget widget tab-container box"> 
+							<ul class="tabnav clearfix"> 
 								<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span class="comments">Visi</span></a></li>
 								<!-- START BLOCK : mb-tabs-->
 								<li><a href="/mb-latest?pg=0&amp;tab=friends" class="{friends-selected}remember-friends ajax"><span class="friends">Draugu</span></a></li>
@@ -445,8 +433,8 @@
 
 					<div class="widget">
 						<h3 class="title"><span>Jaunākais portālā</span></h3>
-						<div id="tabwidget" class="widget tab-container box"> 
-							<ul id="tabnav" class="clearfix"> 
+						<div class="tabwidget widget tab-container box"> 
+							<ul class="tabnav clearfix"> 
 								<!-- START BLOCK : notification-list-->
 								<li><a href="/events-pager?events-page=0" class="{events-selected}remember-events ajax"><span class="profile">Notikumi</span></a></li>
 								<!-- END BLOCK : notification-list-->
@@ -578,7 +566,7 @@
 				<div class="footer-widget span3 block2">
 					<div class="widget" style="min-height:400px">
 						<h3 class="title"><span>Jaunākais no twitter</span></h3>
-						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2"{twitter-theme}>Tweets by @exs_lv</a>
+						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2">Tweets by @exs_lv</a>
 						<script>!function(d, s, id) {
 								var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
 								if (!d.getElementById(id)) {
@@ -730,7 +718,7 @@
 	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
 	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
 	<noscript>
-	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
+	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
 	</noscript>
 
 </body>

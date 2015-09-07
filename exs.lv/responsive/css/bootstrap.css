@@ -864,9 +864,10 @@ blockquote {
 
 blockquote p {
 	margin-bottom: 0;
-	font-size: 17.5px;
+	font-size: 14px;
 	font-weight: 300;
-	line-height: 1.25
+	line-height: 1.25;
+	font-style: italic
 }
 
 blockquote small {
@@ -4487,7 +4488,6 @@ input[type="submit"].btn.btn-mini {
 	padding: 10px 15px 10px;
 	color: #777777;
 	text-decoration: none;
-	text-shadow: 0 1px 0 #ffffff
 }
 
 .navbar .nav .dropdown-toggle .caret {

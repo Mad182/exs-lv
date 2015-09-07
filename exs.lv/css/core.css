@@ -1323,7 +1323,7 @@ a.friend img, .comments-avatar {
 	display: inline
 }
 
-.blockhref li span.wrap span.post-time {
+.post-time, .blockhref li span.wrap span.post-time {
 	display: block
 }
 
@@ -1567,42 +1567,44 @@ a.friend img, .comments-avatar {
 
 .latest-imgs a {
 	float: left;
-	width: 33%;
 	height: auto;
 	overflow: hidden;
+	width: 32%;
 	display: inline;
 	border: 0;
-	margin: 0
+	margin: 1px
 }
 
-.latest-imgs a span.container {
-	padding: 2px;
+.latest-imgs a span.cnt {
 	margin: 0;
-	position: relative
+	position: relative;
+	width: 100%;
+	height: auto;
+	display: block
 }
 
-.latest-imgs a span.container img {
+.latest-imgs a span.cnt img {
 	max-width: 100%;
 	height: auto
 }
 
-.latest-imgs a span.container span {
-	font-size: 11px;
+.latest-imgs a span.cnt span {
+	font-size: 12px;
 	position: absolute;
-	bottom: 6px;
+	bottom: 3px;
 	right: 3px;
-	height: 14px;
-	line-height: 14px;
+	height: 16px;
+	line-height: 16px;
 	width: 18px;
 	background: #444;
-	color: #888;
+	color: #bbb;
 	text-align: center;
 	float: right
 }
 
-.latest-imgs a span.container span.unread, .imgs a span.unread {
+body #content .latest-imgs a span.cnt span.r, body #content .imgs a span.r {
 	background: #ef6000;
-	color: #333
+	color: #fff
 }
 
 .imgs a.sel {

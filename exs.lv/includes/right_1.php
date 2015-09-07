@@ -151,11 +151,6 @@ if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
 
-if ($auth->skin == 1) {
-	$tpl->assignGlobal('twitter-theme', ' data-theme="dark"');
-}
-
-
 /**
  * exs.lv kreisais sidebar
  */
@@ -290,5 +285,5 @@ if ($category->module == 'movies') {
 }
 
 
-include(CORE_PATH . '/modules/core/poll.php');
+//include(CORE_PATH . '/modules/core/poll.php');
 

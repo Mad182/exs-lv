@@ -77,7 +77,7 @@ if ($articles) {
 		$cat = get_cat($article->category);
 
 		if (!$user->deleted) {
-			$author_link = '<a rel="author" href="/user/' . $user->id . '" rel="author">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+			$author_link = '<a href="/user/' . $user->id . '" rel="author">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
 		} else {
 			$author_link = '<em>dzēsts</em>';
 		}
@@ -85,7 +85,6 @@ if ($articles) {
 		$tpl->assign(array(
 			'cat' => $cat->title,
 			'cat-strid' => $cat->textid,
-			'articles-node-id' => $article->id,
 			'url' => '/read/' . $article->strid,
 			'aurl' => '/user/' . $user->id,
 			'title' => $article->title,

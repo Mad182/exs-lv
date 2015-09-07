@@ -112,6 +112,8 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 				if($total > 7 && $offset > 0) {
 					$tpl->assignGlobal('offset', 'left:-' . $offset . 'px');
+				} else {
+					$tpl->assignGlobal('offset', 'left:0px');
 				}
 			} else {
 				$sel = '';

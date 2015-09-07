@@ -1347,21 +1347,21 @@ ul#menu-footer {
 
 /* tab widget */
 
-#tabwidget ul {
+.tabwidget ul {
 	margin:0 0 5px 0;
 	list-style:none
 }
 
-ul#tabnav li {
+ul.tabnav li {
 	float:left;
 	width:33.33%
 }
 
-ul#tabnav li img {
+ul.tabnav li img {
 	margin-right:7px
 }
 
-ul#tabnav li a {
+ul.tabnav li a {
 	color:#FFF;
 	background:#3b5157;
 	border-right:1px solid #485A63;
@@ -1371,19 +1371,19 @@ ul#tabnav li a {
 	line-height: 18px
 }
 
-ul#tabnav li a span {
+ul.tabnav li a span {
 	padding: 0 0 0 20px;
 	line-height: 16px;
 	height: 16px
 }
 
-ul#tabnav li a:last-child {
+ul.tabnav li a:last-child {
 	border-right:none
 }
 
-ul#tabnav li a:hover,
-ul#tabnav li a.active,
-ul#tabnav li a.selected {
+ul.tabnav li a:hover,
+ul.tabnav li a.active,
+ul.tabnav li a.selected {
 	background:#81b752;
 	text-decoration:none
 }
@@ -1702,12 +1702,7 @@ blockquote {
 	border-right: 1px solid #ccc;
 	border-left:5px solid #78c1cf !important;
 	padding:15px !important;
-	margin: .5em 0 !important
-}
-
-blockquote p {
-	font-size:13px !important;
-	font-style:italic
+	margin: .5em 0 .6em !important
 }
 
 input,
@@ -1942,7 +1937,7 @@ img.twit-pic {
 		padding-left:15px;
 		padding-right:15px;
 	}
-	ul#tabnav h3 {
+	ul.tabnav h3 {
 		font-size:13px;
 	}
 	.navbar {
@@ -1980,7 +1975,7 @@ img.twit-pic {
 	}
 	#slide-left,
 	#slide-right,
-	ul#tabnav li {
+	ul.tabnav li {
 		width:100%;
 	}
 	#slide-right {
@@ -1996,7 +1991,7 @@ img.twit-pic {
 		position:static;
 		display:block;
 	}
-	ul#tabnav li a {
+	ul.tabnav li a {
 		padding-left:15px;
 		text-align:left;
 	}
@@ -2096,10 +2091,10 @@ img.twit-pic {
 	#slider .entry p {
 		display:none;
 	}
-	ul#tabnav li {
+	ul.tabnav li {
 		width:100%;
 	}
-	ul#tabnav li a {
+	ul.tabnav li a {
 		padding-left:20px;
 		text-align:left;
 	}
@@ -3127,7 +3122,7 @@ ol li.code-row {
 	float: right;
 	height: 16px;
 	margin: 0;
-	padding: 9px 0 0
+	padding: 11px 0 0
 }
 
 #login-form fieldset {
@@ -3146,9 +3141,9 @@ ol li.code-row {
 #login-form input {
 	color: #555;
 	border: 0;
-	width: 72px;
+	width: 90px;
 	display: inline;
-	margin: 0 3px 0 0;
+	margin: 0 10px 0 2px;
 	padding: 2px 3px;
 	background: #EAEAEA
 }
@@ -4114,6 +4109,8 @@ body #content .list-tags li a:hover {
 	min-height: 120px;
 	height: 120px;
 	margin: 0;
+	font-size: 14px;
+	line-height: 1.5;
 	padding: 6px
 }
 
@@ -4159,7 +4156,7 @@ p.comment-tools a {
 	min-height: 45px;
 	background: transparent;
 	margin: 0;
-	padding: 10px 3px 8px
+	padding: 10px 3px 3px
 }
 
 .rpl-list li:last-child {
@@ -4994,6 +4991,13 @@ html .lb {
 	color: #369
 }
 
+.form label .description {
+	font-weight: normal;
+	font-size: 90%;
+	line-height: 1.1;
+	color: #777;
+	width: 300px
+}
 
 .imgs .items a {
 	float: left;
@@ -5035,7 +5039,7 @@ html .lb {
 	margin: 1px
 }
 
-.latest-imgs a span.c {
+.latest-imgs a span.cnt {
 	margin: 0;
 	position: relative;
 	width: 72px;
@@ -5043,12 +5047,12 @@ html .lb {
 	display: block
 }
 
-.latest-imgs a span.c img {
+.latest-imgs a span.cnt img {
 	max-width: 100%;
 	height: auto
 }
 
-.latest-imgs a span.c span {
+.latest-imgs a span.cnt span {
 	font-size: 12px;
 	position: absolute;
 	bottom: 3px;
@@ -5062,7 +5066,7 @@ html .lb {
 	float: right
 }
 
-body #content .latest-imgs a span.c span.r, body #content .imgs a span.r {
+body #content .latest-imgs a span.cnt span.r, body #content .imgs a span.r {
 	background: #ef6000;
 	color: #fff
 }
