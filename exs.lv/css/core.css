@@ -1626,6 +1626,10 @@ input, select, textarea {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
 }
 
+.form label {
+	display: block
+}
+
 .form label .description {
 	font-weight: 400;
 	font-size: 90%;
@@ -4089,26 +4093,7 @@ img.show-banned:hover {
 
 /* socialo mediju share pogas */
 #share-block {
-	margin: 30px auto 20px;
-	width: 340px
-}
-
-.social-button {
-	float: left;
-	width: 105px;
-	height: 25px
-}
-
-.social-button.draugiem {
-	width: 115px
-}
-
-.social-button.gplus {
-	width: 90px
-}
-
-.social-button.facebook {
-	width: 110px
+	margin: 20px auto
 }
 
 table .quote {
@@ -4327,6 +4312,7 @@ h2.entry-title {
 
 .entry-meta ul {
   margin:0;
+  padding: 0;
   list-style:none
 }
 

@@ -601,7 +601,7 @@
 									</li>
 								</ul>
 								<div class="c"></div>
-								Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
+								Lapu tiešsaitē {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
 								<span id="online-list">{page-onlineusers}</span>
 							</div>
 						</div>

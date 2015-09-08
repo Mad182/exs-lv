@@ -217,14 +217,14 @@ h3 {
 
 #content, #content.no-left, #wrapper-content {
 	float: left;
-	width: 74%;
+	width: 73%;
 	margin: 0;
 	padding: 0
 }
 
 #right {
 	float: right;
-	width: 24%;
+	width: 27%;
 	margin: 0;
 	padding: 0
 }

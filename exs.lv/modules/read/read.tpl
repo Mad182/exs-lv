@@ -125,7 +125,7 @@
 <!-- START BLOCK : read-article-->
 
 
-<article class="post" id="full-story">
+<article class="post">
 	<h1>
 		<span class="the_title">{title}
 			<!-- START BLOCK : title-lv-->
