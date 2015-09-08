@@ -11,6 +11,7 @@ if (!im_mod()) {
 ini_set('memory_limit', '256M');
 
 function make_thumb($data, $path, $id) {
+
 	require_once(CORE_PATH . '/includes/class.upload.php');
 	$foo = new Upload($data);
 	$foo->allowed = array('image/*');
@@ -26,6 +27,7 @@ function make_thumb($data, $path, $id) {
 	if ($foo->processed) {
 		return $foo->file_dst_name;
 	} else {
+		echo $foo->error . '<br />';
 		return false;
 	}
 }
@@ -34,9 +36,19 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'lol') {
 	$id = (int) $_GET['var1'];
 	if ($pic = $db->get_row("SELECT * FROM `junk_queue` WHERE `approved` = 0 AND `id` = '$id'")) {
 
-		$data = curl_get($pic->image, 5, 15);
+		
 		$ext = substr($pic->image, -4);
-		if ($data) {
+
+		$gifv = false;
+		if($ext == 'gifv') {
+			$gifv = $pic->image;
+			$ext = '.jpg';
+			$pic->image = str_replace('.gifv', 'm.jpg', $pic->image);
+		}
+
+		$data = curl_get($pic->image, 5, 15);
+
+		if (!empty($data)) {
 			$dir1 = substr($pic->id, -1);
 			if (!$dir1) {
 				$dir1 = 0;
@@ -56,12 +68,19 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'lol') {
 			$thumbnail = make_thumb($newfile, $path, $pic->id);
 			$thb = '/junk/thb/' . $path . '/' . $thumbnail;
 			if (!empty($thumbnail)) {
+
+				if(!empty($gifv)) {
+					$image = $gifv;
+				}
+
 				$db->query("INSERT INTO `junk`
 					(`author`, `approved_by`, `image`, `thb`, `title`, `date`, `bump`, `ip`, `source`, `link`) VALUES
 					('$pic->user_id', '$auth->id', '" . sanitize($image) . "', '" . sanitize($thb) . "', '" . sanitize($pic->title) . "', NOW(), '" . time() . "', '" . $auth->ip . "', '" . sanitize($pic->source) . "', '" . sanitize($pic->link) . "')");
 
 				$db->query("UPDATE `junk_queue` SET `approved` = 1 WHERE `id` = '$id'");
 				die('<p class="g">Apstiprināts</p>');
+			}  else {
+				@unlink($newfile);
 			}
 		}
 
@@ -89,8 +108,8 @@ if (!empty($junks)) {
 	foreach ($junks as $junk) {
 		$tpl->newBlock('junk-queue-item');
 		
-		if(substr($junk->image, -3) == 'gif') {
-			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="/bildes/gif-icon.png" alt="" style="width: 128px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
+		if(substr($junk->image, -4) == 'gifv') {
+			$junk->html = '<a href="'.$junk->image.'?_test" class="lightbox"><img src="/bildes/gif-icon.png" alt="" style="width: 128px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
 		} else {
 			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="'.$junk->image.'" alt="" style="width: 200px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
 		}

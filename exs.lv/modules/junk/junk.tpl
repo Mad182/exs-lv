@@ -31,42 +31,40 @@
 	<!-- START BLOCK : junk-view-->
 	<ul id="miniblog-list">
 		<li>
-			<div class="mbox">
-				<div class="c"></div>
-				<div id="junk-vote-wrap">{voter}</div>
+			<div class="c"></div>
+			<div id="junk-vote-wrap">{voter}</div>
 
-				<!-- START BLOCK : mb-reply-main-->
-				<a href="#" class="mb-reply-main mb-icon">Atbildēt</a>
-				<!-- END BLOCK : mb-reply-main-->
+			<!-- START BLOCK : mb-reply-main-->
+			<a href="#" class="mb-reply-main mb-icon">Atbildēt</a>
+			<!-- END BLOCK : mb-reply-main-->
 
-				<p style="text-align: center;margin: 10px auto;width: 300px;"">
+			<p style="text-align: center;margin: 10px auto;width: 300px;"">
 
-					<!-- START BLOCK : junk-next-->
-					<a class="junk-button" href="/junk/{id}#content" title="Jaunāka"><img style="float: left;margin: 0 10px;" src="//img.exs.lv/bildes/junk/left.png" alt="Jaunāka" /></a>
-					<!-- END BLOCK : junk-next-->
+				<!-- START BLOCK : junk-next-->
+				<a class="junk-button" href="/junk/{id}#content" title="Jaunāka"><img style="float: left;margin: 0 10px;" src="//img.exs.lv/bildes/junk/left.png" alt="Jaunāka" /></a>
+				<!-- END BLOCK : junk-next-->
 
-					<!-- START BLOCK : junk-prev-->
+				<!-- START BLOCK : junk-prev-->
 
-					<a class="junk-button" href="/junk/{id}#content" title="Vecāka"><img style="float: right;margin: 0 10px;" src="//img.exs.lv/bildes/junk/right.png" alt="Vecāka" /></a>
-					<!-- END BLOCK : junk-prev-->
+				<a class="junk-button" href="/junk/{id}#content" title="Vecāka"><img style="float: right;margin: 0 10px;" src="//img.exs.lv/bildes/junk/right.png" alt="Vecāka" /></a>
+				<!-- END BLOCK : junk-prev-->
 
-					<a class="junk-button" href="/junk/random" title="random"><img style="margin: 0 10px;" src="//img.exs.lv/bildes/junk/random.png" alt="Random" /></a>
+				<a class="junk-button" href="/junk/random" title="random"><img style="margin: 0 10px;" src="//img.exs.lv/bildes/junk/random.png" alt="Random" /></a>
 
-				</p>
+			</p>
 
-				<div class="c"></div>
+			<div class="c"></div>
 
-				<p style="text-align:center">{title}</p>
-				<p style="text-align:center"><img src="//img.exs.lv{image}" class="av" style="height:auto;width:auto;max-width:720px;float:none" alt="" /></p>
+			<p style="text-align:center">{title}</p>
+			{image}
 
-				<div class="c"></div>
+			<div class="c"></div>
 
-				<!-- INCLUDE BLOCK : share-block -->
+			<!-- INCLUDE BLOCK : share-block -->
 
-				<!-- START BLOCK : junk-view-author-->
-				<p>Pievienoja: <a href="/user/{id}">{nick}</a></p>
-				<!-- END BLOCK : junk-view-author-->
-			</div>
+			<!-- START BLOCK : junk-view-author-->
+			<p>Pievienoja: <a href="/user/{id}">{nick}</a></p>
+			<!-- END BLOCK : junk-view-author-->
 
 			<!-- START BLOCK : miniblog-posts-->
 			{mbout}

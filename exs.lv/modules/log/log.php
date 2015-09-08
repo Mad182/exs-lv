@@ -84,7 +84,7 @@ if ($logs) {
 			'log-ip' => $log->ip,
 			'log-who' => $log->user_id,
 			'log-place' => $place,
-			'log-action' => $log->action,
+			'log-action' => textlimit($log->action, 255),
 			'log-time' => str_replace('-', '.', $log->created),
 		));
 	}

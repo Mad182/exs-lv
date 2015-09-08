@@ -170,7 +170,7 @@ ul.author-social li {
 }
 
 #page {
-	margin:20px auto
+	margin:16px auto
 }
 
 .nobot {
@@ -215,7 +215,6 @@ ul.author-social li {
 
 h1, h2, h3, h4, h5 {
 	color:#939ead;
-	font-family: 'Ubuntu', Roboto, sans-serif !important;
 	font-weight: 500;
 	line-height: 1.2
 }
@@ -246,7 +245,6 @@ h2.site-description {
 	color: #fff !important;
 	border-right:1px solid #485a63;
 	padding:15px !important;
-	font-family: 'Ubuntu', Roboto, sans-serif !important
 }
 
 /* Dropdown menu style starts */
@@ -369,7 +367,6 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	line-height: 40px;
 	padding: 0 16px;
 	margin: 0;
-	font-family: 'Ubuntu', Roboto, sans-serif !important
 }
 
 #user-menu li:last-child {
@@ -852,7 +849,7 @@ span.date,
 /* Single post */
 
 .entry-content {
-	padding:10px 0 40px
+	padding:10px 0 20px
 }
 
 .entry-content img {
@@ -1187,21 +1184,16 @@ h3.kontak {
 
 .widget .kontak ul li {
 	border-bottom:1px solid #eee;
-	padding:20px
+	padding:2px 20px
 }
 
-.widget .kontak ul li.address:before,
 .widget .kontak ul li.email:before,
 .widget .kontak ul li.phone:before,
-.widget .kontak ul li.website:before {
+.widget .kontak ul li.teamspeak:before {
 	content:"";
 	float:left;
 	height:20px;
 	width:25px
-}
-
-.widget .kontak ul li.address:before {
-	background:url("images/address-bg.png") no-repeat scroll left center transparent
 }
 
 .widget .kontak ul li.email:before {
@@ -1212,8 +1204,8 @@ h3.kontak {
 	background:url("images/phone-bg.png") no-repeat scroll left center transparent
 }
 
-.widget .kontak ul li.website:before {
-	background:url("images/website-bg.png") no-repeat scroll left center transparent
+.widget .kontak ul li.teamspeak:before {
+	background:url("images/teamspeak-bg.png") no-repeat scroll left center transparent
 }
 
 .widget .kontak ul li.address p {
@@ -1298,41 +1290,6 @@ ul#menu-footer {
 
 .widget {
 	margin:0 0 30px
-}
-
-.widget.widget_rss ul,
-.widget.widget_archive ul,
-.widget.widget_nav_menu ul,
-.widget.widget_recent_comments ul,
-.widget.widget_recent_entries ul,
-.widget.widget_pages ul,
-.widget.widget_meta ul,
-.widget.widget_categories ul {
-	margin:0;
-	list-style:none
-}
-
-.widget.widget_rss ul li,
-.widget.widget_archive ul li,
-.widget.widget_nav_menu ul li,
-.widget.widget_recent_comments ul li,
-.widget.widget_recent_entries ul li,
-.widget.widget_pages ul li,
-.widget.widget_meta ul li,
-.widget.widget_categories ul li {
-	padding:10px 0;
-	border-bottom:1px solid #eeeeee
-}
-
-.widget.widget_rss ul li:first-child,
-.widget.widget_archive ul li:first-child,
-.widget.widget_nav_menu ul li:first-child,
-.widget.widget_recent_comments ul li:first-child,
-.widget.widget_recent_entries ul li:first-child,
-.widget.widget_pages ul li:first-child,
-.widget.widget_meta ul li:first-child,
-.widget.widget_categories ul li:first-child {
-	padding-top:0
 }
 
 /* General Widgets */
@@ -2038,6 +1995,10 @@ img.twit-pic {
 
 @media (max-width:767px) {
 
+	#headline {
+		height: 80px;
+	}
+
 	#scroll-up {
 		padding:0;
 		width:0;
@@ -2119,8 +2080,12 @@ img.twit-pic {
 
 @media (max-width:479px) {
 
+	#headline {
+		height: 60px;
+	}
+
 	#intr .search {
-		margin-top:20px;
+		margin-top:10px;
 	}
 	#mast-head {
 		max-width:120px !important;
@@ -2156,7 +2121,6 @@ img.twit-pic {
 	.bx-next {
 		float:right;
 	}
-
 
 	h2.entry-title {
 		position:static;
@@ -2281,7 +2245,7 @@ img.twit-pic {
 
 .mb-col li .author {
 	color: #888;
-	font-weight: 700
+	font-weight: 500
 }
 
 .mbox {
@@ -2294,7 +2258,14 @@ miniblogi
 */
 #op-content,
 .response-content {
-	margin: 0 0 0 57px
+	margin: 0 0 0 57px;
+	word-wrap: break-word;
+	text-overflow: elipsis;
+}
+
+.comment-text p {
+	word-wrap: break-word;
+	text-overflow: elipsis;
 }
 
 #miniblog-list {
@@ -2655,25 +2626,7 @@ a.friend img, .comments-avatar {
 
 /* socialo mediju share pogas */
 #share-block {
-	margin: 30px auto 20px
-}
-
-.social-button {
-	float: left;
-	width: 105px;
-	height: 25px
-}
-
-.social-button.draugiem {
-	width: 115px
-}
-
-.social-button.gplus {
-	width: 90px
-}
-
-.social-button.facebook {
-	width: 100px
+	margin: 18px auto
 }
 
 table .quote {
@@ -3121,8 +3074,8 @@ ol li.code-row {
 #login-form {
 	float: right;
 	height: 16px;
-	margin: 0;
-	padding: 11px 0 0
+	margin: 0 5px;
+	padding: 11px 5px 0
 }
 
 #login-form fieldset {
@@ -3141,7 +3094,7 @@ ol li.code-row {
 #login-form input {
 	color: #555;
 	border: 0;
-	width: 90px;
+	width: 80px;
 	display: inline;
 	margin: 0 10px 0 2px;
 	padding: 2px 3px;
@@ -3166,7 +3119,7 @@ ol li.code-row {
 
 a.external-login span {
 	height: 18px;
-	float: left;
+	display: inline-block;
 	text-indent: -9999px;
 	outline: none;
 	line-height: 18px
@@ -3185,14 +3138,6 @@ a.external-fb span {
 a.external-twitter span {
 	background: url('//img.exs.lv/bildes/twitter_login.png') no-repeat 0 50%;
 	width: 61px
-}
-
-#login-form a {
-	float: left;
-	color: #fff;
-	height: 16px;
-	margin: 0 5px 0 0;
-	padding: 0 5px 0 0
 }
 
 /* april fools joke texts */
@@ -3278,7 +3223,7 @@ a.external-twitter span {
 }
 
 #ucl .admin a {
-	background: #700
+	background: #500
 }
 
 .video-thb {
@@ -3858,7 +3803,7 @@ a.friend-right {
 #fancybox-title-float-main {
 	color: #FFF;
 	line-height: 29px;
-	font-weight: 700;
+	font-weight: 500;
 	background: url('//img.exs.lv/bildes/fancybox-x.png') 0 -40px;
 	padding: 0 0 3px
 }
@@ -4066,7 +4011,7 @@ body #content .list-tags li a:hover {
 }
 
 #comments dt {
-	border-top: 4px solid #B5C0CF;
+	border-top: 4px solid #DCDFE5;
 	float: left;
 	width: 127px;
 	margin: 0;
@@ -4078,7 +4023,7 @@ body #content .list-tags li a:hover {
 #comments dd {
 	margin: 0 0 0 125px;
 	padding: 0;
-	border-top: 4px solid #B5C0CF;
+	border-top: 4px solid #DCDFE5;
 	text-align: left
 }
 
@@ -4353,7 +4298,7 @@ a:hover .lp-prefix {
 
 /* lietotaju klases */
 .admins, .blockhref li span.admins {
-	color: #700
+	color: #500
 }
 
 .mods, .blockhref li span.mods {
@@ -4378,7 +4323,7 @@ html .banned {
 	margin: 10px 20px
 }
 .mod-list-table th {
-	font-weight: 700;
+	font-weight: 500;
 	padding: 8px 10px 8px 2px;
 	font-size: 12px;
 	text-align: left;
@@ -4391,7 +4336,7 @@ html .banned {
 	font-size: 12px
 }
 .mod-list-table .counter {
-	font-weight: 700;
+	font-weight: 500;
 	color:  #235A96;
 	text-align: center;
 	padding: 5px 0
@@ -4412,7 +4357,7 @@ html .banned {
 }
 .list-table li .stronger {
 	color:#515152;
-	font-weight: 700;
+	font-weight: 500;
 	margin-right:7px
 }
 
@@ -4498,7 +4443,7 @@ li.view_more {
 }
 #checkform .toggle-rows {
 	text-align:center;
-	font-weight: 700
+	font-weight: 500
 }
 #checkform .res-info {
 	color:rgb(63, 67, 119)
@@ -4559,7 +4504,7 @@ li.view_more {
 }
 #report-title {
 	font-size:14px;
-	font-weight:700;
+	font-weight:500;
 	padding:0 10px 3px;
 	border-bottom:1px dotted #eee;
 	margin:5px 20px 10px;
@@ -4592,7 +4537,7 @@ li.view_more {
 	border:1px solid #DFD6D6
 }
 .report-error, .report-response, .report-response-good {
-	font-weight:700;
+	font-weight:500;
 	margin:10px 20px;
 	line-height:1.3
 }

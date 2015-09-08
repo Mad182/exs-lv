@@ -122,11 +122,20 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		if (im_mod()) {
 			$add = ' [<a href="/junk-edit/' . $pic->id . '">labot</a>]';
 		}
+
+		if(substr($pic->image, -4) === 'gifv') {
+			$html = '<iframe class="embedded-iframe" src="'.$pic->image.'#embed" ';
+			$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+			$html .= 'width="100%" style="background:transparent" height="400"></iframe>';
+		} else {
+			$html = '<p style="text-align:center"><img src="//img.exs.lv'.$pic->image.'" class="av" style="height:auto;width:auto;max-width:720px;float:none" alt="'.h(strip_tags($pic->title)).'" title="'.h(strip_tags($pic->title)).'" /></p>';
+		}
+
 		$tpl->assign(array(
 			'voter' => junk_vote($pic->id, $auth->id),
 			'title' => $pic->title . $add,
 			'title-html' => h($pic->title),
-			'image' => $pic->image,
+			'image' => $html,
 			'id' => $pic->id,
 		));
 

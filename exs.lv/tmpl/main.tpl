@@ -32,9 +32,7 @@
 	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500&amp;subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
-
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 	<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 	<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
 	<script type='text/javascript' src='{static-server}/responsive/js/bootstrap.min.js'></script>
@@ -46,7 +44,7 @@
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js?reload"></script>
+	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script type="text/javascript">
@@ -119,7 +117,7 @@
 		<header id="header" class="container">
 			<div id="mast-head">
 				<div id="logo">
-					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="Magazine" /></a>
+					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="logo" /></a>
 				</div>
 			</div>
 
@@ -176,6 +174,7 @@
 		</header><!-- #masthead -->
 
 		<div id="headline" class="container"{page-persona}>
+			<!-- START BLOCK : header-ad-->
 			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
 				<script type="text/javascript" id="position_2919">
 				  var ads_positions = ads_positions || [];
@@ -189,6 +188,7 @@
 				  })();
 				</script>
 			</div>
+			<!-- END BLOCK : header-ad-->
 		</div>
 
 		<div id="intr" class="container">
@@ -260,24 +260,29 @@
 					</ul>
 					<!-- END BLOCK : user-menu-->
 					<!-- START BLOCK : login-form-->
-					<form id="login-form" action="{page-loginurl}" method="post">
-						<fieldset>
-							<input type="hidden" name="xsrf_token" value="{xsrf}" />
-							<span{cat-sel-106}><a href="/register">Reģistrēties</a></span>
-							<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
-							<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
-							<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
-							<a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=https%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')) {
+					<ul id="user-menu" class="nav nav-pills">
+						<li><a href="/"><img src="/responsive/images/home.png" alt="Sākumlapa"></a></li>
+						<li{cat-sel-106}><a href="/register">Reģistrēties</a></li>
+						<li>
+							<form id="login-form" action="{page-loginurl}" method="post">
+								<fieldset>
+									<input type="hidden" name="xsrf_token" value="{xsrf}" />
+									<label>Niks:<input id="login-nick" size="16" name="niks" type="text" /></label>
+									<label>Parole:<input id="login-pass" size="16" name="parole" type="password" /></label>
+									<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
+								</fieldset>
+							</form>
+						</li>
+						<li><a rel="nofollow" class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=http%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F" onclick="if (handle = window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=eaef1fd32cb572a292467e05f26cf774&amp;redirect=https%3A%2F%2Fexs.lv%2Fdraugiem-signup%2F&amp;popup=1', 'Dr_15005147', 'width=400, height=400, left=' + (screen.width ? (screen.width - 400) / 2 : 0) + ', top=' + (screen.height ? (screen.height - 400) / 2 : 0) + ',scrollbars=no')) {
 								handle.focus();
 								return false;
-							}"><span>Ienākt</span></a>
+							}"><span>Ienākt</span></a></li>
 
-							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
+						<li><a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a></li>
 
-							<a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Log in</span></a>
-
-						</fieldset>
-					</form>
+						<li><a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Log in</span></a></li>
+					
+					</ul>
 					<!-- END BLOCK : login-form-->
 				</div>
 
@@ -615,7 +620,7 @@
 								</li>
 								<li>
 									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
-									<h4>301</h4>
+									<h4>303</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
@@ -631,15 +636,15 @@
 					<div class="clearfix"></div>
 				</div>
 
-				<div class="footer-widget span3 block6">
+				<div class="footer-widget widget span3 block6">
 
-					<div class="footer-text">
+					<div class="kontak">
 						<h3 class="title"><span>Kontakti</span></h3>
-						<p>
-							E-pasts: info@exs.lv<br />
-							Tālrunis: <span id="noindex-phone"></span><br />
-							Teamspeak 3: ts.exs.lv
-						</p>
+						<ul>
+							<li class="email">info@exs.lv</li>
+							<li class="phone"><span id="noindex-phone"></span></li>
+							<li class="teamspeak">Teamspeak 3: ts.exs.lv</li>
+						</ul>
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -668,9 +673,9 @@
 
 	</div>
 
-	<!-- START BLOCK : smartad-eu-->
-	<!-- smartad.eu -->
-	<script type='text/javascript'>/* <![CDATA[ */
+	<!-- START BLOCK : popup-ads-->
+	<script type='text/javascript'>
+		/* <![CDATA[ */
 		var _smartad = _smartad || new Object();
 		_smartad.page_id = Math.floor(Math.random() * 10000001);
 		if (!_smartad.prop) {
@@ -700,8 +705,16 @@
 				}
 			}
 		})();
-		/* ]]> */</script>
-	<!-- END BLOCK : smartad-eu-->
+		/* ]]> */
+	</script>
+
+	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
+	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
+	<noscript>
+	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
+	</noscript>
+	<!-- END BLOCK : popup-ads-->
 	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -713,13 +726,6 @@
 	  ga('send', 'pageview');
 
 	</script>
-
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
-	<noscript>
-	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
-	</noscript>
 
 </body>
 

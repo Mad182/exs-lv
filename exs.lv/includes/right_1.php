@@ -287,3 +287,12 @@ if ($category->module == 'movies') {
 
 //include(CORE_PATH . '/modules/core/poll.php');
 
+//show popup ads only for desktops
+require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
+$detect = new Mobile_Detect;
+$deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+if($deviceType === 'computer') {
+	$tpl->newBlock('popup-ads');
+	$tpl->newBlock('header-ad');
+}
+
