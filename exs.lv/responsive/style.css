@@ -378,7 +378,9 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 #user-menu li ul#user-group-menu {
-	width: 500px
+	width: 495px;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 #user-menu li ul#user-group-menu li {
@@ -413,13 +415,21 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	line-height: 28px;
 	border: 0;
 	margin: 0;
-	padding: 2px 3px
+	padding: 2px 6px 2px 0;
+}
+
+#user-group-menu .is-unread {
+    background-color:#394F5A;
+}
+
+#user-group-menu .is-unread:hover {
+    background-color:#526E7B !important;
 }
 
 #user-menu li ul#user-group-menu li .gm-logo {
 	float: left;
 	padding: 0;
-	margin: 0 6px 0 2px;
+	margin: 0 10px 0 2px;
 	width: 28px;
 	height: 28px;
 	position: relative
@@ -430,7 +440,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	font-weight: normal;
 	position: absolute;
 	top: -2px;
-	right: -2px;
+	right: -4px;
 	height: 13px;
 	line-height: 13px;
 	padding: 0 3px;

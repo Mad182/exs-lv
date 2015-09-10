@@ -444,8 +444,10 @@ if ($skin === 'main') {
 					$class = 'l-gadmin';
 					$newposts = $g_owner->posts - $g_owner->owner_seenposts;
 					$unread = '';
+					$css_class = '';
 					if ($newposts > 0) {
 						$unread = '<span class="gm-unread">' . $newposts . '</span>';
+						$css_class = 'is-unread';
 					}
 					if (empty($g_owner->avatar)) {
 						$g_owner->avatar = 'none.png';
@@ -455,7 +457,8 @@ if ($skin === 'main') {
 						'class' => $class,
 						'title' => $g_owner->title,
 						'avatar' => $g_owner->avatar,
-						'unread' => $unread
+						'unread' => $unread,
+						'unread-class' => $css_class
 					));
 				}
 			}
@@ -469,8 +472,10 @@ if ($skin === 'main') {
 					}
 					$newposts = $g_member->posts - $g_member->seenposts;
 					$unread = '';
+					$css_class = '';
 					if ($newposts > 0) {
 						$unread = '<span class="gm-unread">' . $newposts . '</span>';
+						$css_class = 'is-unread';
 					}
 					if (empty($g_member->avatar)) {
 						$g_member->avatar = 'none.png';
@@ -479,6 +484,7 @@ if ($skin === 'main') {
 						'id' => $g_member->clan,
 						'class' => $class,
 						'unread' => $unread,
+						'unread-class' => $css_class,
 						'title' => $g_member->title,
 						'avatar' => $g_member->avatar,
 					));

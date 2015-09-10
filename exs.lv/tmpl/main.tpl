@@ -214,8 +214,8 @@
 							<ul class="dropdown-menu" id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
 								<li>
-									<a href="/group/{id}" title="{title}">
-										<span class="gm-logo" style="background:url('{img-server}/userpic/small/{avatar}') no-repeat 50% 50%">
+									<a class="{unread-class}" href="/group/{id}" title="{title}">
+										<span class="gm-logo" style="background:url('https://img.exs.lv/userpic/small/{avatar}') no-repeat 50% 50%">
 											{unread}
 										</span>
 										{title}
