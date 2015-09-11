@@ -59,11 +59,11 @@ include('../developer_ips.php');
 
 //domēns no kura lādēt pseido-statiskos (/css, /js) failus
 //testējot lapu uz sava lokālā servera var aizvietot ar tukšumu
-$static_server = 'http://static.exs.lv';
+$static_server = 'https://static.exs.lv';
 
 //domēns, no kura ielādēt attēlus
 //uz lokālā servera var aizvietot ar tukšumu
-$img_server = 'http://img.exs.lv';
+$img_server = 'https://img.exs.lv';
 
 /**
  * Pareizas klienta IP adreses noteikšana ir somewhat tricky,

@@ -109,9 +109,12 @@ if (!empty($junks)) {
 		$tpl->newBlock('junk-queue-item');
 		
 		if(substr($junk->image, -4) == 'gifv') {
-			$junk->html = '<a href="'.$junk->image.'?_test" class="lightbox"><img src="/bildes/gif-icon.png" alt="" style="width: 128px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
+			$junk->html = '<iframe style="float:left;margin:0 10px 10px 0" src="'.$junk->image.'#embed" ';
+			$junk->html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+			$junk->html .= 'width="280" style="background:transparent" height="160"></iframe>';
+			
 		} else {
-			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="'.$junk->image.'" alt="" style="width: 200px;float: left;margin: 0 10px 10px 0;" class="av" /></a>';
+			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="'.$junk->image.'" alt="" style="width:280px;float: left;margin:0 10px 10px 0" class="av" /></a>';
 		}
 		
 		$tpl->assignAll($junk);

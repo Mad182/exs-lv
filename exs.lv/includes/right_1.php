@@ -91,7 +91,7 @@ if ($wallpaper) {
 }*/
 
 //jaunākās junk bildes
-$junks = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 3");
+$junks = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 6");
 if ($junks) {
 	$tpl->newBlock('side-junk');
 	foreach ($junks as $junk) {

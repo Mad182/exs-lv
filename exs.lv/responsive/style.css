@@ -1987,6 +1987,7 @@ img.twit-pic {
 }
 
 @media (min-width:798px) {
+
 	body {
 		position: inherit !important;
 		width: 100% !important;
@@ -2011,10 +2012,23 @@ img.twit-pic {
 	}
 
 	.exs-groups li h3 {
-		font-size: 90%; !important;
+		font-size: 99%; !important;
 	}
 	body {
 		padding: 0 !important;
+	}
+	
+	#miniblog-list li ul ul {
+		margin-left: -55px !important;
+	}
+
+	#miniblog-list li ul {
+		padding-left: 10px !important;
+	}
+	
+	
+	.form textarea.mb-textarea {
+		width: 92% !important;
 	}
 
 	#header,
