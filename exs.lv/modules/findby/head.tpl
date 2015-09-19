@@ -20,28 +20,31 @@ $(document).ready(function($) {
 		}
 	});
 
-	$('.show-rows').on('click', function() {
+	$('#checkform').on('click', '.show-rows', function() {
 		$(this).parent().parent().siblings('.hide-rows').toggle('slow');
 		if ($(this).text() == 'rādīt vairāk') {
 			$(this).text('rādīt mazāk');
-		} else
+		} else {
 			$(this).text('rādīt vairāk');
+        }
 	});
 
-	$('#show_more_all').on('click', function() {
+	$('#checkform').on('click', '#show_more_all', function() {
 		$('#all_ips .hidden-row').toggle('slow');
 		if ($(this).children('.toggle-text').text() == 'vairāk') {
 			$(this).children('.toggle-text').text('mazāk');
-		} else
+		} else {
 			$(this).children('.toggle-text').text('vairāk');
+        }
 	});
 
-	$('#show_more_unique').on('click', function() {
+	$('#checkform').on('click', '#show_more_unique', function() {
 		$('#unique_ips .hidden-row').toggle('slow');
 		if ($(this).children('.toggle-text').text() == 'vairāk') {
 			$(this).children('.toggle-text').text('mazāk');
-		} else
+		} else {
 			$(this).children('.toggle-text').text('vairāk');
+        }
 	});
 	
 });
