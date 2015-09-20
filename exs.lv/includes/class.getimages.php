@@ -8,17 +8,16 @@ class getImages {
 
 	public function reddit() {
 		global $db;
-		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs.json');
+		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs+gaming_gifs+GamePhysics.json');
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
 
 			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif', 'peg', 'ifv'))) {
 
-				if (stristr($data->data->url, 'imgur.com/')) {
+				if (stristr($data->data->url, '//imgur.com/')) {
 					$data->data->url = str_replace('.gif', '.gifv', $data->data->url);
 				}
-				$data->data->url = str_replace('.gifvv', '.gifv', $data->data->url);
 
 				$addr = str_replace('//imgur.com/', '//i.imgur.com/', $data->data->url);
 				$file = str_replace('http://i.imgur.com/', 'https://i.imgur.com/', $addr);

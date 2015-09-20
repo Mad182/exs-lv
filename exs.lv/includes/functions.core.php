@@ -257,27 +257,27 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 	$user_id = intval($user_id);
 	$out = '';
 	$texts = array(
-		0 => 'atbilde komentāram',
+		0 => 'atbilde', //komentāram
 		1 => 'komentārs galerijā',
 		2 => 'komentārs rakstam',
-		3 => 'atbilde mb',
+		3 => 'atbilde', //mb
 		4 => 'jauns biedrs tavā grupā',
 		5 => 'tevi aicina draudzēties',
 		6 => 'tev ir jauns draugs',
 		7 => 'tu saņēmi medaļu',
-		8 => 'atbilde grupā',
+		8 => 'atbilde', //grupā
 		9 => 'saņemta vēstule',
 		10 => 'brīdinājums!',
 		11 => 'noņemts brīdinājums',
 		12 => 'jaunumi no exs.lv',
-		13 => 'tevi pieminēja grupā',
-		14 => 'tevi pieminēja mb',
+		13 => 'pieminēja grupā',
+		14 => 'pieminēja mb',
 		15 => 'tevi pieminēja',
-		16 => 'tevi pieminēja galerijā'
+		16 => 'pieminēja galerijā'
 	);
 	if (!empty($user_id)) {
 
-		$end = 5;
+		$end = 4;
 		if (isset($_GET['events-page'])) {
 			$skip = (int) $_GET['events-page'] * $end;
 		} else {
@@ -334,16 +334,16 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$out .= 'href="' . $domain . $notify->url . '"><span class="notification-icon"></span><span class="notification-date">' . time_ago(strtotime($notify->bump)) . $site . '</span>' . $texts[$notify->type] . $add;
 
 				if (!empty($notify->info) && $notify->info != 'twitter') {
-					$out .= ' - <span class="info-content">' . strip_tags(textlimit($notify->info, 45, '')) . '...</span>';
+					$out .= ': <span class="info-content">' . strip_tags(textlimit($notify->info, 45, '')) . '...</span>';
 				}
 
 				$out .= '</a></li>';
 			}
 			$out .= '</ul>';
 
-			$total = $db->get_var("SELECT count(*) FROM `notify` WHERE `user_id` = '$user_id' $lang_var ORDER BY `bump` DESC LIMIT 25");
-			if ($total > 25) {
-				$total = 25;
+			$total = $db->get_var("SELECT count(*) FROM `notify` WHERE `user_id` = '$user_id' $lang_var ORDER BY `bump` DESC LIMIT 20");
+			if ($total > 20) {
+				$total = 20;
 			}
 			if ($total > $end) {
 				$out .= '<p class="core-pager ajax-pager">';
