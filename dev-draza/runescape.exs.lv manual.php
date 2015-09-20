@@ -1,13 +1,18 @@
+<?php
 /** 
- *  Visādi ar RuneScape apakšprojektu saistīti pieraksti
+ *  Visādi ar RuneScape apakšprojektu saistīti pieraksti.
+ *
+ *  @author Edgars Peļņa
+ *
  */
 
+/*
+|--------------------------------------------------------------------------
+|   RuneScape sadaļu hierarhija.
+|   (id, textid, module, description)
+|--------------------------------------------------------------------------
 
-\\  RS kategoriju hierarhija
-   (id, textid, module, description)
-
-
-1863 index 			(module = runescape)	- RuneScape apakšprojekta index lapa
+1863 index 			            (module = runescape)
 
 	1903 rs-arhivs              (module = redirect, lang = 9, content = http://runescape.exs.lv/padomi)
 		5    padomi				(module = rshelp)
@@ -43,25 +48,21 @@
 		287 dungeoneering
 		1912 divination
 
-		
 	102 kvestu-pamacibas		(module = rshelp)
 		99  f2p-kvesti			(module = rshelp)
 		100 p2p-kvesti			(module = rshelp)
 		193 mini-kvesti			(module = rshelp)
 
-		
 	2046 achievements           (module = rshelp)
 	160 minispeles				(module = rshelp)
 	599 runescape 				(module = rshelp)	- jaunumu rakstu sadaļa
 	791 gildes					(module = rshelp)
 	792 distractions-diversions	(module = rshelp)	
 	
-	
 	// forums
-	1871 games 			(module = forum)			- RuneScape forums
-		661 rs 			(module = list)				- foruma vienīgā sadaļa
+	1871 games 			        (module = forum) - RuneScape forums
+		661 rs 			        (module = list)  - foruma vienīgā sadaļa
 
-		
 	// runescape pamācību sadaļu administrēšanas apakšsadaļas
 	765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
 		1875 series         - kvestu sēriju pārvaldība
@@ -73,19 +74,17 @@
 		2044 all-guilds
 		2043 all-unlisted
 
+	1866 rsfacts 		(module = rs-facts)		- runescape faktu pārvaldība
+	1867 gallery		(module = gallery)		- runescape projekta galerijas
+	1869 findby		    (module = findby)	    - lietotāju meklēšanas forma
 
-	1866 rsfacts 		(module = rs-facts)			- runescape faktu pārvaldība
-	1867 gallery		(module = gallery)			- runescape projekta galerijas
-	1869 findby		    (module = findby)		        - lietotāju meklēšanas forma
+	1901 aptaujas 		(module = polls)		- bijušo aptauju uzskaitījums
+	1905 myblog         (module = blogadmin)    - bloga administrēšanas sadaļa
 
-	1901 aptaujas 		(module = polls)			- bijušo aptauju uzskaitījums
-	1905 myblog         (module = blogadmin)        - bloga administrēšanas sadaļa
-
-	2147 rsload         (module = rsload)           - satura bloku ielāde caur ajax
-
+	2147 rsload         (module = rsload)       - satura bloku ielāde caur ajax
 
 
-\\  redirects
+\\  redirects no vecām sadaļu saitēm uz jaunām
 
 	84 runescape-jautajumi 	(lang=1, redirect=/rs)
 	85 runescape-tirgus 	(lang=1, redirect=/rs)
@@ -102,33 +101,36 @@
 	1874 runescape 			(lang=1, redirect=http://runescape.exs.lv)
 
 
+|--------------------------------------------------------------------------
+|   Noderīgi SQL pieprasījumi.
+|--------------------------------------------------------------------------
 
+* visu prasmju sadaļu atlasīšanai	
 
+    (4, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 287)
+    
+    WHERE `parent` = 4 OR `id` = 4
+	
 
-\\  database queries
+|--------------------------------------------------------------------------
+|   RS apakšprojekta moderatoriem pieejamās iespējas.
+|--------------------------------------------------------------------------
 
-	* visu prasmju sadaļu atlasīšanai	
-
-		4, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 287
-		
-		WHERE `parent` = 4 OR `id` = 4
+* savus rakstus var rediģēt vienmēr bez laika ierobežojuma
+* pie raksta rediģēšanas to var pārvietot uz citu sadaļu
+* redz "RS Mod" izvēlni
+* var pārvaldīt RuneScape faktus    
 	
 	
-\\ runescape apakšprojekta satura moderatoriem pieejamās iespējas:
+|--------------------------------------------------------------------------
+|   Ar RuneScape apakšprojektu saistītie faili.
+|--------------------------------------------------------------------------
 
-	* savus rakstus var rediģēt vienmēr bez laika ierobežojuma
-	* pie raksta rediģēšanas to var pārvietot uz citu sadaļu
-	* redz "RS Mod" izvēlni
-	* var pārvaldīt RuneScape faktus    
-	
-	
-	
-\\  Faili, kuriem ir saistība ar runescape.exs.lv apakšprojektu:
+    // funkciju, klašu u.c. faili tiek pārsvarā likti modules/runescape mapē,
+    // lai ar RS saistītie faili būtu mazāk izmētāti pa dažādām vietām
 
-	
 	/config/runescape.exs.lv.php
-	/includes/site_loader.php    
-	/includes/functions.runescape.php
+	/includes/site_loader.php
 	
 	/includes/left_9.php
 	/includes/right_9.php
@@ -144,7 +146,6 @@
 	/modules/rshelp
 	/modules/rsmod
 	/modules/runescape
-	/modules/core/runescape
 	/modules/core/miniblog (tpl_options)
 	
 	// plato rakstu iespēja
@@ -171,5 +172,5 @@
 	functions.core.php  
 		get_latest_posts() - ->show_rs
 		get_latest_mbs() - ->show_rs  
-	
+*/
 	
