@@ -2,13 +2,13 @@
 
 $(document).ready(function($) {
 
-	$('#checkform').on('click', '.get-user-info', function(e) {
+	$('#findby').on('click', '.get-user-info', function(e) {
 		e.preventDefault();
 		var userid = $(this).attr('data-id');
-		if ($('#data-' + userid).parent().hasClass('hide-userdata')) {
-			$('#data-' + userid).parent().removeClass('hide-userdata');
+		if ($('#data-' + userid).parent().hasClass('is-hidden')) {
+			$('#data-' + userid).parent().removeClass('is-hidden');
 			$.ajax({
-				type: "GET",
+				type: 'get',
 				url: '/{category-url}?display=' + userid,
 				data: $(this).serialize(),
 				success: function(data) {
@@ -16,12 +16,12 @@ $(document).ready(function($) {
 				}
 			});
 		} else {
-			$('#data-' + userid).parent().addClass('hide-userdata');
+			$('#data-' + userid).parent().addClass('is-hidden');
 		}
 	});
 
-	$('#checkform').on('click', '.show-rows', function() {
-		$(this).parent().parent().siblings('.hide-rows').toggle('slow');
+	$('#findby').on('click', '.show-rows', function() {
+		$(this).parent().parent().siblings('.is-hidden').toggle('slow');
 		if ($(this).text() == 'rādīt vairāk') {
 			$(this).text('rādīt mazāk');
 		} else {
@@ -29,8 +29,8 @@ $(document).ready(function($) {
         }
 	});
 
-	$('#checkform').on('click', '#show_more_all', function() {
-		$('#all_ips .hidden-row').toggle('slow');
+	$('#findby').on('click', '#show_more_all', function() {
+		$('#all_ips .is-hidden').toggle('slow');
 		if ($(this).children('.toggle-text').text() == 'vairāk') {
 			$(this).children('.toggle-text').text('mazāk');
 		} else {
@@ -38,8 +38,8 @@ $(document).ready(function($) {
         }
 	});
 
-	$('#checkform').on('click', '#show_more_unique', function() {
-		$('#unique_ips .hidden-row').toggle('slow');
+	$('#findby').on('click', '#show_more_unique', function() {
+		$('#unique_ips .is-hidden').toggle('slow');
 		if ($(this).children('.toggle-text').text() == 'vairāk') {
 			$(this).children('.toggle-text').text('mazāk');
 		} else {
