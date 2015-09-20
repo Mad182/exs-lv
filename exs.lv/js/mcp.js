@@ -29,7 +29,7 @@ $(document).ready(function($) {
     /*
 	* Profilu pārvaldība - piesaistīto profilu saraksta atvēršana.
 	* ------------------------------------------------------------- */
-	$('#profile-list').on('click', '.show-children', function(e) {  
+	$('#prof_mgmt').on('click', '.show-children', function(e) {  
 		$(this).parent().parent().next().toggle();    
 		e.preventDefault();
 	});
@@ -37,7 +37,7 @@ $(document).ready(function($) {
     /*
 	* Profilu pārvaldība - dažādas profilu grupas iespējas.
 	* ------------------------------------------------------------- */
-	$('#profile-list').on(
+	$('#prof_mgmt').on(
         'click',
         '.connect-profile, .delete-group, .edit-description',
         function(e) {
