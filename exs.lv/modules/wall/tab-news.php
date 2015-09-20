@@ -9,7 +9,7 @@ if (isset($_GET['skip'])) {
 	$skip = 0;
 }
 
-$end = 4;
+$end = 5;
 
 $date = display_time(time());
 
@@ -73,7 +73,7 @@ if(!empty($articles)) {
 			'date' => $date,
 			'author' => $author_link,
 			'posts' => $article->posts,
-			'intro' => textlimit($article->text, 330),
+			'intro' => textlimit($article->text, 320),
 			'class' => $class,
 			'avatar' => get_avatar($user, 's')
 		));

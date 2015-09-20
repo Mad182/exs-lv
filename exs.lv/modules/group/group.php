@@ -498,7 +498,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$body = post2db($_POST['newminiblog']);
 
 			// ja nav pārkāpts flood limits, pievieno miniblogu un visādas notifikācijas
-			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) {
+			if ((!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) && check_token('newmb', $_POST['token'])) {
 				$_SESSION["antiflood"] = time();
 
 				$ins = post_mb(array(
@@ -647,6 +647,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// vai grupa ir arhivēta
 		if ($auth->ok && !isset($_GET['single']) && !$group->archived) {
 			$tpl->newBlock('user-miniblog-form');
+			$tpl->assign(array(
+				'token' => make_token('newmb')
+			));
 		} elseif ($group->archived) {
 			$tpl->newBlock('archived');
 		}

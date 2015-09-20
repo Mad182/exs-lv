@@ -91,7 +91,7 @@ if ($wallpaper) {
 }*/
 
 //jaunākās junk bildes
-$junks = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 3");
+$junks = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 6");
 if ($junks) {
 	$tpl->newBlock('side-junk');
 	foreach ($junks as $junk) {
@@ -155,10 +155,7 @@ if ($auth->ok === true) {
  * exs.lv kreisais sidebar
  */
 $sel = 'pages';
-if($auth->ok === true && empty($_COOKIE['last-sidebar-tab']) || !empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'events') {
-	$out = get_notify($auth->id);
-	$sel = 'events';
-} elseif (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
+if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] === 'gallery') {
 	$out = get_latest_images();
 	$sel = 'gallery';
 } else {
@@ -168,6 +165,7 @@ if($auth->ok === true && empty($_COOKIE['last-sidebar-tab']) || !empty($_COOKIE[
 //lietotāja notifikācijas
 if ($auth->ok === true) {
 	$tpl->newBlock('notification-list');
+	$tpl->assign('html', get_notify($auth->id));
 }
 
 $tpl->assignGlobal(array(
@@ -256,7 +254,7 @@ if ($groups = get_latest_groups()) {
 }
 
 //filmu meklētājs
-if ($category->module == 'movies') {
+if ($category->module === 'movies') {
 	$tpl->newBlock('movie-search');
 
 	if (isset($_GET['genre'])) {
@@ -293,6 +291,13 @@ $detect = new Mobile_Detect;
 $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
 if($deviceType === 'computer') {
 	$tpl->newBlock('popup-ads');
-	$tpl->newBlock('header-ad');
+	
+	if($auth->ok !== true) {
+		$tpl->newBlock('unauthorized-ad');
+		$tpl->newBlock('header-ad-unauthorized');
+	} else {
+		$tpl->newBlock('header-ad');
+	}
 }
+
 

@@ -831,8 +831,8 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$tpl->assign(array(
 							'title' => h($article->title),
 							'type' => 'video.movie',
-							'url' => 'http://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
-							'image' => $img_server . $avatar->thb
+							'url' => 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
+							'image' => 'https://img.exs.lv' . $avatar->image
 						));
 					}
 				}

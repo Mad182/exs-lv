@@ -8,7 +8,7 @@ class getImages {
 
 	public function reddit() {
 		global $db;
-		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs.json');
+		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs+gaming_gifs+GamePhysics.json');
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
