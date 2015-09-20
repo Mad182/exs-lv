@@ -3814,11 +3814,11 @@ li.view_more {
 }
 #mgmt_usernames {
     table-layout:fixed;
-    width:50% !important;
+    width:65% !important;
     margin-bottom:20px;
 }
     #mgmt_usernames td {
-        border-right: 15px solid #fff;
+        border-right: 15px solid transparent;
     }
     #mgmt_usernames td:nth-child(1) {
         width:20% !important;
