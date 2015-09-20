@@ -3809,10 +3809,6 @@ li.view_more {
 }
 
 /* sūdzību iesniegšanas fancybox stili */
-.clearfix {
-	clear:both;
-	display:block
-}
 .report-button {
 	margin: 0 3px
 }

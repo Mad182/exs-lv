@@ -1,6 +1,7 @@
 <?php
 /**
- *  RuneScape apakšprojektā izmantotās funkcijas.
+ *  RuneScape apakšprojektam specifiskas funkcijas.
+ *  Tiek ielādētas apakšprojekta konfigurācijas failā.
  */
 
 /**
@@ -12,12 +13,12 @@
  *      init_mvc();
  */
 function init_mvc() {
-    global $category;
-    if (empty($category)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
-    $class_name = as_class_name($category->module);
-    if (empty($class_name)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
-    $controller = new $class_name();
-    $controller->index();
+	global $category;
+	if (empty($category)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
+	$class_name = as_class_name($category->module);
+	if (empty($class_name)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
+	$controller = new $class_name();
+	$controller->index();
 }
 
 /**
@@ -44,35 +45,6 @@ function as_class_name($name = '') {
 	$name = str_replace(' ', '_', $name);
 
 	return $name;
-}
-
-/**
- *  Atgriež objektu ar template faila saturu
- *
- *  @param string $file     faila nosaukums
- *  @param bool $add_path   vai pievienot pilno ceļu uz atvērto moduli
- *  @return bool            "false", ja fails neeksistē
- *  @return TemplatePower   template objekts
- */
-function get_tpl($file = '', $add_path = true) {
-	global $category;
-	
-	if ($file == '') {
-		return false;
-	}
-
-	if ($add_path) {
-		$file = CORE_PATH.'/modules/'.$category->module.'/'.$file.'.tpl';
-	}
-	
-	if (!file_exists($file)) {
-		return false;
-	}
-
-	$tpl = new TemplatePower($file);
-	$tpl->prepare();
-	
-	return $tpl;
 }
 
 /**

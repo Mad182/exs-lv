@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  Ar runescape.exs.lv saistītas pārbaudes, 
  *  kuras vieglākai rediģēšanai iznestas ārpus index.php faila.
