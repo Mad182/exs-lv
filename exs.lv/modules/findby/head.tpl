@@ -45,8 +45,7 @@ $(document).ready(function($) {
 		} else {
 			$(this).children('.toggle-text').text('vairāk');
         }
-	});
-	
+	});	
 });
 
 </script>

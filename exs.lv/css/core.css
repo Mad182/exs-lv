@@ -235,11 +235,13 @@ html .banned {
 	padding:9px 15px;
 	background-color:#ECEFF5;
 	border:1px solid #DADDDF;
-	font-size:12px;
 	color:#4D5669
 }
 .pointer:hover {
 	cursor:pointer
+}
+.is-hidden {
+    display:none
 }
 
 /* layout */
@@ -3633,12 +3635,12 @@ ul.taged {
 
 /* Mod sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
 .mod-list-table {
-	margin: 10px 20px
+	margin: 10px 20px;
+    table-layout: fixed;
 }
 .mod-list-table th {
 	font-weight: 700;
 	padding: 8px 10px 8px 2px;
-	font-size: 12px;
 	text-align: left;
 	color: #284C6D;
 	border-bottom: 2px solid #404449
@@ -3646,7 +3648,6 @@ ul.taged {
 .mod-list-table td {
 	padding: 7px 10px;
 	border-bottom: 1px solid #EEF0F3;
-	font-size: 12px
 }
 .mod-list-table .counter {
 	font-weight: 700;
@@ -3963,11 +3964,12 @@ li.view_more {
 	padding-bottom:7px;
 	overflow:auto;
 	margin:0 5px 5px;
-	font-size:12px
+}
+.fancy-container .button {
+    text-transform:uppercase;
 }
 .fancy-title {
 	margin:5px 0;
-	font-weight:bold;
 	font-size:14px;
 	color:#234C79;
 	padding:0 0 5px;

@@ -1,28 +1,49 @@
 <?php
 /**
- *  Profilu sasaistes sadaļa
+ *  Profilu sasaistes sadaļa.
  *
  *  Moderatoriem iespēja esošos viena lietotāja profilus sasaistīt kopā,
  *  lai vienkāršā veidā monitorētu fake profilu lietošanu un 
  *  vienlaicīgi varētu dāvāt liegumus veselām grupām profilu.
  */
+
 $robotstag[] = 'noindex';
 $add_css[] = 'grouped-profiles.css';
 
-if (!im_mod()) {
+// šāda mainīgā eksistenci pārbaudīs failos, kas tiek iekļauti šajā failā
+$sub_include = true;
+
+if (!im_mod() || ($lang != 1 && $lang != 0)) {
 	set_flash('Pieeja liegta!');
 	redirect();
 	exit;
 }
 
+/*
+|--------------------------------------------------------------------------
+|   jQuery AJAX: atgriezīs sadaļas pamatsaturu.
+|--------------------------------------------------------------------------
+|   Tiek izsaukts, nospiežot uz šīs sadaļas cilnes,
+|   lai to ielādētu satura blokā zem ciļņu izvēlnes.
+*/
 
-/**
- *  Profila meklēšana pēc main profila
- *
- *  Pēc norādītā ID atrod šī lietotāja parent profila ID, tad
- *  ar javascriptu aizritina lapu līdz attiecīgajai tabulas rindai.
- */
-if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id'])) {
+if (isset($_GET['_']) && isset($_GET['load'])) {
+    // saturs atsevišķā failā, jo tiek ielasīts vairākās vietās
+    include_once(CORE_PATH.'/modules/grouped-profiles/main-content.php');
+    echo json_encode(array(
+        'content' => $new_tpl->getOutputContent()
+    ));
+    exit;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+|   Lietotāja meklēšana no saraksta pēc tā profila ID.
+|--------------------------------------------------------------------------  
+*/
+if (isset($_GET['var1']) && $_GET['var1'] == 'search' &&
+    isset($_POST['user_id'])) {
 
 	$user_id = (int)$_POST['user_id'];
 	if ($user_id < 1) {
@@ -60,12 +81,15 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 	} else { // norādītais lietotājs ir child profils
 		redirect('/'.$_GET['viewcat'].'?scroll='.$get_parent->parent_id);
 	}
+}
 	
 
-/**
- *  Main profila ieraksta pievienošana datubāzei
- */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
+/*
+|--------------------------------------------------------------------------
+|   "Main" profila ieraksta pievienošana sarakstam.
+|--------------------------------------------------------------------------  
+*/
+else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 
 	if (!isset($_POST['userid']) || (int)$_POST['userid'] < 1) {
 		set_flash('Norādīti kļūdaini dati!');
@@ -115,14 +139,17 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 		set_flash('Izveidot ierakstu neizdevās!');
 		redirect('/'.$_GET['viewcat']);
 	}
-	
-	
-/**
- *  Child profilu piesaiste kādam main profilam
- *
- *  $_GET['var2'] - `users_groups`.`id` vērtība
- */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'add-child' && isset($_GET['var2'])) {
+}
+
+
+/*
+|--------------------------------------------------------------------------
+|   "Child" profilu piesaiste kādam "main" profilam.
+|-------------------------------------------------------------------------- 
+|   $_GET['var2'] - `users_groups`.`id` vērtība
+*/
+else if (isset($_GET['var1']) && $_GET['var1'] == 'add-child' &&
+         isset($_GET['var2'])) {
 
 	// lai piesaistītu child, datubāzē jau jābūt ierakstam par main profilu
 	$parent_id = (int)$_GET['var2'];
@@ -243,12 +270,16 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 		set_flash('Kļūdaini norādīta adrese!');
 		redirect('/'.$_GET['viewcat']);
 	}
+}
 
-	
-/**
- *  Sasaistīto profilu grupas apraksta rediģēšana
- */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'edit' && isset($_GET['var2'])) {
+
+/*
+|--------------------------------------------------------------------------
+|   Sasaistīto profilu grupas apraksta rediģēšana.
+|-------------------------------------------------------------------------- 
+*/
+else if (isset($_GET['var1']) && $_GET['var1'] == 'edit' &&
+         isset($_GET['var2'])) {
 
 	$group_id = (int)$_GET['var2'];
 	
@@ -320,14 +351,17 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 		set_flash('Kļūdaini norādīta adrese!');
 		redirect('/'.$_GET['viewcat']);
 	}
+}
 
 
-/**
- *  Profilu grupas dzēšana
- *
- *  $_GET['var2'] - `users_groups`.`id`
- */
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-group' && isset($_GET['var2'])) {
+/*
+|--------------------------------------------------------------------------
+|   Profilu grupas dzēšana.
+|--------------------------------------------------------------------------
+|   $_GET['var2'] - `users_groups`.`id`
+*/
+else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-group' &&
+         isset($_GET['var2'])) {
 
 	$group_id = (int)$_GET['var2'];
 	if ($group_id < 1) {
@@ -410,14 +444,17 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 		}
 		redirect('/'.$category->textid);
 	}
+}
  
 
-/**
- *  Kāda child profila atsaistīšana no main profila
- *
- *  $_GET['var2'] - `users_groups`.`id`
- */ 
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-child' && isset($_GET['var2'])) {
+/*
+|--------------------------------------------------------------------------
+|   Kāda "child" profila atsaistīšana no "main" profila.
+|--------------------------------------------------------------------------
+|   $_GET['var2'] - `users_groups`.`id`
+*/
+else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-child' &&
+         isset($_GET['var2'])) {
 
 	$child_id = (int)$_GET['var2'];
 	if ($child_id < 1) {
@@ -446,14 +483,17 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 	}
 	
 	redirect('/'.$_GET['viewcat']);
- 
+}
 
-/**
- *  Apmaina norādīto child vietām ar main
- *
- *  $_GET['var2'] - `users_groups`.`id`
- */ 
-} else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' && isset($_GET['var2'])) {
+
+/*
+|--------------------------------------------------------------------------
+|   Apmainīs norādīto "child" profilu vietām ar "main".
+|--------------------------------------------------------------------------
+|   $_GET['var2'] - `users_groups`.`id`
+*/
+else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
+         isset($_GET['var2'])) {
 
 	$child_id = (int)$_GET['var2'];
 	if ($child_id < 1) {
@@ -507,134 +547,22 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' && isset($_POST['user_id']
 	$upd = $db->update('users_groups', $criteria, $arr);
 	
 	redirect('/'.$_GET['viewcat'].'?scroll='.$data->user_id);
- 
-	
-/**
- *  Izdrukā sarakstu ar pievienotajiem profiliem
- */
-} else {
-	
-	$tpl->newBlock('content-info');
-	$tpl->newBlock('new-profile-form');
-	
-	$profiles = $db->get_results("
-		SELECT
-			`users_groups`.`id` AS `ug_id`,
-			`users_groups`.`description`,
-			`users`.`id`        AS `user_id`,
-			`users`.`nick`      AS `user_nick`,
-			`users`.`level`     AS `user_level`,
-			`users`.`lastip`    AS `user_lastip`,
-			`users`.`lastseen`  AS `user_seen`,
-			IFNULL(`child`.`id`, 0) AS `child_id`,
-			`children`.`id`     AS `child_parent`,
-			`child`.`nick`      AS `child_nick`,
-			`child`.`level`     AS `child_level`,
-			`child`.`lastip`    AS `child_lastip`,
-			`child`.`lastseen`  AS `child_seen`
-		FROM `users_groups`
-			JOIN `users` ON (
-				`users_groups`.`user_id` = `users`.`id` AND
-				`users`.`deleted` = 0
-			)
-			LEFT JOIN `users_groups` AS `children` ON (
-				`users_groups`.`id` = `children`.`parent_id` AND 
-				`children`.`deleted_by` = 0
-			)
-			LEFT JOIN `users` AS `child` ON (
-				`children`.`user_id` = `child`.`id` AND
-				`child`.`deleted` = 0 AND
-				`child`.`level` NOT IN(1,2)
-			)
-		WHERE 
-			`users_groups`.`parent_id` = 0 AND
-			`users_groups`.`deleted_by` = 0
-		ORDER BY 
-			`users`.`nick` ASC,
-			`child`.`nick` ASC
-	");
+}
 
-	if ($profiles === false) {
-		$tpl->newBlock('no-profiles');
-	} else {
-	
-		$tmp_main_id = 0;
-		$main_cnt = 0;          // main profilu skaits
-		$children_cnt = 0;      // child profilu skaits ciklā ejošajam main
-	
-		$tpl->newBlock('profile-list');
-		
-		foreach ($profiles as $profile) {
-	
-			// mainās main profils
-			if ($profile->user_id != $tmp_main_id) {
 
-				$tmp_main_id = $profile->user_id;
-				
-				// pirmajā cikla reizē children skaits vēl nav zināms, jo
-				// tas tiek skaitīts, ejot pa ciklu, un ir jāpieraksta beigās
-				if ($main_cnt > 0) {                    
-					if ($children_cnt == 0) {
-						$tpl->newBlock('no-children');
-					} else {
-						$tpl->newBlock('child-table-header');
-					}
-					$tpl->gotoBlock('a-profile');
-					$tpl->assign('profile_count', $children_cnt + 1);
-				}                
-				$children_cnt = 0;
-				
-				$main_cnt++;
-				
-				// izveido jaunu rindu galvenajam profilam
-				$profile->user_nick = usercolor($profile->user_nick, $profile->user_level, false, $profile->user_id);
-				$profile->user_seen = date('d.m.y, H:i', strtotime($profile->user_seen));
-
-				$tpl->newBlock('a-profile');
-				$tpl->assignAll($profile);
-				$tpl->assign('counter', $main_cnt);
-				
-				// tabulas rinda visiem turpmākajiem child profiliem
-				$tpl->newBlock('all-children');
-				$tpl->assign(array(
-					'user_seen' => $profile->user_seen,
-					'user_lastip' => (empty($profile->user_lastip) ? '-' : $profile->user_lastip)
-				));
-				if (!empty($profile->description)) {
-					$tpl->assign('description', '<p><strong>Komentārs:</strong></p><p>'.$profile->description.'</p>');
-				}
-			}
-			
-			// main profilam var nebūt neviena child profila
-			if ($profile->child_id != '0') {
-
-				$profile->child_nick = usercolor($profile->child_nick, $profile->child_level, false, $profile->child_id);
-				$profile->child_seen = date('d.m.y, H:i', strtotime($profile->child_seen));
-			
-				$tpl->newBlock('a-child');
-				$tpl->assignAll($profile);
-				
-				$children_cnt++;
-			}
-		}
-		
-		// ciklā pēdējam ierakstam child skaits vēl netika norādīts
-		if ($children_cnt == 0) {
-			$tpl->newBlock('no-children');
-		} else {
-			$tpl->newBlock('child-table-header');
-		}
-		$tpl->gotoBlock('a-profile');
-		$tpl->assign('profile_count', $children_cnt + 1);
-		
-		// javascripts meklēs main profilu ar šādu id un 
-		// aizritinās lapu līdz attiecīgajai rindai
-		if (isset($_GET['scroll'])) {
-			$scroll_to = (int)$_GET['scroll'];
-			if ($scroll_to > 0) {
-				$tpl->newBlock('scroll-to');
-				$tpl->assign('main-id', '\'#profile-'.$scroll_to.'\'');
-			}
-		}
-	}
+/*
+|--------------------------------------------------------------------------
+|   Ievietos lapā sadaļas pamatsaturu - sarakstu ar saistītajiem profiliem.
+|--------------------------------------------------------------------------
+*/
+else {
+    $tpl->newBlock('mcp-grouped-profiles-tabs');
+    // šis "div" tags nepieciešams javascriptam
+    $tpl->newBlock('mcp-grouped-outer-start');
+    // saturs atsevišķā failā, jo tiek ielasīts vairākās vietās
+    include_once(CORE_PATH.'/modules/grouped-profiles/main-content.php');
+    // varam jauno HTML iekļaut esošajā template kā parastu mainīgo
+    $tpl->gotoBlock('_ROOT');
+    $tpl->assign('includable-content', $new_tpl->getOutputContent());
+    $tpl->newBlock('mcp-grouped-outer-end');
 }
