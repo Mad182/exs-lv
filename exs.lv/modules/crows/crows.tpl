@@ -1,25 +1,23 @@
 <h1 style="position:relative;top:-15px">Pēdējās brīvībā palaistās vārnas...</h1>
 <!-- START BLOCK : warns-list -->
-<table class="mod-list-table">
+<table class="mod-list-table" style="margin-left:5px;table-layout:fixed;width:100%">
 	<tr class="">
-		<th style="width:3%">&nbsp;</th>
-		<th style="width:21%">Iesaistītie</th>
-		<th style="width:60%">Iemesls</th>
-		<th style="width:16%">Laiks</th>
+		<th style="width:20%">Iesaistītie</th>
+		<th style="width:65%">Iemesls</th>
+		<th style="width:15%">Laiks</th>
 	</tr>
 	<!-- START BLOCK : single-warn -->
 	<tr{removed-warn}>
-		<td class="counter">{row_counter}</td>
 		<td>
 			<ul class="list-table">
 				<li><span class="stronger" style="margin-left:11px">No:</span>{creator_nick}</li>
 				<li><span class="stronger">Kam:</span>{offender_nick}</li>
 				<!-- START BLOCK : warn-site -->
-				<li><span class="stronger">Vieta:</span>{site}</li>
+				<li><span class="stronger">&nbsp;&nbsp;Kur:</span>{site}</li>
 				<!-- END BLOCK : warn-site -->
 			</ul>
 		</td>
-		<td>{warn_reason} {removal-reason}</td>
+		<td style="padding-right:20px">{warn_reason} {removal-reason}</td>
 		<td style="padding-left:0;padding-right:0">
 			<ul class="list-table">
 				<li>{warn_created_at}</li>
