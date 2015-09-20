@@ -1,9 +1,11 @@
 <?php
-
 /**
- * functions.core.php
- * satur pamata funkcijas, kas vajadzīgas praktiski jebkurā lapas pieprasījumā
+ *  functions.core.php
+ *
+ *  Satur pamata funkcijas, kas vajadzīgas praktiski
+ *  jebkurā lapas pieprasījumā.
  */
+
 // functions related to awards
 require(CORE_PATH . '/includes/functions.awards.php');
 
@@ -97,18 +99,45 @@ function h($str) {
 }
 
 /**
- *  Atgriež objektu ar atvērtā moduļa template failu
+ *  Atgriezīs TemplatePower objektu ar ielādētu norādīto failu.
  *
- *  Noder reizēs, kad ajax pieprasījumam jāatgriež html saturs. To var
- *  izveidot no tā paša moduļa template, nevis cieti iekodēt.
+ *  Noderīgi moduļos, kur jāielādē kāds cits .tpl fails, ja
+ *  HTML saturs tiek atgriezts caur ajax.
+ *
+ *  Piemēri:
+ *    fetch_tpl():                /modules/<module>/<module>.tpl
+ *    fetch_tpl('xyz'):           /modules/<module>/xyz.tpl
+ *    fetch_tpl('xyz', 'abcdef'): /modules/abcdef/xyz.tpl
+ *    fetch_tpl('xyz', 'tmpl'):   /tmpl/xyz.tpl
  */
-function fetch_tpl() {
+function fetch_tpl($filename = null, $dirname = null) {
 	global $category;
+    
+    $filename = trim((string)$filename);
+    $dirname = trim((string)$dirname);
 
-	if (empty($category->module))
-		return false;
+    // nenorādot nosaukumu, meklēs failu, kuram nosaukumā ir aktīvā moduļa
+    // nosaukums, bet tam nepieciešams parametrs no sadaļas
+	if (is_null($filename) && empty($category->module)) return null;
 
-	$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
+    // pēc noklusējuma failu meklēs moduļa mapē ar moduļa nosaukumu
+    $dir = 'modules/'.$category->module;
+    $file = $category->module;
+    
+    // custom vērtības...
+    if (!empty($filename)) {
+        $file = $filename;
+    }
+    if (!empty($dirname)) {
+        $dir = $dirname;
+        if ($dir !== 'tmpl') $dir = 'modules/'.$dir;
+    }
+    
+    if (!file_exists(CORE_PATH.'/'.$dir.'/'.$file.'.tpl')) {
+        return null;
+    }
+
+	$tpl = new TemplatePower(CORE_PATH.'/'.$dir.'/'.$file.'.tpl');
 	$tpl->prepare();
 
 	return $tpl;

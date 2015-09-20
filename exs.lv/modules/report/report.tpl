@@ -3,7 +3,7 @@
 	<p id="report-title" style="clear:both">Pārkāpuma ziņojums</p>
 	<div id="form-block">
 		<p><strong class="report-item">Pārkāpējs:</strong> {offender}</p>
-		<form id="report-form" method="post" action="{action}">
+		<form method="post" action="{action}">
 			<input type="hidden" name="anti-xsrf" value="{xsrf}">
 			<p class="report-content"><strong class="report-item">Saturs:</strong><br>{entry-text}</p>
 
@@ -11,8 +11,8 @@
 			<p><textarea id="report-txtarea" name="report-reason"></textarea></p>
 
 			<p>
-				<input class="danger button" type="submit" name="submit" value="Ziņot">
-				<a class="fancy-close button primary" href="javascript:void(0)">Pārdomāju!</a></p>
+				<a class="fancy-close button" href="javascript:void(0)">pārdomāju</a>
+				<input class="primary button" type="submit" name="submit" value="ZIŅOT"></p>
 		</form>
 	</div>
 	<div id="report-description">
@@ -35,7 +35,40 @@
 </div>
 <div class="clearfix"></div>
 <div class="report-response"></div>
+
+<script type="text/javascript">
+    $(document).ready(function($) {
+        /**
+         *  Nospiežot uz "submit" pogas, iesniegts sūdzību.
+         */
+        $('#outer-form-block').on('submit', 'form', function() {
+            $form = $(this);
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $form.attr('action') + '?_=1',
+                data: $form.serialize(),
+                success: function(response) {
+                    $('.report-response').html('');
+                    if (response.state == 'success') {
+                        $('#outer-form-block').toggle('slow');
+                        $('.report-response').attr('class', 'report-response-good')
+                                             .html(response.content);
+                    } else {
+                        $('.report-response').html(response.content);
+                    }
+                }
+            });
+            return false;
+        });
+        /**
+         *  Nospiežot uz "Pārdomāju" pogas, aizvērs atvērto fancybox logu.
+         */
+        /* aizver atvērto fancybox, nospiežot uz "Pārdomāju" podziņas */
+        $('#outer-form-block').on('click', '.fancy-close', function() {
+            $.fancybox.close();
+            return false;
+        });
+    });
+</script>
 <!-- END BLOCK : report-form -->
-<!-- START BLOCK : error-message -->
-<p class="report-error">{error-message}</p>
-<!-- END BLOCK : error-message -->
