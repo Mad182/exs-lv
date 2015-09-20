@@ -1,6 +1,6 @@
 <h1 style="position:relative;top:-15px">Pēdējās brīvībā palaistās vārnas...</h1>
 <!-- START BLOCK : warns-list -->
-<table class="mod-list-table" style="margin-left:5px;table-layout:fixed;width:100%">
+<table class="mod-list-table" style="margin-left:5px;table-layout:fixed;">
 	<tr class="">
 		<th style="width:20%">Iesaistītie</th>
 		<th style="width:65%">Iemesls</th>
