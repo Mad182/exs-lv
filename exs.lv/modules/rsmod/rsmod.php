@@ -1,12 +1,16 @@
 <?php
 /**
- *  RuneScape pamācību sadaļu (kvesti/prasmes u.tml.) administrācijas panelis
+ *  RuneScape pamācību sadaļu (kvesti/prasmes u.tml.) administrācijas panelis.
  *
- *  Šis modulis apkopo tās sadaļas, kurās iespējams veikt izmaiņas
+ *  Šis modulis iekļauj visas tās apakšsadaļas, kurās iespējams veikt izmaiņas
  *  RuneScape pamācību sadaļām, piemēram, pievienojot jaunas rakstu sērijas,
  *  mainot rakstu secību sērijā, izveidojot rakstu "placeholders" u.c.
+ *
+ *  Modulis izmanto exs MVC struktūru.
  */
 
+require_once(CORE_PATH.'/modules/runescape/class.controller.php');
+ 
 class Rsmod extends Controller {
 
     // [category->textid] => [file name]
@@ -40,3 +44,5 @@ class Rsmod extends Controller {
         }
     }
 }
+
+init_mvc();

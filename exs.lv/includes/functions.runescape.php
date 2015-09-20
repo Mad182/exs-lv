@@ -1,9 +1,50 @@
 <?php
 /**
  *  RuneScape apakšprojektā izmantotās funkcijas.
- *
- *  Autors: Edgars P. 
  */
+
+/**
+ *  Vairākām RuneScape sadaļām tiek izmantota MVC struktūra,
+ *  lai to saturu foršāk nodalītu un ielādētu caur klasēm un funkcijām.
+ *  
+ *  Lai sadaļas modulī realizētā klase tiktu izsaukta,
+ *  AIZ tās jāpievieno šāda rinda:
+ *      init_mvc();
+ */
+function init_mvc() {
+    global $category;
+    if (empty($category)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
+    $class_name = as_class_name($category->module);
+    if (empty($class_name)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
+    $controller = new $class_name();
+    $controller->index();
+}
+
+/**
+ *  Apstrādās saņemto simbolu virkni, pārveidojot (ja nepieciešams)
+ *  to uz tādu, kāda drīkst būt PHP klases nosaukumā.
+ *
+ *  Tiek izmantota sadaļās ar MVC tipa arhitektūru.
+ */
+function as_class_name($name = '') {
+
+	$name = trim($name);
+	if (empty($name)) return '';
+
+	// klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
+	$name = str_replace(array('-', ' '), '_', $name);
+
+	$allowed = "/[^a-z0-9_]/i";
+	$name = preg_replace($allowed, '', $name);
+	if (empty($name)) return '';
+
+	// katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
+	$name = str_replace('_', ' ', $name);
+	$name = ucwords($name);
+	$name = str_replace(' ', '_', $name);
+
+	return $name;
+}
 
 /**
  *  Atgriež objektu ar template faila saturu

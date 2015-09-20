@@ -11,6 +11,8 @@
  *      - u.c.
  */
 
+require_once(CORE_PATH.'/modules/runescape/class.controller.php');
+
 class Rshelp extends Controller {
     
     // skaits attiecas uz rakstiem
@@ -194,3 +196,5 @@ class Rshelp extends Controller {
         }      
     }
 }
+
+init_mvc();
