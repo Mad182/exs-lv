@@ -112,55 +112,25 @@ $(document).ready(function($) {
 		cache: false
 	});
 
-	/* 	tiek izsaukta, nospiežot uz lietotāja nosūdzēšanas podziņas;
+	/* tiek izsaukta, nospiežot uz lietotāja nosūdzēšanas podziņas;
 	 atver fancybox ar pārkāpuma aprakstīšanas formu */
-	$('.report-user').on('click', function(e) {
+	$('.mbox').on('click', '.report-user', function(e) {
+		e.preventDefault();
 		$.ajax({
-			dataType: "json",
+			dataType: 'json',
 			url: $(this).attr('href') + '?_=1',
 			success: function(data) {
 				$.fancybox(data.content);
 			}
 		});
-		e.preventDefault();
 	});
 
-	/*	izmanto moderatoru sadaļā, lai apskatītu iesniegtās sūdzības saturu */
+	/* izmanto moderatoru sadaļā, lai apskatītu iesniegtās sūdzības saturu */
 	$('.get-report-content').on('click', function(e) {
+		e.preventDefault();
 		$.getJSON(($(this).attr('href') + '?_=1'), function(response) {
 			$.fancybox(response.message);
 		});
-		e.preventDefault();
-	});
-
-	/* 	izmanto sūdzību iesūtīšanai; tiek izsaukta,
-	 nospiežot submit pogu fancybox logā */
-	$('#report-form').on('submit', function() {
-		$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: $('#report-form').attr('action') + '?_=1',
-			data: $('#report-form').serialize(),
-			success: function(response) {
-
-				$('.report-response').html("");
-
-				if (response.state == 'success') {
-					$('#outer-form-block').toggle('slow');
-					$('.report-response').attr('class', 'report-response-good').html(response.content);
-				}
-				else {
-					$('.report-response').html(response.content);
-				}
-			}
-		});
-		return false;
-	});
-
-	/* aizver atvērto fancybox, nospiežot uz "Pārdomāju" podziņas */
-	$('.fancy-close').on('click', function() {
-		$.fancybox.close();
-		return false;
 	});
 
 	/* sūdzību arhivēšanas poga */
