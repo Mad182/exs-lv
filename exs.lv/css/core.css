@@ -235,7 +235,8 @@ html .banned {
 	padding:9px 15px;
 	background-color:#ECEFF5;
 	border:1px solid #DADDDF;
-	color:#4D5669
+	color:#4D5669;
+    font-size:13px;
 }
 .pointer:hover {
 	cursor:pointer
