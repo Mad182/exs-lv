@@ -3303,7 +3303,7 @@ ul#user-notify {
 	background: transparent url('//img.exs.lv/bildes/icons-24.png') no-repeat 0 -526px;
 	width: 28px;
 	height: 28px;
-	margin: 2px 5px 4px 2px;
+	margin: 2px 7px 7px 0;
 	float: left
 }
 
@@ -3379,7 +3379,7 @@ ul#user-notify {
 }
 
 #user-notify li span.info-content {
-	display: inline
+	display: inline;
 }
 
 #friends-pending, #friend-list {
