@@ -189,6 +189,22 @@
 				</script>
 			</div>
 			<!-- END BLOCK : header-ad-->
+
+			<!-- START BLOCK : header-ad-unauthorized-->
+			<div style="position:absolute;right:50px;top:30px;width:460px;height:60px;z-index:4">
+				<script type="text/javascript" id="position_2918">
+				  var ads_positions = ads_positions || [];
+				  ads_positions.push(["2918", "", "document"]);
+				  (function() {
+				    if (!document.getElementById("ads_loader")) {
+				      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
+				      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
+				      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+				    }
+				  })();
+				</script>
+			</div>
+			<!-- END BLOCK : header-ad-unauthorized-->
 		</div>
 
 		<div id="intr" class="container">
@@ -318,6 +334,22 @@
 					<!-- START BLOCK : page-path-->
 					<p id="breadcrumbs">{page-path}</p>
 					<!-- END BLOCK : page-path-->
+					
+					<!-- START BLOCK : unauthorized-ad-->
+					<div style="padding: 0 0 10px;width:728px;margin:0 auto;max-width:100%;overflow:hidden">
+						<script type="text/javascript" id="position_2919">
+						  var ads_positions = ads_positions || [];
+						  ads_positions.push(["2919", "", "document"]);
+						  (function() {
+						    if (!document.getElementById("ads_loader")) {
+						      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
+						      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
+						      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+						    }
+						  })();
+						</script>
+					</div>
+					<!-- END BLOCK : unauthorized-ad-->
 
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
@@ -399,6 +431,15 @@
 						<div class="c"></div>
 					</div>
 					<!-- END BLOCK : profile-box-->
+					
+					<!-- START BLOCK : notification-list-->
+					<div class="widget">
+						<h3 class="title"><span>Tavi jaunumi</span></h3>
+						<div>
+							{html}
+						</div>
+					</div>
+					<!-- END BLOCK : notification-list-->
 
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
@@ -439,10 +480,7 @@
 					<div class="widget">
 						<h3 class="title"><span>Jaunākais portālā</span></h3>
 						<div class="tabwidget widget tab-container box"> 
-							<ul class="tabnav clearfix"> 
-								<!-- START BLOCK : notification-list-->
-								<li><a href="/events-pager?events-page=0" class="{events-selected}remember-events ajax"><span class="profile">Notikumi</span></a></li>
-								<!-- END BLOCK : notification-list-->
+							<ul class="tabnav clearfix">
 								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
 								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
 							</ul>
@@ -708,12 +746,7 @@
 		/* ]]> */
 	</script>
 
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
-	<noscript>
-	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
-	</noscript>
+
 	<!-- END BLOCK : popup-ads-->
 	
 	<script>
