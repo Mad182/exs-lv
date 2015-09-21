@@ -3,11 +3,8 @@
  *  Satur tās funkcijas, kurām ir saistība ar RuneScape jaunumu ielasīšanu
  *  no runescape.com RSS feeds un to parādīšanu sākumlapā.
  *
- *  Šīs funkcijas tiek izmantotas tikai šajā modulī.
- *
- *  Autors: Edgars P. 
+ *  Šīs funkcijas tiek izmantotas tikai šajā modulī!
  */
-
 
 /**
  *  Atgriež HTML ar RuneScape jaunākajām ziņām, kas
@@ -31,7 +28,6 @@ function fetch_news($type = 'rs3') {
 	
 	return $output;
 }
-
 
 /**
  *  RuneScape.com jaunumu RSS feed lasītājs.
@@ -156,7 +152,6 @@ function read_rss($force = false) {
 	create_news('oldschool');
 }
 
-
 /**
  *  Uzģenerēs HTML formāta cache failu ar RuneScape ziņām,
  *  par kurām dati jau saglabāti datubāzē.
@@ -248,7 +243,6 @@ function create_news($type = 'rs3') {
 	fclose($file);
 }
 
-
 /**
  *  Saglabās lokāli RuneScape ziņu raksta logo.
  *
@@ -292,7 +286,6 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
 	}
 	return true;
 }
-
 
 /**
  *  Atgriezīs fallback bildi RuneScape jaunumu ierakstam.

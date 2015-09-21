@@ -1,10 +1,16 @@
 <?php
 /**
- * 	Ievades formas lietotāju profilu meklēšanai pēc atšķirīgiem kritērijiem
+ *  Šajā sadaļā iespējams meklēt lietotāju profilus pēc dažādiem kritērijiem,
+ *  piemēram, IP adresēm, lietotājvārdiem un e-pastiem.
+ *
+ *  Pie katra no atrastajiem profiliem redzama noderīga papildinformācija,
+ *  piemēram, lietotāja visi bijušie lietotājvārdi u.c.
  *
  * 	Moduļa adrese: exs.lv/findby
  */
 
+$add_css[] = 'grouped-profiles.css';
+ 
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
 	set_flash('Pieeja liegta!');
@@ -19,32 +25,65 @@ $limit_total_ips = 50;
 $limit_shown_ips = 10;
 
 // profilu skaits, cik parādīt pirms "rādīt vairāk" pogas;
-// dažiem kadriem ir desmitiem fake profilu!
+// dažiem indivīdiem ir desmitiem fake profilu!
 $limit_shown_profiles = 10;
 
 
+/*
+|--------------------------------------------------------------------------
+|   jQuery AJAX: atgriezīs saturu ar profilu meklētāju.
+|--------------------------------------------------------------------------
+|   Tiek izsaukta, nospiežot uz sadaļas atvēršanas cilnes,
+|   lai to ielādētu satura blokā zem ciļņu izvēlnes.
+*/
+
+if (isset($_GET['_']) && isset($_GET['load'])) {
+    
+    $new_tpl = fetch_tpl();
+    if (empty($new_tpl)) { die('error'); }
+    
+    $new_tpl->newBlock('mcp-find-profiles');
+    $new_tpl->assignAll(array(
+        'category-url' => $category->textid
+    ));
+    echo json_encode(array(
+        'content' => $new_tpl->getOutputContent()
+    ));
+    exit;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+|   jQuery AJAX: atgriezīs norādītā lietotāja e-pasta adresi.
+|--------------------------------------------------------------------------
+*/
+
 if (isset($_GET['email']) && is_numeric($_GET['email'])) {
 
-	$content = 'Nav norādīts!';
+	$user = $db->get_row("
+        SELECT `mail` FROM `users`
+        WHERE `id` = " . (int) $_GET['email']
+    );
 
-	$user = $db->get_row("SELECT `mail` FROM `users` WHERE `id` = '" . (int) $_GET['email'] . "' ");
-	if ($user) {
-		$content = $user->mail;
-	}
-
-	echo $content;
+	echo ($user) ? $user->mail : 'Nav norādīts!';
 	exit;
 }
 
-/**
- * 	jQuery pieprasījums, kas ielādē šādus datus:
- *
- * 		- lietotāja vecos lietotājvārdus
- * 		- profilus, ar kuriem sakrīt paroles hash
- * 		- banu termiņus
- * 		- iepriekš izmantotās IP (noteiktu skaitu)
- *
- */
+
+/*
+|--------------------------------------------------------------------------
+|   jQuery AJAX: atgriezīs datus par norādīto lietotāju.
+|--------------------------------------------------------------------------
+|
+|   Ielādēta tiks šāda informācija:
+|
+| 	  - lietotāja vecie lietotājvārdi;
+| 	  - profili, ar kuriem sakrīt paroles hash;
+| 	  - banu termiņi;
+|     - iepriekš izmantotās IP (noteikts skaits).
+*/
+
 if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 	$userid = (int) $_GET['display'];
@@ -56,8 +95,6 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 		exit;
 	}
 
-
-	//$content = '<div><a class="clue" href="javascript:void()" rel="/findby/?email=115" title="">115</a><div class="c"></div></div><div class="c"></div>';
 	// pārbauda, vai lietotājam ir aktīvs bans
 	$ban = $db->get_row("
 		SELECT
@@ -73,10 +110,8 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 			`banned`.`time` DESC
 	");
 	if ($ban && (time() - $ban->time < $ban->length)) {
-		$content .= '<p class="infop"><strong>Bloķēts ar iemeslu:</strong> ' . $ban->reason . ' (' . $ban->nick . ')</p>';
+		$content .= '<p class="note note-findby">Bloķēts ar iemeslu: ' . $ban->reason . ' (' . $ban->nick . ')</p>';
 	}
-
-
 
 	// atrod pēdējās x lietotās IP
 	$all_ips = $db->get_results("
@@ -104,18 +139,18 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 		$counter = 1;
 
 		$content .= '<div id="ip_block">';
-		$content .= '<p class="infop"><strong>Izmantotās IP:</strong></p>';
+		$content .= '<p class="note note-findby">Izmantotās IP:</p>';
 
 		// visu atrasto IP stabiņš ar laiku, kad šī IP izmantota
 		if ($all_ips) {
 			$content .= '<table id="all_ips" class="ip-table">';
-			$content .= '<tr><td><strong>Pēdējās IP</strong></td></tr>';
+			$content .= '<tr><td>Pēdējās IP</td></tr>';
 			foreach ($all_ips as $ip) {
 			
 				if (!empty($ip->ip) && $ip->ip != '--') {
 					$ip->ip = '<a href="https://whois.domaintools.com/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
 				}
-				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
+				$row_class = ( $counter > $limit_shown_ips ) ? ' class="is-hidden"' : '';
 								
 				$content .= '<tr' . $row_class . '><td>' . $ip->ip . ' (pirms ' . time_ago(strtotime($ip->lastseen)) . ')</td></tr>';
 				$counter++;
@@ -134,13 +169,13 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 		// unikālo izmantoto IP stabiņš
 		if ($unique_ips) {
 			$content .= '<table id="unique_ips" class="ip-table">';
-			$content .= '<tr><td><strong>Unikālās IP</strong></td></tr>';
+			$content .= '<tr><td>Unikālās IP</td></tr>';
 			foreach ($unique_ips as $ip) {
 			
 				if (!empty($ip->ip) && $ip->ip != '--') {
 					$ip->ip = '<a href="https://whois.domaintools.com/'.$ip->ip.'" rel="nofollow">'.$ip->ip.'</a>';
 				}
-				$row_class = ( $counter > $limit_shown_ips ) ? ' class="hidden-row"' : '';
+				$row_class = ( $counter > $limit_shown_ips ) ? ' class="is-hidden"' : '';
 				
 				$content .= '<tr' . $row_class . '><td>' . $ip->ip . '</td></tr>';
 				$counter++;
@@ -155,92 +190,10 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 
 		$content .= '</div>';
 	} else {
-		$content .= '<p class="infop"><strong>Izmantotās IP:</strong><br>Nav fiksētas!</p>';
+		$content .= '<p class="note note-findby">Izmantotās IP:<br>Nav fiksētas!</p>';
 	}
 
-
-
-	// veic salīdzināšanu, vai paroles hash nesakrīt ar kāda cita profila hash
-	if (strlen($user->pwd) > 5 && !in_array($user->pwd, array('', ' '))) {
-
-		// moderatori neredzēs, ja viņu paroles sakritīs ar kāda cita profila parolēm
-		$pass = $db->get_results("
-			SELECT
-				`users`.`id`,
-				`users`.`nick`,
-				`users`.`lastseen`,
-				`users`.`level`,
-				`users`.`lastip`,
-				`users`.`mail`
-			FROM `users`
-			WHERE
-				`users`.`pwd` LIKE '%" . $user->pwd . "%' AND
-				`users`.`id` != '" . $user->id . "' AND
-				`users`.`id` != '" . $auth->id . "'
-			ORDER BY `users`.`nick` ASC
-		");
-
-		if (!$pass) {
-			$content .= '<p class="infop"><strong>Parole ne ar vienu lietotāju nesakrīt.</strong></p>';
-		} else {
-			$content .= '<p class="infop"><strong>Parole sakrīt ar šādiem profiliem:</strong><br />';
-			$content .= '<table><tr><th>Profils</th><th>Manīts</th><th>Pēdējā IP</th><th>Bans vēl...</th></tr>';
-
-			$counter = 0;
-			$add_class = '';
-
-			foreach ($pass as $pwd) {
-
-				// 	paslēps rindu, ja to profilu ar tādu pašu paroli ir daudz;
-				//	varēs apskatīt ar jQuery
-				if ($counter > $limit_shown_profiles)
-					$add_class = ' class="hide-rows"';
-
-				// 	pārbauda, vai profilam ir aktīvs bans
-				$active_ban = $db->get_row("SELECT `time`,`length` FROM `banned` WHERE `user_id` = '" . $pwd->id . "' ORDER BY `time` DESC ");
-
-				if ($active_ban) {
-					$len = time() - $active_ban->time;
-					if ($len < $active_ban->length) {
-						$banned = '<strong>' . floor(($active_ban->length - $len) / 60 / 60 / 24) . '</strong> dienas';
-					} else {
-						$banned = ' -- ';
-					}
-				} else {
-					$banned = ' -- ';
-				}
-
-				$pwd->lastseen = time_ago(strtotime($pwd->lastseen));
-				$pwd->nick = usercolor($pwd->nick, $pwd->level, false, $pwd->id);
-				//$pwd->mail		= textlimit(substr($pwd->mail,0, strpos($pwd->mail, '@')),20);
-				
-				if (!empty($pwd->lastip) && $pwd->lastip != '--') {
-					$pwd->lastip = '<a href="https://whois.domaintools.com/'.$pwd->lastip.'" rel="nofollow">'.$pwd->lastip.'</a>';
-				}
-
-				$content .= '<tr' . $add_class . '>
-								<td><a href="/user/' . $pwd->id . '" title="E-pasts: ' . $pwd->mail . '">' . $pwd->nick . '</a></td>
-								<td class="centered-result">pirms ' . $pwd->lastseen . '</td>
-								<td class="centered-result">' . $pwd->lastip . '</td>
-								<td class="centered-result">' . $banned . '</td>
-							</tr>';
-
-				$counter++;
-			}
-
-			if ($counter > $limit_shown_profiles + 1) {
-				$content .= '<tr><td colspan="4" class="toggle-rows"><a class="show-rows" href="javascript:void(0);">rādīt vairāk</a></td></tr>';
-			}
-
-			$content .= '</table></p>';
-		}
-	} else {
-		$content .= '<p class="infop"><strong>Parole ne ar vienu lietotāju nesakrīt.</strong></p>';
-	}
-
-
-
-	// atrod vecos lietotājvārdus
+	// atradīs vecos lietotājvārdus
 	$usernames = $db->get_results("
 		SELECT
 			`user_id` AS `id`,
@@ -254,14 +207,18 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 	");
 
 	if ($usernames) {
-		$content .= '<p class="infop"><strong>Iepriekšējie lietotājvārdi:</strong></p><p>';
+		$content .= '<p class="note note-findby">Iepriekšējie lietotājvārdi:</p>';
+        $content .= '<table id="mgmt_usernames">';
 		foreach ($usernames as $uname) {
 			$uname->changed = date("d.m.Y, H:i", strtotime($uname->changed));
-			$content .= '<a href="/user/' . $uname->id . '">' . $uname->nick . '</a> &nbsp;&nbsp;&nbsp;(mainīts: ' . $uname->changed . ')<br />';
+            $content .= '<tr>';
+            $content .=     '<td><a href="/user/'.$uname->id.'">'.$uname->nick.'</a></td>';
+            $content .=     '<td>līdz: '.$uname->changed.'</td>';
+            $content .= '</tr>';
 		}
-		$content .= '</p>';
+		$content .= '</table>';
 	} else {
-		$content .= '<p class="infop" style="margin-bottom:10px"><strong>Šis lietotājs savu lietotājvārdu nav mainījis!</strong></p>';
+		$content .= '<p class="note note-findby" style="margin-bottom:10px">Šis lietotājs savu lietotājvārdu nav mainījis.</p>';
 	}
 
 	echo $content;
@@ -269,17 +226,21 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 }
 
 
+/*
+|--------------------------------------------------------------------------
+|   Saturs ar ievades formām un meklēšanas rezultātiem.
+|--------------------------------------------------------------------------
+*/
 
-
-
-/**
- * 	Ievades formas un meklēšanas rezultāti
- */
-$tpl->assignInclude('module-head', CORE_PATH . '/modules/' .
-								   $category->module . '/head.tpl');
+$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
-$tpl->newBlock('mod-cpanel');
-
+$tpl->newBlock('mcp-profiles-tabs');
+// otra sadaļa pieejama tikai pāris projektos
+if ($lang == 0 || $lang == 1) {
+    $tpl->newBlock('grouped-enabled');
+}
+$tpl->newBlock('mcp-find-outer-start');
+$tpl->newBlock('mcp-find-profiles');
 
 // kāda no formām aizpildīta un iesūtīta
 if (isset($_POST['submit']) || isset($_GET['ip'])) {
@@ -346,9 +307,8 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 				`users`.`nick` ASC
 			LIMIT 0,50
 		");
-	} 
 	// pārējos gadījumos pietiek ar meklēšanu `users` tabulā
-	else {
+	} else {
 		$results = $db->get_results("
 			SELECT
 				`id`,`nick`,`mail`,`lastip`,`karma`,`date`,`level`
@@ -401,3 +361,5 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 		}
 	}
 }
+
+$tpl->newBlock('mcp-find-outer-end');

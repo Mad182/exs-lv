@@ -1,37 +1,50 @@
 <?php
 /**
- *  RuneScape apakšprojektā izmantotās funkcijas.
- *
- *  Autors: Edgars P. 
+ *  RuneScape apakšprojektam specifiskas funkcijas.
+ *  Tiek ielādētas apakšprojekta konfigurācijas failā.
  */
 
 /**
- *  Atgriež objektu ar template faila saturu
- *
- *  @param string $file     faila nosaukums
- *  @param bool $add_path   vai pievienot pilno ceļu uz atvērto moduli
- *  @return bool            "false", ja fails neeksistē
- *  @return TemplatePower   template objekts
+ *  Vairākām RuneScape sadaļām tiek izmantota MVC struktūra,
+ *  lai to saturu foršāk nodalītu un ielādētu caur klasēm un funkcijām.
+ *  
+ *  Lai sadaļas modulī realizētā klase tiktu izsaukta,
+ *  AIZ tās jāpievieno šāda rinda:
+ *      init_mvc();
  */
-function get_tpl($file = '', $add_path = true) {
+function init_mvc() {
 	global $category;
-	
-	if ($file == '') {
-		return false;
-	}
+	if (empty($category)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
+	$class_name = as_class_name($category->module);
+	if (empty($class_name)) die('Ooooops! Sadaļu ielādēt neizdevās. :(');
+	$controller = new $class_name();
+	$controller->index();
+}
 
-	if ($add_path) {
-		$file = CORE_PATH.'/modules/'.$category->module.'/'.$file.'.tpl';
-	}
-	
-	if (!file_exists($file)) {
-		return false;
-	}
+/**
+ *  Apstrādās saņemto simbolu virkni, pārveidojot (ja nepieciešams)
+ *  to uz tādu, kāda drīkst būt PHP klases nosaukumā.
+ *
+ *  Tiek izmantota sadaļās ar MVC tipa arhitektūru.
+ */
+function as_class_name($name = '') {
 
-	$tpl = new TemplatePower($file);
-	$tpl->prepare();
-	
-	return $tpl;
+	$name = trim($name);
+	if (empty($name)) return '';
+
+	// klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
+	$name = str_replace(array('-', ' '), '_', $name);
+
+	$allowed = "/[^a-z0-9_]/i";
+	$name = preg_replace($allowed, '', $name);
+	if (empty($name)) return '';
+
+	// katra daļa sāksies ar lielo sākumburtu, piemēram, "class Model_Users"
+	$name = str_replace('_', ' ', $name);
+	$name = ucwords($name);
+	$name = str_replace(' ', '_', $name);
+
+	return $name;
 }
 
 /**

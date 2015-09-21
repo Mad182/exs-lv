@@ -50,13 +50,11 @@ $warns = $db->get_results("
     $where
 	ORDER BY 
 		`warns`.`created` DESC 
-	LIMIT 0,100
+	LIMIT 0, 50
 ");
 if (!$warns) {
 	$tpl->newBlock('no-warns-found');
 } else {
-
-	$counter = 1;
 
 	$tpl->newBlock('warns-list');
 
@@ -92,7 +90,6 @@ if (!$warns) {
 
 		$tpl->newBlock('single-warn');
 		$tpl->assignAll($warn);
-		$tpl->assign('row_counter', $counter);
 
 		// ja brīdinājums ticis noņemts... parāda noņēmēju un noņemšanas iemeslu
 		if ($warn->removed_id != '0') {
@@ -114,8 +111,6 @@ if (!$warns) {
 				$tpl->assign('site', $config_domains[$warn->lang]['domain']);
 			}
         }
-
-		$counter++;
 	}
 }
 

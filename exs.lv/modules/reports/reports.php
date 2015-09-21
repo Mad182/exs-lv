@@ -14,6 +14,7 @@
  *  kur ziņošanas podziņa tiek vispār izdrukāta lapā.
  *  Tie ir visu veidu miniblogi, rakstu komentāri un galeriju komentāri.
  */
+
 $allowed_sites = array(1, 7, 9);
 
 
@@ -73,7 +74,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 	} else {
 
 		$data->reported_content = ( empty($data->reported_content) ) ?
-				'<p class="report-notice"><strong>Nav saglabāts!</strong></p>' :
+				'<p class="report-notice stronger">Nav saglabāts!</p>' :
 				$data->reported_content;
 		$data->reported_content = add_smile($data->reported_content);
 
@@ -117,8 +118,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 			// to moderatoram pieklātos redzēt
 			if ($original_data->removed == 1) {
 				$original = $original_data->text;
-				$original_data->text = '<p class="report-notice"><strong>';
-				$original_data->text .= 'Ieraksts ir dzēsts!</strong></p>';
+				$original_data->text = '<p class="report-notice stronger">';
+				$original_data->text .= 'Ieraksts ir dzēsts!</p>';
 				$original_data->text .= $original;
 			}
 			$templ->assign('original-post', add_smile($original_data->text));
@@ -464,13 +465,13 @@ foreach ($report_types as $report_type) {
 
 				// raksta komentārs (vai komentāra atbilde)
 				case 1:
-					$report_place = '<strong>Komentārs: </strong>';
+					$report_place = '<span class="stronger">Komentārs: </span>';
 					$report_place .= '<a href="/read/' . $report->comment_page_strid . '#c' . $report->comment_id . '">' . $report->comment_page_title . '</a>';
 					break;
 
 				// galerijas komentārs
 				case 2:
-					$report_place = '<strong>Komentārs: </strong> ';
+					$report_place = '<span class="stronger">Komentārs: </span> ';
 					$report_place .= '<a href="/gallery/' . $report->gallery_author . '/' . $report->galcom_bid . '#c' . $report->galcom_id . '">' . $report->galcom_id . '</a>';
 					break;
 
@@ -479,7 +480,7 @@ foreach ($report_types as $report_type) {
 
 					// junk komentārs
 					if ($report->miniblog_type == 'junk' && $report->miniblog_parent != 0) {
-						$report_place = '<strong>Junk komentārs: </strong>';
+						$report_place = '<span class="stronger">Junk komentārs: </span>';
 						$report_place .= '<a href="/junk/' . $report->miniblog_parent . '#m' . $report->miniblog_id . '">#m' . $report->miniblog_id . '</a>';
 
 					// minibloga komentārs
@@ -489,12 +490,12 @@ foreach ($report_types as $report_type) {
 
 						// grupā esošs komentārs
 						if ($report->miniblog_groupid != '0') {
-							$report_place = '<strong>Grupas mb komentārs: </strong>';
+							$report_place = '<span class="stronger">Grupas mb komentārs: </span>';
 							$report_place .= '<a href="/group/' . $report->parentmb_groupid . '/forum/' . base_convert($report->parentmb_id, 10, 36) . '#m' . $report->miniblog_id . '">' . $report->group_title . '</a>';
 
 						// ārpus grupām esošs komentārs
 						} else {
-							$report_place = '<strong>Minibloga komentārs: </strong>';
+							$report_place = '<span class="stronger">Minibloga komentārs: </span>';
 							$report_place .= '<a href="/say/' . $report->parentmb_author . '/' . $report->parentmb_id . '-' . $mb_strid . '#m' . $report->miniblog_id . '">' . $mb_strid . '</a>';
 						}
 
@@ -505,12 +506,12 @@ foreach ($report_types as $report_type) {
 
 						// grupā esošs miniblogs
 						if ($report->miniblog_groupid != '0') {
-							$report_place = '<strong>Grupas miniblogs: </strong>';
+							$report_place = '<span class="stronger">Grupas miniblogs: </span>';
 							$report_place .= '<a href="/group/' . $report->miniblog_groupid . '/forum/' . base_convert($report->miniblog_id, 10, 36) . '">' . $report->group_title . '</a>';
 
 						// ārpus grupām esošs miniblogs
 						} else {
-							$report_place = '<strong>Miniblogs: </strong>';
+							$report_place = '<span class="stronger">Miniblogs: </span>';
 							$report_place .= '<a href="/say/' . $report->miniblog_author . '/' . $report->miniblog_id . '-' . $mb_strid . '">' . $mb_strid . '</a>';
 						}
 					}

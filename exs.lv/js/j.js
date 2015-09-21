@@ -530,27 +530,6 @@ $(document).ready(function($) {
 		});
 	}
 	
-	/* profili - piesaistīto profilu saraksta atvēršana */
-	$('#profile-list').on('click', '.show-children', function(e) {  
-		$(this).parent().parent().next().toggle();    
-		e.preventDefault();
-	});    
-	/* profili - profila piesaistīšana */
-	$('#profile-list').on('click', '.connect-profile', function(e) {
-		open_fancy($(this));
-		e.preventDefault();
-	});    
-	/* profili - profilu grupas dzēšana */
-	$('#profile-list').on('click', '.delete-group', function(e) {    
-		open_fancy($(this));      
-		e.preventDefault();
-	});
-	/* profili - apraksta rediģēšana */
-	$('#profile-list').on('click', '.edit-description', function(e) {    
-		open_fancy($(this));      
-		e.preventDefault();
-	});
-	
 	/* checkbox pie lietotāja bloķēšanas iespējām */
 	$('.check-all').click(function() {
 		if ($(this).prop('checked')) {
@@ -560,7 +539,7 @@ $(document).ready(function($) {
 		}
 	});
 	$('.js-checkbox').click(function(){ 
-		if($('.js-checkbox').length == $('.js-checkbox:checked').length) {
+		if ($('.js-checkbox').length == $('.js-checkbox:checked').length) {
 			$('.check-all').attr('checked', 'checked');
 		} else {
 			$('.check-all').removeAttr('checked');
