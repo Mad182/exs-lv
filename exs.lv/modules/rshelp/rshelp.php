@@ -1,15 +1,20 @@
 <?php
 /**
- * 	RuneScape pamācību sadaļas
+ *  RuneScape pamācību sadaļas.
  *
- *  Starp tām ietilpst:
+ *  Šis modulis iekļauj visas tās apakšsadaļas, kurās parastam lietotājam
+ *  iespējams lasīt RuneScape pamācības. Starp tām ietilpst:
  *
  *      - kvesti (f2p, p2p, mini-)
  *      - minispēles
  *      - distractions & diversions
  *      - tasks
  *      - u.c.
+ *
+ *  Modulis izmanto exs mvc arhitektūru.
  */
+
+require_once(CORE_PATH.'/modules/runescape/class.controller.php');
 
 class Rshelp extends Controller {
     
@@ -194,3 +199,5 @@ class Rshelp extends Controller {
         }      
     }
 }
+
+init_mvc();

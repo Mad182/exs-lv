@@ -6,10 +6,10 @@
 	<h2>Bloķētie lietotāji</h2>
 	<table class="table">
 		<tr>
-			<th style="width:120px">Lietotājs</th>
-			<th>Iemesls</th>
-			<th style="width:150px;text-align:right">Datums</th>
-			<th style="width:20px">Del</th>
+			<th class="stronger" style="width:120px;font-weight:500">Lietotājs</th>
+			<th class="stronger" style="font-weight:500">Iemesls</th>
+			<th class="stronger" style="width:150px;text-align:right;font-weight:500">Datums</th>
+			<th class="stronger" style="width:20px;font-weight:500">Del</th>
 		</tr>
 		<!-- START BLOCK : banned-row -->
 		<tr>

@@ -22,7 +22,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,mcp.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -143,10 +143,10 @@
 						<!-- START BLOCK : user-modlink-->
 						<li{cat-sel-83}><a href="#">Mod</a>
 							<ul>
-								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-								<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
+								<li{cat-sel-125}><a href="/banned">Liegumi</a></li>
+								<li{cat-sel-1827}><a href="/reports">Sūdzības{reports-count}</a></li>
 								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
-								<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
+								<li{cat-sel-199}><a href="/log">Darbību vēsture</a></li>
 							</ul>
 						</li>
 						<!-- END BLOCK : user-modlink-->

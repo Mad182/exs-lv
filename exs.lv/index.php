@@ -37,7 +37,7 @@ $requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_G
 
 // android.exs.lv adresēs neliks '.json', bet sagaidīs tikai un vienīgi json
 if ($requested_json || $lang === 2) {
-	header("Content-Type: application/json");
+	header('Content-Type: application/json');
 } else {
 	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
 	header('Content-Type: text/html; charset=UTF-8');
@@ -194,17 +194,7 @@ if (isset($_GET['u'])) {
 		}
 
 		/* ielādē moduli */
-		if ($category->has_mvc) { // sadaļām, kas izmanto MVC-tipa arhitektūru
-			require_once(CORE_PATH . '/includes/class.controller.php');
-			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
-			$class_name = as_class_name($category->module);
-			if (empty($class_name))
-				die('Ooooops! Sadaļu neizdevās ielādēt. :)');
-			$controller = new $class_name();
-			$controller->index();
-		} else {
-			require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
-		}
+        require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
 
 		/* ajax pieprasījumus te arī izbeidzam */
 		if (isset($_GET['_'])) {
@@ -236,7 +226,7 @@ if (isset($_GET['u'])) {
 // RuneScape apakšprojekts ielādē papildu failu,
 // kas veic vēl atsevišķas pārbaudes
 if ($lang == 9) {
-	include(CORE_PATH . '/modules/core/runescape.php');
+	include(CORE_PATH . '/modules/runescape/core_settings.php');
 }
 
 //izdomā, ko darīt ar templeita opšeniem (rādīt vai nerādīt kreiso un labo kolonnu)

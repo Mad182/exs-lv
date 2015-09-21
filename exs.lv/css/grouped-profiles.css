@@ -1,25 +1,80 @@
-/* Profilu sasaistes sadaļa */
-.new-main {
+/**
+ *  Viena lietotāja profilu sasaistes sadaļas stils.
+ */
+
+#prof_mgmt .note-top, #prof_mgmt .note-empty {
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.prof-mgmt-forms {
 	padding:10px 20px;
 	margin:10px 3px;
 	border:1px solid #EBEBEB;
 	background:rgb(252, 252, 252);
+    box-sizing:border-box;
 }
-	.new-main .small-text {
-		font-weight:bold;
-		font-size:12px
-	}
+    .prof-mgmt-forms div:first-child {
+        float:left;
+    }
+    .prof-mgmt-forms div:nth-child(2) {
+        float:right;
+    }
+    .prof-mgmt-forms div {
+        width:45%;
+        box-sizing:border-box;
+    }
+    .prof-mgmt-forms input[type=text] {
+        margin-bottom:0;
+        margin-right:4px;
+    }
+    .prof-mgmt-forms input:focus {
+        outline:0;
+    }
+    .prof-mgmt-forms .button {
+        text-transform:uppercase;
+    }
+    @media all and (max-width: 1200px) {
+        .prof-mgmt-forms input[type=text] {
+            width:70px;
+        }
+    }
+
+#profile-list, .child-table {
+    width:100%;
+    box-sizing:border-box;
+    margin-left:0;
+    margin-right:0;
+}
+#profile-list td:nth-child(1) {
+    text-align:center;
+    width:5%;
+}
+#profile-list td:nth-child(2) {
+    text-align:left;
+    width:50%;
+}
+#profile-list td:nth-child(3) {
+    text-align:center;
+    width:15%;
+}
+#profile-list td:nth-child(4) {
+    text-align:right;
+    width:30%;
+}
+
+#profile-list td:nth-child(4) a {
+    margin-left:5px;
+}
+#profile-list td:nth-child(4) a:hover {
+    text-decoration:none;
+}
+
 #profile-list tr.main-profile:nth-child(4n + 2) {
-	background:#FAFAFA
+	background:#FAFAFA;
 }
-	.is-hidden {
-		display:none
-	}
 	.main-profile td:nth-child(2) {
 		position:relative
-	}
-	.show-children:hover {
-		cursor:pointer
 	}
 	.show-children {
 		padding:5px 15px 0;
@@ -30,12 +85,36 @@
 	.show-children:hover {
 		background:rgb(243, 243, 243)
 	}
+    
+#profile-list .child-table td:nth-child(1) {
+    text-align:center;
+    width:5%;
+}
+#profile-list .child-table td:nth-child(2) {
+    text-align:left;
+    width:40%;
+}
+#profile-list .child-table td:nth-child(3) {
+    text-align:left;
+    width:20%;
+}
+#profile-list .child-table td:nth-child(4) {
+    text-align:left;
+    width:20%;
+}
+#profile-list .child-table td:nth-child(5) {
+    text-align:right;
+    width:15%;
+}
+
+
 .child-block {
 	background:#F7FBFF;
 	border:1px solid #E2E6F1;
 	margin-left:10px;
 	padding:10px 20px
 }
+
 .profiles-description {
 	width:450px;
 	min-height:130px

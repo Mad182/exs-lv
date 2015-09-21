@@ -403,7 +403,7 @@
 <div class="tabMain">
 	<form id="edit-profile" class="form" action="/user/{user-id}/block" method="post" enctype="multipart/form-data">
 		<fieldset>
-			<legend><strong>Bloķēt pieeju lapai</strong></legend>
+			<legend class="stronger" style="margin-bottom:0">Bloķēt pieeju lapai</legend>
 
 			<!-- START BLOCK : has-active-ban -->
 			<p class="note">
@@ -480,7 +480,7 @@
 	<!-- START BLOCK : form-other-profiles -->
 	<form id="edit-profile" class="form" action="/user/{user-id}/block/other" method="post">
 		<fieldset id="profiles">
-			<legend><strong>Piesaistīto profilu bloķēšana</strong></legend>
+			<legend class="stronger" style="margin-bottom:0">Piesaistīto profilu bloķēšana</legend>
 
 			<!-- START BLOCK : no-other-profiles -->
 			<p class="note">Šim profilam nav citu piesaistītu profilu.</p>

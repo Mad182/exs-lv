@@ -9,7 +9,7 @@
 
 <!-- START BLOCK : list-reports -->
 <h2>{report-title}</h2>
-<table class="mod-list-table" style="width:95%;margin-bottom:40px">
+<table class="mod-list-table" style="width:95%;margin:20px 0 40px 10px;table-layout:fixed">
 	<tr class="">
 		<th style="width:22%">Iesaistītie</th>
 		<th style="width:52%">Pārkāpuma pamatojums</th>
@@ -59,7 +59,7 @@
 <!-- END BLOCK : list-reports -->
 
 <!-- START BLOCK : no-reports-found -->
-<p class="no-reports"><strong>Nav nevienas {report-type}!</strong></p>
+<p class="no-reports">Nav nevienas {report-type}!</p>
 <!-- END BLOCK : no-reports-found -->
 
 <!-- END BLOCK : report-list-container -->

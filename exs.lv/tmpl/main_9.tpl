@@ -22,7 +22,7 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.cluetip.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,runescape.js,j.js"></script>
+		<script type="text/javascript" src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.cluetip.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,runescape.js,mcp.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 		<script type="text/javascript">
@@ -148,10 +148,10 @@
 						<a href="#" class="dropdown">Mod</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="/banned">Bloķētie lietotāji</a></li>
+							<li><a href="/banned">Liegumi</a></li>
 							<li><a href="/crows">Atbrīvotās vārnas</a></li>
-							<li><a href="/reports">Iesniegtās sūdzības {reports-count}</a></li>
-							<li><a href="/log">Administrācijas darbības</a></li>
+							<li><a href="/reports">Sūdzības {reports-count}</a></li>
+							<li><a href="/log">Darbību vēsture</a></li>
 							<li><a href="/polladmin">Aptaujas</a></li>
 							<li>&nbsp;</li>
 						</ul>

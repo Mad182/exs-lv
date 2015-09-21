@@ -44,7 +44,7 @@
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,j.js"></script>
+	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script type="text/javascript">
@@ -244,14 +244,13 @@
 						<!-- START BLOCK : user-modlink-->
 						<li class="dropdown"><a href="#">Mod</a>
 							<ul class="dropdown-menu">
-								<li{cat-sel-83}><a href="/moderatoriem">Forums</a></li>
-								<li{cat-sel-125}><a href="/banned">Bloķētie lietotāji</a></li>
-								<li{cat-sel-2082}><a href="/grouped-profiles">Profilu sasaiste</a></li>
+								<li{cat-sel-83}><a href="/moderatoriem">Moderatoru forums</a></li>
+								<li{cat-sel-125}><a href="/banned">Liegumi</a></li>
 								<li{cat-sel-1822}><a href="/crows">Atbrīvotās vārnas</a></li>
-								<li{cat-sel-1827}><a href="/reports">Iesniegtās sūdzības{reports-count}</a></li>
-								<li{cat-sel-1132}><a href="/findby">Profilu meklētājs</a></li>
+								<li{cat-sel-1827}><a href="/reports">Sūdzības{reports-count}</a></li>
+								<li{cat-sel-1132}><a href="/findby">Profilu pārvaldība</a></li>
+								<li{cat-sel-199}><a href="/log">Darbību vēsture</a></li>
 								<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
-								<li{cat-sel-199}><a href="/log">Administrācijas darbības</a></li>
 								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
 								<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
 								<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
