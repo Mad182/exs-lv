@@ -154,7 +154,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 						$nick = get_user($id);
 
 						if(!empty($nick) && !$nick->deleted) {
-							$profiles[$key] = '<a href="/user/' . $id . '">' . $nick->nick . '</a>';
+							$profiles[$key] = userlink($nick);
 						} else {
 							unset($profiles[$key]);
 						}
