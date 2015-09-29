@@ -10,9 +10,9 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 */
 
 body {
-	background-color:#09151f;
-	background: url("images/background-new.jpg") no-repeat top center fixed;
-	/*background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-244699.jpg") no-repeat top center fixed;
+	background-color:#f3f5f8;
+	/*background: url("images/background-new.jpg") no-repeat top center fixed;
+	background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-244699.jpg") no-repeat top center fixed;
 	background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-16281.jpg") no-repeat top center fixed;
 	background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-220973.png") no-repeat top center fixed;*/
 	color: #334;
@@ -340,7 +340,10 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 #headline {
-	background:#ebebeb;
+	background-color:#345;
+	background-size:cover;
+	background-repeat:no-repeat;
+	background-position: 0 0;
 	padding:0 40px;
 	position: relative;
 	height: 104px
@@ -2820,7 +2823,6 @@ vecie tabi (pagaidu variantā */
 .tabs {
 	list-style: none;
 	line-height: 24px;
-	height: 25px;
 	z-index: 2;
 	background: #f3f3f3;
 	padding: 6px 5px 0;

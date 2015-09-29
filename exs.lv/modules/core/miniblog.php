@@ -71,7 +71,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 		redirect();
 	}
 
-	if (get_mb_level($to) > 1 && $auth->level != 1) {
+	if (get_mb_level($to) > 2 && $auth->level != 1) {
 		die('Too deep ;(');
 	}
 
@@ -424,7 +424,7 @@ if (!empty($inprofile)) {
 							$json[$response->reply_to][] = $response;
 						}
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 3, $record->closed));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 4, $record->closed));
 					}
 				}
 

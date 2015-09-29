@@ -64,7 +64,7 @@ if ($auth->ok && ($user->credit >= 5 || $owned)) {
 if (im_mod()) {
 
 	if (isset($_POST['gif_avatars_import'])) {
-		$id = (int) $_POST['gif_avatars_id'];
+		$id = mkslug($_POST['gif_avatars_id']);
 
 		$contents = curl_get('https://gif-avatars.com/avatar/' . $id . '/json');
 		if (empty($contents)) {
