@@ -114,7 +114,7 @@ $(document).ready(function($) {
 
 	/* tiek izsaukta, nospiežot uz lietotāja nosūdzēšanas podziņas;
 	 atver fancybox ar pārkāpuma aprakstīšanas formu */
-	$('.mbox').on('click', '.report-user', function(e) {
+	$('#miniblog-list').on('click', '.report-user', function(e) {
 		e.preventDefault();
 		$.ajax({
 			dataType: 'json',
