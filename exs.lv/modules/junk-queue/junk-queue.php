@@ -14,6 +14,7 @@ function make_thumb($data, $path, $id) {
 
 	require_once(CORE_PATH . '/includes/class.upload.php');
 	$foo = new Upload($data);
+	$foo->image_max_pixels = 200000000;
 	$foo->allowed = array('image/*');
 	$foo->image_resize = true;
 	$foo->image_ratio = true;

@@ -85,6 +85,7 @@ else {
 			if (isset($_FILES['new-avatar'])) {
 				require_once('includes/class.upload.php');
 				$foo = new Upload($_FILES['new-avatar']);
+				$foo->image_max_pixels = 200000000;
 				$foo->file_new_name_body = $ins;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';
@@ -121,6 +122,7 @@ else {
 				if (!empty($curuser_avatar)) {
 					require_once('includes/class.upload.php');
 					$foo = new Upload('dati/bildes/useravatar/' . $curuser_avatar);
+					$foo->image_max_pixels = 200000000;
 					$foo->file_new_name_body = $ins;
 					$foo->image_resize = true;
 					$foo->image_convert = 'jpg';

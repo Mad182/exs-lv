@@ -41,6 +41,7 @@ if (isset($_POST['new-topic-body'])) {
 			if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
 				require_once('includes/class.upload.php');
 				$foo = new Upload($_FILES['edit-avatar']);
+				$foo->image_max_pixels = 200000000;
 				$foo->file_new_name_body = $topicid;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';
@@ -83,6 +84,7 @@ if (isset($_POST['new-topic-body'])) {
 			if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
 				require_once('includes/class.upload.php');
 				$foo = new Upload($_FILES['edit-avatar']);
+				$foo->image_max_pixels = 200000000;
 				$foo->file_new_name_body = $topicid;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';

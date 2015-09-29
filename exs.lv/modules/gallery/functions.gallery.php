@@ -35,6 +35,7 @@ function gallery_upload() {
 			$folder = 'dati/bildes/g' . date('Y') . '_' . date('m') . '/';
 			rmkdir($folder);
 			$foo = new Upload($_FILES['new-image']);
+			$foo->image_max_pixels = 200000000;
 			$foo->file_new_name_body = 'large_' . $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';

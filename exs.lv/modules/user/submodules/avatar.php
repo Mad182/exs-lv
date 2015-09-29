@@ -18,6 +18,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 		$text = time() . '_' . $auth->id;
 		$foo = new Upload($_FILES['edit-avatar']);
 		$foo->file_new_name_body = $text;
+		$foo->image_max_pixels = 200000000;
 		$foo->image_resize = true;
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 90;
