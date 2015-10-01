@@ -4865,14 +4865,13 @@ html .lb {
 
 .auto-embed-placeholder {
 	width: 240px;
-	background: #f7f7f7;
 	color: #333;
 	font-size: 11px;
 	line-height: 13px;
 	text-align: left;
 	border: 1px solid #ccc;
 	margin: 8px auto;
-	padding: 3px 3px 2px;
+	padding: 4px;
 	border-radius: 3px;
 	position: relative
 }
