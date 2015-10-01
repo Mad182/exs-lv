@@ -342,6 +342,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
 						require(CORE_PATH . '/includes/class.upload.php');
 						$foo = new Upload($_FILES['edit-avatar']);
+						$foo->image_max_pixels = 200000000;
 						$foo->file_new_name_body = $topicid;
 						$foo->image_resize = true;
 						$foo->image_convert = 'jpg';
@@ -613,6 +614,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 						require_once(CORE_PATH . '/includes/class.upload.php');
 						$foo = new Upload($tmpname);
+						$foo->image_max_pixels = 200000000;
 						$foo->allowed = array('image/*');
 						$foo->image_resize = true;
 						$foo->image_ratio_crop = true;

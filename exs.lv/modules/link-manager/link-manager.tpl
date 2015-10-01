@@ -1,7 +1,7 @@
 <!-- START BLOCK : link-manager-->
 <h1>{title}</h1>
 
-<ul class="tabs nav nav-tabs nav-justified">
+<ul class="tabs">
 	<li class="{active-dofollow}"><a href="/{category-url}" class="{active-dofollow}"><span class="friends">Whitelist</span></a></li>
 	<li class="{active-blacklisted}"><a href="/{category-url}/blacklisted" class="{active-blacklisted}"><span class="pages">Blacklist</span></a></li>
 	<li class="{active-https}"><a href="/{category-url}/https" class="{active-https}"><span class="pages">HTTPS</span></a></li>

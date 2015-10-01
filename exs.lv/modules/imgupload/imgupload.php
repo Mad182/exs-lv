@@ -40,6 +40,7 @@ if ($auth->ok) {
 
 		require_once CORE_PATH . '/includes/class.upload.php';
 		$foo = new Upload($_FILES['new-image']);
+		$foo->image_max_pixels = 200000000;
 		$foo->mime_check = true;
 		$foo->no_script = true;
 		$foo->file_max_size = $max_size;

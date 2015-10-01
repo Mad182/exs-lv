@@ -21,6 +21,7 @@ if ($auth->level > 0) {
 
 		require(CORE_PATH . '/includes/class.upload.php');
 		$foo = new Upload($_FILES['new-image']);
+		$foo->image_max_pixels = 200000000;
 		$foo->image_resize = true;
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 128;

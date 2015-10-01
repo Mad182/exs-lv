@@ -20,6 +20,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 		require_once(CORE_PATH . '/includes/class.upload.php');
 		$text = 'group_' . time() . '_' . $group->id;
 		$foo = new Upload($post);
+		$foo->image_max_pixels = 200000000;
 		$foo->file_new_name_body = $text;
 		$foo->image_resize = true;
 		$foo->image_convert = 'jpg';
@@ -33,7 +34,6 @@ function upload_user_avatar($post, $old_filename, $text) {
 		$foo->process('dati/bildes/useravatar/');
 		if ($foo->processed) {
 
-			$foo = new Upload($_FILES['edit-avatar']);
 			$foo->file_new_name_body = $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';
@@ -46,7 +46,6 @@ function upload_user_avatar($post, $old_filename, $text) {
 			$foo->file_overwrite = true;
 			$foo->process('dati/bildes/u_small/');
 
-			$foo = new Upload($_FILES['edit-avatar']);
 			$foo->file_new_name_body = $text;
 			$foo->image_resize = true;
 			$foo->image_convert = 'jpg';

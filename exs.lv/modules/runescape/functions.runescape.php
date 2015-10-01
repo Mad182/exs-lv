@@ -268,6 +268,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
 	require_once(CORE_PATH . '/includes/class.upload.php');
 
 	$foo = new Upload($target_path.$target_name);
+	$foo->image_max_pixels = 200000000;
 	if ($foo->uploaded) {
 		$foo->file_new_name_body = str_replace(array('.png','.gif','.jpg', '.jpeg'), '', $target_name);
 		$foo->image_resize = true;

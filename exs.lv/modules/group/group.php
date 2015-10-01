@@ -525,10 +525,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 			$to = (int) $_POST['response-to'];
 
-			$mlevel = 3;
-
 			// security pārbaudes...
-			if (get_mb_level($to) > $mlevel && $auth->level != 1) {
+			if (get_mb_level($to) > 2 && $auth->level != 1) {
 				die('Too deep ;(');
 			}
 			if (!isset($_POST['token']) or $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
@@ -817,9 +815,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						foreach ($responses as $response) {
 							$json[$response->reply_to][] = $response;
 						}
-						$mlevel = 5;
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), $mlevel, $record->closed, $group->disable_vote, $record->pic_heavy));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 4, $record->closed, $group->disable_vote, $record->pic_heavy));
 					}
 				}
 
