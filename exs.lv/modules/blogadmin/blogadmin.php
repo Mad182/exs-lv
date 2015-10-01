@@ -12,7 +12,7 @@ if (!$auth->ok) {
 // pārbauda un, iespējams, piešķir lietotājam blogu
 elseif (!get_blog_by_user($auth->id)) {
 
-    // pārbaude pēc lietotāja karmas
+	// pārbaude pēc lietotāja karmas
 	if ($auth->karma >= 200) {
 		$nick = sanitize($auth->nick);
 		$db->query("INSERT INTO `cat` (textid,title,isblog,parent,lang) VALUES ('" . strtolower(mkslug($nick)) . "','$nick blogs','$auth->id','110','$lang')");
@@ -23,24 +23,30 @@ elseif (!get_blog_by_user($auth->id)) {
 		header('Location: /' . strtolower(mkslug($nick)));
 	}
 
-    // lietotājs iegādājies blogu par exspunktiem
+	// lietotājs iegādājies blogu par exspunktiem
 	$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 	$pay = '';
 	if ($credit >= 5) {
 
-		if (isset($_GET['act']) && $_GET['act'] == 'submitpay') {
+		if (isset($_GET['var1']) && $_GET['var1'] == 'submitpay') {
 			$nick = sanitize($auth->nick);
 			$db->query("UPDATE users SET credit = credit-'5' WHERE id = '$auth->id'");
-			$db->query("INSERT INTO cat (textid,title,isblog,parent) VALUES ('" . strtolower(mkslug($auth->nick)) . "','$nick blogs','$auth->id','110')");
+			
+			// bloga sadaļa jāizveido visos projektos, kur blogi eksistē
+			$blog_langs = array(1, 9); // exs.lv, rs.exs.lv
+			foreach ($blog_langs as $blog_lang) {
+				$db->query("INSERT INTO cat (textid,lang,title,isblog,parent) VALUES ('" . strtolower(mkslug($auth->nick)) . "','$blog_lang','$nick blogs','$auth->id','110')");
+				$m->delete('isb_' . $auth->id . '_' . $blog_lang);
+			}
+			
 			push('Izveidoja sev <a href="/' . mkslug($auth->nick) . '">blogu</a>');
-			$m->delete('isb_' . $auth->id . '_' . $lang);
 			redirect('/' . $category->textid);
 		}
 
-		$pay = '<p><a href="/?c=111&amp;act=submitpay"><strong>Izveidot blogu</strong></a></p>';
+		$pay = '<p><a href="/myblog/submitpay"><strong>Izveidot blogu</strong></a></p>';
 	}
-    
-    
+	
+	
 	$tpl->newBlock('blogadmin-setup');
 	$tpl->assign(array(
 		'credit' => $credit,
@@ -54,7 +60,7 @@ else {
 	$inprofile = get_user($auth->id);
 	$tpl->newBlock('blogadmin-body');
 
-    // izveidots jauns raksts un saņemti $_POST dati
+	// izveidots jauns raksts un saņemti $_POST dati
 	if (isset($_POST['new-topic-title']) && isset($_POST['new-topic-body'])) {
 
 		if (!isset($_POST['token']) or $_POST['token'] != md5('lol' . $category->title . $remote_salt . $auth->id)) {
@@ -64,10 +70,10 @@ else {
 
 		$body = trim($_POST['new-topic-body']);
 		$title = trim($_POST['new-topic-title']);
-        
-        // pārbaude, vai raksts tika pievienots platā skata režīmā 
-        $topicwide = (isset($_GET['wide']) && $lang == 9) ? 1 : 0;
-        
+		
+		// pārbaude, vai raksts tika pievienots platā skata režīmā 
+		$topicwide = (isset($_GET['wide']) && $lang == 9) ? 1 : 0;
+		
 		if ($body && $title) {
 
 			$title = title2db($title);
@@ -141,7 +147,7 @@ else {
 		}
 	}
 
-    // saraksts ar lietotāja paša bloga rakstiem un iespēju tos labot
+	// saraksts ar lietotāja paša bloga rakstiem un iespēju tos labot
 	if (isset($_GET['act']) && $_GET['act'] == 'edit') {
 		$tpl->assign('edit-active', ' active');
 		$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `category` = '" . get_blog_by_user($auth->id) . "' ORDER BY date DESC");
@@ -156,14 +162,14 @@ else {
 			}
 		}
 	} 
-    
-    // atvērta saišu cilne
-    elseif (isset($_GET['act']) && $_GET['act'] == 'links') {
-    
+	
+	// atvērta saišu cilne
+	elseif (isset($_GET['act']) && $_GET['act'] == 'links') {
+	
 		$tpl->assign('links-active', ' active');
 		$tpl->newBlock('blogadmin-links');
 
-        // saites dzēšana
+		// saites dzēšana
 		if (isset($_GET['delete'])) {
 			$delete = (int) $_GET['delete'];
 			$db->query("DELETE FROM sidelinks WHERE id = ('$delete') AND category = ('" . get_blog_by_user($auth->id) . "') LIMIT 1");
@@ -229,24 +235,24 @@ else {
 			}
 		}
 	} 
-    
-    // jauna bloga pievienošanas forma
-    else {
+	
+	// jauna bloga pievienošanas forma
+	else {
 		$tpl->assign('new-active', ' active');
 		$tpl->newBlock('tinymce-enabled');
 		$tpl->newBlock('blogadmin-new');
 		$tpl->assign('blog-check', md5('lol' . $category->title . $remote_salt . $auth->id));
-        
-        // runescape apakšprojektā eksistē platie raksti,
-        // kuriem nav kreisās kolonnas
-        if (isset($_GET['wide']) && $lang == 9) {
-            $tpl_options = 'no-left';
-        }
-        // izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
-        if (!isset($_GET['wide']) && $lang == 9) {
-            $tpl->newBlock('goto-wide-page');
-        } else if ($lang == 9) {
-            $tpl->newBlock('goto-narrow-page');
-        }       
+		
+		// runescape apakšprojektā eksistē platie raksti,
+		// kuriem nav kreisās kolonnas
+		if (isset($_GET['wide']) && $lang == 9) {
+			$tpl_options = 'no-left';
+		}
+		// izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
+		if (!isset($_GET['wide']) && $lang == 9) {
+			$tpl->newBlock('goto-wide-page');
+		} else if ($lang == 9) {
+			$tpl->newBlock('goto-narrow-page');
+		}       
 	}
 }
