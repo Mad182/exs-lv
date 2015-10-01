@@ -47,7 +47,7 @@ body {
 /* <b> aizstājējs, jo jaunajā dizainā treknraksts neizskatās labi :( */
 .stronger {
     color:#515152;
-    font-weight:500;
+    font-weight:500
 }
 
 img {
@@ -232,7 +232,7 @@ ul.author-social li {
 }
 
 #logo {
-	padding: 12px 0 0;
+	padding: 12px 0 0
 }
 
 h1, h2, h3, h4, h5 {
@@ -266,7 +266,7 @@ h2.site-description {
 .navbar .nav > li > a {
 	color: #fff !important;
 	border-right:1px solid #485a63;
-	padding:15px !important;
+	padding:15px !important
 }
 
 /* Dropdown menu style starts */
@@ -391,7 +391,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	height: 40px;
 	line-height: 40px;
 	padding: 0 16px;
-	margin: 0;
+	margin: 0
 }
 
 #user-menu li:last-child {
@@ -405,7 +405,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 #user-menu li ul#user-group-menu {
 	width: 495px;
     padding-left: 3px;
-    padding-right: 3px;
+    padding-right: 3px
 }
 
 #user-menu li ul#user-group-menu li {
@@ -440,15 +440,15 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	line-height: 28px;
 	border: 0;
 	margin: 0;
-	padding: 2px 6px 2px 0;
+	padding: 2px 6px 2px 0
 }
 
 #user-group-menu .is-unread {
-    background-color:#394F5A;
+    background-color:#394F5A
 }
 
 #user-group-menu .is-unread:hover {
-    background-color:#526E7B !important;
+    background-color:#526E7B !important
 }
 
 #user-menu li ul#user-group-menu li .gm-logo {
@@ -3401,7 +3401,7 @@ ul#user-notify {
 }
 
 #user-notify li span.info-content {
-	display: inline;
+	display: inline
 }
 
 #friends-pending, #friend-list {
@@ -4367,7 +4367,7 @@ html .banned {
 /* Mod sadaļās izmantotās tabulas stils (brīdinājumi, sūdzības) */
 .mod-list-table {
 	margin: 10px 20px;
-    table-layout: fixed;
+    table-layout: fixed
 }
 .mod-list-table th {
 	font-weight: 500;
@@ -4378,7 +4378,7 @@ html .banned {
 }
 .mod-list-table td {
 	padding: 7px 10px;
-	border-bottom: 1px solid #EEF0F3;
+	border-bottom: 1px solid #EEF0F3
 }
 .mod-list-table .counter {
 	font-weight: 500;
@@ -4441,7 +4441,7 @@ li.view_more {
 	border:1px solid #ddd;
 	margin:20px auto 10px;
 	width:100%;
-    box-sizing:border-box;
+    box-sizing:border-box
 }
 #findby th {
 	padding:5px 8px;
@@ -4465,12 +4465,12 @@ li.view_more {
 	-webkit-border-radius: 2px
 }
 #findby .button {
-    text-transform:uppercase;
+    text-transform:uppercase
 }
 #user-results {
 	margin-top:10px;
     table-layout:fixed;
-    width:100%;
+    width:100%
 }
 #user-results th, #user-results td {
 	padding:3px 12px;
@@ -4485,7 +4485,7 @@ li.view_more {
 }
 #user-results tr td:nth-child(1) {
     text-align:left;
-    width:25%;
+    width:25%
 }
     #user-results tr td:nth-child(2) {
         text-align:left;
@@ -4526,7 +4526,7 @@ li.view_more {
     }
 .note.note-findby {
     background:rgb(252, 252, 252);
-    border:1px solid #DBE5E9;
+    border:1px solid #DBE5E9
 }
 #ip_block {
 	clear:both;
@@ -4544,7 +4544,7 @@ li.view_more {
 #mgmt_usernames {
     table-layout:fixed;
     width:50% !important;
-    margin-bottom:20px;
+    margin-bottom:20px
 }
     #mgmt_usernames td {
         border-right: 15px solid transparent;
@@ -4639,12 +4639,12 @@ li.view_more {
 	min-height:150px;
 	border:1px solid #eee;
 	padding:0 10px 10px 10px;
-	margin-right:10px;
+	margin-right:10px
 }
 .reported-content {
 	border-bottom: 1px solid #F3F2F2;
 	color: #FF4737;
-	margin: 7px 0;
+	margin: 7px 0
 }
 .report-notice {
 	padding:0 0 0 7px;
@@ -4709,10 +4709,10 @@ li.view_more {
 	min-height:130px;
 	padding-bottom:7px;
 	overflow:auto;
-	margin:0 5px 5px;
+	margin:0 5px 5px
 }
 .fancy-container .button {
-    text-transform:uppercase;
+    text-transform:uppercase
 }
 .fancy-title {
 	margin:5px 0;
@@ -4874,11 +4874,6 @@ html .lb {
 	margin: 8px auto;
 	padding: 3px 3px 2px;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ccc;
-	-webkit-box-shadow: 2px 2px 4px #ccc;
-	box-shadow: 2px 2px 4px #ccc;
 	position: relative
 }
 
@@ -4919,20 +4914,14 @@ html .lb {
 
 .auto-embed {
 	width: 380px;
-	background: #f7f7f7;
 	color: #333;
 	font-size: 11px;
-	line-height: 13px;
+	line-height: 14px;
 	text-align: left;
-	border: 1px solid #ccc;
+	border: 1px solid #e1e8ed;
 	margin: 8px auto;
-	padding: 3px 3px 2px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ccc;
-	-webkit-box-shadow: 2px 2px 4px #ccc;
-	box-shadow: 2px 2px 4px #ccc
+	padding: 5px;
+	border-radius: 3px
 }
 
 #full-story .auto-embed {
@@ -4947,8 +4936,6 @@ html .lb {
 .auto-embed a strong {
 	color: #555
 }
-
-
 
 .form textarea.mb-textarea {
 	width: 80%;
