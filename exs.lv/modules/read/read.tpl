@@ -125,35 +125,37 @@
 <!-- START BLOCK : read-article-->
 
 
-<article class="post">
-	<h1>
-		<span class="the_title">{title}
+<article class="post type-post status-publish format-standard hentry">
+	<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="{bookmark}" rel="bookmark">{title}
 			<!-- START BLOCK : title-lv-->
 			<span class="slash">/</span> <small>{title}</small>
 			<!-- END BLOCK : title-lv-->
-		</span>
-	</h1>
-	<div class="entry-meta row-fluid">
-		<ul class="clearfix">
-			<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-			<li><img src="//exs.lv/responsive/images/time.png" alt="">{date}</li>
-			<li><img src="//exs.lv/responsive/images/view-bg.png" alt="">{views}</li>
-			<li><img src="//exs.lv/responsive/images/komen.png" alt=""><a href="#" title="Comment on Donec consectetuer ligula vulputate sem tristique cursus">{posts} komentāri</a></li>
+			</a>
+		</h1>
+		<div class="entry-meta row-fluid">
+			<ul class="clearfix">
+				<li><img alt="" src="{avatar}" class="userav" />{author}</li>
+				<li><img src="//exs.lv/responsive/images/time.png" alt=""><time class="entry-date published" datetime="{date_atom}">{date}</time></li>
+				<li><img src="//exs.lv/responsive/images/view-bg.png" alt="">{views}</li>
+				<li><img src="//exs.lv/responsive/images/komen.png" alt=""><a href="{bookmark}#comments" title="Raksta &quot;{title}&quot; komentāri">{posts} komentāri</a></li>
 
-			<!-- START BLOCK : add-bookmark-->
-			<li class="bookmark">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
-			<!-- END BLOCK : add-bookmark-->
-			<!--
-			<!-- START BLOCK : post-tags-->
-			<li class="tagz"><img src="//exs.lv/responsive/images/tags-icon.png" alt="">
-				<!-- START BLOCK : post-tags-node-->
-				<a href="/tag/{slug}" rel="tag">{tag-title}</a>, 
-				<!-- END BLOCK : post-tags-node-->
-			<br /></li>
-			<!-- END BLOCK : post-tags-->
-			-->
-		</ul>
-	</div>
+				<!-- START BLOCK : add-bookmark-->
+				<li class="bookmark">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
+				<!-- END BLOCK : add-bookmark-->
+				<!--
+				<!-- START BLOCK : post-tags-->
+				<li class="tagz"><img src="//exs.lv/responsive/images/tags-icon.png" alt="">
+					<!-- START BLOCK : post-tags-node-->
+					<a href="/tag/{slug}" rel="tag">{tag-title}</a>, 
+					<!-- END BLOCK : post-tags-node-->
+				<br /></li>
+				<!-- END BLOCK : post-tags-->
+				-->
+			</ul>
+		</div>
+	</header>
 
 	<div class="entry-content">
 

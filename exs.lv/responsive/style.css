@@ -698,12 +698,8 @@ ul.gallery {
 /* Tipo-tipo
 *************/
 
-h1.entry-title {
-	font-size:16px
-}
 
-h3.title,
-h1.entry-title {
+h3.title {
 	color:#3E4548;
 	border-bottom:1px solid #eee;
 	font-weight:normal;
@@ -728,10 +724,8 @@ h3.poll-q {
 	margin-bottom: 10px
 }
 
-.title span,
-h1.entry-title span {
+.title span {
 	background:#E9ECEE;
-	;
 	padding:0 15px;
 	display:inline-block
 }

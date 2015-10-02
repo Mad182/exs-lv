@@ -789,12 +789,13 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			}
 
 			$article_text = add_smile($article->text, 1, $article->disable_emotions);
+
 			if ($article->strid == 'exs-lv-infografiks') {
 				$article_text .= '<iframe src="//infogr.am/exs_lv-9431592631" width="499" height="12542" scrolling="no" frameborder="0" style="border:none;margin: 0 auto;width:499px;display:block;"></iframe><div style="width:499px;border-top:1px solid #acacac;padding-top:3px;font-family:Arial;font-size:10px;text-align:center;"><a target="_blank" href="http://infogr.am/exs_lv-9431592631" style="color:#acacac;text-decoration:none;">VĒSTURESTATISTIKA</a> | <a style="color:#acacac;text-decoration:none;" href="http://infogr.am" target="_blank">Create infographics</a></div>';
 			}
 
 			if (!$author->deleted) {
-				$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>';
+				$author_link = '<span class="author vcard"><a class="url fn n" href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a></span>';
 			} else {
 				$author_link = '<em>dzēsts</em>';
 			}
@@ -804,8 +805,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'title' => $article->title,
 				'text' => $article_text,
 				'id' => $article->id,
+				'bookmark' => get_protocol($lang) . get_domain($lang) . '/read/' . $article->strid,
 				'views' => $article->views + 1,
 				'date' => $date,
+				'date_atom' => date(DATE_ATOM, strtotime($article->date)),
 				'author' => $author_link,
 				'level' => $author->level,
 				'gender' => $author->gender,
@@ -814,8 +817,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'rating_count' => $article->rating_count,
 				'avatar' => get_avatar($author, 's')	
 			));
-
-
 
 			$page_title = $article->title . ' - ' . $category->title;
 

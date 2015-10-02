@@ -114,7 +114,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$tpl->newBlock('info-node');
 			$tpl->assign(array(
 				'title' => 'Mājaslapa',
-				'value' => add_smile('<a href="' . h($inprofile->web) . '" rel="nofollow">' . h($inprofile->web) . '</a>', 0, 1, 1)
+				'value' => add_smile('<a href="' . h($inprofile->web) . '" rel="nofollow" target="_blank">' . h($inprofile->web) . '</a>', 0, 1, 1)
 			));
 		}
 
