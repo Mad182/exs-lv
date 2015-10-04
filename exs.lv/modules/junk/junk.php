@@ -129,7 +129,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
 			$html .= 'width="100%" style="background:transparent" height="400"></iframe>';
 		} else {
-			$html = '<p style="text-align:center"><img src="//img.exs.lv'.$pic->image.'" class="av" style="height:auto;width:auto;max-width:720px;float:none" alt="'.h(strip_tags($pic->title)).'" title="'.h(strip_tags($pic->title)).'" /></p>';
+			$html = '<p style="text-align:center"><img src="//img.exs.lv'.$pic->image.'" class="av" style="height:auto;width:auto;float:none" alt="'.h(strip_tags($pic->title)).'" title="'.h(strip_tags($pic->title)).'" /></p>';
 		}
 
 		$tpl->assign(array(
