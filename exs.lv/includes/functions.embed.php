@@ -743,7 +743,7 @@ function embed_vimeo($params) {
 }
 
 /**
- *  Callback metode imgur gifv failu embedošanai
+ *  Callback metode gfycat gifv/mp4/webm failu embedošanai
  *
  *  @param $params        video parametri
  *  @return $html   iframe ar video
@@ -759,7 +759,7 @@ function embed_gifv_gfycat($params) {
 		$width = 560;
 		$height = 400;
 
-		$json = curl_get('https://gfycat.com/cajax/get/TartFeminineCommongonolek');
+		$json = curl_get('https://gfycat.com/cajax/get/' . $params[4]);
 		if(!empty($json)) {
 			$jparams = json_decode($json);
 	
