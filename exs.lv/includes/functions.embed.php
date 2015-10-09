@@ -382,6 +382,9 @@ function embed_widgets($txt, $wide = 0) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a(.*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
 		);
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/([g])fycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
+		);
 	}
 
 	return $txt;
