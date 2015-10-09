@@ -346,7 +346,7 @@ $(document).ready(function($) {
 		'titleShow': false
 	});
 
-	$('.c-rate').on('click', '.plus, .minus', function(e) {
+	$('body').on('click', '.plus, .minus', function(e) {
 		e.preventDefault();
 
 		var elem = $(this).parent();

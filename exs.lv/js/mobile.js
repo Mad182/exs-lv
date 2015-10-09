@@ -174,6 +174,13 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
+	/* paslēptie miniblogu posti */
+	$('.toggle-replies').click(function(e){   
+		e.preventDefault();
+		$(this).hide();
+		$(this).siblings('.more-replies').show();
+	});
+
 	/* sidr menu */
 	 $('#menu').sidr();
 
