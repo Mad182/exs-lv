@@ -11,7 +11,7 @@ $tpl->assign(array(
 	'statistics-pms' => $db->get_var("SELECT max(id) FROM pm")
 ));
 
-$spamers = $db->get_results("SELECT nick,level,id,posts FROM users ORDER BY posts DESC LIMIT 100");
+$spamers = $db->get_results("SELECT `nick`,`level`,`id`,`posts` FROM `users` WHERE `deleted` = 0 ORDER BY `posts` DESC LIMIT 100");
 if ($spamers) {
 	foreach ($spamers as $spamer) {
 		$tpl->newBlock('spamerlist-node');
@@ -23,7 +23,7 @@ if ($spamers) {
 	}
 }
 
-$spamers = $db->get_results("SELECT nick,level,id,karma FROM users ORDER BY karma DESC LIMIT 100");
+$spamers = $db->get_results("SELECT `nick`,`level`,`id`,`karma` FROM `users` WHERE `deleted` = 0 ORDER BY `karma` DESC LIMIT 100");
 if ($spamers) {
 	foreach ($spamers as $spamer) {
 		$tpl->newBlock('karma-node');
@@ -35,7 +35,7 @@ if ($spamers) {
 	}
 }
 
-$tusers = $db->get_results("SELECT id,nick,today,level FROM users WHERE today > 0 ORDER BY today DESC, lastseen DESC LIMIT 10");
+$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC, `lastseen` DESC LIMIT 10");
 if ($tusers) {
 	$self = false;
 	$tpl->newBlock('usertop');
