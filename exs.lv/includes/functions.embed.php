@@ -377,10 +377,13 @@ function embed_widgets($txt, $wide = 0) {
 	//gfycat
 	if (strpos($txt, 'gfycat') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/fat\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/?#im", 'embed_gifv_gfycat', $txt
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/?#im", 'embed_gifv_gfycat', $txt
 		);
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/www\.gfycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
+		);
+		$txt = preg_replace_callback(
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/([g])fycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
 		);
 	}
 
@@ -743,17 +746,47 @@ function embed_vimeo($params) {
 }
 
 /**
- *  Callback metode imgur gifv failu embedošanai
+ *  Callback metode gfycat gifv/mp4/webm failu embedošanai
  *
  *  @param $params        video parametri
  *  @return $html   iframe ar video
  */
 function embed_gifv_gfycat($params) {
 
-	$html = '<iframe class="embedded-iframe" src="//gfycat.com/ifr/'.h($params[3]).'" ';
-	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
-	$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
-	$html .= 'width="520" height="300"></iframe>';
+	global $m;
+	
+	$cache_key = 'gify_' . md5($params[4]);
+	
+	if (($html = $m->get($cache_key)) === false) {
+
+		$width = 560;
+		$height = 400;
+
+		$json = curl_get('https://gfycat.com/cajax/get/' . $params[4]);
+		if(!empty($json)) {
+			$jparams = json_decode($json);
+	
+			if(!empty($jparams->gfyItem->width) && !empty($jparams->gfyItem->height)) {
+	
+				if($jparams->gfyItem->width > 560) {
+					$height = floor($jparams->gfyItem->height*(560/$jparams->gfyItem->width));
+					$width = 560;
+				} else {
+					$height = $jparams->gfyItem->height;
+					$width = $jparams->gfyItem->width;
+				}
+	
+			}
+		}
+
+		$html = '<iframe class="embedded-iframe" src="//gfycat.com/ifr/'.h($params[4]).'" ';
+		$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
+		$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
+		$html .= 'width="' . (int)$width . '" height="' . (int)$height . '"></iframe>';
+		
+		$m->set($cache_key, $html, false, 3600);
+	
+	}
 
 	return $html;
 }
