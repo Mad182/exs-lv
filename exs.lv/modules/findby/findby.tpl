@@ -18,35 +18,35 @@
 <div id="findby">
     <form id="search-nick" method="post" action="/{category-url}">
         <p>Lietotājvārds:</p>
-        <p class="form-input-box">
+        <p class="form-input-box clearfix">
             <input type="text" name="nick" value="{nick}">
             <input type="submit" name="submit" class="button primary" value="Meklēt">
         </p>
     </form>
     <form id="search-mail" method="post" action="/{category-url}">
         <p>E-pasts:</p>
-        <p class="form-input-box">
+        <p class="form-input-box clearfix">
             <input type="text" name="mail" value="{mail}">
             <input type="submit" name="submit" class="button primary" value="Meklēt">
         </p>
     </form>
     <form id="search-ip" method="post" action="/{category-url}">
         <p>Pēdējā lietotā IP: <span style="color:orangered">*</span></p>
-        <p class="form-input-box">
+        <p class="form-input-box clearfix">
             <input type="text" name="ip" value="{ip}">
             <input type="submit" name="submit" class="button primary" value="Meklēt">
         </p>
     </form>
     <form id="search-vip" method="post" action="/{category-url}">
         <p>Vispār lietota IP: <span style="color:orangered">*</span></p>
-        <p class="form-input-box">
+        <p class="form-input-box clearfix">
             <input type="text" name="vip" value="{vip}">
             <input type="submit" name="submit" class="button primary" value="Meklēt">
         </p>
     </form>
     <form id="search-agent" method="post" action="/{category-url}">
         <p>User-agent: <span style="color:orangered">*</span></p>
-        <p class="form-input-box">
+        <p class="form-input-box clearfix">
             <input type="text" name="useragent" value="{useragent}">
             <input type="submit" name="submit" class="button primary" value="Meklēt">
         </p>
@@ -76,6 +76,13 @@
             <td id="data-{id}" class="wider-row" colspan="5"></td>
         </tr>
         <!-- END BLOCK : search-result -->
+        <!-- START BLOCK : search-pages -->
+        <tr><td class="user-search-pages" colspan="5">
+            <!-- START BLOCK : search-page -->
+            <a class="ajax-search-page" href="/findby/page/{page-nr}">{displayed}</a>
+            <!-- END BLOCK : search-page -->
+        </td></tr>
+        <!-- END BLOCK : search-pages -->
     </table>
     <!-- END BLOCK : search-results -->
 </div>
@@ -84,3 +91,34 @@
 <!-- START BLOCK : mcp-find-outer-end -->
 </div>
 <!-- END BLOCK : mcp-find-outer-end -->
+
+<!-- START BLOCK : mcp-search-page -->
+    <tr class="th">
+        <td>Profils</td>
+        <td>Lietotā IP</td>
+        <td>E-pasts</td>
+        <td>Karma</td>
+        <td>Dienas</td>
+    </tr>
+    <!-- START BLOCK : search-page-result -->
+    <tr>
+        <td class="get-user-info" data-id="{id}">
+            <a href="/user/{id}">{nick}</a>
+        </td>
+        <td>{lastip}</td>
+        <td>{mail}</td>
+        <td>{karma}</td>
+        <td>{date}</td>
+    </tr>
+    <tr class="is-hidden">
+        <td id="data-{id}" class="wider-row" colspan="5"></td>
+    </tr>
+    <!-- END BLOCK : search-page-result -->
+    <!-- START BLOCK : search-page-list -->
+    <tr><td class="user-search-pages" colspan="5">
+        <!-- START BLOCK : search-list-page -->
+        <a class="ajax-search-page" href="/findby/page/{page-nr}">{displayed}</a>
+        <!-- END BLOCK : search-list-page -->
+    </td></tr>
+    <!-- END BLOCK : search-page-list -->
+<!-- END BLOCK : mcp-search-page -->

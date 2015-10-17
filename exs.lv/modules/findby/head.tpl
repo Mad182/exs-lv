@@ -46,6 +46,23 @@ $(document).ready(function($) {
 			$(this).children('.toggle-text').text('vairāk');
         }
 	});	
+    
+    $('#findby').on('click', '.ajax-search-page', function(e) {
+        e.preventDefault();
+        $elem = $(this);
+        $('#user-results').fadeTo(150, 0.7);
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: $elem.attr('href'),
+            data: $('#search-vip').serialize(),
+            success: function(data) {
+                if (typeof data.content !== 'undefined') {
+                    $('#user-results').html(data.content).fadeTo(50, 1);
+                }
+            }
+        });
+    });
 });
 
 </script>
