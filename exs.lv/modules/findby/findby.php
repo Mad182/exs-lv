@@ -1,21 +1,34 @@
 <?php
 /**
- *  Šajā sadaļā iespējams meklēt lietotāju profilus pēc dažādiem kritērijiem,
- *  piemēram, IP adresēm, lietotājvārdiem un e-pastiem.
+ *  Profilu meklētājs pēc IP adresēm, lietotājvārdiem, e-pastiem u.c.
  *
  *  Pie katra no atrastajiem profiliem redzama noderīga papildinformācija,
  *  piemēram, lietotāja visi bijušie lietotājvārdi u.c.
  *
- * 	Moduļa adrese: exs.lv/findby
+ * 	Moduļa adrese: /findby
  */
 
 $add_css[] = 'grouped-profiles.css';
  
 // ne-moderatorus sūtām prom
 if (!im_mod()) {
-	set_flash('Pieeja liegta!');
+	set_flash('no hacking, pls');
 	redirect();
 }
+
+
+/*
+|--------------------------------------------------------------------------
+|   Globālie moduļa mainīgie.
+|--------------------------------------------------------------------------
+*/
+
+// maksimālais lappušu skaits meklētāja rezultātiem
+$max_result_pages = 10;
+
+// rādāmo rezultātu skaits vienā lappusē
+$max_in_result_page = 1;
+
 
 // maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
 // nospiežot "rādīt vairāk" pogu
@@ -57,6 +70,7 @@ if (isset($_GET['_']) && isset($_GET['load'])) {
 |--------------------------------------------------------------------------
 |   jQuery AJAX: atgriezīs norādītā lietotāja e-pasta adresi.
 |--------------------------------------------------------------------------
+|   (not sure, vai vēl kaut kur tiek izsaukta)
 */
 
 if (isset($_GET['email']) && is_numeric($_GET['email'])) {
@@ -68,6 +82,96 @@ if (isset($_GET['email']) && is_numeric($_GET['email'])) {
 
 	echo ($user) ? $user->mail : 'Nav norādīts!';
 	exit;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+|   jQuery AJAX: atgriezīs lappusi meklētāja rezultātiem.
+|--------------------------------------------------------------------------
+*/
+if (isset($_GET['var1']) && $_GET['var1'] == 'page' &&
+    isset($_GET['var2']) && isset($_POST['vip'])) {
+    
+    $page_nr = (int)$_GET['var2'];
+    if ($page_nr < 1) $page_nr = 1;
+    
+    $new_tpl = fetch_tpl();
+    if (empty($new_tpl)) { die('error'); }
+    
+    $new_tpl->newBlock('mcp-search-page');
+    
+    $total = $db->get_var("
+        SELECT count(*) AS `total_count`
+        FROM (
+            SELECT count(*) AS `total` FROM `visits`
+            JOIN `users` ON `visits`.`user_id` = `users`.`id`
+            WHERE `visits`.`ip` LIKE '" . sanitize(trim($_POST['vip'])) . "' AND
+            `users`.`deleted` = 0
+            GROUP BY `user_id`
+        ) AS `tbl`
+    ");
+    
+    $page_count = ceil($total / $max_in_result_page);
+    if ($page_count > $max_result_pages) $page_count = $max_result_pages;
+    if ($page_nr > $page_count) $page_nr = $max_result_pages;
+    $offset = ($page_nr - 1) * $max_in_result_page;
+    
+    $results = $db->get_results("
+        SELECT
+            `users`.`id`,
+            `users`.`nick`,
+            `users`.`level`,
+            `users`.`lastip`,
+            `users`.`mail`,
+            `users`.`karma`,
+            `users`.`date`,
+            `visits`.`ip`
+        FROM `visits`
+            JOIN `users` ON `visits`.`user_id` = `users`.`id`
+        WHERE `visits`.`ip` LIKE '" . sanitize(trim($_POST['vip'])) . "' AND
+        `users`.`deleted` = 0
+        GROUP BY `user_id`
+        ORDER BY `users`.`level` DESC, `users`.`nick`
+        LIMIT ".$offset.", ".$max_in_result_page."
+    ");
+    
+    if ($results) {
+
+		foreach ($results as $res) {
+
+			$res->date = ceil((time() - strtotime($res->date)) / 60 / 60 / 24);			
+			
+			// ja laukā ļauts ievadīt "%", tos šeit vispirms izvāc,
+			// lai varētu veikt pareizu aizstāšanu
+            $escaped = str_replace('%', '', trim($_POST['vip']));
+            $res->lastip = $res->ip;
+            $tmp_ip = $res->lastip;
+            $res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
+            $res->lastip = '<a href="https://whois.domaintools.com/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';           
+			
+			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
+			$new_tpl->newBlock('search-page-result');
+			$new_tpl->assignAll($res);
+		}
+
+        if ($page_count > 1) {
+            $new_tpl->newBlock('search-page-list');
+            for ($i = 1; $i <= $page_count; $i++) {
+                $new_tpl->newBlock('search-list-page');
+                $new_tpl->assign(array(
+                    'page-nr' => $i,
+                    'displayed' =>
+                        ($i == $page_nr) ? '<strong>'.$i.'</strong>' : $i
+                ));
+            }
+        }
+	}
+
+    echo json_encode(array(
+        'content' => $new_tpl->getOutputContent()
+    ));
+    exit;
 }
 
 
@@ -89,10 +193,11 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 	$userid = (int) $_GET['display'];
 	$content = '';
 
-	$user = $db->get_row("SELECT `id`,`nick`,`pwd`,`level` FROM `users` WHERE `id` = '$userid' ");
+	$user = $db->get_row("
+        SELECT `id`, `nick`, `pwd`, `level` FROM `users` WHERE `id` = ".$userid
+    );
 	if (!$user) {
-		echo '';
-		exit;
+		echo ''; exit;
 	}
 
 	// pārbauda, vai lietotājam ir aktīvs bans
@@ -105,7 +210,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 		FROM `banned`
 			JOIN `users` ON `banned`.`author` = `users`.`id`
 		WHERE
-			`banned`.`user_id` = '$user->id'
+			`banned`.`user_id` = ".$user->id."
 		ORDER BY
 			`banned`.`time` DESC
 	");
@@ -283,10 +388,26 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 		$criteria = '1';
 		$field = '';
 	}
+ 
+    $page_count = 1;
 
 	// meklējot pēc IP, jāpiesaista `visits` tabula
 	if ($field == 'vip') {
 
+        $total = $db->get_var("
+            SELECT count(*) AS `total_count`
+            FROM (
+                SELECT count(*) AS `total` FROM `visits`
+                JOIN `users` ON `visits`.`user_id` = `users`.`id`
+                WHERE " . $criteria . " AND
+                `users`.`deleted` = 0
+                GROUP BY `user_id`
+            ) AS `tbl`
+		");
+        
+        $page_count = ceil($total / $max_in_result_page);
+        if ($page_count > $max_result_pages) $page_count = $max_result_pages;
+        
 		$results = $db->get_results("
 			SELECT
 				`users`.`id`,
@@ -299,26 +420,23 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 				`visits`.`ip`
 			FROM `visits`
 				JOIN `users` ON `visits`.`user_id` = `users`.`id`
-			WHERE " . $criteria . "
-			GROUP BY
-				`user_id`
-			ORDER BY
-				ABS(`users`.`level`) DESC,
-				`users`.`nick` ASC
-			LIMIT 0,50
+			WHERE " . $criteria . " AND
+            `users`.`deleted` = 0
+			GROUP BY `user_id`
+			ORDER BY `users`.`level` DESC, `users`.`nick`
+			LIMIT 0, ".$max_in_result_page."
 		");
 	// pārējos gadījumos pietiek ar meklēšanu `users` tabulā
 	} else {
 		$results = $db->get_results("
 			SELECT
-				`id`,`nick`,`mail`,`lastip`,`karma`,`date`,`level`
+				`id`, `nick`, `mail`, `lastip`, `karma`, `date`, `level`
 			FROM `users`
-			WHERE " . $criteria . "
-			ORDER BY
-				ABS(`level`) DESC,
-				`nick` ASC
-			LIMIT 0,50
-		");
+			WHERE " . $criteria . " AND
+            `users`.`deleted` = 0
+			ORDER BY `level` DESC, `nick`
+			LIMIT 0, ".$max_in_result_page
+		);
 	}
 
 	if ($results) {
@@ -359,6 +477,17 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 			$tpl->newBlock('search-result');
 			$tpl->assignAll($res);
 		}
+
+        if ($field === 'vip' && $page_count > 1) {
+            $tpl->newBlock('search-pages');
+            for ($i = 1; $i <= $page_count; $i++) {
+                $tpl->newBlock('search-page');
+                $tpl->assign(array(
+                    'page-nr' => $i,
+                    'displayed' => ($i == 1) ? '<strong>'.$i.'</strong>' : $i
+                ));
+            }
+        }
 	}
 }
 
