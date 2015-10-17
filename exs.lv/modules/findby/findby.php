@@ -27,7 +27,7 @@ if (!im_mod()) {
 $max_result_pages = 10;
 
 // rādāmo rezultātu skaits vienā lappusē
-$max_in_result_page = 1;
+$max_in_result_page = 50;
 
 
 // maksimālais skaits, cik pēdējās IP var apskatīt vienā stabiņā,
