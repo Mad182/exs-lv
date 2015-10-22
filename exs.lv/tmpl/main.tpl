@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="lv">
+<html lang="lv" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta charset="UTF-8">
 	<title>{page-title}</title>
@@ -44,7 +44,7 @@
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
+	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js?t"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script type="text/javascript">
@@ -161,7 +161,7 @@
 								<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
 								<li><a href="https://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
 								<li><a href="https://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
-								<li><a href="https://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
+								<li><a href="https://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
 							</ul>
 						</li>
 
@@ -701,7 +701,7 @@
 				</div>
 
 				<div id="credit" class="fl">
-					<p>&copy; 2005-2015, <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a> - mājas lapas izstrāde un uzturēšana.</p>
+					<p>&copy; 2005-2015, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
 				</div>
 
 			</div>

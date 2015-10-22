@@ -289,9 +289,15 @@ if (!empty($inprofile)) {
 						}
 
 						if (!empty($title)) {
-							$page_title = $title . ' | ' . $inprofile->nick;
+							$page_title = $title;
+							if(!$inprofile->deleted) {
+								$page_title .= ' | ' . $inprofile->nick;
+							}
 						} else {
-							$page_title = 'Ieraksts #' . $record->id . ' | ' . $inprofile->nick;
+							$page_title = 'Ieraksts #' . $record->id;
+							if(!$inprofile->deleted) {
+								$page_title .= ' | ' . $inprofile->nick;
+							}
 						}
 					}
 				}
@@ -382,6 +388,7 @@ if (!empty($inprofile)) {
 					$limit = '';
 				} else {
 					$limit = ' LIMIT 0,3';
+					$robotstag = array('noindex', 'follow');
 				}
 
 				// atvērtiem miniblogiem pievieno komentārus

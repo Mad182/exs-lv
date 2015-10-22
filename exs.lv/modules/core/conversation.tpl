@@ -113,7 +113,7 @@
 
 		<!-- START BLOCK : mb-more-->
 		<ul class="responses mb-open">
-			<li class="more"><a href="{url}">{text}</a></li>
+			<li class="more"><a href="{url}" rel="bookmark" class="read-more">{text}</a></li>
 		</ul>
 		<!-- END BLOCK : mb-more-->
 

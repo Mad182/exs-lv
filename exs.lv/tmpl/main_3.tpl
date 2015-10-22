@@ -357,7 +357,7 @@
 				</div>
 				<div class="infoblock">
 					<div class="inner">
-						<p>&copy; <a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>, 2012-{current-year}</p>
+						<p>&copy; {openidea}, 2012-{current-year}</p>
 						<p>
 							E-pasts: info@exs.lv<br />
 							Tālrunis: <span id="noindex-phone"></span><br />

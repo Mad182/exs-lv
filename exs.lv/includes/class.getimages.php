@@ -8,15 +8,16 @@ class getImages {
 
 	public function reddit() {
 		global $db;
-		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs+gaming_gifs+GamePhysics.json');
+		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs+gaming_gifs+GamePhysics+highqualitygifs+holdmyredbull.json');
 		$junk = json_decode($data);
 		foreach ($junk->data->children as $data) {
 			$file = false;
 
 			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif', 'peg', 'ifv'))) {
 
-				if (stristr($data->data->url, '//imgur.com/')) {
+				if (stristr($data->data->url, 'imgur.com')) {
 					$data->data->url = str_replace('.gif', '.gifv', $data->data->url);
+					$data->data->url = str_replace('.gifvv', '.gifv', $data->data->url);
 				}
 
 				$addr = str_replace('//imgur.com/', '//i.imgur.com/', $data->data->url);
@@ -30,8 +31,8 @@ class getImages {
 					$file = $addr . '.jpg';
 				} elseif (file_get_contents($addr . '.png')) {
 					$file = $addr . '.png';
-				} elseif (file_get_contents($addr . '.gif')) {
-					$file = $addr . '.gif';
+				} elseif (file_get_contents($addr . '.gifv')) {
+					$file = $addr . '.gifv';
 				}
 			}
 

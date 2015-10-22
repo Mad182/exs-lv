@@ -83,3 +83,6 @@
 <!-- END BLOCK : forum-addtopic-no-->
 
 <!-- END BLOCK : forum-->
+
+<!-- INCLUDE BLOCK : share-block -->
+

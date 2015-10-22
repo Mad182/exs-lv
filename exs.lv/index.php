@@ -333,6 +333,12 @@ if (im_mod()) {
 	$new_reports_count = 0;
 }
 
+//links uz openidea.lv, aktīvs tikai sākumlapās
+$openidea = 'SIA Open Idea';
+if($_SERVER['REQUEST_URI'] === '/') {
+	$openidea = '<a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>';
+}
+
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal(array(
 	'page-title' => hide_spoilers($page_title),
@@ -360,7 +366,8 @@ $tpl->assignGlobal(array(
 	'footer-topics' => get_footer_topics(),
 	'static-server' => $static_server,
 	'img-server' => $img_server,
-	'logout-hash' => $auth->logout_hash
+	'logout-hash' => $auth->logout_hash,
+	'openidea' => $openidea
 ));
 
 if (!empty($add_css)) {

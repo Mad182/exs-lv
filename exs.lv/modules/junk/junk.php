@@ -147,6 +147,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 				'nick' => usercolor($author->nick, $author->level, false, $author->id),
 				'id' => $author->id
 			));
+		} else {
+			if(empty($pic->edit_user) && $pic->posts < 10) {
+				$robotstag = array('noindex', 'follow');
+			}
 		}
 
 		$page_title = h($pic->title);

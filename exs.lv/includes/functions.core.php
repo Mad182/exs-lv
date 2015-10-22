@@ -1509,13 +1509,17 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 					$val->text = resize_html_images($val->text);
 				}
 
-				$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+				$out .= '<div class="post-content"';
+				if($val->hidden) {
+					$out .= ' style="display:none"';
+				}
+				$out .= '>' . add_smile($val->text) . '</div>';
 			}
 			if (($auth->ok === true || $val->posts) && !$val->hidden) {
 				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote, $pic_heavy);
 				$out .= '<div class="c"></div>';
 			} elseif ($val->posts && $val->hidden) {
-				$out .= '<a class="toggle-replies" href="#">&raquo;&nbsp;parādīt atbildes...</a><div class="more-replies" style="display:none">';
+				$out .= '<a class="toggle-replies" href="#">&raquo;&nbsp;parādīt komentāru un atbildes...</a><div class="more-replies" style="display:none">';
 				$out .= mb_recursive($data, $val->id, $level, $intro, $answer_limit, $closed, $disable_vote, $pic_heavy);
 				$out .= '</div><div class="c"></div>';
 			}
@@ -2177,7 +2181,8 @@ function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
 		}
-		return '/av/' . $user->avatar;
+
+		return 'https://m.exs.lv/av/' . $user->avatar;
 	}
 }
 
@@ -2612,10 +2617,17 @@ function get_asn($ip) {
 		return '';
 	}
 	
-	if (($asn = $m->get('asn_' . md5($ip))) === false) {
+	if(strpos($ip, '.')) {
+		$parts = explode('.', $ip);
+		$key = 'asn_' . md5($parts[0] . '.' . $parts[1] . '.' . $parts[2]. '.*');
+	} else {
+		$key = 'asn_' . md5($ip);
+	}
+
+	if (($asn = $m->get($key)) === false) {
 		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}"));
 		$asn = $details->org;
-		$m->set('asn_' . md5($ip), $asn, false, 432000);
+		$m->set($key, $asn, false, 864000);
 	}
 
 	return '<br /><small>' . $asn . '</small>';
@@ -2666,5 +2678,4 @@ function group_top() {
 	$out .= '</ul><div class="c"></div>';
 	return $out;
 }
-
-
+ 
