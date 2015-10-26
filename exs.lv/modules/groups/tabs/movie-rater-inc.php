@@ -26,12 +26,12 @@ $series = $db->get_results("SELECT
 
 if (!empty($series)) {
 
-	$module_content .= '<h2>' . $movie_rater_title . '</h2>';
+	$module_content .= '<h2>' . $custom_p_title . '</h2>';
 	$module_content .= $movie_rater_description;
 	$module_content .= '<table class="table" id="series-ratings-ingroup">';
 	$module_content .= '	<tr>';
 	$module_content .= '		<th></th>';
-	$module_content .= '		<th style="width:115px;">Nosaukums</th>';
+	$module_content .= '		<th style="width:115px">Nosaukums</th>';
 	$module_content .= '		<th><span class="rautors">Iesaka</span></th>';
 	$module_content .= '		<th><span class="admins">Nepatīk</span></th>';
 	$module_content .= '	</tr>';
@@ -40,7 +40,7 @@ if (!empty($series)) {
 		$module_content .= '
 	<tr>
 		<td>
-			<a href="/read/' . $s->strid . '"><img class="mr-av" src="//img.exs.lv' . $s->thb . '" alt="' . h($s->title) . '" /></a>
+			<a href="/read/' . $s->strid . '" title="' . h($s->title) . ' apskats"><img class="mr-av" src="//img.exs.lv' . $s->thb . '" alt="' . h($s->title) . '" /></a>
 		</td>
 		<td class="mr-inf">
 			<strong>' . $s->title . '</strong>

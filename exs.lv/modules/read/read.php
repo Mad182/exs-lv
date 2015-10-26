@@ -833,7 +833,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$tpl->newBlock('opengraph');
 						$tpl->assign(array(
 							'title' => h($article->title),
-							'type' => 'video.movie',
+							'type' => 'article',
 							'url' => 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
 							'image' => 'https://img.exs.lv' . $avatar->image
 						));
@@ -975,6 +975,24 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					if (!empty($like)) {
 						$tpl->newBlock('movie-like');
 						$tpl->assign('like', $like);
+					}
+				}
+			} else {
+			//NOT FILMAS
+
+				//opengraph tagi
+				if (!$auth->mobile) {
+					$tpl->newBlock('opengraph');
+					$tpl->assign(array(
+						'title' => h($article->title),
+						'type' => 'article',
+						'url' => 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid
+					));
+				
+					if (!empty($article->image)) {
+						$tpl->assign(array(
+							'image' => 'https://img.exs.lv/topics/large/' . $article->image
+						));
 					}
 				}
 			}

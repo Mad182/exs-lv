@@ -44,7 +44,7 @@
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js?t"></script>
+	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script type="text/javascript">
@@ -620,7 +620,7 @@
 							}(document, "script", "twitter-wjs")
 									;</script>
 
-						<div id="magz-twitter-follow-link"><a target="_blank" href="http://twitter.com/exs_lv">Seko mums Twitter</a></div>
+						<div id="magz-twitter-follow-link"><a target="_blank" href="http://twitter.com/exs_lv" rel="nofollow">Seko mums Twitter</a></div>
 					</div>
 				</div>
 
@@ -657,12 +657,12 @@
 								</li>
 								<li>
 									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
-									<h4>303</h4>
+									<h4>314</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
 									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/facebook.png" alt=""></a>
-									<h4>323</h4>
+									<h4>326</h4>
 									<p>Fani</p>
 								</li>
 							</ul>

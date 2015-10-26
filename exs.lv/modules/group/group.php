@@ -573,12 +573,25 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 					$title = mb_get_title(stripslashes($body));
 					$url = $group_link . '/forum/' . base_convert($mainid, 10, 36);
+					
+					//kādā grupā?
+					if(!empty($group->title_form)) {
+						$gt = $group->title_form . ' grupā';
+					} else {
+						$gt = $group->title . ' grupā';
+					}
 
 					//ja grupas ieraksti ir slēpti, ievieto userlogā tikai nosaukumu
 					if (!$group->hide_intro) {
-						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $group->title . ' grupā &quot;' . textlimit($title, 32, '...') . '&quot;</a>', get_avatar($group, 's', true), 'g-' . $mainid);
+
+						if(strlen(textlimit($title, 32, '...')) > 1) {
+							$tt = ' &quot;' . textlimit($title, 32, '...') . '&quot;';
+						} else {
+							$tt = '...';
+						}
+						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $gt . $tt. '</a>', get_avatar($group, 's', true), 'g-' . $mainid);
 					} else {
-						push('Atbildēja ' . $group->title . ' grupā', get_avatar($group, 's', true), 'g-' . $mainid);
+						push('Atbildēja ' . $gt, get_avatar($group, 's', true), 'g-' . $mainid);
 					}
 
 					// mentions & notifikācijas
@@ -952,8 +965,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$share = '';
 			if ($tab->share) {
 				$share = '
-					<div style="float: left;width: 136px; height: 65px;">
-						<div style="float: right;width: 65px; height: 65px;">
+					<div style="float: left;width: 166px; height: 75px;">
+						<div style="float: right;width: 95px; height: 65px;">
 							<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
 							<div id="draugiemLike"></div>
 							<script type="text/javascript">
@@ -984,7 +997,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				'tab-module' => $module_content,
 				'tab-text' => $share . add_smile($tab->text, 1)
 			));
-			$page_title = $group->title . ' - ' . $tab->title;
+			
+			if(!empty($custom_p_title)) {
+				$page_title =  $custom_p_title . ' - ' . $group->title;
+			} else {
+				$page_title = $group->title . ' - ' . $tab->title;
+			}
+			
 		} else {
 			$page_title = $group->title . ' | ' . $tab->title;
 			$tpl->newBlock('noguestacc-tab');

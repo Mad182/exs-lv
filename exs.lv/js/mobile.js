@@ -179,6 +179,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		$(this).hide();
 		$(this).siblings('.more-replies').show();
+		$(this).siblings('.post-content').show();
 	});
 
 	/* sidr menu */

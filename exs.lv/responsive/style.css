@@ -2643,15 +2643,25 @@ a.friend img, .comments-avatar {
 .entry-content ul,
 .comment-text .response-content ul {
 	overflow: hidden;
-	margin: 6px 10px 15px 20px;
+	margin: 8px 10px 16px 20px;
 	padding: 0 0 0 20px;
 	list-style-type: disc;
 	clear: none
 }
 
+#miniblog-list li div.post-content ol,
+.entry-content ol,
+.comment-text .response-content ol {
+	overflow: hidden;
+	margin: 8px 10px 16px 20px;
+	padding: 0 0 0 20px;
+	clear: none
+}
+
 #miniblog-list li div.post-content li,
-.entry-content ul li,
-.comment-text .response-content ul li {
+.entry-content ul li, .entry-content ol li,
+.comment-text .response-content ul li,
+.comment-text .response-content ol li {
 	border: 0;
 	height: auto;
 	min-height: 0;
@@ -5579,4 +5589,14 @@ form.simple-form label {
     .event-data {
         padding-top:0
     }
+}
+
+#full-story img.mr-av {
+	width: 125px;
+	min-width: 124px
+}
+
+#full-story .mr-us img {
+	width: 28px;
+	height: 28px
 }
