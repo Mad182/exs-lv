@@ -11,7 +11,7 @@ require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
 $facebook = new Facebook(array(
 	'appId' => $fb_api_id,
 	'secret' => $fb_api_key
-		));
+));
 
 $user = $facebook->getUser();
 $fb_like = false;
@@ -211,7 +211,13 @@ if (!empty($me)) {
 					. "WHERE `id` = '$userinfo->id'");
 
 			update_karma($userinfo->id, true);
-			redirect();
+
+			$to = '/';
+			if(!empty($_SESSION['redirect_after_login'])) {
+				$to = $_SESSION['redirect_after_login'];
+			}
+
+			redirect($to);
 		}
 	}
 } else {
@@ -219,6 +225,10 @@ if (!empty($me)) {
 	$protocol = 'https://';
 	if (empty($config_domains[$lang]['ssl'])) {
 		$protocol = 'http://';
+	}
+
+	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']))  {
+		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
 	}
 
 	redirect($facebook->getLoginUrl(array('redirect_uri' => $protocol . $_SERVER['SERVER_NAME'] . '/fb-login/', 'scope' => 'user_likes')));
