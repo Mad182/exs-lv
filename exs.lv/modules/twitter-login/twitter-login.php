@@ -20,8 +20,14 @@ if (!isset($_SESSION['twitter_id']) && !isset($_GET['oauth_token']) && !isset($_
 		switch ($connection->http_code) {
 			case 200:
 				$url = $connection->getAuthorizeURL($token, true);
+				
+				//set url where to redirect back after login
+				if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']))  {
+					$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
+				}
+				
 				//redirect to Twitter .
-				header('Location: ' . $url);
+				redirect($url);
 				break;
 			default:
 				echo "Connection with twitter Failed";
@@ -221,7 +227,16 @@ if (!empty($_SESSION['twitter_id'])) {
 		}
 
 		update_karma($userinfo->id, true);
-		redirect();
+
+		//redirect back to page where login button was clicked
+		$to = '/';
+		if(!empty($_SESSION['redirect_after_login'])) {
+			$to = $_SESSION['redirect_after_login'];
+			$_SESSION['redirect_after_login'] = null;
+		}
+
+		redirect($to);
+
 	}
 }
 

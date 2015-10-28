@@ -215,6 +215,7 @@ if (!empty($me)) {
 			$to = '/';
 			if(!empty($_SESSION['redirect_after_login'])) {
 				$to = $_SESSION['redirect_after_login'];
+				$_SESSION['redirect_after_login'] = null;
 			}
 
 			redirect($to);

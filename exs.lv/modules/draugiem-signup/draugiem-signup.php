@@ -217,11 +217,24 @@ if ($session) {//Authentication successful
 					. "WHERE `id` = '$userinfo->id'");
 
 			update_karma($userinfo->id, true);
-			redirect();
+
+			$to = '/';
+			if(!empty($_SESSION['redirect_after_login'])) {
+				$to = $_SESSION['redirect_after_login'];
+				$_SESSION['redirect_after_login'] = null;
+			}
+
+			redirect($to);
+
 		}
 	}
 } else { //User not logged in, show login button
 	$tpl->newBlock('draugiem-login');
+	
+	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']))  {
+		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
+	}
+	
 	$redirect = 'https://' . $_SERVER['SERVER_NAME'] . '/draugiem-signup/'; //Where to redirect after authorization
 	$tpl->assign('button', $draugiem->getLoginButton($redirect)); //Show the button
 }

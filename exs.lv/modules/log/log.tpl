@@ -28,7 +28,7 @@
 	<tr>
 		<td>{log-who}</td>
 		<td>{log-place}</td>
-		<td>{log-action}</td>
+		<td style="word-break:break-all">{log-action}</td>
 		<td>{log-time}</td>
 		<td>{log-ip}</td>
 	</tr>
