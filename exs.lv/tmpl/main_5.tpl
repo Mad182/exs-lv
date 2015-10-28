@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="lv">
+<html lang="lv" prefix="fb: http://www.facebook.com/2008/fbml">
 	<head>
 		<meta charset="UTF-8">
 		<title>{page-title}</title>
 		<!-- START BLOCK : meta-description-->
 		<meta name="description" content="{description}">
 		<!-- END BLOCK : meta-description-->
+		<!-- START BLOCK : opengraph-->
+		<meta property="og:title" content="{title}">
+		<meta property="og:type" content="{type}">
+		<meta property="og:url" content="{url}">
+		<meta property="og:image" content="{image}">
+		<!-- END BLOCK : opengraph-->
 		<!-- START BLOCK : robots-->
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->

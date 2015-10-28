@@ -322,7 +322,7 @@
 					<!-- START BLOCK : reply-vote-->
 					<span class="c-rate"><span class="r-val {comment-vclass}">{comment-vote_value}</span>{comment-plus}{comment-minus}</span>
 					<!-- END BLOCK : reply-vote-->
-					<a name="c{rpl-id}" href="{rpl-aurl}"><img class="rpl-avatar av" src="{rpl-avatar}" alt="" /></a>
+					<a id="c{rpl-id}" href="{rpl-aurl}"><img class="rpl-avatar av" src="{rpl-avatar}" alt="" /></a>
 					<div class="response-content">
 						<p class="comment-author"><a href="{rpl-aurl}">{rpl-author}</a> @ {rpl-date} atbildēja:
 							<!-- START BLOCK : report-reply -->

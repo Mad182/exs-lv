@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="lv" xmlns:fb="http://ogp.me/ns/fb#">
+<html lang="lv" prefix="fb: http://www.facebook.com/2008/fbml">
 <head>
 	<meta charset="UTF-8">
 	<title>{page-title}</title>
