@@ -415,7 +415,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	$cakeday = '';
 	if (!empty($cday_users)) {
 		if (!empty($cday_users[$userid]) || in_array($nick, $cday_users)) {
-			$cakeday = '<img src="' . $img_server . '/bildes/cakeday.png" alt="" title="Cake Day!" style="display:inline-block;width:16px;height:16px;" />';
+			$cakeday = '<img src="' . $img_server . '/bildes/cakeday.png" alt="" title="Cake Day!" style="display:inline-block;width:16px;height:16px;max-width:16px;min-width:16px;min-height:16px" />';
 		}
 	}
 

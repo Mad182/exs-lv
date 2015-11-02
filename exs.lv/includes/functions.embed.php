@@ -263,6 +263,7 @@ function insert_smilies($txt) {
 		':minka:' => 'connie_mini_kitty.gif',
 		':buck:' => 'connie_mini_buck.gif',
 		':bump:' => 'connie_mini_bump.gif',
+		':shifty:' => 'shifty.gif'
 	);
 
 	foreach ($smilies as $key => $val) {
