@@ -5637,6 +5637,17 @@ form.simple-form label {
         text-decoration:none;
         cursor:pointer
     }
+    a.circled-link {
+        background:gray;
+        border-radius:50px;
+        color:#fff;
+        padding:2px 6px;
+        font-size:12px
+    }
+    a.circled-link:hover {
+        text-decoration:none;
+        background:#737272
+    }
 
 .astro-title {
     padding-top:0;
