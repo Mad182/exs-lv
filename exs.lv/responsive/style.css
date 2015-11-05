@@ -10,11 +10,8 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 */
 
 body {
-	background-color:#f3f5f8;
-	/*background: url("images/background-new.jpg") no-repeat top center fixed;
-	background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-244699.jpg") no-repeat top center fixed;
-	background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-16281.jpg") no-repeat top center fixed;
-	background: url("http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-220973.png") no-repeat top center fixed;*/
+	background: #f3f5f8 url('//img.exs.lv/bildes/sos.png') repeat 0 0;
+	/*background: url("images/background-new.jpg") no-repeat top center fixed;*/
 	color: #334;
 	font-family: Roboto, sans-serif;
 	font-weight: normal;
