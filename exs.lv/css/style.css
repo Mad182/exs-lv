@@ -312,15 +312,15 @@ ul li {
         cursor:pointer
     }
     a.circled-link {
-        background:gray;
+        border:1px solid #A6B2D2;
         border-radius:50px;
-        color:#fff;
+        color:#6F808C;
         padding:2px 6px;
-        font-size:12px
+        font-size:11px
     }
     a.circled-link:hover {
         text-decoration:none;
-        background:#737272
+        border:1px solid #8794B7
     }
 
 .astro-title {
