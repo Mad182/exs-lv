@@ -5600,3 +5600,43 @@ form.simple-form label {
 	width: 28px;
 	height: 28px
 }
+
+/**
+ *  Astronomijas grupai specifiski stili.
+ */
+
+.astro-list {
+    margin:5px 0;    
+    padding-left:0
+}
+ 
+.astro-table {
+    display:table;
+    list-style-type:none;
+    border-bottom:1px solid #eee;
+    padding-left:0
+}
+    .astro-table:first-child {
+        border-top:1px solid #eee
+    }
+
+.astro-image, .astro-link {
+    display:table-cell;
+    vertical-align:middle;
+    padding-top:5px;
+    padding-bottom:5px
+}
+    .astro-image img {
+        max-width:100px;
+        max-height:100px;
+        padding-right:10px
+    }
+    .astro-image:hover {
+        text-decoration:none;
+        cursor:pointer
+    }
+
+.astro-title {
+    padding-top:0;
+    padding-bottom:5px
+}
