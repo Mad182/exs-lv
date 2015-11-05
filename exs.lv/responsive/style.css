@@ -1334,17 +1334,17 @@ ul#menu-footer {
 /* tab widget */
 
 .tabwidget ul {
-	margin:0 0 5px 0;
-	list-style:none
+	margin: 0 0 5px 0;
+	list-style: none
 }
 
 ul.tabnav li {
-	float:left;
-	width:33.33%
+	float: left;
+	width: 33.33%
 }
 
 ul.tabnav li img {
-	margin-right:7px
+	margin-right: 7px
 }
 
 ul.tabnav li a {
@@ -3310,6 +3310,7 @@ a.external-twitter span {
 
 /* notifikacijas */
 ul#user-notify {
+	list-style: none;
 	padding: 0;
 	margin: 5px
 }
@@ -3410,7 +3411,8 @@ ul#user-notify {
 
 #friends-pending, #friend-list {
 	padding: 0;
-	margin: 0
+	margin: 0;
+	list-style: none
 }
 
 #friends-pending li {
