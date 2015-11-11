@@ -32,7 +32,7 @@
 					return;
 				js = d.createElement(s);
 				js.id = id;
-				js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1&appId=353222841436117";
+				js.src = "//connect.facebook.net/lv_LV/all.js#xfbml=1&appId={facebook-app-id}";
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));</script>
 	</div>

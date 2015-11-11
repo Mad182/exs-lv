@@ -2474,6 +2474,10 @@ miniblogi
 	padding: 0
 }
 
+ul.taged.blockhref li span {
+	display: block
+}
+
 #full-story img {
 	max-width: 100%
 }
@@ -4752,7 +4756,7 @@ html .lb {
 	line-height: 13px;
 	text-align: left;
 	border: 1px solid #ccc;
-	margin: 8px auto;
+	margin: 1.4em auto;
 	padding: 4px;
 	border-radius: 3px;
 	position: relative
@@ -4800,7 +4804,7 @@ html .lb {
 	line-height: 14px;
 	text-align: left;
 	border: 1px solid #e1e8ed;
-	margin: 8px auto;
+	margin: 1.4em auto;
 	padding: 5px;
 	border-radius: 3px
 }
@@ -4956,11 +4960,16 @@ body #content .latest-imgs a span.cnt span.r, body #content .imgs a span.r {
 
 /* related topics (links in /read/page) */
 #related-topics {
-	margin: 10px 0 0
+	margin: 1em 0
+}
+
+#related-topics ul {
+	list-style: none
 }
 
 #related-topics li {
-	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 6px
+	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 8px;
+	padding: 2px 0 2px 18px
 }
 
 .inliner-link {
@@ -5662,6 +5671,6 @@ img.attels_pa_kreisi {
 }
 img.attels_centrets {
 	display: block;
-	margin: 1.2em auto;
+	margin: 1.4em auto
 }
 

@@ -89,6 +89,8 @@
 	</div>
 
 	<!-- START BLOCK : cindex-right-->
+	
+	<a title="Interneta veikals BM.LV" href="http://bm.lv/" target="_blank" rel="nofollow" style="displan:block;padding:0"><img src="https://img.exs.lv/m/a/mad/bm-lv.png" alt="bm.lv banner" style="width:85%;margin:0 auto;display:block;" /></a>
 
 	<h2 class="title"><a href="/blogs"><span>Jaunākais blogos</span></a></h2>
 	<ul class="index-list secondary">

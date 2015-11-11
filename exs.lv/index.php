@@ -365,6 +365,7 @@ $tpl->assignGlobal(array(
 	'footer-mb' => get_footer_mb(),
 	'footer-topics' => get_footer_topics(),
 	'static-server' => $static_server,
+	'facebook-app-id' => $fb_api_id,
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash,
 	'openidea' => $openidea

@@ -130,6 +130,13 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			$html .= 'width="100%" style="background:transparent" height="400"></iframe>';
 		} else {
 			$html = '<p style="text-align:center"><img src="//img.exs.lv'.$pic->image.'" class="av" style="height:auto;width:auto;float:none" alt="'.h(strip_tags($pic->title)).'" title="'.h(strip_tags($pic->title)).'" /></p>';
+
+			$opengraph_meta['title'] = h($pic->title);
+			$opengraph_meta['type'] = 'article';
+			$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/junk/' . $pic->id;
+			$opengraph_meta['image'] = 'https://img.exs.lv' . $pic->image;
+			$twitter_meta['card'] = 'summary_large_image';
+
 		}
 
 		$tpl->assign(array(
