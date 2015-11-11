@@ -5650,3 +5650,18 @@ form.simple-form label {
     padding-top:0;
     padding-bottom:5px
 }
+
+/* Content images */
+img.attels_pa_labi {
+	float: right;
+	margin: 6px 5px 6px 10px
+}
+img.attels_pa_kreisi {
+	float: left;
+	margin: 6px 10px 6px 5px
+}
+img.attels_centrets {
+	display: block;
+	margin: 1.2em auto;
+}
+

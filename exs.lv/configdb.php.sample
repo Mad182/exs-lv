@@ -144,3 +144,7 @@ $polls_cat = 0;
 //instrukcijas meklētājiem
 $robotstag = array();
 
+//opengraph and twitter mata tags for layout
+$opengraph_meta = array();
+$twitter_meta = array();
+

@@ -93,17 +93,6 @@ hr {
 .quote-nouser {
 	display: none
 }
-img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
-	padding: 2px;
-	background: #eee;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ddd;
-	-webkit-box-shadow: 2px 2px 4px #ddd;
-	box-shadow: 2px 2px 4px #ddd
-}
 img.attels_pa_labi {
 	float: right;
 	margin: 6px 5px 6px 10px
@@ -114,8 +103,7 @@ img.attels_pa_kreisi {
 }
 img.attels_centrets {
 	display: block;
-	margin: 8px auto;
-	padding: 2px;
+	margin: 1.2em auto;
 }
 a.thb-image img {
 	margin: 6px 5px;

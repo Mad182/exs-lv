@@ -6,12 +6,12 @@
 	<!-- START BLOCK : meta-description-->
 	<meta name="description" content="{description}">
 	<!-- END BLOCK : meta-description-->
-	<!-- START BLOCK : opengraph-->
-	<meta property="og:title" content="{title}">
-	<meta property="og:type" content="{type}">
-	<meta property="og:url" content="{url}">
-	<meta property="og:image" content="{image}">
-	<!-- END BLOCK : opengraph-->
+	<!-- START BLOCK : og-meta-->
+	<meta property="og:{key}" content="{val}">
+	<!-- END BLOCK : og-meta-->
+	<!-- START BLOCK : twitter-meta-->
+	<meta name="twitter:{key}" content="{val}">
+	<!-- END BLOCK : twitter-meta-->
 	<!-- START BLOCK : robots-->
 	<meta name="robots" content="{value}">
 	<!-- END BLOCK : robots-->
@@ -175,6 +175,7 @@
 
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
+			<!-- START BLOCK : headers-ad-->
 			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
 				<script type="text/javascript" id="position_2919">
 				  var ads_positions = ads_positions || [];
@@ -188,6 +189,7 @@
 				  })();
 				</script>
 			</div>
+			<!-- END BLOCK : headers-ad-->
 			<!-- END BLOCK : header-ad-->
 
 			<!-- START BLOCK : header-ad-unauthorized-->
@@ -745,12 +747,14 @@
 		/* ]]> */
 	</script>
 
+			<!-- START BLOCK : headersss-ad-->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
 	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
 	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
 	<noscript>
 	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
 	</noscript>
+			<!-- END BLOCK : headersss-ad-->
 
 	<!-- END BLOCK : popup-ads-->
 	

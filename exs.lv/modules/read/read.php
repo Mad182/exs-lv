@@ -830,13 +830,12 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$tpl->assignAll($avatar);
 
 					if (!$auth->mobile) {
-						$tpl->newBlock('opengraph');
-						$tpl->assign(array(
-							'title' => h($article->title),
-							'type' => 'article',
-							'url' => 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid,
-							'image' => 'https://img.exs.lv' . $avatar->image
-						));
+						$opengraph_meta['title'] = 'Filma ' . h($article->title);
+						$opengraph_meta['type'] = 'article';
+						$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid;
+						$opengraph_meta['image'] = 'https://img.exs.lv' . $avatar->image;
+						$opengraph_meta['description'] = h(textlimit($article->text, 200));
+						$twitter_meta['card'] = 'summary';
 					}
 				}
 				$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
@@ -982,17 +981,16 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 				//opengraph tagi
 				if (!$auth->mobile) {
-					$tpl->newBlock('opengraph');
-					$tpl->assign(array(
-						'title' => h($article->title),
-						'type' => 'article',
-						'url' => 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid
-					));
-				
+					$opengraph_meta['title'] = h($article->title);
+					$opengraph_meta['type'] = 'article';
+					$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid;
+					$opengraph_meta['description'] = h(textlimit($article->text, 200));
+
 					if (!empty($article->image)) {
-						$tpl->assign(array(
-							'image' => 'https://img.exs.lv/topics/large/' . $article->image
-						));
+						$opengraph_meta['image'] = 'https://img.exs.lv/topics/large/' . $article->image;
+						$twitter_meta['card'] = 'summary_large_image';
+					} else {
+						$twitter_meta['card'] = 'summary';
 					}
 				}
 			}

@@ -66,6 +66,15 @@ if ($auth->ok) {
 			$foo->jpeg_quality = 98;
 		}
 
+		if (!empty($_POST['resize960'])) {
+			$foo->image_resize = true;
+			$foo->image_convert = 'jpg';
+			$foo->image_x = 960;
+			$foo->image_ratio_no_zoom_in = true;
+			$foo->jpeg_quality = 98;
+		}
+
+
 		// runescape.exs.lv ūdenszīme
 		if ($lang == 9 && isset($_POST['add-watermark'])) {
 

@@ -39,6 +39,8 @@ $profile_views_limit = 20;
 
 $page_title = 'League of Legends forums';
 
+$twitter_meta['site'] = '@exs_lv';
+
 
 /*
 |--------------------------------------------------------------------------

@@ -6,12 +6,12 @@
 		<!-- START BLOCK : meta-description-->
 		<meta name="description" content="{description}">
 		<!-- END BLOCK : meta-description-->
-		<!-- START BLOCK : opengraph-->
-		<meta property="og:title" content="{title}">
-		<meta property="og:type" content="{type}">
-		<meta property="og:url" content="{url}">
-		<meta property="og:image" content="{image}">
-		<!-- END BLOCK : opengraph-->
+		<!-- START BLOCK : og-meta-->
+		<meta property="og:{key}" content="{val}">
+		<!-- END BLOCK : og-meta-->
+		<!-- START BLOCK : twitter-meta-->
+		<meta name="twitter:{key}" content="{val}">
+		<!-- END BLOCK : twitter-meta-->
 		<!-- START BLOCK : robots-->
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->

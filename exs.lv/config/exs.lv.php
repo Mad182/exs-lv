@@ -33,6 +33,8 @@ $profile_views_limit = 27;
 
 $robotstag[] = 'noodp';
 
+$twitter_meta['site'] = '@exs_lv';
+$opengraph_meta['locale'] = 'lv_LV';
 
 /*
 |--------------------------------------------------------------------------
