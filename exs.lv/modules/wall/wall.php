@@ -30,3 +30,10 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 
 $pagepath = '';
 
+$opengraph_meta['title'] = 'Spēļu un izklaides portāls exs.lv';
+$opengraph_meta['type'] = 'article';
+$opengraph_meta['url'] = 'https://exs.lv';
+$opengraph_meta['image'] = 'https://exs.lv/bildes/exs-lv-screenshot.png';
+$opengraph_meta['description'] = 'Viens no senākajiem un populārākajiem spēļu portāliem Latvijā. Diskusijas, atbildes uz jautājumiem, spēļu un filmu apskati, interesanti jaunumi un daudz kas cits...';
+$twitter_meta['card'] = 'summary_large_image';
+
