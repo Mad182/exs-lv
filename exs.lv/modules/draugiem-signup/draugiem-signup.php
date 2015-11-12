@@ -181,13 +181,22 @@ if ($session) {//Authentication successful
 				}
 			}
 
-
+			//create unique username
 			if (strlen($user['nick']) > 2 && !$db->get_var("SELECT count(*) FROM `users` WHERE `nick` = '" . sanitize($user['nick']) . "'")) {
 				$nick = $user['nick'];
+
 			} elseif (strlen($user['name']) > 2 && !$db->get_var("SELECT count(*) FROM `users` WHERE `nick` = '" . sanitize($user['name']) . "'")) {
 				$nick = $user['name'];
+				
+			} elseif (!empty($user['name']) && !empty($user['surname']) && !$db->get_var("SELECT count(*) FROM `users` WHERE `nick` = '" . sanitize($user['name'].substr($user['surname'], 0, 1)) . "'")) {
+				$nick = $user['name'].substr($user['surname'], 0, 1);
+
 			} elseif (!$db->get_var("SELECT count(*) FROM `users` WHERE `nick` = '" . sanitize($user['name'] . " " . $user['surname']) . "'")) {
 				$nick = $user['name'] . ' ' . $user['surname'];
+
+			} else {
+				$nick = $user['name'] . rand(100,9999);
+
 			}
 
 			$tpl->assign(array(

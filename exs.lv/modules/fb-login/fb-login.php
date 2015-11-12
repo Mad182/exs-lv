@@ -180,13 +180,22 @@ if (!empty($me)) {
 				}
 			}
 
-
-			if (strlen($me['username']) > 2 && !$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($me['username']) . "'")) {
+			//create unique username
+			if (!empty($me['username']) && strlen($me['username']) > 2 && !$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($me['username']) . "'")) {
 				$nick = $me['username'];
+	
+			} elseif (!empty($me['first_name']) && !$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($me['first_name'].substr($me['last_name'], 0, 1)) . "'")) {
+				$nick = $me['first_name'].substr($me['last_name'], 0, 1);
+				
 			} elseif (strlen($me['first_name']) > 2 && !$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($me['first_name']) . "'")) {
 				$nick = $me['first_name'];
+
 			} elseif (!$db->get_var("SELECT count(*) FROM users WHERE nick = '" . sanitize($me['name']) . "'")) {
 				$nick = $me['name'];
+
+			} else {
+				$nick = $me['first_name'] . rand(100,9999);
+
 			}
 
 			$tpl->assign(array(
