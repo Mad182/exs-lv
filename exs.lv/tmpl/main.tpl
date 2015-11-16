@@ -175,7 +175,6 @@
 
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
-			<!-- START BLOCK : headers-ad-->
 			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
 				<script type="text/javascript" id="position_2919">
 				  var ads_positions = ads_positions || [];
@@ -189,7 +188,6 @@
 				  })();
 				</script>
 			</div>
-			<!-- END BLOCK : headers-ad-->
 			<!-- END BLOCK : header-ad-->
 
 			<!-- START BLOCK : header-ad-unauthorized-->
@@ -713,48 +711,12 @@
 	</div>
 
 	<!-- START BLOCK : popup-ads-->
-	<script type='text/javascript'>
-		/* <![CDATA[ */
-		var _smartad = _smartad || new Object();
-		_smartad.page_id = Math.floor(Math.random() * 10000001);
-		if (!_smartad.prop) {
-			_smartad.prop = 'screen_width=' + (window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) + unescape('%26screen_height=') + (window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight) + unescape('%26os=') + navigator.platform + unescape('%26refurl=') + encodeURIComponent(document.referrer || '') + unescape('%26pageurl=') + encodeURIComponent(document.URL || '') + unescape('%26rnd=') + new Date().getTime();
-		}
-		(function() {
-			if (_smartad.space) {
-				_smartad.space += ',8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-			} else {
-				_smartad.space = '8149d5ee-611f-4247-9dbd-5a2dcb6e5529';
-				_smartad.type = 'onload';
-				var f = function() {
-					var d = document, b = d.body || d.documentElement || d.getElementsByTagName('BODY')[0], n = b.firstChild, s = d.createElement('SCRIPT');
-					s.type = 'text/javascript', s.language = 'javascript', s.async = true, s.charset = 'UTF-8';
-					s.src = location.protocol + '//serving.bepolite.eu/script?space=' + _smartad.space + unescape('%26type=') + _smartad.type + unescape('%26page_id=') + _smartad.page_id + unescape('%26') + _smartad.prop;
-					n ? b.insertBefore(s, n) : b.appendChild(s);
-				};
-				if (document.readyState === 'complete') {
-					f();
-					delete _smartad.space;
-				} else {
-					if (window.addEventListener) {
-						window.addEventListener('load', f, false);
-					} else if (window.attachEvent) {
-						window.attachEvent('onload', f);
-					}
-				}
-			}
-		})();
-		/* ]]> */
-	</script>
-
-			<!-- START BLOCK : headersss-ad-->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
 	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
 	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
 	<noscript>
 	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
 	</noscript>
-			<!-- END BLOCK : headersss-ad-->
 
 	<!-- END BLOCK : popup-ads-->
 	
