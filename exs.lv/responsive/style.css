@@ -2681,6 +2681,10 @@ a.friend img, .comments-avatar {
 	margin: 18px auto
 }
 
+#share-block #draugiemLike span {
+	width: 420px
+}
+
 table .quote {
 	word-wrap: break-word;
 	max-width: 500px
