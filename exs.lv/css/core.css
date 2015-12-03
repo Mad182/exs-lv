@@ -215,18 +215,14 @@ html .banned {
 	right:50px;
 	bottom:-100px;
 	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	opacity:0.6;
-	filter:alpha(opacity=60); /* For IE8 and earlier */
+	opacity:0.6
 }
 
 #scroll-up:hover {
 	cursor:pointer;
 	border:2px solid #212E3A;
 	background:rgba(62, 101, 158, 0.87) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-	opacity:1.0;
-	filter:alpha(opacity=100); /* For IE8 and earlier */
+	opacity:1.0
 }
 
 /* cits */
@@ -236,13 +232,13 @@ html .banned {
 	background-color:#ECEFF5;
 	border:1px solid #DADDDF;
 	color:#4D5669;
-    font-size:13px;
+	font-size:13px;
 }
 .pointer:hover {
 	cursor:pointer
 }
 .is-hidden {
-    display:none
+	display:none
 }
 
 /* layout */
@@ -355,13 +351,7 @@ html .banned {
 	height: 33px;
 	margin: 0;
 	padding: 0 11px;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
 	border-radius: 0;
-	-webkit-border-top-left-radius: 2px;
-	-webkit-border-top-right-radius: 2px;
-	-moz-border-radius-topleft: 2px;
-	-moz-border-radius-topright: 2px;
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	text-shadow: 0 1px 0 #111;
@@ -377,10 +367,6 @@ html .banned {
 	list-style: none;
 	background: #111;
 	border: 2px solid #2090cc;
-	-webkit-border-radius:2px;
-	-moz-border-radius:2px;
-	-ms-border-radius:2px;
-	-o-border-radius:2px;
 	border-radius:2px;
 	top: 33px
 }
@@ -471,10 +457,6 @@ html .banned {
 	line-height: 30px;
 	text-shadow: 0 1px 0 #111;
 	color: #fff;
-	-webkit-border-radius:0;
-	-moz-border-radius:0;
-	-ms-border-radius:0;
-	-o-border-radius:0;
 	border-radius:0
 }
 
@@ -817,9 +799,6 @@ html .banned {
 	background-repeat: no-repeat;
 	background-image: -webkit-gradient(linear,0 0,0 100%,from(#fffffe), color-stop(25%,#fffffe), to(#e6e6e6));
 	background-image: -webkit-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
-	background-image: -moz-linear-gradient(top,#fffffe,#fffffe 25%,#e6e6e6);
-	background-image: -ms-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
-	background-image: -o-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	background-image: linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	border: 1px solid #E4E4E4;
 	border-bottom: 0;
@@ -834,16 +813,9 @@ html .banned {
 	padding: 4px 4px 3px 4px;
 	float: left;
 	z-index: 1;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	-webkit-transition: 0.1s linear all;
-	-moz-transition: 0.1s linear all;
-	-ms-transition: 0.1s linear all;
-	-o-transition: 0.1s linear all;
 	transition: 0.1s linear all
 }
 
@@ -991,8 +963,6 @@ img.floatLeft {
 .core-pager a {
 	border: 1px solid #ddd;
 	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	background: #eee;
 	margin: 0 1px 0 0;
 	padding: 2px 5px;
@@ -1078,18 +1048,14 @@ a.friend:hover {
 	float: left;
 	display: inline;
 	margin: 5px 10px 3px 1px;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px
+	border-radius: 3px
 }
 
 #profile-image {
 	margin: 8px auto;
 	display: block;
 	max-width: 100%;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px
+	border-radius: 3px
 }
 
 a.friend img, .comments-avatar {
@@ -1097,9 +1063,7 @@ a.friend img, .comments-avatar {
 	max-height: 90px;
 	margin: 8px auto;
 	display: block;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px
+	border-radius: 3px
 }
 
 .mb-av {
@@ -1388,8 +1352,6 @@ a.friend img, .comments-avatar {
 .mbox {
 	background: #EFF1F4;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	padding: 5px 10px
 }
 
@@ -1474,10 +1436,6 @@ a.friend img, .comments-avatar {
 	background: url('//img.exs.lv/bildes/tag_bg.png') no-repeat 0 0;
 	text-shadow: 0 1px 0 #fff;
 	font-size: 12px;
-	-webkit-border-top-right-radius: 2px;
-	-webkit-border-bottom-right-radius: 2px;
-	-moz-border-radius-topright: 2px;
-	-moz-border-radius-bottomright: 2px;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px
 }
@@ -1525,8 +1483,6 @@ a.friend img, .comments-avatar {
 	background: url('//img.exs.lv/bildes/i.png') repeat 0 -418px;
 	border: 1px solid #8D9AAC;
 	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	margin: 0;
 	padding: 2px 5px
 }
@@ -1647,8 +1603,6 @@ input, select, textarea {
 	border: 1px solid #eee;
 	margin: .5em 0 1.5em;
 	padding: 1.4em;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
 	border-radius: 2px
 }
 
@@ -1663,8 +1617,6 @@ input, select, textarea {
 	border: 1px solid #bbb;
 	background: #fff;
 	margin: .5em 0;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
 	border-radius: 2px
 }
 
@@ -1777,10 +1729,6 @@ input, select, textarea {
 	margin: 8px auto;
 	padding: 3px 3px 2px;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ccc;
-	-webkit-box-shadow: 2px 2px 4px #ccc;
 	box-shadow: 2px 2px 4px #ccc;
 	position: relative
 }
@@ -1831,10 +1779,6 @@ input, select, textarea {
 	margin: 8px auto;
 	padding: 3px 3px 2px;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ccc;
-	-webkit-box-shadow: 2px 2px 4px #ccc;
 	box-shadow: 2px 2px 4px #ccc
 }
 
@@ -2060,8 +2004,6 @@ input, select, textarea {
 .index-list li.sticky {
 	background: #e6f0fb;
 	border: 1px solid #d6e0eb;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
 	border-radius: 3px;
 	padding: 5px 10px
 }
@@ -2135,10 +2077,6 @@ img.attels_pa_labi, img.attels_pa_kreisi, img.attels_centrets, a.thb-image img {
 	background: #eee;
 	border: 1px solid #ccc;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-box-shadow: 2px 2px 4px #ddd;
-	-webkit-box-shadow: 2px 2px 4px #ddd;
 	box-shadow: 2px 2px 4px #ddd
 }
 
@@ -2262,9 +2200,7 @@ a.mb-api-twitter {
 
 .small-userlist li a:hover img, #walpaper a:hover img, #wallpapers a:hover, .imgs a:hover, a.radio:hover {
 	border: 1px solid #000;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px
+	border-radius: 2px
 }
 
 .form label, .quote-user {
@@ -2319,7 +2255,6 @@ a.mb-api-twitter {
 fieldset[disabled] .button {
 	pointer-events: none;
 	cursor: not-allowed;
-	filter: alpha(opacity=65);
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	opacity: .65
@@ -2939,15 +2874,11 @@ ul#friend-list li a.delete {
 	right: 1px;
 	line-height: 0;
 	font-size: 0;
-	-moz-opacity: 0.90;
 	opacity: .90;
-	filter: alpha(opacity=90)
 }
 
 ul#friend-list li a.delete:hover {
-	-moz-opacity: 1.00;
 	opacity: 1.00;
-	filter: alpha(opacity=100)
 }
 
 a.friend-right {
@@ -3025,9 +2956,7 @@ p.comment-tools a {
 	padding: 0 3px;
 	float: left;
 	margin: 0 4px 0 0;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px
+	border-radius: 2px
 }
 
 .lp-prefix {
@@ -3038,8 +2967,6 @@ p.comment-tools a {
 	padding: 1px 2px;
 	margin: 0;
 	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	text-transform: uppercase;
 	text-decoration: none
 }
@@ -3068,7 +2995,6 @@ a:hover .lp-prefix {
 
 .mb-rater, .mb-icon {
 	zoom: 1;
-	filter: alpha(opacity=45);
 	opacity: 0.45;
 	float: right;
 	padding: 4px 0;
@@ -3490,9 +3416,7 @@ ul.taged {
 }
 
 #user-awards-inactive {
-	-moz-opacity: 0.30;
-	opacity: .30;
-	filter: alpha(opacity=30)
+	opacity: .30
 }
 
 .usr-awards li {
@@ -3542,8 +3466,6 @@ ul.taged {
 	background: #aaa;
 	color: #fff;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	line-height: 13px;
 	text-shadow: 0 1px 1px #333;
 	padding: 3px 6px;
@@ -3554,12 +3476,8 @@ ul.taged {
 .title-prefix.series {
 	background-color: #c43c35;
 	background-repeat: repeat-x;
-	background-image: -khtml-gradient(linear,left top,left bottom,from(#ee5f5b), to(#c43c35));
-	background-image: -moz-linear-gradient(top,#ee5f5b,#c43c35);
-	background-image: -ms-linear-gradient(top,#ee5f5b,#c43c35);
 	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#ee5f5b), color-stop(100%,#c43c35));
 	background-image: -webkit-linear-gradient(top,#ee5f5b,#c43c35);
-	background-image: -o-linear-gradient(top,#ee5f5b,#c43c35);
 	background-image: linear-gradient(top,#ee5f5b,#c43c35)
 }
 
@@ -3570,8 +3488,6 @@ ul.taged {
 	background: #f6f6f7;
 	color: #555;
 	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	overflow: hidden
 }
 
@@ -3592,13 +3508,7 @@ ul.taged {
 #wrapper {
 	background:#fff;
 	margin: 0 auto 20px;
-	-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3);
-	-moz-box-shadow:0 1px 1px rgba(0,0,0,0.3);
 	box-shadow:0 1px 1px rgba(0,0,0,0.3);
-	-webkit-border-radius:2px;
-	-moz-border-radius:2px;
-	-ms-border-radius:2px;
-	-o-border-radius:2px;
 	border-radius:2px;
 	padding: 0 3px 5px;
 	height: auto !important;
@@ -3807,8 +3717,6 @@ li.view_more {
 	padding: 0 5px;
 	margin: 0 0 0 1px;
 	background: #efefef;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 	font-size: 11px;
 	line-height: 12px;
@@ -4059,13 +3967,11 @@ table .quote {
 	top: 0;
 	right: 0;
 	padding: 5px;
-	opacity:0.6;
-	filter:alpha(opacity=60)
+	opacity:0.6
 }
 
 .gameserver .gameserver-reload:hover {
-	opacity:1;
-	filter:alpha(opacity=100)
+	opacity:1
 }
 
 .gameserver p.playerlist {

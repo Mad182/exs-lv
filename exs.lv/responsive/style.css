@@ -293,13 +293,7 @@ ul.dropdown-menu {
 	width:221px;
 	background:#303e45;
 	box-shadow:none;
-	-moz-box-shadow:none;
-	-webkit-box-shadow:none;
-	-o-box-shadow:none;
 	border-radius:0;
-	-moz-border-radius:0;
-	-webkit-border-radius:0;
-	-o-border-radius:0;
 	padding:5px 0;
 	margin-top:0;
 	border:none;
@@ -1148,9 +1142,8 @@ article .like {
 	display:block;
 	float:left;
 	margin-right:4px;
-	-moz-transition:all 0.2s ease-out 0.1s;
-	-webkit-transition:all 0.2s ease-out 0.1s;
-	-o-transition:all 0.2s ease-out 0.1s
+	transition:all 0.2s ease-out 0.1s;
+	-webkit-transition:all 0.2s ease-out 0.1s
 }
 
 article .post-like a:hover .like {
@@ -1291,9 +1284,7 @@ ul#menu-footer {
 	color:#959cab;
 	padding:0 0.5em;
 	transition:all 0.8s linear 0s;
-	-webkit-transition:all 0.8s linear 0s;
-	-moz-transition:all 0.8s linear 0s;
-	-o-transition:all 0.8s linear 0s
+	-webkit-transition:all 0.8s linear 0s
 }
 
 #footer-nav li a:hover {
@@ -1456,8 +1447,6 @@ ul.recent-tab h4 {
 	float:left;
 	background-color:#fff;
 	-webkit-transition:all 0.8s linear 0s;
-	-moz-transition:all 0.8s linear 0s;
-	-o-transition:all 0.8s linear 0s;
 	transition:all 0.8s linear 0s;
 	color:#555E6B;
 	font-size:12px !important;
@@ -1735,15 +1724,11 @@ a.image_thumb_zoom {
 a.image_thumb_zoom img {
 	position:relative;
 	-webkit-transition:all 0.5s ease-in;
-	-moz-transition:all 0.5s ease-in;
-	-o-transition:all 0.5s ease-in;
 	transition:all 0.5s ease-in
 }
 
 a.image_thumb_zoom:hover img {
 	-webkit-transform:scale(1.2);
-	-moz-transform:scale(1.2);
-	-o-transform:scale(1.2);
 	transform:scale(1.2)
 }
 
@@ -2610,9 +2595,7 @@ a.friend:hover {
 	margin: 12px auto;
 	display: block;
 	max-width: 100%;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px
+	border-radius: 3px
 }
 
 a.friend img, .comments-avatar {
@@ -2620,9 +2603,7 @@ a.friend img, .comments-avatar {
 	max-height: 90px;
 	margin: 8px auto;
 	display: block;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px
+	border-radius: 3px
 }
 
 .mb-av {
@@ -2851,9 +2832,6 @@ vecie tabi (pagaidu variantā */
 	background-repeat: no-repeat;
 	background-image: -webkit-gradient(linear,0 0,0 100%,from(#fffffe), color-stop(25%,#fffffe), to(#e6e6e6));
 	background-image: -webkit-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
-	background-image: -moz-linear-gradient(top,#fffffe,#fffffe 25%,#e6e6e6);
-	background-image: -ms-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
-	background-image: -o-linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	background-image: linear-gradient(#fffffe,#fffffe 25%,#e6e6e6);
 	border: 1px solid #E4E4E4;
 	border-bottom: 0;
@@ -2867,16 +2845,9 @@ vecie tabi (pagaidu variantā */
 	padding: 4px 4px 3px 4px;
 	float: left;
 	z-index: 1;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	-webkit-transition: 0.1s linear all;
-	-moz-transition: 0.1s linear all;
-	-ms-transition: 0.1s linear all;
-	-o-transition: 0.1s linear all;
 	transition: 0.1s linear all
 }
 
@@ -2984,9 +2955,7 @@ ol li.code-row {
 }
 
 #user-awards-inactive {
-	-moz-opacity: 0.30;
-	opacity: .30;
-	filter: alpha(opacity=30)
+	opacity: .30
 }
 
 .usr-awards li {
@@ -3035,8 +3004,6 @@ ol li.code-row {
 	background: #aaa;
 	color: #fff;
 	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	line-height: 13px;
 	text-shadow: 0 1px 1px #333;
 	padding: 3px 6px;
@@ -3047,12 +3014,8 @@ ol li.code-row {
 .title-prefix.series {
 	background-color: #c43c35;
 	background-repeat: repeat-x;
-	background-image: -khtml-gradient(linear,left top,left bottom,from(#ee5f5b), to(#c43c35));
-	background-image: -moz-linear-gradient(top,#ee5f5b,#c43c35);
-	background-image: -ms-linear-gradient(top,#ee5f5b,#c43c35);
 	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#ee5f5b), color-stop(100%,#c43c35));
 	background-image: -webkit-linear-gradient(top,#ee5f5b,#c43c35);
-	background-image: -o-linear-gradient(top,#ee5f5b,#c43c35);
 	background-image: linear-gradient(top,#ee5f5b,#c43c35)
 }
 
@@ -3063,8 +3026,6 @@ ol li.code-row {
 	background: #f6f6f7;
 	color: #555;
 	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	overflow: hidden
 }
 
@@ -3103,7 +3064,6 @@ ol li.code-row {
 
 .mb-rater, .mb-icon {
 	zoom: 1;
-	filter: alpha(opacity=45);
 	opacity: 0.45;
 	float: right;
 	padding: 4px 0;
@@ -3256,13 +3216,11 @@ a.external-twitter span {
 	height: 13px;
 	margin: 0 1px;
 	padding: 0;
-	opacity: 0.8;
-	filter: alpha(opacity=80)
+	opacity: 0.8
 }
 
 #ucl a:hover {
-	opacity: 1;
-	filter: alpha(opacity=100)
+	opacity: 1
 }
 
 #ucl .user a {
@@ -3474,15 +3432,11 @@ ul#friend-list li a.delete {
 	right: 1px;
 	line-height: 0;
 	font-size: 0;
-	-moz-opacity: 0.90;
-	opacity: .90;
-	filter: alpha(opacity=90)
+	opacity: .90
 }
 
 ul#friend-list li a.delete:hover {
-	-moz-opacity: 1.00;
-	opacity: 1.00;
-	filter: alpha(opacity=100)
+	opacity: 1.00
 }
 
 a.friend-right {
@@ -4018,10 +3972,6 @@ body #content .list-tags li {
 	background: url('//img.exs.lv/bildes/tag_bg.png') no-repeat 0 0;
 	text-shadow: 0 1px 0 #fff;
 	font-size: 12px;
-	-webkit-border-top-right-radius: 2px;
-	-webkit-border-bottom-right-radius: 2px;
-	-moz-border-radius-topright: 2px;
-	-moz-border-radius-bottomright: 2px;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px
 }
@@ -4134,9 +4084,7 @@ p.comment-tools a {
 	padding: 0 3px;
 	float: left;
 	margin: 0 4px 0 0;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px
+	border-radius: 2px
 }
 
 .rpl-avatar {
@@ -4180,8 +4128,6 @@ p.comment-tools a {
 	padding: 1px 2px;
 	margin: 0;
 	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	text-transform: uppercase;
 	text-decoration: none
 }
@@ -4549,8 +4495,6 @@ li.view_more {
 	padding: 0 5px;
 	margin: 0 0 0 1px;
 	background: #efefef;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 	font-size: 11px;
 	line-height: 12px;
@@ -5534,18 +5478,14 @@ form.simple-form label {
 	right:50px;
 	bottom:-100px;
 	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	opacity:0.6;
-	filter:alpha(opacity=60); /* For IE8 and earlier */
+	opacity:0.6
 }
 
 #scroll-up:hover {
 	cursor:pointer;
 	border:2px solid #212E3A;
 	background:rgba(62, 101, 158, 0.87) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-	opacity:1.0;
-	filter:alpha(opacity=100); /* For IE8 and earlier */
+	opacity:1.0
 }
 
 /**
