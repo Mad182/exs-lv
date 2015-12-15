@@ -115,7 +115,7 @@ function get_todays_top_comment($date = null) {
 
 			$content = strip_tags($best->text);
 			if (strlen($content) > 100) {
-				$content = substr($content, 0, 100) . '...';
+				$content = textlimit($content, 120, '') . '...';
 			}
 
 			$out = array(

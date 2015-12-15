@@ -296,7 +296,12 @@ class AuthBase {
 			'86.63.183.96',
 			'87.246.137.132',
 			'89.248.83.3',
+			'109.73.109.194',
 			'136.169.15.221',
+			'159.148.15.150',
+			'159.148.36.129',
+			'176.67.34.96',
+			'176.67.40.27',
 			'212.93.100.40',
 			'212.142.121.225',
 		);
@@ -307,7 +312,7 @@ class AuthBase {
 
 		if (($is_tor = $m->get('t-'.md5($this->ip))) === false) {
 		
-			$value = curl_get('http://check.getipintel.net/check.php?ip=' . $this->ip);
+			$value = curl_get('http://check.getipintel.net/check.php?ip=' . $this->ip . '&contact=mad182@gmail.com');
 
 			if ($value == "1") {
 				$is_tor = 'y';

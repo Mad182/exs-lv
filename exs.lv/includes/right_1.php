@@ -294,10 +294,7 @@ if($deviceType === 'computer' && !in_array(date('m-d'), array('01-20', '05-01', 
 	
 	if($auth->ok !== true) {
 		$tpl->newBlock('unauthorized-ad');
-		$tpl->newBlock('header-ad-unauthorized');
-	} else {
-		$tpl->newBlock('header-ad');
 	}
+	$tpl->newBlock('header-ad');
 }
-
 

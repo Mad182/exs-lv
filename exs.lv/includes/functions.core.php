@@ -2678,4 +2678,41 @@ function group_top() {
 	$out .= '</ul><div class="c"></div>';
 	return $out;
 }
- 
+
+function get_bookmarked_id($id, $user, $table = 'pages') {
+	global $db;
+
+	if(empty($user) or empty($id)) {
+		return 0;
+	}
+
+	return (int) $db->get_var("
+		SELECT 
+			`id`
+		FROM
+			`bookmarks`
+		WHERE
+			`userid` = ".intval($user)." AND
+			`pageid` = ".intval($id)." AND
+			`foreign_table` = '".sanitize($table)."'
+		LIMIT 1
+	");
+}
+
+function add_bookmark($id, $user, $table = 'pages') {
+	global $db;
+
+	if(!get_bookmarked_id($id, $user, $table)) {
+		$db->query("
+			INSERT INTO `bookmarks` (`userid`, `pageid`, `foreign_table`)
+			VALUES (".intval($user).", ".intval($id).", '".sanitize($table)."')
+		");
+	}
+}
+
+function remove_bookmark($id) {
+	global $db;
+
+	$db->query("DELETE FROM `bookmarks` WHERE `id` = ".intval($id)." LIMIT 1");
+}
+
