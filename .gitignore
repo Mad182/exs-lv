@@ -7,6 +7,9 @@
 /exs.lv/bildes/runescape/news/*
 /exs.lv/modules/approve/av_l/*
 /exs.lv/modules/approve/av_sm/*
+/exs.lv/dati/bildes/topic-av/*
+/img.exs.lv/*
+/m.exs.lv/av/*
 .idea
 .gitignore
 .DS_Store
