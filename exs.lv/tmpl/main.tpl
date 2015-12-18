@@ -176,35 +176,9 @@
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
 			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
-				<script type="text/javascript" id="position_2919">
-				  var ads_positions = ads_positions || [];
-				  ads_positions.push(["2919", "", "document"]);
-				  (function() {
-				    if (!document.getElementById("ads_loader")) {
-				      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
-				      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
-				      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-				    }
-				  })();
-				</script>
+				<div id='bmone2n-22484.2.2.1'></div>
 			</div>
 			<!-- END BLOCK : header-ad-->
-
-			<!-- START BLOCK : header-ad-unauthorized-->
-			<div style="position:absolute;right:50px;top:30px;width:460px;height:60px;z-index:4">
-				<script type="text/javascript" id="position_2918">
-				  var ads_positions = ads_positions || [];
-				  ads_positions.push(["2918", "", "document"]);
-				  (function() {
-				    if (!document.getElementById("ads_loader")) {
-				      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
-				      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
-				      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-				    }
-				  })();
-				</script>
-			</div>
-			<!-- END BLOCK : header-ad-unauthorized-->
 		</div>
 
 		<div id="intr" class="container">
@@ -719,6 +693,21 @@
 	</noscript>
 
 	<!-- END BLOCK : popup-ads-->
+	
+	<!-- iBILLBOARD Ad Server one2many code -->
+	<!-- HowTo: All the ad codes must be above this code! -->
+	<!-- HowTo: It is good idea to place this code just below the last ad code. -->
+	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/bb/bb_one2n.js'></script>
+	<script type='text/javascript'>/* <![CDATA[ */ 
+	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
+	//bmone2n.addPosition('22484.2.3.2','');
+	bmone2n.addPosition('22484.2.2.1','');
+	bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
+	/* ]]> */</script>
+	<div id='bmone2t-22484.2.3.2' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
+	<div id='bmone2t-22484.2.2.1' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
+	<script type='text/javascript'>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
 	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

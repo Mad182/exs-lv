@@ -15,14 +15,13 @@
 
 <form class="form" action="" method="post">
 	<fieldset>
-		<ul style="padding:0;margin:0">
+		<ul style="padding:0;margin:0;list-style:none">
 			<!-- START BLOCK : av-node-->
-			<li style="background:transparent;float:left;width:130px;padding:4px 0;margin:3px 1px;height:130px;text-align:center;{owned}">
+			<li style="background:transparent;float:left;width:146px;padding:6px 0 1px;margin:3px 1px;height:146px;text-align:center;{owned}">
 				<label for="av-{id}" style="font-size:90%;font-weight:normal">
 					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" /><br />
 					{title}
 				</label>
-				<br />
 				<input id="av-{id}" type="radio" name="avatarid" value="{id}" />
 			</li>
 			<!-- END BLOCK : av-node-->

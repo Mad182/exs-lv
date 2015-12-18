@@ -82,7 +82,7 @@ else {
 			$textid = date('YmdHis');
 			$strid = mkslug_newpage($title);
 
-			$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang,is_wide) VALUES ('$strid','$textid','$blogid','$body','$title','$auth->id',NOW(),NOW(),'$auth->ip','$lang',$topicwide)");
+			$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,updated,ip,lang,is_wide) VALUES ('$strid','$textid','$blogid','$body','$title','$auth->id',NOW(),NOW(),NOW(),'$auth->ip','$lang',$topicwide)");
 			$ins = $db->insert_id;
 			userlog($auth->id, 'Izveidoja rakstu blogā &quot;<a href="/read/' . $strid . '">' . $title . '</a>&quot;');
 			update_stats($blogid);

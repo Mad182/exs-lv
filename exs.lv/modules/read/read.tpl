@@ -137,12 +137,16 @@
 		<div class="entry-meta row-fluid">
 			<ul class="clearfix">
 				<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-				<li><img src="//exs.lv/responsive/images/time.png" alt=""><time class="entry-date published" datetime="{date_atom}">{date}</time></li>
-				<li><img src="//exs.lv/responsive/images/view-bg.png" alt="">{views}</li>
+				<li><img src="//exs.lv/responsive/images/time.png" alt=""><time class="entry-date published" datetime="{date_atom}">{date}</time><time class="updated" datetime="{updated_atom}">{updated}</time></li>
+				<li><img src="{img-server}/bildes/fugue-icons/eye.png" alt="">{views}</li>
 				<li><img src="//exs.lv/responsive/images/komen.png" alt=""><a href="{bookmark}#comments" title="Raksta &quot;{title}&quot; komentāri">{posts} komentāri</a></li>
 
 				<!-- START BLOCK : add-bookmark-->
-				<li class="bookmark">[<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">+</a>]{article-status}</li>
+				<li class="bookmark">
+					<a title="Pievienot savai rakstu izlasei" href="?mode=bookmark">
+						<img src="{img-server}/bildes/fugue-icons/{icon}" alt="Pievienot favorītiem">
+					</a>
+				</li>
 				<!-- END BLOCK : add-bookmark-->
 				<!--
 				<!-- START BLOCK : post-tags-->

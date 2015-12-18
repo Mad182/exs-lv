@@ -447,19 +447,20 @@ if ($article && ($auth->ok === true || !$article->private)) {
                         '" . (int) $article->is_wide . "'
                     )");
 
-					$db->query("UPDATE pages SET
-						text = ('$body'),
-						intro = (''),
-						title = ('$title'),
-						avatar = ('$article->avatar'),
-						sm_avatar = ('$article->sm_avatar'),
-						image = ('$article->image'),
-						category = ('$topiccat'),
-						edit_time = ('" . time() . "'),
-						edit_user = ('$auth->id'),
-						edit_times = edit_times+1,
-                        is_wide = $topicwide
-					WHERE id = '$topicid'");
+					$db->query("UPDATE `pages` SET
+						`text` = ('$body'),
+						`intro` = (''),
+						`title` = ('$title'),
+						`avatar` = ('$article->avatar'),
+						`sm_avatar` = ('$article->sm_avatar'),
+						`image` = ('$article->image'),
+						`category` = ('$topiccat'),
+						`edit_time` = ('" . time() . "'),
+						`edit_user` = ('$auth->id'),
+						`edit_times` = edit_times+1,
+						`updated` = NOW(),
+                        `is_wide` = $topicwide
+					WHERE `id` = '$topicid'");
 
 					update_stats($topiccat);
 
@@ -679,10 +680,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 								$article->avatar = 'dati/bildes/avatari/' . $article->id . '.jpg';
 								$article->sm_avatar = 'dati/bildes/av_sm/' . $article->id . '.jpg';
 
-								$db->query("UPDATE pages SET
-									avatar = ('$article->avatar'),
-									sm_avatar = ('$article->sm_avatar')
-								WHERE id = '$article->id'");
+								$db->query("UPDATE `pages` SET
+									`avatar` = ('$article->avatar'),
+									`sm_avatar` = ('$article->sm_avatar'),
+									`updated` = NOW()
+								WHERE `id` = '$article->id'");
 							}
 
 							$foo->clean();
@@ -760,22 +762,25 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			//add bookmark
 		} elseif ($auth->ok && isset($_GET['mode']) && $_GET['mode'] == 'bookmark') {
-			if (!$db->get_var("SELECT id FROM bookmarks WHERE userid = '$auth->id' AND pageid = '$article->id'")) {
-				$db->query("INSERT INTO bookmarks (userid,pageid) VALUES ('$auth->id','$article->id')");
+
+			if (!$bm = get_bookmarked_id($article->id, $auth->id)) {
+				add_bookmark($article->id, $auth->id);
 				if (!empty($article->avatar)) {
 					push('Pievienoja savai izlasei rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
 				} else {
 					push('Pievienoja savai izlasei rakstu &quot;<a href="/read/' . $article->strid . '">' . $article->title . '</a>&quot;');
 				}
-				redirect('/read/' . $article->strid . '/?status=added');
 			} else {
-				redirect('/read/' . $article->strid . '/?status=inbookmarks');
+				remove_bookmark($bm);
 			}
+
+			redirect('/read/' . $article->strid);
 
 			//show page contents
 		} else {
 
 			$date = display_time(strtotime($article->date));
+			$updated = display_time(strtotime($article->updated));
 
 			if ($article->edit_times > 0) {
 				$edit_usrinfo = get_user($article->edit_user);
@@ -808,7 +813,9 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'bookmark' => get_protocol($lang) . get_domain($lang) . '/read/' . $article->strid,
 				'views' => $article->views + 1,
 				'date' => $date,
+				'updated' => $updated,
 				'date_atom' => date(DATE_ATOM, strtotime($article->date)),
+				'updated_atom' => date(DATE_ATOM, strtotime($article->updated)),
 				'author' => $author_link,
 				'level' => $author->level,
 				'gender' => $author->gender,
@@ -997,15 +1004,15 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			if ($auth->ok) {
 				$tpl->newBlock('add-bookmark');
-				$bkm_status = '';
-				if (isset($_GET['status']) && $_GET['status'] == 'added') {
-					$bkm_status = ' <span class="thanks">Pievienots!</span>';
-				} elseif (isset($_GET['status']) && $_GET['status'] == 'inbookmarks') {
-					$bkm_status = ' <span class="fail">Jau ir izlasē!</span>';
+
+				$added = get_bookmarked_id($article->id, $auth->id);
+				$icon = 'heart-empty.png';
+				if($added) {
+					$icon = 'heart.png';
 				}
+
 				$tpl->assign(array(
-					'article-id' => $article->id,
-					'article-status' => $bkm_status,
+					'icon' => $icon
 				));
 			}
 

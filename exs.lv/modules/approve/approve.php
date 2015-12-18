@@ -25,14 +25,13 @@ if (isset($_POST['new-topic-body'])) {
 		$title = title2db($title);
 		$body = htmlpost2db($body);
 
-		$date = date('Y-m-d H:i:s');
 		$textid = date('YmdHis');
 		$strid = mkslug_newpage($title);
 
 		if ($auth->ok && ($auth->level == 3 or $auth->level == 2 or $auth->level == 1)) {
         
-			$insert = $db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang,is_wide)
-									VALUES ('$strid','$textid','$newcat','$body','$title','$auth->id','$date','$date','$auth->ip','$lang',$is_wide)");
+			$insert = $db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,updated,bump,ip,lang,is_wide)
+									VALUES ('$strid','$textid','$newcat','$body','$title','$auth->id',NOW(),NOW(),NOW(),'$auth->ip','$lang',$is_wide)");
 
 			$topicid = $db->insert_id;
 
@@ -78,7 +77,7 @@ if (isset($_POST['new-topic-body'])) {
 		} else {
 
 			$insert = $db->query("INSERT INTO approve (category,text,title,author,date,ip,lang,is_wide)
-									VALUES ('$newcat','$body','$title','$auth->id','$date','$auth->ip','$lang',$is_wide)");
+									VALUES ('$newcat','$body','$title','$auth->id',NOW(),'$auth->ip','$lang',$is_wide)");
 			$topicid = $db->insert_id;
 
 			if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
@@ -147,11 +146,10 @@ if ($auth->ok) {
 				$added = sanitize($_POST['ap-topic-date']);
 				$ip = sanitize($_POST['ap-topic-ip']);
 				$category = (int) $_POST['ap-topic-category'];
-				$date = date('Y-m-d H:i:s');
 				$textid = date('YmdHis');
 				$strid = mkslug_newpage($title);
                 $make_wide = (isset($_POST['ap-topic-wide']) && (int)$_POST['ap-topic-wide'] == 1) ? 1 : 0;
-				$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,ip,lang,is_wide) VALUES ('$strid','$textid','$category','$body','$title','$author','$added','$date','$ip','$lang',$make_wide)");
+				$db->query("INSERT INTO pages (strid,textid,category,text,title,author,date,bump,updated,ip,lang,is_wide) VALUES ('$strid','$textid','$category','$body','$title','$author','$added',NOW(),NOW(),'$ip','$lang',$make_wide)");
 				$topicid = $db->insert_id;
 				update_stats($category);
 

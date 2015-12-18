@@ -81,10 +81,8 @@ if ($resps) {
 
 		$level = get_mb_level($resp->id);
 
+		$limit = 3;
 		if ($resp->groupid) {
-			$limit = 4;
-
-
 			$group = $db->get_row("SELECT `id`, `public`, `owner`  FROM `clans` WHERE `id` = '$resp->groupid'");
 			if (!$group->public) {
 				if (!$auth->ok) {
@@ -97,8 +95,6 @@ if ($resps) {
 					continue;
 				}
 			}
-		} else {
-			$limit = 2;
 		}
 
 		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img class="av" width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';

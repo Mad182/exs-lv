@@ -5089,6 +5089,7 @@ fieldset[disabled] .button.primary.active {
 	background-image: none
 }
 .button.success.disabled,
+
 .button.success[disabled],
 fieldset[disabled] .button.success,
 .button.success.disabled:hover,
@@ -5618,3 +5619,6 @@ img.attels_centrets {
 	margin: 1.4em auto
 }
 
+time.updated {
+	display: none
+}
