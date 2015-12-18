@@ -273,7 +273,7 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 
 //Latvijas valsts svētki
 if (in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
-	$persona = ' style="height:157px;background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 0 -25px;background-size:cover;"';
+	$persona = ' style="height:157px;background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 50% -25px;background-size:cover;"';
 }
 
 $in_level = 0;

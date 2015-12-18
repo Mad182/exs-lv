@@ -34,6 +34,13 @@ function reverse_htmlentities($mixed) {
 $m = new Memcache;
 $m->connect($mc_host, $mc_port);
 
+//ategoriju stati
+$cats = $db->get_results("SELECT id FROM cat");
+foreach ($cats as $cat) {
+	update_stats($cat->id);
+}
+
+//karma
 $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC");
 echo "start update_karma()\n";
 $i = 0;
