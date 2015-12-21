@@ -66,6 +66,7 @@ if ($user) {
 			`reset_token` = '',
 			`city` = 0,
 			`connected_profiles` = '',
+			`user_agent` = '',
 			`deleted` = 1
 			WHERE id = '$user'");
 
@@ -82,3 +83,4 @@ if ($user) {
 
 	echo 'user #' . $user . " deleted\n\n";
 }
+

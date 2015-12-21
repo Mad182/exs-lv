@@ -1314,6 +1314,10 @@ a.friend img, .comments-avatar {
 	display: inline
 }
 
+ul.taged.blockhref li span {
+	display: block
+}
+
 #latest-topics {
 	list-style: none;
 	padding: 0;

@@ -2,7 +2,25 @@
 
 include('../developer_ips.php');
 
-if(!in_array($_SERVER['REMOTE_ADDR'], $dev_ips)) {
+//cloudflare gadījums, vienalga vai ar vai bez varnish
+if(!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+
+//ja pieprasījums ir bez varnish
+} elseif(empty($_SERVER['HTTP_X_VARNISH'])) {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
+
+}
+
+
+//paņemam pēdējo IP adresi (jebšu pirmo, ja skatamies no klienta puses),
+//ja HTTP_X_FORWARDED_FOR satur vairākas
+if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
+	$addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
+	$_SERVER['HTTP_X_FORWARDED_FOR'] = trim($addr[sizeof($addr)-1]);
+}
+
+if(!in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $dev_ips)) {
 	die("IP nav whitelistota!");
 }
 
