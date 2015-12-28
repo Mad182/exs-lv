@@ -20,12 +20,18 @@ function can_edit_page($article) {
 	}
 
 	if ($auth->id == $article->author) {
-		if ($auth->id == 34212) {
+
+		//manuāli norādīti lietotāji
+		if ($auth->id == 34212 || $auth->id == 34198) {
 			return true;
 		}
+
+		//rakstu autori
 		if ($auth->level == 3) {
 			return true;
 		}
+
+		//pārējie, ja ļauj karma un izveides laiks
 		if ($auth->karma >= $min_page_edit) {
 			if ($page_edit_time == 0) {
 				return true;
@@ -34,6 +40,7 @@ function can_edit_page($article) {
 				return true;
 			}
 		}
+
 	}
 
 	return false;

@@ -47,6 +47,4 @@
 /m.exs.lv/av/*
 /phpmyadmin/*
 /ezgif/*
-.idea
-.gitignore
-.DS_Store
+/.*
