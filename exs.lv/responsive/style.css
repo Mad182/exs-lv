@@ -4704,7 +4704,7 @@ html .lb {
 	line-height: 13px;
 	text-align: left;
 	border: 1px solid #ccc;
-	margin: 1.4em auto;
+	margin: 1.8em auto;
 	padding: 4px;
 	border-radius: 3px;
 	position: relative
@@ -5089,6 +5089,7 @@ fieldset[disabled] .button.primary.active {
 	background-image: none
 }
 .button.success.disabled,
+
 
 .button.success[disabled],
 fieldset[disabled] .button.success,

@@ -224,7 +224,7 @@ if ($auth->ok) {
         }
         // citu apakšprojektu kategoriju sadalījums
         else {
-            $categorys = $db->get_results("SELECT id,title FROM `cat` WHERE (module = 'list' OR module = 'movies' OR module = 'wall' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
+            $categorys = $db->get_results("SELECT `id`,`title` FROM `cat` WHERE (module = 'list' OR module = 'movies' OR module = 'wall' OR module = 'rshelp') AND isblog = '0' AND mods_only = '0' AND (`lang` = '$lang' OR `lang` = '0')");
             if ($categorys) {
                 
                 $tpl->newBlock('cat-app-selection');
@@ -236,7 +236,7 @@ if ($auth->ok) {
                         $sel = ' selected="selected"';
                     }
                     $tpl->assign(array(
-                        'category-title' => $category_l->title,
+                        'category-title' => str_replace('Spēļu portāls', 'Spēļu portāls (jaunumi)', $category_l->title),
                         'category-id' => $category_l->id,
                         'category-sel' => $sel
                     ));
@@ -326,7 +326,7 @@ if ($auth->ok) {
                 foreach ($categorys as $category_l) {
                     $tpl->newBlock('select-category');
                     $tpl->assign(array(
-                        'category-title' => $category_l->title,
+                        'category-title' => str_replace('Spēļu portāls', 'Spēļu portāls (jaunumi)', $category_l->title),
                         'category-id' => $category_l->id,
                     ));
                 }

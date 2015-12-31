@@ -13,7 +13,7 @@ require(CORE_PATH . '/includes/site_loader.php');
 
 session_start();
 
-$cat = 'wall';
+$cat = 'index';
 $bootstrap_cache_key = '';
 
 //mysql konekcija
