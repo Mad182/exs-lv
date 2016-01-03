@@ -349,8 +349,14 @@ function embed_widgets($txt, $wide = 0) {
 	// soundcloud tracks, users, and playlists
 	if (strpos($txt, 'soundcloud') !== false ||
 			strpos($txt, 'snd.sc') !== false) {
+		// tā kā soundcloud saites mēdz būt ļoti garas, htmlpurifier tās var
+		// saīsināt, tāpēc īstā saite jānolasa no "href" atribūta;
+		// lai nebūtu problēmu, ja vienā HTML paragrāfā uzreiz aiz, piemēram,
+		// YouTube saites ir soundcloud saite, .* vietā jābūt [^>]*,
+		// kas attiecīgajās vietās neļaus atrasties ">", citādi regex
+		// var vienā piegājienā paķert abas saites
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9]+)(.*?))</a>#im", 'embed_soundcloud', $txt
+			"#(^|[\n ]|<a[^>]*?href=\"(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9_\/\-]+))\"[^>]*?>)(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9_\.\/\-	]+))(</a>)?#im", 'embed_soundcloud', $txt
 		);
 	}
 
@@ -652,9 +658,9 @@ function embed_vine($params) {
 }
 
 /**
- *  Callback metode Soundcloud dziesmu iekļaušanai tekstā
+ *  Callback metode Soundcloud dziesmu iekļaušanai tekstā.
  *
- *  Izveidoto HTML iekešo Memcached (30 min)
+ *  Izveidoto HTML iekešo Memcached (30 min).
  *
  *  @param $params          dziesmas parametri
  *  @return $scloud_html    iframe ar dziesmām
@@ -662,48 +668,60 @@ function embed_vine($params) {
 function embed_soundcloud($params) {
 	global $m;
 
-	// [2] adrese ir nesaīsinātā formā, jo atrodas iekš href=""
-	// $params[2] - https://../..
-	// [3] adrese var būt saīsināta, jo atrodas starp <a></a>
-	// $params[3] - https://../..
-	// $params[5] - lietotājvārds
-	// $params[6] - parametri aiz lietotājvārda (ņemti no saīsinātās adreses)
+	// tā kā soundcloud saites mēdz būt garas, htmlpurifier var saīsināt
+	// starp <a> un </a> esošo tekstu, tāpēc to nevajadzētu izmantot
+	
+	// [0] pilns "notvertais" saturs
+	// [1] <a...>
+	// [2] adrese nesaīsinātā formā no "href" atribūta
+	// [3] "soundcloud.com" vai "snd.sc" (no "href" adreses)
+	// [4] adreses parametri pēc / (no "href" adreses)
+	// [5] adrese no <a></a> tagu vidus (var būt saīsināta)
+	// [6] "soundcloud.com" vai "snd.sc" (no "<a>...</a>" adreses)
+	// [7] adreses parametri pēc / (no "<a>...</a>" adreses)
+	// [8] </a>
 
 	$max_height = 320;
 	$max_width = 450;
 
 	// ja norādīta specifiska dziesma, augstums nepieciešams visai neliels
-	if (isset($params[6]) && !empty($params[6])) {
+	if (isset($params[4]) && !empty($params[4])) {
 		$max_height = 130;
 	}
 
 	// nolasa no Memcached vai arī tajā ieraksta iframe saturu
-	if (($scloud_html = $m->get('scloud_' . md5($params[2]))) === false) {
+	if (($scloud_html = $m->get('scloud_' . md5($params[4]))) === false) {
 
 		// izveido adresi, kas atgriež JSON formāta datus par ierakstā
 		// iekļauto adresi; no JSON var atlasīt iframe saturu
-		$url = 'https://soundcloud.com/oembed?format=json';
+		$url  = 'https://soundcloud.com/oembed?format=json';
 		$url .= '&maxwidth=' . $max_width . '&maxheight=' . $max_height;
 		$url .= '&url=' . urlencode(strip_tags($params[2]));
 
 		$data = '';
 		$response = curl_get($url);
-		if (!empty($response)) {
-			$data = json_decode($response);
-		}
+		
+		if (!empty($response)) {			
+			$data = json_decode($response);		
 
-		// šis paslēpj kvadrātformas attēlu dziesmas sānā
-		/* $data->html = str_replace('show_artwork=true',
-		  'show_artwork=false',
-		  $data->html); */
-
-		// šis paslēpj fona attēlu
-		if ($data !== '') {
-			$scloud_html = str_replace(
+			if ($data !== '' && !empty($data->html)) {
+				
+				// šis paslēpj kvadrātformas attēlu dziesmas sānā
+				/* $data->html = str_replace('show_artwork=true',
+				  'show_artwork=false',
+				  $data->html); */
+				
+				// šis paslēpj fona attēlu
+				$scloud_html = str_replace(
 					'visual=true', 'visual=false', $data->html);
+			}
 		}
 
-		$m->set('scloud_' . md5($params[2]), $scloud_html, false, 3600);
+		// ja nekas nav izdevies, iekešo sākotnējo HTML saturu
+		if (empty($scloud_html)) {
+			$scloud_html = $params[0];
+		}
+		$m->set('scloud_' . md5($params[4]), $scloud_html, false, 1800);
 	}
 
 	return $scloud_html;
