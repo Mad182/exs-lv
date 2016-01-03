@@ -6,7 +6,8 @@
  *  Pagaidām atbalstītie ārējo lapu widgets:
  *
  *      YouTube, Twitter, Spotify, Deezer,
- *      Vine, Soundcloud, Instagram, Vimeo
+ *      Vine, Soundcloud, Instagram, Vimeo,
+ *		imgur gifv video, gfycat
  */
 
 /**
@@ -276,25 +277,24 @@ function insert_smilies($txt) {
 }
 
 /**
- *  Aizstās noteiktas adreses tekstā ar ārēju lapu widgetiem
- *
- *  Šobrīd tiek izsaukta tikai no add_smile()
+ *  Aizstās noteiktas adreses tekstā ar ārēju lapu logrīkiem.
  *
  *  Atbalsta:
- *      - YouTube
- *      - Twitter
- *      - Spotify
- *      - Deezer
- *      - Vine
- *      - Soundcloud
- *      - Instagram
- *      - Vimeo
+ *      - YouTube, Twitter
+ *      - Spotify, Deezer
+ *      - Soundcloud, Vine, Instagram, Vimeo
+ *		- imgur gif video, gfycat
  *
  *  @param $txt     apstrādājamais saturs
  *  @param $wide    vai rādīt platu video
  *  @return $txt
  */
 function embed_widgets($txt, $wide = 0) {
+	
+	// lai nebūtu problēmu, ja vienā HTML paragrāfā uzreiz aiz, piemēram,
+	// YouTube saites ir kāda cita saite, .* vietā jābūt [^>]*,
+	// kas attiecīgajās vietās neļaus atrasties ">", citādi regex
+	// var vienā piegājienā paķert abas saites
 
 	// youtube videos
 	if (strpos($txt, 'youtu') !== false) {
@@ -304,22 +304,22 @@ function embed_widgets($txt, $wide = 0) {
 			$fn = 'get_youtube_video_small';
 		}
 		$txt = preg_replace_callback(
-				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a([^>]*?)>)https?://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)(([^<]*?)</a>)?#im", $fn, $txt
 		);
 		$txt = preg_replace_callback(
-				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", $fn, $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a([^>]*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)(([^<]*?)</a>)?#im", $fn, $txt
 		);
 	}
 
 	// twitter posts
 	if (strpos($txt, 'twitter') !== false) {
 		$txt = preg_replace_callback(
-				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
+				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a([^>]*?)>)https?://(www\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)(([^<]*?)</a>)?#im", 'embed_twitter', $txt
 		);
 
 		if (strpos($txt, 'mobile.twitter') !== false) {
 			$txt = preg_replace_callback(
-					"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(mobile\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_twitter', $txt
+					"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a([^>]*?)>)https?://(mobile\.)?twitter\.com/.+?/status(es)?/([a-zA-Z0-9]+)(([^<]*?)</a>)?#im", 'embed_twitter', $txt
 			);
 		}
 
@@ -335,14 +335,14 @@ function embed_widgets($txt, $wide = 0) {
 	// deezer track or album, or even playlist
 	if (strpos($txt, 'deezer') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)((.*?)</a>)?#im", 'embed_deezer', $txt
+				"#(^|[\n ]|<a[^>]*?>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)(</a>)?#im", 'embed_deezer', $txt
 		);
 	}
 
 	// vine videos
 	if (strpos($txt, 'vine') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?#im", 'embed_vine', $txt
+				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vine', $txt
 		);
 	}
 
@@ -351,10 +351,6 @@ function embed_widgets($txt, $wide = 0) {
 			strpos($txt, 'snd.sc') !== false) {
 		// tā kā soundcloud saites mēdz būt ļoti garas, htmlpurifier tās var
 		// saīsināt, tāpēc īstā saite jānolasa no "href" atribūta;
-		// lai nebūtu problēmu, ja vienā HTML paragrāfā uzreiz aiz, piemēram,
-		// YouTube saites ir soundcloud saite, .* vietā jābūt [^>]*,
-		// kas attiecīgajās vietās neļaus atrasties ">", citādi regex
-		// var vienā piegājienā paķert abas saites
 		$txt = preg_replace_callback(
 			"#(^|[\n ]|<a[^>]*?href=\"(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9_\/\-]+))\"[^>]*?>)(https?:\/\/(soundcloud\.com|snd\.sc)\/([a-z0-9_\.\/\-	]+))(</a>)?#im", 'embed_soundcloud', $txt
 		);
@@ -363,34 +359,34 @@ function embed_widgets($txt, $wide = 0) {
 	// instagram images
 	if (strpos($txt, 'instagram') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a.*?href=\"(.*?)\".*?>)(https?:\/\/instagram.com\/p\/([a-z0-9_\-]+)(.*?))</a>#im", 'embed_instagram', $txt
+				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/(www\.)?instagram.com\/p\/([a-z0-9_\-]+))([^<]*?</a>)#im", 'embed_instagram', $txt
 		);
 	}
 
 	// vimeo video
 	if (strpos($txt, 'vimeo') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/vimeo\.com\/([a-z0-9]+)\/?#im", 'embed_vimeo', $txt
+				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vimeo\.com\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vimeo', $txt
 		);
 	}
 
 	// gifv video
 	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.(gifv|webm)\/?#im", 'embed_gifv_imgur', $txt
+				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.(gifv|webm)\/(</a>)?#im", 'embed_gifv_imgur', $txt
 		);
 	}
 	
-	//gfycat
+	// gfycat
 	if (strpos($txt, 'gfycat') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/?#im", 'embed_gifv_gfycat', $txt
+				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
 		);
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
+				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
 		);
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a(.*?)>)https?:\/\/([g])fycat\.com\/([A-Za-z0-9]+)\/?#im", 'embed_gifv_gfycat', $txt
+				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([g])fycat\.com\/([A-Za-z0-9]+)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
 		);
 	}
 
@@ -572,12 +568,9 @@ function embed_twitter($params) {
 }
 
 /**
- *  Callback metode Spotify ierakstu iekļaušanai tekstā
+ *  Callback metode Spotify ierakstu iekļaušanai tekstā.
  *
- *  Izveidoto HTML iekešo Memcached (30 min)
- *
- *  @param $params          ieraksta parametri
- *  @return $spotify_html   iframe ar dziesmām
+ *  @see https://developer.spotify.com/technologies/widgets/examples/
  */
 function embed_spotify($params) {
 	global $m;
@@ -603,67 +596,69 @@ function embed_spotify($params) {
 }
 
 /**
- *  Callback metode Deezer ierakstu iekļaušanai tekstā
+ *  Callback metode Deezer logrīka iekļaušanai tekstā.
  *
- *  @param $params          ieraksta parametri
- *  @return $deezer_html    iframe ar dziesmām
+ *	@see https://developers.deezer.com/musicplugins/player
  */
 function embed_deezer($params) {
 
-	// $matches[4] - ieraksta veids
-	// $matches[5] - ieraksta id
+	// [0] pilns "notvertais" saturs
+	// [1] <a...>
+	// [2] www.
+	// [3] playlist|album|track
+	// [4] ieraksts ID
+	// [5] </a>
 
 	$type = 'tracks';
-	$height = 180; // izmērs pietiek, lai redzētu vienu dziesmu
-	// izmērs atbilst 6 dziesmām sarakstā
-	if ($params[4] === 'album') {
-		$type = 'album';
-		$height = 375;
-	} elseif ($params[4] === 'playlist') {
-		$type = 'playlist';
-		$height = 375;
+	$format = 'classic';
+	$width = 400;
+	$height = 100;
+	
+	if ($params[3] === 'playlist' || $params[3] === 'album') {
+		$type = $params[3];
+		$format = 'square';
+		$width = 200;
+		$height = 200;
 	}
-
-	$deezer_html = '<p><iframe class="embedded-iframe" scrolling="no" frameborder="0" ';
-	$deezer_html .= 'allowTransparency="true" ';
-	$deezer_html .= 'src="https://www.deezer.com/plugins/player?';
-	$deezer_html .= 'autoplay=false&playlist=true&width=300';
-	$deezer_html .= '&height=' . (int) $height . '&cover=false&type=' . $type;
-	$deezer_html .= '&id=' . (int) $params[5] . '&title=&format=vertical';
-	$deezer_html .= '&app_id=undefined" width="300" ';
-	$deezer_html .= 'height="' . (int) $height . '"></iframe></p>';
-
-	return $deezer_html;
+	
+	return	'<p><iframe class="embedded-iframe" scrolling="no" '.
+			'frameborder="0" style="margin:5px 0" allowTransparency="true" '.
+			'src="https://www.deezer.com/plugins/player?format='.$format.
+			'&autoplay=false&playlist=false&width='.$width.'&height='.$height.
+			'&color=007FEB&layout=dark&size=medium&type='.$type.
+			'&id='.(int)$params[4].'&title=&app_id=1" '.
+			'width="'.$width.'" height="'.$height.'"></iframe></p>';
 }
 
 /**
- *  Callback metode Vine video iekļaušanai tekstā
+ *  Callback metode Vine video iekļaušanai tekstā.
  *
- *  @param $params       video parametri
- *  @return $vine_html   iframe ar video
+ *	@see http://blog.vine.co/post/55514921892/embed-vine-posts
+ *		 https://dev.twitter.com/web/vine/oembed
  */
 function embed_vine($params) {
 	global $m;
 
+	// [0] pilns "notvertais" saturs
+	// [1] <a...>
+	// [2] adrese uz vine video
+	// [3] video parametrs
+	// [4] </a>
+
 	$encoded_url = urlencode(strip_tags($params[3]));
 
-	$vine_html  = '<iframe class="embedded-iframe vine-embed" ';
-	$vine_html .= 'src="https://vine.co/v/'.$encoded_url.'/embed/simple"';
-	$vine_html .= 'width="320" height="320" frameborder="0">';
-	$vine_html .= '</iframe><script async src="';
-	$vine_html .= '//platform.vine.co/static/scripts/embed.js"';
-	$vine_html .= 'charset="utf-8"></script>';
-
-	return $vine_html;
+	return	'<iframe class="embedded-iframe vine-embed" '.
+			'src="https://vine.co/v/'.$encoded_url.'/embed/simple"'.
+			'width="320" height="320" frameborder="0">'.
+			'</iframe><script async src="'.
+			'//platform.vine.co/static/scripts/embed.js"'.
+			'charset="utf-8"></script>';
 }
 
 /**
  *  Callback metode Soundcloud dziesmu iekļaušanai tekstā.
  *
  *  Izveidoto HTML iekešo Memcached (30 min).
- *
- *  @param $params          dziesmas parametri
- *  @return $scloud_html    iframe ar dziesmām
  */
 function embed_soundcloud($params) {
 	global $m;
@@ -728,46 +723,45 @@ function embed_soundcloud($params) {
 }
 
 /**
- *  Callback metode Instagram attēlu iekļaušanai tekstā
- *
- *  @param $params       attēla parametri
- *  @return $inst_html   iframe ar attēlu
+ *  Callback metode Instagram attēlu iekļaušanai tekstā.
  */
 function embed_instagram($params) {
+	
+	// [0] pilns "notvertais" saturs
+	// [1] <a...>
+	// [2] adrese uz instagram attēlu
+	// [3] www.
+	// [4] attēla parametrs
+	// [5] </a> vai /</a>
 
-	// $params[4] - attēla ID
-
-	$inst_html = '<iframe class="embedded-iframe" src="//instagram.com/p/';
-	$inst_html .= urlencode($params[4]) . '/embed/" ';
-	$inst_html .= 'width="350" height="450" frameborder="0" ';
-	$inst_html .= 'scrolling="no" allowtransparency="true"></iframe>';
-
-	return $inst_html;
+	return	'<iframe class="embedded-iframe" src="//instagram.com/p/'.
+			urlencode($params[4]) . '/embed/" '.
+			'width="350" height="450" frameborder="0" '.
+			'scrolling="no" allowtransparency="true"></iframe>';
 }
 
 /**
- *  Callback metode Vimeo video iekļaušanai tekstā
- *
- *  @param $params        video parametri
- *  @return $vimeo_html   iframe ar video
+ *  Callback metode Vimeo video iekļaušanai tekstā.
  */
 function embed_vimeo($params) {
+	
+	// [0] pilns "notvertais" saturs
+	// [1] <a...>
+	// [2] adrese uz vimeo video
+	// [3] video parametrs
+	// [4] </a>
 
-	// $params[3] - video id
-
-	$vimeo_html = '<iframe class="embedded-iframe" src="//player.vimeo.com/video/';
-	$vimeo_html .= urlencode($params[3]) . '?badge=0&byline=0" ';
-	$vimeo_html .= 'width="520" height="300" frameborder="0" ';
-	$vimeo_html .= 'webkitallowfullscreen mozallowfullscreen ';
-	$vimeo_html .= 'allowfullscreen></iframe>';
-
-	return $vimeo_html;
+	return	'<iframe class="embedded-iframe" src="//player.vimeo.com/video/'.
+			urlencode($params[3]) . '?badge=0&byline=0" '.
+			'width="520" height="300" frameborder="0" '.
+			'webkitallowfullscreen mozallowfullscreen '.
+			'allowfullscreen></iframe>';
 }
 
 /**
  *  Callback metode gfycat gifv/mp4/webm failu embedošanai
  *
- *  @param $params        video parametri
+ *  @param $params  video parametri
  *  @return $html   iframe ar video
  */
 function embed_gifv_gfycat($params) {
