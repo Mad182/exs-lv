@@ -520,8 +520,12 @@ function im_cat_mod($id = null) {
 }
 
 function textlimit($string, $setlength, $replacer = '...') {
-	$string = trim(strip_tags(str_replace(array('<li>', '</li>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $string)));
-	$string = str_replace('	 ', ' ', $string);
+	$string = strip_tags(str_replace(array('<li>', '</li>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $string));
+
+	//aizvāc dubultos space un space no galiem
+	$string = preg_replace('%\s+%u', ' ', $string); 
+	$string = trim(preg_replace('/\s+/', ' ', $string));
+
 	$length = $setlength;
 	if ($length < strlen($string)) {
 		while (($string{$length} != " ") AND ( $length > 0)) {
@@ -531,8 +535,9 @@ function textlimit($string, $setlength, $replacer = '...') {
 			return substr($string, 0, $setlength);
 		else
 			return substr($string, 0, $length) . $replacer;
-	} else
+	} else {
 		return $string;
+	}
 }
 
 function sanitize($input) {
