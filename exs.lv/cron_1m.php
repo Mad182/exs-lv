@@ -33,6 +33,6 @@ unset($password);
 $m = new Memcache;
 $m->connect($mc_host, $mc_port);
 
-get_game_monitor('http://csgo.exs.lv/monitor/index.php', true);
-get_game_monitor('http://csgo.exs.lv/monitor/ut.php', true);
+//get_game_monitor('http://csgo.exs.lv/monitor/index.php', true);
+//get_game_monitor('http://csgo.exs.lv/monitor/ut.php', true);
 

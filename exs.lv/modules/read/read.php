@@ -992,7 +992,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 				//opengraph tagi
 				if (!$auth->mobile) {
-					$opengraph_meta['title'] = h($article->title);
+					$opengraph_meta['title'] = $article->title;
 					$opengraph_meta['type'] = 'article';
 					$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid;
 					$opengraph_meta['description'] = h(textlimit($article->text, 200));

@@ -522,7 +522,10 @@ function im_cat_mod($id = null) {
 function textlimit($string, $setlength, $replacer = '...') {
 	$string = strip_tags(str_replace(array('<li>', '</li>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $string));
 
-	//aizvāc dubultos space un space no galiem
+	//labojam shitty rakstības stilu :)
+	$string = str_replace(array(',', ' ,', ' : ', ' . '), array(', ', ',', ': ', '. '), $string);
+
+	//aizvāc dubultos space un space no teksta galiem
 	$string = preg_replace('%\s+%u', ' ', $string); 
 	$string = trim(preg_replace('/\s+/', ' ', $string));
 
@@ -1711,7 +1714,7 @@ function get_latest_posts() {
 
 			$out .= '<li><a href="' . $url . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
-			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span>';
+			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
 
 			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
 				$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']</a></li>';
