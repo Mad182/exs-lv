@@ -782,7 +782,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			$date = display_time(strtotime($article->date));
 			$updated = display_time(strtotime($article->updated));
 
-			if ($article->edit_times > 0) {
+			if ($article->edit_times > 0 && empty($article->custom_include)) {
 				$edit_usrinfo = get_user($article->edit_user);
 				$edit_usr = $edit_usrinfo->nick;
 				$article->text .= '<p class="comment-edited-by">Laboja ' . $edit_usr . ', labots ' . $article->edit_times . 'x</p>';
