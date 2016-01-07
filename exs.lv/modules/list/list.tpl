@@ -43,7 +43,7 @@
 	<div class="entry-content">
 		<!-- START BLOCK : list-avatar-->
 		<a href="{url}" title="Atvērt rakstu" rel="bookmark">
-			<img class="av" src="{img-server}/{image}" alt="{alt}" />
+			<img class="av" src="{img-server}{image}" alt="{alt}" />
 		</a>
 		<!-- END BLOCK : list-avatar-->
 		<p>{intro}</p>
