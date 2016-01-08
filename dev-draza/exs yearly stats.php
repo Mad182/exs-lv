@@ -63,7 +63,7 @@ rakstu skaits ------------------------------------------------------------- 31
 	spēles: `cat`.`id` = 81													7
 	mūzika: `cat`.`id` = 323												1
 
-blograkstu skaits --------------------------------------------------------- 1
+blograkstu skaits --------------------------------------------------------- 66
 
 	SELECT count(*) FROM `pages`
 		JOIN `cat` ON `pages`.`category` = `cat`.`id`
@@ -71,7 +71,7 @@ blograkstu skaits --------------------------------------------------------- 1
 		`pages`.`category` NOT IN(6, 244, 1133, 1904, 1972) AND
 		`pages`.`date` > '2014-12-31 23:59:59' AND
 		`pages`.`date` < '2016-01-01 00:00:00' AND
-		`cat`.`isblog` = 1 AND
+		`cat`.`isblog` > 0 AND
 		`cat`.`isforum` = 0 AND
 		`pages`.`lang` IN(0, 1)
 	// sadaļas ir dažādu apakšprojektu musari
