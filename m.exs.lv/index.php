@@ -14,6 +14,7 @@ require(CORE_PATH . '/includes/site_loader.php');
 session_start();
 
 $cat = 'index';
+if ($lang === 9 || $lang === 7) $cat = 'wall';
 $bootstrap_cache_key = '';
 
 //mysql konekcija
