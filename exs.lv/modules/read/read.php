@@ -782,7 +782,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			$date = display_time(strtotime($article->date));
 			$updated = display_time(strtotime($article->updated));
 
-			if ($article->edit_times > 0) {
+			if ($article->edit_times > 0 && empty($article->custom_include)) {
 				$edit_usrinfo = get_user($article->edit_user);
 				$edit_usr = $edit_usrinfo->nick;
 				$article->text .= '<p class="comment-edited-by">Laboja ' . $edit_usr . ', labots ' . $article->edit_times . 'x</p>';
@@ -795,20 +795,24 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$article_text = add_smile($article->text, 1, $article->disable_emotions);
 
-			if ($article->strid == 'exs-lv-infografiks') {
-				$article_text .= '<iframe src="//infogr.am/exs_lv-9431592631" width="499" height="12542" scrolling="no" frameborder="0" style="border:none;margin: 0 auto;width:499px;display:block;"></iframe><div style="width:499px;border-top:1px solid #acacac;padding-top:3px;font-family:Arial;font-size:10px;text-align:center;"><a target="_blank" href="http://infogr.am/exs_lv-9431592631" style="color:#acacac;text-decoration:none;">VĒSTURESTATISTIKA</a> | <a style="color:#acacac;text-decoration:none;" href="http://infogr.am" target="_blank">Create infographics</a></div>';
-			}
-
 			if (!$author->deleted) {
 				$author_link = '<span class="author vcard"><a class="url fn n" href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a></span>';
 			} else {
 				$author_link = '<em>dzēsts</em>';
 			}
 
+			$custom_content = '';
+			if(!empty($article->custom_include) && file_exists(CORE_PATH . '/modules/read/custom_includes/' . mkslug($article->custom_include) . '.php')) {
+				ob_start();
+				include(CORE_PATH . '/modules/read/custom_includes/' . mkslug($article->custom_include) . '.php');
+				$custom_content = ob_get_clean();
+			}
+
 			$tpl->newBlock('read-article');
 			$tpl->assign(array(
 				'title' => $article->title,
 				'text' => $article_text,
+				'custom_content' => $custom_content,
 				'id' => $article->id,
 				'bookmark' => get_protocol($lang) . get_domain($lang) . '/read/' . $article->strid,
 				'views' => $article->views + 1,
@@ -988,7 +992,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 				//opengraph tagi
 				if (!$auth->mobile) {
-					$opengraph_meta['title'] = h($article->title);
+					$opengraph_meta['title'] = $article->title;
 					$opengraph_meta['type'] = 'article';
 					$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid;
 					$opengraph_meta['description'] = h(textlimit($article->text, 200));

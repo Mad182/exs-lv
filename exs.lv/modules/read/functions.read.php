@@ -22,7 +22,7 @@ function can_edit_page($article) {
 	if ($auth->id == $article->author) {
 
 		//manuāli norādīti lietotāji
-		if ($auth->id == 34212 || $auth->id == 34198) {
+		if ($auth->id == 34212 || $auth->id == 34198 || $auth->id == 27719 || $auth->id == 3962) {
 			return true;
 		}
 

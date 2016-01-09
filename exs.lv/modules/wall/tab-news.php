@@ -73,7 +73,7 @@ if(!empty($articles)) {
 			'date' => $date,
 			'author' => $author_link,
 			'posts' => $article->posts,
-			'intro' => textlimit($article->text, 320),
+			'intro' => textlimit($article->text, 350),
 			'class' => $class,
 			'avatar' => get_avatar($user, 's')
 		));

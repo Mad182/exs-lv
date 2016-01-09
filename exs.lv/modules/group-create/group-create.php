@@ -13,17 +13,27 @@ if (!in_array($lang, array(1, 5, 9))) {
 if ($auth->ok) {
 
 	$pagepath = '<a href="/grupas">Exs grupas</a> / ' . $pagepath;
-	$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
+	$credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = '$auth->id'");
 
 	if (isset($_POST['new-title']) && !empty($_POST['new-title'])) {
-		if ($credit < 3) {
+		$title = sanitize(h(trim($_POST['new-title'])));
+
+		if($db->get_var("SELECT count(*) FROM `clans` WHERE `title` = '".$title."' OR `title` LIKE '".$title."'")) {
+			set_flash('Izvēlies citu nosaukumu, šāda grupa jau eksistē!', 'error');
+			$auth->log('Neizdevās uztaisīt grupu (nosaukums sakrīt ar eksistējošu ' . h(serialize($_POST)) . ')');
+
+		} elseif ($credit < 3) {
 			set_flash('Nepietiek exs punktu!', 'error');
+
 		} else {
-			$title = sanitize(h(trim($_POST['new-title'])));
+
 			$db->query("UPDATE users SET credit = credit-'3' WHERE id = ('" . $auth->id . "')");
 			$db->query("INSERT INTO clans (title,date_created,owner,lang) VALUES ('$title','" . time() . "','$auth->id','$lang')");
 			update_karma($auth->id, true);
 			get_latest_groups(true);
+
+			$auth->log('Izveidoja grupu (' . h(serialize($_POST)) . ')');
+
 			redirect('/group/' . $db->insert_id);
 		}
 	}

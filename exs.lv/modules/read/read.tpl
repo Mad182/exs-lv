@@ -216,6 +216,7 @@
 	
 	<div id="full-story" class="post-content">
 		{text}
+		{custom_content}
 	</div>
 
 	<!-- START BLOCK : post-stags-->
