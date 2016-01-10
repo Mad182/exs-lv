@@ -84,7 +84,7 @@ blograkstu skaits --------------------------------------------------------- 66
 		`pages`.`category` NOT IN(6, 244, 1133, 1904, 1972) AND
 		`pages`.`date` > '2014-12-31 23:59:59' AND
 		`pages`.`date` < '2016-01-01 00:00:00' AND
-		`cat`.`isblog` = 1 AND
+		`cat`.`isblog` > 0 AND
 		`cat`.`isforum` = 0 AND
 		`pages`.`lang` IN(0, 1)
 	GROUP BY `pages`.`author` ORDER BY count(*) DESC LIMIT 10
@@ -219,6 +219,15 @@ neizlasītās vēstules ------------------------------------------------------ 8
 		`pm`.`date` > '2014-12-31 23:59:59' AND
 		`pm`.`date` < '2016-01-01 00:00:00' AND
 		`pm`.`is_read` = 0
+	GROUP BY `pm`.`to_uid` ORDER BY count(*) DESC LIMIT 10
+	
+visvairāk saņemtās vēstules ----------------------------------------------- 871
+
+	SELECT `users`.`nick`, count(*) AS `received_count` FROM `pm`
+		JOIN `users` ON `pm`.`to_uid` = `users`.`id`
+	WHERE
+		`pm`.`date` > '2014-12-31 23:59:59' AND
+		`pm`.`date` < '2016-01-01 00:00:00'
 	GROUP BY `pm`.`to_uid` ORDER BY count(*) DESC LIMIT 10
 
 
@@ -925,6 +934,28 @@ izveidoto grupu skaits ---------------------------------------------------- 22
 		`clans`.`date_created` > '1420070399' AND
 		`clans`.`date_created` < '1451606400' AND
 		`clans`.`lang` IN(0, 1)
+		
+	// vispopulārākās no jaunajām lietotāju ziņā
+	SELECT `clans`.`title`, count(*) AS `clan_members` FROM `clans`
+		JOIN `clans_members` ON `clans`.`id` = `clans_members`.`clan`
+	WHERE
+		`clans`.`date_created` > '1420070399' AND
+		`clans`.`date_created` < '1451606400' AND
+		`clans`.`lang` IN(0, 1)
+	GROUP BY `clans_members`.`clan` ORDER BY count(*) DESC LIMIT 10
+	
+	// vispopulārākās komentāru ziņā
+	SELECT `clans`.`title`, count(*) FROM `miniblog`
+		JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
+	WHERE
+		`miniblog`.`date` > '2014-12-31 23:59:59' AND
+		`miniblog`.`date` < '2016-01-01 00:00:00' AND
+		`miniblog`.`removed` = 0 AND
+		`miniblog`.`lang` IN(0, 1) AND
+		`miniblog`.`type` = 'miniblog' AND
+		`miniblog`.`groupid` != 0
+	GROUP BY `miniblog`.`groupid` ORDER BY count(*) DESC LIMIT 10
+	
 
 izspēlēto desas partiju skaits -------------------------------------------- 152
 
@@ -968,8 +999,6 @@ pieci aktīvākie lietotāji (miniblogu un to komentāru skaita ziņā) --------
 
 aktīvākais banotājs --------------------------------------------------------
 
-	alberts00 - 216
-
 	SELECT
 		`users`.`nick`,
 		count(*) AS `times_banned`
@@ -985,8 +1014,6 @@ aktīvākais banotājs --------------------------------------------------------
 
 aktīvākais brīdinātājs -----------------------------------------------------
 
-	Styrnucis - 279
-
 	SELECT 
 		`users`.`nick`,
 		count(*) AS `times_warned`
@@ -1001,8 +1028,6 @@ aktīvākais brīdinātājs ----------------------------------------------------
 	LIMIT 10
 
 aktīvākais sūdzību izskatītājs ---------------------------------------------
-
-	krabz - 281
 
 	SELECT
 		`users`.`nick`,
