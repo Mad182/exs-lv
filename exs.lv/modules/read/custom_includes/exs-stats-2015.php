@@ -252,21 +252,21 @@
 		
 		<li style="height: 5px; width: 50%; margin: 20px auto; background: #d8d8d8; border-radius: 5px; list-style-type:none"></li>
 		
-		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-right:5px solid #68da76">
+		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-left:5px solid #68da76">
 			<span style="display: table-cell; vertical-align:middle;width: 85%; padding: 5px 5px;">
 				<p style="margin:0 10px 3px;padding:0;">Mīnusotākais ieraksts (<span style="color:#ff6262">-90</span>)</p>
 			</span>
 			<span style="display: table-cell; vertical-align:middle; width: 15%; padding: 10px 12px;color:#ff6262;text-align:center"><a href="https://exs.lv/say/16111/4392975-iesakiet-kadu-seksa-komediju#m4393178">saite</a></span>
 		</li>
 		
-		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-right:5px solid #68da76">
+		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-left:5px solid #68da76">
 			<span style="display: table-cell; vertical-align:middle;width: 85%; padding: 5px 5px;">
 				<p style="margin:0 10px 3px;padding:0;">Plusotākais ieraksts (<span style="color:#178c6f">+145</span>)</p>
 			</span>
 			<span style="display: table-cell; vertical-align:middle; width: 15%; padding: 10px 12px;color:#ff6262;text-align:center"><a href="https://exs.lv/say/13034/4432441-www-straightouttasomewhere-com#m4432485">saite</a></span>
 		</li>
 		
-		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-right:5px solid #68da76">
+		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-left:5px solid #68da76">
 			<span style="display: table-cell; width: 85%; padding: 5px 5px;">
 				<p style="margin:0 10px 3px;padding:0;">Plusu summa</p>
 				<p style="margin:0 10px;padding:0;font-size:10px;text-transform:uppercase;color:#b9b9b9">
@@ -276,7 +276,7 @@
 			<span style="display: table-cell; vertical-align:middle; width: 15%; padding: 10px 12px;color:#178c6f;text-align:center">+249,289</span>
 		</li>
 		
-		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-right:5px solid #68da76">
+		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-left:5px solid #68da76">
 			<span style="display: table-cell; width: 85%; padding: 5px 5px;">
 				<p style="margin:0 10px 3px;padding:0;">Mīnusu summa</p>
 				<p style="margin:0 10px;padding:0;font-size:10px;text-transform:uppercase;color:#b9b9b9">
@@ -286,7 +286,7 @@
 			<span style="display: table-cell; vertical-align:middle; width: 15%; padding: 10px 12px;color:#ff6262;text-align:center">-88,416</span>
 		</li>
 		
-		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-right:5px solid #68da76">
+		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #6f7070; margin: 5px 0;border-left:5px solid #68da76">
 			<span style="display: table-cell; width: 85%; padding: 5px 5px;">
 				<p style="margin:0 10px 3px;padding:0;">Vērtējumu summa gada laikā</p>
 				<p style="margin:0 10px;padding:0;font-size:10px;text-transform:uppercase;color:#b9b9b9">
