@@ -589,7 +589,7 @@ function embed_spotify($params) {
 				$spotify_html = $spotify->html;
 			}
 		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 3600);
+		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 21600);
 	}
 
 	return $spotify_html;
