@@ -6,14 +6,14 @@ if ($auth->level == 1) {
 	if ($logs) {
 		foreach ($logs as $log) {
 			$tpl->newBlock('smslog-node');
-			$user = $db->get_row("SELECT * FROM users WHERE id = '" . intval($log->message) . "'");
+			$user = get_user($log->message);
 			$tpl->assign(array(
 				'id' => $log->id,
 				'nick' => $user->nick,
 				'message' => $log->message,
 				'suspended' => $log->suspended,
 				'message_id' => $log->message_id,
-				'sender' => $log->sender,
+				'sender' => $log->sender
 			));
 		}
 	}
