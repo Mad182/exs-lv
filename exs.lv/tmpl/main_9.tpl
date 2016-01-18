@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="lv" prefix="fb: http://www.facebook.com/2008/fbml">
+<html lang="lv" prefix="fb:http://www.facebook.com/2008/fbml">
 	<head>
 		<meta charset="UTF-8">
 		<title>{page-title}</title>
@@ -104,9 +104,9 @@
 					<li><a href="/" class="dropdown">runescape.exs.lv</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="https://exs.lv">exs.lv</a></li>
-							<li><a href="https://lol.exs.lv">lol.exs.lv</a></li>
-							<li><a href="https://rp.exs.lv">rp.exs.lv</a></li>
+							<li><a href="//exs.lv">exs.lv</a></li>
+							<li><a href="//lol.exs.lv">lol.exs.lv</a></li>
+							<li><a href="//rp.exs.lv">rp.exs.lv</a></li>
 							<li><a rel="nofollow" href="https://coding.lv">coding.lv</a></li>
 							<li>&nbsp;</li>
 						</ul>
@@ -114,7 +114,7 @@
 					<li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a></li>
+							<li><a href="//tops.exs.lv/runescape" rel="nofollow">Tops</a></li>
 							<li><a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a></li>
 							<li><a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a></li>
 							<li>&nbsp;</li>
@@ -205,7 +205,7 @@
 			</nav>
 		</div>
 		<div id="wrapper">
-			<div id="header-navig">
+			<div id="header-navig" style="display:none">
 				<!-- START BLOCK : top-navig-hidden -->
 				<ul class="nav-left">
 					<li>
@@ -237,7 +237,7 @@
 				</ul>
 				<!-- END BLOCK : top-navig-hidden -->
 			</div>
-			<div id="header">
+			<div id="header" style="display:none">
 				<a href="/">
 					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">                    
 						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
@@ -324,7 +324,7 @@
 				<div class="c"></div>
 				<!-- END BLOCK : flash-message-->
 
-				<div id="content" class="{layout-options}" style="float:left">
+				<div id="content" class="{layout-options}">
 					<div id="inner-content">
 						<!-- START BLOCK : page-path-->
 						<p id="breadcrumbs">{page-path}</p>
@@ -350,9 +350,67 @@
 
 					</div>
 				</div>
-
+				
 				<div id="rs_columns">
+					
 
+					<!-- START BLOCK : main-layout-right-->
+					<div id="right">
+
+						<h3>Jaunākais lapā</h3>
+						<div class="box">
+							<ul class="tabs">
+								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+							</ul>
+							<div id="lat" class="ajaxbox">{latest-noscript}</div>
+						</div>
+
+						<!-- START BLOCK : notification-list-->
+						<h3>Tavi notikumi</h3>
+						<div class="box">
+							{out}
+						</div>
+						<!-- END BLOCK : notification-list-->
+
+						<!-- START BLOCK : poll-box-->
+						<h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
+						<div class="box poll-box">
+							<p><strong>{poll-title}</strong></p>
+							<!-- START BLOCK : poll-answers-->
+							<ol class="poll-answers">
+								<!-- START BLOCK : poll-answers-node-->
+								<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+								<!-- END BLOCK : poll-answers-node-->
+							</ol>
+							<span class="poll-text">
+								Balsojuši: {poll-totalvotes}<br />
+								<a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
+							</span>
+							<!-- END BLOCK : poll-answers-->
+							<!-- START BLOCK : poll-questions-->
+							<form name="poll" method="post" action="">
+								<fieldset>
+									<!-- START BLOCK : poll-error-->
+									<p>{poll-error}</p>
+									<!-- END BLOCK : poll-error-->
+									<!-- START BLOCK : poll-options-->
+									<ol id="poll-questions">
+										<!-- START BLOCK : poll-options-node-->
+										<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+										<!-- END BLOCK : poll-options-node-->
+									</ol>
+									<input type="submit" name="vote" value="Balsot!" class="button primary" />
+									<!-- END BLOCK : poll-options-->
+								</fieldset>
+							</form>
+							<!-- END BLOCK : poll-questions-->
+						</div>
+						<!-- END BLOCK : poll-box-->
+
+					</div>
+					<!-- END BLOCK : main-layout-right-->
+					
 					<!-- START BLOCK : main-layout-left-->
 					<div id="left">
 
@@ -415,64 +473,8 @@
 
 					</div>
 					<!-- END BLOCK : main-layout-left-->
-
-					<!-- START BLOCK : main-layout-right-->
-					<div id="right">
-
-						<h3>Jaunākais lapā</h3>
-						<div class="box">
-							<ul class="tabs">
-								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-							</ul>
-							<div id="lat" class="ajaxbox">{latest-noscript}</div>
-						</div>
-
-						<!-- START BLOCK : notification-list-->
-						<h3>Tavi notikumi</h3>
-						<div class="box">
-							{out}
-						</div>
-						<!-- END BLOCK : notification-list-->
-
-						<!-- START BLOCK : poll-box-->
-						<h3><img class="box-icon" src="/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
-						<div class="box poll-box">
-							<p><strong>{poll-title}</strong></p>
-							<!-- START BLOCK : poll-answers-->
-							<ol class="poll-answers">
-								<!-- START BLOCK : poll-answers-node-->
-								<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-								<!-- END BLOCK : poll-answers-node-->
-							</ol>
-							<span class="poll-text">
-								Balsojuši: {poll-totalvotes}<br />
-								<a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
-							</span>
-							<!-- END BLOCK : poll-answers-->
-							<!-- START BLOCK : poll-questions-->
-							<form name="poll" method="post" action="">
-								<fieldset>
-									<!-- START BLOCK : poll-error-->
-									<p>{poll-error}</p>
-									<!-- END BLOCK : poll-error-->
-									<!-- START BLOCK : poll-options-->
-									<ol id="poll-questions">
-										<!-- START BLOCK : poll-options-node-->
-										<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-										<!-- END BLOCK : poll-options-node-->
-									</ol>
-									<input type="submit" name="vote" value="Balsot!" class="button primary" />
-									<!-- END BLOCK : poll-options-->
-								</fieldset>
-							</form>
-							<!-- END BLOCK : poll-questions-->
-						</div>
-						<!-- END BLOCK : poll-box-->
-
-					</div>
-					<!-- END BLOCK : main-layout-right-->
 				</div>
+				
 				<div class="c"></div>
 
 				<div id="footer">
