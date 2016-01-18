@@ -373,10 +373,10 @@ function embed_widgets($txt, $wide = 0) {
 	// gifv video
 	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false) {
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/i\.imgur\.com\/([a-z0-9]+)\.(gifv|webm)\/(</a>)?#im", 'embed_gifv_imgur', $txt
+				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([A-Za-z0-9]+)\.(gifv|webm)\/?#im", 'embed_gifv_imgur', $txt
 		);
 	}
-	
+
 	// gfycat
 	if (strpos($txt, 'gfycat') !== false) {
 		$txt = preg_replace_callback(
