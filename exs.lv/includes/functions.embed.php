@@ -814,7 +814,7 @@ function embed_gifv_imgur($params) {
 
 	$html = '<iframe class="embedded-iframe" src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
 	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
-	$html .= 'width="520" height="300"></iframe>';
+	$html .= 'width="100%" height="400"></iframe>';
 
 	return $html;
 }
