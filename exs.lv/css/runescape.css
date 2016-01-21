@@ -1,7 +1,7 @@
 /**
  *  RuneScape apakšprojekta CSS stili.
  *
- *  Satura rādītājs. (CTRL + F = {nr.})
+ *  Satura rādītājs.
  *
  *  1. Šis un tas.
  *  2. Pārrakstītie core.css elementi
@@ -32,10 +32,10 @@
  *  11. tinyMCE uzliekamie stili
  *  12. Here be dragons!
  */
-body {
-	background:url('/bildes/runescape/wallpapers/frostshatter_1920x1080.jpg') no-repeat fixed 50% 0
-}
 
+body {
+	background:url('/bildes/runescape/wallpapers/lost-city-of-the-elves.jpg') no-repeat fixed 50% 0
+}
 /* background fix lielajiem ekrāniem  */
 @media only screen and (min-width:1920px) {
 	body {
@@ -106,7 +106,7 @@ body {
 /* 2. Pārrakstītie core.css elementi */
 #wrapper {
 	position:relative;
-	margin-top:25px;
+	margin-top:100px;	
 	margin-bottom:0;
 	padding:0;
 	background:transparent;

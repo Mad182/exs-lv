@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="lv" prefix="fb: http://www.facebook.com/2008/fbml">
+<html lang="lv" prefix="fb:http://www.facebook.com/2008/fbml">
 	<head>
 		<meta charset="UTF-8">
 		<title>{page-title}</title>
@@ -104,9 +104,9 @@
 					<li><a href="/" class="dropdown">runescape.exs.lv</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="https://exs.lv">exs.lv</a></li>
-							<li><a href="https://lol.exs.lv">lol.exs.lv</a></li>
-							<li><a href="https://rp.exs.lv">rp.exs.lv</a></li>
+							<li><a href="//exs.lv">exs.lv</a></li>
+							<li><a href="//lol.exs.lv">lol.exs.lv</a></li>
+							<li><a href="//rp.exs.lv">rp.exs.lv</a></li>
 							<li><a rel="nofollow" href="https://coding.lv">coding.lv</a></li>
 							<li>&nbsp;</li>
 						</ul>
@@ -114,7 +114,7 @@
 					<li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
 						<span class="arrow-down"></span>
 						<ul>
-							<li><a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a></li>
+							<li><a href="//tops.exs.lv/runescape" rel="nofollow">Tops</a></li>
 							<li><a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a></li>
 							<li><a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a></li>
 							<li>&nbsp;</li>
@@ -205,50 +205,6 @@
 			</nav>
 		</div>
 		<div id="wrapper">
-			<div id="header-navig">
-				<!-- START BLOCK : top-navig-hidden -->
-				<ul class="nav-left">
-					<li>
-						<a href="http://tops.exs.lv/runescape" rel="nofollow">Tops</a>&middot;
-					</li>
-					<li>
-						<a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a>&middot;
-					</li>
-					<li>
-						<a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a>&middot;
-					</li>
-					<li>
-						<a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a>&middot;
-					</li>
-					<li>
-						<a href="http://z8.invisionfree.com/lrc" rel="nofollow" target="_blank">LRC forums</a>&middot;
-					</li>
-					<li>
-						<a href="http://z13.invisionfree.com/Latvian_Archers" rel="nofollow" target="_blank">LA klans</a>&middot;
-					</li>
-					<li>
-						<a href="http://z10.invisionfree.com/Janis_Vimba/" rel="nofollow" target="_blank">JV forums</a>
-					</li>
-				</ul>
-				<ul class="nav-right">
-					<li><a href="/img">eXs bilžu hostings</a>&middot;</li>
-					<li><a rel="nofollow" href="http://runescape.com" target="_blank">runescape.com</a>&middot;</li>
-					<li><a rel="nofollow" href="http://oldschool.runescape.com" target="_blank">oldschool rs</a></li>
-				</ul>
-				<!-- END BLOCK : top-navig-hidden -->
-			</div>
-			<div id="header">
-				<a href="/">
-					<div id="header-slider" class="cycle-slideshow" data-cycle-speed="3000" data-cycle-timeout="8000" data-cycle-random="true">                    
-						<img src="/bildes/runescape/banners/evergreens.jpg" alt="">
-						<img src="/bildes/runescape/banners/wilderness.jpg" alt="">
-						<img src="/bildes/runescape/banners/exchange.jpg" alt="">
-						<img src="/bildes/runescape/banners/north.jpg" alt="">
-						<img src="/bildes/runescape/banners/scorpions.jpg" alt="">
-						<img src="/bildes/runescape/banners/musician.jpg" alt="">
-					</div>
-				</a>
-			</div>
 			<div id="top-menu">
 				<ul id="top-menu-left">
 					<li{cat_sel_1863}><a class="first" href="/">Lobby</a></li>
@@ -324,7 +280,7 @@
 				<div class="c"></div>
 				<!-- END BLOCK : flash-message-->
 
-				<div id="content" class="{layout-options}" style="float:left">
+				<div id="content" class="{layout-options}">
 					<div id="inner-content">
 						<!-- START BLOCK : page-path-->
 						<p id="breadcrumbs">{page-path}</p>
@@ -350,9 +306,9 @@
 
 					</div>
 				</div>
-
+				
 				<div id="rs_columns">
-
+					
 					<!-- START BLOCK : main-layout-left-->
 					<div id="left">
 
@@ -415,7 +371,7 @@
 
 					</div>
 					<!-- END BLOCK : main-layout-left-->
-
+					
 					<!-- START BLOCK : main-layout-right-->
 					<div id="right">
 
@@ -472,7 +428,9 @@
 
 					</div>
 					<!-- END BLOCK : main-layout-right-->
+					
 				</div>
+				
 				<div class="c"></div>
 
 				<div id="footer">
