@@ -26,7 +26,7 @@ $list = `netstat -atun | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' |sort |
 
 $lines = explode("\n", $list);
 
-$whitelist = array('127.0.0.1', '127.0.0.2', '0.0.0.0', '92.240.69.183');
+$whitelist = array('127.0.0.1', '127.0.0.2', '0.0.0.0', '92.240.69.183', '92.240.69.188');
 $blocked = array();
 
 foreach ($lines as $line) {

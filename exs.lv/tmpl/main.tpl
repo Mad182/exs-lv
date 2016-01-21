@@ -612,7 +612,7 @@
 									</li>
 								</ul>
 								<div class="c"></div>
-								Lapu tiešsaitē {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
+								Tiešsaitē {page-onlinetotal} lietotāji, no tiem reģistrētie:<br />
 								<span id="online-list">{page-onlineusers}</span>
 							</div>
 						</div>
