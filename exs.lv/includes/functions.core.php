@@ -2505,6 +2505,10 @@ function get_game_monitor($url, $force = false) {
  */
 function send_email($to, $subject, $content) {
 
+	if(empty($to)) {
+		return false;
+	}
+
 	//suta e-pastu
 	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
