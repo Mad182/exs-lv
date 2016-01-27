@@ -41,7 +41,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 			$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
 			//sagabā iepriekšējo tekstu datubāzē
-			$db->query("INSERT INTO `miniblog_ver` (`mbid` ,`text` ,`nextmod` ,`modified` ,`ip`)
+			$db->query("INSERT INTO `miniblog_ver` (`mbid` ,`text` ,`user_id` ,`modified` ,`ip`)
 			VALUES ('".$mb->id."',  '".sanitize($mb->text)."',  '".$auth->id."', NOW( ) ,  '".$auth->ip."')");
 
 			return2mb($mb);
