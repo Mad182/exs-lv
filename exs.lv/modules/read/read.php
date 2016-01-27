@@ -437,14 +437,15 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$lastmodu = $article->author;
 					}
 
-					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category,is_wide) VALUES (
+					$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category,is_wide,ip) VALUES (
                         '$article->id',
                         '" . time() . "',
                         '" . sanitize($article->title) . "',
                         '" . sanitize($article->text) . "',
                         '" . $lastmodu . "',
                         '" . $article->category . "',
-                        '" . (int) $article->is_wide . "'
+                        '" . (int) $article->is_wide . "',
+						'" . $auth->ip . "'
                     )");
 
 					$db->query("UPDATE `pages` SET
