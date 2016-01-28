@@ -730,7 +730,7 @@ function update_awards($user) {
 
 	//custom medalas. atkomentēt pēc vajadzības un updatot tiem lietotajiem. ja masīvā nav izmaiņu, nav ko lieki trenkāt procesoru :crazy:
 	/*
-	  if(in_array($user,array(2,140,325,543,1822,2324,2339,3650,4711,6001,8531,8872,9048,9247,12605,14911,16267,21600))) {
+	  if(in_array($user,array(2,140,325,543,1822,2324,2339,3650,3962,4711,6001,8531,8872,9048,9247,12605,14911,16267,21600))) {
 	  $awards_list['exs-cup']['state'] = 'active';
 	  } */
 
