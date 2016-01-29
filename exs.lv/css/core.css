@@ -1071,6 +1071,11 @@ a.friend img, .comments-avatar {
 	line-height: 1px
 }
 
+.mb-av img.av {
+	width: 45px;
+	height: 45px
+}
+
 /* ikonas pie avatara */
 .user-deco {
 	width: 16px;
