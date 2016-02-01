@@ -288,7 +288,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 			$skip = 0;
 		}
 
-		// rs.exs.lv nerādīs citu projektu notifikācijas
+		// #rs nerādīs citu projektu notifikācijas
 		$lang_var = ($lang == 9) ? ' AND `lang` = 9 ' : '';
 
 		if ($notify = $db->get_results("SELECT * FROM `notify` WHERE `user_id` = '$user_id' $lang_var ORDER BY `bump` DESC LIMIT $skip,$end")) {
@@ -360,7 +360,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$total = 20;
 			}
 			if ($total > $end) {
-				$out .= '<p class="core-pager ajax-pager">';
+				$out .= '<p class="core-pager ajax-pager rs-notif-pager">'; // #rs specifiska klase
 				$startnext = 0;
 				$page_number = 0;
 				while ($total - $startnext > 0) {
@@ -2011,12 +2011,13 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$mb->text = wordwrap($mb->text, 36, "\n", 1);
 			$mb->text = str_replace('/', "/<wbr />", $mb->text);
 
+			$koef = ($mb->lang === 9) ? 10 : 0; // #rs projektā īsāks teksts			
 			if ($mb->groupid != 0 && empty($group_id)) {
-				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88, '...');
+				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88 - $koef, '...');
 			} elseif ($mb->lang != $lang) {
-				$mb->text = '<em><span>' . $config_domains[$mb->lang]['domain'] . '</span></em>' . textlimit($mb->text, 88, '...');
+				$mb->text = '<em><span>' . $config_domains[$mb->lang]['domain'] . '</span></em>' . textlimit($mb->text, 88 - $koef, '...');
 			} else {
-				$mb->text = textlimit($mb->text, 98, '...');
+				$mb->text = textlimit($mb->text, 88 - $koef, '...');
 			}
 
 			$mb->text = str_replace('.', ".<wbr />", $mb->text);
@@ -2030,7 +2031,11 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$out .= '<img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
 			$out .= '<span class="entry"><span class="author">' . h($mb->nick) . '</span> ';
 			$out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
-			$out .= $mb->text . '&nbsp;[' . $mb->posts . ']';
+			if ($lang === 9) { // #rs
+				$out .= $mb->text . '&nbsp;(' . $mb->posts . ')';
+			} else {
+				$out .= $mb->text . '&nbsp;[' . $mb->posts . ']';
+			}
 			$out .= '</span></a></li>';
 		}
 	}

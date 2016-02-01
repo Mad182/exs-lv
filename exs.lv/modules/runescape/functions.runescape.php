@@ -32,7 +32,7 @@ function fetch_news($type = 'rs3') {
 /**
  *  RuneScape.com jaunumu RSS feed lasītājs.
  *
- *  Veiks jaunāko ziņu nolasīšanu no mājaslapas (gan RS3, gan OS) un
+ *  Veiks jaunāko ziņu nolasīšanu no mājaslapas (gan RS3, gan OSRS) un
  *  tās saglabās datubāzē. Katram jaunumam izveidos attiecīgu miniblogu.
  *  Jaunumu logo tiek pārglabāti lokāli vai aizvietoti ar placeholderiem.
  *
@@ -66,12 +66,7 @@ function read_rss($force = false) {
 			$single->is_oldschool = ($key === 'oldschool') ? 1 : 0;
 			
 			// pārbaude, vai datubāzē šāds jaunums jau neeksistē
-			$single->hashval = sanitize(md5($single->pubDate.$single->title));
-			// temp code, lai sākotnēji uzģenerē tikai pāris miniblogus,
-			// nevis visiem 10+ rakstiem. Lai sakrājas pamazām.
-			if ($single->hashval == '0d178235ca794d1631d90405d85083c9') {
-				break;
-			}           
+			$single->hashval = sanitize(md5($single->pubDate.$single->title));        
 			$val = $db->get_var("
 				SELECT count(*) FROM `rs_news`
 					JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`

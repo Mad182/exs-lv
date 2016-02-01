@@ -3,7 +3,6 @@
  *  Visādi ar RuneScape apakšprojektu saistīti pieraksti.
  *
  *  @author Edgars Peļņa
- *
  */
 
 /*
@@ -125,6 +124,9 @@
 |--------------------------------------------------------------------------
 |   Ar RuneScape apakšprojektu saistītie faili.
 |--------------------------------------------------------------------------
+	
+	// failos, kas nav tieši saistīti tikai ar RuneScape, tajās vietās, kur
+	// darbības pielāgotas RS projektam, tiek pievienots #rs hashtags
 
     // funkciju, klašu u.c. faili tiek pārsvarā likti modules/runescape mapē,
     // lai ar RS saistītie faili būtu mazāk izmētāti pa dažādām vietām
@@ -163,6 +165,7 @@
 	
 	/index.php
 	/json_mb.php                         - ziņošanas podziņa
+	/latest.php
 	visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)
 	
 	functions.awards.php

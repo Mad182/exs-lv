@@ -223,10 +223,9 @@ if (isset($_GET['u'])) {
 	}
 }
 
-// RuneScape apakšprojekts ielādē papildu failu,
-// kas veic vēl atsevišķas pārbaudes
-if ($lang == 9) {
-	include(CORE_PATH . '/modules/runescape/core_settings.php');
+// #rs apakšprojekts ielādē failu, kas veic papildpārbaudes
+if ($lang === 9) {
+	include(CORE_PATH . '/modules/runescape/init.php');
 }
 
 //izdomā, ko darīt ar templeita opšeniem (rādīt vai nerādīt kreiso un labo kolonnu)

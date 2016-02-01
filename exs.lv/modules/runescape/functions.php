@@ -93,3 +93,99 @@ function get_rs_page_categories($current = null, $force = false) {
 	}
 	return $return;
 }
+
+/**
+ *	Atgriež sarakstu ar jaunākajiem RS rakstiem HTML veidā.
+ */
+function rs_get_latest_pages() {
+	global $auth, $db, $lang, $comments_per_page, $config_domains;
+	
+	$out = '';
+	$skip = (isset($_GET['pg'])) ? 8 * intval($_GET['pg']) : 0;
+	
+	$conditions = array();
+	$conditions[] = '`pages`.`lang` = '.$lang;
+	
+	// ņems vērā to, kurām kategorijām lietotājs neseko līdzi
+	if ($auth->ok) {
+		$ignores = $db->get_col("
+			SELECT `category_id` FROM `cat_ignore`
+			WHERE `user_id` = ".$auth->id
+		);
+		if (!empty($ignores)) {
+			foreach ($ignores as $ignore) {
+				$conditions[] = "`category` != $ignore";
+			}
+		}
+	}
+
+	$mods_only = '';
+	if (!im_mod()) {
+		$mods_only = " AND `cat`.`mods_only` = 0";
+	}
+
+	$latest = $db->get_results("
+		SELECT
+			`pages`.`title`,
+			`pages`.`id`,
+			`pages`.`posts`,
+			`pages`.`readby`,
+			`pages`.`strid`,
+			`pages`.`category`,
+			`pages`.`lang`,
+			`pages`.`bump`,
+			`cat`.`mods_only`
+		FROM
+			`pages`,
+			`cat`
+		WHERE
+			".implode(' AND ', $conditions).$mods_only." AND
+			`cat`.`id` = `pages`.`category`
+		ORDER BY
+			`pages`.`bump` DESC
+		LIMIT ".$skip.", 8
+	");
+
+	if ($latest) {
+
+		$out = '<ul id="latest-topics" class="blockhref">';
+		foreach ($latest as $late) {			
+			$skip = '';
+			if ($late->posts > $comments_per_page) {
+				$posts = $db->get_var("SELECT count(*) FROM `comments` WHERE `pid` = $late->id AND `parent` = 0 AND `removed` = 0");
+				if ($posts > $comments_per_page) {
+					$skip = '/com_page/' . floor(($posts - 1) / $comments_per_page);
+				}
+			}
+			if ($late->mods_only == 1) {
+				$late->title = '<em>' . $late->title . '</em>';
+			}
+			$out .= '<li><a href="' . '/read/' . $late->strid . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
+			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
+			if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
+				$out .= $late->title . '&nbsp;(' . $late->posts . ')</a></li>';
+			} else {
+				$out .= $late->title . '&nbsp;(<span class="r">' . $late->posts . '</span>)</a></li>';
+			}
+		}
+
+		// lappuses
+		$out .= '</ul><p class="core-pager ajax-pager">';
+		for ($i = 1; $i <= 5; $i++) {
+			$out .= ' <a class="page-numbers ';
+			if ($i == 1) {
+				$out .= 'default-posts-tab ';
+			}
+			if ((isset($_GET['pg']) && $_GET['pg'] == ($i - 1)) || (!isset($_GET['pg']) && $i == 1)) {
+				$out .= 'selected';
+			}
+			$out .= '" href="/latest.php?pg=' . ($i - 1) . '">' . $i . '</a>';
+			if ($i != 5) {
+				$out .= ' <span>-</span>';
+			}
+		}
+		$out .= '</p>';
+	}
+	
+	return $out;
+}

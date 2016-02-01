@@ -30,5 +30,9 @@ $auth = new Auth();
 if (isset($_GET['type']) && $_GET['type'] == 'images') {
 	echo get_latest_images();
 } else {
-	echo get_latest_posts();
+	if ($lang === 9) { // #rs
+		echo rs_get_latest_pages();
+	} else {
+		echo get_latest_posts();
+	}
 }
