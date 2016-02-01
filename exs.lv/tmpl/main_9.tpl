@@ -99,12 +99,18 @@
 		body {
 			background:url('{img-server}/bildes/runescape/wallpapers/lost-city-of-the-elves.jpg') no-repeat fixed 50% 0;
 		}
+		@media only screen and (min-width:1920px) {
+			body { background-size:cover; }
+		}
 	</style>
 	<!-- END BLOCK : rs-background-elves -->
 	<!-- START BLOCK : rs-background-goats -->
 	<style type="text/css">
 		body {
 			background:url('{img-server}/bildes/runescape/wallpapers/goats.jpg') no-repeat fixed 50% 0;
+		}
+		@media only screen and (min-width:1920px) {
+			body { background-size:cover; }
 		}
 	</style>
 	<!-- END BLOCK : rs-background-goats -->

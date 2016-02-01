@@ -39,11 +39,11 @@ body {
     /*background:url('/bildes/runescape/wallpapers/living-rocks.jpg') no-repeat fixed 50% 0;*/
 }
 /* background fix lielajiem ekrāniem  */
-@media only screen and (min-width:1920px) {
+/*@media only screen and (min-width:1920px) {
     body {
         background-size:cover;
     }
-}
+}*/
 
 /* vertically center */
 .vc-ghost-item {
