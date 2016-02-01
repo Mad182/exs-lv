@@ -5091,6 +5091,7 @@ fieldset[disabled] .button.primary.active {
 .button.success.disabled,
 
 
+
 .button.success[disabled],
 fieldset[disabled] .button.success,
 .button.success.disabled:hover,
@@ -5622,4 +5623,40 @@ img.attels_centrets {
 
 time.updated {
 	display: none
+}
+
+/* image blocks */
+
+p.imageblock {
+	margin: 10px 0;
+	padding: 0;
+	overflow: auto;
+}
+
+p.imageblock img {
+	margin-bottom: 3px;
+}
+
+p.images-2 img {
+	width: 49%;
+	margin-right:.5%;
+	float: left;
+}
+
+p.images-3 img {
+	width: 32%;
+	margin-right:.5%;
+	float: left;
+}
+
+p.images-4 img {
+	width: 24%;
+	margin-right:.5%;
+	float: left;
+}
+
+p.images-5 img {
+	width: 19%;
+	margin-right:.5%;
+	float: left;
 }
