@@ -30,6 +30,9 @@ class AuthBase {
 		$this->flood = 8;
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		$this->ok = false;
+		
+		$this->rs_bg = 0;
+		$this->rs_layout = 0;
 
 		// lai vēlāk iekš `visits` (un varbūt kur citur) varētu fiksēt tos,
 		// kas saturu ielādē caur Android appu

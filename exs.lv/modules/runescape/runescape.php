@@ -29,16 +29,17 @@ if ($auth->ok) {
         } else {
             $db->update('users', $auth->id, array('rs_bg' => 0));
         }
+        get_users($auth->id, true);
         redirect();
     }
     // izklājuma iestatījumi
-    // (cepums tiek pārbaudīts includes/right_9.php failā)
     if (isset($_GET['layout'])) {
         if ($_GET['layout'] === 'sticky') {
             $db->update('users', $auth->id, array('rs_layout' => 0));
         } else {
             $db->update('users', $auth->id, array('rs_layout' => 1));
         }
+        get_users($auth->id, true);
         redirect();
     }
 }
