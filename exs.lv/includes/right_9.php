@@ -1,17 +1,21 @@
 <?php
 /**
  *  RuneScape apakšprojekta labā kolonna.
- *  Aplūkojama tikai šaurākajās lapas sadaļās, kur redzamas abas kolonnas.
+ *
+ *  Aplūkojama tikai šaurākajās lapas sadaļās,
+ *	kur vienlaicīgiredzamas abas kolonnas.
  */
+
 $tpl->newBlock('main-layout-right');
+
 
 // jaunākais galerijās
 $sel = 'pages';
 if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
 	$out = get_latest_images();
 	$sel = 'gallery';
-} else {
-	$out = get_latest_posts();
+} else { // jaunākais rakstos/blogos
+	$out = rs_get_latest_pages();
 }
 $tpl->assign(array(
 	'latest-noscript'   => $out,
@@ -20,7 +24,7 @@ $tpl->assign(array(
 unset($out);
 
 
-//lietotāja notifikācijas
+// lietotāja notifikācijas
 if ($auth->ok === true) {
 	if ($html = get_notify($auth->id)) {
 		$tpl->newBlock('notification-list');

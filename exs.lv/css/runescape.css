@@ -1,21 +1,21 @@
 /**
- *  RuneScape apakšprojekta CSS stili.
+ *	RuneScape apakšprojekta CSS stili.
  *
- *  Satura rādītājs.
+ *	Satura rādītājs.
  *
- *  1. Šis un tas.
- *  2. Pārrakstītie core.css elementi
- *  3. Jaunie lapas pamatbloki
- *  4. Lapas šaurās kolonnas
- *  5. Dropdown izvēlnes
- *  6. --
- *  7. RuneScape jaunumi, sākumlapa
+ *	1. Šis un tas.
+ *	2. Pārrakstītie core.css elementi
+ *	3. Jaunie lapas pamatbloki
+ *	4. Lapas šaurās kolonnas
+ *	5. Dropdown izvēlnes
+ *	6. --
+ *	7. RuneScape jaunumi, sākumlapa
 	8.0 RuneScape faktu pārvaldība
 	8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas
 	8.2 rsmod - kvestu pārvaldība
 	8.3 rsmod - prasmju prasības
  *
- *  9.0 RuneScape pamācību sadaļu stili
+ *	9.0 RuneScape pamācību sadaļu stili
 	9.1 RS tabulas
 	9.2 RuneScape kvestu sadaļa
 		9.2.1 Kvestu sērijas
@@ -28,13 +28,15 @@
 		9.5.2 XP tabula
 	9.6 tasks un ģildes
  *
- *  10. Aptaujas
- *  11. tinyMCE uzliekamie stili
- *  12. Here be dragons!
+ *	10. Aptaujas
+ *	11. tinyMCE uzliekamie stili
+ *	12. Here be dragons!
  */
 
 body {
-	background:url('/bildes/runescape/wallpapers/lost-city-of-the-elves.jpg') no-repeat fixed 50% 0
+	background:url('/bildes/runescape/wallpapers/lost-city-of-the-elves.jpg') no-repeat fixed 50% 0;
+	/*background:url('/bildes/runescape/wallpapers/goats.jpg') no-repeat fixed 50% 0;*/
+	/*background:url('/bildes/runescape/wallpapers/living-rocks.jpg') no-repeat fixed 50% 0;*/
 }
 /* background fix lielajiem ekrāniem  */
 @media only screen and (min-width:1920px) {
@@ -75,7 +77,7 @@ body {
 	margin:20px auto
 }
 #cluetip {
-	font-size:12px    
+	font-size:12px	  
 }
 .is-right-aligned {
 	position:absolute;
@@ -102,8 +104,18 @@ body {
 .is-pointer:hover {
 	cursor:pointer
 }
+.has-ellipsis { /* rindas galā, aptrūkstoties vietai, pievienos "..." */
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
 
-/* 2. Pārrakstītie core.css elementi */
+/*
+|--------------------------------------------------------------------------
+|	2. Pārrakstītie core.css elementi
+|--------------------------------------------------------------------------
+*/
+
 #wrapper {
 	position:relative;
 	margin-top:100px;	
@@ -140,10 +152,10 @@ body {
 	width:95%
 }
 #content.no-left {
-	width:766px
+	width:765px
 }
 #content.no-right {
-	width:744px
+	width:761px;
 }
 .no-right #left {
 	left:0 !important
@@ -295,6 +307,7 @@ div pre {
 }
 
 /* raksta saturs */
+
 #full-story img {
 	max-width:550px
 }
@@ -331,7 +344,51 @@ div pre {
 	padding-left: 0
 }
 
-/* 3. Jaunie lapas pamatbloki */
+/* lappušu saraksts */
+
+.box .core-pager {
+	margin-top:11px;
+}
+.core-pager a {
+	background:transparent;
+	display:inline;
+	padding:3px 10px 2px;
+	border-radius:3px;
+}
+.core-pager a.selected {
+	/* fona vietā tikai tumšāks rāmis */
+	border:1px solid #a2a0a0;
+	font-weight:normal;
+	background:transparent;
+}
+.core-pager a:not(.selected):hover {
+	/* ne tik tumšs, kā .selected, bet tomēr izcelsies */
+	border:1px solid #c3bfbf;
+	text-decoration:none;
+}
+
+/* lappušu saraksts zem jaunākajām notifikācijām */
+
+.box .rs-notif-pager {
+	text-align:right;
+	/* šeit pogas būs mazākas */
+	margin-top:4px;
+	margin-bottom:-4px;
+	font-size:10px;
+}
+.box .rs-notif-pager a {
+	padding:1px 8px 1px;
+}
+.box .rs-notif-pager a:hover {
+	text-decoration:none;
+}
+
+/*
+|--------------------------------------------------------------------------
+|	3. Jaunie lapas pamatbloki
+|--------------------------------------------------------------------------
+*/
+
 .top-navig {
 	background:#000 url('/bildes/runescape/nav-pattern-blue.png') repeat-x;
 	border-bottom:2px solid #000;
@@ -420,52 +477,25 @@ ul.nav-right {
 	#header-slider img {
 		max-height:130px
 	}
-.new-groups p {
-	display: block;
-	clear: both;
-	overflow: auto;
-	border-bottom: 1px solid #F3EEEE;
-	padding: 2px 0
-}
-.new-groups img {
-	float:left;
-	margin:0 5px 0 0;
-	max-width:40px;
-	max-height:40px
-}
-.new-groups a {
-	margin-top: 11px;
-	margin-left:5px;
-	display: inline-block
-}
 
-/* 4. Lapas šaurās kolonnas */
+/*
+|--------------------------------------------------------------------------
+|	4. Lapas šaurās kolonnas
+|--------------------------------------------------------------------------
+*/
+
 #rs_columns {
 	overflow:auto;
 	background-image:url('/bildes/runescape/pattern-cols.png')
 }
-.box {
-	background:#FCFCFD
+#right {
+	width:202px;
+	padding-left:4px;
+	padding-right:5px;
 }
-.col-box {
-	clear:both;
-	overflow:auto;
-	padding: 5px;
-	margin:0 0 5px;
-	background-color:rgba(253, 253, 253, 0.7);
-	border: 2px solid #D3D0D0;
-	font-size: 11px
-}
-.col-box-title {
-	display: inline-block;
-	margin-left: 20px;
-	margin-top: 10px;
-	font-size: 11px;
-	font-weight: 700;
-	color: #C8CED5;
-	padding: 3px 12px;
-	background: #232527;
-	border-bottom: 1px solid #C7C7C7
+#left {
+	padding-left:3px;
+	padding-right:4px;
 }
 #left .comments {
 	background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -780px
@@ -478,28 +508,220 @@ ul.nav-right {
 	top:3px;
 	margin-right:7px
 }
-/* random fact box  */
+
+/* abām kolonnām kopīgi stili */
+
+#left, #right {
+	padding-top:0;
+}
+#left h3, #right h3 {
+	margin:8px 0 0;
+	padding-left:12px;
+	color:#335572;
+	background-image:linear-gradient(#fffffe, #fffffe 25%, #e6e6e6);
+}
+#left h3 .mb-create,
+#right h3 .mb-create {
+	float:right;
+	margin:2px 8px 2px 2px;
+}
+.box {
+	background:#FCFCFD
+}
+.box .tabs {
+	/* pirms ciļņu rindas nebūs atstarpes,
+	   un rinda būs visā platumā */
+	margin:-5px -5px 0;
+}
+.box .tabs li:first-child {
+	margin-right:4px;
+}
+.box .tabs a {
+	margin-right:0;	
+}
+.box .tabs a,
+.box .tabs a.active,
+.box .tabs a.active:hover {
+	padding:4px 13px;
+}
+.box .tabs span {
+	padding-left:24px;
+	padding-top:1px;
+}
+
+/* jaunāko miniblogu saraksts */
+
+#mb-list li {
+	padding:1px 0 3px;
+}
+#mb-list li:hover {
+	background:#f5f5f6;
+}
+#mb-list .av {
+	border-radius:50%; /* apaļi avatari */
+	margin-bottom:2px;
+}
+#mb-list a:hover {
+	background:none
+}
+#mb-list .author {
+	color:#33568C;
+	padding-bottom:2px;
+}
+#mb-list .post-time {
+	text-transform:uppercase;
+	font-size:10px;
+	padding-bottom:2px;
+}
+#mb-list em {
+	display:block;
+	padding-bottom:4px;
+}
+	#mb-list em span {
+		display:block;
+		/* papildsaturs vienā rindā ar ellipsis galā */
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+	}
+#mb-list .entry {
+	/* lielāka augšējā atkāpe no laika */
+	padding-top:5px;
+}
+.mb-col li.group {
+	/* nedaudz dzeltenāks tonis */
+	border-bottom:1px solid #e9c32d;
+}
+
+/* jaunāko grupu saraksts */
+
+.new-groups p {
+	display:block;
+	clear:both;
+	overflow:auto;
+	border-bottom:1px solid #F3EEEE;
+	padding:4px 0;
+}
+.new-groups img {
+	max-width:30px;
+	max-height:30px;
+	margin:0 10px 0 0;
+	float:left;
+	border-radius:3px;
+}
+.new-groups a {
+	margin-top:7px;
+	margin-right:10px;
+	display:block;
+}
+.see-other-groups {
+	font-size:13px;
+	margin:6px 5px 2px 0;
+	text-align:right;
+}
+.see-other-groups a {
+	color:#6b6b6b;
+	margin:0;
+}
+
+/* nejaušs RuneScape fakts */
+
 .facts-box {
 	min-height:100px;
-	padding:5px 10px
+	padding:5px 15px;
 }
-	.facts-box, .facts-box p {
-		line-height: 1.8;
-		font-size: 13px;
-		text-indent: 10px;
-	}
+.facts-box, .facts-box p {
+	line-height:1.8;
+	font-size:12px;
+}
 .fetch-new-fact {
 	background:url('/bildes/fugue-icons/arrow-circle-225.png') no-repeat center center;
 	float:right;
 	height:16px;
 	width:16px;
-	padding:2px
+	padding:2px;
 }
 .fetch-new-fact:hover {
-	background-color:#C8D9EC
+	background-color:#C8D9EC;
 }
 
-/* 5. dropdown izvēlnes */
+/* jaunāko rakstu saraksts */
+
+#latest-topics .av {
+	border-radius:50%;
+}
+#latest-topics .post-time {
+	margin-top:2px;
+	margin-bottom:2px;
+	padding-bottom:2px;
+	text-transform:uppercase;
+	font-size:10px;
+	color:#888;
+}
+#latest-topics.blockhref li a {
+	/* mūsdienās glītāk, ja no kreisā sāna atkāpes nav :) */
+	padding-left:0;
+	padding-bottom:5px;
+	line-height:1.25;
+}
+	
+/* lietotāja notifikāciju saraksts */
+
+#user-notify li a {	
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+}
+#user-notify li span.info-content {
+	color:#0a6eb1;
+}
+#user-notify .notification-date {
+	/*text-transform:uppercase;*/
+	font-size:12px;
+	margin-bottom:2px;
+}
+
+/* jaunāko attēlu saraksts */
+
+.latest-imgs a span.cnt {
+	display:inline;
+	background:#757070;	
+}
+.latest-imgs a span.cnt span {
+	color:#fff;
+}
+#wrapper .latest-imgs .r {
+	background:#ef6000; /* sarkanāks background, lai izceltos */
+	color:#fff;
+}
+
+/* aptaujas bloks */
+
+.poll-box {
+	padding:10px;
+}
+.poll-box form input[type=submit] {
+	padding:2px 13px;
+	float:right;
+	margin:10px 0 -4px;
+}
+.poll-box #poll-questions li {
+	padding:4px 2px;
+}
+.poll-box .poll-answers li {
+	padding-left:0;
+}
+.poll-box .poll-text {
+	margin-top:10px;
+	display:block;
+}
+
+/*
+|--------------------------------------------------------------------------
+|	5. Dropdown izvēlnes
+|--------------------------------------------------------------------------
+*/
+
 .droplist li {
 	position:relative
 }
@@ -576,15 +798,49 @@ ul.nav-right {
 		height:16px
 	}
 
-/* 6. -- */
+/*
+|--------------------------------------------------------------------------
+|	6. ...
+|--------------------------------------------------------------------------
+*/
 
-/* 7. RuneScape jaunumi, sākumlapa */
+/*
+|--------------------------------------------------------------------------
+|	7. RuneScape jaunumi, sākumlapa
+|--------------------------------------------------------------------------
+*/
+
+/* divas kolonnas ar RS3 un OSRS jaunumu virsrakstiem tajās */
+.rsnews-container {
+	background:#fff;
+	border:1px solid #F9F9F9;
+	padding:10px 14px;
+	margin:10px 0;
+	min-height:100px;
+}
+.rsnews-container p {
+	font-size:12px
+}
+
 .rsnews-header {
 	margin:0 auto 10px;
 	font-size:18px
 }
+.rsnews-tabs {
+	margin:0;
+}
 .rsnews-tabs li {
-	float:right
+	float:right;
+	margin-right:0;
+}
+.rsnews-tabs li a,
+.rsnews-tabs li a.active,
+.rsnews-tabs li a.active:hover {
+	padding:4px 13px;
+}
+.rsnews-tabs li a span {
+	padding-left:24px;
+	padding-top:1px;
 }
 .official-news {
 	margin:0 0 20px 0;
@@ -607,7 +863,7 @@ ul.nav-right {
 	}
 	.official-news img {
 		margin-right:12px;
-		max-width:125px;
+		width:125px;
 		max-height:85px
 	}
 	.official-news p {
@@ -670,7 +926,12 @@ ul.nav-right {
 		color: rgb(249, 63, 91)
 	}
 
-/* 8.0 RuneScape faktu pārvaldība */
+/*
+|--------------------------------------------------------------------------
+|	8.0 RuneScape faktu pārvaldība
+|--------------------------------------------------------------------------
+*/
+
 table.facts-table th, table.facts-table td {
 	padding:5px 10px
 }
@@ -694,7 +955,12 @@ table.facts-table .row-counter {
 	text-align:center
 }
 
-/* 8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas */
+/*
+|--------------------------------------------------------------------------
+|	8.1 rsmod - pamācību saraksti, rediģēšanas/pievienošanas formas
+|--------------------------------------------------------------------------
+*/
+
 .list-intro, .list-text, .simple-note {
 	background-color:#f4f5f7;
 	margin:10px 3px;
@@ -733,7 +999,12 @@ table.facts-table .row-counter {
 	height:auto
 }
 
-/* 8.2 rsmod - kvestu pārvaldība */
+/*
+|--------------------------------------------------------------------------
+|	8.2 rsmod - kvestu pārvaldība
+|--------------------------------------------------------------------------
+*/
+
 .rslist.series-list {
 	background:#fff;
 	float:left;
@@ -814,7 +1085,12 @@ table.facts-table .row-counter {
 		background:rgb(250, 207, 214)
 	}
 
-/* 8.3 rsmod - prasmju prasības */
+/*
+|--------------------------------------------------------------------------
+|	8.3 rsmod - prasmju prasības
+|--------------------------------------------------------------------------
+*/
+
 table.skill-reqs {
 	float:left;
 	width:47%;
@@ -845,7 +1121,12 @@ table.skill-reqs {
 	border:1px solid #fcb7bd
 }
 
-/* 9.0 RuneScape pamācību sadaļu stili */
+/*
+|--------------------------------------------------------------------------
+|	9.0 RuneScape pamācību sadaļu stili
+|--------------------------------------------------------------------------
+*/
+
 .rs-intro {
 	margin:10px 20px 20px;
 	padding:7px 15px;
@@ -864,7 +1145,12 @@ table.skill-reqs {
 	line-height:1.5
 }
 
-/* 9.1 RS tabulas */
+/*
+|--------------------------------------------------------------------------
+|	9.1 RS tabulas
+|--------------------------------------------------------------------------
+*/
+
 .rslist {
   font-size:11px;
   margin:10px auto
@@ -903,12 +1189,22 @@ table.skill-reqs {
 	border-top:2px solid #bbb
   }
 
-/* 9.2 RuneScape kvestu sadaļa */
+/*
+|--------------------------------------------------------------------------
+|	9.2 RuneScape kvestu sadaļa
+|--------------------------------------------------------------------------
+*/
+
 .placeholder {
 	color:#8993a0
 }
 
-/* 9.2.1 Kvestu sērijas */
+/*
+|--------------------------------------------------------------------------
+|	9.2.1 Kvestu sērijas
+|--------------------------------------------------------------------------
+*/
+
 #khazard {
 	max-height:120px;
 	padding-right:10px
@@ -944,7 +1240,13 @@ table.skill-reqs {
 		display:block;
 		background:url('/bildes/runescape/li.png') no-repeat;
 	}
-/* 9.2.2 Kvestu statistika */
+
+/*
+|--------------------------------------------------------------------------
+|	9.2.2 Kvestu statistika
+|--------------------------------------------------------------------------
+*/
+
 #balance {
 	border-bottom:1px solid #ccc;
 	max-height:220px;
@@ -971,7 +1273,13 @@ table.skill-reqs {
 .stats-left tr.space td {
 	padding-top:17px
 }
-/* 9.2.3 Prasmju prasības */
+
+/*
+|--------------------------------------------------------------------------
+|	9.2.3 Prasmju prasības
+|--------------------------------------------------------------------------
+*/
+
 .skill-req {
 	margin:20px auto
 }
@@ -986,7 +1294,12 @@ table.skill-reqs {
 	color:#495d90
 }
 
-/* 9.3 freeplay & miniquests */
+/*
+|--------------------------------------------------------------------------
+|	9.3 freeplay & miniquests
+|--------------------------------------------------------------------------
+*/
+
 .simple-quests {
 	margin:20px 50px 20px 20px;
 	width:95%
@@ -1010,7 +1323,12 @@ table.skill-reqs {
 		color:#7e888a
 	}
 
-/* 9.4 minigames & D&D */
+/*
+|--------------------------------------------------------------------------
+|	9.4 minigames & D&D
+|--------------------------------------------------------------------------
+*/
+
 #logo-minigames {
   max-height:110px
 }
@@ -1062,7 +1380,12 @@ table.skill-reqs {
 	background:#f1f1f1
 }
 
-/* 9.5 prasmes */
+/*
+|--------------------------------------------------------------------------
+|	9.5 prasmes
+|--------------------------------------------------------------------------
+*/
+
 #sage {
 	margin:5px;
 	position:relative;
@@ -1092,7 +1415,7 @@ table.skill-reqs {
 	font-weight: 700;
 	color:#3e5265;
 	font-size:13px
-}    
+}	 
 .skill-links {
 	padding-top:5px;
 	width:15%;
@@ -1129,7 +1452,13 @@ table.skill-reqs {
 	margin-top:35px;
 	margin-bottom:15px
 }
-/* 9.5.1 Fakti */
+
+/*
+|--------------------------------------------------------------------------
+|	9.5.1 Fakti
+|--------------------------------------------------------------------------
+*/
+
 #skills-facts {
 	margin:20px 70px 10px 30px;
 	clear:both;
@@ -1147,7 +1476,13 @@ table.skill-reqs {
 		margin:15px auto 0;
 		display:block
 	}
-/* 9.5.2 XP tabula */
+
+/*
+|--------------------------------------------------------------------------
+|	9.5.2 XP tabula
+|--------------------------------------------------------------------------
+*/
+
 .xp-table tr td {
 	font-size:12px
 }
@@ -1161,7 +1496,12 @@ table.skill-reqs {
 	margin-left:15px
 }
 
-/* 9.6 tasks un ģildes */
+/*
+|--------------------------------------------------------------------------
+|	9.6 Tasks un ģildes
+|--------------------------------------------------------------------------
+*/
+
 #trollis {
 	max-height:110px;
 	margin:0 10px 5px 0
@@ -1241,7 +1581,12 @@ table.skill-reqs {
 		color:#0059A7
 	}
 
-/* 10. Aptaujas */
+/*
+|--------------------------------------------------------------------------
+|	10. Aptaujas
+|--------------------------------------------------------------------------
+*/
+
 .poll-box strong {
 	color:#344669
 }
@@ -1303,7 +1648,12 @@ table.skill-reqs {
 	margin-left:20px
 }
 
-/* 11. tinyMCE uzliekamie stili */
+/*
+|--------------------------------------------------------------------------
+|	11. tinyMCE uzliekamie stili
+|--------------------------------------------------------------------------
+*/
+
 .rs-image-left {
 	float:left;
 	margin:5px 7px 7px 0;
@@ -1322,4 +1672,9 @@ table.skill-reqs {
 .simple-links a {
 	color:inherit
 }
-/* 12. Sadly no dragons here... */
+
+/*
+|--------------------------------------------------------------------------
+|	12. Sadly no dragons here...
+|--------------------------------------------------------------------------
+*/

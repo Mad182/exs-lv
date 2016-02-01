@@ -31,6 +31,38 @@ if (isset($_COOKIE['last-rsnews-tab']) &&
 
 read_rss(); // iekšēji funkcija nolasīs tikai reizi x minūtēs
 
+// $tpl->newBlock('articles-container');
+
 $tpl->newBlock('news-tabs');
 $tpl->assign($news_type.'-selected', 'active '); 
 $tpl->assign('selected-news', fetch_news($news_type));
+
+// jaunais bloks ar jaunāko RuneScape ziņu virsrakstiem
+// $tpl->newBlock('rsnews-container');
+
+/*$all_news = $db->get_results("
+	SELECT
+		`rs_news`.`id`,
+		`rs_news`.`mb_id`,
+		`rs_news`.`has_image`,
+		`rs_news`.`news_title`          AS `title`,
+		`rs_news`.`news_description`    AS `description`,
+		`rs_news`.`news_date`           AS `date`,
+		`rs_news`.`news_category`       AS `category`,
+		`rs_news`.`news_link`           AS `link`,
+		`miniblog`.`removed`,
+		`miniblog`.`text`
+	FROM `rs_news`
+		JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
+	WHERE
+		`rs_news`.`deleted_by` = 0 AND
+		`rs_news`.`is_oldschool` = 0
+	ORDER BY `rs_news`.`id` DESC LIMIT 5
+");
+
+if ($all_news) {
+	foreach ($all_news as $news) {
+		$tpl->newBlock('rsnews-single');
+		$tpl->assign('title', $news->title);
+	}
+}*/

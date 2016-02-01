@@ -107,7 +107,9 @@ if($auth->ok) {
 
 // poga uz jauna ieraksta pievienošanu
 if ($auth->ok === true) {
-	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
+	$tpl->assignGlobal(
+		'miniblog-add',
+		'&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">izveidot</a>');
 }
 
 
