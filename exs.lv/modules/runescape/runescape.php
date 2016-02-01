@@ -29,7 +29,7 @@ if ($auth->ok) {
         } else {
             $db->update('users', $auth->id, array('rs_bg' => 0));
         }
-        get_user($auth->id, true);
+        $auth->reset();
         redirect();
     }
     // izklājuma iestatījumi
@@ -39,7 +39,7 @@ if ($auth->ok) {
         } else {
             $db->update('users', $auth->id, array('rs_layout' => 1));
         }
-        get_user($auth->id, true);
+        $auth->reset();
         redirect();
     }
 }
