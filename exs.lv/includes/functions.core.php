@@ -257,7 +257,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
  * Atgriež lietotāja notifikāciju HTML sarakstu
  */
 function get_notify($user_id, $base = '/events-pager?events-page=') {
-	global $db, $lang, $new_msg_html, $auth, $config_domains; //man kauns :(
+	global $db, $lang, $new_msg_html, $auth, $config_domains, $auth; //man kauns :(
 	$user_id = intval($user_id);
 	$out = '';
 	$texts = array(
@@ -330,6 +330,16 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$class = $notify->type;
 				if ($notify->type == 8) {
 					$class = 3;
+
+					//hide text for unauthorized users if the group has hide_intro = 1
+					if(!$auth->ok || $auth->id != $user_id) {
+						$gr = $db->get_var("SELECT `groupid` FROM `miniblog` WHERE `id` = '$notify->foreign_key'");
+						$hide = $db->get_row("SELECT `hide_intro`, `title` FROM `clans` WHERE `id` = '$gr'");
+						if(!empty($hide->hide_intro)) {
+							$notify->info = $hide->title;
+						}
+					}
+
 				}
 				$out .= '<li class="notification-' . $class . '"><a ';
 				if (!empty($notify->info) && $notify->info != 'twitter') {
@@ -1490,7 +1500,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			//dzēst (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && !$auth->mobile && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
+			if ($val->mb_removed == 0 && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
 				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 
@@ -2499,6 +2509,10 @@ function get_game_monitor($url, $force = false) {
  * E-pastu izsūtīšana
  */
 function send_email($to, $subject, $content) {
+
+	if(empty($to)) {
+		return false;
+	}
 
 	//suta e-pastu
 	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');

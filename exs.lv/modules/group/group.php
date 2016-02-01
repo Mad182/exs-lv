@@ -131,6 +131,10 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	if (isset($_POST['edit-group-text']) && check_token('groupedit', $_POST['xsrf_token'])) {
 		$edit_text = htmlpost2db($_POST['edit-group-text']);
 
+		//saglabā veco teksta versiju
+		$db->query("INSERT INTO `clans_ver` (`group_id` ,`text` ,`avatar` ,`title` , `user_id` ,`modified` ,`ip`)
+					VALUES ('".$group->id."', '".sanitize($group->text)."' , '".sanitize($group->avatar)."' , '".sanitize($group->title)."' , '".$auth->id."' , NOW(), '".$auth->ip."')");
+
 		if (isset($_FILES['edit-avatar'])) {
 			$group->avatar = upload_user_avatar($_FILES['edit-avatar'], $group->avatar, 'group_' . time() . '_' . $group->id);
 		}

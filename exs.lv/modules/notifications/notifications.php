@@ -73,6 +73,16 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 						$class = $notify->type;
 						if ($notify->type == 8) {
 							$class = 3;
+
+							//hide text for unauthorized users if the group has hide_intro = 1
+							if(!$auth->ok || $auth->id != $user_id) {
+								$gr = $db->get_var("SELECT `groupid` FROM `miniblog` WHERE `id` = '$notify->foreign_key'");
+								$hide = $db->get_row("SELECT `hide_intro`, `title` FROM `clans` WHERE `id` = '$gr'");
+								if(!empty($hide->hide_intro)) {
+									$notify->info = $hide->title;
+								}
+							}
+
 						}
 
 						echo '		<item>', "\n";
@@ -135,6 +145,16 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 						$class = $notify->type;
 						if ($notify->type == 8) {
 							$class = 3;
+
+							//hide text for unauthorized users if the group has hide_intro = 1
+							if(!$auth->ok || $auth->id != $user_id) {
+								$gr = $db->get_var("SELECT `groupid` FROM `miniblog` WHERE `id` = '$notify->foreign_key'");
+								$hide = $db->get_row("SELECT `hide_intro`, `title` FROM `clans` WHERE `id` = '$gr'");
+								if(!empty($hide->hide_intro)) {
+									$notify->info = $hide->title;
+								}
+							}
+
 						}
 
 						$data[] = array(

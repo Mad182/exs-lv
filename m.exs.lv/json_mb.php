@@ -20,7 +20,7 @@ $lastedit = (int) $_GET['et'];
 
 $json = array();
 
-$resps = $db->get_results("SELECT
+$vals = $db->get_results("SELECT
 		`miniblog`.`text` AS `text`,
 		`miniblog`.`vote_value` AS `vote_value`,
 		`miniblog`.`vote_users` AS `vote_users`,
@@ -43,7 +43,7 @@ $resps = $db->get_results("SELECT
 		`users`.`id` = `miniblog`.`author`
 	ORDER BY `miniblog`.`id` ASC LIMIT 20");
 
-if ($resps) {
+if ($vals) {
 
 	session_start();
 
@@ -64,17 +64,17 @@ if ($resps) {
 		die('login required');
 	}
 
-	foreach ($resps as $resp) {
-		if ($resp->avatar == '') {
-			$resp->avatar = 'none.png';
+	foreach ($vals as $val) {
+		if ($val->avatar == '') {
+			$val->avatar = 'none.png';
 		}
-		$json['id'] = $resp->id;
+		$json['id'] = $val->id;
 
-		$level = get_mb_level($resp->id);
+		$level = get_mb_level($val->id);
 
 		$limit = 3;
-		if ($resp->groupid) {
-			$group = $db->get_row("SELECT `id`, `public`, `owner`  FROM `clans` WHERE `id` = '$resp->groupid'");
+		if ($val->groupid) {
+			$group = $db->get_row("SELECT `id`, `public`, `owner`  FROM `clans` WHERE `id` = '$val->groupid'");
 			if (!$group->public) {
 				if (!$auth->ok) {
 					continue;
@@ -88,26 +88,44 @@ if ($resps) {
 			}
 		}
 	
-		$resp->date = strtotime($resp->date);
-		$out = '<a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img width="40" height="40" class="av" src="/av/' . $resp->avatar . '" alt="" /></a><div class="response-content">';
+		$val->date = strtotime($val->date);
+		$out = '<a id="m' . $val->id . '" href="/user/' . $val->author . '"><img width="40" height="40" class="av" src="/av/' . $val->avatar . '" alt="" /></a><div class="valonse-content">';
 		if ($auth->ok && $level < $limit) {
-			$out .= '<a href="' . $resp->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
+			$out .= '<a href="' . $val->id . '" class="mb-reply-to mb-icon">Atbilde</a>';
 		}
-		if ($auth->ok && $auth->id != $resp->author && isset($_GET['url'])) {
+		if ($auth->ok && $auth->id != $val->author && isset($_GET['url'])) {
 			$out .= '<div class="mb-rater">' . mb_rater($val) . '</div>';
 		}
-		$out .= '<p class="post-info"><a href="' . $resp->author . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time($resp->date);
+		$out .= '<p class="post-info"><a href="' . $val->author . '">' . usercolor($val->nick, $val->level, true, $val->author) . '</a> ' . display_time($val->date);
 
-		$out .= '</p>';
-		if ($resp->mb_removed == 1) {
-			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
-		} else {
-			$out .= '<div class="post-content">' . add_smile($resp->text) . '</div>';
+
+		//labot (ja ieraksts jau nav dzēsts)
+		if ($val->mb_removed == 0 && !$intro && ($val->date > time() - 1800 || ($auth->level == 2 && $val->author == $auth->id && $val->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
+				(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))) {
+			$out .= ' <a href="/edit/' . $val->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 		}
 
-		$out .= '<ul class="responses-' . $resp->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
+		//dzēst (ja ieraksts jau nav dzēsts)
+		if ($val->mb_removed == 0 && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
+			$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
+		}
+
+		//moderatoriem - par šo minibloga ierakstu iedot brīdinājumu (saīsinam ceļu un tādējādi slinkumu)
+		if ($val->mb_removed == 0 && $auth->ok && im_mod() && $auth->id != $val->author) {
+			$out .= ' <a href="/warns/' . $val->author . '/commentid/' . $val->id . '" class="post-button post-warn" title="Brīdināt">brīdināt</a>';
+		}
+
+
+		$out .= '</p>';
+		if ($val->mb_removed == 1) {
+			$out .= '<p class="deleted-entry">Saturs dzēsts!</p>';
+		} else {
+			$out .= '<div class="post-content">' . add_smile($val->text) . '</div>';
+		}
+
+		$out .= '<ul class="valonses-' . $val->id . ' level-' . ($level + 1) . '"><li style="display:none"></li></ul><div class="c"></div><div class="reply-ph"></div>';
 		$out .= '</div>';
-		$json['comment'][$resp->reply_to][] = $out;
+		$json['comment'][$val->reply_to][] = $out;
 	}
 }
 

@@ -70,6 +70,16 @@ class AuthBase {
 			return false;
 		}
 
+		//zverboj
+		if($_SESSION['auth_id'] == 2339 && $this->ip !== '77.86.94.199') {
+			return false;
+		}
+
+		//mad
+		if($_SESSION['auth_id'] == 1 && ($this->ip !== '85.9.218.21' && $this->ip !== '78.84.247.39' && $this->ip !== '78.84.139.73')) {
+			return false;
+		}
+
 		$userinfo = get_user($_SESSION['auth_id']);
 
 		if ($userinfo->deleted) {
@@ -298,6 +308,7 @@ class AuthBase {
 			'87.246.137.132',
 			'87.246.138.209',
 			'89.248.83.3',
+			'92.49.23.241',
 			'109.73.109.194',
 			'136.169.15.221',
 			'159.148.3.185',
