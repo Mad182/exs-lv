@@ -105,13 +105,9 @@
     <table class="stats-left vc-item">
         <tr><td class="left">P2P kvesti:</td><td>{p2p}</td></tr>
         <tr><td class="left">F2P kvesti:</td><td>{f2p}</td></tr>
-        <tr class="space"><td class="left">2016. gadā:</td><td>{16}</td></tr>
-        <tr><td class="left">15. gadā:</td><td>{15}</td></tr>
-        <tr><td class="left">14. gadā:</td><td>{14}</td></tr>
-        <tr><td class="left">13. gadā:</td><td>{13}</td></tr>
-        <tr><td class="left">12. gadā:</td><td>{12}</td></tr>
-        <tr><td class="left">11. gadā:</td><td>{11}</td></tr>
-        <tr><td class="left">10. gadā:</td><td>{10}</td></tr>
+		<!-- START BLOCK : stats-single-year -->
+        <tr class="{row-class}"><td class="left">{short-year}. gadā:</td><td>{quest-count}</td></tr>
+		<!-- END BLOCK : stats-single-year -->
         <tr><td class="left">Senāk:</td><td>{older}</td></tr>  
     </table>
     <img id="balance" class="vc-item" src="{img-server}/bildes/runescape/intro/balance.png" title="Balance Elemental" alt="">

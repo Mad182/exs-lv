@@ -269,7 +269,21 @@ class Quests extends Controller {
 
         $this->view->newBlock('stats-found');
         foreach ($stats as $key => $value) {
-            $this->view->assign($key, $value);
+            // apakšmasīvs, kur pie katra gada norādīts iznākušo kvestu skaits
+            if ($key === 'years') {
+                foreach ($value as $single_year => $quest_count) {
+                    $this->view->newBlock('stats-single-year');
+                    $this->view->assignAll(array(
+                        'short-year' => $single_year,
+                        'quest-count' => $quest_count
+                    ));
+                    if ($single_year == date('Y')) {
+                        $this->view->assign('row-class', 'space');
+                    }
+                }
+            } else { // citas vērtības
+                $this->view->assign($key, $value);
+            }
         }   
     }
     
