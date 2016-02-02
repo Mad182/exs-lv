@@ -1121,42 +1121,42 @@ table.skill-reqs {
 */
 
 .rslist {
-  font-size:11px;
-  margin:10px auto
+	font-size:11px;
+	margin:10px auto;
 }
 .rslist.col-list {
     float:left;
-    margin-left:10px
+    margin-left:10px;
 }
 .rslist .listhead {
-  border-bottom:2px solid #ddd;
-  font-weight: 700;
-  background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
-  color:#374a55
+	border-bottom:2px solid #ddd;
+	font-weight:700;
+	background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
+	color:#374a55;
 }
 .rslist tr td {
-  padding:3px;
-  border-bottom:1px solid #ddd
+	padding:4px 3px 3px;
+	border-bottom:1px solid #ddd;
 }
-  .rslist tr.listhead:hover td {
-    background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top
-  }
-  .rslist tr td.center, .rslist-center td {
-    text-align:center
-  }
-  .rslist tr td.right {
-    text-align:right
-  }
-  .rslist tr.letter td {
-    font-weight: 700
-  }
-  .rslist .number {
-    color:#333;
-    font-weight: 700
-  }
-  .rslist .border {
-    border-top:2px solid #bbb
-  }
+.rslist tr.listhead:hover td {
+	background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
+}
+.rslist tr td.center, .rslist-center td {
+	text-align:center;
+}
+.rslist tr td.right {
+	text-align:right;
+}
+.rslist tr.letter td {
+	font-weight:700;
+}
+.rslist .number {
+	color:#333;
+	font-weight:700;
+}
+.rslist .border {
+	border-top:2px solid #bbb;
+}
 
 /*
 |--------------------------------------------------------------------------
