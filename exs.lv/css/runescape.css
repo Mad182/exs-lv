@@ -97,6 +97,15 @@
     overflow:hidden;
     white-space:nowrap;
 }
+/* bloks ar gaišu fonu un rāmi, kurā ievietot informatīvu tekstu */
+.simple-note {
+    margin:10px 3px;
+	padding:7px 15px;
+    background-color:#f4f5f7;
+    border:1px solid #e2e6ec;
+    font-size:12px;
+	line-height:1.5;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -930,18 +939,17 @@ table.facts-table .row-counter {
 |--------------------------------------------------------------------------
 */
 
-.list-intro, .list-text, .simple-note {
+.list-intro, .list-text {
     background-color:#f4f5f7;
     margin:10px 3px;
     border:1px solid #e2e6ec;
-    font-size:12px
+    font-size:12px;
 }
     .list-intro {
         background:#f4f5f7 url('//img.exs.lv/bildes/notice.png') no-repeat 1% 10%;
-        padding:7px 12px 7px 45px;
-        text-indent:10px
+        padding:7px 12px 7px 48px;
     }
-    .list-text, .simple-note {
+    .list-text {
         padding:7px 12px;
     }
 .list-no-pages {
@@ -1096,8 +1104,9 @@ table.skill-reqs {
 |--------------------------------------------------------------------------
 */
 
+/* kvestu sēriju sadaļa */
 .rs-intro {
-    margin:10px 20px 20px;
+    margin:20px;
     padding:7px 15px;
     border:1px solid #ddd;
     border-bottom:2px solid #bbb;
@@ -1109,7 +1118,6 @@ table.skill-reqs {
     left:-7px
 }
 .rs-intro p {
-    text-indent:10px;
     font-size:13px;
     line-height:1.5
 }
