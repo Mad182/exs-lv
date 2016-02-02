@@ -1,6 +1,6 @@
 <?php
 
-
+/*
 $clans = $db->get_results("SELECT id from clans");
 
 foreach($clans as $clan) {
@@ -9,7 +9,7 @@ foreach($clans as $clan) {
 	
 	
 	$db->query("UPDATE clans SET last_activity = '$post' WHERE id = $clan->id");
-}
+}*/
 
 exit;
 $number_of_days_from_now = 3299;
