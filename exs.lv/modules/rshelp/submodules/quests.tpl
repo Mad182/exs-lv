@@ -26,7 +26,9 @@
 <!-- END BLOCK : no-series-found -->
 
 <!-- START BLOCK : series-block -->
-<p class="simple-note" style="margin-bottom:20px;text-indent:7px">Šis sadalījums pa sērijām ir neoficiāls, arī liela daļa kvestu iederas vairākās sērijās, savukārt pašas sērijas nereti viena ar otru pārklājas vai papildina kādu citu, tāpēc atspoguļotais kādam var nešķist pilnīgi pareizs.</p>
+<p class="simple-note" style="margin:5px 20px 20px">
+	Šis sadalījums pa sērijām ir neoficiāls, un liela daļa kvestu iederas vairākās sērijās, savukārt sērijas nereti viena ar otru pārklājas vai papildina kādu citu, tāpēc parādītais sadalījums nav vienīgais iespējamais.
+</p>
 <div id="series">
     <!-- START BLOCK : single-series -->
     <div class="series"{newline}>
