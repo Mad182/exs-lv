@@ -1,9 +1,7 @@
 <?php
 /**
- *  RuneScape apakšprojekta labā kolonna.
- *
- *  Aplūkojama tikai šaurākajās lapas sadaļās,
- *  kur vienlaicīgiredzamas abas kolonnas.
+ *  RuneScape apakšprojekta labā kolonna un tās saturs
+ *  (notifikācijas, jaunākie raksti/attēli, aptauja u.tml.).
  */
 
 $tpl->newBlock('main-layout-right');

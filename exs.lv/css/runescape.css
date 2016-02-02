@@ -33,18 +33,6 @@
  *  12. Here be dragons!
  */
 
-body {
-    /*background:url('/bildes/runescape/wallpapers/lost-city-of-the-elves.jpg') no-repeat fixed 50% 0;*/
-    /*background:url('/bildes/runescape/wallpapers/goats.jpg') no-repeat fixed 50% 0;*/
-    /*background:url('/bildes/runescape/wallpapers/living-rocks.jpg') no-repeat fixed 50% 0;*/
-}
-/* background fix lielajiem ekrāniem  */
-/*@media only screen and (min-width:1920px) {
-    body {
-        background-size:cover;
-    }
-}*/
-
 /* vertically center */
 .vc-ghost-item {
     display:inline-block; 
@@ -57,12 +45,12 @@ body {
 }
 
 #scroll-up {
-    background:rgba(86, 105, 136, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+    background:rgba(86, 105, 136, 0.84) url('//img.exs.lv/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
     border: 2px solid #000
 }
     #scroll-up:hover {
         border:2px solid #1B1C1D;
-        background:rgba(94, 130, 189, 0.84) url('/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+        background:rgba(94, 130, 189, 0.84) url('//img.exs.lv/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
     }
 .clearfix {
     margin:0;
@@ -131,7 +119,7 @@ body {
     padding-bottom:10px;
     margin:0;
     overflow:auto;
-    background:url('/bildes/runescape/pattern-wrapper.png') 0 2%;
+    background:url('//img.exs.lv/bildes/runescape/pattern-wrapper.png') 0 2%;
 }
 #top-menu #top-menu-right li ul#user-group-menu {
     width:330px;
@@ -202,7 +190,7 @@ body {
     }
 
 #top-menu {
-    background:url('/bildes/runescape/pattern-navig.png') repeat-x;
+    background:url('//img.exs.lv/bildes/runescape/pattern-navig.png') repeat-x;
     border-top: 1px solid #363535;
     border-bottom: 1px solid #363535;
     z-index:100;
@@ -360,7 +348,7 @@ div pre {
 */
 
 .top-navig {
-    background:#000 url('/bildes/runescape/nav-pattern-blue.png') repeat-x;
+    background:#000 url('//img.exs.lv/bildes/runescape/nav-pattern-blue.png') repeat-x;
     border-bottom:2px solid #000;
     color:#6D93A5;
     height:30px;
@@ -394,7 +382,7 @@ div pre {
         text-decoration:none
     }
     .top-navig ul li:hover {
-        background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+        background:url('//img.exs.lv/bildes/runescape/nav-pattern-blue-2.png') repeat-x
     }
     .top-navig .rs-logo:hover {
         background:inherit
@@ -411,7 +399,7 @@ ul.nav-right {
 #header-navig {
     min-height:15px;
     border-bottom:1px solid #424346;
-    background:#0E0F0F url('/bildes/runescape/pattern-navig.png') repeat-x;
+    background:#0E0F0F url('//img.exs.lv/bildes/runescape/pattern-navig.png') repeat-x;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -478,14 +466,14 @@ ul.nav-right {
     width:578px;
     padding-left:15px;
     padding-right:15px;
-    background:url('/bildes/runescape/pattern-wrapper.png') 0 2%
+    background:url('//img.exs.lv/bildes/runescape/pattern-wrapper.png') 0 2%
 }
 #left {
     width:207px;
     padding:0 4px 0 3px;
 }
 #left, #right {
-    background-image:url('/bildes/runescape/pattern-cols.png');
+    background-image:url('//img.exs.lv/bildes/runescape/pattern-cols.png');
 }
 
 /* galvenā satura kolonnas platums pie dažādiem tpl_options mainās */
@@ -626,7 +614,7 @@ ul.nav-right {
     font-size:12px;
 }
 .fetch-new-fact {
-    background:url('/bildes/fugue-icons/arrow-circle-225.png') no-repeat center center;
+    background:url('//img.exs.lv/bildes/fugue-icons/arrow-circle-225.png') no-repeat center center;
     float:right;
     height:16px;
     width:16px;
@@ -723,12 +711,12 @@ ul.nav-right {
             border-bottom: 1px solid #2E3853;
         }
         .droplist ul li:hover {
-            background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat
+            background:url('//img.exs.lv/bildes/runescape/nav-pattern-blue-2.png') repeat
         }
         .droplist ul a, .droplist ul a:hover {
             width:150px;
             padding:7px 14px 7px 30px;
-            background:url('/bildes/fugue-icons/blue-document-hf-select-footer.png') no-repeat 5px 60%
+            background:url('//img.exs.lv/bildes/fugue-icons/blue-document-hf-select-footer.png') no-repeat 5px 60%
         }
     /* dziļāki līmeņi, neskaitot pirmo; novietojas labajā pusē */
     .droplist ul ul {
@@ -740,7 +728,7 @@ ul.nav-right {
             border-left:1px solid #2e3853
         }
         .droplist ul ul a, .droplist ul ul a:hover {
-            background:url('/bildes/fugue-icons/flask.png') no-repeat 5px 60%
+            background:url('//img.exs.lv/bildes/fugue-icons/flask.png') no-repeat 5px 60%
         }
         /* novietojums pretējā pusē (kreisajā) */
         .droplist ul ul.flip-side {
@@ -756,7 +744,7 @@ ul.nav-right {
     .droplist ul li:last-child {
         width:194px;
         height:5px;
-        background:url('/bildes/runescape/nav-pattern-blue-2.png') repeat-x
+        background:url('//img.exs.lv/bildes/runescape/nav-pattern-blue-2.png') repeat-x
     }
     .droplist ul ul li:first-child {
         border-top:1px solid #2e3853;
@@ -769,7 +757,7 @@ ul.nav-right {
         background:#2D455F
     }
     .droplist .arrow-down {
-        background:url('/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
+        background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
         position:absolute;
         right:8px;
         top:25%;
@@ -777,7 +765,7 @@ ul.nav-right {
         height:16px
     }
     .droplist .arrow-right {
-        background:url('/bildes/fugue-icons/control-arrow-right.png') no-repeat right 50%;
+        background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-right.png') no-repeat right 50%;
         position:absolute;
         right:5px;
         top:25%;
@@ -949,7 +937,7 @@ table.facts-table .row-counter {
     font-size:12px
 }
     .list-intro {
-        background:#f4f5f7 url('/bildes/notice.png') no-repeat 1% 10%;
+        background:#f4f5f7 url('//img.exs.lv/bildes/notice.png') no-repeat 1% 10%;
         padding:7px 12px 7px 45px;
         text-indent:10px
     }
@@ -1143,7 +1131,7 @@ table.skill-reqs {
 .rslist .listhead {
   border-bottom:2px solid #ddd;
   font-weight: 700;
-  background:transparent url('/bildes/runescape/table-bg.png') repeat-x top;
+  background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
   color:#374a55
 }
 .rslist tr td {
@@ -1151,7 +1139,7 @@ table.skill-reqs {
   border-bottom:1px solid #ddd
 }
   .rslist tr.listhead:hover td {
-    background:transparent url('bildes/runescape/table-bg.png') repeat-x top
+    background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top
   }
   .rslist tr td.center, .rslist-center td {
     text-align:center
@@ -1219,7 +1207,7 @@ table.skill-reqs {
         margin:2px 0;
         padding-left:20px;
         display:block;
-        background:url('/bildes/runescape/li.png') no-repeat;
+        background:url('//img.exs.lv/bildes/runescape/li.png') no-repeat;
     }
 
 /*
@@ -1450,7 +1438,7 @@ table.skill-reqs {
         padding:0
     }
     #skills-facts ul li {
-        background:transparent url('/bildes/runescape/li.png') no-repeat;
+        background:transparent url('//img.exs.lv/bildes/runescape/li.png') no-repeat;
         padding-left:20px
     }
     #wagtail {
