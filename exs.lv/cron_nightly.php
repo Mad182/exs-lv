@@ -36,7 +36,7 @@ $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIM
 $i = 0;
 foreach ($users as $user) {
 
-	$langs = array(1,3,5,7);
+	$langs = array(1,3,5,7,9);
 
 	foreach($langs as $clean) {
 		$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '$clean' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '$clean' ORDER BY id DESC LIMIT 200) AS TAB)");
@@ -50,6 +50,15 @@ foreach ($users as $user) {
 }
 
 echo 'cleanup un karma update... ' . $i . '... ok' . "\n";
+
+//sludinājumu dzēšana
+$pages = $db->get_results("SELECT id,title FROM pages WHERE category IN(868,869,870) AND `date` < '".date('Y-m-d H:i', strtotime('-3 months'))."'");
+foreach($pages as $page) {
+	$db->query("DELETE FROM `comments` WHERE `pid` = '$page->id'");
+	$db->query("DELETE FROM `pages` WHERE `id` = '$page->id' LIMIT 1");
+	$db->query("DELETE FROM `taged` WHERE `page_id` = '$page->id' AND `type` = 0");
+	$db->query("DELETE FROM `bookmarks` WHERE `pageid` = '$page->id' AND `foreign_table` = 'pages'");
+}
 
 $cats = $db->get_results("SELECT id FROM cat");
 foreach ($cats as $cat) {
