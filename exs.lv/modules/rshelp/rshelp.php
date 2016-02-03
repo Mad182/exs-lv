@@ -19,7 +19,7 @@ require_once(CORE_PATH.'/modules/runescape/class.controller.php');
 class Rshelp extends Controller {
     
     // skaits attiecas uz rakstiem
-    private $max_per_page = 30;
+    private $max_per_page = 50;
 
     // [category->textid] => [file name]
     private $submodules = array(
@@ -164,9 +164,8 @@ class Rshelp extends Controller {
         foreach ($items as $item => $data) {
             
             if ($user = get_user($data->author)) {
-                $data->author  = '<a style="font-size:11px;"';
-                $data->author .= ' href="'.mkurl('user', $user->id, $user->nick);
-                $data->author .= '">'.usercolor($user->nick, $user->level).'</a>';
+                $data->author = '<a href="'.mkurl('user', $user->id, $user->nick)
+                                .'">'.usercolor($user->nick, $user->level).'</a>';
             }
             
             // rs rakstu virsrakstiem nodzēš kādreizējos prefixus
@@ -188,7 +187,8 @@ class Rshelp extends Controller {
                 (int)$_GET['skip'] : 0;
             
             $pager = pager($this->category->stat_topics, $lim_start, 
-                           $this->max_per_page, '/runescape?skip=');
+                           $this->max_per_page,
+                           '/'.$this->category->textid.'?skip=');
             
             $this->view->newBlock('show-pager');
             $this->view->assignGlobal(array(

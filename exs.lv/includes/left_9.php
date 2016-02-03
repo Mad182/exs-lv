@@ -1,7 +1,7 @@
 <?php
 /**
- *  RuneScape apakšprojekta kreisā kolonna.
- *  Redzama gandrīz katrā sadaļā, satur jaunākos miniblogus.
+ *  RuneScape apakšprojekta kreisā kolonna un tās saturs
+ *	(lietotāja profila attēls, miniblogi, jaunākās grupas u.tml.).
  */
 
 $tpl->newBlock('main-layout-left');

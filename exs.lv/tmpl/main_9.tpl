@@ -94,26 +94,16 @@
 	</script>
 	<!-- END BLOCK : mb-head-->
 	<!-- INCLUDE BLOCK : module-head -->
-	<!-- START BLOCK : rs-background-elves -->
+	<!-- START BLOCK : rs-background-css -->
 	<style type="text/css">
 		body {
-			background:url('{img-server}/bildes/runescape/wallpapers/lost-city-of-the-elves.jpg') no-repeat fixed 50% 0;
+			background:url('{img-server}/bildes/runescape/wallpapers/{background-title}') no-repeat fixed 50% 0;
 		}
 		@media only screen and (min-width:1920px) {
 			body { background-size:cover; }
 		}
 	</style>
-	<!-- END BLOCK : rs-background-elves -->
-	<!-- START BLOCK : rs-background-goats -->
-	<style type="text/css">
-		body {
-			background:url('{img-server}/bildes/runescape/wallpapers/goats.jpg') no-repeat fixed 50% 0;
-		}
-		@media only screen and (min-width:1920px) {
-			body { background-size:cover; }
-		}
-	</style>
-	<!-- END BLOCK : rs-background-goats -->
+	<!-- END BLOCK : rs-background-css -->
 </head>
 <body class="{layout-options}">
 	<div id="scroll-up" title="Uz augšu"></div>
@@ -185,10 +175,11 @@
 				<li><a href="javascript:void(0)" class="dropdown" style="position:relative;top:-2px;">Noformējums <sup style="color:#FF5B5B;">NEW</sup></a>
 					<span class="arrow-down"></span>
 					<ul>
-						<li><a href="/?bg=elves">fons: prifddinas</a></li>
-						<li><a href="/?bg=goats">fons: goats</a></li>
-						<li><a href="/?layout=sticky">izklājums: blakus</a></li>
-						<li><a href="/?layout=not-sticky">izklājums: abos sānos</a></li>
+						<li><a href="/?bg=elves">fons: Prifddinas</a></li>
+						<li><a href="/?bg=goats">fons: Goats</a></li>
+						<li><a href="/?bg=map">fons: RuneScape karte</a></li>
+						<li><a href="/?layout=sticky">kolonnas blakus</a></li>
+						<li><a href="/?layout=not-sticky">kolonnas sānos</a></li>
 						<li>&nbsp;</li>
 					</ul>
 				</li>

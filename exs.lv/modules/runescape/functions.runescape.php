@@ -200,7 +200,7 @@ function create_news($type = 'rs3') {
 		if ($single->has_image && file_exists(CORE_PATH.$img_path)) {
 			$image = '<img class="vc-item" src="'.$img_server.$img_path.'" title="'.$single->title.'" alt="Logo">';
 		} else {
-			$image = '<img class="vc-item" src="'.$fallback_path.'" title="'.$single->title.'" alt="Logo">';
+			$image = '<img class="vc-item" src="'.$img_server.$fallback_path.'" title="'.$single->title.'" alt="Logo">';
 		}
 		
 		$date = date('d.m.Y', strtotime($single->date));

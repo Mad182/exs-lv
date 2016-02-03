@@ -480,33 +480,21 @@ function im_mod() {
 }
 
 /**
- *  RuneScape satura rediģēšanas moderatoru pārbaude
- *
- *  Atlasa no datubāzes tos lietotājus,
- *  kuriem ļauts rediģēt ar rs saistītu saturu un ir vēl pāris privilēģu.
- *
- *  @param  bool    norāde, vai atjaunot memcache vērtību ar moderatoru sarakstu
+ *	Pārbauda, vai lietotājam ir specifiskas tiesības #rs projektā.
  */
-function im_rs_mod($force = true) {
+function im_rs_mod($force = false) {
 	global $auth, $db, $m, $lang;
 
-	if (!$auth->ok || $lang != 9)
-		return false;
+	if (!$auth->ok || $lang !== 9) return false;
 
 	$rs_mods = array();
-
 	if ($force || $m->get('runescape-mods') === false) {
-
 		$get_mods = $db->get_col("SELECT `user_id` FROM `rs_mods` WHERE `is_deleted` = 0");
 		if ($get_mods) {
 			$rs_mods = $get_mods;
 		}
-
-		// ik pēc 15 min pārbaudīs datubāzi,
-		// 15 min tādēļ, lai pēc izmaiņām tabulā ilgi nebūtu jāgaida
 		$m->set('runescape-mods', $rs_mods, false, 900);
 	}
-
 	$rs_mods = $m->get('runescape-mods');
 
 	return (im_mod() || in_array($auth->id, $rs_mods));
@@ -2011,7 +1999,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$mb->text = wordwrap($mb->text, 36, "\n", 1);
 			$mb->text = str_replace('/', "/<wbr />", $mb->text);
 
-			$koef = ($mb->lang === 9) ? 10 : 0; // #rs projektā īsāks teksts			
+			$koef = ($lang === 9) ? 10 : 0; // #rs projektā īsāks teksts			
 			if ($mb->groupid != 0 && empty($group_id)) {
 				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88 - $koef, '...');
 			} elseif ($mb->lang != $lang) {

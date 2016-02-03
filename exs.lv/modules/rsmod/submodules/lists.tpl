@@ -89,7 +89,7 @@
     <tr{splitted-row-style}{faded-row}>
         <td class="is-centered">{splitted-by}</td>
         <td>{title}</td>
-        <td class="is-centered" colspan="2"><em>Ierakstam nav piesaistīta raksta</em></td>
+        <td colspan="2"><em>Ierakstam nav piesaistīta raksta</em></td>
         <td>&nbsp;</td>
         <td><a href="/{category-url}/edit/{rspage_id}">
             <img class="is-faded" src="/bildes/fugue-icons/notebook--pencil.png" title="Labot informāciju" alt="">

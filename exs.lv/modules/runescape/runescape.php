@@ -26,6 +26,8 @@ if ($auth->ok) {
     if (isset($_GET['bg'])) {
         if ($_GET['bg'] === 'goats') {
             $db->update('users', $auth->id, array('rs_bg' => 1));
+        } else if ($_GET['bg'] === 'map') {
+            $db->update('users', $auth->id, array('rs_bg' => 2));
         } else {
             $db->update('users', $auth->id, array('rs_bg' => 0));
         }
