@@ -100,11 +100,11 @@
 /* bloks ar gaišu fonu un rāmi, kurā ievietot informatīvu tekstu */
 .simple-note {
     margin:10px 3px;
-	padding:7px 15px;
+    padding:7px 15px;
     background-color:#f4f5f7;
     border:1px solid #e2e6ec;
     font-size:12px;
-	line-height:1.5;
+    line-height:1.5;
 }
 
 /*
@@ -633,6 +633,36 @@ ul.nav-right {
     background-color:#C8D9EC;
 }
 
+/* discord kanāla kaste */
+.box-discord,
+.box-discord div {
+    box-sizing:border-box;  
+}
+.box-discord {
+    display:table;
+    width:100%;
+    padding-top:7px;
+}
+.box-discord div {
+    display:table-cell;
+    vertical-align:middle;
+    line-height:1;
+}
+.box-discord div:first-child {
+    width:15%;
+}
+.box-discord div:last-child {
+    width:75%;
+    text-align:center;
+}
+.box-discord img {
+    max-width:35px;
+    max-height:35px;
+}
+.box-discord .lightbox {
+    font-size:10px;
+}
+
 /* jaunāko rakstu saraksts */
 #latest-topics .av {
     border-radius:50%;
@@ -1129,41 +1159,41 @@ table.skill-reqs {
 */
 
 .rslist {
-	font-size:11px;
-	margin:10px auto;
+    font-size:11px;
+    margin:10px auto;
 }
 .rslist.col-list {
     float:left;
     margin-left:10px;
 }
 .rslist .listhead {
-	border-bottom:2px solid #ddd;
-	font-weight:700;
-	background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
-	color:#374a55;
+    border-bottom:2px solid #ddd;
+    font-weight:700;
+    background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
+    color:#374a55;
 }
 .rslist tr td {
-	padding:4px 3px 3px;
-	border-bottom:1px solid #ddd;
+    padding:4px 3px 3px;
+    border-bottom:1px solid #ddd;
 }
 .rslist tr.listhead:hover td {
-	background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
+    background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
 }
 .rslist tr td.center, .rslist-center td {
-	text-align:center;
+    text-align:center;
 }
 .rslist tr td.right {
-	text-align:right;
+    text-align:right;
 }
 .rslist tr.letter td {
-	font-weight:700;
+    font-weight:700;
 }
 .rslist .number {
-	color:#333;
-	font-weight:700;
+    color:#333;
+    font-weight:700;
 }
 .rslist .border {
-	border-top:2px solid #bbb;
+    border-top:2px solid #bbb;
 }
 
 /*

@@ -301,11 +301,23 @@
 			<!-- START BLOCK : main-layout-right -->
 			<div id="right" class="{layout-right-class}">
 
-				<!-- START BLOCK : notification-list-->
+				<!-- START BLOCK : notification-list -->
 				<h3>Tavi notikumi</h3>
 				<div class="box">{out}</div>
-				<!-- END BLOCK : notification-list-->
+				<!-- END BLOCK : notification-list -->
+				
+				<!-- START BLOCK : discord-box -->
+				<h3>exs saziņas iespējas <sup style="color:#FF5B5B;font-size:9px;">NEW</sup></h3>
+				<div class="box box-discord">
+					<div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="eXs Discord kanāls" alt="exs discord"></div>
+					<div>
+						<a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">exs Discord kanāls</a><br>
+						<a class="lightbox" href="https://img.exs.lv/m/o/mokskis/discord-1.png">attēls darbībā</a>
+					</div>
+				</div>
+				<!-- END BLOCK : discord-box -->
 
+				<!-- START BLOCK : latest-box -->
 				<h3>Jaunākais lapā</h3>
 				<div class="box">
 					<ul class="tabs">
@@ -318,6 +330,7 @@
 					</ul>
 					<div id="lat" class="ajaxbox">{latest-noscript}</div>
 				</div>
+				<!-- END BLOCK : latest-box -->
 
 				<!-- START BLOCK : poll-box-->
 				<h3><img class="box-icon" src="{img-server}/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
