@@ -350,6 +350,11 @@ div pre {
     text-decoration:none;
 }
 
+/* atvērts miniblogs */
+#miniblog-list .mb-av .av {
+	/*border-radius:50%;*/
+}
+
 /*
 |--------------------------------------------------------------------------
 |   3. Jaunie pamatbloki
@@ -661,6 +666,7 @@ ul.nav-right {
 }
 .box-discord .lightbox {
     font-size:10px;
+	color:rgb(84, 105, 138);
 }
 
 /* jaunāko rakstu saraksts */
@@ -668,7 +674,6 @@ ul.nav-right {
     border-radius:50%;
 }
 #latest-topics .post-time {
-    margin-top:2px;
     margin-bottom:2px;
     padding-bottom:2px;
     text-transform:uppercase;

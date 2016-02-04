@@ -307,11 +307,11 @@
 				<!-- END BLOCK : notification-list -->
 				
 				<!-- START BLOCK : discord-box -->
-				<h3>exs saziņas iespējas <sup style="color:#FF5B5B;font-size:9px;">NEW</sup></h3>
+				<h3>rs.exs saziņas iespējas <sup style="color:#FF5B5B;font-size:9px;">NEW</sup></h3>
 				<div class="box box-discord">
 					<div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="eXs Discord kanāls" alt="exs discord"></div>
 					<div>
-						<a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">exs Discord kanāls</a><br>
+						<a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a><br>
 						<a class="lightbox" href="https://img.exs.lv/m/o/mokskis/discord-1.png">attēls darbībā</a>
 					</div>
 				</div>
