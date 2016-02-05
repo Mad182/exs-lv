@@ -462,6 +462,40 @@
 						</div>
 					</div>
 
+					<!-- START BLOCK : poll-box-->
+					<div class="widget">
+						<h3 class="title"><a href="/aptaujas"><span>Aptauja: {poll-title}</span></a></h3>
+						<div class="box">
+							<!-- START BLOCK : poll-answers-->
+							<ol class="poll-answers">
+								<!-- START BLOCK : poll-answers-node-->
+								<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
+								<!-- END BLOCK : poll-answers-node-->
+							</ol>
+							Balsojuši: {poll-totalvotes}<br />
+							<a href="{ppage-id}">Komentāri</a>
+							<!-- END BLOCK : poll-answers-->
+							<!-- START BLOCK : poll-questions-->
+							<form name="poll" method="post" action="">
+								<fieldset>
+									<!-- START BLOCK : poll-error-->
+									<p>{poll-error}</p>
+									<!-- END BLOCK : poll-error-->
+									<!-- START BLOCK : poll-options-->
+									<ol id="poll-questions">
+										<!-- START BLOCK : poll-options-node-->
+										<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
+										<!-- END BLOCK : poll-options-node-->
+									</ol>
+									<input type="submit" name="vote" value="Balsot!" class="button primary" />
+									<!-- END BLOCK : poll-options-->
+								</fieldset>
+							</form>
+							<!-- END BLOCK : poll-questions-->
+						</div>
+					</div>
+					<!-- END BLOCK : poll-box-->
+
 					<!--
 					<!-- START BLOCK : groups-l-list-->
 					<div class="widget">
@@ -508,40 +542,6 @@
 						</div>
 					</div>
 					<!-- END BLOCK : daily-best-->
-
-					<!--
-					<!-- START BLOCK : poll-box-->
-					<h2 class="title"><a href="/aptaujas"><span>Aptauja</span></a></h2>
-					<h3 class="poll-q">{poll-title}</h3>
-					<!-- START BLOCK : poll-answers-->
-					<ol class="poll-answers">
-						<!-- START BLOCK : poll-answers-node-->
-						<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
-						<!-- END BLOCK : poll-answers-node-->
-					</ol>
-					Balsojuši: {poll-totalvotes}<br />
-					<a href="{ppage-id}">Komentāri</a>
-					<!-- END BLOCK : poll-answers-->
-					<!-- START BLOCK : poll-questions-->
-					<form name="poll" method="post" action="">
-						<fieldset>
-							<!-- START BLOCK : poll-error-->
-							<p>{poll-error}</p>
-							<!-- END BLOCK : poll-error-->
-							<!-- START BLOCK : poll-options-->
-							<ol id="poll-questions">
-								<!-- START BLOCK : poll-options-node-->
-								<li><label><input type="radio" name="questions" value="{poll-options-id}" /> {poll-options-question}</label></li>
-								<!-- END BLOCK : poll-options-node-->
-							</ol>
-							<input type="submit" name="vote" value="Balsot!" class="button primary" />
-							<!-- END BLOCK : poll-options-->
-						</fieldset>
-					</form>
-					<!-- END BLOCK : poll-questions-->
-					<!-- END BLOCK : poll-box-->
-					-->
-
 
 					<!-- START BLOCK : side-junk-->
 					<div class="widget">

@@ -315,3 +315,39 @@ ul li {
     padding-top:0;
     padding-bottom:5px
 }
+
+/* image blocks */
+
+p.imageblock {
+	margin: 10px 0;
+	padding: 0;
+	overflow: auto;
+}
+
+p.imageblock img {
+	margin-bottom: 3px;
+}
+
+p.images-2 img {
+	width: 49%;
+	margin-right:.5%;
+	float: left;
+}
+
+p.images-3 img {
+	width: 32%;
+	margin-right:.5%;
+	float: left;
+}
+
+p.images-4 img {
+	width: 24%;
+	margin-right:.5%;
+	float: left;
+}
+
+p.images-5 img {
+	width: 19%;
+	margin-right:.5%;
+	float: left;
+}
