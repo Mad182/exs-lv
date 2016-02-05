@@ -13,21 +13,6 @@ if ($auth->ok && $auth->rs_layout == 1) {
 }
 
 
-// jaunākais galerijās
-$sel = 'pages';
-if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
-    $out = get_latest_images();
-    $sel = 'gallery';
-} else { // jaunākais rakstos/blogos
-    $out = rs_get_latest_pages();
-}
-$tpl->assign(array(
-    'latest-noscript'   => $out,
-    $sel . '-selected'  => 'active '
-));
-unset($out);
-
-
 // lietotāja notifikācijas
 if ($auth->ok === true) {
     if ($html = get_notify($auth->id)) {
@@ -36,6 +21,26 @@ if ($auth->ok === true) {
         unset($html);
     }
 }
+
+
+// informatīvs bloks ar informāciju par Discord kanālu
+$tpl->newBlock('discord-box');
+
+
+// jaunākais galerijās
+$sel = 'pages';
+if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
+    $out = get_latest_images();
+    $sel = 'gallery';
+} else { // jaunākais rakstos/blogos
+    $out = rs_get_latest_pages();
+}
+$tpl->newBlock('latest-box');
+$tpl->assign(array(
+    'latest-noscript'   => $out,
+    $sel . '-selected'  => 'active '
+));
+unset($out);
 
 
 // aptaujas
