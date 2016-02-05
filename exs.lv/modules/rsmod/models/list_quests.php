@@ -178,6 +178,7 @@ class Model_List_Quests extends Model {
             'extra'             => $extra,
             'description'       => $description,
             'date'              => sanitize($date),
+            'year'              => (int)substr($date, -2),
             'created_by'        => (int)$this->auth->id,
             'created_at'        => time()
         );
@@ -281,6 +282,7 @@ class Model_List_Quests extends Model {
             'extra'             => $entry->extra,
             'description'       => $entry->description,
             'date'              => sanitize($entry->date),
+            'year'              => (int)substr($entry->date, -2),
             'updated_by'        => (int)$this->auth->id,
             'updated_at'        => time()
         );

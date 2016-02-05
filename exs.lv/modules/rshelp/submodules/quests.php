@@ -23,7 +23,11 @@ class Quests extends Controller {
         
             // statistikas cilne
             if ($_GET['var1'] === 'stats') {
-                $this->stats_tab();
+				if ($this->auth->id == 115 && isset($_GET['force'])) {
+					$this->stats_tab(true);
+				} else {
+					$this->stats_tab();
+				}
             
             // faktu cilne
             } else if ($_GET['var1'] === 'facts') {
@@ -254,14 +258,14 @@ class Quests extends Controller {
     /**
      *  Statistikas cilne
      */
-    private function stats_tab() {
+    private function stats_tab($force = false) {
 
         $this->view->assign('tab-stats', 'active');
         $this->view->newBlock('stats-block');
 
         $this->model('models/quests');
 
-        $stats = $this->quests->fetch_stats();        
+        $stats = $this->quests->fetch_stats($force);        
         if (!$stats) {
             $this->view->newBlock('no-stats-found');
             return;
