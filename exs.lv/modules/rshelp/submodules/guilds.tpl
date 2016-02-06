@@ -1,10 +1,10 @@
 <!-- START BLOCK : guilds-intro-text -->
 <div class="rs-intro" style="margin-bottom:20px">
     <span class="vc-ghost-item"></span>
-	<img id="wise-old-man" class="vc-item" src="/bildes/runescape/intro/wise-old-man.png" title="Wise Old Man" alt="">
-	<p class="vc-item" style="max-width:90%">Ģildes ir īpaši iekārtotas ēkas, kurās var iekļūt tikai attiecīgajā prasmē sevišķi iepratušies spēlētāji, 
-		ja tie sasnieguši noteiktu prasmes līmeni, izpildījuši grūtu kvestu vai sakrājuši noteiktu Quest Points skaitu.<br><br>&nbsp;&nbsp;&nbsp;Katrai ģildei ir savas unikālās iespējas, ieskaitot vieglāku piekļuvi rīkiem un resursiem, kas veltīti attiecīgajai prasmei, 
-		un veikaliem, kuros pārdod citur nenopērkamus priekšmetus.</p>
+    <img id="wise-old-man" class="vc-item" src="/bildes/runescape/intro/wise-old-man.png" title="Wise Old Man" alt="">
+    <p class="vc-item" style="max-width:90%">Ģildes ir īpaši iekārtotas ēkas, kurās var iekļūt tikai attiecīgajā prasmē sevišķi iepratušies spēlētāji, 
+    ja tie sasnieguši noteiktu prasmes līmeni, izpildījuši grūtu kvestu vai sakrājuši noteiktu Quest Points skaitu.<br><br>&nbsp;&nbsp;&nbsp;Katrai ģildei ir savas unikālās iespējas, ieskaitot vieglāku piekļuvi rīkiem un resursiem, kas veltīti attiecīgajai prasmei, 
+    un veikaliem, kuros pārdod citur nenopērkamus priekšmetus.</p>
 </div>
 <div class="simple-note">
   <img style="margin-right:7px;position:relative;left:3px;top:1px" src="/bildes/runescape/star-p2p-small.png" alt="">

@@ -33,7 +33,8 @@ class Controller {
             'db', 'auth', 'lang',
             'tpl_options', 'debug',
             'm', 'ss',
-            'category', 'page_title'
+            'category', 'page_title',
+            'img_server'
         );
         foreach ($globals as $global) {
             global ${$global};

@@ -106,6 +106,9 @@
     font-size:12px;
     line-height:1.5;
 }
+#content .simple-note {
+    margin:10px 20px;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -395,6 +398,31 @@ div pre {
     }
 }
 
+/* cilnes */ 
+.tabs {
+    /* pirms ciļņu rindas nebūs atstarpes,
+       un rinda būs visā platumā */
+    margin:-5px -5px 0;
+}
+.tabs li {
+    margin-right:4px;
+}
+.tabs li:last-child {
+    margin-right:0;
+}
+.tabs li a {
+    margin-right:0; 
+}
+.tabs li a,
+.tabs li a.active,
+.tabs li a.active:hover {
+    padding:4px 13px;
+}
+.tabs li a span {
+    padding-left:24px;
+    padding-top:1px;
+}
+
 /*
 |--------------------------------------------------------------------------
 |   3. Jaunie pamatbloki
@@ -560,26 +588,6 @@ ul.nav-right {
 /* kolonnu satura "kastes" */
 .box {
     background:#FCFCFD
-}
-.box .tabs {
-    /* pirms ciļņu rindas nebūs atstarpes,
-       un rinda būs visā platumā */
-    margin:-5px -5px 0;
-}
-.box .tabs li:first-child {
-    margin-right:4px;
-}
-.box .tabs a {
-    margin-right:0; 
-}
-.box .tabs a,
-.box .tabs a.active,
-.box .tabs a.active:hover {
-    padding:4px 13px;
-}
-.box .tabs span {
-    padding-left:24px;
-    padding-top:1px;
 }
 
 /* jaunāko miniblogu saraksts */
@@ -1435,7 +1443,7 @@ table.skill-reqs {
 
 /*
 |--------------------------------------------------------------------------
-|   9.5 prasmes
+|   9.5 Prasmes
 |--------------------------------------------------------------------------
 */
 
@@ -1448,7 +1456,7 @@ table.skill-reqs {
 .skill-block {
     border:1px solid #ddd;
     border-bottom:2px solid #a4aeb9;
-    width:345px;
+    width:350px;
     height:210px;
     float:left;
     margin:10px 15px 10px 0
@@ -1476,18 +1484,19 @@ table.skill-reqs {
     height:205px;
     position:relative;
     border-left:1px solid #ddd;
-    font-size:11px
+    font-size:12px;
 }
     .skill-links p {
         font-weight: 700;
         color:#5b6b7b;
-        padding-left:7px
+        padding-left:7px;
+        font-size:13px;
     }
     .skill-links a {
         border-bottom:1px dotted #E4E1E1;
-        padding:1px 5px 4px 8px;
+        padding:4px 5px 4px 0;
         margin:2px 0 0 8px;
-        display:inline-block
+        display:block;
     }
 .skill-pages {
     background:#F8F8F8;
@@ -1537,13 +1546,20 @@ table.skill-reqs {
 */
 
 .xp-table tr td {
-    font-size:12px
+    font-size:12px;
+    text-align:center;
+}
+.xp-table tr td:last-child {
+    border-right:1px solid #ccc;
+}
+.xp-table tr:first-child td:last-child {
+    border-right:0;
 }
 .xp-table .number-2 {
     color:#274d73;
     font-weight: 700;
     border-left:1px solid #ccc;
-    border-right:1px solid #ccc
+    border-right:1px solid #ccc;
 }
 .rslist-center {
     margin-left:15px

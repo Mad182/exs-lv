@@ -21,6 +21,8 @@ class Skills extends Controller {
             $this->view->newBlock('list-tabs');
             $this->view->assign('tab-xptable', 'active');
             $this->view->newBlock('skills-xp-table');
+            $this->view->newBlock('xp-table-past-120');
+            $this->view->newBlock('invention-xp-table');
         
         // ar prasmēm saistīti fakti
         } else if (isset($_GET['var1']) && $_GET['var1'] === 'facts') {
@@ -35,10 +37,10 @@ class Skills extends Controller {
     }
     
     /**
-     *  Saraksts ar RuneScape prasmēm
+     *  Saraksts ar RuneScape prasmēm.
      *
      *  Pie katras prasmes ir tās attēls, neliels apraksts un blakus -
-     *  prasmes sadaļai pievienotie raksti
+     *  prasmes sadaļai pievienotie raksti.
      */
     private function show_skill_blocks() {
         
@@ -95,12 +97,12 @@ class Skills extends Controller {
 
                 if ((int)$skill->members_only === 1) {
                     $skill->members_only = 
-                        '<img src="/bildes/runescape/star-p2p-small.png" ' .
-                        'title="Pieejama tikai maksājošajiem spēlētājiem">';
+                        '<img src="'.$this->img_server.'/bildes/runescape/star-p2p-small.png" ' .
+                        'title="Pieejama tikai maksājošajiem spēlētājiem" alt="">';
                 } else {
                     $skill->members_only = '';
                 }
-                $skill->img = '/bildes/runescape/skills/'.$skill->img;
+                $skill->img = $this->img_server.'/bildes/runescape/skills/'.$skill->img;
 
                 $this->view->newBlock('skill');
                 $this->view->assignAll($skill);
@@ -142,13 +144,13 @@ class Skills extends Controller {
             'latest-skill' => $largest_skill,
             'max-xp'       => number_format(($skill_counter + 3) * 200000000),
             'skill-count'  => $skill_counter + 3 
-                // pieskaita arī Constitution un cmb prasmes
+            // pieskaita arī Constitution un cmb prasmes
         ));
     }
     
     /**
      *  Atgriež atbildi js pieprasījumam par prasmes rakstiem
-     *  noteiktā rakstu lappusē
+     *  noteiktā rakstu lappusē.
      */
     private function get_skill_page() {
 
