@@ -1,6 +1,6 @@
 <?php
 /**
- *  RuneScape minispēļu un D&D pamācību sadaļa
+ *  RuneScape minispēļu un D&D pamācību sadaļa.
  *
  *  Adreses:
  *
@@ -35,7 +35,7 @@ class Minigames extends Controller {
     }
 
     /**
-     *  Atkarībā no sadaļas nosaka parādāmo saturu
+     *  Atkarībā no sadaļas nosaka parādāmo saturu.
      */
     public function index() {
 
@@ -53,7 +53,7 @@ class Minigames extends Controller {
     }
     
     /**
-     *  Saraksts ar minispēlēm vai D&D aktivitātēm
+     *  Saraksts ar minispēlēm vai D&D aktivitātēm.
      *
      *  Katram ierakstam kreisajā pusē ir neliels attēls, bet blakus -
      *  īss apraksts.
@@ -74,12 +74,12 @@ class Minigames extends Controller {
 
             if (!empty($game->avatar)) {
                 $avatar  = '<a href="/read/'.$game->strid.'">';
-                $avatar .= '<img src="//img.exs.lv/'.$game->avatar.'" ';
+                $avatar .= '<img src="'.$this->img_server.'/'.$game->avatar.'" ';
                 $avatar .= 'title="'.$game->title.'" alt=""></a>';
                 $game->avatar = $avatar;
             } else {
                 $avatar  = '<a href="javascript:void(0)">';
-                $avatar .= '<img src="/bildes/runescape/fallback.png" ';
+                $avatar .= '<img src="'.$this->img_server.'/bildes/runescape/fallback.png" ';
                 $avatar .= 'title="'.$game->title.'" alt=""></a>';
                 $game->avatar = $avatar;
             }
@@ -121,11 +121,11 @@ class Minigames extends Controller {
             }
         }
 
-        $this->show_stats();
+        // $this->show_stats();
     }
     
     /**
-     *  Ievieto skatā bloku ar statistikas datiem par minispēlēm/d&d
+     *  Ievieto skatā bloku ar statistikas datiem par minispēlēm/d&d.
      */
     private function show_stats() {
 

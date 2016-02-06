@@ -1,7 +1,7 @@
 <?php
 /**
  *  RuneScape Achievements
- *  (agrāk saukti par Tasks un Achievement Diaries)
+ *  (agrāk saukti par Tasks un Achievement Diaries).
  */
 
 class Tasks extends Controller {
@@ -18,7 +18,7 @@ class Tasks extends Controller {
 
     /**
      *  Parādīs Achievements reģionus un piesaistīs tiem
-     *  rakstus no `rs_pages` tabulas (tai skaitā placeholders)
+     *  rakstus no `rs_pages` tabulas (tai skaitā placeholders).
      *
      *  Ja reģionam rakstu nav, rādīs tikai tā nosaukumu un attēlu
      *  (zem reģioniem, kuriem raksti ir).
@@ -81,7 +81,7 @@ class Tasks extends Controller {
     
     /**
      *  Parādīs vienu bloku ar rakstiem, 
-     *  kuri nevienam esošajam reģionam nav piesaistīti
+     *  kuri nevienam esošajam reģionam nav piesaistīti.
      */
     private function show_uncategorised() {
 
