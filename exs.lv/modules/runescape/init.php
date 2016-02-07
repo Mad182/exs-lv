@@ -8,13 +8,13 @@
 // izvēlēts atbilstošs fona attēls
 $bg_name = 'goats.jpg'; // pēc noklusējuma
 if ($auth->ok) {
-	if ($auth->rs_bg == 0) {
-		$bg_name = 'lost-city-of-the-elves.jpg';
-	} else if ($auth->rs_bg == 1) {
-		$bg_name = 'goats.jpg';
-	} else {
-		$bg_name = 'runescape-map.jpg';
-	}
+    if ($auth->rs_bg == 0) {
+        $bg_name = 'lost-city-of-the-elves.jpg';
+    } else if ($auth->rs_bg == 1) {
+        $bg_name = 'goats.jpg';
+    } else {
+        $bg_name = 'runescape-map.jpg';
+    }
 }
 $tpl->newBlock('rs-background-css');
 $tpl->assign('background-title', $bg_name);

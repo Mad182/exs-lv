@@ -23,11 +23,11 @@ class Quests extends Controller {
         
             // statistikas cilne
             if ($_GET['var1'] === 'stats') {
-				if ($this->auth->id == 115 && isset($_GET['force'])) {
-					$this->stats_tab(true);
-				} else {
-					$this->stats_tab();
-				}
+                if ($this->auth->id == 115 && isset($_GET['force'])) {
+                    $this->stats_tab(true);
+                } else {
+                    $this->stats_tab();
+                }
             
             // faktu cilne
             } else if ($_GET['var1'] === 'facts') {

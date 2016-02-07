@@ -172,7 +172,7 @@
 				</li>
 				<!-- END BLOCK : mod-nav -->
 				<!-- START BLOCK : auth-nav -->
-				<li><a href="javascript:void(0)" class="dropdown" style="position:relative;top:-2px;">Noformējums <sup style="color:#FF5B5B;">NEW</sup></a>
+				<li><a href="javascript:void(0)" class="dropdown" style="position:relative;top:-2px;">Noformējums <sup class="new">new</sup></a>
 					<span class="arrow-down"></span>
 					<ul>
 						<li><a href="/?bg=elves">fons: Prifddinas</a></li>
@@ -237,16 +237,16 @@
 					</ul>
 				</li>
 				<li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-				<li{cat-sel-4}><a href="/prasmes">Prasmes</a>
+				<li{cat-sel-4}><a href="/prasmes">Prasmes&nbsp;<span class="is-new">new</span></a>
 					<ul>
 						<li><a href="/prasmes">Prasmju saraksts</a></li>
-						<li><a href="/prasmes/xp-table">XP tabula</a></li>
+						<li><a href="/prasmes/xp-table">XP tabula&nbsp;<span class="is-new">new</span></a></li>
 						<li><a href="/prasmes/facts">Fakti</a></li>
 					</ul>
 				</li>
-				<li{cat-sel-2046}><a href="/achievements">Achievements</a></li>
-				<li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
-				<li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
+				<!--<li{cat-sel-2046}><a href="/achievements">Achievements</a></li>-->
+                    <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
+				<!--<li{cat-sel-791}><a href="/gildes">Ģildes</a></li>-->
 				<li{cat-sel-1903}><a href="#">Arhīvs</a>
 					<ul>
 						<li{cat-sel-599}><a href="/runescape">Ziņas</a></li>
@@ -307,9 +307,9 @@
 				<!-- END BLOCK : notification-list -->
 				
 				<!-- START BLOCK : discord-box -->
-				<h3>rs.exs saziņas iespējas <sup style="color:#FF5B5B;font-size:9px;">NEW</sup></h3>
+				<h3>Saziņas kanāli <span class="is-new">new</span></h3>
 				<div class="box box-discord">
-					<div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="eXs Discord kanāls" alt="exs discord"></div>
+					<div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="exs Discord kanāls" alt="exs discord kanāls"></div>
 					<div>
 						<a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a><br>
 						<a class="lightbox" href="https://img.exs.lv/m/o/mokskis/discord-1.png">attēls darbībā</a>
@@ -421,6 +421,13 @@
 					<div class="c"></div>
 				</div>
 				<!-- END BLOCK : profile-box-->
+                
+                <h3>Ātrās saites</h3>
+				<div class="box" style="padding:10px 20px;font-size:12px">
+                    - <a href="javascript:void(0)">invention hs (eng)</a><br>
+                    - <a href="javascript:void(0)">invention hs (lv)</a><br>
+                    - <a href="javascript:void(0)">runescape.wiki</a>
+				</div>
 
 				<!-- START BLOCK : mb-box-->
 				<h3>Miniblogi{miniblog-add}</h3>

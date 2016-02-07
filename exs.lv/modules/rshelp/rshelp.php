@@ -44,7 +44,7 @@ class Rshelp extends Controller {
      */
     public function index() {
 
-        $this->tpl_options = 'no-right';
+        $this->tpl_options = 'no-left';
         
         if (array_key_exists($this->category->textid, $this->submodules)) {
         

@@ -1915,6 +1915,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	if (!$auth->ok) {
 		$priv = ' AND `miniblog`.`private` = 0 ';
 	}
+    $limit = ($lang === 9) ? 5 : 6; // #rs
 
 	$mbs = $db->get_results("SELECT
 		`miniblog`.`id` AS `id`,
@@ -1943,7 +1944,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		$priv
 	ORDER BY
 		`miniblog`.`bump`
-	DESC LIMIT $skip, 6");
+	DESC LIMIT $skip, $limit");
 	
 
 	if ($mbs) {
@@ -2018,7 +2019,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$out .= '<li' . $spec . '><a href="' . $url . '">';
 			$out .= '<img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
 			$out .= '<span class="entry"><span class="author">' . h($mb->nick) . '</span> ';
-			$out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
+            $out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
 			if ($lang === 9) { // #rs
 				$out .= $mb->text . '&nbsp;(' . $mb->posts . ')';
 			} else {

@@ -97,6 +97,20 @@
     overflow:hidden;
     white-space:nowrap;
 }
+sup.new {
+    color:#FF5B5B;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+.is-new {
+    /* vietām, kur "sup" tags kaitē paddingam u.tml. */
+    color:#FF5B5B;
+    font-weight:bold;
+    font-size:10px;
+    text-transform:uppercase;
+    position:relative;
+    top:-3px;
+}
 /* bloks ar gaišu fonu un rāmi, kurā ievietot informatīvu tekstu */
 .simple-note {
     margin:10px 3px;
@@ -107,7 +121,7 @@
     line-height:1.5;
 }
 #content .simple-note {
-    margin:10px 20px;
+    margin:10px 0;
 }
 
 /*
@@ -131,7 +145,7 @@
     padding-bottom:10px;
     margin:0;
     overflow:auto;
-    background:url('//img.exs.lv/bildes/runescape/pattern-wrapper.png') 0 2%;
+    background-image:url('//img.exs.lv/bildes/runescape/pattern-cols.png');
 }
 #top-menu #top-menu-right li ul#user-group-menu {
     width:330px;
@@ -200,14 +214,36 @@
         background: url("//img.exs.lv/bildes/login.png") no-repeat scroll 0px -40px transparent;
         width: 76px;
     }
-
 #top-menu {
     background:url('//img.exs.lv/bildes/runescape/pattern-navig.png') repeat-x;
-    border-top: 1px solid #363535;
-    border-bottom: 1px solid #363535;
     z-index:100;
     width:inherit;
-    font-family:verdana,ubuntu,tahoma,arial
+    height:28px;
+    font-family:verdana,ubuntu,tahoma,arial;
+    border-top:1px solid #363535;
+    border-bottom:2px solid #3f4041;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+#top-menu.no-radius {
+    /* kad rinda ir pielipināta augšai un saturs "aizbrauc" aiz tās,
+       nebūs redzami balti stūri */
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+}
+#top-menu li a {
+    padding:0 9px;
+    line-height:28px;
+    height:28px;
+    font-size:11px;
+}
+#top-menu > ul > li > a {
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    font-size:10px;
+}
+#top-menu li ul {
+    top:28px;
 }
 #top-menu li.selected a, #top-menu li a:hover, #top-menu li:hover a {
     background: #2090cc url('//img.exs.lv/m/a/mad/blue.png') repeat 0 0;
@@ -266,8 +302,29 @@ div pre {
     margin-right: 0;
     padding-right: 0
 }
+ul#mainlist.rs-articles {
+    margin-left:15px;
+    margin-right:15px;
+}
+    .rs-article-img {
+        width:20%;
+        padding:0 20px 0 0;
+        display:table-cell;
+        vertical-align:middle;
+        text-align:center;
+    }
+    .rs-article-intro {
+        padding:5px 0 10px;
+        font-size:13px;
+        width:80%;
+        display:table-cell;
+        vertical-align:middle;
+    }
 #forum td h3 {
     font-size:13px
+}
+#breadcrumbs {
+    margin-bottom:5px;
 }
 
 /* raksta saturs */
@@ -400,9 +457,8 @@ div pre {
 
 /* cilnes */ 
 .tabs {
-    /* pirms ciļņu rindas nebūs atstarpes,
-       un rinda būs visā platumā */
-    margin:-5px -5px 0;
+    /* ciļņu rinda būs visā platumā */
+    margin:0;
 }
 .tabs li {
     margin-right:4px;
@@ -416,7 +472,7 @@ div pre {
 .tabs li a,
 .tabs li a.active,
 .tabs li a.active:hover {
-    padding:4px 13px;
+    padding:4px 10px;
 }
 .tabs li a span {
     padding-left:24px;
@@ -548,23 +604,30 @@ ul.nav-right {
     width:578px;
     padding-left:15px;
     padding-right:15px;
-    background:url('//img.exs.lv/bildes/runescape/pattern-wrapper.png') 0 2%
+    background:url('//img.exs.lv/bildes/runescape/pattern-wrapper.png') 0 2%;
+    /* lai arī tad, ja saturs šajā blokā ir "zems", bloka augstums
+       daudz maz sakristu ar sānu kolonnu minimālo augstumu */
+    /*min-height:1115px;*/
+    min-height:1172px;
 }
 #left {
     width:207px;
     padding:0 4px 0 3px;
 }
-#left, #right {
-    background-image:url('//img.exs.lv/bildes/runescape/pattern-cols.png');
-}
-
 /* galvenā satura kolonnas platums pie dažādiem tpl_options mainās */
 #content.no-left {
     width:785px;
-    padding-left:25px;
 }
 #content.no-right {
     width:789px;
+}
+.no-left #inner-content,
+.no-right #inner-content,
+.no-left-right #inner-content {
+    /* tiklīdz trūkst viena vai abas sānu kolonnas, tā galvenais saturs
+       izskatās glītāk ar lielākām atkāpēm no malām */
+    padding-left:20px;
+    padding-right:20px;
 }
 
 /*
@@ -575,9 +638,10 @@ ul.nav-right {
 
 #left h3, #right h3 {
     margin:8px 0 0;
-    padding-left:12px;
     color:#335572;
     background-image:linear-gradient(#fffffe, #fffffe 25%, #e6e6e6);
+    padding:3px 4px 3px 12px;
+    font-size:12px;
 }
 #left h3 .mb-create,
 #right h3 .mb-create {
@@ -895,6 +959,9 @@ ul.nav-right {
     float:right;
     margin-right:0;
 }
+.rsnews-tabs li:last-child {
+    margin-right:4px;
+}
 .rsnews-tabs li a,
 .rsnews-tabs li a.active,
 .rsnews-tabs li a.active:hover {
@@ -1190,20 +1257,20 @@ table.skill-reqs {
 
 /* kvestu sēriju sadaļa */
 .rs-intro {
-    margin:20px;
+    margin-bottom:20px;
     padding:7px 15px;
     border:1px solid #ddd;
     border-bottom:2px solid #bbb;
     border-top:2px solid #bbb;
-    position:relative
+    position:relative;
 }
 .rs-intro img {
     position:relative;
-    left:-7px
+    left:-7px;
 }
 .rs-intro p {
     font-size:13px;
-    line-height:1.5
+    line-height:1.5;
 }
 
 /*
@@ -1214,7 +1281,7 @@ table.skill-reqs {
 
 .rslist {
     font-size:11px;
-    margin:10px auto;
+    margin:10px 0;
 }
 .rslist.col-list {
     float:left;
@@ -1229,6 +1296,7 @@ table.skill-reqs {
 .rslist tr td {
     padding:4px 3px 3px;
     border-bottom:1px solid #ddd;
+    font-size:12px;
 }
 .rslist tr.listhead:hover td {
     background:transparent url('//img.exs.lv/bildes/runescape/table-bg.png') repeat-x top;
@@ -1270,37 +1338,34 @@ table.skill-reqs {
     max-height:120px;
     padding-right:10px
 }
-#series {
-    margin-left:20px
+.series {
+    background:#f8f8f8;
+    width:200px;
+    min-height:150px;
+    float:left;
+    padding:5px 10px 8px;
+    margin:0 7px 20px 0;
+    border:1px solid #ddd;
+    font-size:12px
 }
-    .series {
-        background:#f8f8f8;
-        width:200px;
-        min-height:150px;
-        float:left;
-        padding:5px 10px 8px;
-        margin:0 7px 20px 0;
-        border:1px solid #ddd;
-        font-size:12px
-    }
-    .series > h3 {
-        margin:0 auto 5px;
-        padding:0 0 3px 5px;
-        font-weight:700;
-        font-size:13px;
-        color:#FF0D0D;
-        border-bottom:1px solid #E6E6E6
-    }
-    .series img {
-        margin:5px auto;
-        max-width:200px
-    }
-    .series a {
-        margin:2px 0;
-        padding-left:20px;
-        display:block;
-        background:url('//img.exs.lv/bildes/runescape/li.png') no-repeat;
-    }
+.series > h3 {
+    margin:0 auto 5px;
+    padding-bottom:3px;
+    font-weight:700;
+    font-size:13px;
+    color:#FF0D0D;
+    border-bottom:1px solid #E6E6E6
+}
+.series img {
+    margin:5px auto;
+    max-width:200px
+}
+.series a {
+    margin:2px 0 2px -3px;
+    padding-left:20px;
+    display:block;
+    background:url('//img.exs.lv/bildes/runescape/li.png') no-repeat;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -1319,7 +1384,7 @@ table.skill-reqs {
     margin:auto
 }
 .stats-left {
-    margin:20px;
+    margin:20px 20px 20px 0;
     position:relative;
     top:15px
 }
@@ -1362,8 +1427,7 @@ table.skill-reqs {
 */
 
 .simple-quests {
-    margin:20px 50px 20px 20px;
-    width:95%
+    margin:20px 0;
 }
     .simple-quests tr td {
         padding:1px 3px;
@@ -1456,7 +1520,7 @@ table.skill-reqs {
 .skill-block {
     border:1px solid #ddd;
     border-bottom:2px solid #a4aeb9;
-    width:350px;
+    width:340px;
     height:210px;
     float:left;
     margin:10px 15px 10px 0

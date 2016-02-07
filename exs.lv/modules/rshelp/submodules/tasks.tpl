@@ -24,7 +24,7 @@
 <!-- START BLOCK : tasks -->
 <div style="margin:20px">
 
-    <h2 style="font-size:20px">Lapā esošās teritorijas</h1>
+    <h2 style="font-size:20px">Teritorijas</h1>
     <!-- START BLOCK : tasks-has-pages -->
     <div class="guide-block{newline}">
         <p class="guide-title">{series_title}</p>
