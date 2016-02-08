@@ -221,7 +221,7 @@ function create_news($type = 'rs3') {
                     '<div>'.$image.'</div>'.
                     '<div>'.
                         '<span>'.$single->title.'</span>'.
-                        '<span class="description">'.$description.'</span>'.
+                        '<span class="description has-ellipsis">'.$description.'</span>'.
                         '<span>'.$date.' &middot; '.$cat.'</span>'.
                     '</div>'.
                 '</a></li>';        

@@ -45,12 +45,12 @@
 }
 
 #scroll-up {
-    background:rgba(86, 105, 136, 0.84) url('//img.exs.lv/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
-    border: 2px solid #000
+    background:rgba(42, 76, 134, 0.9) url('//img.exs.lv/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+    border:2px solid #141E29;
 }
     #scroll-up:hover {
-        border:2px solid #1B1C1D;
         background:rgba(94, 130, 189, 0.84) url('//img.exs.lv/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
+        border:2px solid #1D2848;
     }
 .clearfix {
     margin:0;
@@ -1005,7 +1005,7 @@ ul.nav-right {
     vertical-align:middle;
 }
 .official-news img {
-    /* platumu nenorādām, jo to jau ierobežo tabulas rūts platums */
+    max-width:137px;
     max-height:85px;
     /* attēls būs vertikāli centrēts esošajā "tabulas" rūtī */
     vertical-align:middle;
@@ -1139,7 +1139,7 @@ table.facts-table .row-counter {
 .rslist.series-list {
     background:#fff;
     float:left;
-    margin-left:20px
+    margin-right:5px
 }
 .series-input {
     border:1px solid #E4E4E4;

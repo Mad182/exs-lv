@@ -36,7 +36,7 @@
             </td>
             <td>
                 <a class="related-quests" href="/{category-url}/getlist/{id}">
-                    <img class="is-pointer" src="/bildes/fugue-icons/navigation-270-button.png" title="Skatīt sērijas kvestus" alt="">
+                    <img class="is-pointer" src="{img-server}/bildes/fugue-icons/navigation-270-button.png" title="Skatīt sērijas kvestus" alt="">
                 </a>
             </td>
         </tr>
@@ -146,7 +146,7 @@
             </tr>
             <!-- START BLOCK : single-skill -->
             <tr{special}>
-                <td><img src="/bildes/fugue-icons/control-stop-square-small.png" title="{title} prasība" alt=""></td>
+                <td><img src="{img-server}/bildes/fugue-icons/control-stop-square-small.png" title="{title} prasība" alt=""></td>
                 <td style="width:70px">{title}</td>
                 <td class="is-centered" style="width:50px">
                     <input class="level-input" type="text" name="level-{id}" value="{level}">
