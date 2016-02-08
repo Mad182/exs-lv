@@ -167,16 +167,16 @@ sup.new {
 }
 #top-menu #top-menu-left li .dropdown {
     /* izbrīvēs vietu bultiņai sānā */
-    padding-right:15px;
+    padding-right:20px;
 }
     #top-menu #top-menu-left li span.arrow {
         /* bultiņa labajā sānā norādīs uz eksistējošu dropdown */
         position:absolute;
-        top:30%;
+        top:27%;
+        right:7px;
         width:16px;
         height:16px;
         background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-down.png') no-repeat right 50%;
-        right:2px;
     }
 #login-block {
     margin:0 10px 0 0;
@@ -470,6 +470,9 @@ ul#mainlist.rs-articles {
     /* ciļņu rinda būs visā platumā */
     margin:0;
 }
+.box .tabs {
+    margin:-5px -5px 0;
+}
 .tabs li {
     margin-right:4px;
 }
@@ -522,7 +525,7 @@ ul#mainlist.rs-articles {
     .top-navig ul a {
         color:#A5BCCE;
         font-family:verdana, tahoma, arial;
-        padding:7px 14px;
+        padding:7px 12px;
         display:inline-block;
     }
     .top-navig ul a:hover {
