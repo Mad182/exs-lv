@@ -2671,6 +2671,10 @@ table .quote {
 	max-width: 500px
 }
 
+.quote-nouser, .code-header {
+	display: none
+}
+
 .socmed {
 	padding:10px 0
 }
@@ -5092,6 +5096,7 @@ fieldset[disabled] .button.primary.active {
 
 
 
+
 .button.success[disabled],
 fieldset[disabled] .button.success,
 .button.success.disabled:hover,
@@ -5660,3 +5665,4 @@ p.images-5 img {
 	margin-right:.5%;
 	float: left;
 }
+
