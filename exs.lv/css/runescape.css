@@ -165,6 +165,19 @@ sup.new {
     font-size: 11px;
     line-height: 14px
 }
+#top-menu #top-menu-left li .dropdown {
+    /* izbrīvēs vietu bultiņai sānā */
+    padding-right:15px;
+}
+    #top-menu #top-menu-left li span.arrow {
+        /* bultiņa labajā sānā norādīs uz eksistējošu dropdown */
+        position:absolute;
+        top:30%;
+        width:16px;
+        height:16px;
+        background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-down.png') no-repeat right 50%;
+        right:2px;
+    }
 #login-block {
     margin:0 10px 0 0;
     padding:0;

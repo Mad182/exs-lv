@@ -233,7 +233,8 @@
         <div id="top-menu">
             <ul id="top-menu-left">
                 <li{cat_sel_1863}><a class="first" href="/">Lobby</a></li>
-                <li{cat-sel-102}><a href="/kvestu-pamacibas">Kvesti</a>
+                <li{cat-sel-102}><a class="dropdown" href="/kvestu-pamacibas">Kvesti</a>
+                    <span class="arrow">&nbsp;</span>
                     <ul>
                         <li><a href="/kvestu-pamacibas">Sērijas</a></li>
                         <li><a href="/p2p-kvesti">P2P kvesti</a></li>
@@ -245,7 +246,8 @@
                     </ul>
                 </li>
                 <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-                <li{cat-sel-4}><a href="/prasmes">Prasmes{skills-is-new}</a>
+                <li{cat-sel-4}><a class="dropdown" href="/prasmes">Prasmes{skills-is-new}</a>
+                    <span class="arrow">&nbsp;</span>
                     <ul>
                         <li><a href="/prasmes">Prasmju saraksts</a></li>
                         <li><a href="/prasmes/xp-table">XP tabula&nbsp;<span class="is-new">new</span></a></li>
@@ -253,7 +255,8 @@
                     </ul>
                 </li>
                 <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
-                <li{cat-sel-1903}><a href="#">Arhīvs</a>
+                <li{cat-sel-1903}><a class="dropdown" href="#">Arhīvs</a>
+                    <span class="arrow">&nbsp;</span>
                     <ul>
                         <li{cat-sel-599}><a href="/runescape">Ziņas</a></li>
                         <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>

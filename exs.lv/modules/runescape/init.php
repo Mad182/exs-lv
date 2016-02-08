@@ -6,7 +6,7 @@
 
 // īslaicīgs kods, lai paslēptu vairs nevajadzīgus "NEW"
 $today = date('Y-m-d H:i:s');
-if ($today < '2016-02-13 00:00:00') {
+if ($today < '2016-02-12 00:00:00') {
     $tpl->assignGlobal('skills-is-new', '&nbsp;<span class="is-new">new</span>');
     $tpl->assignGlobal('hs-is-new', '&nbsp;<span class="is-new">new</span>');
 }
