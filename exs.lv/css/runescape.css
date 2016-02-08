@@ -41,7 +41,7 @@
 }
 .vc-item {
     vertical-align:middle;
-    display: inline-block
+    display:inline-block;
 }
 
 #scroll-up {
@@ -971,89 +971,92 @@ ul.nav-right {
     padding-left:24px;
     padding-top:1px;
 }
+
+/* saraksts ar runescape oficiālajiem jaunumiem sākumlapā */
 .official-news {
     margin:0 0 20px 0;
     font-size:12px;
-    padding:0
+    padding:0;
 }
-    .official-news:after {
-        content:"";
-        display:table
+.official-news li {
+    background:#fff;
+    border-bottom:2px solid rgb(235, 232, 232);
+    padding:0;
+    margin:10px 0 0;
+}
+.official-news li a {
+    /* visvienkāršākais variants, kā saturu nocentrēt vertikāli */
+    display:table;
+}
+.official-news li a:hover {
+    text-decoration:none; /* noņems underline */
+}
+.official-news div {
+    /* abi div'i kā tabulas rūtis ar satura vertikālo centrējumu */
+    display:table-cell;
+}
+.official-news div:first-child {
+    width:25%;
+    min-width:137px;
+}
+.official-news div:last-child {
+    width:75%;
+    padding:5px 15px; /* atkāpes ap tekstu; ap bildi tādas nevajag */
+    vertical-align:middle;
+}
+.official-news img {
+    /* platumu nenorādām, jo to jau ierobežo tabulas rūts platums */
+    max-height:85px;
+    /* attēls būs vertikāli centrēts esošajā "tabulas" rūtī */
+    vertical-align:middle;
+    margin:3px 0;
+}
+.official-news span {
+    display:block;
+    color:#2385B3;
+    line-height:1.6;
+}
+.official-news span:first-child {
+    color:#0a6eb1;
+    font-weight:700;
+    margin-top:2px;
+}
+.official-news .description {
+    margin-top:2px;
+    margin-bottom:2px;
+    color:#546873;
+}
+.official-news li:hover .description {
+    color:#152F3E;
+}
+.official-news .link {
+    text-align:right;
+}
+.official-news .link a {
+    display:block;
+    padding:7px 20px 5px;
+}
+
+/* specifisko rs jaunumu miniblogu stils */
+.rsmb-title {
+    color:#38405A;
+    font-weight: 700;
+    padding-bottom:0;
+    font-size:15px;
+    margin-top:2px
+}
+.rsmb-text {
+    margin:9px 5px 0 0
+}
+    .rsmb-text a {
+        margin-top:7px
     }
-    .official-news li {
-        background:#fff;
-        border-bottom:2px solid rgb(235, 232, 232);
-        padding:0;
-        margin:10px 0 0;
-        overflow:auto
-    }
-    .official-news li:hover {
-        background:rgb(244, 247, 252)
-    }
-    .official-news img {
-        margin-right:12px;
-        width:125px;
-        max-height:85px
-    }
-    .official-news p {
-        width:70%;
-        line-height:1.8;
-        padding-top:0
-    }
-    .official-news p > span:nth-child(1) {
-        color:#0a6eb1;
-        display:block;
-        font-weight:700;
-        margin-top:5px
-    }
-    .official-news p > span:nth-child(2) {
-        display:block;
-        color:#2385B3
-    }
-    .official-news .link {
-        margin-top:0
-    }
-    .official-news .link a {
-        padding:5px 10px;
-        float:right;
-    }
-    .official-news .goto-mb {
-        float: right;
-        width: 20px;
-        display: table;
-        padding:0
-    }
-    .official-news .goto-mb a {
-        vertical-align: middle;
-        display: table-cell;
-        width: 20px;
-        height: 68px;
-        background: #E5EBFA;
-        padding-left: 5px;
-    }
-    .official-news .goto-mb a:hover {
-        background:#C0D7E6
-    }
-    /* specifisko miniblogu stils */
-    .rsmb-title {
-        color:#38405A;
-        font-weight: 700;
-        padding-bottom:0;
-        font-size:15px;
-        margin-top:2px
-    }
-    .rsmb-text {
-        margin:9px 5px 0 0
-    }
-        .rsmb-text a {
-            margin-top:7px
-        }
-    .rsmb-fade {
-        color: #1f4fa3
-    }
-    .rsmb-oldschool {
-        color: rgb(249, 63, 91)
-    }
+.rsmb-fade {
+    color: #1f4fa3
+}
+.rsmb-oldschool {
+    color: rgb(249, 63, 91)
+}
 
 /*
 |--------------------------------------------------------------------------

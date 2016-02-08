@@ -2000,7 +2000,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$mb->text = wordwrap($mb->text, 36, "\n", 1);
 			$mb->text = str_replace('/', "/<wbr />", $mb->text);
 
-			$koef = ($lang === 9) ? 10 : 0; // #rs projektā īsāks teksts			
+			$koef = ($lang === 9) ? 15 : 0; // #rs projektā īsāks teksts			
 			if ($mb->groupid != 0 && empty($group_id)) {
 				$mb->text = '<em><span>@' . $group->title . '</span></em>' . textlimit($mb->text, 88 - $koef, '...');
 			} elseif ($mb->lang != $lang) {
