@@ -112,7 +112,7 @@
             <ul class="droplist">
                 <li class="rs-logo"><img src="{img-server}/bildes/runescape/rs-logo-sm.png" alt=""></li>
                 <li><a href="/" class="dropdown">runescape.exs.lv</a>
-                    <span class="arrow-down"></span>
+                    <span class="arrow arrow-down"></span>
                     <ul>
                         <li><a href="//exs.lv">exs.lv</a></li>
                         <li><a href="//lol.exs.lv">lol.exs.lv</a></li>
@@ -121,21 +121,25 @@
                         <li>&nbsp;</li>
                     </ul>
                 </li>
-                <li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
-                    <span class="arrow-down"></span>
+                <li><a href="javascript:void(0)" class="dropdown">Hiscores{hs-is-new}</a>
+                    <span class="arrow arrow-down"></span>
                     <ul>
-                        <li><a href="//tops.exs.lv/runescape" rel="nofollow">Tops</a></li>
+                        <li><a href="http://scores.kopideja.lv/Invention.htm" rel="nofollow" target="_blank">Invention HS (LV)&nbsp;<span class="is-new">new</span></a></li>
+                        <li><a href="http://services.runescape.com/m=hiscore/a=1/ranking?category_type=0&table=27&page=1" rel="nofollow" target="_blank">Invention HS&nbsp;<span class="is-new">new</span></a></li>
+                        <li class="as-last">&nbsp;</li>
+                        <li><a href="//tops.exs.lv/runescape" rel="nofollow" target="_blank">tops.exs.lv</a></li>
                         <li><a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a></li>
                         <li><a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a></li>
                         <li>&nbsp;</li>
                     </ul>
                 </li>
-                <li><a href="javascript:void(0)" class="dropdown">Cits</a>
-                    <span class="arrow-down"></span>
+                <li><a href="javascript:void(0)" class="dropdown">Citas saites</a>
+                    <span class="arrow arrow-down"></span>
                     <ul>
-                        <li><a href="/img">exs bilžu hostings</a></li>
-                        <li><a href="http://warbandtracker.com/schedule.php" rel="nofollow">Warbands taimeris</a></li>
+                        <li><a href="http://runescape.wikia.com/wiki/RuneScape_Wiki" rel="nofollow" target="_blank">runescape.wikia&nbsp;<span class="is-new">new</span></a></li>
+                        <li><a href="http://warbandtracker.com/schedule.php" rel="nofollow" target="_blank">Warbands taimeris</a></li>
                         <li><a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a></li>
+                        <li class="as-last">&nbsp;</li>
                         <li><a href="http://z8.invisionfree.com/lrc" rel="nofollow" target="_blank">LRC forums</a></li>
                         <li><a href="http://z13.invisionfree.com/Latvian_Archers" rel="nofollow" target="_blank">Latvian Archers</a></li>
                         <li><a href="http://z10.invisionfree.com/Janis_Vimba/" rel="nofollow" target="_blank">JV forums</a></li>
@@ -146,7 +150,7 @@
             <ul class="droplist nav-right">
                 <!-- START BLOCK : rsmod-nav -->
                 <li{active-rsmod}><a href="#" class="dropdown">RS Mod</a>
-                    <span class="arrow-down"></span>
+                    <span class="arrow arrow-down"></span>
                     <ul>
                         <li><a href="/rsfacts">RuneScape fakti</a></li>
                         <li><a href="/modules/runescape/1000-rs-facts.txt">1000 faktu saraksts</a></li>
@@ -160,7 +164,7 @@
                 <!-- END BLOCK : rsmod-nav -->
                 <!-- START BLOCK : mod-nav -->
                 <li{active-mod}><a href="#" class="dropdown">Mod</a>
-                    <span class="arrow-down"></span>
+                    <span class="arrow arrow-down"></span>
                     <ul>
                         <li><a href="/banned">Liegumi</a></li>
                         <li><a href="/crows">Atbrīvotās vārnas</a></li>
@@ -172,27 +176,31 @@
                 </li>
                 <!-- END BLOCK : mod-nav -->
                 <!-- START BLOCK : auth-nav -->
-                <li><a href="javascript:void(0)" class="dropdown" style="position:relative;top:-2px;">Noformējums <sup class="new">new</sup></a>
-                    <span class="arrow-down"></span>
-                    <ul>
-                        <li><a href="/?bg=elves">fons: Prifddinas</a></li>
-                        <li><a href="/?bg=goats">fons: Goats</a></li>
-                        <li><a href="/?bg=map">fons: RuneScape karte</a></li>
-                        <li><a href="/?layout=sticky">kolonnas blakus</a></li>
-                        <li><a href="/?layout=not-sticky">kolonnas sānos</a></li>
-                        <li>&nbsp;</li>
-                    </ul>
-                </li>
+                <li><a href="/img">Bilžu hosts</a></li>
                 <li{cat-sel-104}><a href="/pm">Vēstules<span id="new-msg">{new-messages}</span></a></li>
-                <li{cat-sel-646}><a href="/user/{currentuser-id}" class="dropdown">Profils</a>
-                    <span class="arrow-down"></span>
+                <li{cat-sel-646}><a href="/user/{currentuser-id}" class="dropdown">Profils{paint-is-new}</a>
+                    <span class="arrow arrow-down"></span>
                     <ul>
+                        <li><a class="dropdown" href="javascript:void(0)">Noformējums&nbsp;<span class="is-new">new</span></a>
+                            <span class="arrow arrow-down"></span>
+                            <ul class="flip-side" style="width:194px">
+                                <li class="as-last">&nbsp;</li>
+                                <li><a class="paint" href="/?bg=elves">fons: Prifddinas</a></li>
+                                <li><a class="paint" href="/?bg=goats">fons: Goats</a></li>
+                                <li><a class="paint" href="/?bg=map">fons: RuneScape karte</a></li>
+                                <li><a class="paint" href="/?layout=sticky">kolonnas blakus</a></li>
+                                <li><a class="paint" href="/?layout=not-sticky">kolonnas sānos</a></li>
+                                <li>&nbsp;</li>
+                            </ul>
+                        </li>
+                        <li class="as-last">&nbsp;</li>
                         <li><a href="/user/edit">Profila informācija</a></li>
                         <li><a href="/user/avatar">Mans avatars</a></li>
                         <li><a href="/user/settings">Mani iestatījumi</a></li>
                         <li><a href="/user/security">Paroles maiņa</a></li>
                         <li><a href="/user/email">E-pasta adreses maiņa</a></li>
                         <li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
+                        <li>&nbsp;</li>
                     </ul>
                 </li>
                 <li><a href="/logout/{logout-hash}">Iziet ({currentuser-nick})</a></li>
@@ -237,19 +245,19 @@
                     </ul>
                 </li>
                 <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-                <li{cat-sel-4}><a href="/prasmes">Prasmes&nbsp;<span class="is-new">new</span></a>
+                <li{cat-sel-4}><a href="/prasmes">Prasmes{skills-is-new}</a>
                     <ul>
                         <li><a href="/prasmes">Prasmju saraksts</a></li>
                         <li><a href="/prasmes/xp-table">XP tabula&nbsp;<span class="is-new">new</span></a></li>
                         <li><a href="/prasmes/facts">Fakti</a></li>
                     </ul>
                 </li>
-                <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
+                <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
                 <li{cat-sel-1903}><a href="#">Arhīvs</a>
                     <ul>
                         <li{cat-sel-599}><a href="/runescape">Ziņas</a></li>
                         <li{cat-sel-195}><a href="/celvezi">Ceļveži</a></li>
-                        <li{cat-sel-791}><a href="/gildes">Ģildes</a></li>
+                        <li{cat-sel-792}><a href="/distractions-diversions">D&amp;D</a></li>
                         <li{cat-sel-2046}><a href="/achievements">Achievements</a></li>
                         <li{cat-sel-1087}><a href="/oss-guides">Oldschool RS</a></li>
                         <li{cat-sel-5}><a href="/padomi">Dažādi raksti</a></li>
@@ -307,7 +315,7 @@
                 <!-- END BLOCK : notification-list -->
                 
                 <!-- START BLOCK : discord-box -->
-                <h3>Saziņas kanāli <span class="is-new">new</span></h3>
+                <h3>Saziņas kanāli{is-new}</h3>
                 <div class="box box-discord">
                     <div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="exs Discord kanāls" alt="exs discord kanāls"></div>
                     <div>
@@ -421,13 +429,6 @@
                     <div class="c"></div>
                 </div>
                 <!-- END BLOCK : profile-box-->
-                
-                <h3>Ātrās saites</h3>
-                <div class="box" style="padding:10px 20px;font-size:12px">
-                    - <a href="javascript:void(0)">invention hs (eng)</a><br>
-                    - <a href="javascript:void(0)">invention hs (lv)</a><br>
-                    - <a href="javascript:void(0)">runescape.wiki</a>
-                </div>
 
                 <!-- START BLOCK : mb-box-->
                 <h3>Miniblogi{miniblog-add}</h3>

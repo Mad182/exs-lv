@@ -25,6 +25,11 @@ if ($auth->ok === true) {
 
 // informatīvs bloks ar informāciju par Discord kanālu
 $tpl->newBlock('discord-box');
+$today = date('Y-m-d H:i:s');
+$date = '2016-02-16 00:00:00';
+if ($today < $date) {
+    $tpl->assign('is-new', '&nbsp;<span class="is-new">new</span>');
+}
 
 
 // jaunākais galerijās

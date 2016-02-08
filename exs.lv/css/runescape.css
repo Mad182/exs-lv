@@ -218,7 +218,7 @@ sup.new {
     background:url('//img.exs.lv/bildes/runescape/pattern-navig.png') repeat-x;
     z-index:100;
     width:inherit;
-    height:28px;
+    height:32px;
     font-family:verdana,ubuntu,tahoma,arial;
     border-top:1px solid #363535;
     border-bottom:2px solid #3f4041;
@@ -233,17 +233,12 @@ sup.new {
 }
 #top-menu li a {
     padding:0 9px;
-    line-height:28px;
-    height:28px;
+    line-height:32px;
+    height:32px;
     font-size:11px;
 }
-#top-menu > ul > li > a {
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-    font-size:10px;
-}
 #top-menu li ul {
-    top:28px;
+    top:32px;
 }
 #top-menu li.selected a, #top-menu li a:hover, #top-menu li:hover a {
     background: #2090cc url('//img.exs.lv/m/a/mad/blue.png') repeat 0 0;
@@ -421,9 +416,9 @@ ul#mainlist.rs-articles {
     padding:5px 0;
 }
 .exs-groups li p {
-    font-size:90%;
     color:#888;
-    line-height:1.2;
+    font-size:12px;
+    margin-top:-2px;
 }
 .exs-groups li h3 {
     line-height:1.2;
@@ -432,6 +427,8 @@ ul#mainlist.rs-articles {
     text-overflow:ellipsis;
     white-space:nowrap;
     padding-right:15px;
+    font-size:16px;
+    margin-top:14px;
 }
 @media (min-width:980px) and (max-width:1199px) {
     .exs-groups li h3 {
@@ -885,7 +882,10 @@ ul.nav-right {
             border-left:1px solid #2e3853
         }
         .droplist ul ul a, .droplist ul ul a:hover {
-            background:url('//img.exs.lv/bildes/fugue-icons/flask.png') no-repeat 5px 60%
+            background:url('//img.exs.lv/bildes/fugue-icons/flask.png') no-repeat 7px 60%
+        }
+        .droplist ul ul a.paint, .droplist ul ul a.paint:hover {
+            background:url('//img.exs.lv/bildes/fugue-icons/paint-tube.png') no-repeat 7px 60%
         }
         /* novietojums pretējā pusē (kreisajā) */
         .droplist ul ul.flip-side {
@@ -898,7 +898,9 @@ ul.nav-right {
     .droplist li:hover > ul {
         display:block
     }
-    .droplist ul li:last-child {
+    .droplist ul li:last-child,
+    .droplist ul li.as-last {
+        /* tumšāka, "zemāka" rinda bez jebkāda teksta */
         width:194px;
         height:5px;
         background:url('//img.exs.lv/bildes/runescape/nav-pattern-blue-2.png') repeat-x
@@ -907,27 +909,26 @@ ul.nav-right {
         border-top:1px solid #2e3853;
         margin-top:-1px
     }
-    .droplist a.dropdown {
+    .droplist > li > a.dropdown {
+        /* tikai pirmajā slānī piešķirs atkāpi, lai atstātu vietu bultiņai */
         padding-right:20px
     }
     .dropdown.active-page, .droplist li.selected {
         background:#2D455F
     }
-    .droplist .arrow-down {
-        background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
+    .droplist .arrow {
         position:absolute;
-        right:8px;
         top:25%;
         width:16px;
-        height:16px
+        height:16px;
+    }
+    .droplist .arrow-down {
+        background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-down.png') no-repeat 96% 50%;
+        right:8px;        
     }
     .droplist .arrow-right {
         background:url('//img.exs.lv/bildes/fugue-icons/control-arrow-right.png') no-repeat right 50%;
-        position:absolute;
         right:5px;
-        top:25%;
-        width:16px;
-        height:16px
     }
 
 /*
