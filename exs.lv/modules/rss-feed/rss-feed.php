@@ -53,6 +53,7 @@ if (!empty($articles)) {
 			$text = '<p><a href="' . $url . '"><img style="border:0;float:left;margin: 6px 7px 0 0" src="' . $site_url . $article->avatar . '" alt="' . h($article->title) . '" /></a></p>' . $text;
 		}
 
+		$text = str_replace('"//img.exs.lv/', '"https://img.exs.lv/', $text);
 		$text = str_replace('="/', '="' . $site_url, $text);
 
 		$cat = get_cat($article->category);
@@ -67,6 +68,7 @@ if (!empty($articles)) {
 			'category' => h($cat->title)
 		));
 	}
+
 }
 
 $tpl->printToScreen();
