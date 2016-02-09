@@ -1051,7 +1051,7 @@ function get_banlist($force = false) {
 /**
  * Linki uz jaunākajiem miniblogiem lapas footerī
  */
-function get_footer_mb($force = true) {
+function get_footer_mb($force = false) {
 	global $db, $m, $lang, $auth;
 	if ($force || !($html = $m->get('f_mb_' . $lang))) {
 		$html = '';
