@@ -183,7 +183,7 @@ $(document).ready(function($) {
 	var is_visible = false;
 	$(window).scroll(function() {
 		if ($(this).scrollTop() > 200 && !is_visible) {
-			$elem.stop().animate({bottom: '40px', opacity: 0.6}, 500);
+			$elem.stop().animate({bottom: '40px', opacity: 1}, 500);
 			is_visible = true;
 		}
 		else if ($(this).scrollTop() <= 200 && is_visible) {

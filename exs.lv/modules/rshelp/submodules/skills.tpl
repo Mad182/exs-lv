@@ -1,5 +1,5 @@
 <!-- START BLOCK : list-tabs -->
-<ul class="tabs" style="margin:10px 20px 0;">
+<ul class="tabs" style="margin:0 0 15px">
     <li><a class="{tab-skills}" href="/{category-url}">Prasmes</a></li>
     <li><a class="{tab-xptable}" href="/{category-url}/xp-table">XP tabula</a></li>
     <li><a class="{tab-facts}" href="/{category-url}/facts">Prasmju fakti</a></li>
@@ -12,8 +12,8 @@
     <img id="sage" class="vc-item" src="{img-server}/bildes/runescape/intro/lumby_sage.png" title="Lumbridge Sage" alt="Lumbridge Sage">
     <p class="vc-item" style="max-width:80%">Gīlinora ir neparasta zeme pat vienkāršiem iemītniekiem, kurus neinteresē nekas cits kā vien savu piemājas dobīšu uzaršana un izravēšana, kas neprasa daudz pūļu. Tomēr lielākiem dēkaiņiem, kas ceļo tālu un meklē piedzīvojumus, cīnās ar asinskāriem nezvēriem vai attīsta savu veiklību, papildu iemaņas ir ļoti būtiskas.<br><br>No vienkāršas ugunskura iekuršanas un ēdmaņas zvejošanas līdz nesalaužamu slēdzeņu atdarīšanai un nāvīgi maģisku virumu brūvēšanai. Un tas ir tikai sākums!<br><br>Līdz ar <strong style="color:#012542">{latest-skill}</strong> izlaišanu spēlē pavisam pieejamas <strong style="color:#012542">{skill-count}</strong> prasmes (max xp: <strong>{max-xp}</strong>).</p>
 </div>
-<div class="simple-note">
-  <img style="margin:3px 7px 0 0" src="{img-server}/bildes/runescape/star-p2p-small.png" alt="">Prasme pieejama tikai maksājošajiem spēlētājiem
+<div class="simple-note" style=">
+    <img style="margin:3px 7px 0 0" src="{img-server}/bildes/runescape/star-p2p-small.png" alt="">Prasme pieejama tikai maksājošajiem spēlētājiem
 </div>
 <!-- END BLOCK : skills-intro-text -->
 
@@ -38,30 +38,26 @@
 <!-- END BLOCK : js-skill-pages -->
 
 <!-- START BLOCK : skills -->
-<div style="margin-left:20px">
-
-    <!-- START BLOCK : skill -->
-    <div class="skill-block"{linebreak}>
-        <div class="skill-info" style="width:50%">
-            <img class="skill-icon" src="{img}" title="{cat_title}" alt="">
-            <p class="skill-name">{cat_title} {members_only}</p>
-            {info}
-        </div>
-        <div class="skill-links" style="width:45%">
-            <p>Saistītie raksti</p>
-            <div>
-                <!-- START BLOCK : new-skill-guide -->
-                <a title="{page_title}" href="/read/{strid}">{page_title}</a>
-                <!-- END BLOCK : new-skill-guide -->
-                <!-- START BLOCK : skill-pages -->   
-                <div class="skill-pages">{next}</div>
-                <!-- END BLOCK : skill-pages -->
-            </div>        
-        </div>
+<!-- START BLOCK : skill -->
+<div class="skill-block"{linebreak}>
+    <div class="skill-info" style="width:50%">
+        <img class="skill-icon" src="{img}" title="{cat_title}" alt="">
+        <p class="skill-name">{cat_title} {members_only}</p>
+        {info}
     </div>
-    <!-- END BLOCK : skill -->
-    
+    <div class="skill-links" style="width:45%">
+        <p>Saistītie raksti</p>
+        <div>
+            <!-- START BLOCK : new-skill-guide -->
+            <a title="{page_title}" href="/read/{strid}">{page_title}</a>
+            <!-- END BLOCK : new-skill-guide -->
+            <!-- START BLOCK : skill-pages -->   
+            <div class="skill-pages">{next}</div>
+            <!-- END BLOCK : skill-pages -->
+        </div>        
+    </div>
 </div>
+<!-- END BLOCK : skill -->
 <div class="clearfix"></div>
 <!-- END BLOCK : skills -->
 
@@ -91,8 +87,8 @@
 <p class="simple-note">
     Šajā tabulā redzams nepieciešamais XP punktu daudzums katram iespējamajam prasmes līmenim.<br>
     Maksimālais iegūstamais XP punktu daudzums vienā prasmē ir 200,000,000.<br><br>
-    - <a href="#xp-past-120">XP tabula pēc 120. prasmes</a><br>
-    - <a href="#xp-invention">Invention XP tabula</a>
+    - <a href="#xp-past-120">XP tabula pēc 120. prasmes&nbsp;<sup class="new">NEW</sup></a><br>
+    - <a href="#xp-invention">Invention XP tabula&nbsp;<sup class="new">NEW</sup></a>
 </p>
 <table class="rslist xp-table">
     <tr class="listhead">
@@ -408,7 +404,7 @@
 </table>
 
 <!-- START BLOCK : xp-table-past-120 -->
-<p class="simple-note" style="margin:30px 20px 10px;">
+<p class="simple-note" style="margin:30px 0 10px;">
     Augstāk par 120. līmeni nevienā prasmē iegūt nav iespējams, tomēr nepieciešamais XP apjoms tādiem ir aprēķināms.
 </p>
 <table class="rslist xp-table">
@@ -440,7 +436,7 @@
 <!-- END BLOCK : xp-table-past-120 -->
 
 <!-- START BLOCK : invention-xp-table -->
-<p class="simple-note" style="margin:30px 20px 10px;">
+<p class="simple-note" style="margin:30px 0 10px;">
     <img style="float:left;margin-right:7px;" src="/bildes/runescape/skills/invention.png" title="Invention" alt="Invention logo"> 2016. gada 25. janvārī iznāca pirmā elites klases prasme - <strong>Invention</strong>.<br>Šajā prasmē katrā līmenī nepieciešamais XP apjoms ir citāds.
 </p>
 <table class="rslist xp-table">

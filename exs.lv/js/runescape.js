@@ -1,5 +1,5 @@
 /**
- *  Parādīs adreses saturu fancybox logā
+ *  Parādīs adreses saturu fancybox logā.
  */
 function fancyContent(url) {
     $.getJSON(url, function(response) {
@@ -27,7 +27,7 @@ $(document).ready(function () {
     });
 
     /**
-     *  RuneScape random fakta atjaunotājs
+     *  RuneScape random fakta atjaunotājs.
      */
     var $fact_box = $('.facts-box');
     $('.fetch-new-fact').on('click', function(e) {
@@ -43,7 +43,7 @@ $(document).ready(function () {
     });
 
     /**
-     *  Pielīmēs RuneScape projekta augšējo navigāciju
+     *  Pielīmēs RuneScape projekta augšējo navigāciju.
      */
     jQuery(function($) {
     
@@ -54,10 +54,12 @@ $(document).ready(function () {
         function fixDiv() {                  
           if ($(window).scrollTop() >= height ) {
             $topmenu.css({'position': 'fixed', 'top': '32px'});
+            $topmenu.addClass('no-radius');
             $header.css({'margin-bottom': '35px'});
           }
           else {
             $topmenu.css({'position': 'relative', 'top': 'auto'});
+            $topmenu.removeClass('no-radius');
             $header.css({'margin-bottom': 'auto'});
           }
         }
@@ -66,7 +68,7 @@ $(document).ready(function () {
     });
     
     /**
-     *  Prasmju sadaļas pārvietošanās pa lapām
+     *  Prasmju sadaļas pārvietošanās pa lapām.
      */
     $('a.skill-pager').on('click', function() {
         var elem = $(this).parent().parent();
@@ -78,7 +80,7 @@ $(document).ready(function () {
     });    
 
     /**
-     *  Parāda sērijai piesaistītos kvestus
+     *  Parāda sērijai piesaistītos kvestus.
      */
     $('.series-list').on('click', '.related-quests', function(e) {
         e.preventDefault();
@@ -90,7 +92,7 @@ $(document).ready(function () {
     });
 
     /**
-     *  Parāda izvēlni ar visiem piesaistāmajiem kvestiem
+     *  Parāda izvēlni ar visiem piesaistāmajiem kvestiem.
      */
     $('body').on('click', '.change-list', function(e) {     
         e.preventDefault();
@@ -98,7 +100,7 @@ $(document).ready(function () {
     });
     
     /**
-     *  Atjauno sērijas kvestu secību
+     *  Atjauno sērijas kvestu secību.
      */
     $('body').on('submit', '#quest-order', function(e) {
         e.preventDefault();
@@ -106,11 +108,11 @@ $(document).ready(function () {
         $form = $(this);
 
         $.ajax({
-			type: "POST",
-			dataType: "json",
-			url: $form.attr('action') + '?_=1',
-			data: $form.serialize(),
-			success: function(response) {
+            type: "POST",
+            dataType: "json",
+            url: $form.attr('action') + '?_=1',
+            data: $form.serialize(),
+            success: function(response) {
                 if (response.state == 'error') {
                     alert(response.message);
                 } else {
@@ -120,12 +122,12 @@ $(document).ready(function () {
                         $('.response').html('');
                     }, 4000);
                 }
-			}
-		});
+            }
+        });
     });
 
     /**
-     *  Pievieno/dzēš sērijai piesaistītu kvestu
+     *  Pievieno/dzēš sērijai piesaistītu kvestu.
      */
     $('body').on('click', '.set-quest', function(e) {    
         e.preventDefault();
@@ -157,7 +159,7 @@ $(document).ready(function () {
     });
 
     /**
-     * Dzēš ierakstu par RuneScape pamācību
+     * Dzēš ierakstu par RuneScape pamācību.
      */
     $('.del-page').on('click', function(e) {
 
@@ -178,7 +180,7 @@ $(document).ready(function () {
     });
 
     /**
-     * Slēpj/parāda ierakstu par RuneScape pamācību
+     * Slēpj/parāda ierakstu par RuneScape pamācību.
      */
     $('.hide-page').on('click', function(e) {
 
@@ -199,4 +201,3 @@ $(document).ready(function () {
         e.preventDefault();
     });
 });
-

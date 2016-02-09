@@ -1,7 +1,7 @@
 <?php
 /**
  *  RuneScape apakšprojekta kreisā kolonna un tās saturs
- *	(lietotāja profila attēls, miniblogi, jaunākās grupas u.tml.).
+ *  (lietotāja profila attēls, miniblogi, jaunākās grupas u.tml.).
  */
 
 $tpl->newBlock('main-layout-left');
@@ -113,7 +113,7 @@ if ($auth->ok === true) {
 }
 
 
-//  jaunāko izveidoto RuneScape grupu saraksts
+// jaunāko izveidoto RuneScape grupu saraksts
 if ($groups = get_latest_groups()) {
 
     $tpl->newBlock('groups-l-list');
@@ -138,7 +138,7 @@ if ($groups = get_latest_groups()) {
 }
 
 
-// nejauši atlasīts RuneScape fakts;
+// nejauši atlasīts RuneScape fakts
 $tpl->newBlock('runescape-facts-box');
 if ($rsfacts = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 ORDER BY RAND() LIMIT 1")) {
     $tpl->assign('random-fact', $rsfacts->text);

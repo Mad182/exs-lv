@@ -1,5 +1,5 @@
 <!-- START BLOCK : list-tabs -->
-<ul class="tabs" style="margin:0 20px">
+<ul class="tabs" style="margin-bottom:20px">
     <li><a class="{tab-series}" href="/kvestu-pamacibas">Sērijas</a></li>
     <li><a class="{tab-p2p}" href="/p2p-kvesti">P2P</a></li>
     <li><a class="{tab-f2p}" href="/f2p-kvesti">F2P</a></li>
@@ -26,8 +26,8 @@
 <!-- END BLOCK : no-series-found -->
 
 <!-- START BLOCK : series-block -->
-<p class="simple-note" style="margin:5px 20px 20px">
-	Šis sadalījums pa sērijām ir neoficiāls, un liela daļa kvestu iederas vairākās sērijās, savukārt sērijas nereti viena ar otru pārklājas vai papildina kādu citu, tāpēc parādītais sadalījums nav vienīgais iespējamais.
+<p class="simple-note" style="margin:5px 0 20px">
+    Šis sadalījums pa sērijām ir neoficiāls, un liela daļa kvestu iederas vairākās sērijās, savukārt sērijas nereti viena ar otru pārklājas vai papildina kādu citu, tāpēc parādītais sadalījums nav vienīgais iespējamais.
 </p>
 <div id="series">
     <!-- START BLOCK : single-series -->
@@ -45,7 +45,7 @@
 
 
 <!-- START BLOCK : p2p-quests-block -->
-<p class="simple-note" style="margin:5px 20px 20px">
+<p class="simple-note" style="margin:5px 0 20px">
     Šajā sarakstā uzskaitītie kvesti ir pieejami tikai spēles maksas versijā (pay-to-play).<br>Nedaudziem senākiem kvestiem pamācības var meklēt <a href="/padomi">arhīvā</a>.
 </p>
 <!-- START BLOCK : no-p2p-quests -->
@@ -54,7 +54,7 @@
 </p>
 <!-- END BLOCK : no-p2p-quests -->
 <!-- START BLOCK : p2p-quests -->
-<table class="rslist">
+<table class="rslist" style="width:100%">
     <tr class="listhead">
         <td style="width:15px">&nbsp;</td>
         <td style="width:500px">&nbsp;</td>
@@ -93,7 +93,7 @@
 
 
 <!-- START BLOCK : stats-block -->
-<p class="simple-note" style="margin:10px 20px 0 20px">
+<p class="simple-note" style="margin:15px 0 0">
     Šajā sadaļā aplūkojama ar kvestiem saistīta statistika.
 </p>
 <!-- START BLOCK : no-stats-found -->
@@ -107,9 +107,9 @@
     <table class="stats-left vc-item">
         <tr><td class="left">P2P kvesti:</td><td>{p2p}</td></tr>
         <tr><td class="left">F2P kvesti:</td><td>{f2p}</td></tr>
-		<!-- START BLOCK : stats-single-year -->
+        <!-- START BLOCK : stats-single-year -->
         <tr class="{row-class}"><td class="left">{short-year}. gadā:</td><td>{quest-count}</td></tr>
-		<!-- END BLOCK : stats-single-year -->
+        <!-- END BLOCK : stats-single-year -->
         <tr><td class="left">Senāk:</td><td>{older}</td></tr>  
     </table>
     <img id="balance" class="vc-item" src="{img-server}/bildes/runescape/intro/balance.png" title="Balance Elemental" alt="">
@@ -120,7 +120,7 @@
         <tr><td class="left">Experienced:</td><td>{experienced}</td></tr>
         <tr><td class="left">Intermediate:</td><td>{intermediate}</td></tr>
         <tr><td class="left">Novice:</td><td>{novice}</td></tr>
-        <tr class="space"><td class="left">Minikvesti:</td><td>{miniquests}</td></tr>
+        <tr class="space"><td class="left">Minikvesti:</td><td>{miniquests}+</td></tr>
     </table>
 </div>
 <!-- END BLOCK : stats-found -->
@@ -129,8 +129,8 @@
 
 
 <!-- START BLOCK : facts-block -->
-<p class="simple-note" style="margin:10px 20px 0 20px">
-    Šajā sadaļā apkopoti ar kvestiem saistīti fakti.
+<p class="simple-note" style="margin:10px 0 0">
+    Šajā sadaļā apkopoti vispārīgi ar kvestiem saistīti fakti.
 </p>
 <div id="skills-facts" style="font-size:13px">
     <ul>
@@ -154,7 +154,7 @@
 
 
 <!-- START BLOCK : skills-block -->
-<p class="simple-note" style="margin:15px 20px 0 20px">
+<p class="simple-note" style="margin:15px 0 0">
     Šajā sadaļā parādīts augstākais līmenis katrā prasmē, kāds nepieciešams kādam no kvestiem. Sasniedzot šīs prasības, iespējams izpildīt visus kvestus.
 </p>
 <!-- START BLOCK : no-skills-found -->

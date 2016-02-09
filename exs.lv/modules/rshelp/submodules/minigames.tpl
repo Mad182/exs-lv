@@ -31,13 +31,13 @@
 <!-- END BLOCK : minigames-statistics -->
 
 <!-- START BLOCK : no-guides-found -->
-<p class="simple-note" style="margin:10px 20px">
+<p class="simple-note" style="margin:10px 0">
     Neizdevās atrast nevienu šīs sadaļas rakstu.
 </p>
 <!-- END BLOCK : no-guides-found -->
 
 <!-- START BLOCK : minigames-list -->
-<table class="rslist minigame-list" style="margin:10px 20px">
+<table class="rslist minigame-list" style="margin:10px 0">
     <tr class="listhead">
         <td style="width:100px">&nbsp;</td>
         <td style="width:600px">
