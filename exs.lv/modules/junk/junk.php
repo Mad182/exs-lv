@@ -129,10 +129,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/junk/' . $pic->id;
 		$twitter_meta['card'] = 'summary_large_image';
 
-		if(substr($pic->image, -4) === 'gifv') {
-			$html = '<iframe class="embedded-iframe" src="'.$pic->image.'#embed" ';
-			$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
-			$html .= 'width="100%" style="background:transparent" height="400"></iframe>';
+		if(strpos($pic->image, 'imgur')) {
+			$html = '<div style="text-align:center"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(array('https://i.imgur.com/', '#embed', '.gifv', '.gif'), '', $pic->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
 			
 			$opengraph_meta['image'] = 'https://img.exs.lv' . str_replace('/thb/', '/large/', $pic->thb);
 		} else {
