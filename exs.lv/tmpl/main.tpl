@@ -661,7 +661,6 @@
 				</div>
 			</div>
 
-
 			<div id="site-info" class="container">
 
 				<div id="footer-nav" class="fr">
@@ -675,7 +674,7 @@
 				</div>
 
 				<div id="credit" class="fl">
-					<p>&copy; 2005-2015, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
+					<p>&copy; 2005-{current-year}, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
 				</div>
 
 			</div>
@@ -695,8 +694,6 @@
 	<!-- END BLOCK : popup-ads-->
 	
 	<!-- iBILLBOARD Ad Server one2many code -->
-	<!-- HowTo: All the ad codes must be above this code! -->
-	<!-- HowTo: It is good idea to place this code just below the last ad code. -->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
 	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/bb/bb_one2n.js'></script>
 	<script type='text/javascript'>/* <![CDATA[ */ 
