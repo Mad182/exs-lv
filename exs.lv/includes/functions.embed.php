@@ -573,8 +573,7 @@ function embed_twitter($params) {
  *  @see https://developer.spotify.com/technologies/widgets/examples/
  */
 function embed_spotify($params) {
-	global $m;
-	global $embed_ly_key;
+	global $m, $embed_ly_key;
 
 	// $matches[0] - ieraksta adrese
 	// nolasa no Memcached vai izveido iframe saturu
@@ -589,7 +588,7 @@ function embed_spotify($params) {
 				$spotify_html = $spotify->html;
 			}
 		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 21600);
+		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 121600);
 	}
 
 	return $spotify_html;
@@ -812,9 +811,10 @@ function embed_gifv_gfycat($params) {
  */
 function embed_gifv_imgur($params) {
 
-	$html = '<iframe class="embedded-iframe" src="//i.imgur.com/' . h($params[3]) . '.gifv#embed" ';
-	$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
-	$html .= 'width="100%" height="400"></iframe>';
+	$html = '<div style="text-align:center">';
+	$html .= '<blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.h($params[3]).'"></blockquote>';
+	$html .= '<script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>';
+	$html .= '</div>';
 
 	return $html;
 }
