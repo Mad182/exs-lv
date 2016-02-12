@@ -189,7 +189,7 @@ ul.author-social li {
 }
 
 #page {
-	margin:16px auto
+	margin:0 auto
 }
 
 .nobot {
@@ -2050,10 +2050,6 @@ img.twit-pic {
 	#site-info {
 		padding-left:10px;
 		padding-right:10px;
-	}
-
-	#page {
-		margin: 0;
 	}
 
 	.navbar .nav > li > a {
