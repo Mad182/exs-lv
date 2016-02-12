@@ -115,6 +115,9 @@ function read_rss($force = false) {
 
             // ne visiem rakstiem ir pieejams logo
             if ($has_image) {
+                // curl šajā implementācijā nespēs verificēt sertifikātus
+                $single->enclosure['url'] = str_replace(
+                    'https://', 'http://', $single->enclosure['url']);
                 // attēls tiks saglabāts uz lokālā servera
                 $img_path = CORE_PATH.'/bildes/runescape/news/';
                 $save = save_rs_image(
@@ -271,7 +274,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
         $foo->file_new_name_body = str_replace(array('.png','.gif','.jpg', '.jpeg'), '', $target_name);
         $foo->image_resize = true;
         $foo->image_convert = 'jpg';
-        $foo->image_x = 125;
+        $foo->image_x = 170;
         $foo->image_ratio_y = true;
         $foo->allowed = array('image/*');
         $foo->Process(CORE_PATH . '/bildes/runescape/news/');
