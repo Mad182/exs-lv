@@ -337,7 +337,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	background-position: 0 0;
 	padding:0 30px;
 	position: relative;
-	height: 104px
+	height: 100px
 }
 
 #headline img {
@@ -1331,6 +1331,10 @@ ul.tabnav li {
 	width: 33.33%
 }
 
+#sidebar-left ul.tabnav li {
+	width: 50%
+}
+
 ul.tabnav li img {
 	margin-right: 7px
 }
@@ -1891,7 +1895,10 @@ img.twit-pic {
 
 @media (min-width:980px) and (max-width:1199px) {
 
-
+	#sidebar-left .latest-imgs a span.cnt {
+		width: 44px;
+		height: 44px;
+	}
 	.exs-groups li h3 {
 		font-size: 14px;
 	}
@@ -1927,6 +1934,11 @@ img.twit-pic {
 
 @media (min-width:768px) and (max-width:979px) {
 
+	#sidebar-left .latest-imgs a span.cnt {
+		width: 50px;
+		height: 50px;
+	}
+
 	.exs-groups li {
 		width: 50% !important;
 	}
@@ -1934,6 +1946,10 @@ img.twit-pic {
 		font-size: 15px;
 	}
 
+	#user-notify li a .notification-icon,
+	#latest-topics li .av {
+		display: none
+	}
 
 	.navbar .nav > li > a {
 		border-right:none;
@@ -2037,7 +2053,6 @@ img.twit-pic {
 		padding-left: 10px !important;
 	}
 	
-	
 	.form textarea.mb-textarea {
 		width: 92% !important;
 	}
@@ -2070,7 +2085,15 @@ img.twit-pic {
 	#footer-nav {
 		float:left;
 	}
-	#slider .entry p {
+	#latest-groups,
+	#todays-active,
+	#slider .entry p,
+	#frontage-banner,
+	.fp-latest,
+	#footer-twitter,
+	#share-block,
+	#ucl,
+	.widget_latestpost {
 		display:none;
 	}
 	ul.tabnav li {
@@ -2083,7 +2106,6 @@ img.twit-pic {
 	.attachment-post-first {
 		width:100%;
 	}
-
 	/* Comment */
 
 	.commentlist .children li {
@@ -2097,6 +2119,7 @@ img.twit-pic {
 	.fb_iframe_widget span {
 		width: 360px !important;
 	}
+
 }
 
 @media (max-width:479px) {
@@ -2172,6 +2195,7 @@ img.twit-pic {
 	padding: 0;
 	margin: 0;
 	position: absolute;
+
 	left: -4px;
 	top: -5px
 }
@@ -2590,7 +2614,7 @@ a.friend:hover {
 #profile-image {
 	margin: 12px auto;
 	display: block;
-	max-width: 100%;
+	max-width: 80%;
 	border-radius: 3px
 }
 
@@ -3167,6 +3191,7 @@ a.external-twitter span {
 	padding: 3px;
 	list-style: none
 }
+
 
 #page-options li {
 	float: left;
@@ -4867,9 +4892,16 @@ html .lb {
 .latest-imgs a span.cnt {
 	margin: 0;
 	position: relative;
-	width: 72px;
-	height: 72px;
+	width: 54px;
+	height: 54px;
 	display: block
+}
+
+@media (min-width: 1390px) {
+	.latest-imgs a span.cnt {
+		width: 58px;
+		height: 58px;
+	}
 }
 
 .latest-imgs a span.cnt img {

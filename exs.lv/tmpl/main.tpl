@@ -31,7 +31,7 @@
 	<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css?w' type='text/css' media='all' />
 	<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css?w' type='text/css' media='all' />
+	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css?wq' type='text/css' media='all' />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 	<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 	<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
@@ -296,7 +296,7 @@
 
 			<div id="main" class="row-fluid">
 
-				<div id="sidebar-left" class="span3">
+				<div id="sidebar-left" class="span2">
 
 					<!-- START BLOCK : notification-list-->
 					<div class="widget">
@@ -337,7 +337,7 @@
 					</div>
 
 					<!-- START BLOCK : groups-l-list-->
-					<div class="widget">
+					<div class="widget" id="latest-groups">
 						<h3 class="title"><span>Jaunākās grupas</span></h3>
 						<div class="box">
 							<p>
@@ -350,7 +350,7 @@
 					</div>
 					<!-- END BLOCK : groups-l-list-->
 
-					<div class="widget">
+					<div class="widget" id="todays-active">
 						<h3 class="title"><span>Šodien aktīvākie</span></h3>
 						<div class="box">
 							<ul class="tabs">
@@ -366,7 +366,7 @@
 				</div><!-- sidebar-left -->
 
 
-				<div id="main-left" class="span6">
+				<div id="main-left" class="span7">
 
 					<!-- START BLOCK : flash-message-->
 					<div class="mbox {class}" id="flash-message">
@@ -586,7 +586,7 @@
 					</div>
 				</div>
 
-				<div class="footer-widget span3 block2">
+				<div id="footer-twitter" class="footer-widget span3 block2">
 					<div class="widget" style="min-height:400px">
 						<h3 class="title"><span>Jaunākais no twitter</span></h3>
 						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2">Tweets by @exs_lv</a>
@@ -691,28 +691,8 @@
 	</div>
 
 	<!-- START BLOCK : popup-ads-->
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
-	<noscript>
-	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
-	</noscript>
-
 	<!-- END BLOCK : popup-ads-->
-	
-	<!-- iBILLBOARD Ad Server one2many code -->
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/bb/bb_one2n.js'></script>
-	<script type='text/javascript'>/* <![CDATA[ */ 
-	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
-	//bmone2n.addPosition('22484.2.3.2','');
-	bmone2n.addPosition('22484.2.2.1','');
-	bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
-	/* ]]> */</script>
-	<div id='bmone2t-22484.2.3.2' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
-	<div id='bmone2t-22484.2.2.1' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
-	<script type='text/javascript'>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
-	
+
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

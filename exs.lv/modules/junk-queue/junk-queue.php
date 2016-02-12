@@ -110,9 +110,8 @@ if (!empty($junks)) {
 		$tpl->newBlock('junk-queue-item');
 		
 		if(substr($junk->image, -4) == 'gifv') {
-			$junk->html = '<iframe style="float:left;margin:0 10px 10px 0" src="'.$junk->image.'#embed" ';
-			$junk->html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
-			$junk->html .= 'width="280" style="background:transparent" height="160"></iframe>';
+
+			$junk->html = '<div style="text-align:center;width:280px;float:left;margin:0 10px 10px 0"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(array('https://i.imgur.com/', '#embed', '.gifv', '.gif'), '', $junk->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
 			
 		} else {
 			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="'.$junk->image.'" alt="" style="width:280px;float: left;margin:0 10px 10px 0" class="av" /></a>';

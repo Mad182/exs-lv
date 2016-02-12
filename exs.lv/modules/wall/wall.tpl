@@ -90,55 +90,63 @@
 
 	<!-- START BLOCK : cindex-right-->
 	
-	<a title="Interneta veikals BM.LV" href="http://bm.lv/" target="_blank" rel="nofollow" style="displan:block;padding:0"><img src="https://img.exs.lv/m/a/mad/bm-lv.png" alt="bm.lv banner" style="width:85%;margin:0 auto;display:block;" /></a>
+	<a id="frontage-banner" title="Interneta veikals BM.LV" href="http://bm.lv/" target="_blank" rel="nofollow" style="displan:block;padding:0"><img src="https://img.exs.lv/m/a/mad/bm-lv.png" alt="bm.lv banner" style="width:80%;margin:0 auto;display:block" /></a>
 
-	<h2 class="title"><a href="/blogs"><span>Jaunākais blogos</span></a></h2>
-	<ul class="index-list secondary">
-		<!-- START BLOCK : index-blogs-node-->
-		<li>
-			{av}
-			<h3><a href="{node-url}">{title}</a></h3>
-			<p>{intro}</p>
-			<div class="c"></div>
-		</li>
-		<!-- END BLOCK : index-blogs-node-->
-	</ul>
+	<div class="fp-latest" id="latest-blogs">
+		<h2 class="title"><a href="/blogs"><span>Jaunākais blogos</span></a></h2>
+		<ul class="index-list secondary">
+			<!-- START BLOCK : index-blogs-node-->
+			<li>
+				{av}
+				<h3><a href="{node-url}">{title}</a></h3>
+				<p>{intro}</p>
+				<div class="c"></div>
+			</li>
+			<!-- END BLOCK : index-blogs-node-->
+		</ul>
+	</div>
 
-	<h2 class="title"><a href="/speles"><span>Spēļu apskati</span></a></h2>
-	<ul class="index-list secondary">
-		<!-- START BLOCK : index-games-node-->
-		<li>
-			{av}
-			<h3><a href="{node-url}">{title}</a></h3>
-			<p>{intro}</p>
-			<div class="c"></div>
-		</li>
-		<!-- END BLOCK : index-games-node-->
-	</ul>
+	<div class="fp-latest" id="latest-games">
+		<h2 class="title"><a href="/speles"><span>Spēļu apskati</span></a></h2>
+		<ul class="index-list secondary">
+			<!-- START BLOCK : index-games-node-->
+			<li>
+				{av}
+				<h3><a href="{node-url}">{title}</a></h3>
+				<p>{intro}</p>
+				<div class="c"></div>
+			</li>
+			<!-- END BLOCK : index-games-node-->
+		</ul>
+	</div>
 
-	<h2 class="title"><a href="/filmas"><span>Filmu apskati</span></a></h2>
-	<ul class="index-list secondary">
-		<!-- START BLOCK : index-movies-node-->
-		<li>
-			{av}
-			<h3><a href="{node-url}">{title}</a></h3>
-			<p>{intro}</p>
-			<div class="c"></div>
-		</li>
-		<!-- END BLOCK : index-movies-node-->
-	</ul>
+	<div class="fp-latest" id="latest-movies">
+		<h2 class="title"><a href="/filmas"><span>Filmu apskati</span></a></h2>
+		<ul class="index-list secondary">
+			<!-- START BLOCK : index-movies-node-->
+			<li>
+				{av}
+				<h3><a href="{node-url}">{title}</a></h3>
+				<p>{intro}</p>
+				<div class="c"></div>
+			</li>
+			<!-- END BLOCK : index-movies-node-->
+		</ul>
+	</div>
 
-	<h2 class="title"><a href="/muzika"><span>Mūzikas apskati</span></a></h2>
-	<ul class="index-list secondary">
-		<!-- START BLOCK : index-music-node-->
-		<li>
-			{av}
-			<h3><a href="{node-url}">{title}</a></h3>
-			<p>{intro}</p>
-			<div class="c"></div>
-		</li>
-		<!-- END BLOCK : index-music-node-->
-	</ul>
+	<div class="fp-latest" id="latest-music">
+		<h2 class="title"><a href="/muzika"><span>Mūzikas apskati</span></a></h2>
+		<ul class="index-list secondary">
+			<!-- START BLOCK : index-music-node-->
+			<li>
+				{av}
+				<h3><a href="{node-url}">{title}</a></h3>
+				<p>{intro}</p>
+				<div class="c"></div>
+			</li>
+			<!-- END BLOCK : index-music-node-->
+		</ul>
+	</div>
 	<!-- END BLOCK : cindex-right-->
 
 </div>
