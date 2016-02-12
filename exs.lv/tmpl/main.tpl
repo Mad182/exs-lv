@@ -29,9 +29,9 @@
 
 	<link rel='stylesheet' id='swipemenu-css'  href='{static-server}/responsive/css/swipemenu.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css?w' type='text/css' media='all' />
 	<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css?w' type='text/css' media='all' />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 	<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 	<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
@@ -295,7 +295,78 @@
 		<div id="content" class="container">
 
 			<div id="main" class="row-fluid">
-				<div id="main-left" class="span8">
+
+				<div id="sidebar-left" class="span3">
+
+					<!-- START BLOCK : notification-list-->
+					<div class="widget">
+						<h3 class="title"><span>Tavi jaunumi</span></h3>
+						<div>
+							{html}
+						</div>
+					</div>
+					<!-- END BLOCK : notification-list-->
+
+					<!-- START BLOCK : menu-list-->
+					<h3 class="title"><span>{title}</span></h3>
+					<ul class="menu" id="nav-{topid}">
+						<!-- START BLOCK : menu-node-->
+						<li{sel}><a href="{url}">{title}</a>
+							<!-- START BLOCK : menu-list-sub-->
+							<ul>
+								<!-- START BLOCK : menu-node-sub-->
+								<li{sel}><a href="{url}">{title}</a></li>
+								<!-- END BLOCK : menu-node-sub-->
+							</ul>
+							<!-- END BLOCK : menu-list-sub-->
+						</li>
+						<!-- END BLOCK : menu-node-->
+					</ul>
+					<!-- END BLOCK : menu-list-->
+
+					<div class="widget">
+						<h3 class="title"><span>Jaunākais portālā</span></h3>
+						<div class="tabwidget widget tab-container box"> 
+							<ul class="tabnav clearfix">
+								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+							</ul>
+							<div class="c"></div>
+							<div id="lat" class="ajaxbox">{latest-noscript}</div>
+						</div>
+					</div>
+
+					<!-- START BLOCK : groups-l-list-->
+					<div class="widget">
+						<h3 class="title"><span>Jaunākās grupas</span></h3>
+						<div class="box">
+							<p>
+								<!-- START BLOCK : groups-l-node-->
+								<a href="{link}">{title}</a><br />
+								<!-- END BLOCK : groups-l-node-->
+							</p>
+							<a href="/grupas">Visas grupas &raquo;</a>
+						</div>
+					</div>
+					<!-- END BLOCK : groups-l-list-->
+
+					<div class="widget">
+						<h3 class="title"><span>Šodien aktīvākie</span></h3>
+						<div class="box">
+							<ul class="tabs">
+								<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
+								<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
+							</ul>
+							<div class="c"></div>
+							<div id="daily-top" class="ajaxbox">{user-top}</div>
+						</div>
+					</div>
+
+
+				</div><!-- sidebar-left -->
+
+
+				<div id="main-left" class="span6">
 
 					<!-- START BLOCK : flash-message-->
 					<div class="mbox {class}" id="flash-message">
@@ -348,7 +419,7 @@
 
 				</div><!-- #main-left -->
 
-				<div id="sidebar" class="span4">
+				<div id="sidebar" class="span3">
 
 					<!-- START BLOCK : movie-search-->
 					<h3 class="title"><span>Meklēt filmu</span></h3>
@@ -404,15 +475,7 @@
 						<div class="c"></div>
 					</div>
 					<!-- END BLOCK : profile-box-->
-					
-					<!-- START BLOCK : notification-list-->
-					<div class="widget">
-						<h3 class="title"><span>Tavi jaunumi</span></h3>
-						<div>
-							{html}
-						</div>
-					</div>
-					<!-- END BLOCK : notification-list-->
+
 
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
@@ -432,35 +495,6 @@
 						</div>
 					</div>
 					<!-- END BLOCK : mb-box-->
-
-					<!-- START BLOCK : menu-list-->
-					<h3 class="title"><span>{title}</span></h3>
-					<ul class="menu" id="nav-{topid}">
-						<!-- START BLOCK : menu-node-->
-						<li{sel}><a href="{url}">{title}</a>
-							<!-- START BLOCK : menu-list-sub-->
-							<ul>
-								<!-- START BLOCK : menu-node-sub-->
-								<li{sel}><a href="{url}">{title}</a></li>
-								<!-- END BLOCK : menu-node-sub-->
-							</ul>
-							<!-- END BLOCK : menu-list-sub-->
-						</li>
-						<!-- END BLOCK : menu-node-->
-					</ul>
-					<!-- END BLOCK : menu-list-->
-
-					<div class="widget">
-						<h3 class="title"><span>Jaunākais portālā</span></h3>
-						<div class="tabwidget widget tab-container box"> 
-							<ul class="tabnav clearfix">
-								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-							</ul>
-							<div class="c"></div>
-							<div id="lat" class="ajaxbox">{latest-noscript}</div>
-						</div>
-					</div>
 
 					<!-- START BLOCK : poll-box-->
 					<div class="widget">
@@ -496,33 +530,6 @@
 					</div>
 					<!-- END BLOCK : poll-box-->
 
-					<!--
-					<!-- START BLOCK : groups-l-list-->
-					<div class="widget">
-						<h3 class="title"><span>Jaunākās grupas</span></h3>
-						<div class="box">
-							<p>
-								<!-- START BLOCK : groups-l-node-->
-								<a href="{link}">{title}</a><br />
-								<!-- END BLOCK : groups-l-node-->
-							</p>
-							<a href="/grupas">Visas grupas &raquo;</a>
-						</div>
-					</div>
-					<!-- END BLOCK : groups-l-list-->
-					-->
-
-					<div class="widget">
-						<h3 class="title"><span>Šodien aktīvākie</span></h3>
-						<div class="box">
-							<ul class="tabs">
-								<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
-								<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
-							</ul>
-							<div class="c"></div>
-							<div id="daily-top" class="ajaxbox">{user-top}</div>
-						</div>
-					</div>
 
 					<!-- START BLOCK : daily-best-->
 

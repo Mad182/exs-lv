@@ -206,7 +206,7 @@ ul.author-social li {
 
 #header {
 	background:#3b5157;
-	padding:0 40px
+	padding:0 30px
 }
 
 #header .nav {
@@ -335,7 +335,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	background-size:cover;
 	background-repeat:no-repeat;
 	background-position: 0 0;
-	padding:0 40px;
+	padding:0 30px;
 	position: relative;
 	height: 104px
 }
@@ -348,7 +348,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 #intr {
 	background:#f7f7f7;
-	padding: 0 40px
+	padding: 0 30px
 }
 
 #intr {
@@ -553,7 +553,7 @@ input#searchsubmit {
 
 #content {
 	background:#FFF;
-	padding:40px 40px 60px
+	padding:40px 30px 60px
 }
 
 #slider {
@@ -1240,7 +1240,7 @@ h3.kontak {
 
 #footer-widgets {
 	background:#f1f1f1;
-	padding:20px 40px
+	padding:20px 30px
 }
 
 .footer-widget h3.title {
@@ -1255,7 +1255,7 @@ h3.kontak {
 #site-info {
 	background:#3b5157;
 	font-size:12px;
-	padding:15px 40px;
+	padding:15px 30px;
 	color: #aaa
 }
 
