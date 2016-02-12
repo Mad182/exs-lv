@@ -1067,15 +1067,22 @@ function get_footer_mb($force = false) {
 			FROM `miniblog`
 			WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1209600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang $priv
 			ORDER BY `id` DESC
-			LIMIT 5
+			LIMIT 8
 		");
 
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
+			$i = 1;
 			foreach ($latest as $late) {
-				$late->text = mb_get_title($late->text);
+				if($i > 5) {
+					continue;
+				}
+				$late->text = trim(mb_get_title($late->text));
 				$url_title = mkslug(textlimit($late->text, 36, ''));
-				$html .= '<li><a href="/say/' . $late->author . '/' . $late->id . '-' . $url_title . '">' . textlimit($late->text, 36, '') . '</a></li>';
+				if(!empty($late->text)) {
+					$html .= '<li><a href="/say/' . $late->author . '/' . $late->id . '-' . $url_title . '">' . textlimit($late->text, 36, '') . '</a></li>';
+					$i++;
+				}
 			}
 			$html .= '</ul>';
 		}

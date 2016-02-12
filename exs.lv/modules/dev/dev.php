@@ -1,16 +1,5 @@
 <?php
 
-/*
-$clans = $db->get_results("SELECT id from clans");
-
-foreach($clans as $clan) {
-
-	$post = $db->get_var("SELECT MAX(`date`) FROM miniblog WHERE groupid = $clan->id");
-	
-	
-	$db->query("UPDATE clans SET last_activity = '$post' WHERE id = $clan->id");
-}*/
-
 exit;
 $number_of_days_from_now = 3299;
 $now = time();

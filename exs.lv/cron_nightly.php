@@ -52,7 +52,7 @@ foreach ($users as $user) {
 echo 'cleanup un karma update... ' . $i . '... ok' . "\n";
 
 //sludinājumu dzēšana
-$pages = $db->get_results("SELECT id,title FROM pages WHERE category IN(868,869,870) AND `date` < '".date('Y-m-d H:i', strtotime('-3 months'))."'");
+$pages = $db->get_results("SELECT id,title FROM pages WHERE category IN(868,869,870) AND `attach` = 0 AND `strid` != 'pardodu-konsoles-dzelzus-un-citus-zverus' AND `date` < '".date('Y-m-d H:i', strtotime('-3 months'))."'");
 foreach($pages as $page) {
 	$db->query("DELETE FROM `comments` WHERE `pid` = '$page->id'");
 	$db->query("DELETE FROM `pages` WHERE `id` = '$page->id' LIMIT 1");

@@ -29,9 +29,9 @@
 
 	<link rel='stylesheet' id='swipemenu-css'  href='{static-server}/responsive/css/swipemenu.css' type='text/css' media='all' />
 	<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css?w' type='text/css' media='all' />
 	<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
+	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css?wq' type='text/css' media='all' />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 	<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
 	<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
@@ -295,7 +295,78 @@
 		<div id="content" class="container">
 
 			<div id="main" class="row-fluid">
-				<div id="main-left" class="span8">
+
+				<div id="sidebar-left" class="span2">
+
+					<!-- START BLOCK : notification-list-->
+					<div class="widget">
+						<h3 class="title"><span>Tavi jaunumi</span></h3>
+						<div>
+							{html}
+						</div>
+					</div>
+					<!-- END BLOCK : notification-list-->
+
+					<!-- START BLOCK : menu-list-->
+					<h3 class="title"><span>{title}</span></h3>
+					<ul class="menu" id="nav-{topid}">
+						<!-- START BLOCK : menu-node-->
+						<li{sel}><a href="{url}">{title}</a>
+							<!-- START BLOCK : menu-list-sub-->
+							<ul>
+								<!-- START BLOCK : menu-node-sub-->
+								<li{sel}><a href="{url}">{title}</a></li>
+								<!-- END BLOCK : menu-node-sub-->
+							</ul>
+							<!-- END BLOCK : menu-list-sub-->
+						</li>
+						<!-- END BLOCK : menu-node-->
+					</ul>
+					<!-- END BLOCK : menu-list-->
+
+					<div class="widget">
+						<h3 class="title"><span>Jaunākais portālā</span></h3>
+						<div class="tabwidget widget tab-container box"> 
+							<ul class="tabnav clearfix">
+								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
+								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
+							</ul>
+							<div class="c"></div>
+							<div id="lat" class="ajaxbox">{latest-noscript}</div>
+						</div>
+					</div>
+
+					<!-- START BLOCK : groups-l-list-->
+					<div class="widget" id="latest-groups">
+						<h3 class="title"><span>Jaunākās grupas</span></h3>
+						<div class="box">
+							<p>
+								<!-- START BLOCK : groups-l-node-->
+								<a href="{link}">{title}</a><br />
+								<!-- END BLOCK : groups-l-node-->
+							</p>
+							<a href="/grupas">Visas grupas &raquo;</a>
+						</div>
+					</div>
+					<!-- END BLOCK : groups-l-list-->
+
+					<div class="widget" id="todays-active">
+						<h3 class="title"><span>Šodien aktīvākie</span></h3>
+						<div class="box">
+							<ul class="tabs">
+								<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
+								<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
+							</ul>
+							<div class="c"></div>
+							<div id="daily-top" class="ajaxbox">{user-top}</div>
+						</div>
+					</div>
+
+
+				</div><!-- sidebar-left -->
+
+
+				<div id="main-left" class="span7">
 
 					<!-- START BLOCK : flash-message-->
 					<div class="mbox {class}" id="flash-message">
@@ -348,7 +419,7 @@
 
 				</div><!-- #main-left -->
 
-				<div id="sidebar" class="span4">
+				<div id="sidebar" class="span3">
 
 					<!-- START BLOCK : movie-search-->
 					<h3 class="title"><span>Meklēt filmu</span></h3>
@@ -404,15 +475,7 @@
 						<div class="c"></div>
 					</div>
 					<!-- END BLOCK : profile-box-->
-					
-					<!-- START BLOCK : notification-list-->
-					<div class="widget">
-						<h3 class="title"><span>Tavi jaunumi</span></h3>
-						<div>
-							{html}
-						</div>
-					</div>
-					<!-- END BLOCK : notification-list-->
+
 
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
@@ -432,35 +495,6 @@
 						</div>
 					</div>
 					<!-- END BLOCK : mb-box-->
-
-					<!-- START BLOCK : menu-list-->
-					<h3 class="title"><span>{title}</span></h3>
-					<ul class="menu" id="nav-{topid}">
-						<!-- START BLOCK : menu-node-->
-						<li{sel}><a href="{url}">{title}</a>
-							<!-- START BLOCK : menu-list-sub-->
-							<ul>
-								<!-- START BLOCK : menu-node-sub-->
-								<li{sel}><a href="{url}">{title}</a></li>
-								<!-- END BLOCK : menu-node-sub-->
-							</ul>
-							<!-- END BLOCK : menu-list-sub-->
-						</li>
-						<!-- END BLOCK : menu-node-->
-					</ul>
-					<!-- END BLOCK : menu-list-->
-
-					<div class="widget">
-						<h3 class="title"><span>Jaunākais portālā</span></h3>
-						<div class="tabwidget widget tab-container box"> 
-							<ul class="tabnav clearfix">
-								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
-								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
-							</ul>
-							<div class="c"></div>
-							<div id="lat" class="ajaxbox">{latest-noscript}</div>
-						</div>
-					</div>
 
 					<!-- START BLOCK : poll-box-->
 					<div class="widget">
@@ -496,33 +530,6 @@
 					</div>
 					<!-- END BLOCK : poll-box-->
 
-					<!--
-					<!-- START BLOCK : groups-l-list-->
-					<div class="widget">
-						<h3 class="title"><span>Jaunākās grupas</span></h3>
-						<div class="box">
-							<p>
-								<!-- START BLOCK : groups-l-node-->
-								<a href="{link}">{title}</a><br />
-								<!-- END BLOCK : groups-l-node-->
-							</p>
-							<a href="/grupas">Visas grupas &raquo;</a>
-						</div>
-					</div>
-					<!-- END BLOCK : groups-l-list-->
-					-->
-
-					<div class="widget">
-						<h3 class="title"><span>Šodien aktīvākie</span></h3>
-						<div class="box">
-							<ul class="tabs">
-								<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span class="profile">Lietotāji</span></a></li>
-								<li><a rel="nofollow" href="/dailytop/groups" class="ajax"><span class="users">Grupas</span></a></li>
-							</ul>
-							<div class="c"></div>
-							<div id="daily-top" class="ajaxbox">{user-top}</div>
-						</div>
-					</div>
 
 					<!-- START BLOCK : daily-best-->
 
@@ -579,7 +586,7 @@
 					</div>
 				</div>
 
-				<div class="footer-widget span3 block2">
+				<div id="footer-twitter" class="footer-widget span3 block2">
 					<div class="widget" style="min-height:400px">
 						<h3 class="title"><span>Jaunākais no twitter</span></h3>
 						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2">Tweets by @exs_lv</a>
@@ -661,7 +668,6 @@
 				</div>
 			</div>
 
-
 			<div id="site-info" class="container">
 
 				<div id="footer-nav" class="fr">
@@ -675,7 +681,7 @@
 				</div>
 
 				<div id="credit" class="fl">
-					<p>&copy; 2005-2015, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
+					<p>&copy; 2005-{current-year}, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
 				</div>
 
 			</div>
@@ -685,30 +691,8 @@
 	</div>
 
 	<!-- START BLOCK : popup-ads-->
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
-	<noscript>
-	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
-	</noscript>
-
 	<!-- END BLOCK : popup-ads-->
-	
-	<!-- iBILLBOARD Ad Server one2many code -->
-	<!-- HowTo: All the ad codes must be above this code! -->
-	<!-- HowTo: It is good idea to place this code just below the last ad code. -->
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/bb/bb_one2n.js'></script>
-	<script type='text/javascript'>/* <![CDATA[ */ 
-	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
-	//bmone2n.addPosition('22484.2.3.2','');
-	bmone2n.addPosition('22484.2.2.1','');
-	bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
-	/* ]]> */</script>
-	<div id='bmone2t-22484.2.3.2' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
-	<div id='bmone2t-22484.2.2.1' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
-	<script type='text/javascript'>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
-	
+
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
