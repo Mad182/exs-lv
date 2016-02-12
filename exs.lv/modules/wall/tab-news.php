@@ -149,11 +149,18 @@ foreach ($articles as $article) {
 		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	}
 
+	$title = textlimit($article->title, 50, '...');
+
+	$len = 90;
+	if(strlen($title) > 28) {
+		$len = 58;
+	}
+
 	$tpl->assign(array(
 		'node-url' => '/read/' . $article->strid,
-		'title' => textlimit($article->title, 30, '...'),
+		'title' => $title,
 		'date' => $date,
-		'intro' => trim_intro($article->text),
+		'intro' => trim_intro($article->text, $len),
 		'av' => $av
 	));
 }
@@ -202,11 +209,18 @@ foreach ($list_cats as $cat_type => $cat_id) {
 			$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 		}
 
+		$title = textlimit($article->title, 50, '...');
+
+		$len = 90;
+		if(strlen($title) > 28) {
+			$len = 58;
+		}
+
 		$tpl->assign(array(
 			'node-url' => '/read/' . $article->strid,
-			'title' => textlimit($article->title, 30, '...'),
+			'title' => $title,
 			'date' => $date,
-			'intro' => trim_intro($article->text),
+			'intro' => trim_intro($article->text, $len),
 			'av' => $av
 		));
 	}

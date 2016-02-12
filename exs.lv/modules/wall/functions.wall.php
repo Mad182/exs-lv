@@ -23,7 +23,7 @@ function strip_selected_tags($text, $tags = array()) {
 /**
  * Sagatavo raksta tekstu lai to varētu rādīt kā ievadu
  */
-function trim_intro($text, $len = 110) {
+function trim_intro($text, $len = 98) {
 
 	//get rid of smilies, will strip images later
 	$text = add_smile($text);

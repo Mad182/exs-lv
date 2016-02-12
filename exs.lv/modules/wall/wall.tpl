@@ -92,7 +92,7 @@
 	
 	<a id="frontage-banner" title="Interneta veikals BM.LV" href="http://bm.lv/" target="_blank" rel="nofollow" style="displan:block;padding:0"><img src="https://img.exs.lv/m/a/mad/bm-lv.png" alt="bm.lv banner" style="width:80%;margin:0 auto;display:block" /></a>
 
-	<div class="fp-latest" id="latest-blogs">
+	<div class="fp-latest" id="latest-in-blogs">
 		<h2 class="title"><a href="/blogs"><span>Jaunākais blogos</span></a></h2>
 		<ul class="index-list secondary">
 			<!-- START BLOCK : index-blogs-node-->
