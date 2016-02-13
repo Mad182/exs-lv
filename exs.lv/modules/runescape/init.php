@@ -6,7 +6,7 @@
  
 // īslaicīgs kods, lai paslēptu vairs nevajadzīgu "NEW"
 $today = date('Y-m-d H:i:s');
-if ($today < '2016-02-18 00:00:00') { // pie "citas saites"
+if ($today < '2016-02-17 00:00:00') { // pie "citas saites"
     $tpl->assignGlobal('is-new', '&nbsp;<span class="is-new">new</span>');
 }
 

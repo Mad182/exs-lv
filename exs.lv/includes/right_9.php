@@ -39,11 +39,8 @@ $tpl->newBlock('latest-pages');
 $tpl->assign('latest-pages', rs_get_latest_pages());
 
 
-// informatīvs bloks ar informāciju par Discord kanālu
-$tpl->newBlock('discord-box');
-if ($today < '2016-02-16 00:00:00') {
-    $tpl->assign('is-new', '&nbsp;<span class="is-new">new</span>');
-}
+// informatīvs bloks par saziņas kanāliem
+$tpl->newBlock('communication-box');
 
 
 // aptaujas
