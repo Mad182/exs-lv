@@ -3,6 +3,13 @@
  *  Šis fails tiek iekļauts root index.php failā vēl pirms moduļa ielādes,
  *  lai varētu veikt papildpārbaudes, ar tām neaizrakstot pilnu index failu.
  */
+ 
+// īslaicīgs kods, lai paslēptu vairs nevajadzīgu "NEW"
+$today = date('Y-m-d H:i:s');
+if ($today < '2016-02-18 00:00:00') { // pie "citas saites"
+    $tpl->assignGlobal('is-new', '&nbsp;<span class="is-new">new</span>');
+}
+
 
 // atkarībā no izvēlētajiem iestatījumiem lapai tiks
 // izvēlēts atbilstošs fona attēls
@@ -39,7 +46,6 @@ if ($category->id == 1863) {
 if ($auth->ok) {
     $tpl->newBlock('auth-nav');
     // īslaicīgs kods, lai paslēptu vairs nevajadzīgu "NEW"
-    $today = date('Y-m-d H:i:s', time());
     if ($today < '2016-02-15 00:00:00') {
         $tpl->assignGlobal('paint-is-new', '&nbsp;<span class="is-new">new</span>');
     }
