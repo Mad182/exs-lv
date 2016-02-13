@@ -64,7 +64,8 @@ function get_rs_page_categories($current = null, $force = false) {
     $return = array();
     foreach ($cats as $cat) {
 
-        if ( in_array($cat->id, array(102, 4)) ) { // kvestu parent, prasmju parent
+        if ($cat->id == 102 || $cat->id == 4) {
+            // kvestu parent, prasmju parent
             continue;
         }
  
@@ -75,10 +76,10 @@ function get_rs_page_categories($current = null, $force = false) {
             $return['Arhīvs'][$cat->id] = $cat->title;
         } elseif ($cat->parent == 102) {
             $return['Kvesti'][$cat->id] = $cat->title;
-        } elseif ($cat->module == 'rshelp') {
-            $return['Runescape'][$cat->id] = $cat->title;
         } elseif ($cat->id == 599) { // rs ziņas
             $return['Main'][$cat->id] = $cat->title;
+        } elseif ($cat->module == 'rshelp') {
+            $return['Runescape'][$cat->id] = $cat->title;
         }         
         // blogi, atkritne un vēl atsevišķas sadaļas redzamas tikai moderatoriem
         else if ( im_mod() || im_cat_mod($cat->id) ) {
