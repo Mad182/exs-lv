@@ -83,7 +83,7 @@ if (!empty($inprofile)) {
 
 // jaunākais lietotāju albumos
 // - tikai index lapā, jo citviet attēlus rādīs otrā kolonnā
-if ($category->textid === 'index') {
+if ($category->textid === 'index' && empty($inprofile)) {
     $tpl->newBlock('latest-images');
     $tpl->assign('latest-images', get_latest_images());
 }
