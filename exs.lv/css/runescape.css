@@ -666,6 +666,11 @@ ul.nav-right {
 .box {
     background:#FCFCFD
 }
+h3 .box-icon {
+    margin-right:5px;
+    margin-bottom:1px;
+    vertical-align:middle;
+}
 
 /* jaunāko miniblogu saraksts */
 #left .friends {
@@ -772,7 +777,8 @@ ul.nav-right {
 .box-discord {
     display:table;
     width:100%;
-    padding-top:7px;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 .box-discord div {
     display:table-cell;
@@ -780,15 +786,14 @@ ul.nav-right {
     line-height:1;
 }
 .box-discord div:first-child {
-    width:15%;
+    width:20%;
 }
 .box-discord div:last-child {
-    width:75%;
-    text-align:center;
+    width:80%;
 }
 .box-discord img {
-    max-width:35px;
-    max-height:35px;
+    max-width:25px;
+    max-height:25px;
 }
 .box-discord .lightbox {
     font-size:10px;
@@ -829,12 +834,25 @@ ul.nav-right {
 }
 
 /* jaunāko attēlu saraksts */
+.box.box-images {
+    /* lai kastes augstums pie nospiešanas uz lappusēm nelēkātu */
+    min-height:133px;
+    padding-right:3px;
+    padding-left:8px;
+}
+.latest-imgs a {
+    width:23%; /* vienā rindā iespiedīs 4 attēlus */
+    margin-right:2px;
+}
 .latest-imgs a span.cnt {
     display:inline;
     background:#757070; 
 }
 .latest-imgs a span.cnt span {
     color:#fff;
+    font-size:11px;
+    right:-1px;
+    bottom:3px;
 }
 #wrapper .latest-imgs .r {
     background:#ef6000; /* sarkanāks background, lai izceltos */

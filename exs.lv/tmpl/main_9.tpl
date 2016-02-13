@@ -121,7 +121,7 @@
                         <li>&nbsp;</li>
                     </ul>
                 </li>
-                <li><a href="javascript:void(0)" class="dropdown">Hiscores{hs-is-new}</a>
+                <li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
                         <li><a href="http://scores.kopideja.lv/Invention.htm" rel="nofollow" target="_blank">Invention HS (LV)&nbsp;<span class="is-new">new</span></a></li>
@@ -245,7 +245,7 @@
                     </ul>
                 </li>
                 <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-                <li{cat-sel-4}><a href="/prasmes">Prasmes{skills-is-new}</a>
+                <li{cat-sel-4}><a href="/prasmes">Prasmes</a>
                     <ul>
                         <li><a href="/prasmes">Prasmju saraksts</a></li>
                         <li><a href="/prasmes/xp-table">XP tabula&nbsp;<span class="is-new">new</span></a></li>
@@ -315,31 +315,27 @@
                 <div class="box">{out}</div>
                 <!-- END BLOCK : notification-list -->
                 
+                <!-- START BLOCK : latest-images-right -->
+                <h3>Jaunākie attēli</h3>
+                <div class="box box-images">
+                    <div class="ajaxbox">{latest-images}</div>
+                </div>
+                <!-- END BLOCK : latest-images-right -->
+
+                <!-- START BLOCK : latest-pages -->
+                <h3>Jaunākie raksti</h3>
+                <div class="box">
+                    <div id="lat" class="ajaxbox">{latest-pages}</div>
+                </div>
+                <!-- END BLOCK : latest-pages -->
+                
                 <!-- START BLOCK : discord-box -->
                 <h3>Saziņas kanāli{is-new}</h3>
                 <div class="box box-discord">
-                    <div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="exs Discord kanāls" alt="exs discord kanāls"></div>
-                    <div>
-                        <a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a><br>
-                        <a class="lightbox" href="https://img.exs.lv/m/o/mokskis/discord-1.png">attēls darbībā</a>
-                    </div>
+                    <div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="exs Discord kanāls" alt=""></div>
+                    <div><a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a></div>
                 </div>
                 <!-- END BLOCK : discord-box -->
-
-                <!-- START BLOCK : latest-box -->
-                <h3>Jaunākais lapā</h3>
-                <div class="box">
-                    <ul class="tabs">
-                        <li><a href="/latest.php" class="{pages-selected}remember-pages ajax">
-                            <span class="comments">Raksti</span>
-                        </a></li>
-                        <li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax">
-                            <span class="gallery">Bildes</span>
-                        </a></li>
-                    </ul>
-                    <div id="lat" class="ajaxbox">{latest-noscript}</div>
-                </div>
-                <!-- END BLOCK : latest-box -->
 
                 <!-- START BLOCK : poll-box-->
                 <h3><img class="box-icon" src="{img-server}/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
@@ -430,6 +426,13 @@
                     <div class="c"></div>
                 </div>
                 <!-- END BLOCK : profile-box-->
+                
+                <!-- START BLOCK : latest-images -->
+                <h3>Jaunākie attēli</h3>
+                <div class="box box-images">
+                    <div class="ajaxbox">{latest-images}</div>
+                </div>
+                <!-- END BLOCK : latest-images -->
 
                 <!-- START BLOCK : mb-box-->
                 <h3>Miniblogi{miniblog-add}</h3>

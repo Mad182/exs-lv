@@ -161,7 +161,7 @@ function read_rss($force = false) {
 function create_news($type = 'rs3') {
     global $db, $rsbot_id, $img_server;
     
-    $news_count = 12; // ierakstu skaits, kas būs redzams lapā    
+    $news_count = 11; // ierakstu skaits, kas būs redzams lapā    
     $is_oldschool = ($type === 'oldschool') ? 1 : 0;
 
     $news = $db->get_results("
