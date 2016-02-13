@@ -71,7 +71,7 @@
 			<div id="buttons" class="quad">
 				<ul>
 					<li><a href="/">Siena</a></li>
-					<li><a href="/index">Forums</a></li>
+					<li><a href="/rs">Forums</a></li>
 					<!-- START BLOCK : user-menu-->
 					<li><a href="/pm">PM{new-messages}</a></li>
 					<li><a href="/say/{currentuser-id}">M-blogs</a></li>
