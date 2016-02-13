@@ -14,7 +14,7 @@ if ($auth->ok && $auth->rs_layout == 1) {
 
 
 // lietotāja notifikācijas
-if ($auth->ok === true) {
+if ($auth->ok === true && $category->textid === 'index') {
     if ($html = get_notify($auth->id)) {
         $tpl->newBlock('notification-list');
         $tpl->assign('out', $html);
@@ -23,29 +23,24 @@ if ($auth->ok === true) {
 }
 
 
-// informatīvs bloks ar informāciju par Discord kanālu
-$tpl->newBlock('discord-box');
-$today = date('Y-m-d H:i:s');
-$date = '2016-02-16 00:00:00';
-if ($today < $date) {
-    $tpl->assign('is-new', '&nbsp;<span class="is-new">new</span>');
+// jaunākais lietotāju albumos
+//   - galerijās jārāda, jo otra kolonna nebūs redzama
+//   - rshelp sadaļās nerāda, jo labāk, lai redzamāki ir jaunākie raksti
+//   - index lapā nerāda, jo tad rādīs jau otrā kolonnā
+if ($category->textid === 'gallery' ||
+        ($category->module !== 'rshelp' && $category->textid !== 'index')) {
+    $tpl->newBlock('latest-images-right');
+    $tpl->assign('latest-images', get_latest_images());
 }
 
 
-// jaunākais galerijās
-$sel = 'pages';
-if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gallery') {
-    $out = get_latest_images();
-    $sel = 'gallery';
-} else { // jaunākais rakstos/blogos
-    $out = rs_get_latest_pages();
-}
-$tpl->newBlock('latest-box');
-$tpl->assign(array(
-    'latest-noscript'   => $out,
-    $sel . '-selected'  => 'active '
-));
-unset($out);
+// jaunākais rakstu sadaļās (tai skaitā, blogos)
+$tpl->newBlock('latest-pages');
+$tpl->assign('latest-pages', rs_get_latest_pages());
+
+
+// informatīvs bloks par saziņas kanāliem
+$tpl->newBlock('communication-box');
 
 
 // aptaujas

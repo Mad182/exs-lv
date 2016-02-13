@@ -3,13 +3,13 @@
  *  Šis fails tiek iekļauts root index.php failā vēl pirms moduļa ielādes,
  *  lai varētu veikt papildpārbaudes, ar tām neaizrakstot pilnu index failu.
  */
-
-// īslaicīgs kods, lai paslēptu vairs nevajadzīgus "NEW"
+ 
+// īslaicīgs kods, lai paslēptu vairs nevajadzīgu "NEW"
 $today = date('Y-m-d H:i:s');
-if ($today < '2016-02-12 00:00:00') {
-    $tpl->assignGlobal('skills-is-new', '&nbsp;<span class="is-new">new</span>');
-    $tpl->assignGlobal('hs-is-new', '&nbsp;<span class="is-new">new</span>');
+if ($today < '2016-02-17 00:00:00') { // pie "citas saites"
+    $tpl->assignGlobal('is-new', '&nbsp;<span class="is-new">new</span>');
 }
+
 
 // atkarībā no izvēlētajiem iestatījumiem lapai tiks
 // izvēlēts atbilstošs fona attēls

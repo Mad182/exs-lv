@@ -1748,9 +1748,11 @@ function get_latest_posts() {
 
 function get_latest_images() {
 	global $db, $auth, $lang, $img_server;
+    
+    $lim = ($lang === 9) ? 8 : 15; // #rs
 
 	if (isset($_GET['pg'])) {
-		$skip = 15 * intval($_GET['pg']);
+		$skip = $lim * intval($_GET['pg']);
 	} else {
 		$skip = 0;
 	}
@@ -1778,7 +1780,7 @@ function get_latest_images() {
 		" . $int . "
 	ORDER BY
 		`images`.`bump`
-	DESC LIMIT $skip,15");
+	DESC LIMIT $skip,$lim");
 
 	$out = '<p class="latest-imgs">';
 	if ($latest) {

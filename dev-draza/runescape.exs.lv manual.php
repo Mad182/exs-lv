@@ -11,105 +11,107 @@
 |   (id, textid, module, description)
 |--------------------------------------------------------------------------
 
-1863 index 			            (module = runescape)
+1863 index                      (module = runescape)
 
-	1903 rs-arhivs              (module = redirect, lang = 9, content = http://runescape.exs.lv/padomi)
-		5    padomi				(module = rshelp)
-		195  celvezi			(module = rshelp)              
-		789  stasti-un-vesture	(module = rshelp)       
-		1087 oss-guides			(module = rshelp)
-	
-	1904 atkritne               (module = rshelp) - miskastē iemestie raksti
-	
-	4 prasmes					(module = rshelp)
-		169 farming
-		170 melee				(module = list)
-		171 thieving			(module = ...)
-		172 firemaking
-		173 fishing
-		174 mining
-		175 cooking
-		176 prayer
-		177 slayer
-		178 woodcutting
-		179 magic
-		180 crafting
-		181 summoning
-		182 construction
-		183 ranged
-		185 agility
-		186 herblore
-		187 hunter
-		188 fletching
-		189 smithing
-		190 runecrafting
-		191 hitpoints	
-		287 dungeoneering
-		1912 divination
+    1903 rs-arhivs                  (module = redirect, lang = 9, content = http://runescape.exs.lv/padomi)
+        5    padomi                 (module = rshelp)
+        195  celvezi                (module = rshelp)              
+        789  stasti-un-vesture      (module = rshelp)       
+        1087 oss-guides             (module = rshelp)
+        2046 achievements           (module = rshelp)
+        792 distractions-diversions (module = rshelp)   
+    
+    1904 atkritne               (module = rshelp) - miskastē iemestie raksti
+    
+    4 prasmes                   (module = rshelp)
+        169 farming
+        170 melee               (module = list)
+        171 thieving            (module = ...)
+        172 firemaking
+        173 fishing
+        174 mining
+        175 cooking
+        176 prayer
+        177 slayer
+        178 woodcutting
+        179 magic
+        180 crafting
+        181 summoning
+        182 construction
+        183 ranged
+        185 agility
+        186 herblore
+        187 hunter
+        188 fletching
+        189 smithing
+        190 runecrafting
+        191 hitpoints   
+        287 dungeoneering
+        1912 divination
+        2318 invention
 
-	102 kvestu-pamacibas		(module = rshelp)
-		99  f2p-kvesti			(module = rshelp)
-		100 p2p-kvesti			(module = rshelp)
-		193 mini-kvesti			(module = rshelp)
+    102 kvestu-pamacibas        (module = rshelp)
+        99  f2p-kvesti          (module = rshelp)
+        100 p2p-kvesti          (module = rshelp)
+        193 mini-kvesti         (module = rshelp)
 
-	2046 achievements           (module = rshelp)
-	160 minispeles				(module = rshelp)
-	599 runescape 				(module = rshelp)	- jaunumu rakstu sadaļa
-	791 gildes					(module = rshelp)
-	792 distractions-diversions	(module = rshelp)	
-	
-	// forums
-	1871 games 			        (module = forum) - RuneScape forums
-		661 rs 			        (module = list)  - foruma vienīgā sadaļa
+    160 minispeles              (module = rshelp)
+    791 gildes                  (module = rshelp)
+    599 runescape               (module = rshelp)   - jaunumu rakstu sadaļa
+    
+    // forums
+    1871 games                  (module = forum) - RuneScape forums
+        661 rs                  (module = list)  - foruma vienīgā sadaļa
 
-	// runescape pamācību sadaļu administrēšanas apakšsadaļas
-	765 rsmod			(module = redirect, lang = 9, content = http://runescape.exs.lv)
-		1875 series         - kvestu sēriju pārvaldība
-		2045 skills         - prasmju prasības kvestiem
-		2039 all-quests
-		2040 all-miniquests
-		2041 all-minigames
-		2042 all-distractions
-		2044 all-guilds
-		2043 all-unlisted
+    // runescape pamācību sadaļu administrēšanas apakšsadaļas
+    765 rsmod           (module = redirect, lang = 9, content = http://runescape.exs.lv)
+        1875 series         - kvestu sēriju pārvaldība
+        2045 skills         - prasmju prasības kvestiem
+        2039 all-quests
+        2040 all-miniquests
+        2041 all-minigames
+        2042 all-distractions
+        2044 all-guilds
+        2043 all-unlisted
 
-	1866 rsfacts 		(module = rs-facts)		- runescape faktu pārvaldība
-	1867 gallery		(module = gallery)		- runescape projekta galerijas
-	1869 findby		    (module = findby)	    - lietotāju meklēšanas forma
+    1866 rsfacts        (module = rs-facts)     - runescape faktu pārvaldība
+    1867 gallery        (module = gallery)      - runescape projekta galerijas
+    1869 findby         (module = findby)       - lietotāju meklēšanas forma
+    2319 banned         (module = banned)
 
-	1901 aptaujas 		(module = polls)		- bijušo aptauju uzskaitījums
-	1905 myblog         (module = blogadmin)    - bloga administrēšanas sadaļa
+    1901 aptaujas       (module = polls)        - bijušo aptauju uzskaitījums
+    1905 myblog         (module = blogadmin)    - bloga administrēšanas sadaļa
 
-	2147 rsload         (module = rsload)       - satura bloku ielāde caur ajax
+    2147 rsload         (module = rsload)       - satura bloku ielāde caur ajax
 
 
 \\  redirects no vecām sadaļu saitēm uz jaunām
 
-	84 runescape-jautajumi 	(lang=1, redirect=/rs)
-	85 runescape-tirgus 	(lang=1, redirect=/rs)
-	86 runescape-events 	(lang=1, redirect=/rs)
-	88 runescape-general 	(lang=1, redirect=/rs)
-	194 tasks               (lang=9, redirect=/achievements)
-	346  prasmju_arhivs 	(lang=9, redirect=http://runescape.exs.lv/padomi)
-	536  db                 (lang=9, redirect=http://runescape.exs.lv)
-	787  briesmonu-medisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
-	788  trenesanas			(lang=9, redirect=http://runescape.exs.lv/padomi)
-	790  naudas-pelnisana	(lang=9, redirect=http://runescape.exs.lv/padomi)
-	793  basics				(lang=9, redirect=http://runescape.exs.lv/padomi)
-	1873 rs 				(lang=1, redirect=http://runescape.exs.lv)
-	1874 runescape 			(lang=1, redirect=http://runescape.exs.lv)
+    84 runescape-jautajumi  (lang=1, redirect=/rs)
+    85 runescape-tirgus     (lang=1, redirect=/rs)
+    86 runescape-events     (lang=1, redirect=/rs)
+    88 runescape-general    (lang=1, redirect=/rs)
+    194 tasks               (lang=9, redirect=/achievements)
+    346  prasmju_arhivs     (lang=9, redirect=http://runescape.exs.lv/padomi)
+    536  db                 (lang=9, redirect=http://runescape.exs.lv)
+    787  briesmonu-medisana (lang=9, redirect=http://runescape.exs.lv/padomi)
+    788  trenesanas         (lang=9, redirect=http://runescape.exs.lv/padomi)
+    790  naudas-pelnisana   (lang=9, redirect=http://runescape.exs.lv/padomi)
+    793  basics             (lang=9, redirect=http://runescape.exs.lv/padomi)
+    1873 rs                 (lang=1, redirect=http://runescape.exs.lv)
+    1874 runescape          (lang=1, redirect=http://runescape.exs.lv)
 
 
 |--------------------------------------------------------------------------
 |   Noderīgi SQL pieprasījumi.
 |--------------------------------------------------------------------------
 
-* visu prasmju sadaļu atlasīšanai	
+* visu prasmju sadaļu atlasīšanai   
 
-    (4, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 287)
+    (4, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 287, 1912, 2318)
     
     WHERE `parent` = 4 OR `id` = 4
-	
+    
 
 |--------------------------------------------------------------------------
 |   RS apakšprojekta moderatoriem pieejamās iespējas.
@@ -119,61 +121,61 @@
 * pie raksta rediģēšanas to var pārvietot uz citu sadaļu
 * redz "RS Mod" izvēlni
 * var pārvaldīt RuneScape faktus    
-	
-	
+    
+    
 |--------------------------------------------------------------------------
 |   Ar RuneScape apakšprojektu saistītie faili.
 |--------------------------------------------------------------------------
-	
-	// failos, kas nav tieši saistīti tikai ar RuneScape, tajās vietās, kur
-	// darbības pielāgotas RS projektam, tiek pievienots #rs hashtags
+    
+    // failos, kas nav tieši saistīti tikai ar RuneScape, tajās vietās, kur
+    // darbības pielāgotas RS projektam, tiek pievienots #rs hashtags
 
     // funkciju, klašu u.c. faili tiek pārsvarā likti modules/runescape mapē,
     // lai ar RS saistītie faili būtu mazāk izmētāti pa dažādām vietām
 
-	/config/runescape.exs.lv.php
-	/includes/site_loader.php
-	
-	/includes/left_9.php
-	/includes/right_9.php
-	/tmpl/main_9.tpl
-	
-	/cache/runescape
-	/css/runescape.css    
-	/js/runescape.js
-	/bildes/runescape/*
-	
-	/modules/facts-admin
-	/modules/rs-facts
-	/modules/rshelp
-	/modules/rsmod
-	/modules/runescape
-	/modules/core/miniblog (tpl_options)
-	
-	// plato rakstu iespēja
-	// rs kategoriju izvēlne
-	// iespēja rs modiem labot savus rakstus
-		/modules/read/read.php/.tpl
-		/modules/approve/approve.php/.tpl
-		/modules/history/history.php
-		/modules/blogadmin/blogadmin.php/.tpl
-		
-	// ūdenszīme attēliem
-		/modules/imgupload.php/.tpl
-		/watermark-mini.png
-		/watermark-large.png
-	
-	/index.php
-	/json_mb.php                         - ziņošanas podziņa
-	/latest.php
-	visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)
-	
-	functions.awards.php
-		list_awards() - medaļas saistībā ar RS
-		update_awards() - saraksts ar sadaļām, kurās jābūt aktivitātei, lai piešķirtu medaļu
-		
-	functions.core.php  
-		get_latest_posts() - ->show_rs
-		get_latest_mbs() - ->show_rs  
+    /config/runescape.exs.lv.php
+    /includes/site_loader.php
+    
+    /includes/left_9.php
+    /includes/right_9.php
+    /tmpl/main_9.tpl
+    
+    /cache/runescape
+    /css/runescape.css    
+    /js/runescape.js
+    /bildes/runescape/*
+    
+    /modules/facts-admin
+    /modules/rs-facts
+    /modules/rshelp
+    /modules/rsmod
+    /modules/runescape
+    /modules/core/miniblog (tpl_options)
+    
+    // plato rakstu iespēja
+    // rs kategoriju izvēlne
+    // iespēja rs modiem labot savus rakstus
+        /modules/read/read.php/.tpl
+        /modules/approve/approve.php/.tpl
+        /modules/history/history.php
+        /modules/blogadmin/blogadmin.php/.tpl
+        
+    // ūdenszīme attēliem
+        /modules/imgupload.php/.tpl
+        /watermark-mini.png
+        /watermark-large.png
+    
+    /index.php
+    /json_mb.php                         - ziņošanas podziņa
+    /latest.php
+    visi faili, kur parādās miniblogu izvade (ziņošanas podziņa)
+    
+    functions.awards.php
+        list_awards() - medaļas saistībā ar RS
+        update_awards() - saraksts ar sadaļām, kurās jābūt aktivitātei, lai piešķirtu medaļu
+        
+    functions.core.php  
+        get_latest_posts() - ->show_rs
+        get_latest_mbs() - ->show_rs  
 */
-	
+    

@@ -121,7 +121,7 @@
                         <li>&nbsp;</li>
                     </ul>
                 </li>
-                <li><a href="javascript:void(0)" class="dropdown">Hiscores{hs-is-new}</a>
+                <li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
                         <li><a href="http://scores.kopideja.lv/Invention.htm" rel="nofollow" target="_blank">Invention HS (LV)&nbsp;<span class="is-new">new</span></a></li>
@@ -133,9 +133,20 @@
                         <li>&nbsp;</li>
                     </ul>
                 </li>
-                <li><a href="javascript:void(0)" class="dropdown">Citas saites</a>
+                <li><a href="javascript:void(0)" class="dropdown">Citas saites{is-new}</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
+                        <li><a class="dropdown" href="javascript:void(0)">Ekrāntapetes&nbsp;<span class="is-new">new</span></a>
+                            <span class="arrow arrow-down"></span>
+                            <ul class="flip-side" style="width:194px">
+                                <li class="as-last">&nbsp;</li>
+                                <li><a class="paint" href="https://imgur.com/a/m9pUt/all" rel="nofollow" target="_blank">imgur #1</a></li>
+                                <li><a class="paint" href="https://imgur.com/gallery/b1NsF" rel="nofollow" target="_blank">imgur #2</a></li>
+                                <li><a class="paint" href="https://www.flickr.com/photos/126721369@N06/albums/" rel="nofollow" target="_blank">RuneScape Flickr</a></li>
+                                <li><a class="paint" href="http://runescape.wikia.com/wiki/Wallpaper" rel="nofollow" target="_blank">runescape.wikia</a></li>
+                                <li>&nbsp;</li>
+                            </ul>
+                        </li>
                         <li><a href="http://runescape.wikia.com/wiki/RuneScape_Wiki" rel="nofollow" target="_blank">runescape.wikia&nbsp;<span class="is-new">new</span></a></li>
                         <li><a href="http://warbandtracker.com/schedule.php" rel="nofollow" target="_blank">Warbands taimeris</a></li>
                         <li><a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a></li>
@@ -245,7 +256,7 @@
                     </ul>
                 </li>
                 <li{cat-sel-160}><a href="/minispeles">Minispēles</a></li>
-                <li{cat-sel-4}><a href="/prasmes">Prasmes{skills-is-new}</a>
+                <li{cat-sel-4}><a href="/prasmes">Prasmes</a>
                     <ul>
                         <li><a href="/prasmes">Prasmju saraksts</a></li>
                         <li><a href="/prasmes/xp-table">XP tabula&nbsp;<span class="is-new">new</span></a></li>
@@ -272,7 +283,7 @@
                     <!-- START BLOCK : mygroups-->
                     <ul id="user-group-menu">
                         <!-- START BLOCK : myg-node-->
-                        <li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="">{title}{add}</a></li>
+                        <li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="">{title}&nbsp;&nbsp;{unread}</a></li>
                         <!-- END BLOCK : myg-node-->
                     </ul>
                     <!-- END BLOCK : mygroups-->
@@ -315,31 +326,33 @@
                 <div class="box">{out}</div>
                 <!-- END BLOCK : notification-list -->
                 
-                <!-- START BLOCK : discord-box -->
-                <h3>Saziņas kanāli{is-new}</h3>
-                <div class="box box-discord">
-                    <div><img src="{img-server}/bildes/runescape/ico-discord-app.png" title="exs Discord kanāls" alt="exs discord kanāls"></div>
+                <!-- START BLOCK : latest-images-right -->
+                <h3>Jaunākie attēli</h3>
+                <div class="box box-images">
+                    <div class="ajaxbox">{latest-images}</div>
+                </div>
+                <!-- END BLOCK : latest-images-right -->
+
+                <!-- START BLOCK : latest-pages -->
+                <h3>Jaunākie raksti</h3>
+                <div class="box">
+                    <div id="lat" class="ajaxbox">{latest-pages}</div>
+                </div>
+                <!-- END BLOCK : latest-pages -->
+                
+                <!-- START BLOCK : communication-box -->
+                <h3>Saziņas kanāli</h3>
+                <div class="box box-communication">
                     <div>
-                        <a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a><br>
-                        <a class="lightbox" href="https://img.exs.lv/m/o/mokskis/discord-1.png">attēls darbībā</a>
+                        <img src="{img-server}/bildes/runescape/ico-discord-app-small.png" title="exs Discord kanāls" alt="">
+                        <a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a>
+                    </div>
+                    <div>
+                        <img src="{img-server}/bildes/runescape/ico-friends-chat.gif" title="Spēles Friends' Chats" alt="">
+                        <span>FC: lv mineris</span>
                     </div>
                 </div>
-                <!-- END BLOCK : discord-box -->
-
-                <!-- START BLOCK : latest-box -->
-                <h3>Jaunākais lapā</h3>
-                <div class="box">
-                    <ul class="tabs">
-                        <li><a href="/latest.php" class="{pages-selected}remember-pages ajax">
-                            <span class="comments">Raksti</span>
-                        </a></li>
-                        <li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax">
-                            <span class="gallery">Bildes</span>
-                        </a></li>
-                    </ul>
-                    <div id="lat" class="ajaxbox">{latest-noscript}</div>
-                </div>
-                <!-- END BLOCK : latest-box -->
+                <!-- END BLOCK : communication-box -->
 
                 <!-- START BLOCK : poll-box-->
                 <h3><img class="box-icon" src="{img-server}/bildes/fugue-icons/chart_1.png" alt="Aptauja">Jaunākā aptauja</h3>
@@ -430,6 +443,13 @@
                     <div class="c"></div>
                 </div>
                 <!-- END BLOCK : profile-box-->
+                
+                <!-- START BLOCK : latest-images -->
+                <h3>Jaunākie attēli</h3>
+                <div class="box box-images">
+                    <div class="ajaxbox">{latest-images}</div>
+                </div>
+                <!-- END BLOCK : latest-images -->
 
                 <!-- START BLOCK : mb-box-->
                 <h3>Miniblogi{miniblog-add}</h3>
