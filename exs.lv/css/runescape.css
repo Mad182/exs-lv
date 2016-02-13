@@ -298,6 +298,9 @@ div pre {
 .top-navig .green, .top-navig .g {
     color: #60ef00
 }
+#user-group-menu .gm-unread {
+    color:#FF4E4E;
+}
 #wrapper .article-info {
     background: #f4f5f6;
     padding: 3px 0 2px;

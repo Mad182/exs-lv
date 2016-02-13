@@ -283,7 +283,7 @@
                     <!-- START BLOCK : mygroups-->
                     <ul id="user-group-menu">
                         <!-- START BLOCK : myg-node-->
-                        <li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="">{title}{add}</a></li>
+                        <li><a href="/group/{id}"><img src="{img-server}/userpic/small/{avatar}" width="28" height="28" alt="">{title}&nbsp;&nbsp;{unread}</a></li>
                         <!-- END BLOCK : myg-node-->
                     </ul>
                     <!-- END BLOCK : mygroups-->
