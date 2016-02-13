@@ -11,7 +11,7 @@ if ($auth->ok) {
 }
 
 // mod opšns
-if ($auth->id === 115) {    
+if ($auth->id == 115) {    
     if (isset($_GET['magic']) && $_GET['magic'] == 'readrss') {
         read_rss(true);
     }   
