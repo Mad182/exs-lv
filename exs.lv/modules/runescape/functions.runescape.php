@@ -196,6 +196,7 @@ function create_news($type = 'rs3') {
         if ($single->removed) continue;
         
         $img_path = '/bildes/runescape/news/'.$img_prefix.$single->mb_id.'.jpg';
+        $img_path_2 = '/bildes/runescape/news/'.$img_prefix.$single->mb_id.'_1.jpg';
         if ($type === 'oldschool') {
             $fallback_path = '/bildes/runescape/fallback/os-fallback.png';
         } else {
@@ -206,6 +207,8 @@ function create_news($type = 'rs3') {
         $image = '';
         if ($single->has_image && file_exists(CORE_PATH.$img_path)) {
             $image = '<img src="'.$img_server.$img_path.'" title="'.$single->title.'" alt="'.$single->title.'">';
+        } else if ($single->has_image && file_exists(CORE_PATH.$img_path_2)) {
+            $image = '<img src="'.$img_server.$img_path_2.'" title="'.$single->title.'" alt="'.$single->title.'">';
         } else {
             $image = '<img src="'.$img_server.$fallback_path.'" title="'.$single->title.'" alt="'.$single->title.'">';
         }
@@ -272,6 +275,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
     $foo->image_max_pixels = 200000000;
     if ($foo->uploaded) {
         $foo->file_new_name_body = str_replace(array('.png','.gif','.jpg', '.jpeg'), '', $target_name);
+        $foo->file_auto_rename = false;
         $foo->image_resize = true;
         $foo->image_convert = 'jpg';
         $foo->image_x = 170;
