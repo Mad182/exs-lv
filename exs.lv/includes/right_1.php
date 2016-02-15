@@ -282,8 +282,7 @@ if ($category->module === 'movies') {
 	}
 }
 
-
-include(CORE_PATH . '/modules/core/poll.php');
+//include(CORE_PATH . '/modules/core/poll.php');
 
 //show popup ads only for desktops
 require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');

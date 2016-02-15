@@ -2608,7 +2608,7 @@ a.friend:hover {
 .av {
 	float: left;
 	display: inline;
-	margin: 5px 10px 5px 0
+	margin: 5px 9px 5px 0
 }
 
 #profile-image {
@@ -3300,7 +3300,7 @@ a.external-twitter span {
 ul#user-notify {
 	list-style: none;
 	padding: 0;
-	margin: 5px
+	margin: 0
 }
 
 #user-notify li {
@@ -3318,7 +3318,7 @@ ul#user-notify {
 	background: transparent url('//img.exs.lv/bildes/icons-24.png') no-repeat 0 -526px;
 	width: 28px;
 	height: 28px;
-	margin: 2px 7px 7px 0;
+	margin: 1px 5px 2px 0;
 	float: left
 }
 
@@ -3897,7 +3897,7 @@ a.friend-right {
 
 #latest-topics li {
 	background: transparent;
-	padding: 3px;
+	padding: 3px 0 3px 1px;
 	margin: 0;
 	height: auto !important;
 	height: 30px;
@@ -3914,9 +3914,10 @@ a.friend-right {
 }
 
 #latest-topics li .av {
-	width: 32px;
-	height: 32px;
-	margin-top: 0
+	width: 30px;
+	height: 30px;
+	margin-top: 4px;
+	margin-right: 7px;
 }
 
 
