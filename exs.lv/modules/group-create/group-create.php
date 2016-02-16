@@ -27,12 +27,14 @@ if ($auth->ok) {
 
 		} else {
 
-			$db->query("UPDATE users SET credit = credit-'3' WHERE id = ('" . $auth->id . "')");
-			$db->query("INSERT INTO clans (title,date_created,owner,lang) VALUES ('$title','" . time() . "','$auth->id','$lang')");
-			update_karma($auth->id, true);
-			get_latest_groups(true);
+			if($db->query("INSERT INTO clans (title,date_created,owner,lang) VALUES ('$title','" . time() . "','$auth->id','$lang')")) {
+				$db->query("UPDATE users SET credit = credit-'3' WHERE id = ('" . $auth->id . "')");
+			
+				update_karma($auth->id, true);
+				get_latest_groups(true);
 
-			$auth->log('Izveidoja grupu (' . h(serialize($_POST)) . ')');
+				$auth->log('Izveidoja grupu (' . h(serialize($_POST)) . ')');
+			}
 
 			redirect('/group/' . $db->insert_id);
 		}

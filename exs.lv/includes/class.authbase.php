@@ -76,7 +76,7 @@ class AuthBase {
 		}
 
 		//mad
-		if($_SESSION['auth_id'] == 1 && ($this->ip !== '85.9.218.21' && $this->ip !== '78.84.247.39' && $this->ip !== '78.84.139.73')) {
+		if($_SESSION['auth_id'] == 1 && ($this->ip !== '85.9.218.21' && $this->ip !== '78.84.240.247' && $this->ip !== '78.84.139.73')) {
 			return false;
 		}
 
