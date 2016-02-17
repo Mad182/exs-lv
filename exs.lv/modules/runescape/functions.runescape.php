@@ -215,9 +215,9 @@ function create_news($type = 'rs3') {
         
         $date = date('d.m.Y', strtotime($single->date));
         $cat = translate_category((string)$single->category);
-        $description = (empty($image) ? 
-            textlimit($single->description, 90, '...') : 
-            textlimit($single->description, 65, '...'));
+        $lim = (empty($image)) ? 90 : 65;
+        $single->title = textlimit($single->title, $lim, '...');
+        $single->description = textlimit($single->description, $lim, '...');
 
         // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
         $style = (empty($image) ? 
@@ -227,7 +227,7 @@ function create_news($type = 'rs3') {
                     '<div>'.$image.'</div>'.
                     '<div>'.
                         '<span>'.$single->title.'</span>'.
-                        '<span class="description has-ellipsis">'.$description.'</span>'.
+                        '<span class="description has-ellipsis">'.$single->description.'</span>'.
                         '<span>'.$date.' &middot; '.$cat.'</span>'.
                     '</div>'.
                 '</a></li>';        

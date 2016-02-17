@@ -1026,6 +1026,7 @@ h3 .box-icon {
 .official-news div:first-child {
     width:25%;
     min-width:137px;
+    vertical-align:middle;
 }
 .official-news div:last-child {
     width:75%;
@@ -1033,7 +1034,7 @@ h3 .box-icon {
     vertical-align:middle;
 }
 .official-news img {
-    max-width:137px;
+    width:137px;
     max-height:85px;
     /* attēls būs vertikāli centrēts esošajā "tabulas" rūtī */
     vertical-align:middle;
