@@ -347,10 +347,6 @@
                         <img src="{img-server}/bildes/runescape/ico-discord-app-small.png" title="exs Discord kanāls" alt="">
                         <a href="/say/20867/4609657-discord-kanals-ir-izveidots-cik">Discord kanāls</a>
                     </div>
-                    <div>
-                        <img src="{img-server}/bildes/runescape/ico-friends-chat.gif" title="Spēles Friends' Chats" alt="">
-                        <span>FC: lv mineris</span>
-                    </div>
                 </div>
                 <!-- END BLOCK : communication-box -->
 
