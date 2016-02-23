@@ -2646,7 +2646,7 @@ a.friend img, .comments-avatar {
 .comment-text .response-content ul {
 	overflow: hidden;
 	margin: 8px 10px 16px 20px;
-	padding: 0 0 0 20px;
+	padding: 0 0 0 22px;
 	list-style-type: disc;
 	clear: none
 }
@@ -2655,8 +2655,8 @@ a.friend img, .comments-avatar {
 .entry-content ol,
 .comment-text .response-content ol {
 	overflow: hidden;
-	margin: 8px 10px 16px 20px;
-	padding: 0 0 0 20px;
+	margin: 8px 10px 16px 10px;
+	padding: 0 0 0 32px;
 	clear: none
 }
 
