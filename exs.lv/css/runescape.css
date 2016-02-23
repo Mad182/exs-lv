@@ -541,7 +541,7 @@ ul#mainlist.rs-articles {
     .top-navig .rs-logo:hover {
         background:inherit
     }
-    .top-navig .rs-logo > img {
+    .top-navig .rs-logo a > img {
         max-height:30px
     }
 ul.nav-left {

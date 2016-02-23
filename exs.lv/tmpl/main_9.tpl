@@ -110,7 +110,7 @@
     <div class="top-navig">
         <nav>
             <ul class="droplist">
-                <li class="rs-logo"><img src="{img-server}/bildes/runescape/rs-logo-sm.png" alt=""></li>
+                <li class="rs-logo"><a style="padding:0" href="/"><img src="{img-server}/bildes/runescape/rs-logo-sm.png" alt=""></a></li>
                 <li><a href="/" class="dropdown">runescape.exs.lv</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
