@@ -19,7 +19,7 @@ if ($lang == 3) {
 	$site_title = 'exs.lv jaunumi';
 	$site_description = 'Spēļu portāls';
 	$site_url = 'https://exs.lv/';
-	$index_categories = array(1, 81);
+	$index_categories = array(1, 80, 81, 323);
 }
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'all' || !isset($_GET['var1']) && $lang == 3) {

@@ -50,31 +50,32 @@
 		<!-- END BLOCK : greetings-->
 
 		<!-- START BLOCK : form-fields-->
+		<input type="hidden" name="reg_token" value="{reg_token}" />
 		<p>
-			<label for="{field_nick}">Iesauka:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label><br />
+			<label for="{field_nick}">Iesauka:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label>
 			<input tabindex="1" type="text" class="text usercheck" name="{field_nick}" id="{field_nick}" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
 		</p>
 		<p>
 			<label for="{field_mail}">E-pasta adrese:<br />
 				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts<br />
 					reģistrācijas apstiprinājuma e-pasts.</span>
-			</label><br />
+			</label>
 			<input tabindex="2" type="text" class="text" name="{field_mail}" id="{field_mail}" value="{new-mail}" maxlength="64" />
 		</p>
 		<p>
-			<label for="omnomnom">Parole:</label><br />
+			<label for="omnomnom">Parole:</label>
 			<input tabindex="3" type="password" class="text" name="omnomnom" id="omnomnom" />
 		</p>
 		<p>
-			<label for="url">Parole atkārtoti:</label><br />
+			<label for="url">Parole atkārtoti:</label>
 			<input tabindex="4" type="password" class="text" name="url" id="url" />
 		</p>
 		<p id="required-registration-field">
-			<label for="reg-www">Homepage:</label><br />
+			<label for="reg-www">Homepage:</label>
 			<input type="text" class="text" name="www" id="reg-www" value="http://" />
 		</p>
 		<p>
-			<label for="password">desmit mīnus 1 ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label><br />
+			<label for="password">desmit mīnus 1 ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label>
 			<input tabindex="5" type="text" class="text" name="password" id="password" />
 		</p>
 		<h2>Reģistrējoties tu piekrīti mājas lapas lietošanas noteikumiem:</h2>

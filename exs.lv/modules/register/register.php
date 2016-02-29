@@ -30,7 +30,7 @@ if (!$auth->ok) {
 	$regdata['botsok'] = false;
 	$regdata['agree'] = false;
 
-	if (isset($_POST[$field_nick]) && $_POST['www'] === $botstring) {
+	if (isset($_POST[$field_nick]) && $_POST['www'] === $botstring && check_token('reg', $_POST['reg_token'])) {
 
 		//check mail
 		if (filter_var($_POST[$field_mail], FILTER_VALIDATE_EMAIL)) {
@@ -139,7 +139,8 @@ if (!$auth->ok) {
 			'new-nick' => h($regdata['nick']),
 			'new-mail' => h($regdata['mail']),
 			'field_mail' => $field_mail,
-			'field_nick' => $field_nick
+			'field_nick' => $field_nick,
+			'reg_token' => make_token('reg')
 		));
 	}
 } else {

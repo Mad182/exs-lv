@@ -334,7 +334,7 @@ if (im_mod()) {
 
 //links uz openidea.lv, aktīvs tikai sākumlapās
 $openidea = 'SIA Open Idea';
-if($_SERVER['REQUEST_URI'] === '/') {
+if($_SERVER['REQUEST_URI'] === '/' || $category->textid === 'html-pamati' || $category->textid === 'css-pamati') {
 	$openidea = '<a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>';
 }
 
