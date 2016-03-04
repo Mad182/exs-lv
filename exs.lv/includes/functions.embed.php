@@ -190,6 +190,7 @@ function insert_smilies($txt) {
 		':crazy:' => 'crazy.gif',
 		':rokas:' => 'rokas.gif',
 		':facepalm:' => 'facepalm.gif',
+		':bulduris:' => 'facepalm.gif',
 		':hihi:' => 'hihi.gif',
 		':ile:' => 'loveexs.gif',
 		':ban:' => 'ban.gif',
