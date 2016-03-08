@@ -174,10 +174,10 @@
 		</header><!-- #masthead -->
 
 		<div id="headline" class="container"{page-persona}>
-			<!-- START BLOCK : header-ad-->
 			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
 				<div id='bmone2n-22484.2.2.1'></div>
 			</div>
+			<!-- START BLOCK : header-ad-->
 			<!-- END BLOCK : header-ad-->
 		</div>
 
@@ -380,19 +380,6 @@
 					<!-- END BLOCK : page-path-->
 					
 					<!-- START BLOCK : unauthorized-ad-->
-					<div style="padding: 0 0 10px;width:728px;margin:0 auto;max-width:100%;overflow:hidden">
-						<script type="text/javascript" id="position_2919">
-						  var ads_positions = ads_positions || [];
-						  ads_positions.push(["2919", "", "document"]);
-						  (function() {
-						    if (!document.getElementById("ads_loader")) {
-						      var script = document.createElement("script"); script.type = "text/javascript"; script.id = "ads_loader"; script.async = true;
-						      script.src = ("https:" == document.location.protocol ? "https://" : "http://") + "static.adclick.lv/ads_loader__min.js?rand=" + (new Date()).getTime();
-						      (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
-						    }
-						  })();
-						</script>
-					</div>
 					<!-- END BLOCK : unauthorized-ad-->
 
 					<!-- START BLOCK : profile-menu-->
@@ -691,7 +678,27 @@
 	</div>
 
 	<!-- START BLOCK : popup-ads-->
+	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
+	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
+	<noscript>
+	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
+	</noscript>
+
 	<!-- END BLOCK : popup-ads-->
+	
+	<!-- iBILLBOARD Ad Server one2many code -->
+	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/bb/bb_one2n.js'></script>
+	<script type='text/javascript'>/* <![CDATA[ */ 
+	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
+	//bmone2n.addPosition('22484.2.3.2','');
+	bmone2n.addPosition('22484.2.2.1','');
+	bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
+	/* ]]> */</script>
+	<div id='bmone2t-22484.2.3.2' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
+	<div id='bmone2t-22484.2.2.1' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
+	<script type='text/javascript'>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

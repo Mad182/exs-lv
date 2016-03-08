@@ -2211,12 +2211,14 @@ function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 function remake_thb($large, $thb) {
 	$thb = CORE_PATH . '/' . $thb;
 	$large = CORE_PATH . '/' . $large;
+	$size = 72;
 	if(file_exists($thb)) {
 		$thb_size = getimagesize($thb);
-		$size = 72;
 		if ($thb_size[0] != $size) {
 			exec("convert " . $large . " -resize '" . $size . "x" . $size . "^' -gravity center -crop " . $size . "x" . $size . "+0+0 +repage -strip " . $thb);
 		}
+	} elseif(file_exists($large)) {
+			exec("convert " . $large . " -resize '" . $size . "x" . $size . "^' -gravity center -crop " . $size . "x" . $size . "+0+0 +repage -strip " . $thb);
 	}
 }
 

@@ -1,39 +1,8 @@
 <?php
 
 exit;
-$number_of_days_from_now = 3299;
-$now = time();
-
-$arr_days = array();
-
-$i = 0;
-while($i <> $number_of_days_from_now){
-	$str_stamp = "- $i day";
-	$arr_days[] = date('Y-m-d',strtotime($str_stamp,$now));
-	$i ++;
-}
-
-foreach($arr_days as $day) {
-	$arr = get_todays_top_comment($day);
-	if(!empty($arr['best-rating']) && $arr['best-rating'] > 1) {
-		echo '<p>'.$day.' <strong><a href="'.$arr['best-link'].'">'.$arr['best-nick']. '</a> ('.$arr['best-rating'].')</strong>: ' . add_smile($arr['best-comment']).'</p>';
-	}
-}
-
-
-
-//get_todays_top_comment();
-
-
-exit;
-$json = curl_get('https://www.googleapis.com/youtube/v3/videos?id=JIsmQPX6sAM&key=AIzaSyAY_u1YzIGq8jeDufkmsNGRKbJ4_bea0AI&part=snippet');
-$data = json_decode($json);
-
-pr($data->items[0]->snippet);
-
-exit;
-$folder = 'florbols-01-11-2014';
-$user_id = 35809;
+$folder = 'florbols-05-03-2016';
+$user_id = 39299;
 
 
 if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
@@ -42,7 +11,7 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 
 			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
 			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
-			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . " - Exs florbola turnīrs 01.11.2014, Jūrmala</p>");
+			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . " - Exs #4 florbola turnīrs 05.03.2016, Jūrmala</p>");
 
 			remake_thb($image, $thb);
 
@@ -53,9 +22,9 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 				('$user_id','$image','$thb','$text',NOW(),NOW(),'127.0.0.1',1,8)
 			";
 
-			$db->query($sql);
+			//$db->query($sql);
 
-			userlog($user_id, 'Pievienoja <a href="/gallery/' . $user_id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit(strip_tags($text), 32, '...') . '</a>', '/' . $thb);
+			//userlog($user_id, 'Pievienoja <a href="/gallery/' . $user_id . '/' . $db->insert_id . '">jaunu attēlu ' . textlimit(strip_tags($text), 32, '...') . '</a>', '/' . $thb);
 
 			echo $sql . '<br />';
 		}

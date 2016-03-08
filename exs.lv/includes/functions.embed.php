@@ -127,6 +127,14 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	foreach ($https_sites as $site) {
 		if (strpos($txt, $site) !== false) {
 			$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
+		} elseif(stripos($site, '*') !== false) {
+
+			//wildcard
+			$check = str_replace('*', '', $site);
+			if (strpos($txt, $check) !== false) {
+				$txt = preg_replace('/http:\/\/([a-zA-Z0-9]+)'.$check.'/', 'https://$1'.$check, $txt);
+			} 
+
 		}
 	}
 
