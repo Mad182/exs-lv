@@ -158,7 +158,7 @@ if ($facts) {
 
 	foreach ($facts as $fact) {
     
-        $fact->text = stripslashes($fact->text);
+        $fact->text = add_smile($fact->text);
 
 		$tpl->newBlock('single-fact');
         $tpl->assignAll($fact);

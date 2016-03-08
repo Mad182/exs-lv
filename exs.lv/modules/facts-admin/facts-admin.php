@@ -98,7 +98,7 @@ if ($facts) {
 		$tpl->newBlock("facts_admin-list-node");
 		$tpl->assign(array(
 			'id' => $fact->id,
-			'text' => stripslashes($fact->text),
+			'text' => add_smile($fact->text),
 			'fact-type' => $fact_link
 		));
 	}
