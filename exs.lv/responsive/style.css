@@ -2023,10 +2023,6 @@ img.twit-pic {
 
 @media (max-width:767px) {
 
-	#headline {
-		height: 80px;
-	}
-
 	#scroll-up {
 		padding:0;
 		width:0;
@@ -2123,10 +2119,6 @@ img.twit-pic {
 }
 
 @media (max-width:479px) {
-
-	#headline {
-		height: 60px;
-	}
 
 	#intr .search {
 		margin-top:10px;

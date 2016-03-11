@@ -28,23 +28,14 @@
 	<meta name="viewport" content="width=device-width" />
 
 	<link rel='stylesheet' id='swipemenu-css'  href='{static-server}/responsive/css/swipemenu.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='bootstrap-responsive-css'  href='{static-server}/responsive/css/bootstrap-responsive.css?w' type='text/css' media='all' />
-	<link rel='stylesheet' id='ie-styles-css'  href='{static-server}/responsive/css/ie.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css?wq' type='text/css' media='all' />
+	<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css?w' type='text/css' media='all' />
+	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
-	<script type='text/javascript' src="{static-server}/responsive/js/jquery-1.10.2.min.js"></script>
-	<script type='text/javascript' src='{static-server}/responsive/js/html5.js'></script>
-	<script type='text/javascript' src='{static-server}/responsive/js/bootstrap.min.js'></script>
-	<script type='text/javascript' src='{static-server}/responsive/js/fluidvids.min.js'></script>
-	<script type='text/javascript' src='{static-server}/responsive/js/jquery.sidr.min.js'></script>
-	<script type='text/javascript' src='{static-server}/responsive/js/jquery.touchSwipe.min.js'></script>
-	<script type='text/javascript' src='{static-server}/responsive/js/jquery.swipemenu.init.js'></script>
 
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
+	<script type="text/javascript" src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script type="text/javascript">
@@ -577,18 +568,6 @@
 					<div class="widget" style="min-height:400px">
 						<h3 class="title"><span>Jaunākais no twitter</span></h3>
 						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2">Tweets by @exs_lv</a>
-						<script>!function(d, s, id) {
-								var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-								if (!d.getElementById(id)) {
-									js = d.createElement(s);
-									js.id = id;
-									js.src = p + "://platform.twitter.com/widgets.js";
-									fjs.parentNode.insertBefore(js, fjs);
-								}
-							}(document, "script", "twitter-wjs")
-									;</script>
-
-						<div id="magz-twitter-follow-link"><a target="_blank" href="http://twitter.com/exs_lv" rel="nofollow">Seko mums Twitter</a></div>
 					</div>
 				</div>
 
@@ -676,6 +655,8 @@
 		</footer>
 
 	</div>
+
+	<script type="text/javascript">!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
 
 	<!-- START BLOCK : popup-ads-->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>

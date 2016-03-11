@@ -60,7 +60,7 @@ if (!empty($articles)) {
 
 		$tpl->newBlock('feed-item');
 		$tpl->assign(array(
-			'title' => h($article->title),
+			'title' => $article->title,
 			'link' => h($url),
 			'description' => h($text),
 			'date' => gmdate('r', strtotime($article->date)),

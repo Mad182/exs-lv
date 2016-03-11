@@ -290,7 +290,7 @@ function insert_smilies($txt) {
 
 	foreach ($smilies as $key => $val) {
 		if (strpos($txt, $key) !== false) { // speeds things up
-			$txt = str_replace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
+			$txt = str_ireplace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
 		}
 	}
 

@@ -313,12 +313,12 @@
 					<div style="margin:20px auto">
 
 						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- coding.lv -->
+						<!-- coding -->
 						<ins class="adsbygoogle"
-						     style="display:block"
-						     data-ad-client="ca-pub-0844454810885567"
-						     data-ad-slot="1099049027"
-						     data-ad-format="auto"></ins>
+							 style="display:block"
+							 data-ad-client="ca-pub-9907860161851752"
+							 data-ad-slot="9760494839"
+							 data-ad-format="auto"></ins>
 						<script>
 						(adsbygoogle = window.adsbygoogle || []).push({});
 						</script>
@@ -368,6 +368,8 @@
 				<div class="c"></div>
 			</div>
 		</div>
+
+		<script type="text/javascript">!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
 
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
