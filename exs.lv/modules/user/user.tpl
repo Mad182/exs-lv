@@ -155,7 +155,7 @@
 			<legend>Exs.lv nika maiņa</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="new-nick">Jaunais niks:</label><br />
+				<label for="new-nick">Jaunais niks:</label>
 				<input type="text" class="text usercheck" name="new-nick" id="new-nick" value="" maxlength="14" o /> <span class="usercheck-response"></span>
 			</p>
 			<p>
@@ -216,7 +216,7 @@
 
 			<!-- START BLOCK : custom_title-->
 			<p>
-				<label for="edit-custom_title">Lietotāja nosaukums:</label><br />
+				<label for="edit-custom_title">Lietotāja nosaukums:</label>
 				<input type="text" class="text" name="edit-custom_title" id="edit-custom_title" value="{user-custom_title}" maxlength="18" />
 			</p>
 			<!-- END BLOCK : custom_title-->
@@ -226,23 +226,23 @@
 			<!-- END BLOCK : custom_title_buy-->
 
 			<p>
-				<label for="edit-skype">Skype niks:</label><br />
+				<label for="edit-skype">Skype niks:</label>
 				<input type="text" class="text" name="edit-skype" id="edit-skype" value="{user-skype}" maxlength="32" />
 			</p>
 			<p>
-				<label for="edit-yt_name">YouTube:</label><br />
+				<label for="edit-yt_name">YouTube:</label>
 				<input type="text" class="text" name="edit-yt_name" id="edit-yt_name" value="{user-yt_name}" maxlength="32" />
 			</p>
 			<p>
-				<label for="edit-twitter">Twitter:</label><br />
+				<label for="edit-twitter">Twitter:</label>
 				<input type="text" class="text" name="edit-twitter" id="edit-twitter" value="{user-twitter}" maxlength="64" />
 			</p>
 			<p>
-				<label for="edit-web">Mājaslapa:</label><br />
+				<label for="edit-web">Mājaslapa:<br /><span class="description">(jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
 				<input type="text" class="text" name="edit-web" id="edit-web" value="{user-web}" maxlength="128" />
 			</p>
 			<p>
-				<label for="edit-city">Pilsēta:</label><br />
+				<label for="edit-city">Pilsēta:</label>
 				<select class="text" name="edit-city" id="edit-city">
 					<option value="0">Neteikšu</option>
 					<!-- START BLOCK : user-profile-edit-city-->
@@ -252,12 +252,12 @@
 			</p>
 
 			<!-- START BLOCK : sig-about-edit-->
-			<label for="edit-signature">Paraksts:<br /><span class="description">(parādās zem komentāriem)</span></label><br />
+			<label for="edit-signature">Paraksts:<br /><span class="description">(parādās zem komentāriem)</span></label>
 			<textarea rows="4" cols="20" name="edit-signature" id="edit-signature">{user-signature}</textarea>
 
 			<br />
 
-			<label for="edit-signature">Par mani<br /><span class="description">(redzams citiem atverot Tavu profilu)</span></label><br />
+			<label for="edit-signature">Par mani<br /><span class="description">(redzams citiem atverot Tavu profilu, jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
 			<textarea rows="4" cols="20" style="width:98%;height:300px" name="edit-about" id="edit-about">{user-about}</textarea>
 
 			<br />
@@ -284,15 +284,15 @@
 			<legend>Profila drošības iestatījumi</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="password-old">Esošā parole:</label><br />
+				<label for="password-old">Esošā parole:</label>
 				<input type="password" class="text" name="password-old" id="password-old" value="" />
 			</p>
 			<p>
-				<label for="password-1">Jaunā parole:</label><br />
+				<label for="password-1">Jaunā parole:</label>
 				<input type="password" class="text" name="password-1" id="password-1" value="" />
 			</p>
 			<p>
-				<label for="password-2">Atkārto jauno paroli:</label><br />
+				<label for="password-2">Atkārto jauno paroli:</label>
 				<input type="password" class="text" name="password-2" id="password-2" value="" />
 			</p>
 			<p>
@@ -310,11 +310,11 @@
 			<legend>Profila drošības iestatījumi</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="edit-mail">E-pasta adrese:</label><br />
+				<label for="edit-mail">E-pasta adrese:</label>
 				<input type="text" class="text" name="edit-mail" id="edit-mail" value="{user-mail}" maxlength="64" />
 			</p>
 			<p>
-				<label for="password-old">Ievadi savu paroli:</label><br />
+				<label for="password-old">Ievadi savu paroli:</label>
 				<input type="password" class="text" name="password-old" id="password-old" value="" />
 			</p>
 			<p>
@@ -332,7 +332,7 @@
 			<legend>Avatara maiņa</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="edit-avatar">Profila attēls: (<a href="/animacijas">Vēlies kustīgu?</a>)</label><br />
+				<label for="edit-avatar">Profila attēls: (<a href="/animacijas">Vēlies kustīgu?</a>)</label>
 				<input type="file" class="text" name="edit-avatar" id="edit-avatar" />
 			</p>
 			<p>

@@ -102,7 +102,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$db->update('viewprofile', $viewed, array('time' => $date));
 			}
 		}
-		if ($inprofile->about) {
+		if ($inprofile->about && $inprofile->posts >= 10) {
 			$tpl->newBlock('user-profile-about');
 			$tpl->assign(array(
 				'user-about' => add_smile($inprofile->about)

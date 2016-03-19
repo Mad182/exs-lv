@@ -17,13 +17,13 @@ if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 	}
 
 	$inprofile->web = '';
-	if (!empty($_POST['edit-web'])) {
+	if (!empty($_POST['edit-web']) && $auth->posts >= 10) {
 		if (substr($_POST['edit-web'], 0, 4) != 'http') {
 			$web = 'http://' . $_POST['edit-web'];
 		} else {
 			$web = $_POST['edit-web'];
 		}
-		if (filter_var($web, FILTER_VALIDATE_URL)) {
+		if (filter_var($web, FILTER_VALIDATE_URL) && curl_get($web)) {
 			$inprofile->web = sanitize(filter_var($web, FILTER_SANITIZE_URL));
 		}
 	}
