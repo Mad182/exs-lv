@@ -79,7 +79,6 @@ $arr_domains = array(
 	'rp.exs.lv' => 5,
 	'lol.exs.lv' => 7,
 	'runescape.exs.lv' => 9,
-	'rs.exs.lv' => 9,
 	
 	// mobilās versijas
 	// (cloudflāres dēļ neveidojam vēl vairāk domēna līmeņu)
@@ -135,6 +134,11 @@ if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {
 		}
 		redirect($proto . $name . $_SERVER['REQUEST_URI'], true);
 	}
+
+//rs redirektējam uz runescape lai neveidojas dublikāts saturam
+} elseif($_SERVER['SERVER_NAME'] == 'rs.exs.lv') {
+	redirect('https://runescape.exs.lv' . $_SERVER['REQUEST_URI'], true);
+
 //ja nekas nav atpazīts, redirektējam uz exs.lv
 } else {
 	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
