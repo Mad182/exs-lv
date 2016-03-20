@@ -87,7 +87,7 @@ function comments_block($parent = 'null', $ajax = false) {
 
 				$avatar = get_avatar($comment, 's');
 
-				$json['comment'][] = '<img src="' . $avatar . '" class="av" /><p class="comment-author"><strong>' . $comment->nick . '</strong> ' . display_time($comment->time) . '</p>' . add_smile($comment->text);
+				$json['comment'][] = '<img src="' . $avatar . '" class="av" width="45" height="45" /><p class="comment-author"><strong>' . $comment->nick . '</strong> ' . display_time($comment->time) . '</p>' . add_smile($comment->text);
 			}
 			$json['id'] = $comment->id;
 		}

@@ -11,7 +11,7 @@
 <ul id="comments-ajax-list">
 	<!-- END BLOCK : comments-ajax-list -->
 	<!-- START BLOCK : comments-ajax-node -->
-	<li><img src="{avatar}" class="av" alt="" /><p class="comment-author"><strong>{nick}</strong> {date}</p>{text}</li>
+	<li><img src="{avatar}" class="av" width="45" height="45" alt="" /><p class="comment-author"><strong>{nick}</strong> {date}</p>{text}</li>
 	<!-- END BLOCK : comments-ajax-node -->
 	<!-- START BLOCK : comments-ajax-empty -->
 	<li class="empty">Pagaidām nav komentāru...</li>
