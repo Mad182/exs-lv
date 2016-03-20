@@ -135,6 +135,9 @@ if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {
 		}
 		redirect($proto . $name . $_SERVER['REQUEST_URI'], true);
 	}
+//ja nekas nav atpazīts, redirektējam uz exs.lv
+} else {
+	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 
