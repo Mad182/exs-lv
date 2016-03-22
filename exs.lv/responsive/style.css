@@ -4439,7 +4439,7 @@ li.view_more {
 #report-description {
 	width:250px;
 	float:left;
-	margin:15px 15px 0 20px;
+	margin:15px 15px 0 5px;
 	border:1px solid #eee;
 	padding:10px
 }

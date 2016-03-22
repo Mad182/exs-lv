@@ -1,18 +1,19 @@
 <!-- START BLOCK : report-form -->
 <div id="outer-form-block">
 	<p id="report-title" style="clear:both">Pārkāpuma ziņojums</p>
-	<div id="form-block">
+	<div id="form-block" style="padding-bottom:0">
 		<p><strong class="report-item">Pārkāpējs:</strong> {offender}</p>
-		<form method="post" action="{action}">
+		<form method="post" action="{action}" style="margin-bottom:5px">
 			<input type="hidden" name="anti-xsrf" value="{xsrf}">
 			<p class="report-content"><strong class="report-item">Saturs:</strong><br>{entry-text}</p>
 
 			<p class="report-item"><strong>Iemesls sūdzībai:</strong></p>
 			<p><textarea id="report-txtarea" name="report-reason"></textarea></p>
 
-			<p>
+			<p style="text-align:right">
+				<input class="primary button" type="submit" name="submit" value="ZIŅOT">
 				<a class="fancy-close button" href="javascript:void(0)">pārdomāju</a>
-				<input class="primary button" type="submit" name="submit" value="ZIŅOT"></p>
+            </p>
 		</form>
 	</div>
 	<div id="report-description">
