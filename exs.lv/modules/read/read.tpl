@@ -329,7 +329,7 @@
 					<!-- END BLOCK : reply-vote-->
 					<a id="c{rpl-id}" href="{rpl-aurl}"><img class="rpl-avatar av" src="{rpl-avatar}" alt="" /></a>
 					<div class="response-content">
-						<p class="comment-author"><a href="{rpl-aurl}">{rpl-author}</a> @ {rpl-date} atbildēja:
+						<p class="comment-author">{rpl-author} @ {rpl-date} atbildēja:
 							<!-- START BLOCK : report-reply -->
 							<span class="report-button">
 								<a class="report-user" href="/report/article-comment/{comment-id}" title="Ziņot par pārkāpumu">Ziņot</a>

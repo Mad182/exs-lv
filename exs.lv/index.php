@@ -216,7 +216,8 @@ if (isset($_GET['u'])) {
 		if ($auth->via_android === 1) {
 			require(CORE_PATH . '/modules/android/android.php');
 		} else {
-			$auth->log('Error 404:' . $_SERVER['REQUEST_URI']);
+			header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+			header("Status: 404 Not Found");
 			set_flash('Pieprasītā lapa netika atrasta!', 'error');
 			redirect();
 		}

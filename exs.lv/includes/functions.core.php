@@ -1441,6 +1441,11 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 	if (!empty($data[$key])) {
 		$level++;
 		foreach ($data[$key] as $val) {
+
+			if(!empty($val->private)) {
+				continue;
+			}
+
 			$out .= '<li>';
 			$val->date = strtotime($val->date);
 			if (!$auth->mobile) {

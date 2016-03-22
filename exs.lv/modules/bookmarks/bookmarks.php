@@ -30,22 +30,25 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		$tpl->newBlock('user-bookmarks-list');
 		foreach ($articles as $article) {
 			$info = $db->get_row("SELECT id,title,date,posts,strid FROM pages WHERE id = ('" . $article->pageid . "')");
-			$tpl->newBlock('user-bookmarks-node');
+	
+			if(!empty($info)) {
+				$tpl->newBlock('user-bookmarks-node');
 
-			//delete link
-			$delete = '';
-			if ($auth->ok && $auth->id == $inprofile->id) {
-				$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->id . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
+				//delete link
+				$delete = '';
+				if ($auth->ok && $auth->id == $inprofile->id) {
+					$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->id . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
+				}
+
+				$tpl->assign(array(
+					'id' => $info->id,
+					'url' => '/read/' . $info->strid,
+					'title' => $info->title,
+					'date' => substr($info->date, 0, 10),
+					'posts' => $info->posts,
+					'delete' => $delete
+				));
 			}
-
-			$tpl->assign(array(
-				'id' => $info->id,
-				'url' => '/read/' . $info->strid,
-				'title' => $info->title,
-				'date' => substr($info->date, 0, 10),
-				'posts' => $info->posts,
-				'delete' => $delete
-			));
 		}
 	}
 	$pagepath = '';

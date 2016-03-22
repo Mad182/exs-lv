@@ -6,6 +6,7 @@
 if (!$inprofile = get_user(intval($_GET['m']))) {
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	header("Status: 404 Not Found");
+	set_flash('Pieprasītā lapa netika atrasta!', 'error');
 	redirect();
 }
 
@@ -407,6 +408,7 @@ if (!empty($inprofile)) {
 							`miniblog`.`id` AS `id`,
 							`miniblog`.`removed` AS `mb_removed`,
 							`miniblog`.`hidden` AS `hidden`,
+							`miniblog`.`private` AS `private`,
 							`users`.`nick` AS `nick`,
 							`users`.`decos` AS `decos`,
 							`users`.`avatar` AS `avatar`,
@@ -545,7 +547,10 @@ if (!empty($inprofile)) {
 			));
 		}
 	} elseif(!empty($_GET['single'])) {
-		http_response_code(404);
+		header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+		header("Status: 404 Not Found");
+		set_flash('Pieprasītā lapa netika atrasta!', 'error');
+		redirect();
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');

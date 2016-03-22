@@ -1258,13 +1258,18 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 									$avatar = get_avatar($author[$reply->author], 's');
 
+									if (!$author[$reply->author]->deleted) {
+										$author_link = '<a href="/user/' . $reply->author . '">' . usercolor($author[$reply->author]->nick, $author[$reply->author]->level, false, $reply->author) . '</a>';
+									} else {
+										$author_link = '<em>dzēsts</em>';
+									}
+
 									$tpl->assign(array(
 										'rpl-id' => $reply->id,
 										'rpl-text' => add_smile($reply->text),
 										'rpl-date' => $reply->date,
-										'rpl-author' => usercolor($author[$reply->author]->nick, $author[$reply->author]->level, false, $reply->author),
+										'rpl-author' => $author_link,
 										'rpl-author-id' => $reply->author,
-										'rpl-aurl' => '/user/' . $reply->author,
 										'rpl-avatar' => $avatar
 									));
 

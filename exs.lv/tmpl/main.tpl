@@ -26,10 +26,8 @@
 	</script>
 
 	<meta name="viewport" content="width=device-width" />
-
-	<link rel='stylesheet' id='swipemenu-css'  href='{static-server}/responsive/css/swipemenu.css' type='text/css' media='all' />
-	<link rel='stylesheet' id='bootstrap-css'  href='{static-server}/responsive/css/bootstrap.css?w' type='text/css' media='all' />
-	<link rel='stylesheet' id='magz-style-css'  href='{static-server}/responsive/style.css' type='text/css' media='all' />
+	<link rel="stylesheet" href="{static-server}/responsive/css/bootstrap.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="{static-server}/responsive/style.css" type="text/css" media="all" />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 
 	<!-- START BLOCK : additional-css-->
@@ -443,7 +441,7 @@
 							<!-- END BLOCK : profilebox-twitter-link-->
 
 							<!-- START BLOCK : profilebox-yt-link-->
-							<a href="/youtube/{profile-id}/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a>
+							<a rel="nofollow" target="_blank" href="https://www.youtube.com/{yt-slug}" id="l-yt"><span class="yt">{yt-name}</span></a>
 							<!-- END BLOCK : profilebox-yt-link-->
 
 							<!-- START BLOCK : profilebox-lastfm-link-->
@@ -567,7 +565,7 @@
 				<div id="footer-twitter" class="footer-widget span3 block2">
 					<div class="widget" style="min-height:400px">
 						<h3 class="title"><span>Jaunākais no twitter</span></h3>
-						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="2">Tweets by @exs_lv</a>
+						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="1">Tweets by @exs_lv</a>
 					</div>
 				</div>
 
@@ -604,12 +602,12 @@
 								</li>
 								<li>
 									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
-									<h4>314</h4>
+									<h4>326</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
 									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/facebook.png" alt=""></a>
-									<h4>326</h4>
+									<h4>330</h4>
 									<p>Fani</p>
 								</li>
 							</ul>
