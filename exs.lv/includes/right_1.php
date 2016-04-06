@@ -290,10 +290,7 @@ $detect = new Mobile_Detect;
 $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
 if($deviceType === 'computer' && !in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
 	//$tpl->newBlock('popup-ads');
-	
-	if($auth->ok !== true) {
-		//$tpl->newBlock('unauthorized-ad');
-	}
-	//$tpl->newBlock('header-ad');
+
+	$tpl->newBlock('header-ad');
 }
 

@@ -17,7 +17,7 @@
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes">
-	<script type="text/javascript">
+	<script>
 		var mb_refresh_limit = {mb-refresh-limit};
 		var current_user = {currentuser-id};
 		var new_msg_count = {new-messages-count};
@@ -33,10 +33,10 @@
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
+	<script src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-	<script type="text/javascript">
+	<script>
 		tinymce.init({
 			selector: "textarea",
 			plugins: [
@@ -66,7 +66,7 @@
 	<!-- END BLOCK : tinymce-enabled-->
 	<!-- START BLOCK : tinymce-simple-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-	<script type="text/javascript">
+	<script>
 		tinymce.init({
 			selector: "textarea",
 			plugins: [
@@ -85,7 +85,7 @@
 		});</script>
 	<!-- END BLOCK : tinymce-simple-->
 	<!-- START BLOCK : mb-head-->
-	<script type="text/javascript">
+	<script>
 		var lastid = {lastid};
 				var mbid = {mbid};
 				var usrid = {usrid};
@@ -163,10 +163,8 @@
 		</header><!-- #masthead -->
 
 		<div id="headline" class="container"{page-persona}>
-			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
-				<div id='bmone2n-22484.2.2.1'></div>
-			</div>
 			<!-- START BLOCK : header-ad-->
+			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4"><div id='bmone2n-22484.2.2.1'></div></div>
 			<!-- END BLOCK : header-ad-->
 		</div>
 
@@ -367,9 +365,6 @@
 					<!-- START BLOCK : page-path-->
 					<p id="breadcrumbs">{page-path}</p>
 					<!-- END BLOCK : page-path-->
-					
-					<!-- START BLOCK : unauthorized-ad-->
-					<!-- END BLOCK : unauthorized-ad-->
 
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
@@ -602,7 +597,7 @@
 								</li>
 								<li>
 									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
-									<h4>326</h4>
+									<h4>330</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
@@ -654,7 +649,7 @@
 
 	</div>
 
-	<script type="text/javascript">!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
+	<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
 
 	<!-- START BLOCK : popup-ads-->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
@@ -663,7 +658,6 @@
 	<noscript>
 	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
 	</noscript>
-
 	<!-- END BLOCK : popup-ads-->
 	
 	<!-- iBILLBOARD Ad Server one2many code -->
@@ -684,10 +678,7 @@
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	  ga('create', 'UA-4190387-2', 'auto');
-	  ga('send', 'pageview');
-
+	  ga('create', 'UA-4190387-2', 'auto');ga('send', 'pageview');
 	</script>
 
 </body>

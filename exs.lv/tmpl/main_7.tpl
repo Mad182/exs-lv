@@ -16,7 +16,7 @@
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-		<script type="text/javascript">
+		<script>
 			var mb_refresh_limit = {mb-refresh-limit};
 			var current_user = {currentuser-id};
 			var new_msg_count = {new-messages-count};
@@ -28,10 +28,10 @@
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 		<!-- END BLOCK : additional-css-->
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,mcp.js,j.js"></script>
+		<script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,mcp.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-		<script type="text/javascript">
+		<script>
 			tinymce.init({
 				selector: "textarea",
 				plugins: [
@@ -61,7 +61,7 @@
 		<!-- END BLOCK : tinymce-enabled-->
 		<!-- START BLOCK : tinymce-simple-->
 		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-		<script type="text/javascript">
+		<script>
 			tinymce.init({
 				selector: "textarea",
 				plugins: [
@@ -80,7 +80,7 @@
 			});</script>
 		<!-- END BLOCK : tinymce-simple-->
 		<!-- START BLOCK : mb-head-->
-		<script type="text/javascript">
+		<script>
 			var lastid = {lastid};
 			var mbid = {mbid};
 			var usrid = {usrid};
@@ -444,7 +444,7 @@
 			</div>
 		</div>
 
-		<script type="text/javascript">!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
+		<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
 
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

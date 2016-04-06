@@ -1442,7 +1442,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 		$level++;
 		foreach ($data[$key] as $val) {
 
-			if(!empty($val->private)) {
+			if(!empty($val->private) && !$auth->ok) {
 				continue;
 			}
 
