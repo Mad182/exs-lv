@@ -445,7 +445,7 @@ if ($skin === 'main') {
 					$css_class = '';
 					if ($newposts > 0) {
 						$unread = '<span class="gm-unread">' . $newposts . '</span>';
-						$css_class = 'is-unread';
+						$css_class = ' class="is-unread"';
 					}
 					if (empty($g_owner->avatar)) {
 						$g_owner->avatar = 'none.png';
@@ -473,7 +473,7 @@ if ($skin === 'main') {
 					$css_class = '';
 					if ($newposts > 0) {
 						$unread = '<span class="gm-unread">' . $newposts . '</span>';
-						$css_class = 'is-unread';
+						$css_class = ' class="is-unread"';
 					}
 					if (empty($g_member->avatar)) {
 						$g_member->avatar = 'none.png';

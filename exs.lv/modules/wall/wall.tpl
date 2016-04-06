@@ -5,9 +5,7 @@
 </ul>
 
 <div class="tabMain">
-
 <!-- START BLOCK : wall-->
-
 <div id="wall">
 	<ul id="wall-posts">
 		<!-- START BLOCK : wall-node-->
@@ -36,7 +34,6 @@
 </div>
 
 <!-- END BLOCK : wall-->
-
 <!-- START BLOCK : news-->
 
 <div class="left span7">
@@ -90,7 +87,7 @@
 
 	<!-- START BLOCK : cindex-right-->
 	
-	<a id="frontage-banner" title="Interneta veikals BM.LV" href="http://bm.lv/" target="_blank" rel="nofollow" style="displan:block;padding:0"><img src="https://img.exs.lv/m/a/mad/bm-lv.png" alt="bm.lv banner" style="width:66%;margin:12px auto 8px;display:block" /></a>
+	<a id="frontage-banner" title="Interneta veikals BM.LV" href="http://bm.lv/" target="_blank" rel="nofollow" style="displan:block;padding:0"><img src="//img.exs.lv/m/a/mad/bm-lv.png" alt="bm.lv banner" style="width:66%;margin:12px auto 8px;display:block" /></a>
 
 	<div class="fp-latest" id="latest-in-blogs">
 		<h2 class="title"><a href="/blogs"><span>Jaunākais blogos</span></a></h2>
@@ -154,7 +151,6 @@
 <!-- END BLOCK : news-->
 
 <div class="c"></div>
-
 </div>
 
 <!-- INCLUDE BLOCK : share-block -->

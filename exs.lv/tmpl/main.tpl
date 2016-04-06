@@ -17,13 +17,7 @@
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes">
-	<script>
-		var mb_refresh_limit = {mb-refresh-limit};
-		var current_user = {currentuser-id};
-		var new_msg_count = {new-messages-count};
-		var query_timeout = 60000;
-		var c_url = "{page-url}";
-	</script>
+	<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" href="{static-server}/responsive/css/bootstrap.css" type="text/css" media="all" />
@@ -110,7 +104,6 @@
 				</div>
 			</div>
 
-
 			<nav class="navbar clearfix nobot">
 
 				<a id="responsive-menu-button" href="#swipe-menu">
@@ -156,11 +149,11 @@
 
 					</ul>
 
-				</div><!--/.nav-collapse -->
+				</div>
 
-			</nav><!-- /.navbar -->
+			</nav>
 
-		</header><!-- #masthead -->
+		</header>
 
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
@@ -190,14 +183,7 @@
 							<!-- START BLOCK : mygroups-->
 							<ul class="dropdown-menu" id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
-								<li>
-									<a class="{unread-class}" href="/group/{id}" title="{title}">
-										<span class="gm-logo" style="background:url('https://img.exs.lv/userpic/small/{avatar}') no-repeat 50% 50%">
-											{unread}
-										</span>
-										{title}
-									</a>
-								</li>
+								<li><a{unread-class} href="/group/{id}" title="{title}"><span style="background-image:url('//img.exs.lv/userpic/small/{avatar}')">{unread}</span>{title}</a></li>
 								<!-- END BLOCK : myg-node-->
 							</ul>
 							<!-- END BLOCK : mygroups-->
@@ -262,20 +248,17 @@
 					<!-- END BLOCK : login-form-->
 				</div>
 
-
-				<div class="search span3"><div class="offset1">
-						<form method="get" id="searchform" action="/search/">
-							<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
-							<input type="hidden" name="cof" value="FORID:11" />
-							<input type="hidden" name="ie" value="UTF-8" />
-							<p><input type="text" value="Es meklēju..." onfocus="if (this.value == 'Es meklēju...') {
-						this.value = '';
-					}" onblur="if (this.value == '') {
-								this.value = 'Es meklēju...';
-							}" name="q" id="s" />
-								<input type="submit" id="searchsubmit" value="Meklēt" /></p>
-						</form>
-					</div></div>
+				<div class="search span3">
+					<form method="get" id="searchform" action="/search/">
+						<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
+						<input type="hidden" name="cof" value="FORID:11" />
+						<input type="hidden" name="ie" value="UTF-8" />
+						<p>
+							<input type="text" value="" placeholder="Es meklēju..." name="q" id="s" />
+							<input type="submit" id="searchsubmit" value="Meklēt" />
+						</p>
+					</form>
+				</div>
 			</div>
 		</div>
 
@@ -350,25 +333,21 @@
 					</div>
 
 
-				</div><!-- sidebar-left -->
+				</div>
 
 
 				<div id="main-left" class="span7">
-
 					<!-- START BLOCK : flash-message-->
 					<div class="mbox {class}" id="flash-message">
 						<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 					</div>
 					<div class="c"></div>
 					<!-- END BLOCK : flash-message-->
-
 					<!-- START BLOCK : page-path-->
 					<p id="breadcrumbs">{page-path}</p>
 					<!-- END BLOCK : page-path-->
-
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
-
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
 						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
@@ -378,17 +357,13 @@
 						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
 						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
 					</ul>
-
 					<!-- END BLOCK : profile-menu-->
-
 					<!-- INCLUDE BLOCK : module-core-error -->
 					<div id="current-module">
 						<!-- INCLUDE BLOCK : module-currrent -->
 					</div>
-					
 					<div class="c"></div>
-
-				</div><!-- #main-left -->
+				</div>
 
 				<div id="sidebar" class="span3">
 
@@ -404,7 +379,6 @@
 						</form>
 					</div>
 					<!-- END BLOCK : movie-search-->
-
 					<!-- START BLOCK : profile-box-->
 					<div class="widget">
 						<h3 class="title"><span>{profile-nick}{custom_title}</span></h3>
@@ -446,8 +420,6 @@
 						<div class="c"></div>
 					</div>
 					<!-- END BLOCK : profile-box-->
-
-
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
 						<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
@@ -501,7 +473,6 @@
 					</div>
 					<!-- END BLOCK : poll-box-->
 
-
 					<!-- START BLOCK : daily-best-->
 
 					<div class="widget">
@@ -537,13 +508,13 @@
 					<!-- END BLOCK : side-junk-->
 
 
-				</div><!-- sidebar -->
+				</div>
 
-				<div class="clearfix"></div>
+				<div class="c"></div>
 
-			</div><!-- #main -->
+			</div>
 
-		</div><!-- #content -->
+		</div>
 
 		<footer id="footer" class="row-fluid">
 			<div id="footer-widgets" class="container">
@@ -610,7 +581,7 @@
 
 					</div>
 
-					<div class="clearfix"></div>
+					<div class="c"></div>
 				</div>
 
 				<div class="footer-widget widget span3 block6">
@@ -623,12 +594,11 @@
 							<li class="teamspeak">Teamspeak 3: ts.exs.lv</li>
 						</ul>
 					</div>
-					<div class="clearfix"></div>
+					<div class="c"></div>
 				</div>
 			</div>
 
 			<div id="site-info" class="container">
-
 				<div id="footer-nav" class="fr">
 					<ul class="menu">
 						<li><a href="/">Sākumlapa</a></li>
@@ -638,15 +608,11 @@
 						<li><a href="/reklama">Reklāma portālā</a></li>
 					</ul>
 				</div>
-
 				<div id="credit" class="fl">
 					<p>&copy; 2005-{current-year}, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
 				</div>
-
 			</div>
-
 		</footer>
-
 	</div>
 
 	<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>

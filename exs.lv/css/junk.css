@@ -65,16 +65,10 @@
 }
 
 #junk-voter span.downlink, #junk-voter span.uplink {
-	filter: alpha(opacity=45);
-	-khtml-opacity: 0.35;
-	-moz-opacity: 0.35;
 	opacity: 0.35
 }
 
 #junk-voter span.downlink.active, #junk-voter span.uplink.active {
-	filter: alpha(opacity=65);
-	-khtml-opacity: 0.65;
-	-moz-opacity: 0.65;
 	opacity: 0.65
 }
 

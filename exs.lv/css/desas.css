@@ -8,7 +8,7 @@
 	width: 171px;
 	height: 171px;
 	position: relative;
-	border: 1px solid #ddd;
+	border: 1px solid #ddd
 }
 #desas .field {
 	float: left;
@@ -20,7 +20,7 @@
 	font-family:'Trebuchet MS',sans-serif;
 	font-size: 22px;
 	padding: 0;
-	margin: 0;
+	margin: 0
 }
 #desas .field a {
 	float: left;
@@ -28,13 +28,13 @@
 	width: 55px;
 	height: 55px;
 	text-align: center;
-	line-height: 55px;
+	line-height: 55px
 }
 #desas .field.mine {
-	color: green;
+	color: green
 }
 #desas .field.other {
-	color: red;
+	color: red
 }
 #desas .overlay {
 	position: absolute;
@@ -46,10 +46,9 @@
 	top: 9px;
 	right: 9px;
 	opacity:0.7;
-	filter:alpha(opacity=70);
 	border: 1px solid #000066;
 	background: #333388;
-	color: #fff;
+	color: #fff
 }
 #desas .alert {
 	position: absolute;
@@ -64,16 +63,15 @@
 	padding: 3px 9px;
 	border: 1px solid #660000;
 	background: #883333;
-	opacity:0.4;
-	filter:alpha(opacity=40);
+	opacity:0.4
 }
 #start-desas {
 	display: block;
 	padding: 70px 0 30px;
 	font-size: 16px;
-	text-align: center;
+	text-align: center
 }
 #desas-info {
 	font-size: 90%;
-	line-height: 1.2;
+	line-height: 1.2
 }

@@ -1,3 +1,5 @@
+var processing = false, query_timeout = 60000;
+
 function prompt_why_delete(url) {
 	var reply = prompt("Iemesls dzēšanai?", "")
 	if (reply) {
@@ -55,8 +57,6 @@ function msgrr() {
 
 	setTimeout('msgrr()', query_timeout);
 }
-
-var processing = false;
 
 function update_mb() {
 	clearInterval(mbRefreshId);

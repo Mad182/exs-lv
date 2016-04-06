@@ -16,13 +16,7 @@
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-		<script>
-			var mb_refresh_limit = {mb-refresh-limit};
-			var current_user = {currentuser-id};
-			var new_msg_count = {new-messages-count};
-			var query_timeout = 60000;
-			var c_url = "{page-url}";
-		</script>
+		<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
 		<link rel="stylesheet" href="{static-server}/css/core.css,lol.css" type="text/css">
 		<!-- START BLOCK : additional-css-->

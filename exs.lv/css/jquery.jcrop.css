@@ -21,9 +21,9 @@
 .jcrop-dragbar.ord-s{bottom:0;margin-bottom:-4px}
 .jcrop-dragbar.ord-e{margin-right:-4px;right:0}
 .jcrop-dragbar.ord-w{margin-left:-4px}
-.jcrop-light .jcrop-vline,.jcrop-light .jcrop-hline{background:#FFF;filter:Alpha(opacity=70)!important;opacity:.70!important}
+.jcrop-light .jcrop-vline,.jcrop-light .jcrop-hline{background:#FFF;opacity:.70!important}
 .jcrop-light .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#000;border-color:#FFF;border-radius:3px}
-.jcrop-dark .jcrop-vline,.jcrop-dark .jcrop-hline{background:#000;filter:Alpha(opacity=70)!important;opacity:.7!important}
+.jcrop-dark .jcrop-vline,.jcrop-dark .jcrop-hline{background:#000;opacity:.7!important}
 .jcrop-dark .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#FFF;border-color:#000;border-radius:3px}
 .jcrop-holder img,img.jcrop-preview{max-width:none}
 
