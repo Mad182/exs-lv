@@ -11,7 +11,7 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 
 body {
 	background: #f3f5f8 url('//img.exs.lv/bildes/sos.png') repeat 0 0;
-	/*background: url("images/background-new.jpg") no-repeat top center fixed;*/
+	/*background: url("/bildes/background-new.jpg") no-repeat top center fixed;*/
 	color: #334;
 	font-family: Roboto, sans-serif;
 	font-weight: normal;
@@ -390,7 +390,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 #user-menu li a:hover {
-	background: url('/responsive/images/bg.png') repeat-x 0 -38px
+	background: url('/bildes/bg.png') repeat-x 0 -38px
 }
 
 #user-menu li ul#user-group-menu {
@@ -546,7 +546,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 input#searchsubmit {
-	background:url("images/search-bg1.png") no-repeat;
+	background:url("/bildes/search-bg1.png") no-repeat;
 	border:none;
 	height:41px;
 	width:44px;
@@ -590,7 +590,7 @@ input#searchsubmit {
 }
 
 .flex-control-thumbs .flex-active {
-	background:url("images/thumb-active.png") no-repeat;
+	background:url("/bildes/thumb-active.png") no-repeat;
 	background-size:cover;
 	margin-top:-4%;
 	padding-top:8%
@@ -666,7 +666,7 @@ ul.gallery {
 
 .bx-prev,
 .bx-next {
-	background:url("images/bx-bg.png") no-repeat;
+	background:url("/bildes/bx-bg.png") no-repeat;
 	display:inline-block;
 	height:27px;
 	width:30px
@@ -1140,7 +1140,7 @@ article .post-like {
 }
 
 article .like {
-	background:url(images/icons.png) no-repeat 0 0;
+	background:url(/bildes/icons.png) no-repeat 0 0;
 	width:15px;
 	height:16px;
 	display:block;
@@ -1151,7 +1151,7 @@ article .like {
 }
 
 article .post-like a:hover .like {
-	background:url(images/icons.png) no-repeat -16px 0
+	background:url(/bildes/icons.png) no-repeat -16px 0
 }
 
 article .voted .like,
@@ -1220,15 +1220,15 @@ h3.kontak {
 }
 
 .widget .kontak ul li.email:before {
-	background:url("images/mail-bg.png") no-repeat scroll left center transparent
+	background:url("/bildes/mail-bg.png") no-repeat scroll left center transparent
 }
 
 .widget .kontak ul li.phone:before {
-	background:url("images/phone-bg.png") no-repeat scroll left center transparent
+	background:url("/bildes/phone-bg.png") no-repeat scroll left center transparent
 }
 
 .widget .kontak ul li.teamspeak:before {
-	background:url("images/teamspeak-bg.png") no-repeat scroll left center transparent
+	background:url("/bildes/teamspeak-bg.png") no-repeat scroll left center transparent
 }
 
 .widget .kontak ul li.address p {
@@ -1543,7 +1543,7 @@ ul.recent-tab h4 {
 
 .holder a.jp-previous,
 .holder a.jp-next {
-	background:url("images/bx-bg.png") no-repeat !important;
+	background:url("/bildes/bx-bg.png") no-repeat !important;
 	display:inline-block;
 	height:27px;
 	text-indent:-9999px;
@@ -1557,7 +1557,7 @@ ul.recent-tab h4 {
 .bx-next:hover,
 a.jp-previous:hover,
 a.jp-next:hover {
-	background:url("images/bx-bg-hover.png") no-repeat !important
+	background:url("/bildes/bx-bg-hover.png") no-repeat !important
 }
 
 .bx-next:hover,
@@ -1620,7 +1620,7 @@ a.jp-disabled:hover {
 
 .holder2 a.jp-previous,
 .holder2 a.jp-next {
-	background:url("images/bx-bg.png") no-repeat !important;
+	background:url("/bildes/bx-bg.png") no-repeat !important;
 	display:inline-block;
 	height:27px;
 	text-indent:-9999px;

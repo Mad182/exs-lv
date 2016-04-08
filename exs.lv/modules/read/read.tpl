@@ -137,9 +137,9 @@
 		<div class="entry-meta row-fluid">
 			<ul class="clearfix">
 				<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-				<li><img src="//exs.lv/responsive/images/time.png" alt=""><time class="entry-date published" datetime="{date_atom}">{date}</time><time class="updated" datetime="{updated_atom}">{updated}</time></li>
+				<li><img src="{img-server}/bildes/time.png" alt=""><time class="entry-date published" datetime="{date_atom}">{date}</time><time class="updated" datetime="{updated_atom}">{updated}</time></li>
 				<li><img src="{img-server}/bildes/fugue-icons/eye.png" alt="">{views}</li>
-				<li><img src="//exs.lv/responsive/images/komen.png" alt=""><a href="{bookmark}#comments" title="Raksta &quot;{title}&quot; komentāri">{posts} komentāri</a></li>
+				<li><img src="{img-server}/bildes/komen.png" alt=""><a href="{bookmark}#comments" title="Raksta &quot;{title}&quot; komentāri">{posts} komentāri</a></li>
 
 				<!-- START BLOCK : add-bookmark-->
 				<li class="bookmark">
@@ -150,7 +150,7 @@
 				<!-- END BLOCK : add-bookmark-->
 				<!--
 				<!-- START BLOCK : post-tags-->
-				<li class="tagz"><img src="//exs.lv/responsive/images/tags-icon.png" alt="">
+				<li class="tagz"><img src="{img-server}/bildes/tags-icon.png" alt="">
 					<!-- START BLOCK : post-tags-node-->
 					<a href="/tag/{slug}" rel="tag">{tag-title}</a>, 
 					<!-- END BLOCK : post-tags-node-->

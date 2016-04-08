@@ -50,8 +50,8 @@
 			<div class="entry-meta row-fluid">
 				<ul class="clearfix">
 					<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-					<li><img src="//exs.lv/responsive/images/time.png" alt="">{date}</li>
-					<li><img src="//exs.lv/responsive/images/komen.png" alt=""><a href="{url}#comments" title="Komentāri">{posts}</a></li>
+					<li><img src="{img-server}/bildes/time.png" alt="">{date}</li>
+					<li><img src="{img-server}/bildes/komen.png" alt=""><a href="{url}#comments" title="Komentāri">{posts}</a></li>
 				</ul>
 			</div>
 	

@@ -12,19 +12,16 @@
 		<script>
 		  (function() {
 			var e = document.createElement('script'); e.async = true;
-			e.src = document.location.protocol +
-			  '//connect.facebook.net/lv_LV/all.js#xfbml=1&appId={facebook-app-id}';
+			e.src = 'https://connect.facebook.net/lv_LV/all.js#xfbml=1&appId={facebook-app-id}';
 			document.getElementById('fb-root').appendChild(e);
 		  }());
 		</script>
 	</div>
 
 	<div class="span2">
-		<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
+		<script src="//www.draugiem.lv/api/api.js"></script>
 		<div id="draugiemLike"></div>
-		<script type="text/javascript">
-		new DApi.Like().append('draugiemLike');
-		</script>
+		<script>new DApi.Like().append('draugiemLike');</script>
 	</div>
 
 	<div class="span3"></div>

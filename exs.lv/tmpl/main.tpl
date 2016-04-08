@@ -20,8 +20,7 @@
 	<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 
 	<meta name="viewport" content="width=device-width" />
-	<link rel="stylesheet" href="{static-server}/responsive/css/bootstrap.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="{static-server}/responsive/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" type="text/css" media="all" />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 
 	<!-- START BLOCK : additional-css-->
@@ -100,7 +99,7 @@
 		<header id="header" class="container">
 			<div id="mast-head">
 				<div id="logo">
-					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="logo" /></a>
+					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="{img-server}/bildes/logos/logo_exs_small.png" alt="logo" /></a>
 				</div>
 			</div>
 
@@ -166,7 +165,7 @@
 				<div class="span9">
 					<!-- START BLOCK : user-menu-->
 					<ul id="user-menu" class="nav nav-pills">
-						<li><a href="/"><img src="/responsive/images/home.png" alt="Sākumlapa"></a></li>
+						<li><a href="/"><img src="{img-server}/bildes/home.png" alt="Sākumlapa"></a></li>
 						<li class="dropdown">
 							<a href="/user/{currentuser-id}">Profils</a>
 							<ul class="dropdown-menu">
@@ -223,7 +222,7 @@
 					<!-- END BLOCK : user-menu-->
 					<!-- START BLOCK : login-form-->
 					<ul id="user-menu" class="nav nav-pills">
-						<li><a href="/"><img src="/responsive/images/home.png" alt="Sākumlapa"></a></li>
+						<li><a href="/"><img src="/bildes/home.png" alt="Sākumlapa"></a></li>
 						<li{cat-sel-106}><a href="/register">Reģistrēties</a></li>
 						<li>
 							<form id="login-form" action="{page-loginurl}" method="post">
@@ -562,17 +561,17 @@
 						<div class="socmed textwidget clearfix">		
 							<ul>
 								<li>
-									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank"><img src="/responsive/images/social/android.png" alt=""></a>
+									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/android.png" alt=""></a>
 									<h4>Android</h4>
 									<p>Aplikācija</p>
 								</li>
 								<li>
-									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
+									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/twitter.png" alt=""></a>
 									<h4>330</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
-									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/facebook.png" alt=""></a>
+									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/facebook.png" alt=""></a>
 									<h4>330</h4>
 									<p>Fani</p>
 								</li>
