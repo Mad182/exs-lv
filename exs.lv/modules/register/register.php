@@ -82,7 +82,31 @@ if (!$auth->ok) {
 			$regdata['passok'] = true;
 		}
 
-		if (strtolower($_POST['password']) == '9' or strtolower($_POST['password']) == 'deviņi' or strtolower($_POST['password']) == 'devini') {
+
+
+
+	    $captcha = false;
+	    if(isset($_POST['g-recaptcha-response'])) {
+			$captcha=$_POST['g-recaptcha-response'];
+		}
+
+		$url = 'https://www.google.com/recaptcha/api/siteverify';
+		$data = array('secret' => '6Lc4eR0TAAAAANtY0bNSr0rcXat9-sgDwWRurRIq',
+		         'response' => $captcha,
+		         'remoteip' => $_SERVER['REMOTE_ADDR']);
+
+		$options = array(
+		    'http' => array(
+		        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+		        'method'  => 'POST',
+		        'content' => http_build_query($data) 
+		    )
+		);
+
+		$context  = stream_context_create($options);
+		$response = json_decode(file_get_contents($url, false, $context));
+
+	    if($response->success === true) {
 			$regdata['botsok'] = true;
 		} else {
 			$tpl->newBlock('invalid-bots');
