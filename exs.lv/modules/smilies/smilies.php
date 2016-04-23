@@ -120,7 +120,8 @@ $str = "			':sweat:' => 'smiley-sweat.png',
 			':shifty:' => 'shifty.gif',
 			':bulduris:' => 'bulduris.png',
 			':agility:' => 'agility.png',
-			':11:' => '11.png'";
+			':11:' => '11.png',
+			':zagis:' => 'chainsaw.gif'";
 
 $aa = explode("\n", $str);
 

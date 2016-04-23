@@ -285,7 +285,8 @@ function insert_smilies($txt) {
 		':shifty:' => 'shifty.gif',
 		':bulduris:' => 'bulduris.png',
 		':agility:' => 'agility.png',
-		':11:' => '11.png'
+		':11:' => '11.png',
+		':zagis:' => 'chainsaw.gif'
 	);
 
 	foreach ($smilies as $key => $val) {

@@ -4,13 +4,13 @@
 	margin: 0 auto;
 	padding: 10px;
 	position: relative;
-	text-align: center;
+	text-align: center
 }
 
 #gal-large img {
 	max-width: 100%;
 	width: auto;
-	height: auto;
+	height: auto
 }
 
 #gal-large .img-newer, #gal-large .img-older {
@@ -21,23 +21,23 @@
 	margin: 0;
 	outline: none;
 	text-indent: -99999px;
-	top: 0;
+	top: 0
 }
 
 #gal-large .img-newer {
-	left: 0;
+	left: 0
 }
 
 #gal-large .img-older {
-	right: 0;
+	right: 0
 }
 
 #gal-large .img-newer:hover {
-	background: url('//img.exs.lv/bildes/arrow-left.png') no-repeat 30% 50%;
+	background: url('//img.exs.lv/bildes/arrow-left.png') no-repeat 30% 50%
 }
 
 #gal-large .img-older:hover {
-	background: url('//img.exs.lv/bildes/arrow-rgt.png') no-repeat 70% 50%;
+	background: url('//img.exs.lv/bildes/arrow-rgt.png') no-repeat 70% 50%
 }
 
 .scrollable {
@@ -48,19 +48,19 @@
 	border: 0;
 	float: left;
 	margin: 5px 0 10px;
-	padding: 0;
+	padding: 0
 }
 
 .scrollable .items {
 	width: 20000em;
 	position: absolute;
-	clear: both;
+	clear: both
 }
 
 .scrollable .active {
 	border: 2px solid #000;
 	position: relative;
-	cursor: default;
+	cursor: default
 }
 
 .browse {
@@ -71,8 +71,6 @@
 	text-decoration: none;
 	font-size: 15px;
 	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	line-height: 19px;
 	display: block;
@@ -82,24 +80,24 @@
 	padding: 28px 0;
 	margin: 3px 0 0;
 	color: #333;
-        -moz-user-select: none;
-        -o-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none
 }
 
 a.right {
 	clear: right;
-	margin-right: 0;
+	margin-right: 0
 }
 
 a.left {
-	margin-left: 0;
+	margin-left: 0
 }
 
 .scrollable a.disabled {
-	visibility: hidden!important;
+	visibility: hidden!important
 }
 

@@ -17,26 +17,19 @@
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes">
-	<script type="text/javascript">
-		var mb_refresh_limit = {mb-refresh-limit};
-		var current_user = {currentuser-id};
-		var new_msg_count = {new-messages-count};
-		var query_timeout = 60000;
-		var c_url = "{page-url}";
-	</script>
+	<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 
 	<meta name="viewport" content="width=device-width" />
-	<link rel="stylesheet" href="{static-server}/responsive/css/bootstrap.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="{static-server}/responsive/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" type="text/css" media="all" />
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
 
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
 	<!-- END BLOCK : additional-css-->
-	<script type="text/javascript" src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
+	<script src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-	<script type="text/javascript">
+	<script>
 		tinymce.init({
 			selector: "textarea",
 			plugins: [
@@ -66,7 +59,7 @@
 	<!-- END BLOCK : tinymce-enabled-->
 	<!-- START BLOCK : tinymce-simple-->
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-	<script type="text/javascript">
+	<script>
 		tinymce.init({
 			selector: "textarea",
 			plugins: [
@@ -85,7 +78,7 @@
 		});</script>
 	<!-- END BLOCK : tinymce-simple-->
 	<!-- START BLOCK : mb-head-->
-	<script type="text/javascript">
+	<script>
 		var lastid = {lastid};
 				var mbid = {mbid};
 				var usrid = {usrid};
@@ -106,10 +99,9 @@
 		<header id="header" class="container">
 			<div id="mast-head">
 				<div id="logo">
-					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="/bildes/logos/logo_exs_small.png" alt="logo" /></a>
+					<a href="/" title="exs.lv spēļu portāls" rel="home"><img src="{img-server}/bildes/logos/logo_exs_small.png" alt="logo" /></a>
 				</div>
 			</div>
-
 
 			<nav class="navbar clearfix nobot">
 
@@ -156,17 +148,15 @@
 
 					</ul>
 
-				</div><!--/.nav-collapse -->
+				</div>
 
-			</nav><!-- /.navbar -->
+			</nav>
 
-		</header><!-- #masthead -->
+		</header>
 
 		<div id="headline" class="container"{page-persona}>
-			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4">
-				<div id='bmone2n-22484.2.2.1'></div>
-			</div>
 			<!-- START BLOCK : header-ad-->
+			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4"><div id='bmone2n-22484.2.2.1'></div></div>
 			<!-- END BLOCK : header-ad-->
 		</div>
 
@@ -175,7 +165,7 @@
 				<div class="span9">
 					<!-- START BLOCK : user-menu-->
 					<ul id="user-menu" class="nav nav-pills">
-						<li><a href="/"><img src="/responsive/images/home.png" alt="Sākumlapa"></a></li>
+						<li><a href="/"><img src="{img-server}/bildes/home.png" alt="Sākumlapa"></a></li>
 						<li class="dropdown">
 							<a href="/user/{currentuser-id}">Profils</a>
 							<ul class="dropdown-menu">
@@ -192,14 +182,7 @@
 							<!-- START BLOCK : mygroups-->
 							<ul class="dropdown-menu" id="user-group-menu">
 								<!-- START BLOCK : myg-node-->
-								<li>
-									<a class="{unread-class}" href="/group/{id}" title="{title}">
-										<span class="gm-logo" style="background:url('https://img.exs.lv/userpic/small/{avatar}') no-repeat 50% 50%">
-											{unread}
-										</span>
-										{title}
-									</a>
-								</li>
+								<li><a{unread-class} href="/group/{id}" title="{title}"><span style="background-image:url('//img.exs.lv/userpic/small/{avatar}')">{unread}</span>{title}</a></li>
 								<!-- END BLOCK : myg-node-->
 							</ul>
 							<!-- END BLOCK : mygroups-->
@@ -239,7 +222,7 @@
 					<!-- END BLOCK : user-menu-->
 					<!-- START BLOCK : login-form-->
 					<ul id="user-menu" class="nav nav-pills">
-						<li><a href="/"><img src="/responsive/images/home.png" alt="Sākumlapa"></a></li>
+						<li><a href="/"><img src="/bildes/home.png" alt="Sākumlapa"></a></li>
 						<li{cat-sel-106}><a href="/register">Reģistrēties</a></li>
 						<li>
 							<form id="login-form" action="{page-loginurl}" method="post">
@@ -264,20 +247,17 @@
 					<!-- END BLOCK : login-form-->
 				</div>
 
-
-				<div class="search span3"><div class="offset1">
-						<form method="get" id="searchform" action="/search/">
-							<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
-							<input type="hidden" name="cof" value="FORID:11" />
-							<input type="hidden" name="ie" value="UTF-8" />
-							<p><input type="text" value="Es meklēju..." onfocus="if (this.value == 'Es meklēju...') {
-						this.value = '';
-					}" onblur="if (this.value == '') {
-								this.value = 'Es meklēju...';
-							}" name="q" id="s" />
-								<input type="submit" id="searchsubmit" value="Meklēt" /></p>
-						</form>
-					</div></div>
+				<div class="search span3">
+					<form method="get" id="searchform" action="/search/">
+						<input type="hidden" name="cx" value="014557532850324448350:fe0imkmdxam" />
+						<input type="hidden" name="cof" value="FORID:11" />
+						<input type="hidden" name="ie" value="UTF-8" />
+						<p>
+							<input type="text" value="" placeholder="Es meklēju..." name="q" id="s" />
+							<input type="submit" id="searchsubmit" value="Meklēt" />
+						</p>
+					</form>
+				</div>
 			</div>
 		</div>
 
@@ -352,28 +332,21 @@
 					</div>
 
 
-				</div><!-- sidebar-left -->
+				</div>
 
 
 				<div id="main-left" class="span7">
-
 					<!-- START BLOCK : flash-message-->
 					<div class="mbox {class}" id="flash-message">
 						<p><a id="close-flash-message" href="#"><img src="{img-server}/bildes/fugue-icons/cross-button.png" alt="Aizvērt" title="Aizvērt" width="16" height="16" /></a> {message}</p>
 					</div>
 					<div class="c"></div>
 					<!-- END BLOCK : flash-message-->
-
 					<!-- START BLOCK : page-path-->
 					<p id="breadcrumbs">{page-path}</p>
 					<!-- END BLOCK : page-path-->
-					
-					<!-- START BLOCK : unauthorized-ad-->
-					<!-- END BLOCK : unauthorized-ad-->
-
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
-
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
 						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
@@ -383,17 +356,13 @@
 						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
 						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
 					</ul>
-
 					<!-- END BLOCK : profile-menu-->
-
 					<!-- INCLUDE BLOCK : module-core-error -->
 					<div id="current-module">
 						<!-- INCLUDE BLOCK : module-currrent -->
 					</div>
-					
 					<div class="c"></div>
-
-				</div><!-- #main-left -->
+				</div>
 
 				<div id="sidebar" class="span3">
 
@@ -409,7 +378,6 @@
 						</form>
 					</div>
 					<!-- END BLOCK : movie-search-->
-
 					<!-- START BLOCK : profile-box-->
 					<div class="widget">
 						<h3 class="title"><span>{profile-nick}{custom_title}</span></h3>
@@ -451,8 +419,6 @@
 						<div class="c"></div>
 					</div>
 					<!-- END BLOCK : profile-box-->
-
-
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
 						<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
@@ -506,7 +472,6 @@
 					</div>
 					<!-- END BLOCK : poll-box-->
 
-
 					<!-- START BLOCK : daily-best-->
 
 					<div class="widget">
@@ -542,13 +507,13 @@
 					<!-- END BLOCK : side-junk-->
 
 
-				</div><!-- sidebar -->
+				</div>
 
-				<div class="clearfix"></div>
+				<div class="c"></div>
 
-			</div><!-- #main -->
+			</div>
 
-		</div><!-- #content -->
+		</div>
 
 		<footer id="footer" class="row-fluid">
 			<div id="footer-widgets" class="container">
@@ -596,17 +561,17 @@
 						<div class="socmed textwidget clearfix">		
 							<ul>
 								<li>
-									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank"><img src="/responsive/images/social/android.png" alt=""></a>
+									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/android.png" alt=""></a>
 									<h4>Android</h4>
 									<p>Aplikācija</p>
 								</li>
 								<li>
-									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/twitter.png" alt=""></a>
-									<h4>326</h4>
+									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/twitter.png" alt=""></a>
+									<h4>330</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
-									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="/responsive/images/social/facebook.png" alt=""></a>
+									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/facebook.png" alt=""></a>
 									<h4>330</h4>
 									<p>Fani</p>
 								</li>
@@ -615,7 +580,7 @@
 
 					</div>
 
-					<div class="clearfix"></div>
+					<div class="c"></div>
 				</div>
 
 				<div class="footer-widget widget span3 block6">
@@ -628,12 +593,11 @@
 							<li class="teamspeak">Teamspeak 3: ts.exs.lv</li>
 						</ul>
 					</div>
-					<div class="clearfix"></div>
+					<div class="c"></div>
 				</div>
 			</div>
 
 			<div id="site-info" class="container">
-
 				<div id="footer-nav" class="fr">
 					<ul class="menu">
 						<li><a href="/">Sākumlapa</a></li>
@@ -643,18 +607,14 @@
 						<li><a href="/reklama">Reklāma portālā</a></li>
 					</ul>
 				</div>
-
 				<div id="credit" class="fl">
 					<p>&copy; 2005-{current-year}, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
 				</div>
-
 			</div>
-
 		</footer>
-
 	</div>
 
-	<script type="text/javascript">!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
+	<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
 
 	<!-- START BLOCK : popup-ads-->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
@@ -663,7 +623,6 @@
 	<noscript>
 	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
 	</noscript>
-
 	<!-- END BLOCK : popup-ads-->
 	
 	<!-- iBILLBOARD Ad Server one2many code -->
@@ -684,10 +643,7 @@
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	  ga('create', 'UA-4190387-2', 'auto');
-	  ga('send', 'pageview');
-
+	  ga('create', 'UA-4190387-2', 'auto');ga('send', 'pageview');
 	</script>
 
 </body>

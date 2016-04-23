@@ -6,33 +6,27 @@
  */
 
 body {
-	background: #ebebeb;
+	background: #ebebeb
 }
 
 #header {
 	background: url('//img.exs.lv/m/a/mad/rp-top.png') no-repeat 0 20px;
-	height: 198px;
+	height: 198px
 }
 
 #wrapper {
 	background:#fff;
 	margin: 0 auto 20px;
-	-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.3);
-	-moz-box-shadow:0 1px 1px rgba(0,0,0,0.3);
 	box-shadow:0 1px 1px rgba(0,0,0,0.3);
-	-webkit-border-radius:2px;
-	-moz-border-radius:2px;
-	-ms-border-radius:2px;
-	-o-border-radius:2px;
 	border-radius:2px;
 	padding: 0 5px 5px;
 	height: auto !important;
 	height: 1100px;
-	min-height: 1100px;
+	min-height: 1100px
 }
 
 #left {
-	display:none;
+	display:none
 }
 
 #tools-bar {
@@ -44,22 +38,22 @@ body {
 	padding: 0 8px;
 	text-transform: uppercase;
 	line-height: 22px;
-	height: 22px;
+	height: 22px
 }
 
 #tools-bar strong {
 	font-size: 13px;
-	line-height: 22px;
+	line-height: 22px
 }
 
 #site-links li {
 	line-height: 22px;
-	height: 22px;
+	height: 22px
 }
 
 #site-links li a {
 	line-height: 22px;
-	height: 22px;
+	height: 22px
 }
 
 #tools-bar strong a{
@@ -67,23 +61,23 @@ body {
 	line-height: 22px;
 	height: 22px;
 	float: left;
-	padding: 0 8px;
+	padding: 0 8px
 }
 
 #tools-bar strong a:hover{
 	background: rgb(213, 68, 0);
 	color: #fff;
-	text-decoration: none;
+	text-decoration: none
 }
 
 #site-links li a:hover {
 	background: rgb(213, 68, 0);
-	text-decoration: none;
+	text-decoration: none
 }
 
 #header-overlay {
 	background: transparent;
-	height: 170px;
+	height: 170px
 }
 
 #top-menu {
@@ -92,7 +86,7 @@ body {
 	background: #353535 url('//img.exs.lv/bildes/lfs/navbar.png') repeat;
 	height: 35px;
 	line-height: 35px;
-	border: 0;
+	border: 0
 }
 
 #top-menu ul {
@@ -107,7 +101,7 @@ body {
 	padding: 0;
 	margin: 0;
 	height: 35px;
-	line-height: 35px;
+	line-height: 35px
 }
 
 #top-menu li a {
@@ -119,12 +113,12 @@ body {
 	margin: 0;
 	height: 35px;
 	line-height: 35px;
-	background: transparent url('//img.exs.lv/bildes/lfs/seperator.png') no-repeat 0 -2px;
+	background: transparent url('//img.exs.lv/bildes/lfs/seperator.png') no-repeat 0 -2px
 }
 
 #top-menu li a:hover {
 	color: rgb(213, 68, 0);
-	text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px;
+	text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 1px
 }
 
 #top-menu li .first {
@@ -141,36 +135,36 @@ body {
 	-moz-border-radius-topright: 3px;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
-	text-shadow: 0;
+	text-shadow: 0
 }
 
 #top-menu li ul {
 	height: auto;
-	border: 1px solid #222;
+	border: 1px solid #222
 }
 
 #login-form label {
 	float: none;
 	display: inline;
-	margin: 0;
+	margin: 0
 }
 
 #login-form {
-	padding: 0 5px;
+	padding: 0 5px
 }
 
 #top-menu a.external-login span {
-	margin-top: 8px;
+	margin-top: 8px
 }
 
 #logo {
-	height: 190px;
+	height: 190px
 }
 
 #exs-logo {
 	background: transparent;
 	width: 100%;
-	height: 175px;
+	height: 175px
 }
 
 /* forum */
@@ -191,85 +185,85 @@ body {
 #forum td {
 	border-right: none;
 	border-bottom: 1px solid #F3F3F3;
-	padding: 4px 6px;
+	padding: 4px 6px
 }
 
 #forum td h3 {
-	text-shadow: none;
+	text-shadow: none
 }
 
 a {
-	color: #51A6C2;
+	color: #51A6C2
 }
 
 #ucl .user a {
-	background: #51A6C2;
+	background: #51A6C2
 }
 
 h1, h2 {
-	font-size: 16px;
+	font-size: 16px
 }
 
 #latest-topics {
-	margin: 4px 0;
+	margin: 4px 0
 }
 
 p.core-pager {
-	padding: 6px 0;
+	padding: 6px 0
 }
 
 #latest-topics li {
 	height: auto !important;
 	min-height: 45px;
-	height: 45px;
+	height: 45px
 }
 
 /* foruma komenti */
 #comments dt {
 	width: 120px;
-	text-align: center;
+	text-align: center
 }
 #comments dt a.username {
-	text-align: left;
+	text-align: left
 }
 #comments dt img {
 	padding: 1px;
 	margin: 5px auto 1px;
-	border: 1px solid #eee;
+	border: 1px solid #eee
 }
 
 #comments dd {
-	margin: 0 0 0 120px;
+	margin: 0 0 0 120px
 }
 
 #content .custom-title {
 	color: #5a5a5a;
 	text-align: center;
-	font-size: 12px;
+	font-size: 12px
 }
 
 .author-info span.title {
-	font-weight: 400;
+	font-weight: 400
 }
 
 .author-info {
 	font-size: 11px;
 	line-height: 12px;
-	color: #999;
+	color: #999
 }
 
 .comment-signature {
-	color: #666;
+	color: #666
 }
 
 .comment-text {
 	height: auto !important;
 	height: 130px;
-	min-height: 130px;
+	min-height: 130px
 }
 
 #add-comment-form {
-	margin: 16px 10px 10px 110px;
+	margin: 16px 10px 10px 110px
 }
 
 
@@ -277,22 +271,22 @@ p.core-pager {
 	height: auto !important;
 	height: 39px;
 	min-height: 39px;
-	padding-left: 3px;
+	padding-left: 3px
 }
 
 #inner-content {
-	padding: 0 8px;
+	padding: 0 8px
 }
 
 #right {
 	padding-left: 0;
-	width: 220px;
+	width: 220px
 }
 
 #content.no-left {
-	width: 750px;
+	width: 750px
 }
 
 #footer li {
-	line-height: 16px;
+	line-height: 16px
 }

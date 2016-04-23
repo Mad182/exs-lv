@@ -1,65 +1,64 @@
 /* global */
 div.ui-cluetip {
-  font-size: 11px;
+	font-size: 11px
 }
 .ui-cluetip-header,
 .ui-cluetip-content {
-  padding: 8px;
+	padding: 8px
 }
 .ui-cluetip-header {
-  font-size: 1em;
-  margin: 0;
-  overflow: hidden;
+	font-size: 1em;
+	margin: 0;
+	overflow: hidden
 }
 
 .cluetip-title .cluetip-close {
-  float: right;
-  position: relative;
+	float: right;
+	position: relative
 }
 .cluetip-close img {
-  border: 0;
+	border: 0
 }
 
 #cluetip-waitimage {
-  width: 43px;
-  height: 11px;
-  position: absolute;
-  background-image: url('//img.exs.lv/bildes/loading.gif');
+	width: 43px;
+	height: 11px;
+	position: absolute;
+	background-image: url('//img.exs.lv/bildes/loading.gif')
 }
 .cluetip-arrows {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: -11px;
-  width: 11px;
-  height: 22px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  border-width: 0;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: -11px;
+	width: 11px;
+	height: 22px;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	border-width: 0
 }
 .cluetip-extra {
-  display: none;
+	display: none
 }
 
 /***************************************
    =cluetipClass: 'default'
 -------------------------------------- */
 .cluetip-default {
-	opacity:0.9;
-	filter:alpha(opacity=90); /* For IE8 and earlier */
+	opacity:0.9
 }
 .cluetip-default,
 .cluetip-default .cluetip-outer {
-  background-color: #333;
-	color: #fff;
+	background-color: #333;
+	color: #fff
 }
 .cluetip-default .ui-cluetip-header {
-  background-color: #222;
-	color: #fff;
+	background-color: #222;
+	color: #fff
 }
 
 /* stupid IE6 HasLayout hack */
 .cluetip-rounded .cluetip-title,
 .cluetip-rounded .cluetip-inner {
-  zoom: 1;
+	zoom: 1
 }

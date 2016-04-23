@@ -37,7 +37,7 @@
 		<!-- END BLOCK : invalid-pass-mach-->
 
 		<!-- START BLOCK : invalid-bots-->
-		<p class="error">Tu nemāki skaitīt!</p>
+		<p class="error">Kaut kas nav kārtībā ar robotu pārbaudi!</p>
 		<!-- END BLOCK : invalid-bots-->
 
 		<!-- START BLOCK : invalid-agree-->
@@ -74,10 +74,11 @@
 			<label for="reg-www">Homepage:</label>
 			<input type="text" class="text" name="www" id="reg-www" value="http://" />
 		</p>
-		<p>
-			<label for="password">desmit mīnus 1 ir:<br /><span class="description">Ja neesi ļauns spambots, tad tev to būtu jāzina</span></label>
-			<input tabindex="5" type="text" class="text" name="password" id="password" />
-		</p>
+
+		<script src="https://www.google.com/recaptcha/api.js"></script>
+		<div class="g-recaptcha" data-sitekey="6Lc4eR0TAAAAADtKKHnukW83hTpJYDoqR3BQeVdU"></div>
+		<p>&nbsp;</p>
+
 		<h2>Reģistrējoties tu piekrīti mājas lapas lietošanas noteikumiem:</h2>
 		<div class="box">{rules}</div>
 		<p>
