@@ -3971,7 +3971,7 @@ table .quote {
  *  @see https://exs.lv/geocaching/tab/pasakumi
  */
 .geotab-event {
-	margin:0 0 4em
+	margin:0 0 2em
 }
 
 .geotab-event h2 {
@@ -4001,8 +4001,7 @@ table .quote {
 	width:30%;
 	display:inline-block;
 	box-sizing:border-box;
-	vertical-align:middle;
-	padding-top:1em
+	vertical-align:middle
 }
 
 
