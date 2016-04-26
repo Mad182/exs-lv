@@ -5511,8 +5511,7 @@ form.simple-form label {
     width:30%;
     display:inline-block;
     box-sizing:border-box;
-    vertical-align:middle;
-    padding-top:1em
+    vertical-align:middle
 }
 
 @media (max-width: 1200px) {
