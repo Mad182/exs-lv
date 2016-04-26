@@ -761,7 +761,7 @@ html .banned {
 }
 
 #wrapper .music {
-	background: url('//img.exs.lv/bildes/fugue-icons/audioscrobbler.png') no-repeat 0 50%
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -835px;
 }
 
 .tabs {
@@ -1946,8 +1946,23 @@ input, select, textarea {
 	padding: 0 0 0 19px
 }
 
+.tw-btn {
+	background: #ebf4f8 url('//img.exs.lv/bildes/i.png') no-repeat 8px -167px;
+	padding: 1px 16px 1px 32px;
+	font-size: 11px;
+	line-height: 17px;
+	height: 17px;
+	border-radius: 3px;
+	display: inline-block;
+	border: 1px solid #9fc9d5
+}
+
+.tw-btn:hover {
+	border: 1px solid #afd9e5
+}
+
 #l-lastfm {
-	background: url('//img.exs.lv/bildes/fugue-icons/audioscrobbler.png') no-repeat 0 50%;
+	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -835px;
 	padding: 0 0 0 19px
 }
 
