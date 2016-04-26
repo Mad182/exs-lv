@@ -21,7 +21,7 @@
 
 	<meta name="viewport" content="width=device-width" />
 	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" type="text/css" media="all" />
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin" type='text/css'>
 
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
@@ -561,17 +561,17 @@
 						<div class="socmed textwidget clearfix">		
 							<ul>
 								<li>
-									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/android.png" alt=""></a>
+									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank" class="social android">Android</a>
 									<h4>Android</h4>
 									<p>Aplikācija</p>
 								</li>
 								<li>
-									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/twitter.png" alt=""></a>
+									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank" class="social twitter">Twitter</a>
 									<h4>330</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
-									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank"><img src="{img-server}/bildes/social/facebook.png" alt=""></a>
+									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank" class="social facebook">Facebook</a>
 									<h4>330</h4>
 									<p>Fani</p>
 								</li>
@@ -619,15 +619,15 @@
 	<!-- START BLOCK : popup-ads-->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
 	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
+	<script type='text/javascript' charset='utf-8' src='//go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
 	<noscript>
-	<a href="https://go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="https://go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" alt='' /></a>
+	<a href="//go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="//go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
 	</noscript>
 	<!-- END BLOCK : popup-ads-->
 	
 	<!-- iBILLBOARD Ad Server one2many code -->
 	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<script type='text/javascript' charset='utf-8' src='https://go.eu.bbelements.com/bb/bb_one2n.js'></script>
+	<script type='text/javascript' charset='utf-8' src='//go.eu.bbelements.com/bb/bb_one2n.js'></script>
 	<script type='text/javascript'>/* <![CDATA[ */ 
 	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
 	//bmone2n.addPosition('22484.2.3.2','');

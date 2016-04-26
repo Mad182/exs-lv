@@ -401,8 +401,9 @@ function embed_widgets($txt, $wide = 0) {
 
 	// gfycat
 	if (strpos($txt, 'gfycat') !== false) {
+
 		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
+				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)(</a>)?#im", 'embed_gifv_gfycat', $txt
 		);
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
