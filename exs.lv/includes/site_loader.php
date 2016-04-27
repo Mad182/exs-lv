@@ -112,21 +112,21 @@ $arr_domains = array(
 |--------------------------------------------------------------------------
 */
 
-if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {  
+if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {  
   
-	$lang = $arr_domains[$_SERVER['SERVER_NAME']];
+	$lang = $arr_domains[$_SERVER['HTTP_HOST']];
 	
-	if (substr($_SERVER['SERVER_NAME'], -4) === '.dev') {
+	if (substr($_SERVER['HTTP_HOST'], -4) === '.dev') {
 		$is_local = 1;
 	}
-	if (strpos($_SERVER['SERVER_NAME'], 'm') === 0) {
+	if (strpos($_SERVER['HTTP_HOST'], 'm') === 0) {
 		$is_mobile = 1;
 	}
 	
 // valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'
-} else if (strpos($_SERVER['SERVER_NAME'], 'www.') === 0) {
+} else if (strpos($_SERVER['HTTP_HOST'], 'www.') === 0) {
 
-	$name = str_replace('www.', '', $_SERVER['SERVER_NAME']);   
+	$name = str_replace('www.', '', $_SERVER['HTTP_HOST']);   
 	if (!empty($name) && isset($arr_domains[$name])) {
 		$proto = 'https://';
 		if (empty($config_domains[$arr_domains[$name]]['ssl'])) {
@@ -136,7 +136,7 @@ if (isset($arr_domains[$_SERVER['SERVER_NAME']])) {
 	}
 
 //rs redirektējam uz runescape lai neveidojas dublikāts saturam
-} elseif($_SERVER['SERVER_NAME'] == 'rs.exs.lv') {
+} elseif($_SERVER['HTTP_HOST'] == 'rs.exs.lv') {
 	redirect('https://runescape.exs.lv' . $_SERVER['REQUEST_URI'], true);
 
 //ja nekas nav atpazīts, redirektējam uz exs.lv

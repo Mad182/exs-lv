@@ -1364,8 +1364,8 @@ function htmlpost2db($text, $sanitize = true) {
 	$config->set('AutoFormat.RemoveEmpty', true);
 	$purifier = new HTMLPurifier($config);
 	$text = $purifier->purify($text);
-	$text = str_replace('href="http://' . $_SERVER['SERVER_NAME'] . '/', 'href="/', $text);
-	$text = str_replace('href="https://' . $_SERVER['SERVER_NAME'] . '/', 'href="/', $text);
+	$text = str_replace('href="http://' . $_SERVER['HTTP_HOST'] . '/', 'href="/', $text);
+	$text = str_replace('href="https://' . $_SERVER['HTTP_HOST'] . '/', 'href="/', $text);
 	$text = str_replace(' rel="nofollow"', '', $text);
 	$text = str_replace('<code>', '<code class="prettyprint">', $text);
 	$text = str_replace('<pre>', '<pre class="prettyprint">', $text);

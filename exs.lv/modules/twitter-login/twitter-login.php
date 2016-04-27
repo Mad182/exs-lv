@@ -22,7 +22,7 @@ if (!isset($_SESSION['twitter_id']) && !isset($_GET['oauth_token']) && !isset($_
 				$url = $connection->getAuthorizeURL($token, true);
 				
 				//set url where to redirect back after login
-				if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']))  {
+				if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']))  {
 					$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
 				}
 				

@@ -237,11 +237,11 @@ if (!empty($me)) {
 		$protocol = 'http://';
 	}
 
-	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']))  {
+	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']))  {
 		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
 	}
 
-	redirect($facebook->getLoginUrl(array('redirect_uri' => $protocol . $_SERVER['SERVER_NAME'] . '/fb-login/', 'scope' => 'user_likes')));
+	redirect($facebook->getLoginUrl(array('redirect_uri' => $protocol . $_SERVER['HTTP_HOST'] . '/fb-login/', 'scope' => 'user_likes')));
 	/* $loginUrl = $facebook->getLoginUrl();
 	  $tpl->newBlock('fb-login');
 	  $tpl->assign('link', $loginUrl); //Show the button */

@@ -126,7 +126,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		$opengraph_meta['title'] = h($pic->title);
 		$opengraph_meta['type'] = 'article';
-		$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/junk/' . $pic->id;
+		$opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/junk/' . $pic->id;
 		$twitter_meta['card'] = 'summary_large_image';
 
 		if(strpos($pic->image, 'imgur')) {

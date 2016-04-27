@@ -18,7 +18,7 @@ if ($session && !empty($_GET['dr_auth_code'])) {//New session, check if we are n
 	if (!empty($_GET['dr_popup'])) {//Redirected from popup, refresh parent window and close the popup with Javascript
 		?>
 		<script type="text/javascript">
-			window.opener.location.href = 'https://<?php echo h($_SERVER['SERVER_NAME']); ?>/draugiem-signup';
+			window.opener.location.href = 'https://<?php echo h($_SERVER['HTTP_HOST']); ?>/draugiem-signup';
 			window.opener.focus();
 			if (window.opener != window) {
 				window.close();
@@ -240,11 +240,11 @@ if ($session) {//Authentication successful
 } else { //User not logged in, show login button
 	$tpl->newBlock('draugiem-login');
 	
-	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']))  {
+	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']))  {
 		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
 	}
 	
-	$redirect = 'https://' . $_SERVER['SERVER_NAME'] . '/draugiem-signup/'; //Where to redirect after authorization
+	$redirect = 'https://' . $_SERVER['HTTP_HOST'] . '/draugiem-signup/'; //Where to redirect after authorization
 	$tpl->assign('button', $draugiem->getLoginButton($redirect)); //Show the button
 }
 

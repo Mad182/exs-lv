@@ -844,7 +844,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					if (!$auth->mobile) {
 						$opengraph_meta['title'] = 'Filma ' . h($article->title);
 						$opengraph_meta['type'] = 'article';
-						$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid;
+						$opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
 						$opengraph_meta['image'] = 'https://img.exs.lv' . $avatar->image;
 						$opengraph_meta['description'] = h(textlimit($article->text, 200));
 						$twitter_meta['card'] = 'summary';
@@ -995,7 +995,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				if (!$auth->mobile) {
 					$opengraph_meta['title'] = $article->title;
 					$opengraph_meta['type'] = 'article';
-					$opengraph_meta['url'] = 'https://' . $_SERVER['SERVER_NAME'] . '/read/' . $article->strid;
+					$opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
 					$opengraph_meta['description'] = h(textlimit($article->text, 200));
 
 					if (!empty($article->image)) {

@@ -3738,7 +3738,7 @@ class upload {
 							date('Y-m-d'),
 							date('H:i:s'),
 							(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'n/a'),
-							(isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'n/a'),
+							(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'n/a'),
 							(isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'n/a'),
 							$this->gdversion(true)), $this->image_text);
 

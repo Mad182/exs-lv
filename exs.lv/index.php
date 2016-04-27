@@ -20,6 +20,30 @@ require(CORE_PATH . '/includes/class.cookie.tracking.php');
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
 
+//rewrite hack
+if(!empty($_GET['fakeurl'])) {
+	$parts = explode('/', $_GET['fakeurl']);
+	$_GET['viewcat'] = $parts[0];
+	if(!empty($parts[1])) {
+		$_GET['var1'] = $parts[1];
+	}
+	if(!empty($parts[2])) {
+		$_GET['var2'] = $parts[2];
+	}
+	if(!empty($parts[3])) {
+		$_GET['var3'] = $parts[3];
+	}
+
+	if($_GET['viewcat'] === 'say') {
+		$_GET['m'] = $parts[1];
+		if(!empty($parts[2])) {
+			$mbid = explode('-', $parts[2]);
+			$_GET['single'] = $mbid[0];
+		}
+	}
+
+}
+
 session_start();
 
 //mysql konekcija

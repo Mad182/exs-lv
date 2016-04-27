@@ -43,27 +43,9 @@ RewriteRule ^page/([0-9]+)-(.*)/?$ index.php?p=$1 [NC,L,QSA]
 
 RewriteRule ^rss\.php$ index.php?viewcat=rss [NC,L,QSA]
 
-RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/open$ index.php?m=$1&single=$2&unclose [NC,L]
-RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/close$ index.php?m=$1&single=$2&close [NC,L]
-RewriteRule ^say/([0-9]+)/([0-9]+)-(.*)/?$ index.php?m=$1&single=$2 [NC,L,QSA]
-RewriteRule ^say/([0-9]+)/skip-([0-9]+)/?$ index.php?m=$1&skip=$2 [NC,L]
-RewriteRule ^say/([0-9]+)/?$ index.php?m=$1 [NC,L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?viewcat=$1&var1=$2&var2=$3&var3=$4&var4=$5 [NC,L,QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_]+)/?$ index.php?viewcat=$1&var1=$2&var2=$3&var3=$4 [NC,L,QSA]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_]+)/([0-9a-z\-_.]+)/?$ index.php?viewcat=$1&var1=$2&var2=$3 [NC,L,QSA]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([0-9a-z\-_]+)/([0-9a-z\-_.]+)/?$ index.php?viewcat=$1&var1=$2 [NC,L,QSA]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([0-9a-z\-_]+)/?$ index.php?viewcat=$1 [NC,L,QSA]
+RewriteRule ^(.*)$ index.php?fakeurl=$1 [QSA,L]
 
 RewriteRule ^ES_SPAMOJU_SUDUS/(.*)?$ index.php?viewcat=ES_SPAMOJU_SUDUS [NC,L]
 
