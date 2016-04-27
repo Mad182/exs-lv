@@ -76,7 +76,7 @@
 		});</script>
 	<!-- END BLOCK : tinymce-simple-->
 	<!-- START BLOCK : mb-head-->
-	<script>var lastid={lastid},mbid={mbid},usrid={usrid},edit_time={edit_time},mbtype="{type}",mbRefreshId=setInterval("update_mb()", refreshlim);</script>
+	<script>var lastid={lastid},mbid={mbid},usrid={usrid},edit_time={edit_time},mbtype="{type}",mbRefreshId=setInterval("update_mb()", mb_refresh_limit);</script>
 	<!-- END BLOCK : mb-head-->
 	<!-- INCLUDE BLOCK : module-head -->
 </head>
