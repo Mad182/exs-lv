@@ -56,12 +56,12 @@
 				</a>
 				<!-- START BLOCK : mb-edit-main-->
 				<!-- START BLOCK : mb-edit-close-->
-				<a href="{url}/close" id="close-{id}" class="mb-icon mb-close">
+				<a href="{url}?close" id="close-{id}" class="mb-icon mb-close">
 					<img src="//exs.lv/bildes/fugue-icons/lock.png" alt="Aizvērt" title="Aizvērt tēmu" width="16" height="16" />
 				</a>
 				<!-- START BLOCK : mb-edit-close-->
 				<!-- START BLOCK : mb-edit-unclose-->
-				<a href="{url}/open" id="unclose-{id}" class="mb-icon mb-unclose">
+				<a href="{url}?open" id="unclose-{id}" class="mb-icon mb-unclose">
 					<img src="//exs.lv/bildes/fugue-icons/lock-unlock.png" alt="Atvērt" title="Atvērt tēmu" width="16" height="16" />
 				</a>
 				<!-- START BLOCK : mb-edit-unclose-->

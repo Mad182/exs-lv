@@ -58,6 +58,7 @@ function msgrr() {
 	setTimeout('msgrr()', query_timeout);
 }
 
+refreshlim = mb_refresh_limit;
 function update_mb() {
 	clearInterval(mbRefreshId);
 	mbRefreshId = '';

@@ -11,6 +11,30 @@ require(CORE_PATH . '/includes/class.templatepower.php');
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
 
+//rewrite hack
+if(!empty($_GET['fakeurl'])) {
+	$parts = explode('/', $_GET['fakeurl']);
+	$_GET['viewcat'] = $parts[0];
+	if(!empty($parts[1])) {
+		$_GET['var1'] = $parts[1];
+	}
+	if(!empty($parts[2])) {
+		$_GET['var2'] = $parts[2];
+	}
+	if(!empty($parts[3])) {
+		$_GET['var3'] = $parts[3];
+	}
+
+	if($_GET['viewcat'] === 'say') {
+		$_GET['m'] = $parts[1];
+		if(!empty($parts[2])) {
+			$mbid = explode('-', $parts[2]);
+			$_GET['single'] = $mbid[0];
+		}
+	}
+
+}
+
 session_start();
 
 $cat = 'index';
@@ -189,7 +213,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 }
 
 $tpl->assignGlobal(array(
-	'server-name' => h(str_replace('m.', '', $_SERVER['SERVER_NAME'])),
+	'server-name' => h(str_replace('m.', '', $_SERVER['HTTP_HOST'])),
 	'page-title' => $page_title,
 	'page-url' => h($_SERVER['REQUEST_URI']),
 	'current-year' => date('Y'),

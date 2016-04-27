@@ -34,24 +34,24 @@ $config_domains = array(
 );
 
 // saīsinātais runescape projekta domēns
-if ($_SERVER['SERVER_NAME'] === 'm.rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.m.rs.exs.lv' || $_SERVER['SERVER_NAME'] === 'm.runescape.exs.lv') {
+if ($_SERVER['HTTP_HOST'] === 'm.rs.exs.lv' || $_SERVER['HTTP_HOST'] === 'dev.m.rs.exs.lv' || $_SERVER['HTTP_HOST'] === 'm.runescape.exs.lv') {
 	redirect('https://mrs.exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 // saīsinātais lol projekta domēns
-if ($_SERVER['SERVER_NAME'] === 'm.lol.exs.lv' || $_SERVER['SERVER_NAME'] === 'dev.m.lol.exs.lv') {
+if ($_SERVER['HTTP_HOST'] === 'm.lol.exs.lv' || $_SERVER['HTTP_HOST'] === 'dev.m.lol.exs.lv') {
 	redirect('https://mlol.exs.lv' . $_SERVER['REQUEST_URI'], true);
 }
 
 $found = false;
 foreach ($config_domains as $lang => $site) {
 
-	if ($_SERVER['SERVER_NAME'] === $site['domain'] || $_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === 'dev.' . $site['domain']) {
+	if ($_SERVER['HTTP_HOST'] === $site['domain'] || $_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === 'dev.' . $site['domain']) {
 		require(CORE_PATH . '/config/' . $site['include'] . '.php');
 		$found = true;
 		break;
-	} elseif ($_SERVER['SERVER_NAME'] === 'www.' . $site['domain']) {
-		redirect('https://' . str_replace('www.', '', $_SERVER['SERVER_NAME']) . $_SERVER['REQUEST_URI'], true);
+	} elseif ($_SERVER['HTTP_HOST'] === 'www.' . $site['domain']) {
+		redirect('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'], true);
 	}
 }
 
