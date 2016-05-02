@@ -286,9 +286,13 @@ class AuthBase {
 	 */
 	function is_tor_exit() {
 
-		return false;
-
 		global $m;
+
+		if(substr($this->ip, 0, 7) === '5.152.2') {
+			return true;
+		}
+
+		return false;
 
 		$is_tor = 'n';
 

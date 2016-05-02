@@ -8,6 +8,12 @@ if (!im_mod()) {
 }
 
 if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) {
+
+	if(substr($_POST['icon'],0,8) !== 'https://') {
+		set_flash('Attēlus var pievienot tikai no HTTPS linkiem!', 'error');
+		redirect('/user_decos');
+	}
+
 	$userid = (int) $_POST['userid'];
 	$user = $db->get_row("SELECT * FROM users WHERE id = '$userid'");
 

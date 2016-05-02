@@ -5,7 +5,6 @@
  */
 if (!$inprofile = get_user(intval($_GET['m']))) {
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-	header("Status: 404 Not Found");
 	set_flash('Pieprasītā lapa netika atrasta!', 'error');
 	redirect();
 }
@@ -548,7 +547,6 @@ if (!empty($inprofile)) {
 		}
 	} elseif(!empty($_GET['single'])) {
 		header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-		header("Status: 404 Not Found");
 		set_flash('Pieprasītā lapa netika atrasta!', 'error');
 		redirect();
 	}

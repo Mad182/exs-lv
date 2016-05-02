@@ -20,12 +20,12 @@ if (file_exists($original)) {
 	$foo->image_y = 90;
 	$foo->allowed = array('image/*');
 	$foo->image_ratio_crop = true;
-	$foo->jpeg_quality = 92;
+	$foo->jpeg_quality = 93;
 	$foo->file_auto_rename = false;
 	$foo->file_overwrite = true;
 	$foo->process('av/' . $path);
 	header("Content-Type: image/jpg");
-	echo file_get_contents('av/' . $path . $_GET['img']);
+	echo file_get_contents($original);
 } else {
 	header("Content-Type: image/png");
 	echo file_get_contents('av/none.png');
