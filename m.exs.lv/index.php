@@ -24,12 +24,19 @@ if(!empty($_GET['fakeurl'])) {
 	if(!empty($parts[3])) {
 		$_GET['var3'] = $parts[3];
 	}
+	if(!empty($parts[4])) {
+		$_GET['var4'] = $parts[4];
+	}
 
 	if($_GET['viewcat'] === 'say') {
 		$_GET['m'] = $parts[1];
 		if(!empty($parts[2])) {
 			$mbid = explode('-', $parts[2]);
-			$_GET['single'] = $mbid[0];
+			if($mbid[0] === 'skip') {
+				$_GET['skip'] = $mbid[1];
+			} else {
+				$_GET['single'] = $mbid[0];
+			}
 		}
 	}
 
