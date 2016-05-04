@@ -87,8 +87,8 @@
 <p class="simple-note">
     Šajā tabulā redzams nepieciešamais XP punktu daudzums katram iespējamajam prasmes līmenim.<br>
     Maksimālais iegūstamais XP punktu daudzums vienā prasmē ir 200,000,000.<br><br>
-    - <a href="#xp-past-120">XP tabula pēc 120. prasmes&nbsp;<sup class="new">NEW</sup></a><br>
-    - <a href="#xp-invention">Invention XP tabula&nbsp;<sup class="new">NEW</sup></a>
+    - <a href="#xp-past-120">XP tabula pēc 120. prasmes</a><br>
+    - <a href="#xp-invention">Invention XP tabula</a>
 </p>
 <table class="rslist xp-table">
     <tr class="listhead">

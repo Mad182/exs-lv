@@ -46,25 +46,29 @@ $(document).ready(function () {
      *  Pielīmēs RuneScape projekta augšējo navigāciju.
      */
     jQuery(function($) {
+
+        $sticky_toolbar = $('#top-menu'); /* "pielīmējamā" rīkjosla */
+        $outer_content = $('#outer_content'); /* satura bloks, kam jāmaina paddings */
     
-        var $topmenu    = $('#top-menu');
-        var $header     = $('#header');
-        var height      = $topmenu.offset().top - 32;
+        var top_toolbar_height = $('.top-navig').outerHeight();        
+        var sticky_toolbar_height = $sticky_toolbar.outerHeight();           
+        var height_diff = $sticky_toolbar.offset().top - top_toolbar_height;       
         
-        function fixDiv() {                  
-          if ($(window).scrollTop() >= height ) {
-            $topmenu.css({'position': 'fixed', 'top': '32px'});
-            $topmenu.addClass('no-radius');
-            $header.css({'margin-bottom': '35px'});
-          }
-          else {
-            $topmenu.css({'position': 'relative', 'top': 'auto'});
-            $topmenu.removeClass('no-radius');
-            $header.css({'margin-bottom': 'auto'});
-          }
-        }
-        $(window).scroll(fixDiv);
-        fixDiv();
+        var flag = 0;
+        
+        $(window).scroll(function(){         
+            if (flag == 0 && $(window).scrollTop() >= height_diff) {
+                flag = 1;
+                $sticky_toolbar.css({'position': 'fixed', 'top': top_toolbar_height + 'px'});
+                $sticky_toolbar.addClass('no-radius');
+                $outer_content.css({'padding-top': sticky_toolbar_height+'px'});
+            } else if (flag == 1 && $(window).scrollTop() < height_diff) {
+                flag = 0;
+                $sticky_toolbar.css({'position': 'relative', 'top': 'auto'});
+                $sticky_toolbar.removeClass('no-radius');
+                $outer_content.css({'padding-top': 0});
+            }
+        });
     });
     
     /**
