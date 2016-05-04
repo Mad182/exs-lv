@@ -118,8 +118,8 @@
                 <li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
-                        <li><a href="http://scores.kopideja.lv/Invention.htm" rel="nofollow" target="_blank">Invention HS (LV)&nbsp;<span class="is-new">new</span></a></li>
-                        <li><a href="http://services.runescape.com/m=hiscore/a=1/ranking?category_type=0&table=27&page=1" rel="nofollow" target="_blank">Invention HS&nbsp;<span class="is-new">new</span></a></li>
+                        <li><a href="http://scores.kopideja.lv/Invention.htm" rel="nofollow" target="_blank">Invention HS (LV)</a></li>
+                        <li><a href="http://services.runescape.com/m=hiscore/a=1/ranking?category_type=0&table=27&page=1" rel="nofollow" target="_blank">Invention HS</a></li>
                         <li class="as-last">&nbsp;</li>
                         <li><a href="//tops.exs.lv/runescape" rel="nofollow" target="_blank">tops.exs.lv</a></li>
                         <li><a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a></li>
@@ -130,7 +130,7 @@
                 <li><a href="javascript:void(0)" class="dropdown">Citas saites{is-new}</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
-                        <li><a class="dropdown" href="javascript:void(0)">Ekrāntapetes&nbsp;<span class="is-new">new</span></a>
+                        <li><a class="dropdown" href="javascript:void(0)">Ekrāntapetes</a>
                             <span class="arrow arrow-down"></span>
                             <ul class="flip-side" style="width:194px">
                                 <li class="as-last">&nbsp;</li>
@@ -141,7 +141,7 @@
                                 <li>&nbsp;</li>
                             </ul>
                         </li>
-                        <li><a href="http://runescape.wikia.com/wiki/RuneScape_Wiki" rel="nofollow" target="_blank">runescape.wikia&nbsp;<span class="is-new">new</span></a></li>
+                        <li><a href="http://runescape.wikia.com/wiki/RuneScape_Wiki" rel="nofollow" target="_blank">runescape.wikia</a></li>
                         <li><a href="http://warbandtracker.com/schedule.php" rel="nofollow" target="_blank">Warbands taimeris</a></li>
                         <li><a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a></li>
                         <li class="as-last">&nbsp;</li>
@@ -186,7 +186,7 @@
                 <li{cat-sel-646}><a href="/user/{currentuser-id}" class="dropdown">Profils{paint-is-new}</a>
                     <span class="arrow arrow-down"></span>
                     <ul>
-                        <li><a class="dropdown" href="javascript:void(0)">Noformējums&nbsp;<span class="is-new">new</span></a>
+                        <li><a class="dropdown" href="javascript:void(0)">Noformējums</a>
                             <span class="arrow arrow-down"></span>
                             <ul class="flip-side" style="width:194px">
                                 <li class="as-last">&nbsp;</li>
@@ -253,7 +253,7 @@
                 <li{cat-sel-4}><a href="/prasmes">Prasmes</a>
                     <ul>
                         <li><a href="/prasmes">Prasmju saraksts</a></li>
-                        <li><a href="/prasmes/xp-table">XP tabula&nbsp;<span class="is-new">new</span></a></li>
+                        <li><a href="/prasmes/xp-table">XP tabula</a></li>
                         <li><a href="/prasmes/facts">Fakti</a></li>
                     </ul>
                 </li>
