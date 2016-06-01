@@ -303,6 +303,63 @@
 </div>
 <!-- END BLOCK : user-profile-security-->
 
+<!-- START BLOCK : user-profile-2fa-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
+		<fieldset>
+			<legend>Divu Faktoru Autentifikācija</legend>
+			<p class="notice">
+				Lai izmantotu divu faktoru autentifikāciju, nepieciešams telefonā uzstādīt Google Authenticator.<br />
+
+				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br />
+				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br />
+			</p>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
+
+			<p>
+				Noskenē kodu ar Google Authenticator:<br />
+				<br />
+				<img src="{qrCodeUrl}" alt="" />
+			</p>
+
+			<p>
+				<label for="code">Ievadi kodu no Google Authenticator:</label>
+				<input type="text" class="text" name="code" id="code" value="" maxlength="16" />
+			</p>
+
+			<p>
+				<input type="submit" name="submit" class="button primary" value="Ieslēgt 2FA" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-2fa-->
+
+
+<!-- START BLOCK : user-profile-2fa-enabled-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
+		<fieldset>
+			<legend>Divu Faktoru Autentifikācija</legend>
+			<p class="success">
+				<strong>Divu Faktoru Autentifikācija ir ieslēgta!</strong><br />
+				<br />
+				Lai izmantotu divu faktoru autentifikāciju, nepieciešams telefonā uzstādīt Google Authenticator.<br />
+	
+				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br />
+				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br />
+			</p>
+
+			<p>
+				Noskenē kodu ar Google Authenticator:<br />
+				<br />
+				<img src="{qrCodeUrl}" alt="" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-2fa-enabled-->
+
 <!-- START BLOCK : user-profile-email-->
 <div class="tabMain">
 	<form id="edit-profile" class="form" action="{page-url}" method="post">

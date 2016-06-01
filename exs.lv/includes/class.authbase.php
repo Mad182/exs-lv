@@ -7,6 +7,11 @@
  */
 require(LIB_PATH . '/bcrypt/lib/password.php');
 
+/**
+ * Google 2FA lib
+ */
+require(LIB_PATH . '/GoogleAuthenticator/PHPGangsta/GoogleAuthenticator.php');
+
 class AuthBase {
 
 	var $error = 0;
@@ -76,6 +81,10 @@ class AuthBase {
 		}
 
 		$userinfo = get_user($_SESSION['auth_id']);
+
+		if($userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'mb-latest') {
+			redirect('/2fa');
+		}
 
 		if ($userinfo->deleted) {
 			return $this->logout();

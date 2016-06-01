@@ -1,5 +1,28 @@
 <?php
 
+
+$ga = new PHPGangsta_GoogleAuthenticator();
+//$secret = $ga->createSecret();
+
+
+//$auth->reset();
+
+$secret = $auth->auth_secret;
+
+echo "Secret is: ".$secret."\n\n";
+$qrCodeUrl = $ga->getQRCodeGoogleUrl('exs.lv', $secret);
+echo "Google Charts URL for the QR-Code: ".$qrCodeUrl."\n\n";
+echo '<br /><img src="'.$qrCodeUrl .'"><br />';
+$oneCode = $ga->getCode($secret);
+echo "Checking Code '$oneCode' and Secret '$secret':\n";
+$checkResult = $ga->verifyCode($secret, $oneCode, 4);    // 2 = 2*30sec clock tolerance
+if ($checkResult) {
+    echo 'OK';
+} else {
+    echo 'FAILED';
+}
+
+
 exit;
 $folder = 'florbols-05-03-2016';
 $user_id = 39299;

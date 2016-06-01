@@ -146,7 +146,7 @@
 
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
-			<div style="position:absolute;right:10px;top:7px;width:728px;height:90px;z-index:4"><div id='bmone2n-22484.2.2.1'></div></div>
+			<div style="position:absolute;right:10px;top:7px;width:970px;height:90px;z-index:4;text-align:right"><div id='bmone2n-22484.2.2.1'></div></div>
 			<!-- END BLOCK : header-ad-->
 		</div>
 
