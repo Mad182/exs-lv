@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
 			$db->query("UPDATE `users` SET `auth_2fa` = '1' WHERE `id` = $auth->id LIMIT 1");
 			set_flash('Divu Faktoru Autentifikācija ir ieslēgta!', 'success');
 			$auth->reset();
+			$_SESSION['2fa'] = 1;
 		} else {
 			set_flash('<strong>Kļūda:</strong> nepareizs kods!', 'error');
 		}

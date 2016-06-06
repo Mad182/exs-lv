@@ -52,6 +52,10 @@ class Auth extends AuthBase {
 		}
 		$userinfo = get_user($_SESSION['auth_id']);
 
+		if($userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'mb-latest') {
+			redirect('/2fa');
+		}
+
 		if ($userinfo->deleted) {
 			return $this->logout();
 		}

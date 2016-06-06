@@ -327,6 +327,10 @@
 				<input type="text" class="text" name="code" id="code" value="" maxlength="16" />
 			</p>
 
+			<p class="notice">
+				Rīkojies uzmanīgi un nepazaudē šo aplikāciju un tās datus, tas radīs problēmas ielogoties.
+			</p>
+
 			<p>
 				<input type="submit" name="submit" class="button primary" value="Ieslēgt 2FA" />
 			</p>
@@ -348,12 +352,6 @@
 	
 				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br />
 				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br />
-			</p>
-
-			<p>
-				Noskenē kodu ar Google Authenticator:<br />
-				<br />
-				<img src="{qrCodeUrl}" alt="" />
 			</p>
 		</fieldset>
 	</form>
