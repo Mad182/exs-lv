@@ -8,6 +8,12 @@ RewriteBase /
 RewriteRule ^js/(.*\.js) combine.php?type=javascript&files=$1
 RewriteRule ^css/(.*\.css) combine.php?type=css&files=$1
 
+# exs API dokumentācijas sadaļa ar pilnīgi atšķirīgu lapu
+RewriteCond %{HTTP_HOST} ^(exs.dev|exs.lv)$
+RewriteRule ^api$ /modules/api/docs.php [QSA,L]
+RewriteCond %{HTTP_HOST} ^(exs.dev|exs.lv)$
+RewriteRule ^api/(.*)$ /modules/api/docs.php?params=$1 [QSA,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
