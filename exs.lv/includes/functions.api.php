@@ -1,15 +1,15 @@
 <?php
 /**
- *  Globālas funkcijas Android/iOS lietotnes pieprasījumiem.
- *  Tiek izmantotas Android/iOS modulī (modules/android | modules/ios).
+ *  Globālas funkcijas mobilo lietotņu pieprasījumiem.
+ *  Tiek izmantotas Android un iOS modulī.
  *
- *  Funkciju nosaukumiem izmantots "a_" prefix, lai citos failos tās
- *  varētu atšķirt.
+ *  Funkciju nosaukumiem izmantots "a_" (no "api") prefix,
+ *  lai citos failos tās varētu atšķirt.
  */
 
 /**
- *  Pievienos kļūdas paziņojumu nākamajai atbildei,
- *  kuru lietotne izmetīs kā Toast ziņu.
+ *  Pieprasījuma atbildei pievieno kļūdas tekstu,
+ *  kuru lietotnē var attiecīgi parādīt.
  */
 function a_error($string = '') {
 	global $json_state, $json_message;
@@ -19,43 +19,48 @@ function a_error($string = '') {
 }
 
 /**
- *  Atgriezīs XSRF tokenu, kāds izmantojams Android adresēs,
- *  lai identificētu konkrēto lietotāju.
+ *  Kļūdas teksta parametrā pievieno informatīvu tekstu,
+ *  ko lietotnes pusē tā arī jāuztver kā informatīvu, nevis kļūdu.
+ */
+/*function a_message($string = '') {
+	global $json_page;
+	
+	$json_page['message'] = $string;
+}*/
+function a_info($string = '') {
+    global $json_state, $json_message;
+	
+	$json_state   = 'success';
+	$json_message = $string;
+}
+
+/**
+ *  Atgriež XSRF atslēgu, kādu nosūtīt tālāk pieprasījuma atbildē.
+ *  No lietotnes nākošajiem pieprasījumiem adrešu galā jābūt šai atslēgai.
  */
 function a_make_xsrf() {
 	global $auth;
 	// nav jēgas izmantot MD5 hashu visā garumā
-	return substr($auth->xsrf, 0, 7);
+	return substr($auth->xsrf, 0, 10);
 }
 
 /**
- *  Pārbaudīs, vai norādītā xsrf atslēga sakrīt ar 
- *  konkrētajam lietotājam izveidoto.
+ *  Pārbauda, vai pieprasījumā saņemtā XSRF atslēga sakrīt ar to,
+ *  kāda atbilst lietotājam, kas pieprasījumu veicis.
  */
 function a_check_xsrf($key = '') {
 	global $auth;
 	if (empty($key)) {
 		if (!empty($_GET['xsrf'])) {
-			return (substr($auth->xsrf, 0, 7) === $_GET['xsrf']);
+			return (substr($auth->xsrf, 0, 10) === $_GET['xsrf']);
 		}
 		return false;
 	}
-	return (substr($auth->xsrf, 0, 7) === $key);
+	return (substr($auth->xsrf, 0, 10) === $key);
 }
 
 /**
- *  Pievienos atbildei tekstu, kas netiks uztverts kā kļūda,
- *  bet kuru lietotne pēc vajadzības varēs kaut kur izvadīt,
- *  paskaidrojot situāciju.
- */
-function a_message($string = '') {
-	global $json_page;
-	
-	$json_page['message'] = $string;
-}
-
-/**
- *  Pievienos atbildei masīvā norādītās vērtības.
+ *  Pieprasījuma atbildei galā pievieno norādītā masīva vērtības.
  */
 function a_append($values) {
 	global $json_page;
@@ -70,20 +75,20 @@ function a_append($values) {
 }
 
 /**
- *  Saglabās ziņojumu datubāzes `android_logs` tabulā,
- *  piefiksējot atvērto adresi, lai zinātu, ko lietotājs centās atvērt.
+ *  Saglabā žurnālierakstu ar norādīto tekstu datubāzē.
+ *  Papildu tiek fiksēta adrese, kādu lietotājs centies ielādēt.
  */
 function a_log($text) {
-	global $db, $auth;
+	global $db, $auth, $lang;
 	
-	if (empty($text)) {
-		return;
-	}
+	if (empty($text)) return;
+    
+    // TODO: lietošanā pārsaukt 'android_logs' tabulu uz 'api_android_logs'
+    $log_table = ($lang === 4) ? 'api_ios_logs' : 'android_logs';
 	
-	$uri = (isset($_SERVER['REQUEST_URI'])) ? 
-		$_SERVER['REQUEST_URI'] : '';
+	$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
 	
-	return $db->insert('android_logs', array(
+	return $db->insert($log_table, array(
 		'message' => sanitize($text),
 		'url' => sanitize($uri),
 		'created_by' => (int)$auth->id,
@@ -93,9 +98,10 @@ function a_log($text) {
 }
 
 /**
- *  Ielādēs informāciju, kādu lietotne vēlas saņemt pie veiksmīgas autorizācijas.
+ *  Pieprasījuma atbildei pievieno informāciju par lietotāju.
+ *  Izmantota brīdī, kad lietotājs veiksmīgi autentificējies.
  */
-function a_load_profile() {
+function a_append_profile_info() {
 	global $db, $auth, $img_server;
 	
 	// nelasīto vēstuļu skaits
@@ -109,7 +115,8 @@ function a_load_profile() {
 		'level' => (int)$auth->level,
 		'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
 		'usertitle' => $auth->custom_title,
-		'users_online' => (int)$auth->hosts_online,
+        // TODO: šos varētu vākt prom, jo neattiecas uz profilu
+        'users_online' => (int)$auth->hosts_online,
 		'inbox_unread' => (int)$msgs
 	)));
 }
@@ -315,7 +322,10 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 }
 
 /**
- *  Pievienos atbildei datus par lietotājam piemēroto liegumu, ja tāds ir.
+ *  Pieprasījuma atbildei pievieno informāciju par lietotāja liegumu.
+ *
+ *  Šī funkcija tikai pievieno datus atbildei. Tas, vai lietotājam
+ *  ir liegums, tiek noskaidrots jau iepriekš.
  *
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
@@ -336,14 +346,12 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
 	
 		$prof_banned = $db->get_row("
 			SELECT * FROM `banned` 
-			WHERE 
-				`active` = 1 AND 
-				`user_id` = ".(int)$auth->id."
-			LIMIT 1
+			WHERE `active` = 1 AND `user_id` = ".(int)$auth->id."
+            LIMIT 1
 		");
 		
 		if (!$prof_banned) {
-			a_error('Neizdevās atlasīt lieguma info');
+			a_error('Neizdevās atlasīt lieguma informāciju');
 		} else {
 			$from_user = get_user($prof_banned->author);
 			$to_user = get_user($prof_banned->user_id);

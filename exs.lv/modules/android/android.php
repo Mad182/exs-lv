@@ -122,7 +122,7 @@ if (isset($_GET['banstatus'])) {
 				$auth->android_seen = 1;
 			}
 		
-			a_load_profile();
+			a_append_profile_info();
 		}
 	}
 
