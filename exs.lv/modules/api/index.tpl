@@ -3,11 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width" />
-	<title>eXs API dokumentācija &middot; exs.lv</title>
+	<title>exs API dokumentācija &middot; exs.lv</title>
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin" type="text/css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/styles/default.min.css">
-	<link rel="stylesheet" href="{static-server}/css/api.css" type="text/css">
+	<link rel="stylesheet" href="/modules/api/api.css" type="text/css">
     <script src="{static-server}/js/jquery-1.10.2.min.js"></script>
     <script src="/modules/api/api.js"></script>
 </head>
