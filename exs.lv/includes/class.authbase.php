@@ -37,8 +37,9 @@ class AuthBase {
 		$this->ok = false;
 
 		// lai vēlāk iekš `visits` (un varbūt kur citur) varētu fiksēt tos,
-		// kas saturu ielādē caur Android appu
+		// kas saturu ielādē caur Android/iOS appu
 		$this->via_android = (($lang === 2) ? 1 : 0);
+        $this->via_ios = (($lang === 4) ? 1 : 0);
 
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
@@ -112,7 +113,7 @@ class AuthBase {
 		$this->ok = true;
 
 		if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 480) {
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `android` = ".$this->via_android.", `seen_today` = 1 WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `android` = ".$this->via_android.", `ios` = ".$this->via_ios.", `seen_today` = 1 WHERE `id` = '$this->id'");
 			$_SESSION['lastseen'] = time();
 		}
 
@@ -121,14 +122,14 @@ class AuthBase {
 			$_SESSION['updvisits'] = time();
 		}
 
-		// android.exs.lv redirekti neder
-		if ($this->via_android === 0 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+		// android|ios.exs.lv redirekti neder
+		if ($this->via_android === 0 && $this->via_ios === 0 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 			$this->logout();
 			redirect();
 		}
 
-		// android.exs.lv pats prot apstrādāt bloķētos profilus
-		if ($this->via_android === 0 && !isset($_GET['_']) &&
+		// android|ios.exs.lv pats prot apstrādāt bloķētos profilus
+		if ($this->via_android === 0 && $this->via_ios === 0 && !isset($_GET['_']) &&
 				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 			$this->logout();
 			set_flash('Pieeja lapai ir liegta!', 'error');
@@ -224,16 +225,16 @@ class AuthBase {
 			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			$this->error = 0;
 
-			// android.exs.lv pats prot apstrādāt bloķētos profilus un
+			// android|ios.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder
-			if ($this->via_android === 0 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			if ($this->via_android === 0 && $this->via_ios === 0 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
 				$this->error = 3;
 				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = ".$this->via_android.", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = ".$this->via_android.", `ios` = ".$this->via_ios.", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
@@ -253,7 +254,7 @@ class AuthBase {
 	function logout() {
 		global $db;
 		$lang = get_lang();
-		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0, `android` = 0 WHERE `id` = '$this->id' LIMIT 1");
+		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0, `android` = 0, `ios` = 0 WHERE `id` = '$this->id' LIMIT 1");
 		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
 		$this->id = 0;
 		$this->nick = "Guest";

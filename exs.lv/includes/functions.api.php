@@ -1,7 +1,7 @@
 <?php
 /**
- *  Globālas funkcijas Android lietotnes pieprasījumiem.
- *  Tiek izmantotas Android modulī (modules/android).
+ *  Globālas funkcijas Android/iOS lietotnes pieprasījumiem.
+ *  Tiek izmantotas Android/iOS modulī (modules/android | modules/ios).
  *
  *  Funkciju nosaukumiem izmantots "a_" prefix, lai citos failos tās
  *  varētu atšķirt.
@@ -222,13 +222,13 @@ function a_format_text(&$mb_text, $return_img = true) {
  *  apakšprojekta adresi.
  */
 function a_fill_link($string) {
-	global $config_domains, $android_lang;
+	global $config_domains, $api_lang;
 
 	if (strlen($string) < 2) {
 		return $string;
 	}
 	
-	$project = $config_domains[$android_lang]['domain'];
+	$project = $config_domains[$api_lang]['domain'];
 
 	$first_sym = substr($string, 0, 1);
 	$second_sym = substr($string, 1, 1);
@@ -396,7 +396,7 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
  */
 function a_fetch_online($force = false) {
-	global $db, $m, $auth, $android_lang;
+	global $db, $m, $auth, $api_lang;
 	global $online_users, $busers;
 	
 	// laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
@@ -405,7 +405,7 @@ function a_fetch_online($force = false) {
 	$data = array();
 	
 	// satura nolasīšana no memcached
-	if ($force || !($data = $m->get('android-online-'.$android_lang))) {
+	if ($force || !($data = $m->get('api-online-'.$api_lang))) {
 
 		$online = null;
 		$classes = null;
@@ -420,7 +420,7 @@ function a_fetch_online($force = false) {
 			FROM `visits`
 				JOIN `users` ON `visits`.`user_id` = `users`.`id`
 			WHERE
-				`visits`.`site_id` = ".$android_lang." AND
+				`visits`.`site_id` = ".$api_lang." AND
 				`visits`.`lastseen` > '".$last_seen."'
 			ORDER BY
 				`users`.`nick` ASC
@@ -444,6 +444,9 @@ function a_fetch_online($force = false) {
 			if (!empty($online_users['androidusers']) && 
 				in_array($user->nick, $online_users['androidusers'])) {
 				$device = 2; // androīda apps
+			} else if (!empty($online_users['iosusers']) && 
+				in_array($user->nick, $online_users['iosusers'])) {
+				$device = 3; // ios apps
 			} else if (!empty($online_users['mobileusers']) && 
 				in_array($user->nick, $online_users['mobileusers'])) {
 				$device = 1; // mob. tel.
@@ -475,7 +478,7 @@ function a_fetch_online($force = false) {
 			'users' => $online
 		);
 		
-		$m->set('android-online-'.$android_lang, $data, false, 15);
+		$m->set('api-online-'.$api_lang, $data, false, 15);
 	}
 	
 	a_append($data);
@@ -539,7 +542,7 @@ function a_get_user_avatar($user, $size = 'm') {
  *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
  */
 function a_get_news() {
-	global $auth, $db, $lang, $android_lang;
+	global $auth, $db, $lang, $api_lang;
 	
 	// vienā lappusē redzamo rakstu skaits
 	$news_in_page = 20;
@@ -554,7 +557,7 @@ function a_get_news() {
 	$conditions = array();
 	
 	// redzami izvēlētā apakšprojekta vai $lang=0 raksti
-	$conditions[] = '(`pages`.`lang` = ' . (int)$android_lang . ' || `pages`.`lang` = 0)';
+	$conditions[] = '(`pages`.`lang` = ' . (int)$api_lang . ' || `pages`.`lang` = 0)';
 
 	// atlasa sadaļas, kuras lietotājs vēlas ignorēt
 	if ($auth->ok) {
@@ -720,7 +723,7 @@ function a_fetch_awards($user_id, $award_count = 4) {
 		return;
 	}
 	
-	$memcached_key = 'android_awards_'.$user_id.'-'.$award_count;
+	$memcached_key = 'api_awards_'.$user_id.'-'.$award_count;
 	
 	if (($data = $m->get($memcached_key)) === false) {
 		$awards = array();

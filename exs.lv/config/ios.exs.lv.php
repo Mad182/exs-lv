@@ -1,18 +1,18 @@
 <?php
 /**
- *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
+ *  exs.lv iOS lietotnei paredzēto atbilžu konfigurācija.
  */
 
 
 // lietotnē būs iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
-// nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
+// nepieciešams jauns mainīgais, jo parastais $lang (ios.exs.lv) nemainās
 $api_lang = 1;
 
 
-// android pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
+// ios pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
 // json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
 // lai kļūdas lokāli redzētu, var iekš configdb.php pievienot šādu mainīgo
-if (!isset($android_local)) {
+if (!isset($ios_local)) {
 
 	// ar $_GET['debug'] atstāsim variantu, 
 	// kā kļūdas tomēr apskatīt arī live versijā
@@ -30,7 +30,7 @@ if (!isset($android_local)) {
 |--------------------------------------------------------------------------
 */
 
-if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
+if (!$is_local && $_SERVER['SERVER_NAME'] !== $ios_local_ip) {
 
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
@@ -46,7 +46,7 @@ if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
 
 	$secure_login = true;
 
-} else if ($_SERVER['SERVER_NAME'] !== $android_local_ip) {
+} else if ($_SERVER['SERVER_NAME'] !== $ios_local_ip) {
     ini_set('session.cookie_domain', '.exs.dev');
 }
 
