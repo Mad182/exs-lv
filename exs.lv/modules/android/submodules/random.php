@@ -212,7 +212,7 @@ if ($var1 === 'notifications') {
 				  $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = ".$user_id." AND removed = 0"));
 
 		// lietotāja rakstu skaits atvērtajā apakšprojektā
-		$user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".$android_lang);
+		$user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".$api_lang);
 		
 		// kā citi lietotāji vērtējuši šī lietotāja ierakstus
 		$voteval = $db->get_var("SELECT SUM(`vote_value`) FROM `comments` WHERE `author` = ".$user_id) +

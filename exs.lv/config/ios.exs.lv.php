@@ -30,7 +30,7 @@ if (!isset($ios_local)) {
 |--------------------------------------------------------------------------
 */
 
-if (!$is_local && $_SERVER['SERVER_NAME'] !== $ios_local_ip) {
+if (!$is_local && (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_local_ip)) {
 
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
@@ -46,7 +46,7 @@ if (!$is_local && $_SERVER['SERVER_NAME'] !== $ios_local_ip) {
 
 	$secure_login = true;
 
-} else if ($_SERVER['SERVER_NAME'] !== $ios_local_ip) {
+} else if (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_local_ip) {
     ini_set('session.cookie_domain', '.exs.dev');
 }
 

@@ -12,9 +12,10 @@
  *  kuru lietotnē var attiecīgi parādīt.
  */
 function a_error($string = '') {
-	global $json_state, $json_message;
+	global $json_state, $json_success, $json_message;
 	
-	$json_state   = 'error';
+	$json_state = 'error';
+	$json_success = false;
 	$json_message = $string;
 }
 
@@ -28,9 +29,10 @@ function a_error($string = '') {
 	$json_page['message'] = $string;
 }*/
 function a_info($string = '') {
-    global $json_state, $json_message;
+    global $json_state, $json_success, $json_message;
 	
-	$json_state   = 'success';
+    $json_state = 'success';
+	$json_success = true;
 	$json_message = $string;
 }
 
@@ -102,23 +104,42 @@ function a_log($text) {
  *  Izmantota brīdī, kad lietotājs veiksmīgi autentificējies.
  */
 function a_append_profile_info() {
-	global $db, $auth, $img_server;
+	global $db, $auth, $img_server, $lang;
 	
 	// nelasīto vēstuļu skaits
 	$msgs = $db->get_var("
 		SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
 	");
+    
+    $arr = array();
+    if ($lang === 2) {
+        $arr += array(
+            'id' => (int)$auth->id,
+            'nick' => $auth->nick,
+            'level' => (int)$auth->level,
+            'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
+            'usertitle' => $auth->custom_title
+        );
+    } else {
+        $arr += array(
+            'id' => (int)$auth->id,
+            'nick' => $auth->nick,
+            'user_class' => (int)$auth->level,
+            'user_title' => $auth->custom_title,
+            'avatar_url' => $img_server.'/userpic/medium/'.$auth->avatar
+        );
+    }
+    
+    if ($lang === 2) {
+        // android projektā vēl, šķiet, šīs vērtības tiek lasītas,
+        // bet vajadzētu pamazām vākt prom, jo īsti neattiecas uz profilu
+        $arr += array(
+            'users_online' => (int)$auth->hosts_online,
+            'inbox_unread' => (int)$msgs
+        );
+    }
 
-	a_append(array('profile' => array(
-		'id' => (int)$auth->id,
-		'nick' => $auth->nick,
-		'level' => (int)$auth->level,
-		'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
-		'usertitle' => $auth->custom_title,
-        // TODO: šos varētu vākt prom, jo neattiecas uz profilu
-        'users_online' => (int)$auth->hosts_online,
-		'inbox_unread' => (int)$msgs
-	)));
+	a_append(array('profile' => $arr));
 }
 
 /**
@@ -268,7 +289,7 @@ function a_fill_link($string) {
  *  lietotājam.
  */
 function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
-	global $auth, $online_users, $busers;
+	global $auth, $online_users, $busers, $lang;
 
 	// dati par autorizēto lietotāju
 	if ($user_id == 0) {
@@ -285,18 +306,20 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 	$is_online = false;
 	$is_banned = false;
-	$device = 0; // 0 - dators, 1 - mob. tel., 2 - androīda app
+	$device = 0; // 0 - dators, 1 - mob., 2 - droīds, 3 - ios
 
 	// vai lietotājs ir tiešsaistē?
 	if ((!empty($online_users['onlineusers'][$user_id])) || 
-		(!empty($online_users['onlineusers']) && 
-		in_array($user_nick, $online_users['onlineusers']))) {
-	
+        (!empty($online_users['onlineusers']) && 
+        in_array($user_nick, $online_users['onlineusers']))) {	
 		$is_online = true;
 	}
 
 	// caur kādu ierīci lietotājs ielādējis saturu?
-	if (!empty($online_users['androidusers']) && 
+	if (!empty($online_users['iosusers']) && 
+		in_array($user_nick, $online_users['iosusers'])) {
+		$device = 3;
+	} else if (!empty($online_users['androidusers']) && 
 		in_array($user_nick, $online_users['androidusers'])) {
 		$device = 2;
 	} else if (!empty($online_users['mobileusers']) && 
@@ -308,15 +331,27 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 	if (!empty($busers) && !empty($busers[$user_id])) {
 		$is_banned = true;
 	}
-
-	$data = array(
-		'id'        => (int)$user_id, 
-		'nick'      => (string)$user_nick,
-		'level'     => (int)$user_level,
-		'is_online' => (bool)$is_online,
-		'is_banned' => (bool)$is_banned,
-		'device'    => (int)$device
-	);
+    
+    $data = null;
+    if ($lang === 2) {
+        $data = array(
+            'id'          => (int)$user_id, 
+            'nick'        => (string)$user_nick,
+            'level'       => (int)$user_level,
+            'is_online'   => (bool)$is_online,
+            'is_banned'   => (bool)$is_banned,
+            'device'      => (int)$device
+        );
+    } else {
+        $data = array(
+            'id'          => (int)$user_id, 
+            'nick'        => (string)$user_nick,
+            'user_class'  => (int)$user_level,
+            'is_online'   => (bool)$is_online,
+            'is_banned'   => (bool)$is_banned,
+            'device_type' => (int)$device
+        );
+    }
 
 	return $data;
 }

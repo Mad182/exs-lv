@@ -36,9 +36,9 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
 
 // atgriežamā json objekta mainīgie;
 // to saturs pēc nepieciešamības maināms katra apakšmoduļa iekšienē
-$json_banned    = 0;
 $json_state     = 'success';
 $json_message   = '';
+$json_banned    = 0;
 $json_page      = null;
 
 
@@ -47,7 +47,7 @@ $json_page      = null;
 $ip_banned = $db->get_row("
 	SELECT * FROM `banned` 
 	WHERE `active` = 1 AND `ip` = '".sanitize($auth->ip)."' AND
-	(`lang` = 0 OR `lang` = ".(int)$android_lang.")
+	(`lang` = 0 OR `lang` = ".(int)$api_lang.")
 	LIMIT 1
 ");
 

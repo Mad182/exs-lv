@@ -37,19 +37,19 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
  *  atpakaļ saņem atbildi šādā JSON masīva formātā:
  *
  *  $json = array(
- *      'state'     => string    // "error" vai "success"
- *      'message'   => string,   // kļūdas paziņojums, ja "state" === "error"
- *      'is_banned' => int,      // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
- *      'is_online' => bool,     // statuss, kas apzīmē, vai lietotājs ir autentificēts
- *      'xsrf'      => string,   // anti-xsrf atslēga, kas pievienojama adrešu galā
- *      'response'  => array()   // detalizētāks saturs kā atbilde pieprasījumam
+ *      'success'       => bool      // vai pieprasījums bija veiksmīgs?
+ *      'message'       => string,   // kļūdas paziņojums, ja "state" === "error"
+ *      'ban_type'      => int,      // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
+ *      'logged_in'     => bool,     // statuss, kas apzīmē, vai lietotājs ir autentificēts
+ *      'xsrf_token'    => string,   // anti-xsrf atslēga, kas pievienojama adrešu galā
+ *      'response'      => array()   // detalizētāks saturs kā atbilde pieprasījumam
  *  );
  */
 
 
 // atgriežamā json objekta mainīgie;
 // to saturs pēc nepieciešamības maināms katra apakšmoduļa iekšienē
-$json_state     = 'success';
+$json_success   = true;
 $json_message   = '';
 $json_banned    = 0;
 $json_page      = null;
@@ -58,8 +58,8 @@ $json_page      = null;
 // dati par lietotāja IP liegumu, ja tādi ir
 $ip_banned = $db->get_row("
 	SELECT * FROM `banned` 
-	WHERE `active` = 1 AND `ip` = '".sanitize($auth->ip)."' AND
-	(`lang` = 0 OR `lang` = ".(int)$api_lang.")
+	WHERE `ip` = '".sanitize($auth->ip)."' AND
+	(`lang` = 5 OR `lang` = ".(int)$api_lang.")
 	LIMIT 1
 ");
 
@@ -106,7 +106,7 @@ if ($category->textid === 'ban_details') {
     // ios.exs.lv/letmein
     
     // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-	// bet serveris domā pretēji un atved šeit, labāk izautorizēt
+	// bet serveris domā pretēji, labāk izautorizēt
     if ($auth->ok) {
         a_log('Autentificējies lietotājs centās autentificēties vēlreiz. Veikta automātiska izlogošana');
         $auth->logout();
@@ -124,7 +124,7 @@ if ($category->textid === 'ban_details') {
             a_fetch_ban(2);
         } else { // autentificēšanās OK
         
-            // atzīmē kā iOS lietotāju, lai saņemtu medaļu
+            // atzīmē kā iOS lietotāju, lai saņemtu medaļu (kad tāda būs)
             if ($auth->ios_seen == 0) {
                 $db->update('users', $auth->id, array(
                     'ios_seen' => 1
@@ -132,7 +132,7 @@ if ($category->textid === 'ban_details') {
                 $auth->ios_seen = 1;
             }
         
-            // pēc veiksmīgas autentificēšanās atbildei pievienojama
+            // pēc veiksmīgas autentificēšanās atbildei pievieno
             // svaigāko lietotāja profila informāciju
             a_append_profile_info();
         }
@@ -147,6 +147,11 @@ if ($category->textid === 'ban_details') {
 	// pārbauda, vai lietotājam ir profila liegums
 	if (!empty($busers) && !empty($busers[$auth->id])) {      
 		a_fetch_ban(2);
+        
+    // sākotnējiem izstrādes testiem...
+    } else if (isset($_GET['welcome'])) {
+        a_append(array('message' => 'Hello World!'));
+        a_append_profile_info();
 
 	// atver pieprasīto moduli un tajā izpilda darbības
 	} else if ($category->textid !== 'index' &&
@@ -157,7 +162,7 @@ if ($category->textid === 'ban_details') {
 	// sasinhronizējies starp serveri un lietotni
 	} else {
 		a_log('Pieprasīta neeksistējoša sadaļa');
-		a_error('Pieprasīti dati ar neeksistējošu adresi');
+		a_error('Pieprasīti dati ar nepareizu adresi');
 	}
 
 } else {
@@ -176,12 +181,12 @@ if ($category->textid === 'ban_details') {
 
 // atgriež atbildi uz pieprasījumu JSON objekta formā
 echo json_encode(array(
-	'state'     => $json_state,
-	'message'   => $json_message,
-	'is_banned' => $json_banned,
-	'is_online' => $auth->ok,
-	'xsrf'      => a_make_xsrf(),
-	'response'  => $json_page
+	'success'    => $json_success,
+	'message'    => $json_message,
+	'ban_type'   => $json_banned,
+	'logged_in'  => $auth->ok,
+	'xsrf_token' => a_make_xsrf(),
+	'response'   => $json_page
 ));
 
 // pēc šī faila vairs nekādu pārbaužu un darbību nebūs

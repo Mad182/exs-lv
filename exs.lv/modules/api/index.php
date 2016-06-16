@@ -46,7 +46,7 @@ $site_access = get_site_access(); // nepieciešams Auth klasei
 $auth = new Auth();
 
 // pagaidām lapa pieejama tikai pāris lietotājiem
-if (!in_array($auth->id, array(1, 115, 29176))) { // mad, burvis, svens
+if (!$auth->ok || !in_array($auth->id, array(1, 115, 29176))) { // mad, burvis, svens
     redirect('/');
     exit;
 }
@@ -69,7 +69,7 @@ if (($tpl2 = $m->get('tpl_exs_api_docs')) === false || $debug === true) {
 |--------------------------------------------------------------------------
 */
 
-$project = ($var1 === 'i') ? 'ios' : 'android';
+$project = ($var1 === 'a') ? 'android' : 'ios';
 
 // parāda izvēlētā moduļa sāna navigāciju
 switch ($project) {
@@ -86,7 +86,7 @@ switch ($project) {
 }
 
 // ielasa un parāda Android moduļa sadaļas saturu
-if ($var1 === false || $var1 === 'a') {    
+if ($var1 === 'a') {    
 
     $filename = 'intro.html';
     if (is_string($var2)) {
@@ -121,7 +121,7 @@ if ($var1 === false || $var1 === 'a') {
 }
 
 // ielasa un parāda iOS moduļa sadaļas saturu
-if ($var1 === 'i') {    
+if ($var1 === false || $var1 === 'i') {    
 
     $filename = 'intro.html';
     if (is_string($var2)) {
