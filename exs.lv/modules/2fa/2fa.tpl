@@ -9,9 +9,13 @@
 			<input type="text" class="text" name="code" id="code" value="" maxlength="16" />
 		</p>
 		<p>
+			<label for="remember"><input type="checkbox" name="remember" id="remember" /> atcerēties šo ierīci</label>
+		</p>
+		<p>
 			<input type="submit" name="submit" class="button primary" value="Ienākt" />
 		</p>
 	</fieldset>
 </form>
 
 <!-- END BLOCK : auth-2fa-->
+
