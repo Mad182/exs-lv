@@ -12,7 +12,7 @@
  *  Norādot grupas ID, atgriezti tiks tikai šīs grupas miniblogi.
  */
 function a_fetch_miniblogs($group_id = 0) {
-	global $auth, $db, $android_lang;      
+	global $auth, $db, $api_lang;      
 	
 	$group_id = (int)$group_id;
 	
@@ -97,7 +97,7 @@ function a_fetch_miniblogs($group_id = 0) {
 			`miniblog`.`removed` = 0 AND
 			`miniblog`.`parent` = 0 AND
 			`miniblog`.`type` = 'miniblog' AND
-			`miniblog`.`lang` = ".$android_lang." AND
+			`miniblog`.`lang` = ".$api_lang." AND
 			`miniblog`.`groupid` IN(".$groups.") AND
 			`users`.`id` = `miniblog`.`author`
 		ORDER BY
@@ -175,7 +175,7 @@ function a_fetch_miniblogs($group_id = 0) {
  *  Atgriezīs norādītā minibloga info, kā arī komentārus.
  */
 function a_fetch_miniblog($miniblog_id = 0) {
-	global $db, $auth, $android_lang, $img_server;
+	global $db, $auth, $api_lang, $img_server;
 	
 	$miniblog_id = (int)$miniblog_id;
 
@@ -194,7 +194,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
 			`miniblog`.`removed` = 0 AND
 			`miniblog`.`type` = 'miniblog' AND
 			`miniblog`.`parent` = 0 AND 
-			`miniblog`.`lang` = ".$android_lang."
+			`miniblog`.`lang` = ".$api_lang."
 	");
 	
 	if (!$miniblog) {
@@ -353,7 +353,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
  */
 function a_add_miniblog($data) {
 	global $db, $auth;
-	global $android_lang;
+	global $api_lang;
 	
 	// iesniegto datu esamības pārbaudes
 	if (empty($data) || !isset($data['group_id']) || 
@@ -404,7 +404,7 @@ function a_add_miniblog($data) {
 			)
 			WHERE
 				`clans`.`id` = ".$group_id." AND
-				`clans`.`lang` = ".$android_lang."
+				`clans`.`lang` = ".$api_lang."
 		");
 		
 		if (!$group_data) {
@@ -486,7 +486,7 @@ function a_add_miniblog($data) {
 		'reply_to' => $reply_to,
 		'text' => post2db($data['content']),
 		'private' => (bool)$data['is_private'],
-		'lang' => $android_lang,
+		'lang' => $api_lang,
 		'device' => 2
 	));
 	
@@ -764,7 +764,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
  *  @param $allow_voting    vai pārbaudīt, vai ierakstu vērtēšana ir iespējota?
  */
 function a_member_of($group_id = 0, $allow_archived = true, $check_voting = false) {
-	global $db, $auth, $android_lang;
+	global $db, $auth, $api_lang;
 	
 	$group_id = (int)$group_id;
 	if ($group_id < 1) {
@@ -783,7 +783,7 @@ function a_member_of($group_id = 0, $allow_archived = true, $check_voting = fals
 		)
 		WHERE
 			`clans`.`id` = ".$group_id." AND
-			`clans`.`lang` = ".$android_lang."
+			`clans`.`lang` = ".$api_lang."
 	");
 	
 	if (!$group_data) {
