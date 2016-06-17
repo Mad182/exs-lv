@@ -87,7 +87,7 @@ server {
         }
 
         location /api/ {
-		rewrite ^/api/(.*)$ /modules/api/docs.php?params=$1 last;
+		rewrite ^/api/(.*)$ /modules/api/index.php?params=$1 last;
         }
 
         location ~ /dati/bildes/topic-av/(.*\.jpg) {
