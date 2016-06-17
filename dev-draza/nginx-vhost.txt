@@ -16,6 +16,15 @@ server {
 
 server {
         listen 80;
+        server_name ios.exs.lv;
+        access_log off;
+        error_log /dev/null;
+        return 301 https://ios.exs.lv$request_uri;
+}
+
+
+server {
+        listen 80;
         server_name m.coding.lv;
         access_log off;
         error_log /dev/null;
@@ -60,7 +69,7 @@ server {
 	root /home/www/exs.lv;
         index index.php;
 
-        server_name exs.lv coding.lv www.exs.lv rp.exs.lv www.coding.lv rs.exs.lv runescape.exs.lv lol.exs.lv static.exs.lv secure.exs.lv;
+        server_name exs.lv coding.lv www.exs.lv rp.exs.lv www.coding.lv rs.exs.lv runescape.exs.lv lol.exs.lv static.exs.lv secure.exs.lv android.exs.lv ios.exs.lv;
         client_max_body_size 60M;
 
         #SSL
