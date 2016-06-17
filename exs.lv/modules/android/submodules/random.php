@@ -51,7 +51,7 @@ if ($var1 === 'notifications') {
 		SELECT * FROM `notify` 
 		WHERE 
 			`user_id` = ".$auth->id." AND
-			`lang` = ".$android_lang."
+			`lang` = ".$api_lang."
 		ORDER BY `bump` DESC 
 		LIMIT 0, $notif_limit
 	");
@@ -125,7 +125,7 @@ if ($var1 === 'notifications') {
 		SELECT `bump` FROM `notify` 
 		WHERE 
 			`user_id` = ".$auth->id." AND
-			`lang` = ".$android_lang." AND
+			`lang` = ".$api_lang." AND
 			`bump` > '".date('Y-m-d H:i:s', $last_bump)."'
 		ORDER BY `bump` DESC 
 		LIMIT 0, 25
@@ -325,7 +325,7 @@ if ($var1 === 'notifications') {
 		FROM `clans`
 		WHERE 
 			`owner` = ".(int)$auth->id." AND
-			`lang` = ".(int)$android_lang." 
+			`lang` = ".(int)$api_lang." 
 		ORDER BY `title` ASC
 	");
 	
@@ -342,7 +342,7 @@ if ($var1 === 'notifications') {
 		FROM `clans_members`
 			JOIN `clans` ON (
 				`clans_members`.`clan` = `clans`.`id` AND
-				`clans`.`lang` = ".(int)$android_lang."
+				`clans`.`lang` = ".(int)$api_lang."
 			)
 		WHERE 
 			`clans_members`.`user` = ".(int)$auth->id." AND
@@ -414,7 +414,7 @@ if ($var1 === 'notifications') {
 		FROM `clans_categories`
 			JOIN `clans` ON (
 				`clans_categories`.`id` = `clans`.`category_id` AND
-				`clans`.`lang` = ".$android_lang."
+				`clans`.`lang` = ".$api_lang."
 			)
 		GROUP BY `clans`.`category_id`
 		ORDER BY 
@@ -486,7 +486,7 @@ if ($var1 === 'notifications') {
 					`member`.`deleted` = 0
 				)
 			WHERE 
-				`lang` = ".(int)$android_lang." AND
+				`lang` = ".(int)$api_lang." AND
 				`category_id` = ".(int)$get_cat->id." 
 			ORDER BY `title` ASC
 			LIMIT ".$limit.", ".$amount."
