@@ -1,61 +1,68 @@
 <?php
 /**
- *  Globālas funkcijas Android lietotnes pieprasījumiem.
- *  Tiek izmantotas Android modulī (modules/android).
+ *  Globālas funkcijas mobilo lietotņu pieprasījumiem.
+ *  Tiek izmantotas Android un iOS modulī.
  *
- *  Funkciju nosaukumiem izmantots "a_" prefix, lai citos failos tās
- *  varētu atšķirt.
+ *  Funkciju nosaukumiem izmantots "a_" (no "api") prefix,
+ *  lai citos failos tās varētu atšķirt.
  */
 
 /**
- *  Pievienos kļūdas paziņojumu nākamajai atbildei,
- *  kuru lietotne izmetīs kā Toast ziņu.
+ *  Pieprasījuma atbildei pievieno kļūdas tekstu,
+ *  kuru lietotnē var attiecīgi parādīt.
  */
 function a_error($string = '') {
-	global $json_state, $json_message;
+	global $json_state, $json_success, $json_message;
 	
-	$json_state   = 'error';
+	$json_state = 'error';
+	$json_success = false;
 	$json_message = $string;
 }
 
 /**
- *  Atgriezīs XSRF tokenu, kāds izmantojams Android adresēs,
- *  lai identificētu konkrēto lietotāju.
+ *  Kļūdas teksta parametrā pievieno informatīvu tekstu,
+ *  ko lietotnes pusē tā arī jāuztver kā informatīvu, nevis kļūdu.
+ */
+/*function a_message($string = '') {
+	global $json_page;
+	
+	$json_page['message'] = $string;
+}*/
+function a_info($string = '') {
+    global $json_state, $json_success, $json_message;
+	
+    $json_state = 'success';
+	$json_success = true;
+	$json_message = $string;
+}
+
+/**
+ *  Atgriež XSRF atslēgu, kādu nosūtīt tālāk pieprasījuma atbildē.
+ *  No lietotnes nākošajiem pieprasījumiem adrešu galā jābūt šai atslēgai.
  */
 function a_make_xsrf() {
 	global $auth;
 	// nav jēgas izmantot MD5 hashu visā garumā
-	return substr($auth->xsrf, 0, 7);
+	return substr($auth->xsrf, 0, 10);
 }
 
 /**
- *  Pārbaudīs, vai norādītā xsrf atslēga sakrīt ar 
- *  konkrētajam lietotājam izveidoto.
+ *  Pārbauda, vai pieprasījumā saņemtā XSRF atslēga sakrīt ar to,
+ *  kāda atbilst lietotājam, kas pieprasījumu veicis.
  */
 function a_check_xsrf($key = '') {
 	global $auth;
 	if (empty($key)) {
 		if (!empty($_GET['xsrf'])) {
-			return (substr($auth->xsrf, 0, 7) === $_GET['xsrf']);
+			return (substr($auth->xsrf, 0, 10) === $_GET['xsrf']);
 		}
 		return false;
 	}
-	return (substr($auth->xsrf, 0, 7) === $key);
+	return (substr($auth->xsrf, 0, 10) === $key);
 }
 
 /**
- *  Pievienos atbildei tekstu, kas netiks uztverts kā kļūda,
- *  bet kuru lietotne pēc vajadzības varēs kaut kur izvadīt,
- *  paskaidrojot situāciju.
- */
-function a_message($string = '') {
-	global $json_page;
-	
-	$json_page['message'] = $string;
-}
-
-/**
- *  Pievienos atbildei masīvā norādītās vērtības.
+ *  Pieprasījuma atbildei galā pievieno norādītā masīva vērtības.
  */
 function a_append($values) {
 	global $json_page;
@@ -70,20 +77,20 @@ function a_append($values) {
 }
 
 /**
- *  Saglabās ziņojumu datubāzes `android_logs` tabulā,
- *  piefiksējot atvērto adresi, lai zinātu, ko lietotājs centās atvērt.
+ *  Saglabā žurnālierakstu ar norādīto tekstu datubāzē.
+ *  Papildu tiek fiksēta adrese, kādu lietotājs centies ielādēt.
  */
 function a_log($text) {
-	global $db, $auth;
+	global $db, $auth, $lang;
 	
-	if (empty($text)) {
-		return;
-	}
+	if (empty($text)) return;
+    
+    // TODO: lietošanā pārsaukt 'android_logs' tabulu uz 'api_android_logs'
+    $log_table = ($lang === 4) ? 'api_ios_logs' : 'android_logs';
 	
-	$uri = (isset($_SERVER['REQUEST_URI'])) ? 
-		$_SERVER['REQUEST_URI'] : '';
+	$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
 	
-	return $db->insert('android_logs', array(
+	return $db->insert($log_table, array(
 		'message' => sanitize($text),
 		'url' => sanitize($uri),
 		'created_by' => (int)$auth->id,
@@ -93,25 +100,46 @@ function a_log($text) {
 }
 
 /**
- *  Ielādēs informāciju, kādu lietotne vēlas saņemt pie veiksmīgas autorizācijas.
+ *  Pieprasījuma atbildei pievieno informāciju par lietotāju.
+ *  Izmantota brīdī, kad lietotājs veiksmīgi autentificējies.
  */
-function a_load_profile() {
-	global $db, $auth, $img_server;
+function a_append_profile_info() {
+	global $db, $auth, $img_server, $lang;
 	
 	// nelasīto vēstuļu skaits
 	$msgs = $db->get_var("
 		SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
 	");
+    
+    $arr = array();
+    if ($lang === 2) {
+        $arr += array(
+            'id' => (int)$auth->id,
+            'nick' => $auth->nick,
+            'level' => (int)$auth->level,
+            'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
+            'usertitle' => $auth->custom_title
+        );
+    } else {
+        $arr += array(
+            'id' => (int)$auth->id,
+            'nick' => $auth->nick,
+            'user_class' => (int)$auth->level,
+            'user_title' => $auth->custom_title,
+            'avatar_url' => $img_server.'/userpic/medium/'.$auth->avatar
+        );
+    }
+    
+    if ($lang === 2) {
+        // android projektā vēl, šķiet, šīs vērtības tiek lasītas,
+        // bet vajadzētu pamazām vākt prom, jo īsti neattiecas uz profilu
+        $arr += array(
+            'users_online' => (int)$auth->hosts_online,
+            'inbox_unread' => (int)$msgs
+        );
+    }
 
-	a_append(array('profile' => array(
-		'id' => (int)$auth->id,
-		'nick' => $auth->nick,
-		'level' => (int)$auth->level,
-		'av_url' => $img_server.'/userpic/medium/'.$auth->avatar,
-		'usertitle' => $auth->custom_title,
-		'users_online' => (int)$auth->hosts_online,
-		'inbox_unread' => (int)$msgs
-	)));
+	a_append(array('profile' => $arr));
 }
 
 /**
@@ -222,13 +250,13 @@ function a_format_text(&$mb_text, $return_img = true) {
  *  apakšprojekta adresi.
  */
 function a_fill_link($string) {
-	global $config_domains, $android_lang;
+	global $config_domains, $api_lang;
 
 	if (strlen($string) < 2) {
 		return $string;
 	}
 	
-	$project = $config_domains[$android_lang]['domain'];
+	$project = $config_domains[$api_lang]['domain'];
 
 	$first_sym = substr($string, 0, 1);
 	$second_sym = substr($string, 1, 1);
@@ -261,7 +289,7 @@ function a_fill_link($string) {
  *  lietotājam.
  */
 function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
-	global $auth, $online_users, $busers;
+	global $auth, $online_users, $busers, $lang;
 
 	// dati par autorizēto lietotāju
 	if ($user_id == 0) {
@@ -278,18 +306,20 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 
 	$is_online = false;
 	$is_banned = false;
-	$device = 0; // 0 - dators, 1 - mob. tel., 2 - androīda app
+	$device = 0; // 0 - dators, 1 - mob., 2 - droīds, 3 - ios
 
 	// vai lietotājs ir tiešsaistē?
 	if ((!empty($online_users['onlineusers'][$user_id])) || 
-		(!empty($online_users['onlineusers']) && 
-		in_array($user_nick, $online_users['onlineusers']))) {
-	
+        (!empty($online_users['onlineusers']) && 
+        in_array($user_nick, $online_users['onlineusers']))) {	
 		$is_online = true;
 	}
 
 	// caur kādu ierīci lietotājs ielādējis saturu?
-	if (!empty($online_users['androidusers']) && 
+	if (!empty($online_users['iosusers']) && 
+		in_array($user_nick, $online_users['iosusers'])) {
+		$device = 3;
+	} else if (!empty($online_users['androidusers']) && 
 		in_array($user_nick, $online_users['androidusers'])) {
 		$device = 2;
 	} else if (!empty($online_users['mobileusers']) && 
@@ -301,21 +331,36 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 	if (!empty($busers) && !empty($busers[$user_id])) {
 		$is_banned = true;
 	}
-
-	$data = array(
-		'id'        => (int)$user_id, 
-		'nick'      => (string)$user_nick,
-		'level'     => (int)$user_level,
-		'is_online' => (bool)$is_online,
-		'is_banned' => (bool)$is_banned,
-		'device'    => (int)$device
-	);
+    
+    $data = null;
+    if ($lang === 2) {
+        $data = array(
+            'id'          => (int)$user_id, 
+            'nick'        => (string)$user_nick,
+            'level'       => (int)$user_level,
+            'is_online'   => (bool)$is_online,
+            'is_banned'   => (bool)$is_banned,
+            'device'      => (int)$device
+        );
+    } else {
+        $data = array(
+            'id'          => (int)$user_id, 
+            'nick'        => (string)$user_nick,
+            'user_class'  => (int)$user_level,
+            'is_online'   => (bool)$is_online,
+            'is_banned'   => (bool)$is_banned,
+            'device_type' => (int)$device
+        );
+    }
 
 	return $data;
 }
 
 /**
- *  Pievienos atbildei datus par lietotājam piemēroto liegumu, ja tāds ir.
+ *  Pieprasījuma atbildei pievieno informāciju par lietotāja liegumu.
+ *
+ *  Šī funkcija tikai pievieno datus atbildei. Tas, vai lietotājam
+ *  ir liegums, tiek noskaidrots jau iepriekš.
  *
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
@@ -336,14 +381,12 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
 	
 		$prof_banned = $db->get_row("
 			SELECT * FROM `banned` 
-			WHERE 
-				`active` = 1 AND 
-				`user_id` = ".(int)$auth->id."
-			LIMIT 1
+			WHERE `active` = 1 AND `user_id` = ".(int)$auth->id."
+            LIMIT 1
 		");
 		
 		if (!$prof_banned) {
-			a_error('Neizdevās atlasīt lieguma info');
+			a_error('Neizdevās atlasīt lieguma informāciju');
 		} else {
 			$from_user = get_user($prof_banned->author);
 			$to_user = get_user($prof_banned->user_id);
@@ -396,7 +439,7 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
  */
 function a_fetch_online($force = false) {
-	global $db, $m, $auth, $android_lang;
+	global $db, $m, $auth, $api_lang;
 	global $online_users, $busers;
 	
 	// laiks sekundēs, kurā lietotāju uzskata par tiešsaistē esošu
@@ -405,7 +448,7 @@ function a_fetch_online($force = false) {
 	$data = array();
 	
 	// satura nolasīšana no memcached
-	if ($force || !($data = $m->get('android-online-'.$android_lang))) {
+	if ($force || !($data = $m->get('api-online-'.$api_lang))) {
 
 		$online = null;
 		$classes = null;
@@ -420,7 +463,7 @@ function a_fetch_online($force = false) {
 			FROM `visits`
 				JOIN `users` ON `visits`.`user_id` = `users`.`id`
 			WHERE
-				`visits`.`site_id` = ".$android_lang." AND
+				`visits`.`site_id` = ".$api_lang." AND
 				`visits`.`lastseen` > '".$last_seen."'
 			ORDER BY
 				`users`.`nick` ASC
@@ -444,6 +487,9 @@ function a_fetch_online($force = false) {
 			if (!empty($online_users['androidusers']) && 
 				in_array($user->nick, $online_users['androidusers'])) {
 				$device = 2; // androīda apps
+			} else if (!empty($online_users['iosusers']) && 
+				in_array($user->nick, $online_users['iosusers'])) {
+				$device = 3; // ios apps
 			} else if (!empty($online_users['mobileusers']) && 
 				in_array($user->nick, $online_users['mobileusers'])) {
 				$device = 1; // mob. tel.
@@ -475,7 +521,7 @@ function a_fetch_online($force = false) {
 			'users' => $online
 		);
 		
-		$m->set('android-online-'.$android_lang, $data, false, 15);
+		$m->set('api-online-'.$api_lang, $data, false, 15);
 	}
 	
 	a_append($data);
@@ -539,7 +585,7 @@ function a_get_user_avatar($user, $size = 'm') {
  *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
  */
 function a_get_news() {
-	global $auth, $db, $lang, $android_lang;
+	global $auth, $db, $lang, $api_lang;
 	
 	// vienā lappusē redzamo rakstu skaits
 	$news_in_page = 20;
@@ -554,7 +600,7 @@ function a_get_news() {
 	$conditions = array();
 	
 	// redzami izvēlētā apakšprojekta vai $lang=0 raksti
-	$conditions[] = '(`pages`.`lang` = ' . (int)$android_lang . ' || `pages`.`lang` = 0)';
+	$conditions[] = '(`pages`.`lang` = ' . (int)$api_lang . ' || `pages`.`lang` = 0)';
 
 	// atlasa sadaļas, kuras lietotājs vēlas ignorēt
 	if ($auth->ok) {
@@ -720,7 +766,7 @@ function a_fetch_awards($user_id, $award_count = 4) {
 		return;
 	}
 	
-	$memcached_key = 'android_awards_'.$user_id.'-'.$award_count;
+	$memcached_key = 'api_awards_'.$user_id.'-'.$award_count;
 	
 	if (($data = $m->get($memcached_key)) === false) {
 		$awards = array();

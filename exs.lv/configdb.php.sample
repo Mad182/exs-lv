@@ -28,6 +28,7 @@ $remote_salt = 'BgpgSvz21ku6C2tcEGVLqwWj8fXkeSA9';
 // lokālā vide; tai jābūt norādītai arī pašā lietotnē, un ir jāizveido
 // attiecīgs virtualhosts, lai pieprasījums vispār šeit nonāktu
 $android_local_ip = null; // piemēram, '192.168.88.5'
+$ios_local_ip = null;
 
 //facebook login
 $fb_api_id = null;

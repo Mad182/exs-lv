@@ -19,7 +19,7 @@
             <ul class="top_navig">
                 <li><a {active-0}href="/api/a" title="Android lietotnes dokumentācija">Android</a></li>
                 <li><a {active-1}href="/api/i" title="iOS lietotnes dokumentācija">iOS</a></li>
-                <li><a href="//exs.lv" title="Uz exs.lv mājaslapu">exs.lv</a></li>
+                <li><a href="//exs.lv" title="Uz exs.lv mājaslapu">uz exs.lv</a></li>
             </ul>
         </div>
         <div class="c"></div>
@@ -35,18 +35,16 @@
             <div class="col_divider" style="margin-top:0"></div>
             <ul class="side_navig">
                 <!-- START BLOCK : android-navig -->
-                <li><a class="{active-intro}" href="/api/a">Ievads</a></li>
-                <li><a class="{active-miniblogs}" href="/api/a/miniblogs">Miniblogi</a></li>
-                <li><a class="{active-messages}" href="/api/a/messages">Vēstules</a></li>
-                <li><a class="{active-groups}" href="/api/a/groups">Domubiedru grupas</a></li>
-                <li><a class="{active-other}" href="/api/a/other">Cits</a></li>
+                <li><a class="{active-intro} inactive" href="/api/a">Ievads</a></li>
+                <li><a class="{active-miniblogs} inactive" href="/api/a/miniblogs">Miniblogi</a></li>
+                <li><a class="{active-groups} inactive" href="/api/a/groups">Domubiedru grupas</a></li>
+                <li><a class="{active-messages} inactive" href="/api/a/messages">Vēstules</a></li>
                 <!-- END BLOCK : android-navig -->
                 <!-- START BLOCK : ios-navig -->
                 <li><a class="{active-intro}" href="/api/i">Ievads</a></li>
-                <li><a class="{active-miniblogs}" href="/api/i/miniblogs">Miniblogi</a></li>
-                <li><a class="{active-messages}" href="/api/i/messages">Vēstules</a></li>
-                <li><a class="{active-groups}" href="/api/i/groups">Domubiedru grupas</a></li>
-                <li><a class="{active-other}" href="/api/i/other">Cits</a></li>
+                <li><a class="{active-miniblogs} inactive" href="/api/i/miniblogs">Miniblogi</a></li>
+                <li><a class="{active-groups} inactive" href="/api/i/groups">Domubiedru grupas</a></li>
+                <li><a class="{active-messages} inactive" href="/api/i/messages">Vēstules</a></li>
                 <!-- END BLOCK : ios-navig -->
             </ul>
             <div class="col_divider"></div>

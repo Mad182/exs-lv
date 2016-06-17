@@ -1,6 +1,6 @@
 <?php
 /**
- *  Android miniblogiem paredzētas funkcijas.
+ *  iOS miniblogiem paredzētas funkcijas.
  *
  *  Šīs funkcijas rakstītas daudz maz universālā veidā, lai katra atbalstītu
  *  gan parastos miniblogus, gan grupās esošos, gan nākotnē arī citus.
@@ -487,7 +487,7 @@ function a_add_miniblog($data) {
 		'text' => post2db($data['content']),
 		'private' => (bool)$data['is_private'],
 		'lang' => $api_lang,
-		'device' => 2
+		'device' => 3
 	));
 	
 	// ārējā minibloga dati, kas nepieciešami notifikācijām

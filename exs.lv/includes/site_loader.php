@@ -42,6 +42,11 @@ $config_domains = array(
 		'prefix' => 'code',
 		'ssl' => true
 	),
+    4 => array(
+        'domain' => 'ios.exs.lv',
+        'prefix' => 'ios',
+        'ssl' => true
+    ),
 	5 => array(
 		'domain' => 'rp.exs.lv',
 		'prefix' => 'mta',
@@ -75,7 +80,8 @@ $arr_domains = array(
 	
 	// apakšprojekti
 	'android.exs.lv' => 2,
-	$android_local_ip => 2,    
+	$android_local_ip => 2,   
+    'ios.exs.lv' => 4,
 	'rp.exs.lv' => 5,
 	'lol.exs.lv' => 7,
 	'runescape.exs.lv' => 9,
@@ -93,6 +99,7 @@ $arr_domains = array(
 	// (https://stackoverflow.com/questions/25277457/google-chrome-redirecting-localhost-to-https)
 	'exs.dev' => 1,
 	'android.exs.dev' => 2,
+    'ios.exs.dev' => 4,
 	'coding.dev' => 3,
 	'rp.exs.dev' => 5,
 	'lol.exs.dev' => 7,

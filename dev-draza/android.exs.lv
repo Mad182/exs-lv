@@ -1,3 +1,0 @@
-android.exs.lv TODO:
-
-* šobrīd gan grupu miniblogu modulī, gan pie parastajiem miniblogiem, pievienojot komentāru, ir viens un tas pats kods. Varētu pārcelt uz kādu universālu funkciju un pielāgot tajā atbildi arī Android versijai, kas arī izmanto ļoti līdzīgu kodu (functions.android.php: a_add_mb_comment())

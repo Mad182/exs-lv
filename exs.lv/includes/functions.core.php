@@ -44,10 +44,10 @@ function get_lang($get_super_lang = false) {
 		return $tmp_lang;
 	}
 	
-	// android.exs.lv vienmēr būs 2, lai kādu projektu caur to skatītu,
+	// android|ios.exs.lv vienmēr būs 2 vai 4, lai kādu projektu caur to skatītu,
 	// bet pareizai datu atlasei jāzina tieši skatītā apakšprojekta vērtība
-	if ($tmp_lang === 2) {
-		$tmp_lang = get_global('android_lang', 1);
+	if ($tmp_lang === 2 || $tmp_lang === 4) {
+		$tmp_lang = get_global('api_lang', 1);
 	}
 	
 	return $tmp_lang;
@@ -413,6 +413,9 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	if ($online !== 'disable') {
 		if ($online || (!empty($userid) && !empty($online_users['onlineusers'][$userid])) || (!empty($online_users['onlineusers']) && in_array($nick, $online_users['onlineusers']))) {
 			if (!empty($online_users['androidusers']) && in_array($nick, $online_users['androidusers'])) {
+				$star = '<span class="lb">*</span>';
+			} else if (!empty($online_users['iosusers']) && in_array($nick, $online_users['iosusers'])) {
+                // pagaidām krāsa sakritīs ar android, lai neizceļas, kamēr lietotne tiešām nav gatava
 				$star = '<span class="lb">*</span>';
 			} else if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
 				$star = '<span class="g">*</span>';
@@ -1121,7 +1124,8 @@ function get_online($force = false) {
 			`users`.`id`,
 			`users`.`nick`,
 			`users`.`mobile`,
-			`users`.`android`
+			`users`.`android`,
+            `users`.`ios`
 		FROM
 			`users`,
 			`visits`
@@ -1133,13 +1137,16 @@ function get_online($force = false) {
 		$data = array(
 			'onlineusers' => array(),
 			'mobileusers' => array(),
-			'androidusers' => array()
+			'androidusers' => array(),
+            'iosusers' => array()
 		);
 		if ($lastseen) {
 			foreach ($lastseen as $usr) {
 				$data['onlineusers'][$usr->id] = $usr->nick;
 				if ($usr->android) {
 					$data['androidusers'][$usr->id] = $usr->nick;
+				} else if ($usr->ios) {
+					$data['iosusers'][$usr->id] = $usr->nick;
 				} else if ($usr->mobile) {
 					$data['mobileusers'][$usr->id] = $usr->nick;
 				}
