@@ -83,7 +83,7 @@ if (!empty($var1) && !empty($var2) &&
 		)
 		WHERE
 			`clans`.`id` = ".$group_id." AND
-			`clans`.`lang` = ".$android_lang."
+			`clans`.`lang` = ".$api_lang."
 	");
 
 	$credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = ".$auth->id);
@@ -174,7 +174,7 @@ if (!empty($var1) && !empty($var2) &&
 		)
 		WHERE
 			`clans`.`id` = ".$group_id." AND
-			`clans`.`lang` = ".$android_lang."
+			`clans`.`lang` = ".$api_lang."
 	");
 
 	if (empty($group)) {

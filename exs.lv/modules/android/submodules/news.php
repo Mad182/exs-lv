@@ -35,7 +35,7 @@ if (isset($_GET['var1'])) {
 			JOIN `cat` ON `pages`.`category` = `cat`.`id`
 		WHERE 
 			`pages`.`id` = '".(int)$_GET['var1']."' AND
-			(`pages`.`lang` = '$android_lang' OR `pages`.`lang` = 0)
+			(`pages`.`lang` = '$api_lang' OR `pages`.`lang` = 0)
 	");
 	
 	if (!$article) {
