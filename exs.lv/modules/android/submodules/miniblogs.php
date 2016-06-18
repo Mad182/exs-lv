@@ -33,11 +33,11 @@ if ($var1 === 'getlist') {
 	
 	if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
 		!isset($_POST['content']) || !isset($_POST['is_private'])) {
-		a_error('Kļūdains pieprasījums');
+		api_error('Kļūdains pieprasījums');
 		if ($var1 === 'new') {
-			a_log('Netika iesniegti minibloga ieraksta pievienošanas dati');
+			api_log('Netika iesniegti minibloga ieraksta pievienošanas dati');
 		} else {
-			a_log('Netika iesniegti minibloga komentēšanas dati');
+			api_log('Netika iesniegti minibloga komentēšanas dati');
 		}
 	} else {
 		a_add_miniblog(array(
@@ -68,6 +68,6 @@ if ($var1 === 'getlist') {
  *  Citi gadījumi.
  */
 } else {
-	a_error('Kļūdains pieprasījums (#4)');
-	a_log('Kļūdains pieprasījums miniblogu modulī');
+	api_error('Kļūdains pieprasījums (#4)');
+	api_log('Kļūdains pieprasījums miniblogu modulī');
 }

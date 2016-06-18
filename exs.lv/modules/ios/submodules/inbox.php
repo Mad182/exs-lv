@@ -52,7 +52,7 @@ if ($var1 === 'received') {
 	");
 	
 	if (!$pms) {
-		a_append(array(
+		api_append(array(
 			'endoflist' => true,
 			'unread' => 0,
 			'messages' => array()
@@ -76,7 +76,7 @@ if ($var1 === 'received') {
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
 			} else {
-				$from = a_fetch_user($pm->from_uid, $pm->nick, $pm->level);
+				$from = api_fetch_user($pm->from_uid, $pm->nick, $pm->level);
 			}
 			
 			$pm_title = wordwrap(textlimit(
@@ -95,7 +95,7 @@ if ($var1 === 'received') {
 		
 		$unread = ($unread) ? (int)$unread : 0;
 		
-		a_append(array(
+		api_append(array(
 			'endoflist' => $endoflist,
 			'unread' => $unread,
 			'messages' => $messages
@@ -111,15 +111,15 @@ if ($var1 === 'received') {
 	// kļūdu pārbaudes
 	if (!isset($_POST['msg_title']) || !isset($_POST['msg_content']) ||
 		!isset($_POST['msg_to'])) {
-		a_error('Kļūdaini iesniegti dati');
-		a_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju');        
-	} else if (!a_check_xsrf()) {
-		a_error('no hacking, pls');
-		a_log('Sūtot vēstuli, konstatēts XSRF uzbrukums');        
+		api_error('Kļūdaini iesniegti dati');
+		api_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju');
+	} else if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Sūtot vēstuli, konstatēts XSRF uzbrukums');
 	} else if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] >= time() - 3) {
-		a_error('exā plūdi. :( Brīdi uzgaidi!');        
+		api_error('exā plūdi. :( Brīdi uzgaidi!');
 	} else if ((int)$_POST['msg_to'] == $auth->id) {
-		a_error('Tik vientuļi, ka raksti sev? :(');
+		api_error('Tik vientuļi, ka raksti sev? :(');
 
 	// viss šķietami kārtībā un vēstuli var sūtīt
 	} else {
@@ -131,10 +131,10 @@ if ($var1 === 'received') {
 		$receiver = get_user($send_to, true);
 
 		if (!$receiver) {
-			a_error('Norādītais saņēmējs neeksistē');
-			a_log('Centās nosūtīt vēstuli neeksistējošam lietotājam (id:'.$send_to.')');
+			api_error('Norādītais saņēmējs neeksistē');
+			api_log('Centās nosūtīt vēstuli neeksistējošam lietotājam (id:'.$send_to.')');
 		} else if (empty($send_body)) {
-			a_error('Tukšu vēstuli nosūtīt nevar');
+			api_error('Tukšu vēstuli nosūtīt nevar');
 		} else {
 		
 			// vēstules virsraksta apstrāde
@@ -177,7 +177,7 @@ if ($var1 === 'received') {
 				send_email($receiver->mail, $subject, $message);
 			}
 			
-			a_append(array(
+			api_append(array(
 				'sent' => true
 			));
 		}
@@ -196,10 +196,10 @@ if ($var1 === 'received') {
 	);
 	
 	if (!$pm) {
-		a_error('Šāda vēstule neeksistē');
+		api_error('Šāda vēstule neeksistē');
 	} else if ($pm->to_uid != $auth->id && $pm->from_uid != $auth->id) {
-		a_error('Pieeja vēstules saturam liegta');
-		a_log('Centās atvērt svešu vēstuli');
+		api_error('Pieeja vēstules saturam liegta');
+		api_log('Centās atvērt svešu vēstuli');
 	} else {
 	
 		$type = ($pm->to_uid == $auth->id) ? 'rec' : 'sent';
@@ -217,19 +217,19 @@ if ($var1 === 'received') {
 		if (!$usr || $usr->deleted) {
 			$usr->nick = '<em>dzēsts</em>';
 		} else {
-			$usr_data = a_fetch_user($usr->id, $usr->nick, $usr->level);
+			$usr_data = api_fetch_user($usr->id, $usr->nick, $usr->level);
 		}
 		
-		$arr_images = a_format_text($pm->text);
+		$arr_images = api_format_text($pm->text);
 
-		a_append(array('content' => array(
+		api_append(array('content' => array(
 			'id' => (int)$pm->id,
 			'title' => $pm->title,
 			'text' => $pm->text,
 			'text_images' => $arr_images,
 			'date' => substr($pm->date, 0, 16),
 			'user' => $usr_data,
-			'user_avatar' => a_get_user_avatar($usr)
+			'user_avatar' => api_get_user_avatar($usr)
 		)));
 	}
 	
@@ -270,7 +270,7 @@ if ($var1 === 'received') {
 	);
 	
 	if (!$pms) {
-		a_append(array(
+		api_append(array(
 			'endoflist' => true,
 			'messages' => array()
 		));
@@ -293,7 +293,7 @@ if ($var1 === 'received') {
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
 			} else {
-				$to = a_fetch_user($pm->to_uid, $pm->nick, $pm->level);
+				$to = api_fetch_user($pm->to_uid, $pm->nick, $pm->level);
 			}
 			
 			$pm_title = wordwrap(textlimit(
@@ -308,7 +308,7 @@ if ($var1 === 'received') {
 			);
 		}
 		
-		a_append(array(
+		api_append(array(
 			'endoflist' => false,
 			'messages' => $messages
 		));

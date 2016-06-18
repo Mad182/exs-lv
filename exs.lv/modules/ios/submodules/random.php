@@ -57,7 +57,7 @@ if ($var1 === 'notifications') {
 	");
 	
 	if (!$user_notifications) {
-		a_error('Nav paziņojumu');
+		api_error('Nav paziņojumu');
 	} else {
 	
 		// atlasīs miniblogu id no tām notifikācijām, kas ir ierakstiem grupās
@@ -103,7 +103,7 @@ if ($var1 === 'notifications') {
 			);
 		}
 		
-		a_append(array('notifications' => $arr_notifs));
+		api_append(array('notifications' => $arr_notifs));
 	}
 
 /**
@@ -152,7 +152,7 @@ if ($var1 === 'notifications') {
 		SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
 	");
 	
-	a_append(array('numbers' => array(
+	api_append(array('numbers' => array(
 		'users_online' => (int)$auth->hosts_online,
 		'inbox_unread' => (int)$inbox,
 		'notifs_new' => (int)$unseen_notifs,
@@ -164,7 +164,7 @@ if ($var1 === 'notifications') {
  */
 } else if ($var1 === 'online') {
 	set_action('tiešsaistē esošo lietotāju sarakstu');
-	a_fetch_online();
+	api_fetch_online();
 	
 /**
  *  Atgriezīs ar lietotāja profilu saistītu informāciju.
@@ -178,7 +178,7 @@ if ($var1 === 'notifications') {
 		SELECT * FROM `users` WHERE `id` = ".$user_id
 	);
 	if (!$profile) {
-		a_error('Šāds profils neeksistē');
+		api_error('Šāds profils neeksistē');
 	} else {
 	
 		// skatot cita lietotāja profilu, skatījums jāatzīmē
@@ -226,7 +226,7 @@ if ($var1 === 'notifications') {
 		$time_ago = time_ago(strtotime($profile->lastseen));
 		
 		$data = array(
-			'formatted' => a_fetch_user($profile->id, $profile->nick, $profile->level),
+			'formatted' => api_fetch_user($profile->id, $profile->nick, $profile->level),
 			'avatar' => 'https://img.exs.lv/userpic/large/'.$profile->avatar,
 			'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
 			'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
@@ -249,10 +249,10 @@ if ($var1 === 'notifications') {
 			$data['useragent'] = $profile->user_agent;        
 		}*/
 		
-		a_append(array('userdata' => $data));
+		api_append(array('userdata' => $data));
 		
 		// pievienos klāt arī lietotāja pāris jaunākos apbalvojumus
-		a_fetch_awards($user_id, 6);
+		api_fetch_awards($user_id, 6);
 	}
 
 /**
@@ -299,7 +299,7 @@ if ($var1 === 'notifications') {
 						'nick' => $info->nick
 					);
 				} else {
-					$friends[] = a_fetch_user($info->id, $info->nick, $info->level);
+					$friends[] = api_fetch_user($info->id, $info->nick, $info->level);
 				}
 			}
 			
@@ -307,7 +307,7 @@ if ($var1 === 'notifications') {
 		}
 	}
 	
-	a_append(array(
+	api_append(array(
 		'count' => (int)$cnt_friends,
 		'contacts' => $friends
 	));
@@ -353,7 +353,7 @@ if ($var1 === 'notifications') {
 	");
 	
 	if (!$own_groups && !$member_of) {
-		a_error('Neesi pieteicies nevienai grupai');
+		api_error('Neesi pieteicies nevienai grupai');
 	} else {
 	
 		$groups = array();
@@ -393,7 +393,7 @@ if ($var1 === 'notifications') {
 			}
 		}
 
-		a_append(array(
+		api_append(array(
 			'group_count' => $group_count++,
 			'groups' => $groups
 		));
@@ -422,7 +422,7 @@ if ($var1 === 'notifications') {
 	");
 	
 	if (!$categories) {
-		a_error('Nav nevienas grupu kategorijas!');
+		api_error('Nav nevienas grupu kategorijas!');
 	} else {
 	
 		$data = array();
@@ -457,7 +457,7 @@ if ($var1 === 'notifications') {
 	);
 
 	if (!$get_cat) {
-		a_error('Kļūdaini norādīta sadaļa');
+		api_error('Kļūdaini norādīta sadaļa');
 	} else {
 	
 		$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;        
@@ -529,7 +529,7 @@ if ($var1 === 'notifications') {
 				);
 			}
 			
-			a_append(array(
+			api_append(array(
 				'cat_id' => (int)$get_cat->id,
 				'cat_title' => $get_cat->title,
 				'groups' => $data
@@ -541,6 +541,6 @@ if ($var1 === 'notifications') {
  *  Citas situācijas.
  */
 } else {
-	a_error('Kļūdains pieprasījums (#3)');
-	a_log('Kļūdains pieprasījums random modulī');
+	api_error('Kļūdains pieprasījums (#3)');
+	api_log('Kļūdains pieprasījums random modulī');
 }

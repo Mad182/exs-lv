@@ -2,16 +2,13 @@
 /**
  *  Globālas funkcijas mobilo lietotņu pieprasījumiem.
  *  Tiek izmantotas Android un iOS modulī.
- *
- *  Funkciju nosaukumiem izmantots "a_" (no "api") prefix,
- *  lai citos failos tās varētu atšķirt.
  */
 
 /**
  *  Pieprasījuma atbildei pievieno kļūdas tekstu,
  *  kuru lietotnē var attiecīgi parādīt.
  */
-function a_error($string = '') {
+function api_error($string = '') {
 	global $json_state, $json_success, $json_message;
 	
 	$json_state = 'error';
@@ -28,7 +25,7 @@ function a_error($string = '') {
 	
 	$json_page['message'] = $string;
 }*/
-function a_info($string = '') {
+function api_info($string = '') {
     global $json_state, $json_success, $json_message;
 	
     $json_state = 'success';
@@ -40,7 +37,7 @@ function a_info($string = '') {
  *  Atgriež XSRF atslēgu, kādu nosūtīt tālāk pieprasījuma atbildē.
  *  No lietotnes nākošajiem pieprasījumiem adrešu galā jābūt šai atslēgai.
  */
-function a_make_xsrf() {
+function api_make_xsrf() {
 	global $auth;
 	// nav jēgas izmantot MD5 hashu visā garumā
 	return substr($auth->xsrf, 0, 10);
@@ -50,7 +47,7 @@ function a_make_xsrf() {
  *  Pārbauda, vai pieprasījumā saņemtā XSRF atslēga sakrīt ar to,
  *  kāda atbilst lietotājam, kas pieprasījumu veicis.
  */
-function a_check_xsrf($key = '') {
+function api_check_xsrf($key = '') {
 	global $auth;
 	if (empty($key)) {
 		if (!empty($_GET['xsrf'])) {
@@ -64,7 +61,7 @@ function a_check_xsrf($key = '') {
 /**
  *  Pieprasījuma atbildei galā pievieno norādītā masīva vērtības.
  */
-function a_append($values) {
+function api_append($values) {
 	global $json_page;
 	
 	if (!is_array($values)) {
@@ -80,7 +77,7 @@ function a_append($values) {
  *  Saglabā žurnālierakstu ar norādīto tekstu datubāzē.
  *  Papildu tiek fiksēta adrese, kādu lietotājs centies ielādēt.
  */
-function a_log($text) {
+function api_log($text) {
 	global $db, $auth, $lang;
 	
 	if (empty($text)) return;
@@ -103,7 +100,7 @@ function a_log($text) {
  *  Pieprasījuma atbildei pievieno informāciju par lietotāju.
  *  Izmantota brīdī, kad lietotājs veiksmīgi autentificējies.
  */
-function a_append_profile_info() {
+function api_append_profile_info() {
 	global $db, $auth, $img_server, $lang;
 	
 	// nelasīto vēstuļu skaits
@@ -139,7 +136,7 @@ function a_append_profile_info() {
         );
     }
 
-	a_append(array('profile' => $arr));
+	api_append(array('profile' => $arr));
 }
 
 /**
@@ -157,7 +154,7 @@ function a_append_profile_info() {
  *  atpazītu un būtu nospiežamas, tiks paslēpti spoileri un veikti
  *  vēl citi pārveidojumi.
  */
-function a_format_text(&$mb_text, $return_img = true) {
+function api_format_text(&$mb_text, $return_img = true) {
 
 	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
 	if (strpos($mb_text, 'spoiler') !== false) {
@@ -193,7 +190,7 @@ function a_format_text(&$mb_text, $return_img = true) {
 		// vienā brīdī pārtrauc strādāt, tāpēc jāizmanto regressive loop
 		for ($i = $images->length; $i > 0; $i--) {    
 			$image = $images->item($i - 1);
-			$image_link = a_fill_link($image->getAttribute('src'));
+			$image_link = api_fill_link($image->getAttribute('src'));
 			$arr_images[] = $image_link;            
 			$element = $dom->createElement('span', '(attēls #'.$i.')');
 			$element->setAttribute('class', 'img_replacement');
@@ -227,7 +224,7 @@ function a_format_text(&$mb_text, $return_img = true) {
 			}            
 			
 			if ($do_replace) {
-				$addr = a_fill_link($link->getAttribute('href'));          
+				$addr = api_fill_link($link->getAttribute('href'));
 				$element = $dom->createTextNode($addr);
 				$link->parentNode->replaceChild($element, $link);
 			}
@@ -249,7 +246,7 @@ function a_format_text(&$mb_text, $return_img = true) {
  *  Pēc vajadzības pievienos adresei priekšā pareizo protokolu un
  *  apakšprojekta adresi.
  */
-function a_fill_link($string) {
+function api_fill_link($string) {
 	global $config_domains, $api_lang;
 
 	if (strlen($string) < 2) {
@@ -288,7 +285,7 @@ function a_fill_link($string) {
  *  kas šo funkciju izsauc. Norādot parametrus, dati atbildīs norādītajam
  *  lietotājam.
  */
-function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
+function api_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 	global $auth, $online_users, $busers, $lang;
 
 	// dati par autorizēto lietotāju
@@ -365,7 +362,7 @@ function a_fetch_user($user_id = 0, $nick = '-', $level = 0) {
  *  @param $type    1 - ip liegums, 2 - profila liegums
  *  @param query    ja $type = 1, datus ņem no šī query
  */
-function a_fetch_ban($type = 1, $ip_banned = null) {
+function api_fetch_ban($type = 1, $ip_banned = null) {
 	global $db, $auth;
 	global $json_page, $json_banned;
 
@@ -386,18 +383,18 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
 		");
 		
 		if (!$prof_banned) {
-			a_error('Neizdevās atlasīt lieguma informāciju');
+			api_error('Neizdevās atlasīt lieguma informāciju');
 		} else {
 			$from_user = get_user($prof_banned->author);
 			$to_user = get_user($prof_banned->user_id);
 			
 			if ($from_user && $to_user) {
-				a_append(array(
+				api_append(array(
 					'ip' => $prof_banned->ip,
-					'to_user' => a_fetch_user($to_user->id, 
+					'to_user' => api_fetch_user($to_user->id,
 						$to_user->nick, $to_user->level),
 					'reason' => $prof_banned->reason,
-					'from_user' => a_fetch_user($from_user->id, 
+					'from_user' => api_fetch_user($from_user->id,
 						$from_user->nick, $from_user->level),
 					'date_from' => date('d.m.Y, H:i', $prof_banned->time),
 					'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
@@ -415,12 +412,12 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
 		$to_user = get_user($ip_banned->user_id);
 		
 		if ($from_user && $to_user) {
-			a_append(array(
+			api_append(array(
 				'ip' => $ip_banned->ip,
-				'to_user' => a_fetch_user($to_user->id, 
+				'to_user' => api_fetch_user($to_user->id,
 					$to_user->nick, $to_user->level),
 				'reason' => $ip_banned->reason,
-				'from_user' => a_fetch_user($from_user->id, 
+				'from_user' => api_fetch_user($from_user->id,
 					$from_user->nick, $from_user->level),
 				'date_from' => date('d.m.Y, H:i', $ip_banned->time),
 				'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
@@ -438,7 +435,7 @@ function a_fetch_ban($type = 1, $ip_banned = null) {
  *  Atgriezīs sarakstu ar tiešsaistē esošajiem lietotājiem 
  *  atvērtajā apakšprojektā pēdējās x sekundēs.
  */
-function a_fetch_online($force = false) {
+function api_fetch_online($force = false) {
 	global $db, $m, $auth, $api_lang;
 	global $online_users, $busers;
 	
@@ -470,7 +467,7 @@ function a_fetch_online($force = false) {
 		");
 
 		if (!$lastseen) {
-			a_append(array(
+			api_append(array(
 				'online' => 0,
 				'registered' => 0,
 				'users' => array()
@@ -524,7 +521,7 @@ function a_fetch_online($force = false) {
 		$m->set('api-online-'.$api_lang, $data, false, 15);
 	}
 	
-	a_append($data);
+	api_append($data);
 }
 
 /**
@@ -539,7 +536,7 @@ function a_fetch_online($force = false) {
  *  @param object   satur vērtības, pēc kurām var izveidot adresi
  *  @param string   s|m|l   norāda nepieciešamā avatara izmēru
  */
-function a_get_user_avatar($user, $size = 'm') {
+function api_get_user_avatar($user, $size = 'm') {
 	global $auth, $img_server;
 	
 	if (!$user || empty($user->av_alt) || empty($user->avatar)) {
@@ -584,7 +581,7 @@ function a_get_user_avatar($user, $size = 'm') {
  *
  *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
  */
-function a_get_news() {
+function api_get_news() {
 	global $auth, $db, $lang, $api_lang;
 	
 	// vienā lappusē redzamo rakstu skaits
@@ -673,11 +670,11 @@ function a_get_news() {
  *
  *  @param object   raksta dati no datubāzes
  */
-function a_add_article_comment($article = null) {
+function api_add_article_comment($article = null) {
 	global $db, $auth, $remote_salt, $comments_per_page;
 	
 	if ($article == null || !isset($_POST['comment'])) {
-		a_error('Pievienot neizdevās'); 
+		api_error('Pievienot neizdevās');
 		return;
 	}
 	
@@ -686,15 +683,15 @@ function a_add_article_comment($article = null) {
 	
 	// pārbaudes
 	if ($article->closed) {    
-		a_error('Raksta komentēšana slēgta'); 
+		api_error('Raksta komentēšana slēgta');
 		return;        
 	} else if (empty($_POST['comment'])) {    
-		a_error('Tukšu komentāru nevar pievienot'); 
+		api_error('Tukšu komentāru nevar pievienot');
 		return;        
 	} 
 	// drošības atslēgas pārbaude
 	else if (!isset($_POST['safe']) || $_POST['safe'] != $article_salt) {
-		a_error('no hacking, pls');
+		api_error('no hacking, pls');
 		return;
 	} else {
 	
@@ -711,7 +708,7 @@ function a_add_article_comment($article = null) {
 					`parent` = 0
 			");
 			if (!$comment) {
-				a_error('Atbildāmais komentārs neeksistē'); 
+				api_error('Atbildāmais komentārs neeksistē');
 				return;
 			}
 		}
@@ -755,14 +752,14 @@ function a_add_article_comment($article = null) {
 /**
  *  Atgriezīs x jaunākos apbalvojumus lietotāja profilā.
  */
-function a_fetch_awards($user_id, $award_count = 4) {
+function api_fetch_awards($user_id, $award_count = 4) {
 	global $db, $m, $img_server;
 	
 	$user_id = (int)$user_id;
 	$award_count = (int)$award_count;
 	
 	if ($user_id < 0 || $award_count < 0 || $award_count > 10) {
-		a_error('Kļūdaini apbalvojumu ielādes parametri');
+		api_error('Kļūdaini apbalvojumu ielādes parametri');
 		return;
 	}
 	
@@ -795,5 +792,5 @@ function a_fetch_awards($user_id, $award_count = 4) {
 		$m->set($memcached_key, $data, false, 900);
 	}
 	
-	a_append(array('awards' => $data));
+	api_append(array('awards' => $data));
 }

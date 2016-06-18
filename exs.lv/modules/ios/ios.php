@@ -75,17 +75,17 @@ if ($category->textid === 'ban_details') {
     // ios.exs.lv/ban_details
 
 	if ($ip_banned) {
-		a_fetch_ban(1, $ip_banned);
+		api_fetch_ban(1, $ip_banned);
 	} else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) {
-		a_fetch_ban(2);
+		api_fetch_ban(2);
 	} else {
-        a_info('Lietotājam nav liegta piekļuve exs.lv');
+        api_info('Lietotājam nav liegta piekļuve exs.lv');
     }
 
 // pārbauda, vai lietotājam ir IP liegums
 } else if ($ip_banned) {
 
-	a_fetch_ban(1, $ip_banned);
+	api_fetch_ban(1, $ip_banned);
 	if ($auth->ok) {
 		$auth->logout();
 	}
@@ -97,8 +97,8 @@ if ($category->textid === 'ban_details') {
     if ($auth->ok) {
         $auth->logout();
     } else {
-        a_log('Neautentificējies lietotājs centās iziet no sistēmas');
-        a_error('Lietotājs nemaz nav autentificējies');
+        api_log('Neautentificējies lietotājs centās iziet no sistēmas');
+        api_error('Lietotājs nemaz nav autentificējies');
     }
     
 // login pieprasījums
@@ -108,7 +108,7 @@ if ($category->textid === 'ban_details') {
     // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
 	// bet serveris domā pretēji, labāk izautorizēt
     if ($auth->ok) {
-        a_log('Autentificējies lietotājs centās autentificēties vēlreiz. Veikta automātiska izlogošana');
+        api_log('Autentificējies lietotājs centās autentificēties vēlreiz. Veikta automātiska izlogošana');
         $auth->logout();
     } 
     
@@ -117,11 +117,11 @@ if ($category->textid === 'ban_details') {
         $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
         
         if (!$auth->ok) {
-            a_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati');
-            a_error('Kļūdaini norādīti piekļuves dati');
+            api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati');
+            api_error('Kļūdaini norādīti piekļuves dati');
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            a_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums');
-            a_fetch_ban(2);
+            api_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums');
+            api_fetch_ban(2);
         } else { // autentificēšanās OK
         
             // atzīmē kā iOS lietotāju, lai saņemtu medaļu (kad tāda būs)
@@ -134,11 +134,11 @@ if ($category->textid === 'ban_details') {
         
             // pēc veiksmīgas autentificēšanās atbildei pievieno
             // svaigāko lietotāja profila informāciju
-            a_append_profile_info();
+            api_append_profile_info();
         }
     } else {
-        a_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole');
-        a_error('Kļūdaini norādīti piekļuves dati');
+        api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole');
+        api_error('Kļūdaini norādīti piekļuves dati');
     }
     
 // autorizētu pieprasījumu apstrāde
@@ -146,12 +146,12 @@ if ($category->textid === 'ban_details') {
  
 	// pārbauda, vai lietotājam ir profila liegums
 	if (!empty($busers) && !empty($busers[$auth->id])) {      
-		a_fetch_ban(2);
+		api_fetch_ban(2);
         
     // sākotnējiem izstrādes testiem...
     } else if (isset($_GET['welcome'])) {
-        a_append(array('message' => 'Hello World!'));
-        a_append_profile_info();
+        api_append(array('message' => 'Hello World!'));
+        api_append_profile_info();
 
 	// atver pieprasīto moduli un tajā izpilda darbības
 	} else if ($category->textid !== 'index' &&
@@ -161,15 +161,15 @@ if ($category->textid === 'ban_details') {
 	// šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
 	// sasinhronizējies starp serveri un lietotni
 	} else {
-		a_log('Pieprasīta neeksistējoša sadaļa');
-		a_error('Pieprasīti dati ar nepareizu adresi');
+		api_log('Pieprasīta neeksistējoša sadaļa');
+		api_error('Pieprasīti dati ar nepareizu adresi');
 	}
 
 } else {
     // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un
     // sūta pieprasījumu, bet serveris jau dzēsis sesiju, nonāk šeit
-    a_log('Neatbilstošs pieprasījums no neautentificēta lietotāja');
-	a_error('Lūdzu, autorizējies');
+    api_log('Neatbilstošs pieprasījums no neautentificēta lietotāja');
+	api_error('Lūdzu, autorizējies');
 }
 
 
@@ -185,7 +185,7 @@ echo json_encode(array(
 	'message'    => $json_message,
 	'ban_type'   => $json_banned,
 	'logged_in'  => $auth->ok,
-	'xsrf_token' => a_make_xsrf(),
+	'xsrf_token' => api_make_xsrf(),
 	'response'   => $json_page
 ));
 
