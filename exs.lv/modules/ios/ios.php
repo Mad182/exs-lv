@@ -59,7 +59,7 @@ $json_page      = null;
 $ip_banned = $db->get_row("
 	SELECT * FROM `banned` 
 	WHERE `ip` = '".sanitize($auth->ip)."' AND
-	(`lang` = 5 OR `lang` = ".(int)$api_lang.")
+	(`lang` = 0 OR `lang` = ".(int)$api_lang.")
 	LIMIT 1
 ");
 

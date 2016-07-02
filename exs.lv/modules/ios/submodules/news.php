@@ -47,9 +47,9 @@ if (isset($_GET['var1'])) {
 			in_array($_GET['var2'], array('plus', 'minus'))) {
 
 			if ($_GET['var2'] == 'plus') {
-				a_rate_comment((int)$_GET['var3'], 'article', true);
+				api_rate_comment((int)$_GET['var3'], 'article', true);
 			} else {
-				a_rate_comment((int)$_GET['var3'], 'article', false);
+				api_rate_comment((int)$_GET['var3'], 'article', false);
 			}
 		}
 		

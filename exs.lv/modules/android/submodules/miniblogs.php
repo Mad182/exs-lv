@@ -23,7 +23,7 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
  */
 if ($var1 === 'getlist') {
 	set_action('jaunākos miniblogus');
-	a_fetch_miniblogs();
+	api_fetch_miniblogs();
 
 /**
  *  Jauna minibloga pievienošana vai esoša minibloga komentēšana.
@@ -40,7 +40,7 @@ if ($var1 === 'getlist') {
 			api_log('Netika iesniegti minibloga komentēšanas dati');
 		}
 	} else {
-		a_add_miniblog(array(
+		api_add_miniblog(array(
 			'group_id' => $_POST['group_id'],
 			'parent_id' => $_POST['parent_id'],
 			'is_private' => $_POST['is_private'],
@@ -55,14 +55,14 @@ if ($var1 === 'getlist') {
 } else if (!empty($var1) && !empty($var2) &&
 		   in_array($var1, array('plus', 'minus'))) {
 
-	a_rate_comment($var2, ($var1 === 'plus'));
+	api_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Minibloga satura atgriešana ar visiem komentāriem.
  *  (/miniblogs/getcontent/{miniblog_id})
  */
 } else if ($var1 === 'getcontent' && !empty($var2)) {
-	a_fetch_miniblog($var2);
+	api_fetch_miniblog($var2);
 
 /**
  *  Citi gadījumi.

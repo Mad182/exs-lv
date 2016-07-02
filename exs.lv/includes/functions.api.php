@@ -81,15 +81,13 @@ function api_log($text) {
 	global $db, $auth, $lang;
 	
 	if (empty($text)) return;
-    
-    // TODO: lietošanā pārsaukt 'android_logs' tabulu uz 'api_android_logs'
-    $log_table = ($lang === 4) ? 'api_ios_logs' : 'android_logs';
 	
 	$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
 	
-	return $db->insert($log_table, array(
-		'message' => sanitize($text),
+	return $db->insert('api_logs', array(
+        'api_type' => ($lang === 2 ? 0 : 1),
 		'url' => sanitize($uri),
+		'message' => sanitize($text),
 		'created_by' => (int)$auth->id,
 		'created_at' => date('Y-m-d H:i:s', time()),
 		'created_ip' => sanitize($auth->ip)

@@ -11,7 +11,7 @@
  *
  *  Norādot grupas ID, atgriezti tiks tikai šīs grupas miniblogi.
  */
-function a_fetch_miniblogs($group_id = 0) {
+function api_fetch_miniblogs($group_id = 0) {
 	global $auth, $db, $api_lang;      
 	
 	$group_id = (int)$group_id;
@@ -21,7 +21,7 @@ function a_fetch_miniblogs($group_id = 0) {
 	$current_page = 1;
 	
 	// noteiks, vai lietotājam maz ir piekļuve norādītajai grupai
-	if ($group_id != 0 && !a_member_of($group_id)) {
+	if ($group_id != 0 && !api_member_of($group_id)) {
 		return;
 	}    
 	
@@ -174,7 +174,7 @@ function a_fetch_miniblogs($group_id = 0) {
 /**
  *  Atgriezīs norādītā minibloga info, kā arī komentārus.
  */
-function a_fetch_miniblog($miniblog_id = 0) {
+function api_fetch_miniblog($miniblog_id = 0) {
 	global $db, $auth, $api_lang, $img_server;
 	
 	$miniblog_id = (int)$miniblog_id;
@@ -204,7 +204,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
 	}
 	
 	// lietotājam var nebūt piekļuves grupai, kurā ir šis miniblogs
-	if (!empty($miniblog->group_id) && !a_member_of($miniblog->group_id)) {
+	if (!empty($miniblog->group_id) && !api_member_of($miniblog->group_id)) {
 		return;
 	}
 
@@ -351,7 +351,7 @@ function a_fetch_miniblog($miniblog_id = 0) {
  *  Ar miniblogu tiek saprasts ieraksts `miniblog` tabulā (t.i., gan miniblogs,
  *  gan tā komentāri). Pagaidām neatbalsta junk sadaļu.
  */
-function a_add_miniblog($data) {
+function api_add_miniblog($data) {
 	global $db, $auth;
 	global $api_lang;
 	
@@ -629,7 +629,7 @@ function a_add_miniblog($data) {
  *  $type - 'miniblog'. Nākotnē plānots arī 'image' un 'article'.
  *  $positive - vai vērtēt pozitīvi?
  */
-function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
+function api_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 	global $db, $auth;
 	
 	$comment_id = (int)$comment_id;
@@ -688,7 +688,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 		return;
 	// vērtējot grupā esošu ierakstu, jāpārbauda lietotāja pieeja tam
 	} else if ($type === 'miniblog' && $comment->groupid != 0 &&
-			   !a_member_of($comment->groupid, false, true)) {
+			   !api_member_of($comment->groupid, false, true)) {
 		return;
 	}
 	
@@ -763,7 +763,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
  *  @param $allow_archived  vai arhivēta grupa ir pieļaujama
  *  @param $allow_voting    vai pārbaudīt, vai ierakstu vērtēšana ir iespējota?
  */
-function a_member_of($group_id = 0, $allow_archived = true, $check_voting = false) {
+function api_member_of($group_id = 0, $allow_archived = true, $check_voting = false) {
 	global $db, $auth, $api_lang;
 	
 	$group_id = (int)$group_id;

@@ -23,7 +23,7 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 if (!empty($var1) && !empty($var2) &&
 	in_array($var1, array('plus', 'minus'))) {
 
-	a_rate_comment($var2, ($var1 === 'plus'));
+	api_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
@@ -31,7 +31,7 @@ if (!empty($var1) && !empty($var2) &&
  */
 } else if (!empty($var1) && $var2 === 'getlist') {
 	set_action('grupas miniblogus');
-	a_fetch_miniblogs($var1);
+	api_fetch_miniblogs($var1);
 
 /**
  *  Atgriezīs grupas minibloga saturu.
@@ -39,7 +39,7 @@ if (!empty($var1) && !empty($var2) &&
  */
 } else if ($var1 === 'getcontent' && !empty($var2)) {
 	set_action('grupas miniblogu');
-	a_fetch_miniblog($var2);
+	api_fetch_miniblog($var2);
 
 /**
  *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
@@ -56,7 +56,7 @@ if (!empty($var1) && !empty($var2) &&
 			api_log('Netika iesniegti grupas minibloga komentēšanas dati');
 		}
 	} else {
-		a_add_miniblog(array(
+		api_add_miniblog(array(
 			'group_id' => $_POST['group_id'],
 			'parent_id' => $_POST['parent_id'],
 			'is_private' => $_POST['is_private'],
