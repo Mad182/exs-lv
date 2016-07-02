@@ -136,7 +136,7 @@ function update_karma($userid, $force_award = false) {
 		$pms = (int) $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = '" . $user->id . "' OR `from_uid` = '" . $user->id . "'");
 		$votes = $db->get_var("SELECT count(*) FROM `responses` WHERE `user_id` = '" . $user->id . "'");
 		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND removed = '0'") + $db->get_var("SELECT count(*) FROM galcom WHERE author = '$user->id' AND removed = '0'"));
-		$miniblog = $db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $user->id . "' AND removed = '0'");
+		$miniblog = $db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $user->id . "' AND removed = '0' AND `groupid` != '605'");
 		$awards = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user->id'");
 		$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
 		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id' AND removed = '0'") +
@@ -167,7 +167,7 @@ function update_karma($userid, $force_award = false) {
 		$topics = $db->get_var("SELECT count(*) FROM pages WHERE author = '" . $user->id . "' AND `date` > '" . date('Y-m-d') . " 00:00:00'");
 		$images = $db->get_var("SELECT count(*) FROM images WHERE uid = '" . $user->id . "' AND `date` > '" . date('Y-m-d') . " 00:00:00'");
 		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$user->id' AND removed = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00'") + $db->get_var("SELECT count(*) FROM `galcom` WHERE `author` = '$user->id' AND `removed` = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00'"));
-		$miniblog = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = '" . $user->id . "' AND removed = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00'");
+		$miniblog = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = '" . $user->id . "' AND removed = '0' AND `date` > '" . date('Y-m-d') . " 00:00:00' AND `groupid` != '605'");
 		$today = $posts + $miniblog + $topics + $images;
 		if ($today != $user->today) {
 			$db->update('users', $user->id, array('today' => $today));
