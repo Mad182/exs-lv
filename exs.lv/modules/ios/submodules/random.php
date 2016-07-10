@@ -98,8 +98,8 @@ if ($var1 === 'notifications') {
 				'type' => (int)$notify->type,
 				'group_id' => (int)$group_id,
 				'foreign_key' => (int)$notify->foreign_key,
-				'text' => textlimit(trim($notify->info), 45, ''),
-				'date' => time_ago(strtotime($notify->bump))
+				'text' => api_textlimit(trim($notify->info), 45, ''),
+				'date' => 'pirms ' . time_ago(strtotime($notify->bump))
 			);
 		}
 		
@@ -225,21 +225,20 @@ if ($var1 === 'notifications') {
 		// pēdējoreiz redzēts pirms...
 		$time_ago = time_ago(strtotime($profile->lastseen));
 		
-		$data = array(
-			'formatted' => api_fetch_user($profile->id, $profile->nick, $profile->level),
-			'avatar' => 'https://img.exs.lv/userpic/large/'.$profile->avatar,
-			'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
-			'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
+        $data = api_fetch_user($profile->id, $profile->nick, $profile->level, true);
+		$data += array(
+			'days_online' => (int)$profile->days_in_row,
+			'days_registered' => (int)$days,
 			'last_seen' => 'pirms '.$time_ago,
 			'usertitle' => $profile->custom_title,
 			'gender' => (int)$profile->gender,
 			'web' => $profile->web,
 			'karma' => (int)$profile->karma,
-			'posts' => (int)$posts,
-			'pages' => (int)$user_pages,
-			'voted_by_self_cnt' => (int)$profile->vote_total,
-			'voted_by_self_sum' => (int)$profile->vote_others,
-			'voted_by_others' => (int)$voteval
+			'post_count' => (int)$posts,
+			'page_count' => (int)$user_pages,
+			'self_votes_count' => (int)$profile->vote_total,
+			'self_votes_sum' => (int)$profile->vote_others,
+			'other_votes_sum' => (int)$voteval
 		);
 		
 		// moderatoriem redzama papildinformācija par lietotāju
@@ -249,7 +248,7 @@ if ($var1 === 'notifications') {
 			$data['useragent'] = $profile->user_agent;        
 		}*/
 		
-		api_append(array('userdata' => $data));
+		api_append(array('profile' => $data));
 		
 		// pievienos klāt arī lietotāja pāris jaunākos apbalvojumus
 		api_fetch_awards($user_id, 6);
@@ -363,11 +362,10 @@ if ($var1 === 'notifications') {
 			foreach ($own_groups as $group) {
 				$groups[] = array(
 					'id' => (int)$group->id,
-					'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+					'avatar_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
 					'title' => $group->title,
-					'members' => (int)$group->members,
-					'posts' => (int)$group->posts,
-					'in_group' => true,
+					'member_count' => (int)$group->members,
+					'post_count' => (int)$group->posts,
 					'is_admin' => true,
 					'is_mod' => false,
 					'unread_msgs' => (int)($group->posts - $group->owner_seenposts)
@@ -380,11 +378,10 @@ if ($var1 === 'notifications') {
 			foreach ($member_of as $group) {
 				$groups[] = array(
 					'id' => (int)$group->id,
-					'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+					'avatar_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
 					'title' => $group->title,
-					'members' => (int)$group->members,
-					'posts' => (int)$group->posts,
-					'in_group' => true,
+					'member_count' => (int)$group->members,
+					'post_count' => (int)$group->posts,
 					'is_admin' => false,
 					'is_mod' => (bool)($group->moderator ? true : false),
 					'unread_msgs' => (int)($group->posts - $group->seenposts)
@@ -518,10 +515,10 @@ if ($var1 === 'notifications') {
 			
 				$data[] = array(
 					'id' => (int)$group->id,
-					'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+					'avatar_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
 					'title' => $group->title,
-					'members' => (int)$group->members,
-					'posts' => (int)$group->posts,
+					'member_count' => (int)$group->members,
+					'post_count' => (int)$group->posts,
 					'in_group' => $in_group,
 					'is_admin' => false,
 					'is_mod' => $is_moderator,
@@ -530,8 +527,8 @@ if ($var1 === 'notifications') {
 			}
 			
 			api_append(array(
-				'cat_id' => (int)$get_cat->id,
-				'cat_title' => $get_cat->title,
+				'category_id' => (int)$get_cat->id,
+				'category_title' => $get_cat->title,
 				'groups' => $data
 			));
 		}

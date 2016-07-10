@@ -29,7 +29,7 @@ if (!empty($var1) && !empty($var2) &&
  *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
  *  (/groups/{group_id}/getlist)
  */
-} else if (!empty($var1) && $var2 === 'getlist') {
+} else if (!empty($var1) && $var2 === 'getlatestlist') {
 	set_action('grupas miniblogus');
 	api_fetch_miniblogs($var1);
 
@@ -37,7 +37,7 @@ if (!empty($var1) && !empty($var2) &&
  *  Atgriezīs grupas minibloga saturu.
  *  (/groups/getcontent/{miniblog_id})
  */
-} else if ($var1 === 'getcontent' && !empty($var2)) {
+} else if ($var1 === 'getminiblog' && !empty($var2)) {
 	set_action('grupas miniblogu');
 	api_fetch_miniblog($var2);
 
@@ -48,7 +48,7 @@ if (!empty($var1) && !empty($var2) &&
 } else if ($var1 === 'new' || $var1 === 'comment') {
 	
 	if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
-		!isset($_POST['content']) || !isset($_POST['is_private'])) {
+		!isset($_POST['mb_text'])) {
 		api_error('Kļūdains pieprasījums');
 		if ($var1 === 'new') {
 			api_log('Netika iesniegti grupas minibloga ieraksta pievienošanas dati');
@@ -59,8 +59,8 @@ if (!empty($var1) && !empty($var2) &&
 		api_add_miniblog(array(
 			'group_id' => $_POST['group_id'],
 			'parent_id' => $_POST['parent_id'],
-			'is_private' => $_POST['is_private'],
-			'content' => $_POST['content']
+			'is_private' => false,
+			'mb_text' => $_POST['mb_text']
 		));
 	}
 
@@ -224,6 +224,7 @@ if (!empty($var1) && !empty($var2) &&
 		SELECT 
 			`clans`.`id` AS `clan_id`,
 			`clans`.`title`,
+			`clans_categories`.`id` AS `cat_id`,
 			`clans_categories`.`title` AS `cat_title`,
 			`clans`.`text`,
 			`clans`.`avatar`,
@@ -257,7 +258,7 @@ if (!empty($var1) && !empty($var2) &&
 		if (!empty($owner->deleted)) {
 			$owner->nick = 'dzēsts';
 		}
-		$owner = api_fetch_user($owner->id, $owner->nick, $owner->level);
+		$owner = api_fetch_user($owner->id, $owner->nick, $owner->level, true);
 
 		$is_member = ($group_data->is_member != '0') ? true : false;
 		
@@ -272,18 +273,20 @@ if (!empty($var1) && !empty($var2) &&
 		$arr_images = api_format_text($group_data->text);
 
 		// atgriežamais masīvs ar datiem
-		api_append(array('content' => array(
-			'id' => (int)$group_data->clan_id,
-			'cat_title' => mb_strtoupper($group_data->cat_title),
-			'title' => $group_data->title,
-			'text' => $group_data->text,
-			'text_images' => $arr_images,
-			'av_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
-			'members' => (int)($group_data->members + 1), // + admins
-			'posts' => (int)$group_data->posts,
+		api_append(array('group_data' => array(
+			'category_id' => (int)$group_data->cat_id,
+			'category_title' => mb_strtoupper($group_data->cat_title),
+			'group_id' => (int)$group_data->clan_id,
+			'group_title' => $group_data->title,
+			'intro_text' => $group_data->text,
+			'image_count' => count($arr_images),
+			'image_urls' => $arr_images,
+			'avatar_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
+			'member_count' => (int)($group_data->members + 1), // + admins
+			'post_count' => (int)$group_data->posts,
 			'posts_seen' => (int)$posts_seen,
+			'owner_data' => $owner,
 			'is_member' => $is_member,
-			'owner' => $owner,
 			'is_archived' => ($group_data->archived ? true : false)
 		)));
 	}
@@ -315,7 +318,7 @@ if (!empty($var1) && !empty($var2) &&
 		);
 		
 		// lappušu iestatījumi
-		$max_per_page = 21;
+		$max_per_page = 20;
 		$current_page = 1;
 		$page_count = ceil($total_members / $max_per_page);
 		
@@ -345,12 +348,14 @@ if (!empty($var1) && !empty($var2) &&
 				$owner->nick = 'dzēsts';
 			}
 			$avatar = api_get_user_avatar($owner, 'l');
-			$arr_members[] = array(
+			$arr = array(
 				'member_id' => 0,
-				'av_url' => $avatar,
-				'user' => api_fetch_user($owner->id, $owner->nick, $owner->level),
-				'is_mod' => 0
+                'is_admin' => true,
+                'is_mod' => false,
+				'avatar_url' => $avatar
 			);
+            $arr += api_fetch_user($owner->id, $owner->nick, $owner->level);
+            $arr_members[] = $arr;
 			$member_count = 1;
 		}
 
@@ -370,12 +375,14 @@ if (!empty($var1) && !empty($var2) &&
 						$usr->nick = 'dzēsts';
 					}
 					$avatar = api_get_user_avatar($usr, 'l');
-					$arr_members[] = array(
+					$arr = array(
 						'member_id' => (int)$member->id,
-						'av_url' => $avatar,
-						'user' => api_fetch_user($usr->id, $usr->nick, $usr->level),
-						'is_mod' => (bool)$member->moderator
+                        'is_admin' => false,
+                        'is_mod' => (bool)$member->moderator,
+						'avatar_url' => $avatar					
 					);
+                    $arr += api_fetch_user($usr->id, $usr->nick, $usr->level);
+                    $arr_members[] = $arr;
 					$member_count++;
 				}
 			}

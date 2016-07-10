@@ -6,6 +6,9 @@
  *  Ieviests: 14.06.2016. (@burvis)
  */
  
+require_once(CORE_PATH . '/includes/functions.api.php');
+require_once(CORE_PATH . '/modules/ios/functions.iosapi.php');
+ 
 /*
 |--------------------------------------------------------------------------
 |   Pamatkonfigurācija.
@@ -42,7 +45,7 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
  *      'ban_type'      => int,      // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
  *      'logged_in'     => bool,     // statuss, kas apzīmē, vai lietotājs ir autentificēts
  *      'xsrf_token'    => string,   // anti-xsrf atslēga, kas pievienojama adrešu galā
- *      'response'      => array()   // detalizētāks saturs kā atbilde pieprasījumam
+ *      'response'      => null|JSONObject   // detalizētāks saturs kā atbilde pieprasījumam
  *  );
  */
 
@@ -161,7 +164,9 @@ if ($category->textid === 'ban_details') {
 	// šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
 	// sasinhronizējies starp serveri un lietotni
 	} else {
-		api_log('Pieprasīta neeksistējoša sadaļa');
+        if ($category->textid !== 'index') {
+            api_log('Pieprasīta neeksistējoša sadaļa');
+        }
 		api_error('Pieprasīti dati ar nepareizu adresi');
 	}
 

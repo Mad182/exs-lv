@@ -5,6 +5,15 @@
  *  Apstrādā visus no Android saņemtos pieprasījumus.
  */
 
+require_once(CORE_PATH . '/includes/functions.api.php');
+require_once(CORE_PATH . '/modules/android/functions.androidapi.php');
+ 
+/*
+|--------------------------------------------------------------------------
+|   Pamatkonfigurācija.
+|--------------------------------------------------------------------------
+*/
+
 // submoduļos ir pārbaude, vai šāds mainīgais definēts,
 // lai failus neskatītos pa tiešo
 $sub_include = true;
@@ -50,6 +59,12 @@ $ip_banned = $db->get_row("
 	(`lang` = 0 OR `lang` = ".(int)$api_lang.")
 	LIMIT 1
 ");
+
+/*
+|--------------------------------------------------------------------------
+|   Pieprasījumu pārvaldība.
+|--------------------------------------------------------------------------
+*/
 
 // ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
 // info par lieguma statusu, lai noteiktu, vai tāds vēl pastāv, tāpēc šādai
@@ -132,14 +147,21 @@ if (isset($_GET['banstatus'])) {
 	api_error('Lūdzu, autorizējies');
 }
 
-$arr = array(
+/*
+|--------------------------------------------------------------------------
+|   Atbilde pieprasījumam.
+|--------------------------------------------------------------------------
+*/
+
+// atgriež atbildi uz pieprasījumu JSON objekta formā
+echo json_encode(array(
 	'state'     => $json_state,
 	'message'   => $json_message,
 	'is_banned' => $json_banned,
 	'is_online' => $auth->ok,
 	'xsrf'      => api_make_xsrf(),
 	'response'  => $json_page
-);
+));
 
-echo json_encode($arr);
+// pēc šī faila vairs nekādu pārbaužu un darbību nebūs
 exit;

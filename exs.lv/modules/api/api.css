@@ -49,7 +49,6 @@ h1 a { /* lapas nosaukums augšējā joslā */
     line-height: 50px;
     font-size: 19px;
     /*color: #518be4;*/
-    text-transform: uppercase;
 }
     h1 a:hover {
         text-decoration: none;
@@ -73,14 +72,14 @@ h4 { /* mazāki virsraksti satura daļā */
 /* links */
 a {
 	text-decoration: none;
-	color: #0A6Eb1;
+	color: #6fc7cc;
 }
 a:hover {
-	color: #09446b;
+	color: #57b6bb;
 	text-decoration: underline
 }
 a:focus {
-	color: #c00;
+	color: #57b6bb;
 }
 
 /* lists */
