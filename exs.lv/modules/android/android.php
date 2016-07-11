@@ -5,6 +5,15 @@
  *  Apstrādā visus no Android saņemtos pieprasījumus.
  */
 
+require_once(CORE_PATH . '/includes/functions.api.php');
+require_once(CORE_PATH . '/modules/android/functions.androidapi.php');
+ 
+/*
+|--------------------------------------------------------------------------
+|   Pamatkonfigurācija.
+|--------------------------------------------------------------------------
+*/
+
 // submoduļos ir pārbaude, vai šāds mainīgais definēts,
 // lai failus neskatītos pa tiešo
 $sub_include = true;
@@ -51,21 +60,27 @@ $ip_banned = $db->get_row("
 	LIMIT 1
 ");
 
+/*
+|--------------------------------------------------------------------------
+|   Pieprasījumu pārvaldība.
+|--------------------------------------------------------------------------
+*/
+
 // ja lietotājs lietotnē ir nonācis lieguma skatā, tas var pieprasīt svaigu
 // info par lieguma statusu, lai noteiktu, vai tāds vēl pastāv, tāpēc šādai
 // info ir jābūt noskaidrojamai vienmēr
 if (isset($_GET['banstatus'])) {
 
 	if ($ip_banned) {
-		a_fetch_ban(1, $ip_banned);
+		api_fetch_ban(1, $ip_banned);
 	} else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) { 
-		a_fetch_ban(2);
+		api_fetch_ban(2);
 	}
 
 // lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
 // paziņojumu par liegumu
 } else if ($ip_banned) {
-	a_fetch_ban(1, $ip_banned);
+	api_fetch_ban(1, $ip_banned);
 	if ($auth->ok) {
 		$auth->logout();
 	}
@@ -76,7 +91,7 @@ if (isset($_GET['banstatus'])) {
 	// ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
 	// bet serveris domā pretēji un atved šeit, labāk izautorizēt
 	if (isset($_GET['login'])) {
-		a_log('Kā pieteicies lietotājs centās pieteikties atkārtoti');
+		api_log('Kā pieteicies lietotājs centās pieteikties atkārtoti');
 		$auth->logout();
 	}
 
@@ -88,7 +103,7 @@ if (isset($_GET['banstatus'])) {
 
 	// pārbauda, vai ir profila liegums, lai lietotnē varētu parādīt paziņojumu
 	} else if (!empty($busers) && !empty($busers[$auth->id])) {      
-		a_fetch_ban(2);
+		api_fetch_ban(2);
 
 	// atvērs pieprasīto moduli un tajā izpildīs darbības
 	} else if (file_exists(CORE_PATH . '/modules/android/submodules/' . $category->textid . '.php')) {
@@ -97,8 +112,8 @@ if (isset($_GET['banstatus'])) {
 	// šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
 	// sasinhronizējies starp serveri un lietotni
 	} else {
-		a_log('Pieteicies lietotājs veica nezināmu pieprasījumu');
-		a_error('Kļūdains pieprasījums (#1)');
+		api_log('Pieteicies lietotājs veica nezināmu pieprasījumu');
+		api_error('Kļūdains pieprasījums (#1)');
 	}
 
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
@@ -109,9 +124,9 @@ if (isset($_GET['banstatus'])) {
 		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
 		
 		if (!$auth->ok) {
-			a_error('Nepareizi ievadīti piekļuves dati');
+			api_error('Nepareizi ievadīti piekļuves dati');
 		} else if (!empty($busers) && !empty($busers[$auth->id])) {
-			a_fetch_ban(2);
+			api_fetch_ban(2);
 		} else {
 		
 			// atzīmēs kā android lietotāju, lai saņemtu medaļu
@@ -122,24 +137,31 @@ if (isset($_GET['banstatus'])) {
 				$auth->android_seen = 1;
 			}
 		
-			a_append_profile_info();
+			api_append_profile_info();
 		}
 	}
 
 // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un sūta pieprasījumu,
 // bet serveris jau dzēsis sesiju, nonāks šeit
 } else {
-	a_error('Lūdzu, autorizējies');
+	api_error('Lūdzu, autorizējies');
 }
 
-$arr = array(
+/*
+|--------------------------------------------------------------------------
+|   Atbilde pieprasījumam.
+|--------------------------------------------------------------------------
+*/
+
+// atgriež atbildi uz pieprasījumu JSON objekta formā
+echo json_encode(array(
 	'state'     => $json_state,
 	'message'   => $json_message,
 	'is_banned' => $json_banned,
 	'is_online' => $auth->ok,
-	'xsrf'      => a_make_xsrf(),
+	'xsrf'      => api_make_xsrf(),
 	'response'  => $json_page
-);
+));
 
-echo json_encode($arr);
+// pēc šī faila vairs nekādu pārbaužu un darbību nebūs
 exit;

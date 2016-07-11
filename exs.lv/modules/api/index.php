@@ -2,11 +2,10 @@
 /**
  *  exs.lv API dokumentācijas lapa.
  *
- *  Izveidota kā atsevišķa lapa ar jaunu dizainu,
- *  un tā ir nodalīta no visa pārējā exs satura.
+ *  Izveidota kā atsevišķa lapa ar jaunu dizainu.
  *
  *  API dokumentācijas moduļi:
- *    1. Android lietotne
+ *    1. Android lietotne (nav uzrakstīta, paslēpta)
  *    2. iOS lietotne
  */
  

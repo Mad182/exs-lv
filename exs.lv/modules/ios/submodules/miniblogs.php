@@ -4,6 +4,8 @@
  *
  *  Apstrādā pieprasījumus saistībā ar darbībām miniblogos, tai skaitā
  *  jauna minibloga pievienošanu vai esoša komentēšanu, vērtēšanu u.c.
+ *
+ *  Adrese: ios.exs.lv/miniblogs/
  */
 
 // nebūs iespējams skatīt failu pa tiešo
@@ -19,55 +21,55 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 
 /**
  *  Atgriezīs jaunāko miniblogu sarakstu.
- *  (/miniblogs/getlist)
+ *  /miniblogs/getlatestlist
  */
-if ($var1 === 'getlist') {
+if ($var1 === 'getlatestlist') {
 	set_action('jaunākos miniblogus');
-	a_fetch_miniblogs();
+	api_fetch_miniblogs();
 
 /**
  *  Jauna minibloga pievienošana vai esoša minibloga komentēšana.
- *  (/miniblogs/{new|comment})
+ *  /miniblogs/{new|comment}
  */
 } else if ($var1 === 'new' || $var1 === 'comment') {
 	
-	if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
-		!isset($_POST['content']) || !isset($_POST['is_private'])) {
-		a_error('Kļūdains pieprasījums');
+	if (!isset($_POST['parent_id']) || !isset($_POST['mb_text']) ||
+        ($var1 === 'new' && !isset($_POST['is_private']))) {
+		api_error('Kļūdains pieprasījums');
 		if ($var1 === 'new') {
-			a_log('Netika iesniegti minibloga ieraksta pievienošanas dati');
+			api_log('Netika iesniegti minibloga ieraksta pievienošanas dati');
 		} else {
-			a_log('Netika iesniegti minibloga komentēšanas dati');
+			api_log('Netika iesniegti minibloga komentēšanas dati');
 		}
 	} else {
-		a_add_miniblog(array(
-			'group_id' => $_POST['group_id'],
+		api_add_miniblog(array(
+			'group_id' => 0,
 			'parent_id' => $_POST['parent_id'],
-			'is_private' => $_POST['is_private'],
-			'content' => $_POST['content']
+			'is_private' => ($var1 === 'new' ? $_POST['is_private'] : 0),
+			'mb_text' => $_POST['mb_text']
 		));
 	}
 
 /**
  *  Minibloga vērtēšana ar plusu vai mīnusu.
- *  (/miniblogs/{plus|minus}/{entry_id})
+ *  /miniblogs/{plus|minus}/{miniblog_id}
  */
 } else if (!empty($var1) && !empty($var2) &&
 		   in_array($var1, array('plus', 'minus'))) {
 
-	a_rate_comment($var2, ($var1 === 'plus'));
+	api_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Minibloga satura atgriešana ar visiem komentāriem.
- *  (/miniblogs/getcontent/{miniblog_id})
+ *  /miniblogs/getminiblog/{miniblog_id}
  */
-} else if ($var1 === 'getcontent' && !empty($var2)) {
-	a_fetch_miniblog($var2);
+} else if ($var1 === 'getminiblog' && !empty($var2)) {
+	api_fetch_miniblog($var2);
 
 /**
  *  Citi gadījumi.
  */
 } else {
-	a_error('Kļūdains pieprasījums (#4)');
-	a_log('Kļūdains pieprasījums miniblogu modulī');
+	api_error('Kļūdains pieprasījums');
+	api_log('Kļūdains pieprasījums miniblogu modulī');
 }

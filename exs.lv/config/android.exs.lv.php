@@ -51,4 +51,3 @@ if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
 }
 
 require_once(CORE_PATH . '/includes/functions.exs.php');
-require_once(CORE_PATH . '/includes/functions.api.php');

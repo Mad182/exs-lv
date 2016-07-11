@@ -52,7 +52,7 @@ if ($var1 === 'received') {
 	");
 	
 	if (!$pms) {
-		a_append(array(
+		api_append(array(
 			'endoflist' => true,
 			'unread' => 0,
 			'messages' => array()
@@ -66,20 +66,29 @@ if ($var1 === 'received') {
 			// sūtītāja dati
 			$from = '';            
 			if (!empty($pm->user_deleted)) {
-				$from = '<em>dzēsts</em>';
+                $from = array(
+                    'nick' => '<em>dzēsts</em>',
+                    'params' => '0|0|0|0|0',
+                    'avatar_url' => ''
+                );
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
-					$from = wordwrap(textlimit(
+					$from = wordwrap(api_textlimit(
 						h($pm->imap_name), 48, '...'), 20, '\n', 1);
 				} else {
-					$from = wordwrap(textlimit(
+					$from = wordwrap(api_textlimit(
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
+                $from = array(
+                    'nick' => $from,
+                    'params' => '0|0|0|0|0',
+                    'avatar_url' => ''
+                );
 			} else {
-				$from = a_fetch_user($pm->from_uid, $pm->nick, $pm->level);
+				$from = api_fetch_user($pm->from_uid, $pm->nick, $pm->level, true);
 			}
 			
-			$pm_title = wordwrap(textlimit(
+			$pm_title = wordwrap(api_textlimit(
 				strip_tags($pm->title), 48, '...'), 20, ' ', 1);
 			
 			$messages[] = array(
@@ -95,7 +104,7 @@ if ($var1 === 'received') {
 		
 		$unread = ($unread) ? (int)$unread : 0;
 		
-		a_append(array(
+		api_append(array(
 			'endoflist' => $endoflist,
 			'unread' => $unread,
 			'messages' => $messages
@@ -111,15 +120,15 @@ if ($var1 === 'received') {
 	// kļūdu pārbaudes
 	if (!isset($_POST['msg_title']) || !isset($_POST['msg_content']) ||
 		!isset($_POST['msg_to'])) {
-		a_error('Kļūdaini iesniegti dati');
-		a_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju');        
-	} else if (!a_check_xsrf()) {
-		a_error('no hacking, pls');
-		a_log('Sūtot vēstuli, konstatēts XSRF uzbrukums');        
+		api_error('Kļūdaini iesniegti dati');
+		api_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju');
+	} else if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Sūtot vēstuli, konstatēts XSRF uzbrukums');
 	} else if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] >= time() - 3) {
-		a_error('exā plūdi. :( Brīdi uzgaidi!');        
+		api_error('exā plūdi. :( Brīdi uzgaidi!');
 	} else if ((int)$_POST['msg_to'] == $auth->id) {
-		a_error('Tik vientuļi, ka raksti sev? :(');
+		api_error('Tik vientuļi, ka raksti sev? :(');
 
 	// viss šķietami kārtībā un vēstuli var sūtīt
 	} else {
@@ -131,10 +140,10 @@ if ($var1 === 'received') {
 		$receiver = get_user($send_to, true);
 
 		if (!$receiver) {
-			a_error('Norādītais saņēmējs neeksistē');
-			a_log('Centās nosūtīt vēstuli neeksistējošam lietotājam (id:'.$send_to.')');
+			api_error('Norādītais saņēmējs neeksistē');
+			api_log('Centās nosūtīt vēstuli neeksistējošam lietotājam (id:'.$send_to.')');
 		} else if (empty($send_body)) {
-			a_error('Tukšu vēstuli nosūtīt nevar');
+			api_error('Tukšu vēstuli nosūtīt nevar');
 		} else {
 		
 			// vēstules virsraksta apstrāde
@@ -177,7 +186,7 @@ if ($var1 === 'received') {
 				send_email($receiver->mail, $subject, $message);
 			}
 			
-			a_append(array(
+			api_append(array(
 				'sent' => true
 			));
 		}
@@ -196,10 +205,10 @@ if ($var1 === 'received') {
 	);
 	
 	if (!$pm) {
-		a_error('Šāda vēstule neeksistē');
+		api_error('Šāda vēstule neeksistē');
 	} else if ($pm->to_uid != $auth->id && $pm->from_uid != $auth->id) {
-		a_error('Pieeja vēstules saturam liegta');
-		a_log('Centās atvērt svešu vēstuli');
+		api_error('Pieeja vēstules saturam liegta');
+		api_log('Centās atvērt svešu vēstuli');
 	} else {
 	
 		$type = ($pm->to_uid == $auth->id) ? 'rec' : 'sent';
@@ -215,21 +224,25 @@ if ($var1 === 'received') {
 		$usr = ($type == 'rec') ? get_user($pm->from_uid) : get_user($pm->to_uid);
 		$usr_data = array();        
 		if (!$usr || $usr->deleted) {
-			$usr->nick = '<em>dzēsts</em>';
+            $usr_data = array(
+                'nick' => '<em>dzēsts</em>',
+                'params' => '0|0|0|0|0',
+                'avatar_url' => ''
+            );
 		} else {
-			$usr_data = a_fetch_user($usr->id, $usr->nick, $usr->level);
+			$usr_data = api_fetch_user($usr->id, $usr->nick, $usr->level, true);
 		}
 		
-		$arr_images = a_format_text($pm->text);
+		$arr_images = api_format_text($pm->text);
 
-		a_append(array('content' => array(
+		api_append(array('message_content' => array(
 			'id' => (int)$pm->id,
 			'title' => $pm->title,
 			'text' => $pm->text,
-			'text_images' => $arr_images,
-			'date' => substr($pm->date, 0, 16),
-			'user' => $usr_data,
-			'user_avatar' => a_get_user_avatar($usr)
+			'image_count' => count($arr_images),
+			'image_urls' => $arr_images,
+			'datetime' => substr($pm->date, 0, 16),
+			'user' => $usr_data
 		)));
 	}
 	
@@ -270,7 +283,7 @@ if ($var1 === 'received') {
 	);
 	
 	if (!$pms) {
-		a_append(array(
+		api_append(array(
 			'endoflist' => true,
 			'messages' => array()
 		));
@@ -283,32 +296,41 @@ if ($var1 === 'received') {
 			// saņēmēja dati
 			$to = '';            
 			if (!empty($pm->user_deleted)) {
-				$to = '<em>dzēsts</em>';
+                $to = array(
+                    'nick' => '<em>dzēsts</em>',
+                    'params' => '0|0|0|0|0',
+                    'avatar_url' => ''
+                );
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
-					$to = wordwrap(textlimit(
+					$to = wordwrap(api_textlimit(
 						h($pm->imap_name), 48, '...'), 20, '\n', 1);
 				} else {
-					$to = wordwrap(textlimit(
+					$to = wordwrap(api_textlimit(
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
+                $to = array(
+                    'nick' => $from,
+                    'params' => '0|0|0|0|0',
+                    'avatar_url' => ''
+                );
 			} else {
-				$to = a_fetch_user($pm->to_uid, $pm->nick, $pm->level);
+				$to = api_fetch_user($pm->to_uid, $pm->nick, $pm->level, true);
 			}
 			
-			$pm_title = wordwrap(textlimit(
+			$pm_title = wordwrap(api_textlimit(
 				strip_tags($pm->title), 48, '...'), 20, '\n', 1);
 			
 			$messages[] = array(
 				'id' => (int)$pm->id,
 				'title' => $pm_title,
 				'date' => display_time(strtotime($pm->date)),
-				'from' => $to,
+				'to' => $to,
 				'is_read' => (bool)$pm->is_read
 			);
 		}
 		
-		a_append(array(
+		api_append(array(
 			'endoflist' => false,
 			'messages' => $messages
 		));

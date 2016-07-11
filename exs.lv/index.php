@@ -67,7 +67,7 @@ $ss = new SiteStorage;
 $requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_GET['var1']) && $_GET['var1'] == 'json'));
 
 // android|ios.exs.lv adresēs neliks '.json', bet sagaidīs tikai un vienīgi json
-if ($requested_json || ($lang === 2 || $lang === 4)) {
+if ($requested_json || $lang === 2 || $lang === 4) {
 	header('Content-Type: application/json');
 } else {
 	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
