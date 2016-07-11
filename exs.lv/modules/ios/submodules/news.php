@@ -39,7 +39,7 @@ if (isset($_GET['var1'])) {
 	");
 	
 	if (!$article) {
-		a_error('Raksts nav atrasts');
+		api_error('Raksts nav atrasts');
 	} else {
 	
 		// ieraksta vērtēšana
@@ -47,15 +47,15 @@ if (isset($_GET['var1'])) {
 			in_array($_GET['var2'], array('plus', 'minus'))) {
 
 			if ($_GET['var2'] == 'plus') {
-				a_rate_comment((int)$_GET['var3'], 'article', true);
+				api_rate_comment((int)$_GET['var3'], 'article', true);
 			} else {
-				a_rate_comment((int)$_GET['var3'], 'article', false);
+				api_rate_comment((int)$_GET['var3'], 'article', false);
 			}
 		}
 		
 		// jauna komentāra pievienošana
 		else if (isset($_POST['comment'])) {
-			a_add_article_comment($article);
+			api_add_article_comment($article);
 		}
 		
 		// raksta satura skatīšana
@@ -71,7 +71,7 @@ if (isset($_GET['var1'])) {
 				'text'      => $article->text,
 				'date'      => display_time(strtotime($article->date)),
 				'category'  => $article->category,
-				'author'    => a_fetch_user($author->id, $author->nick, 
+				'author'    => api_fetch_user($author->id, $author->nick,
 											$author->level),
 				'closed'    => (bool)$article->closed,
 				'safe'      => $key
@@ -123,9 +123,9 @@ if (isset($_GET['var1'])) {
 						'replies'   => (int)$comment->replies,
 						'vote'      => (int)$comment->vote,
 						'voted'     => (bool)$voted,
-						'author'    => a_fetch_user($author->id, $author->nick,
+						'author'    => api_fetch_user($author->id, $author->nick,
 													$author->level),
-						'avatar'    => a_get_user_avatar($author, 's'),
+						'avatar'    => api_get_user_avatar($author, 's'),
 						'safe'      => $key
 					);
 				}
@@ -146,5 +146,5 @@ if (isset($_GET['var1'])) {
  *  Visos pārējos gadījumos atgriezīs sarakstu ar jaunākajiem rakstiem
  */
 else {    
-	$json_page = a_get_news();
+	$json_page = api_get_news();
 }

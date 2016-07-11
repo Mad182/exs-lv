@@ -57,7 +57,7 @@ if ($var1 === 'notifications') {
 	");
 	
 	if (!$user_notifications) {
-		a_error('Nav paziņojumu');
+		api_error('Nav paziņojumu');
 	} else {
 	
 		// atlasīs miniblogu id no tām notifikācijām, kas ir ierakstiem grupās
@@ -98,12 +98,12 @@ if ($var1 === 'notifications') {
 				'type' => (int)$notify->type,
 				'group_id' => (int)$group_id,
 				'foreign_key' => (int)$notify->foreign_key,
-				'text' => textlimit(trim($notify->info), 45, ''),
-				'date' => time_ago(strtotime($notify->bump))
+				'text' => api_textlimit(trim($notify->info), 45, ''),
+				'date' => 'pirms ' . time_ago(strtotime($notify->bump))
 			);
 		}
 		
-		a_append(array('notifications' => $arr_notifs));
+		api_append(array('notifications' => $arr_notifs));
 	}
 
 /**
@@ -152,7 +152,7 @@ if ($var1 === 'notifications') {
 		SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
 	");
 	
-	a_append(array('numbers' => array(
+	api_append(array('numbers' => array(
 		'users_online' => (int)$auth->hosts_online,
 		'inbox_unread' => (int)$inbox,
 		'notifs_new' => (int)$unseen_notifs,
@@ -164,7 +164,7 @@ if ($var1 === 'notifications') {
  */
 } else if ($var1 === 'online') {
 	set_action('tiešsaistē esošo lietotāju sarakstu');
-	a_fetch_online();
+	api_fetch_online();
 	
 /**
  *  Atgriezīs ar lietotāja profilu saistītu informāciju.
@@ -178,7 +178,7 @@ if ($var1 === 'notifications') {
 		SELECT * FROM `users` WHERE `id` = ".$user_id
 	);
 	if (!$profile) {
-		a_error('Šāds profils neeksistē');
+		api_error('Šāds profils neeksistē');
 	} else {
 	
 		// skatot cita lietotāja profilu, skatījums jāatzīmē
@@ -225,21 +225,20 @@ if ($var1 === 'notifications') {
 		// pēdējoreiz redzēts pirms...
 		$time_ago = time_ago(strtotime($profile->lastseen));
 		
-		$data = array(
-			'formatted' => a_fetch_user($profile->id, $profile->nick, $profile->level),
-			'avatar' => 'https://img.exs.lv/userpic/large/'.$profile->avatar,
-			'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
-			'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
+        $data = api_fetch_user($profile->id, $profile->nick, $profile->level, true);
+		$data += array(
+			'days_online' => (int)$profile->days_in_row,
+			'days_registered' => (int)$days,
 			'last_seen' => 'pirms '.$time_ago,
 			'usertitle' => $profile->custom_title,
 			'gender' => (int)$profile->gender,
 			'web' => $profile->web,
 			'karma' => (int)$profile->karma,
-			'posts' => (int)$posts,
-			'pages' => (int)$user_pages,
-			'voted_by_self_cnt' => (int)$profile->vote_total,
-			'voted_by_self_sum' => (int)$profile->vote_others,
-			'voted_by_others' => (int)$voteval
+			'post_count' => (int)$posts,
+			'page_count' => (int)$user_pages,
+			'self_votes_count' => (int)$profile->vote_total,
+			'self_votes_sum' => (int)$profile->vote_others,
+			'other_votes_sum' => (int)$voteval
 		);
 		
 		// moderatoriem redzama papildinformācija par lietotāju
@@ -249,10 +248,10 @@ if ($var1 === 'notifications') {
 			$data['useragent'] = $profile->user_agent;        
 		}*/
 		
-		a_append(array('userdata' => $data));
+		api_append(array('profile' => $data));
 		
 		// pievienos klāt arī lietotāja pāris jaunākos apbalvojumus
-		a_fetch_awards($user_id, 6);
+		api_fetch_awards($user_id, 6);
 	}
 
 /**
@@ -299,7 +298,7 @@ if ($var1 === 'notifications') {
 						'nick' => $info->nick
 					);
 				} else {
-					$friends[] = a_fetch_user($info->id, $info->nick, $info->level);
+					$friends[] = api_fetch_user($info->id, $info->nick, $info->level);
 				}
 			}
 			
@@ -307,7 +306,7 @@ if ($var1 === 'notifications') {
 		}
 	}
 	
-	a_append(array(
+	api_append(array(
 		'count' => (int)$cnt_friends,
 		'contacts' => $friends
 	));
@@ -353,7 +352,7 @@ if ($var1 === 'notifications') {
 	");
 	
 	if (!$own_groups && !$member_of) {
-		a_error('Neesi pieteicies nevienai grupai');
+		api_error('Neesi pieteicies nevienai grupai');
 	} else {
 	
 		$groups = array();
@@ -363,11 +362,10 @@ if ($var1 === 'notifications') {
 			foreach ($own_groups as $group) {
 				$groups[] = array(
 					'id' => (int)$group->id,
-					'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+					'avatar_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
 					'title' => $group->title,
-					'members' => (int)$group->members,
-					'posts' => (int)$group->posts,
-					'in_group' => true,
+					'member_count' => (int)$group->members,
+					'post_count' => (int)$group->posts,
 					'is_admin' => true,
 					'is_mod' => false,
 					'unread_msgs' => (int)($group->posts - $group->owner_seenposts)
@@ -380,11 +378,10 @@ if ($var1 === 'notifications') {
 			foreach ($member_of as $group) {
 				$groups[] = array(
 					'id' => (int)$group->id,
-					'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+					'avatar_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
 					'title' => $group->title,
-					'members' => (int)$group->members,
-					'posts' => (int)$group->posts,
-					'in_group' => true,
+					'member_count' => (int)$group->members,
+					'post_count' => (int)$group->posts,
 					'is_admin' => false,
 					'is_mod' => (bool)($group->moderator ? true : false),
 					'unread_msgs' => (int)($group->posts - $group->seenposts)
@@ -393,7 +390,7 @@ if ($var1 === 'notifications') {
 			}
 		}
 
-		a_append(array(
+		api_append(array(
 			'group_count' => $group_count++,
 			'groups' => $groups
 		));
@@ -422,7 +419,7 @@ if ($var1 === 'notifications') {
 	");
 	
 	if (!$categories) {
-		a_error('Nav nevienas grupu kategorijas!');
+		api_error('Nav nevienas grupu kategorijas!');
 	} else {
 	
 		$data = array();
@@ -457,7 +454,7 @@ if ($var1 === 'notifications') {
 	);
 
 	if (!$get_cat) {
-		a_error('Kļūdaini norādīta sadaļa');
+		api_error('Kļūdaini norādīta sadaļa');
 	} else {
 	
 		$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;        
@@ -518,10 +515,10 @@ if ($var1 === 'notifications') {
 			
 				$data[] = array(
 					'id' => (int)$group->id,
-					'av_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
+					'avatar_url' => 'https://img.exs.lv/userpic/medium/'.$group->avatar,
 					'title' => $group->title,
-					'members' => (int)$group->members,
-					'posts' => (int)$group->posts,
+					'member_count' => (int)$group->members,
+					'post_count' => (int)$group->posts,
 					'in_group' => $in_group,
 					'is_admin' => false,
 					'is_mod' => $is_moderator,
@@ -529,9 +526,9 @@ if ($var1 === 'notifications') {
 				);
 			}
 			
-			a_append(array(
-				'cat_id' => (int)$get_cat->id,
-				'cat_title' => $get_cat->title,
+			api_append(array(
+				'category_id' => (int)$get_cat->id,
+				'category_title' => $get_cat->title,
 				'groups' => $data
 			));
 		}
@@ -541,6 +538,6 @@ if ($var1 === 'notifications') {
  *  Citas situācijas.
  */
 } else {
-	a_error('Kļūdains pieprasījums (#3)');
-	a_log('Kļūdains pieprasījums random modulī');
+	api_error('Kļūdains pieprasījums (#3)');
+	api_log('Kļūdains pieprasījums random modulī');
 }

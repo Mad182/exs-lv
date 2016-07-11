@@ -23,23 +23,23 @@ $var3 = (!empty($_GET['var3'])) ? $_GET['var3'] : '';
 if (!empty($var1) && !empty($var2) &&
 	in_array($var1, array('plus', 'minus'))) {
 
-	a_rate_comment($var2, ($var1 === 'plus'));
+	api_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
  *  (/groups/{group_id}/getlist)
  */
-} else if (!empty($var1) && $var2 === 'getlist') {
+} else if (!empty($var1) && $var2 === 'getlatestlist') {
 	set_action('grupas miniblogus');
-	a_fetch_miniblogs($var1);
+	api_fetch_miniblogs($var1);
 
 /**
  *  Atgriezīs grupas minibloga saturu.
  *  (/groups/getcontent/{miniblog_id})
  */
-} else if ($var1 === 'getcontent' && !empty($var2)) {
+} else if ($var1 === 'getminiblog' && !empty($var2)) {
 	set_action('grupas miniblogu');
-	a_fetch_miniblog($var2);
+	api_fetch_miniblog($var2);
 
 /**
  *  Jauna grupas minibloga pievienošana vai esoša minibloga komentēšana.
@@ -48,19 +48,19 @@ if (!empty($var1) && !empty($var2) &&
 } else if ($var1 === 'new' || $var1 === 'comment') {
 	
 	if (!isset($_POST['group_id']) || !isset($_POST['parent_id']) ||
-		!isset($_POST['content']) || !isset($_POST['is_private'])) {
-		a_error('Kļūdains pieprasījums');
+		!isset($_POST['mb_text'])) {
+		api_error('Kļūdains pieprasījums');
 		if ($var1 === 'new') {
-			a_log('Netika iesniegti grupas minibloga ieraksta pievienošanas dati');
+			api_log('Netika iesniegti grupas minibloga ieraksta pievienošanas dati');
 		} else {
-			a_log('Netika iesniegti grupas minibloga komentēšanas dati');
+			api_log('Netika iesniegti grupas minibloga komentēšanas dati');
 		}
 	} else {
-		a_add_miniblog(array(
+		api_add_miniblog(array(
 			'group_id' => $_POST['group_id'],
 			'parent_id' => $_POST['parent_id'],
-			'is_private' => $_POST['is_private'],
-			'content' => $_POST['content']
+			'is_private' => false,
+			'mb_text' => $_POST['mb_text']
 		));
 	}
 
@@ -89,26 +89,26 @@ if (!empty($var1) && !empty($var2) &&
 	$credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = ".$auth->id);
 
 	if (empty($group)) {
-		a_error('Neizdevās pārbaudīt grupas datus');
-		a_log('Norādīja neeksistējošas grupas id');
-	} else if (!a_check_xsrf()) {
-		a_error('no hacking, pls');
-		a_log('Piesakoties grupai, norādīja nepareizu xsrf atslēgu');
+		api_error('Neizdevās pārbaudīt grupas datus');
+		api_log('Norādīja neeksistējošas grupas id');
+	} else if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Piesakoties grupai, norādīja nepareizu xsrf atslēgu');
 	} else if ($group->owner == $auth->id) {
-		a_error('Tu jau esi šīs grupas administrators');
-		a_log('Grupas administrators centās pievienoties grupai');
+		api_error('Tu jau esi šīs grupas administrators');
+		api_log('Grupas administrators centās pievienoties grupai');
 	} else if ($group->approved == '0') {
-		a_error('Grupai jau esi pieteicies, gaidi apstiprinājumu');
-		a_log('Centās pieteikties grupai, kurā jau gaida apstiprinājumu');
+		api_error('Grupai jau esi pieteicies, gaidi apstiprinājumu');
+		api_log('Centās pieteikties grupai, kurā jau gaida apstiprinājumu');
 	} else if ($group->approved == '1') {
-		a_error('Jau esi grupā');
-		a_log('Centās pieteikties grupai, kuras biedrs lietotājs jau ir');
+		api_error('Jau esi grupā');
+		api_log('Centās pieteikties grupai, kuras biedrs lietotājs jau ir');
 	} else if ($group->paid == 1 && $credit < 3) {
-		a_error('Nepietiek kredīta, lai pieteiktos grupai');
-		a_log('Pieteicās grupai, bet nepietika kredīta');
+		api_error('Nepietiek kredīta, lai pieteiktos grupai');
+		api_log('Pieteicās grupai, bet nepietika kredīta');
 	} else if ($group->archived) {
-		a_error('Arhivētai grupai pieteikties nav iespējams');
-		a_log('Centās pieteikties arhivētai grupai');
+		api_error('Arhivētai grupai pieteikties nav iespējams');
+		api_log('Centās pieteikties arhivētai grupai');
 	} else {
 	
 		$approved = (int)$group->auto_approve;
@@ -152,7 +152,7 @@ if (!empty($var1) && !empty($var2) &&
 			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = ".(int)$auth->id);
 		}
 		
-		a_append(array('approved' => $approved));
+		api_append(array('approved' => $approved));
 	}
 
 /**
@@ -178,20 +178,20 @@ if (!empty($var1) && !empty($var2) &&
 	");
 
 	if (empty($group)) {
-		a_error('Neizdevās pārbaudīt grupas datus');
-		a_log('Norādīja neeksistējošas grupas id');
-	} else if (!a_check_xsrf()) {
-		a_error('no hacking, pls');
-		a_log('Izstājoties no grupas, norādīja nepareizu xsrf atslēgu');
+		api_error('Neizdevās pārbaudīt grupas datus');
+		api_log('Norādīja neeksistējošas grupas id');
+	} else if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Izstājoties no grupas, norādīja nepareizu xsrf atslēgu');
 	} else if ($group->owner == $auth->id) {
-		a_error('Tu esi grupas administrators');
-		a_log('Grupas administrators centās izstāties no grupas');
+		api_error('Tu esi grupas administrators');
+		api_log('Grupas administrators centās izstāties no grupas');
 	} else if ($group->approved == '-') {
-		a_error('Neesi pieteicies grupai');
-		a_log('Centās izstāties no grupas, kurs biedrs nemaz nav');
+		api_error('Neesi pieteicies grupai');
+		api_log('Centās izstāties no grupas, kurs biedrs nemaz nav');
 	} else if ($group->approved == '0') {
-		a_error('Nevar izstāties, ja neesi apstiprināts');
-		a_log('Centās izstāties no grupas, kurā gaida apstiprinājumu');
+		api_error('Nevar izstāties, ja neesi apstiprināts');
+		api_log('Centās izstāties no grupas, kurā gaida apstiprinājumu');
 	} else {
 		
 		$db->query("
@@ -211,7 +211,7 @@ if (!empty($var1) && !empty($var2) &&
 		$group->av_alt = 1;
 		push('Izstājās no grupas &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true));
 		
-		a_append(array('left' => 1));
+		api_append(array('left' => 1));
 	}
 
 /**
@@ -224,6 +224,7 @@ if (!empty($var1) && !empty($var2) &&
 		SELECT 
 			`clans`.`id` AS `clan_id`,
 			`clans`.`title`,
+			`clans_categories`.`id` AS `cat_id`,
 			`clans_categories`.`title` AS `cat_title`,
 			`clans`.`text`,
 			`clans`.`avatar`,
@@ -247,8 +248,8 @@ if (!empty($var1) && !empty($var2) &&
 			`clans`.`id` = ".(int)$var1
 	);
 	if (!$group_data) {
-		a_error('Kļūdaini norādīta grupa');
-		a_log('Norādīja neeksistējošas grupas id ('.(int)$var1.')');
+		api_error('Kļūdaini norādīta grupa');
+		api_log('Norādīja neeksistējošas grupas id ('.(int)$var1.')');
 	} else {
 	
 		set_action('grupas informāciju');
@@ -257,7 +258,7 @@ if (!empty($var1) && !empty($var2) &&
 		if (!empty($owner->deleted)) {
 			$owner->nick = 'dzēsts';
 		}
-		$owner = a_fetch_user($owner->id, $owner->nick, $owner->level);
+		$owner = api_fetch_user($owner->id, $owner->nick, $owner->level, true);
 
 		$is_member = ($group_data->is_member != '0') ? true : false;
 		
@@ -269,21 +270,23 @@ if (!empty($var1) && !empty($var2) &&
 			$posts_seen = $group_data->member_seen;
 		}
 		
-		$arr_images = a_format_text($group_data->text);
+		$arr_images = api_format_text($group_data->text);
 
 		// atgriežamais masīvs ar datiem
-		a_append(array('content' => array(
-			'id' => (int)$group_data->clan_id,
-			'cat_title' => mb_strtoupper($group_data->cat_title),
-			'title' => $group_data->title,
-			'text' => $group_data->text,
-			'text_images' => $arr_images,
-			'av_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
-			'members' => (int)($group_data->members + 1), // + admins
-			'posts' => (int)$group_data->posts,
+		api_append(array('group_data' => array(
+			'category_id' => (int)$group_data->cat_id,
+			'category_title' => mb_strtoupper($group_data->cat_title),
+			'group_id' => (int)$group_data->clan_id,
+			'group_title' => $group_data->title,
+			'intro_text' => $group_data->text,
+			'image_count' => count($arr_images),
+			'image_urls' => $arr_images,
+			'avatar_url' => $img_server.'/userpic/large/'.$group_data->avatar,   
+			'member_count' => (int)($group_data->members + 1), // + admins
+			'post_count' => (int)$group_data->posts,
 			'posts_seen' => (int)$posts_seen,
+			'owner_data' => $owner,
 			'is_member' => $is_member,
-			'owner' => $owner,
 			'is_archived' => ($group_data->archived ? true : false)
 		)));
 	}
@@ -301,8 +304,8 @@ if (!empty($var1) && !empty($var2) &&
 	);
 	
 	if (empty($group_id) || !$group_owner) {
-		a_error('Neizdevās atlasīt biedru sarakstu');
-		a_log('Kļūdaini norādīta grupa, vai arī neizdevās noteikt tās autoru');
+		api_error('Neizdevās atlasīt biedru sarakstu');
+		api_log('Kļūdaini norādīta grupa, vai arī neizdevās noteikt tās autoru');
 	} else {
 	
 		set_action('grupas biedru sarakstu');
@@ -315,7 +318,7 @@ if (!empty($var1) && !empty($var2) &&
 		);
 		
 		// lappušu iestatījumi
-		$max_per_page = 21;
+		$max_per_page = 20;
 		$current_page = 1;
 		$page_count = ceil($total_members / $max_per_page);
 		
@@ -324,7 +327,7 @@ if (!empty($var1) && !empty($var2) &&
 			if ($_GET['page'] < 0) {
 				$_GET['page'] = 1;
 			} else if ($_GET['page'] > $page_count) {
-				a_append(array(
+				api_append(array(
 					'group_members' => array(),
 					'endoflist' => true
 				));
@@ -344,13 +347,15 @@ if (!empty($var1) && !empty($var2) &&
 			if (!empty($owner->deleted)) {
 				$owner->nick = 'dzēsts';
 			}
-			$avatar = a_get_user_avatar($owner, 'l');
-			$arr_members[] = array(
+			$avatar = api_get_user_avatar($owner, 'l');
+			$arr = array(
 				'member_id' => 0,
-				'av_url' => $avatar,
-				'user' => a_fetch_user($owner->id, $owner->nick, $owner->level),
-				'is_mod' => 0
+                'is_admin' => true,
+                'is_mod' => false,
+				'avatar_url' => $avatar
 			);
+            $arr += api_fetch_user($owner->id, $owner->nick, $owner->level);
+            $arr_members[] = $arr;
 			$member_count = 1;
 		}
 
@@ -369,13 +374,15 @@ if (!empty($var1) && !empty($var2) &&
 					if ($usr->deleted == 1) {
 						$usr->nick = 'dzēsts';
 					}
-					$avatar = a_get_user_avatar($usr, 'l');
-					$arr_members[] = array(
+					$avatar = api_get_user_avatar($usr, 'l');
+					$arr = array(
 						'member_id' => (int)$member->id,
-						'av_url' => $avatar,
-						'user' => a_fetch_user($usr->id, $usr->nick, $usr->level),
-						'is_mod' => (bool)$member->moderator
+                        'is_admin' => false,
+                        'is_mod' => (bool)$member->moderator,
+						'avatar_url' => $avatar					
 					);
+                    $arr += api_fetch_user($usr->id, $usr->nick, $usr->level);
+                    $arr_members[] = $arr;
 					$member_count++;
 				}
 			}
@@ -392,13 +399,13 @@ if (!empty($var1) && !empty($var2) &&
 				$endoflist = true;
 			}
 		
-			a_append(array(
+			api_append(array(
 				'group_members' => $arr_members,
 				'endoflist' => $endoflist
 			));
 			
 		} else {
-			a_append(array(
+			api_append(array(
 				'group_members' => array(),
 				'endoflist' => true
 			));
@@ -409,6 +416,6 @@ if (!empty($var1) && !empty($var2) &&
  *  Citas situācijas.
  */
 } else {
-	a_error('Kļūdains pieprasījums (#5)');
-	a_log('Kļūdains pieprasījums grupu modulī');
+	api_error('Kļūdains pieprasījums (#5)');
+	api_log('Kļūdains pieprasījums grupu modulī');
 }

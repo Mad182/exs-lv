@@ -18,9 +18,9 @@
 <pre><code class="json">{
     "success": bool,
     "message": string,
-    "ban_type": int(0|1|2),
+    "ban_type": int,
     "logged_in": bool,
-    "xsrf_token": string(len:10),
+    "xsrf_token": string,
     "response": null|JSONObject
 }</code></pre>
     <p>Atbildes parametri skaidroti tabulā.</p>
@@ -73,7 +73,7 @@
         <tr>
             <td>xsrf_token</td>
             <td></td>
-            <td>simbolu virkne, kas jāpievieno turpmāko pieprasījumu galā<br>(https://ios.exs.lv/..?xsrf=..)<br>(pārbaudīta gan tiek tikai pie atsevišķām darbībām)</td>
+            <td>simbolu virkne garumā 10, kas jāpievieno turpmāko pieprasījumu galā<br>(https://ios.exs.lv/..?xsrf=..)<br>(pārbaudīta gan tiek tikai pie kritiskām darbībām)</td>
         </tr>
         <tr>
             <td>response</td>
@@ -87,7 +87,7 @@
         </tr>
     </table>
     <p>Parametrā <span class="hl">success</span> saņemot vērtību "false", parametrs <span class="hl">response</span> vienmēr būs vienāds ar "null". <span class="hl">success</span> parametrs ir pirmā vērtība, kas lietotnē vienmēr būtu jāpārbauda. Parametrā <span class="hl">message</span> esošā vērtība ir paredzēta parādīšanai lietotājam.</p>
-    <p>Parametrā <span class="hl">ban_type</span> saņemot vērtību 1 vai 2, parametrs <span class="hl">response</span> var saturēt papildu informāciju, kas aprakstīta sadaļā <a href="#ban_check">Liegumu pārbaude"</a>.</p>
+    <p>Parametrā <span class="hl">ban_type</span> saņemot vērtību 1 vai 2, parametrs <span class="hl">response</span> var saturēt papildu informāciju, kas aprakstīta sadaļā <a href="#ban_check">"Liegumu pārbaude"</a>.</p>
 </div>
 <div class="col_divider"></div>
 <div class="block">
@@ -102,29 +102,21 @@
     "message": "",
     "ban_type": 1,
     "logged_in": false,
-    "xsrf_token": string(len:10),
+    "xsrf_token": string,
     "response": {
         "ip": string,
-        "to_user": {        
-            "id": int,
+        "to_user": {     
             "nick": string,
-            "user_class": int(0|1|2|3),
-            "is_online": bool,
-            "is_banned": bool,
-            "device_type": int(0|1|2|3)
+            "params": string
         },
         "reason": string,
         "from_user": {
-            "id": int,
             "nick": string,
-            "user_class": int(0|1|2|3),
-            "is_online": bool,
-            "is_banned": bool,
-            "device_type": int(0|1|2|3)
+            "params": string
         },
-        "date_from": string("05.04.2015, 21:49"),
-        "date_to": string("06.04.2015, 21:49"),
-        "remaining": string("71d 20h 36s")
+        "date_from": string,
+        "date_to": string,
+        "remaining": string
     }
 }</code></pre>
     <p><i>Ņemt vērā, ka IP lieguma gadījumā lietotājs tiek automātiski izlogots!</i></p>
@@ -135,28 +127,41 @@
             <th style="width:400px">Skaidrojums</th>
         </tr>
         <tr>
+            <td>ip</td>
+            <td>IP adrese, kurai uzlikts liegums</td>
+        </tr>
+        <tr>
             <td>to_user</td>
-            <td>lietotājs, kuram šāds IP liegums uzlikts</td>
+            <td>objekts ar datiem par lietotāju, kuram šāds IP liegums uzlikts</td>
         </tr>
         <tr>
-            <td>to_user : user_class</td>
-            <td>0 - parasts lietotājs &middot;1 - administrators<br>2 - moderators &middot; 3 - rakstu autors</td>
+            <td>to_user : nick</td>
+            <td>lietotāja lietotājvārds</td>
         </tr>
         <tr>
-            <td>to_user : is_online</td>
-            <td>vai šis lietotājs šobrīd ir tiešsaistē?</td>
+            <td>to_user : params</td>
+            <td>vairākas vērtības, atdalītas ar "|", kas raksturo lietotājvārdu, lai to varētu pareizi noformatēt, piemēram, "115|2|1|3|1":<br>
+            1) lietotāja ID<br>2) lietotāja klase: 0 - parasts lietotājs,  1 - administrators, 2 - moderators, 3 - rakstu autors, 5 - bots<br>3) 0 - lietotājs nav online, 1 - lietotājs ir online<br>4) ierīce, caur kuru lietotājs skatās lapu: 0 - exs.lv &middot; 1 - m.exs.lv. &middot; 2 - android app &middot; 3 - iOS app<br>5) vai lietotājam ir aktīvs liegums? 0 - nav, 1 - ir</td>
         </tr>
         <tr>
-            <td>to_user : is_banned</td>
-            <td>vai šim lietotājam šobrīd arī ir piemērots liegums?<br>(lai zinātu, kad pārsvītrot lietotājvārdu)</td>
-        </tr>
-        <tr>
-            <td>to_user : device_type</td>
-            <td>0 - exs.lv &middot; 1 - m.exs.lv.<br>2 - android app &middot; 3 - iOS app</td>
+            <td>reason</td>
+            <td>lieguma iemesls</td>
         </tr>
         <tr>
             <td>from_user</td>
-            <td>lietotājs, kurš liegumu piemērojis</td>
+            <td>objekts ar datiem par lietotāju, kurš liegumu piemērojis</td>
+        </tr>
+        <tr>
+            <td>date_from</td>
+            <td>datums, kad liegums uzlikts (piemēram, "09.10.2010, 18:48")</td>
+        </tr>
+        <tr>
+            <td>date_to</td>
+            <td>datums, kad liegums tiks noņemts (piemēram, "10.10.2010, 18:48")</td>
+        </tr>
+        <tr>
+            <td>remaining</td>
+            <td>lieguma atlikušais laiks (piemēram, "21d 3h 19m 29s")</td>
         </tr>
     </table>
     <h4 style="margin-top:25px">Profila liegums</h4>
@@ -213,10 +218,8 @@
     ...,
     "response": {
         "profile": {
-            "id": int,
             "nick": string,
-            "user_class": int(0|1|2|3),
-            "user_title": string,
+            "params": string,
             "avatar_url": string
         }
     }
@@ -228,24 +231,16 @@
             <th style="width:350px">Skaidrojums</th>
         </tr>
         <tr>
-            <td>id</td>
-            <td>lietotāja identifikators</td>
-        </tr>
-        <tr>
             <td>nick</td>
-            <td>lietotājvārds</td>
+            <td>lietotāja lietotājvārds</td>
         </tr>
         <tr>
-            <td>user_class</td>
-            <td>0 - parasts lietotājs &middot; 1 - administrators<br>2 - moderators &middot; 3 - rakstu autors</td>
-        </tr>
-        <tr>
-            <td>user_title</td>
-            <td>lietotāja paša izvēlētais nosaukums profilā</td>
+            <td>params</td>
+            <td>...</td>
         </tr>
         <tr>
             <td>avatar_url</td>
-            <td><i>piemērs:</i> /userpic/medium/none.png</td>
+            <td>saite uz lietotāja avataru</td>
         </tr>
     </table>
 </div>
@@ -266,14 +261,12 @@
     "message": "",
     "ban_type": 0,
     "logged_in": true,
-    "xsrf_token": string(len:10),
+    "xsrf_token": string,
     "response": {
         "message": "Hello World!",
         "profile": {
-            "id": int,
             "nick": string,
-            "user_class": int(0|1|2|3),
-            "user_title": string,
+            "params": string,
             "avatar_url": string
         }
     }

@@ -50,5 +50,4 @@ if (!$is_local && (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_loc
     ini_set('session.cookie_domain', '.exs.dev');
 }
 
-require_once(CORE_PATH . '/includes/functions.exs.php');
-require_once(CORE_PATH . '/includes/functions.api.php');
+require_once(CORE_PATH . '/includes/functions.core.php');

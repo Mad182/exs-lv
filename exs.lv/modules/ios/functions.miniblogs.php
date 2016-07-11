@@ -11,7 +11,7 @@
  *
  *  Norādot grupas ID, atgriezti tiks tikai šīs grupas miniblogi.
  */
-function a_fetch_miniblogs($group_id = 0) {
+function api_fetch_miniblogs($group_id = 0) {
 	global $auth, $db, $api_lang;      
 	
 	$group_id = (int)$group_id;
@@ -21,7 +21,8 @@ function a_fetch_miniblogs($group_id = 0) {
 	$current_page = 1;
 	
 	// noteiks, vai lietotājam maz ir piekļuve norādītajai grupai
-	if ($group_id != 0 && !a_member_of($group_id)) {
+	if ($group_id != 0 && !api_member_of($group_id)) {
+        api_error('Lietotājam nav piekļuves grupai');
 		return;
 	}    
 	
@@ -31,7 +32,7 @@ function a_fetch_miniblogs($group_id = 0) {
 		if ($_GET['page'] < 1) {
 			$_GET['page'] = 1;
 		} else if ($_GET['page'] > $max_pages) {
-			a_append(array(
+			api_append(array(
 				'miniblogs' => array(),
 				'endoflist' => true
 			));
@@ -84,6 +85,8 @@ function a_fetch_miniblogs($group_id = 0) {
 			`miniblog`.`posts`,
 			`miniblog`.`groupid`,
 			`miniblog`.`closed`,
+			`miniblog`.`closed_by`,
+			`miniblog`.`close_reason`,
 			`users`.`avatar`,
 			`users`.`deleted`,
 			`users`.`av_alt`,
@@ -106,7 +109,7 @@ function a_fetch_miniblogs($group_id = 0) {
 	);
 
 	if (!$mbs) {
-		a_append(array(
+		api_append(array(
 			'miniblogs' => array(),
 			'endoflist' => true
 		));
@@ -119,7 +122,7 @@ function a_fetch_miniblogs($group_id = 0) {
 
 		// kaut kas šeit tiek eskeipots
 		$mb->text = mb_get_title($mb->text);
-		$mb->text = textlimit($mb->text, 300, '...');
+		$mb->text = api_textlimit($mb->text, 300, '...');
 
 		// paslēps spoilerus
 		if (strpos($mb->text, 'spoiler') !== false) {
@@ -143,29 +146,66 @@ function a_fetch_miniblogs($group_id = 0) {
 			);
 			if ($group->avatar) {
 				$group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
-				$avatar = a_get_user_avatar($group, 's');
+				$avatar = api_get_user_avatar($group, 's');
 			}
-			$group_title = ' @ ' . $group->title;
+			$group_title = $group->title;
 
 		// pārējiem miniblogiem - to autoru avatarus
 		} else {
-			$avatar = a_get_user_avatar($mb, 's');
+			$avatar = api_get_user_avatar($mb, 's');
 		}
+        
+        // dati par lietotāju, kas aizslēdzis miniblogu
+        $closed_by = 0;
+        if ($mb->closed_by !== '0') {
+            $closed_user = get_user((int)$mb->closed_by);
+            if ($closed_user) {
+                $closed_by = api_fetch_user($closed_user->id, $closed_user->nick, $closed_user->level);
+            }
+        }
+        if ($mb->close_reason !== '') {
+            api_format_text($mb->close_reason, false);
+            $mb->close_reason = strip_tags($mb->close_reason);
+        }
 
-		$arr_mbs[] = array(
+        // pieprasot grupas miniblogus, visiem miniblogiem nav jēgas no
+        // grupas avatara, tāpēc liek lietotāja avatarus, bet tos var norādīt
+        // uzreiz lietotāja objektā
+        $author = ($group_id > 0) ?
+            api_fetch_user($mb->user_id, $mb->nick, $mb->level, true) :
+            api_fetch_user($mb->user_id, $mb->nick, $mb->level);
+            
+		$arr = array(
 			'id' => (int)$mb->mb_id,
-			'text' => $mb->text,
-			'author' => a_fetch_user($mb->user_id, $mb->nick, $mb->level),
-			'date' => 'pirms ' . time_ago(strtotime($mb->date)),
-			'av_url' => $avatar,
-			'posts' => (int)$mb->posts,
+			'short_text' => $mb->text,
+			'author' => $author
+        );
+        // pieprasot ne tikai grupas miniblogus, avatars var būt arī grupas avatars,
+        // tāpēc parametrs ārpus lietotāja objekta
+        if ($group_id == 0) {
+			$arr['avatar_url'] = $avatar;
+        }
+            
+        $arr += array(
+			'time_before' => 'pirms ' . time_ago(strtotime($mb->date)),
+			'post_count' => (int)$mb->posts,
 			'is_closed' => (bool)$mb->closed,
-			'group_id' => (int)$mb->groupid,
-			'group_title' => $group_title
+            'closed_by' => $closed_by,
+            'close_reason' => $mb->close_reason
 		);
+        
+        // pieprasot grupas mb, lietotnē grupas ID jau ir zināms,
+        // tāpēc grupas datus papildu vairs nepievienos
+        if ($group_id == 0) {
+            $arr += array(                
+                'group_id' => (int)$mb->groupid,
+                'group_title' => $group_title
+            );
+        }
+		$arr_mbs[] = $arr;
 	}
-	
-	a_append(array(
+
+	api_append(array(
 		'miniblogs' => $arr_mbs,
 		'endoflist' => false
 	));
@@ -174,7 +214,7 @@ function a_fetch_miniblogs($group_id = 0) {
 /**
  *  Atgriezīs norādītā minibloga info, kā arī komentārus.
  */
-function a_fetch_miniblog($miniblog_id = 0) {
+function api_fetch_miniblog($miniblog_id = 0) {
 	global $db, $auth, $api_lang, $img_server;
 	
 	$miniblog_id = (int)$miniblog_id;
@@ -198,24 +238,22 @@ function a_fetch_miniblog($miniblog_id = 0) {
 	");
 	
 	if (!$miniblog) {
-		a_error('Atvērtais miniblogs neeksistē');
-		a_log('a_fetch_miniblog('.$miniblog_id.'): miniblogs neeksistē');
+		api_error('Atvērtais miniblogs neeksistē');
+		api_log('a_fetch_miniblog('.$miniblog_id.'): miniblogs neeksistē');
 		return;
 	}
 	
 	// lietotājam var nebūt piekļuves grupai, kurā ir šis miniblogs
-	if (!empty($miniblog->group_id) && !a_member_of($miniblog->group_id)) {
+	if (!empty($miniblog->group_id) && !api_member_of($miniblog->group_id)) {
 		return;
 	}
 
 	// info par grupu, kurā miniblogs ievietots
-	$group_id = 0;
-	$group_title = '';
-	$group_av_url = '';
+    $group_data = false;
 	if (!empty($miniblog->group_id)) {
-		$group_id = (int)$miniblog->group_id;
-		$group_title = $miniblog->group_title;
-		$group_av_url = $img_server.'/userpic/large/'.$miniblog->group_avatar;
+        $group_data['id'] = (int)$miniblog->group_id;
+		$group_data['title'] = $miniblog->group_title;
+		$group_data['avatar_url'] = $img_server.'/userpic/large/'.$miniblog->group_avatar;
 	}
 	
 	$author = get_user($miniblog->author);
@@ -235,36 +273,52 @@ function a_fetch_miniblog($miniblog_id = 0) {
 		$miniblog->voted = false;
 	}
 	
-	$arr_images = a_format_text($miniblog->text);
-	// jāzina attēlu skaits, lai pie liela skaita miniblogos tos
-	// neielādētu kā thumbnails, ja izmanto mobilo tīklu
+	$arr_images = api_format_text($miniblog->text);
 	$cnt_images = count($arr_images);
+    
+    // dati par lietotāju, kas aizslēdzis miniblogu
+    $closed_by = 0;
+    if ($miniblog->closed_by !== '0') {
+        $closed_user = get_user((int)$miniblog->closed_by);
+        if ($closed_user) {
+            $closed_by = api_fetch_user($closed_user->id, $closed_user->nick, $closed_user->level);
+        }
+    }
+    if ($miniblog->close_reason !== '') {
+        api_format_text($miniblog->close_reason, false);
+        $miniblog->close_reason = strip_tags($miniblog->close_reason);
+    }
 	
 	// atgriežamā informācija par pašu miniblogu
 	$arr_miniblog = array(
 		'id' => (int)$miniblog->id,
-		'text' => $miniblog->text,   
-		'text_images' => $arr_images,     
-		'date' => display_time(strtotime($miniblog->date)),
-		'author' => a_fetch_user($author->id, $author->nick, $author->level),
-		'author_av_url' => a_get_user_avatar($author, 's'),
+		'full_text' => $miniblog->text,   
+        'image_count' => $cnt_images,
+		'image_urls' => $arr_images,
+		'author' => api_fetch_user($author->id, $author->nick, $author->level, true),
+		'datetime' => display_time(strtotime($miniblog->date)),
 		'vote_value' => (int)$miniblog->vote_value,
-		'voted' => $miniblog->voted,
+		'has_voted' => $miniblog->voted,
 		'is_closed' => (bool)$miniblog->closed,
-		'group_id' => $group_id,
-		'group_title' => $group_title,
-		'group_av_url' => $group_av_url
+		'closed_by' => $closed_by,
+		'close_reason' => $miniblog->close_reason,
+        'group_data' => $group_data
 	);
    
 	// atlasīs miniblogam pievienotos komentārus
-	$arr_comments = array();   
+	$arr_comments = array();
+    
+	// ja mb ir 1 komentārs, no objekta tas tiek pārveidots uz masīvu;
+	// lietotne vienmēr gaida objektu, tāpēc jāpievieno papildelements
+	$arr_comments['comment_count'] = (int)$miniblog->posts;
+    
 	if ($miniblog->posts) {
 
 		$comments = $db->get_results("
 			SELECT
-				`id`, `text`, `author`, `date`,
-				`groupid` AS `group_id`, `reply_to`,
-				`removed`, `vote_value`, `vote_users`
+				`id`, `text` AS `full_text`, `author`, `date` AS `datetime`,
+				`reply_to`,
+				`removed` AS `is_removed`, `vote_value`, `vote_users`
 			FROM `miniblog`
 			WHERE
 				`parent` = ".(int)$miniblog->id." AND
@@ -276,43 +330,48 @@ function a_fetch_miniblog($miniblog_id = 0) {
 		
 			// katru komentāru pievienos masīvam
 			foreach ($comments as $comment) {
+                
+                $cnt_images = 0;
 			
 				$author = get_user($comment->author);
 				if ($author->deleted) {
 					$author->nick = 'dzēsts';
 				}
-				$comment->author = a_fetch_user(
+				$comment->author = api_fetch_user(
 					$author->id, $author->nick, $author->level);
-
-				// saturs tiek pārveidots atbilstoši droīda iespējām
-				if ($comment->removed) {
-					$comment->text = '<em>Ieraksts dzēsts!</em>';
-					$comment->text_images = array();
-				} else {
-					$comment->text_images = a_format_text($comment->text);
-					$cnt_images += count($comment->text_images);
-				}
 				
-				$comment->date = display_time(strtotime($comment->date));
-				$comment->avatar = a_get_user_avatar($author, 's');
+				$comment->datetime = display_time(strtotime($comment->datetime));
+				$comment->author['avatar_url'] = api_get_user_avatar($author, 's');
 				$comment->id = (int)$comment->id;
-				$comment->group_id = (int)$comment->group_id;
-				$comment->reply_to = (int)$comment->reply_to;
-				$comment->removed = (int)$comment->removed;
-				$comment->vote_value = (int)$comment->vote_value;
+				$comment->is_removed = (bool)$comment->is_removed;
+				$comment->vote_value = (int)$comment->vote_value;                
+
+                $reply_to = (int)$comment->reply_to;
+                unset($comment->reply_to);
 				
 				// pārbaudīs, vai šis lietotājs komentāru jau vērtējis
 				$voters = array();
 				if (!empty($comment->vote_users)) {
 					$voters = unserialize($comment->vote_users);
-				}   
-				if (in_array($auth->id, $voters)) {
-					$comment->voted = true;
-				} else {
-					$comment->voted = false;
 				}
+                unset($comment->vote_users); // šo API izstrādātājam nerādīsim!
+				if (in_array($auth->id, $voters)) {
+					$comment->has_voted = true;
+				} else {
+					$comment->has_voted = false;
+				}
+
+				// saturs tiek pārveidots atbilstoši droīda iespējām
+				if ($comment->is_removed) {
+					$comment->full_text = '<em>Ieraksts dzēsts!</em>';
+					$comment->image_urls = array();
+				} else {
+					$comment->image_urls = api_format_text($comment->full_text);
+					$cnt_images = count($comment->image_urls);
+				}
+                $comment->image_count = $cnt_images;
 			
-				$arr_comments[$comment->reply_to][] = $comment;
+				$arr_comments[$reply_to][] = $comment;
 			}  
 		}
 	}
@@ -333,14 +392,9 @@ function a_fetch_miniblog($miniblog_id = 0) {
 			);
 		}
 	}
-		
-	// ja mb ir 1 komentārs, no objekta tas tiek pārveidots uz masīvu;
-	// lietotne vienmēr gaida objektu, tāpēc jāpievieno papildelements
-	$arr_comments[-1][] = 'safe';
 	
-	a_append(array(
+	api_append(array(
 		'miniblog' => $arr_miniblog,
-		'image_count' => (int)$cnt_images,
 		'comments' => $arr_comments
 	));
 }
@@ -351,20 +405,20 @@ function a_fetch_miniblog($miniblog_id = 0) {
  *  Ar miniblogu tiek saprasts ieraksts `miniblog` tabulā (t.i., gan miniblogs,
  *  gan tā komentāri). Pagaidām neatbalsta junk sadaļu.
  */
-function a_add_miniblog($data) {
+function api_add_miniblog($data) {
 	global $db, $auth;
 	global $api_lang;
 	
 	// iesniegto datu esamības pārbaudes
 	if (empty($data) || !isset($data['group_id']) || 
-		!isset($data['parent_id']) || !isset($data['content']) ||
+		!isset($data['parent_id']) || !isset($data['mb_text']) ||
 		!isset($data['is_private'])) {
-		a_error('Pieprasījuma kļūda');
+		api_error('Pieprasījuma kļūda');
 		return;
 	}
-	$data['content'] = trim($data['content']);
-	if (empty($data['content'])) {
-		a_error('Nevar pievienot tukšu miniblogu');
+	$data['mb_text'] = trim($data['mb_text']);
+	if (empty($data['mb_text'])) {
+		api_error('Nevar pievienot tukšu miniblogu');
 		return;
 	}
 	
@@ -377,13 +431,13 @@ function a_add_miniblog($data) {
 	$mb_level = 1; // kaut kāds dziļuma parametrs miniblogiem
 	
 	// anti-xsrf aizsardzība
-	if (!a_check_xsrf()) {
-		a_error('no hacking, pls');
-		a_log('Pievienojot miniblogu, nenorādīja pareizu XSRF atslēgu');        
+	if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Pievienojot miniblogu, nenorādīja pareizu XSRF atslēgu');
 	// plūdu kontrole
 	} else if (isset($_SESSION['antiflood']) && 
 		$_SESSION['antiflood'] >= time() - 15) {
-		a_error('Pārāk bieža pievienošana, brīdi uzgaidi');
+		api_error('Pārāk bieža pievienošana, brīdi uzgaidi');
 		return;
 	}
 	$_SESSION['antiflood'] = time();
@@ -408,17 +462,17 @@ function a_add_miniblog($data) {
 		");
 		
 		if (!$group_data) {
-			a_error('Grupa neeksistē');
-			a_log('a_add_miniblog('.$group_id.'): norādītā grupa neeksistē');
+			api_error('Grupa neeksistē');
+			api_log('a_add_miniblog('.$group_id.'): norādītā grupa neeksistē');
 			return false;
 		} else if ($group_data->owner != $auth->id &&
 				   $group_data->approved == '0') {
-			a_error('Pieeja grupai liegta');
-			a_log('a_add_miniblog('.$group_id.'): lietotājam grupai nav piekļuves');
+			api_error('Pieeja grupai liegta');
+			api_log('a_add_miniblog('.$group_id.'): lietotājam grupai nav piekļuves');
 			return false;
 		} else if ($group_data->archived == 1) {
-			a_error('Grupa ir arhivēta');
-			a_log('a_add_miniblog('.$group_id.'): norādītā grupa ir arhivēta');
+			api_error('Grupa ir arhivēta');
+			api_log('a_add_miniblog('.$group_id.'): norādītā grupa ir arhivēta');
 			return false;
 		}
 	}
@@ -434,12 +488,12 @@ function a_add_miniblog($data) {
 				`groupid` = ".$group_id."
 		");
 		if (!$parent_data) {
-			a_error('Atbildāmais ieraksts neeksistē vai ir dzēsts');
-			a_log('Centās pievienot atbildi neeksistējošam vai dzēstam miniblogam (id:'.$parent_id.', groupid:'.$group_id.')');
+			api_error('Atbildāmais ieraksts neeksistē vai ir dzēsts');
+			api_log('Centās pievienot atbildi neeksistējošam vai dzēstam miniblogam (id:'.$parent_id.', groupid:'.$group_id.')');
 			return;
 		} else if ($parent_data->reply_to == 0 && $parent_data->closed == 1) {
-			a_error('Miniblogs slēgts komentēšanai');
-			a_log('Centās pievienot ierakstu slēgtam miniblogam ('.$parent_id.') #1');
+			api_error('Miniblogs slēgts komentēšanai');
+			api_log('Centās pievienot ierakstu slēgtam miniblogam ('.$parent_id.') #1');
 			return;
 		}
 		$parent_user_id = $parent_data->author;
@@ -457,12 +511,12 @@ function a_add_miniblog($data) {
 					`miniblog`.`groupid` = ".$group_id."
 			");
 			if (!$miniblog) {
-				a_error('Miniblogs neeksistē');
-				a_log('Vēlējās pievienot ierakstu neeksistējošam miniblogam ('.$parent_data->parent.')');
+				api_error('Miniblogs neeksistē');
+				api_log('Vēlējās pievienot ierakstu neeksistējošam miniblogam ('.$parent_data->parent.')');
 				return;
 			} else if ($miniblog->closed == 1) {
-				a_error('Miniblogs slēgts komentēšanai');
-				a_log('Centās pievienot ierakstu slēgtam miniblogam ('.$parent_data->parent.') #2');
+				api_error('Miniblogs slēgts komentēšanai');
+				api_log('Centās pievienot ierakstu slēgtam miniblogam ('.$parent_data->parent.') #2');
 				return;
 			}
 		}  
@@ -470,8 +524,8 @@ function a_add_miniblog($data) {
 		// minibloga "dziļumam" ir sava robeža
 		$current_level = get_mb_level($parent_id);
 		if ($current_level > $mb_level) {
-			a_error('Too deep ;(');
-			a_log('Vēlējās pievienot minibloga ierakstu pārāk dziļā rekursivitātes līmenī ('.$current_level.')');
+			api_error('Too deep ;(');
+			api_log('Vēlējās pievienot minibloga ierakstu pārāk dziļā rekursivitātes līmenī ('.$current_level.')');
 			return;
 		}
 	}
@@ -484,7 +538,7 @@ function a_add_miniblog($data) {
 		'groupid' => $group_id,
 		'parent' => $outer_parent_id,
 		'reply_to' => $reply_to,
-		'text' => post2db($data['content']),
+		'text' => post2db($data['mb_text']),
 		'private' => (bool)$data['is_private'],
 		'lang' => $api_lang,
 		'device' => 3
@@ -505,8 +559,8 @@ function a_add_miniblog($data) {
 		WHERE `miniblog`.`id` = ".(int)$outer_parent_id."
 	");    
 	if (empty($main_mb)) {
-		a_log('Neizdevās pievienot notifikācijas jaunam ierakstam');
-		a_append(array('miniblog_id' => (int)$main_mb->mb_id));
+		api_log('Neizdevās pievienot notifikācijas jaunam ierakstam');
+		api_append(array('miniblog_id' => (int)$main_mb->mb_id));
 		return;
 	}
 	$mb_title = mb_get_title($main_mb->text);
@@ -620,7 +674,7 @@ function a_add_miniblog($data) {
 		}
 	}
 	
-	a_append(array('miniblog_id' => (int)$main_mb->mb_id));
+	api_append(array('miniblog_id' => (int)$main_mb->mb_id));
 }
 
 /**
@@ -629,7 +683,7 @@ function a_add_miniblog($data) {
  *  $type - 'miniblog'. Nākotnē plānots arī 'image' un 'article'.
  *  $positive - vai vērtēt pozitīvi?
  */
-function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
+function api_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 	global $db, $auth;
 	
 	$comment_id = (int)$comment_id;
@@ -644,14 +698,14 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 			SET `vote_today` = (`vote_today` + 3)
 			WHERE `id` = ".(int)$auth->id
 		);        
-		a_error('Hold your horses!');
+		api_error('Hold your horses!');
 		return;
 	}
 	$_SESSION['voting_antiflood'] = microtime(true);
 	
 	// xsrf aizsardzība
-	if (!a_check_xsrf()) {
-		a_error('no hacking, pls');
+	if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
 		return;
 	}
 	
@@ -661,7 +715,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 		$limit += 50;
 	}
 	if ($auth->vote_today >= $limit) {
-		a_error('Sasniegts dienas limits'); 
+		api_error('Sasniegts dienas limits');
 		return;
 	}
 	
@@ -684,17 +738,17 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 		WHERE `id` = ".$comment_id."
 	");
 	if (empty($comment)) {
-		a_error('Vērtējamais ieraksts neeksistē'); 
+		api_error('Vērtējamais ieraksts neeksistē');
 		return;
 	// vērtējot grupā esošu ierakstu, jāpārbauda lietotāja pieeja tam
 	} else if ($type === 'miniblog' && $comment->groupid != 0 &&
-			   !a_member_of($comment->groupid, false, true)) {
+			   !api_member_of($comment->groupid, false, true)) {
 		return;
 	}
 	
 	// sevi plusot/mīnusot nav ļauts
 	if ($comment->author == $auth->id) {
-		a_error('Savu ierakstu nevar vērtēt'); 
+		api_error('Savu ierakstu nevar vērtēt');
 		return;
 	}
 
@@ -704,7 +758,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 		$voters = unserialize($comment->vote_users);
 	}   
 	if (in_array($auth->id, $voters)) {
-		a_error('Ieraksts jau novērtēts'); 
+		api_error('Ieraksts jau novērtēts');
 		return;
 	}
 	
@@ -754,7 +808,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
 	}
 	
 	// atgriezīs lietotnei jauno vērtējumu
-	a_append(array('vote_value' => (int)$comment->vote_value));
+	api_append(array('vote_value' => (int)$comment->vote_value));
 }
 
 /**
@@ -763,7 +817,7 @@ function a_rate_comment($comment_id = 0, $positive = true, $type = 'miniblog') {
  *  @param $allow_archived  vai arhivēta grupa ir pieļaujama
  *  @param $allow_voting    vai pārbaudīt, vai ierakstu vērtēšana ir iespējota?
  */
-function a_member_of($group_id = 0, $allow_archived = true, $check_voting = false) {
+function api_member_of($group_id = 0, $allow_archived = true, $check_voting = false) {
 	global $db, $auth, $api_lang;
 	
 	$group_id = (int)$group_id;
@@ -787,19 +841,19 @@ function a_member_of($group_id = 0, $allow_archived = true, $check_voting = fals
 	");
 	
 	if (!$group_data) {
-		a_error('Grupa neeksistē');
-		a_log('a_member_of('.$group_id.'): norādītā grupa neeksistē');
+		api_error('Grupa neeksistē');
+		api_log('a_member_of('.$group_id.'): norādītā grupa neeksistē');
 		return false;
 	} else if ($group_data->owner !== $auth->id &&
 			   $group_data->approved == '0') {
-		a_error('Pieeja liegta');
+		api_error('Pieeja liegta');
 		return false;
 	} else if (!$allow_archived && $group_data->archived == 1) {
-		a_error('Grupa ir arhivēta');
-		a_log('a_member_of('.$group_id.'): norādītā grupa ir arhivēta');
+		api_error('Grupa ir arhivēta');
+		api_log('a_member_of('.$group_id.'): norādītā grupa ir arhivēta');
 		return false;
 	} else if ($check_voting && $group_data->disable_vote) {
-        a_error('Vērtēšana šajā grupā nav atļauta');
+        api_error('Vērtēšana šajā grupā nav atļauta');
 		return false;
     }
 	
