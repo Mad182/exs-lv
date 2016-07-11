@@ -67,7 +67,7 @@
         </tr>
         <tr>
             <td>notifications : text</td>
-            <td>īss notikuma teksts</td>
+            <td>īss notikuma teksts, piemēram, fragments no minibloga teksta.<br>Neskaitot miniblogus, citiem notikumiem pārsvarā tukšs string.</td>
         </tr>
         <tr>
             <td>notifications : date</td>
@@ -77,8 +77,8 @@
     <p>Tabulā paskaidroti notikumu tipi:</p>
     <table class="default">
         <tr class="header">
-            <th style="width:150px">type</th>
-            <th style="width:450px">text</th>
+            <th style="width:150px">Tips</th>
+            <th style="width:450px">Skaidrojums</th>
         </tr>
         <tr>
             <td>0</td>
@@ -151,8 +151,8 @@
     </table>
     <table class="default">
         <tr class="header">
-            <th style="width:150px">type</th>
-            <th style="width:450px">foreign key</th>
+            <th style="width:150px">Tips</th>
+            <th style="width:450px">'Foreign key' vērtība</th>
         </tr>
         <tr>
             <td>3, 8, 13, 14</td>
@@ -355,7 +355,7 @@
         </tr>
         <tr>
             <td>awards : list</td>
-            <td>masīvs ar objektiem par lietotājam piešķirtajām medaļām (tām 6 (maināma vērtība), kuras lietotājs starp visām medaļām novietojis kā pirmās sarakstā)</td>
+            <td>masīvs ar objektiem par svarīgākajām lietotājam piešķirtajām medaļām (tām, kuras lietotājs starp visām medaļām novietojis kā pirmās sarakstā; sakrīt ar parametrā "top_count" parādīto vērtību)</td>
         </tr>
         <tr>
             <td>awards : list : img_url</td>
