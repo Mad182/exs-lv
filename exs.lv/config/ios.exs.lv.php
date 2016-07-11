@@ -8,7 +8,6 @@
 // nepieciešams jauns mainīgais, jo parastais $lang (ios.exs.lv) nemainās
 $api_lang = 1;
 
-
 // ios pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
 // json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
 // lai kļūdas lokāli redzētu, var iekš configdb.php pievienot šādu mainīgo
@@ -20,6 +19,16 @@ if (!isset($ios_local)) {
 		ini_set('display_errors', 0);
 		error_reporting(0);
 		$debug = false;
+	}
+}
+
+// ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
+// tas jāpievieno, lai iOS atpazītu adreses
+if (isset($img_server) && substr($img_server, 0, 2) === '//') {
+	if (!empty($_SERVER['HTTPS'])) {
+		$img_server = 'https:'.$img_server;
+	} else {
+		$img_server = 'http:'.$img_server;
 	}
 }
 

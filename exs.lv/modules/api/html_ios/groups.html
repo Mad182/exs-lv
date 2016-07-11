@@ -204,88 +204,116 @@
     <h3 id="mbtab">Grupas miniblogu cilne</h3>
     <p>Atgriež sarakstu ar jaunākajiem grupas miniblogiem.</p>
     <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/getlatestlist?page={page_nr}</span></p>
-    <p>{group_id} - grupas ID<br>{page_nr} - skatāmā miniblogu saraksta lappuse. Parametru nenorādot, tiks atgriezta pirmā lappuse.</p>
+    <p>{group_id} - grupas ID<br>{page_nr} - skatāmā saraksta lappuse, lielāka par 0. Parametru nenorādot, tiks atgriezta pirmā lappuse.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
     ...,
     "response": {
-        "miniblogs": [
+        "page_count": int,
+        "current_page": int,
+        "per_page": int,
+        "miniblog": [
             {
                 "id": int,
                 "short_text": string,
                 "author": {                
                     "nick": string,
-                    "params": string
+                    "params": string,
                     "avatar_url": string
                 },
-                "time_before": string;
+                "created_at": string,
+                "bumped_at": string,
                 "post_count": int,
+                "interface": int,
                 "is_closed": bool,
-                "closed_by": 0|{
+                "closed_by": {
                     "nick": string,
-                    "params": string
+                    "params": string,
+                    "avatar_url": string
                 },
                 "close_reason": string
-            }
+            },
             ...
-        ],
-        "endoflist": bool
+        ]
     }
 }</code></pre>
     <p>Atbildes vērtības skaidrotas tabulā:</p>
     <table class="default">
         <tr class="header">
-            <th style="width:200px">Parametrs</th>
-            <th style="width:400px">Skaidrojums</th>
+            <th style="width:230px">Parametrs</th>
+            <th style="width:370px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>page_count</td>
+            <td>kopumā skatāmo miniblogu lappušu skaits (<em>maināma vērtība</em>)</td>
+        </tr>
+        <tr>
+            <td>current_page</td>
+            <td>pieprasītā lappuse</td>
+        </tr>
+        <tr>
+            <td>per_page</td>
+            <td>vienā lappusē atgriezto miniblogu skaits (<em>maināma vērtība</em>)</td>
         </tr>
         <tr>
             <td>miniblogs</td>
-            <td>masīvs ar jaunāko grupas miniblogu objektiem</td>
+            <td>masīvs ar jaunāko miniblogu objektiem</td>
         </tr>
         <tr>   
             <td>miniblogs : id</td>
-            <td>grupas minibloga ID</td>
+            <td>minibloga ID</td>
         </tr>
         <tr>   
             <td>miniblogs : short_text</td>
-            <td>saīsināts grupas minibloga satura teksts max. 300 simbolu garumā ar daudzpunkti galā (ja satura vairāk); attēli kā saites, spoileri nodzēsti, smaidiņi kā simboli, bez HTML tagiem</td>
+            <td>saīsināts minibloga satura teksts max. 300 simbolu garumā ar daudzpunkti galā (ja satura vairāk);<br>attēli kā saites, spoileri nodzēsti, smaidiņi kā simboli, bez HTML tagiem</td>
         </tr>        
         <tr>
             <td>miniblogs : author</td>
-            <td>objekts ar informāciju par grupas minibloga autoru</td>
+            <td>objekts ar informāciju par minibloga autoru</td>
         </tr>
+        <tr>
+            <td>miniblogs : author : nick</td>
+            <td>lietotāja lietotājvārds</td>
+        </tr>
+        <tr>
+            <td>miniblogs : author : params</td>
+            <td>vairākas vērtības, atdalītas ar "|", kas raksturo lietotājvārdu, lai to varētu pareizi noformatēt, piemēram, "115|2|1|3|0":<br>
+            1) lietotāja ID<br>2) lietotāja klase: 0 - parasts lietotājs,  1 - administrators, 2 - moderators, 3 - rakstu autors, 5 - bots<br>3) 0 - lietotājs nav online, 1 - lietotājs ir online<br>4) ierīce, caur kuru lietotājs skatās lapu: 0 - exs.lv &middot; 1 - m.exs.lv. &middot; 2 - android app &middot; 3 - iOS app<br>5) vai lietotājam ir aktīvs liegums? 0 - nav, 1 - ir</td>
+        </tr> 
         <tr>   
-            <td>miniblogs : time_before</td>
-            <td>laiks, pirms kura grupas miniblogā veikts jaunākais ieraksts<br>(piemēram: "pirms 3 nedēļām")</td>
+            <td>miniblogs : author: avatar_url</td>
+            <td>pilna adrese uz lietotāja avataru</td>
+        </tr> 
+        <tr>   
+            <td>miniblogs : created_at</td>
+            <td>laiks, kad miniblogs pievienots;<br>formāta piemērs: "2016-07-11 21:21:53"</td>
+        </tr> 
+        <tr>   
+            <td>miniblogs : bumped_at</td>
+            <td>laiks, kad miniblogā pēdējoreiz pievienots jauns ieraksts;<br>formāta piemērs: "2016-07-11 21:22:08"</td>
         </tr>
         <tr>   
             <td>miniblogs : post_count</td>
-            <td>komentāru skaits grupas miniblogā</td>
+            <td>ierakstu skaits miniblogā</td>
+        </tr>
+        <tr>   
+            <td>miniblogs : interface</td>
+            <td>saskarne, caur kuru miniblogs pievienots;<br>0 - exs.lv, 1 - m.exs.lv, 2 - android, 3 - ios</td>
         </tr>
         <tr>   
             <td>miniblogs : is_closed</td>
-            <td>vai grupas miniblogs jau ir aizvērts?</td>
+            <td>vai miniblogs jau ir aizvērts?</td>
         </tr>
         <tr>   
             <td>miniblogs : closed_by</td>
-            <td>objekts ar informāciju par lietotāju, kas grupas miniblogu aizslēdzis, vai 0</td>
+            <td>objekts ar informāciju par lietotāju, kas miniblogu aizslēdzis, vai tukšs objekts, ja miniblogs vēl nav slēgts</td>
         </tr>
         <tr>   
             <td>miniblogs : close_reason</td>
-            <td>grupas minibloga aizvēršanas iemesls</td>
+            <td>minibloga aizvēršanas iemesls vai tukšs string</td>
         </tr>
-        <tr>   
-            <td>endoflist</td>
-            <td>sasniedzot pēdējo skatāmo lappusi, atgriezīs TRUE, signalizējot, ka vairāk parādāmo ierakstu nav</td>
-        </tr>      
     </table>
-    <p>
-        <ul>
-            <li>&nbsp;&nbsp;&nbsp;- skatāmas ne vairāk kā jaunākās <span class="hl">10 lappuses</span> (maināma vērtība)</li>
-            <li>&nbsp;&nbsp;&nbsp;- katrā lappusē tiek atgriezta informācija par <span class="hl">20 miniblogiem</span> (maināma vērtība)</li>
-        </ul>
-    </p>
 </div>
 <div class="col_divider"></div>
 <div class="block">
@@ -351,22 +379,25 @@
             "full_text": string,
             "image_count": int,
             "image_urls": string[],
-            "author": {                
+            "created_by": {                
                 "nick": string,
                 "params": string,
                 "avatar_url": string
             },
-            "datetime": string,
+            "created_at": string,
+            "bumped_at": string,
+            "post_count": int,
+            "interface": int,
             "vote_value": int,
             "has_voted": bool,
             "is_closed": bool,
-            "closed_by": 0|{
+            "closed_by": {
                 "nick": string,
                 "params": string,
                 "avatar_url": string
             },
             "close_reason": string,
-            "group_data": false|{
+            "group_data": {
                 "id": int,
                 "title": string,
                 "avatar_url": string
@@ -377,13 +408,14 @@
                 {
                     "id": int,
                     "full_text": string,
-                    "author": {                
+                    "created_by": {                
                         "nick": string,
                         "params": string,
                         "avatar_url": string
                     },
-                    "datetime": string,
-                    "is_removed": int,
+                    "created_at": string,
+                    "is_removed": bool,
+                    "interface": int,
                     "vote_value": int,
                     "has_voted": bool,
                     "image_urls": string[],
@@ -397,8 +429,7 @@
                 },
                 ...
             ],
-            ...,
-            "comment_count": int
+            ...
         ]
     }
 }</code></pre>
@@ -429,12 +460,24 @@
             <td>masīvs ar saitēm uz tekstā atrastajiem attēliem</td>
         </tr>
         <tr>
-            <td>miniblog : author</td>
+            <td>miniblog : created_by</td>
             <td>objekts ar informāciju par minibloga autoru</td>
         </tr>
         <tr>
-            <td>miniblog : datetime</td>
-            <td>laiks, kad ieraksts pievienots, piemēram, "19.03.2015. 21:28"</td>
+            <td>miniblog : created_at</td>
+            <td>laiks, kad miniblogs izveidots;<br>formāta piemērs: "2016-07-11 21:21:53"</td>
+        </tr>
+        <tr>
+            <td>miniblog : bumped_at</td>
+            <td>laiks, kad miniblogā pēdējoreiz pievienots jauns ieraksts;<br>formāta piemērs: "2016-07-11 21:22:08"</td>
+        </tr>
+        <tr>
+            <td>miniblog : post_count</td>
+            <td>ierakstu skaits miniblogā</td>
+        </tr>
+        <tr>   
+            <td>miniblog : interface</td>
+            <td>saskarne, caur kuru miniblogs pievienots;<br>0 - exs.lv, 1 - m.exs.lv, 2 - android, 3 - ios</td>
         </tr>
         <tr>
             <td>miniblog : vote_value</td>
@@ -442,7 +485,7 @@
         </tr>
         <tr>
             <td>miniblog : has_voted</td>
-            <td>vai autentificētais lietotājs šo miniblogu jau ir novērtējis</td>
+            <td>vai autentificētais lietotājs šo miniblogu jau ir novērtējis?</td>
         </tr>
         <tr>
             <td>miniblog : is_closed</td>
@@ -450,27 +493,27 @@
         </tr>
         <tr>   
             <td>miniblog : closed_by</td>
-            <td>objekts ar informāciju par lietotāju, kas miniblogu aizslēdzis, vai 0</td>
+            <td>objekts ar informāciju par lietotāju, kas miniblogu aizslēdzis, vai tukšs objekts, ja miniblogs vēl nav slēgts</td>
         </tr>
         <tr>   
             <td>miniblog : close_reason</td>
-            <td>minibloga aizvēršanas iemesls</td>
+            <td>minibloga aizvēršanas iemesls vai tukšs string</td>
         </tr>
-        <tr>
+        <tr>   
             <td>miniblog : group_data</td>
-            <td>informācija par grupu, kurai pievienots miniblogs, vai FALSE</td>
+            <td>objekts ar informāciju par grupu, kurā miniblogs pievienots</td>
         </tr>
-        <tr>
+        <tr>   
             <td>miniblog : group_data : id</td>
-            <td>ID grupai, kurā pievienots šis miniblogs, vai 0</td>
+            <td>grupas ID</td>
         </tr>
-        <tr>
+        <tr>   
             <td>miniblog : group_data : title</td>
-            <td>nosaukums grupai, kurā pievienots šis miniblogs, vai tukšs string</td>
+            <td>grupas nosaukums</td>
         </tr>
-        <tr>
+        <tr>   
             <td>miniblog : group_data : avatar_url</td>
-            <td>saite uz avataru grupai, kurā pievienots šis miniblogs, vai tukšs string</td>
+            <td>pilna adrese uz grupas avataru</td>
         </tr>
         <tr>
             <td>comments</td>
@@ -478,12 +521,8 @@
         </tr>
         <tr>
             <td>comments : int</td>
-            <td>skaitliska vērtība, kas apzīmē komentāra parent ieraksta ID;<br>zem 0 - masīvs ar minibloga 1. līmeņa komentāriem;<br>visi pārējie ID ir kāda 1. līmeņa komentāra ID, kas nozīmē, ka katrs no tiem satur masīvu ar atbildēm uz šo 1. līmeņa komentāru</td>
+            <td>skaitliska vērtība, kas apzīmē komentāra parent ieraksta ID;<br>zem "0" - masīvs ar minibloga 1. līmeņa komentāriem;<br>visi pārējie ID ir kāda 1. līmeņa komentāra ID, kas nozīmē, ka katrs no tiem satur masīvu ar atbildēm uz šo 1. līmeņa komentāru</td>
         </tr>
-        <tr>
-            <td>comments : comment_count</td>
-            <td>miniblogam pievienoto komentāru skaits (ieskaitot komentāru atbildes)</td>
-        </tr>  
         <tr>
             <td>comments : int : id</td>
             <td>komentāra ID</td>
@@ -493,16 +532,21 @@
             <td>komentāra/atbildes teksts;<br>formatēts pēc tāda paša principa kā paša minibloga teksts</td>
         </tr> 
         <tr>
-            <td>comments : int : author</td>
-            <td>objekts ar informāciju par komentāra autoru</td>
+            <td>comments : int : created_by</td>
+            <td>objekts ar informāciju par ieraksta autoru</td>
         </tr> 
         <tr>
-            <td>comments : int : datetime</td>
-            <td>laiks teksta formātā: "pirms ..."</td>
+            <td>comments : int : created_at</td>
+            <td>laiks, kad ieraksts pievienots;<br>formāta piemērs: "2016-07-11 21:21:53"</td>
         </tr>
         <tr>
             <td>comments : int : is_removed</td>
-            <td>0 - ieraksts nav dzēsts;<br>1 - ieraksts dzēsts</td>
+            <td>0 - ieraksts nav dzēsts &middot; 1 - ieraksts dzēsts;<br>ja šī parametra vērtība ir 1, tad parametra "miniblog:full_text" vērtība ir "Ieraksts dzēsts."</td>
+        </tr>
+        <tr>   
+            <td>comments : int : interface</td>
+            <td>saskarne, caur kuru ieraksts pievienots;<br>0 - exs.lv, 1 - m.exs.lv, 2 - android, 3 - ios</td>
+        </tr>
         </tr> 
             <td>comments : int : vote_value</td>
             <td>komentāra vērtējums;<br>pozitīva vērtējuma gadījumā "+" zīme netiek pierakstīta</td>
@@ -518,7 +562,7 @@
         <tr>
             <td>comments : int : image_count</td>
             <td>tekstā atrasto attēlu skaits (sakrīt ar parametrā "image_urls" esošā masīva izmēru)</td>
-        </tr>         
+        </tr>     
     </table>
 </div>
 <div class="col_divider"></div>
@@ -559,7 +603,7 @@
 <pre><code class="json">{
     ...,
     "response": {
-        "approved": int
+        "joined": bool
     }
 }</code></pre>
     <p>Atbildes vērtība skaidrota tabulā:</p>
@@ -569,8 +613,8 @@
             <th style="width:450px">Skaidrojums</th>
         </tr>
         <tr>
-            <td>approved</td>
-            <td>vērtība vienmēr būs vienāda ar 1 (ja vien netiks atgriezta kāda kļūda parametrā "success" un "message", tādējādi šo parametru nemaz nepievienojot)</td>
+            <td>joined</td>
+            <td>vērtība vienmēr būs vienāda ar TRUE (ja vien netiks atgriezta kāda kļūda parametrā "success" un "message", tādējādi šo parametru nemaz nepievienojot)</td>
         </tr>    
     </table>
 </div>
@@ -585,7 +629,7 @@
 <pre><code class="json">{
     ...,
     "response": {
-        "left": int
+        "left": bool
     }
 }</code></pre>
     <p>Atbildes vērtība skaidrota tabulā:</p>
@@ -596,7 +640,7 @@
         </tr>
         <tr>
             <td>left</td>
-            <td>vērtība vienmēr būs vienāda ar 1 (ja vien netiks atgriezta kāda kļūda parametrā "success" un "message", tādējādi šo parametru nemaz nepievienojot)</td>
+            <td>vērtība vienmēr būs vienāda ar TRUE (ja vien netiks atgriezta kāda kļūda parametrā "success" un "message", tādējādi šo parametru nemaz nepievienojot)</td>
         </tr>    
     </table>
 </div>

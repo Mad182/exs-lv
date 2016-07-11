@@ -6,19 +6,9 @@
  *  ielādētu tieši tam paredzētu saturu.
  */
 
-/*
-|--------------------------------------------------------------------------
-|   Globālie projekta vides mainīgie.
-|--------------------------------------------------------------------------
-*/
-
 // vai atvērta lokālā izstrādes vide?
+// (izmanto projektu konfigurācijas failos /config mapē)
 $is_local = 0;
-
-// vai atvērta mobilā versija, ar to saprotot
-// kādu no "m." apakšprojektiem, nevis Android vai citas OS lietotni?
-$is_mobile = 0;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -143,7 +133,7 @@ if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {
 	}
 
 //rs redirektējam uz runescape lai neveidojas dublikāts saturam
-} elseif($_SERVER['HTTP_HOST'] == 'rs.exs.lv') {
+} else if ($_SERVER['HTTP_HOST'] == 'rs.exs.lv') {
 	redirect('https://runescape.exs.lv' . $_SERVER['REQUEST_URI'], true);
 
 //ja nekas nav atpazīts, redirektējam uz exs.lv
@@ -162,7 +152,7 @@ if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {
 if ($lang > 0) {
 	require CORE_PATH . '/config/' . $config_domains[$lang]['domain'] . '.php';
 } else {
-	if ($is_mobile) {
+	if (strpos($_SERVER['HTTP_HOST'], 'm') === 0) {
 		redirect('https://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
 	}
 	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);

@@ -3,31 +3,6 @@
  *  Globālas funkcijas mobilo lietotņu pieprasījumiem.
  *  Tiek izmantotas Android un iOS modulī.
  */
- 
-function api_textlimit($string, $setlength, $replacer = '...') {
-	$string = strip_tags(str_replace(array('<li>', '</li>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"), ' ', $string));
-
-	//labojam shitty rakstības stilu :)
-	$string = str_replace(array(',', ' ,', ' : ', ' . '), array(', ', ',', ': ', '. '), $string);
-
-	//aizvāc dubultos space un space no teksta galiem
-	$string = preg_replace('%\s+%u', ' ', $string); 
-	// $string = trim(preg_replace('/\s+/', ' ', $string)); <- DZĒSTA, jo nez kāpēc šeit iekš API sprāgst nost
-	$string = trim($string);
-
-	$length = $setlength;
-	if ($length < strlen($string)) {
-		while (($string{$length} != " ") AND ( $length > 0)) {
-			$length--;
-		}
-		if ($length == 0)
-			return substr($string, 0, $setlength);
-		else
-			return substr($string, 0, $length) . $replacer;
-	} else {
-		return $string;
-	}
-}
 
 /**
  *  Pieprasījuma atbildei pievieno kļūdas tekstu,
@@ -36,9 +11,9 @@ function api_textlimit($string, $setlength, $replacer = '...') {
 function api_error($string = '') {
 	global $json_state, $json_success, $json_message;
 	
-	$json_state = 'error';
-	$json_success = false;
-	$json_message = $string;
+	$json_state = 'error'; // androīdam    
+	$json_success = false; // iOS
+	$json_message = $string; // androīdam/iOS
 }
 
 /**
@@ -299,179 +274,6 @@ function api_get_user_avatar($user, $size = 'm') {
 		}
 	} else {    
 		return $img_server . '/userpic/' . $path . '/' . $user->avatar;
-	}
-}
-
-/**
- *  Atgriež JSON sarakstu ar jaunākajiem exs.lv rakstiem.
- *
- *  Atbalsta pārvietošanos pa lapām un apakšprojektus.
- */
-function api_get_news() {
-	global $auth, $db, $lang, $api_lang;
-	
-	// vienā lappusē redzamo rakstu skaits
-	$news_in_page = 20;
-
-	if (isset($_GET['page'])) {
-		$skip = $news_in_page * intval($_GET['page']);
-	} else {
-		$skip = 0;
-	}
-	
-	// tiek pievienoti kritēriji rakstu atlasei
-	$conditions = array();
-	
-	// redzami izvēlētā apakšprojekta vai $lang=0 raksti
-	$conditions[] = '(`pages`.`lang` = ' . (int)$api_lang . ' || `pages`.`lang` = 0)';
-
-	// atlasa sadaļas, kuras lietotājs vēlas ignorēt
-	if ($auth->ok) {
-		$ignores = $db->get_col("SELECT `category_id` FROM `cat_ignore` WHERE `user_id` = '$auth->id'");
-		if (!empty($ignores)) {
-			foreach ($ignores as $ignore) {
-				$conditions[] = "`category` != $ignore";
-			}
-		}
-	}
-
-	// moderatoru sadaļu pārbaude
-	$mods_only = '';
-	if (!im_mod()) {
-		$mods_only = " AND `cat`.`mods_only` = 0";
-	}
-
-	// tiek atlasīti izvēlētie raksti
-	$latest = $db->get_results("
-		SELECT
-			`pages`.`id`,
-			`pages`.`strid`,
-			`pages`.`title`,
-			`pages`.`category`,
-			`pages`.`posts`,
-			`pages`.`readby`,
-			`pages`.`bump`,
-			`cat`.`mods_only`,
-			`cat`.`title` AS `cat_title`
-		FROM `pages`
-			JOIN `cat` ON `pages`.`category` = `cat`.`id`
-		WHERE
-			" . implode(' AND ', $conditions) . $mods_only . "            
-		ORDER BY
-			`pages`.`bump` DESC 
-		LIMIT $skip, $news_in_page
-	");
-
-	// masīvs, kas tiks atgriezts
-	$arr_news = array();
-	
-	if ( !$latest ) {
-		return $arr_news;
-	}
-	
-	foreach ($latest as $late) {
-	
-		// statuss, kas norādīs, vai lietotājs rakstu ir lasījis
-		$is_read = false;
-		if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
-		   $is_read = true;
-		}        
-	
-		$arr_news[] = array(
-			$late->id, 
-			$late->title, 
-			$late->cat_title,
-			$late->posts,
-			$late->mods_only,
-			$late->bump,
-			$is_read
-		);
-	}
-	
-	return $arr_news;
-}
-
-/**
- *  Raksta komentāra vai tā atbildes pievienošana.
- *
- *  @param object   raksta dati no datubāzes
- */
-function api_add_article_comment($article = null) {
-	global $db, $auth, $remote_salt, $comments_per_page;
-	
-	if ($article == null || !isset($_POST['comment'])) {
-		api_error('Pievienot neizdevās');
-		return;
-	}
-	
-	// drošības atslēga xsrf tipa uzbrukumiem
-	$article_salt = substr(md5($article->id . $remote_salt . $auth->id), 0, 5);
-	
-	// pārbaudes
-	if ($article->closed) {    
-		api_error('Raksta komentēšana slēgta');
-		return;        
-	} else if (empty($_POST['comment'])) {    
-		api_error('Tukšu komentāru nevar pievienot');
-		return;        
-	} 
-	// drošības atslēgas pārbaude
-	else if (!isset($_POST['safe']) || $_POST['safe'] != $article_salt) {
-		api_error('no hacking, pls');
-		return;
-	} else {
-	
-		// pārbaude, vai tiek atbildēts kādam esošam komentāram
-		$parent_id = 0;
-		$comment = null;
-		if (isset($_POST['parent_comment'])) {
-			$parent_id = (int)$_POST['parent_comment'];
-			$comment = $db->get_row("
-				SELECT * FROM `comments` 
-				WHERE 
-					`id` = ".$parent_id." AND 
-					`pid` = ".(int)$article->id." AND 
-					`parent` = 0
-			");
-			if (!$comment) {
-				api_error('Atbildāmais komentārs neeksistē');
-				return;
-			}
-		}
-
-		// komentāru saglabā datubāzē
-		require(CORE_PATH . '/includes/class.comment.php');
-		$addcom = new Comment();
-		$addcom->add_comment($article->id, $auth->id, $_POST['comment'], 
-							 0, $parent_id);
-		
-		// izveido adresi notifikācijai raksta autoram
-		$total = $db->get_var("
-			SELECT count(*) FROM `comments` 
-			WHERE 
-				`pid` = " . (int)$article->id . " AND 
-				`parent` = 0 AND 
-				`removed` = 0
-		");
-		if ($total > $comments_per_page) {
-			$skip = '/com_page/' . floor($total / $comments_per_page);
-		} else {
-			$skip = '';
-		}
-		$url = '/read/' . $article->strid . $skip;
-		
-		// pievieno notifikāciju raksta autoram, ja tiek atbildēts
-		if ($comment != null && $comment->author != $article->author) {
-			notify($comment->author, 0, $comment->id, $url, 
-				   textlimit(hide_spoilers($article->title), 64));
-		}
-
-		// atjauno raksta skaitliskos datus
-		update_stats($article->category);
-		$category = get_cat($article->category);
-		if (!empty($category->parent)) {
-			update_stats($category->parent);
-		}
 	}
 }
 

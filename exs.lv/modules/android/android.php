@@ -1,13 +1,17 @@
 <?php 
 /**
- *  exs.lv Android lietotnes modulis
+ *  exs.lv Android lietotnes modulis.
  *
- *  Apstrādā visus no Android saņemtos pieprasījumus.
+ *  Visi uz android.exs.lv veiktie pieprasījumi nonāk šeit.
+ *  Modulis atgriež atbildi JSON formātā.
+ *
+ *  Ieviests: 2015. gada 1. aprīlis.
+ *  Lietotne: https://play.google.com/store/apps/details?id=lv.exs.android
  */
 
 require_once(CORE_PATH . '/includes/functions.api.php');
 require_once(CORE_PATH . '/modules/android/functions.androidapi.php');
- 
+
 /*
 |--------------------------------------------------------------------------
 |   Pamatkonfigurācija.
@@ -18,15 +22,6 @@ require_once(CORE_PATH . '/modules/android/functions.androidapi.php');
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
-// ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
-// tas jāpievieno, lai Android atpazītu adreses
-if (isset($img_server) && substr($img_server, 0, 2) === '//') {
-	if (!empty($_SERVER['HTTPS'])) {
-		$img_server = 'https:'.$img_server;
-	} else {
-		$img_server = 'http:'.$img_server;
-	}
-}
 
 /**
  *  Katram pieprasījumam, kas nonācis šajā modulī,

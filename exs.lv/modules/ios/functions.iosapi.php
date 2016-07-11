@@ -43,12 +43,12 @@ function api_append_profile_info() {
 }
 
 /**
- *  Atgriezīs datus par norādīto lietotāju.
+ *  Atgriež datus par norādīto lietotāju.
  *
  *  Lietotnē tie ir nepieciešami specifiskā formātā (ne-HTML), lai
  *  lietotne pēc tam spētu lietotājvārdu atbilstoši "izdaiļot" ar krāsām.
  *
- *  Ja tiek izmantoti noklusētie parametri, atgriezīs datus par to lietotāju,
+ *  Ja tiek izmantoti noklusētie parametri, atgriež datus par to lietotāju,
  *  kas šo funkciju izsauc. Norādot parametrus, dati atbildīs norādītajam
  *  lietotājam.
  */
@@ -104,7 +104,7 @@ function api_fetch_user($user_id = 0, $nick = '-', $level = 0, $append_avatar = 
     if ($append_avatar) {
         $usr = get_user(($user_id === 0 ? $auth->id : $user_id));
         if ($usr) {
-            $arr['avatar_url'] = api_get_user_avatar($usr, 's');
+            $arr['avatar_url'] = api_get_user_avatar($usr, 'm');
         }
     }
     

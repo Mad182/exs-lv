@@ -3,11 +3,10 @@
  *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
  */
 
-
+ 
 // lietotnē būs iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
 // nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
 $api_lang = 1;
-
 
 // android pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
 // json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
@@ -20,6 +19,16 @@ if (!isset($android_local)) {
 		ini_set('display_errors', 0);
 		error_reporting(0);
 		$debug = false;
+	}
+}
+
+// ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
+// tas jāpievieno, lai Android atpazītu adreses
+if (isset($img_server) && substr($img_server, 0, 2) === '//') {
+	if (!empty($_SERVER['HTTPS'])) {
+		$img_server = 'https:'.$img_server;
+	} else {
+		$img_server = 'http:'.$img_server;
 	}
 }
 

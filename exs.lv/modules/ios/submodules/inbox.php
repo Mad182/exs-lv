@@ -73,10 +73,10 @@ if ($var1 === 'received') {
                 );
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
-					$from = wordwrap(api_textlimit(
+					$from = wordwrap(textlimit(
 						h($pm->imap_name), 48, '...'), 20, '\n', 1);
 				} else {
-					$from = wordwrap(api_textlimit(
+					$from = wordwrap(textlimit(
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
                 $from = array(
@@ -88,7 +88,7 @@ if ($var1 === 'received') {
 				$from = api_fetch_user($pm->from_uid, $pm->nick, $pm->level, true);
 			}
 			
-			$pm_title = wordwrap(api_textlimit(
+			$pm_title = wordwrap(textlimit(
 				strip_tags($pm->title), 48, '...'), 20, ' ', 1);
 			
 			$messages[] = array(
@@ -303,10 +303,10 @@ if ($var1 === 'received') {
                 );
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
-					$to = wordwrap(api_textlimit(
+					$to = wordwrap(textlimit(
 						h($pm->imap_name), 48, '...'), 20, '\n', 1);
 				} else {
-					$to = wordwrap(api_textlimit(
+					$to = wordwrap(textlimit(
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
                 $to = array(
@@ -318,7 +318,7 @@ if ($var1 === 'received') {
 				$to = api_fetch_user($pm->to_uid, $pm->nick, $pm->level, true);
 			}
 			
-			$pm_title = wordwrap(api_textlimit(
+			$pm_title = wordwrap(textlimit(
 				strip_tags($pm->title), 48, '...'), 20, '\n', 1);
 			
 			$messages[] = array(

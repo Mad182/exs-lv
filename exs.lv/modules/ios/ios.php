@@ -1,9 +1,11 @@
 <?php 
 /**
  *  exs.lv iOS lietotnes modulis.
- *  Apstrādā visus no iOS lietotnes saņemtos pieprasījumus.
  *
- *  Ieviests: 14.06.2016. (@burvis)
+ *  Visi uz ios.exs.lv veiktie pieprasījumi nonāk šeit.
+ *  Modulis atgriež atbildi JSON formātā.
+ *
+ *  Ieviests: 2016. gada 14. jūnijs.
  */
  
 require_once(CORE_PATH . '/includes/functions.api.php');
@@ -19,21 +21,6 @@ require_once(CORE_PATH . '/modules/ios/functions.iosapi.php');
 // lai failus neskatītos pa tiešo
 $sub_include = true;
 
-// $_GET mainīgo shortcuti
-// TODO: sarakstīt jau globālā exs līmenī
-/*$var1 = (isset($_GET['var1']) ? $_GET['var1'] : false);
-$var2 = (isset($_GET['var2']) ? $_GET['var2'] : false);
-$var3 = (isset($_GET['var3']) ? $_GET['var3'] : false);*/
-
-// ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
-// protokols jāpievieno, lai iOS atpazītu adreses
-if (isset($img_server) && substr($img_server, 0, 2) === '//') {
-	if (!empty($_SERVER['HTTPS'])) {
-		$img_server = 'https:'.$img_server;
-	} else {
-		$img_server = 'http:'.$img_server;
-	}
-}
 
 /**
  *  Katrs pieprasījums, kas nonācis šajā modulī,
@@ -192,7 +179,7 @@ echo json_encode(array(
 	'logged_in'  => $auth->ok,
 	'xsrf_token' => api_make_xsrf(),
 	'response'   => $json_page
-));
+), JSON_UNESCAPED_UNICODE);
 
 // pēc šī faila vairs nekādu pārbaužu un darbību nebūs
 exit;

@@ -68,7 +68,7 @@ $requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_G
 
 // android|ios.exs.lv adresēs neliks '.json', bet sagaidīs tikai un vienīgi json
 if ($requested_json || $lang === 2 || $lang === 4) {
-	header('Content-Type: application/json');
+	header('Content-Type: application/json; charset=UTF-8');
 } else {
 	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
 	header('Content-Type: text/html; charset=UTF-8');

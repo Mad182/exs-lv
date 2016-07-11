@@ -98,7 +98,7 @@ if ($var1 === 'notifications') {
 				'type' => (int)$notify->type,
 				'group_id' => (int)$group_id,
 				'foreign_key' => (int)$notify->foreign_key,
-				'text' => api_textlimit(trim($notify->info), 45, ''),
+				'text' => textlimit(trim($notify->info), 45, ''),
 				'date' => 'pirms ' . time_ago(strtotime($notify->bump))
 			);
 		}

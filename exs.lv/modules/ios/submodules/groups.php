@@ -152,7 +152,7 @@ if (!empty($var1) && !empty($var2) &&
 			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = ".(int)$auth->id);
 		}
 		
-		api_append(array('approved' => $approved));
+		api_append(array('joined' => true));
 	}
 
 /**
@@ -211,7 +211,7 @@ if (!empty($var1) && !empty($var2) &&
 		$group->av_alt = 1;
 		push('Izstājās no grupas &quot;<a href="'.$group_link.'">'.$group->title.'</a>&quot;', get_avatar($group, 's', true));
 		
-		api_append(array('left' => 1));
+		api_append(array('left' => true));
 	}
 
 /**
