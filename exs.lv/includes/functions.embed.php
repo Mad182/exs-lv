@@ -286,7 +286,8 @@ function insert_smilies($txt) {
 		':bulduris:' => 'bulduris.png',
 		':agility:' => 'agility.png',
 		':11:' => '11.png',
-		':zagis:' => 'chainsaw.gif'
+		':zagis:' => 'chainsaw.gif',
+		':dickbutt:' => 'dickbutt.gif'
 	);
 
 	foreach ($smilies as $key => $val) {
@@ -611,7 +612,7 @@ function embed_spotify($params) {
 				$spotify_html = $spotify->html;
 			}
 		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 121600);
+		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 432000);
 	}
 
 	return $spotify_html;

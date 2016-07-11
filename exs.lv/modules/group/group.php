@@ -46,6 +46,11 @@ else if ($group->lang != $lang) {
 	redirect('https://' . $config_domains[$group->lang]['domain'] . $_SERVER['REQUEST_URI'], true);
 }
 
+//disable google indexing for some groups
+if($group->noindex) {
+	$robotstag = array('noindex', 'follow');
+}
+
 // grupas avatars
 $group->av_alt = 1;
 if (empty($group->avatar)) {

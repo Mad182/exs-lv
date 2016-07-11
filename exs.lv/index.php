@@ -527,6 +527,7 @@ if ($skin === 'main') {
 
 /* robots meta taga pievienošana */
 if (!empty($robotstag)) {
+	$robotstag = array_unique($robotstag);
 	$tpl->newBlock('robots');
 	$tpl->assign('value', implode(',', $robotstag));
 }
