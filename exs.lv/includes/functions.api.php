@@ -103,9 +103,8 @@ function api_log($text) {
 	if (empty($text)) return;
 	
 	$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
-    $tbl_name = ($lang === 2) ? 'android_logs' : 'api_ios_logs';
 	
-	return $db->insert($tbl_name, array(
+	return $db->insert('api_logs', array(
         'api_type' => ($lang === 2 ? 0 : 1),
 		'url' => sanitize($uri),
 		'message' => sanitize($text),
