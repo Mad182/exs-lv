@@ -235,7 +235,7 @@ if ($var1 === 'received') {
 		
 		$arr_images = api_format_text($pm->text);
 
-		api_append(array('message_content' => array(
+		api_append(array('message' => array(
 			'id' => (int)$pm->id,
 			'title' => $pm->title,
 			'text' => $pm->text,
