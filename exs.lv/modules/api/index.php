@@ -74,12 +74,12 @@ $project = ($var1 === 'a') ? 'android' : 'ios';
 switch ($project) {
     case 'ios':
         $tpl->assign('active-1', 'class="is-active" ');
-        $tpl->newBlock('ios-logo');
+        // $tpl->newBlock('ios-logo');
         $tpl->newBlock('ios-navig');
         break;
     default:
         $tpl->assign('active-0', 'class="is-active" ');
-        $tpl->newBlock('android-logo');
+        // $tpl->newBlock('android-logo');
         $tpl->newBlock('android-navig');
         break;
 }

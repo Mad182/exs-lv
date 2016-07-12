@@ -27,7 +27,7 @@ if (!empty($var1) && !empty($var2) &&
 
 /**
  *  Atgriezīs sarakstu ar grupas jaunākajiem miniblogiem.
- *  (/groups/{group_id}/getlist)
+ *  (/groups/{group_id}/getlatestlist)
  */
 } else if (!empty($var1) && $var2 === 'getlatestlist') {
 	set_action('grupas miniblogus');
@@ -285,8 +285,8 @@ if (!empty($var1) && !empty($var2) &&
 			'member_count' => (int)($group_data->members + 1), // + admins
 			'post_count' => (int)$group_data->posts,
 			'posts_seen' => (int)$posts_seen,
-			'owner_data' => $owner,
 			'is_member' => $is_member,
+			'created_by' => $owner,
 			'is_archived' => ($group_data->archived ? true : false)
 		)));
 	}
@@ -315,27 +315,36 @@ if (!empty($var1) && !empty($var2) &&
 		$total_members = $db->get_var("
 			SELECT count(*) FROM `clans_members` 
 			WHERE `approve` = 1 AND `clan` = ".$group_id
-		);
+		) + 1; // pieskaita grupas autoru, kas tabulā nav
 		
 		// lappušu iestatījumi
-		$max_per_page = 20;
+		$per_page = 20;
 		$current_page = 1;
-		$page_count = ceil($total_members / $max_per_page);
-		
+		$page_count = (int) ceil($total_members / $per_page);
+
 		if (isset($_GET['page'])) {
 			$_GET['page'] = (int)$_GET['page'];
-			if ($_GET['page'] < 0) {
-				$_GET['page'] = 1;
+			if ($_GET['page'] < 1) {
+				api_error('Pieprasīta neeksistējoša lappuse');
+                api_log('Pieprasīta < 1 lappuse (page:'.$_GET['page'].').');
+                return;
 			} else if ($_GET['page'] > $page_count) {
-				api_append(array(
-					'group_members' => array(),
-					'endoflist' => true
-				));
-				return;
+                api_error('Pārsniegts lappušu skaits');
+                api_log('Pieprasīta pārāk liela grupas biedru lappuse (page:'.$_GET['page'].').');
+                return;
 			}
 			$current_page = $_GET['page'];
 		}
-		$limit_start = ($current_page - 1) * $max_per_page;
+		$limit_start = ($current_page - 1) * $per_page;
+        
+        if ($current_page === 1) {
+            // jo sākumā jau papildu pievieno grupas adminu
+            $per_page -= 1;
+        } else {
+            // citās lappusēs sāk par vienu ātrāk, jo pirmajā lappusē
+            // gala robeža ir par vienu mazāk
+            $limit_start -= 1;
+        }
 		
 		$arr_members = array();
 		$member_count = 0;
@@ -347,24 +356,22 @@ if (!empty($var1) && !empty($var2) &&
 			if (!empty($owner->deleted)) {
 				$owner->nick = 'dzēsts';
 			}
-			$avatar = api_get_user_avatar($owner, 'l');
 			$arr = array(
 				'member_id' => 0,
                 'is_admin' => true,
-                'is_mod' => false,
-				'avatar_url' => $avatar
+                'is_mod' => false
 			);
-            $arr += api_fetch_user($owner->id, $owner->nick, $owner->level);
+            $arr += api_fetch_user($owner->id, $owner->nick, $owner->level, true);
             $arr_members[] = $arr;
 			$member_count = 1;
 		}
 
-		// atlasīs un pievienos masīvam visus pārējos grupas biedrus, ja eksistē
+		// atlasa un pievieno masīvam visus pārējos grupas biedrus, ja tādi ir
 		$all_members = $db->get_results("
 			SELECT `id`, `user` AS `user_id`, `moderator` FROM `clans_members`
 			WHERE `clan` = ".$group_id." AND `approve` = 1
 			ORDER BY `moderator` DESC, `date_added` ASC
-			LIMIT ".$limit_start.", ".$max_per_page."
+			LIMIT ".$limit_start.", ".$per_page."
 		");
 		
 		if ($all_members) {
@@ -378,10 +385,9 @@ if (!empty($var1) && !empty($var2) &&
 					$arr = array(
 						'member_id' => (int)$member->id,
                         'is_admin' => false,
-                        'is_mod' => (bool)$member->moderator,
-						'avatar_url' => $avatar					
+                        'is_mod' => (bool)$member->moderator				
 					);
-                    $arr += api_fetch_user($usr->id, $usr->nick, $usr->level);
+                    $arr += api_fetch_user($usr->id, $usr->nick, $usr->level, true);
                     $arr_members[] = $arr;
 					$member_count++;
 				}
@@ -389,27 +395,13 @@ if (!empty($var1) && !empty($var2) &&
 		}
 		
 		// atgriezīs datus lietotnei
-		if (!empty($arr_members)) {
-		
-			$endoflist = false;
-		
-			// pēdējā lappusē ziņos par saraksta beigām,
-			// lai lietotne neturpinātu nākamo lappušu pieprasījumus
-			if ($member_count < $max_per_page) {
-				$endoflist = true;
-			}
-		
-			api_append(array(
-				'group_members' => $arr_members,
-				'endoflist' => $endoflist
-			));
-			
-		} else {
-			api_append(array(
-				'group_members' => array(),
-				'endoflist' => true
-			));
-		}
+		api_append(array(
+            'member_count' => $total_members,
+            'page_count' => $page_count,
+            'current_page' => $current_page, 
+            'per_page' => (($current_page === 1) ? $per_page + 1 : $per_page),
+            'members' => $arr_members
+        ));
 	}
 
 /**

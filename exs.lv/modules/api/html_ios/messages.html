@@ -5,7 +5,7 @@
         <li><a href="#inbox">- saņemtās vēstules</a></li>
         <li><a href="#outbox">- nosūtītās vēstules</a></li>
         <li><a href="#new">- jauna vēstule</a></li>
-        <li><a href="#read">- vēstules lasīšana</a></li>
+        <li><a href="#read">- vēstules ielāde</a></li>
     </ul>
 </div>
 <div class="col_divider"></div>
@@ -18,20 +18,23 @@
 <div class="block">
     <h3 id="inbox">Saņemtās vēstules</h3>
     <p>Atgriež sarakstu ar saņemtajām vēstulēm.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/received?page={page_nr}</span></p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/in?page={page_nr}</span></p>
     <p>{page_nr} - vēstuļu saraksta lappuse. Parametru nenorādot, atgriež pirmo lappusi.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
     ...,
     "response": {
-        "endoflist": bool,
+        "message_count": int,
+        "page_count": int,
+        "current_page": int,
+        "per_page": int,
         "unread": int,
         "messages": [
             {
                 "id": int,
                 "title": string,
-                "date": string,
+                "received_at": string,
                 "from": {
                     "nick": string,
                     "params": string,
@@ -50,8 +53,20 @@
             <th style="width:400px">Skaidrojums</th>
         </tr>
         <tr>
-            <td>endoflist</td>
-            <td>sasniedzot pēdējo skatāmo vēstuļu saraksta lappusi, atgriezīs TRUE, signalizējot, ka vairāk saņemtu vēstuļu nav</td>
+            <td>message_count</td>
+            <td>lietotāja saņemto vēstuļu skaits</td>
+        </tr>
+        <tr>
+            <td>page_count</td>
+            <td>saņemto vēstuļu lappušu skaits</td>
+        </tr>
+        <tr>
+            <td>current_page</td>
+            <td>pieprasītā lappuse</td>
+        </tr>
+        <tr>
+            <td>per_page</td>
+            <td>vienā lappusē atgriezto vēstuļu skaits (<em>maināma vērtība</em>)</td>
         </tr>
         <tr>
             <td>unread</td>
@@ -70,8 +85,8 @@
             <td>vēstules virsraksts</td>
         </tr>
         <tr>
-            <td>messages : date</td>
-            <td>laiks, kad vēstule saņemta (piemēram, "Šodien, 21:32")</td>
+            <td>messages : received_at</td>
+            <td>laiks, kad vēstule saņemta;<br>formāta piemērs: "2016-07-11 21:21:53"</td>
         </tr>
         <tr>
             <td>messages : from</td>
@@ -95,30 +110,28 @@
             <td>vai vēstule ir izlasīta?</td>
         </tr>
     </table>
-    <p>
-        <ul>
-            <li>&nbsp;&nbsp;&nbsp;- skatāmo lappušu skaits nav ierobežots</li>
-            <li>&nbsp;&nbsp;&nbsp;- katrā lappusē tiek atgriezta informācija par <span class="hl">20 vēstulēm</span> (maināma vērtība)</li>
-        </ul>
-    </p>
 </div>
 <div class="col_divider"></div>
 <div class="block">
     <h3 id="outbox">Nosūtītās vēstules</h3>
     <p>Atgriež sarakstu ar nosūtītajām vēstulēm.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/sent?page={page_nr}</span></p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/out?page={page_nr}</span></p>
     <p>{page_nr} - vēstuļu saraksta lappuse. Parametru nenorādot, atgriež pirmo lappusi.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
     ...,
     "response": {
-        "endoflist": bool,
+        "message_count": int,
+        "page_count": int,
+        "current_page": int,
+        "per_page": int,
+        "unread": int,
         "messages": [
             {
                 "id": int,
                 "title": string,
-                "date": string,
+                "sent_at": string,
                 "to": {
                     "nick": string,
                     "params": string,
@@ -137,26 +150,37 @@
             <th style="width:450px">Skaidrojums</th>
         </tr>
         <tr>
-            <td>endoflist</td>
-            <td>sasniedzot pēdējo skatāmo vēstuļu saraksta lappusi, atgriezīs TRUE, signalizējot, ka vairāk nosūtītu vēstuļu nav</td>
+            <td>message_count</td>
+            <td>lietotāja nosūtīto vēstuļu skaits</td>
+        </tr>
+        <tr>
+            <td>page_count</td>
+            <td>nosūtīto vēstuļu lappušu skaits</td>
+        </tr>
+        <tr>
+            <td>current_page</td>
+            <td>pieprasītā lappuse</td>
+        </tr>
+        <tr>
+            <td>per_page</td>
+            <td>vienā lappusē atgriezto vēstuļu skaits (<em>maināma vērtība</em>)</td>
+        </tr>
+        <tr>
+            <td>unread</td>
+            <td>vēl neizlasīto vēstuļu skaits</td>
         </tr>
         <tr>
             <td>messages</td>
             <td>masīvs ar objektiem par nosūtītajām vēstulēm</td>
-        </tr>         
-    </table>    
-    <p>
-        <ul>
-            <li>&nbsp;&nbsp;&nbsp;- skatāmo lappušu skaits nav ierobežots</li>
-            <li>&nbsp;&nbsp;&nbsp;- katrā lappusē tiek atgriezta informācija par <span class="hl">20 vēstulēm</span> (maināma vērtība)</li>
-        </ul>
-    </p>
+        </tr>       
+    </table>
 </div>
 <div class="col_divider"></div>
 <div class="block">
     <h3 id="new">Jauna vēstule</h3>
-    <p>Ļauj nosūtīt kādam lietotājam jaunu vēstuli.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/send</span></p>
+    <p>Ļauj nosūtīt lietotājam jaunu vēstuli.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/send?xsrf={xsrf}</span></p>
+    <p>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
     <p>Šis ir POST tipa pieprasījums, un tam jāpievieno šādas POST vērtības:</p>
     <table class="default">
         <tr class="header">
@@ -202,10 +226,10 @@
 </div>
 <div class="col_divider"></div>
 <div class="block">
-    <h3 id="read">Vēstules lasīšana</h3>
-    <p>Atgriež informāciju par norādīto vēstuli.</p>
+    <h3 id="read">Vēstules ielāde</h3>
+    <p>Atgriež informāciju par norādīto vēstuli (gan saņemto, gan nosūtīto).</p>
     <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/read/{message_id}</span></p>
-    <P>{message_id} - lasāmās vēstules ID</p>
+    <P>{message_id} - lasāmās vēstules ID.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
@@ -217,8 +241,8 @@
             "text": string,
             "image_count": int,
             "image_urls": string[],
-            "datetime": string,
-            "user": {
+            "received_at"/"sent_at": string,
+            "from"/"to": {
                 "nick": string,
                 "params": string,
                 "avatar_url": string
@@ -229,12 +253,12 @@
     <p>Atbildes vērtības skaidrotas tabulā:</p>
     <table class="default">
         <tr class="header">
-            <th style="width:180px">Atslēga</th>
-            <th style="width:420px">Skaidrojums</th>
+            <th style="width:220px">Atslēga</th>
+            <th style="width:380px">Skaidrojums</th>
         </tr>
         <tr>
             <td>message</td>
-            <td>informācija par vēstuli</td>
+            <td>objekts ar informāciju par vēstuli</td>
         </tr>
         <tr>
             <td>message : id</td>
@@ -257,11 +281,11 @@
             <td>masīvs ar saitēm uz tekstā atrastajiem attēliem</td>
         </tr>
         <tr>
-            <td>message : datetime</td>
-            <td>laiks teksta formātā: "2016-07-10 21:40"</td>
+            <td>message : received_at/sent_at</td>
+            <td>laiks, kad vēstule saņemta/nosūtīta;<br>formāta piemērs: "2016-07-10 21:40"</td>
         </tr>
         <tr>
-            <td>message : user</td>
+            <td>message : from/to</td>
             <td>vēstules saņēmēja/adresāta dati</td>
         </tr>
     </table>

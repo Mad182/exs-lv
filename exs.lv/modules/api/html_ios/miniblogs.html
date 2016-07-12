@@ -28,11 +28,11 @@
         "page_count": int,
         "current_page": int,
         "per_page": int,
-        "miniblog": [
+        "miniblogs": [
             {
                 "id": int,
                 "short_text": string,
-                "author": {                
+                "created_by": {                
                     "nick": string,
                     "params": string,
                     "avatar_url": string
@@ -42,12 +42,6 @@
                 "post_count": int,
                 "interface": int,
                 "is_closed": bool,
-                "closed_by": {
-                    "nick": string,
-                    "params": string,
-                    "avatar_url": string
-                },
-                "close_reason": string,
                 "group_data": {
                     "id": int,
                     "title": string,
@@ -89,20 +83,20 @@
             <td>saīsināts minibloga satura teksts max. 300 simbolu garumā ar daudzpunkti galā (ja satura vairāk);<br>attēli kā saites, spoileri nodzēsti, smaidiņi kā simboli, bez HTML tagiem</td>
         </tr>        
         <tr>
-            <td>miniblogs : author</td>
+            <td>miniblogs : created_by</td>
             <td>objekts ar informāciju par minibloga autoru</td>
         </tr>
         <tr>
-            <td>miniblogs : author : nick</td>
+            <td>miniblogs : created_by : nick</td>
             <td>lietotāja lietotājvārds</td>
         </tr>
         <tr>
-            <td>miniblogs : author : params</td>
+            <td>miniblogs : created_by : params</td>
             <td>vairākas vērtības, atdalītas ar "|", kas raksturo lietotājvārdu, lai to varētu pareizi noformatēt, piemēram, "115|2|1|3|0":<br>
             1) lietotāja ID<br>2) lietotāja klase: 0 - parasts lietotājs,  1 - administrators, 2 - moderators, 3 - rakstu autors, 5 - bots<br>3) 0 - lietotājs nav online, 1 - lietotājs ir online<br>4) ierīce, caur kuru lietotājs skatās lapu: 0 - exs.lv &middot; 1 - m.exs.lv. &middot; 2 - android app &middot; 3 - iOS app<br>5) vai lietotājam ir aktīvs liegums? 0 - nav, 1 - ir</td>
         </tr> 
         <tr>   
-            <td>miniblogs : author: avatar_url</td>
+            <td>miniblogs : created_by : avatar_url</td>
             <td>pilna adrese uz lietotāja avataru</td>
         </tr> 
         <tr>   
@@ -124,14 +118,6 @@
         <tr>   
             <td>miniblogs : is_closed</td>
             <td>vai miniblogs jau ir aizvērts?</td>
-        </tr>
-        <tr>   
-            <td>miniblogs : closed_by</td>
-            <td>objekts ar informāciju par lietotāju, kas miniblogu aizslēdzis, vai tukšs objekts, ja miniblogs vēl nav slēgts</td>
-        </tr>
-        <tr>   
-            <td>miniblogs : close_reason</td>
-            <td>minibloga aizvēršanas iemesls vai tukšs string</td>
         </tr>
         <tr>   
             <td>miniblogs : group_data</td>

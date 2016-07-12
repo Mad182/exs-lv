@@ -456,14 +456,31 @@ if ($var1 === 'notifications') {
 	if (!$get_cat) {
 		api_error('Kļūdaini norādīta sadaļa');
 	} else {
-	
-		$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;        
-		if ($page < 1) {
-			$page = 1;
+        
+        $group_count = (int) $db->get_var("
+			SELECT count(*) FROM `clans`
+			WHERE `lang` = ".(int)$api_lang." AND `category_id` = ".(int)$get_cat->id."
+		");
+        
+        // lappušu iestatījumi
+		$per_page = 20;
+		$current_page = 1;
+		$page_count = (int) ceil($group_count / $per_page);
+        
+        if (isset($_GET['page'])) {
+			$_GET['page'] = (int)$_GET['page'];
+			if ($_GET['page'] < 1) {
+				api_error('Pieprasīta neeksistējoša lappuse');
+                api_log('Pieprasīta < 1 lappuse.');
+                return;
+			} else if ($_GET['page'] > $page_count) {
+                api_error('Pārsniegts lappušu skaits');
+                api_log('Pieprasīta pārāk liela lappuse.');
+                return;
+			}
+			$current_page = $_GET['page'];
 		}
-
-		$amount = 20; // vienā lapā atgriežamo grupu skaits
-		$limit = ($page - 1) * $amount;
+		$limit_start = ($current_page - 1) * $per_page;
 	
 		$groups = $db->get_results("
 			SELECT 
@@ -486,15 +503,12 @@ if ($var1 === 'notifications') {
 				`lang` = ".(int)$api_lang." AND
 				`category_id` = ".(int)$get_cat->id." 
 			ORDER BY `title` ASC
-			LIMIT ".$limit.", ".$amount."
+			LIMIT ".$limit_start.", ".$per_page."
 		");
 		
 		if (!$groups) {
-			$json_page = array(
-				'cat_id' => (int)$get_cat->id,
-				'cat_title' => $get_cat->title,
-				'groups' => array()
-			);           
+			api_log('Neizdevās atlasīt kategorijas grupu sarakstu.');
+            api_error('Grupu ielāde neizdevās');
 		} else {
 	
 			$data = array();
@@ -527,6 +541,10 @@ if ($var1 === 'notifications') {
 			}
 			
 			api_append(array(
+                'group_count' => $group_count,
+                'page_count' => $page_count,
+                'current_page' => $current_page,
+                'per_page' => $per_page,
 				'category_id' => (int)$get_cat->id,
 				'category_title' => $get_cat->title,
 				'groups' => $data

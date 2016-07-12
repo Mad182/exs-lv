@@ -91,8 +91,6 @@ function api_fetch_miniblogs($group_id = 0) {
 			`miniblog`.`device`,
 			`miniblog`.`groupid`,
 			`miniblog`.`closed`,
-			`miniblog`.`closed_by`,
-			`miniblog`.`close_reason`,
 			`users`.`avatar`,
 			`users`.`deleted`,
 			`users`.`av_alt`,
@@ -154,19 +152,6 @@ function api_fetch_miniblogs($group_id = 0) {
 			$mb->group_title = $group->title;
         }
         
-        // dati par lietotāju, kas aizslēdzis miniblogu
-        $closed_by = new ArrayObject();
-        if ($mb->closed_by !== '0') {
-            $closed_user = get_user((int)$mb->closed_by);
-            if ($closed_user) {
-                $closed_by = api_fetch_user($closed_user->id, $closed_user->nick, $closed_user->level, true);
-            }
-        }
-        if ($mb->close_reason !== '') {
-            api_format_text($mb->close_reason, false);
-            $mb->close_reason = strip_tags($mb->close_reason);
-        }
-        
         // kad ieraksts pēdējoreiz uzbumpots (piem., ar komentāra pievienošanu)
         $mb->bump = ($mb->bump === '0') ?
             $mb->date : date('Y-m-d H:i:s', $mb->bump);
@@ -174,14 +159,12 @@ function api_fetch_miniblogs($group_id = 0) {
 		$arr = array(
 			'id' => (int)$mb->mb_id,
 			'short_text' => $mb->text,
-			'author' => api_fetch_user($mb->user_id, $mb->nick, $mb->level, true),
+			'created_by' => api_fetch_user($mb->user_id, $mb->nick, $mb->level, true),
 			'created_at' => $mb->date,
 			'bumped_at' => $mb->bump,
 			'post_count' => (int)$mb->posts,
             'interface' => (int)$mb->device,
-			'is_closed' => (bool)$mb->closed,
-            'closed_by' => $closed_by,
-            'close_reason' => $mb->close_reason
+			'is_closed' => (bool)$mb->closed
 		);
         
         // ja nav pieprasīti tikai vienas konkrētas grupas miniblogi,

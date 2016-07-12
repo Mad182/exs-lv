@@ -10,25 +10,49 @@ $var1 = (!empty($_GET['var1'])) ? $_GET['var1'] : '';
 $var2 = (!empty($_GET['var2'])) ? $_GET['var2'] : '';
 
 /**
- *  Pieprasīts saraksts ar saņemtajām vēstulēm.
- *  (/inbox/received)
+ *  Pieprasīts saraksts ar saņemtajām vai nosūtītajām vēstulēm.
+ *  /inbox/in vai /inbox/out
  */
-if ($var1 === 'received') {
+if ($var1 === 'in' || $var1 === 'out') {
 
 	set_action('pastkastīti');
+    
+    $field_prefix = ($var1 === 'in') ? 'to' : 'from';
+    $user_key = ($var1 === 'in') ? 'from' : 'to';
+    $time_key = ($var1 === 'in') ? 'received_at' : 'sent_at';
 
+    // saņemto/nosūtīto vēstuļu skaits
+    $message_count = $db->get_var(
+        "SELECT count(*) FROM `pm`
+        WHERE `pm`.`".$field_prefix."_uid` = ".$auth->id
+    );
+	// vēl nelasīto vēstuļu skaits
+	$unread = $db->get_var("
+		SELECT count(*) FROM `pm`
+        WHERE `".$field_prefix."_uid` = ".$auth->id." AND `is_read` = 0
+	");
+    
 	// lappušu iestatījumi
-	$msg_per_page = 20;
+	$per_page = 20;
+    $page_count = (int) ceil($message_count / $per_page);    
 	$current_page = 1;
+    
 	if (isset($_GET['page'])) {
-		$current_page = (int)$_GET['page'];
-		if ($current_page < 1) {
-			$current_page = 1;
+        $_GET['page'] = (int)$_GET['page'];
+        if ($_GET['page'] < 1) {
+			api_error('Pieprasīta neeksistējoša lappuse');
+            api_log('Pieprasīta < 1 vēstuļu lappuse.');
+			return;
+        } else if ($_GET['page'] > $page_count) {
+            api_error('Pārsniegts skatāmo lappušu skaits');
+            api_log('Pieprasīta pārāk liela vēstuļu lappuse.');
+			return;
 		}
+		$current_page = $_GET['page'];
 	}
-	$lim_start = ($current_page - 1) * $msg_per_page;
+	$lim_start = ($current_page - 1) * $per_page;    
 
-	// atlasīs lietotāja jaunākās vēstules
+	// atlasīs lietotāja saņemtās/nosūtītās vēstules
 	$pms = $db->get_results("
 		SELECT
 			`pm`.*,
@@ -37,55 +61,49 @@ if ($var1 === 'received') {
 			`users`.`deleted` AS `user_deleted`
 		FROM `pm`
 			JOIN `users` ON (
-				`pm`.`from_uid` = `users`.`id`
+				`pm`.`".$field_prefix."_uid` = `users`.`id`
 			)
 		WHERE
-			`pm`.`to_uid` = ".$auth->id."
+			`pm`.`".$field_prefix."_uid` = ".$auth->id."
 		ORDER BY
 			`pm`.`date` DESC
 		LIMIT
-			".$lim_start.", ".$msg_per_page
+			".$lim_start.", ".$per_page
 	);
-	// vēl nelasīto vēstuļu skaits
-	$unread = $db->get_var("
-		SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
-	");
 	
 	if (!$pms) {
-		api_append(array(
-			'endoflist' => true,
-			'unread' => 0,
-			'messages' => array()
-		));
+        api_error('Neizdevās ielādēt vēstules');
+        api_log('Neizdevās ielādēt vēstules.');
 	} else {
 
 		$messages = array();
 	
 		foreach ($pms as $pm) {
 			
-			// sūtītāja dati
-			$from = '';            
+			// sūtītāja/saņēmēja dati
+			$other_user = new arrayObject();            
 			if (!empty($pm->user_deleted)) {
-                $from = array(
+                $other_user = array(
                     'nick' => '<em>dzēsts</em>',
                     'params' => '0|0|0|0|0',
                     'avatar_url' => ''
                 );
 			} else if (!empty($pm->imap_uid)) {
+                $other_user = '';
 				if (!stristr($pm->imap_name, '?')) {
-					$from = wordwrap(textlimit(
+					$other_user = wordwrap(textlimit(
 						h($pm->imap_name), 48, '...'), 20, '\n', 1);
 				} else {
-					$from = wordwrap(textlimit(
+					$other_user = wordwrap(textlimit(
 						h($pm->imap_email), 48, '...'), 20, '\n', 1);
 				}
-                $from = array(
-                    'nick' => $from,
+                $other_user = array(
+                    'nick' => $other_user,
                     'params' => '0|0|0|0|0',
                     'avatar_url' => ''
                 );
 			} else {
-				$from = api_fetch_user($pm->from_uid, $pm->nick, $pm->level, true);
+				$other_user = api_fetch_user($pm->from_uid, $pm->nick, $pm->level, true);
 			}
 			
 			$pm_title = wordwrap(textlimit(
@@ -94,28 +112,28 @@ if ($var1 === 'received') {
 			$messages[] = array(
 				'id' => (int)$pm->id,
 				'title' => $pm_title,
-				'date' => display_time(strtotime($pm->date)),
-				'from' => $from,
+				$time_key => $pm->date,
+				$user_key => $other_user,
 				'is_read' => (bool)$pm->is_read
 			);
 		}
 		
-		$endoflist = (count($messages) < $msg_per_page) ? true : false;
-		
-		$unread = ($unread) ? (int)$unread : 0;
-		
 		api_append(array(
-			'endoflist' => $endoflist,
-			'unread' => $unread,
+            'message_count' => (int) $message_count,
+            'page_count' => $page_count,
+            'current_page' => $current_page,
+            'per_page' => $per_page,
+			'unread' => (($unread) ? (int)$unread : 0),
 			'messages' => $messages
 		));
-	}
+	}    
+}
 
 /**
  *  Vēstules nosūtīšana.
  *  (/inbox/send?xsrf={..} + $_POST)
  */
-} else if ($var1 === 'send') {
+else if ($var1 === 'send') {
 
 	// kļūdu pārbaudes
 	if (!isset($_POST['msg_title']) || !isset($_POST['msg_content']) ||
@@ -191,12 +209,13 @@ if ($var1 === 'received') {
 			));
 		}
 	}
+}
 
 /**
  *  Vēstules (gan saņemtas, gan nosūtītas) lasīšana.
- *  (/inbox/read/{id})
+ *  /inbox/read/{id}
  */
-} else if ($var1 === 'read' && !empty($var2)) {
+else if ($var1 === 'read' && !empty($var2)) {
 
 	$read_id = (int)$var2;
 	
@@ -212,6 +231,8 @@ if ($var1 === 'received') {
 	} else {
 	
 		$type = ($pm->to_uid == $auth->id) ? 'rec' : 'sent';
+        $key_time = ($type === 'rec') ? 'received_at' : 'sent_at';
+        $key_user = ($type === 'rec') ? 'from' : 'to';
 	
 		// saņemtu atzīmēs vēstuli kā lasītu
 		if ($type == 'rec' && $pm->is_read == 0) {
@@ -241,98 +262,11 @@ if ($var1 === 'received') {
 			'text' => $pm->text,
 			'image_count' => count($arr_images),
 			'image_urls' => $arr_images,
-			'datetime' => substr($pm->date, 0, 16),
-			'user' => $usr_data
+			$key_time => $pm->date,
+			$key_user => $usr_data
 		)));
-	}
-	
-/**
- *  Pieprasīts saraksts ar nosūtītajām vēstulēm.
- *  (/inbox/sent)
- */
-} else if ($var1 === 'sent') {
-
-	// lappušu iestatījumi
-	$msg_per_page = 20;
-	$current_page = 1;
-	if (isset($_GET['page'])) {
-		$current_page = (int)$_GET['page'];
-		if ($current_page < 1) {
-			$current_page = 1;
-		}
-	}
-	$lim_start = ($current_page - 1) * $msg_per_page;
-
-	// saraksts ar nosūtītajām vēstulēm
-	$pms = $db->get_results("
-		SELECT
-			`pm`.*,
-			`users`.`nick`,
-			`users`.`level`,
-			`users`.`deleted` AS `user_deleted`
-		FROM `pm`
-			JOIN `users` ON (
-				`pm`.`to_uid` = `users`.`id`
-			)
-		WHERE
-			`pm`.`from_uid` = ".$auth->id."
-		ORDER BY
-			`pm`.`date` DESC
-		LIMIT
-			".$lim_start.", ".$msg_per_page
-	);
-	
-	if (!$pms) {
-		api_append(array(
-			'endoflist' => true,
-			'messages' => array()
-		));
-	} else {
-	
-		$messages = array();
-	
-		foreach ($pms as $pm) {
-
-			// saņēmēja dati
-			$to = '';            
-			if (!empty($pm->user_deleted)) {
-                $to = array(
-                    'nick' => '<em>dzēsts</em>',
-                    'params' => '0|0|0|0|0',
-                    'avatar_url' => ''
-                );
-			} else if (!empty($pm->imap_uid)) {
-				if (!stristr($pm->imap_name, '?')) {
-					$to = wordwrap(textlimit(
-						h($pm->imap_name), 48, '...'), 20, '\n', 1);
-				} else {
-					$to = wordwrap(textlimit(
-						h($pm->imap_email), 48, '...'), 20, '\n', 1);
-				}
-                $to = array(
-                    'nick' => $from,
-                    'params' => '0|0|0|0|0',
-                    'avatar_url' => ''
-                );
-			} else {
-				$to = api_fetch_user($pm->to_uid, $pm->nick, $pm->level, true);
-			}
-			
-			$pm_title = wordwrap(textlimit(
-				strip_tags($pm->title), 48, '...'), 20, '\n', 1);
-			
-			$messages[] = array(
-				'id' => (int)$pm->id,
-				'title' => $pm_title,
-				'date' => display_time(strtotime($pm->date)),
-				'to' => $to,
-				'is_read' => (bool)$pm->is_read
-			);
-		}
-		
-		api_append(array(
-			'endoflist' => false,
-			'messages' => $messages
-		));
-	}
+	}	
+} else {
+    api_log('Sasniegts vēstuļu moduļa "else" bloks.');
+    api_error('hellou... are thou lost?');
 }
