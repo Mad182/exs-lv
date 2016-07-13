@@ -15,7 +15,7 @@ require_once(API_PATH.'/api_ios/functions.miniblogs.php');
  *  Atgriezīs jaunāko miniblogu sarakstu.
  *  /miniblogs/getlatestlist
  */
-if ($var1 === 'getlatestlist') {
+if ($var1 === 'getlatest') {
 	set_action('jaunākos miniblogus');
 	api_fetch_miniblogs();
 

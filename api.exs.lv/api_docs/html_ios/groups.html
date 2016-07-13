@@ -2,12 +2,15 @@
     <h3>Saturs</h3>
     <ul class="table_of_contents">
         <li><a href="#description">- skaidrojums</a></li>
+        <li><a href="#mygroups">- saraksts ar lietotāja grupām</a></li>        
+        <li><a href="#groupcats">- grupu kategoriju saraksts</a></li>
+        <li><a href="#catgroups">- kategorijas grupu saraksts</a></li>
         <li><a href="#hometab">- informācija par grupu</a></li>
-        <li><a href="#usertab">- lietotāju saraksts</a></li>
-        <li><a href="#mbtab">- jaunāko miniblogu saraksts</a></li>
+        <li><a href="#usertab">- grupas lietotāju saraksts</a></li>
+        <li><a href="#mbtab">- grupas jaunāko miniblogu saraksts</a></li>
         <li><a href="#new">- jauna minibloga/komentāra pievienošana</a></li>
-        <li><a href="#open">- minibloga ielāde</a></li>
-        <li><a href="#rate">- minibloga vērtēšana</a></li>
+        <li><a href="#open">- grupas minibloga ielāde</a></li>
+        <li><a href="#rate">- grupas minibloga vērtēšana</a></li>
         <li><a href="#join">- lietotāja pieteikšanās grupai</a></li>
         <li><a href="#leave">- lietotāja izstāšanās no grupas</a></li>
     </ul>
@@ -17,6 +20,202 @@
     <h3 id="description">Skaidrojums</h3>
     <p>Šajā sadaļā aprakstīti tie pieprasījumi, kam ir saistība ar domubiedru grupām.<br> Šādi pieprasījumi veicami uz adresi <span class="hl">https://ios.exs.lv/groups/</span>.</p>
     <p>Lai izpildītu kādu no pieprasījumiem, lietotājam jābūt autentificētam.</p>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="mygroups">Lietotāja grupu saraksts</h3>
+    <p>Atgriež sarakstu ar grupām, kurās lietotājs ir pieteicies, un nelasīto ziņu skaitu tajās.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/group_news</span></p>
+    <p>Atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "response": {
+        "group_count": int,
+        "groups": [
+            {
+                "id": int,
+                "avatar_url": string,
+                "title": string,
+                "member_count": int,
+                "post_count": int,
+                "is_admin": bool,
+                "is_mod": bool,
+                "unread_msgs": int
+            },
+            ...
+        ]
+    }
+}</code></pre>
+    <p>Atbildes vērtības skaidrotas tabulā:</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:180px">Atslēga</th>
+            <th style="width:420px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>group_count</td>
+            <td>grupu skaits, kurās lietotājs ir pieteicies vai kuras ir izveidojis</td>
+        </tr>
+        <tr>
+            <td>groups</td>
+            <td>saraksts ar grupām</td>
+        </tr>
+        <tr>
+            <td>groups : id</td>
+            <td>grupas ID</td>
+        </tr>
+        <tr>
+            <td>groups : avaar_url</td>
+            <td>saite uz grupas avataru</td>
+        </tr>
+        <tr>
+            <td>groups : title</td>
+            <td>grupas nosaukums</td>
+        </tr>
+        <tr>
+            <td>groups : member_count</td>
+            <td>grupas biedru skaits, ieskaitot grupas autoru</td>
+        </tr>
+        <tr>
+            <td>groups : post_count</td>
+            <td>grupā veikto ierakstu skaits</td>
+        </tr>
+        <tr>
+            <td>groups : is_admin</td>
+            <td>vai autentificētais lietotājs šajā grupā ir administrators</td>
+        </tr>
+        <tr>
+            <td>groups : is_mod</td>
+            <td>vai autentificētais lietotājs šajā grupā ir moderators</td>
+        </tr>
+        <tr>
+            <td>groups : unread_msgs</td>
+            <td>autentificētā lietotāja neizlasīto ierakstu skaits šajā grupā</td>
+        </tr>    
+    </table>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="groupcats">Grupu kategoriju saraksts</h3>
+    <p>Atgriež sarakstu ar grupu kategorijām.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/categories</span></p>
+    <p>Atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "response": {
+        "group_count": int,
+        "group_categories": [
+            {
+                "id": int,
+                "title": string,
+                "group_count": int
+            },
+            ...
+        ]
+    }
+}</code></pre>
+    <p>Atbildes vērtības skaidrotas tabulā:</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:220px">Atslēga</th>
+            <th style="width:380px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>group_count</td>
+            <td>grupu kopskaits pa visām grupu kategorijām</td>
+        </tr>
+        <tr>
+            <td>group_categories</td>
+            <td>masīvs ar objektiem par grupu kategorijām</td>
+        </tr>
+        <tr>
+            <td>group_categories : id</td>
+            <td>kategorijas ID</td>
+        </tr>
+        <tr>
+            <td>group_categories : title</td>
+            <td>kategorijas nosaukums</td>
+        </tr>
+        <tr>
+            <td>group_categories : group_count</td>
+            <td>grupu skaits šajā kategorijā</td>
+        </tr>    
+    </table>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="catgroups">Kategorijas grupu saraksts</h3>
+    <p>Atgriež sarakstu ar grupām norādītajā grupu kategorijā.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/cat_groups/{cat_id}?page={page_nr}</span></p>
+    <p>{cat_id} - grupu kategorijas ID.<br>{page_nr} - grupu saraksta lappuse. Parametru nenorādot, atgriež pirmo lappusi.</p>
+    <p>Atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "response": {
+        "group_count": int,
+        "page_count": int,
+        "current_page": int,
+        "per_page": int,
+        "category_id": int,
+        "category_title": string,
+        "groups": [
+            {
+                "id": int,
+                "avatar_url": string,
+                "title": string,
+                "member_count": int,
+                "post_count": int,
+                "in_group": bool,
+                "is_admin": bool,
+                "is_mod": bool,
+                "unread_msgs": int
+            },
+            ...
+        ]
+    }
+}</code></pre>
+    <p>Atbildes vērtības skaidrotas tabulā:</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:150px">Atslēga</th>
+            <th style="width:450px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>group_count</td>
+            <td>grupu skaits šajā kategorijā</td>
+        </tr>
+        <tr>
+            <td>page_count</td>
+            <td>šīs kategorijas grupu saraksta lappušu skaits</td>
+        </tr>
+        <tr>
+            <td>current_page</td>
+            <td>pieprasītā lappuse</td>
+        </tr>
+        <tr>
+            <td>per_page</td>
+            <td>vienā lappusē atgriezto grupu skaits (<em>maināma vērtība</em>)</td>
+        </tr>
+        <tr>
+            <td>category_id</td>
+            <td>grupu kategorijas ID</td>
+        </tr>
+        <tr>
+            <td>category_title</td>
+            <td>grupu kategorijas nosaukums</td>
+        </tr>
+        <tr>
+            <td>groups</td>
+            <td>masīvs ar objektiem par kategorijas grupām</td>
+        </tr> 
+        <tr>
+            <td>groups : in_group</td>
+            <td>vai autentificētais lietotājs ir pieteicies šajā grupā?</td>
+        </tr>    
+    </table>
 </div>
 <div class="col_divider"></div>
 <div class="block">
@@ -211,7 +410,7 @@
 <div class="block">
     <h3 id="mbtab">Grupas miniblogu cilne</h3>
     <p>Atgriež sarakstu ar jaunākajiem grupas miniblogiem.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/getlatestlist?page={page_nr}</span></p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/getminiblogs?page={page_nr}</span></p>
     <p>{group_id} - grupas ID.<br>{page_nr} - skatāmā saraksta lappuse, lielāka par 0. Parametru nenorādot, tiks atgriezta pirmā lappuse.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>

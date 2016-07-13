@@ -34,11 +34,7 @@ function api_fetch_miniblogs($group_id = 0) {
 			api_error('Pieprasīta neeksistējoša lappuse.');
             api_log('Pieprasīta < 1 miniblogu lappuse (page:'.$_GET['page'].').');
 			return;
-        } else if ($_GET['page'] === $max_pages + 1) {
-            api_info('Sasniegta pēdējā lappuse.');
-            api_log('Pieprasīta max_pages + 1 lappuse.');
-            return;
-		} else if ($_GET['page'] > $max_pages) {
+        } else if ($_GET['page'] > $max_pages) {
             api_error('Pārsniegts skatāmo lappušu skaits.');
             api_log('Pieprasīta pārāk liela jaunāko miniblogu lappuse (page:'.$_GET['page'].').');
 			return;
@@ -113,8 +109,20 @@ function api_fetch_miniblogs($group_id = 0) {
 	);
 
 	if (!$mbs) {
-        api_log('Neizdevās nolasīt jaunāko miniblogu sarakstu. Kāpēc?');
-        api_error('Miniblogu saraksta ielāde neizdevās.');
+        if ($group_id === 0) {
+            // ārpus grupām vismaz $max_pages lappusēm noteikti jābūt!
+            api_log('Neizdevās nolasīt jaunāko miniblogu sarakstu. Kāpēc?');
+            api_error('Miniblogu saraksta ielāde neizdevās.');
+        } else {
+            // iespējams, ka tik daudz lappušu ar miniblogiem šajā grupā nav
+            api_log('Miniblogu saraksta ielāde neizdevās. Iespējams, ka nav tik daudz lappušu.');
+            api_append(array(
+                'page_count' => $max_pages,
+                'current_page' => $current_page,
+                'per_page' => $mbs_per_page,
+                'miniblogs' => array()
+            ));
+        }
 		return;
 	}
 	
