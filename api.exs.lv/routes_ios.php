@@ -21,6 +21,7 @@ require(API_PATH . '/api_ios/functions.ios.php');
 // piemēram, https://ios.exs.lv/inbox/
 $category_list = array(
     'random',
+    'profiles',
     'miniblogs',
     'groups',
     'inbox'

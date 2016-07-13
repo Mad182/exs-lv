@@ -153,8 +153,8 @@ function api_fetch_ban($type = 1, $ip_banned = null) {
 					'reason' => $prof_banned->reason,
 					'from_user' => api_fetch_user($from_user->id,
 						$from_user->nick, $from_user->level),
-					'date_from' => date('d.m.Y, H:i', $prof_banned->time),
-					'date_to' => date('d.m.Y, H:i', $prof_banned->time + 
+					'date_from' => date('Y-m-d H:i:s', $prof_banned->time),
+					'date_to' => date('Y-m-d H:i:s', $prof_banned->time + 
 						$prof_banned->length),
 					'remaining' => strTime($prof_banned->time + 
 						$prof_banned->length - time())
@@ -176,8 +176,8 @@ function api_fetch_ban($type = 1, $ip_banned = null) {
 				'reason' => $ip_banned->reason,
 				'from_user' => api_fetch_user($from_user->id,
 					$from_user->nick, $from_user->level),
-				'date_from' => date('d.m.Y, H:i', $ip_banned->time),
-				'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
+				'date_from' => date('Y-m-d H:i:s', $ip_banned->time),
+				'date_to' => date('Y-m-d H:i:s', $ip_banned->time + 
 						$ip_banned->length),
 				'remaining' => strTime($ip_banned->time + 
 					$ip_banned->length - time())

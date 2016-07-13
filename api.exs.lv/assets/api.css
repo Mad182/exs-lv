@@ -261,6 +261,9 @@ pre { /* šeit tiek likti koda bloki */
         margin: 15px 0;
         font-size: 14px;
     }
+    .col_right ul {
+        font-size: 14px;
+    }
     .col_right .code_block_title {
         background: #e7edef;
         text-transform: uppercase;
@@ -303,11 +306,23 @@ pre { /* šeit tiek likti koda bloki */
     .side_navig a.is_active {
         color: #1876bb;
     }
-    
-/* dažādi */
+
+/*
+|--------------------------------------------------------------------------
+|   Dažādi.
+|--------------------------------------------------------------------------
+*/
+
 .table_of_contents a {
     padding: 3px 0;
     display: block;
     margin-left: 40px;
     color: #6e7482;
+}
+
+.changeset li:before {
+    content:'- ';
+}
+.changeset li {
+    padding-left: 20px;
 }

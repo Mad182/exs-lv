@@ -34,7 +34,7 @@ switch ($var0) {
 // ielasa un parāda Android moduļa sadaļas saturu
 if ($var0 === 'a') {    
 
-    $filename = 'intro.html';
+    $filename = 'intro.html'; // pēc noklusējuma
     if (is_string($var1)) {
         switch ($var1) {
             case 'miniblogs':
@@ -43,14 +43,11 @@ if ($var0 === 'a') {
             case 'groups':
                 $filename = 'groups.html';
                 break;
-            case 'messages':
-                $filename = 'messages.html';
+            case 'inbox':
+                $filename = 'inbox.html';
                 break;
             case 'other':
                 $filename = 'other.html';
-                break;
-            default:
-                $filename = 'intro.html';
                 break;
         }
     }
@@ -69,22 +66,25 @@ if ($var0 === 'a') {
 // ielasa un parāda iOS moduļa sadaļas saturu
 else {    
 
-    $filename = 'intro.html';
+    $filename = 'changeset.html'; // pēc noklusējuma
     if (is_string($var1)) {
         switch ($var1) {
+            case 'profiles':
+                $filename = 'profiles.html';
+                break;
             case 'miniblogs':
                 $filename = 'miniblogs.html';
                 break;
             case 'groups':
                 $filename = 'groups.html';
                 break;
-            case 'messages':
-                $filename = 'messages.html';
+            case 'inbox':
+                $filename = 'inbox.html';
                 break;
             case 'other':
                 $filename = 'other.html';
                 break;
-            default:
+            case 'intro':
                 $filename = 'intro.html';
                 break;
         }

@@ -39,15 +39,17 @@
                 <li><a class="{active-intro} inactive" href="/a">Ievads</a></li>
                 <li><a class="{active-miniblogs} inactive" href="/a/miniblogs">Miniblogi</a></li>
                 <li><a class="{active-groups} inactive" href="/a/groups">Grupas</a></li>
-                <li><a class="{active-messages} inactive" href="/a/messages">Vēstules</a></li>
-                <li><a class="{active-other} inactive" href="/a/other">Cits</a></li>
+                <li><a class="{active-inbox} inactive" href="/a/inbox">Vēstules</a></li>
+                <li><a class="{active-other} inactive" href="/a/other">Dažādi</a></li>
                 <!-- END BLOCK : android-navig -->
                 <!-- START BLOCK : ios-navig -->
-                <li><a class="{active-intro}" href="/i">Ievads</a></li>
+                <li><a class="{active-changeset}" href="/i/changeset">Izmaiņu vēsture</a></li>
+                <li><a class="{active-intro}" href="/i/intro">Ievads</a></li>
+                <li><a class="{active-profiles}" href="/i/profiles">Profili</a></li>
+                <li><a class="{active-inbox}" href="/i/inbox">Vēstules</a></li>
                 <li><a class="{active-miniblogs}" href="/i/miniblogs">Miniblogi</a></li>
                 <li><a class="{active-groups}" href="/i/groups">Grupas</a></li>
-                <li><a class="{active-messages}" href="/i/messages">Vēstules</a></li>
-                <li><a class="{active-other}" href="/i/other">Cits</a></li>
+                <li><a class="{active-other}" href="/i/other">Dažādi</a></li>
                 <!-- END BLOCK : ios-navig -->
             </ul>
             <div class="col_divider"></div>
