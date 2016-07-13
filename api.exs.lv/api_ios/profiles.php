@@ -64,14 +64,11 @@ if ($var1 === 'fetch' && !empty($var2)) {
 		// reģistrējās pirms x dienām
 		$days = ceil((time() - strtotime($profile->date)) / 60 / 60 / 24);
 		
-		// pēdējoreiz redzēts pirms...
-		$time_ago = time_ago(strtotime($profile->lastseen));
-		
         $data = api_fetch_user($profile->id, $profile->nick, $profile->level, true);
 		$data += array(
 			'days_online' => (int)$profile->days_in_row,
 			'days_registered' => (int)$days,
-			'last_seen' => 'pirms '.$time_ago,
+			'last_seen' => $profile->lastseen,
 			'usertitle' => $profile->custom_title,
 			'gender' => (int)$profile->gender,
 			'web' => $profile->web,
