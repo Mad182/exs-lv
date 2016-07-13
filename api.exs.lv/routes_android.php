@@ -8,8 +8,8 @@
  *  Ieviests: 2014. gada pavasaris.
  */
 
-require_once(API_PATH . '/functions.api.php');
-require_once(API_PATH . '/api_android/functions.android.php');
+require(API_PATH . '/functions.api.php');
+require(API_PATH . '/api_android/functions.android.php');
 
 /*
 |--------------------------------------------------------------------------

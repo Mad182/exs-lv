@@ -5,7 +5,7 @@
  *  Apstrādā pieprasījumus saistībā ar darbībām grupās.
  */
 
-require_once(API_PATH.'/api_android/functions.miniblogs.php');
+require(API_PATH.'/api_android/functions.miniblogs.php');
 
 
 /**

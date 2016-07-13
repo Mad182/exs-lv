@@ -8,8 +8,8 @@
  *  Ieviests: 2016. gada 14. jūnijs.
  */
 
-require_once(API_PATH . '/functions.api.php');
-require_once(API_PATH . '/api_ios/functions.ios.php');
+require(API_PATH . '/functions.api.php');
+require(API_PATH . '/api_ios/functions.ios.php');
 
 /*
 |--------------------------------------------------------------------------

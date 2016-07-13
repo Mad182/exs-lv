@@ -6,7 +6,7 @@
  *  jauna minibloga pievienošanu vai esoša komentēšanu, vērtēšanu u.c.
  */
 
-require_once(API_PATH.'/api_android/functions.miniblogs.php');
+require(API_PATH.'/api_android/functions.miniblogs.php');
 
 
 /**
