@@ -157,9 +157,10 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
  *  Šobrīd tiek izsaukta tikai no add_smile()
  *
  *  @param $txt apstrādājamais teksts
+ *  @param $just_return TRUE - tikai atgriež smaidiņu masīvu
  *  @return $txt
  */
-function insert_smilies($txt) {
+function insert_smilies($txt, $just_return = false) {
 	global $img_server;
 
 	$smilies = array(
@@ -289,6 +290,11 @@ function insert_smilies($txt) {
 		':zagis:' => 'chainsaw.gif',
 		':dickbutt:' => 'dickbutt.gif'
 	);
+    
+    // izmanto exs API moduļos, lai vienkārši atgrieztu smaidiņu sarakstu
+    if ($just_return) {
+        return $smilies;
+    }
 
 	foreach ($smilies as $key => $val) {
 		if (strpos($txt, $key) !== false) { // speeds things up

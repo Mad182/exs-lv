@@ -8,7 +8,7 @@
  *  Ieviests: 2014. gada pavasaris.
  */
 
-require(API_PATH . '/functions.api.php');
+require(API_PATH . '/shared/shared.api.php');
 require(API_PATH . '/api_android/functions.android.php');
 
 /*
@@ -23,7 +23,8 @@ $category_list = array(
     'random',
     'miniblogs',
     'groups',
-    'inbox'
+    'inbox',
+    'collections'
     // 'news'
 );
 $category = '';

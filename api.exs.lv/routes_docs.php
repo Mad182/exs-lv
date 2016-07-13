@@ -34,9 +34,12 @@ switch ($var0) {
 // ielasa un parāda Android moduļa sadaļas saturu
 if ($var0 === 'a') {    
 
-    $filename = 'intro.html'; // pēc noklusējuma
+    $filename = 'changeset.html'; // pēc noklusējuma
     if (is_string($var1)) {
         switch ($var1) {
+            case 'collections':
+                $filename = 'collections.html';
+                break;
             case 'miniblogs':
                 $filename = 'miniblogs.html';
                 break;
@@ -48,6 +51,9 @@ if ($var0 === 'a') {
                 break;
             case 'other':
                 $filename = 'other.html';
+                break;
+            case 'intro':
+                $filename = 'intro.html';
                 break;
         }
     }
@@ -69,6 +75,9 @@ else {
     $filename = 'changeset.html'; // pēc noklusējuma
     if (is_string($var1)) {
         switch ($var1) {
+            case 'collections':
+                $filename = 'collections.html';
+                break;
             case 'profiles':
                 $filename = 'profiles.html';
                 break;

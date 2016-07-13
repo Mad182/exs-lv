@@ -257,7 +257,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
  * Atgriež lietotāja notifikāciju HTML sarakstu
  */
 function get_notify($user_id, $base = '/events-pager?events-page=') {
-	global $db, $lang, $new_msg_html, $auth, $config_domains, $auth; //man kauns :(
+	global $db, $lang, $new_msg_html, $auth, $config_domains; //man kauns :(
 	$user_id = intval($user_id);
 	$out = '';
 	$texts = array(
