@@ -1,21 +1,7 @@
 <?php
 /**
- *  exs.lv iOS API projekta konfigurācija.
+ *  exs.lv mobilā API dokumentācijas projekta konfigurācija.
  */
-
-
-// ios pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
-// json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas
-if (!isset($is_local)) {
-
-	// ar $_GET['debug'] atstāsim variantu, 
-	// kā kļūdas tomēr apskatīt arī live versijā
-	if ($debug === true && !isset($_GET['debug'])) {
-		ini_set('display_errors', 0);
-		error_reporting(0);
-		$debug = false;
-	}
-}
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +9,7 @@ if (!isset($is_local)) {
 |--------------------------------------------------------------------------
 */
 
-// ja nedarbina lokālā vidē...
-if (!$is_local && (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_local_ip)) {
+if (!$is_local) { // ja nedarbina lokālā vidē
 
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
 	if (empty($_SERVER['HTTPS'])) {
@@ -40,6 +25,6 @@ if (!$is_local && (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_loc
 
 	$secure_login = true;
 
-} else if (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_local_ip) {
+} else {
     ini_set('session.cookie_domain', '.exs.dev');
 }

@@ -42,6 +42,11 @@ $config_domains = array(
 		'prefix' => 'mta',
 		'ssl' => true
 	),
+	6 => array(
+		'domain' => 'api.exs.lv',
+		'prefix' => 'api',
+		'ssl' => true
+	),
 	7 => array(
 		'domain' => 'lol.exs.lv',
 		'prefix' => 'lol',
@@ -69,6 +74,7 @@ $arr_domains = array(
 	'secure.exs.lv' => 8,    
 	
 	// apakšprojekti
+    'api.exs.lv' => 6,
 	'android.exs.lv' => 2,
 	$android_local_ip => 2,   
     'ios.exs.lv' => 4,
@@ -88,6 +94,7 @@ $arr_domains = array(
 	// lai lokāli nerastos problēmas ar pārlūkiem un HSTS
 	// (https://stackoverflow.com/questions/25277457/google-chrome-redirecting-localhost-to-https)
 	'exs.dev' => 1,
+	'api.exs.dev' => 6,
 	'android.exs.dev' => 2,
     'ios.exs.dev' => 4,
 	'coding.dev' => 3,
@@ -115,9 +122,6 @@ if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {
 	
 	if (substr($_SERVER['HTTP_HOST'], -4) === '.dev') {
 		$is_local = 1;
-	}
-	if (strpos($_SERVER['HTTP_HOST'], 'm') === 0) {
-		$is_mobile = 1;
 	}
 	
 // valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'

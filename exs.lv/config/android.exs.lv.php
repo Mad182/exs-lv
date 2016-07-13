@@ -1,17 +1,12 @@
 <?php
 /**
- *  exs.lv Android lietotnei paredzēto atbilžu konfigurācija.
+ *  exs.lv Android API projekta konfigurācija.
  */
 
- 
-// lietotnē būs iespējota pārslēgšanās starp vairākiem apakšprojektiem, bet tiem
-// nepieciešams jauns mainīgais, jo parastais $lang (android.exs.lv) nemainās
-$api_lang = 1;
 
 // android pieprasījumos nedrīkst atgriezt kļūdas (ja vien tās nav 
-// json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas;
-// lai kļūdas lokāli redzētu, var iekš configdb.php pievienot šādu mainīgo
-if (!isset($android_local)) {
+// json formātā), bet var gadīties, ka iekš configdb.php tās jau ir iespējotas
+if (!isset($is_local)) {
 
 	// ar $_GET['debug'] atstāsim variantu, 
 	// kā kļūdas tomēr apskatīt arī live versijā
@@ -22,16 +17,6 @@ if (!isset($android_local)) {
 	}
 }
 
-// ja configdb.php failā $img_server tiek definēts, nenorādot protokolu,
-// tas jāpievieno, lai Android atpazītu adreses
-if (isset($img_server) && substr($img_server, 0, 2) === '//') {
-	if (!empty($_SERVER['HTTPS'])) {
-		$img_server = 'https:'.$img_server;
-	} else {
-		$img_server = 'http:'.$img_server;
-	}
-}
-
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +24,7 @@ if (isset($img_server) && substr($img_server, 0, 2) === '//') {
 |--------------------------------------------------------------------------
 */
 
+// ja nedarbina lokālā vidē...
 if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
 
     // pārvirzīs uz HTTPS saitēm, ja lapa pieprasīta caur HTTP
@@ -58,5 +44,3 @@ if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
 } else if ($_SERVER['SERVER_NAME'] !== $android_local_ip) {
     ini_set('session.cookie_domain', '.exs.dev');
 }
-
-require_once(CORE_PATH . '/includes/functions.exs.php');

@@ -1,0 +1,24 @@
+ErrorDocument 404 /index.php?error404=true
+ErrorDocument 403 /index.php?error403=true
+
+Options +FollowSymlinks
+RewriteEngine on
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^www\.api.exs\.lv$ [NC]
+RewriteRule ^(.*)$ https://api.exs.lv/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^www\.android.exs\.lv$ [NC]
+RewriteRule ^(.*)$ https://android.exs.lv/$1 [L,R=301]
+
+RewriteCond %{HTTP_HOST} ^www\.ios.exs\.lv$ [NC]
+RewriteRule ^(.*)$ https://ios.exs.lv/$1 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?params=$1 [QSA,L]
+
+<Files  ~ "\.tpl$">
+  Order allow,deny
+  Deny from all
+</Files>
