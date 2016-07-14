@@ -8,8 +8,8 @@
  *  Ieviests: 2016. gada 14. jūnijs.
  */
 
-require(API_PATH . '/shared/shared.api.php');
-require(API_PATH . '/api_ios/functions.ios.php');
+require(API_PATH . '/shared/shared.functions.php');
+require(API_PATH . '/shared/ios.functions.php');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,8 @@ $category_list = array(
     'miniblogs',
     'groups',
     'inbox',
-    'collections'
+    'collections',
+    'viewstates'
     // 'news'
 );
 $category = '';

@@ -8,7 +8,7 @@
  *  Adrese: ios.exs.lv/miniblogs/
  */
 
-require(API_PATH.'/api_ios/functions.miniblogs.php');
+require(API_PATH.'/shared/ios.miniblogs.php');
 
 
 /**
