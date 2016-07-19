@@ -8,14 +8,14 @@
  */
 function api_auth_login() {
     global $db, $auth, $busers, $lang;
-	
-    // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-	// bet serveris domā pretēji, labāk izautorizēt
-    // TODO: xsrf pārbaude...
+
+    // gadījums, kad lietotne uzskata, ka lietotājs nav pieteicies,
+    // un cenšas autentificēt, bet serveris domā pretēji
     if ($auth->ok) {
-        api_log('Autentificējies lietotājs centās autentificēties vēlreiz. Veikta automātiska izlogošana.');
-        $auth->logout();
-    } 
+        api_log('Autentificējies lietotājs centās autentificēties vēlreiz.');
+        api_append_profile_info();
+        return;
+    }
 
     if (!isset($_POST['username']) || !isset($_POST['password'])) {
         api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
@@ -58,7 +58,10 @@ function api_auth_login() {
 function api_auth_logout() {
     global $auth;
     
-    if ($auth->ok) {
+    if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Mēģinot izautorizēties, konstatēts XSRF uzbrukums.');
+	} else if ($auth->ok) {
         $auth->logout();
         api_info('Lietotājs no sistēmas izautorizēts.');
     } else {

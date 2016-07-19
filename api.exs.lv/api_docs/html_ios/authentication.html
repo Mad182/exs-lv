@@ -68,7 +68,8 @@
 <div class="col_divider"></div>
 <div class="block">
     <h3 id="logout">Iziešana</h3>
-    <p>Iziešanas pieprasījums sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/logout</span>.
+    <p>Iziešanas pieprasījums sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/logout?xsrf={xsrf}</span>.</p>
+    <p>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
     <p>Pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
     <p>Pēc lietotāja izautorizēšanas atpakaļ tiks sūtīta šāda atbilde:</p>
     <div class="code_block_title">json</div>
