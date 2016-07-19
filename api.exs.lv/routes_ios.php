@@ -19,19 +19,28 @@ require(API_PATH . '/shared/ios.functions.php');
 
 // saraksts ar "sadaļām", kuras var pieprasīt caur adresi,
 // piemēram, https://ios.exs.lv/inbox/
-$category_list = array(
+$list_private_cats = array( // šīm pieeja, ja lietotājs ir autentificējies
     'random',
     'profiles',
     'miniblogs',
     'groups',
-    'inbox',
-    'collections',
-    'viewstates'
+    'inbox'
     // 'news'
 );
-$category = '';
-if ($var0 && in_array($var0, $category_list)) {
-    $category = $var0;
+$list_public_cats = array( // šīm pieeja vienmēr
+    'auth',
+    'collections'
+    // 'viewstates'
+);
+
+// pārbauda, kura sadaļa adresē pieprasīta
+$cat_private = '';
+$cat_public = '';
+
+if ($var0 && in_array($var0, $list_public_cats)) {
+    $cat_public = $var0;
+} else if ($var0 && in_array($var0, $list_public_cats)) {
+    $cat_private = $var0;
 }
 
 /**
@@ -92,57 +101,15 @@ if ($var0 === 'ban_details') {
 		$auth->logout();
 	}
     
-// logout pieprasījums
-} else if ($var0 === 'letmeout') {
-    // ios.exs.lv/letmeout
+// publiskas sadaļas pieprasījums
+} else if ($cat_public !== '') {
     
-    if ($auth->ok) {
-        $auth->logout();
-        api_info('Lietotājs no sistēmas izautorizēts.');
+    if (!file_exists(API_PATH . '/api_ios/' . $cat_public . '.php')) {
+        api_log('Netika atrasts publiskas API sadaļas PHP fails.');
+        api_error('Exs serverī ieperinājušās blusas. ;( Pacietību!');
     } else {
-        api_log('Neautentificējies lietotājs centās iziet no sistēmas.');
-        api_error('Lietotājs nemaz nav autentificējies.');
-    }
-    
-// login pieprasījums
-} else if ($var0 === 'letmein') {
-    // ios.exs.lv/letmein
-    
-    // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-	// bet serveris domā pretēji, labāk izautorizēt
-    if ($auth->ok) {
-        api_log('Autentificējies lietotājs centās autentificēties vēlreiz. Veikta automātiska izlogošana.');
-        $auth->logout();
+        include(API_PATH . '/api_ios/' . $cat_public . '.php');
     } 
-    
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-
-        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-        
-        if (!$auth->ok) {
-            api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati.');
-            api_error('Kļūdaini norādīti piekļuves dati.');
-        } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            api_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums.');
-            api_fetch_ban(2);
-        } else { // autentificēšanās OK
-        
-            // atzīmē kā iOS lietotāju, lai saņemtu medaļu (kad tāda būs)
-            if ($auth->ios_seen == 0) {
-                $db->update('users', $auth->id, array(
-                    'ios_seen' => 1
-                ));
-                $auth->ios_seen = 1;
-            }
-        
-            // pēc veiksmīgas autentificēšanās atbildei pievieno
-            // svaigāko lietotāja profila informāciju
-            api_append_profile_info();
-        }
-    } else {
-        api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
-        api_error('Kļūdaini norādīti piekļuves dati.');
-    }
     
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
@@ -151,24 +118,26 @@ if ($var0 === 'ban_details') {
 	if (!empty($busers) && !empty($busers[$auth->id])) {      
 		api_fetch_ban(2);
 
-	// atver pieprasīto moduli un tajā izpilda darbības
-	} else if ($category !== '' &&
-               file_exists(API_PATH . '/api_ios/' . $category . '.php')) {
-		include(API_PATH . '/api_ios/' . $category . '.php');
+	// ielādē ne-publisko sadaļu un tajā izpilda darbības
+	} else if ($cat_private !== '' &&
+               file_exists(API_PATH . '/api_ios/' . $cat_private . '.php')) {
+		include(API_PATH . '/api_ios/' . $cat_private . '.php');
 
     // citu sadaļu pieprasījumi
 	} else {
-        if ($var0 !== '') { // 'index' sadaļu jeb "/" adresi nelogos
+        if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
+            api_info('Hello world!');
+        } else {
             api_log('Pieprasīta neeksistējoša sadaļa.');
+            api_error('Pieprasīta neeksistējoša sadaļa.');
         }
-		api_info('Hello world!');
 	}
 
 } else {
     // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un
     // sūta pieprasījumu, bet serveris jau dzēsis sesiju, nonāk šeit
-    api_log('Neatbilstošs pieprasījums no neautentificēta lietotāja.');
-	api_error('Lūdzu, autorizējies!');
+    api_log('Neatpazīts pieprasījums no neautentificēta lietotāja.');
+	//api_error('Lūdzu, autorizējies!');
 }
 
 

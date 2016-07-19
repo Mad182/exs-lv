@@ -105,7 +105,7 @@ if ($var1 === 'notifications') {
  *
  *  /status/{last_bump}
  */
-} else if ($var1 == 'status') {
+} else if ($var1 === 'status') {
 
 	// pēdējās redzētās notifikācijas laiks sekundēs
 	$last_bump = 0;

@@ -4,8 +4,6 @@
         <li><a href="#request_format">- pieprasījuma formāts</a></li>
         <li><a href="#ban_check">- liegumu pārbaude</a></li>
         <li><a href="#auth_check">- autentifikācijas pārbaude</a></li>
-        <li><a href="#auth_request">- autentificēšanās</a></li>
-        <li><a href="#logout">- iziešana</a></li>
     </ul>
 </div>
 <div class="col_divider"></div>
@@ -183,80 +181,10 @@
     
     <ul>
         <li><span class="hl">https://ios.exs.lv/ban_details</span></li>
-        <li><span class="hl">https://ios.exs.lv/letmein</span></li>
+        <li><span class="hl">https://ios.exs.lv/auth/</span></li>
     </ul>
      
     <p>Pieprasīt informāciju par lieguma statusu iespējams vienmēr, savukārt autentificēšanās nebūs pieejama, ja pieprasītājam tiks konstatēts IP liegums, par ko attiecīgi tiks pievienota informācija.</p>
     <p>Autentificēts lietotājs drīkst veikt pieprasījumu arī uz citām adresēm, kas aprakstītas dokumentācijā.</p>
-</div>
-<div class="col_divider"></div>
-<div class="block">
-    <h3 id="auth_request">Autentificēšanās</h3>
-    <p>Autentificēšanās pieprasījums ar POST metodi sūtāms uz adresi <span class="hl">https://ios.exs.lv/letmein</span>. Pieprasījumam klāt jāpievieno tabulā norādītās POST vērtības.</p>
-    <table class="default">
-        <tr class="header">
-            <th>Parametrs</th>
-            <th>Vērtības tips</th>
-        </tr>
-        <tr>
-            <td>username</td>
-            <td>string</td>
-        </tr>
-        <tr>
-            <td>password</td>
-            <td>string</td>
-        </tr>
-    </table>
-    <p>1. Autentificēšanās pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
-    <p>2. Pēc veiksmīgas autentificēšanās konstatējot, ka lietotājam piemērots profila liegums, tiks pievienota attiecīga informācija, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
-    <p>3. Profila liegumam neesot, tiks saņemta šāda atbilde:</p>
-<div class="code_block_title">json</div>
-<pre><code class="json">{
-    ...,
-    "logged_in": true,
-    ...,
-    "response": {
-        "profile": {
-            "nick": string,
-            "params": string,
-            "avatar_url": string
-        }
-    }
-}</code></pre>
-    <p>Atbildes parametri skaidroti tabulā.</p>
-    <table class="default">
-        <tr class="header">
-            <th style="width:100px">Parametrs</th>
-            <th style="width:350px">Skaidrojums</th>
-        </tr>
-        <tr>
-            <td>nick</td>
-            <td>lietotāja lietotājvārds</td>
-        </tr>
-        <tr>
-            <td>params</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>avatar_url</td>
-            <td>saite uz lietotāja avataru</td>
-        </tr>
-    </table>
-</div>
-<div class="col_divider"></div>
-<div class="block">
-    <h3 id="logout">Iziešana</h3>
-    <p>Iziešanas pieprasījums sūtāms uz adresi <span class="hl">https://ios.exs.lv/letmeout</span>.
-    <p>Pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
-    <p>Pēc lietotāja izautorizēšanas atpakaļ tiks sūtīta šāda atbilde:</p>
-    <div class="code_block_title">json</div>
-<pre><code class="json">{
-    "success": true,
-    "message": "Lietotājs no sistēmas izautorizēts.",
-    ...,
-    "logged_in": false,
-    ...,
-    "response": null
-}</code></pre>
 </div>
 <div class="col_divider"></div>
