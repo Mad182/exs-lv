@@ -1,0 +1,262 @@
+<div class="block">
+    <h3>Saturs</h3>
+    <ul class="table_of_contents">
+        <li><a href="#request_format">- pieprasījuma formāts</a></li>
+        <li><a href="#ban_check">- liegumu pārbaude</a></li>
+        <li><a href="#auth_check">- autentifikācijas pārbaude</a></li>
+        <li><a href="#auth_request">- autentificēšanās</a></li>
+        <li><a href="#logout">- iziešana</a></li>
+    </ul>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="request_format">Pieprasījuma formāts</h3>
+    <p>Exs pusē visi pieprasījumi no iOS lietotnes tiek gaidīti uz adresi <span class="hl">https://ios.exs.lv</span>.<br>Atbilde uz pieprasījumu vienmēr būs JSON objekts tādā formātā, kāds parādīts zemāk.</p>
+    <p></p>
+<div class="code_block_title">json</div>
+<pre><code class="json">{
+    "success": bool,
+    "message": string,
+    "ban_type": int,
+    "logged_in": bool,
+    "xsrf_token": string,
+    "response": null|JSONObject
+}</code></pre>
+    <p>Atbildes parametri skaidroti tabulā.</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:100px">Parametrs</th>
+            <th style="width:100px">Vērtība</th>
+            <th style="width:400px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>success</td>
+            <td>false</td>
+            <td>ja kaut kas pieprasījuma apstrādē nav izdevies</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>true</td>
+            <td>veiksmīgas pieprasījuma apstrādes gadījumā</td>
+        </tr>
+        <tr>
+            <td>message</td>
+            <td></td>
+            <td>pie success:false vienmēr satur kļūdas tekstu<br>pie success:true dažreiz satur informatīvu paziņojumu<br>(attiecīgajos gadījumos tas pieminēts dokumentācijā)</td>
+        </tr>
+        <tr>
+            <td>ban_type</td>
+            <td>0</td>
+            <td>pieprasītājam nav piemērots liegums</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>1</td>
+            <td>pieprasītāja IP adresei piemērots IP liegums</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>2</td>
+            <td>lietotājam piemērots profila liegums</td>
+        </tr>
+        <tr>
+            <td>logged_in</td>
+            <td>false</td>
+            <td>lietotājs nav autentificēts</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>true</td>
+            <td>lietotājs ir autentificēts</td>
+        </tr>
+        <tr>
+            <td>xsrf_token</td>
+            <td></td>
+            <td>simbolu virkne garumā 10, kas jāpievieno turpmāko pieprasījumu galā<br>(https://ios.exs.lv/..?xsrf=..)<br>(pārbaudīta gan tiek tikai pie kritiskām darbībām)</td>
+        </tr>
+        <tr>
+            <td>response</td>
+            <td>null</td>
+            <td>kad nav jāatgriež papildu saturs, notikusi kļūda, kas konstatējama no iepriekšējiem parametriem, u.tml. situācijas</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>JSONObject</td>
+            <td>papildu saturs, kas specifisks katram pieprasījumam un aprakstīts citviet</td>
+        </tr>
+    </table>
+    <p>Parametrā <span class="hl">success</span> saņemot vērtību "false", parametrs <span class="hl">response</span> vienmēr būs vienāds ar "null". <span class="hl">success</span> parametrs ir pirmā vērtība, kas lietotnē vienmēr būtu jāpārbauda. Parametrā <span class="hl">message</span> esošā vērtība ir paredzēta parādīšanai lietotājam.</p>
+    <p>Parametrā <span class="hl">ban_type</span> saņemot vērtību 1 vai 2, parametrs <span class="hl">response</span> var saturēt papildu informāciju, kas aprakstīta sadaļā <a href="#ban_check">"Liegumu pārbaude"</a>.</p>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="ban_check">Liegumu pārbaude</h3>
+    <p>Katram pieprasījumam tiek veikta IP lieguma pārbaude, savukārt autentificētiem lietotājiem - arī profila lieguma pārbaude.</p>
+    <p>Konstatējot aktīvu liegumu, oriģinālais pieprasījums vairs netiek ņemts vērā, bet tiek atgriezta atbilde, kurā vēl bez <span class="hl">ban_type</span> parametra arī <span class="hl">response</span> parametrā tiek pievienota papildinformācija.</p>
+    <h4>IP liegums</h4>
+    <p>IP liegums tiek pārbaudīts katrā pieprasījumā, un pie tāda esamības tiek atgriezta atbilde šādā formātā:</p>
+<div class="code_block_title">json</div>
+<pre><code class="json">{
+    "success": true,
+    "message": "",
+    "ban_type": 1,
+    "logged_in": false,
+    "xsrf_token": string,
+    "response": {
+        "ip": string,
+        "to_user": {     
+            "nick": string,
+            "params": string
+        },
+        "reason": string,
+        "from_user": {
+            "nick": string,
+            "params": string
+        },
+        "date_from": string,
+        "date_to": string,
+        "remaining": string
+    }
+}</code></pre>
+    <p><i>Ņemt vērā, ka IP lieguma gadījumā lietotājs tiek automātiski izlogots!</i></p>
+    <p>Atbildes parametri skaidroti tabulā.</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:150px">Parametrs</th>
+            <th style="width:400px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>ip</td>
+            <td>IP adrese, kurai uzlikts liegums</td>
+        </tr>
+        <tr>
+            <td>to_user</td>
+            <td>objekts ar datiem par lietotāju, kuram šāds IP liegums uzlikts</td>
+        </tr>
+        <tr>
+            <td>to_user : nick</td>
+            <td>lietotāja lietotājvārds</td>
+        </tr>
+        <tr>
+            <td>to_user : params</td>
+            <td>vairākas vērtības, atdalītas ar "|", kas raksturo lietotājvārdu, lai to varētu pareizi noformatēt, piemēram, "115|2|1|3|1":<br>
+            1) lietotāja ID<br>2) lietotāja klase: 0 - parasts lietotājs,  1 - administrators, 2 - moderators, 3 - rakstu autors, 5 - bots<br>3) 0 - lietotājs nav online, 1 - lietotājs ir online<br>4) ierīce, caur kuru lietotājs skatās lapu: 0 - exs.lv &middot; 1 - m.exs.lv. &middot; 2 - android app &middot; 3 - iOS app<br>5) vai lietotājam ir aktīvs liegums? 0 - nav, 1 - ir</td>
+        </tr>
+        <tr>
+            <td>reason</td>
+            <td>lieguma iemesls</td>
+        </tr>
+        <tr>
+            <td>from_user</td>
+            <td>objekts ar datiem par lietotāju, kurš liegumu piemērojis</td>
+        </tr>
+        <tr>
+            <td>date_from</td>
+            <td>datums, kad liegums uzlikts (piemēram, "2016-06-29 18:48:12")</td>
+        </tr>
+        <tr>
+            <td>date_to</td>
+            <td>datums, kad liegums tiks noņemts (piemēram, "2016-06-30 18:48:12")</td>
+        </tr>
+        <tr>
+            <td>remaining</td>
+            <td>lieguma atlikušais laiks (piemēram, "21d 3h 19m 29s")</td>
+        </tr>
+    </table>
+    <h4 style="margin-top:25px">Profila liegums</h4>
+    <p>Profila liegums tiek pārbaudīts tikai autentificētiem lietotājiem, un atbilde uz pieprasījumu ir identiska tai, kāda tā ir IP lieguma gadījumā ar vienīgo atšķirību parametrā <span class="hl">ban_type</span>.</p>
+    <h4>Lieguma datu atsvaidzināšana</h4>
+    <p>Pieprasījums uz adresi <span class="hl">https://ios.exs.lv/ban_details</span> ir vienīgais, kas pieejams jebkurā brīdī un ignorē aktīva IP lieguma pārbaudi. Tāds var noderēt, ja lietotnē lietotājam redzams lieguma skats, bet lietotājs ar <i>refresh</i> pogu vēlas datus atjaunot, tā pārbaudot, vai liegums vēl ir spēkā.</p>
+    <p>Atbilde aktīva lieguma gadījumā ir tāda pati, kā aprakstīts iepriekš, savukārt, ja lieguma nav, atbildei tiek pievienots informatīvs paziņojums:</p>
+<div class="code_block_title">json</div>
+<pre><code class="json">{
+    "success": true,
+    "message": "Lietotājam nav liegta piekļuve exs.lv.",
+    ...
+}</code></pre> 
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="auth_check">Autentifikācijas pārbaude</h3>
+    <p>Pieprasījuma veicējs tiek atpazīts pēc pieprasījumam klāt pievienotā sesijas cepuma. Balstoties uz sesijas cepuma vērtību, parametrā <span class="hl">logged_in</span> tiek norādīts, vai šāds lietotājs ir autentificēts. Cepumu nesaņemot, tiek uzskatīts, ka lietotājs nav autentificēts.</p>
+    <p>Neautentificētam lietotājam ļauts veikt pieprasījumu tikai uz šādām adresēm:</p>
+    
+    <ul>
+        <li><span class="hl">https://ios.exs.lv/ban_details</span></li>
+        <li><span class="hl">https://ios.exs.lv/letmein</span></li>
+    </ul>
+     
+    <p>Pieprasīt informāciju par lieguma statusu iespējams vienmēr, savukārt autentificēšanās nebūs pieejama, ja pieprasītājam tiks konstatēts IP liegums, par ko attiecīgi tiks pievienota informācija.</p>
+    <p>Autentificēts lietotājs drīkst veikt pieprasījumu arī uz citām adresēm, kas aprakstītas dokumentācijā.</p>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="auth_request">Autentificēšanās</h3>
+    <p>Autentificēšanās pieprasījums ar POST metodi sūtāms uz adresi <span class="hl">https://ios.exs.lv/letmein</span>. Pieprasījumam klāt jāpievieno tabulā norādītās POST vērtības.</p>
+    <table class="default">
+        <tr class="header">
+            <th>Parametrs</th>
+            <th>Vērtības tips</th>
+        </tr>
+        <tr>
+            <td>username</td>
+            <td>string</td>
+        </tr>
+        <tr>
+            <td>password</td>
+            <td>string</td>
+        </tr>
+    </table>
+    <p>1. Autentificēšanās pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
+    <p>2. Pēc veiksmīgas autentificēšanās konstatējot, ka lietotājam piemērots profila liegums, tiks pievienota attiecīga informācija, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
+    <p>3. Profila liegumam neesot, tiks saņemta šāda atbilde:</p>
+<div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "logged_in": true,
+    ...,
+    "response": {
+        "profile": {
+            "nick": string,
+            "params": string,
+            "avatar_url": string
+        }
+    }
+}</code></pre>
+    <p>Atbildes parametri skaidroti tabulā.</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:100px">Parametrs</th>
+            <th style="width:350px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>nick</td>
+            <td>lietotāja lietotājvārds</td>
+        </tr>
+        <tr>
+            <td>params</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>avatar_url</td>
+            <td>saite uz lietotāja avataru</td>
+        </tr>
+    </table>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="logout">Iziešana</h3>
+    <p>Iziešanas pieprasījums sūtāms uz adresi <span class="hl">https://ios.exs.lv/letmeout</span>.
+    <p>Pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
+    <p>Pēc lietotāja izautorizēšanas atpakaļ tiks sūtīta šāda atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    "success": true,
+    "message": "Lietotājs no sistēmas izautorizēts.",
+    ...,
+    "logged_in": false,
+    ...,
+    "response": null
+}</code></pre>
+</div>
+<div class="col_divider"></div>

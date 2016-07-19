@@ -66,9 +66,8 @@ $ss = new SiteStorage;
 
 $requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_GET['var1']) && $_GET['var1'] == 'json'));
 
-// android|ios.exs.lv adresēs neliks '.json', bet sagaidīs tikai un vienīgi json
-if ($requested_json || $lang === 2 || $lang === 4) {
-	header('Content-Type: application/json');
+if ($requested_json) {
+	header('Content-Type: application/json; charset=UTF-8');
 } else {
 	//laicīgi novēršam enkodinga gļukus stulbos pārlūkos
 	header('Content-Type: text/html; charset=UTF-8');
@@ -243,17 +242,10 @@ if (isset($_GET['u'])) {
 		}
 
 		// 404
-		// android|ios.exs.lv nepatīk redirekti :(
-		if ($auth->via_android === 1) {
-			require(CORE_PATH . '/modules/android/android.php');
-		} else if ($auth->via_ios === 1) {
-            require(CORE_PATH . '/modules/ios/ios.php');
-        } else {
-			header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-			header("Status: 404 Not Found");
-			set_flash('Pieprasītā lapa netika atrasta!', 'error');
-			redirect();
-		}
+        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+        header("Status: 404 Not Found");
+        set_flash('Pieprasītā lapa netika atrasta!', 'error');
+        redirect();
 	}
 }
 

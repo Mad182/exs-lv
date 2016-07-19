@@ -1,0 +1,152 @@
+<div class="block">
+    <h3>Saturs</h3>
+    <ul class="table_of_contents">
+        <li><a href="#description">- skaidrojums</a></li>
+        <li><a href="#profile">- lietotāja profila informācija</a></li>
+    </ul>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="description">Skaidrojums</h3>
+    <p>Šajā sadaļā aprakstīti ar lietotāju profiliem saistīti pieprasījumi.<br>Šādi pieprasījumi veicami uz adresi <span class="hl">https://ios.exs.lv/profiles/</span>.</p>
+    <p>Lai kādu no tiem izpildītu, lietotājam jābūt autentificētam.</p>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="profile">Lietotāja profila informācija</h3>
+    <p>Atgriež norādītā lietotāja profila datus.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/profiles/fetch/{user_id}</span></p>
+    <p>{user_id} - lietotāja ID, par kuru datus atgriezt.</p>
+    <p>Atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "response": {
+        "profile": {
+            "nick": string,
+            "params": string,
+            "avatar_url": string,
+            "days_online": int,
+            "days_registered": int,
+            "last_seen": string,
+            "usertitle": string,
+            "gender": int,
+            "web": string,
+            "karma": int,
+            "post_count": int,
+            "page_count": int,
+            "self_votes_count": int,
+            "self_votes_sum": int,
+            "other_votes_sum": int
+        },
+        "awards": {
+            "total_count": int,
+            "top_count": int,
+            "list": [
+                {
+                    "img_url": string,
+                    "title": string
+                },
+                ...
+            ]
+        }
+    }
+}</code></pre>
+    <p>Atbildes vērtības skaidrotas tabulā:</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:200px">Atslēga</th>
+            <th style="width:400px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>profile</td>
+            <td>informācija par lietotāju</td>
+        </tr>
+        <tr>
+            <td>profile : nick</td>
+            <td>lietotāja lietotājvārds</td>
+        </tr>
+        <tr>
+            <td>profile : params</td>
+            <td>vairākas vērtības, atdalītas ar "|", kas raksturo lietotājvārdu, lai to varētu pareizi noformatēt, piemēram, "115|2|1|3|0":<br>
+            1) lietotāja ID<br>2) lietotāja klase: 0 - parasts lietotājs,  1 - administrators, 2 - moderators, 3 - rakstu autors, 5 - bots<br>3) 0 - lietotājs nav online, 1 - lietotājs ir online<br>4) ierīce, caur kuru lietotājs skatās lapu: 0 - exs.lv &middot; 1 - m.exs.lv. &middot; 2 - android app &middot; 3 - iOS app<br>5) vai lietotājam ir aktīvs liegums? 0 - nav, 1 - ir</td>
+        </tr>
+        <tr>
+            <td>profile : avatar_url</td>
+            <td>saite uz lietotāja avataru</td>
+        </tr>
+        <tr>
+            <td>profile : days_online</td>
+            <td>dienu skaits, cik pēc kārtas lietotājs ir bijis tiešsaistē</td>
+        </tr>
+        <tr>
+            <td>profile : days_registered</td>
+            <td>dienu skaits, cik ilgi lietotājs jau ir reģistrējies lapā</td>
+        </tr>
+        <tr>
+            <td>profile : last_seen</td>
+            <td>laiks teksta formā, kad pēdējoreiz lietotājs redzēts;<br>formāta piemērs: "2016-01-20 12:12:12"</td>
+        </tr>
+        <tr>
+            <td>profile : usertitle</td>
+            <td>lietotāja nosaukums profilā</td>
+        </tr>
+        <tr>
+            <td>profile : gender</td>
+            <td>lietotāja dzimums (0 - vīrietis, 1 - sieviete)</td>
+        </tr>
+        <tr>
+            <td>profile : web</td>
+            <td>lietotāja norādītās mājaslapas adrese</td>
+        </tr>
+        <tr>
+            <td>profile : karma</td>
+            <td>lietotāja karma</td>
+        </tr>
+        <tr>
+            <td>profile : post_count</td>
+            <td>lietotāja veikto ierakstu skaits lapā</td>
+        </tr>
+        <tr>
+            <td>profile : page_count</td>
+            <td>lietotāja izveidoto rakstu skaits lapā</td>
+        </tr>
+        <tr>
+            <td>profile : self_votes_count</td>
+            <td>cik reizes lietotājs vērtējis kādu ierakstu</td>
+        </tr>
+        <tr>
+            <td>profile : self_votes_sum</td>
+            <td>lietotāja veikto vērtējumu summa</td>
+        </tr>
+        <tr>
+            <td>profile : other_votes_sum</td>
+            <td>summa vērtējumiem, kādus šī lietotāja ierakstiem atzīmējuši citi lietotāji</td>
+        </tr>
+        <tr>
+            <td>awards</td>
+            <td>informācija par lietotāja medaļām</td>
+        </tr>
+        <tr>
+            <td>awards : total_count</td>
+            <td>lietotājam kopā piešķirto medaļu skaits</td>
+        </tr>
+        <tr>
+            <td>awards : top_count</td>
+            <td>lietotāja svarīgāko medaļu skaits (sakrīt ar parametrā "list" esošo objektu skaitu)</td>
+        </tr>
+        <tr>
+            <td>awards : list</td>
+            <td>masīvs ar objektiem par svarīgākajām lietotājam piešķirtajām medaļām (tām, kuras lietotājs starp visām medaļām novietojis kā pirmās sarakstā; sakrīt ar parametrā "top_count" parādīto vērtību)</td>
+        </tr>
+        <tr>
+            <td>awards : list : img_url</td>
+            <td>saite uz medaļas attēlu</td>
+        </tr>
+        <tr>
+            <td>awards : list : title</td>
+            <td>medaļas nosaukums</td>
+        </tr>
+    </table>
+</div>
+<div class="col_divider"></div>

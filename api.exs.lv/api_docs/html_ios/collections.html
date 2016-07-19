@@ -1,0 +1,109 @@
+<div class="block">
+    <h3>Saturs</h3>
+    <ul class="table_of_contents">
+        <li><a href="#description">- skaidrojums</a></li>
+        <li><a href="#smilies">- smaidiņu saraksts</a></li>
+        <li><a href="#notifications">- notifikāciju attēlu saraksts</a></li>
+    </ul>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="description">Skaidrojums</h3>
+    <p>Šajā sadaļā aprakstīti ar attēlu kolekcijām saistīti pieprasījumi.<br>Šādi pieprasījumi veicami uz adresi <span class="hl">https://ios.exs.lv/collections/</span>.</p>
+    <p>Lai kādu no tiem izpildītu, lietotājam jābūt autentificētam.</p>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="smilies">Smaidiņu saraksts</h3>
+    <p>Atgriež sarakstu ar exs.lv izmantotajiem smaidiņiem un adresēm uz to attēliem.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/collections/smilies</span></p>
+    <p>Atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "response": {
+        "smilies_count": int,
+        "smilies": [
+            {
+                "code": string,
+                "title": string,
+                "url": string
+            },
+            ...
+        ]
+    }
+}</code></pre>
+    <p>Atbildes vērtības skaidrotas tabulā:</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:200px">Atslēga</th>
+            <th style="width:400px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>smilies_count</td>
+            <td>smaidiņu skaits parametrā "smilies"</td>
+        </tr>
+        <tr>
+            <td>smilies</td>
+            <td>masīvs ar objektiem par smaidiņiem</td>
+        </tr>
+        <tr>
+            <td>smilies : code</td>
+            <td>smaidiņa kods, kas izmantojams tekstā</td>
+        </tr>
+        <tr>
+            <td>smilies : title</td>
+            <td>smaidiņa attēla nosaukums, ieskaitot attēla formātu</td>
+        </tr>
+        <tr>
+            <td>smilies : url</td>
+            <td>pilna adrese uz smaidiņa attēlu</td>
+        </tr>
+    </table>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="notifications">Notifikāciju attēlu saraksts</h3>
+    <p>Atgriež sarakstu ar attēliem, kādi tiek izmantoti lietotāja notifikācijām.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/collections/notifications</span></p>
+    <p>Atbilde:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    ...,
+    "response": {
+        "list_size": int,
+        "notifications": [
+            {
+                "type": int,
+                "title": string,
+                "url": string
+            },
+            ...
+        ]
+    }
+}</code></pre>
+    <p>Atbildes vērtības skaidrotas tabulā:</p>
+    <table class="default">
+        <tr class="header">
+            <th style="width:200px">Atslēga</th>
+            <th style="width:400px">Skaidrojums</th>
+        </tr>
+        <tr>
+            <td>list_size</td>
+            <td>elementu skaits parametrā "notifications"</td>
+        </tr>
+        <tr>
+            <td>notifications : type</td>
+            <td>notifikācijas tips;<br>sīkāku tipu skaidrojumu meklēt <a href="https://api.exs.lv/i/other#notifications">šeit</a>.</td>
+        </tr>
+        <tr>
+            <td>notifications : title</td>
+            <td>notifikācijas nosaukums</td>
+        </tr>
+        <tr>
+            <td>notifications : url</td>
+            <td>pilna adrese uz notifikācijas attēlu</td>
+        </tr>     
+    </table>
+</div>
+<div class="col_divider"></div>
