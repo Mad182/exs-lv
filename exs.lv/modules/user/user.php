@@ -302,6 +302,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$out .= '<span class="post-time">' . time_ago($action->time) . '</span>' . $action->action . '</li>';
 			}
 			$out .= '</ul>';
+
+		} elseif($lang != 1 && $lang != $inprofile->source_site) {
+			//liek meklētājiem neindeksēt profilus apakšprojektos, kur tie nav reģistrēti un neko nav darījuši
+			$robotstag[] = 'noindex';
 		}
 
 		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' LIMIT 60");
