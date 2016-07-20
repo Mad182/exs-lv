@@ -134,6 +134,8 @@ if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {
 			$proto = 'http://';
 		}
 		redirect($proto . $name . $_SERVER['REQUEST_URI'], true);
+	} else {
+		redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
 	}
 
 //rs redirektējam uz runescape lai neveidojas dublikāts saturam
