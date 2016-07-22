@@ -39,7 +39,7 @@ $cat_public = '';
 
 if ($var0 && in_array($var0, $list_public_cats)) {
     $cat_public = $var0;
-} else if ($var0 && in_array($var0, $list_public_cats)) {
+} else if ($var0 && in_array($var0, $list_private_cats)) {
     $cat_private = $var0;
 }
 
@@ -64,6 +64,7 @@ $json_success   = true;
 $json_message   = '';
 $json_banned    = 0;
 $json_page      = null;
+$json_2fa       = false;
 
 
 // dati par lietotāja IP liegumu, ja tādi ir
@@ -110,28 +111,39 @@ if ($var0 === 'ban_details') {
     } else {
         include(API_PATH . '/api_ios/' . $cat_public . '.php');
     } 
-    
+
 // autorizētu pieprasījumu apstrāde
 } else if ($auth->ok) {
  
 	// pārbauda, vai lietotājam ir profila liegums
-	if (!empty($busers) && !empty($busers[$auth->id])) {      
+    if (!empty($busers) && !empty($busers[$auth->id])) {      
 		api_fetch_ban(2);
-
-	// ielādē ne-publisko sadaļu un tajā izpilda darbības
-	} else if ($cat_private !== '' &&
-               file_exists(API_PATH . '/api_ios/' . $cat_private . '.php')) {
-		include(API_PATH . '/api_ios/' . $cat_private . '.php');
-
-    // citu sadaļu pieprasījumi
-	} else {
-        if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
-            api_info('Hello world!');
-        } else {
-            api_log('Pieprasīta neeksistējoša sadaļa.');
-            api_error('Pieprasīta neeksistējoša sadaļa.');
+    } else {
+        
+        // 2-factor-authentication iespējots? jāpieprasa kods
+        if ($auth->auth_2fa && empty($_SESSION['2fa'])) {
+            api_auth_2fa_request();
         }
-	}
+        
+        // pieeja sadaļām tikai tad, ja 2fa veiksmīgi izpildīts
+        if (!$auth->auth_2fa || !empty($_SESSION['2fa'])) {
+
+            // ielādē ne-publisko sadaļu un tajā izpilda darbības
+            if ($cat_private !== '' &&
+                   file_exists(API_PATH . '/api_ios/' . $cat_private . '.php')) {
+                include(API_PATH . '/api_ios/' . $cat_private . '.php');
+
+            // citu sadaļu pieprasījumi
+            } else {
+                if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
+                    api_info('Hello world!');
+                } else {
+                    api_log('Pieprasīta neeksistējoša sadaļa.');
+                    api_error('Pieprasīta neeksistējoša sadaļa.');
+                }
+            }
+        }
+    }
 
 } else {
     // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un
@@ -147,13 +159,20 @@ if ($var0 === 'ban_details') {
 |--------------------------------------------------------------------------
 */
 
-echo json_encode(array(
+$arr = array(
 	'success'    => $json_success,
 	'message'    => $json_message,
 	'ban_type'   => $json_banned,
 	'logged_in'  => $auth->ok,
 	'xsrf_token' => api_make_xsrf(),
 	'response'   => $json_page
-), JSON_UNESCAPED_UNICODE);
+);
 
+// norādīs, ka nākamajos pieprasījumos no lietotnes gaidīs lietotāja
+// ievadītu kodu, kas iegūts @ Google Authenticator
+if ($json_2fa === true) {
+    $arr['2fa_enabled'] = true;
+}
+
+echo json_encode($arr, JSON_UNESCAPED_UNICODE);
 exit;
