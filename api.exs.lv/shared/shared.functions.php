@@ -4,19 +4,36 @@
  */
 
 /**
+ *  Uzstāda atgriežamā JSON objekta statusu.
+ */
+function api_status($status) { // iOS only pagaidām
+    global $json_arr;
+    $json_arr['status'] = $status;
+}
+
+/**
  *  Pieprasījuma atbildei pievieno kļūdas tekstu,
  *  kuru lietotnē var attiecīgi parādīt.
  */
 function api_error($string = '') {
-	global $lang, $json_state, $json_success, $json_message;
+	global $lang;    
     
     if ($lang === 2 && substr($string, -1) === '.') {
         $string = substr($string, 0, -1);
     }
 	
-	$json_state = 'error'; // androīdam    
-	$json_success = false; // iOS
-	$json_message = $string; // androīdam/iOS
+    // androīdam
+    if ($lang === 2) {
+        global $json_state, $json_message;
+        $json_state = 'error';
+        $json_message = $string;
+    }
+    
+    // ios
+    if ($lang === 4) {
+        api_status(400);
+        api_append('error_message', $string);
+    }
 }
 
 /**
@@ -24,11 +41,62 @@ function api_error($string = '') {
  *  ko lietotnes pusē tā arī jāuztver kā informatīvu, nevis kļūdu.
  */
 function api_info($string = '') {
-    global $json_state, $json_success, $json_message;
+    global $lang;
+
+    if ($lang === 2) {
+        // androīdam
+        global $json_state, $json_message;
+        $json_state = 'success';
+        $json_message = $string;
+    }
+    
+    if ($lang === 4) {
+        // ios
+        global $json_arr;
+        $json_arr['response']['info_message'] = $string;
+    }
+}
+
+/**
+ *  Pieprasījuma atbildei galā pievieno norādītā masīva vērtības.
+ */
+function api_append($obj, $value = '') {
+	global $lang, $json_page;
+    
+    if ($lang === 2) { // androīdam
+        if (!is_array($obj)) return;
+        foreach ($obj as $key => $value) {
+            $json_page[$key] = $value;
+        }
+    } else { // ios
+        global $json_arr;
+        if (is_array($obj)) {
+            $json_arr['response'] = $obj;
+            return;            
+        }
+        $json_arr[$obj] = $value;
+    }
+}
+
+/**
+ *  Saglabā žurnālierakstu ar norādīto tekstu datubāzē.
+ *  Papildu tiek fiksēta adrese, kādu lietotājs centies ielādēt.
+ */
+function api_log($text) {
+	global $db, $auth, $lang;
 	
-    $json_state = 'success';
-	$json_success = true;
-	$json_message = $string;
+	if (empty($text)) return;
+	
+	$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
+	
+	return $db->insert('api_logs', array(
+        'api_type' => ($lang === 2 ? 0 : 1),
+		'url' => sanitize($uri),
+		'message' => sanitize($text),
+		'created_by' => (int)$auth->id,
+		'created_at' => date('Y-m-d H:i:s', time()),
+		'created_ip' => sanitize($auth->ip)
+	));
 }
 
 /**
@@ -54,42 +122,6 @@ function api_check_xsrf($key = '') {
 		return false;
 	}
 	return (substr($auth->xsrf, 0, 10) === $key);
-}
-
-/**
- *  Pieprasījuma atbildei galā pievieno norādītā masīva vērtības.
- */
-function api_append($values) {
-	global $json_page;
-	
-	if (!is_array($values)) {
-		return;
-	}
-
-	foreach ($values as $key => $value) {
-		$json_page[$key] = $value;
-	}
-}
-
-/**
- *  Saglabā žurnālierakstu ar norādīto tekstu datubāzē.
- *  Papildu tiek fiksēta adrese, kādu lietotājs centies ielādēt.
- */
-function api_log($text) {
-	global $db, $auth, $lang;
-	
-	if (empty($text)) return;
-	
-	$uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
-	
-	return $db->insert('api_logs', array(
-        'api_type' => ($lang === 2 ? 0 : 1),
-		'url' => sanitize($uri),
-		'message' => sanitize($text),
-		'created_by' => (int)$auth->id,
-		'created_at' => date('Y-m-d H:i:s', time()),
-		'created_ip' => sanitize($auth->ip)
-	));
 }
 
 /**

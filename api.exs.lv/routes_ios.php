@@ -30,7 +30,6 @@ $list_private_cats = array( // šīm pieeja, ja lietotājs ir autentificējies
 $list_public_cats = array( // šīm pieeja vienmēr
     'auth',
     'collections'
-    // 'viewstates'
 );
 
 // pārbauda, kura sadaļa adresē pieprasīta
@@ -43,29 +42,10 @@ if ($var0 && in_array($var0, $list_public_cats)) {
     $cat_private = $var0;
 }
 
-/**
- *  Katrs pieprasījums, kas nonācis šajā failā,
- *  atpakaļ saņem atbildi šādā JSON masīva formātā:
- *
- *  $json = array(
- *      'success'       => bool      // vai pieprasījums bija veiksmīgs?
- *      'message'       => string,   // kļūdas paziņojums, ja "state" === "error"
- *      'ban_type'      => int,      // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
- *      'logged_in'     => bool,     // statuss, kas apzīmē, vai lietotājs ir autentificēts
- *      'xsrf_token'    => string,   // anti-xsrf atslēga, kas pievienojama adrešu galā
- *      'response'      => null|JSONObject   // detalizētāks saturs kā atbilde pieprasījumam
- *  );
- */
-
-
-// atgriežamā json objekta mainīgie;
-// to saturs pēc nepieciešamības maināms katra apakšmoduļa iekšienē
-$json_success   = true;
-$json_message   = '';
-$json_banned    = 0;
-$json_page      = null;
-$json_2fa       = false;
-
+// masīvs, kas tiks atgriezts atpakaļ JSON formātā
+$json_arr = array(
+    'status' => 200
+);
 
 // dati par lietotāja IP liegumu, ja tādi ir
 $ip_banned = $db->get_row("
@@ -98,6 +78,7 @@ if ($var0 === 'ban_details') {
 } else if ($ip_banned) {
 
 	api_fetch_ban(1, $ip_banned);
+    api_status(442);
 	if ($auth->ok) {
 		$auth->logout();
 	}
@@ -112,44 +93,47 @@ if ($var0 === 'ban_details') {
         include(API_PATH . '/api_ios/' . $cat_public . '.php');
     } 
 
-// autorizētu pieprasījumu apstrāde
-} else if ($auth->ok) {
+// pieprasījums sadaļai, kur nepieciešama autentificēšanās
+} else if ($cat_private !== '') {
  
+    if (!$auth->ok) {
+        api_status(440);
+        api_append('info_message', 'Lai piekļūtu saturam, nepieciešams autentificēties.');
 	// pārbauda, vai lietotājam ir profila liegums
-    if (!empty($busers) && !empty($busers[$auth->id])) {      
+    } else if (!empty($busers) && !empty($busers[$auth->id])) {      
+        api_status(442);
 		api_fetch_ban(2);
     } else {
-        
+
         // 2-factor-authentication iespējots? jāpieprasa kods
+        $request_2fa = false;
         if ($auth->auth_2fa && empty($_SESSION['2fa'])) {
-            api_auth_2fa_request();
+            require(API_PATH.'/shared/shared.auth.php');
+            $request_2fa = api_auth_2fa_request();
         }
         
-        // pieeja sadaļām tikai tad, ja 2fa veiksmīgi izpildīts
-        if (!$auth->auth_2fa || !empty($_SESSION['2fa'])) {
-
+        if ($request_2fa) {
+            api_status(441);
+            api_append('info_message', 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.');
+        } else {
+            
             // ielādē ne-publisko sadaļu un tajā izpilda darbības
-            if ($cat_private !== '' &&
-                   file_exists(API_PATH . '/api_ios/' . $cat_private . '.php')) {
+            if (file_exists(API_PATH . '/api_ios/' . $cat_private . '.php')) {
                 include(API_PATH . '/api_ios/' . $cat_private . '.php');
-
-            // citu sadaļu pieprasījumi
             } else {
-                if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
-                    api_info('Hello world!');
-                } else {
-                    api_log('Pieprasīta neeksistējoša sadaļa.');
-                    api_error('Pieprasīta neeksistējoša sadaļa.');
-                }
+               api_error('API kļūda.');
+               api_log('Neeksistē ne-publiskas sadaļas \.php fails.');
             }
         }
     }
 
 } else {
-    // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un
-    // sūta pieprasījumu, bet serveris jau dzēsis sesiju, nonāk šeit
-    api_log('Neatpazīts pieprasījums no neautentificēta lietotāja.');
-	//api_error('Lūdzu, autorizējies!');
+    if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
+        api_append('info_message', 'Hello world! ('.api_make_xsrf().')');
+    } else {
+        api_log('Pieprasīta kļūdaina adrese.');
+        api_error('Pieprasīta kļūdaina adrese!');
+    }    
 }
 
 
@@ -159,20 +143,5 @@ if ($var0 === 'ban_details') {
 |--------------------------------------------------------------------------
 */
 
-$arr = array(
-	'success'    => $json_success,
-	'message'    => $json_message,
-	'ban_type'   => $json_banned,
-	'logged_in'  => $auth->ok,
-	'xsrf_token' => api_make_xsrf(),
-	'response'   => $json_page
-);
-
-// norādīs, ka nākamajos pieprasījumos no lietotnes gaidīs lietotāja
-// ievadītu kodu, kas iegūts @ Google Authenticator
-if ($json_2fa === true) {
-    $arr['2fa_enabled'] = true;
-}
-
-echo json_encode($arr, JSON_UNESCAPED_UNICODE);
+echo json_encode($json_arr, JSON_UNESCAPED_UNICODE);
 exit;

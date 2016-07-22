@@ -89,7 +89,7 @@ function api_auth_logout() {
  *  ierīce atrodama starp tām, kuras lietotājs vēlējies "atcerēties".
  */
 function api_auth_2fa_request() {
-    global $db, $auth, $json_2fa;
+    global $lang, $db, $auth;
     
     // atlasa iepriekš saglabātās ierīces
     $check_existing = $db->get_results("
@@ -103,7 +103,7 @@ function api_auth_2fa_request() {
     // ar šobrīd izmantoto (pārbaudot cepumu)
 	if (!empty($check_existing)) {
 		foreach ($check_existing as $device) {
-			if(!empty($_COOKIE[$device->cookie]) &&
+			if (!empty($_COOKIE[$device->cookie]) &&
                   $_COOKIE[$device->cookie] === $device->token) {
 				$_SESSION['2fa'] = 1;
                 $device_found = true;
@@ -111,11 +111,7 @@ function api_auth_2fa_request() {
 		}
 	}
     
-    // neatrodot iepriekš saglabātu šādu ierīci, norādīs,
-    // ka lietotnei jāliek lietotājam ievadīt kodu no Google Authenticator
-    if ($device_found === false) {
-        $json_2fa = true;
-    }
+    return (!$device_found);
 }
 
 /**
@@ -125,14 +121,20 @@ function api_auth_2fa_request() {
 function api_auth_accept_2fa() {
     global $db, $auth;
     
-    if (!$auth->auth_2fa) {
+    if (!$auth->ok) {
+        api_error('Lietotājs vēl nav autentificējies!');
+		api_log('Mēģinājums ievadīt 2fa kodu, kad lietotājs nav autentificējies.');
+        return; 
+    } else if (!empty($_SESSION['2fa'])) {
+        api_error('Autentificēšanās jau notikusi!');
+		api_log('Mēģinājums atkārtoti ievadīt 2fa kodu, kad tas nav nepieciešams.');
+        return; 
+    } else if (!$auth->auth_2fa) {
         api_error('Profilam 2fa nav iespējots!');
         api_log('2fa pieprasījums profilam, kuram 2fa nav iespējots.');
         return;
-    }
-    
-    if (!api_check_xsrf()) {
-		api_error('no hacking, pls');
+    } else if (!api_check_xsrf()) {
+        api_error('no hacking, pls');
 		api_log('Iesūtot 2fa kodu, konstatēts XSRF uzbrukums.');
         return;
 	} else if (!isset($_POST['2fa_code'])) {
