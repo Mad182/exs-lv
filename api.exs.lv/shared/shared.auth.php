@@ -49,16 +49,20 @@ function api_auth_login() {
         // 2-factor-authentication iespējots? jāpieprasa kods
         $request_2fa = false;
         if ($auth->auth_2fa && empty($_SESSION['2fa'])) {
-            require_once(API_PATH.'/shared/shared.auth.php');
             $request_2fa = api_auth_2fa_request();
         }
         
         if ($request_2fa) {
-            api_status(441);
-            api_append(array(
-                'info_message' => 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.',
-                'token' => api_make_xsrf()
-            ));
+            if ($lang === 2) {
+                global $json_2fa;
+                $json_2fa = true;
+            } else {
+                api_status(441);
+                api_append(array(
+                    'info_message' => 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.',
+                    'token' => api_make_xsrf()
+                ));
+            }
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             api_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums.');
             api_status(442);
