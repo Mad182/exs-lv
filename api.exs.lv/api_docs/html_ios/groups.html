@@ -29,7 +29,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "group_count": int,
         "groups": [
@@ -103,7 +103,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "group_count": int,
         "group_categories": [
@@ -153,7 +153,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "group_count": int,
         "page_count": int,
@@ -225,7 +225,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "group_data": {
             "category_id": int,
@@ -335,7 +335,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "member_count": int,
         "page_count": int,
@@ -415,7 +415,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "page_count": int,
         "current_page": int,
@@ -511,8 +511,8 @@
 <div class="col_divider"></div>
 <div class="block">
     <h3 id="new">Jauna grupas minibloga/komentāra pievienošana</h3>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{new|comment}?xsrf={xsrf}</span></p>
-    <p>{new|comment} - atbilstoši jaunam miniblogam vai minibloga komentāram/atbildei.<br>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{new|comment}?token={token}</span></p>
+    <p>{new|comment} - atbilstoši jaunam miniblogam vai minibloga komentāram/atbildei.<br>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Šis ir POST tipa pieprasījums, un tam jāpievieno šādas POST vērtības:</p>
     <table class="default">
         <tr class="header">
@@ -539,7 +539,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "miniblog_id": int
     }
@@ -565,7 +565,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "miniblog": {
             "id": int,
@@ -762,13 +762,13 @@
 <div class="block">
     <h3 id="rate">Grupas minibloga vērtēšana</h3>
     <p>Ļauj novērtēt miniblogu vai tā komentāru/atbildi ar plusiņu vai mīnusiņu.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{plus|minus}/{mb_id}?xsrf={xsrf}</span></p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{plus|minus}/{mb_id}?token={token}</span></p>
     <p>{plus|minus} - atbilstoši pozitīvam vai negatīvam vērtējumam.<br>
-    {mb_id} - minibloga/komentāra/atbildes ID.<br>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    {mb_id} - minibloga/komentāra/atbildes ID.<br>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "vote_value": int
     }
@@ -789,12 +789,12 @@
 <div class="block">
     <h3 id="join">Lietotāja pieteikšanās grupai</h3>
     <p>Ļauj lietotājam pieteikties par biedru kādā no grupām.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/apply?xsrf={xsrf}</span></p>
-    <p>{group_id} - ID grupai, kurā lietotājs vēlas kļūt par biedru.<br>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/apply?token={token}</span></p>
+    <p>{group_id} - ID grupai, kurā lietotājs vēlas kļūt par biedru.<br>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "joined": bool
     }
@@ -815,12 +815,12 @@
 <div class="block">
     <h3 id="leave">Lietotāja izstāšanās no grupas</h3>
     <p>Ļauj lietotājam izstāties no grupas.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/leave?xsrf={xsrf}</span></p>
-    <p>{group_id} - ID grupai, no kuras lietotājs vēlas izstāties.<br>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/groups/{group_id}/leave?token={token}</span></p>
+    <p>{group_id} - ID grupai, no kuras lietotājs vēlas izstāties.<br>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "left": bool
     }

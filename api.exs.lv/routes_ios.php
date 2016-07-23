@@ -21,6 +21,7 @@ require(API_PATH . '/shared/ios.functions.php');
 // piemēram, https://ios.exs.lv/inbox/
 $list_private_cats = array( // šīm pieeja, ja lietotājs ir autentificējies
     'random',
+    'statuses',
     'profiles',
     'miniblogs',
     'groups',
@@ -42,7 +43,25 @@ if ($var0 && in_array($var0, $list_public_cats)) {
     $cat_private = $var0;
 }
 
-// masīvs, kas tiks atgriezts atpakaļ JSON formātā
+/**
+ *  Katram pieprasījumam, kas nonācis šajā failā,
+ *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:
+ *
+ *  $json_arr = array(
+ *      'status'    => int   // 200|400|440|441|442
+ *      'response'  => JSONObj 
+ *  );
+ *
+ *  200 - viss OK, 'response' satur atbildi, kādu klients vēlas sagaidīt
+ *  400 - radās kāda kļūda, piemēram, 
+ *  440 - lai veiktu šādu pieprasījumu, nepieciešams autentificēties
+ *  441 - autentificēšanās 1. solis veikts, bet vēl nav saņemts 2fa kods
+ *  442 - IP adresei vai autentificētajam profilam ir liegums
+ *
+ *  Izņemot '200' kodu, visiem pārējiem statusiem 'response' atslēgas vietā
+ *  var būt cita veida saturs, kas sīkāk aprakstīts dokumentācijā.
+ */
+
 $json_arr = array(
     'status' => 200
 );
@@ -63,15 +82,20 @@ $ip_banned = $db->get_row("
 */
 
 // info par liegumu jāvar noskaidrot jebkurā brīdī, tāpēc pirmā pārbaude
-if ($var0 === 'ban_details') {
-    // ios.exs.lv/ban_details
+if ($var0 === 'statuses' && $var1 === 'ban_details') {
+    // ios.exs.lv/statuses/ban_details
 
 	if ($ip_banned) {
+        api_append('is_active', true);
 		api_fetch_ban(1, $ip_banned);
 	} else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) {
+        api_append('is_active', true);
 		api_fetch_ban(2);
 	} else {
-        api_info('Lietotājam nav liegta piekļuve exs.lv.');
+        api_append(array(
+            'is_active' => false,
+            'info_message' => 'Lietotājam nav liegta piekļuve exs.lv.'
+        ));
     }
 
 // pārbauda, vai lietotājam ir IP liegums
@@ -98,7 +122,7 @@ if ($var0 === 'ban_details') {
  
     if (!$auth->ok) {
         api_status(440);
-        api_append('info_message', 'Lai piekļūtu saturam, nepieciešams autentificēties.');
+        api_append(array('info_message' => 'Lai piekļūtu saturam, nepieciešams autentificēties.'));
 	// pārbauda, vai lietotājam ir profila liegums
     } else if (!empty($busers) && !empty($busers[$auth->id])) {      
         api_status(442);
@@ -114,7 +138,10 @@ if ($var0 === 'ban_details') {
         
         if ($request_2fa) {
             api_status(441);
-            api_append('info_message', 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.');
+            api_append(array(
+                'info_message' => 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.',
+                'token' => api_make_xsrf()
+            ));
         } else {
             
             // ielādē ne-publisko sadaļu un tajā izpilda darbības
@@ -129,7 +156,7 @@ if ($var0 === 'ban_details') {
 
 } else {
     if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
-        api_append('info_message', 'Hello world! ('.api_make_xsrf().')');
+        api_append(array('info_message' => 'Hello world!'));
     } else {
         api_log('Pieprasīta kļūdaina adrese.');
         api_error('Pieprasīta kļūdaina adrese!');

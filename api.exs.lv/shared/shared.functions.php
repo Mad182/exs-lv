@@ -32,7 +32,7 @@ function api_error($string = '') {
     // ios
     if ($lang === 4) {
         api_status(400);
-        api_append('error_message', $string);
+        api_append(array('error_message' => $string));
     }
 }
 
@@ -71,10 +71,24 @@ function api_append($obj, $value = '') {
     } else { // ios
         global $json_arr;
         if (is_array($obj)) {
-            $json_arr['response'] = $obj;
-            return;            
+            if (array_key_exists('response', $json_arr)) {
+                $json_arr['response'] += $obj;
+            } else {
+                $json_arr['response'] = $obj;
+            }
+            return;
         }
         $json_arr[$obj] = $value;
+    }
+}
+
+function api_append_root($obj) {
+    global $json_arr;
+    
+    if (!is_array($obj)) return;
+    
+    foreach ($obj as $key => $value) {
+        $json_arr[$key] = $value;
     }
 }
 
@@ -113,15 +127,16 @@ function api_make_xsrf() {
  *  Pārbauda, vai pieprasījumā saņemtā XSRF atslēga sakrīt ar to,
  *  kāda atbilst lietotājam, kas pieprasījumu veicis.
  */
-function api_check_xsrf($key = '') {
-	global $auth;
-	if (empty($key)) {
-		if (!empty($_GET['xsrf'])) {
-			return (substr($auth->xsrf, 0, 10) === $_GET['xsrf']);
+function api_check_xsrf($token = '') {
+	global $auth, $lang;
+    $key = ($lang === 2) ? 'xsrf' : 'token';
+	if (empty($token)) {
+		if (!empty($_GET[$key])) {
+			return (substr($auth->xsrf, 0, 10) === $_GET[$key]);
 		}
 		return false;
 	}
-	return (substr($auth->xsrf, 0, 10) === $key);
+	return (substr($auth->xsrf, 0, 10) === $token);
 }
 
 /**

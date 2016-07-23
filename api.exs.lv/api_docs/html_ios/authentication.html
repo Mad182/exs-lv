@@ -2,19 +2,23 @@
     <h3>Saturs</h3>
     <ul class="table_of_contents">
         <li><a href="#description">- skaidrojums</a></li>
-        <li><a href="#login">- autentificēšanās</a></li>
+        <li><a href="#login">- autentificēšana ar lietotājvārdu un paroli</a></li>
+        <li><a href="#2fa">- autentificēšana ar 2fa kodu</a></li>
+        <li><a href="#token">- auth token atkārtota iegūšana</a></li>
         <li><a href="#logout">- iziešana</a></li>
     </ul>
 </div>
 <div class="col_divider"></div>
 <div class="block">
     <h3 id="description">Skaidrojums</h3>
-    <p>Šajā sadaļā aprakstīti tie pieprasījumi, kas saistīti ar lietotāja autentificēšanos.<br>Šādi pieprasījumi veicami uz adresi <span class="hl">https://ios.exs.lv/auth/</span>.</p>
+    <p>Lielākā daļa informācijas caur API pieejama tikai tad, ja lietotājs caur API ir autentificējies. Šajā sadaļā aprakstīti ar to saistītie pieprasījumi, kas veicami uz adresi <span class="hl">https://ios.exs.lv/auth/</span>.</p>
+    <p>Pieprasot informāciju no adreses, kur ir nepieciešama lietotāja autentificēšana, un lietotājam neesot autentificētam, tiks atgriezts vai nu 440, vai 441 statuss, <a href="/i/intro#statuses">kā aprakstīts</a> sadaļā <span class="hl">"Ievads"</span>.</p>
+    <p>Atsevišķiem exs profiliem ir aktivizēta divu soļu autentificēšanās, kas nozīmē, ka tiem jāievada ne vien lietotājvārds un parole, bet arī kods, kas iegūts no Google Authenticator lietotnes, vispirms to piesaistot profilam exs web versijā.</p>
 </div>
 <div class="col_divider"></div>
 <div class="block">
-    <h3 id="login">Autentificēšanās</h3>
-    <p>Autentificēšanās pieprasījums ar POST metodi sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/login</span>. Pieprasījumam klāt jāpievieno tabulā norādītās POST vērtības.</p>
+    <h3 id="login">Autentificēšana ar lietotājvārdu un paroli</h3>
+    <p>Pieprasījums ar POST metodi sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/login</span>. Pieprasījumam klāt jāpievieno tabulā norādītās POST vērtības.</p>
     <table class="default">
         <tr class="header">
             <th>Parametrs</th>
@@ -29,14 +33,13 @@
             <td>string</td>
         </tr>
     </table>
-    <p>1. Autentificēšanās pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
-    <p>2. Pēc veiksmīgas autentificēšanās konstatējot, ka lietotājam piemērots profila liegums, tiks pievienota attiecīga informācija, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
-    <p>3. Profila liegumam neesot, tiks saņemta šāda atbilde:</p>
+    <p>Autentificēšanās pieprasījums nav pieejams, ja pieprasījuma veicējam tiek konstatēts IP liegums. Tādā gadījumā <a href="/i/intro#statuses">atbilstoši aprakstam</a> sadaļā <span class="hl">"Ievads"</span> tiek atgriezts 442 statuss.</p>
+    <p>Neizdevušās autentificēšanās gadījumā tiek atgriezts 400 statuss, informējot par kļūdu, savukārt, visam noritot veiksmīgi, iespējami divi rezultāti:</p>
+    <h4>1. Profilam nav iespējota 2 soļu autentificēšanās.</h4>
+    <p>Tiek pārbaudīts, vai profilam ir piemērots profila liegums. Ja tā ir, tiek atgriezts 442 statuss. Liegumam neesot, atbildē tiek pievienota informācija par autentificētā lietotāja profilu:</p>
 <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
-    "logged_in": true,
-    ...,
+    "statuss": 200,
     "response": {
         "profile": {
             "nick": string,
@@ -64,22 +67,72 @@
             <td>saite uz lietotāja avataru</td>
         </tr>
     </table>
+    <h4>2. Profilam ir iespējota 2 soļu autentificēšanās.</h4>
+    <p>Tiek atgriezts 441 statuss šādā formātā:</p>
+<pre><code class="json">{
+    "statuss": 441,
+    "response": {
+        "info_message": "Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.",
+        "token": "xxxxxxxxxx"
+    }
+}</code></pre>
+    <p>Lai pabeigtu lietotāja autentificēšanu, jāveic pieprasījums, kas aprakstīts nodaļā <a href="/i/auth/#2fa"><span class="hl">"Autentificēšana ar 2fa kodu"</span></a>.</p>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="2fa">Autentificēšana ar 2fa kodu</h3>
+    <p>Lai pabeigtu divu soļu autentificēšanos, jāiesūta kods, kas iegūstams Google Authenticator lietotnē. (Profilam jābūt iepriekš sasaistītam ar Google Authenticator caur exs web versiju!)</p>
+    <p>Pieprasījums ar POST metodi sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/2fa?token={token}</span>. Tam klāt jāpievieno tabulā norādītā POST vērtība.</p>
+    <table class="default">
+        <tr class="header">
+            <th>Parametrs</th>
+            <th>Vērtības tips</th>
+        </tr>
+        <tr>
+            <td>2fa_code</td>
+            <td>string</td>
+        </tr>
+    </table>
+    <p>Neobligāts ir POST parametrs <span class="hl">"2fa_remember"</span>. Pievienojot to pieprasījumam, veiksmīgas autentificēšanās gadījumā ierīce, no kuras pieprasījums veikts, tiks iegaumēta, t.i., kādu laiku no tās ievadīt jaunu kodu netiks pieprasīts.</p>
+    <p>{token} - vērtība, kas iegūstama <a href="/i/auth/#login">pirmajā autentificēšanās solī</a>. To nozaudējot, token atkārtota iegūšana aprakstīta <a href="/i/auth/#token">šajā pieprasījumā</a>.</p>
+    <p>Autentifikācijai neizdodoties, tiek atgriezts 400 statuss, savukārt, ja viss noritējis veiksmīgi, atbildei tiek pievienota informācija par autentificēto lietotāju:</p>
+<div class="code_block_title">json</div>
+<pre><code class="json">{
+    "statuss": 200,
+    "response": {
+        "profile": {
+            "nick": string,
+            "params": string,
+            "avatar_url": string
+        }
+    }
+}</code></pre>
+</div>
+<div class="col_divider"></div>
+<div class="block">
+    <h3 id="token">Auth token atkārtota iegūšana</h3>
+    <p>Nozaudējot pie autentificēšanās nolasīto tokenu, kas jāpievieno daudzu adrešu galā, to iespējams nolasīt atkārtoti, veicot pieprasījumu uz adresi <span class="hl">https://ios.exs.lv/auth/gettoken</span>.</p>
+    <p>Atpakaļ tiek atgriezta atbilde šādā formātā:</p>
+    <div class="code_block_title">json</div>
+<pre><code class="json">{
+    "status": 200,
+    "response": {
+        "token": "xxxxxxxxxx"
+    }
+}</code></pre>
 </div>
 <div class="col_divider"></div>
 <div class="block">
     <h3 id="logout">Iziešana</h3>
-    <p>Iziešanas pieprasījums sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/logout?xsrf={xsrf}</span>.</p>
-    <p>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
-    <p>Pieprasījums nebūs pieejams, ja pieprasījuma veicējam tiks konstatēts IP liegums, par ko informācija tiks attiecīgi pievienota atbildē, parametru <span class="hl">response</span> saglabājot tukšu ("null").</p>
-    <p>Pēc lietotāja izautorizēšanas atpakaļ tiks sūtīta šāda atbilde:</p>
+    <p>Iziešanas pieprasījums sūtāms uz adresi <span class="hl">https://ios.exs.lv/auth/logout?token={token}</span>.</p>
+    <p>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
+    <p>Pēc lietotāja izautorizēšanas atpakaļ tiek sūtīta šāda atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    "success": true,
-    "message": "Lietotājs no sistēmas izautorizēts.",
-    ...,
-    "logged_in": false,
-    ...,
-    "response": null
+    "status": 200,
+    "response": {
+        "info_message": "Lietotājs no sistēmas izautorizēts."
+    }
 }</code></pre>
 </div>
 <div class="col_divider"></div>

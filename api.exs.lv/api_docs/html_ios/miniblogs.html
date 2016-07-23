@@ -23,7 +23,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "page_count": int,
         "current_page": int,
@@ -141,8 +141,8 @@
 <div class="block">
     <h3 id="add">Jauna minibloga/komentāra pievienošana</h3>
     <p>Ļauj pievienot jaunu miniblogu vai tā komentāru vai atbildi uz komentāru.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/miniblogs/{new|comment}?xsrf={xsrf}</span></p>
-    <p>{new|comment} - ar "new" tiek saprast jauns miniblogs, ar "comment" - komentārs vai komentāra atbilde.<br>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/miniblogs/{new|comment}?token={token}</span></p>
+    <p>{new|comment} - ar "new" tiek saprast jauns miniblogs, ar "comment" - komentārs vai komentāra atbilde.<br>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Šis ir POST tipa pieprasījums, un tam jāpievieno šādas POST vērtības:</p>
     <table class="default">
         <tr class="header">
@@ -177,7 +177,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "miniblog_id": int
     }
@@ -202,7 +202,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "miniblog": {
             "id": int,
@@ -401,11 +401,11 @@
     <p>Ļauj novērtēt miniblogu vai tā komentāru/atbildi ar plusiņu vai mīnusiņu.</p>
     <p>Adrese: <span class="hl">https://ios.exs.lv/miniblogs/{plus|minus}/{id}?xsrf={xsrf}</span></p>
     <p>{plus|minus} - atbilstoši pozitīvai vai negatīvai vērtēšanai.<br>
-    {id} - minibloga/komentāra/atbildes ID.<br>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    {id} - minibloga/komentāra/atbildes ID.<br>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "vote_value": int
     }

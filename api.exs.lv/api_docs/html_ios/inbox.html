@@ -23,7 +23,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "message_count": int,
         "page_count": int,
@@ -120,7 +120,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "message_count": int,
         "page_count": int,
@@ -179,8 +179,8 @@
 <div class="block">
     <h3 id="new">Jauna vēstule</h3>
     <p>Ļauj nosūtīt lietotājam jaunu vēstuli.</p>
-    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/send?xsrf={xsrf}</span></p>
-    <p>{xsrf} - parametrā <span class="hl">"xsrf_token"</span> saņemtā vērtība.</p>
+    <p>Adrese: <span class="hl">https://ios.exs.lv/inbox/send?token={token}</span></p>
+    <p>{token} - pie autentificēšanās saņemtā vērtība atslēgā <span class="hl">"token"</span>.</p>
     <p>Šis ir POST tipa pieprasījums, un tam jāpievieno šādas POST vērtības:</p>
     <table class="default">
         <tr class="header">
@@ -207,7 +207,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "sent": bool
     }
@@ -233,7 +233,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "message": {
             "id": int,

@@ -6,10 +6,17 @@
 require(API_PATH.'/shared/shared.auth.php');
 
 /**
+ *  Atgriež lietotāja xsrf tokenu.
+ *  ios.exs.lv/auth/gettoken
+ */
+if ($var1 === 'gettoken') {
+    api_auth_get_token();
+
+/**
  *  Autentificēšanās mēģinājums.
  *  ios.exs.lv/auth/login
  */
-if ($var1 === 'login') {
+} else if ($var1 === 'login') {
     api_auth_login();	
 
 /**
