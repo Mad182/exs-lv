@@ -2465,7 +2465,7 @@ function get_latest_music() {
 			$time = time_ago($track->date);
 
 			if (!empty($track->images_medium)) {
-				$img = 'https://images.weserv.nl/?url=' . str_replace('http://', '', $track->images_medium);
+				$img = str_replace('http://', '//', $track->images_medium);
 			} else {
 				//ja last.fm nedod avataru, rādam lietotāju
 				$img = get_avatar($track, 's');
