@@ -147,6 +147,7 @@ function api_fetch_ban($type = 1, $ip_banned = null) {
 			
 			if ($from_user && $to_user) {
 				api_append(array(
+                    'type' => 1,
 					'ip' => $prof_banned->ip,
 					'to_user' => api_fetch_user($to_user->id,
 						$to_user->nick, $to_user->level),
@@ -170,6 +171,7 @@ function api_fetch_ban($type = 1, $ip_banned = null) {
 		
 		if ($from_user && $to_user) {
 			api_append(array(
+                'type' => 0,
 				'ip' => $ip_banned->ip,
 				'to_user' => api_fetch_user($to_user->id,
 					$to_user->nick, $to_user->level),

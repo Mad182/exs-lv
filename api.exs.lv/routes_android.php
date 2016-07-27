@@ -8,8 +8,8 @@
  *  Ieviests: 2014. gada pavasaris.
  */
 
-require(API_PATH . '/shared/shared.api.php');
-require(API_PATH . '/api_android/functions.android.php');
+require(API_PATH . '/shared/shared.functions.php');
+require(API_PATH . '/shared/android.functions.php');
 
 /*
 |--------------------------------------------------------------------------

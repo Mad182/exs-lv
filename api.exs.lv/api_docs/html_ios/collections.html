@@ -10,7 +10,7 @@
 <div class="block">
     <h3 id="description">Skaidrojums</h3>
     <p>Šajā sadaļā aprakstīti ar attēlu kolekcijām saistīti pieprasījumi.<br>Šādi pieprasījumi veicami uz adresi <span class="hl">https://ios.exs.lv/collections/</span>.</p>
-    <p>Lai kādu no tiem izpildītu, lietotājam jābūt autentificētam.</p>
+    <p>Lai kādu no tiem izpildītu, lietotājam NAV jābūt autentificētam.<br>IP lieguma gadījumā šie pieprasījumi nebūs pieejami.</p>
 </div>
 <div class="col_divider"></div>
 <div class="block">
@@ -20,7 +20,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "smilies_count": int,
         "smilies": [
@@ -69,7 +69,7 @@
     <p>Atbilde:</p>
     <div class="code_block_title">json</div>
 <pre><code class="json">{
-    ...,
+    "status": 200,
     "response": {
         "list_size": int,
         "notifications": [

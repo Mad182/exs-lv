@@ -8,8 +8,8 @@
  *  Ieviests: 2016. gada 14. jūnijs.
  */
 
-require(API_PATH . '/shared/shared.api.php');
-require(API_PATH . '/api_ios/functions.ios.php');
+require(API_PATH . '/shared/shared.functions.php');
+require(API_PATH . '/shared/ios.functions.php');
 
 /*
 |--------------------------------------------------------------------------
@@ -19,42 +19,52 @@ require(API_PATH . '/api_ios/functions.ios.php');
 
 // saraksts ar "sadaļām", kuras var pieprasīt caur adresi,
 // piemēram, https://ios.exs.lv/inbox/
-$category_list = array(
+$list_private_cats = array( // šīm pieeja, ja lietotājs ir autentificējies
     'random',
+    'statuses',
     'profiles',
     'miniblogs',
     'groups',
-    'inbox',
-    'collections'
+    'inbox'
     // 'news'
 );
-$category = '';
-if ($var0 && in_array($var0, $category_list)) {
-    $category = $var0;
+$list_public_cats = array( // šīm pieeja vienmēr
+    'auth',
+    'collections'
+);
+
+// pārbauda, kura sadaļa adresē pieprasīta
+$cat_private = '';
+$cat_public = '';
+
+if ($var0 && in_array($var0, $list_public_cats)) {
+    $cat_public = $var0;
+} else if ($var0 && in_array($var0, $list_private_cats)) {
+    $cat_private = $var0;
 }
 
 /**
- *  Katrs pieprasījums, kas nonācis šajā failā,
- *  atpakaļ saņem atbildi šādā JSON masīva formātā:
+ *  Katram pieprasījumam, kas nonācis šajā failā,
+ *  uz lietotni atpakaļ atgriež JSON datus šādā formātā:
  *
- *  $json = array(
- *      'success'       => bool      // vai pieprasījums bija veiksmīgs?
- *      'message'       => string,   // kļūdas paziņojums, ja "state" === "error"
- *      'ban_type'      => int,      // 0 - viss ok, 1 - ip liegums, 2 - profila liegums
- *      'logged_in'     => bool,     // statuss, kas apzīmē, vai lietotājs ir autentificēts
- *      'xsrf_token'    => string,   // anti-xsrf atslēga, kas pievienojama adrešu galā
- *      'response'      => null|JSONObject   // detalizētāks saturs kā atbilde pieprasījumam
+ *  $json_arr = array(
+ *      'status'    => int   // 200|400|440|441|442
+ *      'response'  => JSONObj 
  *  );
+ *
+ *  200 - viss OK, 'response' satur atbildi, kādu klients vēlas sagaidīt
+ *  400 - radās kāda kļūda, piemēram, 
+ *  440 - lai veiktu šādu pieprasījumu, nepieciešams autentificēties
+ *  441 - autentificēšanās 1. solis veikts, bet vēl nav saņemts 2fa kods
+ *  442 - IP adresei vai autentificētajam profilam ir liegums
+ *
+ *  Izņemot '200' kodu, visiem pārējiem statusiem 'response' atslēgas vietā
+ *  var būt cita veida saturs, kas sīkāk aprakstīts dokumentācijā.
  */
 
-
-// atgriežamā json objekta mainīgie;
-// to saturs pēc nepieciešamības maināms katra apakšmoduļa iekšienē
-$json_success   = true;
-$json_message   = '';
-$json_banned    = 0;
-$json_page      = null;
-
+$json_arr = array(
+    'status' => 200
+);
 
 // dati par lietotāja IP liegumu, ja tādi ir
 $ip_banned = $db->get_row("
@@ -72,102 +82,85 @@ $ip_banned = $db->get_row("
 */
 
 // info par liegumu jāvar noskaidrot jebkurā brīdī, tāpēc pirmā pārbaude
-if ($var0 === 'ban_details') {
-    // ios.exs.lv/ban_details
+if ($var0 === 'statuses' && $var1 === 'ban_details') {
+    // ios.exs.lv/statuses/ban_details
 
 	if ($ip_banned) {
+        api_append('is_active', true);
 		api_fetch_ban(1, $ip_banned);
 	} else if ($auth->ok && !empty($busers) && !empty($busers[$auth->id])) {
+        api_append('is_active', true);
 		api_fetch_ban(2);
 	} else {
-        api_info('Lietotājam nav liegta piekļuve exs.lv.');
+        api_append(array(
+            'is_active' => false,
+            'info_message' => 'Lietotājam nav liegta piekļuve exs.lv.'
+        ));
     }
 
 // pārbauda, vai lietotājam ir IP liegums
 } else if ($ip_banned) {
 
 	api_fetch_ban(1, $ip_banned);
+    api_status(442);
 	if ($auth->ok) {
 		$auth->logout();
 	}
     
-// logout pieprasījums
-} else if ($var0 === 'letmeout') {
-    // ios.exs.lv/letmeout
+// publiskas sadaļas pieprasījums
+} else if ($cat_public !== '') {
     
-    if ($auth->ok) {
-        $auth->logout();
-        api_info('Lietotājs no sistēmas izautorizēts.');
+    if (!file_exists(API_PATH . '/api_ios/' . $cat_public . '.php')) {
+        api_log('Netika atrasts publiskas API sadaļas PHP fails.');
+        api_error('Exs serverī ieperinājušās blusas. ;( Pacietību!');
     } else {
-        api_log('Neautentificējies lietotājs centās iziet no sistēmas.');
-        api_error('Lietotājs nemaz nav autentificējies.');
-    }
-    
-// login pieprasījums
-} else if ($var0 === 'letmein') {
-    // ios.exs.lv/letmein
-    
-    // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-	// bet serveris domā pretēji, labāk izautorizēt
-    if ($auth->ok) {
-        api_log('Autentificējies lietotājs centās autentificēties vēlreiz. Veikta automātiska izlogošana.');
-        $auth->logout();
+        include(API_PATH . '/api_ios/' . $cat_public . '.php');
     } 
-    
-    if (isset($_POST['username']) && isset($_POST['password'])) {
 
-        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-        
-        if (!$auth->ok) {
-            api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati.');
-            api_error('Kļūdaini norādīti piekļuves dati.');
-        } else if (!empty($busers) && !empty($busers[$auth->id])) {
-            api_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums.');
-            api_fetch_ban(2);
-        } else { // autentificēšanās OK
-        
-            // atzīmē kā iOS lietotāju, lai saņemtu medaļu (kad tāda būs)
-            if ($auth->ios_seen == 0) {
-                $db->update('users', $auth->id, array(
-                    'ios_seen' => 1
-                ));
-                $auth->ios_seen = 1;
-            }
-        
-            // pēc veiksmīgas autentificēšanās atbildei pievieno
-            // svaigāko lietotāja profila informāciju
-            api_append_profile_info();
-        }
-    } else {
-        api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
-        api_error('Kļūdaini norādīti piekļuves dati.');
-    }
-    
-// autorizētu pieprasījumu apstrāde
-} else if ($auth->ok) {
+// pieprasījums sadaļai, kur nepieciešama autentificēšanās
+} else if ($cat_private !== '') {
  
+    if (!$auth->ok) {
+        api_status(440);
+        api_append(array('info_message' => 'Lai piekļūtu saturam, nepieciešams autentificēties.'));
 	// pārbauda, vai lietotājam ir profila liegums
-	if (!empty($busers) && !empty($busers[$auth->id])) {      
+    } else if (!empty($busers) && !empty($busers[$auth->id])) {      
+        api_status(442);
 		api_fetch_ban(2);
+    } else {
 
-	// atver pieprasīto moduli un tajā izpilda darbības
-	} else if ($category !== '' &&
-               file_exists(API_PATH . '/api_ios/' . $category . '.php')) {
-		include(API_PATH . '/api_ios/' . $category . '.php');
-
-    // citu sadaļu pieprasījumi
-	} else {
-        if ($var0 !== '') { // 'index' sadaļu jeb "/" adresi nelogos
-            api_log('Pieprasīta neeksistējoša sadaļa.');
+        // 2-factor-authentication iespējots? jāpieprasa kods
+        $request_2fa = false;
+        if ($auth->auth_2fa && empty($_SESSION['2fa'])) {
+            require(API_PATH.'/shared/shared.auth.php');
+            $request_2fa = api_auth_2fa_request();
         }
-		api_info('Hello world!');
-	}
+        
+        if ($request_2fa) {
+            api_status(441);
+            api_append(array(
+                'info_message' => 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.',
+                'token' => api_make_xsrf()
+            ));
+        } else {
+            
+            // ielādē ne-publisko sadaļu un tajā izpilda darbības
+            if (file_exists(API_PATH . '/api_ios/' . $cat_private . '.php')) {
+                include(API_PATH . '/api_ios/' . $cat_private . '.php');
+            } else {
+               api_error('API kļūda.');
+               api_log('Neeksistē ne-publiskas sadaļas \.php fails.');
+            }
+        }
+    }
 
 } else {
-    // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un
-    // sūta pieprasījumu, bet serveris jau dzēsis sesiju, nonāk šeit
-    api_log('Neatbilstošs pieprasījums no neautentificēta lietotāja.');
-	api_error('Lūdzu, autorizējies!');
+    if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
+        api_append(array('info_message' => 'Hello world!'));
+    } else {
+        api_log('Pieprasīta kļūdaina adrese.');
+        api_error('Pieprasīta kļūdaina adrese!');
+    }    
 }
 
 
@@ -177,13 +170,5 @@ if ($var0 === 'ban_details') {
 |--------------------------------------------------------------------------
 */
 
-echo json_encode(array(
-	'success'    => $json_success,
-	'message'    => $json_message,
-	'ban_type'   => $json_banned,
-	'logged_in'  => $auth->ok,
-	'xsrf_token' => api_make_xsrf(),
-	'response'   => $json_page
-), JSON_UNESCAPED_UNICODE);
-
+echo json_encode($json_arr, JSON_UNESCAPED_UNICODE);
 exit;

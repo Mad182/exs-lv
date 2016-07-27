@@ -47,6 +47,7 @@
                 <!-- START BLOCK : ios-navig -->
                 <li><a class="{active-changeset}" href="/i/changeset">Izmaiņu vēsture</a></li>
                 <li><a class="{active-intro}" href="/i/intro">Ievads</a></li>
+                <li><a class="{active-authentication}" href="/i/auth">Autentifikācija</a></li>
                 <li><a class="{active-profiles}" href="/i/profiles">Profili</a></li>
                 <li><a class="{active-inbox}" href="/i/inbox">Vēstules</a></li>
                 <li><a class="{active-miniblogs}" href="/i/miniblogs">Miniblogi</a></li>

@@ -5,7 +5,7 @@
  *  Apstrādā pieprasījumus saistībā ar darbībām grupās.
  */
 
-require(API_PATH.'/api_ios/functions.miniblogs.php');
+require(API_PATH.'/shared/ios.miniblogs.php');
 
 
 /**
@@ -179,10 +179,10 @@ if (!empty($var1) && !empty($var2) &&
 			$groups_total += $group_cat->clan_count;
 		}
 		
-		$json_page = array(
+		api_append(array(
 			'group_count' => (int)$groups_total,
 			'group_categories' => $data
-		);
+		));
 	}
     
 /**

@@ -78,6 +78,12 @@ else {
             case 'collections':
                 $filename = 'collections.html';
                 break;
+            case 'auth':
+                $filename = 'authentication.html';
+                break;
+            case 'statuses':
+                $filename = 'statuses.html';
+                break;
             case 'profiles':
                 $filename = 'profiles.html';
                 break;

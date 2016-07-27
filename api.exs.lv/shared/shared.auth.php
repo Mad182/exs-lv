@@ -1,0 +1,199 @@
+<?php
+/**
+ *  API autentificēšanās sadaļā izmantotās funkcijas.
+ */
+ 
+/**
+ *  Atgriež lietotāja XSRF tokenu,
+ *  kas pievienojams adrešu galā.
+ */
+function api_auth_get_token() {
+    global $auth;
+    
+    if (!$auth->ok) {
+        api_error('Nepieciešams autentificēties.');
+        api_log('Pieprasījums pēc xsrf token, bet lietotājs nav autentificējies.');
+    } else {
+        api_append(array('token' => api_make_xsrf()));
+    }
+}
+ 
+/**
+ *  Autentificē lietotāju.
+ */
+function api_auth_login() {
+    global $db, $auth, $busers, $lang;
+
+    // no TOR autentificēties nebūs ļauts
+    if ($auth->is_tor_exit()) {
+        api_log('Neizdevies login mēģinājums (IS_TOR_EXIT = true).');
+        api_error('Pieprasījumi no šīs IP adreses bloķēti.');
+        $auth->logout();
+        return;
+    }
+
+    if (!$auth->ok) {
+        if (!isset($_POST['username']) || !isset($_POST['password'])) {
+            api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
+            api_error('Nepareizs lietotājvārds un/vai parole.');
+            return;
+        }
+        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
+    }
+    
+    if (!$auth->ok) {
+        api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati.');
+        api_error('Nepareizs lietotājvārds un/vai parole.');
+    } else { // autentificēšanās OK
+    
+        // 2-factor-authentication iespējots? jāpieprasa kods
+        $request_2fa = false;
+        if ($auth->auth_2fa && empty($_SESSION['2fa'])) {
+            require_once(API_PATH.'/shared/shared.auth.php');
+            $request_2fa = api_auth_2fa_request();
+        }
+        
+        if ($request_2fa) {
+            api_status(441);
+            api_append(array(
+                'info_message' => 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.',
+                'token' => api_make_xsrf()
+            ));
+        } else if (!empty($busers) && !empty($busers[$auth->id])) {
+            api_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums.');
+            api_status(442);
+            api_fetch_ban(2);
+        } else {
+            
+            // atzīmē kā app lietotāju, lai saņemtu medaļu
+            if ($lang === 4 && $auth->ios_seen == 0) {
+                $db->update('users', $auth->id, array(
+                    'ios_seen' => 1
+                ));
+                $auth->ios_seen = 1;
+            } else if ($lang === 2 && $auth->android_seen == 0) {
+                $db->update('users', $auth->id, array(
+                    'android_seen' => 1
+                ));
+                $auth->android_seen = 1;
+            }
+            
+            // pēc veiksmīgas autentificēšanās atbildei pievieno
+            // svaigāko lietotāja profila informāciju
+            api_append_profile_info();
+        }
+    }
+}
+
+/**
+ *  Izautorizē lietotāju.
+ */
+function api_auth_logout() {
+    global $auth;
+    
+    if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Mēģinot izautorizēties, konstatēts XSRF uzbrukums.');
+	} else if ($auth->ok) {
+        $auth->logout();
+        api_info('Lietotājs no sistēmas izautorizēts.');
+    } else {
+        api_log('Neautentificējies lietotājs centās iziet no sistēmas.');
+        api_error('Lietotājs nemaz nav autentificējies.');
+    }
+}
+
+/**
+ *  Pārbauda, vai lietotājam ir jāliek ievadīt 2fa kods, vai tomēr
+ *  ierīce atrodama starp tām, kuras lietotājs vēlējies "atcerēties".
+ */
+function api_auth_2fa_request() {
+    global $lang, $db, $auth;
+    
+    // atlasa iepriekš saglabātās ierīces
+    $check_existing = $db->get_results("
+        SELECT `cookie`, `token` FROM `tfa_whitelist`
+        WHERE `user_id` = ".$auth->id
+    );
+    
+    $device_found = false;
+    
+    // starp visām saglabātajām ierīcēm meklē tādu, kas sakrīt
+    // ar šobrīd izmantoto (pārbaudot cepumu)
+	if (!empty($check_existing)) {
+		foreach ($check_existing as $device) {
+			if (!empty($_COOKIE[$device->cookie]) &&
+                  $_COOKIE[$device->cookie] === $device->token) {
+				$_SESSION['2fa'] = 1;
+                $device_found = true;
+			}
+		}
+	}
+    
+    return (!$device_found);
+}
+
+/**
+ *  Apstrādā pieprasījumu, kurā no lietotāja tiek (cerams)
+ *  saņemts 2fa kods.
+ */
+function api_auth_accept_2fa() {
+    global $db, $auth;
+
+    if (!api_check_xsrf()) {
+        api_error('no hacking, pls');
+		api_log('Iesūtot 2fa kodu, konstatēts XSRF uzbrukums.');
+        return;
+	} else if (!$auth->ok) {
+        api_error('Nav izpildīts autentificēšanās 1. solis!');
+		api_log('Mēģinājums ievadīt 2fa kodu, kad lietotājs nav autentificējies ar lietotājvārdu un paroli.');
+        return; 
+    } else if (!empty($_SESSION['2fa'])) {
+        api_error('Autentificēšanās jau notikusi!');
+		api_log('Mēģinājums atkārtoti ievadīt 2fa kodu, kad tas nav nepieciešams.');
+        return; 
+    } else if (!$auth->auth_2fa) {
+        api_error('Profilam 2fa nav iespējots.');
+        api_log('2fa pieprasījums profilam, kuram 2fa nav iespējots.');
+        return;
+    } else if (!isset($_POST['2fa_code'])) {
+        api_error('Ievadīts kļūdains kods.');
+        api_log('Nav saņemts 2fa kods.');
+        return;
+    }
+    
+    // pārbauda, vai iesūtītais kods ir pareizs
+    $ga = new PHPGangsta_GoogleAuthenticator();
+    $checkResult = $ga->verifyCode($auth->auth_secret, $_POST['2fa_code'], 4);
+    
+    if (!$checkResult) {
+        api_error('Ievadīts kļūdains kods.');
+        api_log('Saņemtais 2fa kods nav pareizs.');
+        return;
+    }
+
+    $_SESSION['2fa'] = 1;
+
+    // ja lietotājs vēlas, lai viņa izmantoto ierīci "atceras" un
+    // kods nebūtu jāievada pārāk bieži, pievieno vērtību cepumos
+    if (!empty($_POST['2fa_remember'])) {
+
+        $cookie = md5(uniqid());
+        $token = md5(uniqid() . $auth->xsrf);
+
+        $db->insert('tfa_whitelist', array(
+            'user_id' => $auth->id,
+            'ip' => $auth->ip,
+            'cookie' => $cookie,
+            'token' => $token,
+            'created' => 'NOW()',
+            'modified' => 'NOW()'
+        ));
+ 
+        setcookie($cookie, $token, time()+2592000, '/', '.exs.lv', 1, 1);
+    }
+    
+    // pēc veiksmīgas autentificēšanās atbildei pievieno
+    // svaigāko lietotāja profila informāciju
+    api_append_profile_info();
+}

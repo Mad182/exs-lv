@@ -4,19 +4,36 @@
  */
 
 /**
+ *  Uzstāda atgriežamā JSON objekta statusu.
+ */
+function api_status($status) { // iOS only pagaidām
+    global $json_arr;
+    $json_arr['status'] = $status;
+}
+
+/**
  *  Pieprasījuma atbildei pievieno kļūdas tekstu,
  *  kuru lietotnē var attiecīgi parādīt.
  */
 function api_error($string = '') {
-	global $lang, $json_state, $json_success, $json_message;
+	global $lang;    
     
     if ($lang === 2 && substr($string, -1) === '.') {
         $string = substr($string, 0, -1);
     }
 	
-	$json_state = 'error'; // androīdam    
-	$json_success = false; // iOS
-	$json_message = $string; // androīdam/iOS
+    // androīdam
+    if ($lang === 2) {
+        global $json_state, $json_message;
+        $json_state = 'error';
+        $json_message = $string;
+    }
+    
+    // ios
+    if ($lang === 4) {
+        api_status(400);
+        api_append(array('error_message' => $string));
+    }
 }
 
 /**
@@ -24,51 +41,55 @@ function api_error($string = '') {
  *  ko lietotnes pusē tā arī jāuztver kā informatīvu, nevis kļūdu.
  */
 function api_info($string = '') {
-    global $json_state, $json_success, $json_message;
-	
-    $json_state = 'success';
-	$json_success = true;
-	$json_message = $string;
-}
+    global $lang;
 
-/**
- *  Atgriež XSRF atslēgu, kādu nosūtīt tālāk pieprasījuma atbildē.
- *  No lietotnes nākošajiem pieprasījumiem adrešu galā jābūt šai atslēgai.
- */
-function api_make_xsrf() {
-	global $auth;
-	// nav jēgas izmantot MD5 hashu visā garumā
-	return substr($auth->xsrf, 0, 10);
-}
-
-/**
- *  Pārbauda, vai pieprasījumā saņemtā XSRF atslēga sakrīt ar to,
- *  kāda atbilst lietotājam, kas pieprasījumu veicis.
- */
-function api_check_xsrf($key = '') {
-	global $auth;
-	if (empty($key)) {
-		if (!empty($_GET['xsrf'])) {
-			return (substr($auth->xsrf, 0, 10) === $_GET['xsrf']);
-		}
-		return false;
-	}
-	return (substr($auth->xsrf, 0, 10) === $key);
+    if ($lang === 2) {
+        // androīdam
+        global $json_state, $json_message;
+        $json_state = 'success';
+        $json_message = $string;
+    }
+    
+    if ($lang === 4) {
+        // ios
+        global $json_arr;
+        $json_arr['response']['info_message'] = $string;
+    }
 }
 
 /**
  *  Pieprasījuma atbildei galā pievieno norādītā masīva vērtības.
  */
-function api_append($values) {
-	global $json_page;
-	
-	if (!is_array($values)) {
-		return;
-	}
+function api_append($obj, $value = '') {
+	global $lang, $json_page;
+    
+    if ($lang === 2) { // androīdam
+        if (!is_array($obj)) return;
+        foreach ($obj as $key => $value) {
+            $json_page[$key] = $value;
+        }
+    } else { // ios
+        global $json_arr;
+        if (is_array($obj)) {
+            if (array_key_exists('response', $json_arr)) {
+                $json_arr['response'] += $obj;
+            } else {
+                $json_arr['response'] = $obj;
+            }
+            return;
+        }
+        $json_arr[$obj] = $value;
+    }
+}
 
-	foreach ($values as $key => $value) {
-		$json_page[$key] = $value;
-	}
+function api_append_root($obj) {
+    global $json_arr;
+    
+    if (!is_array($obj)) return;
+    
+    foreach ($obj as $key => $value) {
+        $json_arr[$key] = $value;
+    }
 }
 
 /**
@@ -90,6 +111,32 @@ function api_log($text) {
 		'created_at' => date('Y-m-d H:i:s', time()),
 		'created_ip' => sanitize($auth->ip)
 	));
+}
+
+/**
+ *  Atgriež XSRF atslēgu, kādu nosūtīt tālāk pieprasījuma atbildē.
+ *  No lietotnes nākošajiem pieprasījumiem adrešu galā jābūt šai atslēgai.
+ */
+function api_make_xsrf() {
+	global $auth;
+	// nav jēgas izmantot MD5 hashu visā garumā
+	return substr($auth->xsrf, 0, 10);
+}
+
+/**
+ *  Pārbauda, vai pieprasījumā saņemtā XSRF atslēga sakrīt ar to,
+ *  kāda atbilst lietotājam, kas pieprasījumu veicis.
+ */
+function api_check_xsrf($token = '') {
+	global $auth, $lang;
+    $key = ($lang === 2) ? 'xsrf' : 'token';
+	if (empty($token)) {
+		if (!empty($_GET[$key])) {
+			return (substr($auth->xsrf, 0, 10) === $_GET[$key]);
+		}
+		return false;
+	}
+	return (substr($auth->xsrf, 0, 10) === $token);
 }
 
 /**

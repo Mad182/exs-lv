@@ -83,7 +83,8 @@ class AuthBase {
 
 		$userinfo = get_user($_SESSION['auth_id']);
 
-		if($userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
+        // ios.exs.lv prot pārbaudīt 2fa
+		if(/*$this->via_android === 0 && */$this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
 			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
 			redirect('/2fa');
 		}
