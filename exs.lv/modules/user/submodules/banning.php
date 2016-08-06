@@ -363,7 +363,7 @@ if ($is_banned) {
 		$tpl->newBlock('block-domain');
 
 		foreach ($config_domains as $key => $domain) {
-			if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
+			if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'ios.exs.lv' && $domain['domain'] !== 'api.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
 				$tpl->newBlock('block-domain-node');
 				$tpl->assign(array(
 					'id' => $key,
@@ -419,7 +419,7 @@ if ($lang == 1 || $lang == 9) {
 			$tpl->newBlock('block-domain-2');
 
 			foreach ($config_domains as $key => $domain) {
-				if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
+				if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'ios.exs.lv' && $domain['domain'] !== 'api.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
 					$tpl->newBlock('block-domain-node-2');
 					$tpl->assign(array(
 						'id' => $key,
