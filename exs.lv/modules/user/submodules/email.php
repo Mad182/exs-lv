@@ -56,10 +56,10 @@ if (isset($_POST['submit'])) {
 					update_karma($auth->id, true);
 					set_flash('Izmaiņas saglabātas!<br />Savā jaunajā e-pasta adresē pēc brīža saņemsi apstiprinājuma linku, lai varētu pabeigt e-pasta maiņu.', 'success');
 
-					$auth->log('Pieprasīja e-pasta maiņu (apstiprinājuma e-pasts nosūtīts)', 'users', $userdata->id);
+					$auth->log('Pieprasīja e-pasta maiņu (apstiprinājuma e-pasts nosūtīts)', 'users', $auth->id);
 				} else {
 					set_flash('<strong>Kļūda:</strong> neizdevās nosūtīt apstiprinājuma e-pastu!', 'error');
-					$auth->log('Pieprasīja e-pasta maiņu (neizdevās nosūtīt apstiprinājuma e-pastu)', 'users', $userdata->id);
+					$auth->log('Pieprasīja e-pasta maiņu (neizdevās nosūtīt apstiprinājuma e-pastu)', 'users', $auth->id);
 				}
 			}
 		} else {

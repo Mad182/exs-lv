@@ -279,8 +279,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 			//clean up deleted users
 			if (empty($m_user)) {
-				$db->query("DELETE FROM `clans_members` WHERE `id` = '$member->id' LIMIT 1");
-				$db->query("UPDATE `clans` SET `members` = `members`-1 WHERE `id` = '$group->id' LIMIT 1");
+				//$db->query("DELETE FROM `clans_members` WHERE `id` = '$member->id' LIMIT 1");
+				//$db->query("UPDATE `clans` SET `members` = `members`-1 WHERE `id` = '$group->id' LIMIT 1");
 				continue;
 			}
 

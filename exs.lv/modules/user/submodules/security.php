@@ -21,6 +21,8 @@ if (isset($_POST['submit'])) {
 
 				$db->update('users', $auth->id, array('pwd' => '', 'password' => $newpass));
 
+				$auth->log('Nomainīja savu paroli', 'users', $auth->id);
+
 				$auth->login($inprofile->nick, $_POST['password-1']);
 				set_flash('Izmaiņas saglabātas!', 'success');
 			} else {
