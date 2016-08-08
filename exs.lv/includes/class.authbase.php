@@ -304,6 +304,11 @@ class AuthBase {
 			return true;
 		}
 
+		if(substr($this->ip, 0, 10) === '62.102.148') {
+			return true;
+		}
+
+		//we are blocked by check.getipintel.net
 		return false;
 
 		$is_tor = 'n';
