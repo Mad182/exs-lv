@@ -26,7 +26,7 @@
 	<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 	<script src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
-	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 	<script>
 		tinymce.init({
 			selector: "textarea",
@@ -56,7 +56,7 @@
 		});</script>
 	<!-- END BLOCK : tinymce-enabled-->
 	<!-- START BLOCK : tinymce-simple-->
-	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 	<script>
 		tinymce.init({
 			selector: "textarea",

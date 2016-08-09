@@ -24,7 +24,7 @@
 		<!-- END BLOCK : additional-css-->
 		<script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,mcp.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
-		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 		<script>
 			tinymce.init({
 				selector: "textarea",
@@ -54,7 +54,7 @@
 			});</script>
 		<!-- END BLOCK : tinymce-enabled-->
 		<!-- START BLOCK : tinymce-simple-->
-		<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 		<script>
 			tinymce.init({
 				selector: "textarea",
