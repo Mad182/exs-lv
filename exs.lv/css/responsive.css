@@ -5611,7 +5611,8 @@ form.simple-form label {
         border-radius:50px;
         color:#6F808C;
         padding:2px 6px;
-        font-size:11px
+        font-size:11px;	
+		white-space: nowrap
     }
     a.circled-link:hover {
         text-decoration:none;

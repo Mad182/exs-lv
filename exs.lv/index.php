@@ -149,6 +149,10 @@ if (isset($_GET['p'])) {
 	$article = $db->get_row("SELECT * FROM `pages` WHERE `id` = " . $id . "");
 	if ($article) {
 		redirect('/read/' . $article->strid, true);
+	} else {
+        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+        set_flash('Pieprasītā lapa netika atrasta!', 'error');
+        redirect();
 	}
 } else {
 
@@ -243,7 +247,6 @@ if (isset($_GET['u'])) {
 
 		// 404
         header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        header("Status: 404 Not Found");
         set_flash('Pieprasītā lapa netika atrasta!', 'error');
         redirect();
 	}
