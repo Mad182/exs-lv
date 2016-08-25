@@ -288,7 +288,8 @@ function insert_smilies($txt, $just_return = false) {
 		':agility:' => 'agility.png',
 		':11:' => '11.png',
 		':zagis:' => 'chainsaw.gif',
-		':dickbutt:' => 'dickbutt.gif'
+		':dickbutt:' => 'dickbutt.gif',
+		':hektors:' => 'hektors.png'
 	);
     
     // izmanto exs API moduļos, lai vienkārši atgrieztu smaidiņu sarakstu
