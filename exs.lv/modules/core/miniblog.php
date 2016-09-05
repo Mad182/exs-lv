@@ -167,7 +167,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 }
 
 // minibloga atslēgšana
-if ($auth->ok && im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
+if ($auth->ok && im_mod() && isset($_GET['open']) && isset($_GET['single'])) {
 	$sid = (int) $_GET['single'];
 	if ($sid > 0) {
 		$db->query("UPDATE miniblog SET closed = '0' WHERE id = '$sid' AND closed_by != '17077' AND `lang` = '$lang'");

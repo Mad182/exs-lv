@@ -83,11 +83,7 @@ class AuthBase {
 
 		$userinfo = get_user($_SESSION['auth_id']);
 
-        // ios.exs.lv prot pārbaudīt 2fa
-		if(/*$this->via_android === 0 && */$this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
-			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
-			redirect('/2fa');
-		}
+        $this->check_2fa($userinfo);
 
 		if ($userinfo->deleted) {
 			return $this->logout();
@@ -242,6 +238,8 @@ class AuthBase {
 
 			$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
 
+			$this->check_2fa($userinfo);
+
 			return true;
 		} else {
 			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
@@ -366,6 +364,25 @@ class AuthBase {
 			return true;
 		}
 		return false;
+	}
+
+	function check_2fa($userinfo) {
+		global $db;
+		if(/*$this->via_android === 0 && */$this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
+			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
+
+			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $userinfo->id");
+			if(!empty($check_existing)) {
+				foreach($check_existing as $device) {
+					if(!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
+						$_SESSION['2fa'] = 1;
+						return true;
+					}
+				}
+			}
+
+			redirect('/2fa');
+		}
 	}
 
 }

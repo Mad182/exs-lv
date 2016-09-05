@@ -5,6 +5,17 @@ Disallow: /dati/speles/swf/
 Disallow: /dati/speles/speles/
 Disallow: /tmpl/
 Disallow: /cache/
+Disallow: /psychostats/
+Disallow: /bans/
+Disallow: /unreal/
+Disallow: /hilib/
+Disallow: /vl/
+Disallow: /award-info/
+Disallow: /server.php
+Disallow: /rss.php
+Disallow: /db.php
+Disallow: /cs.php
+Disallow: /cdn-cgi/
 
 User-Agent: bingbot
 Crawl-delay: 1
@@ -14,3 +25,15 @@ Disallow: /dati/speles/swf/
 Disallow: /dati/speles/speles/
 Disallow: /tmpl/
 Disallow: /cache/
+Disallow: /psychostats/
+Disallow: /bans/
+Disallow: /unreal/
+Disallow: /hilib/
+Disallow: /vl/
+Disallow: /award-info/
+Disallow: /server.php
+Disallow: /rss.php
+Disallow: /db.php
+Disallow: /cs.php
+Disallow: /cdn-cgi/
+
