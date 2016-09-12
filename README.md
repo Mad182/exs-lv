@@ -43,6 +43,10 @@ Uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
 Nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt.,
 ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
+### Let's encrypt ###
+
+    /opt/certbot-auto certonly --webroot -w /home/www/exs.lv -d exs.lv -d www.exs.lv -d coding.lv -d www.coding.lv -d lol.exs.lv -d rp.exs.lv -d rs.exs.lv -d runescape.exs.lv -d secure.exs.lv -d static.exs.lv -w /home/www/m.exs.lv -d m.coding.lv -d m.exs.lv -d mlol.exs.lv -d mrp.exs.lv -d mrs.exs.lv -d mrunescape.exs.lv -w /home/www/api.exs.lv -d api.exs.lv -d android.exs.lv -d ios.exs.lv -w /var/www/munin -d munin.exs.lv -w /home/www/img.exs.lv -d img.exs.lv
+
 
 ## Nepieciešamo programmu uzstādīšana ##
 
