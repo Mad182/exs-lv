@@ -347,6 +347,12 @@
 						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
 					</ul>
 					<!-- END BLOCK : profile-menu-->
+					<!-- START BLOCK : profile-menu-deleted-->
+					<h1>Dzēsts lietotājs</h1>
+					<ul class="tabs">
+						<li><a href="/say/{user-id}" class="active"><span class="comments">Miniblogs</span></a></li>
+					</ul>
+					<!-- END BLOCK : profile-menu-deleted-->
 					<!-- INCLUDE BLOCK : module-core-error -->
 					<div id="current-module">
 						<!-- INCLUDE BLOCK : module-currrent -->

@@ -2309,16 +2309,31 @@ function profile_menu($user, $active, $title, $action = null) {
 		set_action($user->nick . ' ' . $action);
 	}
 
-	$tpl->newBlock('profile-menu');
-	$tpl->assign('user-menu-add', ' ' . $title);
+	if($user->deleted) {
 
-	$tpl->assignGlobal(array(
-		'user-id' => $user->id,
-		'user-nick' => h($user->nick),
-		'active-tab-' . $active => 'active'
-	));
+		$tpl->newBlock('profile-menu-deleted');
 
-	$page_title = $user->nick . ' ' . $title;
+		$tpl->assignGlobal(array(
+			'user-id' => $user->id,
+			'user-nick' => 'Dzēsts lietotājs'
+		));
+
+		$page_title = 'Dzēsts lietotājs ' . $title;
+
+	} else {
+		$tpl->newBlock('profile-menu');
+
+		$tpl->assign('user-menu-add', ' ' . $title);
+
+		$tpl->assignGlobal(array(
+			'user-id' => $user->id,
+			'user-nick' => h($user->nick),
+			'active-tab-' . $active => 'active'
+		));
+
+		$page_title = $user->nick . ' ' . $title;
+	}
+
 }
 
 /**
