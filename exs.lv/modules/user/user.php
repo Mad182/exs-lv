@@ -189,16 +189,19 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$tpl->newBlock('user-profile-lol');
 		}
 
-		$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $inprofile->id . " ORDER BY `date` DESC");
-		if ($awards) {
-			$tpl->newBlock('user-profile-awards');
-			foreach ($awards as $award) {
-				$tpl->newBlock('user-profile-awards-node');
-				$tpl->assign(array(
-					'award-title' => $award->title,
-					'award-icon' => $award->icon,
-					'award-link' => $award->link
-				));
+		//coding.lv nerādam exs.lv apbalvojumus
+		if($lang !== 3) {
+			$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $inprofile->id . " ORDER BY `date` DESC");
+			if ($awards) {
+				$tpl->newBlock('user-profile-awards');
+				foreach ($awards as $award) {
+					$tpl->newBlock('user-profile-awards-node');
+					$tpl->assign(array(
+						'award-title' => $award->title,
+						'award-icon' => $award->icon,
+						'award-link' => $award->link
+					));
+				}
 			}
 		}
 
