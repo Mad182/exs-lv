@@ -16,24 +16,12 @@ Disallow: /rss.php
 Disallow: /db.php
 Disallow: /cs.php
 Disallow: /cdn-cgi/
-
-User-Agent: bingbot
-Crawl-delay: 1
-Allow: /
-Disallow: /upload/flash-games/swf/
-Disallow: /dati/speles/swf/
-Disallow: /dati/speles/speles/
-Disallow: /tmpl/
-Disallow: /cache/
-Disallow: /psychostats/
-Disallow: /bans/
-Disallow: /unreal/
-Disallow: /hilib/
-Disallow: /vl/
-Disallow: /award-info/
-Disallow: /server.php
-Disallow: /rss.php
-Disallow: /db.php
-Disallow: /cs.php
-Disallow: /cdn-cgi/
+Disallow: /proxy/
+Disallow: /devana/credits.php
+Disallow: /devana/index.php
+Disallow: /devana/login.php
+Disallow: /devana/map.php
+Disallow: /devana/register.php
+Disallow: /devana/ch_lang.php
+Disallow: /calendar/
 

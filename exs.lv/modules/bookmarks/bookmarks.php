@@ -21,11 +21,12 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 	//delete
 	if ($auth->ok && $auth->id == $inprofile->id && isset($_GET['delete'])) {
 		$delete = (int) $_GET['delete'];
-		$db->query("DELETE FROM bookmarks WHERE id = '$delete' AND userid = '$auth->id'");
+		$db->query("DELETE FROM `bookmarks` WHERE `id` = '$delete' AND `userid` = '$auth->id'");
+		count_bookmarks($auth->id);
 		redirect('/bookmarks/' . $auth->id);
 	}
 
-	$articles = $db->get_results("SELECT id,pageid FROM bookmarks WHERE userid = ('" . $inprofile->id . "') ORDER BY id DESC");
+	$articles = $db->get_results("SELECT id, pageid FROM bookmarks WHERE userid = ('" . $inprofile->id . "') ORDER BY id DESC");
 	if ($articles) {
 		$tpl->newBlock('user-bookmarks-list');
 		foreach ($articles as $article) {

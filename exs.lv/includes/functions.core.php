@@ -178,10 +178,10 @@ function update_karma($userid, $force_award = false) {
 /**
  * Saīsinājums prieks userlog aktuālajam lietotājam
  */
-function push($action, $avatar = '', $multi = '') {
+function push($action, $avatar = '', $multi = '', $private = 0) {
 	global $auth;
 	if ($auth->ok === true) {
-		return userlog($auth->id, $action, $avatar, $multi);
+		return userlog($auth->id, $action, $avatar, $multi, $private);
 	} else {
 		return false;
 	}
@@ -190,14 +190,15 @@ function push($action, $avatar = '', $multi = '') {
 /**
  * Veic ierakstu lietotāja pēdējās darbībās
  */
-function userlog($user, $action, $avatar = '', $multi = '') {
+function userlog($user, $action, $avatar = '', $multi = '', $private = 0) {
 	global $db;
 	$lang = get_lang();
 
 	if (!empty($multi)) {
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang' LIMIT 2");
 	}
-	$db->query("INSERT INTO `userlogs` (time,user,avatar,action,multi,lang) VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang')");
+	$db->query("INSERT INTO `userlogs` (`time`,`user`,`avatar`,`action`,`multi`,`lang`,`private`) 
+				VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang','" . intval($private) . "')");
 	return true;
 }
 
@@ -2688,11 +2689,25 @@ function add_bookmark($id, $user, $table = 'pages') {
 			VALUES (".intval($user).", ".intval($id).", '".sanitize($table)."')
 		");
 	}
+	count_bookmarks($user);
 }
 
 function remove_bookmark($id) {
 	global $db;
 
 	$db->query("DELETE FROM `bookmarks` WHERE `id` = ".intval($id)." LIMIT 1");
+	count_bookmarks($auth->id);
+}
+
+function count_bookmarks($user_id) {
+	global $db, $auth;
+
+	$count = $db->get_var("SELECT count(*) FROM `bookmarks` WHERE `userid` = '".intval($user_id)."'");
+	if($auth->bookmarks != $count || $user_id != $auth->id) {
+		$db->query("UPDATE `users` SET `bookmarks` = $count WHERE `id` = '".intval($user_id)."' LIMIT 1");
+		$auth->reset();
+	}
+
+	return true;
 }
 

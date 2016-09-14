@@ -286,7 +286,13 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		} else {
 			$skip = 0;
 		}
-		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
+
+		$private = '';
+		if (!$auth->ok) {
+			$private = ' AND `private` = 0';
+		}
+
+		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ".$private." ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
 		if ($actions) {
 			$out .= '<ul class="user-actions" id="profile-user-actions">';
 			foreach ($actions as $action) {
@@ -311,10 +317,11 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$robotstag[] = 'noindex';
 		}
 
-		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' LIMIT 60");
+		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ".$private." LIMIT 60");
 		if ($total > 60) {
 			$total = 60;
 		}
+
 		if ($total > $end) {
 			if ($skip > 0) {
 				if ($skip > $end) {

@@ -50,7 +50,7 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 		// dažādas notifikācijas
 		$title = mb_get_title($topic->text);
 		$strid = mb_get_strid($title, $topic->id);
-		push('Izveidoja <a href="/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid . '">minibloga ierakstu &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>');
+		push('Izveidoja <a href="/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid . '">minibloga ierakstu &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', '', $private);
 
 		$topic->text = mention($topic->text, '/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid, 'mb', $topic->id);
 		$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($topic->text) . "' WHERE id = '$topic->id'");
@@ -118,6 +118,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				$str = $inprofile->nick;
 			}
 			$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
+			$private = $db->get_var("SELECT `private` FROM `miniblog` WHERE `id` = '$mainid'");
 
 			$title = mb_get_title(stripslashes($body));
 			$strid = mb_get_strid($title, $mainid);
@@ -125,7 +126,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 
 			// bump, notifikācijas
 			if (!isset($_POST['no-bump'])) {
-				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid);
+				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private);
 
 				$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
 				$newpost->text = mention($newpost->text, $url, 'mb', $mainid);

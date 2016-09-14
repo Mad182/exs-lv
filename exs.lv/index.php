@@ -51,6 +51,10 @@ if(!empty($_GET['fakeurl'])) {
 
 }
 
+if(empty($_GET['viewcat'])) {
+	$_GET['viewcat'] = null;
+}
+
 session_start();
 
 //mysql konekcija
