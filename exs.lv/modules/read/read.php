@@ -181,8 +181,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 	// redirekts
 	if (!empty($article->redirect)) {
-		header("HTTP/1.1 301 Moved Permanently");
-		redirect($article->redirect);
+		redirect($article->redirect, true);
 	}
 
 	if (!$rating_users = unserialize($article->rating_users)) {
@@ -1437,7 +1436,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 		redirect();
 	}
 } else {
-	set_flash('Raksts netika atrasts! Kļūdains links?', 'error');
-	redirect();
+	error_404();
 }
 

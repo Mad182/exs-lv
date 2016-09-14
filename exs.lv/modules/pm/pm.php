@@ -19,7 +19,7 @@ if (!$auth->ok) {
 			$to = $pm->to_uid;
 			$from = $pm->from_uid;
 			if (empty($pm->imap_email)) {
-				$hmsgs = $db->get_results("SELECT * FROM pm WHERE (`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid') ORDER BY `date` DESC LIMIT 40");
+				$hmsgs = $db->get_results("SELECT * FROM pm WHERE (`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid') ORDER BY `date` DESC LIMIT 100");
 				foreach ($hmsgs as $hmsg) {
 					$fromuser = get_user($hmsg->from_uid);
 					$tpl->newBlock('pm-h-node');

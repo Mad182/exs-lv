@@ -547,9 +547,7 @@ if (!empty($inprofile)) {
 			));
 		}
 	} elseif(!empty($_GET['single'])) {
-		header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-		set_flash('Pieprasītā lapa netika atrasta!', 'error');
-		redirect();
+		error_404();
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');

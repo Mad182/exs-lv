@@ -41,9 +41,15 @@ function trim_intro($text, $len = 98) {
 }
 
 function get_index_events() {
-	global $db, $lang, $img_server;
+	global $db, $lang, $img_server, $auth;
 	$out = '';
-	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ORDER BY `time` DESC LIMIT 5");
+
+	$private = '';
+	if (!$auth->ok) {
+		$private = ' AND `private` = 0';
+	}
+
+	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ".$private." ORDER BY `time` DESC LIMIT 5");
 
 	if ($actions) {
 		$out .= '<ul class="user-actions">';

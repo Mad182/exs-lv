@@ -154,9 +154,7 @@ if (isset($_GET['p'])) {
 	if ($article) {
 		redirect('/read/' . $article->strid, true);
 	} else {
-        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        set_flash('Pieprasītā lapa netika atrasta!', 'error');
-        redirect();
+		error_404();
 	}
 } else {
 
@@ -250,9 +248,7 @@ if (isset($_GET['u'])) {
 		}
 
 		// 404
-        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        set_flash('Pieprasītā lapa netika atrasta!', 'error');
-        redirect();
+		error_404();
 	}
 }
 

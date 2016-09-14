@@ -2711,3 +2711,24 @@ function count_bookmarks($user_id) {
 	return true;
 }
 
+function error_404() {
+	global $tpl, $category, $page_title;
+	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/error404/error404.tpl');
+	$tpl->prepare();
+
+	$robotstag[] = 'noindex';
+
+	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
+	http_response_code(404);
+
+	$category = new stdClass();
+	$category->textid = '';
+	$category->parent = 0;
+	$category->id = 0;
+	$category->isblog = 0;
+	$category->module = '';
+	$category->tmpl = 'main';
+	$category->title = $page_title = 'Kļūda - pieprasītā lapa nav atrasta!';
+
+}
+
