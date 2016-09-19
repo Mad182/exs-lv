@@ -18,9 +18,9 @@
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="https://feeds.feedburner.com/codinglv">
 		<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
-		<link rel="stylesheet" href="{static-server}/css/core.css,code.css,prettify.css" type="text/css">
+		<link rel="stylesheet" href="{static-server}/css/core.css,code.css,prettify.css">
 		<!-- START BLOCK : additional-css-->
-		<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css" />
+		<link rel="stylesheet" href="{static-server}/css/{filename}">
 		<!-- END BLOCK : additional-css-->
 		<script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,prettify/prettify.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
@@ -343,7 +343,7 @@
 						<li class="moder"><a href="#">Moderators</a></li>
 						<li class="admin"><a href="#">Administrators</a></li>
 					</ul>
-					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px;">{page-onlineusers}</span>
+					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px">{page-onlineusers}</span>
 				</div>
 				<div class="infoblock">
 					<div class="inner">

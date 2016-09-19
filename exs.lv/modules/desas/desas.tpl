@@ -1,6 +1,6 @@
 <!-- START BLOCK : desas-->
-<script type="text/javascript" src="/modules/desas/desas.js"></script>
-<style type="text/css">
+<script src="/modules/desas/desas.js"></script>
+<style>
 	#desas {
 		width: 171px;
 		height: 171px;

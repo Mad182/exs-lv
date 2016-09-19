@@ -1,5 +1,5 @@
 <!-- START BLOCK : desas-->
-<style type="text/css">
+<style>
 	#desas {
 		width: 171px;
 		height: 171px;

@@ -1,4 +1,4 @@
-<style type="text/css">
+<style>
 	input[type=radio], input[type=checkbox] {
 		margin-left:25px
 	}
@@ -55,7 +55,7 @@
 		background:#6ba6ee
 	}
 </style>
-<script type="text/javascript">
+<script>
 	$(document).ready(function() {
 		$('.form').on('submit', function() {
 			$un = $('#user-name').val();
