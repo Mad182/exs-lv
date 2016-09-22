@@ -5,29 +5,28 @@
 		<title>{page-title}</title>
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
-		<script type="text/javascript">
+		<link rel="stylesheet" href="{static-server}/css/mobile.css">
+		<script src="{static-server}/js/jquery.min.js,mobile.js"></script>
+		<script>
 			var mb_refresh_limit = 12000;
 			var current_user = {currentuser-id};
 			var query_timeout = 80000;
 			var c_url = "{page-url}";
 		</script>
 		<!-- START BLOCK : mb-head-->
-		<script type="text/javascript">
+		<script>
 			var lastid = {lastid};
 			var mbid = {mbid};
 			var usrid = {usrid};
 			var edit_time = {edit_time};
-			var refreshlim = mb_refresh_limit;
 			var mbtype = "{type}";
-			var mbRefreshId = setInterval("update_mb()", refreshlim);
+			var mbRefreshId = setInterval("update_mb()", mb_refresh_limit);
 		</script>
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
 		<!-- START BLOCK : tinymce-enabled-->
-        <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-		<script type="text/javascript">
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+		<script>
 			tinymce.init({
 				selector: "textarea",
 				plugins: [
@@ -63,7 +62,7 @@
 		<div id="outer-wrapper">
 			<div id="header">
 				<div id="user-tools">
-					<a href="/user/{currentuser-id}"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px;" /></a>
+					<a href="/user/{currentuser-id}"><img src="/av/{currentuser-avatar}" alt="" style="float: right;margin: 0 0 0 5px;width:36px;height:36px" /></a>
 					Čau,&nbsp;{currentuser-nick}!<br /><a href="/mevents">Tavi notikumi</a>
 				</div>
 				<a id="logo" href="/">rp.exs.lv</a>
@@ -141,7 +140,6 @@
 
 		  ga('create', 'UA-4190387-2', 'auto');
 		  ga('send', 'pageview');
-
 		</script>
 
 	</body>

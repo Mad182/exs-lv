@@ -2713,6 +2713,11 @@ function count_bookmarks($user_id) {
 
 function error_404() {
 	global $tpl, $category, $page_title;
+
+	if(empty($tpl)) {
+		$tpl = new TemplatePower(CORE_PATH . '/tmpl/main.tpl');
+	}
+
 	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/error404/error404.tpl');
 	$tpl->prepare();
 
