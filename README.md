@@ -24,8 +24,11 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 ### Kas vajadzīgs, lai lapa būtu palaižama ###
 
 * php-gd
-* php-memcache
+* php-memcached
 * php-curl
+* php-mbstring
+* php-mcrypt
+* php-xml (uz php 7)
 * memcached
 * mysql
 * apache2 vai nginx
