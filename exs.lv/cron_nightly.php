@@ -28,8 +28,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 ####################### PROFILA SKATIJUMU UN LOGU TIRISANA
 $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIMIT 10000");
@@ -75,6 +75,3 @@ $db->query("DELETE FROM `taged` WHERE `tag_id` IN(SELECT id FROM `tags` WHERE `n
 $db->query("DELETE FROM `tags` WHERE `name` LIKE '%;%'");
 echo "remve ugly tags... ok\n";
 
-
-//add miniblog column
-//$db->query("ALTER TABLE  `miniblog` ADD  `device` SMALLINT NOT NULL DEFAULT  '0'");

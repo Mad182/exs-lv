@@ -29,7 +29,7 @@ function get_blog_latest($category_id, $force = false) {
 				$html .= '</p></div>';
 			}
 		}
-		$m->set('blog_latest_' . $category_id . '_' . $auth->ok, $html, false, 100);
+		$m->set('blog_latest_' . $category_id . '_' . $auth->ok, $html, 100);
 	}
 	return $html;
 }
@@ -127,7 +127,7 @@ function get_todays_top_comment($date = null) {
 			);
 		}
 
-		$m->set('todays_top_comment_' . date('Y-m-d', $time), $out, false, 20);
+		$m->set('todays_top_comment_' . date('Y-m-d', $time), $out, 20);
 	}
 
 	return $out;

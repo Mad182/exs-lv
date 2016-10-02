@@ -77,7 +77,7 @@ if ($mbs) {
 		");
 	}
 
-	$pager = pager($total, $skip, $end, '/say/?skip=');
+	$pager = pager($total, $skip, $end, '/say?skip=');
 	$tpl->assignGlobal(array(
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],

@@ -26,7 +26,7 @@ function get_top_awards($user) {
 			}
 			$data .= '</p>';
 		}
-		$m->set('aw_' . $user, $data, false, 3600);
+		$m->set('aw_' . $user, $data, 3600);
 	}
 	return $data;
 }

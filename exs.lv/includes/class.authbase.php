@@ -282,7 +282,7 @@ class AuthBase {
 		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
 			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
 			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$lang);
-			$m->set('online_count_' . $lang, "$this->hosts_online", false, 10);
+			$m->set('online_count_' . $lang, "$this->hosts_online", 10);
 		}
 	}
 

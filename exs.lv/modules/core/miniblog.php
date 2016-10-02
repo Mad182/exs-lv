@@ -183,7 +183,7 @@ if ($debug == true || ($tpl2 = $m->get($key)) == false) {
 	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/core/miniblog.tpl');
 	$tpl->assignInclude('conversation', CORE_PATH . '/modules/core/conversation.tpl');
 	$tpl->prepare();
-	$m->set($key, $tpl, false, 3600);
+	$m->set($key, $tpl, 3600);
 } else {
 	$tpl = $tpl2;
 	unset($tpl2);

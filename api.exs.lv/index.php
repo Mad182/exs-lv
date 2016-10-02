@@ -45,8 +45,11 @@ if(!empty($_GET['params'])) {
 session_start();
 $db = new mdb($username, $password, $database, $hostname);
 unset($password);
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+
+//memcached konekcija
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
+
 $site_access = get_site_access(); // nepieciešams Auth klasei
 $auth = new Auth();
 $tpl = null; // nepieciešams dokumentācijas projektam

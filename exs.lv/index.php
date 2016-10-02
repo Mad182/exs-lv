@@ -62,8 +62,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 //lapas settingu/datu glabāšana
 $ss = new SiteStorage;
@@ -215,7 +215,7 @@ if (isset($_GET['u'])) {
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
 			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
 				$tpl->prepare();
-				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, false, 3600);
+				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, 3600);
 			} else {
 				$tpl = $tpl2;
 				unset($tpl2);
@@ -585,3 +585,4 @@ if ($debug && !$requested_json) {
 	pr($_POST);
 	echo '</div></div></div>';
 }
+

@@ -53,7 +53,7 @@ function read_rss($force = false) {
     
         // memcached glabās tikai pēdējās parsēšanas laiku
         if (!$force && $m->get('rs-rssfeed-'.$key.'-lastread')) continue;        
-        $m->set('rs-rssfeed-'.$key.'-lastread', time(), false, $read_every);
+        $m->set('rs-rssfeed-'.$key.'-lastread', time(), $read_every);
 
         $news = curl_get($link);
         if ($news === false) continue; // ignorēs un neko nedarīs

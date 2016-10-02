@@ -27,12 +27,6 @@ require(CORE_PATH . '/includes/functions.core.php');
 $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
-//memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
-
-
-
 $_apiURL = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $steam_api_key . '&steamids='; //Steam API url for players data
 $_limit = 100;  //steam has limit 100 users for request
 $steamIDs = array();

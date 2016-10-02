@@ -205,7 +205,7 @@ class Model_Quests extends Model {
 
             // as_json($stats);
             
-            $this->m->set('quests-stats', $stats, false, 1800);
+            $this->m->set('quests-stats', $stats, 1800);
         }
 
         return $stats;

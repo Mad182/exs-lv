@@ -18,8 +18,8 @@ session_start();
 $db = new mdb($username, $password, $database, $hostname);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 $site_access = get_site_access();
 

@@ -58,7 +58,7 @@ function get_rs_page_categories($current = null, $force = false) {
 
     if ($debug || $force || !($cats = $m->get('cat_list_' . $lang))) {
         $cats = $db->get_results("SELECT `lang`,`parent`,`module`,`persona`,`isblog`,`isforum`,`id`,`title`,`status` FROM `cat` WHERE `module` IN('list','index','rshelp') AND `lang` = '$lang' ORDER BY `title` ASC");
-        $m->set('cat_list_' . $lang, $cats, false, 900);
+        $m->set('cat_list_' . $lang, $cats, 900);
     }
 
     $return = array();

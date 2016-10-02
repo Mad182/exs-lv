@@ -10,7 +10,7 @@ class SiteStorage {
 
 		if (($data = $m->get('ss_sid' . $lang . '_' . $key)) === false) {
 			$data = $db->get_var("SELECT `value` FROM `site_storage` WHERE `key` = '" . sanitize($key) . "' AND `lang` = '$lang'");
-			$m->set('ss_sid' . $lang . '_' . $key, $data, false, 10800);
+			$m->set('ss_sid' . $lang . '_' . $key, $data, 10800);
 		}
 		return $data;
 	}

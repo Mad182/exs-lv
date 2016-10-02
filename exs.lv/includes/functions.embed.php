@@ -533,7 +533,7 @@ function get_youtube($videoid, $force = false) {
 				)");
 		}
 
-		$m->set($videoid, $data, false, 3600);
+		$m->set($videoid, $data, 3600);
 	}
 	return $data;
 }
@@ -592,7 +592,7 @@ function embed_twitter($params) {
 				$tweet_html = $tweet->html;
 			}
 		}
-		$m->set($tweet_unique, $tweet_html, false, 3600);
+		$m->set($tweet_unique, $tweet_html, 3600);
 	}
 
 	return $tweet_html;
@@ -619,7 +619,7 @@ function embed_spotify($params) {
 				$spotify_html = $spotify->html;
 			}
 		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 432000);
+		$m->set('spotify_' . md5($params[0]), $spotify_html, 432000);
 	}
 
 	return $spotify_html;
@@ -746,7 +746,7 @@ function embed_soundcloud($params) {
 		if (empty($scloud_html)) {
 			$scloud_html = $params[0];
 		}
-		$m->set('scloud_' . md5($params[4]), $scloud_html, false, 1800);
+		$m->set('scloud_' . md5($params[4]), $scloud_html, 1800);
 	}
 
 	return $scloud_html;
@@ -827,7 +827,7 @@ function embed_gifv_gfycat($params) {
 		$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
 		$html .= 'width="' . (int)$width . '" height="' . (int)$height . '"></iframe>';
 		
-		$m->set($cache_key, $html, false, 3600);
+		$m->set($cache_key, $html, 3600);
 	
 	}
 

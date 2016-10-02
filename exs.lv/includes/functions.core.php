@@ -497,7 +497,7 @@ function im_rs_mod($force = false) {
 		if ($get_mods) {
 			$rs_mods = $get_mods;
 		}
-		$m->set('runescape-mods', $rs_mods, false, 900);
+		$m->set('runescape-mods', $rs_mods, 900);
 	}
 	$rs_mods = $m->get('runescape-mods');
 
@@ -685,7 +685,7 @@ function get_sitelist($table) {
 	if (empty($$storage)) {
 		if (($$storage = $m->get($storage)) === false) {
 			$$storage = $db->get_col("SELECT `url` FROM `" . $storage . "`");
-			$m->set($storage, $$storage, false, 3600);
+			$m->set($storage, $$storage, 3600);
 		}
 	}
 	return $$storage;
@@ -876,7 +876,7 @@ function mb_get_strid($title = 'Bez nosaukuma', $id = null) {
 	if (!empty($id)) {
 		if (($data = $m->get('strid_' . $id)) === false) {
 			$data = mkslug(textlimit(mb_get_title($title), 36, ''));
-			$m->set('strid_' . $id, $data, false, 300);
+			$m->set('strid_' . $id, $data, 300);
 		}
 		return $data;
 	} else {
@@ -904,7 +904,7 @@ function get_top($id, $depth = 0) {
 	$id = (int) $id;
 	if ($debug || ($data = $m->get('ctop_' . $id)) === false) {
 		$data = get_top_rec($id, $depth);
-		$m->set('ctop_' . $id . '_' . $lang, $data, false, 43200);
+		$m->set('ctop_' . $id . '_' . $lang, $data, 43200);
 	}
 	return $data;
 }
@@ -940,7 +940,7 @@ function get_user($user_id, $force = false) {
 	}
 	if ($debug || $force === true || ($data = $m->get('u_' . $user_id)) === false) {
 		$data = $db->get_row("SELECT * FROM `users` WHERE `id` = '$user_id'");
-		$m->set('u_' . $user_id, $data, false, 3600);
+		$m->set('u_' . $user_id, $data, 3600);
 	}
 	$users_cache[$user_id] = $data;
 	return $data;
@@ -956,7 +956,7 @@ function get_latest_groups($force = false) {
 	global $db, $m, $lang;
 	if ($force || !($data = $m->get('latest_groups_' . $lang))) {
 		$data = $db->get_results("SELECT `id`,`title`,`strid`,`avatar` FROM `clans` WHERE `list` = 1 AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 5");
-		$m->set('latest_groups_' . $lang, $data, false, 3600);
+		$m->set('latest_groups_' . $lang, $data, 3600);
 	}
 	return $data;
 }
@@ -996,7 +996,7 @@ function get_cat($id, $force = false) {
 				$data->mods[] = $mod->user_id;
 			}
 		}
-		$m->set('cat_' . $lang . '_' . $id, $data, false, 7200);
+		$m->set('cat_' . $lang . '_' . $id, $data, 7200);
 	}
 	return $data;
 }
@@ -1031,7 +1031,7 @@ function get_page_strid($id = null) {
 	global $db, $m;
 	if (($data = $m->get('strid_' . $id)) === false) {
 		$data = $db->get_var("SELECT `strid` FROM `pages` WHERE `id` = '$id'");
-		$m->set('strid_' . $id, $data, false, 10800);
+		$m->set('strid_' . $id, $data, 10800);
 	}
 	return $data;
 }
@@ -1047,7 +1047,7 @@ function get_banlist($force = false) {
 				$busers[$banned->user_id] = $banned->user_id;
 			}
 		}
-		$m->set('banlist_' . $lang, $busers, false, 100);
+		$m->set('banlist_' . $lang, $busers, 100);
 	}
 	return $busers;
 }
@@ -1090,7 +1090,7 @@ function get_footer_mb($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_mb_' . $lang, $html, false, 120);
+		$m->set('f_mb_' . $lang, $html, 120);
 	}
 	return $html;
 }
@@ -1110,7 +1110,7 @@ function get_footer_topics($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, false, 120);
+		$m->set('f_topics_' . $lang, $html, 120);
 	}
 	return $html;
 }
@@ -1153,7 +1153,7 @@ function get_online($force = false) {
 				}
 			}
 		}
-		$m->set('onlineusers', $data, false, 10);
+		$m->set('onlineusers', $data, 10);
 	}
 	return $data;
 }
@@ -1183,7 +1183,7 @@ function get_online_list($force = false) {
 				$data .= '<a href="/user/' . $usr->id . '">' . usercolor($usr->nick, $usr->level, true, $usr->id) . '</a> ';
 			}
 		}
-		$m->set('onlinelist-' . $lang, $data, false, 10);
+		$m->set('onlinelist-' . $lang, $data, 10);
 	}
 	return $data;
 }
@@ -1198,7 +1198,7 @@ function get_blog_by_user($user_id, $force = false) {
 		if (!$data) {
 			$data = 'no';
 		}
-		$m->set('isb_' . $user_id . '_' . $lang, $data, false, 7200);
+		$m->set('isb_' . $user_id . '_' . $lang, $data, 7200);
 	}
 	if ($data > 0 && $data != 'no') {
 		return $data;
@@ -1598,7 +1598,7 @@ function get_friends($user_id, $force = false) {
 		$f1 = $db->get_col("SELECT `friend1` FROM `friends` WHERE `friend2` = $user_id AND `confirmed` = 1");
 		$f2 = $db->get_col("SELECT `friend2` FROM `friends` WHERE `friend1` = $user_id AND `confirmed` = 1");
 		$friends = (array) array_merge($f1, $f2);
-		$m->set('friends_' . $user_id, $friends, false, 600);
+		$m->set('friends_' . $user_id, $friends, 600);
 	}
 
 	return $friends;
@@ -1611,7 +1611,7 @@ function get_friends_lastfm($user_id, $force = false) {
 		$f1 = $db->get_col("SELECT `friends`.`friend1` FROM `friends` INNER JOIN `users` ON `users`.`id` = `friends`.`friend1` AND `users`.`lastfm_username` IS NOT NULL WHERE `friends`.`friend2` = $user_id AND `friends`.`confirmed` = 1");
 		$f2 = $db->get_col("SELECT `friends`.`friend2` FROM `friends` INNER JOIN `users` ON `users`.`id` = `friends`.`friend2` AND `users`.`lastfm_username` IS NOT NULL WHERE `friends`.`friend1` = $user_id AND `friends`.`confirmed` = 1");
 		$friends = (array) array_merge($f1, $f2);
-		$m->set('friends_lastfm_' . $user_id, $friends, false, 600);
+		$m->set('friends_lastfm_' . $user_id, $friends, 600);
 	}
 
 	return $friends;
@@ -2252,7 +2252,7 @@ function get_cakeday() {
 				$out[$user->id] = $user->nick;
 			}
 		}
-		$m->set('cday_' . date('Y-m-d'), $out, false, 3600);
+		$m->set('cday_' . date('Y-m-d'), $out, 3600);
 	}
 
 	return $out;
@@ -2528,7 +2528,7 @@ function get_game_monitor($url, $force = false) {
 		if (!$html) {
 			$html = 'Offline';
 		}
-		$m->set($cache_key, $html, false, 180);
+		$m->set($cache_key, $html, 180);
 	}
 	return $html;
 }
@@ -2608,7 +2608,7 @@ function get_asn($ip) {
 	if (($asn = $m->get($key)) === false) {
 		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}"));
 		$asn = $details->org;
-		$m->set($key, $asn, false, 864000);
+		$m->set($key, $asn, 864000);
 	}
 
 	return '<br /><small>' . $asn . '</small>';
