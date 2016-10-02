@@ -28,7 +28,11 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 * php-curl
 * memcached
 * mysql
-* apache2 ar mod_rewrite un .htaccess atbalstu
+* apache2 vai nginx
+
+### php7-fpm un vajadzīgo moduļu uzstādīšana uz debian/ubuntu
+
+    apt-get install php7.0-fpm php7.0-memcached php7.0-gd php7.0-xml php7.0-mbstring php7.0-mcrypt php7.0-curl
 
 ### Lai pilnvērtīgi darbotos img.exs.lv ###
 
