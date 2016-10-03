@@ -5,9 +5,9 @@
  */
 $out = get_latest_posts();
 $tpl->newBlock('main-layout-right');
-$tpl->assign(array(
+$tpl->assign([
 	'latest-noscript' => $out,
-));
+]);
 unset($out);
 
 //profile box
@@ -20,43 +20,43 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'url' => '/user/' . $inprofile->id,
 		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
 		'profile-top-awards' => get_top_awards($inprofile->id)
-	));
+	]);
 
 	if ($auth->ok === true && $auth->id != $inprofile->id) {
 		$tpl->newBlock('profilebox-pm-link');
 	}
 
 	//warnu links un skaits
-	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1, 2))) {
+	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, [1, 2])) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'profile-warns' => '&nbsp;(' . $inprofile->warn_count . ')',
 				'class' => ' class="active"'
-			));
+			]);
 		}
 	}
 
 	if (!empty($inprofile->twitter)) {
 		$tpl->newBlock('profilebox-twitter-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'twitter' => $inprofile->twitter
-		));
+		]);
 	}
 
 	if (!empty($inprofile->yt_name)) {
 		$tpl->newBlock('profilebox-yt-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'yt-name' => $inprofile->yt_name,
 			'yt-slug' => mkslug($inprofile->yt_name)
-		));
+		]);
 	}
 }
 

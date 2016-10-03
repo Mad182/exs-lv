@@ -14,7 +14,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 
 	$servers = $db->get_results("SELECT `players` FROM `serverlist_log` WHERE `server_id` = '$sid' AND `when` > '$time' ORDER BY `when` DESC");
 
-	$values = array();
+	$values = [];
 	foreach ($servers as $server) {
 		$values[] = $server->players;
 	}
@@ -104,7 +104,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 
 	$servers = $db->get_results("SELECT `players` FROM `serverlist_log` WHERE `server_id` = '$sid' AND `when` > '$time' ORDER BY `when` DESC");
 
-	$values = array();
+	$values = [];
 	foreach ($servers as $server) {
 		$values[] = $server->players;
 	}
@@ -192,7 +192,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 
 
 	$tpl->newBlock('csview');
-	$tpl->assign(array(
+	$tpl->assign([
 		'id' => $server->id,
 		'uid' => $server->uid,
 		'port' => $server->port,
@@ -205,11 +205,11 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 		'map' => strtolower(h(textlimit(trim($server->map), 30, '...'))),
 		'title' => h(textlimit($server->title, 64, '...')),
 		'code' => h('<iframe src="http://exs.lv/server.php?s=' . $server->uid . '&color=333333&bgcolor=FFFFFF&padding=4" hspace="0" vspace="0" border="0" frameborder="0" scrolling="no" width="170" height="200"><a href="http://exs.lv/servers/' . $server->id . '">CS serveris ' . h(strip_tags($server->title)) . '</a></iframe>'),
-	));
+	]);
 
 	$maps = $db->get_results("SELECT DISTINCT map FROM serverlist_log WHERE server_id = '$sid' AND map != '' LIMIT 40");
 	$totalcount = 0;
-	$coludmaps = array();
+	$coludmaps = [];
 	foreach ($maps as $map) {
 		$count = $db->get_var("SELECT COUNT(*) FROM serverlist_log WHERE server_id = '$sid' AND map = '" . sanitize($map->map) . "'");
 		$totalcount += $count;
@@ -226,10 +226,10 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 			$size = 9;
 		}
 		$tpl->newBlock('maplist');
-		$tpl->assign(array(
+		$tpl->assign([
 			'map' => $map,
 			'size' => $size,
-		));
+		]);
 	}
 
 	$pagepath = '<a href="/' . $category->textid . '">' . $category->title . '</a> / ' . h(textlimit($server->title, 30, '...'));
@@ -254,7 +254,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 			$mapimg = 'none';
 		}
 		$tpl->newBlock('csserver');
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $server->id,
 			'port' => $server->port,
 			'online' => $server->online,
@@ -264,7 +264,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 			'mapimg' => $mapimg,
 			'map' => strtolower(h(textlimit(trim($server->map), 30, '...'))),
 			'title' => h(textlimit($server->title, 30, '...'))
-		));
+		]);
 	}
 
 	$total = $db->get_var("SELECT count(*) FROM serverlist WHERE map != ''");
@@ -295,11 +295,11 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'players_on
 			$pager_numeric .= '<span>-</span> <a href="/Servers/?page=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 			$startnext = $startnext + $end;
 		}
-		$tpl->assignGlobal(array(
+		$tpl->assignGlobal([
 			'pager-next' => $pager_next,
 			'pager-prev' => $pager_prev,
 			'pager-numeric' => $pager_numeric
-		));
+		]);
 	}
 }
 

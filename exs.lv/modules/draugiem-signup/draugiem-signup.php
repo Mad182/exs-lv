@@ -132,7 +132,7 @@ if ($session) {//Authentication successful
 						$foo->image_convert = 'jpg';
 						$foo->image_x = 90;
 						$foo->image_y = 90;
-						$foo->allowed = array('image/*');
+						$foo->allowed = ['image/*'];
 						$foo->image_ratio_crop = true;
 						$foo->jpeg_quality = 98;
 						$foo->file_auto_rename = false;
@@ -146,7 +146,7 @@ if ($session) {//Authentication successful
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 45;
 							$foo->image_y = 45;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = true;
 							$foo->jpeg_quality = 98;
 							$foo->file_auto_rename = false;
@@ -159,7 +159,7 @@ if ($session) {//Authentication successful
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 200;
 							$foo->image_y = 260;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = false;
 							$foo->image_ratio_no_zoom_in = true;
 							$foo->jpeg_quality = 98;
@@ -199,10 +199,10 @@ if ($session) {//Authentication successful
 
 			}
 
-			$tpl->assign(array(
+			$tpl->assign([
 				'nick' => h($nick),
 				'avatar' => $draugiem->imageForSize($user['img'], 'small')
-			));
+			]);
 
 			if ($users = $draugiem->getUserFriends(1, 100)) {
 

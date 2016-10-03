@@ -44,10 +44,10 @@ function read_rss($force = false) {
     $read_every = 600; // sekundes
     $feed_fetched = false;
 
-    $urls = array(
+    $urls = [
         'rs3' => 'http://services.runescape.com/m=news/latest_news.rss',
         'oldschool' => 'http://services.runescape.com/m=news/latest_news.rss?oldschool=true'
-    );
+    ];
     
     foreach ($urls as $key => $link) {
     
@@ -61,7 +61,7 @@ function read_rss($force = false) {
         
         // ciklā katru jauno ierakstu saglabās masīvā, kura vērtības pēc tam
         // apgriezīs pretēji, lai pievienotu ierakstus pareizā secībā
-        $reversed_objects = array();
+        $reversed_objects = [];
         $data = new SimpleXmlElement($news);
         foreach ($data->channel->item as $single) {
 
@@ -98,13 +98,13 @@ function read_rss($force = false) {
                         'rel="nofollow" target="_blank">'.$single->link.'</a></p>'.
                         '<p class="rsmb-fade">Ieraksts izveidots automātiski.</p>';
 
-            $values = array(
+            $values = [
                 'author'    => (int)$rsbot_id,
                 'date'      => date("Y-m-d H:i:s", time()),
                 'text'      => sanitize($mb_text),
                 'lang'      => (int)$lang,
                 'bump'      => time()
-            );
+            ];
             $insert = $db->insert('miniblog', $values);
             if (!$insert) continue;
 
@@ -130,7 +130,7 @@ function read_rss($force = false) {
                 if ($save === false) $has_image = 0;
             }
             
-            $values = array(
+            $values = [
                 'hash_value'    => input2db((string)$single->hashval, 256),
                 'is_oldschool'  => (int)$single->is_oldschool,
                 'mb_id'         => $mb_id,
@@ -142,7 +142,7 @@ function read_rss($force = false) {
                 'has_image'     => $has_image,
                 'created_by'    => (int)$rsbot_id,
                 'created_at'    => time()
-            );
+            ];
             $db->insert('rs_news', $values);
         }
     }
@@ -274,13 +274,13 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
     $foo = new Upload($target_path.$target_name);
     $foo->image_max_pixels = 200000000;
     if ($foo->uploaded) {
-        $foo->file_new_name_body = str_replace(array('.png','.gif','.jpg', '.jpeg'), '', $target_name);
+        $foo->file_new_name_body = str_replace(['.png','.gif','.jpg', '.jpeg'], '', $target_name);
         $foo->file_auto_rename = false;
         $foo->image_resize = true;
         $foo->image_convert = 'jpg';
         $foo->image_x = 170;
         $foo->image_ratio_y = true;
-        $foo->allowed = array('image/*');
+        $foo->allowed = ['image/*'];
         $foo->Process(CORE_PATH . '/bildes/runescape/news/');
     }
 
@@ -298,7 +298,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
  */
 function get_fallback_image($string = '') {
 
-    $categories = array(
+    $categories = [
         'Game Update News'          => 'gameupdates.jpg',
         'Future Updates'            => 'gameupdates.jpg',
         'Behind the Scenes News'    => 'behindthescenes.jpg',
@@ -311,7 +311,7 @@ function get_fallback_image($string = '') {
         'Community'                 => 'community.jpg',
         'Solomon&apos;s Store'      => 'solomons.jpg',
         'Treasure Hunter'           => 'treasurehunter.jpg'
-    );
+    ];
 
     if ($string !== '' && array_key_exists($string, $categories)) {
         return 'fallback-' . $categories[$string];
@@ -330,7 +330,7 @@ function translate_category($string = '') {
         'Treasure Hunter'           => 'Treasure Hunter',
         'Solomon&apos;s Store'      => 'Solomon&apos;s Store',
     */
-    $categories = array(
+    $categories = [
         'Game Update News'          => 'Spēles jaunumi',
         'Future Updates'            => 'Gaidāmie uzlabojumi',
         'Behind the Scenes News'    => 'Behind the Scenes',
@@ -340,7 +340,7 @@ function translate_category($string = '') {
         'Technical News'            => 'Tehniskie jaunumi',
         'Support'                   => 'Atbalsts',
         'Customer Support News'     => 'Klientu atbalsta ziņas'
-    );
+    ];
 
     if ($string !== '' && array_key_exists($string, $categories)) {
         return $categories[$string];

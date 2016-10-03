@@ -9,17 +9,17 @@ if ($lang == 3) {
 	$site_title = 'coding.lv jaunumi';
 	$site_description = 'Web programmēšanas forums';
 	$site_url = 'https://coding.lv/';
-	$index_categories = array();
+	$index_categories = [];
 } elseif ($lang == 5) {
 	$site_title = 'rp.exs.lv jaunumi';
 	$site_description = 'MTA:SA roleplay serveris';
 	$site_url = 'https://rp.exs.lv/';
-	$index_categories = array(948, 947);
+	$index_categories = [948, 947];
 } else {
 	$site_title = 'exs.lv jaunumi';
 	$site_description = 'Spēļu portāls';
 	$site_url = 'https://exs.lv/';
-	$index_categories = array(1, 80, 81, 323);
+	$index_categories = [1, 80, 81, 323];
 }
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'all' || !isset($_GET['var1']) && $lang == 3) {
@@ -34,12 +34,12 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'all' || !isset($_GET['var1']) && $
 }
 
 $tpl->newBlock('feed');
-$tpl->assign(array(
+$tpl->assign([
 	'title' => h($title),
 	'link' => h($site_url),
 	'description' => h($site_description),
 	'self' => h(substr($site_url, 0, -1) . $_SERVER['REQUEST_URI'])
-));
+]);
 
 if (!empty($articles)) {
 	foreach ($articles as $article) {
@@ -59,14 +59,14 @@ if (!empty($articles)) {
 		$cat = get_cat($article->category);
 
 		$tpl->newBlock('feed-item');
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $article->title,
 			'link' => h($url),
 			'description' => h($text),
 			'date' => gmdate('r', strtotime($article->date)),
 			'creator' => h($author->nick),
 			'category' => h($cat->title)
-		));
+		]);
 	}
 
 }

@@ -8,13 +8,13 @@ if (!$auth->ok) {
 	die('auth required');
 }
 
-$fields = array(
-	0 => array(0 => 0, 1 => 0, 2 => 0),
-	1 => array(0 => 0, 1 => 0, 2 => 0),
-	2 => array(0 => 0, 1 => 0, 2 => 0),
-);
+$fields = [
+	0 => [0 => 0, 1 => 0, 2 => 0],
+	1 => [0 => 0, 1 => 0, 2 => 0],
+	2 => [0 => 0, 1 => 0, 2 => 0],
+];
 
-$out = array();
+$out = [];
 $out['status'] = 2;
 $out['me'] = 0;
 $out['other'] = 0;

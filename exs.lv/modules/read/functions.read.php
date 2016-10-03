@@ -54,7 +54,7 @@ function get_page_categories($current = null, $force = false) {
 		$m->set('cat_list_' . $lang, $cats, 900);
 	}
 
-	$return = array();
+	$return = [];
 	foreach ($cats as $cat) {
 		if ((im_mod() || im_cat_mod($cat->id) || $cat->id == $current || $current == 'all') && $cat->status == 'active') {
 

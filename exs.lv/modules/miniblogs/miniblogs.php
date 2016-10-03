@@ -3,7 +3,7 @@
 /**
  * Visu miniblogu saraksts
  */
-$robotstag = array('noindex', 'follow');
+$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
@@ -48,7 +48,7 @@ if ($mbs) {
 		$url = mb_get_strid($mb->text, $mb->id);
 
 		$time = time_ago(strtotime($mb->date));
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $mb->id,
 			'author' => $mb->author,
 			'text' => add_smile($mb->text),
@@ -58,7 +58,7 @@ if ($mbs) {
 			'resp' => $mb->posts,
 			'url' => $url,
 			'aurl' => '/user/' . $mb->author
-		));
+		]);
 	}
 
 	if ($lang == 1) {
@@ -78,10 +78,10 @@ if ($mbs) {
 	}
 
 	$pager = pager($total, $skip, $end, '/say?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 }
 

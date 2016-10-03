@@ -180,7 +180,7 @@ class AuthBase {
 					$found = $tmp->id;
 
 					//create new bcrypt hash and delete old one
-					$hash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 14));
+					$hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 14]);
 					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
 				}
 
@@ -311,7 +311,7 @@ class AuthBase {
 
 		$is_tor = 'n';
 
-		$wl = array(
+		$wl = [
 			'77.93.23.137',
 			'77.93.29.110',
 			'83.99.202.248',
@@ -341,7 +341,7 @@ class AuthBase {
 			'176.67.40.27',
 			'212.93.100.40',
 			'212.142.121.225',
-		);
+		];
 
 		if(in_array($this->ip, $wl)) {
 			return false;

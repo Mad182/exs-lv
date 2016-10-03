@@ -45,12 +45,12 @@ function comments_block($parent = 'null', $ajax = false) {
 				$avatar = get_avatar($comment, 's');
 
 				$tpl_com->newBlock('comments-ajax-node');
-				$tpl_com->assign(array(
+				$tpl_com->assign([
 					'nick' => $comment->nick,
 					'text' => add_smile($comment->text),
 					'avatar' => $avatar,
 					'date' => display_time($comment->time),
-				));
+				]);
 			}
 		} else {
 			$tpl_com->newBlock('comments-ajax-empty');
@@ -81,7 +81,7 @@ function comments_block($parent = 'null', $ajax = false) {
   	ORDER BY
   		`ajax_comments`.`time` ASC");
 
-		$json = array();
+		$json = [];
 		if ($comments) {
 			foreach ($comments as $comment) {
 

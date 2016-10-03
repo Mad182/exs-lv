@@ -15,9 +15,9 @@ if ($auth->ok) {
 		$tpl->newBlock('fortumo-lv');
 	}
 
-	$tpl->assign(array(
+	$tpl->assign([
 		'user-id' => $auth->id
-	));
+	]);
 
 	$tpl->printToScreen();
 	exit;

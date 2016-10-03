@@ -29,11 +29,11 @@ unset($password);
 
 $_apiURL = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $steam_api_key . '&steamids='; //Steam API url for players data
 $_limit = 100;  //steam has limit 100 users for request
-$steamIDs = array();
+$steamIDs = [];
 
 
 $users = $db->get_results("SELECT `id`, `nick`, `steam_id`  FROM `users` WHERE `steam_id` IS NOT NULL");
-$user_id_array = array();
+$user_id_array = [];
 
 //array to later get exs_id from steam_id without additional query and store steam id's in separate array for curl request
 foreach ($users as $user) {
@@ -75,7 +75,7 @@ foreach ($chunks as $chunk) {
 
                 //update if entry exists in table
                 if (!empty($is_in_table)) {
-                    $db->update('steam_player_info', $id, array(
+                    $db->update('steam_player_info', $id, [
                         'communityvisibilitystate' => $user->communityvisibilitystate,
                         'profilestate'             => $user->profilestate,
                         'personaname'              => $user->personaname,
@@ -92,11 +92,11 @@ foreach ($chunks as $chunk) {
                         'loccountrycode'           => $user->loccountrycode,
                         'locstatecode'             => $user->locstatecode,
                         'loccityid'                => $user->loccityid
-                    ));
+                    ]);
                 } else {
 
                     //do first entry if user doesn't exist in table
-                    $db->insert('steam_player_info', array(
+                    $db->insert('steam_player_info', [
                         'user_id'                  => $user_id_array[$user->steamid],
                         'steamid'                  => $user->steamid,
                         'communityvisibilitystate' => $user->communityvisibilitystate,
@@ -115,7 +115,7 @@ foreach ($chunks as $chunk) {
                         'loccountrycode'           => $user->loccountrycode,
                         'locstatecode'             => $user->locstatecode,
                         'loccityid'                => $user->loccityid
-                    ));
+                    ]);
                 }
 
             }

@@ -14,7 +14,7 @@ require_once(CORE_PATH.'/modules/runescape/class.controller.php');
 class Rsmod extends Controller {
 
 	// [category->textid] => [file name]
-	private $submodules = array(
+	private $submodules = [
 		'all-quests'        => 'lists',
 		'all-miniquests'    => 'lists',
 		'all-minigames'     => 'lists',
@@ -23,7 +23,7 @@ class Rsmod extends Controller {
 		'all-unlisted'      => 'unlisted',
 		'series'            => 'series',
 		'skills'            => 'skills'
-	);
+	];
 
 	/**
 	 *  Ielādēs atbilstošo apakšmoduli

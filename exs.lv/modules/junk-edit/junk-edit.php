@@ -23,11 +23,11 @@ if (im_mod() && isset($_GET['var1'])) {
 		}
 
 		$tpl->newBlock('mb-edit');
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $mb->id,
 			'title' => h($mb->title),
 			'cat-url' => $category->textid
-		));
+		]);
 	}
 } else {
 	if (!$auth->ok) {

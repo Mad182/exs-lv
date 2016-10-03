@@ -15,12 +15,12 @@
  *  Tie ir visu veidu miniblogi, rakstu komentāri un galeriju komentāri.
  */
 
-$allowed_sites = array(1, 7, 9);
+$allowed_sites = [1, 7, 9];
 
 
 // apakšprojekti, kuros ir slēgtās grupas;
 // citos projektos nav nepieciešams atsevišķi aplūkot nosūdzētā ieraksta saturu
-$has_groups = array(1, 9);
+$has_groups = [1, 9];
 
 
 /**
@@ -66,10 +66,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 	");
 
 	if (!$data) {
-		echo json_encode(array(
+		echo json_encode([
 			'state' => 'error',
 			'message' => 'Kļūdaini iesniegts pieprasījums!'
-		));
+		]);
 		exit;
 	} else {
 
@@ -125,10 +125,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'show_content' &&
 			$templ->assign('original-post', add_smile($original_data->text));
 		}
 
-		echo json_encode(array(
+		echo json_encode([
 			'state' => 'success',
 			'message' => $templ->getOutputContent()
-		));
+		]);
 	}
 	exit;
 }
@@ -157,13 +157,13 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'remove' &&
     ");
 
 	if (!$query_update) {
-		echo json_encode(array('state' => 'error', 'text' => ''));
+		echo json_encode(['state' => 'error', 'text' => '']);
 	} else {
 
-		echo json_encode(array(
+		echo json_encode([
 			'state' => 'success',
 			'text' => 'Arhivēts'
-		));
+		]);
 	}
 	exit;
 }
@@ -175,7 +175,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'remove' &&
 // aktīvās cilnes izcelšana
 $active_tab = 'miniblogs';
 if (isset($_GET['var1']) && 
-    in_array($_GET['var1'], array('miniblogs', 'articles', 'gallery-comments'))) {
+    in_array($_GET['var1'], ['miniblogs', 'articles', 'gallery-comments'])) {
 	$active_tab = $_GET['var1'];
 }
 $tpl->assign('tab-' . $active_tab, ' class="active"');
@@ -219,7 +219,7 @@ $includable_subquery = "(
 // nosūdzēto miniblogu pieprasījums
 if ($active_tab == 'miniblogs') {
 
-	$report_types = array(0, 1);
+	$report_types = [0, 1];
 	$query_reports_0 = false;
 	$query_reports_1 = false;
 
@@ -281,7 +281,7 @@ if ($active_tab == 'miniblogs') {
 // nosūdzēto rakstu komentāru pieprasījums
 } else if ($active_tab == 'articles') {
 
-	$report_types = array(0, 1);
+	$report_types = [0, 1];
 	$query_reports_0 = false;
 	$query_reports_1 = false;
 
@@ -333,7 +333,7 @@ if ($active_tab == 'miniblogs') {
 // nosūdzēto galeriju komentāru pieprasījums
 } else if ($active_tab == 'gallery-comments') {
 
-	$report_types = array(0, 1);
+	$report_types = [0, 1];
 	$query_reports_0 = false;
 	$query_reports_1 = false;
 
@@ -401,18 +401,18 @@ $new_gcomments = $db->get_var("
     WHERE `reports`.`type` = 2 AND `reports`.`archived` = 0 AND `reports`.`removed` = 0 AND `reports`.`site_id` = $lang
 ");
 
-$tpl->assign(array(
+$tpl->assign([
 	'count-mblogs' => ' (<span class="red">' . $new_mblogs . '</span>)',
 	'count-articles' => ' (<span class="red">' . $new_articles . '</span>)',
 	'count-gcomments' => ' (<span class="red">' . $new_gcomments . '</span>)'
-));
+]);
 
 
 
 // lapā viens virs otra drukājas divi saraksti;
 // augšējais - nearhivētās sūdzības (0)
 // apakšējais - arhivētās sūdzības (1)
-$report_types = array(0, 1);
+$report_types = [0, 1];
 
 foreach ($report_types as $report_type) {
 
@@ -521,11 +521,11 @@ foreach ($report_types as $report_type) {
 			// izvade lapā
 			$tpl->newBlock('single-report');
 			$tpl->assignAll($report);
-			$tpl->assign(array(
+			$tpl->assign([
 				'report-place' => $report_place,
 				'report-comment' => textlimit($report->report_comment, 600),
 				'full-content' => $report->report_comment
-			));
+			]);
 
 			// parādīs podziņu, kas ļaus apskatīt pilno ziņojuma saturu
 			if (mb_strlen($report->report_comment) > 600) {

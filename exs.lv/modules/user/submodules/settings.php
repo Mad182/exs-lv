@@ -13,7 +13,7 @@ if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])
 	$inprofile->skin = (int) $_POST['edit-skin'];
 	$inprofile->pm_notify_email = (int) $_POST['edit-pm_notify_email'];
 
-	$db->update('users', $auth->id, array(
+	$db->update('users', $auth->id, [
 		'show_code' => $inprofile->show_code,
 		'show_lol' => $inprofile->show_lol,
 		'show_rp' => $inprofile->show_rp,
@@ -21,7 +21,7 @@ if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])
 		'showsig' => $inprofile->showsig,
 		'skin' => $inprofile->skin,
 		'pm_notify_email' => $inprofile->pm_notify_email
-	));
+	]);
 
 	$auth->reset();
 	update_karma($auth->id, true);
@@ -57,7 +57,7 @@ if ($inprofile->show_rs) {
 $tpl->newBlock('user-profile-settings');
 
 //show form
-$tpl->assign(array(
+$tpl->assign([
 	'edit-enablesig-mark' => $sigmark,
 	'edit-show_code-mark' => $show_codemark,
 	'edit-show_lol-mark' => $show_lolmark,
@@ -66,7 +66,7 @@ $tpl->assign(array(
 	'user-skin-' . $inprofile->skin => ' selected="selected"',
 	'user-pm_notify_email-' . $inprofile->pm_notify_email => ' selected="selected"',
 	'xsrf' => make_token('usersettings')
-));
+]);
 
 $page_title = 'Tavi lapas iestatījumi';
 

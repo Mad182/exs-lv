@@ -38,18 +38,18 @@ function get_rss_youtube($url, $exs_userid = 17077, $exs_groupid = 0) {
 
 	$xml = simplexml_load_file($url);
 	if ($xml) {
-		$newtweets = array();
+		$newtweets = [];
 		foreach ($xml->entry as $item) {
 
 			$link = str_replace('&feature=youtube_gdata', '', $item->link['href']);
 			if (!$db->get_var("SELECT count(*) FROM miniblog WHERE twitterid = '" . md5($link) . "'")) {
 
-				$newtweets[] = array(
+				$newtweets[] = [
 					sanitize('<p><strong>' . stripslashes($item->title) . '</strong><br /><a href="' . $link . '">' . $link . '</a><br />' . stripslashes($item->content) . '</p>'),
 					date('Y-m-d H:i:s', strtotime($item->published)),
 					md5($link),
 					strtotime($item->published)
-				);
+				];
 			}
 		}
 

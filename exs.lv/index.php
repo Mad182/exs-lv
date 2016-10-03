@@ -123,7 +123,7 @@ if ($new_msg_string > 0) {
 
 //atgriež visādus datus json formātā, ja pieprasījums bijis uz /get/updates.json
 if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']) && $_GET['var1'] === 'updates.json') {
-	$data = array();
+	$data = [];
 	if (isset($_GET['loadpm'])) {
 		$data['pm-count'] = $new_msg_string;
 	}
@@ -300,7 +300,7 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 }
 
 //Latvijas valsts svētki
-if (in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
+if (in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18'])) {
 	$persona = ' style="height:157px;background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 50% -25px;background-size:cover;"';
 }
 
@@ -368,7 +368,7 @@ if($_SERVER['REQUEST_URI'] === '/' || $category->textid === 'html-pamati' || $ca
 }
 
 //assigno visur izmantotas vērtības
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'page-title' => hide_spoilers($page_title),
 	'page-loginurl' => $login_url,
 	'page-time' => time(),
@@ -397,7 +397,7 @@ $tpl->assignGlobal(array(
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash,
 	'openidea' => $openidea
-));
+]);
 
 if (!empty($add_css)) {
 	$tpl->newBlock('additional-css');
@@ -412,17 +412,17 @@ if (!empty($pagepath) && $skin === 'main') {
 //lai var iezīmēt aktīvo menuci
 if (isset($category) && !isset($_GET['u']) && !isset($_GET['g']) && !isset($_GET['m'])) {
 
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'cat-sel-' . $category->id => ' class="selected active"',
 		'cat-sel-' . $category->textid => ' class="selected active"',
 		'cat-sel-' . $category->parent => ' class="selected active"',
-	));
+	]);
 	if ($category->parent) {
 		$topcat = get_cat($category->parent);
 		if ($topcat->parent) {
-			$tpl->assignGlobal(array(
+			$tpl->assignGlobal([
 				'cat-sel-' . $topcat->parent => ' class="selected active"',
-			));
+			]);
 		}
 	}
 }
@@ -478,14 +478,14 @@ if ($skin === 'main') {
 					if (empty($g_owner->avatar)) {
 						$g_owner->avatar = 'none.png';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'id' => $g_owner->id,
 						'class' => $class,
 						'title' => $g_owner->title,
 						'avatar' => $g_owner->avatar,
 						'unread' => $unread,
 						'unread-class' => $css_class
-					));
+					]);
 				}
 			}
 			if ($g_members) {
@@ -506,14 +506,14 @@ if ($skin === 'main') {
 					if (empty($g_member->avatar)) {
 						$g_member->avatar = 'none.png';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'id' => $g_member->clan,
 						'class' => $class,
 						'unread' => $unread,
 						'unread-class' => $css_class,
 						'title' => $g_member->title,
 						'avatar' => $g_member->avatar,
-					));
+					]);
 				}
 			}
 		}
@@ -531,10 +531,10 @@ if (!empty($robotstag)) {
 if(!empty($opengraph_meta)) {
 	foreach($opengraph_meta as $key => $val) {
 		$tpl->newBlock('og-meta');
-		$tpl->assign(array(
+		$tpl->assign([
 			'key' => $key,
 			'val' => $val
-		));
+		]);
 	}
 }
 
@@ -542,10 +542,10 @@ if(!empty($opengraph_meta)) {
 if(!empty($twitter_meta)) {
 	foreach($twitter_meta as $key => $val) {
 		$tpl->newBlock('twitter-meta');
-		$tpl->assign(array(
+		$tpl->assign([
 			'key' => $key,
 			'val' => $val
-		));
+		]);
 	}
 }
 
@@ -553,10 +553,10 @@ if(!empty($twitter_meta)) {
 /* flash error or success message */
 if (!empty($_SESSION['flash_message'])) {
 	$tpl->newBlock('flash-message');
-	$tpl->assign(array(
+	$tpl->assign([
 		'message' => add_smile($_SESSION['flash_message']['message']),
 		'class' => $_SESSION['flash_message']['class']
-	));
+	]);
 	$_SESSION['flash_message'] = '';
 }
 

@@ -12,19 +12,19 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'url' => '/user/' . $inprofile->id,
 		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
 		'profile-top-awards' => get_top_awards($inprofile->id)
-	));
+	]);
 
 	if (!empty($inprofile->custom_title)) {
-		$tpl->assign(array(
+		$tpl->assign([
 			'custom_title' => ' <span style="font-size:11px">(' . $inprofile->custom_title . ')</span>'
-		));
+		]);
 	}
 
 	if ($auth->ok === true && $auth->id != $inprofile->id) {
@@ -35,29 +35,29 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	if ($auth->ok === true
 			&& ($auth->id == $inprofile->id
 			|| im_mod())
-			&& !in_array($inprofile->level, array(1, 2))) {
+			&& !in_array($inprofile->level, [1, 2])) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'profile-warns' => '&nbsp;(' . $inprofile->warn_count . ')',
 				'class' => ' class="active"'
-			));
+			]);
 		}
 	}
 
 	if (!empty($inprofile->twitter)) {
 		$tpl->newBlock('profilebox-twitter-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'twitter' => $inprofile->twitter
-		));
+		]);
 	}
 
 	if (!empty($inprofile->yt_name)) {
 		$tpl->newBlock('profilebox-yt-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'yt-name' => $inprofile->yt_name,
 			'yt-slug' => mkslug($inprofile->yt_name)
-		));
+		]);
 	}
 }
 
@@ -76,9 +76,9 @@ $tpl->assign('out', $mbs);
 
 if($auth->ok) {
 	$tpl->newBlock('mb-tabs');
-	$tpl->assign(array(
+	$tpl->assign([
 		$sel . '-selected' => 'active '
-	));
+	]);
 }
 
 if ($auth->ok === true) {

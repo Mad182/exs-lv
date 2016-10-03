@@ -3,7 +3,7 @@
 /**
  * Lietotāja grāmatzīmes (raksti)
  */
-$robotstag = array('noindex', 'follow');
+$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
@@ -41,14 +41,14 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 					$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->id . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $info->id,
 					'url' => '/read/' . $info->strid,
 					'title' => $info->title,
 					'date' => substr($info->date, 0, 10),
 					'posts' => $info->posts,
 					'delete' => $delete
-				));
+				]);
 			}
 		}
 	}

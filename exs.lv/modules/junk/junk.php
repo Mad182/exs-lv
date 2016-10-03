@@ -24,7 +24,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			$foo->mime_check = true;
 			$foo->no_script = true;
 			$foo->file_max_size = '8M';
-			$foo->allowed = array('image/*');
+			$foo->allowed = ['image/*'];
 
 			if ($foo->image_src_type == 'bmp') {
 				$foo->image_convert = 'png';
@@ -76,9 +76,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			$thisdate = display_date_simple($junk->bump);
 			if ($date != $thisdate) {
 				$tpl->newBlock('junk-item-date');
-				$tpl->assign(array(
+				$tpl->assign([
 					'date' => $thisdate
-				));
+				]);
 				$date = $thisdate;
 			}
 
@@ -89,11 +89,11 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 	$total = $db->get_var("SELECT count(*) FROM `junk` WHERE `removed` = 0 AND `posts` > 0");
 	$pager = pager($total, $skip, 120, '/junk/commented/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 } elseif (isset($_GET['var1'])) {
 	$id = (int) $_GET['var1'];
 	$pic = $db->get_row("SELECT * FROM `junk` WHERE `removed` = 0 AND `id` = '$id'");
@@ -130,7 +130,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		$twitter_meta['card'] = 'summary_large_image';
 
 		if(strpos($pic->image, 'imgur')) {
-			$html = '<div style="text-align:center"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(array('https://i.imgur.com/', '#embed', '.gifv', '.gif'), '', $pic->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
+			$html = '<div style="text-align:center"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(['https://i.imgur.com/', '#embed', '.gifv', '.gif'], '', $pic->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
 			
 			$opengraph_meta['image'] = 'https://img.exs.lv' . str_replace('/thb/', '/large/', $pic->thb);
 		} else {
@@ -139,24 +139,24 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'voter' => junk_vote($pic->id, $auth->id),
 			'title' => $pic->title . $add,
 			'title-html' => h($pic->title),
 			'image' => $html,
 			'id' => $pic->id,
-		));
+		]);
 
 		if ($pic->author) {
 			$author = get_user($pic->author);
 			$tpl->newBlock('junk-view-author');
-			$tpl->assign(array(
+			$tpl->assign([
 				'nick' => usercolor($author->nick, $author->level, false, $author->id),
 				'id' => $author->id
-			));
+			]);
 		} else {
 			if(empty($pic->edit_user) && $pic->posts < 10) {
-				$robotstag = array('noindex', 'follow');
+				$robotstag = ['noindex', 'follow'];
 			}
 		}
 
@@ -165,17 +165,17 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		$next = $db->get_var("SELECT `id` FROM `junk` WHERE `removed` = 0 AND `id` > '$id' ORDER BY `id` ASC LIMIT 1");
 		if ($next) {
 			$tpl->newBlock('junk-next');
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $next
-			));
+			]);
 		}
 
 		$prev = $db->get_var("SELECT `id` FROM `junk` WHERE `removed` = 0 AND `id` < '$id' ORDER BY `id` DESC LIMIT 1");
 		if ($prev) {
 			$tpl->newBlock('junk-prev');
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $prev
-			));
+			]);
 		}
 
 		$url = '/junk/' . $pic->id;
@@ -205,12 +205,12 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 5) {
 				$_SESSION["antiflood"] = time();
 
-				$newid = post_mb(array(
+				$newid = post_mb([
 					'text' => $body,
 					'parent' => $pic->id,
 					'type' => 'junk',
 					'reply_to' => $reply_to_id
-				));
+				]);
 
 				push('Komentēja attēlu <a href="' . $url . '#m' . $newid . '">&quot;' . textlimit($pic->title, 32, '...') . '&quot;</a>', '', 'junk-answ-' . $id);
 
@@ -271,7 +271,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 	ASC");
 
 			if ($responses) {
-				$json = array();
+				$json = [];
 				foreach ($responses as $response) {
 					$json[$response->reply_to][] = $response;
 				}
@@ -285,19 +285,19 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		if ($auth->ok && !$pic->closed) {
 			$tpl->newBlock('user-miniblog-resp');
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $pic->id,
 				'token' => md5('mb' . $pic->id . $remote_salt . $auth->nick)
-			));
+			]);
 
 			$tpl->newBlock('mb-head');
-			$tpl->assign(array(
+			$tpl->assign([
 				'mbid' => $pic->id,
 				'usrid' => $auth->id,
 				'edit_time' => time(),
 				'type' => 'junk',
 				'lastid' => (int) $db->get_var("SELECT `id` FROM `miniblog` WHERE `parent` = '$pic->id' AND `removed` = '0' AND `type` = 'junk' ORDER BY `id` DESC LIMIT 1")
-			));
+			]);
 		}
 	} else {
 		redirect('/' . $category->textid);
@@ -319,9 +319,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			$thisdate = display_date_simple(strtotime($junk->date));
 			if ($date != $thisdate) {
 				$tpl->newBlock('junk-item-date');
-				$tpl->assign(array(
+				$tpl->assign([
 					'date' => $thisdate
-				));
+				]);
 				$date = $thisdate;
 			}
 
@@ -334,11 +334,11 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 	$total = $db->get_var("SELECT count(*) FROM `junk` WHERE `removed` = 0");
 	$pager = pager($total, $skip, 120, '/junk/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 }
 
 $pagepath = '';

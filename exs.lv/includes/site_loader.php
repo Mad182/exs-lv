@@ -16,57 +16,57 @@ $is_local = 0;
 |--------------------------------------------------------------------------
 */
 
-$config_domains = array(
-	1 => array(
+$config_domains = [
+	1 => [
 		'domain' => 'exs.lv',
 		'prefix' => '',
 		'ssl' => true
-	),
-	2 => array(
+	],
+	2 => [
 		'domain' => 'android.exs.lv',
 		'prefix' => 'android',
 		'ssl' => true
-	),
-	3 => array(
+	],
+	3 => [
 		'domain' => 'coding.lv',
 		'prefix' => 'code',
 		'ssl' => true
-	),
-    4 => array(
+	],
+    4 => [
         'domain' => 'ios.exs.lv',
         'prefix' => 'ios',
         'ssl' => true
-    ),
-	5 => array(
+    ],
+	5 => [
 		'domain' => 'rp.exs.lv',
 		'prefix' => 'mta',
 		'ssl' => true
-	),
-	6 => array(
+	],
+	6 => [
 		'domain' => 'api.exs.lv',
 		'prefix' => 'api',
 		'ssl' => true
-	),
-	7 => array(
+	],
+	7 => [
 		'domain' => 'lol.exs.lv',
 		'prefix' => 'lol',
 		'ssl' => true
-	),
-	8 => array(
+	],
+	8 => [
 		'domain' => 'secure.exs.lv',
 		'prefix' => 'secure',
 		'ssl' => true
-	),
-	9 => array(
+	],
+	9 => [
 		'domain' => 'runescape.exs.lv',
 		'prefix' => 'runescape',
 		'ssl' => true
-	)
-);
+	]
+];
 
 // saraksts ar visiem ieviestajiem domēniem/subdomēniem un to atslēgām;
 // ar tā palīdzību izvairāmies no liekas iepriekšējā masīva pārstaigāšanas.
-$arr_domains = array(
+$arr_domains = [
 
 	'localhost' => 1,
 	'exs.lv' => 1,    
@@ -107,7 +107,7 @@ $arr_domains = array(
 	'm.coding.dev' => 3,
 	'mlol.exs.dev' => 7,
 	'mrs.exs.dev' => 9
-);
+];
 
 
 /*

@@ -26,24 +26,24 @@ class Series extends Controller {
             
             // saraksts ar visiem kvestiem
             } else if ($var1 === 'list' && $var2 > 0) {
-                echo json_encode(array('state' => 'success',
-                    'content' => $this->display_all_quests($var2)));
+                echo json_encode(['state' => 'success',
+                    'content' => $this->display_all_quests($var2)]);
             
             // saraksts ar sērijai piesaistītiem kvestiem
             } else if ($var1 === 'getlist' && $var2 > 0) {
-                echo json_encode(array('state' => 'success',
-                    'content' => $this->display_series_quests($var2)));
+                echo json_encode(['state' => 'success',
+                    'content' => $this->display_series_quests($var2)]);
             
             // sērijas kvestu secības atjaunošana
             } else if ($var1 === 'order' && $var2 !== '' && 
                        isset($_POST['json_check'])) {
 
                 $arr = $this->reorder_quests($var2, $_POST);
-                echo json_encode(array(
+                echo json_encode([
                     'state' => $arr[0], 
                     'message' => $arr[1],
                     'content' => $arr[2]
-                ));
+                ]);
 
             // pievieno/dzēš no sērijas kādu kvestu
             } else if (($var1 === 'add' || $var1 === 'del') && 
@@ -51,13 +51,13 @@ class Series extends Controller {
                 
                 $arr = $this->set_series_quest($var1, $var2, $var3);
                 
-                echo json_encode(array(
+                echo json_encode([
                     'state' => $arr[0],
                     'error' => $arr[1],
                     'type' => $arr[2],
                     'series_id' => $arr[3],
                     'url' => $arr[4]
-                ));
+                ]);
             } else {
                 die('Kļūdaini atvērta adrese');
             }            
@@ -111,10 +111,10 @@ class Series extends Controller {
                 $selected = ($i == $single->ordered_by) ? 
                     ' selected="selected"' : '';
                 $this->view->newBlock('selection-option');
-                $this->view->assign(array(
+                $this->view->assign([
                     'ordered_by' => $i,
                     'selected' => $selected
-                ));
+                ]);
             }
         }
     }    
@@ -131,10 +131,10 @@ class Series extends Controller {
         if (($view = $this->view('rsmod')) === false) return '';
         
         $view->newBlock('series-quests-block');
-        $view->assign(array(
+        $view->assign([
             'category-url'  => $_GET['viewcat'],
             'series-id'     => $series_id
-        ));
+        ]);
         
         $quests = $this->series->fetch_series_quests($series_id);
         
@@ -202,21 +202,21 @@ class Series extends Controller {
         }
         
         $view->newBlock('all-quests-list');
-        $view->assign(array(
+        $view->assign([
             'category-url' => $_GET['viewcat'],
             'series-id' => $series->id,
             'series-title' => $series->title
-        ));
+        ]);
         
         foreach ($get_quests as $quest) {
         
             $view->newBlock('list-single-quest');
-            $view->assign(array(
+            $view->assign([
                 'series-id' => $series_id,
                 'page-id'   => $quest->id,
                 'title'     => $quest->title,
                 'type'      => ($quest->quests_id != '0') ? 'del' : 'add'
-            ));
+            ]);
             
             // iekrāsos kvestu, ja tas jau ir pievienots atvērtajai sērijai
             $marker = ($quest->quests_id != '0') ? 'mark-added' : 'mark-neutral';
@@ -245,7 +245,7 @@ class Series extends Controller {
                 $order = (int)$post_arr['order_' . $single->id];
                 $title = input2db($post_arr['title_' . $single->id], 256);
                 
-                $arr = array('ordered_by' => $order, 'title' => $title);
+                $arr = ['ordered_by' => $order, 'title' => $title];
                 $this->db->update('rs_series', (int)$single->id, $arr);
             }
         }
@@ -262,19 +262,19 @@ class Series extends Controller {
         $series_id = (int)$series_id;
         
         if ($series_id < 1 || $post_arr == null) {
-            $arr = array('error', 'Darbība neizdevās', '');
+            $arr = ['error', 'Darbība neizdevās', ''];
             return $arr;
         }
         
         $series = $this->series->check_series($series_id);        
         if (!$series) {
-            $arr = array('error', 'Darbība neizdevās', '');
+            $arr = ['error', 'Darbība neizdevās', ''];
             return $arr;
         }
         
         $quests = $this->series->fetch_series_quests($series_id);
         if ($quests === false) {
-            $arr = array('error', 'Darbība neizdevās', '');
+            $arr = ['error', 'Darbība neizdevās', ''];
             return $arr;
         }
 
@@ -285,18 +285,18 @@ class Series extends Controller {
 
                 $order = (int)$post_arr['order-'.$single->id];
                 
-                $data = array(
+                $data = [
                     'ordered_by' => $order,
                     'updated_by' => (int)$this->auth->id,
                     'updated_at' => time()
-                );
+                ];
                 
                 $this->db->update('rs_series_quests', $single->id, $data);
             }        
         }
         
-        $arr = array('success', 'Secība atjaunota', 
-            $this->display_series_quests($series_id));
+        $arr = ['success', 'Secība atjaunota', 
+            $this->display_series_quests($series_id)];
         return $arr;
     }
 
@@ -308,17 +308,17 @@ class Series extends Controller {
             
         // ievades parametru pārbaudes
         if ($type !== 'add' && $type !== 'del') {
-            return array('error', 'Darbība neizdevās', '', '', '');
+            return ['error', 'Darbība neizdevās', '', '', ''];
         }
         
         $series_id = (int)$series_id;
         $quest_id = (int)$quest_id;
 
         if (!$this->series->check_series($series_id)) {
-            return array('error', 'Norādītā sērija neeksistē', '', '', '');
+            return ['error', 'Norādītā sērija neeksistē', '', '', ''];
         }
         if (!$this->series->check_quest($quest_id)) {
-            return array('error', 'Norādītais kvests neeksistē', '', '', '');
+            return ['error', 'Norādītais kvests neeksistē', '', '', ''];
         }
         
         // pārbauda, vai ieraksts par šādu sērijas un kvesta kombināciju 
@@ -346,6 +346,6 @@ class Series extends Controller {
         $type = ($type === 'del') ? 'add' : 'del';
         $url = '/series/'.$type.'/'.$series_id.'/'.$quest_id;
 
-        return array($error, '', $type, $series_id, $url);
+        return [$error, '', $type, $series_id, $url];
     }
 }

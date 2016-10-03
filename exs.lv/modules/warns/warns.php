@@ -4,7 +4,7 @@
   warni by maadinsh
  */
 
-$mod_levels = array(1, 2);
+$mod_levels = [1, 2];
 
 if ($inprofile = get_user(intval($_GET['var1']))) {
 
@@ -32,7 +32,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					$edit = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/edit/' . $warn->id . '">labot</a>]';
 					$remove = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/remove/' . $warn->id . '?token=' . make_token('remove') . '">noņemt</a>]';
 				}
-				$tpl->assign(array(
+				$tpl->assign([
 					'date' => display_time(strtotime($warn->created)),
 					'reason' => add_smile($warn->reason),
 					'remove_reason' => add_smile($warn->remove_reason),
@@ -40,7 +40,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					'aurl' => '/user/' . $from->id,
 					'edit' => $edit,
 					'remove' => $remove,
-				));
+				]);
 			}
 			if ($warn_count > 0) {
 				$tpl->assignGlobal('total_warns', ' (' . $warn_count . ')');
@@ -73,13 +73,13 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				} else {
 					$tpl->newBlock('bans-inactive');
 				}
-				$tpl->assign(array(
+				$tpl->assign([
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
 					'aurl' => '/user/' . $from->id,
 					'reason' => add_smile($ban->reason),
 					'date' => display_time($ban->time),
 					'length' => strTime($ban->length),
-				));
+				]);
 			}
 		} else {
 			$tpl->newBlock('bans-no');
@@ -95,10 +95,10 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 				if ($remove) {
 					$tpl->newBlock('warns-remove');
-					$tpl->assign(array(
+					$tpl->assign([
 						'reason' => add_smile($remove->reason),
 						'xsrf' => make_token('removewarn')
-					));
+					]);
 
 					if (isset($_POST['remove_warn']) && !empty($_POST['remove_reason']) && check_token('removewarn', $_POST['xsrf_token'])) {
 						$reason = post2db($_POST['remove_reason']);

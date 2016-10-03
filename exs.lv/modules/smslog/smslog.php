@@ -7,14 +7,14 @@ if ($auth->level == 1) {
 		foreach ($logs as $log) {
 			$tpl->newBlock('smslog-node');
 			$user = get_user($log->message);
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $log->id,
 				'nick' => $user->nick,
 				'message' => $log->message,
 				'suspended' => $log->suspended,
 				'message_id' => $log->message_id,
 				'sender' => $log->sender
-			));
+			]);
 		}
 	}
 } else {

@@ -26,10 +26,10 @@ if ($inprofile->credit >= 3) {
 }
 
 $tpl->newBlock('user-profile-buytitle');
-$tpl->assign(array(
+$tpl->assign([
 	'user-credit' => $inprofile->credit,
 	'pay' => $pay
-));
+]);
 
 $page_title = 'Lietotāja nosaukuma maiņa';
 

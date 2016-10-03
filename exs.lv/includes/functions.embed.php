@@ -54,18 +54,18 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$dofollow_sites = get_sitelist('dofollow');
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
-			$find = array(
+			$find = [
 				' rel="nofollow" href="http://' . $site,
 				' rel="nofollow" href="https://' . $site,
 				' rel="nofollow" href="http://www.' . $site,
 				' rel="nofollow" href="https://www.' . $site
-			);
-			$replace = array(
+			];
+			$replace = [
 				' href="http://' . $site,
 				' href="https://' . $site,
 				' href="http://www.' . $site,
 				' href="https://www.' . $site
-			);
+			];
 			$txt = str_ireplace($find, $replace, $txt);
 		}
 	}
@@ -74,12 +74,12 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$blacklisted_sites = get_sitelist('blacklisted');
 	foreach ($blacklisted_sites as $site) {
 		if (stripos($txt, $site) !== false) {
-			$replace = array(
+			$replace = [
 				'http://' . $site,
 				'http://www.' . $site,
 				'https://' . $site,
 				'https://www.' . $site
-			);
+			];
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
 	}
@@ -92,7 +92,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		}
 	}
 
-	$txt = str_replace(array(
+	$txt = str_replace([
 		'.space.lv',
 		'CoxFr2Kobuw',
 		'MOBM1ODD',
@@ -102,12 +102,12 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'servces-',
 		'.org/lan.',
 		'4f200c32f12e7.jpg'
-			), 'ES_SPAMOJU_SUDUS', $txt);
+			], 'ES_SPAMOJU_SUDUS', $txt);
 
-	$txt = str_replace(array(
+	$txt = str_replace([
 		'/ref.php',
 		'/referrer/'
-			), '/ES_SPAMOJU_SUDUS/', $txt);
+			], '/ES_SPAMOJU_SUDUS/', $txt);
 
 
 	// paslēps spoilerus
@@ -163,7 +163,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 function insert_smilies($txt, $just_return = false) {
 	global $img_server;
 
-	$smilies = array(
+	$smilies = [
 		':sweat:' => 'smiley-sweat.png',
 		':o:' => 'smiley-surprise.png',
 		':eek:' => 'smiley-eek.png',
@@ -290,7 +290,7 @@ function insert_smilies($txt, $just_return = false) {
 		':zagis:' => 'chainsaw.gif',
 		':dickbutt:' => 'dickbutt.gif',
 		':hektors:' => 'hektors.png'
-	);
+	];
     
     // izmanto exs API moduļos, lai vienkārši atgrieztu smaidiņu sarakstu
     if ($just_return) {
@@ -858,7 +858,7 @@ function embed_gifv_imgur($params) {
  */
 function replace_spoiler($text) {
 
-	$text = str_replace(array('<p>', '</p>', '%5B/spoiler%5D'), array('<br />', '<br />', ''), $text[1]);
+	$text = str_replace(['<p>', '</p>', '%5B/spoiler%5D'], ['<br />', '<br />', ''], $text[1]);
 
 	$content = '<span class="spoiler"><a href="javascript:void(0);" ';
 	$content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';

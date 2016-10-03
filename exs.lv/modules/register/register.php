@@ -19,7 +19,7 @@ if (!$auth->ok) {
 	$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 57753"));
 	$tpl->assignGlobal('botstring', $botstring);
 
-	$regdata = array();
+	$regdata = [];
 	$regdata['mail'] = '';
 	$regdata['nick'] = '';
 	$regdata['pass'] = '';
@@ -78,7 +78,7 @@ if (!$auth->ok) {
 		} elseif ($_POST['omnomnom'] !== $_POST['url']) {
 			$tpl->newBlock('invalid-pass-mach');
 		} else {
-			$regdata['pass'] = password_hash($_POST['omnomnom'], PASSWORD_BCRYPT, array("cost" => 14));
+			$regdata['pass'] = password_hash($_POST['omnomnom'], PASSWORD_BCRYPT, ["cost" => 14]);
 			$regdata['passok'] = true;
 		}
 
@@ -91,17 +91,17 @@ if (!$auth->ok) {
 		}
 
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
-		$data = array('secret' => '6Lc4eR0TAAAAANtY0bNSr0rcXat9-sgDwWRurRIq',
+		$data = ['secret' => '6Lc4eR0TAAAAANtY0bNSr0rcXat9-sgDwWRurRIq',
 		         'response' => $captcha,
-		         'remoteip' => $_SERVER['REMOTE_ADDR']);
+		         'remoteip' => $_SERVER['REMOTE_ADDR']];
 
-		$options = array(
-		    'http' => array(
+		$options = [
+		    'http' => [
 		        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 		        'method'  => 'POST',
 		        'content' => http_build_query($data) 
-		    )
-		);
+		    ]
+		];
 
 		$context  = stream_context_create($options);
 		$response = json_decode(file_get_contents($url, false, $context));
@@ -159,13 +159,13 @@ if (!$auth->ok) {
 		//fill form fields
 		$tpl->gotoBlock('registration-form');
 		$tpl->newBlock('form-fields');
-		$tpl->assign(array(
+		$tpl->assign([
 			'new-nick' => h($regdata['nick']),
 			'new-mail' => h($regdata['mail']),
 			'field_mail' => $field_mail,
 			'field_nick' => $field_nick,
 			'reg_token' => make_token('reg')
-		));
+		]);
 	}
 } else {
 	set_flash("Tu jau esi reģistrējies :D");

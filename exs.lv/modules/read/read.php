@@ -144,7 +144,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 	}
 
 	//pieliek tagus
-	if ($auth->ok && in_array($auth->level, array(1, 2, 3)) && isset($_POST['newtags'])) {
+	if ($auth->ok && in_array($auth->level, [1, 2, 3]) && isset($_POST['newtags'])) {
 		$newtags = explode(',', $_POST['newtags']);
 		$tags = new tags;
 		foreach ($newtags as $newtag) {
@@ -185,7 +185,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 	}
 
 	if (!$rating_users = unserialize($article->rating_users)) {
-		$rating_users = array();
+		$rating_users = [];
 	}
 
 	// raksta vērtēšana
@@ -229,7 +229,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 	if ($auth->ok) {
 		if (empty($article->readby)) {
-			$db->query("UPDATE pages SET readby = ('" . serialize(array($auth->id)) . "') WHERE id = '$article->id'");
+			$db->query("UPDATE pages SET readby = ('" . serialize([$auth->id]) . "') WHERE id = '$article->id'");
 		} else {
 			$readby = unserialize($article->readby);
 			if (!in_array($auth->id, $readby)) {
@@ -285,9 +285,9 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 		if (can_edit_page($article)) {
 			$tpl->newBlock('page-options');
-			$tpl->assign(array(
+			$tpl->assign([
 				'article-id' => $article->id
-			));
+			]);
 		}
 
 		// komentāra rediģēšanas forma
@@ -305,10 +305,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				}
 			}
 			$tpl->newBlock('adm-edit-comment');
-			$tpl->assign(array(
+			$tpl->assign([
 				'comment-text' => h($comment->text),
 				'comment-id' => $comment->id
-			));
+			]);
 
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana rakstam: &quot;' . $article->title . '&quot; | ' . $category->title;
@@ -345,7 +345,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$foo->file_new_name_body = $topicid;
 						$foo->image_resize = true;
 						$foo->image_convert = 'jpg';
-						$foo->allowed = array('image/*');
+						$foo->allowed = ['image/*'];
 						$foo->image_ratio = true;
 						$foo->image_ratio_pixels = 17800;
 						$foo->jpeg_quality = 98;
@@ -371,7 +371,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							rmkdir(IMG_PATH . '/topics/thb/' . $path . '/');
 
 							$file_title = mkslug($article->title . '-image');
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_resize = true;
 							$foo->image_ratio_crop = true;
 							$foo->image_y = 215;
@@ -388,7 +388,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 800;
 							$foo->image_y = 800;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = false;
 							$foo->image_ratio_no_zoom_in = true;
 							$foo->jpeg_quality = 98;
@@ -400,7 +400,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 600;
 							$foo->image_y = 240;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = true;
 							$foo->image_ratio_no_zoom_in = true;
 							$foo->jpeg_quality = 98;
@@ -417,7 +417,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 75;
 							$foo->image_y = 75;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = true;
 							$foo->jpeg_quality = 98;
 							$foo->file_auto_rename = false;
@@ -530,20 +530,20 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			// raksta rediģēšanas forma ar datiem
 			$tpl->newBlock('edit-article');
-			$tpl->assign(array(
+			$tpl->assign([
 				'article-showtitle' => $article->title,
 				'article-title' => $article->title,
 				'article-text' => h($article->text),
 				'article-id' => $article->id
-			));
+			]);
 
 			// izdrukās lapā adresi, caur kuru iespējams atvērt kādu no skatiem
 			if ($lang == 9 && (!$article->is_wide && !isset($_GET['wide']) || isset($_GET['narrow']))) {
 				$tpl->newBlock('goto-wide-page');
-				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', h($_SERVER['REQUEST_URI'])));
+				$tpl->assign('wide-page-url', str_replace(['wide=1', 'narrow=1', '\&', '&amp;'], '', h($_SERVER['REQUEST_URI'])));
 			} else if ($lang == 9) {
 				$tpl->newBlock('goto-narrow-page');
-				$tpl->assign('wide-page-url', str_replace(array('wide=1', 'narrow=1', '\&', '&amp;'), '', h($_SERVER['REQUEST_URI'])));
+				$tpl->assign('wide-page-url', str_replace(['wide=1', 'narrow=1', '\&', '&amp;'], '', h($_SERVER['REQUEST_URI'])));
 			}
 
 
@@ -570,25 +570,25 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						if ($key == $article->category) {
 							$sel = ' selected="selected"';
 						}
-						$tpl->assign(array(
+						$tpl->assign([
 							'title' => $val,
 							'id' => $key,
 							'sel' => $sel,
-						));
+						]);
 					}
 				}
 			}
 
 			if ($article->avatar && $category->textid != 'filmas') {
 				$tpl->newBlock('edit-article-av');
-				$tpl->assign(array(
+				$tpl->assign([
 					'img' => $article->avatar
-				));
+				]);
 			}
 
 			if ($category->textid == 'filmas' && im_mod()) {
 
-				$images = array();
+				$images = [];
 
 				if (isset($_POST['avatar-url']) && !empty($_POST['avatar-url']) && isset($_POST['submit'])) {
 
@@ -616,7 +616,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						require_once(CORE_PATH . '/includes/class.upload.php');
 						$foo = new Upload($tmpname);
 						$foo->image_max_pixels = 200000000;
-						$foo->allowed = array('image/*');
+						$foo->allowed = ['image/*'];
 						$foo->image_resize = true;
 						$foo->image_ratio_crop = true;
 						$foo->image_y = 215;
@@ -635,7 +635,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 620;
 							$foo->image_y = 620;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = false;
 							$foo->image_ratio_no_zoom_in = true;
 							$foo->jpeg_quality = 98;
@@ -651,7 +651,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->file_new_name_body = $article->id;
 							$foo->image_resize = true;
 							$foo->image_convert = 'jpg';
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio = true;
 							$foo->image_ratio_pixels = 17800;
 							$foo->jpeg_quality = 98;
@@ -665,7 +665,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 								$foo->image_convert = 'jpg';
 								$foo->image_x = 75;
 								$foo->image_y = 75;
-								$foo->allowed = array('image/*');
+								$foo->allowed = ['image/*'];
 								$foo->image_ratio_crop = true;
 								$foo->jpeg_quality = 98;
 								$foo->file_auto_rename = false;
@@ -696,12 +696,12 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$q = urlencode($article->title . ' movie poster');
 					$jsonurl = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&tbs=iar:t&q=' . $q;
 					$result = json_decode(curl_get($jsonurl), true);
-					$images = array(
+					$images = [
 						$result['responseData']['results'][0]['url'],
 						$result['responseData']['results'][1]['url'],
 						$result['responseData']['results'][2]['url'],
 						$result['responseData']['results'][3]['url']
-					);
+					];
 				}
 
 				$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
@@ -713,24 +713,24 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 
 				$tpl->newBlock('edit-movie');
-				$tpl->assign(array(
+				$tpl->assign([
 					'article-id' => $article->id,
-				));
+				]);
 				if (!empty($images)) {
 					foreach ($images as $img) {
 						$tpl->newBlock('edit-movie-image');
-						$tpl->assign(array(
+						$tpl->assign([
 							'url' => $img,
-						));
+						]);
 					}
 				}
 
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
 				if ($avatar) {
 					$tpl->newBlock('edit-movie-avatar');
-					$tpl->assign(array(
+					$tpl->assign([
 						'url' => $avatar->thb,
-					));
+					]);
 				}
 			}
 
@@ -750,13 +750,13 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				$tpl->newBlock('page-history-list');
 				foreach ($records as $record) {
 					$tpl->newBlock('page-history-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'title' => $record->title,
 						'time' => date('Y-m-d H:i', $record->time),
 						'id' => $record->id,
 						'user' => $db->get_var("SELECT nick FROM users WHERE id = '$record->nextmod' LIMIT 1"),
 						'symbols' => strlen($record->text)
-					));
+					]);
 				}
 			}
 
@@ -809,7 +809,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			}
 
 			$tpl->newBlock('read-article');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $article->title,
 				'text' => $article_text,
 				'custom_content' => $custom_content,
@@ -827,7 +827,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'rating' => $rat,
 				'rating_count' => $article->rating_count,
 				'avatar' => get_avatar($author, 's')	
-			));
+			]);
 
 			$page_title = $article->title . ' - ' . $category->title;
 
@@ -884,12 +884,12 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 					if (!empty($movie_data->type)) {
 
-						$types = array(
+						$types = [
 							'movie' => 'Filma',
 							'documentary' => 'Dokumentāls raidījums',
 							'animation' => 'Animācijas filma',
 							'series' => 'Seriāls'
-						);
+						];
 
 						$tpl->newBlock('movie-info-type');
 						$tpl->assign('type', $types[$movie_data->type]);
@@ -898,7 +898,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 
 					if ($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
-						$gen = array();
+						$gen = [];
 						foreach ($genres as $genre) {
 							$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
 						}
@@ -930,17 +930,17 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 						$rest = $like_count - count($likes);
 						if ($rest > 0) {
-							$tpl->assign(array(
+							$tpl->assign([
 								'rest' => ' un ' . $rest . ' citi...'
-							));
+							]);
 						}
 
 						foreach ($likes as $user_like) {
 							$tpl->newBlock('movie-likes-user');
-							$tpl->assign(array(
+							$tpl->assign([
 								'avatar' => get_avatar($user_like, 's'),
 								'nick' => $user_like->nick
-							));
+							]);
 						}
 					}
 
@@ -1015,9 +1015,9 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$icon = 'heart.png';
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'icon' => $icon
-				));
+				]);
 			}
 
 			$stag = $db->get_var("SELECT `tags`.`id` FROM `taged`,`tags` WHERE `taged`.`page_id` = '$article->id' AND `tags`.`special` = '1' AND `tags`.`id` = `taged`.`tag_id` AND `taged`.`lang` = '$lang' LIMIT 1");
@@ -1030,10 +1030,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$tag_page = $db->get_row("SELECT `title`,`strid` FROM `pages` WHERE `id` = '$article_tag->page_id'");
 						if (!empty($tag_page) && $article->id != $article_tag->page_id) {
 							$tpl->newBlock('post-stags-node');
-							$tpl->assign(array(
+							$tpl->assign([
 								'title' => $tag_page->title,
 								'url' => '/read/' . $tag_page->strid
-							));
+							]);
 						}
 					}
 				}
@@ -1059,14 +1059,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				foreach ($article_tags as $article_tag) {
 					$tagcount++;
 					$tpl->newBlock('post-tags-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'tag-title' => $article_tag->name,
 						'slug' => $article_tag->slug,
-					));
+					]);
 				}
 			}
 
-			if ($auth->ok && in_array($auth->level, array(1, 2, 3))) {
+			if ($auth->ok && in_array($auth->level, [1, 2, 3])) {
 				$tpl->newBlock('post-newtags');
 			}
 
@@ -1113,14 +1113,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				$comment_number = $skip + 1;
 				$childs_q = $db->get_results("SELECT `id`,`date`,`parent`,`author`,`text`,`vote_value`,`vote_users` FROM `comments` WHERE pid = '" . $article->id . "' AND parent != 0 AND removed = 0 ORDER BY id ASC");
 
-				$childs = array();
+				$childs = [];
 				if (!empty($childs_q)) {
 					foreach ($childs_q as $comment) {
 						$childs[$comment->parent][$comment->id] = $comment;
 					}
 				}
 
-				$author = array();
+				$author = [];
 				foreach ($parents as $comment) {
 
 					//REGISTERED USERS
@@ -1154,14 +1154,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						}
 						
 
-						$tpl->assign(array(
+						$tpl->assign([
 							'comment-id' => $comment->id,
 							'comment-number' => $comment_number,
 							'comment-text' => add_smile($comment->text),
 							'comment-date' => $comment->date,
 							'author' => $author_box,
 							'comment-editedby' => $editedby
-						));
+						]);
 
 						if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {
 							$signature = '<div class="comment-signature">' . $author[$comment->author]->signature . '</div>';
@@ -1180,7 +1180,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							if (!empty($comment->vote_users)) {
 								$voters = unserialize($comment->vote_users);
 							} else {
-								$voters = array();
+								$voters = [];
 							}
 							$voted = in_array($auth->id, $voters);
 
@@ -1207,38 +1207,38 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 						if (!$auth->mobile) {
 							$tpl->newBlock('comments-vote');
-							$tpl->assign(array(
+							$tpl->assign([
 								'comment-id' => $comment->id,
 								'comment-vote_value' => $comment->vote_value,
 								'comment-plus' => $pluslnk,
 								'comment-minus' => $minuslnk,
 								'comment-vclass' => $vclass
-							));
+							]);
 						}
 
 						if (im_mod()) {
 							$tpl->newBlock('comments-adm');
-							$tpl->assign(array(
+							$tpl->assign([
 								'delete' => '?delcom=' . $comment->id . '&token=' . make_token('delcom'),
 								'edit' => '?editcom=' . $comment->id,
-							));
+							]);
 						} elseif ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $comment->author) {
 							$tpl->newBlock('comments-own');
-							$tpl->assign(array(
+							$tpl->assign([
 								'edit' => '?editcom=' . $comment->id,
-							));
+							]);
 						}
 
 						if ($auth->ok && !$article->closed && empty($auth->mobile)) {
 							$tpl->newBlock('comments-reply');
-							$tpl->assign(array(
+							$tpl->assign([
 								'comment-id' => $comment->id,
 								'page-id' => $article->id
-							));
+							]);
 						}
 
 						//	pārkāpuma ziņošanas podziņa komentāra labajā pusē
-						if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
+						if ($auth->ok && !$auth->mobile && in_array($lang, [1, 7, 9])) {
 							$tpl->newBlock('report-comment');
 							$tpl->assign('comment-id', $comment->id);
 						}
@@ -1263,14 +1263,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 										$author_link = '<em>dzēsts</em>';
 									}
 
-									$tpl->assign(array(
+									$tpl->assign([
 										'rpl-id' => $reply->id,
 										'rpl-text' => add_smile($reply->text),
 										'rpl-date' => $reply->date,
 										'rpl-author' => $author_link,
 										'rpl-author-id' => $reply->author,
 										'rpl-avatar' => $avatar
-									));
+									]);
 
 
 									$pluslnk = '<span class="voted1"></span>';
@@ -1282,7 +1282,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 										if (!empty($reply->vote_users)) {
 											$voters = unserialize($reply->vote_users);
 										} else {
-											$voters = array();
+											$voters = [];
 										}
 										$voted = in_array($auth->id, $voters);
 
@@ -1309,21 +1309,21 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 									if (!$auth->mobile) {
 										$tpl->newBlock('reply-vote');
-										$tpl->assign(array(
+										$tpl->assign([
 											'comment-id' => $reply->id,
 											'comment-vote_value' => $reply->vote_value,
 											'comment-plus' => $pluslnk,
 											'comment-minus' => $minuslnk,
 											'comment-vclass' => $vclass
-										));
+										]);
 									}
 
 									if (!$auth->mobile && (im_mod() || ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $reply->author))) {
 										$tpl->newBlock('reply-adm');
-										$tpl->assign(array(
+										$tpl->assign([
 											'edit' => '?editcom=' . $reply->id,
 											'delete' => '?delcom=' . $reply->id . '&token=' . make_token('delcom')
-										));
+										]);
 									}
 
 									// komentāra atbildes ziņošanas podziņa
@@ -1355,21 +1355,21 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 						$comment->date = display_time(strtotime($comment->date));
 
-						$tpl->assign(array(
+						$tpl->assign([
 							'comment-id' => $comment->id,
 							'comment-number' => $comment_number,
 							'comment-text' => add_smile($comment->text),
 							'comment-date' => $comment->date,
 							'comment-anon_nick' => $comment->anon_nick,
 							'comment-avatar' => '/dati/bildes/useravatar/none.png'
-						));
+						]);
 						if (im_mod()) {
 							$tpl->newBlock('comments-anon-adm');
-							$tpl->assign(array(
+							$tpl->assign([
 								'comment-id' => $comment->id,
 								'page-id' => $article->id,
 								'comment-ip' => $comment->ip,
-							));
+							]);
 						}
 					}
 
@@ -1386,11 +1386,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$skip = $skip / $end;
 
 					$pager = pager($total, $skip, 1, '/read/' . $article->strid . '/com_page/');
-					$tpl->assignGlobal(array(
+					$tpl->assignGlobal([
 						'pager-next' => $pager['next'],
 						'pager-prev' => $pager['prev'],
 						'pager-numeric' => $pager['pages']
-					));
+					]);
 				}
 			}
 
@@ -1403,10 +1403,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				//comment form
 			} elseif ($auth->ok) {
 				$tpl->newBlock('add-comment');
-				$tpl->assign(array(
+				$tpl->assign([
 					'comment-pid' => $article->id,
 					'comment-pid-check' => substr(md5($article->id . $remote_salt . $auth->id), 0, 8),
-				));
+				]);
 
 				if ($auth->id == 1) {
 					$tpl->newBlock('resp-tools');
@@ -1426,10 +1426,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			$pagepath = '<a href="/' . $category2->textid . '">' . $category2->title . '</a> / ' . $pagepath;
 		}
 
-		$tpl->assignGlobal(array(
+		$tpl->assignGlobal([
 			'page-sel-' . $article->id => ' class="selected"',
 			'cur-url' => '/read/' . $article->strid
-		));
+		]);
 
 	} else {
 		set_flash('Tev nav atļauts apskatīt šo sadaļu!', 'error');

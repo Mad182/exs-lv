@@ -48,12 +48,12 @@ if ($auth->ok && isset($_GET['var1'])) {
 		}
 
 		$tpl->newBlock('mb-edit');
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $mb->id,
 			'text' => h($mb->text),
 			'cat-url' => $category->textid,
 			'xsrf' => make_token('editmb')
-		));
+		]);
 		$tpl->newBlock('tinymce-enabled');
 
 	} else {

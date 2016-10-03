@@ -18,15 +18,15 @@
 // katram pieprasījumam uz šo sadaļu jābūt formātā
 //   /report/{entry-type}/{entry-id}
 // kur {entry-type} ir kāda no šīm vērtībām...
-$allowed_types = array(
+$allowed_types = [
     'miniblog',
     'article-comment',
     'gallery-comment'
-);
+];
 
 // pieļaujamie projekti/apakšprojekti, kuros iespējotas sūdzības:
 // exs.lv, lol.exs.lv, runescape.exs.lv
-$allowed_sites = array(1, 7, 9);
+$allowed_sites = [1, 7, 9];
 
 // sadaļa ielādējama tikai caur ajax pieprasījumu
 if (!isset($_GET['_'])) {
@@ -57,10 +57,10 @@ function send_error($e = 0) {
         $content = '<p class="report-error">Notikusi kļūda (#'.$e.')! '.
                    'Pārlādē lapu un mēģini vēlreiz.</p>';
     }
-	echo json_encode(array(
+	echo json_encode([
         'state' => 'error',
         'content' => $content
-    )); exit;
+    ]); exit;
 }
 
 
@@ -132,14 +132,14 @@ if (isset($_POST['report-reason'])) {
     // nav jāsanitizo, jo vienreiz jau apstrādāts
     $report_content = $query_check->text;
 
-    $insert_data = array(
+    $insert_data = [
         'type' => $entry_type_id,
         'entry_id' => $entry_id,
         'comment' => $report_reason,
         'reported_content' => $report_content,
         'created_by' => $auth->id,
         'created_at' => time()
-    );
+    ];
     $sql = $db->insert('reports', $insert_data);
 
 	if ($sql) {
@@ -150,10 +150,10 @@ if (isset($_POST['report-reason'])) {
 		$content = 'Sūdzību iesniegt neizdevās. :(';
 	}
     
-	echo json_encode(array(
+	echo json_encode([
         'state' => $state,
         'content' => $content
-    )); exit;
+    ]); exit;
 }
 
 
@@ -252,12 +252,12 @@ $offender = '<a href="/user/' . $query_data->userid . '">' . $offender . '</a>';
 
 $new_tpl = fetch_tpl();
 $new_tpl->newBlock('report-form');
-$new_tpl->assign(array(
+$new_tpl->assign([
 	'offender' => $offender,
 	'action' => '/report/' . $entry_type . '/' . $entry_id,
 	'entry-text' => $entry_text,
 	'xsrf' => $auth->xsrf
-));
+]);
 
 // dažādiem projektiem ir dažāds rādāmais saturs
 if ($lang == 1) {
@@ -267,7 +267,7 @@ if ($lang == 1) {
 }
 
 // visbeidzotsaturs tiks atgriezts pieprasījumam
-echo json_encode(array(
+echo json_encode([
     'state' => 'success',
     'content' => $new_tpl->getOutputContent()
-)); exit;
+]); exit;

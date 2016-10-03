@@ -29,16 +29,16 @@ if ($users) {
 
 	foreach ($users as $user) {
 		$tpl->newBlock('userlist-item');
-		$tpl->assign(array(
+		$tpl->assign([
 			'nick' => usercolor($user->nick, $user->level, false, $user->id),
 			'id' => $user->id
-		));
+		]);
 	}
 
 	$pager = pager($db->get_var("SELECT count(*) FROM users " . $sfilter), $skip, $end, '/lietotaji/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 }

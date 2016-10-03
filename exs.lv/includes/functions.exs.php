@@ -38,7 +38,7 @@ function get_blog_latest($category_id, $force = false) {
  * Movie genres
  */
 function translate_genres($en) {
-	$genres = array(
+	$genres = [
 		'Action' => 'Asa sižeta',
 		'Adventure' => 'Piedzīvojumi',
 		'Animation' => 'Animācijas',
@@ -60,7 +60,7 @@ function translate_genres($en) {
 		'Thriller' => 'Trilleris',
 		'War' => 'Karš',
 		'Western' => 'Vesterns'
-	);
+	];
 
 	if (!empty($genres[$en])) {
 		return $genres[$en];
@@ -82,7 +82,7 @@ function get_todays_top_comment($date = null) {
 
 	if (($out = $m->get('todays_top_comment_' . date('Y-m-d', $time))) === false) {
 
-		$out = array();
+		$out = [];
 
 		$best = $db->get_row("SELECT
 						`id`, `author`, `text`, `parent`, `vote_value`
@@ -118,13 +118,13 @@ function get_todays_top_comment($date = null) {
 				$content = textlimit($content, 120, '') . '...';
 			}
 
-			$out = array(
+			$out = [
 				'best-link' => $url,
 				'best-avatar' => $avatar,
 				'best-nick' => $user->nick,
 				'best-rating' => $best->vote_value,
 				'best-comment' => $content
-			);
+			];
 		}
 
 		$m->set('todays_top_comment_' . date('Y-m-d', $time), $out, 20);

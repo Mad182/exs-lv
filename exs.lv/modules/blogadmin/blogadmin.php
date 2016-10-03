@@ -33,7 +33,7 @@ elseif (!get_blog_by_user($auth->id)) {
 			$db->query("UPDATE users SET credit = credit-'5' WHERE id = '$auth->id'");
 			
 			// bloga sadaļa jāizveido visos projektos, kur blogi eksistē
-			$blog_langs = array(1, 9); // exs.lv, rs.exs.lv
+			$blog_langs = [1, 9]; // exs.lv, rs.exs.lv
 			foreach ($blog_langs as $blog_lang) {
 				$db->query("INSERT INTO cat (textid,lang,title,isblog,parent) VALUES ('" . strtolower(mkslug($auth->nick)) . "','$blog_lang','$nick blogs','$auth->id','110')");
 				$m->delete('isb_' . $auth->id . '_' . $blog_lang);
@@ -48,11 +48,11 @@ elseif (!get_blog_by_user($auth->id)) {
 	
 	
 	$tpl->newBlock('blogadmin-setup');
-	$tpl->assign(array(
+	$tpl->assign([
 		'credit' => $credit,
 		'user-id' => $auth->id,
 		'pay' => $pay
-	));
+	]);
 } 
 
 // bloga administrēšanas forma
@@ -95,7 +95,7 @@ else {
 				$foo->file_new_name_body = $ins;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';
-				$foo->allowed = array('image/*');
+				$foo->allowed = ['image/*'];
 				$foo->image_ratio = true;
 				$foo->image_ratio_pixels = 17200;
 				$foo->jpeg_quality = 93;
@@ -110,7 +110,7 @@ else {
 					$foo->image_convert = 'jpg';
 					$foo->image_x = 75;
 					$foo->image_y = 75;
-					$foo->allowed = array('image/*');
+					$foo->allowed = ['image/*'];
 					$foo->image_ratio_crop = true;
 					$foo->jpeg_quality = 93;
 					$foo->process('dati/bildes/av_sm/');
@@ -134,7 +134,7 @@ else {
 					$foo->image_convert = 'jpg';
 					$foo->image_x = 75;
 					$foo->image_y = 75;
-					$foo->allowed = array('image/*');
+					$foo->allowed = ['image/*'];
 					$foo->image_ratio_crop = true;
 					$foo->jpeg_quality = 95;
 					$foo->process('dati/bildes/av_sm/');
@@ -157,10 +157,10 @@ else {
 			$tpl->newBlock('user-usertopics-list');
 			foreach ($articles as $article) {
 				$tpl->newBlock('user-usertopics-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'strid' => $article->strid,
 					'title' => $article->title
-				));
+				]);
 			}
 		}
 	} 
@@ -197,11 +197,11 @@ else {
 				$tpl->newBlock('user-sidelinks-list');
 				foreach ($sidelinks as $sidelink) {
 					$tpl->newBlock('user-sidelinks-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'sidelink-id' => $sidelink->id,
 						'sidelink-title' => $sidelink->title,
 						'sidelink-url' => $sidelink->url,
-					));
+					]);
 				}
 			}
 		} else {
@@ -228,10 +228,10 @@ else {
 					}
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'title' => $edit->title,
 					'url' => $edit->url
-				));
+				]);
 			} else {
 				$tpl->newBlock('error-noedit');
 			}

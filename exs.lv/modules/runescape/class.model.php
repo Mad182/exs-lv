@@ -11,9 +11,9 @@ class Model {
 	 *  Pievienos modelim atsauces uz dažiem projekta globālajiem mainīgajiem.
 	 */
 	public function __construct() {
-		$globals = array(
+		$globals = [
 			'db', 'auth', 'lang', 'debug', 'category', 'm'
-		);
+		];
 		foreach ($globals as $global) {
 			global ${$global};
 			$this->{$global} =& ${$global};

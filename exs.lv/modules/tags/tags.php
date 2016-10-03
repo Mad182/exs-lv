@@ -3,7 +3,7 @@
 /**
  * Apskatīt ietagoto saturu
  */
-$robotstag = array('noindex', 'follow');
+$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['tag'])) {
 	$tagid = (int) $_GET['tag'];
@@ -26,10 +26,10 @@ if (isset($_GET['var1'])) {
 		}
 
 		$tpl->newBlock('tags-current');
-		$tpl->assign(array(
+		$tpl->assign([
 			'tag-name' => $tag->name,
 			'tag-id' => $tag->id
-		));
+		]);
 		if (!empty($tag->description)) {
 			$tpl->newBlock('tags-description');
 			$tpl->assign('description', $tag->description);
@@ -45,14 +45,14 @@ if (isset($_GET['var1'])) {
 					if ($article) {
 						$author = get_user($article->author);
 						$tpl->newBlock('tags-articles-node');
-						$tpl->assign(array(
+						$tpl->assign([
 							'url' => '/read/' . $article->strid,
 							'text' => textlimit($article->text, 170),
 							'title' => $article->title,
 							'id' => $article->id,
 							'author' => $author->nick,
 							'date' => time_ago(strtotime($article->date))
-						));
+						]);
 					} else {
 						//clean database from broken tags
 						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
@@ -68,12 +68,12 @@ if (isset($_GET['var1'])) {
 					$article = $db->get_row("SELECT `id`, `text`, `thb`, `uid` FROM `images` WHERE `id` = " . $taged->page_id);
 					if ($article) {
 						$tpl->newBlock('node-img');
-						$tpl->assign(array(
+						$tpl->assign([
 							'id' => $article->id,
 							'thb' => $article->thb,
 							'title' => ucfirst(h(substr(strip_tags($article->text), 0, 256))),
 							'uid' => $article->uid
-						));
+						]);
 					} else {
 						//clean database from broken tags
 						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
@@ -96,7 +96,7 @@ if (isset($_GET['var1'])) {
 						
 						$user = get_user($mb->author);
 						
-						$tpl->assign(array(
+						$tpl->assign([
 							'uid' => $mb->author,
 							'id' => $mb->id,
 							'av' => get_avatar($user),
@@ -104,7 +104,7 @@ if (isset($_GET['var1'])) {
 							'text' => $text,
 							'author' => $user->nick,
 							'date' => time_ago(strtotime($mb->date))
-						));
+						]);
 					} else {
 						//clean database from broken tags
 						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");
@@ -121,10 +121,10 @@ if (isset($_GET['var1'])) {
 
 					if ($group) {
 						$tpl->newBlock('tags-articles-node-group');
-						$tpl->assign(array(
+						$tpl->assign([
 							'title' => $group->title,
 							'id' => $group->id
-						));
+						]);
 					} else {
 						//clean database from broken tags
 						$db->query("DELETE FROM `taged` WHERE `id` = '$taged->id' AND `lang` = '$lang'");

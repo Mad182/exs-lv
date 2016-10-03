@@ -11,34 +11,34 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 		if ($user) {
 
 			$usernames = $db->get_results("SELECT * FROM `nick_history` WHERE `user_id` = $user->id");
-			$history = array();
+			$history = [];
 			if (!empty($usernames)) {
 				foreach ($usernames as $username) {
-					$history[] = array(
+					$history[] = [
 						'nick' => h($username->nick),
 						'changed' => $username->changed
-					);
+					];
 				}
 			}
 
-			$avatar = array(
+			$avatar = [
 				'small' => 'https:' . get_avatar($user, 's'),
 				'medium' => 'https:' . get_avatar($user, 'm'),
 				'large' => 'https:' . get_avatar($user, 'l'),
-			);
+			];
 
 			$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
 
-			$types = array(
+			$types = [
 				0 => 'user',
 				1 => 'admin',
 				2 => 'moderator',
 				3 => 'journalist',
 				4 => 'vip',
 				5 => 'bot'
-			);
+			];
 
-			$data = array(
+			$data = [
 				'id' => (int) $user->id,
 				'nick' => h($user->nick),
 				'posts' => (int) $user->posts,
@@ -48,7 +48,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 				'last_seen' => $user->lastseen,
 				'nick_history' => $history,
 				'avatar' => $avatar
-			);
+			];
 
 			echo json_encode($data);
 			exit;

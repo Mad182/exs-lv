@@ -44,7 +44,7 @@ if (isset($_POST['new-topic-body'])) {
 				$foo->file_new_name_body = $topicid;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';
-				$foo->allowed = array('image/*');
+				$foo->allowed = ['image/*'];
 				$foo->image_ratio = true;
 				$foo->image_ratio_pixels = 17800;
 				$foo->jpeg_quality = 96;
@@ -58,7 +58,7 @@ if (isset($_POST['new-topic-body'])) {
 					$foo->image_convert = 'jpg';
 					$foo->image_x = 75;
 					$foo->image_y = 75;
-					$foo->allowed = array('image/*');
+					$foo->allowed = ['image/*'];
 					$foo->image_ratio_crop = true;
 					$foo->jpeg_quality = 96;
 					$foo->file_auto_rename = false;
@@ -87,7 +87,7 @@ if (isset($_POST['new-topic-body'])) {
 				$foo->file_new_name_body = $topicid;
 				$foo->image_resize = true;
 				$foo->image_convert = 'jpg';
-				$foo->allowed = array('image/*');
+				$foo->allowed = ['image/*'];
 				$foo->image_ratio = true;
 				$foo->image_ratio_pixels = 17800;
 				$foo->jpeg_quality = 96;
@@ -101,7 +101,7 @@ if (isset($_POST['new-topic-body'])) {
 					$foo->image_convert = 'jpg';
 					$foo->image_x = 75;
 					$foo->image_y = 75;
-					$foo->allowed = array('image/*');
+					$foo->allowed = ['image/*'];
 					$foo->image_ratio_crop = true;
 					$foo->jpeg_quality = 96;
 					$foo->file_auto_rename = false;
@@ -179,7 +179,7 @@ if ($auth->ok) {
 
 		$tpl->newBlock('approve-edit');
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'article-showtitle' => $article->title,
 			'article-title' => $article->title,
 			'article-text' => h($article->text),
@@ -190,12 +190,12 @@ if ($auth->ok) {
 			'aurl' => '/user/' . $article->author,
 			'article-date' => $article->date,
             'article-wide' => $article->is_wide
-		));
+		]);
 
 		if (file_exists('modules/approve/av_l/' . $article->id . '.jpg')) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'article-avatar' => '<strong>Avatars:</strong><br/ ><img src="/modules/approve/av_l/' . $article->id . '.jpg" alt="" />',
-			));
+			]);
 		}
 
         // runescape apakšprojekta kategoriju sadalījums
@@ -214,11 +214,11 @@ if ($auth->ok) {
                     $category_sel = ($key == $article->category) ? ' selected="selected"' : '';
                 
                     $tpl->newBlock('rs-app-category');  
-                    $tpl->assign(array(
+                    $tpl->assign([
                         'category-title' => $val,
                         'category-id'    => $key,
                         'category-sel'   => $category_sel
-                    ));
+                    ]);
                 }
             }
         }
@@ -235,11 +235,11 @@ if ($auth->ok) {
                     if ($category_l->id == $article->category) {
                         $sel = ' selected="selected"';
                     }
-                    $tpl->assign(array(
+                    $tpl->assign([
                         'category-title' => str_replace('Spēļu portāls', 'Spēļu portāls (jaunumi)', $category_l->title),
                         'category-id' => $category_l->id,
                         'category-sel' => $sel
-                    ));
+                    ]);
                 }
             }
         }
@@ -257,10 +257,10 @@ if ($auth->ok) {
 			$tpl->newBlock('approve-list');
 			foreach ($articles as $article) {
 				$tpl->newBlock('approve-list-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'approve-list-title' => $article->title,
 					'approve-list-id' => $article->id,
-				));
+				]);
 			}
 		}
 
@@ -271,10 +271,10 @@ if ($auth->ok) {
 				$tpl->newBlock('approveadm-list');
 				foreach ($articles as $article) {
 					$tpl->newBlock('approveadm-list-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'approve-list-title' => $article->title,
 						'approve-list-id' => $article->id,
-					));
+					]);
 				}
 			}
 		}
@@ -312,10 +312,10 @@ if ($auth->ok) {
                 foreach ($catgroup as $key => $val) {
                 
                     $tpl->newBlock('rs-category');  
-                    $tpl->assign(array(
+                    $tpl->assign([
                         'category-title' => $val,
                         'category-id'    => $key
-                    ));
+                    ]);
                 }
             }
         }
@@ -325,10 +325,10 @@ if ($auth->ok) {
                 $tpl->newBlock('cat-selection');
                 foreach ($categorys as $category_l) {
                     $tpl->newBlock('select-category');
-                    $tpl->assign(array(
+                    $tpl->assign([
                         'category-title' => str_replace('Spēļu portāls', 'Spēļu portāls (jaunumi)', $category_l->title),
                         'category-id' => $category_l->id,
-                    ));
+                    ]);
                 }
             }
         }

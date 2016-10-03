@@ -3,7 +3,7 @@
 /**
  * Aizmirstas paroles atjaunošana
  */
-$robotstag = array('noindex', 'follow');
+$robotstag = ['noindex', 'follow'];
 
 deny_proxies();
 
@@ -29,7 +29,7 @@ if (!$auth->ok) {
 
 		if (!empty($userdata)) {
 			$newpass = createPassword(8);
-			$newhash = password_hash($newpass, PASSWORD_BCRYPT, array("cost" => 14));
+			$newhash = password_hash($newpass, PASSWORD_BCRYPT, ["cost" => 14]);
 
 			//send email
 			$subject = 'Tava jaunā parole ' . $_SERVER['HTTP_HOST'];

@@ -65,7 +65,7 @@ if ($category->isforum) {
 			$finfo = get_cat($forum->textid);
 			if (!empty($finfo->mods)) {
 				$add = '<br />Moderatori: ';
-				$mods = array();
+				$mods = [];
 				foreach ($finfo->mods as $mod) {
 					$minfo = get_user($mod);
 					$mods[] = '<a href="/user/' . $minfo->id . '">' . usercolor($minfo->nick, $minfo->level, false, $minfo->id) . '</a>';
@@ -73,7 +73,7 @@ if ($category->isforum) {
 				$add .= implode(', ', $mods);
 			}
 
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $forum->id,
 				'title' => $forum->title,
 				'textid' => $forum->textid,
@@ -83,35 +83,35 @@ if ($category->isforum) {
 				'topics' => $forum->stat_topics,
 				'txt-posts' => lv_dsk($forum->stat_com, 'posts', 'posti'),
 				'txt-topics' => lv_dsk($forum->stat_topics, 'tēma', 'tēmas')
-			));
+			]);
 
 			$topic = $db->get_row("SELECT `title`, `strid`, `bump`, `author` FROM `pages` WHERE `category` = '" . $forum->id . "' ORDER BY `bump` DESC LIMIT 1");
 			if (!empty($topic)) {
 				$author = get_user($topic->author);
-				$tpl->assign(array(
+				$tpl->assign([
 					'date' => display_time(strtotime($topic->bump)),
 					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
 					'author' => '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>'
-				));
+				]);
 			}
 
 
 			if ($auth->level == 1) {
 				//foruma apakškategoriju pievienošana/labošana
-				$tpl->assign(array(
+				$tpl->assign([
 					'addlink' => '<br /><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
 					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">+edit</a> '
-				));
+				]);
 			}
 
 			if (!empty($subcats2)) {
 				$tpl->newBlock('subcats');
 				foreach ($subcats2 as $subcat2) {
 					$tpl->newBlock('subcats-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'title' => $subcat2->title,
 						'textid' => $subcat2->textid
-					));
+					]);
 				}
 			}
 		}
@@ -192,18 +192,18 @@ if (!$category->mods_only || im_mod()) {
 			$root_cat = get_cat(get_top($category->parent));
 
 			$tpl->newBlock('list-forum');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $category->title,
 				'catid' => $category->id,
 				'strid' => $root_cat->textid
-			));
+			]);
 			
 			if($auth->ok) {
 				$tpl->newBlock('forum-new');
-				$tpl->assign(array(
+				$tpl->assign([
 					'catid' => $category->id,
 					'strid' => $root_cat->textid
-				));
+				]);
 			}
 
 			foreach ($articles as $article) {
@@ -243,7 +243,7 @@ if (!$category->mods_only || im_mod()) {
 					$author_link = '<em>dzēsts</em>';
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $article->id,
 					'url' => '/read/' . $article->strid,
 					'title' => $article->title,
@@ -251,17 +251,17 @@ if (!$category->mods_only || im_mod()) {
 					'date' => $date,
 					'author' => $author_link,
 					'posts' => $article->posts,
-				));
+				]);
 			}
 
 			//list for categories with intro text
 		} elseif ($category->intro) {
 			$tpl->newBlock('list-articles');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $category->title,
 				'catid' => $category->id,
 				'strid' => $category->textid
-			));
+			]);
 
 			foreach ($articles as $article) {
 				if (!$article->nick) {
@@ -281,7 +281,7 @@ if (!$category->mods_only || im_mod()) {
 				if (!empty($article->intro)) {
 					$article->text = $article->intro;
 				} else {
-					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', add_smile($article->text))))), 600);
 					$article->intro = sanitize($article->text);
 					$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 				}
@@ -294,7 +294,7 @@ if (!$category->mods_only || im_mod()) {
 				
 				$user = get_user($article->author);
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $article->id,
 					'url' => '/read/' . $article->strid,
 					'title' => $article->title,
@@ -304,26 +304,26 @@ if (!$category->mods_only || im_mod()) {
 					'posts' => $article->posts,
 					'intro' => $article->text,
 					'avatar' => get_avatar($user, 's')
-				));
+				]);
 
 				if ($article->avatar) {
 					$tpl->newBlock('list-avatar');
-					$tpl->assign(array(
+					$tpl->assign([
 						'url' => '/read/' . $article->strid,
 						'image' => '/' . trim($article->avatar),
 						'node-avatar-alt' => trim(h($article->title))
-					));
+					]);
 				}
 			}
 		} else {
 
 			//list for categories w/o intro text
 			$tpl->newBlock('list-articles-short');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $category->title,
 				'catid' => $category->id,
 				'strid' => $category->textid
-			));
+			]);
 
 			foreach ($articles as $article) {
 
@@ -339,22 +339,22 @@ if (!$category->mods_only || im_mod()) {
 					$author_link = '<em>dzēsts</em>';
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $article->id,
 					'url' => '/read/' . $article->strid,
 					'title' => $article->title,
 					'date' => $article->date,
 					'author' => $author_link
-				));
+				]);
 			}
 		}
 
 		$pager = pager($db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'"), $skip, $end, '/' . $category->textid . '/?skip=');
-		$tpl->assignGlobal(array(
+		$tpl->assignGlobal([
 			'pager-next' => $pager['next'],
 			'pager-prev' => $pager['prev'],
 			'pager-numeric' => $pager['pages']
-		));
+		]);
 	} else {
 		$tpl->newBlock('error-catempty');
 		$tpl->assign('title', $category->title);

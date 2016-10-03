@@ -3,7 +3,7 @@
 /**
  * Lietotājam piešķirto medaļu skats
  */
-$robotstag = array('noindex', 'nofollow');
+$robotstag = ['noindex', 'nofollow'];
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
@@ -41,24 +41,24 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 	$tpl->newBlock('user-awards');
 
 	$awards = get_awards($inprofile->id);
-	$existing_awards = array();
+	$existing_awards = [];
 
 	if (!empty($awards)) {
 
 		$tpl->newBlock('user-awards-list');
-		$tpl->assign(array(
+		$tpl->assign([
 			'total' => count($awards)
-		));
+		]);
 
 		foreach ($awards as $award) {
 			$tpl->newBlock('user-awards-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $award->id,
 				'award' => $award->award,
 				'title' => $award->title,
 				'importance' => $award->importance,
 				'created' => $award->created,
-			));
+			]);
 			if ($auth->id == $inprofile->id || $debug) {
 				$tpl->assign('cursor', 'cursor:move;');
 			}
@@ -75,10 +75,10 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		//ja lietotājam jau ir šāds awards, neko nedaram
 		if (!in_array($key, $existing_awards)) {
 			$tpl->newBlock('user-awards-free-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'award' => $key,
 				'title' => $val['title']
-			));
+			]);
 			if ($auth->id == $inprofile->id) {
 				$tpl->assign('add', '&nbsp;<a class="clue" href="javascript:void();" rel="/award-info/' . $key . '?_=' . time() . '">(?)</a>');
 			}

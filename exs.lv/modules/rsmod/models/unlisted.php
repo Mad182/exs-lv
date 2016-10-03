@@ -11,8 +11,8 @@ class Model_Unlisted extends Model {
         global $cat_f2p_quests, $cat_p2p_quests, $cat_miniquests;
         global $cat_minigames, $cat_distractions, $cat_guilds;
 
-        $this->cats = array($cat_f2p_quests, $cat_p2p_quests, $cat_miniquests, 
-            $cat_minigames, $cat_distractions, $cat_guilds);
+        $this->cats = [$cat_f2p_quests, $cat_p2p_quests, $cat_miniquests, 
+            $cat_minigames, $cat_distractions, $cat_guilds];
 
         parent::__construct();
     }

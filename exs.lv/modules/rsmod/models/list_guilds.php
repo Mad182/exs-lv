@@ -94,7 +94,7 @@ class Model_List_Guilds extends Model {
         $extra = (isset($post_arr['extra'])) ? 
             input2db($post_arr['extra'], 1024) : '';
 
-        $values = array(
+        $values = [
             'page_id'           => $page_id,
             'cat_id'            => (int)$this->cat_guilds,
             'title'             => $title,
@@ -103,7 +103,7 @@ class Model_List_Guilds extends Model {
             'extra'             => $extra,
             'created_by'        => (int)$this->auth->id,
             'created_at'        => time()
-        );
+        ];
         $this->db->insert('rs_pages', $values);
     }
     
@@ -148,7 +148,7 @@ class Model_List_Guilds extends Model {
         $entry->extra = (isset($post_arr['extra'])) ? 
             input2db($post_arr['extra'], 1024) : '';
 
-        $values = array(
+        $values = [
             'page_id'           => $entry->page_id,
             'title'             => $entry->title,
             'members_only'      => (int)$entry->members_only,
@@ -156,11 +156,11 @@ class Model_List_Guilds extends Model {
             'extra'             => $entry->extra,
             'updated_by'        => (int)$this->auth->id,
             'updated_at'        => time()
-        );
-        $params = array(
+        ];
+        $params = [
             'id'            => (int)$entry->id,
             'deleted_by'    => 0
-        );
+        ];
         
         $this->db->update('rs_pages', $params, $values);
     }

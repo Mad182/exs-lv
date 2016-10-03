@@ -2,7 +2,7 @@
 
 $module_content = '<table class="table">';
 
-$files = array();
+$files = [];
 if ($handle = opendir('/home/www/img.exs.lv/pikseli-atbildes')) {
 	while (false !== ($file = readdir($handle))) {
 		if ($file != "." && $file != "..") {

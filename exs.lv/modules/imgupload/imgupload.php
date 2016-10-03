@@ -44,7 +44,7 @@ if ($auth->ok) {
 		$foo->mime_check = true;
 		$foo->no_script = true;
 		$foo->file_max_size = $max_size;
-		$foo->allowed = array('image/*');
+		$foo->allowed = ['image/*'];
 
 		if ($foo->image_src_type == 'bmp') {
 			$foo->image_convert = 'png';
@@ -159,20 +159,20 @@ if ($auth->ok) {
 	if (!empty($images)) {
 		foreach ($images as $image) {
 			$tpl->newBlock('img-upload-item');
-			$tpl->assign(array(
+			$tpl->assign([
 				'file' => $image->file,
 				'path' => $image->path,
 				'created' => $image->created,
-			));
+			]);
 		}
 	}
 
 	$pager = pager($total, $skip, $end, '/img/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 } else {
 	$tpl->newBlock('error-nologin');
 	$tpl->assign('xsrf', $auth->xsrf);

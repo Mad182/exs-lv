@@ -10,7 +10,7 @@ class Model_Rshelp extends Model {
     private $max_per_page = 30;
     
     public function __construct() {
-        $this->globals(array('cat_rsnews', 'cat_padomi'));
+        $this->globals(['cat_rsnews', 'cat_padomi']);
         parent::__construct();
     }
 

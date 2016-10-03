@@ -10,21 +10,21 @@ if ($auth->ok === true) {
 	//apstrādā no last.fm atgriezto autorizāciju
 	if (!empty($_GET['token'])) {
 
-		$vars = array(
+		$vars = [
 			'apiKey' => $lastfm_apikey,
 			'secret' => $lastfm_secret,
 			'token' => $_GET['token']
-		);
+		];
 
 		$lastfm_auth = new lastfmApiAuth('getsession', $vars);
 
 		if (!empty($lastfm_auth->username)) {
-			$db->update('users', $auth->id, array(
+			$db->update('users', $auth->id, [
 				'lastfm_token' => $lastfm_auth->token,
 				'lastfm_username' => $lastfm_auth->username,
 				'lastfm_sessionkey' => $lastfm_auth->sessionKey,
 				'lastfm_subscriber' => $lastfm_auth->subscriber
-			));
+			]);
 		}
 		get_user($auth->id, true);
 
@@ -36,9 +36,9 @@ if ($auth->ok === true) {
 		//saglabā iestatījumus
 		if (isset($_POST['friends-do'])) {
 
-			$db->update('users', $auth->id, array(
+			$db->update('users', $auth->id, [
 				'lastfm_onlyfriends' => (bool) $_POST['friends']
-			));
+			]);
 			get_user($auth->id, true);
 
 			die('ok');

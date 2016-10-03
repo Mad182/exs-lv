@@ -30,9 +30,9 @@ if (!im_mod() || ($lang != 1 && $lang != 0)) {
 if (isset($_GET['_']) && isset($_GET['load'])) {
     // saturs atsevišķā failā, jo tiek ielasīts vairākās vietās
     include_once(CORE_PATH.'/modules/grouped-profiles/main-content.php');
-    echo json_encode(array(
+    echo json_encode([
         'content' => $new_tpl->getOutputContent()
-    ));
+    ]);
     exit;
 }
 
@@ -124,11 +124,11 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 		redirect('/'.$_GET['viewcat']);
 	}
 	
-	$data = array(
+	$data = [
 		'user_id' => $user_id,
 		'created_by' => $auth->id,
 		'created_at' => time()
-	);
+	];
 	
 	$insert = $db->insert('users_groups', $data);
 	
@@ -185,11 +185,11 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-child' &&
 			echo 'Neizdevās atlasīt datus.';
 		} else {
 			$templ->newBlock('new-child-form');            
-			$templ->assign(array(
+			$templ->assign([
 				'category-url' => $category->textid,
 				'main-id' => $parent_id,
 				'main-profile' => usercolor($parent_data->nick, $parent_data->level, false)
-			));
+			]);
 			
 			echo $templ->getOutputContent();
 		}
@@ -236,12 +236,12 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-child' &&
 						$childs_not_added++;
 					} else {
 					
-						$data = array(
+						$data = [
 							'user_id' => $child_id,
 							'parent_id' => $parent_id,
 							'created_by' => $auth->id,
 							'created_at' => time()
-						);
+						];
 						
 						$insert = $db->insert('users_groups', $data);
 						
@@ -318,12 +318,12 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'edit' &&
 			echo 'Neizdevās atlasīt datus.';
 		} else {
 			$templ->newBlock('edit-description');            
-			$templ->assign(array(
+			$templ->assign([
 				'category-url' => $category->textid,
 				'main-id' => $group_id,
 				'main-profile' => usercolor($data->nick, $data->level, false),
 				'description' => $data->description
-			));
+			]);
 			
 			echo $templ->getOutputContent();
 		}
@@ -335,8 +335,8 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'edit' &&
 
 		$description = input2db($_POST['description'], 2000);
 		
-		$values = array('description' => $description);
-		$criteria = array('id' => $data->id);        
+		$values = ['description' => $description];
+		$criteria = ['id' => $data->id];        
 		$update = $db->update('users_groups', $criteria, $values);
 		
 		if ($update !== false) {
@@ -414,12 +414,12 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-group' &&
 		");
 		
 		$tmpl->newBlock('delete-confirmation');
-		$tmpl->assign(array(
+		$tmpl->assign([
 			'category-url' => $category->textid,
 			'main-id' => $group_id,
 			'main-profile' => usercolor($data->nick, $data->level, false),
 			'profile-count' => $profile_count
-		));
+		]);
 		
 		echo $tmpl->getOutputContent();
 		exit;
@@ -427,13 +427,13 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-group' &&
 	// atzīmēs grupu kā dzēstu
 	} else {
 	
-		$data = array(
+		$data = [
 			'deleted_by' => $auth->id,
 			'deleted_at' => time()
-		);
-		$criteria = array(
+		];
+		$criteria = [
 			'id' => $group_id
-		);
+		];
 		$update = $db->update('users_groups', $criteria, $data);
 		
 		if ($update) {
@@ -528,8 +528,8 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
 	}
 	
 	// child -> main
-	$arr = array('parent_id' => 0, 'description' => sanitize($data->description));
-	$criteria = array('id' => $data->id);
+	$arr = ['parent_id' => 0, 'description' => sanitize($data->description)];
+	$criteria = ['id' => $data->id];
 	$upd = $db->update('users_groups', $criteria, $arr);
 	
 	if (!$upd) {
@@ -538,12 +538,12 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
 	}
 	
 	// main -> child
-	$arr = array('parent_id' => $data->id, 'description' => '');    
-	$criteria = array('id' => $data->parent_id, 'deleted_by' => 0);
+	$arr = ['parent_id' => $data->id, 'description' => ''];    
+	$criteria = ['id' => $data->parent_id, 'deleted_by' => 0];
 	$upd = $db->update('users_groups', $criteria, $arr);
 	
 	// children -> change parent
-	$criteria = array('parent_id' => $data->parent_id, 'deleted_by' => 0);
+	$criteria = ['parent_id' => $data->parent_id, 'deleted_by' => 0];
 	$upd = $db->update('users_groups', $criteria, $arr);
 	
 	redirect('/'.$_GET['viewcat'].'?scroll='.$data->user_id);

@@ -1,6 +1,6 @@
 <?php
 
-$events = array();
+$events = [];
 
 $mods_only = '';
 if (!im_mod()) {
@@ -59,7 +59,7 @@ foreach ($articles as $article) {
 
 	$where = ' &raquo; <span class="where">' . $article->ctitle . '</span> &raquo; <span class="where">' . $article->title . '</span>';
 
-	$lastpost = array();
+	$lastpost = [];
 	if ($article->posts > 0) {
 		$lastpost = $db->get_row(
 				"SELECT
@@ -80,7 +80,7 @@ foreach ($articles as $article) {
 		);
 	}
 
-	$events[strtotime($article->bump) . '-' . $url] = array(
+	$events[strtotime($article->bump) . '-' . $url] = [
 		'url' => $url,
 		'author' => usercolor($article->nick, $article->level),
 		'title' => $article->title,
@@ -89,7 +89,7 @@ foreach ($articles as $article) {
 		'where' => $where,
 		'posts' => $article->posts,
 		'lastpost' => $lastpost
-	);
+	];
 }
 
 
@@ -132,7 +132,7 @@ foreach ($images as $image) {
 
 	$where = ' &raquo; <span class="where">galerija</span>';
 
-	$lastpost = array();
+	$lastpost = [];
 	if ($image->posts > 0) {
 		$lastpost = $db->get_row(
 				"SELECT
@@ -153,7 +153,7 @@ foreach ($images as $image) {
 		);
 	}
 
-	$events[strtotime($image->bump) . '-' . $url] = array(
+	$events[strtotime($image->bump) . '-' . $url] = [
 		'url' => $url,
 		'author' => usercolor($image->nick, $image->level),
 		'title' => $image->text,
@@ -162,7 +162,7 @@ foreach ($images as $image) {
 		'where' => $where,
 		'posts' => $image->posts,
 		'lastpost' => $lastpost
-	);
+	];
 }
 
 ########### MINIBLOGS
@@ -170,7 +170,7 @@ foreach ($images as $image) {
 if ($auth->level == 1) {
 	$groupquery = '1 = 1';
 } else {
-	$usergroups = array("`miniblog`.`groupid` = '0'");
+	$usergroups = ["`miniblog`.`groupid` = '0'"];
 	if ($auth->ok === true) {
 		$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
 		if ($g_owners) {
@@ -256,7 +256,7 @@ if ($mbs) {
 		$time = time_ago_m($mb->bump);
 
 
-		$lastpost = array();
+		$lastpost = [];
 		if ($mb->posts > 0) {
 			$lastpost = $db->get_row(
 					"SELECT
@@ -277,7 +277,7 @@ if ($mbs) {
 			);
 		}
 
-		$events[$mb->bump . '-' . $url] = array(
+		$events[$mb->bump . '-' . $url] = [
 			'url' => $url,
 			'author' => usercolor($mb->nick, $mb->level),
 			'title' => $mb->text,
@@ -286,7 +286,7 @@ if ($mbs) {
 			'where' => $where,
 			'posts' => $mb->posts,
 			'lastpost' => $lastpost
-		);
+		];
 	}
 }
 
@@ -301,23 +301,23 @@ if (!empty($events)) {
 			break;
 		}
 		$tpl->newBlock('wall-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'url' => $event['url'],
 			'author' => $event['author'],
-			'title' => strip_selected_tags($event['title'], array('a', 'p')),
+			'title' => strip_selected_tags($event['title'], ['a', 'p']),
 			'avatar' => $event['avatar'],
 			'time' => $event['time'],
 			'where' => $event['where'],
 			'posts' => $event['posts']
-		));
+		]);
 
 		if (!empty($event['lastpost'])) {
 			$tpl->newBlock('wall-lastpost');
-			$tpl->assign(array(
+			$tpl->assign([
 				'av' => get_avatar($event['lastpost'], 's'),
 				'user' => usercolor($event['lastpost']->nick, $event['lastpost']->level),
-				'txt' => strip_selected_tags(add_smile($event['lastpost']->text), array('a', 'p'))
-			));
+				'txt' => strip_selected_tags(add_smile($event['lastpost']->text), ['a', 'p'])
+			]);
 		}
 	}
 }

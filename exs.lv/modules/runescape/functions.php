@@ -33,7 +33,7 @@ function as_class_name($name = '') {
     if (empty($name)) return '';
 
     // klašu nosaukumos nevar būt "-", tāpēc aizstājam ar pieņemamu atdalītāju
-    $name = str_replace(array('-', ' '), '_', $name);
+    $name = str_replace(['-', ' '], '_', $name);
 
     $allowed = "/[^a-z0-9_]/i";
     $name = preg_replace($allowed, '', $name);
@@ -61,7 +61,7 @@ function get_rs_page_categories($current = null, $force = false) {
         $m->set('cat_list_' . $lang, $cats, 900);
     }
 
-    $return = array();
+    $return = [];
     foreach ($cats as $cat) {
 
         if ($cat->id == 102 || $cat->id == 4) {
@@ -104,7 +104,7 @@ function rs_get_latest_pages() {
     $out = '';
     $skip = (isset($_GET['pg'])) ? 8 * intval($_GET['pg']) : 0;
     
-    $conditions = array();
+    $conditions = [];
     $conditions[] = '`pages`.`lang` = '.$lang;
     
     // ņems vērā to, kurām kategorijām lietotājs neseko līdzi

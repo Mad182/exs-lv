@@ -52,7 +52,7 @@ if ($auth->ok) {
 		if (!empty($comment->vote_users)) {
 			$voters = unserialize($comment->vote_users);
 		} else {
-			$voters = array();
+			$voters = [];
 		}
 
 		$voted = in_array($auth->id, $voters);

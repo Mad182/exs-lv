@@ -56,12 +56,12 @@ if (isset($_GET['_']) && isset($_GET['load'])) {
     if (empty($new_tpl)) { die('error'); }
     
     $new_tpl->newBlock('mcp-find-profiles');
-    $new_tpl->assignAll(array(
+    $new_tpl->assignAll([
         'category-url' => $category->textid
-    ));
-    echo json_encode(array(
+    ]);
+    echo json_encode([
         'content' => $new_tpl->getOutputContent()
-    ));
+    ]);
     exit;
 }
 
@@ -159,18 +159,18 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'page' &&
             $new_tpl->newBlock('search-page-list');
             for ($i = 1; $i <= $page_count; $i++) {
                 $new_tpl->newBlock('search-list-page');
-                $new_tpl->assign(array(
+                $new_tpl->assign([
                     'page-nr' => $i,
                     'displayed' =>
                         ($i == $page_nr) ? '<strong>'.$i.'</strong>' : $i
-                ));
+                ]);
             }
         }
 	}
 
-    echo json_encode(array(
+    echo json_encode([
         'content' => $new_tpl->getOutputContent()
-    ));
+    ]);
     exit;
 }
 
@@ -482,10 +482,10 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
             $tpl->newBlock('search-pages');
             for ($i = 1; $i <= $page_count; $i++) {
                 $tpl->newBlock('search-page');
-                $tpl->assign(array(
+                $tpl->assign([
                     'page-nr' => $i,
                     'displayed' => ($i == 1) ? '<strong>'.$i.'</strong>' : $i
-                ));
+                ]);
             }
         }
 	}

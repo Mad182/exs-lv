@@ -3,7 +3,7 @@
 // nerādīs apakšējo dev joslu, kas sadaļā neiederas :)
 $debug = false;
 
-$msgs = array(
+$msgs = [
 	'<p>Cilvēki ar aizspriedumiem piektdienu uzskata par sevišķi neveiksmīgu dienu, ja tā iekrīt 13. datumā. Bailes no piektdienas psihologi sauc par paraskevidekatriafobiju.</p>',
 	'<p>Senajā Romā piektdiena bija veltīta dievietei Venērai. Vēl mūsdienās itāļu valodā piektdienu sauc venerdì, tāpat spāņu un franču nosaukumi atvasināti no Venēras. Senie ģermāņi piektdienu dēvēja auglības dievietes Freijas vārdā (angļu: Friday). Arī vācu nosaukums Freitag cēlies no Freijas.</p>',
 	'<p>Piektdiena ir nedēļas piektā diena. Piektdiena ir pēdējā darba nedēļas diena valstīs ar piecu dienu darba nedēļu.</p>',
@@ -13,7 +13,7 @@ $msgs = array(
 	'<p>Kristietībā Lielā piektdiena ir piektdiena pirms Lieldienām.</p>',
 	'<p>Pēc Romas Katoļu tradīcijām, piektdienās nedrīkst ēst gaļu :(</p>',
 	'<p>Melnā piektdiena attiecas uz visām katastrofām, kas vēsturē notikušas piektdienā, 13. To attiecina arī uz visām piektdienām, kuras ir 13. datumā.</p>',
-);
+];
 shuffle($msgs);
 
 if (date('l') == 'Friday') {

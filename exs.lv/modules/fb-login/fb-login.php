@@ -8,10 +8,10 @@ $robotstag[] = 'noindex';
 require(LIB_PATH . '/facebook-php-sdk/src/base_facebook.php');
 require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
 
-$facebook = new Facebook(array(
+$facebook = new Facebook([
 	'appId' => $fb_api_id,
 	'secret' => $fb_api_key
-));
+]);
 
 $user = $facebook->getUser();
 $fb_like = false;
@@ -131,7 +131,7 @@ if (!empty($me)) {
 						$foo->image_convert = 'jpg';
 						$foo->image_x = 90;
 						$foo->image_y = 90;
-						$foo->allowed = array('image/*');
+						$foo->allowed = ['image/*'];
 						$foo->image_ratio_crop = true;
 						$foo->jpeg_quality = 98;
 						$foo->file_auto_rename = false;
@@ -145,7 +145,7 @@ if (!empty($me)) {
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 45;
 							$foo->image_y = 45;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = true;
 							$foo->jpeg_quality = 98;
 							$foo->file_auto_rename = false;
@@ -158,7 +158,7 @@ if (!empty($me)) {
 							$foo->image_convert = 'jpg';
 							$foo->image_x = 200;
 							$foo->image_y = 260;
-							$foo->allowed = array('image/*');
+							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = false;
 							$foo->image_ratio_no_zoom_in = true;
 							$foo->jpeg_quality = 98;
@@ -198,10 +198,10 @@ if (!empty($me)) {
 
 			}
 
-			$tpl->assign(array(
+			$tpl->assign([
 				'nick' => h($nick),
 				'avatar' => 'https://graph.facebook.com/' . $me['id'] . '/picture?type=large'
-			));
+			]);
 		} else {
 
 			if ($fb_like) {
@@ -241,7 +241,7 @@ if (!empty($me)) {
 		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
 	}
 
-	redirect($facebook->getLoginUrl(array('redirect_uri' => $protocol . $_SERVER['HTTP_HOST'] . '/fb-login/', 'scope' => 'user_likes')));
+	redirect($facebook->getLoginUrl(['redirect_uri' => $protocol . $_SERVER['HTTP_HOST'] . '/fb-login/', 'scope' => 'user_likes']));
 	/* $loginUrl = $facebook->getLoginUrl();
 	  $tpl->newBlock('fb-login');
 	  $tpl->assign('link', $loginUrl); //Show the button */

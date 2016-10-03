@@ -32,7 +32,7 @@ class Mention {
 			$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
 		}
 
-		if (!empty($usr) && !in_array($nick, array('exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail')) && $mention_counter <= 6) {
+		if (!empty($usr) && !in_array($nick, ['exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail']) && $mention_counter <= 6) {
 			$mention_counter++;
 
 			if ($this->type == 'mb') {

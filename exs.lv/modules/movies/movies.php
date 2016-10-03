@@ -51,10 +51,10 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 	}
 
 	$tpl->newBlock('list-articles');
-	$tpl->assign(array(
+	$tpl->assign([
 		'title' => $category->title,
 		'strid' => $category->textid
-	));
+	]);
 
 	foreach ($articles as $article) {
 		if (!$article->nick) {
@@ -68,7 +68,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 500);
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', add_smile($article->text))))), 500);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
 		}
@@ -76,7 +76,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		$user = get_user($article->author);
 		$avatar = get_avatar($user, 's');
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $article->id,
 			'node-url' => '/read/' . $article->strid,
 			'author-id' => $article->author,
@@ -89,7 +89,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'gender' => $article->gender,
 			'intro' => $article->text,
 			'avatar' => $avatar
-		));
+		]);
 
 
 		if ($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
@@ -112,7 +112,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 
 		if ($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
-			$gen = array();
+			$gen = [];
 			foreach ($genres as $genre) {
 				$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
 			}
@@ -122,20 +122,20 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
 			$tpl->newBlock('list-avatar');
-			$tpl->assign(array(
+			$tpl->assign([
 				'image' => $avatar->thb,
 				'alt' => h($avatar->title)
-			));
+			]);
 		}
 	}
 
 
 	$pager = pager($db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'"), $skip, $end, '/' . $category->textid . '/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 } else {
 
 	$sortby = "`pages`.`date` DESC";
@@ -147,7 +147,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 	$page_title = 'Filmu meklētājs';
 
 	if (isset($_GET['genre'])) {
-		$_GET['genres'] = array($_GET['genre']);
+		$_GET['genres'] = [$_GET['genre']];
 
 		if (translate_genres($_GET['genre']) != $_GET['genre']) {
 			$page_title = translate_genres($_GET['genre']) . ' - filmu meklēšana';
@@ -155,7 +155,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 	}
 
 	if (!empty($_GET['genres'])) {
-		$genres = array();
+		$genres = [];
 		foreach ($_GET['genres'] as $genre) {
 			$genres[] = "'" . sanitize(h(trim($genre))) . "'";
 		}
@@ -194,10 +194,10 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		100");
 
 	$tpl->newBlock('list-search');
-	$tpl->assign(array(
+	$tpl->assign([
 		'title' => h($page_title),
 		'strid' => $category->textid
-	));
+	]);
 
 	foreach ($articles as $article) {
 		if (!$article->nick) {
@@ -208,7 +208,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 		$date = display_time(strtotime($article->date));
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $article->id,
 			'node-url' => '/read/' . $article->strid,
 			'author-id' => $article->author,
@@ -219,7 +219,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'posts' => $article->posts,
 			'level' => $article->level,
 			'gender' => $article->gender
-		));
+		]);
 
 
 		if ($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
@@ -228,10 +228,10 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 
 		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'image' => $avatar->thb,
 				'alt' => h($avatar->title)
-			));
+			]);
 		}
 	}
 }

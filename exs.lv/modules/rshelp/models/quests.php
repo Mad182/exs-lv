@@ -6,13 +6,13 @@
 class Model_Quests extends Model {
     
     public function __construct() { 
-        $globals = array(
+        $globals = [
             'cat_quests', 
             'cats_quests', 
             'cat_p2p_quests', 
             'cat_f2p_quests', 
             'cat_miniquests'
-        );
+        ];
         $this->globals($globals);
         parent::__construct();
     }

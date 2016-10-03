@@ -36,7 +36,7 @@ $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIM
 $i = 0;
 foreach ($users as $user) {
 
-	$langs = array(1,3,5,7,9);
+	$langs = [1,3,5,7,9];
 
 	foreach($langs as $clean) {
 		$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '$clean' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '$clean' ORDER BY id DESC LIMIT 200) AS TAB)");

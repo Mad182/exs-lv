@@ -107,8 +107,8 @@ if (!empty($series)) {
 		$more_dislikes = 0;
 		$i_like = 0;
 		$i_dislike = 0;
-		$likes = array();
-		$dislikes = array();
+		$likes = [];
+		$dislikes = [];
 		if (!empty($ratings)) {
 			foreach ($ratings as $rating) {
 				if ($rating->rating == 1) {

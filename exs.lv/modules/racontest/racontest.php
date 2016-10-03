@@ -8,18 +8,18 @@ if (im_mod() || $auth->level == 3) {
 		$start = date('Y-m-d 00:00:00', time() - 604800);
 		$end = date('Y-m-d 23:59:59', time());
 	}
-	$dont_use = array(2, 12, 13, 77, 78, 244, 6);
+	$dont_use = [2, 12, 13, 77, 78, 244, 6];
 	/* 2 - aptauju komentāri, 12 - saites, 13 - kontakti,
 	  77 - WAP špikeri, 78 - lekciju pieraksti, 244 - nekur nederīgie raksti, 6 - musars */
 
 	$categorys = $db->get_results("SELECT `id`,`title` FROM `cat` WHERE module IN('list','index','rshelp','movies') AND `isblog` = '0' AND `isforum` = '0' AND id NOT IN(" . implode(',', $dont_use) . ")");
 	$tpl->newBlock('ra-contest');
-	$tpl->assign(array(
+	$tpl->assign([
 		'start' => $start,
 		'end' => $end,
 		'articles-catid' => $category->id,
 		'articles-title' => $category->title
-	));
+	]);
 	if ($categorys) {
 		foreach ($categorys as $category_l) {
 			$get_topics = $db->get_results("SELECT `strid`,`title`,`author` FROM `pages` WHERE `category` = '" . $category_l->id . "' AND `date` >= '$start' AND `date` <= '$end' ORDER BY `date` DESC LIMIT 50");

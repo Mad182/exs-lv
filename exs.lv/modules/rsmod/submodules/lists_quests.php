@@ -8,23 +8,23 @@
 class Quests extends Controller {
 
     // kvestu sarežģītība
-    private $arr_levels = array(
+    private $arr_levels = [
         1 => 'Novice', 
         2 => 'Intermediate', 
         3 => 'Experienced', 
         4 => 'Master', 
         5 => 'Grandmaster', 
         6 => 'Special'
-    );
+    ];
 
     // kvestu ilgums
-    private $arr_length = array(
+    private $arr_length = [
         1 => 'Īss', 
         2 => 'Vidējs', 
         3 => 'Ilgs', 
         4 => 'Ļoti ilgs', 
         5 => 'Ļoti, ļoti ilgs'
-    );
+    ];
 
     /**
      *  Pēc adreses parametriem izsauc pārējās funkcijas
@@ -71,19 +71,19 @@ class Quests extends Controller {
         // kvesta sarežģītības izvēlne
         foreach ($this->arr_levels as $level => $value) {
             $this->view->newBlock('add-difficulty');
-            $this->view->assign(array(
+            $this->view->assign([
                 'level-id' => $level,
                 'level-title' => $value
-            ));
+            ]);
         }
         
         // kvesta ilguma izvēlne
         foreach ($this->arr_length as $length => $value) {
             $this->view->newBlock('add-length');
-            $this->view->assign(array(
+            $this->view->assign([
                 'length-id' => $length,
                 'length-title' => $value
-            ));
+            ]);
         }
     }
     
@@ -115,10 +115,10 @@ class Quests extends Controller {
         // kvesta sarežģītības izvēlne
         foreach ($this->arr_levels as $level => $value) {
             $this->view->newBlock('add-difficulty');
-            $this->view->assign(array(
+            $this->view->assign([
                 'level-id' => $level,
                 'level-title' => $value
-            ));
+            ]);
             if ((int)$entry->difficulty === $level) {
                 $this->view->assign('selected', ' selected="selected"');
             }
@@ -127,10 +127,10 @@ class Quests extends Controller {
         // kvesta ilguma izvēlne
         foreach ($this->arr_length as $length => $value) {
             $this->view->newBlock('add-length');
-            $this->view->assign(array(
+            $this->view->assign([
                 'length-id' => $length,
                 'length-title' => $value
-            ));
+            ]);
             if ((int)$entry->length === $length) {
                 $this->view->assign('selected', ' selected="selected"');
             }

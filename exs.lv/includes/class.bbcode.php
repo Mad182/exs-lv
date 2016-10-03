@@ -10,7 +10,7 @@ define('BBCODE_NOSMILIES_START', '<!-- no smilies start -->');
 define('BBCODE_NOSMILIES_END', '<!-- no smilies end -->');
 global $board_config, $phpbb_root_path, $phpEx, $lang;
 
-$urls_local = array('http://exs.lv');
+$urls_local = ['http://exs.lv'];
 
 define('AUTOURL', time());
 
@@ -24,72 +24,72 @@ class BBCode {
 	var $allow_smilies = false;
 	var $is_sig = false;
 	var $code_counter = 0;
-	var $allowed_bbcode = array(
+	var $allowed_bbcode = [
 		// simple tags
-		'b' => array(
+		'b' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'i' => array(
+		],
+		'i' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'u' => array(
+		],
+		'u' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'strong' => array(
+		],
+		'strong' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'em' => array(
+		],
+		'em' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'strike' => array(
+		],
+		'strike' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'sup' => array(
+		],
+		'sup' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'sub' => array(
+		],
+		'sub' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'span' => array(
+		],
+		'span' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'center' => array(
+		],
+		'center' => [
 			'nested' => true,
 			'inurl' => false,
 			'allow_empty' => false,
-		),
-		'size' => array(
+		],
+		'size' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'cell' => array(
+		],
+		'cell' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'hr' => array(
+		],
+		'hr' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => true,
-		),
+		],
 		/*
 		  'table' => array(
 		  'nested' => true,
@@ -97,180 +97,180 @@ class BBCode {
 		  'allow_empty' => false,
 		  ),
 		 */
-		'align' => array(
+		'align' => [
 			'nested' => true,
 			'inurl' => false,
 			'allow_empty' => false,
-		),
-		'font' => array(
+		],
+		'font' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'marquee' => array(
+		],
+		'marquee' => [
 			'nested' => true,
 			'inurl' => false,
 			'allow_empty' => false,
-		),
-		'img' => array(
+		],
+		'img' => [
 			'nested' => false,
 			'inurl' => true,
-		),
-		'albumimg' => array(
+		],
+		'albumimg' => [
 			'nested' => false,
 			'inurl' => true,
-		),
-		'color' => array(
+		],
+		'color' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'url' => array(
+		],
+		'url' => [
 			'nested' => false,
 			'inurl' => false,
-		),
-		'a' => array(
+		],
+		'a' => [
 			'nested' => false,
 			'inurl' => false,
-		),
-		'email' => array(
+		],
+		'email' => [
 			'nested' => false,
 			'inurl' => false,
-		),
-		'list' => array(
+		],
+		'list' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'ul' => array(
+		],
+		'ul' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'ol' => array(
+		],
+		'ol' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'*' => array(
+		],
+		'*' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'li' => array(
+		],
+		'li' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'quote' => array(
+		],
+		'quote' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'ot' => array(
+		],
+		'ot' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'code' => array(
+		],
+		'code' => [
 			'nested' => false,
 			'inurl' => false,
-		),
-	);
-	var $allowed_html = array(
-		'b' => array(
+		],
+	];
+	var $allowed_html = [
+		'b' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'i' => array(
+		],
+		'i' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'u' => array(
+		],
+		'u' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'strong' => array(
+		],
+		'strong' => [
 			'nested' => true,
 			'inurl' => true,
-		),
+		],
 		'allow_empty' => false,
-		'em' => array(
+		'em' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'strike' => array(
+		],
+		'strike' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'sup' => array(
+		],
+		'sup' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'sub' => array(
+		],
+		'sub' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'span' => array(
+		],
+		'span' => [
 			'nested' => true,
 			'inurl' => true,
-		),
-		'center' => array(
-			'nested' => true,
-			'inurl' => true,
-			'allow_empty' => false,
-		),
-		'hr' => array(
+		],
+		'center' => [
 			'nested' => true,
 			'inurl' => true,
 			'allow_empty' => false,
-		),
-		'a' => array(
+		],
+		'hr' => [
+			'nested' => true,
+			'inurl' => true,
+			'allow_empty' => false,
+		],
+		'a' => [
 			'nested' => false,
 			'inurl' => false,
-		),
-		'ul' => array(
+		],
+		'ul' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'ol' => array(
+		],
+		'ol' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'li' => array(
+		],
+		'li' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'blockquote' => array(
+		],
+		'blockquote' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'div' => array(
+		],
+		'div' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'table' => array(
+		],
+		'table' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'td' => array(
+		],
+		'td' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'tr' => array(
+		],
+		'tr' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-		'span' => array(
+		],
+		'span' => [
 			'nested' => true,
 			'inurl' => false,
-		),
-	);
-	var $allowed_smilies = array();
-	var $replaced_smilies = array();
-	var $data = array();
+		],
+	];
+	var $allowed_smilies = [];
+	var $replaced_smilies = [];
+	var $data = [];
 	var $tag = '';
-	var $params = array();
+	var $params = [];
 
 	/*
 	  Process bbcode/html tag.
@@ -285,11 +285,11 @@ class BBCode {
 		$start = substr($this->text, $item['start'], $item['start_len']);
 		$end = substr($this->text, $item['end'], $item['end_len']);
 		$content = substr($this->text, $item['start'] + $item['start_len'], $item['end'] - $item['start'] - $item['start_len']);
-		$error = array(
+		$error = [
 			'valid' => false,
 			'start' => $this->process_text($start),
 			'end' => $this->process_text($end)
-		);
+		];
 		if (isset($item['valid']) && $item['valid'] == false) {
 			return $error;
 		}
@@ -303,12 +303,12 @@ class BBCode {
 				$allow_empty = false;
 			}
 			if (!$allow_empty) {
-				return array(
+				return [
 					'valid' => true,
 					'html' => '',
 					'end' => '',
 					'allow_nested' => false,
-				);
+				];
 			}
 		}
 		// check if nested item is allowed
@@ -333,18 +333,18 @@ class BBCode {
 				$tag === 'span' ||
 				$tag === 'center'
 		) {
-			$extras = $this->allow_styling ? array('style', 'class') : array('class');
+			$extras = $this->allow_styling ? ['style', 'class'] : ['class'];
 			$html = '<' . $tag . $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</' . $tag . '>'
-			);
+			];
 		}
 
 		// Single tags: HR
 		if ($tag === 'hr') {
-			$extras = $this->allow_styling ? array('style', 'class') : array();
+			$extras = $this->allow_styling ? ['style', 'class'] : [];
 			if (isset($item['params']['param'])) {
 				$color = $item['params']['param'];
 			} elseif (isset($item['params']['color'])) {
@@ -356,15 +356,15 @@ class BBCode {
 			} else {
 				$html = '<' . $tag . ' color="' . $color . '" />';
 			}
-			return array(
+			return [
 				'valid' => true,
 				'html' => $html
-			);
+			];
 		}
 
 		// ALIGN
 		if ($tag === 'align') {
-			$extras = $this->allow_styling ? array('style', 'class') : array();
+			$extras = $this->allow_styling ? ['style', 'class'] : [];
 			if (isset($item['params']['param'])) {
 				$align = $item['params']['param'];
 			} elseif (isset($item['params']['align'])) {
@@ -374,11 +374,11 @@ class BBCode {
 			}
 			if ($align === 'left' || $align === 'right' || $align === 'center' || $align === 'justify') {
 				$html = '<div style="text-align:' . $align . '">';
-				return array(
+				return [
 					'valid' => true,
 					'start' => $html,
 					'end' => '</div>',
-				);
+				];
 			}
 		}
 
@@ -387,7 +387,7 @@ class BBCode {
 			if ($this->is_sig) {
 				return $error;
 			}
-			$extras = $this->allow_styling ? array('style', 'class') : array();
+			$extras = $this->allow_styling ? ['style', 'class'] : [];
 			if (isset($item['params']['param'])) {
 				$direction = $item['params']['param'];
 			} elseif (isset($item['params']['direction'])) {
@@ -423,16 +423,16 @@ class BBCode {
 			}
 
 			$html = '<marquee behavior="' . $behavior . '" direction="' . $direction . '" scrolldelay="' . $scrolldelay . '">';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</marquee>',
-			);
+			];
 		}
 
 		// FONT
 		if ($tag === 'font') {
-			$extras = $this->allow_styling ? array('style', 'class') : array();
+			$extras = $this->allow_styling ? ['style', 'class'] : [];
 			if (isset($item['params']['param'])) {
 				$font = $item['params']['param'];
 			} elseif (isset($item['params']['font'])) {
@@ -462,11 +462,11 @@ class BBCode {
 				$font = 'Verdana';
 			}
 			$html = '<span style="font-family:' . $font . '">';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</span>',
-			);
+			];
 		}
 
 		// TABLE
@@ -475,7 +475,7 @@ class BBCode {
 				return $error;
 			}
 			// additional allowed parameters
-			$extras = $this->allow_styling ? array('class', 'align', 'width', 'height', 'border', 'cellspacing', 'cellpadding') : array('class', 'align', 'width');
+			$extras = $this->allow_styling ? ['class', 'align', 'width', 'height', 'border', 'cellspacing', 'cellpadding'] : ['class', 'align', 'width'];
 			if (isset($item['params']['param'])) {
 				$table_class = $item['params']['param'];
 			} else {
@@ -503,11 +503,11 @@ class BBCode {
 				$html .= ' ' . $var . '="' . $this->process_text($value) . '"';
 			}
 			$html .= ' >' . $content;
-			return array(
+			return [
 				'valid' => true,
 				'html' => $html,
 				'end' => '</table>',
-			);
+			];
 		}
 
 		// IMG
@@ -516,12 +516,12 @@ class BBCode {
 				return $error;
 			}
 			// main parameters
-			$params = array(
+			$params = [
 				'src' => false,
 				'alt' => false,
-			);
+			];
 			// additional allowed parameters
-			$extras = $this->allow_styling ? array('width', 'height', 'border', 'style', 'class', 'title', 'align') : array('width', 'height', 'border', 'title', 'align');
+			$extras = $this->allow_styling ? ['width', 'height', 'border', 'style', 'class', 'title', 'align'] : ['width', 'height', 'border', 'title', 'align'];
 			// [img=blah]blah2[/img]
 			if (isset($item['params']['param'])) {
 				$params['src'] = $item['params']['param'];
@@ -574,11 +574,11 @@ class BBCode {
 			if (empty($item['inurl'])) {
 				$html = '<a href="' . $params['src'] . '" class="lightbox" target="_blank" title="Atvērsies jaunā logā">' . $html . '</a>';
 			}
-			return array(
+			return [
 				'valid' => true,
 				'html' => $html,
 				'allow_nested' => false,
-			);
+			];
 		}
 
 		// ALBUMIMG
@@ -587,12 +587,12 @@ class BBCode {
 				return $error;
 			}
 			// main parameters
-			$params = array(
+			$params = [
 				'src' => false,
 				'alt' => false,
-			);
+			];
 			// additional allowed parameters
-			$extras = $this->allow_styling ? array('width', 'height', 'border', 'style', 'class', 'title', 'align') : array('width', 'height', 'border', 'title', 'align');
+			$extras = $this->allow_styling ? ['width', 'height', 'border', 'style', 'class', 'title', 'align'] : ['width', 'height', 'border', 'title', 'align'];
 			// [albumimg=blah]blah2[/albumimg]
 			if (isset($item['params']['param'])) {
 				$params['src'] = $item['params']['param'];
@@ -659,11 +659,11 @@ class BBCode {
 			if (empty($item['inurl'])) {
 				$html = '<a href="' . $pic_url . '" title="' . $lang['Click_enlarge_pic'] . '">' . $html . '</a>';
 			}
-			return array(
+			return [
 				'valid' => true,
 				'html' => $html,
 				'allow_nested' => false,
-			);
+			];
 		}
 
 		// LIST
@@ -671,7 +671,7 @@ class BBCode {
 			if ($this->is_sig) {
 				return $error;
 			}
-			$extras = $this->allow_styling ? array('style', 'class') : array();
+			$extras = $this->allow_styling ? ['style', 'class'] : [];
 			// check if nested tags are all [*]
 			$nested_count = 0;
 			for ($i = 0; $i < count($item['items']); $i++) {
@@ -718,11 +718,11 @@ class BBCode {
 				$html .= ' type="' . h($item['params']['type']) . '"';
 			}
 			$html .= $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</li></' . $tag . '>'
-			);
+			];
 		}
 
 		// [*], LI
@@ -730,7 +730,7 @@ class BBCode {
 			if ($this->is_sig) {
 				return $error;
 			}
-			$extras = $this->allow_styling ? array('style', 'class') : array();
+			$extras = $this->allow_styling ? ['style', 'class'] : [];
 			// if not marked as valid return error
 			if (empty($item['list_valid'])) {
 				return $error;
@@ -741,16 +741,16 @@ class BBCode {
 				$html = '</li>' . $html;
 			}
 			$html .= $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '',
-			);
+			];
 		}
 
 		// COLOR
 		if ($tag === 'color') {
-			$extras = $this->allow_styling ? array('class') : array();
+			$extras = $this->allow_styling ? ['class'] : [];
 			$color = '';
 			if (isset($item['params']['param'])) {
 				$color = $item['params']['param'];
@@ -764,11 +764,11 @@ class BBCode {
 				return $error;
 			}
 			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . 'color: ' . $color . ';"' . $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</span>',
-			);
+			];
 		}
 
 		// GLOW
@@ -786,11 +786,11 @@ class BBCode {
 				return $error;
 			}
 			$html = '<span style="filter: glow(color=' . $color . '); height:20;">';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</span>',
-			);
+			];
 		}
 
 		// SHADOW
@@ -808,16 +808,16 @@ class BBCode {
 				return $error;
 			}
 			$html = '<span style="filter: shadow(color=' . $color . '); height:20;">';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</span>',
-			);
+			];
 		}
 
 		// HIGHLIGHT
 		if ($tag === 'highlight') {
-			$extras = $this->allow_styling ? array('class') : array();
+			$extras = $this->allow_styling ? ['class'] : [];
 			$color = '#FFFFAA';
 			if (isset($item['params']['param'])) {
 				$color = $item['params']['param'];
@@ -831,16 +831,16 @@ class BBCode {
 				return $error;
 			}
 			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . 'background-color: ' . $color . ';"' . $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</span>',
-			);
+			];
 		}
 
 		// SIZE
 		if ($tag === 'size') {
-			$extras = $this->allow_styling ? array('class') : array();
+			$extras = $this->allow_styling ? ['class'] : [];
 			$size = 0;
 			if (isset($item['params']['param'])) {
 				$size = intval($item['params']['param']);
@@ -870,16 +870,16 @@ class BBCode {
 				return $error;
 			}
 			$html = '<span style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . 'font-size: ' . $size . 'px;"' . $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</span>',
-			);
+			];
 		}
 
 		// CELL
 		if ($tag === 'cell') {
-			$extras = $this->allow_styling ? array('class') : array('class');
+			$extras = $this->allow_styling ? ['class'] : ['class'];
 			if (isset($item['params']['width'])) {
 				$width = ' width: ' . intval($item['params']['width']) . 'px;';
 			}
@@ -894,16 +894,16 @@ class BBCode {
 				}
 			}
 			$html = '<div style="' . ($this->allow_styling && isset($item['params']['style']) ? h($this->valid_style($item['params']['style'], '')) : '') . $height . $width . $bgcolor . '"' . $this->add_extras($item['params'], $extras) . '>';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</div>',
-			);
+			];
 		}
 
 		// URL, A
 		if ($tag === 'url' || $tag === 'a') {
-			$extras = $this->allow_styling ? array('style', 'class', 'name', 'title') : array('name', 'title');
+			$extras = $this->allow_styling ? ['style', 'class', 'name', 'title'] : ['name', 'title'];
 			$allow_nested = true;
 			$strip_text = false;
 			$show_content = true;
@@ -983,23 +983,23 @@ class BBCode {
 				$html = '<a class="lightbox" href="' . h($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
 			}
 			if ($show_content) {
-				return array(
+				return [
 					'valid' => true,
 					'start' => $html,
 					'end' => '</a>',
-				);
+				];
 			} else {
-				return array(
+				return [
 					'valid' => true,
 					'html' => $html . $content . '</a>',
 					'allow_nested' => false,
-				);
+				];
 			}
 		}
 
 		// EMAIL
 		if ($tag === 'email') {
-			$extras = $this->allow_styling ? array('style', 'class', 'name', 'title') : array('name', 'title');
+			$extras = $this->allow_styling ? ['style', 'class', 'name', 'title'] : ['name', 'title'];
 			$allow_nested = true;
 			$strip_text = false;
 			$url = '';
@@ -1040,7 +1040,7 @@ class BBCode {
 			} else {
 				$str = $url;
 			}
-			$noscript = '<noscript>' . h(str_replace(array('@', '.'), array(' [at] ', ' [dot] '), $str)) . '</noscript>';
+			$noscript = '<noscript>' . h(str_replace(['@', '.'], [' [at] ', ' [dot] '], $str)) . '</noscript>';
 			// make javascript from it
 			$html = BBCODE_NOSMILIES_START . '<script language="JavaScript" type="text/javascript">' . "\n" . '' . "\n";
 			for ($i = 0; $i < strlen($email); $i+=5) {
@@ -1048,11 +1048,11 @@ class BBCode {
 				$html .= 'document.write(\'' . addslashes($str) . '\');' . "\n";
 			}
 			$html .= "\n" . '' . "\n" . '</script>' . $noscript . BBCODE_NOSMILIES_END;
-			return array(
+			return [
 				'valid' => true,
 				'html' => $html,
 				'allow_nested' => false,
-			);
+			];
 		}
 
 		// QUOTE
@@ -1101,29 +1101,29 @@ class BBCode {
 				}
 			}
 			$html .= '<div class="quote-message">';
-			return array(
+			return [
 				'valid' => true,
 				'start' => $html,
 				'end' => '</div></blockquote>'
-			);
+			];
 		}
 
 		// CODE
 		if ($tag === 'code') {
 
 			$text = $this->process_text($content, false, true);
-			$search = array(
+			$search = [
 				'  ',
 				"\t",
 				"\n",
 				"\r"
-			);
-			$replace = array(
+			];
+			$replace = [
 				' &nbsp;',
 				' &nbsp; &nbsp;',
 				'<br />',
 				''
-			);
+			];
 			$text = str_replace($search, $replace, $text);
 
 
@@ -1136,11 +1136,11 @@ class BBCode {
 
 			$html = '<code class="prettyprint">' . $text . '</code>';
 			$this->code_counter++;
-			return array(
+			return [
 				'valid' => true,
 				'html' => $html,
 				'allow_nested' => false
-			);
+			];
 		}
 
 		// Invalid tag
@@ -1198,7 +1198,7 @@ class BBCode {
 
 // Parse style
 	function valid_style($style, $error = false) {
-		$style = str_replace(array('\\', '"', '@'), array('', '', ''), $style);
+		$style = str_replace(['\\', '"', '@'], ['', '', ''], $style);
 		$str = strtolower($style);
 		if (strpos($str, 'expression') !== false || strpos($str, 'javascript:') !== false || strpos($str, 'vbscript:') !== false || strpos($str, 'about:') !== false) {
 			// attempt to use javascript
@@ -1254,7 +1254,7 @@ class BBCode {
 // Splits string to tag and parameters
 	function extract_params($tag, $is_html) {
 		$this->tag = $tag;
-		$this->params = array();
+		$this->params = [];
 		$tag = str_replace("\t", ' ', $tag);
 		// get parameters
 		$pos_eq = strpos($tag, '=');
@@ -1332,7 +1332,7 @@ class BBCode {
 // Recusive function that converts text to bbcode tree
 	function push($start, $level, $prev_tags) {
 		//echo '<b>push</b>(', $start, ', ', $level, ', (', implode(',', $prev_tags), '))<br />';
-		$items = array();
+		$items = [];
 		$pos_start_bbcode = $this->allow_bbcode ? strpos($this->text, '[', $start) : false;
 		$pos_start_html = $this->allow_html ? strpos($this->text, '<', $start) : false;
 		while ($pos_start_bbcode !== false || $pos_start_html !== false) {
@@ -1377,7 +1377,7 @@ class BBCode {
 			}
 			if ($tag_valid) {
 				$start = $pos_end;
-				$params = array();
+				$params = [];
 				if (!$tag_closing) {
 					if (!$this->extract_params($tag, $is_html)) {
 						$tag_valid = false;
@@ -1399,17 +1399,17 @@ class BBCode {
 				if ($tag_closing) {
 					// check if this is correct closing tag
 					if (in_array($tag, $prev_tags)) {
-						return array(
+						return [
 							'items' => $items,
 							'tag' => $tag,
 							'pos' => $pos_end,
 							'start' => $pos_start,
 							'len' => strlen($code)
-						);
+						];
 					}
 				} elseif ($tag_self_closing) {
 					// found self-closing tag
-					$items[] = array(
+					$items[] = [
 						'tag' => $tag,
 						'code' => $code,
 						'params' => $params,
@@ -1420,17 +1420,17 @@ class BBCode {
 						'level' => $level + 1,
 						'iteration' => 0,
 						'self_closing' => 1,
-						'prev' => array(),
-						'next' => array(),
+						'prev' => [],
+						'next' => [],
 						'is_html' => $is_html,
-						'items' => array()
-					);
+						'items' => []
+					];
 				} else {
 					// found correct tag. call recursive search
-					$result = $this->push($pos_end, $level + 1, array_merge($prev_tags, array($tag)));
+					$result = $this->push($pos_end, $level + 1, array_merge($prev_tags, [$tag]));
 					if ($result['tag'] === $tag) {
 						// found correctly finished tag
-						$items[] = array(
+						$items[] = [
 							'tag' => $tag,
 							'code' => $code,
 							'params' => $params,
@@ -1441,21 +1441,21 @@ class BBCode {
 							'level' => $level + 1,
 							'iteration' => 0,
 							'self_closing' => 2,
-							'prev' => array(),
-							'next' => array(),
+							'prev' => [],
+							'next' => [],
 							'is_html' => $is_html,
 							'items' => $result['items']
-						);
+						];
 						$start = $result['pos'];
 					} else {
 						$items = array_merge($items, $result['items']);
-						return array(
+						return [
 							'items' => $items,
 							'tag' => $result['tag'],
 							'pos' => $result['pos'],
 							'start' => $result['start'],
 							'len' => $result['len']
-						);
+						];
 					}
 				}
 			} else {
@@ -1464,10 +1464,10 @@ class BBCode {
 			$pos_start_bbcode = $this->allow_bbcode ? strpos($this->text, '[', $start) : false;
 			$pos_start_html = $this->allow_html ? strpos($this->text, '<', $start) : false;
 		}
-		return array(
+		return [
 			'items' => $items,
 			'tag' => false,
-		);
+		];
 	}
 
 // Debug fuction. Prints tree of bbcode
@@ -1494,13 +1494,13 @@ class BBCode {
 
 // Post-processing. Adds previous/next items to every item.
 	function add_pointers(&$items, $prev_tags) {
-		$tags = array();
+		$tags = [];
 		for ($i = 0; $i < count($items); $i++) {
 			$item = &$items[$i];
-			$tags[] = array(
+			$tags[] = [
 				'tag' => $item['tag'],
 				'item' => &$items[$i]
-			);
+			];
 			$iterations = 0;
 			for ($j = 0; $j < count($prev_tags); $j++) {
 				if ($prev_tags[$j]['tag'] === $item['tag']) {
@@ -1512,11 +1512,11 @@ class BBCode {
 			// todo: check if subitems are allowed
 			// parse sub-items
 			if (count($item['items'])) {
-				$arr = array(
+				$arr = [
 					'tag' => $item['tag'],
 					'item' => &$items[$i]
-				);
-				$item['next'] = $this->add_pointers($item['items'], array_merge($prev_tags, array($arr)));
+				];
+				$item['next'] = $this->add_pointers($item['items'], array_merge($prev_tags, [$arr]));
 				$tags = array_merge($tags, $item['next']);
 			}
 		}
@@ -1525,20 +1525,20 @@ class BBCode {
 
 // Process text
 	function process_text($text, $br = true, $chars = true) {
-		$search = array(
+		$search = [
 			'[url autourl=' . AUTOURL . ']',
 			'[/url autourl=' . AUTOURL . ']',
 			'[email autourl=' . AUTOURL . ']',
 			'[/email autourl=' . AUTOURL . ']'
-		);
-		$replace = array('', '', '', '');
+		];
+		$replace = ['', '', '', ''];
 		$text = str_replace($search, $replace, $text);
 		if ($chars) {
 			$text = h($text);
 			$text = str_replace('&amp;#', '&#', $text);
 		} else {
 			$text = str_replace(
-					array('&amp;', '>', '<', '"', '&amp;#'), array('&amp;amp;', '&gt;', '&lt;', '&quot;', '&#'), $text);
+					['&amp;', '>', '<', '"', '&amp;#'], ['&amp;amp;', '&gt;', '&lt;', '&quot;', '&#'], $text);
 		}
 		if ($br) {
 			$text = str_replace("\n", "<br />\n", $text);
@@ -1591,7 +1591,7 @@ class BBCode {
 		if (!$this->allow_smilies) {
 			return;
 		}
-		$this->replaced_smilies = array();
+		$this->replaced_smilies = [];
 		for ($i = 0; $i < count($this->allowed_smilies); $i++) {
 			if (strpos($this->text, $this->allowed_smilies[$i]['code']) !== false) {
 				$this->replaced_smilies[] = $this->allowed_smilies[$i];
@@ -1601,8 +1601,8 @@ class BBCode {
 
 // Process smilies
 	function process_smilies() {
-		$valid_chars_prev = array('', ' ', "\n", "\r", "\t", '>');
-		$valid_chars_next = array('', ' ', "\n", "\r", "\t", '<');
+		$valid_chars_prev = ['', ' ', "\n", "\r", "\t", '>'];
+		$valid_chars_next = ['', ' ', "\n", "\r", "\t", '<'];
 		if (!$this->allow_smilies && !count($this->replaced_smilies)) {
 			return;
 		}
@@ -1654,14 +1654,14 @@ class BBCode {
 			}
 		}
 		// search and replace arrays
-		$search = array(
+		$search = [
 			"/([\s>])((https?|ftp):\/\/|www\.)([^ \r\n\(\)\^\$!`\"'\|\[\]\{\}<>]+)/si",
 			"/([\s>])([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9\-{$chars}]+(\.[a-zA-Z0-9\-{$chars}]+)*(\.[a-zA-Z]{2,}))/si",
-		);
-		$replace = array(
+		];
+		$replace = [
 			"\\1[url autourl=" . AUTOURL . "]\\2\\4[/url autourl=" . AUTOURL . "]",
 			"\\1[email autourl=" . AUTOURL . "]\\2[/email autourl=" . AUTOURL . "]",
-		);
+		];
 		$this->text = preg_replace($search, $replace, ' ' . $this->text . ' ');
 		$this->text = substr($this->text, 1, strlen($this->text) - 2);
 	}
@@ -1669,16 +1669,16 @@ class BBCode {
 // Converts text to html code
 	function parse($text, $id = false) {
 		if (defined('IN_PHPBB')) {
-			$search = array(
+			$search = [
 				$id ? ':' . $id : '',
 				'code:1]',
 				'list:o]',
-			);
-			$replace = array(
+			];
+			$replace = [
 				'',
 				'code]',
 				'list]',
-			);
+			];
 			$text = str_replace($search, $replace, $text);
 			if ($id) {
 				$text = undo_h($text);
@@ -1686,7 +1686,7 @@ class BBCode {
 		}
 		// reset variables
 		$this->text = $text;
-		$this->data = array();
+		$this->data = [];
 		$this->html = '';
 		$this->prepare_smilies();
 		$this->process_urls();
@@ -1698,7 +1698,7 @@ class BBCode {
 			return $this->html;
 		}
 		// convert to tree structure
-		$result = $this->push(0, 0, array());
+		$result = $this->push(0, 0, []);
 		$this->data = $result['items'];
 
 		/*
@@ -1711,7 +1711,7 @@ class BBCode {
 		 */
 
 		// add prev/next pointers and count iterations
-		$this->add_pointers($this->data, array());
+		$this->add_pointers($this->data, []);
 		// convert to html
 		$this->html = $this->process(0, strlen($this->text), $this->data);
 		$this->process_smilies();
@@ -1740,12 +1740,12 @@ if (defined('SMILIES_TABLE')) {
 	$sql = "SELECT * FROM " . SMILIES_TABLE;
 	if (($result = $db->sql_query($sql)) !== false) {
 		$smilies = $db->sql_fetchrowset($result);
-		$bbcode->allowed_smilies = array();
+		$bbcode->allowed_smilies = [];
 		for ($i = 0; $i < count($smilies); $i++) {
-			$arr = array(
+			$arr = [
 				'code' => $smilies[$i]['code'],
 				'replace' => '<img src="http://' . $_SERVER['HTTP_HOST'] . $board_config['script_path'] . 'images/smiles/' . $smilies[$i]['smile_url'] . '" alt="' . h($smilies[$i]['emotion']) . '" />'
-			);
+			];
 			$bbcode->allowed_smilies[] = $arr;
 		}
 	}
@@ -1762,12 +1762,12 @@ function undo_h($input, $full_undo = false) {
 
 	if ($full_undo) {
 		if (preg_match_all('/&\#([0-9]+);/', $input, $matches) && count($matches)) {
-			$list = array();
+			$list = [];
 			for ($i = 0; $i < count($matches[1]); $i++) {
 				$list[$matches[1][$i]] = true;
 			}
-			$search = array();
-			$replace = array();
+			$search = [];
+			$replace = [];
 			foreach ($list as $var => $value) {
 				$search[] = '&#' . $var . ';';
 				$replace[] = chr($var);
@@ -1845,7 +1845,7 @@ function rainbow($text) {
 }
 
 function load_rainbow_colors() {
-	return array(
+	return [
 		1 => 'red',
 		2 => 'orange',
 		3 => 'yellow',
@@ -1853,7 +1853,7 @@ function load_rainbow_colors() {
 		5 => 'blue',
 		6 => 'indigo',
 		7 => 'violet'
-	);
+	];
 }
 
 // Mighty Gorgon Functions
@@ -1873,7 +1873,7 @@ function bbcode_killer_mg($text, $bbcode_uid) {
 	$text = preg_replace("/\:(([a-z0-9]:)?)" . $bbcode_uid . "/s", "", $text);
 
 // Strip simple tags
-	$look_up_array = array(
+	$look_up_array = [
 		//"[code]", "[/code]",
 		//"[php]","[/php]",
 		//"[cpp]","[/cpp]",
@@ -1915,14 +1915,14 @@ function bbcode_killer_mg($text, $bbcode_uid) {
 		"[center]", "[/center]",
 		//"[]", "[/]",
 		"[hr]",
-	);
+	];
 
 
 	$text = str_replace($look_up_array, "", $text);
 
 // Colours
 	$color_code = "(\#[0-9A-F]{6}|[a-z]+)";
-	$look_up_array = array(
+	$look_up_array = [
 		"/\[color=" . $color_code . "\]/si", "/\[\/color\]/si",
 		"/\[glow=" . $color_code . "\]/si", "/\[\/glow\]/si",
 		"/\[shadow=" . $color_code . "\]/si", "/\[\/shadow\]/si",
@@ -1934,7 +1934,7 @@ function bbcode_killer_mg($text, $bbcode_uid) {
 		"/\[marq=(left|right|up|down)\]/si", "/\[\/marq\]/si",
 		"/\[marquee direction=(left|right|up|down)\]/si", "/\[\/marquee\]/si",
 		"/\[align=(left|center|right|justify)\]/si", "/\[\/align\]/si",
-	);
+	];
 
 	$text = preg_replace($look_up_array, "", $text);
 
@@ -2024,7 +2024,7 @@ function acronym_pass($message) {
 
 	if (!isset($orig)) {
 		global $db, $board_config;
-		$orig = $repl = array();
+		$orig = $repl = [];
 
 		$sql = 'SELECT * FROM ' . ACRONYMS_TABLE;
 		if (!$result = $db->sql_query($sql)) {

@@ -17,10 +17,10 @@ if (im_mod()) {
 			$tpl->newBlock('polls_admin-list');
 			foreach ($polls as $poll) {
 				$tpl->newBlock('polls_admin-list-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'question' => $poll->name,
 					'topic' => $poll->topic,
-				));
+				]);
 			}
 		}
         

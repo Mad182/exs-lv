@@ -19,10 +19,10 @@ if ($auth->ok) {
 		$pay = '<p><a href="/extend-gallery/?act=submitpay"><strong>Paplašināt galeriju</strong></a></p>';
 	}
 
-	$tpl->assign(array(
+	$tpl->assign([
 		'maximg' => $user->maximg,
 		'credit' => $user->credit,
 		'pay' => $pay
-	));
+	]);
 }
 

@@ -3,7 +3,7 @@
 //load css
 $add_css[] = 'steam.css';
 
-$grouped = array();
+$grouped = [];
 
 //lietotāji, kas šobrīd kaut ko spēlē
 $players_online = $db->get_results("
@@ -39,10 +39,10 @@ foreach ($grouped as $game) {
     foreach ($game as $user) {
         $exs_user = get_user($user->user_id);
         $tpl->newBlock('steam-player');
-        $tpl->assign(array(
+        $tpl->assign([
             'profile-url' => $user->profileurl,
             'id'          => $exs_user->id,
             'nick'        => $exs_user->nick
-        ));
+        ]);
     }
 }

@@ -22,12 +22,12 @@ $blogs = $db->get_results("SELECT * FROM `cat` WHERE `isblog` != '0' AND `stat_t
 foreach ($blogs as $blog) {
 
 	$tpl->newBlock('bs-list-node');
-	$tpl->assign(array(
+	$tpl->assign([
 		'url' => '/' . $blog->textid,
 		'title' => $blog->title,
 		'p_count' => $blog->stat_topics,
 		'c_count' => $blog->stat_com,
 		'w_count' => $blog->stat_views
-	));
+	]);
 }
 

@@ -20,10 +20,10 @@ foreach ($polls as $poll) {
 			$responses = $db->get_row("SELECT count(*) as `total` FROM `responses` WHERE `qid` = '" . $question->id . "'");
             $calc = ($total == 0) ? round($responses->total * 100) : round(($responses->total / $total) * 100);
 			$tpl->newBlock('polls-answers-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'polls-answer-question' => $question->question,
 				'polls-answer-percentage' => $calc
-			));
+			]);
 		}
         
         $tpl->gotoBlock('polls-answers');
@@ -32,17 +32,17 @@ foreach ($polls as $poll) {
         if ($lang == 9) {
             $mb_text = $db->get_row("SELECT `id`, `text` FROM `miniblog` WHERE `id` = '".(int)$poll->topic."' LIMIT 1");
             if ($mb_text) {
-                $tpl->assign(array(
+                $tpl->assign([
                     'polls-totalvotes' => $total,
                     'url' => '/say/' . $rsbot_id . '/' . $poll->topic . '-' . mb_get_strid($mb_text->text, $mb_text->id)
-                ));
+                ]);
             }
         // citur - rakstos
         } else {
-            $tpl->assign(array(
+            $tpl->assign([
                 'polls-totalvotes' => $total,
                 'url' => '/read/' . get_page_strid($poll->topic)
-            ));
+            ]);
         }
         
 	}

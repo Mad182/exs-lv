@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 93;
 		$foo->image_y = 74;
-		$foo->allowed = array('image/*');
+		$foo->allowed = ['image/*'];
 		$foo->image_ratio_crop = true;
 		$foo->jpeg_quality = 94;
 		$foo->file_auto_rename = false;

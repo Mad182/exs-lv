@@ -12,7 +12,7 @@ function uploadFile($db, $auth, $file) {
 	$foo->file_new_name_body = $text;
 	$foo->image_convert = 'jpg';
 	$foo->image_resize = false;
-	$foo->allowed = array('image/*');
+	$foo->allowed = ['image/*'];
 	$foo->process(CORE_PATH . '/dati/wallpapers/');
 
 	//sikbilde
@@ -22,7 +22,7 @@ function uploadFile($db, $auth, $file) {
 	$foo->image_convert = 'jpg';
 	$foo->image_x = 120;
 	$foo->image_y = 100;
-	$foo->allowed = array('image/*');
+	$foo->allowed = ['image/*'];
 	$foo->image_ratio_crop = true;
 	$foo->jpeg_quality = 96;
 	$foo->process(CORE_PATH . '/dati/wallpapers/thb/');

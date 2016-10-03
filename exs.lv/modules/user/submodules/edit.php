@@ -36,7 +36,7 @@ if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 
 	$inprofile->city = (int) $_POST['edit-city'];
 
-	$db->update('users', $auth->id, array(
+	$db->update('users', $auth->id, [
 		'web' => $inprofile->web,
 		'city' => $inprofile->city,
 		'skype' => $inprofile->skype,
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 		'yt_name' => $inprofile->yt_name,
 		'twitter' => $inprofile->twitter,
 		'custom_title' => $inprofile->custom_title
-	));
+	]);
 
 	$auth->reset();
 	update_karma($auth->id, true);
@@ -57,7 +57,7 @@ if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 
 //show form
 $tpl->gotoBlock('user-profile-edit');
-$tpl->assign(array(
+$tpl->assign([
 	'user-nick' => $inprofile->nick,
 	'user-skype' => $inprofile->skype,
 	'user-yt_name' => $inprofile->yt_name,
@@ -65,23 +65,23 @@ $tpl->assign(array(
 	'user-web' => h($inprofile->web),
 	'user-date' => $inprofile->date,
 	'xsrf' => make_token('edituser')
-));
+]);
 
 if (!empty($inprofile->allow_signature)) {
 	$tpl->newBlock('sig-about-edit');
-	$tpl->assign(array(
+	$tpl->assign([
 		'user-signature' => h($inprofile->signature),
 		'user-about' => h($inprofile->about)
-	));
+	]);
 } else {
 	$tpl->newBlock('sig-about-disabled');
 }
 
 if ($inprofile->karma >= 500 || im_mod() || $inprofile->custom_title_paid) {
 	$tpl->newBlock('custom_title');
-	$tpl->assign(array(
+	$tpl->assign([
 		'user-custom_title' => $inprofile->custom_title,
-	));
+	]);
 } else {
 	$tpl->newBlock('custom_title_buy');
 }
@@ -95,11 +95,11 @@ foreach ($citys as $city) {
 	} else {
 		$sel = '';
 	}
-	$tpl->assign(array(
+	$tpl->assign([
 		'city-id' => $city->id,
 		'city-title' => $city->title,
 		'city-sel' => $sel
-	));
+	]);
 }
 
 $page_title = 'Tavs profils';

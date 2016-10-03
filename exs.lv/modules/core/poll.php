@@ -66,10 +66,10 @@ if ($poll) {
 			foreach ($questions as $question) {
 				$responses = $db->get_var("SELECT count(*) FROM `responses` WHERE `qid` = '" . $question->id . "'");
 				$tpl->newBlock('poll-answers-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'poll-answer-question' => $question->question,
 					'poll-answer-percentage' => round(($responses / $total) * 100)
-				));
+				]);
 			}
 
 			$tpl->gotoBlock('poll-answers');
@@ -77,16 +77,16 @@ if ($poll) {
             if ($lang == 9) {
                 $poll_mb_text = $db->get_row("SELECT `id`, `text` FROM `miniblog` WHERE `id` = '".(int)$poll->topic."' LIMIT 1");
                 if ($poll_mb_text) {
-                    $tpl->assign(array(
+                    $tpl->assign([
                         'poll-totalvotes' => $total,
                         'ppage-id' => '/say/' . $rsbot_id . '/' . $poll->topic . '-' . mb_get_strid($poll_mb_text->text, $poll_mb_text->id)
-                    ));
+                    ]);
                 }
             } else {
-                $tpl->assign(array(
+                $tpl->assign([
                     'poll-totalvotes' => $total,
                     'ppage-id' => '/read/' . get_page_strid($poll->topic)
-                ));
+                ]);
             }
 		}
         
@@ -110,10 +110,10 @@ if ($poll) {
             
 			foreach ($questions as $question) {
 				$tpl->newBlock('poll-options-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'poll-options-question' => $question->question,
 					'poll-options-id' => $question->id
-				));
+				]);
 			}
 		}
 	}

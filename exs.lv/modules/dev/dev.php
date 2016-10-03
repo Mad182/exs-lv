@@ -20,7 +20,7 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 
 			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
 			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
-			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . " - Exs #4 florbola turnīrs 05.03.2016, Jūrmala</p>");
+			$text = sanitize('<p>' . strtolower(str_replace(['.JPG', '.jpg'], '', $file)) . " - Exs #4 florbola turnīrs 05.03.2016, Jūrmala</p>");
 
 			remake_thb($image, $thb);
 

@@ -48,7 +48,7 @@ else if ($group->lang != $lang) {
 
 //disable google indexing for some groups
 if($group->noindex) {
-	$robotstag = array('noindex', 'follow');
+	$robotstag = ['noindex', 'follow'];
 }
 
 // grupas avatars
@@ -100,10 +100,10 @@ $group_tabs = $db->get_results("SELECT `id`,`title`,`slug` FROM `clans_tabs` WHE
 $pagepath = '<a href="/grupas">Domubiedru grupas</a> / ' . $group->title;
 
 $tpl->newBlock('group-menu');
-$tpl->assign(array(
+$tpl->assign([
 	'group-id' => $group->id,
 	'group-title' => $group->title
-));
+]);
 
 // pievienos grupas cilnes un iekrāsos atvērto
 if ($group_tabs) {
@@ -113,21 +113,21 @@ if ($group_tabs) {
 			$sel = 'active';
 		}
 		$tpl->newBlock('group-menu-add');
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $tab->title,
 			'sel' => $sel,
 			'url' => $tab->slug,
 			'group-id' => $group->id,
-		));
+		]);
 	}
 }
 
 // grupas administratoru fīčas
 if ($is_admin) {
 	$tpl->newBlock('group-menu-options');
-	$tpl->assign(array(
+	$tpl->assign([
 		'group-id' => $group->id
-	));
+	]);
 }
 
 // grupas apraksta rediģēšana
@@ -152,7 +152,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$group->interest_id = intval($_POST['edit-interest_id']);
 		}
 
-		$db->update('clans', $group->id, array('category_id' => $group->category_id, 'interest_id' => $group->interest_id, 'avatar' => $group->avatar, 'text' => $edit_text, 'date_modified' => time()));
+		$db->update('clans', $group->id, ['category_id' => $group->category_id, 'interest_id' => $group->interest_id, 'avatar' => $group->avatar, 'text' => $edit_text, 'date_modified' => time()]);
 
 		$auth->log('Laboja grupas aprakstu', 'clans', $group->id);
 		redirect($group_link);
@@ -160,11 +160,11 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 	$tpl->assignGlobal('active-tab-info', 'active');
 	$tpl->newBlock('group-edit');
-	$tpl->assign(array(
+	$tpl->assign([
 		'group-text' => h($group->text),
 		'group-title' => $group->title,
 		'xsrf' => make_token('groupedit')
-	));
+	]);
 
 	// grupas kategorijas mainīšanas forma
 	if (im_mod()) {
@@ -177,11 +177,11 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				if ($group->category_id == $fcategory->id) {
 					$sel = ' selected="selected"';
 				}
-				$tpl->assign(array(
+				$tpl->assign([
 					'title' => $fcategory->title,
 					'sel' => $sel,
 					'id' => $fcategory->id,
-				));
+				]);
 			}
 		}
 	}
@@ -198,11 +198,11 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				} else {
 					$sel = '';
 				}
-				$tpl->assign(array(
+				$tpl->assign([
 					'title' => $fcategory->title,
 					'sel' => $sel,
 					'id' => $fcategory->id,
-				));
+				]);
 			}
 		}
 	}
@@ -232,7 +232,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				$avatar = get_avatar($p_user, 's');
 				if ($pending->user) {
 					$tpl->newBlock('pending-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'group-id' => $group->id,
 						'pending-id' => $pending->id,
 						'pending-uid' => $p_user->id,
@@ -241,7 +241,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 						'pending-nick' => usercolor($p_user->nick, $p_user->level, false, $p_user->id),
 						'deny_token' => make_token('deny'),
 						'confirm_token' => make_token('confirm')
-					));
+					]);
 				}
 			}
 		}
@@ -255,13 +255,13 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$avatar = get_avatar($m_owner);
 
 	$tpl->newBlock('members-node');
-	$tpl->assign(array(
+	$tpl->assign([
 		'group-id' => $group->id,
 		'member-class' => 'owner',
 		'member-id' => $m_owner->id,
 		'member-nick' => usercolor($m_owner->nick, $m_owner->level, false, $m_owner->id),
 		'avatar' => $avatar
-	));
+	]);
 
 	$skip = 0;
 	if (isset($_GET['skip'])) {
@@ -292,22 +292,22 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			}
 
 			$tpl->newBlock('members-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'group-id' => $group->id,
 				'member-class' => $mclas,
 				'member-id' => $m_user->id,
 				'member-nick' => usercolor($m_user->nick, $m_user->level, false, $m_user->id),
 				'avatar' => $avatar
-			));
+			]);
 
 			//delete member from group
 			if ($is_admin || $is_mod) {
 				$tpl->newBlock('member-delete');
-				$tpl->assign(array(
+				$tpl->assign([
 					'group-id' => $group->id,
 					'member-id' => $m_user->id,
 					'token' => make_token('drop')
-				));
+				]);
 			}
 
 			//set moderator
@@ -317,22 +317,22 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				} else {
 					$tpl->newBlock('member-moderator');
 				}
-				$tpl->assign(array(
+				$tpl->assign([
 					'group-id' => $group->id,
 					'member-id' => $m_user->id,
 					'token' => make_token('mod')
-				));
+				]);
 			}
 		}
 	}
 
 	// biedru saraksta lappuses
 	$pager = pager($group->members, $skip, $end, $group_link . '/members/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 
 	$page_title = $group->title . ' - biedri';
 }
@@ -424,13 +424,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->p
 
 		$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
 		$owner = get_user($group->owner);
-		$tpl->assign(array(
+		$tpl->assign([
 			'user-credit' => $credit,
 			'group-text' => add_smile($group->text),
 			'group-posts' => $group->posts,
 			'group-members' => $group->members + 1,
 			'group-admin' => $owner->nick
-		));
+		]);
 
 		if ($credit >= 3) {
 			$tpl->assign('pay', '<p><a href="' . $group_link . '/submitpay">Pieteikties grupā</a></p>');
@@ -454,11 +454,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->p
 				}
 
 				$tpl->newBlock('nmembers-pay-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'member-id' => $m_user->id,
 					'member-nick' => h($m_user->nick),
 					'avatar' => $avatar,
-				));
+				]);
 			}
 		}
 	}
@@ -510,10 +510,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			if ((!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) && check_token('newmb', $_POST['token'])) {
 				$_SESSION["antiflood"] = time();
 
-				$ins = post_mb(array(
+				$ins = post_mb([
 					'groupid' => $group->id,
 					'text' => $body
-				));
+				]);
 
 				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', get_avatar($group, 's', true), 'g' . $ins);
 
@@ -571,12 +571,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 5) {
 					$_SESSION["antiflood"] = time();
 
-					$newid = post_mb(array(
+					$newid = post_mb([
 						'groupid' => $group->id,
 						'text' => $body,
 						'parent' => $mainid,
 						'reply_to' => $reply_to_id
-					));
+					]);
 
 					$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
 
@@ -667,9 +667,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// vai grupa ir arhivēta
 		if ($auth->ok && !isset($_GET['single']) && !$group->archived) {
 			$tpl->newBlock('user-miniblog-form');
-			$tpl->assign(array(
+			$tpl->assign([
 				'token' => make_token('newmb')
-			));
+			]);
 		} elseif ($group->archived) {
 			$tpl->newBlock('archived');
 		}
@@ -733,7 +733,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$record->text = resize_html_images($record->text);
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'url' => $url,
 					'text' => add_smile($record->text) . $append,
 					'add_deco' => $add_deco,
@@ -745,13 +745,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'author-nick' => $user->nick,
 					'id' => $record->id,
 					'title' => $title
-				));
+				]);
 
 				// atsevišķās grupās ierakstu vērtēšana ir atslēdzama
 				if (empty($group->disable_vote)) {
-					$tpl->assign(array(
+					$tpl->assign([
 						'rater' => mb_rater($record, $url)
-					));
+					]);
 				}
 
 				// atvērtos miniblogos rāda administratīvās iespējas un komentārus
@@ -763,9 +763,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 					if ((im_mod() || (!$record->closed && $auth->karma > 99 && $record->author == $auth->id)) && (strtotime($record->date) > time() - 1800) || $auth->level == 1 || $auth->id == 115) {
 						$tpl->newBlock('mb-edit-main');
-						$tpl->assign(array(
+						$tpl->assign([
 							'id' => $record->id,
-						));
+						]);
 					}
 
 					// linki ieraksta aizslēgšanai/atslēgšanai
@@ -781,14 +781,14 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					// lūdzu, neņem nost laika ierobežojumu :/
 					if (im_mod() && strtotime($record->date) > time() - 86400) {
 						$tpl->newBlock('mb-delete');
-						$tpl->assign(array(
+						$tpl->assign([
 							'id' => $record->id,
 							'token' => make_token('delmb')
-						));
+						]);
 					}
 
 					// podziņa parent mb pārkāpuma ziņošanai
-					if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 9))) {
+					if ($auth->ok && !$auth->mobile && in_array($lang, [1, 9])) {
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
 					}
@@ -833,7 +833,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 					// komentāri tiks pievienoti rekursīvi
 					if ($responses) {
-						$json = array();
+						$json = [];
 						foreach ($responses as $response) {
 							$json[$response->reply_to][] = $response;
 						}
@@ -850,10 +850,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					} else {
 						$text = 'Atvērt sarunu&nbsp;&raquo;';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'text' => $text,
 						'url' => $url
-					));
+					]);
 				} elseif (!$record->posts) {
 					$tpl->newBlock('miniblog-no');
 				}
@@ -862,19 +862,19 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			// minibloga komentēšanas forma
 			if (isset($_GET['single']) && $auth->ok && !$record->closed && !$group->archived) {
 				$tpl->newBlock('user-miniblog-resp');
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $record->id,
 					'token' => md5('mb' . $record->id . $remote_salt . $auth->nick)
-				));
+				]);
 
 				$tpl->newBlock('mb-head');
-				$tpl->assign(array(
+				$tpl->assign([
 					'mbid' => $record->id,
 					'usrid' => $user->id,
 					'edit_time' => time(),
 					'type' => 'miniblog',
 					'lastid' => (int) $db->get_var("SELECT id FROM miniblog WHERE parent = '$record->id' ORDER BY id DESC LIMIT 1")
-				));
+				]);
 			}
 			// par slēgtiem komentāriem paziņo
 			elseif ($record->closed) {
@@ -894,11 +894,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$total = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = '" . $group->id . "' AND `removed` = '0' AND `parent` = '0'");
 				$pager = pager($total, $skip, $end, $group_link . '/forum/?skip=');
 				$tpl->newBlock('mb-pager');
-				$tpl->assign(array(
+				$tpl->assign([
 					'pager-next' => $pager['next'],
 					'pager-prev' => $pager['prev'],
 					'pager-numeric' => $pager['pages']
-				));
+				]);
 			}
 		}
 
@@ -912,9 +912,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	// viesiem nepubliskotas grupas nav skatāmas
 	else {
 		$tpl->newBlock('noguestacc');
-		$tpl->assign(array(
+		$tpl->assign([
 			'group-id' => $group->id,
-		));
+		]);
 		if (!$auth->ok) {
 			$tpl->newBlock('noguestacc-login');
 			$tpl->assign('xsrf', $auth->xsrf);
@@ -951,11 +951,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 			$tpl->newBlock('tinymce-enabled');
 			$tpl->newBlock('group-tab-edit');
-			$tpl->assign(array(
+			$tpl->assign([
 				'tab-module' => $module_content,
 				'tab-text' => h($tab->text),
 				'xsrf' => make_token('tabedit')
-			));
+			]);
 
 			$page_title = $group->title . ' - labot &quot;' . $tab->title . '&quot;';
 		}
@@ -964,10 +964,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 			if ($is_admin || $is_mod) {
 				$tpl->newBlock('tab-options');
-				$tpl->assign(array(
+				$tpl->assign([
 					'group-id' => $group->id,
 					'slug' => $tab->slug
-				));
+				]);
 			}
 
 			// cilnes šārēšana draugos un twitterī
@@ -1002,10 +1002,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			}
 
 			$tpl->newBlock('group-tab');
-			$tpl->assign(array(
+			$tpl->assign([
 				'tab-module' => $module_content,
 				'tab-text' => $share . add_smile($tab->text, 1)
-			));
+			]);
 			
 			if(!empty($custom_p_title)) {
 				$page_title =  $custom_p_title . ' - ' . $group->title;
@@ -1075,12 +1075,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		if ($group_tabs) {
 			foreach ($group_tabs as $tab) {
 				$tpl->newBlock('group-settings-tab');
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $tab->id,
 					'slug' => $tab->slug,
 					'title' => $tab->title,
 					'token' => make_token('deltab')
-				));
+				]);
 			}
 		}
 
@@ -1121,10 +1121,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->newBlock('polls_admin-list');
 			foreach ($polls as $poll) {
 				$tpl->newBlock('polls_admin-list-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'question' => $poll->name,
 					'topic' => $poll->topic,
-				));
+				]);
 			}
 		}
 
@@ -1159,7 +1159,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
  * 5. GRUPAS MEKLĒŠANAS CILNE
  */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
-	$robotstag = array('noindex', 'follow');
+	$robotstag = ['noindex', 'follow'];
 	$tpl->assignGlobal('active-tab-search', 'active');
 	$tpl->newBlock('group-search');
 
@@ -1171,7 +1171,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// meklēšanas forma jau aizpildīta; meklē...
 		if (isset($_GET['q'])) {
 
-			$q_string = str_replace(array(',', '.', '+', '-', '_'), ' ', $_GET['q']);
+			$q_string = str_replace([',', '.', '+', '-', '_'], ' ', $_GET['q']);
 			$q_string = strip_tags($q_string);
 			$tpl->assign('qstr', h($q_string));
 			$q_strings = explode(' ', $q_string);
@@ -1200,12 +1200,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						$link = base_convert($result->parent, 10, 36) . '#m' . $result->id;
 					}
 					$author = get_user($result->author);
-					$tpl->assign(array(
+					$tpl->assign([
 						'author' => userlink($author),
 						'text' => $result->text,
 						'group-id' => $group->id,
 						'link' => $link,
-					));
+					]);
 				}
 			}
 		}
@@ -1247,20 +1247,20 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		$module_content = '<div class="c"></div>' . $module_content . '<div class="c"></div>';
 	}
 
-	$tpl->assign(array(
+	$tpl->assign([
 		'group-text' => add_smile($group->text, 0),
 		'group-posts' => $group->posts,
 		'group-members' => $group->members + 1,
 		'group-admin' => $owner->nick,
 		'module_content' => $module_content
-	));
+	]);
 
 	// iespējas
 	if ($group->owner == $auth->id || im_mod() || $is_mod) {
 		$tpl->newBlock('group-options');
-		$tpl->assign(array(
+		$tpl->assign([
 			'group-id' => $group->id,
-		));
+		]);
 	}
 
 	// ...
@@ -1268,28 +1268,28 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 		if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $group->paid == 0 && !$group->archived) {
 			$tpl->newBlock('group-info-apply');
-			$tpl->assign(array(
+			$tpl->assign([
 				'group-id' => $group->id,
 				'token' => make_token('apply')
-			));
+			]);
 		} elseif (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && !$group->archived) {
 			$tpl->newBlock('group-info-apply-paid');
-			$tpl->assign(array(
+			$tpl->assign([
 				'group-id' => $group->id,
 				'token' => make_token('apply')
-			));
+			]);
 		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '0'")) {
 			$tpl->newBlock('group-info-cancel');
-			$tpl->assign(array(
+			$tpl->assign([
 				'group-id' => $group->id,
 				'token' => make_token('cancel')
-			));
+			]);
 		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
 			$tpl->newBlock('group-info-quit');
-			$tpl->assign(array(
+			$tpl->assign([
 				'group-id' => $group->id,
 				'token' => make_token('cancel')
-			));
+			]);
 		}
 	}
 
@@ -1326,16 +1326,16 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				foreach ($questions as $question) {
 					$responses = $db->get_var("SELECT count(*) FROM `responses` WHERE `qid` = '" . $question->id . "'");
 					$tpl->newBlock('g-poll-answers-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'poll-answer-question' => $question->question,
 						'poll-answer-percentage' => round(($responses / $total) * 100)
-					));
+					]);
 				}
 
 				$tpl->gotoBlock('g-poll-answers');
-				$tpl->assign(array(
+				$tpl->assign([
 					'poll-totalvotes' => $total
-				));
+				]);
 			}
 		} else {
 			$tpl->newBlock('g-poll-box');
@@ -1350,10 +1350,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$tpl->newBlock('g-poll-options');
 				foreach ($questions as $question) {
 					$tpl->newBlock('g-poll-options-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'poll-options-question' => $question->question,
 						'poll-options-id' => $question->id
-					));
+					]);
 				}
 			}
 		}
@@ -1375,11 +1375,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				}
 
 				$tpl->newBlock('nmembers-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'member-id' => $m_user->id,
 					'member-nick' => h($m_user->nick),
 					'avatar' => $avatar
-				));
+				]);
 			}
 		}
 		

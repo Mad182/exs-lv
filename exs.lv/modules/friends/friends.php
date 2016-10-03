@@ -3,7 +3,7 @@
 /**
  * Lietotāja draugu saraksts
  */
-$robotstag = array('noindex', 'follow');
+$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
@@ -49,19 +49,19 @@ if ($inprofile && !$inprofile->deleted) {
 			$avatar = get_avatar($friendinfo);
 
 			$tpl->newBlock('user-friend-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'friend-id' => $theother,
 				'friend-nick' => usercolor($friendinfo->nick, $friendinfo->level),
 				'friend-avatar' => $avatar,
 				'friend-title' => h($friendinfo->nick)
-			));
+			]);
 			//cancel friendship
 			if ($auth->ok && $inprofile->id == $auth->id) {
 				$tpl->newBlock('user-friend-delete');
-				$tpl->assign(array(
+				$tpl->assign([
 					'friendship-id' => $friend->id,
 					'token' => make_token('friend')
-				));
+				]);
 			}
 		}
 	}
@@ -79,7 +79,7 @@ if ($inprofile && !$inprofile->deleted) {
 				$avatar = get_avatar($friendinfo);
 
 				$tpl->newBlock('user-friend-pending-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'friend-id' => $friend->friend1,
 					'friend-date' => substr($friend->date, 0, 10),
 					'friendship-id' => $friend->id,
@@ -87,7 +87,7 @@ if ($inprofile && !$inprofile->deleted) {
 					'friend-avatar' => $avatar,
 					'friend-title' => h($friendinfo->nick),
 					'token' => make_token('friend')
-				));
+				]);
 			}
 		}
 	}

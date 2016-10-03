@@ -1,6 +1,6 @@
 <?php
 
-$allowed_domains = array();
+$allowed_domains = [];
 foreach ($config_domains as $domain) {
 	if ($domain['domain'] !== 'secure.exs.lv') {
 		$allowed_domains[] = $domain['domain'];

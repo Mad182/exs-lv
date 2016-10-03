@@ -17,9 +17,9 @@ if (isset($_POST['submit'])) {
 		if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id)))) {
 			if (strlen($_POST['password-1']) > 5) {
 
-				$newpass = password_hash($_POST['password-1'], PASSWORD_BCRYPT, array("cost" => 14));
+				$newpass = password_hash($_POST['password-1'], PASSWORD_BCRYPT, ["cost" => 14]);
 
-				$db->update('users', $auth->id, array('pwd' => '', 'password' => $newpass));
+				$db->update('users', $auth->id, ['pwd' => '', 'password' => $newpass]);
 
 				$auth->log('Nomainīja savu paroli', 'users', $auth->id);
 

@@ -5,12 +5,12 @@ class getWallpapers {
 	function reddit() {
 		$data = curl_get('http://www.reddit.com/r/wallpaper+wallpapers/top/.json?sort=top&t=week');
 		$wallpapers = json_decode($data);
-		$files = array();
+		$files = [];
 
 		foreach ($wallpapers->data->children as $data) {
 			$file = false;
 			$thumb = $data->data->thumbnail;
-			if (in_array(substr($data->data->url, -3), array('jpg', 'png'))) {
+			if (in_array(substr($data->data->url, -3), ['jpg', 'png'])) {
 				$file = $data->data->url;
 			}
 			if (stristr($data->data->url, 'imgur.com')) {
@@ -25,10 +25,10 @@ class getWallpapers {
 				$thumb = preg_replace('/(\.[jpg|png])/', 's\1', $file);
 			}
 			if (strpos($thumb, 'http') === 0 && $file) {
-				$files[] = array(
+				$files[] = [
 					'thumb' => $thumb,
 					'file' => $file
-				);
+				];
 			}
 		}
 		return $files;
@@ -39,12 +39,12 @@ class getWallpapers {
 		$api_base = 'https://api.imgur.com/3/';
 
 		// get fresh token
-		$params = array(
+		$params = [
 			'client_id' => 'fe55f5989f0576e',
 			'refresh_token' => '308c25d24f84347065b4d0040d346d384bfbdce4',
 			'client_secret' => 'a1712852c1dbde73f0d4a8ec3d070afe47436f68',
 			'grant_type' => 'refresh_token'
-		);
+		];
 
 		$auth = '';
 		foreach ($params as $k => $v) {
@@ -67,9 +67,9 @@ class getWallpapers {
 		$token = $response->access_token;
 
 		// search for wallpapers
-		$headers = array(
+		$headers = [
 			'Authorization: Bearer ' . $token
-		);
+		];
 
 		// todo: cleanup, copypasta
 		$ch = curl_init();
@@ -86,17 +86,17 @@ class getWallpapers {
 		$response = json_decode($response);
 		$wallpapers = $response->data;
 
-		$files = array();
+		$files = [];
 
 		foreach ($wallpapers as $wallpaper) {
 			if ($wallpaper->nsfw || $wallpaper->is_album) {
 				continue;
 			}
 
-			$files[] = array(
+			$files[] = [
 				'thumb' => 'http://i.imgur.com/' . $wallpaper->id . 's.jpg',
 				'file' => $wallpaper->link
-			);
+			];
 		}
 
 		return $files;

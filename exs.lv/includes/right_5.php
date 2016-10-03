@@ -2,9 +2,9 @@
 
 $posts = get_latest_posts();
 $tpl->newBlock('main-layout-right');
-$tpl->assign(array(
+$tpl->assign([
 	'latest-noscript' => $posts
-));
+]);
 
 unset($posts);
 
@@ -18,14 +18,14 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'url' => '/user/' . $inprofile->id,
 		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
 		'profile-top-awards' => get_top_awards($inprofile->id)
-	));
+	]);
 
 	if ($auth->ok === true && $auth->id != $inprofile->id) {
 		$tpl->newBlock('profilebox-pm-link');
@@ -35,39 +35,39 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	if ($auth->ok === true
 			&& ($auth->id == $inprofile->id
 			|| im_mod())
-			&& !in_array($inprofile->level, array(1, 2))) {
+			&& !in_array($inprofile->level, [1, 2])) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'profile-warns' => '&nbsp;(' . $inprofile->warn_count . ')',
 				'class' => ' class="active"'
-			));
+			]);
 		}
 	}
 
 	if (!empty($inprofile->twitter)) {
 		$tpl->newBlock('profilebox-twitter-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'twitter' => $inprofile->twitter
-		));
+		]);
 	}
 
 	if (!empty($inprofile->yt_name)) {
 		$tpl->newBlock('profilebox-yt-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'yt-name' => $inprofile->yt_name,
 			'yt-slug' => mkslug($inprofile->yt_name)
-		));
+		]);
 	}
 } elseif (!empty($ingroup)) {
 	$tpl->newBlock('group-box');
 	$ingroup->av_alt = 1;
 	$av = get_avatar($ingroup, 'l');
-	$tpl->assign(array(
+	$tpl->assign([
 		'group-id' => $ingroup->id,
 		'group-title' => $ingroup->title,
 		'group-av' => $av
-	));
+	]);
 }
 
 include(CORE_PATH . '/modules/core/poll.php');

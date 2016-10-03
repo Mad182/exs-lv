@@ -24,13 +24,13 @@ if ($scores) {
 	foreach ($scores as $score) {
 		$user = $db->get_row("SELECT id,nick,level FROM users WHERE id = '$score->user_id'");
 		$tpl->newBlock('score-tr');
-		$tpl->assign(array(
+		$tpl->assign([
 			'score' => $score->score,
 			'user' => usercolor($user->nick, $user->level, false, $user->id),
 			'user-url' => mkurl('user', $user->id, $user->nick),
 			'date' => date('Y-m-d H:i', $score->time),
 			'place' => $i++
-		));
+		]);
 	}
 }
 

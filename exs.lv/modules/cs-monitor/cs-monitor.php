@@ -40,7 +40,7 @@ if (isset($_GET['notitle']) && $_GET['notitle'] == 'true') {
 }
 
 $tpl->newBlock('csmon');
-$tpl->assign(array(
+$tpl->assign([
 	'adr' => htmlspecialchars($adr),
 	'port' => $port,
 	'bgcolor' => $bgcolor,
@@ -50,7 +50,7 @@ $tpl->assign(array(
 	'padding' => $padding,
 	'players' => $pinput,
 	'notitle' => $notitle
-));
+]);
 
 
 if (isset($_GET['adr'])) {
@@ -74,20 +74,20 @@ if (isset($_GET['adr'])) {
 echo file_get_contents("http://exs.lv/server.php?php=true&players=true&s=' . $hash . $add . '");
 ?>';
 
-	$tpl->assign(array(
+	$tpl->assign([
 		'code' => htmlspecialchars($out),
 		'code-php' => htmlspecialchars($out_php),
 		'iframe' => $out
-	));
+	]);
 }
 
 $i = 0;
 foreach ($db->get_results("SELECT `uid` FROM `serverlist` WHERE `online` = 1 ORDER BY `updated` DESC LIMIT 3") as $server) {
 	$i++;
 	$tpl->newBlock('cslatest');
-	$tpl->assign(array(
+	$tpl->assign([
 		'src' => 'http://exs.lv/server.php?s=' . $server->uid
-	));
+	]);
 }
 
 $pagepath = $category->title;

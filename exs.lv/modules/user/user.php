@@ -3,7 +3,7 @@
 /**
  * Lietotāja profila apskatīšanas un labošanas modulis
  */
-$submodules = array('edit', 'avatar', 'settings', 'security', 'auth2f', 'email', 'buytitle', 'changenick');
+$submodules = ['edit', 'avatar', 'settings', 'security', 'auth2f', 'email', 'buytitle', 'changenick'];
 
 if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 	$userid = (int) $_GET['var1'];
@@ -57,7 +57,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $inprofile->id . "' AND removed = '0'"));
 
 		if ($posts != $inprofile->posts) {
-			$db->update('users', $inprofile->id, array('posts' => $posts));
+			$db->update('users', $inprofile->id, ['posts' => $posts]);
 		}
 
 		$time = time_ago(strtotime($inprofile->lastseen));
@@ -66,7 +66,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$inprofile->id'") +
 				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$inprofile->id'");
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'user-nick' => h($inprofile->nick),
 			'user-date' => $inprofile->date,
 			'user-days' => round($days),
@@ -80,17 +80,17 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			'user-vote_others' => $inprofile->vote_others,
 			'user-vote_total' => $inprofile->vote_total,
 			'user-votes' => $voteval
-		));
+		]);
 
 		if ($auth->ok && $auth->id == $inprofile->id) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'edit' => '<p><a class="button primary" href="/user/edit">labot profilu</a> <a class="button primary" href="/user/changenick">mainīt niku</a> <a class="button primary" href="/subscribe">sekot/nesekot foruma sadaļām</a> <a class="button primary" href="/interests">interešu kategorijas</a></p>',
-			));
+			]);
 		}
 		if ($auth->level != 5 && $inprofile->level != 5 && $auth->ok && $auth->id != $inprofile->id && !$friend->pending_friendship($auth->id, $inprofile->id) && !$friend->get_friendship_id($auth->id, $inprofile->id)) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'friend-link' => '<a class="button primary" href="/user/' . $inprofile->id . '/?addfriend=true&amp;token=' . make_token('addfriend') . '">Draudzēties</a><br />'
-			));
+			]);
 		}
 		if ($auth->ok && $auth->id != $inprofile->id && $auth->level != 5) {
 			$tpl->newBlock('user-profile-pm');
@@ -99,46 +99,46 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			if (!$viewed) {
 				$db->query("INSERT INTO viewprofile (profile,viewer,time) VALUES ('$inprofile->id','$auth->id','$date')");
 			} else {
-				$db->update('viewprofile', $viewed, array('time' => $date));
+				$db->update('viewprofile', $viewed, ['time' => $date]);
 			}
 		}
 		if ($inprofile->about && $inprofile->posts >= 10) {
 			$tpl->newBlock('user-profile-about');
-			$tpl->assign(array(
+			$tpl->assign([
 				'user-about' => add_smile($inprofile->about)
-			));
+			]);
 		}
 
 
 		if (!empty($inprofile->web)) {
 			$tpl->newBlock('info-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => 'Mājaslapa',
 				'value' => add_smile('<a href="' . h($inprofile->web) . '" rel="nofollow" target="_blank">' . h($inprofile->web) . '</a>', 0, 1, 1)
-			));
+			]);
 		}
 
 		if ($auth->ok && !empty($inprofile->skype)) {
 			$tpl->newBlock('info-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => 'Skype',
 				'value' => '<a href="skype:' . h($inprofile->skype) . '?chat">' . h($inprofile->skype) . '</a>'
-			));
+			]);
 		}
 
 		if ($auth->ok && $inprofile->city) {
 			$tpl->newBlock('info-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => 'Pilsēta',
 				'value' => $db->get_var("SELECT `title` FROM `city` WHERE `id` = '$inprofile->city'")
-			));
+			]);
 		}
 
 		if ($inprofile->lastseen > date("Y-m-d H:i:s", time() - 480) && $auth->id != $inprofile->id && !empty($inprofile->last_action)) {
 			$tpl->newBlock('user-profile-last_action');
-			$tpl->assign(array(
+			$tpl->assign([
 				'user-last_action' => $inprofile->last_action,
-			));
+			]);
 		}
 
 		if (im_mod()) {
@@ -170,12 +170,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			}
 
 			$tpl->newBlock('user-modinfo');
-			$tpl->assign(array(
+			$tpl->assign([
 				'lastip' => $inprofile->lastip,
 				'user_agent' => $inprofile->user_agent,
 				'mail' => $inprofile->mail,
 				'cookie_users' => $profiles
-			));
+			]);
 			if ($inprofile->lastip != '127.0.0.1') {
 				$tpl->assign('asn', get_asn($inprofile->lastip));
 			}
@@ -196,11 +196,11 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$tpl->newBlock('user-profile-awards');
 				foreach ($awards as $award) {
 					$tpl->newBlock('user-profile-awards-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'award-title' => $award->title,
 						'award-icon' => $award->icon,
 						'award-link' => $award->link
-					));
+					]);
 				}
 			}
 		}
@@ -210,10 +210,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$tpl->newBlock('user-profile-lastpage');
 			foreach ($articles as $article) {
 				$tpl->newBlock('user-profile-lastpage-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'node-url' => '/read/' . $article->strid,
 					'lastpage-title' => textlimit($article->title, 42, '..')
-				));
+				]);
 			}
 		}
 
@@ -236,10 +236,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$tpl->newBlock('user-profile-lastbookmark');
 			foreach ($articles as $article) {
 				$tpl->newBlock('user-profile-lastbookmark-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'node-url' => '/read/' . $article->strid,
 					'bookmark-title' => textlimit($article->title, 42, '..')
-				));
+				]);
 			}
 		}
 
@@ -269,12 +269,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			foreach ($views as $view) {
 				$avatar = get_avatar($view, 's');
 				$tpl->newBlock('user-profile-views-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $view->viewer,
 					'date' => date('d.m.Y. H:i', $view->time),
 					'nick' => h($view->nick),
 					'avatar' => $avatar
-				));
+				]);
 			}
 		}
 
@@ -307,7 +307,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				if (substr($action->avatar, 0, 8) == '/bildes/') {
 					$action->avatar = $img_server . $action->avatar;
 				}
-				$out .= '<li><img class="av" src="' . str_replace(array('http://img.exs.lv', 'http://exs.lv'), array('//img.exs.lv', '//exs.lv'), $action->avatar) . '" alt="" />';
+				$out .= '<li><img class="av" src="' . str_replace(['http://img.exs.lv', 'http://exs.lv'], ['//img.exs.lv', '//exs.lv'], $action->avatar) . '" alt="" />';
 				$out .= '<span class="post-time">' . time_ago($action->time) . '</span>' . $action->action . '</li>';
 			}
 			$out .= '</ul>';
@@ -356,9 +356,9 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			die($out);
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'out' => $out
-		));
+		]);
 
 		if ($lang == 1) {
 			$g_owners = $db->get_results("SELECT title,id FROM clans WHERE owner = '$inprofile->id' ORDER BY title ASC");
@@ -368,10 +368,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				if ($g_owners) {
 					foreach ($g_owners as $g_owner) {
 						$tpl->newBlock('g-admin');
-						$tpl->assign(array(
+						$tpl->assign([
 							'group-id' => $g_owner->id,
 							'group-title' => $g_owner->title,
-						));
+						]);
 					}
 				}
 				if ($g_members) {
@@ -382,11 +382,11 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 						} else {
 							$class = 'l-gmember';
 						}
-						$tpl->assign(array(
+						$tpl->assign([
 							'group-id' => $g_member->clan,
 							'group-class' => $class,
 							'group-title' => $g_member->title,
-						));
+						]);
 					}
 				}
 			}
@@ -418,10 +418,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$tpl->newBlock('user-profile-lastcom');
 				foreach ($comments as $comment) {
 					$tpl->newBlock('user-profile-lastcom-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'url' => '/read/' . $comment->strid . '#c' . $comment->id,
 						'comments-text' => textlimit($comment->text, 42, '..')
-					));
+					]);
 				}
 			}
 
@@ -445,12 +445,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$tpl->newBlock('user-profile-lastgcom');
 				foreach ($comments as $comment) {
 					$tpl->newBlock('user-profile-lastgcom-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'comments-image' => $comment->bid,
 						'comments-uid' => $comment->uid,
 						'comments-id' => $comment->id,
 						'comments-text' => textlimit($comment->text, 42, '..')
-					));
+					]);
 				}
 			}
 		}
