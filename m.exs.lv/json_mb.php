@@ -18,7 +18,7 @@ $mbid = (int) $_GET['mbid'];
 $lastid = (int) $_GET['lastid'];
 $lastedit = (int) $_GET['et'];
 
-$json = array();
+$json = [];
 
 $vals = $db->get_results("SELECT
 		`miniblog`.`text` AS `text`,

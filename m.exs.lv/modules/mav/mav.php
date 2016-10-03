@@ -18,7 +18,7 @@ if (file_exists($original)) {
 	$foo->image_resize = true;
 	$foo->image_x = 90;
 	$foo->image_y = 90;
-	$foo->allowed = array('image/*');
+	$foo->allowed = ['image/*'];
 	$foo->image_ratio_crop = true;
 	$foo->jpeg_quality = 93;
 	$foo->file_auto_rename = false;

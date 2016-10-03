@@ -5,7 +5,7 @@
 
 set_action('mobilo versiju');
 
-$events = array();
+$events = [];
 
 $mods_only = '';
 if (!im_mod()) {
@@ -59,7 +59,7 @@ foreach ($articles as $article) {
 	$article->title = textlimit($article->title, 125, '...');
 	$where = ' <span class="where">#' . $article->ctitle . '</span>';
 
-	$events[strtotime($article->bump) . '-' . $url] = array(
+	$events[strtotime($article->bump) . '-' . $url] = [
 		'url' => $url,
 		'author' => $article->nick,
 		'title' => $article->title,
@@ -67,14 +67,14 @@ foreach ($articles as $article) {
 		'time' => $time,
 		'where' => $where,
 		'posts' => $article->posts
-	);
+	];
 }
 
 
 if ($auth->level == 1) {
 	$groupquery = '1 = 1';
 } else {
-	$usergroups = array("`miniblog`.`groupid` = '0'");
+	$usergroups = ["`miniblog`.`groupid` = '0'"];
 	if ($auth->ok === true) {
 		$g_owners = $db->get_col("SELECT id FROM clans WHERE owner = '$auth->id'");
 		if ($g_owners) {
@@ -153,7 +153,7 @@ if ($mbs) {
 		}
 		$time = time_ago_m($mb->bump);
 
-		$events[$mb->bump . '-' . $url] = array(
+		$events[$mb->bump . '-' . $url] = [
 			'url' => $url,
 			'author' => $mb->nick,
 			'title' => $mb->text,
@@ -161,7 +161,7 @@ if ($mbs) {
 			'time' => $time,
 			'where' => $where,
 			'posts' => $mb->posts
-		);
+		];
 	}
 }
 
@@ -176,7 +176,7 @@ if (!empty($events)) {
 			break;
 		}
 		$tpl->newBlock('wall-events-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'url' => $event['url'],
 			'author' => $event['author'],
 			'title' => $event['title'],
@@ -184,7 +184,7 @@ if (!empty($events)) {
 			'time' => $event['time'],
 			'where' => $event['where'],
 			'posts' => $event['posts']
-		));
+		]);
 	}
 }
 

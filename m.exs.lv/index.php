@@ -85,9 +85,9 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 		$login_url = h('https://secure.exs.lv/');
 	}
 
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'xsrf' => $auth->xsrf,
-	));
+	]);
 
 } else {
 
@@ -187,22 +187,22 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 
 	$tpl->newBlock('user-menu');
-	$tpl->assign(array(
+	$tpl->assign([
 		'url' => mkurl('user', $auth->id, $auth->nick),
-	));
+	]);
 	//unread messages count
 	$new_messages = $db->get_var("SELECT count(*) FROM pm WHERE to_uid = '" . $auth->id . "' AND is_read = '0'");
 	if ($new_messages) {
 		$new_msg_string = '&nbsp;(<span class="red">' . $new_messages . '</span>)';
 	}
 
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'currentuser-nick' => h($auth->nick),
 		'new-messages' => $new_msg_string,
 		'currentuser-id' => $auth->id,
 		'currentuser-avatar' => $auth->avatar,
 		'logout-hash' => $auth->logout_hash
-	));
+	]);
 
 	//profile box
 	if (isset($category) && $category->isblog != 0) {
@@ -219,7 +219,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	}
 }
 
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'server-name' => h(str_replace('m.', '', $_SERVER['HTTP_HOST'])),
 	'page-title' => $page_title,
 	'page-url' => h($_SERVER['REQUEST_URI']),
@@ -227,15 +227,15 @@ $tpl->assignGlobal(array(
 	'timestamp' => time(),
 	'static-server' => $static_server,
 	'img-server' => $img_server,
-));
+]);
 
 /* flash error or success message */
 if (!empty($_SESSION['flash_message'])) {
 	$tpl->newBlock('flash-message');
-	$tpl->assign(array(
+	$tpl->assign([
 		'message' => add_smile($_SESSION['flash_message']['message']),
 		'class' => $_SESSION['flash_message']['class']
-	));
+	]);
 	$_SESSION['flash_message'] = '';
 }
 
