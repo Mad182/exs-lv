@@ -110,7 +110,7 @@ class TemplatePowerParser {
 			} else {
 				if (!end($this->ignore_stack)) {
 					$regs = [];
-					if (preg_match('/<!--[ ]?(START|END|INCLUDE|INCLUDESCRIPT|REUSE) BLOCK : (.+)-->/', $this->{$tplvar}["content"][$index], $regs)) {
+					if (preg_match('/<!--[ ]?(START|END|INCLUDE|REUSE) BLOCK : (.+)-->/', $this->{$tplvar}["content"][$index], $regs)) {
 						//remove trailing and leading spaces
 						$regs[2] = trim($regs[2]);
 
@@ -140,37 +140,6 @@ class TemplatePowerParser {
 
 								$coderow = $initdev["coderow"];
 								$varrow = $initdev["varrow"];
-							}
-						} else if ($regs[1] == 'INCLUDESCRIPT') {
-							$include_defined = true;
-
-							//check if the includescript file is assigned by the assignInclude function
-							if (isset($this->tpl_include[$regs[2]])) {
-								$include_file = $this->tpl_include[$regs[2]][0];
-								$type = $this->tpl_include[$regs[2]][1];
-							} else if (file_exists($regs[2])) {   //check if defined as constant in template
-								$include_file = $regs[2];
-								$type = T_BYFILE;
-							} else {
-								$include_defined = false;
-							}
-
-							if ($include_defined) {
-								ob_start();
-
-								if ($type == T_BYFILE) {
-									if (!@include_once($include_file)) {
-										$this->__errorAlert('Kļūda: Couldn\'t include script [ ' . $include_file . ' ]!');
-										exit();
-									}
-								} else {
-									eval("?>" . $include_file);
-								}
-
-								$this->defBlock[$blockname]["_C:$coderow"] = ob_get_contents();
-								$coderow++;
-
-								ob_end_clean();
 							}
 						} else if ($regs[1] == 'REUSE') {
 							$reuse_regs = [];
