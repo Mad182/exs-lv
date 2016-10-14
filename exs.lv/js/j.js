@@ -332,11 +332,6 @@ $(document).ready(function($) {
 		$(this).siblings('.spoiler-content').toggle(200);
 	});
 
-	$('#debug-details-trigger').on('click', function(e) {
-		e.preventDefault();
-		$('#debug-details').toggle(200);
-	});
-
 	$(".rpl").fancybox({
 		'overlayShow': true,
 		'transitionIn': 'none',

@@ -561,13 +561,13 @@
 								</li>
 								<li>
 									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank" class="social twitter">Twitter</a>
-									<h4>330</h4>
+									<h4>350</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
 									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank" class="social facebook">Facebook</a>
-									<h4>330</h4>
-									<p>Fani</p>
+									<h4>335</h4>
+									<p>Sekotāji</p>
 								</li>
 							</ul>
 						</div>

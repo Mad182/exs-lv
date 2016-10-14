@@ -366,11 +366,11 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$page_number = 0;
 				while ($total - $startnext > 0) {
 					$page_number++;
-					$class = ' class="page-numbers "';
+					$class = ' class="page-numbers"';
 					if ($skip === $startnext) {
 						$class = ' class="page-numbers selected"';
 					}
-					$out .= ' <a href="' . $base . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
+					$out .= '<a href="' . $base . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 					$startnext = $startnext + $end;
 				}
 				$out .= '</p>';
@@ -1069,7 +1069,7 @@ function get_footer_mb($force = false) {
 		$latest = $db->get_results("
 			SELECT `text`,`id`,`author`
 			FROM `miniblog`
-			WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1209600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang $priv
+			WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1609600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang $priv
 			ORDER BY `id` DESC
 			LIMIT 8
 		");
@@ -1110,7 +1110,7 @@ function get_footer_topics($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, 120);
+		$m->set('f_topics_' . $lang, $html, 1);
 	}
 	return $html;
 }
