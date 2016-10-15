@@ -82,7 +82,7 @@
 		Pretinieks: <span id="desas-opponent">Nav</span><br />
 		Tavi stati: <span id="desas-my-win" class="rautors"></span>/<span id="desas-my-lose" class="admins"></span><br />
 		Pretinieka stati: <span id="desas-op-win" class="rautors"></span>/<span id="desas-op-lose" class="admins"></span><br />
-		<a id="desas-drop" href="/desas_server/drop">Pamest partiju</a>
+		<a href="/desas_server/drop">Pamest partiju</a>
 	</div>
 </div>
 <!-- END BLOCK : desas-->

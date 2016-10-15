@@ -59,10 +59,8 @@ function load_desas(url) {
 }
 
 $(document).ready(function() {
-
-	$('#desas a, #desas-drop').on('click', function() {
+	$('#desas, #desas-info').on('click', 'a', function(e) {
 		load_desas($(this).attr('href'));
-		return false;
+        return false;
 	});
-
 });
