@@ -305,6 +305,9 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				if (substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
 					$action->avatar = '//exs.lv' . $action->avatar;
 				}
+				if (substr($action->avatar, 0, 13) == '/dati/bildes/' && !file_exists('.'.$action->avatar)) {
+					$action->avatar = '//img.exs.lv/userpic/small/none.png';
+				}
 				if (substr($action->avatar, 0, 8) == '/bildes/') {
 					$action->avatar = $img_server . $action->avatar;
 				}
