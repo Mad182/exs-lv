@@ -571,7 +571,7 @@ $tpl->printToScreen();
 
 if ($debug && !$requested_json) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
-	echo '<div><a id="debug-details-trigger" href="#" style="float:right;color: #ccf;">detaļas &raquo;</a>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
+	echo '<div>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | ielāde: ' . round(microtime(true) - $start_time, 5) . ' s';
 	echo ' | mysql: ' . $db->num_queries . ' q';
@@ -579,10 +579,6 @@ if ($debug && !$requested_json) {
 	if (!empty($category->id)) {
 		echo ' | cat_id:' . $category->id . ' (textid:' . $category->textid . ', module:' . $category->module . ')';
 	}
-	echo '</div><div id="debug-details" style="display:none"><strong>$_GET</strong><br />';
-	pr($_GET);
-	echo '<strong>$_POST</strong><br />';
-	pr($_POST);
 	echo '</div></div></div>';
 }
 

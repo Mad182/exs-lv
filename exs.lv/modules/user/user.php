@@ -298,8 +298,9 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			foreach ($actions as $action) {
 				if (!$action->avatar) {
 					$action->avatar = get_avatar($inprofile, 's');
-				} else {
-					$action->avatar = $action->avatar;
+				}
+				if (!$action->avatar || $action->avatar === '/dati/bildes/useravatar/') {
+					$action->avatar = '//img.exs.lv/userpic/small/none.png';
 				}
 				if (substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
 					$action->avatar = '//exs.lv' . $action->avatar;

@@ -1110,7 +1110,7 @@ function get_footer_topics($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, 1);
+		$m->set('f_topics_' . $lang, $html, 120);
 	}
 	return $html;
 }
