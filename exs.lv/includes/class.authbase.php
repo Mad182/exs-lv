@@ -240,6 +240,13 @@ class AuthBase {
 
 			$this->check_2fa($userinfo);
 
+			$bad = $db->get_var("SELECT count(*) FROM `bad_passwords` WHERE `shit` = '".sanitize($password)."'");
+
+			if($bad) {
+				set_flash('<strong>Tava parole ir draņķīga!</strong><br />Tavu paroli var atrast populārāko paroļu datubāzē.<br />Šoreiz izdomā kaut ko oriģinālāku :shura:', 'error');
+				redirect('/user/security');
+			}
+
 			return true;
 		} else {
 			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
