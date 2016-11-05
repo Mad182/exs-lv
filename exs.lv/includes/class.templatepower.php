@@ -261,7 +261,7 @@ class TemplatePower extends TemplatePowerParser {
 	protected $globalvars = [];
 	protected $prepared;
 
-	public function TemplatePower($tpl_file = '', $type = T_BYFILE) {
+	public function __construct($tpl_file = '', $type = T_BYFILE) {
 		parent::__contruct($tpl_file, $type);
 
 		$this->prepared = false;
