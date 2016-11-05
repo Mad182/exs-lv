@@ -37,6 +37,33 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 
     apt-get install php7.0-fpm php7.0-memcached php7.0-gd php7.0-xml php7.0-mbstring php7.0-mcrypt php7.0-curl
 
+### Memcached uz servera ar Windows OS
+
+Lejuplādē servisu no: http://downloads.northscale.com/memcached-win64-1.4.4-14.zip
+
+    pthreadGC2.dll -> C:\Windows\System32\
+    memcached.exe -> C:\memcached\
+
+Palaid memcached.exe servisu:
+
+    memcached.exe -d install
+    memcached.exe -d start
+
+Lejuplādē "Memcache" PHP 7.0 extension:
+
+    https://github.com/nono303/PHP7-memcahe-dll/blob/master/vc14/x86/ts/php_memcache.dll
+    php_memcache.dll -> C:\xampp\php\ext\
+
+Palaid "Memcache":
+
+    * C:\xampp\php\php.ini -> iekopē rindu: extension=php_memcache.dll
+    * iedarbini Apache
+    * C:\www\exs-lv\exs.lv\configdb.php -> atkomentē ar Memcache saistīto klasi
+
+Pamācība:
+
+    https://commaster.net/content/installing-memcached-windows
+
 ### Lai pilnvērtīgi darbotos img.exs.lv ###
 
 * imagemagick
