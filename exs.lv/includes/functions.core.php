@@ -990,6 +990,9 @@ function get_cat($id, $force = false) {
 		} else {
 			$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
 		}
+        if (empty($data)) {
+            return null;
+        }
 		$data->mods = [];
 		if ($mods = $db->get_results("SELECT `user_id` FROM `cat_moderators` WHERE `category_id` = '$data->id'")) {
 			foreach ($mods as $mod) {

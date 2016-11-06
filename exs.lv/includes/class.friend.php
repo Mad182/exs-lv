@@ -14,7 +14,7 @@ class Friend {
 	var $date;
 	var $done = false;
 
-	function Friend() {
+	function __construct() {
 		$this->done = false;
 	}
 

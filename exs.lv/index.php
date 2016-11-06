@@ -163,14 +163,14 @@ if (isset($_GET['p'])) {
 	 */
 	if (isset($_GET['viewcat'])) {
 		$category = get_cat($_GET['viewcat']);
-		$cat = $category->id;
+		$cat = (!empty($category)) ? $category->id : 0;
 	} else {
 		if (isset($_GET['c'])) {
 			$cat = (int) $_GET['c'];
 		}
 		$category = get_cat($cat);
 	}
-	if ($category->tmpl) {
+	if (!empty($category) && $category->tmpl) {
 		$skin = $category->tmpl;
 	}
 }
