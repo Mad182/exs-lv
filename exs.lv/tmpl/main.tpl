@@ -521,14 +521,7 @@
 					</div>
 				</div>
 
-				<div id="footer-twitter" class="footer-widget span3 block2">
-					<div class="widget" style="min-height:400px">
-						<h3 class="title"><span>Jaunākais no twitter</span></h3>
-						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="1">Tweets by @exs_lv</a>
-					</div>
-				</div>
-
-				<div class="footer-widget span6 block4">
+				<div class="footer-widget span9 block4">
 					<div class="widget onlusers-widget">
 						<h3 class="title"><span>Lietotāji tiešsaitē</span></h3>
 						<div class="onlusers clearfix">		
