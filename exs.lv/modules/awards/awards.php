@@ -14,7 +14,7 @@ if (isset($_GET['var1'])) {
 
 if (!empty($inprofile) && empty($inprofile->deleted)) {
 
-	if ($inprofile->id == $auth->id || $debug) {
+	if ($inprofile->id === $auth->id) {
 
 		update_awards($auth->id);
 

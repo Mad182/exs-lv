@@ -9,6 +9,8 @@ function prompt_why_delete(url) {
 	}
 }
 
+function wnp(a,b,c){var d,e;return d=window.screen.width/2-(b/2+10),e=window.screen.height/2-(c/2+50),window.open(a,"Window2","status=no,height="+c+",width="+b+",resizable=yes,left="+d+",top="+e+",screenX="+d+",screenY="+e+",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no"),!1}
+
 function msgrr() {
 	query_timeout = query_timeout + 2000;
 	var query_string = '?query=true';

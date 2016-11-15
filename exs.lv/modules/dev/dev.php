@@ -1,13 +1,6 @@
 <?php
-
-
-
-$coiuntries = $db->get_results("SELECT * FROM `apps_countries`");
-
-foreach($coiuntries as $coiuntry) {
-	$code = strtolower($coiuntry->code);
-	pr($code);
-}
+redirect();
+echo get_fb_likes('https://exs.lv/');
 
 exit;
 $folder = 'florbols-05-03-2016';

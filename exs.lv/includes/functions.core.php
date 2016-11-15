@@ -2740,3 +2740,30 @@ function error_404() {
 
 }
 
+/**
+ * Atgriež facebook share/like skaitu
+ */
+function get_fb_likes($url, $force = false) {
+	global $m;
+
+	$cache_key = md5('fblikes'.$url);
+
+	if ($force || !($likes = $m->get($cache_key))) {
+		$likes = 0;
+		$json = curl_get('https://graph.facebook.com/?fields=og_object%7Blikes.summary(true).limit(0)%7D,share&id='.$url);
+		$json = json_decode($json);
+		if(!empty($json->og_object->likes->summary->total_count)) {
+			$likes += intval($json->og_object->likes->summary->total_count);
+		}
+		if(!empty($json->share->comment_count)) {
+			$likes += intval($json->share->comment_count);
+		}
+		if(!empty($json->share->share_count)) {
+			$likes += intval($json->share->share_count);
+		}
+		$likes = '<span class="fblikes">'.intval($likes).'</span>';
+		$m->set($cache_key, $likes, 43200);
+	}
+	return $likes;
+}
+

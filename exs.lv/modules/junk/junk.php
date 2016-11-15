@@ -145,6 +145,9 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			'title-html' => h($pic->title),
 			'image' => $html,
 			'id' => $pic->id,
+			'text-enc' => urlencode($pic->title),
+			'bookmark-enc' => urlencode('https://exs.lv/junk/'.$pic->id),
+			'fb-likes' => get_fb_likes('https://exs.lv/junk/'.$pic->id)
 		]);
 
 		if ($pic->author) {

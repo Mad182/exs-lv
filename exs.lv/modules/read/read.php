@@ -809,12 +809,17 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			}
 
 			$tpl->newBlock('read-article');
+
+			$permalink = get_protocol($lang) . get_domain($lang) . '/read/' . $article->strid;
+
 			$tpl->assign([
 				'title' => $article->title,
 				'text' => $article_text,
+				'text-enc' => urlencode($article_text),
 				'custom_content' => $custom_content,
 				'id' => $article->id,
-				'bookmark' => get_protocol($lang) . get_domain($lang) . '/read/' . $article->strid,
+				'bookmark' => $permalink,
+				'bookmark-enc' => urlencode($permalink),
 				'views' => $article->views + 1,
 				'date' => $date,
 				'updated' => $updated,
@@ -826,7 +831,8 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count,
-				'avatar' => get_avatar($author, 's')	
+				'avatar' => get_avatar($author, 's'),
+				'fb-likes' => get_fb_likes($permalink)	
 			]);
 
 			$page_title = $article->title . ' - ' . $category->title;
