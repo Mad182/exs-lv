@@ -4633,7 +4633,9 @@ img.show-banned:hover {
 	font-size: 11px
 }
 
-.tw-btn:hover {
+.tw-btn:hover,
+.tw-btn:active,
+.tw-btn:focus {
 	background-color: #0c7abf;
 	color: #fff;
 	text-decoration: none
@@ -4656,7 +4658,9 @@ img.show-banned:hover {
 	font-weight: normal;
 }
 
-.fb-btn:hover {
+.fb-btn:hover,
+.fb-btn:active,
+.fb-btn:focus {
 	background-color: #365899;
 	color: #fff;
 	text-decoration: none
