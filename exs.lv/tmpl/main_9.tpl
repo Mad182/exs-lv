@@ -15,7 +15,7 @@
     <!-- START BLOCK : robots-->
     <meta name="robots" content="{value}">
     <!-- END BLOCK : robots-->
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/bildes/faviconrs.ico">
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
     <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.cluetip.css">

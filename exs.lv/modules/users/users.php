@@ -13,7 +13,7 @@ if (isset($_GET['skip'])) {
 
 $sfilter = ' WHERE `deleted` = 0 ';
 if (isset($_GET['var1']) && $_GET['var1'] == 'klase') {
-	$showclass = (int) $_GET['var2'];
+	$showclass = empty($_GET['var2']) ? 0 : (int) $_GET['var2'];
 
 	$sfilter .= " AND (`level` = '" . $showclass . "' ";
 	if (!empty($site_access[$showclass])) {
