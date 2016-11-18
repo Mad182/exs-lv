@@ -8,7 +8,7 @@ $str = json_decode($str);
 
 foreach ($str as $usr) {
 	if (stristr($usr->url, '/user/')) {
-		$id = str_replace(array('/user/', '/'), '', $usr->url);
+		$id = str_replace(['/user/', '/'], '', $usr->url);
 	} else {
 		//pr($usr);
 		$id = get_between($usr->image, '/i_', '.jpg');

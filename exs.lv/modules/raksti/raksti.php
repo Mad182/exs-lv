@@ -52,10 +52,10 @@ if ($articles) {
 	}
 
 	$tpl->newBlock('list-articles');
-	$tpl->assign(array(
+	$tpl->assign([
 		'articles-title' => $category->title,
 		'articles-catid' => $category->id
-	));
+	]);
 	
 
 	foreach ($articles as $article) {
@@ -69,7 +69,7 @@ if ($articles) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', youtube_title($article->text))))), 680);
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', youtube_title($article->text))))), 680);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
@@ -82,7 +82,7 @@ if ($articles) {
 			$author_link = '<em>dzēsts</em>';
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'cat' => $cat->title,
 			'cat-strid' => $cat->textid,
 			'url' => '/read/' . $article->strid,
@@ -94,13 +94,13 @@ if ($articles) {
 			'posts' => $article->posts,
 			'intro' => $article->text,
 			'avatar' => get_avatar($user, 's')
-		));
+		]);
 		if ($article->avatar) {
 			$tpl->newBlock('list-avatar');
-			$tpl->assign(array(
+			$tpl->assign([
 				'image' => trim($article->avatar),
 				'alt' => trim(h($article->title))
-			));
+			]);
 		}
 	}
 }

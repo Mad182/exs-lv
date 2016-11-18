@@ -9,10 +9,10 @@ if (!empty($_COOKIE['last-sidebar-tab']) && $_COOKIE['last-sidebar-tab'] == 'gal
 }
 
 $tpl->newBlock('main-layout-left');
-$tpl->assign(array(
+$tpl->assign([
 	'latest-noscript' => $out,
 	$sel . '-selected' => 'active ',
-));
+]);
 unset($out);
 
 //top users
@@ -21,12 +21,12 @@ if ($tusers) {
 	$tpl->newBlock('user-top');
 	foreach ($tusers as $tuser) {
 		$tpl->newBlock('user-top-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'user' => usercolor($tuser->nick, $tuser->level, false, $tuser->id),
 			'url' => '/user/' . $tuser->id,
 			'today' => $tuser->today,
 			'avatar' => get_avatar($tuser, 's')
-		));
+		]);
 	}
 }
 unset($tusers);

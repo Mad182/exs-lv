@@ -42,10 +42,10 @@ if (isset($_POST['new-nick']) && check_token('changenick', $_POST['xsrf_token'])
 }
 
 $tpl->newBlock('user-profile-changenick');
-$tpl->assign(array(
+$tpl->assign([
 	'user-credit' => $inprofile->credit,
 	'xsrf' => make_token('changenick')
-));
+]);
 
 $page_title = 'Exs.lv nika maiņa';
 

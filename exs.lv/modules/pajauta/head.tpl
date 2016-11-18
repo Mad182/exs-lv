@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" media="screen" href="/modules/flash-games/flash-games.css" />
-<script type="text/javascript">
+<link rel="stylesheet" href="/modules/flash-games/flash-games.css" />
+<script>
 
 	function postanswer(answer) {
 		$.ajax({
@@ -13,8 +13,6 @@
 		});
 		return false;
 	}
-
-
 
 	var lastid = {lastid};
 	var flaRefreshId = setInterval("update_chat()", 10000);

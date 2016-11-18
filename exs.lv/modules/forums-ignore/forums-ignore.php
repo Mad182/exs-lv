@@ -43,10 +43,10 @@ if (!empty($cats)) {
 		$forums = $db->get_results("SELECT `title`, `textid`, `icon`, `id`, `content`, `stat_topics`, `stat_com` FROM `cat` WHERE (`lang` = '$lang' OR `lang` = 0) AND `parent` = '$cat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 		if ($forums) {
 			$tpl->newBlock('forum-list');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $cat->title,
 				'textid' => $cat->textid
-			));
+			]);
 
 			foreach ($forums as $forum) {
 
@@ -64,14 +64,14 @@ if (!empty($cats)) {
 					$forum->icon = $generic_f_icon;
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'title' => $forum->title,
 					'textid' => $forum->textid,
 					'disabled' => $disabled,
 					'enabled' => $enabled,
 					'id' => $forum->id,
 					'icon' => $forum->icon
-				));
+				]);
 			}
 		}
 	}

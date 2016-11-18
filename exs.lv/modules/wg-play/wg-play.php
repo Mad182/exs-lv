@@ -2,7 +2,7 @@
 
 function mbStringToArray($string) {
 	$stop = mb_strlen($string);
-	$result = array();
+	$result = [];
 	for ($idx = 0; $idx < $stop; $idx++) {
 		$result[] = mb_substr($string, $idx, 1);
 	}
@@ -30,18 +30,18 @@ if (isset($_GET['_'])) {
 if (!$ajax) {
 	$add_css[] = 'hangman.css';
 	$tpl->newBlock('hm-gbody-top');
-	$tpl->assign(array(
+	$tpl->assign([
 		'cat-id' => $category->id,
-	));
+	]);
 } else {
 	$tpl = new TemplatePower('modules/wg-play/wg-play.tpl');
 	$tpl->prepare();
 }
 
 if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $_GET['var1'] == 'top')) {
-	$tpl->assign(array(
+	$tpl->assign([
 		'active-tab-top' => ' activeTab',
-	));
+	]);
 
 	$topusers = $db->get_results("SELECT * FROM wg_results WHERE date = '" . date('Y-m-d') . "' AND user_id != '0' ORDER BY points DESC, games ASC LIMIT 200");
 
@@ -65,7 +65,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 			$tpl->newBlock('top-node');
 			$usr = $db->get_row("SELECT `nick`,`level` FROM users WHERE id = '$topuser->user_id'");
-			$tpl->assign(array(
+			$tpl->assign([
 				'user-place' => $icon,
 				'user-special' => $special,
 				'user-id' => $topuser->user_id,
@@ -74,18 +74,18 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				'user-ig_points' => $topuser->points,
 				'user-ig_done' => $topuser->games,
 				'p-game' => round($topuser->points / $topuser->games, 3),
-			));
+			]);
 			$i++;
 		}
 	}
 } else {
 	if (!$ajax) {
-		$tpl->assign(array(
+		$tpl->assign([
 			'active-tab-game' => ' activeTab',
-		));
+		]);
 	}
 
-	$letters = array('a', 'ā', 'b', 'c', 'č', 'd', 'e', 'ē', 'f', 'g', 'ģ', 'h', 'i', 'ī', 'j', 'k', 'ķ', 'l', 'ļ', 'm', 'n', 'ņ', 'o', 'p', 'r', 's', 'š', 't', 'u', 'ū', 'v', 'z', 'ž', 'w', 'x', 'y', 'q');
+	$letters = ['a', 'ā', 'b', 'c', 'č', 'd', 'e', 'ē', 'f', 'g', 'ģ', 'h', 'i', 'ī', 'j', 'k', 'ķ', 'l', 'ļ', 'm', 'n', 'ņ', 'o', 'p', 'r', 's', 'š', 't', 'u', 'ū', 'v', 'z', 'ž', 'w', 'x', 'y', 'q'];
 
 	if (!get_wg_id()) {
 
@@ -98,7 +98,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 		}
 
 		$word_id = $db->get_var("SELECT id FROM `wg_words` " . $query . " ORDER BY rand() LIMIT 1");
-		$db->query("INSERT INTO wg_games (word_id,correct,wrong,user_id) VALUES ('$word_id','" . serialize(array()) . "','" . serialize(array()) . "','$auth->id')");
+		$db->query("INSERT INTO wg_games (word_id,correct,wrong,user_id) VALUES ('$word_id','" . serialize([]) . "','" . serialize([]) . "','$auth->id')");
 		set_wg_id($db->insert_id);
 		redirect('/' . $category->textid);
 	} else {
@@ -151,11 +151,11 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 				if ($hasempty) {
 
-					$tpl->assign(array(
+					$tpl->assign([
 						'hint' => $word->hint,
 						'guess' => $outstr,
 						'img' => $wrongs,
-					));
+					]);
 
 					foreach ($letters as $letter) {
 						$tpl->newBlock('hm-letter');
@@ -172,11 +172,11 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 					$points = 10 - $wrongs;
 
-					$tpl->assign(array(
+					$tpl->assign([
 						'hint' => 'Tu uzvarēji un ieguvi ' . $points . ' punktus ;) atbilde ir:',
 						'guess' => $outstr . '<br /><br /><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
 						'img' => $wrongs,
-					));
+					]);
 
 					$date = date('Y-m-d');
 					if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
@@ -200,14 +200,14 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 					}
 				}
 
-				$strs = array('Tu zaudēji ;(', 'Ha ha! Tu zaudēji :P', 'Šoreiz nepaviecās :|', 'Tu zaudēji, es uzvarēju :P', 'Karājies, karājies, zaudētāj :P');
+				$strs = ['Tu zaudēji ;(', 'Ha ha! Tu zaudēji :P', 'Šoreiz nepaviecās :|', 'Tu zaudēji, es uzvarēju :P', 'Karājies, karājies, zaudētāj :P'];
 				shuffle($strs);
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'hint' => $strs[0] . ' atbilde ir:',
 					'guess' => $outstr . '<br /><br /><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
 					'img' => 10,
-				));
+				]);
 
 				$db->query("UPDATE wg_games SET correct = '" . serialize($correct) . "', wrong = '" . serialize($wrong) . "' WHERE id = '$game_id' LIMIT 1");
 

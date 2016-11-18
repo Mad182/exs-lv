@@ -16,12 +16,12 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
 		$servers = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `miniblog` WHERE `miniblog`.`removed` = '0' GROUP BY DATE(`miniblog`.`date`) ORDER BY `date` DESC LIMIT 365");
 	}
 
-	$values = array();
+	$values = [];
 	foreach ($servers as $server) {
 		$values[$server->date] = $server->count;
 	}
 
-	$data = array();
+	$data = [];
 	for ($i = 0; $i <= 364; $i++) {
 		$key = date('Y-m-d', strtotime('-' . $i . ' days'));
 		if (!empty($values[$key])) {
@@ -126,7 +126,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart2.jpg') {
 
 	$servers = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `miniblog` WHERE `miniblog`.`removed` = '0' GROUP BY DATE(`miniblog`.`date`) ORDER BY `date` DESC");
 
-	$values = array();
+	$values = [];
 	foreach ($servers as $server) {
 		$values[] = $server->count;
 	}

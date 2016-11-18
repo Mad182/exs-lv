@@ -130,12 +130,12 @@ class Minigames extends Controller {
     private function show_stats() {
 
         $this->view->newBlock('minigames-statistics');
-        $this->view->assign(array(
+        $this->view->assign([
             'f2p-only'  => $this->count_f2p,
             'p2p-only'  => $this->count_p2p,
             'safe'      => $this->count_safe,
             'unsafe'    => $this->count_unsafe
-        ));
+        ]);
     }
 }
 

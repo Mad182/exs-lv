@@ -13,23 +13,23 @@ class Model_List_Quests extends Model {
     private $cat_f2p_quests;
     
     // kvestu sarežģītība
-    private $arr_levels = array(
+    private $arr_levels = [
         1 => 'Novice', 
         2 => 'Intermediate', 
         3 => 'Experienced', 
         4 => 'Master', 
         5 => 'Grandmaster', 
         6 => 'Special'
-    );
+    ];
     
     // kvestu ilgums
-    private $arr_length = array(
+    private $arr_length = [
         1 => 'Īss', 
         2 => 'Vidējs', 
         3 => 'Ilgs', 
         4 => 'Ļoti ilgs', 
         5 => 'Ļoti, ļoti ilgs'
-    );
+    ];
     
     public function __construct() {
         global $cat_quests, $cat_miniquests;
@@ -163,7 +163,7 @@ class Model_List_Quests extends Model {
             $voice_acted = 1;
         }
 
-        $values = array(
+        $values = [
             'page_id'           => $page_id,
             'cat_id'            => (int)$cat,
             'title'             => $title,
@@ -181,7 +181,7 @@ class Model_List_Quests extends Model {
             'year'              => (int)substr($date, -2),
             'created_by'        => (int)$this->auth->id,
             'created_at'        => time()
-        );
+        ];
 
         $this->db->insert('rs_pages', $values);
     }
@@ -267,7 +267,7 @@ class Model_List_Quests extends Model {
             $entry->voice_acted = 1;
         }
         
-        $values = array(
+        $values = [
             'page_id'           => $entry->page_id,
             'cat_id'            => $entry->cat_id,
             'title'             => $entry->title,
@@ -285,11 +285,11 @@ class Model_List_Quests extends Model {
             'year'              => (int)substr($entry->date, -2),
             'updated_by'        => (int)$this->auth->id,
             'updated_at'        => time()
-        );
-        $params = array(
+        ];
+        $params = [
             'id' => (int)$entry->id,
             'deleted_by' => 0
-        );
+        ];
         
         $this->db->update('rs_pages', $params, $values);
     }

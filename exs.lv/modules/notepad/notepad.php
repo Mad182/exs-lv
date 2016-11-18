@@ -27,11 +27,11 @@ if ($auth->ok) {
 			if (!empty($note) && $note->id == $page->id) {
 				$sel = 'active';
 			}
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $page->id,
 				'sel' => $sel,
 				'title' => $page->title
-			));
+			]);
 		}
 	}
 
@@ -74,11 +74,11 @@ if ($auth->ok) {
 	} else {
 		if (!empty($note)) {
 			$tpl->newBlock('notepad-view');
-			$tpl->assign(array(
+			$tpl->assign([
 				'content' => add_smile($note->content, 1),
 				'id' => $note->id,
 				'token' => make_token('delnote')
-			));
+			]);
 		}
 	}
 } else {

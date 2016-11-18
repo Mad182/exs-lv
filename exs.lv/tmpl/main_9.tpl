@@ -15,16 +15,16 @@
     <!-- START BLOCK : robots-->
     <meta name="robots" content="{value}">
     <!-- END BLOCK : robots-->
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/bildes/faviconrs.ico">
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext" type="text/css">
-    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.cluetip.css" type="text/css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
+    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.cluetip.css">
     <!-- START BLOCK : additional-css-->
-    <link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
+    <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->
     <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.cluetip.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
     <!-- START BLOCK : tinymce-enabled-->
-    <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.init({
             selector: "textarea",
@@ -57,7 +57,7 @@
         });</script>
     <!-- END BLOCK : tinymce-enabled-->
     <!-- START BLOCK : tinymce-simple-->
-    <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.init({
             selector: "textarea",
@@ -89,7 +89,7 @@
     <!-- END BLOCK : mb-head-->
     <!-- INCLUDE BLOCK : module-head -->
     <!-- START BLOCK : rs-background-css -->
-    <style type="text/css">
+    <style>
         body {
             background:url('{img-server}/bildes/runescape/wallpapers/{background-title}') no-repeat fixed 50% 0;
         }
@@ -397,7 +397,13 @@
                         <li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
                         <li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
                     </ul>
-                    <!-- END BLOCK : profile-menu-->                    
+                    <!-- END BLOCK : profile-menu-->    
+					<!-- START BLOCK : profile-menu-deleted-->
+					<h1>Dzēsts lietotājs</h1>
+					<ul class="tabs">
+						<li><a href="/say/{user-id}" class="active"><span class="comments">Miniblogs</span></a></li>
+					</ul>
+					<!-- END BLOCK : profile-menu-deleted-->                
                     <!-- INCLUDE BLOCK : module-core-error -->                  
                     <div id="current-module">
                         <!-- INCLUDE BLOCK : module-currrent -->

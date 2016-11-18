@@ -59,7 +59,7 @@ if ($auth->ok) {
     if (im_mod()) {
         $tpl->newBlock('mod-nav');
         if (in_array($category->textid, 
-            array('banned', 'crows', 'reports', 'checkform', 'log'))) {
+            ['banned', 'crows', 'reports', 'checkform', 'log'])) {
             $tpl->assign('active-mod', ' class="selected"');
         }
     }

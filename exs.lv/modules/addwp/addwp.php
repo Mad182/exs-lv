@@ -51,11 +51,11 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'catsite.json') {
 	if ($wallpapers) {
 		foreach ($wallpapers as $image) {
 			$tpl->newBlock('wallpaper');
-			$tpl->assign(array(
+			$tpl->assign([
 				'image' => $image->image,
 				'date' => $image->date,
 				'style' => ' style="color:red"'
-			));
+			]);
 		}
 	}
 }

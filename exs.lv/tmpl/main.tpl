@@ -17,16 +17,16 @@
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes">
-	<meta name="viewport" content="width=device-width" />
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin" type='text/css'>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin">
 	<!-- START BLOCK : additional-css-->
-	<link rel="stylesheet" href="{static-server}/css/{filename}" type="text/css">
+	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
 	<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 	<script src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
-	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 	<script>
 		tinymce.init({
 			selector: "textarea",
@@ -56,7 +56,7 @@
 		});</script>
 	<!-- END BLOCK : tinymce-enabled-->
 	<!-- START BLOCK : tinymce-simple-->
-	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 	<script>
 		tinymce.init({
 			selector: "textarea",
@@ -347,6 +347,12 @@
 						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
 					</ul>
 					<!-- END BLOCK : profile-menu-->
+					<!-- START BLOCK : profile-menu-deleted-->
+					<h1>Dzēsts lietotājs</h1>
+					<ul class="tabs">
+						<li><a href="/say/{user-id}" class="active"><span class="comments">Miniblogs</span></a></li>
+					</ul>
+					<!-- END BLOCK : profile-menu-deleted-->
 					<!-- INCLUDE BLOCK : module-core-error -->
 					<div id="current-module">
 						<!-- INCLUDE BLOCK : module-currrent -->
@@ -496,9 +502,7 @@
 					</div>
 					<!-- END BLOCK : side-junk-->
 
-
 				</div>
-
 				<div class="c"></div>
 
 			</div>
@@ -517,14 +521,7 @@
 					</div>
 				</div>
 
-				<div id="footer-twitter" class="footer-widget span3 block2">
-					<div class="widget" style="min-height:400px">
-						<h3 class="title"><span>Jaunākais no twitter</span></h3>
-						<a class="twitter-timeline" href="https://twitter.com/exs_lv" data-widget-id="404553406976516097" data-tweet-limit="1">Tweets by @exs_lv</a>
-					</div>
-				</div>
-
-				<div class="footer-widget span6 block4">
+				<div class="footer-widget span9 block4">
 					<div class="widget onlusers-widget">
 						<h3 class="title"><span>Lietotāji tiešsaitē</span></h3>
 						<div class="onlusers clearfix">		
@@ -557,13 +554,13 @@
 								</li>
 								<li>
 									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank" class="social twitter">Twitter</a>
-									<h4>330</h4>
+									<h4>350</h4>
 									<p>Sekotāji</p>
 								</li>
 								<li>
 									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank" class="social facebook">Facebook</a>
-									<h4>330</h4>
-									<p>Fani</p>
+									<h4>335</h4>
+									<p>Sekotāji</p>
 								</li>
 							</ul>
 						</div>
@@ -590,11 +587,9 @@
 			<div id="site-info" class="container">
 				<div id="footer-nav" class="fr">
 					<ul class="menu">
-						<li><a href="/">Sākumlapa</a></li>
 						<li><a href="/statistika">Statistika</a></li>
 						<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 						<li><a href="/sitemap">Lapas karte</a></li>
-						<li><a href="/reklama">Reklāma portālā</a></li>
 					</ul>
 				</div>
 				<div id="credit" class="fl">
@@ -607,26 +602,26 @@
 	<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
 
 	<!-- START BLOCK : popup-ads-->
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+	<script src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
 	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script type='text/javascript' charset='utf-8' src='//go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
+	<script charset='utf-8' src='//go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
 	<noscript>
 	<a href="//go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="//go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
 	</noscript>
 	<!-- END BLOCK : popup-ads-->
 	
 	<!-- iBILLBOARD Ad Server one2many code -->
-	<script type='text/javascript' src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<script type='text/javascript' charset='utf-8' src='//go.eu.bbelements.com/bb/bb_one2n.js'></script>
-	<script type='text/javascript'>/* <![CDATA[ */ 
+	<script src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+	<script src='//go.eu.bbelements.com/bb/bb_one2n.js'></script>
+	<script>/* <![CDATA[ */ 
 	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
 	//bmone2n.addPosition('22484.2.3.2','');
 	bmone2n.addPosition('22484.2.2.1','');
 	bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
 	/* ]]> */</script>
-	<div id='bmone2t-22484.2.3.2' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
-	<div id='bmone2t-22484.2.2.1' style='display:none'><script type='text/javascript'>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
-	<script type='text/javascript'>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
+	<div id='bmone2t-22484.2.3.2' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
+	<div id='bmone2t-22484.2.2.1' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
+	<script>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
 
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -637,6 +632,4 @@
 	</script>
 
 </body>
-
 </html>
-

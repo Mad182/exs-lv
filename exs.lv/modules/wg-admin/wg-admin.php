@@ -28,11 +28,11 @@ if (isset($_GET['edit'])) {
 		}
 
 		$tpl->newBlock("facts_admin-edit");
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $fact->id,
 			'word' => stripslashes($fact->word),
 			'hint' => stripslashes($fact->hint)
-		));
+		]);
 
 		if ($suc) {
 			redirect('/' . $category->textid);
@@ -55,10 +55,10 @@ if ($facts) {
 	$tpl->newBlock("facts_admin-list");
 	foreach ($facts as $fact) {
 		$tpl->newBlock("facts_admin-list-node");
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $fact->id,
 			'word' => stripslashes($fact->word),
 			'hint' => stripslashes($fact->hint),
-		));
+		]);
 	}
 }

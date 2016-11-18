@@ -18,10 +18,10 @@ if ($auth->ok) {
 	}
 
 	$tpl->newBlock('chat-head');
-	$tpl->assign(array(
+	$tpl->assign([
 		'slug' => $category->textid,
 		'lastid' => $lastid
-	));
+	]);
 }
 
 if (isset($_GET['edit']) && im_mod()) {
@@ -35,17 +35,17 @@ if (isset($_GET['edit']) && im_mod()) {
 	}
 
 	$tpl->newBlock('text-edit');
-	$tpl->assign(array(
+	$tpl->assign([
 		'title' => $category->title,
 		'content' => h($category->content),
-	));
+	]);
 } else {
 	$tpl->newBlock('text-body');
-	$tpl->assign(array(
+	$tpl->assign([
 		'title' => $category->title,
 		'content' => $category->content,
 		'comments' => comments_block('cat-' . $category->id)
-	));
+	]);
 
 	if (im_mod()) {
 		$tpl->newBlock('options');

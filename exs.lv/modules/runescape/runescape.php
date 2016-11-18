@@ -25,11 +25,11 @@ if ($auth->ok) {
     // fona noformējuma iestatījumi
     if (isset($_GET['bg'])) {
         if ($_GET['bg'] === 'goats') {
-            $db->update('users', $auth->id, array('rs_bg' => 1));
+            $db->update('users', $auth->id, ['rs_bg' => 1]);
         } else if ($_GET['bg'] === 'map') {
-            $db->update('users', $auth->id, array('rs_bg' => 2));
+            $db->update('users', $auth->id, ['rs_bg' => 2]);
         } else {
-            $db->update('users', $auth->id, array('rs_bg' => 0));
+            $db->update('users', $auth->id, ['rs_bg' => 0]);
         }
         $auth->reset();
         redirect();
@@ -37,9 +37,9 @@ if ($auth->ok) {
     // izklājuma iestatījumi
     if (isset($_GET['layout'])) {
         if ($_GET['layout'] === 'sticky') {
-            $db->update('users', $auth->id, array('rs_layout' => 0));
+            $db->update('users', $auth->id, ['rs_layout' => 0]);
         } else {
-            $db->update('users', $auth->id, array('rs_layout' => 1));
+            $db->update('users', $auth->id, ['rs_layout' => 1]);
         }
         $auth->reset();
         redirect();

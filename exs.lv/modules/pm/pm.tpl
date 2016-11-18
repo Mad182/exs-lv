@@ -132,26 +132,6 @@
 					<!-- END BLOCK : pm-compose-option-->
 				</select>
 			</p>
-			<!-- START BLOCK : pm-compose-email-->
-			<style type="text/css">
-				p#compose-to-local {
-					display:none;
-				}
-			</style>
-
-			<p>
-				<label for="compose-to">Profils:</label><br />
-				<select name="profile">
-					<!-- START BLOCK : pm-compose-mails-->
-					<option value="{id}"{sel}>{account}</option>
-					<!-- END BLOCK : pm-compose-mails-->
-				</select>
-			</p>
-
-			<p>
-				<label>Kam:</label><br /><input type="text" name="email" value="{email}" class="text" />
-			</p>
-			<!-- END BLOCK : pm-compose-email-->
 			<p>
 				<label for="compose-title">Tēma:</label><br />
 				<input type="text" name="compose-title" id="compose-title" class="text" value="{compose-title}" maxlength="64" />

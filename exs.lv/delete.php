@@ -33,10 +33,6 @@ function reverse_htmlentities($mixed) {
 	return $mixed;
 }
 
-//memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
-
 $user = (int) $argv[1];
 
 if ($user) {

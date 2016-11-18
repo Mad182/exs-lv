@@ -29,7 +29,7 @@ if ($auth->ok && isset($_GET['var1']) && check_token('delmb', $_GET['token'])) {
 				}
 				$message .= '</p>';
                 
-				echo json_encode(array('state' => 'success', 'message' => $message));
+				echo json_encode(['state' => 'success', 'message' => $message]);
 				exit;
 			}
 
@@ -49,7 +49,7 @@ if ($auth->ok && isset($_GET['var1']) && check_token('delmb', $_GET['token'])) {
 				}
 				$message .= '</p>';
                 
-				echo json_encode(array('state' => 'success', 'message' => $message));
+				echo json_encode(['state' => 'success', 'message' => $message]);
 				exit;
 			}
 

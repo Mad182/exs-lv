@@ -19,15 +19,15 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 
 	if (!empty($user)) {
 		if (!$user->decos == '') {
-			$decos = array();
+			$decos = [];
 		} else {
 			$decos = unserialize($user->decos);
 		}
 
-		$decos[] = array(
+		$decos[] = [
 			'title' => h($_POST['title']),
 			'icon' => h($_POST['icon'])
-		);
+		];
 
 		$decos = serialize($decos);
 
@@ -44,23 +44,23 @@ $listdecos = $db->get_results("SELECT * FROM `users` WHERE `decos` != ''");
 foreach ($listdecos as $decos) {
 	$images = unserialize($decos->decos);
 	if (!empty($images)) {
-		$new = array();
+		$new = [];
 		foreach ($images as $key => $deco) {
 			if (isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove']) && $_GET['remove'] != $key) {
-				$new[$key] = array(
+				$new[$key] = [
 					'title' => $deco['title'],
 					'icon' => $deco['icon'],
-				);
+				];
 			}
 
 			$tpl->newBlock('existing-deco');
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $deco['title'],
 				'icon' => $deco['icon'],
 				'key' => $key,
 				'userid' => $decos->id,
 				'nick' => $decos->nick,
-			));
+			]);
 		}
 
 		if (isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove'])) {

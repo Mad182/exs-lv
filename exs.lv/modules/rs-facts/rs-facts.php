@@ -22,11 +22,11 @@ if (isset($_GET['_'])) {
     $single_fact = $db->get_row("SELECT `text` FROM `rs_facts` WHERE `deleted_by` = 0 ORDER BY RAND() LIMIT 1");
 
     if ($single_fact) {
-        echo json_encode(array('state' => 'success', 'content' => $single_fact->text));
+        echo json_encode(['state' => 'success', 'content' => $single_fact->text]);
         exit;
     }
         
-    echo json_encode(array('state' => 'error', 'content' => 'Piedod, neatradu nevienu RuneScape faktu! ;('));
+    echo json_encode(['state' => 'error', 'content' => 'Piedod, neatradu nevienu RuneScape faktu! ;(']);
     exit;
 }
 
@@ -162,10 +162,10 @@ if ($facts) {
 
 		$tpl->newBlock('single-fact');
         $tpl->assignAll($fact);
-        $tpl->assign(array(
+        $tpl->assign([
             'xsrf' => $auth->xsrf,
             'counter' => $counter
-        ));
+        ]);
         
         $counter++;
 	}

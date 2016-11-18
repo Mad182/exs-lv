@@ -91,10 +91,10 @@ class Tasks extends Controller {
         }
 
         $this->view->newBlock('tasks-has-pages');
-        $this->view->assign(array(
+        $this->view->assign([
             'img'           => 'uncategorised.png',
             'series_title'  => 'Nekategorizēti raksti'
-        ));
+        ]);
 
         foreach ($uncategorised as $task) {
             $this->view->newBlock('task');

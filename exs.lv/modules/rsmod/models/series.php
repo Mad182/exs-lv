@@ -191,10 +191,10 @@ class Model_Series extends Model {
         $row_id = (int)$row_id;
         if ($row_id < 1) return false;
 
-        $fields = array(
+        $fields = [
             'deleted_by' => (int)$this->auth->id,
             'deleted_at' => time()
-        );
+        ];
         $this->db->update('rs_series_quests', $row_id, $fields);
         
         return true;
@@ -219,11 +219,11 @@ class Model_Series extends Model {
         $query = true;
         if ($row_id > 0) {
         
-            $fields = array(
+            $fields = [
                 'deleted_by' => 0,
                 'updated_by' => (int)$this->auth->id,
                 'updated_at' => time()
-            );
+            ];
             $this->db->update('rs_series_quests', $row_id, $fields);
 
         // ieraksta tabulā vēl nav

@@ -13,19 +13,19 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	$avatar = get_avatar($inprofile, 'l');
 
 	$tpl->newBlock('profile-box');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'url' => '/user/' . $inprofile->id,
 		'profile-nick' => h($inprofile->nick),
 		'profile-slug' => mkslug($inprofile->nick),
 		'profile-id' => $inprofile->id,
 		'avatar' => $avatar,
 		'profile-top-awards' => get_top_awards($inprofile->id)
-	));
+	]);
 
 	if (!empty($inprofile->custom_title)) {
-		$tpl->assign(array(
+		$tpl->assign([
 			'custom_title' => ' <small>(' . $inprofile->custom_title . ')</small>'
-		));
+		]);
 	}
 
 	//pm links
@@ -39,36 +39,36 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	}
 
 	//warnu links un skaits
-	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, array(1))) {
+	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, [1])) {
 		$tpl->newBlock('profilebox-warn');
 		if ($inprofile->warn_count > 0) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'profile-warns' => '&nbsp;(' . $inprofile->warn_count . ')',
 				'class' => ' class="active"'
-			));
+			]);
 		}
 	}
 
 	if (!empty($inprofile->twitter)) {
 		$tpl->newBlock('profilebox-twitter-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'twitter' => $inprofile->twitter
-		));
+		]);
 	}
 
 	if (!empty($inprofile->yt_name)) {
 		$tpl->newBlock('profilebox-yt-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'yt-name' => $inprofile->yt_name,
 			'yt-slug' => mkslug($inprofile->yt_name)
-		));
+		]);
 	}
 
 	if (!empty($inprofile->lastfm_username)) {
 		$tpl->newBlock('profilebox-lastfm-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'name' => $inprofile->lastfm_username
-		));
+		]);
 	}
 
 	$isblog = get_blog_by_user($inprofile->id);
@@ -76,10 +76,10 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 		$blog = get_cat($isblog);
 		$count = $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '" . $isblog . "' AND `lang` = " . intval($lang));
 		$tpl->newBlock('profilebox-blog-link');
-		$tpl->assign(array(
+		$tpl->assign([
 			'url' => '/' . $blog->textid,
 			'count' => $count
-		));
+		]);
 	}
 }
 
@@ -96,12 +96,12 @@ if ($junks) {
 	$tpl->newBlock('side-junk');
 	foreach ($junks as $junk) {
 		$tpl->newBlock('side-junk-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $junk->id,
 			'thb' => $junk->thb,
 			'title' => h($junk->title),
 			'posts' => $junk->posts
-		));
+		]);
 	}
 	unset($junks);
 }
@@ -123,9 +123,9 @@ $tpl->assign('out', $mbs);
 if ($auth->ok) {
 	$tpl->newBlock('mb-tabs');
 }
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	$sel . '-selected' => 'active '
-));
+]);
 
 //dienas labākā komentāra bloks
 $best = get_todays_top_comment();
@@ -142,9 +142,9 @@ if (im_mod()) {
 		$iappstr = '&nbsp;(<strong class="r">' . $newimgs . '</strong>)';
 	}
 	$tpl->newBlock('junk-info');
-	$tpl->assign(array(
+	$tpl->assign([
 		'count' => $iappstr
-	));
+	]);
 }
 
 if ($auth->ok === true) {
@@ -168,7 +168,7 @@ if ($auth->ok === true) {
 	$tpl->assign('html', get_notify($auth->id));
 }
 
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'latest-noscript' => $out,
 
 	//'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
@@ -181,7 +181,7 @@ $tpl->assignGlobal(array(
 
 	'user-top' => user_top(),
 	$sel . '-selected' => 'active '
-));
+]);
 unset($out);
 
 //izvēlne
@@ -191,10 +191,10 @@ if ($parent_id != 0) {
 
 	if ($menuitems) {
 		$tpl->newBlock('menu-list');
-		$tpl->assign(array(
+		$tpl->assign([
 			'topid' => $parent_id,
 			'title' => get_cat($parent_id)->title
-		));
+		]);
 		foreach ($menuitems as $menuitem) {
 			$tpl->newBlock('menu-node');
 			$sel = '';
@@ -203,14 +203,14 @@ if ($parent_id != 0) {
 					$sel = ' class="active"';
 				}
 			}
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $menuitem->title,
 				'url' => '/' . $menuitem->textid,
 				'sel' => $sel,
 				'id' => $menuitem->id,
-			));
+			]);
 
-			if (in_array($menuitem->id, array(79)) && !empty($sel)) {
+			if (in_array($menuitem->id, [79]) && !empty($sel)) {
 				$children = $db->get_results("SELECT `textid`,`id`,`title` FROM `cat` WHERE `parent` = '$menuitem->id' ORDER BY `id` ASC");
 				if ($children) {
 					$tpl->newBlock('menu-list-sub');
@@ -221,11 +221,11 @@ if ($parent_id != 0) {
 							$sel = '';
 						}
 						$tpl->newBlock('menu-node-sub');
-						$tpl->assign(array(
+						$tpl->assign([
 							'title' => $child->title,
 							'url' => '/' . $child->textid,
 							'sel' => $sel
-						));
+						]);
 					}
 				}
 			}
@@ -245,10 +245,10 @@ if ($groups = get_latest_groups()) {
 			$group->link = '/group/' . $group->id;
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $group->title,
 			'link' => $group->link
-		));
+		]);
 	}
 	unset($groups);
 }
@@ -258,7 +258,7 @@ if ($category->module === 'movies') {
 	$tpl->newBlock('movie-search');
 
 	if (isset($_GET['genre'])) {
-		$_GET['genres'] = array($_GET['genre']);
+		$_GET['genres'] = [$_GET['genre']];
 
 		if (translate_genres($_GET['genre']) != $_GET['genre']) {
 			$page_title = translate_genres($_GET['genre']);
@@ -272,23 +272,23 @@ if ($category->module === 'movies') {
 	$genres = $db->get_col("SELECT DISTINCT(`genre`) FROM `movie_genres` ORDER BY `genre` ASC");
 	foreach ($genres as $genre) {
 		$tpl->newBlock('genre-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'genre' => $genre,
 			'translated' => translate_genres($genre)
-		));
+		]);
 		if (!empty($_GET['genres']) && in_array($genre, $_GET['genres'])) {
 			$tpl->assign('checked', ' checked="checked"');
 		}
 	}
 }
 
-//include(CORE_PATH . '/modules/core/poll.php');
+include(CORE_PATH . '/modules/core/poll.php');
 
 //show popup ads only for desktops
 require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
 $detect = new Mobile_Detect;
 $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-if($deviceType === 'computer' && !in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
+if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18'])) {
 	if(!$auth->ok) {
 		$tpl->newBlock('popup-ads');
 	}

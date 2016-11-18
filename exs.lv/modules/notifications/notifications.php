@@ -1,6 +1,6 @@
 <?php
 
-$texts = array(
+$texts = [
 	0 => 'atbilde komentāram',
 	1 => 'komentārs galerijā',
 	2 => 'komentārs rakstam',
@@ -18,7 +18,7 @@ $texts = array(
 	14 => 'tevi pieminēja mb',
 	15 => 'tevi pieminēja',
 	16 => 'tevi pieminēja galerijā'
-);
+];
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
@@ -118,7 +118,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 			$out = '';
 			if (!empty($user_id)) {
 
-				$data = array();
+				$data = [];
 
 				if ($notify = $db->get_results("SELECT * FROM `notify` WHERE `user_id` = '$user_id' ORDER BY `bump` DESC LIMIT 0,20")) {
 
@@ -157,13 +157,13 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {
 
 						}
 
-						$data[] = array(
+						$data[] = [
 							'url' => $domain . $notify->url,
 							'title' => h(mb_ucfirst($texts[$notify->type])),
 							'date' => $notify->bump,
 							'info' => $notify->info,
 							'type' => $notify->type
-						);
+						];
 					}
 
 					echo json_encode($data);

@@ -21,13 +21,13 @@ if (isset($_GET['var1']) && (strlen($_GET['var1']) === 64 || strlen($_GET['var1'
 
 	if (!empty($userdata)) {
 
-		$db->update('users', $userdata->id, array(
+		$db->update('users', $userdata->id, [
 			'email_new' => 'null',
 			'email_time' => 'null',
 			'email_token' => 'null',
 			'mail_confirmed' => 'NOW()',
 			'mail' => $userdata->email_new
-		));
+		]);
 
 		set_flash('E-pasta adrese veiksmīgi apstiprināta un nomainīta!', 'success');
 

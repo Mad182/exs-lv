@@ -11,7 +11,7 @@ class DraugiemApi {
 	private $user_key = false; //user API key
 	private $session_key = false; //user draugiem.lv session key
 	private $userinfo = false; //active user
-	private $lastTotal = array(); //last value cache of "total" attributes of friend list requests
+	private $lastTotal = []; //last value cache of "total" attributes of friend list requests
 
 	/**
 	 * @var int Error code for last failed API request
@@ -65,7 +65,7 @@ class DraugiemApi {
 				$_GET['dr_auth_code'] != $_SESSION['draugiem_auth_code'])) {// New session authorization
 			$this->clearSession(); //Delete current session data to prevent overwriting of existing session
 			//Get authorization data
-			$response = $this->apiCall('authorize', array('code' => $_GET['dr_auth_code']));
+			$response = $this->apiCall('authorize', ['code' => $_GET['dr_auth_code']]);
 
 			if ($response && isset($response['apikey'])) {//API key received
 				//User profile info
@@ -79,10 +79,10 @@ class DraugiemApi {
 							$_SESSION['draugiem_domain'] = preg_replace('/[^a-z0-9\.]/', '', $_GET['domain']);
 						}
 						if (!empty($response['inviter'])) {//Fill invitation info if any
-							$_SESSION['draugiem_invite'] = array(
+							$_SESSION['draugiem_invite'] = [
 								'inviter' => (int) $response['inviter'],
 								'extra' => isset($response['invite_extra']) ? $response['invite_extra'] : false,
-							);
+							];
 						}
 					}
 
@@ -113,7 +113,7 @@ class DraugiemApi {
 				if ($_SESSION['draugiem_lastcheck'] > time() - self::SESSION_CHECK_TIMEOUT) {
 					return true;
 				} else {//Session check timeout reached, recheck draugiem.lv session status
-					$response = $this->apiCall('session_check', array('hash' => $this->session_key));
+					$response = $this->apiCall('session_check', ['hash' => $this->session_key]);
 					if (!empty($response['status']) && $response['status'] == 'OK') {
 						$_SESSION['draugiem_lastcheck'] = time();
 						return true;
@@ -175,7 +175,7 @@ class DraugiemApi {
 			}
 		}
 
-		$response = $this->apiCall('userdata', array('ids' => $ids));
+		$response = $this->apiCall('userdata', ['ids' => $ids]);
 		if ($response) {
 			$userData = $response['users'];
 			if (!empty($return_single)) {//Single item requested
@@ -198,12 +198,12 @@ class DraugiemApi {
 	 * @param string $size Desired image size (icon/small/medium/large)
 	 */
 	public function imageForSize($img, $size) {
-		$sizes = array(
+		$sizes = [
 			'icon' => 'i_', //50x50px
 			'small' => 'sm_', //100x100px (default)
 			'medium' => 'm_', //215px wide
 			'large' => 'l_', //710px wide
-		);
+		];
 		if (isset($sizes[$size])) {
 			$img = str_replace('/sm_', '/' . $sizes[$size], $img);
 		}
@@ -218,7 +218,7 @@ class DraugiemApi {
 	 * @return boolean Returns true if the users are friends, false otherwise
 	 */
 	public function checkFriendship($uid, $uid2 = false) {
-		$response = $this->apiCall('check_friendship', array('uid' => $uid, 'uid2' => $uid2));
+		$response = $this->apiCall('check_friendship', ['uid' => $uid, 'uid2' => $uid2]);
 		if (isset($response['status']) && $response['status'] == 'OK') {
 			return true;
 		}
@@ -254,7 +254,7 @@ class DraugiemApi {
 	 * @return array List of user data items/user IDs or false on failure
 	 */
 	public function getUserFriends($page = 1, $limit = 20, $return_ids = false) {
-		$response = $this->apiCall('app_friends', array('show' => ($return_ids ? 'ids' : false), 'page' => $page, 'limit' => $limit));
+		$response = $this->apiCall('app_friends', ['show' => ($return_ids ? 'ids' : false), 'page' => $page, 'limit' => $limit]);
 		if ($response) {
 			$this->lastTotal['friends'][$this->user_key] = (int) $response['total'];
 			if ($return_ids) {
@@ -277,7 +277,7 @@ class DraugiemApi {
 	 * @return array List of user data items/user IDs or false on failure
 	 */
 	public function getOnlineFriends($limit = 20, $in_app = false, $return_ids = false) {
-		$response = $this->apiCall('app_friends_online', array('show' => ($return_ids ? 'ids' : false), 'in_app' => $in_app, 'limit' => $limit));
+		$response = $this->apiCall('app_friends_online', ['show' => ($return_ids ? 'ids' : false), 'in_app' => $in_app, 'limit' => $limit]);
 		if ($response) {
 			if ($return_ids) {
 				return $response['userids'];
@@ -318,7 +318,7 @@ class DraugiemApi {
 	 * @return array List of user data items/user IDs or false on failure
 	 */
 	public function getAppUsers($page = 1, $limit = 20, $return_ids = false) {
-		$response = $this->apiCall('app_users', array('show' => ($return_ids ? 'ids' : false), 'page' => $page, 'limit' => $limit));
+		$response = $this->apiCall('app_users', ['show' => ($return_ids ? 'ids' : false), 'page' => $page, 'limit' => $limit]);
 		if ($response) {
 			$this->lastTotal['users'] = (int) $response['total'];
 			if ($return_ids) {
@@ -410,7 +410,7 @@ class DraugiemApi {
 	}
 
 	public function addActivity($text, $prefix = false, $link = false) {
-		$response = $this->apiCall('add_activity', array('text' => $text, 'prefix' => $prefix, 'link' => $link));
+		$response = $this->apiCall('add_activity', ['text' => $text, 'prefix' => $prefix, 'link' => $link]);
 		if (!empty($response['status'])) {
 			if ($response['status'] == 'OK') {
 				return true;
@@ -420,7 +420,7 @@ class DraugiemApi {
 	}
 
 	public function addNotification($text, $prefix = false, $link = false, $creator = 0) {
-		$response = $this->apiCall('add_notification', array('text' => $text, 'prefix' => $prefix, 'link' => $link, 'creator' => $creator));
+		$response = $this->apiCall('add_notification', ['text' => $text, 'prefix' => $prefix, 'link' => $link, 'creator' => $creator]);
 		if (!empty($response['status'])) {
 			if ($response['status'] == 'OK') {
 				return true;
@@ -429,7 +429,7 @@ class DraugiemApi {
 		return false;
 	}
 
-	public function apiCall($action, $args = array()) {
+	public function apiCall($action, $args = []) {
 
 		$url = self::API_URL . '?app=' . $this->app_key;
 		if ($this->user_key) {//User has been authorized

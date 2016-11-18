@@ -24,9 +24,9 @@ if (isset($_GET['var1'])) {
 			$tpl_cachable = new TemplatePower('modules/flash-games/list.tpl');
 			$tpl_cachable->prepare();
 
-			$tpl_cachable->assignGlobal(array(
+			$tpl_cachable->assignGlobal([
 				'category-url' => $category->textid,
-			));
+			]);
 
 			$games = $db->get_results("SELECT slug,title,thb_local,rating,category,category_slug,rating_count FROM flash_games WHERE category_slug = '$gcat->category_slug' ORDER BY rating/rating_count DESC LIMIT $skip,$end");
 			if ($games) {
@@ -37,10 +37,10 @@ if (isset($_GET['var1'])) {
 				if ($cats) {
 					foreach ($cats as $cat) {
 						$tpl_cachable->newBlock('games-catlist');
-						$tpl_cachable->assign(array(
+						$tpl_cachable->assign([
 							'title' => $cat->category,
 							'slug' => $cat->category_slug
-						));
+						]);
 					}
 				}
 
@@ -53,14 +53,14 @@ if (isset($_GET['var1'])) {
 						$thb = '/dati/bildes/useravatar/none.png';
 					}
 
-					$tpl_cachable->assign(array(
+					$tpl_cachable->assign([
 						'slug' => $game->slug,
 						'title' => $game->title,
 						'alt' => h($game->title),
 						'thumbnail' => $thb,
 						'rating' => round($game->rating / $game->rating_count, 2),
 						'category' => $game->category
-					));
+					]);
 				}
 				$total = $db->get_var("SELECT count(*) FROM flash_games WHERE category_slug = '$gcat->category_slug'");
 				if ($total > $end) {
@@ -90,11 +90,11 @@ if (isset($_GET['var1'])) {
 						$pager_numeric .= '<span>-</span> <a href="/' . $category->textid . '/' . $gcat->category_slug . '/?page=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 						$startnext = $startnext + $end;
 					}
-					$tpl_cachable->assignGlobal(array(
+					$tpl_cachable->assignGlobal([
 						'pager-next' => $pager_next,
 						'pager-prev' => $pager_prev,
 						'pager-numeric' => $pager_numeric
-					));
+					]);
 				}
 
 				$cache_handle = fopen('cache/' . $category->textid . '/' . $skip . '-' . $gcat->category_slug . '.html', 'wb');
@@ -174,13 +174,13 @@ if (isset($_GET['var1'])) {
 				}
 
 				$tpl->newBlock('games-head');
-				$tpl->assign(array(
+				$tpl->assign([
 					'slug' => $game->slug,
 					'lastid' => $lastid
-				));
+				]);
 			}
 			$tpl->newBlock('games-single');
-			$tpl->assign(array(
+			$tpl->assign([
 				'slug' => $game->slug,
 				'title' => $game->title,
 				'title-encoded' => urlencode($game->title),
@@ -193,7 +193,7 @@ if (isset($_GET['var1'])) {
 				'instructions' => $game->instructions,
 				'description' => $game->description,
 				'comments' => comments_block('fg-' . $game->id)
-			));
+			]);
 
 			if ($auth->ok && !in_array($auth->id, $rating_users)) {
 				$tpl->newBlock('game-rate');
@@ -209,24 +209,24 @@ if (isset($_GET['var1'])) {
 					redirect('/' . $category->textid . '/' . $game->slug . '/?edit');
 				}
 				$tpl->newBlock('games-edit');
-				$tpl->assign(array(
+				$tpl->assign([
 					'width' => $game->width,
 					'height' => $game->height,
 					'flash_file' => $game->flash_file,
 					'instructions' => $game->instructions,
 					'description' => $game->description
-				));
+				]);
 			}
 
-			$not = array($game->id);
+			$not = [$game->id];
 			//citas speles saja kategorija
 			$games = $db->get_results("SELECT id,slug,title,thb_local,rating,category,category_slug,rating_count FROM flash_games WHERE category_slug = '$game->category_slug' AND `id` != '$game->id' ORDER BY rating/rating_count DESC LIMIT 3");
 			if ($games) {
 				$tpl->newBlock('games-list-other');
-				$tpl->assign(array(
+				$tpl->assign([
 					'category' => $game->category,
 					'category_slug' => $game->category_slug,
-				));
+				]);
 				//popularakas
 				foreach ($games as $game) {
 					$tpl->newBlock('games-node-other');
@@ -235,14 +235,14 @@ if (isset($_GET['var1'])) {
 					} else {
 						$thb = '/dati/bildes/useravatar/none.png';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'slug' => $game->slug,
 						'title' => $game->title,
 						'alt' => h($game->title),
 						'thumbnail' => $thb,
 						'rating' => round($game->rating / $game->rating_count, 2),
 						'category' => $game->category
-					));
+					]);
 					$not[] = $game->id;
 				}
 				$games = $db->get_results("SELECT slug,title,thb_local,rating,category,category_slug,rating_count FROM flash_games WHERE category_slug = '$game->category_slug' AND id NOT IN('" . implode("','", $not) . "') ORDER BY rand() LIMIT 3");
@@ -254,14 +254,14 @@ if (isset($_GET['var1'])) {
 					} else {
 						$thb = '/dati/bildes/useravatar/none.png';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'slug' => $game->slug,
 						'title' => $game->title,
 						'alt' => h($game->title),
 						'thumbnail' => $thb,
 						'rating' => round($game->rating / $game->rating_count, 2),
 						'category' => $game->category
-					));
+					]);
 				}
 			}
 		} else {
@@ -283,9 +283,9 @@ if (isset($_GET['var1'])) {
 		$tpl_cachable = new TemplatePower('modules/flash-games/list.tpl');
 		$tpl_cachable->prepare();
 
-		$tpl_cachable->assignGlobal(array(
+		$tpl_cachable->assignGlobal([
 			'category-url' => $category->textid,
-		));
+		]);
 
 		$games = $db->get_results("SELECT slug,title,thb_local,rating,category,rating_count FROM flash_games ORDER BY rating/rating_count DESC LIMIT $skip,$end");
 		if ($games) {
@@ -296,10 +296,10 @@ if (isset($_GET['var1'])) {
 			if ($cats) {
 				foreach ($cats as $cat) {
 					$tpl_cachable->newBlock('games-catlist');
-					$tpl_cachable->assign(array(
+					$tpl_cachable->assign([
 						'title' => $cat->category,
 						'slug' => $cat->category_slug
-					));
+					]);
 				}
 			}
 
@@ -312,7 +312,7 @@ if (isset($_GET['var1'])) {
 				}
 
 				$tpl_cachable->newBlock('games-node');
-				$tpl_cachable->assign(array(
+				$tpl_cachable->assign([
 					'slug' => $game->slug,
 					'title' => $game->title,
 					'alt' => h($game->title),
@@ -320,7 +320,7 @@ if (isset($_GET['var1'])) {
 					'thb' => $thb,
 					'rating' => round($game->rating / $game->rating_count, 2),
 					'category' => $game->category
-				));
+				]);
 			}
 			$total = $db->get_var("SELECT count(*) FROM flash_games");
 			if ($skip > 0) {
@@ -349,11 +349,11 @@ if (isset($_GET['var1'])) {
 				$pager_numeric .= '<span>-</span> <a href="/' . $category->textid . '/?page=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 				$startnext = $startnext + $end;
 			}
-			$tpl_cachable->assignGlobal(array(
+			$tpl_cachable->assignGlobal([
 				'pager-next' => $pager_next,
 				'pager-prev' => $pager_prev,
 				'pager-numeric' => $pager_numeric
-			));
+			]);
 			$cache_handle = fopen('cache/' . $category->textid . '/' . $skip . '.html', 'wb');
 			fwrite($cache_handle, $tpl_cachable->getOutputContent());
 			fclose($cache_handle);

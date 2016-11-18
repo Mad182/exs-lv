@@ -5,29 +5,28 @@
 		<title>{page-title}</title>
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
-		<script type="text/javascript" src="{static-server}/js/jquery.min.js,jquery.sidr.js,mobile.js"></script>
-		<script type="text/javascript">
+		<link rel="stylesheet" href="{static-server}/css/mobile.css">
+		<script src="{static-server}/js/jquery.min.js,jquery.sidr.js,mobile.js"></script>
+		<script>
 			var mb_refresh_limit = 12000;
 			var current_user = {currentuser-id};
 			var query_timeout = 80000;
 			var c_url = "{page-url}";
 		</script>
 		<!-- START BLOCK : mb-head-->
-		<script type="text/javascript">
+		<script>
 			var lastid = {lastid};
 			var mbid = {mbid};
 			var usrid = {usrid};
 			var edit_time = {edit_time};
-			var refreshlim = mb_refresh_limit;
 			var mbtype = "{type}";
-			var mbRefreshId = setInterval("update_mb()", refreshlim);
+			var mbRefreshId = setInterval("update_mb()", mb_refresh_limit);
 		</script>
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
 		<!-- START BLOCK : tinymce-enabled-->
-        <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
-		<script type="text/javascript">
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+		<script>
 			tinymce.init({
 				selector: "textarea",
 				plugins: [
@@ -123,7 +122,7 @@
 					<div id="miniblog-block">
 						<ul id="mb-list" class="blockhref">
 							<!-- START BLOCK : events-node-->
-							<li><a href="{url}"><span class="time-ago">{time}</span> <img class="av" src="{avatar}" alt="" /> <span class="author">{author}{where}</span> {title}&nbsp;[{posts}]<br style="clear: both;" /></a></li>
+							<li><a href="{url}"><span class="time-ago">{time}</span> <img class="av" src="{avatar}" alt="" /> <span class="author">{author}{where}</span> {title}&nbsp;[{posts}]<br style="clear:both" /></a></li>
 							<!-- END BLOCK : events-node-->
 						</ul>
 					</div>
@@ -151,7 +150,6 @@
 
 		  ga('create', 'UA-4190387-9', 'auto');
 		  ga('send', 'pageview');
-
 		</script>
 
 	</body>

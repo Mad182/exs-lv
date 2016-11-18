@@ -140,12 +140,12 @@ class Skills extends Controller {
         }
 
         $this->view->gotoBlock('skills-intro-text');
-        $this->view->assign(array(
+        $this->view->assign([
             'latest-skill' => $largest_skill,
             'max-xp'       => number_format(($skill_counter + 3) * 200000000),
             'skill-count'  => $skill_counter + 3 
             // pieskaita arī Constitution un cmb prasmes
-        ));
+        ]);
     }
     
     /**

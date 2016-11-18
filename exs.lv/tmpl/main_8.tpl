@@ -6,7 +6,7 @@
 		<meta http-equiv="content-language" content="lv">
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="/css/mobile.css" type="text/css" />
+		<link rel="stylesheet" href="/css/mobile.css">
 	</head>
 
 	<body>

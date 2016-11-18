@@ -11,7 +11,7 @@ set_action('sākumlapu');
 if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1']) || !empty($_GET['var1']) && $_GET['var1'] === 'wall') {
 
 	if(!empty($_GET['var1']) && $auth->ok && $auth->firstpage !== 'wall') {
-		$db->update('users', $auth->id, array('firstpage' => 'wall'));
+		$db->update('users', $auth->id, ['firstpage' => 'wall']);
 		$auth->reset();
 		$auth->mobile = 0;
 	}
@@ -20,13 +20,19 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 } else {
 
 	if(!empty($_GET['var1']) && $auth->ok && $auth->firstpage !== 'news') {
-		$db->update('users', $auth->id, array('firstpage' => 'news'));
+		$db->update('users', $auth->id, ['firstpage' => 'news']);
 		$auth->reset();
 		$auth->mobile = 0;
 	}
 
 	require(CORE_PATH . '/modules/wall/tab-news.php');
 }
+
+$tpl->assignGlobal([
+	'text-enc' => urlencode('Spēļu un izklaides portāls exs.lv'),
+	'bookmark-enc' => urlencode('https://exs.lv'),
+	'fb-likes' => get_fb_likes('https://exs.lv')
+]);
 
 $pagepath = '';
 

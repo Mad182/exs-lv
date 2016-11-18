@@ -1,6 +1,6 @@
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{static-server}/js/jquery.cluetip.js"></script>
-<script type="text/javascript">
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script src="{static-server}/js/jquery.cluetip.js"></script>
+<script>
 
 	function savePosition(arr) {
 		$.post("{page-url}", {position: arr});
@@ -21,4 +21,4 @@
 
 </script>
 
-<link rel="stylesheet" href="{static-server}/css/jquery.cluetip.css" type="text/css" />
+<link rel="stylesheet" href="{static-server}/css/jquery.cluetip.css">

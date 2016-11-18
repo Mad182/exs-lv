@@ -21,7 +21,7 @@ $pages = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FR
 $mbs = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `miniblog` WHERE `author` = '" . $inprofile->id . "' AND `miniblog`.`removed` = '0' AND `date` > date('$date') GROUP BY DATE(`miniblog`.`date`) ORDER BY `date` DESC");
 $comments = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `comments` WHERE `author` = '" . $inprofile->id . "' AND `comments`.`removed` = '0' AND `date` > date('$date') GROUP BY DATE(`comments`.`date`) ORDER BY `date` DESC");
 
-$values = array();
+$values = [];
 foreach ($mbs as $mb) {
 	$values[$mb->date] = $mb->count;
 }
@@ -47,7 +47,7 @@ foreach ($images as $image) {
 	}
 }
 
-$data = array();
+$data = [];
 //$max = 0;
 for ($i = 0; $i <= 374; $i++) {
 	$key = date('Y-m-d', strtotime('-' . $i . ' days'));
@@ -88,11 +88,11 @@ foreach ($values as $key => $val) {
 			$percent = 100;
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'date' => date('Y.m.d', strtotime($key)),
 			'count' => $val,
 			'percent' => $percent,
 			'decimal' => round((100 / $max * $val / 100), 2),
-		));
+		]);
 	}
 }

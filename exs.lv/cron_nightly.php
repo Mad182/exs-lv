@@ -28,15 +28,15 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 ####################### PROFILA SKATIJUMU UN LOGU TIRISANA
 $users = $db->get_results("SELECT `id` FROM `users` ORDER BY `lastseen` DESC LIMIT 10000");
 $i = 0;
 foreach ($users as $user) {
 
-	$langs = array(1,3,5,7,9);
+	$langs = [1,3,5,7,9];
 
 	foreach($langs as $clean) {
 		$db->query("DELETE FROM `userlogs` WHERE user='$user->id' AND `lang` = '$clean' AND id NOT IN (SELECT * FROM (SELECT id FROM userlogs WHERE user='$user->id' AND `lang` = '$clean' ORDER BY id DESC LIMIT 200) AS TAB)");
@@ -75,6 +75,3 @@ $db->query("DELETE FROM `taged` WHERE `tag_id` IN(SELECT id FROM `tags` WHERE `n
 $db->query("DELETE FROM `tags` WHERE `name` LIKE '%;%'");
 echo "remve ugly tags... ok\n";
 
-
-//add miniblog column
-//$db->query("ALTER TABLE  `miniblog` ADD  `device` SMALLINT NOT NULL DEFAULT  '0'");

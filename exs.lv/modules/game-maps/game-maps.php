@@ -15,7 +15,7 @@ if ($auth->level > 0) {
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 256;
 		$foo->image_y = 128;
-		$foo->allowed = array('image/*');
+		$foo->allowed = ['image/*'];
 		$foo->image_ratio_crop = true;
 		$foo->jpeg_quality = 98;
 		$foo->file_overwrite = true;

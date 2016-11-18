@@ -26,7 +26,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 90;
 		$foo->image_y = 90;
-		$foo->allowed = array('image/*');
+		$foo->allowed = ['image/*'];
 		$foo->image_ratio_crop = true;
 		$foo->jpeg_quality = 97;
 		$foo->file_auto_rename = false;
@@ -39,7 +39,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 45;
 			$foo->image_y = 45;
-			$foo->allowed = array('image/*');
+			$foo->allowed = ['image/*'];
 			$foo->image_ratio_crop = true;
 			$foo->jpeg_quality = 97;
 			$foo->file_auto_rename = false;
@@ -51,7 +51,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 180;
 			$foo->image_y = 220;
-			$foo->allowed = array('image/*');
+			$foo->allowed = ['image/*'];
 			$foo->image_ratio_crop = false;
 			$foo->image_ratio_no_zoom_in = true;
 			$foo->jpeg_quality = 97;
@@ -79,6 +79,6 @@ function update_post_count($group_id) {
 	
 	$db->query("UPDATE `clans` SET `last_activity` = NOW() WHERE `id` = " . intval($group_id));
 	
-	return $db->update('clans', $group_id, array('posts' => $posts_total, 'posts_today' => $posts_today));
+	return $db->update('clans', $group_id, ['posts' => $posts_total, 'posts_today' => $posts_today]);
 }
 

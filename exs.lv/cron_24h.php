@@ -28,8 +28,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 ########################## TOPA TĪRĪŠANA
 
@@ -84,7 +84,7 @@ $str = json_decode('['.$str[0].']');
 
 foreach ($str as $usr) {
 	if (stristr($usr->url, '/user/')) {
-		$id = str_replace(array('/user/', '/'), '', $usr->url);
+		$id = str_replace(['/user/', '/'], '', $usr->url);
 	} else {
 		$id = get_between($usr->image, '/i_', '.jpg');
 	}

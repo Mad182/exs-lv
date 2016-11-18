@@ -7,14 +7,13 @@ define("MONYT_SCRIPT_VERSION", "1.0.1");
 if (isset($_GET['version'])) {
 	die(MONYT_SCRIPT_VERSION);
 } else if (isset($_GET['check'])) {
-	$aCheck = array
-		(
+	$aCheck = [
 		'monyt' => MONYT_SCRIPT_VERSION,
 		'distro' => '',
 		'kernel' => '',
 		'cpu' => '',
 		'cores' => ''
-	);
+	];
 
 	$sDistroName = '';
 	$sDistroVer = '';
@@ -61,7 +60,7 @@ if (isset($_GET['version'])) {
 	die(json_encode($aCheck));
 }
 
-$aStats = array('monyt' => MONYT_SCRIPT_VERSION);
+$aStats = ['monyt' => MONYT_SCRIPT_VERSION];
 
 
 $aStats['uptime'] = trim(file_get_contents("/proc/uptime"));
@@ -82,7 +81,7 @@ foreach ($memory as $line) {
 	}
 }
 
-$aStats['hd'] = array();
+$aStats['hd'] = [];
 
 foreach (file('/proc/mounts') as $mount) {
 	$mount = trim($mount);
@@ -98,15 +97,14 @@ foreach (file('/proc/mounts') as $mount) {
 				$used = $total - $free;
 				$used_perc = ( $used * 100.0 ) / $total;
 
-				$aStats['hd'][] = array
-					(
+				$aStats['hd'][] = [
 					'dev' => $device,
 					'total' => $total,
 					'used' => $used,
 					'free' => $free,
 					'used_perc' => $used_perc,
 					'mount' => $folder
-				);
+				];
 			}
 		}
 	}

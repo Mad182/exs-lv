@@ -58,7 +58,7 @@ foreach($c_pages as $c_pg) {
 			}
 		}
 
-		$votes = array();
+		$votes = [];
 		$votes[1] = $db->get_row("SELECT * FROM `topic_votes` WHERE `user_id` = $auth->id AND `points` = 3");
 		$votes[2] = $db->get_row("SELECT * FROM `topic_votes` WHERE `user_id` = $auth->id AND `points` = 2");
 		$votes[3] = $db->get_row("SELECT * FROM `topic_votes` WHERE `user_id` = $auth->id AND `points` = 1");

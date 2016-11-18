@@ -31,8 +31,8 @@ class Model_Lists extends Model {
     private function get_opened_tab() {    
         $response = 'quests';
 
-        $arr_links = array('all-miniquests', 'all-minigames', 
-                           'all-distractions', 'all-guilds');
+        $arr_links = ['all-miniquests', 'all-minigames', 
+                           'all-distractions', 'all-guilds'];
 
         if (in_array($_GET['viewcat'], $arr_links)) {
             $response = str_replace('all-', '', mkslug($_GET['viewcat']));
@@ -123,10 +123,10 @@ class Model_Lists extends Model {
         $entry_id = (int)$entry_id;
         if ($entry_id < 1) return false;
         
-        $values = array(
+        $values = [
             'deleted_by' => (int)$this->auth->id,
             'deleted_at' => time()
-        );
+        ];
         
         $this->db->update('rs_pages', $entry_id, $values);
         
@@ -143,15 +143,15 @@ class Model_Lists extends Model {
         
         $swap_to = ($swap_to === 1) ? 1 : 0;
         
-        $values = array(
+        $values = [
             'updated_by' => (int)$this->auth->id,
             'updated_at' => time(),
             'is_hidden' => $swap_to
-        );
-        $params = array(
+        ];
+        $params = [
             'id' => $entry_id,
             'deleted_by' => 0
-        );
+        ];
         
         $this->db->update('rs_pages', $params, $values);
 

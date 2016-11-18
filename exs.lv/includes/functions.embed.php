@@ -54,18 +54,18 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$dofollow_sites = get_sitelist('dofollow');
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
-			$find = array(
+			$find = [
 				' rel="nofollow" href="http://' . $site,
 				' rel="nofollow" href="https://' . $site,
 				' rel="nofollow" href="http://www.' . $site,
 				' rel="nofollow" href="https://www.' . $site
-			);
-			$replace = array(
+			];
+			$replace = [
 				' href="http://' . $site,
 				' href="https://' . $site,
 				' href="http://www.' . $site,
 				' href="https://www.' . $site
-			);
+			];
 			$txt = str_ireplace($find, $replace, $txt);
 		}
 	}
@@ -74,12 +74,12 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 	$blacklisted_sites = get_sitelist('blacklisted');
 	foreach ($blacklisted_sites as $site) {
 		if (stripos($txt, $site) !== false) {
-			$replace = array(
+			$replace = [
 				'http://' . $site,
 				'http://www.' . $site,
 				'https://' . $site,
 				'https://www.' . $site
-			);
+			];
 			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
 		}
 	}
@@ -92,7 +92,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		}
 	}
 
-	$txt = str_replace(array(
+	$txt = str_replace([
 		'.space.lv',
 		'CoxFr2Kobuw',
 		'MOBM1ODD',
@@ -102,12 +102,12 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 		'servces-',
 		'.org/lan.',
 		'4f200c32f12e7.jpg'
-			), 'ES_SPAMOJU_SUDUS', $txt);
+			], 'ES_SPAMOJU_SUDUS', $txt);
 
-	$txt = str_replace(array(
+	$txt = str_replace([
 		'/ref.php',
 		'/referrer/'
-			), '/ES_SPAMOJU_SUDUS/', $txt);
+			], '/ES_SPAMOJU_SUDUS/', $txt);
 
 
 	// paslēps spoilerus
@@ -163,7 +163,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 function insert_smilies($txt, $just_return = false) {
 	global $img_server;
 
-	$smilies = array(
+	$smilies = [
 		':sweat:' => 'smiley-sweat.png',
 		':o:' => 'smiley-surprise.png',
 		':eek:' => 'smiley-eek.png',
@@ -288,8 +288,9 @@ function insert_smilies($txt, $just_return = false) {
 		':agility:' => 'agility.png',
 		':11:' => '11.png',
 		':zagis:' => 'chainsaw.gif',
-		':dickbutt:' => 'dickbutt.gif'
-	);
+		':dickbutt:' => 'dickbutt.gif',
+		':hektors:' => 'hektors.png'
+	];
     
     // izmanto exs API moduļos, lai vienkārši atgrieztu smaidiņu sarakstu
     if ($just_return) {
@@ -532,7 +533,7 @@ function get_youtube($videoid, $force = false) {
 				)");
 		}
 
-		$m->set($videoid, $data, false, 3600);
+		$m->set($videoid, $data, 3600);
 	}
 	return $data;
 }
@@ -591,7 +592,7 @@ function embed_twitter($params) {
 				$tweet_html = $tweet->html;
 			}
 		}
-		$m->set($tweet_unique, $tweet_html, false, 3600);
+		$m->set($tweet_unique, $tweet_html, 3600);
 	}
 
 	return $tweet_html;
@@ -618,7 +619,7 @@ function embed_spotify($params) {
 				$spotify_html = $spotify->html;
 			}
 		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, false, 432000);
+		$m->set('spotify_' . md5($params[0]), $spotify_html, 432000);
 	}
 
 	return $spotify_html;
@@ -745,7 +746,7 @@ function embed_soundcloud($params) {
 		if (empty($scloud_html)) {
 			$scloud_html = $params[0];
 		}
-		$m->set('scloud_' . md5($params[4]), $scloud_html, false, 1800);
+		$m->set('scloud_' . md5($params[4]), $scloud_html, 1800);
 	}
 
 	return $scloud_html;
@@ -826,7 +827,7 @@ function embed_gifv_gfycat($params) {
 		$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
 		$html .= 'width="' . (int)$width . '" height="' . (int)$height . '"></iframe>';
 		
-		$m->set($cache_key, $html, false, 3600);
+		$m->set($cache_key, $html, 3600);
 	
 	}
 
@@ -857,7 +858,7 @@ function embed_gifv_imgur($params) {
  */
 function replace_spoiler($text) {
 
-	$text = str_replace(array('<p>', '</p>', '%5B/spoiler%5D'), array('<br />', '<br />', ''), $text[1]);
+	$text = str_replace(['<p>', '</p>', '%5B/spoiler%5D'], ['<br />', '<br />', ''], $text[1]);
 
 	$content = '<span class="spoiler"><a href="javascript:void(0);" ';
 	$content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';

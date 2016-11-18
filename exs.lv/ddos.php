@@ -1,5 +1,5 @@
 <?php
-
+exit;
 /**
  * Neliels antiddos skripts,
  * bloķē ip adreses no kurām nāk pārāk daudz konekciju
@@ -26,8 +26,8 @@ $list = `netstat -atun | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' |sort |
 
 $lines = explode("\n", $list);
 
-$whitelist = array('127.0.0.1', '127.0.0.2', '0.0.0.0', '92.240.69.183', '92.240.69.188');
-$blocked = array();
+$whitelist = ['127.0.0.1', '127.0.0.2', '0.0.0.0', '92.240.69.183', '92.240.69.188'];
+$blocked = [];
 
 foreach ($lines as $line) {
 
@@ -37,7 +37,7 @@ foreach ($lines as $line) {
 		$com = "ufw insert 1 deny from " . $matches[2];
 		$block = `$com`;
 		echo $matches[2] . ': ' . $block . "\n";
-		$blocked[] = array('ip' => $matches[2], 'conn' => $matches[1]);
+		$blocked[] = ['ip' => $matches[2], 'conn' => $matches[1]];
 	}
 }
 

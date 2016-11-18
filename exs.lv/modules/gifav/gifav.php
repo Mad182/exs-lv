@@ -3,9 +3,9 @@
 /**
  * Animated avatars
  */
-$tpl->assign(array(
+$tpl->assign([
 	'user-id' => $auth->id
-));
+]);
 
 $owned = false;
 $avs = $db->get_results("SELECT * FROM `animations` WHERE `user_id` = '0' OR `user_id` = '$auth->id' ORDER BY `user_id` DESC, `id` DESC");
@@ -19,12 +19,12 @@ if ($avs) {
 			$owned = true;
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $av->id,
 			'image' => $av->image,
-			'title' => ucwords(str_replace(array('.gif', '-', '_'), array('', ' ', ' '), $av->image)),
+			'title' => ucwords(str_replace(['.gif', '-', '_'], ['', ' ', ' '], $av->image)),
 			'owned' => $own,
-		));
+		]);
 	}
 }
 

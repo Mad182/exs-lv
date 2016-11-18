@@ -11,7 +11,7 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 
 			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
 			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
-			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . ' - exs.lv Futzāla turnīrs #3. 22.02.2014. Autors: <a href="/user/1385">latvija18</a></p>');
+			$text = sanitize('<p>' . strtolower(str_replace(['.JPG', '.jpg'], '', $file)) . ' - exs.lv Futzāla turnīrs #3. 22.02.2014. Autors: <a href="/user/1385">latvija18</a></p>');
 
 			remake_thb($image, $thb);
 

@@ -36,9 +36,9 @@ if ($auth->ok === true) {
                 $ptn = "/^http:\/\/steamcommunity\.com\/openid\/id\/(7[0-9]{15,25}+)$/";
                 preg_match($ptn, $id, $matches);
 
-                $db->update('users', $auth->id, array(
+                $db->update('users', $auth->id, [
                     'steam_id' => $matches[1]
-                ));
+                ]);
 
                 $tpl->newBlock('steam-success');
             } else {

@@ -26,7 +26,7 @@ function get_top_awards($user) {
 			}
 			$data .= '</p>';
 		}
-		$m->set('aw_' . $user, $data, false, 3600);
+		$m->set('aw_' . $user, $data, 3600);
 	}
 	return $data;
 }
@@ -42,304 +42,304 @@ function get_top_awards($user) {
  * ievietojot ierakstu db tabulā, šeit tikai tos, kurus updato automātiski
  */
 function list_awards() {
-	return array(
-		'first-post' => array(
+	return [
+		'first-post' => [
 			'title' => 'Pirmie 5 posti ;)',
 			'state' => 'inactive'
-		),
-		'avatar-have' => array(
+		],
+		'avatar-have' => [
 			'title' => 'Uzlika sev avataru',
 			'state' => 'inactive'
-		),
-		'group-created' => array(
+		],
+		'group-created' => [
 			'title' => 'Izveidoja grupu',
 			'state' => 'inactive'
-		),
-		'popular' => array(
+		],
+		'popular' => [
 			'title' => 'Populārs (apskatīja 100 biedri)',
 			'state' => 'inactive'
-		),
-		'ingroup-5' => array(
+		],
+		'ingroup-5' => [
 			'title' => '5 grupu biedrs',
 			'state' => 'inactive'
-		),
-		'group-100' => array(
+		],
+		'group-100' => [
 			'title' => 'Izveidoja grupu ar 100 biedriem',
 			'state' => 'inactive'
-		),
-		'friends-20' => array(
+		],
+		'friends-20' => [
 			'title' => 'Sadraudzējās ar 20 lietotājiem',
 			'state' => 'inactive'
-		),
-		'friends-50' => array(
+		],
+		'friends-50' => [
 			'title' => 'Sadraudzējās ar 50 lietotājiem',
 			'state' => 'inactive'
-		),
-		'gallery' => array(
+		],
+		'gallery' => [
 			'title' => 'Ievietoja bildi galerijā',
 			'state' => 'inactive'
-		),
-		'blog-have' => array(
+		],
+		'blog-have' => [
 			'title' => 'Ieguva blogu',
 			'state' => 'inactive'
-		),
-		'messages-100' => array(
+		],
+		'messages-100' => [
 			'title' => 'Nosūtīja 100 vēstules',
 			'state' => 'inactive'
-		),
-		'topics-20' => array(
+		],
+		'topics-20' => [
 			'title' => 'Izveidoja 20 diskusijas',
 			'state' => 'inactive'
-		),
-		'blogcom-100' => array(
+		],
+		'blogcom-100' => [
 			'title' => '100 komentāri tavā blogā',
 			'state' => 'inactive'
-		),
-		'game-pages-1' => array(
+		],
+		'game-pages-1' => [
 			'title' => 'Uzrakstīja vienas spēles apskatu',
 			'state' => 'inactive'
-		),
-		'game-pages-5' => array(
+		],
+		'game-pages-5' => [
 			'title' => 'Uzrakstīja 5 spēļu apskatus',
 			'state' => 'inactive'
-		),
-		'game-pages-10' => array(
+		],
+		'game-pages-10' => [
 			'title' => 'Uzrakstīja 10 spēļu apskatus',
 			'state' => 'inactive'
-		),
-		'rs-pages-1' => array(
+		],
+		'rs-pages-1' => [
 			'title' => 'Uzrakstīja 1 rakstu <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
-		),
-		'rs-pages-5' => array(
+		],
+		'rs-pages-5' => [
 			'title' => 'Uzrakstīja 5 rakstus <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
-		),
-		'rs-pages-10' => array(
+		],
+		'rs-pages-10' => [
 			'title' => 'Uzrakstīja 10 rakstus <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
 			'state' => 'inactive'
-		),
-		'film-pages-1' => array(
+		],
+		'film-pages-1' => [
 			'title' => 'Uzrakstīja vienu filmas apskatu',
 			'state' => 'inactive'
-		),
-		'film-pages-5' => array(
+		],
+		'film-pages-5' => [
 			'title' => 'Uzrakstīja 5 filmu apskatus',
 			'state' => 'inactive'
-		),
-		'film-pages-10' => array(
+		],
+		'film-pages-10' => [
 			'title' => 'Uzrakstīja 10 filmu apskatus',
 			'state' => 'inactive'
-		),
-		'music-pages-1' => array(
+		],
+		'music-pages-1' => [
 			'title' => 'Raksts <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
-		),
-		'music-pages-5' => array(
+		],
+		'music-pages-5' => [
 			'title' => '5 raksti <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
-		),
-		'music-pages-10' => array(
+		],
+		'music-pages-10' => [
 			'title' => '10 raksti <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
 			'state' => 'inactive'
-		),
-		'history-pages-1' => array(
+		],
+		'history-pages-1' => [
 			'title' => 'Uzrakstīja rakstu vēstures sadaļā',
 			'state' => 'inactive'
-		),
-		'history-pages-5' => array(
+		],
+		'history-pages-5' => [
 			'title' => 'Uzrakstīja 5 rakstus vēstures sadaļā',
 			'state' => 'inactive'
-		),
-		'history-pages-10' => array(
+		],
+		'history-pages-10' => [
 			'title' => 'Uzrakstīja 10 rakstus vēstures sadaļā',
 			'state' => 'inactive'
-		),
-		'news-1' => array(
+		],
+		'news-1' => [
 			'title' => 'Uzrakstīja vienu jaunumu rakstu',
 			'state' => 'inactive'
-		),
-		'news-5' => array(
+		],
+		'news-5' => [
 			'title' => 'Uzrakstīja 5 jaunumu rakstus',
 			'state' => 'inactive'
-		),
-		'news-15' => array(
+		],
+		'news-15' => [
 			'title' => 'Uzrakstīja 15 jaunumu rakstus',
 			'state' => 'inactive'
-		),
-		'daily-first' => array(
+		],
+		'daily-first' => [
 			'title' => 'Dienas aktīvākais postotājs',
 			'state' => 'inactive'
-		),
-		'daily-first-5' => array(
+		],
+		'daily-first-5' => [
 			'title' => 'Dienas aktīvākais 5 reizes',
 			'state' => 'inactive'
-		),
-		'miniblog-10' => array(
+		],
+		'miniblog-10' => [
 			'title' => '10 ieraksti miniblogā',
 			'state' => 'inactive'
-		),
-		'miniblog-100' => array(
+		],
+		'miniblog-100' => [
 			'title' => '100 ieraksti miniblogā',
 			'state' => 'inactive'
-		),
-		'miniblog-1000' => array(
+		],
+		'miniblog-1000' => [
 			'title' => '1000 ieraksti miniblogā',
 			'state' => 'inactive'
-		),
-		'miniblog-10000' => array(
+		],
+		'miniblog-10000' => [
 			'title' => '10000 ieraksti miniblogā',
 			'state' => 'inactive'
-		),
-		'miniblog-r-100' => array(
+		],
+		'miniblog-r-100' => [
 			'title' => 'Izveidoja MB ar 100 atbildēm',
 			'state' => 'inactive'
-		),
-		'best-pages' => array(
+		],
+		'best-pages' => [
 			'title' => 'Augsti novērtēti autora raksti',
 			'state' => 'inactive'
-		),
-		'exs-cup' => array(
+		],
+		'exs-cup' => [
 			'title' => 'Uzvarēja rakstu konkursā',
 			'state' => 'inactive'
-		),
-		'desas' => array(
+		],
+		'desas' => [
 			'title' => 'Uzvarēja 25 <a href="//exs.lv/desas">desu</a> partijas',
 			'state' => 'inactive'
-		),
-		'mta-user' => array(
+		],
+		'mta-user' => [
 			'title' => '<a href="//rp.exs.lv/">rp.exs.lv lietotājs</a>',
 			'state' => 'inactive'
-		),
-		'coding-user' => array(
+		],
+		'coding-user' => [
 			'title' => '<a href="http://coding.lv/">coding.lv lietotājs</a>',
 			'state' => 'inactive'
-		),
-		'lol-exs-lv' => array(
+		],
+		'lol-exs-lv' => [
 			'title' => '<a href="//lol.exs.lv/">lol.exs.lv lietotājs</a>',
 			'state' => 'inactive'
-		),
-		'runescape-exs-lv' => array(
+		],
+		'runescape-exs-lv' => [
 			'title' => '<a href="//runescape.exs.lv/">runescape.exs.lv lietotājs</a>',
 			'state' => 'inactive'
-		),
-		'mobile' => array(
+		],
+		'mobile' => [
 			'title' => 'Apmeklēja m.exs.lv',
 			'state' => 'inactive'
-		),
-		'android' => array(
+		],
+		'android' => [
 			'title' => '<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow">exs.lv android lietotājs</a>',
 			'state' => 'inactive'
-		),
-		'draugiem-follow' => array(
+		],
+		'draugiem-follow' => [
 			'title' => 'Draugiem.lv sekotājs',
 			'state' => 'inactive'
-		),
-		'facebook-like' => array(
+		],
+		'facebook-like' => [
 			'title' => 'Facebook.com <a href="https://www.facebook.com/exs.lv" rel="nofollow">like</a>',
 			'state' => 'inactive'
-		),
-		'twitter-follower' => array(
+		],
+		'twitter-follower' => [
 			'title' => 'Twitter.com <a href="https://twitter.com/exs_lv" rel="nofollow">sekotājs</a>',
 			'state' => 'inactive'
-		),
-		'lastfm' => array(
+		],
+		'lastfm' => [
 			'title' => '<a href="https://exs.lv/lastfm">LastFM</a> lietotājs',
 			'state' => 'inactive'
-		),
-		'steam' => array(
+		],
+		'steam' => [
 			'title' => '<a href="https://exs.lv/steam-online">Steam</a> lietotājs',
 			'state' => 'inactive'
-		),
-		'blogs-50' => array(
+		],
+		'blogs-50' => [
 			'title' => 'Veica 50 bloga ierakstus',
 			'state' => 'inactive'
-		),
-		'polls-50' => array(
+		],
+		'polls-50' => [
 			'title' => 'Atbildēja 50 aptaujās',
 			'state' => 'inactive'
-		),
-		'karma-20' => array(
+		],
+		'karma-20' => [
 			'title' => 'Karmas zaķis (20)',
 			'state' => 'inactive'
-		),
-		'karma-100' => array(
+		],
+		'karma-100' => [
 			'title' => 'Karmena (100)',
 			'state' => 'inactive'
-		),
-		'karma-500' => array(
+		],
+		'karma-500' => [
 			'title' => 'Karmas iemiesojums (500)',
 			'state' => 'inactive'
-		),
-		'karma-1000' => array(
+		],
+		'karma-1000' => [
 			'title' => 'Karma Whore (1000)',
 			'state' => 'inactive'
-		),
-		'karma-2000' => array(
+		],
+		'karma-2000' => [
 			'title' => 'How about a nice cup of karma? (2000)',
 			'state' => 'inactive'
-		),
-		'karma-5000' => array(
+		],
+		'karma-5000' => [
 			'title' => 'Alus no Maadinsh (Karma 5000)',
 			'state' => 'inactive'
-		),
-		'online-7days' => array(
+		],
+		'online-7days' => [
 			'title' => '7 dienas online',
 			'state' => 'inactive'
-		),
-		'online-30days' => array(
+		],
+		'online-30days' => [
 			'title' => '30 dienas online',
 			'state' => 'inactive'
-		),
-		'online-100days' => array(
+		],
+		'online-100days' => [
 			'title' => '100 dienas online',
 			'state' => 'inactive'
-		),
-		'online-year' => array(
+		],
+		'online-year' => [
 			'title' => 'Gads online',
 			'state' => 'inactive'
-		),
-		'online-year-2' => array(
+		],
+		'online-year-2' => [
 			'title' => '2 gadi online',
 			'state' => 'inactive'
-		),
-		'online-year-3' => array(
+		],
+		'online-year-3' => [
 			'title' => '3 gadi online',
 			'state' => 'inactive'
-		),
-		'thumbs-up-100' => array(
+		],
+		'thumbs-up-100' => [
 			'title' => 'Atzītais (saņēma 100 plusiņus)',
 			'state' => 'inactive'
-		),
-		'thumbs-up' => array(
+		],
+		'thumbs-up' => [
 			'title' => 'Ievērotais (saņēma 1000 plusiņus)',
 			'state' => 'inactive'
-		),
-		'plus' => array(
+		],
+		'plus' => [
 			'title' => '10 plusi vienam komentāram',
 			'state' => 'inactive'
-		),
-		'mentioned' => array(
+		],
+		'mentioned' => [
 			'title' => '@pieminēts 10 reizes',
 			'state' => 'inactive'
-		),
-		'positive' => array(
+		],
+		'positive' => [
 			'title' => 'Pozitīvais (vērtēja citus +100)',
 			'state' => 'inactive'
-		),
-		'active-poster' => array(
+		],
+		'active-poster' => [
 			'title' => 'Aktīvais postotājs (5 posti dienā)',
 			'state' => 'inactive'
-		),
-		'savejais' => array(
+		],
+		'savejais' => [
 			'title' => 'Savējais (aktīvs 1000 dienas)',
 			'state' => 'inactive'
-		),
-		'hangman' => array(
+		],
+		'hangman' => [
 			'title' => '<a href="//exs.lv/karatavas">Karātavu</a> dienas uzvarētājs',
 			'state' => 'inactive'
-		)
-	);
+		]
+	];
 }
 
 /**
@@ -352,7 +352,7 @@ function get_awards($user) {
 	if ($ret) {
 		return $ret;
 	} else {
-		return array();
+		return [];
 	}
 }
 
@@ -366,7 +366,7 @@ function get_awards_list($user) {
 	if ($ret) {
 		return $ret;
 	} else {
-		return array();
+		return [];
 	}
 }
 
@@ -558,15 +558,15 @@ function update_awards($user) {
 
 		//medaļas par noteiktu rakstu skaitu kādā kategorijā
 		// 'award title' => array(CATEGORY IDS)
-		$topic_awards = array(
-			'game' => array(81, 603),
-			'music' => array(323),
-			'film' => array(80),
-			'history' => array(565),
-			'rs' => array(4, 5, 99, 100, 160, 193, 194, 195, 599, 789, 791, 792)
-		); // prasmes,padomi,f2p,p2p,minisp,minikv,tasks,celvezi,rs-zinas,stasti&vesture,gildes,d&d
+		$topic_awards = [
+			'game' => [81, 603],
+			'music' => [323],
+			'film' => [80],
+			'history' => [565],
+			'rs' => [4, 5, 99, 100, 160, 193, 194, 195, 599, 789, 791, 792]
+		]; // prasmes,padomi,f2p,p2p,minisp,minikv,tasks,celvezi,rs-zinas,stasti&vesture,gildes,d&d
 
-		$topic_award_levels = array(1, 5, 10);
+		$topic_award_levels = [1, 5, 10];
 
 		foreach ($topic_awards as $key => $val) {
 			if (!in_array($key . '-pages-10', $existing_awards) && $userr->posts > 3) {
@@ -720,10 +720,10 @@ function update_awards($user) {
 		$user_age = user_age($userr->date);
 		for ($i = 1; $i < 13; $i++) {
 			if ($user_age >= $i) {
-				$awards_list['cake-' . $i] = array(
+				$awards_list['cake-' . $i] = [
 					'title' => $i . ' ' . lv_dsk($i, 'gads', 'gadi') . ' exā ;)',
 					'state' => 'active'
-				);
+				];
 			}
 		}
 	}
@@ -773,7 +773,7 @@ function update_awards($user) {
 			//ja lietotājam jau ir šāds awards, neko nedaram
 			if (!in_array($key, $existing_awards)) {
 				$db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('$user','$key','" . $val['title'] . "',NOW())");
-				$db->update('autoawards', $db->insert_id, array('importance' => $db->insert_id));
+				$db->update('autoawards', $db->insert_id, ['importance' => $db->insert_id]);
 				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', $img_server . '/dati/bildes/awards/' . $key . '.png');
 				notify($user, 7);
 				$m->delete('aw_' . $user);

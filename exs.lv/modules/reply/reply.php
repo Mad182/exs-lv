@@ -24,12 +24,12 @@ if ($auth->ok) {
 	$author = $db->get_row("SELECT * FROM users WHERE id = '$comment->author'");
 
 	$tpl->newBlock('rpl-form');
-	$tpl->assign(array(
+	$tpl->assign([
 		'page' => $page->id,
 		'comment' => $comment->id,
 		'nick' => h($author->nick),
 		'xsrf' => make_token('reply')
-	));
+	]);
 } else {
 	die('Neesi ielogojies :/');
 }

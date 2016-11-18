@@ -27,8 +27,6 @@
 	swfobject.embedSWF("{flash_file}", "swf-content", "{width}", "{height}", "9", flashvars, attributes);
 </script>
 
-<!-- INCLUDE BLOCK : share-block -->
-
 <!-- START BLOCK : games-edit-->
 <h1>Labot spēli</h1>
 <form class="form" action="" method="post">

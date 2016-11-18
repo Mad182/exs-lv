@@ -23,7 +23,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 		$foo->image_convert = 'jpg';
 		$foo->image_x = 90;
 		$foo->image_y = 90;
-		$foo->allowed = array('image/*');
+		$foo->allowed = ['image/*'];
 		$foo->image_ratio_crop = true;
 		$foo->jpeg_quality = 98;
 		$foo->file_auto_rename = false;
@@ -36,7 +36,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 45;
 			$foo->image_y = 45;
-			$foo->allowed = array('image/*');
+			$foo->allowed = ['image/*'];
 			$foo->image_ratio_crop = true;
 			$foo->jpeg_quality = 98;
 			$foo->file_auto_rename = false;
@@ -48,7 +48,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 260;
 			$foo->image_y = 260;
-			$foo->allowed = array('image/*');
+			$foo->allowed = ['image/*'];
 			$foo->image_ratio_crop = false;
 			$foo->image_ratio_no_zoom_in = true;
 			$foo->jpeg_quality = 98;
@@ -70,10 +70,10 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 		}
 	}
 
-	$db->update('users', $auth->id, array(
+	$db->update('users', $auth->id, [
 		'avatar' => $inprofile->avatar,
 		'av_alt' => $inprofile->av_alt
-	));
+	]);
 
 	$auth->reset();
 	update_karma($auth->id, true);

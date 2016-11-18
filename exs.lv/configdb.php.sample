@@ -1,5 +1,18 @@
 <?php
 
+// atkomentēt uz servera ar Windows OS
+// uz Windows nav šādas Linux funkcijas
+//function sys_getloadavg() {return 1;}
+// uz Windows 05.11.2016. ir pieejams tikai Memcache php extension
+/*class Memcached extends Memcache {    
+    public function addServer($mc_host, $mc_port) {
+        parent::connect($mc_host, $mc_port);
+    }
+    public function set($key, $obj, $seconds) {
+        parent::set($key, $obj, false, $seconds);
+    }
+}*/
+
 //mysql master
 $hostname = 'localhost';
 $username = 'exs';

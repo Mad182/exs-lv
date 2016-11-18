@@ -21,8 +21,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 $db->query("UPDATE users SET year_first = 1 WHERE id IN(SELECT DISTINCT(author) FROM `miniblog` WHERE `date` LIKE '%-01-01 00:00:%')");
 $db->query("UPDATE users SET year_first = 1 WHERE id IN(SELECT DISTINCT(author) FROM `comments` WHERE `date` LIKE '%-01-01 00:00:%')");

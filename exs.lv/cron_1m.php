@@ -30,8 +30,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 //get_game_monitor('http://csgo.exs.lv/monitor/index.php', true);
 //get_game_monitor('http://csgo.exs.lv/monitor/ut.php', true);

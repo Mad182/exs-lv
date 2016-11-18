@@ -13,7 +13,7 @@ if (isset($_GET['skip'])) {
 
 $sfilter = ' WHERE `deleted` = 0 ';
 if (isset($_GET['var1']) && $_GET['var1'] == 'klase') {
-	$showclass = (int) $_GET['var2'];
+	$showclass = empty($_GET['var2']) ? 0 : (int) $_GET['var2'];
 
 	$sfilter .= " AND (`level` = '" . $showclass . "' ";
 	if (!empty($site_access[$showclass])) {
@@ -29,16 +29,16 @@ if ($users) {
 
 	foreach ($users as $user) {
 		$tpl->newBlock('userlist-item');
-		$tpl->assign(array(
+		$tpl->assign([
 			'nick' => usercolor($user->nick, $user->level, false, $user->id),
 			'id' => $user->id
-		));
+		]);
 	}
 
 	$pager = pager($db->get_var("SELECT count(*) FROM users " . $sfilter), $skip, $end, '/lietotaji/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 }

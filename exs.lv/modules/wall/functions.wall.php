@@ -3,11 +3,11 @@
 /**
  * Aizvāc norādītos html tagus
  */
-function strip_selected_tags($text, $tags = array()) {
+function strip_selected_tags($text, $tags = []) {
 
 	$args = func_get_args();
 	$text = array_shift($args);
-	$tags = func_num_args() > 2 ? array_diff($args, array($text)) : (array) $tags;
+	$tags = func_num_args() > 2 ? array_diff($args, [$text]) : (array) $tags;
 	foreach ($tags as $tag) {
 		if (preg_match_all('/<' . $tag . '[^>]*>(.*)<\/' . $tag . '>/iU', $text, $found)) {
 			$text = str_replace($found[0], $found[1], $text);
@@ -29,7 +29,7 @@ function trim_intro($text, $len = 98) {
 	$text = add_smile($text);
 
 	//remove unneeded symbols
-	$text = str_replace(array('Spēles nosaukums:', '&nbsp;', "\t", "\n", chr(0xC2) . chr(0xA0)), ' ', $text);
+	$text = str_replace(['Spēles nosaukums:', '&nbsp;', "\t", "\n", chr(0xC2) . chr(0xA0)], ' ', $text);
 
 	//replace list items with dots
 	$text = str_replace('<li>', ' • ', $text);
@@ -41,9 +41,15 @@ function trim_intro($text, $len = 98) {
 }
 
 function get_index_events() {
-	global $db, $lang, $img_server;
+	global $db, $lang, $img_server, $auth;
 	$out = '';
-	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ORDER BY `time` DESC LIMIT 5");
+
+	$private = '';
+	if (!$auth->ok) {
+		$private = ' AND `private` = 0';
+	}
+
+	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ".$private." ORDER BY `time` DESC LIMIT 5");
 
 	if ($actions) {
 		$out .= '<ul class="user-actions">';

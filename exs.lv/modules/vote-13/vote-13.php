@@ -9,41 +9,41 @@ if (!$auth->ok || $auth->karma < 100) {
 }
 
 // Vai veidot divu dienu pasākumu (sākums piektdienas vakarā, bet beigas - svētdienas rītā)?
-$arr_days = array(
+$arr_days = [
 	0 => 'Nē',
 	1 => 'Jā'
-);
+];
 // Kuri datumi Tev būtu vispieņemamākie?
-$arr_dates = array(
+$arr_dates = [
 	0 => '26.07 - 27.07',
 	1 => '02.08 - 03.08',
 	2 => '09.08 - 10.08',
 	3 => '16.08 - 17.08',
 	4 => '23.08 - 24.08'
-);
+];
 // Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?
-$arr_cost = array(
+$arr_cost = [
 	0 => '5 Ls',
 	1 => '6 Ls',
 	2 => '7 Ls',
 	3 => '8 Ls',
 	4 => '9 Ls',
 	5 => '10 Ls',
-);
+];
 // Vai Tu būtu gatavs veikt maksājumu ar pārskaitījumu jau pirms pasākuma norises?
-$arr_payment = array(
+$arr_payment = [
 	0 => 'Jā',
 	1 => 'Nē',
 	2 => 'Maksātu uz vietas skaidrā naudā'
-);
+];
 // Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?
-$arr_distance = array(
+$arr_distance = [
 	0 => '25 km',
 	1 => '50 km',
 	2 => '80 km',
 	3 => '150 km',
 	4 => 'Attālums nav svarīgs',
-);
+];
 
 
 
@@ -110,22 +110,22 @@ if ($voted/* && isset($_GET['var1']) && $_GET['var1'] == 'results' */) {
 
 		foreach ($dates as $date) {
 			$tpl->newBlock('vote-data-field');
-			$tpl->assign(array(
+			$tpl->assign([
 				'field' => $arr_dates[$date->choice],
 				'count' => $date->count,
 				'bar-width' => floor(150 * ($date->count / $data_count)),
 				'percents' => round(($date->count / $data_count) * 100, 1)
-			));
+			]);
 		}
 	}
 
 	// viss pārējais
-	$values_arr = array(
+	$values_arr = [
 		//0 => array('length','Vai veidot divu dienu pasākumu (sākums piektdienas vakarā, bet beigas - svētdienas rītā)?','arr_days'),
-		0 => array('maxcost', 'Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?', 'arr_cost'),
-		1 => array('paybycard', 'Vai Tu būtu gatavs veikt maksājumu ar pārskaitījumu jau pirms pasākuma norises? (Uz vietas nedaudz dārgāk!)', 'arr_payment'),
-		2 => array('distance', 'Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?', 'arr_distance'),
-	);
+		0 => ['maxcost', 'Lielākā summa, kādu esi gatavs maksāt par viesu mājas īri?', 'arr_cost'],
+		1 => ['paybycard', 'Vai Tu būtu gatavs veikt maksājumu ar pārskaitījumu jau pirms pasākuma norises? (Uz vietas nedaudz dārgāk!)', 'arr_payment'],
+		2 => ['distance', 'Lielākais attālums līdz viesu mājai no Rīgas, kāds tev šķiet pieņemams?', 'arr_distance'],
+	];
 
 
 
@@ -143,12 +143,12 @@ if ($voted/* && isset($_GET['var1']) && $_GET['var1'] == 'results' */) {
 
 			foreach ($get_data as $single_data) {
 				$tpl->newBlock('vote-data-field');
-				$tpl->assign(array(
+				$tpl->assign([
 					'field' => ${$values[2]}[$single_data->$values[0]],
 					'count' => $single_data->count,
 					'bar-width' => floor(150 * ($single_data->count / $data_count)), // max 150 px garums
 					'percents' => round(($single_data->count / $data_count) * 100, 1)
-				));
+				]);
 			}
 		}
 	}

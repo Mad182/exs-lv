@@ -41,7 +41,7 @@ function gallery_upload() {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 960;
 			$foo->image_y = 800;
-			$foo->allowed = array('image/*');
+			$foo->allowed = ['image/*'];
 			$foo->image_ratio_no_zoom_in = true;
 			$foo->jpeg_quality = 98;
 			$foo->process($folder);
@@ -52,7 +52,7 @@ function gallery_upload() {
 				$foo->image_convert = 'jpg';
 				$foo->image_x = 72;
 				$foo->image_y = 72;
-				$foo->allowed = array('image/*');
+				$foo->allowed = ['image/*'];
 				$foo->image_ratio_crop = true;
 				$foo->process($folder);
 				$foo->clean();

@@ -7,7 +7,7 @@
 
 //aizvāc whitespace
 function file_strip($url) {
-	$out = array();
+	$out = [];
 	$data = file($url);
 	if (!$data) {
 		return false;
@@ -37,15 +37,15 @@ class TemplatePowerParser {
 	protected $tpl_base;
 	protected $tpl_include;
 	protected $tpl_count;
-	protected $parent = array();
-	protected $defBlock = array();
+	protected $parent = [];
+	protected $defBlock = [];
 	protected $rootBlockName;
 	protected $ignore_stack;
 
 	public function __contruct($tpl_file, $type) {
-		$this->tpl_base = array($tpl_file, $type);
+		$this->tpl_base = [$tpl_file, $type];
 		$this->tpl_count = 0;
-		$this->ignore_stack = array(false);
+		$this->ignore_stack = [false];
 	}
 
 	protected function __errorAlert($message) {
@@ -56,7 +56,7 @@ class TemplatePowerParser {
 	}
 
 	protected function __prepare() {
-		$this->defBlock[TP_ROOTBLOCK] = array();
+		$this->defBlock[TP_ROOTBLOCK] = [];
 		$tplvar = $this->__prepareTemplate($this->tpl_base[0], $this->tpl_base[1]);
 
 		$initdev["varrow"] = 0;
@@ -100,7 +100,7 @@ class TemplatePowerParser {
 		$index = $initdev["index"];
 
 		while ($index < $this->{$tplvar}["size"]) {
-			$ignreg = array();
+			$ignreg = [];
 			if (preg_match('/<!--[ ]?(START|END) IGNORE -->/', $this->{$tplvar}["content"][$index], $ignreg)) {
 				if ($ignreg[1] == 'START') {
 					array_push($this->ignore_stack, true);
@@ -109,8 +109,8 @@ class TemplatePowerParser {
 				}
 			} else {
 				if (!end($this->ignore_stack)) {
-					$regs = array();
-					if (preg_match('/<!--[ ]?(START|END|INCLUDE|INCLUDESCRIPT|REUSE) BLOCK : (.+)-->/', $this->{$tplvar}["content"][$index], $regs)) {
+					$regs = [];
+					if (preg_match('/<!--[ ]?(START|END|INCLUDE|REUSE) BLOCK : (.+)-->/', $this->{$tplvar}["content"][$index], $regs)) {
 						//remove trailing and leading spaces
 						$regs[2] = trim($regs[2]);
 
@@ -141,39 +141,8 @@ class TemplatePowerParser {
 								$coderow = $initdev["coderow"];
 								$varrow = $initdev["varrow"];
 							}
-						} else if ($regs[1] == 'INCLUDESCRIPT') {
-							$include_defined = true;
-
-							//check if the includescript file is assigned by the assignInclude function
-							if (isset($this->tpl_include[$regs[2]])) {
-								$include_file = $this->tpl_include[$regs[2]][0];
-								$type = $this->tpl_include[$regs[2]][1];
-							} else if (file_exists($regs[2])) {   //check if defined as constant in template
-								$include_file = $regs[2];
-								$type = T_BYFILE;
-							} else {
-								$include_defined = false;
-							}
-
-							if ($include_defined) {
-								ob_start();
-
-								if ($type == T_BYFILE) {
-									if (!@include_once($include_file)) {
-										$this->__errorAlert('Kļūda: Couldn\'t include script [ ' . $include_file . ' ]!');
-										exit();
-									}
-								} else {
-									eval("?>" . $include_file);
-								}
-
-								$this->defBlock[$blockname]["_C:$coderow"] = ob_get_contents();
-								$coderow++;
-
-								ob_end_clean();
-							}
 						} else if ($regs[1] == 'REUSE') {
-							$reuse_regs = array();
+							$reuse_regs = [];
 							//do match for 'AS'
 							if (preg_match('/(.+) AS (.+)/', $regs[2], $reuse_regs)) {
 								$originalbname = trim($reuse_regs[1]);
@@ -202,7 +171,7 @@ class TemplatePowerParser {
 								break;
 							} else {
 
-								$this->defBlock[$regs[2]] = array();
+								$this->defBlock[$regs[2]] = [];
 								$this->defBlock[$blockname]["_B:" . $regs[2]] = '';
 
 								$this->index[$regs[2]] = 0;
@@ -277,22 +246,22 @@ class TemplatePowerParser {
 	}
 
 	public function assignInclude($iblockname, $value, $type = T_BYFILE) {
-		$this->tpl_include["$iblockname"] = array($value, $type);
+		$this->tpl_include["$iblockname"] = [$value, $type];
 	}
 
 }
 
 class TemplatePower extends TemplatePowerParser {
 
-	protected $index = array();  // $index[{blockname}]  = {indexnumber}
-	protected $content = array();
+	protected $index = [];  // $index[{blockname}]  = {indexnumber}
+	protected $content = [];
 	protected $currentBlock;
 	protected $showUnAssigned;
 	protected $serialized;
-	protected $globalvars = array();
+	protected $globalvars = [];
 	protected $prepared;
 
-	public function TemplatePower($tpl_file = '', $type = T_BYFILE) {
+	public function __construct($tpl_file = '', $type = T_BYFILE) {
 		parent::__contruct($tpl_file, $type);
 
 		$this->prepared = false;
@@ -319,7 +288,7 @@ class TemplatePower extends TemplatePowerParser {
 	}
 
 	protected function __makeContentRoot() {
-		$this->content[TP_ROOTBLOCK . "_0"][0] = Array(TP_ROOTBLOCK);
+		$this->content[TP_ROOTBLOCK . "_0"][0] = [TP_ROOTBLOCK];
 		$this->currentBlock = &$this->content[TP_ROOTBLOCK . "_0"][0];
 	}
 
@@ -407,7 +376,7 @@ class TemplatePower extends TemplatePowerParser {
 			$ind_blockname = $blockname . '_' . $this->index[$blockname];
 
 			if (!isset($this->content[$ind_blockname])) {
-				$this->content[$ind_blockname] = array();
+				$this->content[$ind_blockname] = [];
 			}
 
 			$parent[$lastitem]["_B:$blockname"] = $ind_blockname;
@@ -415,7 +384,7 @@ class TemplatePower extends TemplatePowerParser {
 
 		$blocksize = sizeof($this->content[$ind_blockname]);
 
-		$this->content[$ind_blockname][$blocksize] = array($blockname);
+		$this->content[$ind_blockname][$blocksize] = [$blockname];
 
 		$this->currentBlock = &$this->content[$ind_blockname][$blocksize];
 	}
@@ -441,7 +410,7 @@ class TemplatePower extends TemplatePowerParser {
 	}
 
 	public function assignAll($data, $html = false) {
-		$assign = array();
+		$assign = [];
 		foreach ($data as $key => $val) {
 			if ($html) {
 				$val = h($val);

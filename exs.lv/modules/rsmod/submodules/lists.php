@@ -29,8 +29,8 @@ class Lists extends Controller {
     public function index() {
     
         // nosaka atvērto cilni, lai varētu importēt atbilstošo failu
-        $arr_links = array('all-miniquests', 'all-minigames', 
-                           'all-distractions', 'all-guilds');
+        $arr_links = ['all-miniquests', 'all-minigames', 
+                           'all-distractions', 'all-guilds'];
         $this->opened_tab = 'quests';
 
         if (in_array($_GET['viewcat'], $arr_links)) {
@@ -94,12 +94,12 @@ class Lists extends Controller {
                 $this->view->newBlock('list-page-empty');
             }
             
-            $this->view->assign(array(
+            $this->view->assign([
                 'page_id'   => $guide->page_id,
                 'rspage_id' => $guide->rspage_id,
                 'strid'     => $strid,
                 'title'     => $guide->rspage_title
-            ));
+            ]);
             
             // fiksē nosaukuma pirmo burtu, 
             // lai pie tā maiņas tabulā to izceltu
@@ -137,8 +137,8 @@ class Lists extends Controller {
         }
         
         if (isset($_GET['_'])) {
-            echo json_encode(array('state' => $error, 
-                                   'content' => $response));
+            echo json_encode(['state' => $error, 
+                                   'content' => $response]);
         } else {
             set_flash($response);
             redirect('/' . $category->textid);
@@ -159,8 +159,8 @@ class Lists extends Controller {
         $get_entry = $this->lists->fetch_entry($entry_id);
         if (!$get_entry) {
             if (isset($_GET['_'])) {
-                echo json_encode(array('state' => 'error', 
-                                       'content' => 'Ieraksts nav atrasts'));
+                echo json_encode(['state' => 'error', 
+                                       'content' => 'Ieraksts nav atrasts']);
             } else {
                 set_flash('Ieraksts nav atrasts');
                 redirect('/' . $category->textid);
@@ -174,8 +174,8 @@ class Lists extends Controller {
         $this->lists->toggle_entry($entry_id, $swap_to);        
         
         if (isset($_GET['_'])) {
-            echo json_encode(array('state' => 'success', 
-                                   'content' => $swap_text));
+            echo json_encode(['state' => 'success', 
+                                   'content' => $swap_text]);
         } else {
             set_flash(($swap_to) ? 'Ieraksts slēpts' : 
                                    'Ieraksts vairs nav slēpts');
@@ -204,7 +204,7 @@ class Lists extends Controller {
         
         if (file_exists($path)) {
             require($path);
-            $class_name = str_replace(array('.php','lists_'), '', $filename);
+            $class_name = str_replace(['.php','lists_'], '', $filename);
             $class_name = as_class_name($class_name);
             $controller = new $class_name();
             $controller->index();

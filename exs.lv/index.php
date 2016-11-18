@@ -51,6 +51,10 @@ if(!empty($_GET['fakeurl'])) {
 
 }
 
+if(empty($_GET['viewcat'])) {
+	$_GET['viewcat'] = null;
+}
+
 session_start();
 
 //mysql konekcija
@@ -58,8 +62,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 //lapas settingu/datu glabāšana
 $ss = new SiteStorage;
@@ -119,7 +123,7 @@ if ($new_msg_string > 0) {
 
 //atgriež visādus datus json formātā, ja pieprasījums bijis uz /get/updates.json
 if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']) && $_GET['var1'] === 'updates.json') {
-	$data = array();
+	$data = [];
 	if (isset($_GET['loadpm'])) {
 		$data['pm-count'] = $new_msg_string;
 	}
@@ -149,6 +153,8 @@ if (isset($_GET['p'])) {
 	$article = $db->get_row("SELECT * FROM `pages` WHERE `id` = " . $id . "");
 	if ($article) {
 		redirect('/read/' . $article->strid, true);
+	} else {
+		error_404();
 	}
 } else {
 
@@ -157,14 +163,14 @@ if (isset($_GET['p'])) {
 	 */
 	if (isset($_GET['viewcat'])) {
 		$category = get_cat($_GET['viewcat']);
-		$cat = $category->id;
+		$cat = (!empty($category)) ? $category->id : 0;
 	} else {
 		if (isset($_GET['c'])) {
 			$cat = (int) $_GET['c'];
 		}
 		$category = get_cat($cat);
 	}
-	if ($category->tmpl) {
+	if (!empty($category) && $category->tmpl) {
 		$skin = $category->tmpl;
 	}
 }
@@ -177,7 +183,6 @@ if ($lang !== 1 && $skin === 'main') {
 
 $tpl = new TemplatePower(CORE_PATH . '/tmpl/' . $loadskin . '.tpl');
 $tpl->assignInclude('module-core-error', CORE_PATH . '/modules/core/error.tpl');
-$tpl->assignInclude('share-block', CORE_PATH . '/tmpl/share.tpl');
 
 //izdomā, ko tad īsti rādīsim :)
 //redirekti no veco moduļu versijām
@@ -209,7 +214,7 @@ if (isset($_GET['u'])) {
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
 			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
 				$tpl->prepare();
-				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, false, 3600);
+				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, 3600);
 			} else {
 				$tpl = $tpl2;
 				unset($tpl2);
@@ -242,10 +247,7 @@ if (isset($_GET['u'])) {
 		}
 
 		// 404
-        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        header("Status: 404 Not Found");
-        set_flash('Pieprasītā lapa netika atrasta!', 'error');
-        redirect();
+		error_404();
 	}
 }
 
@@ -297,7 +299,7 @@ if (!empty($inprofile) && !empty($inprofile->persona)) {
 }
 
 //Latvijas valsts svētki
-if (in_array(date('m-d'), array('01-20', '05-01', '05-04', '11-11', '11-18'))) {
+if (in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18'])) {
 	$persona = ' style="height:157px;background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 50% -25px;background-size:cover;"';
 }
 
@@ -365,7 +367,7 @@ if($_SERVER['REQUEST_URI'] === '/' || $category->textid === 'html-pamati' || $ca
 }
 
 //assigno visur izmantotas vērtības
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'page-title' => hide_spoilers($page_title),
 	'page-loginurl' => $login_url,
 	'page-time' => time(),
@@ -394,7 +396,7 @@ $tpl->assignGlobal(array(
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash,
 	'openidea' => $openidea
-));
+]);
 
 if (!empty($add_css)) {
 	$tpl->newBlock('additional-css');
@@ -409,17 +411,17 @@ if (!empty($pagepath) && $skin === 'main') {
 //lai var iezīmēt aktīvo menuci
 if (isset($category) && !isset($_GET['u']) && !isset($_GET['g']) && !isset($_GET['m'])) {
 
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'cat-sel-' . $category->id => ' class="selected active"',
 		'cat-sel-' . $category->textid => ' class="selected active"',
 		'cat-sel-' . $category->parent => ' class="selected active"',
-	));
+	]);
 	if ($category->parent) {
 		$topcat = get_cat($category->parent);
 		if ($topcat->parent) {
-			$tpl->assignGlobal(array(
+			$tpl->assignGlobal([
 				'cat-sel-' . $topcat->parent => ' class="selected active"',
-			));
+			]);
 		}
 	}
 }
@@ -475,14 +477,14 @@ if ($skin === 'main') {
 					if (empty($g_owner->avatar)) {
 						$g_owner->avatar = 'none.png';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'id' => $g_owner->id,
 						'class' => $class,
 						'title' => $g_owner->title,
 						'avatar' => $g_owner->avatar,
 						'unread' => $unread,
 						'unread-class' => $css_class
-					));
+					]);
 				}
 			}
 			if ($g_members) {
@@ -503,14 +505,14 @@ if ($skin === 'main') {
 					if (empty($g_member->avatar)) {
 						$g_member->avatar = 'none.png';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'id' => $g_member->clan,
 						'class' => $class,
 						'unread' => $unread,
 						'unread-class' => $css_class,
 						'title' => $g_member->title,
 						'avatar' => $g_member->avatar,
-					));
+					]);
 				}
 			}
 		}
@@ -528,10 +530,10 @@ if (!empty($robotstag)) {
 if(!empty($opengraph_meta)) {
 	foreach($opengraph_meta as $key => $val) {
 		$tpl->newBlock('og-meta');
-		$tpl->assign(array(
+		$tpl->assign([
 			'key' => $key,
 			'val' => $val
-		));
+		]);
 	}
 }
 
@@ -539,10 +541,10 @@ if(!empty($opengraph_meta)) {
 if(!empty($twitter_meta)) {
 	foreach($twitter_meta as $key => $val) {
 		$tpl->newBlock('twitter-meta');
-		$tpl->assign(array(
+		$tpl->assign([
 			'key' => $key,
 			'val' => $val
-		));
+		]);
 	}
 }
 
@@ -550,10 +552,10 @@ if(!empty($twitter_meta)) {
 /* flash error or success message */
 if (!empty($_SESSION['flash_message'])) {
 	$tpl->newBlock('flash-message');
-	$tpl->assign(array(
+	$tpl->assign([
 		'message' => add_smile($_SESSION['flash_message']['message']),
 		'class' => $_SESSION['flash_message']['class']
-	));
+	]);
 	$_SESSION['flash_message'] = '';
 }
 
@@ -568,7 +570,7 @@ $tpl->printToScreen();
 
 if ($debug && !$requested_json) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
-	echo '<div><a id="debug-details-trigger" href="#" style="float:right;color: #ccf;">detaļas &raquo;</a>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
+	echo '<div>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | ielāde: ' . round(microtime(true) - $start_time, 5) . ' s';
 	echo ' | mysql: ' . $db->num_queries . ' q';
@@ -576,9 +578,6 @@ if ($debug && !$requested_json) {
 	if (!empty($category->id)) {
 		echo ' | cat_id:' . $category->id . ' (textid:' . $category->textid . ', module:' . $category->module . ')';
 	}
-	echo '</div><div id="debug-details" style="display:none"><strong>$_GET</strong><br />';
-	pr($_GET);
-	echo '<strong>$_POST</strong><br />';
-	pr($_POST);
 	echo '</div></div></div>';
 }
+

@@ -29,13 +29,13 @@ class Controller {
      */
     public function __construct() {
 
-        $globals = array(
+        $globals = [
             'db', 'auth', 'lang',
             'tpl_options', 'debug',
             'm', 'ss',
             'category', 'page_title',
             'img_server'
-        );
+        ];
         foreach ($globals as $global) {
             global ${$global};
             $this->{$global} =& ${$global};

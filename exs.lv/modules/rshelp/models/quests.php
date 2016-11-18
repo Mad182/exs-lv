@@ -6,13 +6,13 @@
 class Model_Quests extends Model {
     
     public function __construct() { 
-        $globals = array(
+        $globals = [
             'cat_quests', 
             'cats_quests', 
             'cat_p2p_quests', 
             'cat_f2p_quests', 
             'cat_miniquests'
-        );
+        ];
         $this->globals($globals);
         parent::__construct();
     }
@@ -205,7 +205,7 @@ class Model_Quests extends Model {
 
             // as_json($stats);
             
-            $this->m->set('quests-stats', $stats, false, 1800);
+            $this->m->set('quests-stats', $stats, 1800);
         }
 
         return $stats;

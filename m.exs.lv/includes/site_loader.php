@@ -6,32 +6,32 @@
 /**
  * Info par domēniem, kuri atbilst katram $lang (lai veidotu linkus starp projektiem u.c.)
  */
-$config_domains = array(
-	1 => array(
+$config_domains = [
+	1 => [
 		'domain' => 'm.exs.lv',
 		'include' => 'exs.lv',
 		'prefix' => '',
 		'ssl' => true
-	),
-	3 => array(
+	],
+	3 => [
 		'domain' => 'm.coding.lv',
 		'include' => 'coding.lv',
 		'prefix' => 'code',
 		'ssl' => true
-	),
-	7 => array(
+	],
+	7 => [
 		'domain' => 'mlol.exs.lv',
 		'include' => 'lol.exs.lv',
 		'prefix' => 'lol',
 		'ssl' => true
-	),
-	9 => array(
+	],
+	9 => [
 		'domain' => 'mrs.exs.lv',
 		'include' => 'runescape.exs.lv',
 		'prefix' => 'runescape',
 		'ssl' => true
-	)
-);
+	]
+];
 
 // saīsinātais runescape projekta domēns
 if ($_SERVER['HTTP_HOST'] === 'm.rs.exs.lv' || $_SERVER['HTTP_HOST'] === 'dev.m.rs.exs.lv' || $_SERVER['HTTP_HOST'] === 'm.runescape.exs.lv') {

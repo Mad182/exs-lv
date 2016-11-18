@@ -37,14 +37,14 @@ if (isset($_GET['game'])) {
 			$tpl->newBlock('ig-listimages');
 			foreach ($images as $image) {
 				$tpl->newBlock('ig-listimages-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'listimage-id' => $image->id,
 					'listimage-title' => $image->title,
 					'listimage-dif' => $image->dif,
 					'listimage-image' => $image->image,
 					'listimage-game_id' => $image->game_id,
 					'listimage-categoryid' => $category->id,
-				));
+				]);
 			}
 		}
 	}
@@ -63,11 +63,11 @@ if (isset($_GET['game'])) {
 		$tpl->newBlock('ig-listgame');
 		foreach ($games as $game) {
 			$tpl->newBlock('ig-listgame-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'listgame-id' => $game->id,
 				'listgame-date' => $game->date,
 				'listgame-categoryid' => $category->id,
-			));
+			]);
 		}
 	}
 }

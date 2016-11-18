@@ -24,11 +24,45 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 ### Kas vajadzīgs, lai lapa būtu palaižama ###
 
 * php-gd
-* php-memcache
+* php-memcached
 * php-curl
+* php-mbstring
+* php-mcrypt
+* php-xml (uz php 7)
 * memcached
 * mysql
-* apache2 ar mod_rewrite un .htaccess atbalstu
+* apache2 vai nginx
+
+### php7-fpm un vajadzīgo moduļu uzstādīšana uz debian/ubuntu
+
+    apt-get install php7.0-fpm php7.0-memcached php7.0-gd php7.0-xml php7.0-mbstring php7.0-mcrypt php7.0-curl
+
+### Memcached uz servera ar Windows OS
+
+Lejuplādē servisu no: http://downloads.northscale.com/memcached-win64-1.4.4-14.zip
+
+    pthreadGC2.dll -> C:\Windows\System32\
+    memcached.exe -> C:\memcached\
+
+Palaid memcached.exe servisu:
+
+    memcached.exe -d install
+    memcached.exe -d start
+
+Lejuplādē "Memcache" PHP 7.0 extension:
+
+    https://github.com/nono303/PHP7-memcahe-dll/blob/master/vc14/x86/ts/php_memcache.dll
+    php_memcache.dll -> C:\xampp\php\ext\
+
+Palaid "Memcache":
+
+    * C:\xampp\php\php.ini -> iekopē rindu: extension=php_memcache.dll
+    * iedarbini Apache
+    * C:\www\exs-lv\exs.lv\configdb.php -> atkomentē ar Memcache saistīto klasi
+
+Pamācība:
+
+    https://commaster.net/content/installing-memcached-windows
 
 ### Lai pilnvērtīgi darbotos img.exs.lv ###
 
@@ -42,6 +76,10 @@ Uz servera ir arī apc, bet darbību tā trūkumam nevajadzētu ietekmēt
 
 Nemainot site_loader.php strādās tikai uz adreses localhost, dev.exs.lv vai dzīvajām adresēm exs.lv/coding.lv utt.,
 ip adreses un viss pārējais tiek redirektēts uz exs.lv
+
+### Let's encrypt ###
+
+    /opt/certbot-auto certonly --webroot -w /home/www/exs.lv -d exs.lv -d www.exs.lv -d coding.lv -d www.coding.lv -d lol.exs.lv -d rp.exs.lv -d rs.exs.lv -d runescape.exs.lv -d secure.exs.lv -d static.exs.lv -w /home/www/m.exs.lv -d m.coding.lv -d m.exs.lv -d mlol.exs.lv -d mrp.exs.lv -d mrs.exs.lv -d mrunescape.exs.lv -w /home/www/api.exs.lv -d api.exs.lv -d android.exs.lv -d ios.exs.lv -w /var/www/munin -d munin.exs.lv -w /home/www/img.exs.lv -d img.exs.lv
 
 
 ## Nepieciešamo programmu uzstādīšana ##

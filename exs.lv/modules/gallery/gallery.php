@@ -120,14 +120,14 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			}
 
 			$tpl->newBlock('image-list-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'image-list-id' => $image->id,
 				'image-list-thb' => $image->thb,
 				'image-list-posts' => $image->posts,
 				'image-list-sel' => $sel,
 				'image-list-linkid' => $linkid,
 				'imgblock-seperator' => $block
-			));
+			]);
 			$linkid++;
 			$i++;
 		}
@@ -186,10 +186,10 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			}
 
 			$tpl->newBlock('adm-edit-comment');
-			$tpl->assign(array(
+			$tpl->assign([
 				'comment-text' => h($comment->text),
 				'comment-id' => $comment->id
-			));
+			]);
 
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana | ' . $page_title;
@@ -200,7 +200,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
                 
                 // jāiziet cauri visiem attēla komentāriem un jāarhivē arī sūdzības,
                 // ja tādas par kādu no tiem bijušas
-                $img_comments = array();
+                $img_comments = [];
                 $comments = $db->get_results("SELECT `id` FROM `galcom` WHERE `bid` = '$image->id'");
                 if ($comments) {
                     foreach ($comments as $comment) {
@@ -226,7 +226,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			}
 
 			//pieliek tagus
-			if ($auth->ok && in_array($auth->level, array(1, 2, 3)) && isset($_POST['newtags'])) {
+			if ($auth->ok && in_array($auth->level, [1, 2, 3]) && isset($_POST['newtags'])) {
 				$newtags = explode(',', $_POST['newtags']);
 				$tags = new tags;
 				foreach ($newtags as $newtag) {
@@ -254,7 +254,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 			if ($auth->ok) {
 				if (empty($image->readby)) {
-					$db->query("UPDATE `images` SET `readby` = '" . serialize(array($auth->id)) . "' WHERE `id` = '$image->id'");
+					$db->query("UPDATE `images` SET `readby` = '" . serialize([$auth->id]) . "' WHERE `id` = '$image->id'");
 				} else {
 					$readby = unserialize($image->readby);
 					if (!in_array($auth->id, $readby)) {
@@ -293,7 +293,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				$im_size[0] = 560;
 			}
 			$tpl->newBlock('image-view');
-			$tpl->assign(array(
+			$tpl->assign([
 				'width' => $im_size[0],
 				'height' => $im_size[1],
 				'image-url' => $image->url,
@@ -306,18 +306,18 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				'rating_count' => $image->rating_count,
 				'newer' => $newerstr,
 				'older' => $olderstr
-			));
+			]);
 
 			if (empty($image->youtube_video)) {
 				$tpl->newBlock('image-view-img');
-				$tpl->assign(array(
+				$tpl->assign([
 					'width' => $im_size[0],
 					'height' => $im_size[1],
 					'image-url' => $image->url,
 					'image-title' => $image_title,
 					'newer' => $newerstr,
 					'older' => $olderstr
-				));
+				]);
 			} else {
 				$tpl->newBlock('image-view-video');
 				$str = add_smile('<p><a href="https://www.youtube.com/watch?v=' . $image->youtube_video . '">https://www.youtube.com/watch?v=' . $image->youtube_video . '</a></p>', 0);
@@ -327,7 +327,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 			$tpl->assignGlobal('rate-url', '/gallery/' . $inprofile->id . '/' . $image->id);
 
 			if (empty($rating_users)) {
-				$rating_users = array();
+				$rating_users = [];
 			}
 
 			$article_tags = $db->get_results("
@@ -351,11 +351,11 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				foreach ($article_tags as $article_tag) {
 					$tagcount++;
 					$tpl->newBlock('post-tags-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'tag-title' => $article_tag->name,
 						'tag-id' => $article_tag->tag_id,
 						'slug' => $article_tag->slug,
-					));
+					]);
 				}
 			}
 
@@ -371,11 +371,11 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				} else {
 					$closemark = '';
 				}
-				$tpl->assign(array(
+				$tpl->assign([
 					'edit-id' => $image->id,
 					'edit-closed' => $closemark,
 					'token' => make_token('delete')
-				));
+				]);
 
 				if ($lang == 1) {
 					$tpl->newBlock('edit-image-interest');
@@ -455,7 +455,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					}
 
 					//assign comment variables
-					$tpl->assign(array(
+					$tpl->assign([
 						'comment-id' => $comment->id,
 						'comment-number' => $comment_number,
 						'comment-text' => add_smile($comment->text),
@@ -465,7 +465,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						'avatar' => get_avatar($comment),
 						'title' => h($comment->author_nick),
 						'comment-editedby' => $editedby,
-					));
+					]);
 
 					$pluslnk = '<span class="voted1"></span>';
 					$minuslnk = '<span class="voted2"></span>';
@@ -476,7 +476,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						if (!empty($comment->vote_users)) {
 							$voters = unserialize($comment->vote_users);
 						} else {
-							$voters = array();
+							$voters = [];
 						}
 						$voted = in_array($auth->id, $voters);
 
@@ -502,33 +502,33 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					}
 
 					$tpl->newBlock('comments-vote');
-					$tpl->assign(array(
+					$tpl->assign([
 						'comment-id' => $comment->id,
 						'comment-vote_value' => $comment->vote_value,
 						'comment-plus' => $pluslnk,
 						'comment-minus' => $minuslnk,
 						'comment-vclass' => $vclass
-					));
+					]);
 
 					$comment_number++;
 
 					/* podziņa ziņošanai par pārkāpumu */
-					if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
+					if ($auth->ok && !$auth->mobile && in_array($lang, [1, 7, 9])) {
 						$tpl->newBlock('report-user');
 						$tpl->assign('comment-id', $comment->id);
 					}
 
 					if ($auth->ok && ($auth->level == 1 or $auth->level == 2)) {
 						$tpl->newBlock('comments-adm');
-						$tpl->assign(array(
+						$tpl->assign([
 							'delete' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?delcom=' . $comment->id . '&token=' . make_token('delcom'),
 							'edit' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?editcom=' . $comment->id,
-						));
+						]);
 					} elseif ($auth->ok && ($auth->level == 3 || $comment->karma >= 100) && $auth->id == $comment->author) {
 						$tpl->newBlock('comments-own');
-						$tpl->assign(array(
+						$tpl->assign([
 							'edit' => '/gallery/' . $inprofile->id . '/' . $image->id . '/?editcom=' . $comment->id,
-						));
+						]);
 					}
 
 					if ($auth->ok) {
@@ -545,10 +545,10 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				//comment form
 			} elseif ($auth->ok && $image) {
 				$tpl->newBlock('add-comment');
-				$tpl->assign(array(
+				$tpl->assign([
 					'comment-pid' => $image->id,
 					'comment-pid-check' => md5($image->id . $remote_salt . $auth->id . $inprofile->nick),
-				));
+				]);
 
 				$tpl->newBlock('tinymce-simple');
 			} elseif (!$auth->ok) {

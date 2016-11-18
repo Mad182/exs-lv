@@ -8,16 +8,16 @@
  *  Ja admins nav "globāls", t.i. norādīts sub-exa konfigurācijā, 
  *  bans attiecas tikai uz to lapu.
  */
-$robotstag = array('noindex', 'nofollow');
+$robotstag = ['noindex', 'nofollow'];
  
 $q_add = '';
 if (in_array($auth->id, $site_access[1]) || in_array($auth->id, $site_access[2])) {
 	$q_add = " AND `banned`.`lang` = '$lang'";
 }
 
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'category-id' => $category->id
-));
+]);
 
 if (!$auth->ok) {
 	$tpl->newBlock('banned-public');
@@ -75,7 +75,7 @@ if (!$auth->ok) {
 			}
 
 			$author = get_user($banned->author);
-			$tpl->assign(array(
+			$tpl->assign([
 				'banned-id' => $banned->id,
 				'banned-user_id' => $banned->user_id,
 				'nick' => $linkuser,
@@ -87,7 +87,7 @@ if (!$auth->ok) {
 				'banned-author' => $banned->author,
 				'token' => make_token('remban'),
 				'anick' => h($author->nick)
-			));
+			]);
 
 			if ($banned->lang == 0) {
 				$tpl->assign('where', 'Globāls');
@@ -98,10 +98,10 @@ if (!$auth->ok) {
 			// @mad manuāli bloķētie nebūs dzēšami
 			if ($banned->reason != 'perm (ban evading)') {
 				$tpl->newBlock('remove-ban');
-				$tpl->assign(array(
+				$tpl->assign([
 					'banned-id' => $banned->id,
 					'token' => make_token('remban')
-				));
+				]);
 			}
 		}            
 	}

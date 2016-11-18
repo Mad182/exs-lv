@@ -22,7 +22,7 @@ class Rshelp extends Controller {
     private $max_per_page = 50;
 
     // [category->textid] => [file name]
-    private $submodules = array(
+    private $submodules = [
         'kvestu-pamacibas'          => 'quests',
         'f2p-kvesti'                => 'quests',
         'p2p-kvesti'                => 'quests',
@@ -32,10 +32,10 @@ class Rshelp extends Controller {
         'prasmes'                   => 'skills',
         'gildes'                    => 'guilds',
         'achievements'              => 'tasks'
-    );
+    ];
     
     public function __construct() {
-        $this->globals(array('cat_padomi', 'cat_rsnews'));
+        $this->globals(['cat_padomi', 'cat_rsnews']);
         parent::__construct();
     }
     
@@ -95,7 +95,7 @@ class Rshelp extends Controller {
                 $article->text = $article->intro;
             } else {
                 $article->text = str_replace('<li>', ' • ', 
-                    str_replace(array('&nbsp;', '<br />'), ' ', 
+                    str_replace(['&nbsp;', '<br />'], ' ', 
                                 youtube_title($article->text))
                 );
                 $article->text = textlimit(strip_tags(trim(
@@ -110,7 +110,7 @@ class Rshelp extends Controller {
 
             // dati
             $this->view->newBlock('rs-article');
-            $this->view->assign(array(
+            $this->view->assign([
                 'id'        => $article->id,
                 'url'       => '/read/' . $article->strid,
                 'aurl'      => mkurl('user', $article->author, $article->nick),
@@ -120,7 +120,7 @@ class Rshelp extends Controller {
                 'author'    => usercolor($article->nick, $article->level),
                 'posts'     => $article->posts,
                 'intro'     => $article->text
-            ));
+            ]);
             
             // avatars
             if ($article->avatar) {
@@ -135,11 +135,11 @@ class Rshelp extends Controller {
             $pager = pager($this->category->stat_topics, $lim_start, 
                            20, '/runescape?skip=');
 
-            $this->view->assignGlobal(array(
+            $this->view->assignGlobal([
                 'pager-next'    => $pager['next'],
                 'pager-prev'    => $pager['prev'],
                 'pager-numeric' => $pager['pages']
-            ));
+            ]);
         }
     }
     
@@ -169,10 +169,10 @@ class Rshelp extends Controller {
             }
             
             // rs rakstu virsrakstiem nodzēš kādreizējos prefixus
-            $replaceable = array(
+            $replaceable = [
                 '[Runescape] ', '[RuneScape] ', '[runescape] ', 
                 '[RS] ', '[rs] '
-            );
+            ];
             $data->title = str_replace($replaceable, '', $data->title);
             
             $this->view->newBlock('rshelp-listitem');
@@ -191,11 +191,11 @@ class Rshelp extends Controller {
                            '/'.$this->category->textid.'?skip=');
             
             $this->view->newBlock('show-pager');
-            $this->view->assignGlobal(array(
+            $this->view->assignGlobal([
                 'pager-next' => $pager['next'],
                 'pager-prev' => $pager['prev'],
                 'pager-numeric' => $pager['pages']
-            ));
+            ]);
         }      
     }
 }

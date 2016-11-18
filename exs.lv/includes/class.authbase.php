@@ -83,11 +83,7 @@ class AuthBase {
 
 		$userinfo = get_user($_SESSION['auth_id']);
 
-        // android|ios.exs.lv prot pārbaudīt 2fa
-		if($this->via_android === 0 && $this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
-			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
-			redirect('/2fa');
-		}
+        $this->check_2fa($userinfo);
 
 		if ($userinfo->deleted) {
 			return $this->logout();
@@ -184,7 +180,7 @@ class AuthBase {
 					$found = $tmp->id;
 
 					//create new bcrypt hash and delete old one
-					$hash = password_hash($password, PASSWORD_BCRYPT, array("cost" => 14));
+					$hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 14]);
 					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
 				}
 
@@ -242,6 +238,15 @@ class AuthBase {
 
 			$this->logout_hash = substr(md5($this->ip . 'NoKidding' . $this->id), 0, 6);
 
+			$this->check_2fa($userinfo);
+
+			$bad = $db->get_var("SELECT count(*) FROM `bad_passwords` WHERE `shit` = '".sanitize($password)."'");
+
+			if($bad) {
+				set_flash('<strong>Tava parole ir draņķīga!</strong><br />Tavu paroli var atrast populārāko paroļu datubāzē.<br />Šoreiz izdomā kaut ko oriģinālāku :shura:', 'error');
+				redirect('/user/security');
+			}
+
 			return true;
 		} else {
 			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
@@ -284,7 +289,7 @@ class AuthBase {
 		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
 			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
 			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$lang);
-			$m->set('online_count_' . $lang, "$this->hosts_online", false, 10);
+			$m->set('online_count_' . $lang, "$this->hosts_online", 10);
 		}
 	}
 
@@ -304,11 +309,16 @@ class AuthBase {
 			return true;
 		}
 
+		if(substr($this->ip, 0, 10) === '62.102.148') {
+			return true;
+		}
+
+		//we are blocked by check.getipintel.net
 		return false;
 
 		$is_tor = 'n';
 
-		$wl = array(
+		$wl = [
 			'77.93.23.137',
 			'77.93.29.110',
 			'83.99.202.248',
@@ -338,7 +348,7 @@ class AuthBase {
 			'176.67.40.27',
 			'212.93.100.40',
 			'212.142.121.225',
-		);
+		];
 
 		if(in_array($this->ip, $wl)) {
 			return false;
@@ -361,6 +371,25 @@ class AuthBase {
 			return true;
 		}
 		return false;
+	}
+
+	function check_2fa($userinfo) {
+		global $db;
+		if(/*$this->via_android === 0 && */$this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
+			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
+
+			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $userinfo->id");
+			if(!empty($check_existing)) {
+				foreach($check_existing as $device) {
+					if(!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
+						$_SESSION['2fa'] = 1;
+						return true;
+					}
+				}
+			}
+
+			redirect('/2fa');
+		}
 	}
 
 }

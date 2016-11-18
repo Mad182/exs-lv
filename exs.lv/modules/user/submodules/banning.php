@@ -20,7 +20,7 @@ if (!isset($_GET['var2']) || $_GET['var2'] != 'block' || !im_mod()) {
 }
 
 // iespējamie bloķēšanas termiņi sekundēs
-$ban_lengths = array(
+$ban_lengths = [
 	21600 => '6 stundas',
 	86400 => '1 diena',
 	259200 => '3 dienas',
@@ -32,7 +32,7 @@ $ban_lengths = array(
 	7889231 => '3 mēneši',
 	15552000 => '6 mēneši',
 	31556926 => '1 gads'
-);
+];
 
 // nosaka, vai lietotājam ir aktīvs liegums uz atvērtā profila,
 // lai zinātu, vai rādīt tā bloķēšanas formu
@@ -151,7 +151,7 @@ if (isset($_POST['block-reason'])) {
 		}
 	}
 
-	$values = array(
+	$values = [
 		'user_id' => $inprofile->id,
 		'reason' => $reason,
 		'time' => time(),
@@ -159,7 +159,7 @@ if (isset($_POST['block-reason'])) {
 		'author' => $auth->id,
 		'ip' => sanitize($inprofile->lastip),
 		'lang' => $site
-	);
+	];
 	$insert = $db->insert('banned', $values);
 	if (!$insert) {
 		set_flash('Bloķēt lietotāju neizdevās!');
@@ -281,7 +281,7 @@ if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2']
 						// lieguma vēl nav
 					} else {
 
-						$data = array(
+						$data = [
 							'user_id' => $profile->id,
 							'reason' => $reason,
 							'time' => sanitize($ban_time),
@@ -289,7 +289,7 @@ if (isset($_GET['var3']) && $_GET['var3'] == 'other' && isset($_POST['reason-2']
 							'author' => (int) $auth->id,
 							'ip' => sanitize($profile->lastip),
 							'lang' => $domain
-						);
+						];
 						$db->insert('banned', $data);
 					}
 
@@ -326,22 +326,22 @@ if ($is_banned) {
 	$usr_nick = usercolor($usr->nick, $usr->level, false, $usr->id);
 
 	$tpl->newBlock('has-active-ban');
-	$tpl->assign(array(
+	$tpl->assign([
 		'reason' => $find_ban->reason,
 		'from' => date('d.m.Y, H:i', $find_ban->time),
 		'until' => date('d.m.Y, H:i', $find_ban->time + $find_ban->length),
 		'author' => $usr_nick,
 		'id' => $usr->id
-	));
+	]);
 } else {
 	$tpl->newBlock('ban-form');
 
 	foreach ($ban_lengths as $key => $value) {
 		$tpl->newBlock('ban-length');
-		$tpl->assign(array(
+		$tpl->assign([
 			'length' => $key,
 			'title' => $value
-		));
+		]);
 		if ($key == 259200) {
 			$tpl->assign('selected', ' selected="selected"');
 		}
@@ -363,12 +363,12 @@ if ($is_banned) {
 		$tpl->newBlock('block-domain');
 
 		foreach ($config_domains as $key => $domain) {
-			if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
+			if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'ios.exs.lv' && $domain['domain'] !== 'api.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
 				$tpl->newBlock('block-domain-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'id' => $key,
 					'domain' => $domain['domain']
-				));
+				]);
 			}
 		}
 	}
@@ -396,18 +396,18 @@ if ($lang == 1 || $lang == 9) {
 		}
 
 		if ($is_banned) {
-			$tpl->assign(array(
+			$tpl->assign([
 				'reason' => $find_ban->reason
-			));
+			]);
 		}
 
 		// bana termiņu izvēlne
 		foreach ($ban_lengths as $key => $value) {
 			$tpl->newBlock('ban-length-2');
-			$tpl->assign(array(
+			$tpl->assign([
 				'length' => $key,
 				'title' => $value
-			));
+			]);
 			if ($is_banned && $find_ban->length == $key) {
 				$tpl->assign('selected', ' selected="selected"');
 			}
@@ -419,12 +419,12 @@ if ($lang == 1 || $lang == 9) {
 			$tpl->newBlock('block-domain-2');
 
 			foreach ($config_domains as $key => $domain) {
-				if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
+				if ($domain['domain'] !== 'secure.exs.lv' && $domain['domain'] !== 'ios.exs.lv' && $domain['domain'] !== 'api.exs.lv' && $domain['domain'] !== 'android.exs.lv') {
 					$tpl->newBlock('block-domain-node-2');
-					$tpl->assign(array(
+					$tpl->assign([
 						'id' => $key,
 						'domain' => $domain['domain']
-					));
+					]);
 					if ($is_banned && $key == $find_ban->lang) {
 						$tpl->assign('selected', ' selected="selected"');
 					}

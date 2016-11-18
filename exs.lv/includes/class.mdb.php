@@ -30,7 +30,7 @@ class mdb extends mysqli {
 
 	function get_results($query = null) {
 		if (!empty($query) && $data = $this->query($query)) {
-			$return = array();
+			$return = [];
 			while ($row = $data->fetch_object()) {
 				$return[] = $row;
 			}
@@ -59,7 +59,7 @@ class mdb extends mysqli {
 
 	function get_col($query = null) {
 		if (!empty($query) && $data = $this->query($query)) {
-			$return = array();
+			$return = [];
 			while ($row = $data->fetch_array()) {
 				$return[] = $row[0];
 			}
@@ -74,8 +74,8 @@ class mdb extends mysqli {
 			return false;
         }
 
-		$criteria = array();
-		$updates = array();
+		$criteria = [];
+		$updates = [];
 		$limit = 'LIMIT 1';
 
 		if (is_array($params)) {
@@ -115,8 +115,8 @@ class mdb extends mysqli {
 			return false;
 		}
 
-		$keys = array();
-		$values = array();
+		$keys = [];
+		$values = [];
 
 		foreach ($data as $key => $val) {
 			$keys[] = $key;

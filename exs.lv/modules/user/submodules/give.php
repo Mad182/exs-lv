@@ -32,9 +32,9 @@ if ($credit) {
 
 	for ($i = 1; $i <= $credit; $i++) {
 		$tpl->newBlock('give-am');
-		$tpl->assign(array(
+		$tpl->assign([
 			'value' => $i,
-		));
+		]);
 	}
 }
 

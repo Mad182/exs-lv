@@ -7,10 +7,10 @@
 class Quests extends Controller {
     
     public function __construct() {
-        $this->globals(array(
+        $this->globals([
             'cat_f2p_quests', 
             'cat_miniquests'
-        ));
+        ]);
         parent::__construct();
     }
 
@@ -166,10 +166,10 @@ class Quests extends Controller {
             // ja nepieciešams, pārmaina fiksēto burtu
             if (substr($data->title, 0, 1) != $letter) {
                 $letter = substr($data->title, 0, 1);
-                $this->view->assign(array(
+                $this->view->assign([
                     'letter' => '<b>'.$letter.'</b>',
                     'border' => ' class="border"',
-                ));
+                ]);
             }
         }
     }
@@ -277,10 +277,10 @@ class Quests extends Controller {
             if ($key === 'years') {
                 foreach ($value as $single_year => $quest_count) {
                     $this->view->newBlock('stats-single-year');
-                    $this->view->assignAll(array(
+                    $this->view->assignAll([
                         'short-year' => $single_year,
                         'quest-count' => $quest_count
-                    ));
+                    ]);
                     if ($single_year == date('Y')) {
                         $this->view->assign('row-class', 'space');
                     }

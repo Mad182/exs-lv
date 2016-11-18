@@ -46,20 +46,20 @@ if (isset($_POST['submit'])) {
 
 				if (send_email($inprofile->mail, $subject, $message)) {
 
-					$db->update('users', $auth->id, array(
+					$db->update('users', $auth->id, [
 						'email_new' => $inprofile->mail,
 						'email_time' => 'NOW()',
 						'email_token' => $email_token
-					));
+					]);
 
 					$auth->reset();
 					update_karma($auth->id, true);
 					set_flash('Izmaiņas saglabātas!<br />Savā jaunajā e-pasta adresē pēc brīža saņemsi apstiprinājuma linku, lai varētu pabeigt e-pasta maiņu.', 'success');
 
-					$auth->log('Pieprasīja e-pasta maiņu (apstiprinājuma e-pasts nosūtīts)', 'users', $userdata->id);
+					$auth->log('Pieprasīja e-pasta maiņu (apstiprinājuma e-pasts nosūtīts)', 'users', $auth->id);
 				} else {
 					set_flash('<strong>Kļūda:</strong> neizdevās nosūtīt apstiprinājuma e-pastu!', 'error');
-					$auth->log('Pieprasīja e-pasta maiņu (neizdevās nosūtīt apstiprinājuma e-pastu)', 'users', $userdata->id);
+					$auth->log('Pieprasīja e-pasta maiņu (neizdevās nosūtīt apstiprinājuma e-pastu)', 'users', $auth->id);
 				}
 			}
 		} else {
@@ -74,10 +74,10 @@ if (isset($_POST['submit'])) {
 
 //show form
 $tpl->gotoBlock('user-profile-email');
-$tpl->assign(array(
+$tpl->assign([
 	'user-mail' => $inprofile->mail,
 	'xsrf' => make_token('email')
-));
+]);
 
 $page_title = 'E-pasta adreses maiņa';
 

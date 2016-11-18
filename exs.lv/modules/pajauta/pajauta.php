@@ -46,10 +46,10 @@ if ($auth->ok) {
 			$tpl->newBlock('pajauta-list');
 			foreach ($questions as $question) {
 				$tpl->newBlock('pajauta-list-node');
-				$tpl->assign(array(
+				$tpl->assign([
 					'slug' => $question->slug,
 					'question' => $question->question
-				));
+				]);
 			}
 		} else {
 
@@ -87,14 +87,14 @@ if ($auth->ok) {
 				if (!$answered) {
 					$tpl->newBlock('pajauta-q');
 
-					$tpl->assign(array(
+					$tpl->assign([
 						'question' => $question->question,
 						'answ0' => $question->answ0,
 						'answ1' => $question->answ1,
 						'answ1' => $question->answ1,
 						'nick' => h($author->nick),
 						'comments' => comments_block('qg-' . $question->id)
-					));
+					]);
 				} else {
 					$answ0 = (int) $db->get_var("SELECT count(*) FROM qgame_answers WHERE question_id = '$question->id' AND answer = '0'");
 					$answ1 = (int) $db->get_var("SELECT count(*) FROM qgame_answers WHERE question_id = '$question->id' AND answer = '1'");
@@ -103,7 +103,7 @@ if ($auth->ok) {
 
 					$total = $answ0 + $answ1;
 
-					$tpl->assign(array(
+					$tpl->assign([
 						'question' => $question->question,
 						'qurl' => $question->slug,
 						'answ0' => $question->answ0,
@@ -114,17 +114,17 @@ if ($auth->ok) {
 						'percent1' => ceil(100 / $total * $answ1),
 						'nick' => h($author->nick),
 						'comments' => comments_block('qg-' . $question->id)
-					));
+					]);
 				}
 
 				if (!$lastid = (int) $db->get_var("SELECT id FROM ajax_comments WHERE parent = 'qg-" . $question->id . "' ORDER BY id DESC LIMIT 1")) {
 					$lastid = 1;
 				}
 
-				$tpl->assignGlobal(array(
+				$tpl->assignGlobal([
 					'qslug' => $question->slug,
 					'lastid' => $lastid
-				));
+				]);
 
 				$page_title = ucfirst($question->question) . ' - ' . $question->answ0 . ' vai ' . $question->answ1;
 
@@ -166,10 +166,10 @@ if ($auth->ok) {
 			foreach ($questions as $question) {
 				$tpl->newBlock('pajauta-list-node');
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'slug' => $question->slug,
 					'question' => $question->question
-				));
+				]);
 			}
 		} else {
 
@@ -186,7 +186,7 @@ if ($auth->ok) {
 
 				$tpl->newBlock('pajauta-a');
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'question' => $question->question,
 					'answ0' => $question->answ0,
 					'answ1' => $question->answ1,
@@ -196,7 +196,7 @@ if ($auth->ok) {
 					'percent1' => ceil(100 / $total * $answ1),
 					'nick' => h($author->nick),
 					'comments' => comments_block('qg-' . $question->id)
-				));
+				]);
 
 				$page_title = ucfirst($question->question) . ' - ' . $question->answ0 . ' vai ' . $question->answ1;
 			}
@@ -208,10 +208,10 @@ if ($auth->ok) {
 		foreach ($questions as $question) {
 			$tpl->newBlock('pajauta-list-node');
 
-			$tpl->assign(array(
+			$tpl->assign([
 				'slug' => $question->slug,
 				'question' => $question->question
-			));
+			]);
 		}
 	}
 }

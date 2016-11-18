@@ -61,7 +61,7 @@ if ($auth->level == 1 && !empty($_GET['moveup'])) {
 	move_cat($_GET['movedown'], 'down');
 }
 
-$fcategorys = array();
+$fcategorys = [];
 $cats = $db->get_results("SELECT `id`,`title`,`textid` FROM `cat` WHERE `parent` = '$category->id' AND `module` = 'forums' ORDER BY `ordered` ASC");
 if (empty($cats)) {
 	$cats[0] = $category;
@@ -69,18 +69,18 @@ if (empty($cats)) {
 if (!empty($cats)) {
 	foreach ($cats as $cat) {
 		$tpl->newBlock('forum-list');
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $cat->title,
 			'textid' => $cat->textid,
 			'columns' => $columns
-		));
+		]);
 
 		//foruma kategoriju pievienošana
 		if ($auth->level == 1 && !$auth->mobile) {
 			$tpl->newBlock('forum-list-add');
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $cat->id
-			));
+			]);
 		}
 
 		$add = '';
@@ -92,10 +92,10 @@ if (!empty($cats)) {
 
 		foreach ($forums as $forum) {
 			if ((!$forum->mods_only_post || im_mod()) && $forum->status == 'active') {
-				$fcategorys[] = array(
+				$fcategorys[] = [
 					'id' => $forum->id,
 					'title' => $forum->title,
-				);
+				];
 			}
 
 			$subcats = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `parent` = '$forum->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
@@ -113,7 +113,7 @@ if (!empty($cats)) {
 			$finfo = get_cat($forum->textid);
 			if (!empty($finfo->mods)) {
 				$add = '<br />Moderatori: ';
-				$mods = array();
+				$mods = [];
 				foreach ($finfo->mods as $mod) {
 					$mods[] = userlink($mod);
 				}
@@ -122,29 +122,29 @@ if (!empty($cats)) {
 
 			$tpl->newBlock('forum-item');
 
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $forum->title,
 				'textid' => $forum->textid,
 				'content' => $forum->content . $add,
-			));
+			]);
 
 			if (!empty($topic)) {
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'date' => display_time(strtotime($topic->bump)),
 					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
 					'author' => userlink($topic->author)
-				));
+				]);
 			}
 
 			if ($auth->level == 1 && !$auth->mobile) {
 				//foruma kategoriju admin rīki
-				$tpl->assign(array(
+				$tpl->assign([
 					'uplink' => ' <a class="forum-admin-tool" href="?moveup=' . $forum->id . '">&#8593;</a> ',
 					'downlink' => ' <a class="forum-admin-tool" href="?movedown=' . $forum->id . '">&#8595;</a> ',
 					'addlink' => '<br /><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
 					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">edit</a> '
-				));
+				]);
 			}
 
 			if ($columns == 4) {
@@ -154,19 +154,19 @@ if (!empty($cats)) {
 					$forum->icon = $generic_f_icon;
 				}
 				$tpl->newBlock('forum-item-avatar');
-				$tpl->assign(array(
+				$tpl->assign([
 					'icon' => $forum->icon,
 					'textid' => $forum->textid
-				));
+				]);
 
 				//category stats
 				$tpl->newBlock('forum-item-stats');
-				$tpl->assign(array(
+				$tpl->assign([
 					'posts' => $forum->stat_com,
 					'topics' => $forum->stat_topics,
 					'txt-posts' => lv_dsk($forum->stat_com, 'posts', 'posti'),
 					'txt-topics' => lv_dsk($forum->stat_topics, 'tēma', 'tēmas')
-				));
+				]);
 			}
 
 
@@ -179,14 +179,14 @@ if (!empty($cats)) {
 				$tpl->newBlock('subcats');
 				foreach ($subcats as $subcat) {
 					$tpl->newBlock('subcats-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'title' => $subcat->title,
 						'textid' => $subcat->textid
-					));
-					$fcategorys[] = array(
+					]);
+					$fcategorys[] = [
 						'id' => $subcat->id,
 						'title' => '&nbsp;&nbsp;&raquo;&nbsp;' . $subcat->title
-					);
+					];
 
 
 					$subcats2 = $db->get_results("SELECT `id`, `title` FROM `cat` WHERE `parent` = '$subcat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
@@ -194,10 +194,10 @@ if (!empty($cats)) {
 					if (!empty($subcats2)) {
 
 						foreach ($subcats2 as $subcat2) {
-							$fcategorys[] = array(
+							$fcategorys[] = [
 								'id' => $subcat2->id,
 								'title' => '&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&nbsp;' . $subcat2->title
-							);
+							];
 
 
 							$subcats3 = $db->get_results("SELECT `id`, `title` FROM `cat` WHERE `parent` = '$subcat2->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
@@ -205,10 +205,10 @@ if (!empty($cats)) {
 							if (!empty($subcats3)) {
 
 								foreach ($subcats3 as $subcat3) {
-									$fcategorys[] = array(
+									$fcategorys[] = [
 										'id' => $subcat3->id,
 										'title' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&nbsp;' . $subcat3->title
-									);
+									];
 								}
 							}
 						}
@@ -235,11 +235,11 @@ if ($auth->ok && $category->status == 'active') {
 			if ((isset($_GET['cat']) && $_GET['cat'] == $fcategory['id']) || (!isset($_GET['cat']) && $fcategory['id'] == 232)) {
 				$sel = ' selected="selected"';
 			}
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $fcategory['id'],
 				'title' => $fcategory['title'],
 				'sel' => $sel
-			));
+			]);
 		}
 	}
 

@@ -44,11 +44,11 @@ class Unlisted extends Controller {
 
             $this->view->newBlock('unlisted-page');
             
-            $this->view->assign(array(
+            $this->view->assign([
                 'page_id'   => $guide->id,
                 'strid'     => $guide->strid,
                 'title'     => $guide->title
-            ));
+            ]);
         }
     }
 }

@@ -27,8 +27,8 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 $users = $db->get_results("SELECT `id`, `nick` FROM `users` WHERE `lastfm_username` IS NOT NULL AND `lastfm_updated` < '".(time()-120)."' ORDER BY `lastfm_updated` ASC");
 

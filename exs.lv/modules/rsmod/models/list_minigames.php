@@ -109,7 +109,7 @@ class Model_List_Minigames extends Model {
             $cat = $this->cat_distractions;
         }
         
-        $values = array(
+        $values = [
             'page_id'           => $page_id,
             'cat_id'            => (int)$cat,
             'title'             => $title,
@@ -120,7 +120,7 @@ class Model_List_Minigames extends Model {
             'description'       => $description,
             'created_by'        => (int)$this->auth->id,
             'created_at'        => time()
-        );
+        ];
         
         $this->db->insert('rs_pages', $values);
     }
@@ -172,7 +172,7 @@ class Model_List_Minigames extends Model {
         $entry->safe = (isset($post_arr['safe'])) ? 
             (bool)$post_arr['safe'] : false;
 
-        $values = array(
+        $values = [
             'page_id'           => $entry->page_id,
             'title'             => $entry->title,
             'members_only'      => (int)$entry->members_only,
@@ -182,11 +182,11 @@ class Model_List_Minigames extends Model {
             'description'       => $entry->description,
             'updated_by'        => (int)$this->auth->id,
             'updated_at'        => time()
-        );
-        $params = array(
+        ];
+        $params = [
             'id' => (int)$entry_id,
             'deleted_by' => 0
-        );
+        ];
         $this->db->update('rs_pages', $params, $values);
     }
 }

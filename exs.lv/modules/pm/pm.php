@@ -19,16 +19,16 @@ if (!$auth->ok) {
 			$to = $pm->to_uid;
 			$from = $pm->from_uid;
 			if (empty($pm->imap_email)) {
-				$hmsgs = $db->get_results("SELECT * FROM pm WHERE (`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid') ORDER BY `date` DESC LIMIT 40");
+				$hmsgs = $db->get_results("SELECT * FROM pm WHERE (`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid') ORDER BY `date` DESC LIMIT 100");
 				foreach ($hmsgs as $hmsg) {
 					$fromuser = get_user($hmsg->from_uid);
 					$tpl->newBlock('pm-h-node');
-					$tpl->assign(array(
+					$tpl->assign([
 						'title' => $hmsg->title,
 						'text' => add_smile($hmsg->text),
 						'date' => $hmsg->date,
 						'from_nick' => $fromuser->nick
-					));
+					]);
 				}
 			} else {
 				$hmsgs = $db->get_results("SELECT * FROM pm WHERE ((`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid')) AND imap_email = '$pm->imap_email' ORDER BY `date` DESC LIMIT 40");
@@ -39,12 +39,12 @@ if (!$auth->ok) {
 					} else {
 						$from = $hmsg->imap_email;
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'title' => $hmsg->title,
 						'text' => add_smile($hmsg->text),
 						'date' => $hmsg->date,
 						'from_nick' => $from
-					));
+					]);
 				}
 			}
 		}
@@ -160,11 +160,11 @@ if (!$auth->ok) {
 				}
 
 				$tpl->newBlock('pm-compose-option');
-				$tpl->assign(array(
+				$tpl->assign([
 					'friend-id' => $theother,
 					'friend-nick' => h($friendinfo->nick),
 					'friend-sel' => $selected_to
-				));
+				]);
 			}
 
 			if (isset($_GET['to']) && !$doneselect && $_GET['to'] != $auth->id) {
@@ -172,11 +172,11 @@ if (!$auth->ok) {
 				$tonick = $db->get_var("SELECT nick FROM users WHERE id = ('" . $toid . "')");
 				if ($tonick) {
 					$tpl->newBlock('pm-compose-option');
-					$tpl->assign(array(
+					$tpl->assign([
 						'friend-id' => $toid,
 						'friend-nick' => h($tonick),
 						'friend-sel' => ' selected="selected"'
-					));
+					]);
 				}
 			} elseif (isset($_GET['replyto']) && !$doneselect) {
 				$reply_to = (int) $_GET['replyto'];
@@ -184,16 +184,16 @@ if (!$auth->ok) {
 				$reply_user = get_user($reply_content->from_uid);
 				if ($reply_content && $reply_user) {
 					$tpl->newBlock('pm-compose-option');
-					$tpl->assign(array(
+					$tpl->assign([
 						'friend-id' => $reply_user->id,
 						'friend-nick' => h($reply_user->nick),
 						'friend-sel' => ' selected="selected"'
-					));
+					]);
 
 					$tpl->gotoBlock('pm-compose');
-					$tpl->assign(array(
+					$tpl->assign([
 						'compose-title' => 'Re:' . str_replace('Re:', '', $reply_content->title)
-					));
+					]);
 				}
 			}
 		} elseif (isset($_GET['act']) && $_GET['act'] == 'outbox') {
@@ -213,7 +213,7 @@ if (!$auth->ok) {
 					$to = get_user($pm->to_uid);
 
 					$tpl->newBlock('pm-read-outbox');
-					$tpl->assign(array(
+					$tpl->assign([
 						'pm-title' => $pm->title,
 						'pm-text' => add_smile($pm->text),
 						'pm-id' => $pm->id,
@@ -223,7 +223,7 @@ if (!$auth->ok) {
 						'avatar' => get_avatar($to),
 						'pm-to-title' => h($to->nick),
 						'pm-read' => $pm->is_read,
-					));
+					]);
 
 					$page_title = $pm->title . ' - lasīt vēstuli';
 				} else {
@@ -275,23 +275,23 @@ if (!$auth->ok) {
 							$from = '<em>dzēsts</em>';
 						}
 
-						$tpl->assign(array(
+						$tpl->assign([
 							'pm-title' => strip_tags($pm->title),
 							'pm-id' => $pm->id,
 							'pm-date' => display_time(strtotime($pm->date)),
 							'to' => $from,
 							'pm-read' => $pm->is_read,
 							'type' => $type
-						));
+						]);
 					}
 
 					$total = $db->get_var("SELECT count(*) FROM pm WHERE from_uid = ('" . $auth->id . "')");
 					$pager = pager($total, $skip, $end, '/pm/sent/?skip=', true);
-					$tpl->assignGlobal(array(
+					$tpl->assignGlobal([
 						'pager-next' => $pager['next'],
 						'pager-prev' => $pager['prev'],
 						'pager-numeric' => $pager['pages']
-					));
+					]);
 				} else {
 					$tpl->newBlock('pm-list-outbox-empty');
 				}
@@ -304,7 +304,7 @@ if (!$auth->ok) {
 			$tpl->newBlock('pm-search');
 
 			if (isset($_GET['q'])) {
-				$q_string = str_replace(array(',', '.', '+', '-', '_'), ' ', $_GET['q']);
+				$q_string = str_replace([',', '.', '+', '-', '_'], ' ', $_GET['q']);
 				$q_string = strip_tags($q_string);
 				$tpl->assign('qstr', h($q_string));
 				$q_strings = explode(' ', $q_string);
@@ -331,11 +331,11 @@ if (!$auth->ok) {
 						} else {
 							$link = '/' . $category->textid . '/sent/' . $result->id;
 						}
-						$tpl->assign(array(
+						$tpl->assign([
 							'text' => $result->text,
 							'title' => $result->title,
 							'link' => $link,
-						));
+						]);
 					}
 				}
 			}
@@ -365,7 +365,7 @@ if (!$auth->ok) {
 					$from = get_user($pm->from_uid);
 
 					$tpl->newBlock('pm-read-inbox');
-					$tpl->assign(array(
+					$tpl->assign([
 						'pm-title' => $pm->title,
 						'pm-text' => add_smile($pm->text),
 						'pm-id' => $pm->id,
@@ -375,7 +375,7 @@ if (!$auth->ok) {
 						'avatar' => get_avatar($from),
 						'pm-from-title' => h($from->nick),
 						'pm-read' => $pm->is_read,
-					));
+					]);
 
 					if (empty($pm->imap_uid)) {
 						$tpl->newBlock('pm-read-from');
@@ -386,7 +386,7 @@ if (!$auth->ok) {
 							$nick = usercolor($from->nick, $from->level, false, $from->id);
 						}
 
-						$tpl->assign(array(
+						$tpl->assign([
 							'pm-title' => $pm->title,
 							'pm-text' => add_smile($pm->text),
 							'pm-id' => $pm->id,
@@ -396,7 +396,7 @@ if (!$auth->ok) {
 							'avatar' => get_avatar($from),
 							'pm-from-title' => h($from->nick),
 							'pm-read' => $pm->is_read,
-						));
+						]);
 					}
 					$page_title = $pm->title . ' - lasīt vēstuli';
 				} else {
@@ -448,23 +448,23 @@ if (!$auth->ok) {
 							$from = '<em>dzēsts</em>';
 						}
 
-						$tpl->assign(array(
+						$tpl->assign([
 							'pm-title' => wordwrap(textlimit(strip_tags($pm->title), 48, '...'), 20, "\n", 1),
 							'pm-id' => $pm->id,
 							'pm-date' => display_time(strtotime($pm->date)),
 							'from' => $from,
 							'pm-read' => $pm->is_read,
 							'type' => $type
-						));
+						]);
 					}
 
 					$total = $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = '" . $auth->id . "'");
 					$pager = pager($total, $skip, $end, '/pm/?skip=', true);
-					$tpl->assignGlobal(array(
+					$tpl->assignGlobal([
 						'pager-next' => $pager['next'],
 						'pager-prev' => $pager['prev'],
 						'pager-numeric' => $pager['pages']
-					));
+					]);
 				} else {
 					$tpl->newBlock('pm-list-inbox-empty');
 				}
@@ -474,9 +474,9 @@ if (!$auth->ok) {
 }
 
 if (!empty($pm_title)) {
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pm-top-title' => $pm_title,
-	));
+	]);
 }
 
 unset($pagepath);

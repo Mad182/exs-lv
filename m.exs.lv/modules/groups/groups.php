@@ -36,7 +36,7 @@ foreach ($groups as $group) {
 			$group->avatar = 'none.png';
 		}
 		$tpl->newBlock('allgroups');
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $group->title,
 			'id' => $group->id,
 			'avatar' => $group->avatar,
@@ -44,13 +44,13 @@ foreach ($groups as $group) {
 			'members' => $group->members + 1,
 			'style' => $istyle,
 			'add' => $add,
-		));
+		]);
 	} else {
 		if ($group->avatar == '') {
 			$group->avatar = 'none.png';
 		}
 		$tpl->newBlock('allgroups2');
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $group->title,
 			'id' => $group->id,
 			'avatar' => $group->avatar,
@@ -58,13 +58,13 @@ foreach ($groups as $group) {
 			'members' => $group->members + 1,
 			'style' => '',
 			'add' => '',
-		));
+		]);
 	}
 }
 
 $pager = pager($total, $skip, $end, '/grupas/?skip=');
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'pager-next' => $pager['next'],
 	'pager-prev' => $pager['prev'],
 	'pager-numeric' => $pager['pages']
-));
+]);

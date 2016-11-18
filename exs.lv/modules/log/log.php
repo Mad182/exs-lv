@@ -40,10 +40,10 @@ if (isset($_POST['criteria']) && isset($_POST['value'])) {
 	$skip = 0;
 	$limit = 200;
 
-	$tpl->assign(array(
+	$tpl->assign([
 		'selected-' . (int) $_POST['criteria'] => ' selected="selected"',
 		'field-value' => $value
-	));
+	]);
 }
 
 $logs = $db->get_results("SELECT * FROM `logs` $query_where ORDER BY `created` DESC LIMIT $skip, $end");
@@ -79,23 +79,23 @@ if ($logs) {
 			$place = $log->foreign_table . '-' . $log->foreign_key;
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'log-id' => $log->id,
 			'log-ip' => $log->ip,
 			'log-who' => $log->user_id,
 			'log-place' => $place,
 			'log-action' => textlimit($log->action, 255),
 			'log-time' => str_replace('-', '.', $log->created),
-		));
+		]);
 	}
 }
 
 if (empty($_POST)) {
 	$pager = pager($db->get_var("SELECT count(*) FROM `logs`"), $skip, $end, '/' . $category->textid . '/?skip=');
-	$tpl->assignGlobal(array(
+	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
 		'pager-numeric' => $pager['pages']
-	));
+	]);
 }
 

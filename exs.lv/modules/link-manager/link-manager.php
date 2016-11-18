@@ -19,10 +19,10 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'blacklisted') {
 	$title = 'Bilžu hostinga lapas';
 }
 
-$tpl->assign(array(
+$tpl->assign([
 	'active-' . $active => 'active',
 	'title' => $title
-));
+]);
 
 if (isset($_GET['var2']) && $_GET['var2'] == 'delete' && isset($_GET['var3'])) {
 	$delete = (int) $_GET['var3'];
@@ -45,11 +45,11 @@ $domains = $db->get_results("SELECT * FROM `" . $active . "_sites` ORDER BY `id`
 if (!empty($domains)) {
 	foreach ($domains as $domain) {
 		$tpl->newBlock('link-manager-item');
-		$tpl->assign(array(
+		$tpl->assign([
 			'domain' => h($domain->url),
 			'id' => $domain->id,
 			'type' => $active
-		));
+		]);
 	}
 }
 

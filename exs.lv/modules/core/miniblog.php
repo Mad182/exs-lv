@@ -40,17 +40,17 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 			$private = 1;
 		}
 
-		$lastins = post_mb(array(
+		$lastins = post_mb([
 			'text' => $body,
 			'private' => $private
-		));
+		]);
 
 		$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$lastins'");
 
 		// dažādas notifikācijas
 		$title = mb_get_title($topic->text);
 		$strid = mb_get_strid($title, $topic->id);
-		push('Izveidoja <a href="/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid . '">minibloga ierakstu &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>');
+		push('Izveidoja <a href="/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid . '">minibloga ierakstu &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', '', $private);
 
 		$topic->text = mention($topic->text, '/say/' . $inprofile->id . '/' . $topic->id . '-' . $strid, 'mb', $topic->id);
 		$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($topic->text) . "' WHERE id = '$topic->id'");
@@ -106,11 +106,11 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 			$_SESSION["antiflood"] = time();
 
 			// pievieno komentāru
-			$newid = post_mb(array(
+			$newid = post_mb([
 				'text' => $body,
 				'parent' => $mainid,
 				'reply_to' => $reply_to_id
-			));
+			]);
 
 			if ($check == $auth->id) {
 				$str = 'savā';
@@ -118,6 +118,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				$str = $inprofile->nick;
 			}
 			$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
+			$private = $db->get_var("SELECT `private` FROM `miniblog` WHERE `id` = '$mainid'");
 
 			$title = mb_get_title(stripslashes($body));
 			$strid = mb_get_strid($title, $mainid);
@@ -125,7 +126,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 
 			// bump, notifikācijas
 			if (!isset($_POST['no-bump'])) {
-				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid);
+				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private);
 
 				$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
 				$newpost->text = mention($newpost->text, $url, 'mb', $mainid);
@@ -167,7 +168,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 }
 
 // minibloga atslēgšana
-if ($auth->ok && im_mod() && isset($_GET['unclose']) && isset($_GET['single'])) {
+if ($auth->ok && im_mod() && isset($_GET['open']) && isset($_GET['single'])) {
 	$sid = (int) $_GET['single'];
 	if ($sid > 0) {
 		$db->query("UPDATE miniblog SET closed = '0' WHERE id = '$sid' AND closed_by != '17077' AND `lang` = '$lang'");
@@ -182,7 +183,7 @@ if ($debug == true || ($tpl2 = $m->get($key)) == false) {
 	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/core/miniblog.tpl');
 	$tpl->assignInclude('conversation', CORE_PATH . '/modules/core/conversation.tpl');
 	$tpl->prepare();
-	$m->set($key, $tpl, false, 3600);
+	$m->set($key, $tpl, 3600);
 } else {
 	$tpl = $tpl2;
 	unset($tpl2);
@@ -328,7 +329,7 @@ if (!empty($inprofile)) {
 					$author = '<em>dzēsts</em>';
 				}
 
-				$tpl->assign(array(
+				$tpl->assign([
 					'url' => $url,
 					'text' => add_smile($record->text) . $append,
 					'add_deco' => $add_deco,
@@ -341,7 +342,7 @@ if (!empty($inprofile)) {
 					'id' => $record->id,
 					'title' => $title,
 					'rater' => mb_rater($record, $url)
-				));
+				]);
 
 				// ieraksta iespēju pogas redzamas vien tad,
 				// ja miniblogs ir atvērts (nevis lietotāja miniblogu sarakstā)
@@ -354,9 +355,9 @@ if (!empty($inprofile)) {
 					// ieraksta rediģēšanas poga
 					if ((im_mod() || (!$record->closed && $auth->karma >= $min_post_edit && $record->author == $auth->id)) && (strtotime($record->date) > time() - 1800) || $auth->level == 1 || $auth->id == 115) {
 						$tpl->newBlock('mb-edit-main');
-						$tpl->assign(array(
+						$tpl->assign([
 							'id' => $record->id,
-						));
+						]);
 					}
 
 					// linki ieraksta aizslēgšanai/atslēgšanai
@@ -373,14 +374,14 @@ if (!empty($inprofile)) {
 					// lūdzu neņem nost laika ierobežojumu :/
 					if ((im_mod() && strtotime($record->date) > time() - 86400) || ($auth->level == 1 && $debug)) {
 						$tpl->newBlock('mb-delete');
-						$tpl->assign(array(
+						$tpl->assign([
 							'id' => $record->id,
 							'token' => make_token('delmb')
-						));
+						]);
 					}
 
 					// podziņa mb pārkāpuma ziņošanai
-					if ($auth->ok && !$auth->mobile && in_array($lang, array(1, 7, 9))) {
+					if ($auth->ok && !$auth->mobile && in_array($lang, [1, 7, 9])) {
 						$tpl->newBlock('report-mb');
 						$tpl->assign('id', $record->id);
 					}
@@ -388,7 +389,7 @@ if (!empty($inprofile)) {
 					$limit = '';
 				} else {
 					$limit = ' LIMIT 0,3';
-					$robotstag = array('noindex', 'follow');
+					$robotstag = ['noindex', 'follow'];
 				}
 
 				// atvērtiem miniblogiem pievieno komentārus
@@ -427,7 +428,7 @@ if (!empty($inprofile)) {
 					);
 
 					if ($responses) {
-						$json = array();
+						$json = [];
 						foreach ($responses as $response) {
 							$json[$response->reply_to][] = $response;
 						}
@@ -444,10 +445,10 @@ if (!empty($inprofile)) {
 					} else {
 						$text = 'Atvērt sarunu&nbsp;&raquo;';
 					}
-					$tpl->assign(array(
+					$tpl->assign([
 						'text' => $text,
 						'url' => $url
-					));
+					]);
 				}
 				// atvērtā miniblogā parāda pievienotos tagus
 				else {
@@ -475,10 +476,10 @@ if (!empty($inprofile)) {
 						$tpl->newBlock('mb-tags');
 						foreach ($tags as $tag) {
 							$tpl->newBlock('mb-tags-node');
-							$tpl->assign(array(
+							$tpl->assign([
 								'slug' => $tag->slug,
 								'name' => $tag->name
-							));
+							]);
 						}
 					}
 					if (im_mod()) {
@@ -494,23 +495,23 @@ if (!empty($inprofile)) {
 		// ???
 		if (isset($_GET['single']) && $auth->ok && !$record->closed) {
 			$tpl->newBlock('user-miniblog-resp');
-			$tpl->assign(array(
+			$tpl->assign([
 				'id' => $record->id,
 				'token' => md5('mb' . $record->id . $remote_salt . $auth->nick)
-			));
+			]);
 
 			if ($auth->id == 1) {
 				$tpl->newBlock('resp-tools');
 			}
 
 			$tpl->newBlock('mb-head');
-			$tpl->assign(array(
+			$tpl->assign([
 				'mbid' => $record->id,
 				'usrid' => $inprofile->id,
 				'edit_time' => time(),
 				'type' => 'miniblog',
 				'lastid' => (int) $db->get_var("SELECT `id` FROM `miniblog` WHERE `parent` = '$record->id' AND `type` = 'miniblog' ORDER BY `id` DESC LIMIT 1")
-			));
+			]);
 		}
 		// paziņojums, ka miniblogs slēgts
 		elseif ($record->closed) {
@@ -539,16 +540,14 @@ if (!empty($inprofile)) {
 			$total = $db->get_var("SELECT count(*) FROM `miniblog` USE INDEX (`count_pager`) WHERE `author` = " . $inprofile->id . " AND `groupid` = 0 AND `removed` = '0' AND `parent` = 0 AND `lang` = '$lang'" . $private);
 			$pager = pager($total, $skip, $end, '/say/' . $inprofile->id . '/skip-');
 			$tpl->newBlock('mb-pager');
-			$tpl->assign(array(
+			$tpl->assign([
 				'pager-next' => $pager['next'],
 				'pager-prev' => $pager['prev'],
 				'pager-numeric' => $pager['pages']
-			));
+			]);
 		}
 	} elseif(!empty($_GET['single'])) {
-		header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-		set_flash('Pieprasītā lapa netika atrasta!', 'error');
-		redirect();
+		error_404();
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');

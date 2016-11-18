@@ -1,27 +1,6 @@
 <?php
-
-
-$ga = new PHPGangsta_GoogleAuthenticator();
-//$secret = $ga->createSecret();
-
-
-//$auth->reset();
-
-$secret = $auth->auth_secret;
-
-echo "Secret is: ".$secret."\n\n";
-$qrCodeUrl = $ga->getQRCodeGoogleUrl('exs.lv', $secret);
-echo "Google Charts URL for the QR-Code: ".$qrCodeUrl."\n\n";
-echo '<br /><img src="'.$qrCodeUrl .'"><br />';
-$oneCode = $ga->getCode($secret);
-echo "Checking Code '$oneCode' and Secret '$secret':\n";
-$checkResult = $ga->verifyCode($secret, $oneCode, 4);    // 2 = 2*30sec clock tolerance
-if ($checkResult) {
-    echo 'OK';
-} else {
-    echo 'FAILED';
-}
-
+redirect();
+echo get_fb_likes('https://exs.lv/');
 
 exit;
 $folder = 'florbols-05-03-2016';
@@ -34,7 +13,7 @@ if ($handle = opendir('dati/bildes/' . $folder . '/large/')) {
 
 			$image = sanitize('dati/bildes/' . $folder . '/large/' . $file);
 			$thb = sanitize('dati/bildes/' . $folder . '/thb/' . $file);
-			$text = sanitize('<p>' . strtolower(str_replace(array('.JPG', '.jpg'), '', $file)) . " - Exs #4 florbola turnīrs 05.03.2016, Jūrmala</p>");
+			$text = sanitize('<p>' . strtolower(str_replace(['.JPG', '.jpg'], '', $file)) . " - Exs #4 florbola turnīrs 05.03.2016, Jūrmala</p>");
 
 			remake_thb($image, $thb);
 

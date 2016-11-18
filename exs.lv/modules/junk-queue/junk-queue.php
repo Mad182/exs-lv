@@ -15,7 +15,7 @@ function make_thumb($data, $path, $id) {
 	require_once(CORE_PATH . '/includes/class.upload.php');
 	$foo = new Upload($data);
 	$foo->image_max_pixels = 200000000;
-	$foo->allowed = array('image/*');
+	$foo->allowed = ['image/*'];
 	$foo->image_resize = true;
 	$foo->image_ratio = true;
 	$foo->image_y = 130;
@@ -111,7 +111,7 @@ if (!empty($junks)) {
 		
 		if(substr($junk->image, -4) == 'gifv') {
 
-			$junk->html = '<div style="text-align:center;width:280px;float:left;margin:0 10px 10px 0"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(array('https://i.imgur.com/', '#embed', '.gifv', '.gif'), '', $junk->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
+			$junk->html = '<div style="text-align:center;width:280px;float:left;margin:0 10px 10px 0"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(['https://i.imgur.com/', '#embed', '.gifv', '.gif'], '', $junk->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
 			
 		} else {
 			$junk->html = '<a href="'.$junk->image.'" class="lightbox"><img src="'.$junk->image.'" alt="" style="width:280px;float: left;margin:0 10px 10px 0" class="av" /></a>';

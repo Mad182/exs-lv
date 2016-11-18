@@ -51,10 +51,10 @@ function get_page_categories($current = null, $force = false) {
 
 	if ($debug || $force || !($cats = $m->get('cat_list_' . $lang))) {
 		$cats = $db->get_results("SELECT `lang`,`parent`,`module`,`persona`,`isblog`,`isforum`,`id`,`title`,`status` FROM `cat` WHERE `module` IN('list','wall','rshelp','movies') AND `lang` = '$lang' ORDER BY `title` ASC");
-		$m->set('cat_list_' . $lang, $cats, false, 900);
+		$m->set('cat_list_' . $lang, $cats, 900);
 	}
 
-	$return = array();
+	$return = [];
 	foreach ($cats as $cat) {
 		if ((im_mod() || im_cat_mod($cat->id) || $cat->id == $current || $current == 'all') && $cat->status == 'active') {
 

@@ -46,7 +46,7 @@ if(!empty($articles)) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace(array('&nbsp;', '<br />', '<li>'), ' ', youtube_title($article->text)))), 680);
+			$article->text = textlimit(strip_tags(trim(str_replace(['&nbsp;', '<br />', '<li>'], ' ', youtube_title($article->text)))), 680);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
@@ -66,7 +66,7 @@ if(!empty($articles)) {
 		}
 
 		$date = display_time(strtotime($article->date), false);
-		$tpl->assign(array(
+		$tpl->assign([
 			'url' => '/read/' . $article->strid,
 			'aurl' => '/user/' . $user->id,
 			'title' => $article->title,
@@ -76,22 +76,22 @@ if(!empty($articles)) {
 			'intro' => textlimit($article->text, 350),
 			'class' => $class,
 			'avatar' => get_avatar($user, 's')
-		));
+		]);
 
 		if (!empty($article->image)) {
 			$tpl->newBlock('news-image');
-			$tpl->assign(array(
+			$tpl->assign([
 				'url' => '/read/' . $article->strid,
 				'title' => $article->title,
 				'image' => trim($article->image)
-			));
+			]);
 		} elseif (!empty($article->avatar)) {
 			$tpl->newBlock('news-av');
-			$tpl->assign(array(
+			$tpl->assign([
 				'url' => '/read/' . $article->strid,
 				'title' => $article->title,
 				'image' => trim($article->avatar)
-			));
+			]);
 		}
 		
 	}
@@ -100,11 +100,11 @@ if(!empty($articles)) {
 
 //pager
 $pager = pager($category->stat_topics, $skip, $end, '/?skip=');
-$tpl->assignGlobal(array(
+$tpl->assignGlobal([
 	'pager-next' => $pager['next'],
 	'pager-prev' => $pager['prev'],
 	'pager-numeric' => $pager['pages']
-));
+]);
 
 /**
  * Labā kolonna
@@ -156,20 +156,20 @@ foreach ($articles as $article) {
 		$len = 58;
 	}
 
-	$tpl->assign(array(
+	$tpl->assign([
 		'node-url' => '/read/' . $article->strid,
 		'title' => $title,
 		'date' => $date,
 		'intro' => trim_intro($article->text, $len),
 		'av' => $av
-	));
+	]);
 }
 
-$list_cats = array(
+$list_cats = [
 	'games' => 81,
 	'movies' => 80,
 	'music' => 323
-);
+];
 
 foreach ($list_cats as $cat_type => $cat_id) {
 
@@ -201,7 +201,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(array('&nbsp;', '<br />'), ' ', add_smile($article->text))))), 600);
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', add_smile($article->text))))), 600);
 		}
 
 		$av = '';
@@ -216,13 +216,13 @@ foreach ($list_cats as $cat_type => $cat_id) {
 			$len = 58;
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'node-url' => '/read/' . $article->strid,
 			'title' => $title,
 			'date' => $date,
 			'intro' => trim_intro($article->text, $len),
 			'av' => $av
-		));
+		]);
 	}
 }
 

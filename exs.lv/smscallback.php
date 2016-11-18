@@ -9,14 +9,14 @@ $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 //memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
 
 header('Content-Type: text/plain; charset=utf-8');
 
 // check that the request comes from Fortumo server
 if (!in_array($_SERVER['HTTP_X_FORWARDED_FOR'],
-		array(
+		[
 			'54.72.6.126',
 			'54.72.6.27',
 			'54.72.6.17',
@@ -24,7 +24,7 @@ if (!in_array($_SERVER['HTTP_X_FORWARDED_FOR'],
 			'79.125.125.1',
 			'79.125.5.95',
 			'79.125.5.205'
-		))) {
+		])) {
 	die("Error: Unknown IP");
 }
 

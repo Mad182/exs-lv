@@ -84,5 +84,3 @@
 
 <!-- END BLOCK : forum-->
 
-<!-- INCLUDE BLOCK : share-block -->
-

@@ -67,8 +67,8 @@ class CSSmin
             $this->do_raise_php_limits();
         }
 
-        $this->comments = array();
-        $this->preserved_tokens = array();
+        $this->comments = [];
+        $this->preserved_tokens = [];
 
         $start_index = 0;
         $length = strlen($css);
@@ -90,7 +90,7 @@ class CSSmin
         }
 
         // preserve strings so their content doesn't get accidentally minified
-        $css = preg_replace_callback('/(?:"(?:[^\\\\"]|\\\\.|\\\\)*")|'."(?:'(?:[^\\\\']|\\\\.|\\\\)*')/S", array($this, 'replace_string'), $css);
+        $css = preg_replace_callback('/(?:"(?:[^\\\\"]|\\\\.|\\\\)*")|'."(?:'(?:[^\\\\']|\\\\.|\\\\)*')/S", [$this, 'replace_string'], $css);
 
         // Let's divide css code in chunks of 25.000 chars aprox.
         // Reason: PHP's PCRE functions like preg_replace have a "backtrack limit"
@@ -100,7 +100,7 @@ class CSSmin
         // returning NULL and $css would be empty.
         $charset = '';
         $charset_regexp = '/(@charset)( [^;]+;)/i';
-        $css_chunks = array();
+        $css_chunks = [];
         $css_chunk_length = 25000; // aprox size, not exact
         $start_index = 0;
         $i = $css_chunk_length; // save initial iterations
@@ -190,12 +190,12 @@ class CSSmin
      */
     private function do_raise_php_limits()
     {
-        $php_limits = array(
+        $php_limits = [
             'memory_limit' => $this->memory_limit,
             'max_execution_time' => $this->max_execution_time,
             'pcre.backtrack_limit' => $this->pcre_backtrack_limit,
             'pcre.recursion_limit' =>  $this->pcre_recursion_limit
-        );
+        ];
 
         // If current settings are higher respect them.
         foreach ($php_limits as $name => $suggested) {
@@ -265,7 +265,7 @@ class CSSmin
         $css = preg_replace('/\s+/', ' ', $css);
 
         // Shorten & preserve calculations calc(...) since spaces are important
-        $css = preg_replace_callback('/calc(\(((?:[^\(\)]+|(?1))*)\))/i', array($this, 'replace_calc'), $css);
+        $css = preg_replace_callback('/calc(\(((?:[^\(\)]+|(?1))*)\))/i', [$this, 'replace_calc'], $css);
 
         // Replace positive sign from numbers preceded by : or a white-space before the leading space is removed
         // +1.2em to 1.2em, +.8px to .8px, +2% to 2%
@@ -288,7 +288,7 @@ class CSSmin
         // Remove the spaces before the things that should not have spaces before them.
         // But, be careful not to turn "p :link {...}" into "p:link{...}"
         // Swap out any pseudo-class colons with the token, and then swap back.
-        $css = preg_replace_callback('/(?:^|\})(?:(?:[^\{\:])+\:)+(?:[^\{]*\{)/', array($this, 'replace_colon'), $css);
+        $css = preg_replace_callback('/(?:^|\})(?:(?:[^\{\:])+\:)+(?:[^\{]*\{)/', [$this, 'replace_colon'], $css);
         
         // Remove spaces before the things that should not have spaces before them.
         $css = preg_replace('/\s+([\!\{\}\;\:\>\+\(\)\]\~\=,])/', '$1', $css);
@@ -300,23 +300,23 @@ class CSSmin
         $css = preg_replace('/' . self::CLASSCOLON . '/', ':', $css);
 
         // retain space for special IE6 cases
-        $css = preg_replace_callback('/\:first\-(line|letter)(\{|,)/i', array($this, 'lowercase_pseudo_first'), $css);
+        $css = preg_replace_callback('/\:first\-(line|letter)(\{|,)/i', [$this, 'lowercase_pseudo_first'], $css);
 
         // no space after the end of a preserved comment
         $css = preg_replace('/\*\/ /', '*/', $css);
 
         // lowercase some popular @directives
-        $css = preg_replace_callback('/@(font-face|import|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?keyframe|media|page|namespace)/i', array($this, 'lowercase_directives'), $css);
+        $css = preg_replace_callback('/@(font-face|import|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?keyframe|media|page|namespace)/i', [$this, 'lowercase_directives'], $css);
 
         // lowercase some more common pseudo-elements
-        $css = preg_replace_callback('/:(active|after|before|checked|disabled|empty|enabled|first-(?:child|of-type)|focus|hover|last-(?:child|of-type)|link|only-(?:child|of-type)|root|:selection|target|visited)/i', array($this, 'lowercase_pseudo_elements'), $css);
+        $css = preg_replace_callback('/:(active|after|before|checked|disabled|empty|enabled|first-(?:child|of-type)|focus|hover|last-(?:child|of-type)|link|only-(?:child|of-type)|root|:selection|target|visited)/i', [$this, 'lowercase_pseudo_elements'], $css);
 
         // lowercase some more common functions
-        $css = preg_replace_callback('/:(lang|not|nth-child|nth-last-child|nth-last-of-type|nth-of-type|(?:-(?:moz|webkit)-)?any)\(/i', array($this, 'lowercase_common_functions'), $css);
+        $css = preg_replace_callback('/:(lang|not|nth-child|nth-last-child|nth-last-of-type|nth-of-type|(?:-(?:moz|webkit)-)?any)\(/i', [$this, 'lowercase_common_functions'], $css);
 
         // lower case some common function that can be values
         // NOTE: rgb() isn't useful as we replace with #hex later, as well as and() is already done for us
-        $css = preg_replace_callback('/([:,\( ]\s*)(attr|color-stop|from|rgba|to|url|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?(?:calc|max|min|(?:repeating-)?(?:linear|radial)-gradient)|-webkit-gradient)/iS', array($this, 'lowercase_common_functions_values'), $css);
+        $css = preg_replace_callback('/([:,\( ]\s*)(attr|color-stop|from|rgba|to|url|(?:-(?:atsc|khtml|moz|ms|o|wap|webkit)-)?(?:calc|max|min|(?:repeating-)?(?:linear|radial)-gradient)|-webkit-gradient)/iS', [$this, 'lowercase_common_functions_values'], $css);
         
         // Put the space back in some cases, to support stuff like
         // @media screen and (-webkit-min-device-pixel-ratio:0){
@@ -351,8 +351,8 @@ class CSSmin
         // Shorten colors from rgb(51,102,153) to #336699, rgb(100%,0%,0%) to #ff0000 (sRGB color space)
         // Shorten colors from hsl(0, 100%, 50%) to #ff0000 (sRGB color space)
         // This makes it more likely that it'll get further compressed in the next step.
-        $css = preg_replace_callback('/rgb\s*\(\s*([0-9,\s\-\.\%]+)\s*\)(.{1})/i', array($this, 'rgb_to_hex'), $css);
-        $css = preg_replace_callback('/hsl\s*\(\s*([0-9,\s\-\.\%]+)\s*\)(.{1})/i', array($this, 'hsl_to_hex'), $css);
+        $css = preg_replace_callback('/rgb\s*\(\s*([0-9,\s\-\.\%]+)\s*\)(.{1})/i', [$this, 'rgb_to_hex'], $css);
+        $css = preg_replace_callback('/hsl\s*\(\s*([0-9,\s\-\.\%]+)\s*\)(.{1})/i', [$this, 'hsl_to_hex'], $css);
 
         // Shorten colors from #AABBCC to #ABC or short color name.
         $css = $this->compress_hex_colors($css);
@@ -396,7 +396,7 @@ class CSSmin
         $css = preg_replace('/'. self::NL .'/', "\n", $css);
 
         // Lowercase all uppercase properties
-        $css = preg_replace_callback('/(\{|\;)([A-Z\-]+)(\:)/', array($this, 'lowercase_properties'), $css);
+        $css = preg_replace_callback('/(\{|\;)([A-Z\-]+)(\:)/', [$this, 'lowercase_properties'], $css);
 
         // restore preserved comments and strings
         for ($i = 0, $max = count($this->preserved_tokens); $i < $max; $i++) {
@@ -420,7 +420,7 @@ class CSSmin
         // Leave data urls alone to increase parse performance.
         $max_index = strlen($css) - 1;
         $append_index = $index = $last_index = $offset = 0;
-        $sb = array();
+        $sb = [];
         $pattern = '/url\(\s*(["\']?)data\:/i';
 
         // Since we need to account for non-base64 data urls, we need to handle
@@ -498,9 +498,9 @@ class CSSmin
         // Look for hex colors inside { ... } (to avoid IDs) and which don't have a =, or a " in front of them (to avoid filters)
         $pattern = '/(\=\s*?["\']?)?#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])(\}|[^0-9a-f{][^{]*?\})/iS';
         $_index = $index = $last_index = $offset = 0;
-        $sb = array();
+        $sb = [];
         // See: http://ajaxmin.codeplex.com/wikipage?title=CSS%20Colors
-        $short_safe = array(
+        $short_safe = [
             '#808080' => 'gray',
             '#008000' => 'green',
             '#800000' => 'maroon',
@@ -511,7 +511,7 @@ class CSSmin
             '#c0c0c0' => 'silver',
             '#008080' => 'teal',
             '#f00' => 'red'
-        );
+        ];
 
         while (preg_match($pattern, $css, $m, 0, $offset)) {
             $index = $this->index_of($css, $m[0], $offset);
@@ -630,7 +630,7 @@ class CSSmin
             $b = $this->round_number(255 * $this->hue_to_rgb($v1, $v2, $h - (1/3)));
         }
 
-        return $this->rgb_to_hex(array('', $r.','.$g.','.$b, $matches[2]));
+        return $this->rgb_to_hex(['', $r.','.$g.','.$b, $matches[2]]);
     }
 
     private function lowercase_pseudo_first($matches)

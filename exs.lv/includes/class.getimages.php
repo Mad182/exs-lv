@@ -13,7 +13,7 @@ class getImages {
 		foreach ($junk->data->children as $data) {
 			$file = false;
 
-			if (in_array(substr($data->data->url, -3), array('jpg', 'png', 'gif', 'peg', 'ifv'))) {
+			if (in_array(substr($data->data->url, -3), ['jpg', 'png', 'gif', 'peg', 'ifv'])) {
 
 				if (stristr($data->data->url, 'imgur.com')) {
 					$data->data->url = str_replace('.gif', '.gifv', $data->data->url);

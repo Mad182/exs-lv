@@ -22,7 +22,7 @@ $lastid = (int) $_GET['lastid'];
 $lastedit = (int) $_GET['et'];
 
 // apakšprojekti, kuriem rādīt ziņošanas podziņu
-$allowed_sites = array(1, 7, 9); // exs.lv; lol.exs.lv; runescape.exs.lv
+$allowed_sites = [1, 7, 9]; // exs.lv; lol.exs.lv; runescape.exs.lv
 
 
 if (isset($_GET['type']) && $_GET['type'] == 'junk') {
@@ -31,7 +31,7 @@ if (isset($_GET['type']) && $_GET['type'] == 'junk') {
 	$type = 'miniblog';
 }
 
-$json = array();
+$json = [];
 
 $resps = $db->get_results("SELECT
 		`miniblog`.`text` AS `text`,
@@ -65,8 +65,8 @@ if ($resps) {
 	require(CORE_PATH . '/includes/class.auth.php');
 
 	//memcached konekcija
-	$m = new Memcache;
-	$m->connect($mc_host, $mc_port);
+	$m = new Memcached;
+	$m->addServer($mc_host, $mc_port);
 
 	$site_access = get_site_access();
 

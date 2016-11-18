@@ -15,9 +15,9 @@ if (!$sub_include) die('error');
 $new_tpl = fetch_tpl();
 if (empty($new_tpl)) { die('error'); }
 
-$new_tpl->assignGlobal(array(
+$new_tpl->assignGlobal([
     'category-url' => $category->textid,
-));
+]);
 $new_tpl->newBlock('content-info');
 $new_tpl->newBlock('new-profile-form');
 
@@ -103,10 +103,10 @@ if (!$profiles) {
             
             // tabulas rinda visiem turpmākajiem child profiliem
             $new_tpl->newBlock('all-children');
-            $new_tpl->assign(array(
+            $new_tpl->assign([
                 'user_seen' => $profile->user_seen,
                 'user_lastip' => (empty($profile->user_lastip) ? '-' : $profile->user_lastip)
-            ));
+            ]);
             if (!empty($profile->description)) {
                 $new_tpl->assign(
                     'description',

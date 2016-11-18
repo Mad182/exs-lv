@@ -46,7 +46,7 @@ foreach ($categories as $group_category) {
 				$group->link = '/group/' . $group->id;
 			}
 
-			$tpl->assign(array(
+			$tpl->assign([
 				'title' => $group->title,
 				'link' => $group->link,
 				'avatar' => $avatar,
@@ -55,7 +55,7 @@ foreach ($categories as $group_category) {
 				'admin' => $db->get_var("SELECT nick FROM users WHERE id = '$group->owner'"),
 				'style' => $istyle,
 				'add' => $add,
-			));
+			]);
 		}
 	}
 }

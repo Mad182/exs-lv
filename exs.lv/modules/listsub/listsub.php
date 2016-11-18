@@ -11,10 +11,10 @@ if ($categorys2) {
 	$tpl->newBlock('second-category-ul');
 	foreach ($categorys2 as $category2) {
 		$tpl->newBlock('second-category-li');
-		$tpl->assign(array(
+		$tpl->assign([
 			'title' => $category2->title,
 			'url' => '/' . $category2->textid
-		));
+		]);
 	}
 }
 

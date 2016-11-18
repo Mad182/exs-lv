@@ -12,7 +12,7 @@ if ($auth->ok) {
 
 		if ($results = $db->get_results("SELECT id,nick FROM users WHERE nick LIKE '%" . $nick . "%'")) {
 			if ($results) {
-				$users = array();
+				$users = [];
 				foreach ($results as $result) {
 					$users[$result->id] = h($result->nick);
 				}

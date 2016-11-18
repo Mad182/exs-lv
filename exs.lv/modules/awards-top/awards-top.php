@@ -17,11 +17,11 @@ foreach ($awards as $award) {
 		$count = $award->c;
 	}
 	$user = get_user($award->user_id);
-	$tpl->assign(array(
+	$tpl->assign([
 		'nick' => $user->nick,
 		'c' => $award->c,
 		'num' => $num
-	));
+	]);
 	$i++;
 }
 

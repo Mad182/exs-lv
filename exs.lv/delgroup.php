@@ -17,10 +17,6 @@ require('configdb.php');
 require(CORE_PATH . '/includes/class.mdb.php');
 require(CORE_PATH . '/includes/functions.core.php');
 
-$debug = true;
-
-$lang = 1;
-
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);
 
@@ -31,10 +27,6 @@ function reverse_htmlentities($mixed) {
 	}
 	return $mixed;
 }
-
-//memcached konekcija
-$m = new Memcache;
-$m->connect($mc_host, $mc_port);
 
 $id = (int)$argv[1];
 

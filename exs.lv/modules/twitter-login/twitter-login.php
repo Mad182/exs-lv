@@ -44,7 +44,7 @@ if (isset($_GET['oauth_token'])) {
 	$access_token = $connection->getAccessToken($_REQUEST['oauth_verifier']);
 	if ($access_token) {
 		$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-		$params = array();
+		$params = [];
 		$params['include_entities'] = 'false';
 		$content = $connection->get('account/verify_credentials', $params);
 
@@ -83,13 +83,13 @@ if (!empty($_SESSION['twitter_id'])) {
 					 */
 					if (!empty($_POST['follow'])) {
 						$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-						$connection->post('friendships/create', array('id' => 104146775));
+						$connection->post('friendships/create', ['id' => 104146775]);
 					}
 				}
 
 				//award
 				$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-				$check_followig = $connection->get('friendships/lookup', array('screen_name' => 'exs_lv'));
+				$check_followig = $connection->get('friendships/lookup', ['screen_name' => 'exs_lv']);
 				if (is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
 					twitter_award($auth->id);
 				}
@@ -134,7 +134,7 @@ if (!empty($_SESSION['twitter_id'])) {
 					$foo->image_convert = 'jpg';
 					$foo->image_x = 90;
 					$foo->image_y = 90;
-					$foo->allowed = array('image/*');
+					$foo->allowed = ['image/*'];
 					$foo->image_ratio_crop = true;
 					$foo->jpeg_quality = 98;
 					$foo->file_auto_rename = false;
@@ -148,7 +148,7 @@ if (!empty($_SESSION['twitter_id'])) {
 						$foo->image_convert = 'jpg';
 						$foo->image_x = 45;
 						$foo->image_y = 45;
-						$foo->allowed = array('image/*');
+						$foo->allowed = ['image/*'];
 						$foo->image_ratio_crop = true;
 						$foo->jpeg_quality = 98;
 						$foo->file_auto_rename = false;
@@ -161,7 +161,7 @@ if (!empty($_SESSION['twitter_id'])) {
 						$foo->image_convert = 'jpg';
 						$foo->image_x = 170;
 						$foo->image_y = 220;
-						$foo->allowed = array('image/*');
+						$foo->allowed = ['image/*'];
 						$foo->image_ratio_crop = false;
 						$foo->image_ratio_no_zoom_in = true;
 						$foo->jpeg_quality = 98;
@@ -182,7 +182,7 @@ if (!empty($_SESSION['twitter_id'])) {
 					 */
 					if (!empty($_POST['follow'])) {
 						$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-						$connection->post('friendships/create', array('id' => 104146775));
+						$connection->post('friendships/create', ['id' => 104146775]);
 					}
 
 					redirect('/twitter-login');
@@ -201,10 +201,10 @@ if (!empty($_SESSION['twitter_id'])) {
 			$nick = $_SESSION['name'] . " (" . $_SESSION['twitter_id'] . ")";
 		}
 
-		$tpl->assign(array(
+		$tpl->assign([
 			'nick' => h($nick),
 			'avatar' => h($_SESSION['image'])
-		));
+		]);
 	} else {
 
 		//perform login
@@ -220,7 +220,7 @@ if (!empty($_SESSION['twitter_id'])) {
 
 		//award
 		$connection = new TwitterOAuth($CONSUMER_KEY, $CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-		$check_followig = $connection->get('friendships/lookup', array('screen_name' => 'exs_lv'));
+		$check_followig = $connection->get('friendships/lookup', ['screen_name' => 'exs_lv']);
 
 		if (is_array($check_followig) && ($check_followig[0]->connections[0] === 'following' || $check_followig[0]->connections[1] === 'following')) {
 			twitter_award($userinfo->id);

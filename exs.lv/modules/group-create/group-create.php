@@ -5,7 +5,7 @@
  */
 $robotstag[] = 'noindex';
 
-if (!in_array($lang, array(1, 5, 9))) {
+if (!in_array($lang, [1, 5, 9])) {
 	set_Flash('Šobrīd nav pieejams!', 'error');
 	redirect('/grupas');
 }
@@ -41,10 +41,10 @@ if ($auth->ok) {
 	}
 
 	$tpl->newBlock('group-create');
-	$tpl->assign(array(
+	$tpl->assign([
 		'user-credit' => $credit,
 		'user-id' => $auth->id
-	));
+	]);
 } else {
 	$tpl->newBlock('error-nologin');
 }

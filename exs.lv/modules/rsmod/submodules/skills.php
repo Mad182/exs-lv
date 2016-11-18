@@ -101,11 +101,11 @@ class Skills extends Controller {
                 }
 
                 // atjauno informāciju datubāzē
-                $values = array(
+                $values = [
                     'level'         => $level_value,
                     'page_id'       => (int)$page_value,
                     'page_title'    => $title
-                );
+                ];
                 $this->db->update('rs_skills', (int)$skill->id, $values);
             }
         }

@@ -57,11 +57,11 @@ if (isset($_GET['edit']) && isset($_GET['type'])) {
 
 	// rediģēšanas forma
 	$tpl->newBlock("facts_admin-edit");
-	$tpl->assign(array(
+	$tpl->assign([
 		'id' => $fact->id,
 		'text' => stripslashes($fact->text),
 		'fact-type' => $fact_link
-	));
+	]);
 }
 
 
@@ -96,11 +96,11 @@ if ($facts) {
 	foreach ($facts as $fact) {
 
 		$tpl->newBlock("facts_admin-list-node");
-		$tpl->assign(array(
+		$tpl->assign([
 			'id' => $fact->id,
 			'text' => add_smile($fact->text),
 			'fact-type' => $fact_link
-		));
+		]);
 	}
 }
 

@@ -19,14 +19,14 @@ if ($topusers) {
 		}
 
 		$tpl->newBlock('top-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'user-place' => $icon,
 			'user-special' => $special,
 			'user-id' => $topuser->id,
 			'user-nick' => $topuser->nick,
 			'user-ig_points' => $topuser->ig_points,
 			'user-ig_done' => $topuser->ig_done,
-		));
+		]);
 		$i++;
 	}
 }

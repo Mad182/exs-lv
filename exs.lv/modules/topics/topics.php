@@ -3,7 +3,7 @@
 /**
  * Lietotāja izveidoto tēmu saraksts
  */
-$robotstag = array('noindex', 'follow');
+$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
@@ -35,23 +35,23 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		$tpl->newBlock('user-usertopics-list');
 		foreach ($articles as $article) {
 			$tpl->newBlock('user-usertopics-node');
-			$tpl->assign(array(
+			$tpl->assign([
 				'articles-node-id' => $article->id,
 				'node-url' => '/read/' . $article->strid,
 				'articles-node-title' => $article->title,
 				'articles-node-date' => substr($article->date, 0, 10),
 				'articles-node-posts' => $article->posts
-			));
+			]);
 		}
 	}
 
 	if ($total) {
 		$pager = pager($total, $skip, $end, '/topics/' . $inprofile->id . '?skip=', true);
-		$tpl->assignGlobal(array(
+		$tpl->assignGlobal([
 			'pager-next' => $pager['next'],
 			'pager-prev' => $pager['prev'],
 			'pager-numeric' => $pager['pages']
-		));
+		]);
 	}
 	$pagepath = '';
 } else {

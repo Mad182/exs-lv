@@ -25,10 +25,10 @@ if (isset($_GET['var1'])) {
 		}
 
 		$tpl->newBlock('forum-edit');
-		$tpl->assign(array(
+		$tpl->assign([
 			'content' => $edit->content,
 			'title' => $edit->title
-		));
+		]);
 	} else {
 		set_flash('Kategorija, kuru tu mēģini rediģēt nav foruma sadaļa!', 'error');
 		redirect();

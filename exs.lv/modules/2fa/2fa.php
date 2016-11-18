@@ -7,7 +7,11 @@ if($auth->ok && $auth->auth_2fa && empty($_SESSION['2fa'])) {
 		foreach($check_existing as $device) {
 			if(!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
 				$_SESSION['2fa'] = 1;
-				redirect();
+				if(!empty($_SERVER['HTTP_REFERER'])) {
+					redirect($_SERVER['HTTP_REFERER']);
+				} else {
+					redirect();
+				}
 			}
 		}
 	}

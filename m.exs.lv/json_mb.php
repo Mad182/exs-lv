@@ -18,7 +18,7 @@ $mbid = (int) $_GET['mbid'];
 $lastid = (int) $_GET['lastid'];
 $lastedit = (int) $_GET['et'];
 
-$json = array();
+$json = [];
 
 $vals = $db->get_results("SELECT
 		`miniblog`.`text` AS `text`,
@@ -50,8 +50,8 @@ if ($vals) {
 	require('./includes/class.auth.php');
 
 	//memcached konekcija
-	$m = new Memcache;
-	$m->connect($mc_host, $mc_port);
+	$m = new Memcached;
+	$m->addServer($mc_host, $mc_port);
 
 	$site_access = get_site_access();
 

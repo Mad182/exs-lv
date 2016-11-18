@@ -27,11 +27,11 @@ if ($actions) {
 		}
 
 		$tpl->newBlock('user-actions-node');
-		$tpl->assign(array(
+		$tpl->assign([
 			'action' => $action->action,
 			'usrnick' => $action->nick,
 			'action-date' => time_ago($action->time),
 			'action-avatar' => $action->action_avatar
-		));
+		]);
 	}
 }

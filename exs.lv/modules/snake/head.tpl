@@ -1,3 +1,3 @@
-<link rel="stylesheet" type="text/css" media="screen" href="/modules/snake/snake.css" />
-<script type="text/javascript" src="/modules/snake/jquery.snake.js?bite"></script>
-<script type="text/javascript" src="/modules/snake/common.js"></script>
+<link rel="stylesheet" href="/modules/snake/snake.css" />
+<script src="/modules/snake/jquery.snake.js"></script>
+<script src="/modules/snake/common.js"></script>
