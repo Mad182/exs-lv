@@ -93,8 +93,7 @@ if (isset($_GET['banstatus'])) {
 		api_fetch_ban(2);
 	}
 
-// lietotnē lietotājs tiks pārvirzīts uz aktivitāti, kurā redzēs
-// paziņojumu par liegumu
+// lietotājs saņem info par IP liegumu un citam saturam nepiekļūst
 } else if ($ip_banned) {
 	api_fetch_ban(1, $ip_banned);
 	if ($auth->ok) {
@@ -118,6 +117,7 @@ if (isset($_GET['banstatus'])) {
 	// bet serveris domā pretēji un atved šeit, labāk izautorizēt
 	if (isset($_GET['login'])) {
 		api_log('Kā pieteicies lietotājs centās pieteikties atkārtoti.');
+        api_error('Darbība neizdevās! Mēģini vēlreiz.');
 		$auth->logout();
 
 	// primāri laikam jau ļaut izlogoties arī tad, ja ir profila liegums :)
@@ -141,6 +141,7 @@ if (isset($_GET['banstatus'])) {
         
         if ($request_2fa) {
             $json_2fa = true;
+            api_append_profile_info();
         } else {
         
             if ($cat_private !== '' &&
@@ -157,6 +158,7 @@ if (isset($_GET['banstatus'])) {
     }
 
 // neautorizēti var būt tikai autorizēšanās pieprasījumi
+// TODO: dzēst, tiklīdz lietotnes v2.0 tiks laista dzīvajā
 } else if (isset($_GET['login'])) {
 
 	if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -184,7 +186,7 @@ if (isset($_GET['banstatus'])) {
 // ja lietotājs pēc ilgākas pauzes atkal atver lietotni un sūta pieprasījumu,
 // bet serveris jau dzēsis sesiju, nonāks šeit
 } else {
-	api_error('Lūdzu, autorizējies!');
+	api_error('Lūdzu, autorizējies.');
 }
 
 /*

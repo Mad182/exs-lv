@@ -16,11 +16,7 @@ function api_status($status) { // iOS only pagaidām
  *  kuru lietotnē var attiecīgi parādīt.
  */
 function api_error($string = '') {
-	global $lang;    
-    
-    if ($lang === 2 && substr($string, -1) === '.') {
-        $string = substr($string, 0, -1);
-    }
+	global $lang;
 	
     // androīdam
     if ($lang === 2) {

@@ -31,15 +31,22 @@ function api_auth_login() {
         $auth->logout();
         return;
     }
-
-    if (!$auth->ok) {
-        if (!isset($_POST['username']) || !isset($_POST['password'])) {
-            api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
-            api_error('Nepareizs lietotājvārds un/vai parole.');
-            return;
-        }
-        $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
+    
+    // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
+	// bet serveris domā pretēji, labāk izautorizēt
+    if ($auth->ok) {        
+        api_log('Kā pieteicies lietotājs centās pieteikties atkārtoti.');
+        api_error('Darbība neizdevās! Mēģini vēlreiz.');
+		$auth->logout();
+        return;
     }
+
+    if (!isset($_POST['username']) || !isset($_POST['password'])) {
+        api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
+        api_error('Nepareizs lietotājvārds un/vai parole.');
+        return;
+    }
+    $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
     
     if (!$auth->ok) {
         api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati.');
@@ -56,6 +63,9 @@ function api_auth_login() {
             if ($lang === 2) {
                 global $json_2fa;
                 $json_2fa = true;
+                // profila info; lietotne centīsies uzreiz pēc
+                // login lejuplādēt lietotāja avataru, tāpēc jāzina tā adrese
+                api_append_profile_info();
             } else {
                 api_status(441);
                 api_append(array(
@@ -149,19 +159,19 @@ function api_auth_accept_2fa() {
 		api_log('Iesūtot 2fa kodu, konstatēts XSRF uzbrukums.');
         return;
 	} else if (!$auth->ok) {
-        api_error('Nav izpildīts autentificēšanās 1. solis!');
+        api_error('Nav veikta autentificēšanās ar lietotāju un paroli.');
 		api_log('Mēģinājums ievadīt 2fa kodu, kad lietotājs nav autentificējies ar lietotājvārdu un paroli.');
         return; 
     } else if (!empty($_SESSION['2fa'])) {
-        api_error('Autentificēšanās jau notikusi!');
+        api_error('Autentificēšanās jau notikusi.');
 		api_log('Mēģinājums atkārtoti ievadīt 2fa kodu, kad tas nav nepieciešams.');
         return; 
     } else if (!$auth->auth_2fa) {
-        api_error('Profilam 2fa nav iespējots.');
+        api_error('Profilam 2fa nav iespējota.');
         api_log('2fa pieprasījums profilam, kuram 2fa nav iespējots.');
         return;
     } else if (!isset($_POST['2fa_code'])) {
-        api_error('Ievadīts kļūdains kods.');
+        api_error('Ievadīts kļūdains 2fa kods.');
         api_log('Nav saņemts 2fa kods.');
         return;
     }
@@ -169,12 +179,12 @@ function api_auth_accept_2fa() {
     // pārbauda, vai iesūtītais kods ir pareizs
     $ga = new PHPGangsta_GoogleAuthenticator();
     $checkResult = $ga->verifyCode($auth->auth_secret, $_POST['2fa_code'], 4);
-    
+    // sleep(3);
     if (!$checkResult) {
-        api_error('Ievadīts kļūdains kods.');
+        api_error('Ievadīts kļūdains 2fa kods.');
         api_log('Saņemtais 2fa kods nav pareizs.');
         return;
-    }
+    }    
 
     $_SESSION['2fa'] = 1;
 

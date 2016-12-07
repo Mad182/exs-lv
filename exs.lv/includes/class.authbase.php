@@ -375,7 +375,7 @@ class AuthBase {
 
 	function check_2fa($userinfo) {
 		global $db;
-		if(/*$this->via_android === 0 && */$this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
+		if ($this->via_android === 0 && $this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
 			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
 
 			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $userinfo->id");
