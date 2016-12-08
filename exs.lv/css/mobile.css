@@ -1823,11 +1823,6 @@ a.friend-right {
 	text-decoration: none
 }
 
-
-.entry-meta time.updated {
-	display: none
-}
-
 #share-block {
 	padding: 5px 0;
 	height: 20px
@@ -1836,4 +1831,78 @@ a.friend-right {
 #share-block div {
 	float: left;
 	padding: 0 2px;
+}
+
+/* apskatīt rakstu */
+
+
+.entry-cat {
+	border-bottom:5px solid #FA8484;
+	font-size:13px;
+	font-weight:500;
+	line-height:30px;
+	height: 30px;
+	overflow: hidden;
+	padding:0 5px;
+	position:absolute;
+	right:0;
+	bottom:0;
+	max-width: 20%
+}
+
+.entry-cat a {
+	color:#555f6b
+}
+
+.entry-meta {
+	border-bottom:1px solid #eee;
+	height: 32px;
+	width: 100%;
+	overflow: hidden
+}
+
+.entry-meta,
+.entry-meta a {
+	color:#8a8f90
+}
+
+.entry-meta ul {
+	margin:0;
+	padding: 0;
+	list-style:none
+}
+
+.entry-meta ul li {
+	float:left;
+	border-right:1px solid #eee;
+	padding:8px 10px;
+	background: transparent;
+	margin: 0
+}
+
+.entry-meta ul li:last-child {
+	border-right:0
+}
+
+.entry-meta ul li.tagz {
+	border-right: medium none;
+	height: 15px;
+	overflow: hidden;
+	max-width: 31%
+}
+
+.entry-meta ul li img {
+	margin-right:10px;
+	padding: 0;
+	vertical-align:top
+}
+
+.entry-meta ul li img.userav {
+	width:20px;
+	height:20px;
+	padding: 0
+}
+
+.entry-meta time.updated {
+	display: none
 }
