@@ -1778,3 +1778,62 @@ a.friend-right {
 	top: 13px
 }
 
+/* laik and šer */
+.tw-btn {
+	background: #1b95e0 url('//img.exs.lv/bildes/i.png') no-repeat 5px -278px;
+	display: inline-block;
+	padding: 0 16px 0 24px;
+	height: 20px;
+	line-height: 20px;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 11px
+}
+
+.tw-btn:hover,
+.tw-btn:active,
+.tw-btn:focus {
+	background-color: #0c7abf;
+	color: #fff;
+	text-decoration: none
+}
+
+.fb-btn {
+	background: #4267b2 url('//img.exs.lv/bildes/i.png') no-repeat 5px -254px;
+	font-family: Helvetica, Arial, sans-serif;
+	display: inline-block;
+	padding: 0 7px 0 24px;
+	height: 20px;
+	line-height: 20px;
+	border-radius: 3px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 11px
+}
+
+.fb-btn .fblikes {
+	font-weight: normal;
+}
+
+.fb-btn:hover,
+.fb-btn:active,
+.fb-btn:focus {
+	background-color: #365899;
+	color: #fff;
+	text-decoration: none
+}
+
+
+.entry-meta time.updated {
+	display: none
+}
+
+#share-block {
+	padding: 5px 0;
+	height: 20px
+}
+
+#share-block div {
+	float: left;
+	padding: 0 2px;
+}
