@@ -113,7 +113,7 @@
 
 						<li><a href="/forums">Forums</a></li>
 						<li class="dropdown"><a href="/raksti">Raksti</a>
-							<ul class="sub-menu">
+							<ul class="dropdown-menu">
 								<li><a href="/filmas">Filmas</a></li>
 								<li><a href="/muzika">Mūzika</a></li>
 								<li><a href="/speles">Spēles</a></li>
@@ -128,7 +128,7 @@
 						<!-- END BLOCK : junk-info-->
 						<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 						<li class="dropdown"><a href="/">exs.lv</a>
-							<ul class="sub-menu">
+							<ul class="dropdown-menu">
 								<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
 								<li><a href="https://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
 								<li><a href="https://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
