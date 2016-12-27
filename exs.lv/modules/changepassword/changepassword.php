@@ -34,7 +34,7 @@ if (!$auth->ok) {
 			//send email
 			$subject = 'Tava jaunā parole ' . $_SERVER['HTTP_HOST'];
 			$message = '
-					<h3>Parole nomainīta veiksmīgi!</h3>
+					<h3>Parole veiksmīgi nomainīta!</h3>
 					<p>
 						Tava jaunā parole ir <b>' . $newpass . '</b>
 					</p>';
@@ -66,7 +66,7 @@ if (!$auth->ok) {
 			//send email
 			$subject = 'Paroles maiņa ' . $_SERVER['HTTP_HOST'];
 			$message = '
-				<h3>Sveicināts/-a!</h3>
+				<h3>Sveiki!</h3>
 				<p>
 					Kāds (mēs ceram, ka Tu) pieprasīja Tavam profilam paroles maiņu portālā ' . $_SERVER['HTTP_HOST'] . '
 				</p>

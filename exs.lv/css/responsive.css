@@ -10,8 +10,7 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 */
 
 body {
-	background: #f3f5f8 url('//img.exs.lv/bildes/sos.png') repeat 0 0;
-	/*background: url("/bildes/background-new.jpg") no-repeat top center fixed;*/
+	background: #f3f5f8 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAABlBMVEXs7Ozz8u8U0Qc3AAAAFklEQVQI12MAg9C7VxnwssAE6WIEWAB1PR5qSrDnsQAAAABJRU5ErkJggg==) repeat 0 0;
 	color: #334;
 	font-family: Roboto, sans-serif;
 	font-weight: normal;

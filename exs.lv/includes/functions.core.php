@@ -2745,6 +2745,10 @@ function error_404() {
  */
 function get_fb_likes($url, $force = false) {
 	global $m;
+	
+	if($url !== 'https://exs.lv') {
+		return '<span class="fblikes">0</span>';
+	}
 
 	$cache_key = md5('fblikes'.$url);
 
