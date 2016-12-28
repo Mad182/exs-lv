@@ -241,6 +241,7 @@ h2.site-description {
   background:#303e45 !important;
 }
 
+/* Note: `sub-menu` class isn't used in project (see `dropdown-menu` instead). */
 ul.sub-menu, ul.dropdown-menu,
 ul.sub-menu ul.sub-menu{
 	display:none;
