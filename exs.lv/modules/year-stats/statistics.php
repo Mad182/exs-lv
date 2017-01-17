@@ -354,16 +354,6 @@ $arr_stats = [
             `cat`.`isblog` > 0'],
             
         // --
-        ['about' => 'Blogu skaits lol.exs',
-         'type' => 'count',
-         'sql' => 'SELECT count(*) FROM `pages`
-            JOIN `cat` ON `pages`.`category` = `cat`.`id` WHERE
-            `pages`.`date` > \''.$year_start.'\' AND
-            `pages`.`date` < \''.$year_end.'\' AND
-            `pages`.`lang` = '.$lang_lol.' AND
-            `cat`.`isblog` > 0'],
-            
-        // --
         ['about' => 'Blogu skaits rs.exs',
          'type' => 'count',
          'sql' => 'SELECT count(*) FROM `pages`
@@ -383,18 +373,6 @@ $arr_stats = [
             `pages`.`date` > \''.$year_start.'\' AND
             `pages`.`date` < \''.$year_end.'\' AND
             `pages`.`lang` IN('.$lang_main.') AND
-            `cat`.`isblog` > 0
-            GROUP BY `pages`.`author` ORDER BY count(*) DESC LIMIT 5'],
-            
-        // --
-        ['about' => 'Aktīvākie lol.exs blogeri',
-         'type' => 'table',
-         'sql' => 'SELECT `users`.`nick` AS `username`, count(*) AS `new blogs` FROM `pages`
-            JOIN `cat` ON `pages`.`category` = `cat`.`id`
-            JOIN `users` ON `pages`.`author` = `users`.`id` WHERE
-            `pages`.`date` > \''.$year_start.'\' AND
-            `pages`.`date` < \''.$year_end.'\' AND
-            `pages`.`lang` = '.$lang_lol.' AND
             `cat`.`isblog` > 0
             GROUP BY `pages`.`author` ORDER BY count(*) DESC LIMIT 5'],
             
@@ -424,18 +402,6 @@ $arr_stats = [
             `cat`.`isblog` > 0'],
             
         // --
-        ['about' => 'Blogu komentāri lol.exs',
-         'type' => 'count',
-         'sql' => 'SELECT count(*) FROM `comments`
-            JOIN `pages` ON `comments`.`pid` = `pages`.`id`
-            JOIN `cat` ON `pages`.`category` = `cat`.`id` WHERE
-            `comments`.`date` > \''.$year_start.'\' AND
-            `comments`.`date` < \''.$year_end.'\' AND
-            `comments`.`removed` = 0 AND
-            `pages`.`lang` = '.$lang_lol.' AND
-            `cat`.`isblog` > 0'],
-            
-        // --
         ['about' => 'Blogu komentāri rs.exs',
          'type' => 'count',
          'sql' => 'SELECT count(*) FROM `comments`
@@ -459,20 +425,6 @@ $arr_stats = [
             `comments`.`date` < \''.$year_end.'\' AND
             `comments`.`removed` = 0 AND
             `pages`.`lang` IN('.$lang_main.') AND
-            `cat`.`isblog` > 0
-            GROUP BY `comments`.`author` ORDER BY count(*) DESC LIMIT 5'],
-            
-        // --
-        ['about' => 'Aktīvākie lol.exs blogu komentētāji',
-         'type' => 'table',
-         'sql' => 'SELECT `users`.`nick` AS `username`, count(*) AS `comments`
-            FROM `comments` JOIN `pages` ON `comments`.`pid` = `pages`.`id`
-            JOIN `users` ON `comments`.`author` = `users`.`id`
-            JOIN `cat` ON `pages`.`category` = `cat`.`id` WHERE
-            `comments`.`date` > \''.$year_start.'\' AND
-            `comments`.`date` < \''.$year_end.'\' AND
-            `comments`.`removed` = 0 AND
-            `pages`.`lang` = '.$lang_lol.' AND
             `cat`.`isblog` > 0
             GROUP BY `comments`.`author` ORDER BY count(*) DESC LIMIT 5'],
             
@@ -1280,7 +1232,9 @@ $arr_stats = [
             `miniblog`.`date` < \''.$year_end.'\' AND
             `miniblog`.`removed` = 0 AND
             `miniblog`.`type` = \'miniblog\' AND
-            `miniblog`.`groupid` != 0
+            `miniblog`.`groupid` != 0 AND
+            `clans`.`date_created` > \''.strtotime($year_start).'\' AND
+            `clans`.`date_created` < \''.strtotime($year_end).'\'
             GROUP BY `miniblog`.`groupid` ORDER BY count(*) DESC LIMIT 10'],
             
         // --
@@ -1290,7 +1244,9 @@ $arr_stats = [
             JOIN `clans_members` ON `clans`.`id` = `clans_members`.`clan` WHERE
             `clans_members`.`date_added` > \''.strtotime($year_start).'\' AND
             `clans_members`.`date_added` < \''.strtotime($year_end).'\' AND
-            `clans_members`.`approve` = 1
+            `clans_members`.`approve` = 1 AND
+            `clans`.`date_created` > \''.strtotime($year_start).'\' AND
+            `clans`.`date_created` < \''.strtotime($year_end).'\'
             GROUP BY `clans`.`id` ORDER BY count(*) DESC LIMIT 10']
     ],
     
