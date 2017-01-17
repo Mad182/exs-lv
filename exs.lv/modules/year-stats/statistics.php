@@ -1574,8 +1574,8 @@ $arr_stats = [
         // --
         ['about' => 'Visvairāk liegumus nopelnījuši (pa visiem projektiem)',
          'type' => 'table',
-         'sql' => 'SELECT `users`.`nick` AS `username`, count(*) FROM `times`
-            JOIN `users` ON `banned`.`user_id` = `users`.`id` WHERE
+         'sql' => 'SELECT `users`.`nick` AS `username`, count(*) AS `times`
+            FROM `banned` JOIN `users` ON `banned`.`user_id` = `users`.`id` WHERE
             `banned`.`time` > \''.strtotime($year_start).'\' AND
             `banned`.`time` < \''.strtotime($year_end).'\'
             GROUP BY `banned`.`user_id` ORDER BY count(*) DESC LIMIT 10'],
@@ -1601,7 +1601,7 @@ $arr_stats = [
         // --
         ['about' => 'Visaktīvākie sūdzību izskatītāji (pa visiem projektiem)',
          'type' => 'table',
-         'sql' => 'SELECT users`.`nick`, count(*) AS `times` FROM `reports`
+         'sql' => 'SELECT `users`.`nick`, count(*) AS `times` FROM `reports`
             JOIN `users` ON `reports`.`deleted_by` = `users`.`id` WHERE
             `reports`.`created_at` > \''.strtotime($year_start).'\' AND
             `reports`.`created_at` < \''.strtotime($year_end).'\' AND
