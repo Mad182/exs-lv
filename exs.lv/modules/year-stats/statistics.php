@@ -1220,7 +1220,10 @@ $arr_stats = [
          'sql' => 'SELECT `clans`.`title`, count(*) AS `clan_members` FROM `clans`
             JOIN `clans_members` ON `clans`.`id` = `clans_members`.`clan` WHERE
             `clans`.`date_created` > \''.strtotime($year_start).'\' AND
-            `clans`.`date_created` < \''.strtotime($year_end).'\'
+            `clans`.`date_created` < \''.strtotime($year_end).'\' AND
+            `clans_members`.`date_added` > \''.strtotime($year_start).'\' AND
+            `clans_members`.`date_added` < \''.strtotime($year_end).'\' AND
+            `clans_members`.`approve` = 1
             GROUP BY `clans_members`.`clan` ORDER BY count(*) DESC LIMIT 5'],
             
         // --
@@ -1235,6 +1238,18 @@ $arr_stats = [
             `miniblog`.`groupid` != 0 AND
             `clans`.`date_created` > \''.strtotime($year_start).'\' AND
             `clans`.`date_created` < \''.strtotime($year_end).'\'
+            GROUP BY `miniblog`.`groupid` ORDER BY count(*) DESC LIMIT 10'],
+            
+        // --
+        ['about' => 'Populārākās no grupām miniblogu (+komentāru) skaita ziņā',
+         'type' => 'table',
+         'sql' => 'SELECT `clans`.`title`, count(*) AS `posts` FROM `miniblog`
+            JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id` WHERE
+            `miniblog`.`date` > \''.$year_start.'\' AND
+            `miniblog`.`date` < \''.$year_end.'\' AND
+            `miniblog`.`removed` = 0 AND
+            `miniblog`.`type` = \'miniblog\' AND
+            `miniblog`.`groupid` != 0
             GROUP BY `miniblog`.`groupid` ORDER BY count(*) DESC LIMIT 10'],
             
         // --
@@ -1389,7 +1404,7 @@ $arr_stats = [
             `miniblog`.`lang` = '.$lang_exs.' AND
             `miniblog`.`type` = \'miniblog\' AND
             `miniblog`.`vote_value` < 0
-            GROUP BY `miniblog`.`author` ORDER BY SUM(`vote_value`) DESC LIMIT 10'],
+            GROUP BY `miniblog`.`author` ORDER BY SUM(`vote_value`) ASC LIMIT 10'],
             
         // --
         ['about' => 'Lietotāji ar vislielāko vērtējumu summu',
