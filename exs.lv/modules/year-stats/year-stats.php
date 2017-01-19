@@ -13,10 +13,6 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'detailed') {
 // grafiks, kas parāda kaut kādus datus gada griezumā
 } else {
 
-    function array_average_nonzero($arr) {
-        return array_sum($arr) / count(array_filter($arr));
-    }
-
     if (isset($_GET['var1'])) {
         $usr = (int) $_GET['var1'];
         $inprofile = get_user($usr);
