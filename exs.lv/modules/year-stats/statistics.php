@@ -23,6 +23,8 @@ NOMINĀCIJAS
 		https://exs.lv/read/2012-gada-exs-lv-nominacijas-2
 
 STATISTIKA
+    2016. gads
+        https://exs.lv/read/exs-lv-2016-gads-skaitlos
 	2015. gads
         https://exs.lv/read/exs-2015-gads-skaitlos
 		https://exs.lv/lazy-girls/forum/2q8x6

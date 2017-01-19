@@ -187,8 +187,8 @@
 		
 		<li style="height: 5px; width: 50%; margin: 20px auto; background: #cac9c9; border-radius: 5px; list-style-type:none"></li>
         
-        <li style="box-sizing:border-box;list-style-type: none; width:100px; background: #fff; color: #606161; margin: -34px 0 -4px;border-bottom:5px solid #68da76;">
-            <p style="width:100px;display:inline-block;margin:0 5px;padding:3px 10px;font-size:13px;">Vērtējumi</p>
+        <li style="box-sizing:border-box;list-style-type: none; width:200px; background: #fff; color: #606161; margin: 0 0 -4px;border-bottom:5px solid #68da76;">
+            <p style="width:200px;display:inline-block;margin:0 5px;padding:3px 10px;font-size:13px;">Vērtējumi (miniblogos)</p>
 		</li>
 		
 		<li style="box-sizing:border-box;list-style-type: none; display: table; table-layout: fixed; width:100%; background: #fff; color: #606161; margin: 5px 0;border-left:5px solid #68da76">
