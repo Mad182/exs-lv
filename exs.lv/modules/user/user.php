@@ -1,5 +1,9 @@
 <?php
 
+// papildu kods js "cluetip" iekļaušanai
+$tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
+$tpl->prepare();
+
 /**
  * Lietotāja profila apskatīšanas un labošanas modulis
  */
@@ -40,10 +44,6 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 	//view profile
 	} else {
-        
-        // papildu kods js "cluetip" iekļaušanai
-        $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
-		$tpl->prepare();
 
 		include CORE_PATH . '/includes/class.friend.php';
 		$friend = new Friend();
