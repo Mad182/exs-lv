@@ -18,11 +18,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="/bildes/faviconrs.ico">
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.cluetip.css">
+    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.qtip.min.css">
     <!-- START BLOCK : additional-css-->
     <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->
-    <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.cluetip.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
+    <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.qtip.min.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
     <!-- START BLOCK : tinymce-enabled-->
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
@@ -163,6 +163,11 @@
                         <li><a href="/skills">Prasmju prasības</a></li>
                         <li><a href="/series">Kvestu sērijas</a></li>
                         <li><a href="/atkritne">Dzēstie raksti</a></li>
+                        <!-- START BLOCK : rsmod-nav-admin -->
+                        <li><a href="/?magic=readrss">Atjaunot RSS feedu</a></li>
+                        <li><a href="/?magic=recreate">Atjaunot ziņu cachefailus</a></li>
+                        <li><a href="/?magic=logo-list">Skatīt ziņu logo sarakstu</a></li>
+                        <!-- END BLOCK : rsmod-nav-admin -->
                         <li>&nbsp;</li>
                     </ul>
                 </li>
@@ -490,12 +495,12 @@
                 <div id="online-users">
                     Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:12px">{page-onlineusers}</span>
                 </div>
-                <div class="infoblock">
+                <div class="infoblock infoblock-list">
                     <div class="inner">
                         Jaunākie raksti: {footer-topics}
                     </div>
                 </div>
-                <div class="infoblock">
+                <div class="infoblock infoblock-list">
                     <div class="inner">
                         Jaunākais miniblogos: {footer-mb}
                     </div>
@@ -503,10 +508,10 @@
                 <div class="infoblock">
                     <div class="inner">
                         <p>&copy; {openidea}, 2005-{current-year}</p>
-                        <p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums</p>
+                        <p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums.</p>
                     </div>
                 </div>
-                <div class="infoblock">
+                <div class="infoblock infoblock-list">
                     <div class="inner">
                         <ul id="internal-links">
                             <li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>

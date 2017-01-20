@@ -39,7 +39,7 @@ function fetch_news($type = 'rs3') {
  *  RSS feed lasīšana tiek veikta tikai reizi 10 minūtēs.
  */
 function read_rss($force = false) {
-    global $m, $db, $auth, $rsbot_id, $lang;
+    global $m, $db, $auth, $rsbot_id, $lang, $dir_news_images;
     
     $read_every = 600; // sekundes
     $feed_fetched = false;
@@ -119,10 +119,9 @@ function read_rss($force = false) {
                 $single->enclosure['url'] = str_replace(
                     'https://', 'http://', $single->enclosure['url']);
                 // attēls tiks saglabāts uz lokālā servera
-                $img_path = CORE_PATH.'/bildes/runescape/news/';
                 $save = save_rs_image(
                     $single->enclosure['url'], // source_path
-                    $img_path, // target_path
+                    $dir_news_images, // target_path
                     $os_prefix.$mb_id.'.jpg' // img_title
                 );
                 // ja lokāli attēlu saglabāt neizdodas, tā arī jāatzīmē,
@@ -159,9 +158,8 @@ function read_rss($force = false) {
  *  par kurām dati jau saglabāti datubāzē.
  */
 function create_news($type = 'rs3') {
-    global $db, $rsbot_id, $img_server;
+    global $db, $rsbot_id, $img_server, $rs_news_count;
     
-    $news_count = 11; // ierakstu skaits, kas būs redzams lapā    
     $is_oldschool = ($type === 'oldschool') ? 1 : 0;
 
     $news = $db->get_results("
@@ -183,7 +181,7 @@ function create_news($type = 'rs3') {
             `rs_news`.`is_oldschool` = ".$is_oldschool."
         ORDER BY
             `rs_news`.`id` DESC
-        LIMIT 0, ".$news_count."
+        LIMIT 0, ".$rs_news_count."
     ");    
     if (!$news) return; // slikti, ka tā :(
     
@@ -250,16 +248,19 @@ function create_news($type = 'rs3') {
 /**
  *  Saglabās lokāli RuneScape ziņu raksta logo.
  *
- *  @param  string  vieta, no kurienes attēls jālejuplādē
+ *  @param  string  attēla adrese
  *  @param  string  vieta, kur attēls uz servera jāsaglabā
  *  @param  string  attēla nosaukums
  */
-function save_rs_image($source_path, $target_path, $target_name = 'empty') {
+function save_rs_image($img_url, $target_path, $target_name = 'empty') {
 
-    if ($target_name == 'empty' || empty($target_name)) return false;
+    if ($target_name == 'empty' || empty($target_name)) {
+        return false;
+    }
 
-    $curl = curl_init($source_path);
-    $file = fopen($target_path.$target_name, 'wb');
+    // lejuplādē attēlu no adreses un saglabā uz servera
+    $curl = curl_init($img_url);
+    $file = @fopen($target_path.$target_name, 'wb');
     curl_setopt($curl, CURLOPT_FILE, $file);
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
@@ -268,7 +269,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
     curl_close($curl);
     fclose($file);
 
-    // pārveidos attēlu uz pieļaujamu izmēru
+    // pārveido attēlu uz mazāku izmēru
     require_once(CORE_PATH . '/includes/class.upload.php');
 
     $foo = new Upload($target_path.$target_name);
@@ -346,4 +347,72 @@ function translate_category($string = '') {
         return $categories[$string];
     }
     return $string;
+}
+
+/**
+ *  Atgriezīs sarakstu ar saglabātajiem RuneScape jaunumu attēliem.
+ *  Ar papildparametru vairs nevajadzīgie attēli tiks izdzēsti.
+ */
+function get_news_logo_list($delete_old = false) {
+    global $db;
+    global $dir_news_images, $rs_news_count;
+    
+    // nolasa sarakstu ar saglabātajiem attēliem
+    $dh = @opendir($dir_news_images);
+    if ($dh === false) {
+        echo 'Nav neviena saglabāta attēla.'; exit;
+    }
+    while (false !== ($filename = readdir($dh))) {
+        if (in_array($filename, array('.', '..', 'empty'))) {
+            continue;
+        }
+        $files[] = $filename;
+    }
+    
+    $article_titles = [];
+    $article_ids = [];
+    
+    // nolasa sarakstu ar abu tipu rs jaunumiem, kas vēl ir
+    // gana aktuāli un tiek rādīti sākumlapā
+    $type_arr = [0, 1]; // 0 - rs3, 1 - oldschool
+    foreach ($type_arr as $type) {
+        $news = $db->get_results("
+            SELECT `id`, `mb_id`, `news_title`, `news_link` FROM `rs_news`
+            WHERE `deleted_by` = 0 AND `is_oldschool` = ".$type."
+            ORDER BY `id` DESC LIMIT 0, ".$rs_news_count."
+        ");
+        if (!$news) continue;
+        foreach ($news as $article) {
+            $article_ids[] = (int)$article->mb_id;
+            $article_titles[(int)$article->mb_id] = $article->news_title;
+        }
+    }
+    
+    // iziet cauri foldera attēlu sarakstam un parāda,
+    // kuri no attēliem ir kandidāti dzēšanai (jo nav starp aktuālajiem)
+    $deletable = [];
+    
+    foreach ($files as $saved_image) {
+        
+        // iegūst ziņu raksta ID no attēla nosaukuma, kurš ir formātā:
+        // rs3-<id>.jpg VAI os-<id>.jpg
+        $img_id = (int) str_replace(array('rs3-','os-','.jpg'), '', $saved_image);
+        
+        // ja attēla id nav starp aktuālajām ziņām, attēlu dzēš
+        // (ja izdzēsīs kaut ko ne tā, lapā tiks parādīts fallback attēls)
+        if (!in_array($img_id, $article_ids)) {
+            $deletable[] = $saved_image;
+            if ($delete_old) {
+                @unlink($dir_news_images.$saved_image);
+            }
+        }
+    }
+    
+    as_json([
+        'deleted' => $delete_old,
+        'GET param to delete' => '?delete=true',
+        'deletable' => $deletable,
+        'actual' => $article_titles
+    ]);
+    exit;
 }

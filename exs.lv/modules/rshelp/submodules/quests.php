@@ -108,7 +108,7 @@ class Quests extends Controller {
                 $addr = '<a href="/read/'.$single->strid.'">'.$addr.'</a>';
             } else {
                 $addr = '<a class="cluetip" href="javascript:void(0)"'.
-                    ' title="|Pamācība iztrūkst">'.$addr.'</a>';
+                    ' title="Pamācība iztrūkst">'.$addr.'</a>';
             }
 
             $this->view->newBlock('series-quest');
@@ -156,7 +156,7 @@ class Quests extends Controller {
             } else {
                 $data->strid = 'javascript:void(0)';
                 $data->extra = ' class="cluetip placeholder" '.
-                    'title="|Pamācība iztrūkst"';
+                    'title="Pamācība iztrūkst"';
             }
             $data->author = $author;
 

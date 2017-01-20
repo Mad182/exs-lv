@@ -18,6 +18,10 @@ jQuery(document).ready(function($) {
 		* Fix dropdown menu bootstrap error 
 		* ------------------------------------------------- */
 
+		/*
+		 * Note: `sub-menu` class isn't used in project (see `dropdown-menu` instead).
+		 */
+
 		$('.nav').find('li:has(ul)').addClass('dropdown');
 		$('.dropdown > a').addClass('dropdown-toggle disabled');
 		$('li.dropdown').children('ul.sub-menu').addClass('dropdown-menu');

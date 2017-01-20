@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
+if (isset($_GET['var1']) && $_GET['var1'] == 'chart') {
 
 	$expires = 300;
 	header('Pragma: public');
@@ -115,7 +115,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'chart.jpg') {
 
 
 
-if (isset($_GET['var1']) && $_GET['var1'] == 'chart2.jpg') {
+if (isset($_GET['var1']) && $_GET['var1'] == 'chart2') {
 
 	$expires = 600;
 	header('Pragma: public');

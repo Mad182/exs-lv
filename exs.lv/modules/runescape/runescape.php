@@ -11,13 +11,17 @@ if ($auth->ok) {
 }
 
 // mod opšns
-if ($auth->id == 115) {    
-    if (isset($_GET['magic']) && $_GET['magic'] == 'readrss') {
-        read_rss(true);
-    }   
-    if (isset($_GET['magic']) && $_GET['magic'] == 'recreate') {
-        create_news('rs3');
-        create_news('oldschool');
+if ((int)$auth->id === 115 && isset($_GET['magic'])) {
+    switch ($_GET['magic']) {
+        case 'readrss': // lejuplādē jaunākās rs ziņas
+            read_rss(true);
+            break;
+        case 'recreate': // atjauno ziņu cachefailus
+            create_news('rs3');
+            create_news('oldschool');        
+            break;
+        case 'logo-list': // dzēš vecos ziņu logo
+            get_news_logo_list(isset($_GET['delete']));
     }
 }
 
@@ -59,33 +63,3 @@ read_rss(); // iekšēji funkcija nolasīs tikai reizi x minūtēs
 $tpl->newBlock('news-tabs');
 $tpl->assign($news_type.'-selected', 'active '); 
 $tpl->assign('selected-news', fetch_news($news_type));
-
-// $tpl->newBlock('articles-container');
-// jaunais bloks ar jaunāko RuneScape ziņu virsrakstiem
-// $tpl->newBlock('rsnews-container');
-/*$all_news = $db->get_results("
-    SELECT
-        `rs_news`.`id`,
-        `rs_news`.`mb_id`,
-        `rs_news`.`has_image`,
-        `rs_news`.`news_title`          AS `title`,
-        `rs_news`.`news_description`    AS `description`,
-        `rs_news`.`news_date`           AS `date`,
-        `rs_news`.`news_category`       AS `category`,
-        `rs_news`.`news_link`           AS `link`,
-        `miniblog`.`removed`,
-        `miniblog`.`text`
-    FROM `rs_news`
-        JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
-    WHERE
-        `rs_news`.`deleted_by` = 0 AND
-        `rs_news`.`is_oldschool` = 0
-    ORDER BY `rs_news`.`id` DESC LIMIT 5
-");
-
-if ($all_news) {
-    foreach ($all_news as $news) {
-        $tpl->newBlock('rsnews-single');
-        $tpl->assign('title', $news->title);
-    }
-}*/

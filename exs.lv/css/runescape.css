@@ -336,6 +336,19 @@ ul#mainlist.rs-articles {
     margin-bottom:5px;
 }
 
+/* lapas footeris */
+#footer .infoblock-list li {
+    display:block;
+    margin:3px 0;
+}
+    #footer .infoblock-list a {
+        display:block;
+        /* ellipsis, ja teksts par garu */
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+    }
+
 /* raksta saturs */
 #full-story img {
     max-width:550px

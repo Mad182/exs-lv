@@ -2744,7 +2744,11 @@ function error_404() {
  * Atgriež facebook share/like skaitu
  */
 function get_fb_likes($url, $force = false) {
-	global $m;
+	global $m, $category;
+	
+	if($url !== 'https://exs.lv' && $category->textid !== 'index') {
+		return '<span class="fblikes">0</span>';
+	}
 
 	$cache_key = md5('fblikes'.$url);
 
@@ -2765,5 +2769,13 @@ function get_fb_likes($url, $force = false) {
 		$m->set($cache_key, $likes, 43200);
 	}
 	return $likes;
+}
+
+/**
+ * Array average
+ */
+function array_average_nonzero($arr) {
+    $arr = array_filter($arr);
+    return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
 }
 
