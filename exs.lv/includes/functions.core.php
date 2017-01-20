@@ -2775,6 +2775,7 @@ function get_fb_likes($url, $force = false) {
  * Array average
  */
 function array_average_nonzero($arr) {
-    return array_sum($arr) / count(array_filter($arr));
+    $arr = array_filter($arr);
+    return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
 }
 

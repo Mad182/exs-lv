@@ -274,7 +274,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 				    $tpl->newBlock('day');
 
-				    $percent = (int) (100 / $max * $val);
+				    $percent = ($max > 0) ? (int) (100 / $max * $val) : 0;
 				    if ($percent > 100) {
 				        $percent = 100;
 				    }
@@ -283,7 +283,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				        'date' => date('Y.m.d', strtotime($key)),
 				        'count' => $val,
 				        'percent' => $percent,
-				        'decimal' => round((100 / $max * $val / 100), 2),
+				        'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
 				    ]);
 				}
 			}
