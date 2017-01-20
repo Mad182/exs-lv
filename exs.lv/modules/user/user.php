@@ -209,7 +209,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			}
 
 			$tpl->newBlock('user-profile-yearstats');
-			$date = date('Y-m-d', strtotime("-1 year last Monday"));
+			$date = date('Y-m-d', strtotime("-1 year last Tuesday"));
 
 			$images = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `images` WHERE `uid` = '" . $inprofile->id . "' AND `date` > date('$date') GROUP BY DATE(`images`.`date`) ORDER BY `date` DESC");
 			$pages = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `pages` WHERE `author` = '" . $inprofile->id . "' AND `date` > date('$date') GROUP BY DATE(`pages`.`date`) ORDER BY `date` DESC LIMIT 365");
