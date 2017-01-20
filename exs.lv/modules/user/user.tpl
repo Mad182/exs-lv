@@ -40,40 +40,38 @@
 
 	<!-- START BLOCK : user-profile-yearstats-->
 	<div class="c"></div>
-	<h3>Pēdējā gada statistika:</h3>
+	<h3>Pēdējā gada statistika</h3>
 	<div id="year-stats-wrapper">
 
 		<div style="width: 14px;float: left;">
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">P</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">P</span>
 			</div>
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">O</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">O</span>
 			</div>
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">T</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">T</span>
 			</div>
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">C</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">C</span>
 			</div>
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">P</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">P</span>
 			</div>
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">S</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">S</span>
 			</div>
-			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">Sv</span>
+			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">Sv</span>
 			</div>
 		</div>
 
 		<!-- START BLOCK : week-->
 
-		<div style="width: 10px;float: left;">
+		<div style="width:1.815%;float:left">
 			<!-- START BLOCK : day-->
-			<div style="width: 9px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
-				<a style="float: left;width: 9px;height: 10px;background: #681e23;opacity:{decimal};filter:alpha(opacity={percent});" title="{date} - {count} posti"></a>
-			</div>
+			<div style="height:11px;background:#fafafa;margin:1px 1px 0 0"><a style="float:left;width:100%;height:11px;background:#681e23;opacity:{decimal};filter:alpha(opacity={percent});" title="{date} - {count} posti"></a></div>
 			<!-- END BLOCK : day-->
 		</div>
 

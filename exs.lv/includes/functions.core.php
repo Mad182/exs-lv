@@ -2744,9 +2744,9 @@ function error_404() {
  * Atgriež facebook share/like skaitu
  */
 function get_fb_likes($url, $force = false) {
-	global $m;
+	global $m, $category;
 	
-	if($url !== 'https://exs.lv') {
+	if($url !== 'https://exs.lv' && $category->textid !== 'index') {
 		return '<span class="fblikes">0</span>';
 	}
 
