@@ -1,7 +1,7 @@
 <?php
 
 // papildu kods js "cluetip" iekļaušanai
-$tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
+$tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 
 /**
