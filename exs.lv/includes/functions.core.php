@@ -2771,3 +2771,10 @@ function get_fb_likes($url, $force = false) {
 	return $likes;
 }
 
+/**
+ * Array average
+ */
+function array_average_nonzero($arr) {
+    return array_sum($arr) / count(array_filter($arr));
+}
+

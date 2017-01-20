@@ -37,7 +37,54 @@
 		<dt><i>Profili</i></dt><dd>{cookie_users}</dd>
 		<!-- END BLOCK : user-modinfo-->
 	</dl>
+
+	<!-- START BLOCK : user-profile-yearstats-->
+	<div class="c"></div>
+	<h3>Pēdējā gada statistika:</h3>
+	<div id="year-stats-wrapper">
+
+		<div style="width: 14px;float: left;">
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">P</span>
+			</div>
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">O</span>
+			</div>
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">T</span>
+			</div>
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">C</span>
+			</div>
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">P</span>
+			</div>
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">S</span>
+			</div>
+			<div style="width: 14px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<span style="float: left;width: 13px;height: 10px;background: #ddd;font-size:9px;line-height:10px">Sv</span>
+			</div>
+		</div>
+
+		<!-- START BLOCK : week-->
+
+		<div style="width: 10px;float: left;">
+			<!-- START BLOCK : day-->
+			<div style="width: 9px;height: 10px;background: #fafafa;margin: 1px 1px 0 0">
+				<a style="float: left;width: 9px;height: 10px;background: #681e23;opacity:{decimal};filter:alpha(opacity={percent});" title="{date} - {count} posti"></a>
+			</div>
+			<!-- END BLOCK : day-->
+		</div>
+
+		<!-- END BLOCK : week-->
+
+	</div>
+	<div class="c"></div>
+	<!-- END BLOCK : user-profile-yearstats-->
+
 	<!-- START BLOCK : user-profile-awards-->
+
 	<h3>Apbalvojumi:</h3>
 	<ul id="listsub-list">
 		<!-- START BLOCK : user-profile-awards-node-->
