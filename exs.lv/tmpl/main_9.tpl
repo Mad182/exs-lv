@@ -18,11 +18,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="/bildes/faviconrs.ico">
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.cluetip.css">
+    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css,jquery.qtip.min.css">
     <!-- START BLOCK : additional-css-->
     <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->
-    <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.cluetip.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
+    <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.qtip.min.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
     <!-- START BLOCK : tinymce-enabled-->
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>

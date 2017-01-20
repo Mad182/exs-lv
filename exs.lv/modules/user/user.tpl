@@ -71,7 +71,11 @@
 
 		<div style="width:1.815%;float:left">
 			<!-- START BLOCK : day-->
-			<div style="height:11px;background:#fafafa;margin:1px 1px 0 0"><a style="float:left;width:100%;height:11px;background:#681e23;opacity:{decimal};filter:alpha(opacity={percent});" title="{date} - {count} posti"></a></div>
+			<div style="height:11px;background:#fafafa;margin:1px 1px 0 0">
+                <!-- START BLOCK : day-has-posts -->
+				<a class="cluetip cluetip-userprofile" style="float:left;width:100%;height: 11px;background:#681e23;opacity:{decimal};filter:alpha(opacity={percent});" href="javascript:void(0)" title="{date} - {count} posti">&nbsp;</a>
+                <!-- END BLOCK : day-has-posts -->
+			</div>
 			<!-- END BLOCK : day-->
 		</div>
 

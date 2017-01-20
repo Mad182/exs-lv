@@ -38,7 +38,7 @@ class Guilds extends Controller {
             // placeholder ģildēm papildikona
             if ($page->page_id == '0') {
                 $page->cluetip = ' class="cluetip"';
-                $page->cluetip_title = '|Ģildei nav pamācības';
+                $page->cluetip_title = 'Ģildei nav pamācības';
             } else {
                 $page->placeholder = '';
                 $page->cluetip_title = $page->title;

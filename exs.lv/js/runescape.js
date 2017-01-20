@@ -17,14 +17,8 @@ function fancyContent(url) {
 
 $(document).ready(function () {
 
-    /**
-     *  cluetip
-     */
-    $('.cluetip').cluetip({
-        splitTitle: '|',
-        showTitle: false,
-        width: '300px'
-    });
+    /* Custom Cluetip. */
+    $('.cluetip').qtip();
 
     /**
      *  RuneScape random fakta atjaunotājs.
