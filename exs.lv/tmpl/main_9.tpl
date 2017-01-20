@@ -490,12 +490,12 @@
                 <div id="online-users">
                     Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:12px">{page-onlineusers}</span>
                 </div>
-                <div class="infoblock">
+                <div class="infoblock infoblock-list">
                     <div class="inner">
                         Jaunākie raksti: {footer-topics}
                     </div>
                 </div>
-                <div class="infoblock">
+                <div class="infoblock infoblock-list">
                     <div class="inner">
                         Jaunākais miniblogos: {footer-mb}
                     </div>
@@ -503,10 +503,10 @@
                 <div class="infoblock">
                     <div class="inner">
                         <p>&copy; {openidea}, 2005-{current-year}</p>
-                        <p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums</p>
+                        <p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums.</p>
                     </div>
                 </div>
-                <div class="infoblock">
+                <div class="infoblock infoblock-list">
                     <div class="inner">
                         <ul id="internal-links">
                             <li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
