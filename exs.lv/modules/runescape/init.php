@@ -53,6 +53,10 @@ if ($auth->ok) {
     // RS Mod izvēlne
     if (im_rs_mod()) {
         $tpl->newBlock('rsmod-nav');
+        // spec iespējas, piemēram, rss feeda manuāls refresh u.tml.
+        if ((int)$auth->id === 115) {
+            $tpl->newBlock('rsmod-nav-admin');
+        }
     }
 
     // Mod izvēlne

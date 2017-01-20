@@ -163,6 +163,11 @@
                         <li><a href="/skills">Prasmju prasības</a></li>
                         <li><a href="/series">Kvestu sērijas</a></li>
                         <li><a href="/atkritne">Dzēstie raksti</a></li>
+                        <!-- START BLOCK : rsmod-nav-admin -->
+                        <li><a href="/?magic=readrss">Atjaunot RSS feedu</a></li>
+                        <li><a href="/?magic=recreate">Atjaunot ziņu cachefailus</a></li>
+                        <li><a href="/?magic=logo-list">Skatīt ziņu logo sarakstu</a></li>
+                        <!-- END BLOCK : rsmod-nav-admin -->
                         <li>&nbsp;</li>
                     </ul>
                 </li>
