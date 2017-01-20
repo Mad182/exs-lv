@@ -282,16 +282,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				    if ($percent > 100) {
 				        $percent = 100;
 				    }
-
-                    if ($percent > 0) {
-                        $tpl->newBlock('day-has-posts');
-                        $tpl->assign([
-                            'date' => date('Y.m.d', strtotime($key)),
-                            'count' => $val,
-                            'percent' => $percent,
-                            'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
-                        ]);
-                    }
+                    $tpl->assign([
+                        'date' => date('Y.m.d', strtotime($key)),
+                        'count' => $val,
+                        'percent' => $percent,
+                        'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
+                    ]);
 				}
 			}
 
