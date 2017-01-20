@@ -250,16 +250,19 @@ function create_news($type = 'rs3') {
 /**
  *  Saglabās lokāli RuneScape ziņu raksta logo.
  *
- *  @param  string  vieta, no kurienes attēls jālejuplādē
+ *  @param  string  attēla adrese
  *  @param  string  vieta, kur attēls uz servera jāsaglabā
  *  @param  string  attēla nosaukums
  */
-function save_rs_image($source_path, $target_path, $target_name = 'empty') {
+function save_rs_image($img_url, $target_path, $target_name = 'empty') {
 
-    if ($target_name == 'empty' || empty($target_name)) return false;
+    if ($target_name == 'empty' || empty($target_name)) {
+        return false;
+    }
 
-    $curl = curl_init($source_path);
-    $file = fopen($target_path.$target_name, 'wb');
+    // lejuplādē attēlu no adreses un saglabā uz servera
+    $curl = curl_init($img_url);
+    $file = @fopen($target_path.$target_name, 'wb');
     curl_setopt($curl, CURLOPT_FILE, $file);
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
@@ -268,7 +271,7 @@ function save_rs_image($source_path, $target_path, $target_name = 'empty') {
     curl_close($curl);
     fclose($file);
 
-    // pārveidos attēlu uz pieļaujamu izmēru
+    // pārveido attēlu uz mazāku izmēru
     require_once(CORE_PATH . '/includes/class.upload.php');
 
     $foo = new Upload($target_path.$target_name);
