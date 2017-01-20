@@ -5707,3 +5707,7 @@ p.images-5 img {
 	float: left;
 }
 
+/* lietotāja profils */
+.cluetip-userprofile:hover {
+    text-decoration:none;
+}

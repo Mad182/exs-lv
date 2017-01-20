@@ -40,6 +40,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 	//view profile
 	} else {
+        
+        // papildu kods js "cluetip" iekļaušanai
+        $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
+		$tpl->prepare();
 
 		include CORE_PATH . '/includes/class.friend.php';
 		$friend = new Friend();
@@ -279,12 +283,15 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				        $percent = 100;
 				    }
 
-				    $tpl->assign([
-				        'date' => date('Y.m.d', strtotime($key)),
-				        'count' => $val,
-				        'percent' => $percent,
-				        'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
-				    ]);
+                    if ($percent > 0) {
+                        $tpl->newBlock('day-has-posts');
+                        $tpl->assign([
+                            'date' => date('Y.m.d', strtotime($key)),
+                            'count' => $val,
+                            'percent' => $percent,
+                            'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
+                        ]);
+                    }
 				}
 			}
 
