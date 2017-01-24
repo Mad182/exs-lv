@@ -35,7 +35,7 @@ function api_auth_login() {
     // ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
 	// bet serveris domā pretēji, labāk izautorizēt
     if ($auth->ok) {        
-        api_log('Kā pieteicies lietotājs centās pieteikties atkārtoti.');
+        api_log('Kā pieteicies lietotājs centās pieteikties atkārtoti. Tiek izautorizēts.');
         api_error('Darbība neizdevās! Mēģini vēlreiz.');
 		$auth->logout();
         return;
@@ -59,13 +59,13 @@ function api_auth_login() {
             $request_2fa = api_auth_2fa_request();
         }
         
+        // jā, 2fa iespējots, bet nav saņemts cepums, kas
+        // saglabāts db (ja vispār); jālūdz ievadīt kodu
         if ($request_2fa) {
+
             if ($lang === 2) {
                 global $json_2fa;
                 $json_2fa = true;
-                // profila info; lietotne centīsies uzreiz pēc
-                // login lejuplādēt lietotāja avataru, tāpēc jāzina tā adrese
-                api_append_profile_info();
             } else {
                 api_status(441);
                 api_append(array(
@@ -73,6 +73,10 @@ function api_auth_login() {
                     'token' => api_make_xsrf()
                 ));
             }
+            // profila info; android lietotne centīsies uzreiz pēc
+            // login lejuplādēt lietotāja avataru, tāpēc jāzina tā adrese
+            api_append_profile_info();
+
         } else if (!empty($busers) && !empty($busers[$auth->id])) {
             api_log('Pēc autentificēšanās konstatēts, ka lietotājam ir profila liegums.');
             api_status(442);

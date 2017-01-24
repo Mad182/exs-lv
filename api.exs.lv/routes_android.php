@@ -141,11 +141,13 @@ if (isset($_GET['banstatus'])) {
         
         if ($request_2fa) {
             $json_2fa = true;
+            // profila info, lai, piemēram, iegūtu lietotājvārdu un
+            // avatara adresi, kuru parādīt 2fa koda ievades skatā
             api_append_profile_info();
         } else {
         
             if ($cat_private !== '' &&
-                       file_exists(API_PATH . '/api_android/' . $cat_private . '.php')) {
+                   file_exists(API_PATH . '/api_android/' . $cat_private . '.php')) {
                 include(API_PATH . '/api_android/' . $cat_private . '.php');
                 
             // šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav

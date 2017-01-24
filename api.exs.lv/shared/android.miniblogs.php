@@ -184,6 +184,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 		SELECT 
 			`miniblog`.*,
 			IFNULL(`clans`.`id`, 0) AS `group_id`,
+            `clans`.`owner` AS `clan_owner`,
 			`clans`.`title` AS `group_title`,
 			`clans`.`avatar` AS `group_avatar`,
 			`clans`.`posts` AS `group_posts`
@@ -212,10 +213,12 @@ function api_fetch_miniblog($miniblog_id = 0) {
 	$group_id = 0;
 	$group_title = '';
 	$group_av_url = '';
+    $group_owner = 0;
 	if (!empty($miniblog->group_id)) {
 		$group_id = (int)$miniblog->group_id;
 		$group_title = $miniblog->group_title;
 		$group_av_url = $img_server.'/userpic/large/'.$miniblog->group_avatar;
+        $group_owner = (int)$miniblog->clan_owner;
 	}
 	
 	$author = get_user($miniblog->author);
@@ -319,7 +322,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 	
 	// fiksēs, cik daudz komentāru attiecīgajā grupā lietotājs ir jau lasījis
 	if (!empty($miniblog->group_id)) {
-		if ($author->id == $auth->id) {
+		if ((int)$auth->id === $group_owner) {
 			$db->query("
 				UPDATE `clans`
 				SET `owner_seenposts` = ".(int)$miniblog->group_posts."
@@ -329,7 +332,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 			$db->query("
 				UPDATE `clans_members`
 				SET `seenposts` = ".(int)$miniblog->group_posts."
-				WHERE `user` = ".$auth->id." AND `clan` = ".$group_id
+				WHERE `user` = ".(int)$auth->id." AND `clan` = ".$group_id
 			);
 		}
 	}
