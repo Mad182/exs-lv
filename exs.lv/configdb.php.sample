@@ -37,9 +37,8 @@ $lastfm_secret = '';
 //formu tokenu salt
 $remote_salt = 'BgpgSvz21ku6C2tcEGVLqwWj8fXkeSA9';
 
-// ip adrese datoram, pie kura slēgsies no Android ierīces, kad tajā ieslēgta
-// lokālā vide; tai jābūt norādītai arī pašā lietotnē, un ir jāizveido
-// attiecīgs virtualhosts, lai pieprasījums vispār šeit nonāktu
+// lokālās vides servera IP, kas norādīta arī kā virtualhosts,
+// lai no lietotnes lokāli varētu veikt pieprasījumus uz šo IP
 $android_local_ip = null; // piemēram, '192.168.88.5'
 $ios_local_ip = null;
 

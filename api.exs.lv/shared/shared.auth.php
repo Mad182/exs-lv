@@ -208,6 +208,10 @@ function api_auth_accept_2fa() {
             'modified' => 'NOW()'
         ));
  
+
+        // ņemt vērā, ka lokālā vidē ir cits domēns, tāpēc cepums nestrādās;
+        // tomēr vieglāk lokāli 2fa vienkārši izslēgt, nevis šeit pārbaudīt
+        // lokālo domēnvārdu, android/ios IP adrešu virtualhostus u.tml.
         setcookie($cookie, $token, time()+2592000, '/', '.exs.lv', 1, 1);
     }
     
