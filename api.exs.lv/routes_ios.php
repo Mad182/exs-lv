@@ -136,12 +136,15 @@ if ($var0 === 'statuses' && $var1 === 'ban_details') {
             $request_2fa = api_auth_2fa_request();
         }
         
-        if ($request_2fa) {
+        if ($request_2fa) {            
             api_status(441);
             api_append(array(
                 'info_message' => 'Lai pabeigtu autentificēšanos, jāiesūta 2fa kods.',
                 'token' => api_make_xsrf()
             ));
+            // profila info, lai, piemēram, iegūtu lietotājvārdu un
+            // avatara adresi, kuru parādīt 2fa koda ievades skatā
+            api_append_profile_info();            
         } else {
             
             // ielādē ne-publisko sadaļu un tajā izpilda darbības
