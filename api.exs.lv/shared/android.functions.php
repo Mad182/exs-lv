@@ -180,23 +180,46 @@ function api_fetch_ban($type = 1, $ip_banned = null) {
 	} else if ($type === 1 && $ip_banned != null) {
 	
 		$from_user = get_user($ip_banned->author);
-		$to_user = get_user($ip_banned->user_id);
-		
-		if ($from_user && $to_user) {
-			api_append(array(
-				'ip' => $ip_banned->ip,
-				'to_user' => api_fetch_user($to_user->id,
-					$to_user->nick, $to_user->level),
-				'reason' => $ip_banned->reason,
-				'from_user' => api_fetch_user($from_user->id,
-					$from_user->nick, $from_user->level),
-				'date_from' => date('d.m.Y, H:i', $ip_banned->time),
-				'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
-						$ip_banned->length),
-				'remaining' => strTime($ip_banned->time + 
-					$ip_banned->length - time())
-			));
-		}
+        if (!$from_user) {
+            $from_user = array(
+                'id'          => 0, 
+                'nick'        => 'dzēsts',
+                'level'       => 0,
+                'is_online'   => false,
+                'is_banned'   => true,
+                'device'      => 0
+            );
+        } else {
+            $from_user = api_fetch_user(
+                $from_user->id, $from_user->nick, $from_user->level);
+        }
+        
+        $to_user = get_user($ip_banned->user_id);
+        if (!$to_user) {
+            $to_user = array(
+                'id'          => 0, 
+                'nick'        => 'dzēsts',
+                'level'       => 0,
+                'is_online'   => false,
+                'is_banned'   => true,
+                'device'      => 0
+            );
+        } else {
+            $to_user = api_fetch_user(
+                $to_user->id, $to_user->nick, $to_user->level);
+        }
+
+        api_append(array(
+            'ip' => $ip_banned->ip,
+            'to_user' => $to_user,
+            'reason' => $ip_banned->reason,
+            'from_user' => $from_user,
+            'date_from' => date('d.m.Y, H:i', $ip_banned->time),
+            'date_to' => date('d.m.Y, H:i', $ip_banned->time + 
+                    $ip_banned->length),
+            'remaining' => strTime($ip_banned->time + 
+                $ip_banned->length - time())
+        ));
 	}
 }
 
