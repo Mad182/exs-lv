@@ -270,7 +270,7 @@ function save_rs_image($img_url, $target_path, $target_name = 'empty') {
     fclose($file);
 
     // pārveido attēlu uz mazāku izmēru
-    require_once(CORE_PATH . '/includes/class.upload.php');
+    require_once(LIB_PATH . '/verot/src/class.upload.php');
 
     $foo = new Upload($target_path.$target_name);
     $foo->image_max_pixels = 200000000;

@@ -7,7 +7,7 @@
 if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
 
 	/* load libraries */
-	require(CORE_PATH . '/includes/class.upload.php');
+	require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 	//new avatar image
 	if (isset($_FILES['edit-avatar'])) {

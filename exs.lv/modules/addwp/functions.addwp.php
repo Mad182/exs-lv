@@ -3,7 +3,7 @@
 function uploadFile($db, $auth, $file) {
 	ini_set('memory_limit', '128M');
 
-	require_once(CORE_PATH . '/includes/class.upload.php');
+	require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 	$text = substr(md5(date('YmdHis')), 0, 8);
 

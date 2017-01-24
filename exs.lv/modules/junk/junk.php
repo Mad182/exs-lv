@@ -17,7 +17,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			ini_set('memory_limit', '200M');
 
 			$title = sanitize(nl2br(h($_POST['title'])));
-			require_once(CORE_PATH . '/includes/class.upload.php');
+			require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 			$foo = new Upload($_FILES['new-image']);
 			$foo->image_max_pixels = 200000000;

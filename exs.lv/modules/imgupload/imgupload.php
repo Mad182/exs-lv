@@ -38,7 +38,8 @@ if ($auth->ok) {
 
 		rmkdir(IMG_PATH . '/' . $path);
 
-		require_once CORE_PATH . '/includes/class.upload.php';
+		require_once(LIB_PATH . '/verot/src/class.upload.php');
+
 		$foo = new Upload($_FILES['new-image']);
 		$foo->image_max_pixels = 200000000;
 		$foo->mime_check = true;

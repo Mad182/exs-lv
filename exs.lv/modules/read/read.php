@@ -339,7 +339,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$body = htmlpost2db($body);
 
 					if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
-						require(CORE_PATH . '/includes/class.upload.php');
+						require_once(LIB_PATH . '/verot/src/class.upload.php');
 						$foo = new Upload($_FILES['edit-avatar']);
 						$foo->image_max_pixels = 200000000;
 						$foo->file_new_name_body = $topicid;
@@ -613,7 +613,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 						$file_title = mkslug($article->title . '-poster');
 
-						require_once(CORE_PATH . '/includes/class.upload.php');
+						require_once(LIB_PATH . '/verot/src/class.upload.php');
 						$foo = new Upload($tmpname);
 						$foo->image_max_pixels = 200000000;
 						$foo->allowed = ['image/*'];

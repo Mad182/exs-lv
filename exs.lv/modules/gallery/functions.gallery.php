@@ -19,7 +19,7 @@ function gallery_upload() {
 		if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - $auth->flood) {
 			$_SESSION['antiflood'] = time();
 
-			require_once(CORE_PATH . '/includes/class.upload.php');
+			require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 			ini_set('memory_limit', '180M');
 

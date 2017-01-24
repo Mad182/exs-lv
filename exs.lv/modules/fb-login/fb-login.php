@@ -119,7 +119,7 @@ if (!empty($me)) {
 
 						$tmp_image = 'tmp/' . uniqid() . '.jpg';
 
-						require(CORE_PATH . '/includes/class.upload.php');
+						require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 						file_put_contents($tmp_image, file_get_contents('https://graph.facebook.com/' . $me['id'] . '/picture?type=large'));
 

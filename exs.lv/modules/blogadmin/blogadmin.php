@@ -89,7 +89,7 @@ else {
 
 			$avatar = '';
 			if (isset($_FILES['new-avatar'])) {
-				require_once('includes/class.upload.php');
+				require_once(LIB_PATH . '/verot/src/class.upload.php');
 				$foo = new Upload($_FILES['new-avatar']);
 				$foo->image_max_pixels = 200000000;
 				$foo->file_new_name_body = $ins;
@@ -126,7 +126,7 @@ else {
 				$curuser_avatar = $db->get_var("SELECT avatar FROM users WHERE id = '$auth->id'");
 
 				if (!empty($curuser_avatar)) {
-					require_once('includes/class.upload.php');
+					require_once(LIB_PATH . '/verot/src/class.upload.php');
 					$foo = new Upload('dati/bildes/useravatar/' . $curuser_avatar);
 					$foo->image_max_pixels = 200000000;
 					$foo->file_new_name_body = $ins;
