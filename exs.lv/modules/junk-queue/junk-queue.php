@@ -12,7 +12,7 @@ ini_set('memory_limit', '256M');
 
 function make_thumb($data, $path, $id) {
 
-	require_once(CORE_PATH . '/includes/class.upload.php');
+	require_once(LIB_PATH . '/verot/src/class.upload.php');
 	$foo = new Upload($data);
 	$foo->image_max_pixels = 200000000;
 	$foo->allowed = ['image/*'];

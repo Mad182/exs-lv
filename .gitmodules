@@ -28,3 +28,6 @@
 [submodule "libs/GoogleAuthenticator"]
 	path = libs/GoogleAuthenticator
 	url = https://github.com/PHPGangsta/GoogleAuthenticator.git
+[submodule "libs/verot"]
+	path = libs/verot
+	url = https://github.com/verot/class.upload.php.git

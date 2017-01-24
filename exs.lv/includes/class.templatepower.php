@@ -51,7 +51,7 @@ class TemplatePowerParser {
 	protected function __errorAlert($message) {
 		global $debug;
 		if (!empty($debug)) {
-			print('<br />' . $message . '<br />' . PHP_EOL);
+			print '<br />' . $message . '<br />' . PHP_EOL;
 		}
 	}
 
@@ -320,7 +320,7 @@ class TemplatePower extends TemplatePowerParser {
 
 			for (reset($this->defBlock[$defblockname]); $k = key($this->defBlock[$defblockname]); next($this->defBlock[$defblockname])) {
 				if ($k[1] == 'C') {
-					print( $this->defBlock[$defblockname][$k]);
+					print $this->defBlock[$defblockname][$k];
 				} else if ($k[1] == 'V') {
 					$defValue = $this->defBlock[$defblockname][$k];
 
@@ -333,7 +333,7 @@ class TemplatePower extends TemplatePowerParser {
 					} else {
 						$value = $this->content[$blockname][$i]["_V:" . $defValue];
 					}
-					print( $value);
+					print $value;
 				} else if ($k[1] == 'B') {
 					if (isset($this->content[$blockname][$i][$k])) {
 						$this->__outputContent($this->content[$blockname][$i][$k]);

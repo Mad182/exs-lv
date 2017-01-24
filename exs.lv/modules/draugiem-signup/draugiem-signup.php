@@ -120,7 +120,7 @@ if ($session) {//Authentication successful
 							}
 						}
 
-						require(CORE_PATH . '/includes/class.upload.php');
+						require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 						file_put_contents($tmp_image, curl_get($draugiem->imageForSize($user['img'], 'large')));
 

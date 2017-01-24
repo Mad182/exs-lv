@@ -17,7 +17,7 @@ function upload_user_avatar($post, $old_filename, $text) {
 	$return = $old_filename;
 
 	if (isset($post)) {
-		require_once(CORE_PATH . '/includes/class.upload.php');
+		require_once(LIB_PATH . '/verot/src/class.upload.php');
 		$text = 'group_' . time() . '_' . $group->id;
 		$foo = new Upload($post);
 		$foo->image_max_pixels = 200000000;

@@ -26,7 +26,7 @@ if ($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_imag
 }
 
 if ($original != null && file_exists($original)) {
-	require_once(CORE_PATH . '/includes/class.upload.php');
+	require_once(LIB_PATH . '/verot/src/class.upload.php');
 	$foo = new Upload($original);
 	$foo->image_max_pixels = 200000000;
 	$foo->file_safe_name = false;

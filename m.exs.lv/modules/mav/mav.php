@@ -12,7 +12,7 @@ if (substr($_GET['img'], 1, 1) == '/' && substr($_GET['img'], 3, 1) == '/') {
 }
 
 if (file_exists($original)) {
-	require_once(CORE_PATH . '/includes/class.upload.php');
+	require_once(LIB_PATH . '/verot/src/class.upload.php');
 	$foo = new Upload($original);
 	$foo->file_safe_name = false;
 	$foo->image_resize = true;

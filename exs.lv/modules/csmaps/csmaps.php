@@ -19,7 +19,7 @@ if ($auth->level > 0) {
 
 	if (isset($_FILES['new-image'])) {
 
-		require(CORE_PATH . '/includes/class.upload.php');
+		require_once(LIB_PATH . '/verot/src/class.upload.php');
 		$foo = new Upload($_FILES['new-image']);
 		$foo->image_max_pixels = 200000000;
 		$foo->image_resize = true;

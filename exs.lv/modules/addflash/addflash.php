@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 
 	$thb_local = '';
 	if (isset($_FILES['thb_local'])) {
-		require_once(CORE_PATH . '/includes/class.upload.php');
+		require_once(LIB_PATH . '/verot/src/class.upload.php');
 		$text = strtolower(str_replace('-', '_', $slug));
 		$foo = new Upload($_FILES['thb_local']);
 		$foo->file_new_name_body = $text;
