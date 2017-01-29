@@ -377,7 +377,7 @@ function api_add_miniblog($data) {
 	$parent_id = (int)$data['parent_id'];
 	$parent_user_id = $auth->id;
 	$outer_parent_id = $parent_id;    
-	$mb_level = 1; // kaut kāds dziļuma parametrs miniblogiem
+	$mb_level = 2; // dziļuma parametrs miniblogiem
 	
 	// anti-xsrf aizsardzība
 	if (!api_check_xsrf()) {
@@ -393,7 +393,6 @@ function api_add_miniblog($data) {
 	
 	// lietotājam var nebūt piekļuves norādītajai grupai
 	if ($group_id != 0) {
-		$mb_level = 3; // kaut kāds dziļuma parametrs grupām
 
 		$group_data = $db->get_row("
 			SELECT
