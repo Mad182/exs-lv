@@ -16,7 +16,7 @@ function api_fetch_miniblogs($group_id = 0) {
 	
 	$group_id = (int)$group_id;
 	
-	$max_pages = 10;
+	$max_pages = 5;
 	$mbs_per_page = 20;
 	$current_page = 1;
 	
