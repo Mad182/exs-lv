@@ -143,13 +143,13 @@ function api_fetch_miniblogs($group_id = 0) {
 			);
 			if ($group->avatar) {
 				$group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
-				$avatar = api_get_user_avatar($group, 's');
+				$avatar = api_get_user_avatar($group, 'm');
 			}
 			$group_title = ' @ ' . $group->title;
 
 		// pārējiem miniblogiem - to autoru avatarus
 		} else {
-			$avatar = api_get_user_avatar($mb, 's');
+			$avatar = api_get_user_avatar($mb, 'm');
 		}
 
 		$arr_mbs[] = array(
