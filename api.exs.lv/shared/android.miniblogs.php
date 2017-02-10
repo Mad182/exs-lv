@@ -250,7 +250,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 		'text_images' => $arr_images,     
 		'date' => display_time(strtotime($miniblog->date)),
 		'author' => api_fetch_user($author->id, $author->nick, $author->level),
-		'author_av_url' => api_get_user_avatar($author, 's'),
+		'author_av_url' => api_get_user_avatar($author, 'm'),
 		'vote_value' => (int)$miniblog->vote_value,
 		'voted' => $miniblog->voted,
 		'is_closed' => (bool)$miniblog->closed,
@@ -297,7 +297,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 				}
 				
 				$comment->date = display_time(strtotime($comment->date));
-				$comment->avatar = api_get_user_avatar($author, 's');
+				$comment->avatar = api_get_user_avatar($author, 'm');
 				$comment->id = (int)$comment->id;
 				$comment->group_id = (int)$comment->group_id;
 				$comment->reply_to = (int)$comment->reply_to;
