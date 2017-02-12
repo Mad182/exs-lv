@@ -110,25 +110,15 @@ if (isset($_GET['banstatus'])) {
         include(API_PATH . '/api_android/' . $cat_public . '.php');
     } 
     
-// autorizētu pieprasījumu apstrāde
-} else if ($auth->ok) {
+// pieprasījums sadaļai, kur nepieciešama autentificēšanās
+} else if ($cat_private !== '') {
 
-	// ja mistisku iemeslu dēļ lietotnē uzskata, ka lietotājs nav pieteicies,
-	// bet serveris domā pretēji un atved šeit, labāk izautorizēt
-	if (isset($_GET['login'])) {
-		api_log('Kā pieteicies lietotājs centās pieteikties atkārtoti.');
-        api_error('Darbība neizdevās! Mēģini vēlreiz.');
-		$auth->logout();
-
-	// primāri laikam jau ļaut izlogoties arī tad, ja ir profila liegums :)
-	// bet lietotnē neesmu iestrādājis logout pogu lieguma skatā, mwhahaha
-    } else if (isset($_GET['logout'])) {
-		$auth->logout();
-
-	// pārbauda, vai ir profila liegums, lai lietotnē varētu parādīt paziņojumu
-	} else if (!empty($busers) && !empty($busers[$auth->id])) {      
+	if (!$auth->ok) {
+        api_log('Neautentificējies lietotājs centās piekļūt nepubliskai adresei.');
+        api_error('Lai piekļūtu saturam, nepieciešams autentificēties.');
+	// pārbauda, vai lietotājam ir profila liegums
+    } else if (!empty($busers) && !empty($busers[$auth->id])) {      
 		api_fetch_ban(2);
-
 	// atvērs pieprasīto moduli un tajā izpildīs darbības
 	} else {
 
@@ -146,6 +136,7 @@ if (isset($_GET['banstatus'])) {
             api_append_profile_info();
         } else {
         
+            // ielādē ne-publisko sadaļu un tajā izpilda darbības
             if ($cat_private !== '' &&
                    file_exists(API_PATH . '/api_android/' . $cat_private . '.php')) {
                 include(API_PATH . '/api_android/' . $cat_private . '.php');
@@ -153,42 +144,19 @@ if (isset($_GET['banstatus'])) {
             // šeit var nonākt mistiskās situācijās, kad kaut kas ar cepumiem nav
             // sasinhronizējies starp serveri un lietotni
             } else {
-                api_log('Pieteicies lietotājs veica nezināmu pieprasījumu.');
-                api_error('Kļūdains pieprasījums.');
+                api_log('Neeksistē ne-publiskas sadaļas \.php fails.');
+                api_error('API kļūda.');
             }
         }
     }
 
-// neautorizēti var būt tikai autorizēšanās pieprasījumi
-// TODO: dzēst, tiklīdz lietotnes v2.0 tiks laista dzīvajā
-} else if (isset($_GET['login'])) {
-
-	if (isset($_POST['username']) && isset($_POST['password'])) {
-	
-		$auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
-		
-		if (!$auth->ok) {
-			api_error('Nepareizi ievadīti piekļuves dati.');
-		} else if (!empty($busers) && !empty($busers[$auth->id])) {
-			api_fetch_ban(2);
-		} else {
-		
-			// atzīmēs kā android lietotāju, lai saņemtu medaļu
-			if ($auth->android_seen == 0) {
-				$db->update('users', $auth->id, array(
-					'android_seen' => 1
-				));
-				$auth->android_seen = 1;
-			}
-		
-			api_append_profile_info();
-		}
-	}
-
-// ja lietotājs pēc ilgākas pauzes atkal atver lietotni un sūta pieprasījumu,
-// bet serveris jau dzēsis sesiju, nonāks šeit
-} else {
-	api_error('Lūdzu, autorizējies.');
+} else {    
+    if ($var0 === '/') { // 'index' sadaļas atvēršanu par kļūdu neuzskatīsim
+        api_append(array('info_message' => 'Hello world!'));
+    } else {
+        api_log('Pieprasīta kļūdaina adrese.');
+        api_error('Pieprasīta kļūdaina adrese!');
+    } 
 }
 
 /*
