@@ -9,11 +9,6 @@
  */
 function api_append_profile_info() {
 	global $db, $auth, $img_server, $lang;
-	
-	// nelasīto vēstuļu skaits
-	$msgs = $db->get_var("
-		SELECT count(*) FROM `pm` WHERE `to_uid` = ".$auth->id." AND `is_read` = 0
-	");
     
     $arr = array();
     if ($lang === 2) {
@@ -31,15 +26,6 @@ function api_append_profile_info() {
             'user_class' => (int)$auth->level,
             'user_title' => $auth->custom_title,
             'avatar_url' => $img_server.'/userpic/medium/'.$auth->avatar
-        );
-    }
-    
-    if ($lang === 2) {
-        // android projektā vēl, šķiet, šīs vērtības tiek lasītas,
-        // bet vajadzētu pamazām vākt prom, jo īsti neattiecas uz profilu
-        $arr += array(
-            'users_online' => (int)$auth->hosts_online,
-            'inbox_unread' => (int)$msgs
         );
     }
 

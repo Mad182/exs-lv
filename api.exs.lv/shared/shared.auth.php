@@ -95,6 +95,12 @@ function api_auth_login() {
                 ));
                 $auth->android_seen = 1;
             }
+
+            update_karma($auth->id);
+            
+            // require(CORE_PATH . '/includes/class.cookie.tracking.php');
+            // $cookies = new cookieTracker('_steam', 'T3vN3bu5MusC4k4r3T!!!1', $db);
+            // $cookies->setCookie();
             
             // pēc veiksmīgas autentificēšanās atbildei pievieno
             // svaigāko lietotāja profila informāciju

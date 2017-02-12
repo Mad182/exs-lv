@@ -16,7 +16,7 @@ function api_fetch_miniblogs($group_id = 0) {
 	
 	$group_id = (int)$group_id;
 	
-	$max_pages = 10;
+	$max_pages = 5;
 	$mbs_per_page = 20;
 	$current_page = 1;
 	
@@ -143,13 +143,13 @@ function api_fetch_miniblogs($group_id = 0) {
 			);
 			if ($group->avatar) {
 				$group->av_alt = 1; // jo funkcija pārbaudīs av_alt vērtību
-				$avatar = api_get_user_avatar($group, 's');
+				$avatar = api_get_user_avatar($group, 'm');
 			}
 			$group_title = ' @ ' . $group->title;
 
 		// pārējiem miniblogiem - to autoru avatarus
 		} else {
-			$avatar = api_get_user_avatar($mb, 's');
+			$avatar = api_get_user_avatar($mb, 'm');
 		}
 
 		$arr_mbs[] = array(
@@ -250,7 +250,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 		'text_images' => $arr_images,     
 		'date' => display_time(strtotime($miniblog->date)),
 		'author' => api_fetch_user($author->id, $author->nick, $author->level),
-		'author_av_url' => api_get_user_avatar($author, 's'),
+		'author_av_url' => api_get_user_avatar($author, 'm'),
 		'vote_value' => (int)$miniblog->vote_value,
 		'voted' => $miniblog->voted,
 		'is_closed' => (bool)$miniblog->closed,
@@ -297,7 +297,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 				}
 				
 				$comment->date = display_time(strtotime($comment->date));
-				$comment->avatar = api_get_user_avatar($author, 's');
+				$comment->avatar = api_get_user_avatar($author, 'm');
 				$comment->id = (int)$comment->id;
 				$comment->group_id = (int)$comment->group_id;
 				$comment->reply_to = (int)$comment->reply_to;
@@ -377,7 +377,7 @@ function api_add_miniblog($data) {
 	$parent_id = (int)$data['parent_id'];
 	$parent_user_id = $auth->id;
 	$outer_parent_id = $parent_id;    
-	$mb_level = 1; // kaut kāds dziļuma parametrs miniblogiem
+	$mb_level = 2; // dziļuma parametrs miniblogiem
 	
 	// anti-xsrf aizsardzība
 	if (!api_check_xsrf()) {
@@ -393,7 +393,6 @@ function api_add_miniblog($data) {
 	
 	// lietotājam var nebūt piekļuves norādītajai grupai
 	if ($group_id != 0) {
-		$mb_level = 3; // kaut kāds dziļuma parametrs grupām
 
 		$group_data = $db->get_row("
 			SELECT
