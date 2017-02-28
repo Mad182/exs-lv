@@ -153,6 +153,141 @@ function api_check_xsrf($token = '') {
 function api_format_text(&$mb_text, $return_img = true) {
 
 	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
+	/*if (strpos($mb_text, 'spoiler') !== false) {
+		$mb_text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
+			"(spoileris slēpts)", $mb_text);
+	}*/
+
+	// widgetus atstās kā saites un arī smaidiņu vietā neieliks attēlus,
+	// jo to prot darīt jau pati lietotne
+	$mb_text = add_smile($mb_text, false, true, true, false);
+	$mb_text = strip_tags($mb_text, '<a><img><br><p><strong><b><i><em><s>');
+
+	$arr_images = array();
+	
+	// ja tekstā nav ne adrešu, ne attēlu, to var atgriezt esošajā formā
+	if (strpos($mb_text, '<img') === false && strpos($mb_text, 'href') === false) {
+		return $arr_images;
+	}
+	
+	// lai novērstu kodējumu kļūdas
+	// (https://stackoverflow.com/questions/11309194/php-domdocument-failing-to-handle-utf-8-characters-%E2%98%86)
+	$mb_text = mb_convert_encoding($mb_text, 'HTML-ENTITIES', 'UTF-8');
+	
+	$dom = null;
+    
+    // attēlu pārformatēšana uz [img] tagiem
+	if (strpos($mb_text, '<img') !== false) {
+        
+        if (is_null($dom)) {
+            $dom = new DOMDocument();    
+            @$dom->loadHTML($mb_text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        }
+	
+		$images = $dom->getElementsByTagName('img');
+		
+		// aizstājot elementu ar citu, mainās kaut kas ar indeksiem un foreach
+		// vienā brīdī pārtrauc strādāt, tāpēc jāizmanto regressive loop
+		for ($i = $images->length; $i > 0; $i--) {    
+			$image_node = $images->item($i - 1);
+            $image_link = trim($image_node->getAttribute('src'));
+            if ($image_link === '') { // nodzēš tukšo tagu
+                $element = $dom->createTextNode('');
+            } else {
+                // attēlam apliek span, lai tālāk funkcijā, apstrādājot <a>,
+                // varētu noteikt, ka <a> iekšienē bijis attēls:
+                // <span class="replaced">[img]<img_url>[/img]</span>
+                $image_link = api_fill_link($image_link);
+                $element = $dom->createElement('span', '[img]'.$image_link.'[/img]');
+                $element->setAttribute('class', 'replaced');
+            }
+            // nomaina esošo attēla elementu uz elementu ar tagiem
+			$image_node->parentNode->replaceChild($element, $image_node);
+		}
+	}
+	
+    // adrešu (t.sk. #tags un @mentions) pārformatēšana uz [] tagiem
+	if (strpos($mb_text, 'href') !== false) {    
+    
+        if (is_null($dom)) {
+            $dom = new DOMDocument();    
+            @$dom->loadHTML($mb_text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        }
+    
+		$links = $dom->getElementsByTagName('a');        
+		for ($i = $links->length; $i > 0; $i--) {        
+			$link = $links->item($i - 1);
+            
+            // ja starp <a> tagiem tekstuāla satura nav, tagus nodzēš
+            if (trim($link->nodeValue) === '') {
+                $element = $dom->createTextNode('');
+				$link->parentNode->replaceChild($element, $link);
+
+			// mentions => [mention=<user_id>]<nick>[/mention]
+            } else if ($link->getAttribute('class') === 'post-mention') {
+                // lietotāja id ir pēdējais adresē (cerams)
+                $user_id = explode('/', $link->getAttribute('href'));
+                $user_id = (int) end($user_id); 
+                $node_val = $link->nodeValue;
+                if ($user_id < 1) {
+                    $element = $dom->createTextNode($node_val);
+                } else {
+                    $element = $dom->createTextNode('[mention='.$user_id.']'.$node_val.'[/mention]');
+                }
+                $link->parentNode->replaceChild($element, $link);
+                
+            // => [tag]<tagvalue>[/tag]
+			} else if ($link->getAttribute('class') === 'post-tag') {
+				$tag_value = $link->nodeValue;
+                if (trim($tag_value) !== '') {
+                    $element = $dom->createTextNode('[tag]'.$tag_value.'[/tag]');
+                    $link->parentNode->replaceChild($element, $link);
+                }
+
+			// ja šīs adreses iekšienē iepriekš tika aizstāts attēls,
+            // attēla saites vērtību nomaina uz šīs saites vērtību
+			} else {
+                $img_found = false;
+				$spans = $link->getElementsByTagName('span');
+				if ($spans->length > 0) {
+					$img = $spans->item(0);
+					if ($img->getAttribute('class') === 'replaced') {
+                        $img_found = true;
+                        // starp [img] esošo saiti aizstāj ar ārējo linku no <a>
+                        $url = api_fill_link($link->getAttribute('href'));
+                        $element = $dom->createElement('span');
+                        $element->setAttribute('class', 'replaced');
+                        $element->nodeValue = '[img]'.$url.'[/img]';
+                        $link->parentNode->replaceChild($element, $link);
+					}
+				}
+                // pārējās saites, kas nav apliktas ap bildēm:
+                // [url=<url>]<text>[/url]
+                if (!$img_found) {
+                    $inner_value = $link->nodeValue;
+                    $url = api_fill_link($link->getAttribute('href'));
+                    $element = $dom->createTextNode('[url='.$url.']'.$inner_value.'[/url]');
+                    $link->parentNode->replaceChild($element, $link);
+                }
+			}
+		}
+	}
+	
+	if (!is_null($dom)) {
+        $mb_text = $dom->saveHTML();
+        // aizvāks lieki pievienoto "\n" no rindas beigām
+        $mb_text = mb_substr($mb_text, 0, -1);
+    }	
+	
+	// regressive loop masīvā attēlus saglabāja pretēja secībā
+	if ($return_img) {
+		return array_reverse($arr_images);
+	}
+}
+
+function api_format_text_legacy(&$mb_text, $return_img = true) {
+
+	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
 	if (strpos($mb_text, 'spoiler') !== false) {
 		$mb_text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
 			"(spoileris slēpts)", $mb_text);
@@ -237,6 +372,7 @@ function api_format_text(&$mb_text, $return_img = true) {
 		return array_reverse($arr_images);
 	}
 }
+
 
 /**
  *  Pēc vajadzības pievienos adresei priekšā pareizo protokolu un

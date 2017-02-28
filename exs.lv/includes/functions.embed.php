@@ -19,9 +19,10 @@
  *  @param $wide                vai rādīt platos YouTube video
  *  @param $disable_emotions    vai aizstāt smaidiņus
  *  @param $disable_embed       vai ievietot widgets
+ *  @param $hide_spoilers       vai paslēpt spoilerus
  *  @return $txt
  */
-function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
+function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $hide_spoilers = true) {
 	global $lang;
 
 	// @coding.lv nerādīs smaidiņus, ja ierakstā ir koda gabals
@@ -111,7 +112,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0) {
 
 
 	// paslēps spoilerus
-	if (strpos($txt, 'spoiler') !== false) {
+	if ($hide_spoilers && strpos($txt, 'spoiler') !== false) {
 		$txt = preg_replace_callback(
 				"/\[spoiler](.*?)\[\/spoiler]/isS", 'replace_spoiler', $txt
 		);
