@@ -151,6 +151,11 @@ function api_check_xsrf($token = '') {
  *  vēl citi pārveidojumi.
  */
 function api_format_text(&$mb_text, $return_img = true) {
+    
+    global $auth;
+    if ((int)$auth->id !== 115) {
+        return api_format_text_legacy($miniblog->text);
+    }
 
 	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
 	/*if (strpos($mb_text, 'spoiler') !== false) {
@@ -198,6 +203,7 @@ function api_format_text(&$mb_text, $return_img = true) {
                 // varētu noteikt, ka <a> iekšienē bijis attēls:
                 // <span class="replaced">[img]<img_url>[/img]</span>
                 $image_link = api_fill_link($image_link);
+                $arr_images[] = $image_link;
                 $element = $dom->createElement('span', '[img]'.$image_link.'[/img]');
                 $element->setAttribute('class', 'replaced');
             }
