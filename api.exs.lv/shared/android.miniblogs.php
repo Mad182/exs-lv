@@ -238,7 +238,12 @@ function api_fetch_miniblog($miniblog_id = 0) {
 		$miniblog->voted = false;
 	}
 	
-	$arr_images = api_format_text($miniblog->text);
+    $arr_images = null;
+    if ((int)$auth->id === 115) {
+        $arr_images = api_format_text($miniblog->text);
+    } else {
+        $arr_images = api_format_text_legacy($miniblog->text);
+    }
 	// jāzina attēlu skaits, lai pie liela skaita miniblogos tos
 	// neielādētu kā thumbnails, ja izmanto mobilo tīklu
 	$cnt_images = count($arr_images);
