@@ -157,12 +157,6 @@ function api_format_text(&$mb_text, $return_img = true) {
         return api_format_text_legacy($miniblog->text);
     }
 
-	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
-	/*if (strpos($mb_text, 'spoiler') !== false) {
-		$mb_text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
-			"(spoileris slēpts)", $mb_text);
-	}*/
-
 	// widgetus atstās kā saites un arī smaidiņu vietā neieliks attēlus,
 	// jo to prot darīt jau pati lietotne
 	$mb_text = add_smile($mb_text, false, true, true, false);
@@ -204,7 +198,8 @@ function api_format_text(&$mb_text, $return_img = true) {
                 // <span class="replaced">[img]<img_url>[/img]</span>
                 $image_link = api_fill_link($image_link);
                 $arr_images[] = $image_link;
-                $element = $dom->createElement('span', '[img]'.$image_link.'[/img]');
+                // http://www.php.net/manual/en/domdocument.createelement.php#72699
+                $element = $dom->createElement('span', '[img]'.htmlentities($image_link).'[/img]');
                 $element->setAttribute('class', 'replaced');
             }
             // nomaina esošo attēla elementu uz elementu ar tagiem
@@ -263,7 +258,7 @@ function api_format_text(&$mb_text, $return_img = true) {
                         $url = api_fill_link($link->getAttribute('href'));
                         $element = $dom->createElement('span');
                         $element->setAttribute('class', 'replaced');
-                        $element->nodeValue = '[img]'.$url.'[/img]';
+                        $element->nodeValue = '[img]'.htmlentities($url).'[/img]';
                         $link->parentNode->replaceChild($element, $link);
 					}
 				}
