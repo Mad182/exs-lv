@@ -256,10 +256,15 @@ function api_format_text(&$mb_text, $return_img = true) {
                         $img_found = true;
                         // starp [img] esošo saiti aizstāj ar ārējo linku no <a>
                         $url = api_fill_link($link->getAttribute('href'));
+                        $curr_url = str_replace(['[img]','[/img]'],'',$img->nodeValue);
                         $element = $dom->createElement('span');
                         $element->setAttribute('class', 'replaced');
                         $element->nodeValue = '[img]'.htmlentities($url).'[/img]';
                         $link->parentNode->replaceChild($element, $link);
+                        // no masīva nodzēš iepriekš tajā ievietoto adresi...
+                        $arr_images = array_diff($arr_images, [$curr_url]);
+                        // ... un pievieno jauno
+                        $arr_images[] = $url;
 					}
 				}
                 // pārējās saites, kas nav apliktas ap bildēm:
