@@ -152,10 +152,10 @@ function api_check_xsrf($token = '') {
  */
 function api_format_text(&$mb_text, $return_img = true) {
     
-    global $auth;
-    if ((int)$auth->id !== 115) {
-        return api_format_text_legacy($miniblog->text);
-    }
+    // global $auth;
+    // if ((int)$auth->id !== 115) {
+        // return api_format_text_legacy($miniblog->text);
+    // }
 
 	// widgetus atstās kā saites un arī smaidiņu vietā neieliks attēlus,
 	// jo to prot darīt jau pati lietotne
