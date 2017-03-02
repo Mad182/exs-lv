@@ -85,14 +85,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 		}
 	}
 
-	// bilžu hostingi, kas neatbalsta HTTPS
-	$image_sites = get_sitelist('image');
-	foreach ($image_sites as $site) {
-		if (stripos($txt, $site) !== false) {
-			$txt = str_ireplace('src="http://' . $site, 'src="https://images.weserv.nl/?url=' . $site, $txt);
-		}
-	}
-
 	$txt = str_replace([
 		'.space.lv',
 		'CoxFr2Kobuw',
@@ -123,30 +115,41 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 		$txt = embed_widgets($txt, $wide);
 	}
 
-	//http/https support
-	$https_sites = get_sitelist('https');
-	foreach ($https_sites as $site) {
-		if (strpos($txt, $site) !== false) {
-			$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
-		} elseif(stripos($site, '*') !== false) {
+	if(stripos($txt, 'http://') !== false) {
 
-			//wildcard
-			$check = str_replace('*', '', $site);
-			if (strpos($txt, $check) !== false) {
-				$txt = preg_replace('/http:\/\/([a-zA-Z0-9]+)'.$check.'/', 'https://$1'.$check, $txt);
-			} 
+		//force https for known supported sites
+		$https_sites = get_sitelist('https');
+		foreach ($https_sites as $site) {
+			if (strpos($txt, $site) !== false) {
+				$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
+			} elseif(stripos($site, '*') !== false) {
 
+				//wildcard
+				$check = str_replace('*', '', $site);
+				if (strpos($txt, $check) !== false) {
+					$txt = preg_replace('/http:\/\/([a-zA-Z0-9]+)'.$check.'/', 'https://$1'.$check, $txt);
+				} 
+
+			}
 		}
-	}
 
-	//auto add proxy to all jpg/png images over http
-	if($pos = stripos($txt, 'src="http://')) {
-		$data = substr($txt, $pos, 200);
-		$data = explode('"', $data);
-		if(stripos($data[1], '.jpg') || stripos($data[1], '.jpeg') || stripos($data[1], '.png')) {
-			$find = str_ireplace('http://', '', $data[1]);
-			$txt = str_ireplace('src="http://' . $find, 'src="https://images.weserv.nl/?url=' . $find, $txt);
-			error_log($find);
+		// bilžu hostingi, kas neatbalsta HTTPS
+		$image_sites = get_sitelist('image');
+		foreach ($image_sites as $site) {
+			if (stripos($txt, $site) !== false) {
+				$txt = str_ireplace('src="http://' . $site, 'src="https://images.weserv.nl/?url=' . $site, $txt);
+			}
+		}
+
+		//auto add proxy to all jpg/png images over http
+		if($pos = stripos($txt, 'src="http://')) {
+			$data = substr($txt, $pos, 200);
+			$data = explode('"', $data);
+			if(stripos($data[1], '.jpg') || stripos($data[1], '.jpeg') || stripos($data[1], '.png')) {
+				$find = str_ireplace('http://', '', $data[1]);
+				$txt = str_ireplace('src="http://' . $find, 'src="https://images.weserv.nl/?url=' . $find, $txt);
+				error_log($find);
+			}
 		}
 	}
 
