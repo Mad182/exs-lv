@@ -152,16 +152,10 @@ function api_check_xsrf($token = '') {
  */
 function api_format_text(&$mb_text, $return_img = true) {
     
-    global $auth;
-    if ((int)$auth->id !== 115) {
-        return api_format_text_legacy($miniblog->text);
-    }
-
-	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
-	/*if (strpos($mb_text, 'spoiler') !== false) {
-		$mb_text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
-			"(spoileris slēpts)", $mb_text);
-	}*/
+    // global $auth;
+    // if ((int)$auth->id !== 115) {
+        // return api_format_text_legacy($miniblog->text);
+    // }
 
 	// widgetus atstās kā saites un arī smaidiņu vietā neieliks attēlus,
 	// jo to prot darīt jau pati lietotne
@@ -204,7 +198,8 @@ function api_format_text(&$mb_text, $return_img = true) {
                 // <span class="replaced">[img]<img_url>[/img]</span>
                 $image_link = api_fill_link($image_link);
                 $arr_images[] = $image_link;
-                $element = $dom->createElement('span', '[img]'.$image_link.'[/img]');
+                // http://www.php.net/manual/en/domdocument.createelement.php#72699
+                $element = $dom->createElement('span', '[img]'.htmlentities($image_link).'[/img]');
                 $element->setAttribute('class', 'replaced');
             }
             // nomaina esošo attēla elementu uz elementu ar tagiem
@@ -261,10 +256,15 @@ function api_format_text(&$mb_text, $return_img = true) {
                         $img_found = true;
                         // starp [img] esošo saiti aizstāj ar ārējo linku no <a>
                         $url = api_fill_link($link->getAttribute('href'));
+                        $curr_url = str_replace(['[img]','[/img]'],'',$img->nodeValue);
                         $element = $dom->createElement('span');
                         $element->setAttribute('class', 'replaced');
-                        $element->nodeValue = '[img]'.$url.'[/img]';
+                        $element->nodeValue = '[img]'.htmlentities($url).'[/img]';
                         $link->parentNode->replaceChild($element, $link);
+                        // no masīva nodzēš iepriekš tajā ievietoto adresi...
+                        $arr_images = array_diff($arr_images, [$curr_url]);
+                        // ... un pievieno jauno
+                        $arr_images[] = $url;
 					}
 				}
                 // pārējās saites, kas nav apliktas ap bildēm:
