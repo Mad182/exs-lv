@@ -628,7 +628,7 @@ function api_add_miniblog($data) {
 	 
 	// ja miniblogā ir vismaz 500 komentāri, to aizvērs un izveidos jaunu
 	$topic = $db->get_row("
-		SELECT `posts`, `text`, `author`, `lang`, `ip`
+		SELECT `posts`, `text`, `author`, `lang`, `ip`, `private`
 		FROM `miniblog` WHERE `id` = ".$main_mb->mb_id
 	);
 	if (!empty($topic) && $topic->posts >= 500) {
@@ -641,7 +641,8 @@ function api_add_miniblog($data) {
 			'text' => $body,
 			'ip' => $topic->ip,
 			'bump' => time(),
-			'lang' => $topic->lang
+			'lang' => $topic->lang,
+            'private' => (int)$topic->private
 		));
 		$insert_id = $db->insert_id;
 		

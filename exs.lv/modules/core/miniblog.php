@@ -143,7 +143,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 			$topic = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mainid'");
 			if ($topic->posts >= 500) {
 				$body = sanitize($topic->text . '<p>(<a href="' . $url . '">Tēmas</a> turpinājums)</p>');
-				$db->query("INSERT INTO miniblog (`author`,`date`,`text`,`ip`,`bump`,`lang`) VALUES ('$topic->author',NOW(),'$body','$topic->ip','" . time() . "','$topic->lang')");
+				$db->query("INSERT INTO miniblog (`author`,`date`,`text`,`ip`,`bump`,`lang`,`private`) VALUES ('$topic->author',NOW(),'$body','$topic->ip','" . time() . "','$topic->lang','$topic->private')");
 				$new = $db->insert_id;
 				$newtopic = $db->get_row("SELECT * FROM miniblog WHERE id = '$new'");
 				$newtitle = mb_get_title($newtopic->text);
