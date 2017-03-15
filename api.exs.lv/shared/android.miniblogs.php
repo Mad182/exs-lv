@@ -119,13 +119,14 @@ function api_fetch_miniblogs($group_id = 0) {
 
 		// kaut kas šeit tiek eskeipots
 		$mb->text = mb_get_title($mb->text);
-		$mb->text = textlimit($mb->text, 300, '...');
 
 		// paslēps spoilerus
 		if (strpos($mb->text, 'spoiler') !== false) {
 			$mb->text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
 				"(spoiler)", $mb->text);
-		}		
+		}
+
+		$mb->text = textlimit($mb->text, 300, '...');
 
 		// dzēstie lietotājvārdi
 		if (!empty($mb->deleted)) {
