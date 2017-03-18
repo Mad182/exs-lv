@@ -627,6 +627,210 @@ function api_add_miniblog($data) {
 }
 
 /**
+ *  Atgriež minibloga rediģējamo saturu.
+ *
+ *  Minibloga komentāru HTML saturs pirms to atgriešanas tiek pārveidots,
+ *  tāpēc tas vairs nav oriģinālais saturs no db un nevar tikt izmantots
+ *  rediģēšanai. Lai no tā izvairītos, lietotne pieprasa oriģinālo HTML saturu.
+ */
+function api_get_editable_mb($miniblog_id = 0) {
+    global $db, $auth, $api_lang;
+    
+    $miniblog_id = (int) $miniblog_id;
+
+	$miniblog = $db->get_row("
+		SELECT 
+			`miniblog`.*,
+			IFNULL(`clans`.`id`, 0) AS `group_id`,
+            `clans`.`owner` AS `clan_owner`,
+			`clans`.`title` AS `group_title`,
+			`clans`.`avatar` AS `group_avatar`,
+			`clans`.`posts` AS `group_posts`
+		FROM `miniblog`
+			LEFT JOIN `clans` ON `miniblog`.`groupid` = `clans`.`id`
+		WHERE 
+			`miniblog`.`id` = ".$miniblog_id." AND
+			`miniblog`.`removed` = 0 AND
+			`miniblog`.`type` = 'miniblog' AND
+			`miniblog`.`lang` = ".$api_lang."
+	");	
+	if (!$miniblog) {
+		api_error('Šāds ieraksts neeksistē.'); return;
+    }
+	
+	// lietotājam var nebūt piekļuves grupai, kurā ir šis ieraksts
+	if (!empty((int)$miniblog->group_id) &&
+            !api_member_of((int)$miniblog->group_id)) {
+        api_error('Nav pieejas grupai.');
+        api_log('Nav pieejas grupai, kurā ir pieprasītais ieraksts.'); return;
+	}
+
+    // pagaidām rediģēt drīkst tikai savus ierakstus
+    if ((int)$miniblog->author !== (int)$auth->id) {
+        api_error('Rediģēt var tikai savus ierakstus.');
+		api_log('Pieprasīja sveša ieraksta saturu.'); return;
+    }
+    
+    // komentāriem pārbauda arī pašu miniblogu (nav slēgts vai dzēsts?)
+	if ((int)$miniblog->parent !== 0) {	
+		$parent_data = $db->get_row("
+			SELECT `author`, `parent`, `closed`, `reply_to` FROM `miniblog` 
+			WHERE `id` = ".(int)$miniblog->parent." AND `removed` = 0
+		");
+		if (!$parent_data) {
+			api_error('Miniblogs neeksistē vai ir dzēsts.');
+			api_log('Parent miniblogs neeksistē vai ir ticis dzēsts.'); return;
+		} else if ($parent_data->reply_to == 0 && $parent_data->closed == 1) {
+			api_error('Miniblogs slēgts rediģēšanai.');
+			api_log('Parent miniblogs slēgts rediģēšanai.'); return;
+		}
+        // iespējams, ka šis jau IR miniblogs, nevis komentārs
+	} else if ((int)$miniblog->closed === 1) {
+        api_error('Miniblogs slēgts rediģēšanai.');
+        api_log('Miniblogs slēgts rediģēšanai.'); return;
+    }
+	
+	api_append([
+		'id' => (int)$miniblog->id,
+		'text' => $miniblog->text,    
+		'date' => $miniblog->date
+	]);
+}
+
+/**
+ *  Norādītā minibloga rediģēšana.
+ */
+function api_edit_miniblog($miniblog_id, $new_text) {
+    global $db, $auth, $api_lang, $min_post_edit;
+
+    if (!is_int($miniblog_id) || $miniblog_id < 1) {
+        api_error('Rediģēšana neizdevās.'); return;
+    } else if (!api_check_xsrf()) {
+		api_error('no hacking, pls');
+		api_log('Nenorādīja pareizu XSRF atslēgu.'); return;
+	}
+    
+    $miniblog = $db->get_row("
+		SELECT 
+			`miniblog`.`groupid`,
+            `miniblog`.`author`,
+            `miniblog`.`parent`,
+            `miniblog`.`closed`,
+            `miniblog`.`date`,
+            `miniblog`.`edit_times`,
+            `miniblog`.`text`,
+			IFNULL(`clans`.`id`, 0) AS `clan_id`,
+            `clans`.`owner`,
+            `clans`.`archived`,
+            IFNULL(`clans_members`.`approve`, 0) AS `approved`
+		FROM `miniblog`
+			LEFT JOIN `clans` ON (
+                `miniblog`.`groupid` = `clans`.`id` AND
+                `clans`.`lang` = ".$api_lang."
+            )
+            LEFT JOIN `clans_members` ON (
+				`clans`.`id` = `clans_members`.`clan` AND
+				`clans_members`.`user` = ".$auth->id."
+			)
+		WHERE 
+			`miniblog`.`id` = ".$miniblog_id." AND
+			`miniblog`.`removed` = 0 AND
+			`miniblog`.`type` = 'miniblog' AND
+			`miniblog`.`lang` = ".$api_lang."
+	");	
+	if (!$miniblog) {
+		api_error('Rediģējamais ieraksts neeksistē.'); return;
+    }
+	
+	// grupas ierakstu pārbaudes
+    if ((int)$miniblog->groupid > 0) {
+		if ((int)$miniblog->clan_id < 1) {
+			api_error('Grupa neeksistē.'); return;
+		} else if ((int)$miniblog->owner !== (int)$auth->id &&
+                (int)$miniblog->approved === 0) {
+			api_error('Nav pieejas grupai.'); return;
+		} else if ((int)$miniblog->archived === 1) {
+			api_error('Arhivētu grupu ieraksti nav rediģējami.'); return;
+		}
+	}
+    
+    // pagaidām rediģēt drīkst tikai savus ierakstus
+    if ((int)$miniblog->author !== (int)$auth->id) {
+        api_error('Rediģēt var tikai savus ierakstus.');
+		api_log('Centās rediģēt svešu ierakstu.'); return;
+    }
+    
+    // komentāriem pārbauda arī pašu miniblogu (nav slēgts vai dzēsts?)
+	if ((int)$miniblog->parent !== 0) {	
+		$parent_data = $db->get_row("
+			SELECT `author`, `parent`, `closed`, `reply_to` FROM `miniblog` 
+			WHERE `id` = ".(int)$miniblog->parent." AND `removed` = 0
+		");
+		if (!$parent_data) {
+			api_error('Miniblogs neeksistē vai ir dzēsts.');
+			api_log('Parent miniblogs neeksistē vai ir ticis dzēsts.'); return;
+		} else if ((int)$parent_data->closed === 1) {
+			api_error('Miniblogs slēgts rediģēšanai.');
+			api_log('Parent miniblogs slēgts rediģēšanai.'); return;
+		}
+        // iespējams, ka šis jau IR miniblogs, nevis komentārs
+	} else if ((int)$miniblog->closed === 1) {
+        api_error('Miniblogs slēgts rediģēšanai.');
+        api_log('Miniblogs slēgts rediģēšanai.'); return;
+    }
+
+    // kurš katrs newfags gluži nevar rediģēt
+    if ((int)$auth->karma < $min_post_edit) {
+        api_error('Rediģēšana no '.$min_post_edit.' karmas.');
+        api_log('Rediģēšanai nepietiek karmas ('.(int)$auth->karma.').'); return;
+    }
+    
+    // laika ierobežojums
+    if (strtotime($miniblog->date) < time() - 1860 && (int)$auth->id !== 115) {
+        api_error('Ieraksts vairs nav rediģējams.');
+        api_log('Ieraksts vairs nav rediģējams.'); return;
+    }
+
+	$new_text = trim($new_text);
+    if (empty($new_text)) {
+        api_error('Nevar pievienot tukšu ierakstu.'); return;
+    }
+    $new_text = htmlpost2db($new_text);
+
+    $update = $db->update('miniblog', $miniblog_id, [
+        'text' => $new_text,
+        'device' => 2,
+        'edit_time' => time(),
+        'edit_user' => (int)$auth->id,
+        'edit_times' => ((int)$miniblog->edit_times + 1)
+    ]);
+    if (!$update) {
+        api_error('Rediģēšana neizdevās.');
+        api_log('Rediģēšana neizdevās.'); return;
+    }
+    
+    $auth->log('Laboja miniblogu', 'miniblog', $miniblog_id);
+            
+    // saglabā iepriekšējo tekstu datubāzē
+    $db->insert('miniblog_ver', [
+        'mbid' => $miniblog_id,
+        'text' => sanitize($miniblog->text),
+        'user_id' => (int)$auth->id,
+        'modified' => 'NOW()',
+        'ip' => $auth->ip
+    ]);
+	
+	// @mentions apstrāde pievienotajam ierakstam
+	$type = ((int)$miniblog->groupid > 0) ? 'group' : 'mb';
+    $parent_id = (empty($miniblog->parent) ? $miniblog_id : (int)$miniblog->parent);
+	$db->update('miniblog', $miniblog_id, [
+		'text' => sanitize(mention($new_text, '#', $type, $parent_id))
+	]);
+	
+	api_append(['edit_success' => true]);
+}
+
+/**
  *  Novērtēs norādīto komentāru ar plusu vai mīnusu.
  *
  *  $type - 'miniblog'. Nākotnē plānots arī 'image' un 'article'.

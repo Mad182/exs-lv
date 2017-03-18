@@ -8,10 +8,9 @@
 
 require(API_PATH.'/shared/android.miniblogs.php');
 
-
 /**
  *  Atgriezīs jaunāko miniblogu sarakstu.
- *  (/miniblogs/getlist)
+ *  /miniblogs/getlist
  */
 if ($var1 === 'getlist') {
 	set_action('jaunākos miniblogus');
@@ -19,7 +18,7 @@ if ($var1 === 'getlist') {
 
 /**
  *  Jauna minibloga pievienošana vai esoša minibloga komentēšana.
- *  (/miniblogs/{new|comment})
+ *  /miniblogs/{new|comment}
  */
 } else if ($var1 === 'new' || $var1 === 'comment') {
 	
@@ -42,23 +41,39 @@ if ($var1 === 'getlist') {
 
 /**
  *  Minibloga vērtēšana ar plusu vai mīnusu.
- *  (/miniblogs/{plus|minus}/{entry_id})
+ *  /miniblogs/{plus|minus}/{entry_id}
  */
 } else if (!empty($var1) && !empty($var2) &&
 		   in_array($var1, array('plus', 'minus'))) {
-
 	api_rate_comment($var2, ($var1 === 'plus'));
 
 /**
  *  Minibloga satura atgriešana ar visiem komentāriem.
- *  (/miniblogs/getcontent/{miniblog_id})
+ *  /miniblogs/getcontent/{miniblog_id}
  */
 } else if ($var1 === 'getcontent' && !empty($var2)) {
 	api_fetch_miniblog($var2);
-
+    
 /**
- *  Citi gadījumi.
+ *  Minibloga rediģējamā satura atgriešana.
+ *  /miniblogs/geteditable/{miniblog_id}
  */
+} else if ($var1 === 'geteditable' && !empty($var2)) {
+	api_get_editable_mb($var2);
+    
+/**
+ *  Minibloga rediģēšana.
+ *  /miniblogs/edit/{miniblog_id}
+ */
+} else if ($var1 === 'edit' && !empty($var2)) {
+	
+	if (!isset($_POST['text'])) {
+		api_error('Nav saņemts ieraksta jaunais teksts.');
+        api_log('Nav saņemts minibloga ieraksta jaunais saturs.');
+	} else {
+		api_edit_miniblog((int)$var2, $_POST['text']);
+	}
+
 } else {
     api_log('Sasniegts miniblogu moduļa "else" bloks.');
     api_error('hellou... are thou lost?');
