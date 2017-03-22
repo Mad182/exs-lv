@@ -250,6 +250,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 		'text' => $miniblog->text,   
 		'text_images' => $arr_images,     
 		'date' => display_time(strtotime($miniblog->date)),
+        'date_s' => strtotime($miniblog->date),
 		'author' => api_fetch_user($author->id, $author->nick, $author->level),
 		'author_av_url' => api_get_user_avatar($author, 'm'),
 		'vote_value' => (int)$miniblog->vote_value,
@@ -297,6 +298,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 					$cnt_images += count($comment->text_images);
 				}
 				
+                $comment->date_s = strtotime($comment->date);
 				$comment->date = display_time(strtotime($comment->date));
 				$comment->avatar = api_get_user_avatar($author, 'm');
 				$comment->id = (int)$comment->id;
@@ -634,7 +636,7 @@ function api_add_miniblog($data) {
  *  rediģēšanai. Lai no tā izvairītos, lietotne pieprasa oriģinālo HTML saturu.
  */
 function api_get_editable_mb($miniblog_id = 0) {
-    global $db, $auth, $api_lang;
+    global $db, $auth, $api_lang, $min_post_edit;
     
     $miniblog_id = (int) $miniblog_id;
 
@@ -688,6 +690,18 @@ function api_get_editable_mb($miniblog_id = 0) {
 	} else if ((int)$miniblog->closed === 1) {
         api_error('Miniblogs slēgts rediģēšanai.');
         api_log('Miniblogs slēgts rediģēšanai.'); return;
+    }
+    
+    // kurš katrs newfags gluži nevar rediģēt
+    if ((int)$auth->karma < $min_post_edit) {
+        api_error('Rediģēšana no '.$min_post_edit.' karmas.');
+        api_log('Rediģēšanai nepietiek karmas ('.(int)$auth->karma.').'); return;
+    }
+    
+    // laika ierobežojums
+    if (strtotime($miniblog->date) < time() - 1860 && (int)$auth->id !== 115) {
+        api_error('Ieraksts vairs nav rediģējams.');
+        api_log('Ieraksts vairs nav rediģējams.'); return;
     }
 	
 	api_append([
