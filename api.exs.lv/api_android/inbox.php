@@ -60,7 +60,7 @@ if ($var1 === 'received') {
 			// sūtītāja dati
 			$from = '';            
 			if (!empty($pm->user_deleted)) {
-				$from = '<em>dzēsts</em>';
+				$from = new stdClass;
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
 					$from = wordwrap(textlimit(
@@ -185,9 +185,7 @@ if ($var1 === 'received') {
 
 	$read_id = (int)$var2;
 	
-	$pm = $db->get_row("
-		SELECT * FROM `pm` WHERE `id` = ".$read_id
-	);
+	$pm = $db->get_row("SELECT * FROM `pm` WHERE `id` = ".$read_id);
 	
 	if (!$pm) {
 		api_error('Šāda vēstule neeksistē.');
@@ -198,16 +196,14 @@ if ($var1 === 'received') {
 	
 		$type = ($pm->to_uid == $auth->id) ? 'rec' : 'sent';
 	
-		// saņemtu atzīmēs vēstuli kā lasītu
+		// atzīmēs saņemtu vēstuli kā lasītu
 		if ($type == 'rec' && $pm->is_read == 0) {
-			$db->update('pm', $read_id, array(
-				'is_read' => 1
-			));
+			$db->update('pm', $read_id, array('is_read' => 1));
 		}
 		
 		// dati par lietotāju (sūtītāju vai saņēmēju)
 		$usr = ($type == 'rec') ? get_user($pm->from_uid) : get_user($pm->to_uid);
-		$usr_data = array();        
+		$usr_data = new stdClass;        
 		if (!$usr || $usr->deleted) {
 			$usr->nick = '<em>dzēsts</em>';
 		} else {
@@ -277,7 +273,7 @@ if ($var1 === 'received') {
 			// saņēmēja dati
 			$to = '';            
 			if (!empty($pm->user_deleted)) {
-				$to = '<em>dzēsts</em>';
+				$to = new stdClass;
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
 					$to = wordwrap(textlimit(
