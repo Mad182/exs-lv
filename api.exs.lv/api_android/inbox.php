@@ -63,18 +63,15 @@ if ($var1 === 'received') {
 				$from = new stdClass;
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
-					$from = wordwrap(textlimit(
-						h($pm->imap_name), 48, '...'), 20, '\n', 1);
+					$from = textlimit(h($pm->imap_name), 48, '...');
 				} else {
-					$from = wordwrap(textlimit(
-						h($pm->imap_email), 48, '...'), 20, '\n', 1);
+					$from = textlimit(h($pm->imap_email), 48, '...');
 				}
 			} else {
 				$from = api_fetch_user($pm->from_uid, $pm->nick, $pm->level);
 			}
 			
-			$pm_title = wordwrap(textlimit(
-				strip_tags($pm->title), 48, '...'), 20, ' ', 1);
+			$pm_title = textlimit(strip_tags($pm->title), 48, '...');
 			
 			$messages[] = array(
 				'id' => (int)$pm->id,
@@ -276,18 +273,15 @@ if ($var1 === 'received') {
 				$to = new stdClass;
 			} else if (!empty($pm->imap_uid)) {
 				if (!stristr($pm->imap_name, '?')) {
-					$to = wordwrap(textlimit(
-						h($pm->imap_name), 48, '...'), 20, '\n', 1);
+					$to = textlimit(h($pm->imap_name), 48, '...');
 				} else {
-					$to = wordwrap(textlimit(
-						h($pm->imap_email), 48, '...'), 20, '\n', 1);
+					$to = textlimit(h($pm->imap_email), 48, '...');
 				}
 			} else {
 				$to = api_fetch_user($pm->to_uid, $pm->nick, $pm->level);
 			}
 			
-			$pm_title = wordwrap(textlimit(
-				strip_tags($pm->title), 48, '...'), 20, '\n', 1);
+			$pm_title = textlimit(strip_tags($pm->title), 48, '...');
 			
 			$messages[] = array(
 				'id' => (int)$pm->id,

@@ -136,26 +136,9 @@ function api_check_xsrf($token = '') {
 }
 
 /**
- *  Saformatēs tekstu atbilstoši tam, kādu to spēj uztvert Androīds.
- *
- *  Aizstās tekstā esošos attēlus (HTML <img/> tagos) ar informāciju, ka
- *  attiecīgajā vietā bija attēls, un atgriezīs masīvu ar visu atrasto
- *  attēlu adresēm secībā, kādā tās tika atrastas.
- *
- *  Izmantojams miniblogiem, lai lietotnei attēlu saites aizsūtītu atsevišķi un
- *  tā tos ielādētu atsevišķi AIZ teksta lauka kā pielikumus, nevis pašā
- *  teksta laukā, kas ir tehniski sarežģīti un arī nesniedz patīkamu rezultātu.
- *
- *  Papildu pareizi tiks noformētas arī adreses, lai lietotnē tās
- *  atpazītu un būtu nospiežamas, tiks paslēpti spoileri un veikti
- *  vēl citi pārveidojumi.
+ *  Saformatēs HTML tekstu atbilstoši tam, kādu to spēj uztvert Androīds.
  */
 function api_format_text(&$mb_text, $return_img = true) {
-    
-    // global $auth;
-    // if ((int)$auth->id !== 115) {
-        // return api_format_text_legacy($miniblog->text);
-    // }
 
 	// widgetus atstās kā saites un arī smaidiņu vietā neieliks attēlus,
 	// jo to prot darīt jau pati lietotne
@@ -281,97 +264,12 @@ function api_format_text(&$mb_text, $return_img = true) {
 	
 	if (!is_null($dom)) {
         $mb_text = $dom->saveHTML();
+        // sarežģītākā html saturā LibXML uz exs servera vienalga
+        // pievieno šos tagus...
+        $mb_text = str_replace(['<html><body>','</body></html>'], '', $mb_text);
         // aizvāks lieki pievienoto "\n" no rindas beigām
-        $mb_text = mb_substr($mb_text, 0, -1);
+        // $mb_text = mb_substr($mb_text, 0, -1);
     }	
-	
-	// regressive loop masīvā attēlus saglabāja pretēja secībā
-	if ($return_img) {
-		return array_reverse($arr_images);
-	}
-}
-
-function api_format_text_legacy(&$mb_text, $return_img = true) {
-
-	// paslēps spoilerus, kurus lietotnē pagaidām īsti labi parādīt nevar
-	if (strpos($mb_text, 'spoiler') !== false) {
-		$mb_text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', 
-			"(spoileris slēpts)", $mb_text);
-	}
-
-	// widgetus atstās kā saites un arī smaidiņu vietā neieliks attēlus,
-	// jo to prot darīt jau pati lietotne
-	$mb_text = add_smile($mb_text, false, true, true);
-	$mb_text = strip_tags($mb_text, '<a><img><br><p><strong><b><i><em>');
-
-	$arr_images = array();
-	
-	// ja tekstā nav ne adrešu, ne attēlu, to var atgriezt esošajā formā
-	if (strpos($mb_text, '<img') === false && strpos($mb_text, 'href') === false) {
-		return $arr_images;
-	}
-	
-	// lai novērstu kodējumu kļūdas
-	// (https://stackoverflow.com/questions/11309194/php-domdocument-failing-to-handle-utf-8-characters-%E2%98%86)
-	$mb_text = mb_convert_encoding($mb_text, 'HTML-ENTITIES', 'UTF-8');
-
-	$dom = new DOMDocument();    
-	$dom->loadHTML($mb_text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-	
-	// attēlu aizstāšana
-	if (strpos($mb_text, '<img') !== false) {
-	
-		$images = $dom->getElementsByTagName('img');
-		
-		// aizstājot elementu ar citu, mainās kaut kas ar indeksiem un foreach
-		// vienā brīdī pārtrauc strādāt, tāpēc jāizmanto regressive loop
-		for ($i = $images->length; $i > 0; $i--) {    
-			$image = $images->item($i - 1);
-			$image_link = api_fill_link($image->getAttribute('src'));
-			$arr_images[] = $image_link;            
-			$element = $dom->createElement('span', '(attēls #'.$i.')');
-			$element->setAttribute('class', 'img_replacement');
-			$image->parentNode->replaceChild($element, $image);
-		}
-	}
-	
-	// saformatēs adreses uz tādām, kādas Androīdā atpazīst
-	// "<a href="https://exs.lv">spied šeit</a>" -> "https://exs.lv"
-	if (strpos($mb_text, 'href') !== false) {    
-		$links = $dom->getElementsByTagName('a');        
-		for ($i = $links->length; $i > 0; $i--) {        
-			$link = $links->item($i - 1);  
-
-			$do_replace = true;
-			
-			// ja adrese ir ap pieminētu lietotāju, labāk lietotājvārdu atstāsim
-			if ($link->getAttribute('class') == 'post-mention') {
-				$do_replace = false;
-
-			// ja šīs adreses iekšienē iepriekš tika aizstāts attēls,
-			// tad adresi nevajag pārveidot, lai nepazaudētu info par attēlu
-			} else {
-				$imgs = $link->getElementsByTagName('span');
-				if ($imgs->length > 0) {
-					$img = $imgs->item(0);
-					if ($img->getAttribute('class') === 'img_replacement') {
-						$do_replace = false;
-					}
-				}
-			}            
-			
-			if ($do_replace) {
-				$addr = api_fill_link($link->getAttribute('href'));
-				$element = $dom->createTextNode($addr);
-				$link->parentNode->replaceChild($element, $link);
-			}
-		}
-	}
-	
-	$mb_text = $dom->saveHTML();
-	
-	// aizvāks lieki pievienoto "\n" no rindas beigām
-	$mb_text = mb_substr($mb_text, 0, -1);
 	
 	// regressive loop masīvā attēlus saglabāja pretēja secībā
 	if ($return_img) {
