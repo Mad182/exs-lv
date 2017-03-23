@@ -706,7 +706,7 @@ function api_get_editable_mb($miniblog_id = 0) {
 	
 	api_append([
 		'id' => (int)$miniblog->id,
-		'text' => $miniblog->text,    
+		'text' => $miniblog->text,
 		'date' => $miniblog->date
 	]);
 }
@@ -809,10 +809,9 @@ function api_edit_miniblog($miniblog_id, $new_text) {
     if (empty($new_text)) {
         api_error('Nevar pievienot tukšu ierakstu.'); return;
     }
-    $new_text = htmlpost2db($new_text);
 
     $update = $db->update('miniblog', $miniblog_id, [
-        'text' => $new_text,
+        'text' => htmlpost2db($new_text),
         'device' => 2,
         'edit_time' => time(),
         'edit_user' => (int)$auth->id,
