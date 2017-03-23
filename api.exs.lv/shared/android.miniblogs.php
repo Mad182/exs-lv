@@ -667,8 +667,7 @@ function api_get_editable_mb($miniblog_id = 0) {
         api_log('Nav pieejas grupai, kurā ir pieprasītais ieraksts.'); return;
 	}
 
-    // pagaidām rediģēt drīkst tikai savus ierakstus
-    if ((int)$miniblog->author !== (int)$auth->id) {
+    if (!im_mod() && (int)$miniblog->author !== (int)$auth->id) {
         api_error('Rediģēt var tikai savus ierakstus.');
 		api_log('Pieprasīja sveša ieraksta saturu.'); return;
     }
@@ -682,18 +681,18 @@ function api_get_editable_mb($miniblog_id = 0) {
 		if (!$parent_data) {
 			api_error('Miniblogs neeksistē vai ir dzēsts.');
 			api_log('Parent miniblogs neeksistē vai ir ticis dzēsts.'); return;
-		} else if ($parent_data->reply_to == 0 && $parent_data->closed == 1) {
+		} else if (!im_mod() && $parent_data->reply_to == 0 && $parent_data->closed == 1) {
 			api_error('Miniblogs slēgts rediģēšanai.');
 			api_log('Parent miniblogs slēgts rediģēšanai.'); return;
 		}
         // iespējams, ka šis jau IR miniblogs, nevis komentārs
-	} else if ((int)$miniblog->closed === 1) {
+	} else if (!im_mod() && (int)$miniblog->closed === 1) {
         api_error('Miniblogs slēgts rediģēšanai.');
         api_log('Miniblogs slēgts rediģēšanai.'); return;
     }
     
     // kurš katrs newfags gluži nevar rediģēt
-    if ((int)$auth->karma < $min_post_edit) {
+    if (!im_mod() && (int)$auth->karma < $min_post_edit) {
         api_error('Rediģēšana no '.$min_post_edit.' karmas.');
         api_log('Rediģēšanai nepietiek karmas ('.(int)$auth->karma.').'); return;
     }
@@ -768,8 +767,7 @@ function api_edit_miniblog($miniblog_id, $new_text) {
 		}
 	}
     
-    // pagaidām rediģēt drīkst tikai savus ierakstus
-    if ((int)$miniblog->author !== (int)$auth->id) {
+    if (!im_mod() && (int)$miniblog->author !== (int)$auth->id) {
         api_error('Rediģēt var tikai savus ierakstus.');
 		api_log('Centās rediģēt svešu ierakstu.'); return;
     }
@@ -783,18 +781,18 @@ function api_edit_miniblog($miniblog_id, $new_text) {
 		if (!$parent_data) {
 			api_error('Miniblogs neeksistē vai ir dzēsts.');
 			api_log('Parent miniblogs neeksistē vai ir ticis dzēsts.'); return;
-		} else if ((int)$parent_data->closed === 1) {
+		} else if (!im_mod() && (int)$parent_data->closed === 1) {
 			api_error('Miniblogs slēgts rediģēšanai.');
 			api_log('Parent miniblogs slēgts rediģēšanai.'); return;
 		}
         // iespējams, ka šis jau IR miniblogs, nevis komentārs
-	} else if ((int)$miniblog->closed === 1) {
+	} else if (!im_mod() && (int)$miniblog->closed === 1) {
         api_error('Miniblogs slēgts rediģēšanai.');
         api_log('Miniblogs slēgts rediģēšanai.'); return;
     }
 
     // kurš katrs newfags gluži nevar rediģēt
-    if ((int)$auth->karma < $min_post_edit) {
+    if (!im_mod() && (int)$auth->karma < $min_post_edit) {
         api_error('Rediģēšana no '.$min_post_edit.' karmas.');
         api_log('Rediģēšanai nepietiek karmas ('.(int)$auth->karma.').'); return;
     }
