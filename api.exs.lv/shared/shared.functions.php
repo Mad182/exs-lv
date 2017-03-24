@@ -267,8 +267,8 @@ function api_format_text(&$mb_text, $return_img = true) {
         // sarežģītākā html saturā LibXML uz exs servera vienalga
         // pievieno šos tagus...
         $mb_text = str_replace(['<html><body>','</body></html>'], '', $mb_text);
-        // aizvāks lieki pievienoto "\n" no rindas beigām
-        // $mb_text = mb_substr($mb_text, 0, -1);
+        // aizvāks lieki pievienoto "\n" no beigām
+        $mb_text = mb_substr($mb_text, 0, -1);
     }	
 	
 	// regressive loop masīvā attēlus saglabāja pretēja secībā
