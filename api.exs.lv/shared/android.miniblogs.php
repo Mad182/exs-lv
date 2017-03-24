@@ -180,7 +180,6 @@ function api_fetch_miniblog($miniblog_id = 0) {
 	
 	$miniblog_id = (int)$miniblog_id;
 
-	// atlasīs minibloga informāciju
 	$miniblog = $db->get_row("
 		SELECT 
 			`miniblog`.*,
@@ -229,23 +228,35 @@ function api_fetch_miniblog($miniblog_id = 0) {
 	set_action($author->nick.' miniblogu');
 	
 	// vai lietotājs jau ir novērtējis miniblogu?
-	$voters = array();
+	$voters = [];
 	if (!empty($miniblog->vote_users)) {
 		$voters = unserialize($miniblog->vote_users);
 	}   
-	if (in_array($auth->id, $voters)) {
-		$miniblog->voted = true;
-	} else {
-		$miniblog->voted = false;
-	}
+    $miniblog->voted = in_array($auth->id, $voters);
 	
     $arr_images = api_format_text($miniblog->text);
 	// jāzina attēlu skaits, lai pie liela skaita miniblogos tos
 	// neielādētu kā thumbnails, ja izmanto mobilo tīklu
 	$cnt_images = count($arr_images);
+
+    // dati par minibloga aizslēgšanas iemesliem
+    $closed_by = new arrayObject;
+    if ($miniblog->closed === '1') {
+        if ((int)$miniblog->closed_by > 0) {
+            $closed_user = get_user((int)$miniblog->closed_by);
+            if ($closed_user) {
+                $closed_by = api_fetch_user($closed_user->id, $closed_user->nick, $closed_user->level);
+            }
+        }
+        if ($miniblog->close_reason !== '') {
+            $miniblog->close_reason = strip_tags($miniblog->close_reason);
+        }
+    } else {
+        $miniblog->close_reason = '';
+    }
 	
 	// atgriežamā informācija par pašu miniblogu
-	$arr_miniblog = array(
+	$arr_miniblog = [
 		'id' => (int)$miniblog->id,
 		'text' => $miniblog->text,   
 		'text_images' => $arr_images,     
@@ -256,13 +267,15 @@ function api_fetch_miniblog($miniblog_id = 0) {
 		'vote_value' => (int)$miniblog->vote_value,
 		'voted' => $miniblog->voted,
 		'is_closed' => (bool)$miniblog->closed,
+        'closed_by' => $closed_by,
+		'close_reason' => $miniblog->close_reason,
 		'group_id' => $group_id,
 		'group_title' => $group_title,
 		'group_av_url' => $group_av_url
-	);
+	];
    
 	// atlasīs miniblogam pievienotos komentārus
-	$arr_comments = array();   
+	$arr_comments = [];   
 	if ($miniblog->posts) {
 
 		$comments = $db->get_results("
@@ -292,7 +305,7 @@ function api_fetch_miniblog($miniblog_id = 0) {
 				// saturs tiek pārveidots atbilstoši droīda iespējām
 				if ($comment->removed) {
 					$comment->text = '<em>Ieraksts dzēsts!</em>';
-					$comment->text_images = array();
+					$comment->text_images = [];
 				} else {
 					$comment->text_images = api_format_text($comment->text);
 					$cnt_images += count($comment->text_images);
@@ -308,15 +321,11 @@ function api_fetch_miniblog($miniblog_id = 0) {
 				$comment->vote_value = (int)$comment->vote_value;
 				
 				// pārbaudīs, vai šis lietotājs komentāru jau vērtējis
-				$voters = array();
+				$voters = [];
 				if (!empty($comment->vote_users)) {
 					$voters = unserialize($comment->vote_users);
-				}   
-				if (in_array($auth->id, $voters)) {
-					$comment->voted = true;
-				} else {
-					$comment->voted = false;
 				}
+                $comment->voted = in_array($auth->id, $voters);
 			
 				$arr_comments[$comment->reply_to][] = $comment;
 			}  
@@ -344,11 +353,11 @@ function api_fetch_miniblog($miniblog_id = 0) {
 	// lietotne vienmēr gaida objektu, tāpēc jāpievieno papildelements
 	$arr_comments[-1][] = 'safe';
 	
-	api_append(array(
+	api_append([
 		'miniblog' => $arr_miniblog,
 		'image_count' => (int)$cnt_images,
 		'comments' => $arr_comments
-	));
+	]);
 }
 
 /**

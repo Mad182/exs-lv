@@ -268,7 +268,7 @@ function api_fetch_miniblog($miniblog_id) {
 	$cnt_images = count($arr_images);
     
     // dati par lietotāju, kas aizslēdzis miniblogu
-    $closed_by = new arrayObject();
+    $closed_by = new arrayObject;
     if ($miniblog->closed_by !== '0') {
         $closed_user = get_user((int)$miniblog->closed_by);
         if ($closed_user) {

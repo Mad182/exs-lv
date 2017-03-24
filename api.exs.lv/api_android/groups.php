@@ -5,7 +5,7 @@
  *  Apstrādā pieprasījumus saistībā ar darbībām grupās.
  */
 
-require(API_PATH.'/shared/android.miniblogs.php');
+require API_PATH.'/shared/android.miniblogs.php';
 
 
 /**

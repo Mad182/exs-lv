@@ -5,7 +5,7 @@
  *  Apstrādā pieprasījumus saistībā ar vienreiz lejuplādējamu informāciju.
  */
  
-require(API_PATH.'/shared/shared.collections.php');
+require API_PATH.'/shared/shared.collections.php';
 
 /**
  *  Smaidiņu saraksta izdrukāšana.

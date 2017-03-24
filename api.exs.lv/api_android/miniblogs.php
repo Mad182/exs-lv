@@ -6,7 +6,7 @@
  *  jauna minibloga pievienošanu vai esoša komentēšanu, vērtēšanu u.c.
  */
 
-require(API_PATH.'/shared/android.miniblogs.php');
+require API_PATH.'/shared/android.miniblogs.php';
 
 /**
  *  Atgriezīs jaunāko miniblogu sarakstu.
