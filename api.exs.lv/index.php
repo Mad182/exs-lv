@@ -12,11 +12,11 @@
  *  Publicēta:  2015. gada 1. aprīlis
  */
 
-require('../exs.lv/configdb.php');
-require(CORE_PATH . '/includes/class.mdb.php');
-require(CORE_PATH . '/includes/class.auth.php');
-require(CORE_PATH . '/includes/functions.core.php');
-require(CORE_PATH . '/includes/site_loader.php');
+require '../exs.lv/configdb.php';
+require CORE_PATH . '/includes/class.mdb.php';
+require CORE_PATH . '/includes/class.auth.php';
+require CORE_PATH . '/includes/functions.core.php';
+require CORE_PATH . '/includes/site_loader.php';
 
 /*
 |--------------------------------------------------------------------------

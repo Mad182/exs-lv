@@ -3,7 +3,7 @@
  *  Android autentificēšanās apakšmodulis.
  */
 
-require(API_PATH.'/shared/shared.auth.php');
+require API_PATH.'/shared/shared.auth.php';
 
 /**
  *  Atgriež lietotāja xsrf tokenu.
