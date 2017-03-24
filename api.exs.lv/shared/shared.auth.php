@@ -49,7 +49,7 @@ function api_auth_login() {
     $auth->login($_POST['username'], $_POST['password'], $auth->xsrf);
     
     if (!$auth->ok) {
-        api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati.');
+        // api_log('Neizdevies autentificēšanās mēģinājums - kļūdaini piekļuves dati.');
         api_error('Nepareizs lietotājvārds un/vai parole.');
     } else { // autentificēšanās OK
     
@@ -117,7 +117,7 @@ function api_auth_logout() {
     
     if (!api_check_xsrf()) {
 		api_error('no hacking, pls');
-		api_log('Mēģinot izautorizēties, konstatēts XSRF uzbrukums.');
+		api_log('Mēģinot izautorizēties, nesakrita xsrf atslēga.');
 	} else if ($auth->ok) {
         $auth->logout();
         api_info('Lietotājs no sistēmas izautorizēts.');

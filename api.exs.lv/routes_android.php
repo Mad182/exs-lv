@@ -114,7 +114,8 @@ if (isset($_GET['banstatus'])) {
 } else if ($cat_private !== '') {
 
 	if (!$auth->ok) {
-        api_log('Neautentificējies lietotājs centās piekļūt nepubliskai adresei.');
+        // pārāk bieži, kad beidzas sesija
+        // api_log('Neautentificējies lietotājs centās piekļūt nepubliskai adresei.');
         api_error('Lai piekļūtu saturam, nepieciešams autentificēties.');
 	// pārbauda, vai lietotājam ir profila liegums
     } else if (!empty($busers) && !empty($busers[$auth->id])) {      
