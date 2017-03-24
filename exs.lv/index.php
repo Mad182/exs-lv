@@ -133,6 +133,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 		$data['in-tabs'] = get_latest_posts();
 	}
 	if (isset($_GET['loadmb'])) {
+        if (!isset($_GET['tab'])) $_GET['tab'] = '';
 		$data['mb-latest'] = get_latest_mbs($_GET['tab']);
 	}
 	echo json_encode($data);
