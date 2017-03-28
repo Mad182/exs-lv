@@ -5,35 +5,38 @@
  */
 $robotstag[] = 'noindex';
 
-require(LIB_PATH . '/facebook-php-sdk/src/base_facebook.php');
-require(LIB_PATH . '/facebook-php-sdk/src/facebook.php');
-
-$facebook = new Facebook([
-	'appId' => $fb_api_id,
-	'secret' => $fb_api_key
+$facebook = new \Facebook\Facebook([
+	'app_id' => $fb_api_id,
+	'app_secret' => $fb_api_key,
+	'default_graph_version' => 'v2.8'
 ]);
 
-$user = $facebook->getUser();
+$helper = $facebook->getRedirectLoginHelper();
+$permissions = ['user_likes'];
+
 $fb_like = false;
 
-if ($user) {
-	try {
-		// proceed knowing you have a logged in user who's authenticated
-		$me = $facebook->api('/me');
+$me = null;
 
-		// noskaidro vai lietotajs ir uzspiedis "like"
-		$likes = $facebook->api("/me/likes/160566810630384");
-		if (!empty($likes['data'])) {
-			$fb_like = true;
-		}
-	} catch (FacebookApiException $e) {
-		error_log($e);
-		$user = null;
-	}
+try {
+	$accessToken = $helper->getAccessToken();
+
+	$response = $facebook->get('/me', $accessToken);
+	$me = $response->getGraphUser();
+
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  // When Graph returns an error
+ // echo 'Graph returned an error: ' . $e->getMessage();
+ // exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  // When validation fails or other local issues
+  //echo 'Facebook SDK returned an error: ' . $e->getMessage();
+ // exit;
 }
 
-if (!empty($me)) {
 
+if (!empty($me)) {
+	pr($me);
 	if (!empty($me['id'])) {
 		$userinfo = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . sanitize($me['id']) . "'");
 		if (!$userinfo) {
@@ -241,9 +244,7 @@ if (!empty($me)) {
 		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];
 	}
 
-	redirect($facebook->getLoginUrl(['redirect_uri' => $protocol . $_SERVER['HTTP_HOST'] . '/fb-login/', 'scope' => 'user_likes']));
-	/* $loginUrl = $facebook->getLoginUrl();
-	  $tpl->newBlock('fb-login');
-	  $tpl->assign('link', $loginUrl); //Show the button */
+	redirect($helper->getLoginUrl($protocol . $_SERVER['HTTP_HOST'] . '/fb-login', $permissions));
+
 }
 
