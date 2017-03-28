@@ -59,10 +59,11 @@ $steam_login_page = ""; 	//uz kurieni redirektēt pēc logina
 $embed_ly_key = 'your_key';
 
 //include folderi
-define('CORE_PATH', '/home/www/exs.lv');
-define('IMG_PATH', '/home/www/img.exs.lv');
-define('LIB_PATH', '/home/www/libs');
-define('API_PATH', '/home/www/api.exs.lv');
+define('ROOT_PATH', '/home/www');
+define('CORE_PATH', ROOT_PATH . '/exs.lv');
+define('IMG_PATH', ROOT_PATH . '/img.exs.lv');
+define('LIB_PATH', ROOT_PATH . '/libs');
+define('API_PATH', ROOT_PATH . '/api.exs.lv');
 
 // paziņojums ja lapā tiek veikti darbi un tā nav piejama
 //echo(file_get_contents(CORE_PATH . '/tmpl/maintenance.tpl'));

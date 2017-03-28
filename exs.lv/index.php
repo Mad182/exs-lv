@@ -10,6 +10,9 @@
 require('configdb.php');
 
 /* ielādē kopīgos failus */
+
+require(ROOT_PATH  . '/vendor/autoload.php');
+
 require(CORE_PATH . '/includes/class.mdb.php');
 require(CORE_PATH . '/includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
