@@ -36,7 +36,7 @@ try {
 
 
 if (!empty($me)) {
-	pr($me);
+
 	if (!empty($me['id'])) {
 		$userinfo = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . sanitize($me['id']) . "'");
 		if (!$userinfo) {
