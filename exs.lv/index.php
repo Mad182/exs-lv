@@ -10,6 +10,9 @@
 require('configdb.php');
 
 /* ielādē kopīgos failus */
+
+require(ROOT_PATH  . '/vendor/autoload.php');
+
 require(CORE_PATH . '/includes/class.mdb.php');
 require(CORE_PATH . '/includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
@@ -107,6 +110,12 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 }
 
+// #muga medaļas
+if ($auth->ok === true && $auth->id === '115' &&
+        isset($_GET['action']) && $_GET['action'] === 'muga') {
+    set_muga_awards();
+}
+
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
 if ($auth->ok === true) {
 	if ($new_messages = $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = " . $auth->id . " AND `is_read` = 0")) {
@@ -133,6 +142,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 		$data['in-tabs'] = get_latest_posts();
 	}
 	if (isset($_GET['loadmb'])) {
+        if (!isset($_GET['tab'])) $_GET['tab'] = '';
 		$data['mb-latest'] = get_latest_mbs($_GET['tab']);
 	}
 	echo json_encode($data);
@@ -190,7 +200,7 @@ if (isset($_GET['u'])) {
 	include(CORE_PATH . '/modules/core/user.php');
 } elseif (isset($_GET['f'])) {
 	redirect('/friends/' . intval($_GET['f']), true);
-} elseif (isset($_GET['r'])) {
+} elseif (isset($_GET['r']) && $_GET['viewcat'] !== 'ES_SPAMOJU_SUDUS') {
 	include(CORE_PATH . '/modules/core/usertopics.php');
 } elseif (isset($_GET['b'])) {
 	redirect('/bookmarks/' . intval($_GET['b']), true);

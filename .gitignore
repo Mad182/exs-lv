@@ -41,3 +41,4 @@
 /dump.exs.lv/*
 /phpmyadmin/*
 /.*
+/vendor/*
