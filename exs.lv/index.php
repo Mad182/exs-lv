@@ -200,7 +200,7 @@ if (isset($_GET['u'])) {
 	include(CORE_PATH . '/modules/core/user.php');
 } elseif (isset($_GET['f'])) {
 	redirect('/friends/' . intval($_GET['f']), true);
-} elseif (isset($_GET['r'])) {
+} elseif (isset($_GET['r']) && $_GET['viewcat'] !== 'ES_SPAMOJU_SUDUS') {
 	include(CORE_PATH . '/modules/core/usertopics.php');
 } elseif (isset($_GET['b'])) {
 	redirect('/bookmarks/' . intval($_GET['b']), true);
