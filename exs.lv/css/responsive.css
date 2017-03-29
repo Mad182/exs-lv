@@ -5711,3 +5711,40 @@ p.images-5 img {
 .cluetip-userprofile:hover {
     text-decoration:none;
 }
+
+/* custom profila apbalvojumu piešķiršanas sadaļa */
+.ca-form {
+    padding:10px 20px;
+	margin:10px 3px;
+	border:1px solid #EBEBEB;
+	background:rgb(252, 252, 252);
+    box-sizing:border-box;
+}
+.ca-form form {
+   padding:10px 0;
+   margin-bottom:0;
+}
+.ca-form form input[type=submit] {
+    float:right;
+}
+.ca-list {
+    list-style:none;    
+    margin-left:0;
+}
+.ca-list li {
+    display:table;
+    margin-bottom:20px;
+}
+.ca-list .ca-image-block {
+    width:50px;
+    display:table-cell;
+}
+.ca-list .ca-title-block {
+    width:500px;
+    display:table-cell;
+    padding-bottom:10px;
+    border-bottom:1px solid #ddd;
+}
+.ca-form input[type=text] {
+    width:400px;
+}

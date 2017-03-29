@@ -194,6 +194,9 @@
 								<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
 								<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
 								<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
+								<!-- START BLOCK : user-modlink-adm -->
+								<li{cat-sel-2387}><a href="/custom_awards">Profila apbalvojumi</a></li>
+								<!-- END BLOCK : user-modlink-adm -->
 							</ul>
 						</li>
 						<!-- END BLOCK : user-modlink-->
