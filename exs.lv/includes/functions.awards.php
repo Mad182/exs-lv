@@ -790,6 +790,8 @@ function update_awards($user) {
  */
 function set_muga_awards() {
     global $db, $m, $img_server;
+    
+    return false;
 
     $unique_users[32284] = ['MGP', 0]; // četru stirnu grupas admins
     

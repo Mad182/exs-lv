@@ -110,12 +110,6 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 }
 
-// #muga medaļas
-if ($auth->ok === true && $auth->id === '115' &&
-        isset($_GET['action']) && $_GET['action'] === 'muga') {
-    set_muga_awards();
-}
-
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
 if ($auth->ok === true) {
 	if ($new_messages = $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = " . $auth->id . " AND `is_read` = 0")) {
@@ -282,6 +276,9 @@ if ($skin === 'main') {
 
 		if (im_mod()) {
 			$tpl->newBlock('user-modlink');
+			if ($auth->id == 1 || $auth->id == 115) {
+				$tpl->newBlock('user-modlink-adm');
+			}
 			$tpl->newBlock('user-approvelink');
 			$new_approve = $db->get_var("SELECT count(*) FROM `approve` WHERE `removed` = 0 AND `lang` = '$lang'");
 			if ($new_approve) {
