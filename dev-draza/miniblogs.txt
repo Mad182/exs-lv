@@ -1,0 +1,81 @@
+/**
+ *  Saraksts ar failiem, kas saistīti ar miniblogiem.
+ *
+ *  Ļoti iespējams, ka kaut kas ir nejauši izlaists.
+ *  Saraksts atbilst situācijai 30.03.2017. (Edgars)
+ */
+
+/*
+|--------------------------------------------------------------------------
+|   exs.lv
+|--------------------------------------------------------------------------
+*/
+
+// sīkumi, ielādējamo moduļu noteikšana
+exs.lv/index.php
+
+// miniblogu jaunumi sākumlapā
+exs.lv/modules/wall/tab_wall.php
+
+// lietotāja mb saraksta skats un atvērta mb skats
+exs.lv/modules/core/miniblog.php
+
+// ??? (nevarēju atrast, kad tiek izmantoti)
+exs.lv/miniblogs/*
+
+// grupas miniblogu cilne
+exs.lv/modules/group.php
+
+// šeit nonāk pieprasījumi no atvērta mb, lai caur json ielādētu jaunāko saturu
+exs.lv/json_mb.php 
+
+// dažādas funkcijas, kā post_mb() u.tml.
+exs.lv/includes/functions.core.php
+
+// mentionu apstrāde miniblogu saturā
+exs.lv/includes/class.mention.php
+
+// minibloga dzēšana
+exs.lv/modules/mb-delete/*
+
+// minibloga rediģēšana
+exs.lv/modules/mb-edit/*
+
+// ???
+exs.lv/modules/mb-mobile/*
+
+// miniblogu skaita grafiks gada griezumā
+exs.lv/modules/mb-stats/*
+
+// json pieprasījumi, lai skatītu dzēsta komentāra saturu
+exs.lv/modules/mb-view/*
+  
+
+  
+/*
+|--------------------------------------------------------------------------
+|   m.exs.lv
+|--------------------------------------------------------------------------
+*/
+
+// šeit nonāk pieprasījumi no atvērta mb, lai caur json ielādētu jaunāko saturu
+m.exs.lv/json_mb.php 
+
+// miniblogu jaunumi sākumlapā
+m.exs.lv/modules/wall/*
+
+
+/*
+|--------------------------------------------------------------------------
+|   api.exs.lv
+|--------------------------------------------------------------------------
+*/
+
+// šeit nonāk visi ar miniblogiem saistītie pieprasījumi;
+// pēc adreses nosaka, kādas miniblogu funkcijas jāizsauc tālāk
+api.exs.lv/api_android/miniblogs.php
+api.exs.lv/api_ios/miniblogs.php
+
+// miniblogu funkcijas
+api.exs.lv/shared/android.miniblogs.php
+api.exs.lv/shared/ios.miniblogs.php

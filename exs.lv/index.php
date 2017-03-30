@@ -110,6 +110,15 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 }
 
+// 1. aprīlis 2017.
+if ((int)$auth->id === 115 && isset($_GET['aprilfools'])) {
+    if (isset($_SESSION['april'])) {
+        $_SESSION['april'] = !$_SESSION['april'];
+    } else {
+        $_SESSION['april'] = true;
+    }    
+}
+
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
 if ($auth->ok === true) {
 	if ($new_messages = $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = " . $auth->id . " AND `is_read` = 0")) {

@@ -834,7 +834,7 @@ function set_muga_awards() {
     
     if ($users_in_group) {
         foreach ($users_in_group as $single_user) {
-            if (!in_array((int)$single_user->id, $unique_users)) continue;
+            if (in_array((int)$single_user->id, $unique_users)) continue;
             $unique_users[(int)$single_user->id] = [$single_user->nick, 0];
         }
     }
