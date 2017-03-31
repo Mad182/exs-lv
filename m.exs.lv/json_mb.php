@@ -100,13 +100,13 @@ if ($vals) {
 
 
 		//labot (ja ieraksts jau nav dzēsts)
-		if ($val->mb_removed == 0 && !$intro && ($val->date > time() - 1800 || ($auth->level == 2 && $val->author == $auth->id && $val->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
+		if ($val->mb_removed == 0 && ($val->date > time() - 1800 || ($auth->level == 2 && $val->author == $auth->id && $val->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
 				(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))) {
 			$out .= ' <a href="/edit/' . $val->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 		}
 
 		//dzēst (ja ieraksts jau nav dzēsts)
-		if ($val->mb_removed == 0 && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
+		if ($val->mb_removed == 0 && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
 			$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 		}
 
