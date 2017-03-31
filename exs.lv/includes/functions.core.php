@@ -726,7 +726,7 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
      * 1. aprīļa joks
      * aizvieto rakstītāja un visu pieminēto cilvēku profila ikonas
      */
-    if (is_fools_day())
+    if (is_fools_day()) {
         /*
          * Arraya keys - vārds kurš jāatrod
          * Arraya values - decos tipa arrays, kas satur profila ikonas aprakstu
@@ -779,18 +779,19 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
             ]
         ];
 
-    global $db, $auth;
-    foreach ($decosChange as $word => $deco) {
-        if (strpos(strtolower($text), $word) !== false) {
-            $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$auth->id'");
-            // Ja ir padomā labāki veidi kā atrast pieminētos, I'm open to ideas
-            preg_match_all('<a class="post-mention" href="\/user\/([0-9]+)">', $text, $mentionIds, PREG_SET_ORDER);
-            //Katram pieminētajam lietotājam postā pievienojam ikonu
-            foreach ($mentionIds as $match){
-                $userId = (int)$match[1];
-                $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$userId'");
+        global $db, $auth;
+        foreach ($decosChange as $word => $deco) {
+            if (strpos(strtolower($text), $word) !== false) {
+                $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$auth->id'");
+                // Ja ir padomā labāki veidi kā atrast pieminētos, I'm open to ideas
+                preg_match_all('<a class="post-mention" href="\/user\/([0-9]+)">', $text, $mentionIds, PREG_SET_ORDER);
+                //Katram pieminētajam lietotājam postā pievienojam ikonu
+                foreach ($mentionIds as $match) {
+                    $userId = (int)$match[1];
+                    $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$userId'");
+                }
+                break;
             }
-            break;
         }
     }
 
