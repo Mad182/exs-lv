@@ -129,7 +129,7 @@ if ($resps) {
 		}
 
 		//labot (ja ieraksts jau nav dzēsts)
-		if ($resp->mb_removed == 0 && !$auth->mobile && !$intro && ($resp->date > time() - 1800 || ($auth->level == 2 && $resp->author == $auth->id && $resp->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
+		if ($resp->mb_removed == 0 && !$auth->mobile && ($resp->date > time() - 1800 || ($auth->level == 2 && $resp->author == $auth->id && $resp->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
 				(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $resp->author == $auth->id))) {
 			$out .= ' <a href="/edit/' . $resp->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 		}
