@@ -9,7 +9,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 	$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mbid' AND `removed` = 0 AND `lang` = '$lang'");
 
 	if (!empty($mb) && $mb->removed == 0 &&
-			(strtotime($mb->date) > time() - 1860 || $auth->level == 1 || $auth->id == 115) &&
+			(strtotime($mb->date) > time() - 111860 || $auth->level == 1 || $auth->id == 115) &&
 			(im_mod() || (!$mb->closed && $auth->karma >= $min_post_edit && $mb->author == $auth->id))) {
 
 		if (isset($_POST['submit-changes']) && !empty($_POST['text']) && check_token('editmb', $_POST['xsrf_token'])) {
@@ -57,7 +57,7 @@ if ($auth->ok && isset($_GET['var1'])) {
 		$tpl->newBlock('tinymce-enabled');
 
 	} else {
-		if (strtotime($mb->date) < time() - 1860) {
+		if (strtotime($mb->date) < time() - 111860) {
 			set_flash('Šo ierakstu vairs nevar labot!', 'error');
 		} else {
 			set_flash('Tev nav tiesību labot šo ierakstu!', 'error');

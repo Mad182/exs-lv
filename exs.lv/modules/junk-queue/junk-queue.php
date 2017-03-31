@@ -102,7 +102,7 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'wtf') {
 	}
 }
 
-$junks = $db->get_results("SELECT * FROM `junk_queue` WHERE `approved` = 0 ORDER BY `id` DESC LIMIT 100");
+$junks = $db->get_results("SELECT * FROM `junk_queue` WHERE `approved` = 0 ORDER BY `id` DESC LIMIT 50");
 
 if (!empty($junks)) {
 	$tpl->newBlock('junk-queue');
