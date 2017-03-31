@@ -13,19 +13,19 @@ if (!im_mod()) {
  */
 if (isset($_POST['give_deco_all'])) {
     if ($m->get('give_deco_all') === false) {
-        $decosAll = array(); # Te glabājam visas ielasītās ikonas
+        $decosAll = []; # Te glabājam visas ielasītās ikonas
         if ($handle = opendir('bildes/fugue-icons/')) {
             while (false !== ($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
-                    list($width, $height) = getimagesize("bildes/fugue-icons/".$file);
-                    if ($height == 0 || $width == 0) continue;
-                    $ratio = $width / $height;
+                    $imageData = getimagesize("bildes/fugue-icons/".$file);
+                    if ( $imageData && $imageData[0] == 0 || $imageData[1] == 0) continue;
+                    $ratio = $imageData[0] / $imageData[1];
                     /*
                      * Izrādās, ka ne visas ikonas direktorijā ir 16x16px, bet ņemot vērā to, ka
-                     * tās pēc tam tiek resizotas uz 16x16 galvenais ir, lai tai būtu 1:! ratio
+                     * tās pēc tam tiek resizotas uz 16x16 galvenais ir, lai tai būtu 1:1 ratio
                      */
-                    if ($width <= 32 && $height <= 32 && $ratio == 1){
-                        $allDecos[] = "/bildes/fugue-icons/" . $file;
+                    if ($imageData[0] <= 32 && $imageData[1] <= 32 && $ratio == 1){
+                        $decosAll[] = "/bildes/fugue-icons/" . $file;
                     }
                 }
             }
@@ -36,38 +36,44 @@ if (isset($_POST['give_deco_all'])) {
 
         //Katram lietotājam pievienojam nejauši izvēlētu ikonu
         foreach ($decoUsers as $decoUser){
-            $decos = array();
-            $decos[] = [
+            $decos = [[
                 'title' => h(''),
-                'icon' => h($allDecos[rand(0, sizeof($allDecos)-1)])
-            ];
+                'icon' => h($decosAll[rand(0, sizeof($decosAll)-1)])
+            ]];
             $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize($decos)) . "' WHERE `id` = '$decoUser->id'");
         }
 
-        $auth->log('Pievienoja visiem lietotājiem profila ikonu', 'users');
+        set_flash('Veiksmīgi pievienotas ikonas ' . sizeof($decoUsers). ' lietototājiem');
+        $auth->log('Pievienoja' . sizeof($decoUsers) .' lietotājiem profila ikonu', 'users');
         $m->set('give_deco_all', 1, 600);
     }
     else {
+        set_flash("Apbalvojumi netika pievienoti, jo šī darbība tiek pārāk bieži lietota");
         $auth->log('Neveiksmīgi mēģināja pievienot visiem lietotājiem profila ikonu', 'users');
     }
+
+    redirect('/user_decos');
 
 }
 
 /*
  * Noņem visiem lietotājiem ikonas
  */
+
 if (isset($_POST['remove_deco_all'])) {
     if ($m->get('remove_deco_all') === false) {
         $new = sanitize(serialize(array()));
         $db->query("UPDATE `users` SET `decos` = '$new'");
         $auth->log('Noņēma profila ikonas visiem', 'users');
+        set_flash('Veiksmīgi noņemtas ikonas visiem lietototājiem');
 
-        $m->set('remove_deco_all', 1, 600);
+        $m->set('remove_deco_all', 1, 1);
     }
     else {
+        set_flash("Apbalvojumi netika noņemti, jo šī darbība tiek lietota pārāk bieži");
         $auth->log('Neveiksmīgi mēģināja noņemt visiem lietotājiem profila ikonu', 'users');
     }
-
+    redirect('/user_decos');
 }
 
 
@@ -84,11 +90,13 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 
 	if (!empty($user)) {
 		if (!$user->decos == '') {
+            //Uztaisam arrayu
 			$decos = [];
 		} else {
 			$decos = unserialize($user->decos);
 		}
 
+		//Ieliekam iepriekš uztaisītajā arrayā vēl vienu arrayu. What is this
 		$decos[] = [
 			'title' => h($_POST['title']),
 			'icon' => h($_POST['icon'])
@@ -99,8 +107,7 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 		$db->query("UPDATE `users` SET `decos` = '" . sanitize($decos) . "' WHERE `id` = '$user->id'");
 		$auth->log('Pievienoja profila ikonu (' . h($_POST['icon']) . ')', 'users', $user->id);
 
-		header('Location: /' . $category->textid);
-		exit;
+        redirect('/user_decos');
 	}
 }
 
@@ -133,8 +140,7 @@ foreach ($listdecos as $decos) {
 			$db->query("UPDATE `users` SET `decos` = '" . sanitize($new) . "' WHERE `id` = '$decos->id'");
 			$auth->log('Noņēma profila ikonu', 'users', $decos->id);
 
-			header('Location: /' . $category->textid);
-			exit;
+            redirect('/user_decos');
 		}
 	} else {
 		$db->query("UPDATE users SET decos = '' WHERE id = '$decos->id'");
