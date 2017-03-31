@@ -340,9 +340,12 @@ $(document).ready(function($) {
 		'transitionOut': 'none'
 	});
 
-	$('.lightbox').fancybox({
-		'titleShow': false
+	/* rakstu saturā, rakstu komentāros, miniblogos/vēstulēs/profilā */
+	$('#full-story, #comments, .tabMain').on('click', '.lightbox', function(e) {
+		$.fancybox({href:$(this).attr('href')}, {'titleShow':false});
+		e.preventDefault();
 	});
+	/*$('.lightbox').fancybox({'titleShow': false});*/
 
 	$('body').on('click', '.plus, .minus', function(e) {
 		e.preventDefault();
