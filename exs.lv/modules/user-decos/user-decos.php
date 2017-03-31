@@ -8,18 +8,33 @@ if (!im_mod()) {
 }
 
 
+/*
+ * Pievieno visiem lietotājiem nejauši izvēlētas ikonas
+ */
 if (isset($_POST['give_deco_all'])) {
     if ($m->get('give_deco_all') === false) {
-        $decosAll = array();
+        $decosAll = array(); # Te glabājam visas ielasītās ikonas
         if ($handle = opendir('bildes/fugue-icons/')) {
             while (false !== ($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
-                    $allDecos[] = "/bildes/fugue-icons/" . $file;
+                    list($width, $height) = getimagesize("bildes/fugue-icons/".$file);
+                    if ($height == 0 || $width == 0) continue;
+                    $ratio = $width / $height;
+                    /*
+                     * Izrādās, ka ne visas ikonas direktorijā ir 16x16px, bet ņemot vērā to, ka
+                     * tās pēc tam tiek resizotas uz 16x16 galvenais ir, lai tai būtu 1:! ratio
+                     */
+                    if ($width <= 32 && $height <= 32 && $ratio == 1){
+                        $allDecos[] = "/bildes/fugue-icons/" . $file;
+                    }
                 }
             }
             closedir($handle);
         }
+        // Ievācam visus lietotājus, kas ir bijuši aktīvi pēdējās 30 dienās
         $decoUsers = $db->get_results("SELECT id FROM users where decos='' AND lastseen BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()");
+
+        //Katram lietotājam pievienojam nejauši izvēlētu ikonu
         foreach ($decoUsers as $decoUser){
             $decos = array();
             $decos[] = [
@@ -38,6 +53,9 @@ if (isset($_POST['give_deco_all'])) {
 
 }
 
+/*
+ * Noņem visiem lietotājiem ikonas
+ */
 if (isset($_POST['remove_deco_all'])) {
     if ($m->get('remove_deco_all') === false) {
         $new = sanitize(serialize(array()));
