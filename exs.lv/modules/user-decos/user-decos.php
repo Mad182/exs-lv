@@ -7,8 +7,6 @@ if (!im_mod()) {
 	redirect();
 }
 
-global $m;
-
 
 if (isset($_POST['give_deco_all'])) {
     if ($m->get('give_deco_all') === false) {
@@ -32,7 +30,6 @@ if (isset($_POST['give_deco_all'])) {
         }
 
         $auth->log('Pievienoja visiem lietotājiem profila ikonu', 'users');
-        echo 'a';
         $m->set('give_deco_all', 1, 600);
     }
     else {
