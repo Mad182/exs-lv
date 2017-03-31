@@ -17,10 +17,12 @@ exs.lv/index.php
 // miniblogu jaunumi sākumlapā
 exs.lv/modules/wall/tab_wall.php
 
-// lietotāja mb saraksta skats un atvērta mb skats
+// lietotāja mb saraksta skats un atvērta mb skats;
+// izsauc arī pie komentāra pievienošanas miniblogā
+// (index.php pārtver /say/ un tā vietā izpilda šo failu)
 exs.lv/modules/core/miniblog.php
 
-// ??? (nevarēju atrast, kad tiek izmantoti)
+// ??? (izskatās, ka netiek izmantots vispār)
 exs.lv/miniblogs/*
 
 // grupas miniblogu cilne
@@ -41,7 +43,7 @@ exs.lv/modules/mb-delete/*
 // minibloga rediģēšana
 exs.lv/modules/mb-edit/*
 
-// ???
+// izsauc no js vai arī nospiežot uz jaunāko mb cilnes
 exs.lv/modules/mb-mobile/*
 
 // miniblogu skaita grafiks gada griezumā
