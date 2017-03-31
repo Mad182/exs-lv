@@ -2192,8 +2192,8 @@ function get_avatar($user, $size = 'm', $ignore_mobile = false) {
     if (is_fools_day()) {
         // šādi mēģinam pārtvert, ja pieprasa grupas avataru
         // (kuru nevēlamies mainīt uz lietotāja avataru)
-        if (!isset($user->owner)) {
-            $tmp_av = get_wrong_avatar($tmp_av);
+        if (!isset($user->owner) && isset($user->av_alt)) {
+            $tmp_av = get_wrong_avatar($tmp_av, $user->av_alt);
         }
     }
     
@@ -2825,7 +2825,7 @@ function is_fools_day() {
 /**
  *  1. aprīlis 2017.
  */
-function get_wrong_avatar($curr_av_key) {
+function get_wrong_avatar($curr_av_key, $av_alt) {
     global $db, $m, $img_server;
     
     $curr_av_key = trim($curr_av_key);
@@ -2842,20 +2842,20 @@ function get_wrong_avatar($curr_av_key) {
     }
     
     $available_count = (int) $db->get_var("
-        SELECT count(*) FROM `avatars_foolsday`
-    ");
+        SELECT count(*) FROM `avatars_foolsday` WHERE `av_alt` = ".(int)$av_alt
+    );
     if ($available_count < 1) return '';
     
     $rand = rand(0, $available_count - 1);
     
     $new_avatar = $db->get_row("
-        SELECT `img_title` FROM `avatars_foolsday`
+        SELECT `img_title` FROM `avatars_foolsday` WHERE `av_alt` = ".(int)$av_alt."
         LIMIT ".$rand.", 1
     ");
     if (!$new_avatar) return '';
     
-    // pieglabā uz 3h, pēc tam atkal nomaina :)
-    $m->set('fools_av_'.$curr_av_key, $new_avatar->img_title, 10800);
+    // pieglabā uz 2h, pēc tam atkal nomaina :)
+    $m->set('fools_av_'.$curr_av_key, $new_avatar->img_title, 7200);
     
     return $new_avatar->img_title;
 }
