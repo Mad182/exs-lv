@@ -1997,7 +1997,8 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 				if(empty($group_id)) {
 					$spec = ' class="group"';
 				}
-				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
+                // 1. aprīlis 2017.
+				$group = $db->get_row("SELECT `title`,`avatar`,`strid`,`owner` FROM `clans` WHERE `id` = '$mb->groupid'");
 
 				if ($group->avatar && empty($group_id)) {
 					$group->av_alt = 1;
@@ -2184,39 +2185,51 @@ function human_filesize($bytes, $decimals = 2) {
  */
 function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 	global $auth, $img_server;
+    
+    // 1. aprīlis 2017.
+    $tmp_av = $user->avatar;
+    
+    if (is_fools_day()) {
+        // šādi mēģinam pārtvert, ja pieprasa grupas avataru
+        // (kuru nevēlamies mainīt uz lietotāja avataru)
+        if (!isset($user->owner)) {
+            $tmp_av = get_wrong_avatar($tmp_av);
+        }
+    }
+    
 	if (empty($auth->mobile) || $ignore_mobile) {
 		$path = 'medium';
 		$real_path = 'useravatar';
-		if (($user->av_alt || !$user->avatar) && $size == 's') {
+		if (($user->av_alt || !$tmp_av) && $size == 's') {
 			$path = 'small';
 			$real_path = 'u_small';
-		} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
+		} elseif (($user->av_alt || !$tmp_av) && $size == 'l') {
 			$path = 'large';
 			$real_path = 'u_large';
 		}
-		if (empty($user->avatar)) {
-			$user->avatar = 'none.png';
+		if (empty($tmp_av)) {
+			$tmp_av = 'none.png';
 		}
 
 		//fix for avatars on localhost
 		if (empty($img_server)) {
 
-			if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $user->avatar)) {
+			if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $tmp_av)) {
 				//local avatar
-				return '/dati/bildes/' . $real_path . '/' . $user->avatar;
+				return '/dati/bildes/' . $real_path . '/' . $tmp_av;
 			} else {
 				//try to load from img.exs.lv anyway
-				return '//img.exs.lv/userpic/' . $path . '/' . $user->avatar;
+				return '//img.exs.lv/userpic/' . $path . '/' . $tmp_av;
 			}
 		} else {
-			return $img_server . '/userpic/' . $path . '/' . $user->avatar;
+			return $img_server . '/userpic/' . $path . '/' . $tmp_av;
 		}
 	} else {
-		if (empty($user->avatar)) {
-			$user->avatar = 'none.png';
+		if (empty($tmp_av)) {
+			$tmp_av = 'none.png';
 		}
 
-		return 'https://m.exs.lv/av/' . $user->avatar;
+		return 'https://m.exs.lv/av/' . $tmp_av;
 	}
 }
 
@@ -2779,3 +2792,70 @@ function array_average_nonzero($arr) {
     return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
 }
 
+/**
+ *  1. aprīlis 2017.
+ */
+function is_fools_day() {
+    global $m, $auth;
+
+    if (isset($_SESSION['april']) && $_SESSION['april'] === true) {
+        return true;
+    }
+
+    if (($val = $m->get('april_fools_active')) !== false) {
+        return (bool) $val;
+    }
+    
+    $curr_year = date('Y');
+    $curr_time = new DateTime();
+    $day_begin = new DateTime($curr_year.'-04-01 05:59');
+    $day_end = new DateTime($curr_year.'-04-02 00:00');
+    
+    if ($curr_time->getTimestamp() > $day_begin->getTimestamp() && 
+            $curr_time->getTimestamp() < $day_end->getTimestamp()) {
+        $m->set('april_fools_active', 1, 60);
+        return true;
+    } else {
+        $m->set('april_fools_active', 0, 900);
+    }
+
+    return false;
+}
+
+/**
+ *  1. aprīlis 2017.
+ */
+function get_wrong_avatar($curr_av_key) {
+    global $db, $m, $img_server;
+    
+    $curr_av_key = trim($curr_av_key);
+    if (empty($curr_av_key)) return '';
+    
+    // no attēla atslēgas nolasa daļu aiz pēdējā "/"
+    // (lai neņemtu vērā, ka var pieprasīt 1 attēla dažādus izmērus)
+    $keys = explode('/', $curr_av_key);
+    $keys = array_reverse($keys);
+    $curr_av_key = $keys[0];
+    
+    if (($var = $m->get('fools_av_'.$curr_av_key)) !== false) {
+        return $var;
+    }
+    
+    $available_count = (int) $db->get_var("
+        SELECT count(*) FROM `avatars_foolsday`
+    ");
+    if ($available_count < 1) return '';
+    
+    $rand = rand(0, $available_count - 1);
+    
+    $new_avatar = $db->get_row("
+        SELECT `img_title` FROM `avatars_foolsday`
+        LIMIT ".$rand.", 1
+    ");
+    if (!$new_avatar) return '';
+    
+    // pieglabā uz 3h, pēc tam atkal nomaina :)
+    $m->set('fools_av_'.$curr_av_key, $new_avatar->img_title, 10800);
+    
+    return $new_avatar->img_title;
+}

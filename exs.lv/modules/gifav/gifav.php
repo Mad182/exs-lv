@@ -28,6 +28,11 @@ if ($avs) {
 	}
 }
 
+// 1. aprīlis 2017.
+if (is_fools_day()) {
+    $tpl->newBlock('av-change-not-available');
+}
+
 $user = $db->get_row("SELECT * FROM users WHERE id = '$auth->id'");
 
 if ($auth->ok && ($user->credit >= 5 || $owned)) {
@@ -38,7 +43,10 @@ if ($auth->ok && ($user->credit >= 5 || $owned)) {
 
 		$avrow = $db->get_row("SELECT * FROM `animations` WHERE `id` = '$av'");
 
-		if ($avrow->user_id == 0 && $user->credit >= 5) {
+        // 1. aprīlis 2017.
+		if (is_fools_day()) {
+            set_flash('.gif avatara nomaiņa šobrīd nav iespējama!', 'error');
+        } else if ($avrow->user_id == 0 && $user->credit >= 5) {
 			$db->query("UPDATE animations SET user_id = '$auth->id' WHERE id = '$av'");
 			$db->query("UPDATE `users` SET credit = credit-5, av_alt = '1', avatar = '$avrow->image' WHERE id = '$auth->id'");
 			redirect('/user/' . $auth->id);

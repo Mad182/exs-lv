@@ -220,7 +220,7 @@ if ($var1 === 'notifications') {
 		
 		$data = array(
 			'formatted' => api_fetch_user($profile->id, $profile->nick, $profile->level),
-			'avatar' => 'https://img.exs.lv/userpic/large/'.$profile->avatar,
+			'avatar' => api_get_user_avatar($profile, 'l'),
 			'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
 			'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
 			'last_seen' => 'pirms '.$time_ago,

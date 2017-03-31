@@ -429,6 +429,9 @@
 
 <!-- START BLOCK : user-profile-avatar-->
 <div class="tabMain">
+    <!-- START BLOCK : av-change-not-available -->
+    <p class="important-text">Uzmanību! Avatara maiņa šobrīd nav iespējama!</p>
+    <!-- END BLOCK : av-change-not-available -->
 	<form id="edit-profile" class="form" action="{page-url}" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Avatara maiņa</legend>
