@@ -2,6 +2,20 @@
 
 <p><a href="/deco_list">Ikonu saraksts</a> (right click - copy link location)</p>
 
+<form class="form" method="post" action="">
+	<fieldset>
+		<legend>Everyone gets an award icon</legend>
+		<div class="radio">
+			<label><input type="radio" name="give_deco_all" id="give_deco_all">Pievienot katram lietotājam apbalvojuma ikonu</label>
+			<label><input type="radio" name="remove_deco_all" id="remove_deco_all">Noņemt visiem apbalvojuma ikonas</label>
+		</div>
+		<p>
+			<input class="button primary" type="submit" name="submit" id="submit" value="Apstiprināt" />
+		</p>
+
+	</fieldset>
+</form>
+
 <table class="table">
 	<tr>
 		<th>title</th>
@@ -18,7 +32,6 @@
 	</tr>
 	<!-- END BLOCK : existing-deco-->
 </table>
-
 
 <form class="form" method="post" action="">
 	<fieldset>
