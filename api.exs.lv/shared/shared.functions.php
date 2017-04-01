@@ -25,6 +25,7 @@ function api_error($string = '') {
         $json_message = $string;
     }
     
+    
     // ios
     if ($lang === 4) {
         api_status(400);
@@ -353,9 +354,9 @@ function api_get_user_avatar($user, $size = 'm') {
     // 1. aprīlis 2017.
     if (isset($tmp_av) && is_fools_day()) {
         // šādi mēģinam pārtvert, ja pieprasa grupas avataru
-        // (kuru nevēlamies mainīt uz lietotāja avataru)
-        if (!isset($user->owner)) {
-            $tmp_av = get_wrong_avatar($tmp_av);            
+        // (kuru nevēlamies mainīt uz lietotāja avataru)=
+        if (!isset($user->owner) && isset($user->av_alt)) {
+            $tmp_av = get_wrong_avatar($tmp_av, $user->av_alt);
         }
     }
 
