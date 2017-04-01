@@ -721,6 +721,80 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 		$text = preg_replace_callback('/([\s|>])#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', [$hashtag, 'hashtag'], $text);
 	}
 
+
+    /*
+     * 1. aprīļa joks
+     * aizvieto rakstītāja un visu pieminēto cilvēku profila ikonas
+     */
+    if (is_fools_day()) {
+        /*
+         * Arraya keys - vārds kurš jāatrod
+         * Arraya values - decos tipa arrays, kas satur profila ikonas aprakstu
+         * un attēla atrašānās vietu
+         */
+        $decosChange = [
+            'avatar' => [
+                'title' => h('Gaisa kuģu mednieks'),
+                'icon' => h('/bildes/fugue-icons/' . 'spaceship.gif')
+            ],
+            'shattred' => [
+                'title' => h('You deserve turning back and going away'),
+                'icon' => h('/bildes/fugue-icons/' . 'arrow-return.png')
+            ],
+            'nauda' => [
+                'title' => h('Esmu diezgan sure, ka pirmais šo dabūs Svens'),
+                'icon' => h('/bildes/fugue-icons/' . 'money_dollar.png')
+            ],
+            'mārciņa' => [
+                'title' => h('Esmu diezgan sure, ka pirmais šo dabūs Svens'),
+                'icon' => h('/bildes/fugue-icons/' . 'money_dollar.png')
+            ],
+            'peni' => [
+                'title' => h('Give me the D'),
+                'icon' => h('/bildes/fugue-icons/' . 'smaids.png')
+            ],
+            'meme' => [
+                'title' => h('Drukāju mēmes'),
+                'icon' => h('/bildes/fugue-icons/' . 'printer.gif')
+            ],
+            'austri' => [
+                'title' => h('#MUGA'),
+                'icon' => h('/bildes/fugue-icons/' . 'tire.gif')
+            ],
+            'valts' => [
+                'title' => h('#MUGA'),
+                'icon' => h('/bildes/fugue-icons/' . 'tire.png')
+            ],
+            'beef' => [
+                'title' => h('Gaļēdājs'),
+                'icon' => h('/bildes/fugue-icons/' . 'beef.png')
+            ],
+            'test' => [
+                'title' => h('Man patīk spamot'),
+                'icon' => h('/bildes/fugue-icons/' . 'animal-monkey-sulky.png')
+            ],
+            'mod' => [
+                'title' => h('Ceri vien'),
+                'icon' => h('/bildes/fugue-icons/' . 'warning.png')
+            ]
+        ];
+
+        global $db, $auth;
+        foreach ($decosChange as $word => $deco) {
+            if (strpos(strtolower($text), $word) !== false) {
+                $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$auth->id'");
+                // Ja ir padomā labāki veidi kā atrast pieminētos, I'm open to ideas
+                preg_match_all('<a class="post-mention" href="\/user\/([0-9]+)">', $text, $mentionIds, PREG_SET_ORDER);
+                //Katram pieminētajam lietotājam postā pievienojam ikonu
+                foreach ($mentionIds as $match) {
+                    $userId = (int)$match[1];
+                    $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$userId'");
+                }
+                break;
+            }
+        }
+    }
+
 	return $text;
 }
 
