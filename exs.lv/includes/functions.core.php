@@ -757,11 +757,15 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
                 'title' => h('Drukāju mēmes'),
                 'icon' => h('/bildes/fugue-icons/' . 'printer.gif')
             ],
-            'austri' => [
+            'austr' => [
                 'title' => h('#MUGA'),
-                'icon' => h('/bildes/fugue-icons/' . 'tire.gif')
+                'icon' => h('/bildes/fugue-icons/' . 'tire.png')
             ],
-            'valts' => [
+            'valt' => [
+                'title' => h('#MUGA'),
+                'icon' => h('/bildes/fugue-icons/' . 'tire.png')
+            ],
+            'muga' => [
                 'title' => h('#MUGA'),
                 'icon' => h('/bildes/fugue-icons/' . 'tire.png')
             ],
