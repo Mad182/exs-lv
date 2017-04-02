@@ -900,6 +900,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'pager-numeric' => $pager['pages']
 				]);
 			}
+            
+            // poga ritināšanai līdz pašai augšai mobilajā versijā
+            if (isset($_GET['single']) && $auth->mobile) {
+                $tpl->newBlock('scroll-up-mobile');
+            }
 		}
 
 		// fiksē, cik daudz komentāru attiecīgajā grupā lietotājs ir jau lasījis

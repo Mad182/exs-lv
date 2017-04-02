@@ -1436,6 +1436,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			'page-sel-' . $article->id => ' class="selected"',
 			'cur-url' => '/read/' . $article->strid
 		]);
+        
+        // poga ritināšanai līdz pašai augšai mobilajā versijā
+        if ($auth->mobile) {
+            $tpl->newBlock('scroll-up-mobile');
+        }
 
 	} else {
 		set_flash('Tev nav atļauts apskatīt šo sadaļu!', 'error');
