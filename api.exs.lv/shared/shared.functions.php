@@ -326,11 +326,8 @@ function api_fill_link($string) {
  */
 function api_get_user_avatar($user, $size = 'm') {
 	global $auth, $img_server;
-    
-    // 1. aprīlis 2017.
-    $tmp_av = $user->avatar;
 	
-	if (!$user || empty($user->av_alt) || empty($tmp_av)) {
+	if (!$user || empty($user->av_alt) || empty($user->avatar)) {
 		return '';
 	}
 	
@@ -339,39 +336,31 @@ function api_get_user_avatar($user, $size = 'm') {
 	$real_path  = 'useravatar';
 	
 	// nepieciešamības gadījumā izmēru nomaina
-	if (($user->av_alt || !$tmp_av) && $size == 's') {
+	if (($user->av_alt || !$user->avatar) && $size == 's') {
 		$path       = 'small';
 		$real_path  = 'u_small';
-	} elseif (($user->av_alt || !$tmp_av) && $size == 'l') {
+	} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
 		$path       = 'large';
 		$real_path  = 'u_large';
 	}
 	
 	// rādīs silueta avataru, ja cits nebūs norādīts
-	if (empty($tmp_av)) {
-		$tmp_av = 'none.png';
+	if (empty($user->avatar)) {
+		$user->avatar = 'none.png';
 	}
-    // 1. aprīlis 2017.
-    if (isset($tmp_av) && is_fools_day()) {
-        // šādi mēģinam pārtvert, ja pieprasa grupas avataru
-        // (kuru nevēlamies mainīt uz lietotāja avataru)=
-        if (!isset($user->owner) && isset($user->av_alt)) {
-            $tmp_av = get_wrong_avatar($tmp_av, $user->av_alt);
-        }
-    }
 
 	// localhost avataru fix
 	if (empty($img_server)) {
 
-		if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $tmp_av)) {
+		if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $user->avatar)) {
 			//lokālais avatars
-			return 'http://img.exs.lv/dati/bildes/' . $real_path . '/' . $tmp_av;
+			return 'http://img.exs.lv/dati/bildes/' . $real_path . '/' . $user->avatar;
 		} else {
 			// tāpat mēģina nolasīt no img.exs.lv
-			return 'http://img.exs.lv/userpic/' . $path . '/' . $tmp_av;
+			return 'http://img.exs.lv/userpic/' . $path . '/' . $user->avatar;
 		}
 	} else {    
-		return $img_server . '/userpic/' . $path . '/' . $tmp_av;
+		return $img_server . '/userpic/' . $path . '/' . $user->avatar;
 	}
 }
 

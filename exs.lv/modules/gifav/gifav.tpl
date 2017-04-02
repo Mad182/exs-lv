@@ -12,9 +12,6 @@
 	</fieldset>
 </form>
 <!-- END BLOCK : import-->
-<!-- START BLOCK : av-change-not-available -->
-<p class="important-text">Uzmanību! Avatara maiņa šobrīd nav iespējama!</p>
-<!-- END BLOCK : av-change-not-available -->
 <form class="form" action="" method="post">
 	<fieldset>
 		<ul style="padding:0;margin:0;list-style:none">

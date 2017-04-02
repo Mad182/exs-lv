@@ -5748,13 +5748,3 @@ p.images-5 img {
 .ca-form input[type=text] {
     width:400px;
 }
-
-/* temp - april fools day */
-.important-text {
-	background:#ffeedc;
-	border:1px solid #FAAF56;
-	color:#f18512;
-	display:block;
-	margin:10px 0;
-	padding:10px 20px;
-}

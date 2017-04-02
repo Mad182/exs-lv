@@ -721,84 +721,6 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 		$text = preg_replace_callback('/([\s|>])#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', [$hashtag, 'hashtag'], $text);
 	}
 
-
-    /*
-     * 1. aprīļa joks
-     * aizvieto rakstītāja un visu pieminēto cilvēku profila ikonas
-     */
-    if (is_fools_day()) {
-        /*
-         * Arraya keys - vārds kurš jāatrod
-         * Arraya values - decos tipa arrays, kas satur profila ikonas aprakstu
-         * un attēla atrašānās vietu
-         */
-        $decosChange = [
-            'avatar' => [
-                'title' => h('Gaisa kuģu mednieks'),
-                'icon' => h('/bildes/fugue-icons/' . 'spaceship.gif')
-            ],
-            'shattred' => [
-                'title' => h('You deserve turning back and going away'),
-                'icon' => h('/bildes/fugue-icons/' . 'arrow-return.png')
-            ],
-            'nauda' => [
-                'title' => h('Esmu diezgan sure, ka pirmais šo dabūs Svens'),
-                'icon' => h('/bildes/fugue-icons/' . 'money_dollar.png')
-            ],
-            'mārciņa' => [
-                'title' => h('Esmu diezgan sure, ka pirmais šo dabūs Svens'),
-                'icon' => h('/bildes/fugue-icons/' . 'money_dollar.png')
-            ],
-            'peni' => [
-                'title' => h('Give me the D'),
-                'icon' => h('/bildes/fugue-icons/' . 'smaids.png')
-            ],
-            'meme' => [
-                'title' => h('Drukāju mēmes'),
-                'icon' => h('/bildes/fugue-icons/' . 'printer.gif')
-            ],
-            'austr' => [
-                'title' => h('#MUGA'),
-                'icon' => h('/bildes/fugue-icons/' . 'tire.png')
-            ],
-            'valt' => [
-                'title' => h('#MUGA'),
-                'icon' => h('/bildes/fugue-icons/' . 'tire.png')
-            ],
-            'muga' => [
-                'title' => h('#MUGA'),
-                'icon' => h('/bildes/fugue-icons/' . 'tire.png')
-            ],
-            'beef' => [
-                'title' => h('Gaļēdājs'),
-                'icon' => h('/bildes/fugue-icons/' . 'beef.png')
-            ],
-            'test' => [
-                'title' => h('Man patīk spamot'),
-                'icon' => h('/bildes/fugue-icons/' . 'animal-monkey-sulky.png')
-            ],
-            'mod' => [
-                'title' => h('Ceri vien'),
-                'icon' => h('/bildes/fugue-icons/' . 'warning.png')
-            ]
-        ];
-
-        global $db, $auth;
-        foreach ($decosChange as $word => $deco) {
-            if (strpos(strtolower($text), $word) !== false) {
-                $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$auth->id'");
-                // Ja ir padomā labāki veidi kā atrast pieminētos, I'm open to ideas
-                preg_match_all('<a class="post-mention" href="\/user\/([0-9]+)">', $text, $mentionIds, PREG_SET_ORDER);
-                //Katram pieminētajam lietotājam postā pievienojam ikonu
-                foreach ($mentionIds as $match) {
-                    $userId = (int)$match[1];
-                    $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize([$deco])) . "' WHERE `id` = '$userId'");
-                }
-                break;
-            }
-        }
-    }
-
 	return $text;
 }
 
@@ -2075,8 +1997,8 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 				if(empty($group_id)) {
 					$spec = ' class="group"';
 				}
-                // 1. aprīlis 2017.
-				$group = $db->get_row("SELECT `title`,`avatar`,`strid`,`owner` FROM `clans` WHERE `id` = '$mb->groupid'");
+                
+				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
 
 				if ($group->avatar && empty($group_id)) {
 					$group->av_alt = 1;
@@ -2264,50 +2186,39 @@ function human_filesize($bytes, $decimals = 2) {
 function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 	global $auth, $img_server;
     
-    // 1. aprīlis 2017.
-    $tmp_av = $user->avatar;
-    
-    if (is_fools_day()) {
-        // šādi mēģinam pārtvert, ja pieprasa grupas avataru
-        // (kuru nevēlamies mainīt uz lietotāja avataru)
-        if (!isset($user->owner) && isset($user->av_alt)) {
-            $tmp_av = get_wrong_avatar($tmp_av, $user->av_alt);
-        }
-    }
-    
 	if (empty($auth->mobile) || $ignore_mobile) {
 		$path = 'medium';
 		$real_path = 'useravatar';
-		if (($user->av_alt || !$tmp_av) && $size == 's') {
+		if (($user->av_alt || !$user->avatar) && $size == 's') {
 			$path = 'small';
 			$real_path = 'u_small';
-		} elseif (($user->av_alt || !$tmp_av) && $size == 'l') {
+		} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
 			$path = 'large';
 			$real_path = 'u_large';
 		}
-		if (empty($tmp_av)) {
-			$tmp_av = 'none.png';
+		if (empty($user->avatar)) {
+			$user->avatar = 'none.png';
 		}
 
 		//fix for avatars on localhost
 		if (empty($img_server)) {
 
-			if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $tmp_av)) {
+			if (file_exists(CORE_PATH . '/dati/bildes/' . $real_path . '/' . $user->avatar)) {
 				//local avatar
-				return '/dati/bildes/' . $real_path . '/' . $tmp_av;
+				return '/dati/bildes/' . $real_path . '/' . $user->avatar;
 			} else {
 				//try to load from img.exs.lv anyway
-				return '//img.exs.lv/userpic/' . $path . '/' . $tmp_av;
+				return '//img.exs.lv/userpic/' . $path . '/' . $user->avatar;
 			}
 		} else {
-			return $img_server . '/userpic/' . $path . '/' . $tmp_av;
+			return $img_server . '/userpic/' . $path . '/' . $user->avatar;
 		}
 	} else {
-		if (empty($tmp_av)) {
-			$tmp_av = 'none.png';
+		if (empty($user->avatar)) {
+			$user->avatar = 'none.png';
 		}
 
-		return 'https://m.exs.lv/av/' . $tmp_av;
+		return 'https://m.exs.lv/av/' . $user->avatar;
 	}
 }
 
@@ -2868,72 +2779,4 @@ function get_fb_likes($url, $force = false) {
 function array_average_nonzero($arr) {
     $arr = array_filter($arr);
     return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
-}
-
-/**
- *  1. aprīlis 2017.
- */
-function is_fools_day() {
-    global $m, $auth;
-
-    if (isset($_SESSION['april']) && $_SESSION['april'] === true) {
-        return true;
-    }
-
-    if (($val = $m->get('april_fools_active')) !== false) {
-        return (bool) $val;
-    }
-    
-    $curr_year = date('Y');
-    $curr_time = new DateTime();
-    $day_begin = new DateTime($curr_year.'-04-01 05:59');
-    $day_end = new DateTime($curr_year.'-04-02 00:00');
-    
-    if ($curr_time->getTimestamp() > $day_begin->getTimestamp() && 
-            $curr_time->getTimestamp() < $day_end->getTimestamp()) {
-        $m->set('april_fools_active', 1, 60);
-        return true;
-    } else {
-        $m->set('april_fools_active', 0, 900);
-    }
-
-    return false;
-}
-
-/**
- *  1. aprīlis 2017.
- */
-function get_wrong_avatar($curr_av_key, $av_alt) {
-    global $db, $m, $img_server;
-    
-    $curr_av_key = trim($curr_av_key);
-    if (empty($curr_av_key)) return '';
-    
-    // no attēla atslēgas nolasa daļu aiz pēdējā "/"
-    // (lai neņemtu vērā, ka var pieprasīt 1 attēla dažādus izmērus)
-    $keys = explode('/', $curr_av_key);
-    $keys = array_reverse($keys);
-    $curr_av_key = $keys[0];
-    
-    if (($var = $m->get('fools_av_'.$curr_av_key)) !== false) {
-        return $var;
-    }
-    
-    $available_count = (int) $db->get_var("
-        SELECT count(*) FROM `avatars_foolsday` WHERE `av_alt` = ".(int)$av_alt
-    );
-    if ($available_count < 1) return '';
-    
-    $rand = rand(0, $available_count - 1);
-    
-    $new_avatar = $db->get_row("
-        SELECT `img_title` FROM `avatars_foolsday` WHERE `av_alt` = ".(int)$av_alt."
-        LIMIT ".$rand.", 1
-    ");
-    if (!$new_avatar) return '';
-    
-    // pieglabā uz 2h, pēc tam atkal nomaina :)
-    $m->set('fools_av_'.$curr_av_key, $new_avatar->img_title, 7200);
-    
-    return $new_avatar->img_title;
 }
