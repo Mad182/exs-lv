@@ -574,7 +574,7 @@ class BBCode {
 			$html .= ' />';
 			// add url
 			if (empty($item['inurl'])) {
-				// visiem img tagiem vienā parsējamā ierakstā pievieno tag,
+				// visām bildēm vienā parsējamā ierakstā pievieno tag,
 				// lai fancybox no tiem izveidotu galeriju
 				$html = '<a href="' . $params['src'] . '" class="lightbox" data-fancybox-group="'.$this->img_rel_unique.'" target="_blank" title="Atvērsies jaunā logā">' . $html . '</a>';
 			}
@@ -984,7 +984,9 @@ class BBCode {
 			if ($extension['extension'] != 'jpg' && $extension['extension'] != 'png' && $extension['extension'] != 'gif' or stristr($url, '?')) {
 				$html = '<a href="' . h($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
 			} else {
-				$html = '<a class="lightbox" href="' . h($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
+                // visām bildēm vienā parsējamā ierakstā pievieno tag,
+				// lai fancybox no tiem izveidotu galeriju
+				$html = '<a class="lightbox" data-fancybox-group="'.$this->img_rel_unique.'" href="' . h($url) . '"' . ($url_local ? '' : ' target="_blank" rel="nofollow"') . $this->add_extras($item['params'], $extras) . '>';
 			}
 			if ($show_content) {
 				return [
