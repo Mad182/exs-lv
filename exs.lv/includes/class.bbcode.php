@@ -16,6 +16,7 @@ define('AUTOURL', time());
 
 class BBCode {
 
+	var $img_rel_unique = '';
 	var $text = '';
 	var $html = '';
 	var $allow_html = true;
@@ -560,9 +561,10 @@ class BBCode {
 						}
 					}
 				}
-			}
-			// generate html
-			$html = '<img';
+			}			
+			// generate html            
+			$html = '<img'; 
+            
 			foreach ($params as $var => $value) {
 				$html .= ' ' . $var . '="' . $this->process_text($value) . '"';
 			}
@@ -572,7 +574,9 @@ class BBCode {
 			$html .= ' />';
 			// add url
 			if (empty($item['inurl'])) {
-				$html = '<a href="' . $params['src'] . '" class="lightbox" target="_blank" title="Atvērsies jaunā logā">' . $html . '</a>';
+				// visiem img tagiem vienā parsējamā ierakstā pievieno tag,
+				// lai fancybox no tiem izveidotu galeriju
+				$html = '<a href="' . $params['src'] . '" class="lightbox" data-fancybox-group="'.$this->img_rel_unique.'" target="_blank" title="Atvērsies jaunā logā">' . $html . '</a>';
 			}
 			return [
 				'valid' => true,
@@ -1668,6 +1672,9 @@ class BBCode {
 
 // Converts text to html code
 	function parse($text, $id = false) {
+
+        $this->img_rel_unique = strtolower(createRandomString(5));
+
 		if (defined('IN_PHPBB')) {
 			$search = [
 				$id ? ':' . $id : '',

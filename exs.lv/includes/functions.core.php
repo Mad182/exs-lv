@@ -735,6 +735,16 @@ function createPassword($length) {
 	return $password;
 }
 
+function createRandomString($length) {
+    $chs = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $chs_len = strlen($chs);
+    $str = '';
+    for ($i = 0; $i < $length; $i++) {
+        $str .= $chs[rand(0, $chs_len - 1)];
+    }
+    return $str;
+}
+
 function get_between($text, $s1, $s2) {
 	$mid_url = "";
 	$pos_s = strpos($text, $s1);
@@ -1373,6 +1383,9 @@ function htmlpost2db($text, $sanitize = true) {
 	$config->set('AutoFormat.AutoParagraph', true);
 	$config->set('AutoFormat.RemoveSpansWithoutAttributes', true);
 	$config->set('AutoFormat.RemoveEmpty', true);
+    // atribūts fancybox attēlu grupēšanai (to pievieno BB kodu klase)
+    $def = $config->getHTMLDefinition(true);
+    $def->addAttribute('a', 'data-fancybox-group', 'Text');
 	$purifier = new HTMLPurifier($config);
 	$text = $purifier->purify($text);
 	$text = str_replace('href="http://' . $_SERVER['HTTP_HOST'] . '/', 'href="/', $text);

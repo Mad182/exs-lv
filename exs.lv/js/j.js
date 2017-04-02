@@ -91,6 +91,8 @@ function update_mb() {
 					});
 				}
 			});
+            /* lai ar ajax ievietotie attēli arī atverami caur fancybox */
+            $('#miniblog-list').find('.lightbox').fancybox({'titleShow':false});
 		});
 		processing = false;
 	} else {
@@ -341,11 +343,7 @@ $(document).ready(function($) {
 	});
 
 	/* rakstu saturā, rakstu komentāros, miniblogos/vēstulēs/profilā */
-	$('#full-story, #comments, .tabMain').on('click', '.lightbox', function(e) {
-		$.fancybox({href:$(this).attr('href')}, {'titleShow':false});
-		e.preventDefault();
-	});
-	/*$('.lightbox').fancybox({'titleShow': false});*/
+	$('.lightbox').fancybox({'titleShow':false});
 
 	$('body').on('click', '.plus, .minus', function(e) {
 		e.preventDefault();
