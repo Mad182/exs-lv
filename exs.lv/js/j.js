@@ -151,7 +151,7 @@ $(document).ready(function($) {
 	});
 
 	/* ļauj apskatīt dzēsto miniblogu ierakstu bijušo saturu */
-	$('.deleted-content').on('click', function(e) {
+    $('#miniblog-list').on('click', '.deleted-content', function(e) {
 		$.get(($(this).attr('href')), function(response) {
 			$.fancybox(response);
 		});
@@ -166,7 +166,7 @@ $(document).ready(function($) {
 	});
 
 	/* dzēš minibloga ierakstu bez lapas pārlādes */
-	$('.delete-fast').on('click', function(e) {
+    $('#miniblog-list').on('click', '.delete-fast', function(e) {
 		if (confirm("Vai tiešām vēlies veikt šo darbību?")) {
 			var link_element = $(this);
 			var content_element = $(this).parent().siblings('.post-content');
