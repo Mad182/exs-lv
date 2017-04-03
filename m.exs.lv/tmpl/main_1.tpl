@@ -59,6 +59,9 @@
 	</head>
 
 	<body>
+        <!-- START BLOCK : scroll-up-mobile -->
+        <div id="scroll-up" title="Uz augšu"></div>
+        <!-- END BLOCK : scroll-up-mobile -->
 
 		<div id="sidr">
 		  <!-- Your content -->

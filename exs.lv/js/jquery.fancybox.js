@@ -807,13 +807,16 @@
 				selectedIndex = 0;
 
 				var rel = $(this).attr('rel') || '';
+				var rel_data = $(this).attr('data-fancybox-group') || '';
 
-				if (!rel || rel == '' || rel === 'nofollow') {
+				if (rel_data && rel_data != '') {
+					selectedArray = $("a[data-fancybox-group=" + rel_data + "]");
+					selectedIndex = selectedArray.index(this);                    
+				} else if (!rel || rel == '' || rel === 'nofollow') {
 					selectedArray.push(this);
-
 				} else {
 					selectedArray = $("a[rel=" + rel + "], area[rel=" + rel + "]");
-					selectedIndex = selectedArray.index( this );
+					selectedIndex = selectedArray.index(this);
 				}
 
 				_start();

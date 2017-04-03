@@ -557,3 +557,7 @@ if (!empty($inprofile)) {
 	$page_title = 'Kļūda: profils nav atrasts!';
 }
 
+// poga ritināšanai līdz pašai augšai mobilajā versijā
+if ($auth->mobile) {
+    $tpl->newBlock('scroll-up-mobile');
+}
