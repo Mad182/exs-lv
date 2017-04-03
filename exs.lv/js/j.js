@@ -331,7 +331,7 @@ $(document).ready(function($) {
 		$('#newpic').toggle(200);
 	});
 
-	$('.spoiler-title').on('click', function(e) {
+    $('body').on('click', '.spoiler-title', function(e) {
 		e.preventDefault();
 		$(this).siblings('.spoiler-content').toggle(200);
 	});
@@ -342,7 +342,6 @@ $(document).ready(function($) {
 		'transitionOut': 'none'
 	});
 
-	/* rakstu saturā, rakstu komentāros, miniblogos/vēstulēs/profilā */
 	$('.lightbox').fancybox({'titleShow':false});
 
 	$('body').on('click', '.plus, .minus', function(e) {
