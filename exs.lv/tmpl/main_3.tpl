@@ -160,6 +160,8 @@
 
 							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 
+							<a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Log in</span></a>
+
 						</fieldset>
 					</form>
 					<!-- END BLOCK : login-form-->
