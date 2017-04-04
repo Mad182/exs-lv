@@ -276,7 +276,7 @@ if ($skin === 'main') {
 
 		if (im_mod()) {
 			$tpl->newBlock('user-modlink');
-			if (($auth->id == 1 || $auth->id == 115) && $lang != 3) {
+			if (($auth->id == 1 || $auth->id == 115) && $lang == 1) {
 				$tpl->newBlock('user-modlink-adm');
 			}
 			$tpl->newBlock('user-approvelink');
