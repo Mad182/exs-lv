@@ -5,7 +5,7 @@ if (PHP_SAPI !== 'cli') {
 	exit;
 }
 
-echo 'cron_newyearh.php started' . "\n";
+echo 'cron_newyear.php started' . "\n";
 
 chdir(__DIR__);
 ini_set('memory_limit', '256M');
@@ -20,10 +20,7 @@ require('includes/functions.core.php');
 $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
-//memcached konekcija
-$m = new Memcached;
-$m->addServer($mc_host, $mc_port);
-
 $db->query("UPDATE users SET year_first = 1 WHERE id IN(SELECT DISTINCT(author) FROM `miniblog` WHERE `date` LIKE '%-01-01 00:00:%')");
 $db->query("UPDATE users SET year_first = 1 WHERE id IN(SELECT DISTINCT(author) FROM `comments` WHERE `date` LIKE '%-01-01 00:00:%')");
+$db->query("UPDATE users SET year_first = 1 WHERE id IN(SELECT DISTINCT(author) FROM `galcom` WHERE `date` LIKE '%-01-01 00:00:%')");
 
