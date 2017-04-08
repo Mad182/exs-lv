@@ -298,7 +298,7 @@ function api_fetch_online($force = false) {
 			'users' => $online
 		);
 		
-		$m->set('api-online-'.$api_lang, $data, false, 15);
+		$m->set('api-online-'.$api_lang, $data, 15);
 	}
 	
 	api_append($data);

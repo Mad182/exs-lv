@@ -363,7 +363,7 @@ class AuthBase {
 			} else {
 				$is_tor = 'n';
 			}
-			$m->set('t-'.md5($this->ip), $is_tor, false, 9000);
+			$m->set('t-'.md5($this->ip), $is_tor, 9000);
 
 		}
 

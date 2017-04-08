@@ -414,7 +414,7 @@ function api_fetch_awards($user_id, $award_count = 4) {
                 'list' => $awards
             );
         }
-		$m->set($memcached_key, $data, false, 900);
+		$m->set($memcached_key, $data, 900);
 	}
 	
 	api_append(array('awards' => $data));
