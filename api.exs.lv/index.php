@@ -88,7 +88,7 @@ if ($lang === 6) {
     if (($tpl2 = $m->get('tpl_api_docs')) === false || $debug === true) {
         $tpl->prepare();
         // iekešo sadaļas template, tādējādi -20% ielādes laikam
-        $m->set('tpl_api_docs', $tpl, false, 3600);
+        $m->set('tpl_api_docs', $tpl, 3600);
     } else {
         $tpl = $tpl2;
         unset($tpl2);
