@@ -57,7 +57,7 @@ if (!$auth->ok) {
 		if (strlen(trim($_POST[$field_nick])) > 2 && strlen(trim($_POST[$field_nick])) <= 16) {
 			$regdata['nick'] = sanitize(trim($_POST[$field_nick]));
 			$regdata['nickok'] = true;
-			if (mkslug($regdata['nick']) == 'page' || mkslug($regdata['nick']) == '-' || $db->get_row("SELECT * FROM users WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')") || $db->get_row("SELECT * FROM users_tmp WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')")) {
+			if (mkslug($regdata['nick']) == 'page' || mkslug($regdata['nick']) == '-' || mkslug($regdata['nick']) == 'frostijs' || $db->get_row("SELECT * FROM users WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')") || $db->get_row("SELECT * FROM users_tmp WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')")) {
 				$tpl->newBlock('invalid-nick-taken');
 				$regdata['nick'] = '';
 				$regdata['nickok'] = false;
