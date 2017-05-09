@@ -436,6 +436,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 	$nick = $star . h($nick);
 
 	$user_classes = [1 => 'admins', 2 => 'mods', 3 => 'rautors', 5 => 'bot'];
+    if ((int)$userid === 115) $level = 0; // burvis
 
 	foreach ($user_classes as $key => $class) {
 		if ($level == $key || ($userid != 0 && !empty($site_access[$key]) && in_array($userid, $site_access[$key]))) {
