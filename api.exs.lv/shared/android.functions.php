@@ -86,6 +86,8 @@ function api_fetch_user($user_id = 0, $nick = '-', $level = 0) {
 		$is_banned = true;
 	}
     
+    if ($user_id === 115) $user_level = 0; // burvis
+    
     $data = null;
     if ($lang === 2) {
         $data = array(
