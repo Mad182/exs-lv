@@ -1011,13 +1011,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				'tab-module' => $module_content,
 				'tab-text' => $share . add_smile($tab->text, 1)
 			]);
-			
+
 			if(!empty($custom_p_title)) {
 				$page_title =  $custom_p_title . ' - ' . $group->title;
 			} else {
 				$page_title = $group->title . ' - ' . $tab->title;
 			}
-			
+
 		} else {
 			$page_title = $group->title . ' | ' . $tab->title;
 			$tpl->newBlock('noguestacc-tab');
