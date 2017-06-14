@@ -4,7 +4,7 @@ $page = intval(str_replace('', '', $_GET['img']));
 
 $pinfo = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$page'");
 
-$original = null;
+$original = 'modules/forums/images/generic.png';
 
 if ($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
 	$original = IMG_PATH . $avatar->image;
