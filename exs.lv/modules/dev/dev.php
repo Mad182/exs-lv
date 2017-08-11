@@ -1,6 +1,6 @@
 <?php
 
-$data = file_get_contents('/home/www/exs.lv/modules/dev/preload.json');
+/*$data = file_get_contents('/home/www/exs.lv/modules/dev/preload.json');
 
 $data = json_decode($data);
 
@@ -9,7 +9,7 @@ foreach($data->entries as $dom) {
 }
 
 
-exit;
+exit;*/
 
 /*$a = unserialize('a:2:{s:12:"header_image";s:162:"http://ksenija.exs.lv/wp-content/uploads/2010/12/cropped-latrines-cluster-new-with-bright-blue-doors-corrugated-metal-roof-in-slums-of-Dhaka-Bangladesh-1-AJHD.jpg";s:16:"header_textcolor";s:3:"fff";}');
 
@@ -23,7 +23,7 @@ $https_sites = get_sitelist('https');
 foreach ($https_sites as $site) {
 	if(stripos($site, '*') === false) {
 
-		echo "UPDATE `cms_pages` SET `text` = REPLACE(`text`, 'http://".$site."', 'https://".$site."' );<br />";
+		echo "UPDATE `wp_posts` SET `post_content` = REPLACE(`post_content`, 'http://".$site."', 'https://".$site."' );<br />";
 
 	}
 }

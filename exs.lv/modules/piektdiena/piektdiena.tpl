@@ -2,10 +2,7 @@
 <html lang="lv">
 <head>
 	<meta charset="UTF-8">
-	<title>{page-title}</title>
-	<!-- START BLOCK : robots-->
-	<meta name="robots" content="{value}">
-	<!-- END BLOCK : robots-->
+	<title>Vai šodien ir piektdiena?</title>
 	<style>
 		body, html {
 			font-family: tahoma, arial, verdana, sans-serif;
@@ -76,9 +73,9 @@
 		{out}
 		<p>&nbsp;</p>
 		<div>
-			<iframe style="border: 0;margin:0" height="20" width="84" frameborder="0" src="http://www.draugiem.lv/say/ext/like.php?title=Piegdienaaaah&amp;url=http://junk.intranet.lv/piektdiena&amp;titlePrefix=Šodien"></iframe>
-			<a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script src="http://platform.twitter.com/widgets.js"></script>
-			<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexs.lv%2FPiektdiena&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="overflow:hidden; width:100px; height:20px; border: 0;margin:0;" allowTransparency="true"></iframe>
+			<iframe style="border: 0;margin:0" height="20" width="84" frameborder="0" src="https://www.draugiem.lv/say/ext/like.php?title=Piegdienaaaah&amp;url=http://junk.intranet.lv/piektdiena&amp;titlePrefix=Šodien"></iframe>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script src="https://platform.twitter.com/widgets.js"></script>
+			<iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexs.lv%2FPiektdiena&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="overflow:hidden; width:100px; height:20px; border: 0;margin:0;" allowTransparency="true"></iframe>
 		</div>
 	</div>
 	<script>

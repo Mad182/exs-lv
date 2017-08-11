@@ -17,9 +17,11 @@ $msgs = [
 shuffle($msgs);
 
 if (date('l') == 'Friday') {
-	$out = '<h1 class="a win">PIEGDIENAAAAAAAAH!!!</h1><object width="560" height="349"><param name="movie" value="http://www.youtube.com/v/6GggY4TEYbk?fs=1&autoplay=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/6GggY4TEYbk?fs=1&autoplay=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="560" height="349"></embed></object>';
+	$out = '<h1 class="a win">PIEGDIENAAAAAAAAH!!!</h1><iframe width="600" height="450" src="https://www.youtube.com/embed/6GggY4TEYbk?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
 } else {
 	$out = '<h1 class="a fail">Nope. Turpini refrešot... :(</h1>' . $msgs[0];
 }
 
 $tpl->assignGlobal('out', $out);
+$tpl->printToScreen();
+exit;

@@ -3,6 +3,8 @@
 /**
  * List all users
  */
+$robotstag = ['noindex', 'follow'];
+
 $end = 400;
 
 if (isset($_GET['skip'])) {

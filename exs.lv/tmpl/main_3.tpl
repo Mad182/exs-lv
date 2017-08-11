@@ -312,21 +312,6 @@
 						<!-- INCLUDE BLOCK : module-currrent -->
 					</div>
 
-					<div style="margin:20px auto">
-
-						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- coding -->
-						<ins class="adsbygoogle"
-							 style="display:block"
-							 data-ad-client="ca-pub-9907860161851752"
-							 data-ad-slot="9760494839"
-							 data-ad-format="auto"></ins>
-						<script>
-						(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
-					
-					</div>
-
 					<div class="c"></div>
 
 					<p id="bottom-tools"><a href="javascript:history.back()" class="back">Atpakaļ</a> <a href="#top-menu" class="top">Uz augšu</a></p>

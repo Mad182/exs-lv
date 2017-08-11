@@ -57,26 +57,6 @@ if (empty($group->avatar)) {
 	$group->avatar = 'none.png';
 }
 
-// reklāmas
-if (!empty($group->disable_adsense)) {
-	$disable_adsense = true;
-}
-
-/* top ad in group */
-if (!$auth->mobile) {
-	if (!empty($group->top_ad)) {
-		$tpl->assignGlobal('top-group-ad', $group->top_ad);
-	} elseif (empty($disable_adsense)) {
-		if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl')) {
-			$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl'));
-		}
-	} else {
-		if (file_exists(CORE_PATH . '/tmpl/ads/' . $lang . '_728_adsense.tpl')) {
-			$tpl->assignGlobal('top-group-ad', file_get_contents(CORE_PATH . '/tmpl/ads/' . $lang . '_728.tpl'));
-		}
-	}
-}
-
 /* grupas administratora vai moderatora pieeja */
 $is_mod = false;
 $is_admin = false;
