@@ -20,7 +20,7 @@ require(CORE_PATH . '/includes/functions.core.php');
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);
 
-$pages = $db->get_results("SELECT * FROM `pages` WHERE `strid` = 'cruel-talker'");
+$pages = $db->get_results("SELECT * FROM `pages` WHERE `strid` = 'vajadzeetu-takaa-palielinaat-mafiju'");
 
 foreach($pages as $page) {
 	echo 'Deleting page ' . $page->title . "\n\n";
