@@ -16,7 +16,7 @@
 	<meta name="robots" content="{value}">
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="http://feeds.feedburner.com/runes">
+	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="https://feeds.feedburner.com/runes">
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin">
@@ -79,6 +79,7 @@
 	<script>var lastid={lastid},mbid={mbid},usrid={usrid},edit_time={edit_time},mbtype="{type}",mbRefreshId=setInterval("update_mb()", mb_refresh_limit);</script>
 	<!-- END BLOCK : mb-head-->
 	<!-- INCLUDE BLOCK : module-head -->
+
 </head>
 
 <body{onload} class="{layout-options}">
@@ -613,19 +614,6 @@
 	</noscript>
 	<!-- END BLOCK : popup-ads-->
 	
-	<!-- iBILLBOARD Ad Server one2many code -->
-	<script src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<script src='//go.eu.bbelements.com/bb/bb_one2n.js'></script>
-	<script>/* <![CDATA[ */ 
-	if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
-	//bmone2n.addPosition('22484.2.3.2','');
-	bmone2n.addPosition('22484.2.2.1','');
-	bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
-	/* ]]> */</script>
-	<div id='bmone2t-22484.2.3.2' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
-	<div id='bmone2t-22484.2.2.1' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
-	<script>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
-
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

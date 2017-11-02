@@ -76,14 +76,9 @@ class AuthBase {
 			return false;
 		}
 
-		//zverboj
-		if($_SESSION['auth_id'] == 2339 && $this->ip !== '77.86.94.199') {
-			return false;
-		}
-
 		$userinfo = get_user($_SESSION['auth_id']);
 
-        $this->check_2fa($userinfo);
+		$this->check_2fa($userinfo);
 
 		if ($userinfo->deleted) {
 			return $this->logout();

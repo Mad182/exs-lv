@@ -285,14 +285,14 @@ if ($category->module === 'movies') {
 include(CORE_PATH . '/modules/core/poll.php');
 
 //show popup ads only for desktops
-require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
+/*require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
 $detect = new Mobile_Detect;
 $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
 if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18'])) {
 	if(!$auth->ok) {
-		$tpl->newBlock('popup-ads');
+		//$tpl->newBlock('popup-ads');
 	}
 
-	$tpl->newBlock('header-ad');
-}
+	//$tpl->newBlock('header-ad');
+}*/
 

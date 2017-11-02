@@ -154,6 +154,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 	}
 
 	$txt = str_replace(['https://m.ss.lv/', 'https://www.ss.lv/', 'https://m.ss.com/'], 'https://www.ss.com/', $txt);
+	$txt = str_replace(['https://www.imgur.com', 'https://m.imgur.com'], 'https://imgur.com', $txt);
 
 	return $txt;
 }

@@ -12,17 +12,21 @@ function file_strip($url) {
 	if (!$data) {
 		return false;
 	}
-	foreach ($data as $line) {
-
+	foreach($data as $line) {
+		if($line === "\n") {
+			continue;
+		}
 		$line = str_replace('    ', ' ', $line);
 		$line = str_replace('   ', ' ', $line);
 		$line = str_replace('  ', ' ', $line);
-		$line = str_replace('	', '', $line);
-		$line = str_replace("\r", "", $line);
-		$line = str_replace("\n\n", "\n", $line);
-		$line = str_replace("\n\n", "\n", $line);
-		$line = str_replace("\n\n", "\n", $line);
-		$line = str_replace("\n\n", "\n", $line);
+		$line = str_replace('	', '', $line);;
+		$line = str_replace("</li>\n", "</li>", $line);
+		$line = str_replace("</ul>\n", "</ul>", $line);
+		$line = str_replace("<ul>\n", "<ul>", $line);
+		$line = str_replace("</p>\n", "</p>", $line);
+		$line = str_replace("<p>\n", "<p>", $line);
+		$line = str_replace("</div>\n", "</div>", $line);
+		$line = str_replace(" />\n", " />", $line);
 		$out[] = $line;
 	}
 	return $out;

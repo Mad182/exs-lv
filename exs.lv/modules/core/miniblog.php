@@ -113,9 +113,11 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 			]);
 
 			if ($check == $auth->id) {
-				$str = 'savā';
+				$str = 'savā miniblogā';
+			} elseif(!$inprofile->deleted) {
+				$str = $inprofile->nick . ' miniblogā';
 			} else {
-				$str = $inprofile->nick;
+				$str = 'miniblogā';
 			}
 			$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
 			$private = $db->get_var("SELECT `private` FROM `miniblog` WHERE `id` = '$mainid'");
@@ -126,7 +128,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 
 			// bump, notifikācijas
 			if (!isset($_POST['no-bump'])) {
-				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' miniblogā &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private);
+				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private);
 
 				$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
 				$newpost->text = mention($newpost->text, $url, 'mb', $mainid);
