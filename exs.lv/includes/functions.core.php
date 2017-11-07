@@ -1363,6 +1363,28 @@ function filterb4db($text) {
 	$text = str_replace('!!!!!!', '!!!', $text);
 	$text = str_replace('!!!!!', '!!!', $text);
 	$text = str_replace('!!!!', '!!!', $text);
+
+
+        if(stripos($text, 'http://') !== false) {
+
+                //force https for known supported sites
+                $https_sites = get_sitelist('https');
+                foreach ($https_sites as $site) {
+                        if (strpos($text, $site) !== false) {
+                                $text = str_ireplace('http://' . $site, 'https://' . $site, $text);
+                        } elseif(stripos($site, '*') !== false) {
+
+                                //wildcard
+                                $check = str_replace('*', '', $site);
+                                if (strpos($text, $check) !== false) {
+                                        $text = preg_replace('/http:\/\/([a-zA-Z0-9]+)'.$check.'/', 'https://$1'.$check, $text);
+                                }
+
+                        }
+                }
+        }
+
+
 	return $text;
 }
 
