@@ -489,12 +489,13 @@ if (!empty($inprofile)) {
 					}
 				}
 			} else {
-
-				//$tpl->newBlock('user-miniblog-list-private');
+				if(!empty($single)) {
+					$robotstag = ['noindex', 'nofollow'];
+				}
 			}
 		}
 
-		// ???
+		// komentāru forma
 		if (isset($_GET['single']) && $auth->ok && !$record->closed) {
 			$tpl->newBlock('user-miniblog-resp');
 			$tpl->assign([
