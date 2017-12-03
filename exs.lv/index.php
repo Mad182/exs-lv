@@ -58,7 +58,9 @@ if(empty($_GET['viewcat'])) {
 	$_GET['viewcat'] = null;
 }
 
-session_start();
+if (strpos($_SERVER['HTTP_USER_AGENT'],"Googlebot") === false && strpos($_SERVER['HTTP_USER_AGENT'],"YandexBot") === false) {
+	session_start();
+}
 
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);

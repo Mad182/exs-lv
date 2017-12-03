@@ -7,7 +7,7 @@ if ($auth->id != 1) {
 	redirect();
 }
 
-$images = $db->get_results("SELECT * FROM `imgupload` ORDER BY `id` DESC LIMIT 500");
+$images = $db->get_results("SELECT * FROM `imgupload` ORDER BY `id` DESC LIMIT 5000");
 
 $out = '';
 if (!empty($images)) {
@@ -20,7 +20,7 @@ if (!empty($images)) {
 				continue;
 			}
 		}
-		$out .= '<a href="?delete=' . $img->id . '"><img style="width: 50px;" src="' . $img_server . '/' . $img->path . '/small/' . $img->file . '" alt="" /></a> ';
+		$out .= '<a href="?delete=' . $img->id . '"><img src="' . $img_server . '/' . $img->path . '/small/' . $img->file . '" /></a> ';
 	}
 }
 
