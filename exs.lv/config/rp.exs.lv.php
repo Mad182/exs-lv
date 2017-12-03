@@ -1,4 +1,6 @@
 <?php
+redirect('https://exs.lv/');
+
 /**
  *  rp.exs.lv projekta konfigurācija
  */
