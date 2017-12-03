@@ -550,12 +550,16 @@ if (!empty($inprofile)) {
 			]);
 		}
 	} elseif(!empty($_GET['single'])) {
+		$robotstag = ['noindex', 'nofollow'];
 		error_404();
+	} else {
+		 $robotstag = ['noindex'];
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');
 	}
 } else {
+	$robotstag = ['noindex', 'nofollow'];
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';
 }
