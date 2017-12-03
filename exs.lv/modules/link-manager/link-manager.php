@@ -14,9 +14,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'blacklisted') {
 } elseif (isset($_GET['var1']) && $_GET['var1'] == 'https') {
 	$active = 'https';
 	$title = 'HTTPS atbalstošas lapas';
-} elseif (isset($_GET['var1']) && $_GET['var1'] == 'image') {
-	$active = 'image';
-	$title = 'Bilžu hostinga lapas';
 }
 
 $tpl->assign([
