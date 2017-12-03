@@ -131,7 +131,6 @@
 						<li class="dropdown"><a href="/">exs.lv</a>
 							<ul class="dropdown-menu">
 								<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
-								<li><a href="https://rp.exs.lv/" title="MTA San Andreas Roleplay serveris un forums" rel="nofollow">rp.exs.lv</a></li>
 								<li><a href="https://lol.exs.lv/" title="League of Legends forums" rel="nofollow">lol.exs.lv</a></li>
 								<li><a href="https://coding.lv/" title="Mājas lapu veidošanas un programmēšanas forums" rel="nofollow">coding.lv</a></li>
 							</ul>
@@ -613,6 +612,21 @@
 	<a href="//go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="//go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
 	</noscript>
 	<!-- END BLOCK : popup-ads-->
+
+
+        <!-- iBILLBOARD Ad Server one2many code -->
+        <script src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
+        <script src='//go.eu.bbelements.com/bb/bb_one2n.js'></script>
+        <script>/* <![CDATA[ */
+        if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
+        //bmone2n.addPosition('22484.2.3.2','');
+        bmone2n.addPosition('22484.2.2.1','');
+        bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
+        /* ]]> */</script>
+        <div id='bmone2t-22484.2.3.2' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
+        <div id='bmone2t-22484.2.2.1' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
+        <script>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
+
 	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

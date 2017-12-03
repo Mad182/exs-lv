@@ -110,7 +110,6 @@
                     <ul>
                         <li><a href="//exs.lv">exs.lv</a></li>
                         <li><a href="//lol.exs.lv">lol.exs.lv</a></li>
-                        <li><a href="//rp.exs.lv">rp.exs.lv</a></li>
                         <li><a rel="nofollow" href="https://coding.lv">coding.lv</a></li>
                         <li>&nbsp;</li>
                     </ul>

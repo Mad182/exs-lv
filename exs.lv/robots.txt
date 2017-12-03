@@ -25,3 +25,5 @@ Disallow: /devana/register.php
 Disallow: /devana/ch_lang.php
 Disallow: /calendar/
 
+User-agent: Yandex
+Crawl-delay: 5

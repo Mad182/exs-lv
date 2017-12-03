@@ -13,8 +13,8 @@
 		<meta name="twitter:{key}" content="{val}">
 		<!-- END BLOCK : twitter-meta-->
 		<!-- START BLOCK : robots-->
-		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
+		<meta name="robots" content="noindex,follow">
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 		<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">

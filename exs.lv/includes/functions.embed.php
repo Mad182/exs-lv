@@ -133,14 +133,6 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 			}
 		}
 
-		// bilžu hostingi, kas neatbalsta HTTPS
-		$image_sites = get_sitelist('image');
-		foreach ($image_sites as $site) {
-			if (stripos($txt, $site) !== false) {
-				$txt = str_ireplace('src="http://' . $site, 'src="https://images.weserv.nl/?url=' . $site, $txt);
-			}
-		}
-
 		//auto add proxy to all jpg/png images over http
 		if($pos = stripos($txt, 'src="http://')) {
 			$data = substr($txt, $pos, 200);
@@ -148,7 +140,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 			if(stripos($data[1], '.jpg') || stripos($data[1], '.jpeg') || stripos($data[1], '.png')) {
 				$find = str_ireplace('http://', '', $data[1]);
 				$txt = str_ireplace('src="http://' . $find, 'src="https://images.weserv.nl/?url=' . $find, $txt);
-				error_log($find);
+				error_log($find . "\n", 3, "/home/www/exs.lv/tmp/http-img.log");
 			}
 		}
 	}
