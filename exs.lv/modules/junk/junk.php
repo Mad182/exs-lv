@@ -131,7 +131,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		if(strpos($pic->image, 'imgur')) {
 			$html = '<div style="text-align:center"><blockquote class="imgur-embed-pub" data-context="false" lang="en" data-id="'.str_replace(['https://i.imgur.com/', '#embed', '.gifv', '.gif'], '', $pic->image).'"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script></div>';
-			
+
 			$opengraph_meta['image'] = 'https://img.exs.lv' . str_replace('/thb/', '/large/', $pic->thb);
 		} else {
 			$html = '<p style="text-align:center"><img src="//img.exs.lv'.$pic->image.'" class="av" style="height:auto;width:auto;float:none" alt="'.h(strip_tags($pic->title)).'" title="'.h(strip_tags($pic->title)).'" /></p>';
@@ -158,7 +158,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 				'id' => $author->id
 			]);
 		} else {
-			if(empty($pic->edit_user) && $pic->posts < 10) {
+			if(empty($pic->edit_user) && $pic->posts < 3) {
 				$robotstag = ['noindex', 'follow'];
 			}
 		}

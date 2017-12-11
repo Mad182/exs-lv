@@ -15,4 +15,5 @@ appnexus.com, 1908, RESELLER
 appnexus.com, 7944, RESELLER
 
 
+google.com, pub-9907860161851752, DIRECT, f08c47fec0942fa0
 

@@ -18,7 +18,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="https://feeds.feedburner.com/runes">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css?as" media="all">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
@@ -80,6 +80,8 @@
 	<!-- END BLOCK : mb-head-->
 	<!-- INCLUDE BLOCK : module-head -->
 
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	{plevel}
 </head>
 
 <body{onload} class="{layout-options}">
@@ -146,7 +148,9 @@
 
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
-			<div style="position:absolute;right:10px;top:7px;width:970px;height:90px;z-index:4;text-align:right"><div id='bmone2n-22484.2.2.1'></div></div>
+			<div id="tad">
+				<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9907860161851752" data-ad-slot="6111797264" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({ });</script>
+			</div>
 			<!-- END BLOCK : header-ad-->
 		</div>
 
@@ -343,8 +347,8 @@
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
 						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
-						<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-						<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
+						<li><a href="/awards/{user-id}" class="{active-tab-awards}" rel="nofollow"><span class="awards">Medaļas</span></a></li>
+						<li><a href="/friends/{user-id}" class="{active-tab-friends}" rel="nofollow"><span class="friends">Draugi</span></a></li>
 						<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
 						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
 						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
@@ -602,32 +606,9 @@
 		</footer>
 	</div>
 
-	<script>!function(d,s,id){ var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){ js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs); } }(document,"script","twitter-wjs");</script>
-
 	<!-- START BLOCK : popup-ads-->
-	<script src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-	<!-- Position: go.eu.bbelements.com exs.lv(22484) / Pixel_Visas_Lapas_LV(1) / Pixel_Visas_Lapas_LV(10) / Pixel(21) -->
-	<script charset='utf-8' src='//go.eu.bbelements.com/please/code?j-22484.1.10.21.0.0._blank'></script>
-	<noscript>
-	<a href="//go.eu.bbelements.com/please/redirect/22484/1/10/21/" target="_blank"><img src="//go.eu.bbelements.com/please/showit/22484/1/10/21/?typkodu=img" border='0' alt='' /></a>
-	</noscript>
 	<!-- END BLOCK : popup-ads-->
 
-
-        <!-- iBILLBOARD Ad Server one2many code -->
-        <script src="//keytarget.adnet.lt/js/init-for-BBEposCodes-withExtra.js?coCo=lv"></script>
-        <script src='//go.eu.bbelements.com/bb/bb_one2n.js'></script>
-        <script>/* <![CDATA[ */
-        if(typeof bbkeywords == "undefined") var bbkeywords=''; //fill in page keywords separated by ';' e.g. 'audi;ford;fiat'
-        //bmone2n.addPosition('22484.2.3.2','');
-        bmone2n.addPosition('22484.2.2.1','');
-        bmone2n.getAd('go.eu.bbelements.com',bbkeywords,''+(typeof(bburlparam)=='string'?'&'+bburlparam:''),'utf-8');
-        /* ]]> */</script>
-        <div id='bmone2t-22484.2.3.2' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.3.2'); /* ]]> */</script></div>
-        <div id='bmone2t-22484.2.2.1' style='display:none'><script>/* <![CDATA[ */ bmone2n.makeAd('22484.2.2.1'); /* ]]> */</script></div>
-        <script>/* <![CDATA[ */ bmone2n.moveAd(); /* ]]> */</script>
-
-	
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

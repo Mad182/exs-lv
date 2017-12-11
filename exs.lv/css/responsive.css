@@ -335,11 +335,15 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 	background-position: 0 0;
 	padding:0 30px;
 	position: relative;
-	height: 100px
+	height: 110px
 }
 
-#headline img {
-	margin: -20px 0 -10px -20px
+#tad {
+	width: 728px;
+	height: 90;
+	position: absolute;
+	top: 10px;
+	right: 30px;
 }
 /* intr section
 ****************/
@@ -2032,6 +2036,11 @@ img.twit-pic {
 	.fb_iframe_widget span {
 		width: 475px !important;
 	}
+
+	#tad {
+        	right: 8px;
+	}
+
 }
 
 @media (min-width:798px) {
@@ -2040,6 +2049,7 @@ img.twit-pic {
 		position: inherit !important;
 		width: 100% !important;
 	}
+
 }
 
 @media (max-width:767px) {
@@ -2136,6 +2146,20 @@ img.twit-pic {
 	.fb_iframe_widget span {
 		width: 360px !important;
 	}
+
+#tad {
+        width: 468px;
+        height: 60px;
+	margin: 10px auto; 
+        position: relative;
+        top: 0;
+	right: 0;
+        text-align:center;
+}
+#headline {
+	height: 80px;
+}
+
 
 }
 

@@ -2762,7 +2762,7 @@ function error_404() {
 	$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/error404/error404.tpl');
 	$tpl->prepare();
 
-	$robotstag[] = 'noindex';
+	$robotstag = ['noindex', 'nofollow'];
 
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	http_response_code(404);
@@ -2783,7 +2783,7 @@ function error_404() {
  */
 function get_fb_likes($url, $force = false) {
 	global $m, $category;
-	
+
 	if($url !== 'https://exs.lv' && $category->textid !== 'index') {
 		return '<span class="fblikes">0</span>';
 	}

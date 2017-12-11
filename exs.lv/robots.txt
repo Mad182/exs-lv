@@ -24,6 +24,7 @@ Disallow: /devana/map.php
 Disallow: /devana/register.php
 Disallow: /devana/ch_lang.php
 Disallow: /calendar/
+Disallow: /awards
 
 User-agent: Yandex
 Crawl-delay: 5

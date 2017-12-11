@@ -288,10 +288,11 @@ include(CORE_PATH . '/modules/core/poll.php');
 require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
 $detect = new Mobile_Detect;
 $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18'])) {
-	if(!$auth->ok) {
-		$tpl->newBlock('popup-ads');
-	}
-
+if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18']) && !in_array('noindex', $robotstag)) {
 	$tpl->newBlock('header-ad');
 }
+
+if(!$auth->ok && !in_array('noindex', $robotstag)) {
+        $tpl->assignGlobal('plevel', '<script>(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-9907860161851752",enable_page_level_ads: true });</script>');
+}
+

@@ -44,7 +44,7 @@ class AuthBase {
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
-			$this->xsrf = md5($this->ip . $remote_salt . microtime(true));
+			$this->xsrf = substr(md5($this->ip . microtime(true)),0,8);
 			$_SESSION['xsrf'] = $this->xsrf;
 		}
 		$this->check_session();

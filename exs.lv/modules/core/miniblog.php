@@ -261,6 +261,11 @@ if (!empty($inprofile)) {
 
 				if (isset($_GET['single'])) {
 
+					//noindex
+					if($record->private) {
+						$robotstag = ['noindex', 'nofollow'];
+					}
+
 					// pieliek tagus
 					if (im_mod() && isset($_POST['newtags'])) {
 
