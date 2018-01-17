@@ -61,6 +61,7 @@ if(empty($_GET['viewcat'])) {
 //izslēdz sesijas botiem, paātrina ielādi un nepiemēslo ar nevajadzīgiem sesiju failiem
 if (
 		strpos($_SERVER['HTTP_USER_AGENT'],"Googlebot") === false &&
+                strpos($_SERVER['HTTP_USER_AGENT'],"bingbot") === false &&
 		strpos($_SERVER['HTTP_USER_AGENT'],"YandexBot") === false &&
                 strpos($_SERVER['HTTP_USER_AGENT'],"YandexImages") === false &&
 		strpos($_SERVER['HTTP_USER_AGENT'],"Mediapartners") === false &&

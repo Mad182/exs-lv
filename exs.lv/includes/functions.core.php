@@ -2638,16 +2638,16 @@ function get_asn($ip) {
 	if(strlen($ip) <5) {
 		return '';
 	}
-	
+
 	if(strpos($ip, '.')) {
 		$parts = explode('.', $ip);
-		$key = 'asn_' . md5($parts[0] . '.' . $parts[1] . '.' . $parts[2]. '.*');
+		$key = 'i_' . md5($parts[0] . '.' . $parts[1] . '.' . $parts[2]. '.*');
 	} else {
-		$key = 'asn_' . md5($ip);
+		$key = 'i_' . md5($ip);
 	}
 
 	if (($asn = $m->get($key)) === false) {
-		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}"));
+		$details = json_decode(file_get_contents("https://ipinfo.io/{$ip}"));
 		$asn = $details->org;
 		$m->set($key, $asn, 864000);
 	}

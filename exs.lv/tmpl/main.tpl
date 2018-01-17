@@ -80,8 +80,6 @@
 	<!-- END BLOCK : mb-head-->
 	<!-- INCLUDE BLOCK : module-head -->
 
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	{plevel}
 </head>
 
 <body{onload} class="{layout-options}">
@@ -149,7 +147,6 @@
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
 			<div id="tad">
-				<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9907860161851752" data-ad-slot="6111797264" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({ });</script>
 			</div>
 			<!-- END BLOCK : header-ad-->
 		</div>

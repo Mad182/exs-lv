@@ -49,17 +49,17 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 
 	// saturā esošām adresēm pievieno "nofollow" atribūtu
 	$txt = str_replace(' rel="nofollow"', '', $txt);
-	$txt = str_replace(' href="http', ' rel="nofollow" href="http', $txt);
+	$txt = str_replace(' href="http', ' rel="nofollow noopener noreferrer" href="http', $txt);
 
 	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_sitelist('dofollow');
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
 			$find = [
-				' rel="nofollow" href="http://' . $site,
-				' rel="nofollow" href="https://' . $site,
-				' rel="nofollow" href="http://www.' . $site,
-				' rel="nofollow" href="https://www.' . $site
+				' rel="nofollow noopener noreferrer" href="http://' . $site,
+				' rel="nofollow noopener noreferrer" href="https://' . $site,
+				' rel="nofollow noopener noreferrer" href="http://www.' . $site,
+				' rel="nofollow noopener noreferrer" href="https://www.' . $site
 			];
 			$replace = [
 				' href="http://' . $site,

@@ -12,6 +12,10 @@ require('configdb.php');
 require(CORE_PATH . '/includes/class.mdb.php');
 require(CORE_PATH . '/includes/functions.core.php');
 
+//memcached konekcija
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
+
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
 
@@ -63,10 +67,6 @@ if ($resps) {
 	session_start();
 
 	require(CORE_PATH . '/includes/class.auth.php');
-
-	//memcached konekcija
-	$m = new Memcached;
-	$m->addServer($mc_host, $mc_port);
 
 	$site_access = get_site_access();
 
