@@ -3460,9 +3460,13 @@ ul#friend-list li {
 	border: 1px solid #fff;
 	margin: 1px;
 	text-align: center;
-	width: 85px;
-	height: 98px;
+	width: 99px;
+	height: 104px;
 	font-size: 90%
+}
+
+ul#friend-list li.has-postcount {
+	height: 118px;
 }
 
 ul#friend-list li.owner {

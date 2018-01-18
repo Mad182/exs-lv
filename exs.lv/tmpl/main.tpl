@@ -18,7 +18,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="https://feeds.feedburner.com/runes">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css?as" media="all">
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">

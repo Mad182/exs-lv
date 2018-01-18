@@ -203,7 +203,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 	$tpl->newBlock('group-members');
 
 	// modiem / adminiem atlasa biedru pieteikumus
-	if ($is_admin || $is_mod) {
+	if (($is_admin || $is_mod) && empty($_GET['var3'])) {
 		$pendings = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '0' ORDER BY `id` DESC");
 		if ($pendings) {
 			$tpl->newBlock('pending');
@@ -227,30 +227,43 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 	}
 
-	// pirms biedru saraksta pievieno grupas administratoru
 	$tpl->newBlock('members');
 
-	$m_owner = get_user($group->owner);
+	if(empty($_GET['var3'])) {
 
-	$avatar = get_avatar($m_owner);
+		// pirms biedru saraksta pievieno grupas administratoru
+		$m_owner = get_user($group->owner);
 
-	$tpl->newBlock('members-node');
-	$tpl->assign([
-		'group-id' => $group->id,
-		'member-class' => 'owner',
-		'member-id' => $m_owner->id,
-		'member-nick' => usercolor($m_owner->nick, $m_owner->level, false, $m_owner->id),
-		'avatar' => $avatar
-	]);
+		$avatar = get_avatar($m_owner);
+
+		$tpl->newBlock('members-node');
+		$tpl->assign([
+			'group-id' => $group->id,
+			'member-class' => 'owner',
+			'member-id' => $m_owner->id,
+			'member-nick' => usercolor($m_owner->nick, $m_owner->level, false, $m_owner->id),
+			'avatar' => $avatar
+		]);
+
+		 $end = 59;
+	} else {
+		 $end = 60;
+	}
 
 	$skip = 0;
 	if (isset($_GET['skip'])) {
 		$skip = (int) $_GET['skip'];
 	}
-	$end = 59;
+
+	$order_link = '';
+	$order = 'ORDER BY `moderator` DESC, `date_added` ASC';
+	if (isset($_GET['var3']) && $_GET['var3'] == 'by-posts') {
+		$order = 'ORDER BY `posts` DESC, `date_added` ASC';
+		$order_link = '/by-posts';
+	}
 
 	// atlasa grupas biedrus
-	$members = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '1' ORDER BY `moderator` DESC, `date_added` ASC LIMIT $skip,$end");
+	$members = $db->get_results("SELECT * FROM `clans_members` WHERE `clan` = '$group->id' AND `approve` = '1' $order LIMIT $skip,$end");
 	if ($members) {
 
 		// pievieno biedrus sarakstam
@@ -280,6 +293,10 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 				'avatar' => $avatar
 			]);
 
+			if (isset($_GET['var3']) && $_GET['var3'] == 'by-posts') {
+				$tpl->assign('has-postcount', ' has-postcount');
+			}
+
 			//delete member from group
 			if ($is_admin || $is_mod) {
 				$tpl->newBlock('member-delete');
@@ -303,11 +320,19 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 					'token' => make_token('mod')
 				]);
 			}
+
+			//post count
+			if (isset($_GET['var3']) && $_GET['var3'] == 'by-posts') {
+                                $tpl->newBlock('member-posts');
+                                $tpl->assign([
+                                        'posts' => $member->posts,
+                                ]);
+			}
 		}
 	}
 
 	// biedru saraksta lappuses
-	$pager = pager($group->members, $skip, $end, $group_link . '/members/?skip=');
+	$pager = pager($group->members, $skip, $end, $group_link . '/members'.$order_link.'/?skip=');
 	$tpl->assignGlobal([
 		'pager-next' => $pager['next'],
 		'pager-prev' => $pager['prev'],
@@ -562,7 +587,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 					$title = mb_get_title(stripslashes($body));
 					$url = $group_link . '/forum/' . base_convert($mainid, 10, 36);
-					
+
 					//kādā grupā?
 					if(!empty($group->title_form)) {
 						$gt = $group->title_form . ' grupā';
@@ -880,7 +905,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'pager-numeric' => $pager['pages']
 				]);
 			}
-            
+
             // poga ritināšanai līdz pašai augšai mobilajā versijā
             if (isset($_GET['single']) && $auth->mobile) {
                 $tpl->newBlock('scroll-up-mobile');

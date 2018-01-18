@@ -297,9 +297,13 @@
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<ul id="friend-list">
 		<!-- START BLOCK : members-node-->
-		<li class="{member-class}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />{member-nick}</a>
+		<li class="{member-class}{has-postcount}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />
+                        <!-- START BLOCK : member-posts-->
+                        <span style="color:#333">Posti: {posts}</span><br />
+                        <!-- END BLOCK : member-posts-->
+{member-nick}</a>
 			<!-- START BLOCK : member-delete-->
-			<a class="delete confirm" title="Dzēst dalībnieku no grupas" href="{group-link}/drop/{member-id}?token={token}"><img src="//img.exs.lv/bildes/x.png" alt="x" title="Dzēst dalībnieku no grupas" /></a>
+			<a class="delete confirm" title="Dzēst biedru no grupas" href="{group-link}/drop/{member-id}?token={token}"><img src="//img.exs.lv/bildes/x.png" alt="x" title="Dzēst biedru no grupas" /></a>
 			<!-- END BLOCK : member-delete-->
 			<!-- START BLOCK : member-moderator-->
 			<a class="moderator confirm" href="{group-link}/setmod/{member-id}?token={token}"><img src="//img.exs.lv/bildes/icons/user_add.png" alt="mod" title="Uzlikt par moderatoru" /></a>

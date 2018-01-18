@@ -2201,6 +2201,11 @@ function post_mb($post) {
 		}
 	}
 
+	if(!empty($post['groupid'])) {
+		$user_group_posts = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = ".intval($post['groupid'])." AND `author` = ".intval($auth->id)." AND `removed` = 0");
+		$db->query("UPDATE `clans_members` SET `posts` = " . intval($user_group_posts) . " WHERE `user` = ".intval($auth->id)." AND `clan` = ".intval($post['groupid']));
+	}
+
 	update_karma($post['author']);
 
 	return $return;
