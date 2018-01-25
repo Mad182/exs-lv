@@ -5,7 +5,7 @@
 		<title>Ielogoties - {server-name}</title>
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
+		<link rel="stylesheet" href="{static-server}/css/mobile.css?social" type="text/css" />
 		<script type="text/javascript" src="{static-server}/js/jquery.min.js,mobile.js"></script>
 	</head>
 
@@ -37,6 +37,12 @@
 						<p>
 							<input class="button primary" name="submit" value="Ienākt" type="submit" />
 						</p>
+
+						<p id="ext-login">
+							<a rel="nofollow" href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>FaceBook</span></a>
+							<a rel="nofollow" href="/twitter-login" class="external-login external-twitter" title="Log in with twitter"><span>Twitter</span></a>
+						</p>
+
 					</fieldset>
 				</form>
 			</div>

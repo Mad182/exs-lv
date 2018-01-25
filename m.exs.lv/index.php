@@ -3,6 +3,8 @@
 require('../exs.lv/configdb.php');
 
 /* load cammon libraries */
+require(ROOT_PATH  . '/vendor/autoload.php');
+
 require(CORE_PATH . '/includes/class.mdb.php');
 require('includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
@@ -76,7 +78,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 
 }
 
-if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_GET['viewcat'] != 'forgot-password'))) {
+if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_GET['viewcat'] != 'forgot-password' && $_GET['viewcat'] != 'fb-login' && $_GET['viewcat'] != 'twitter-login'))) {
 	$tpl = new TemplatePower('tmpl/login.tpl');
 	$tpl->prepare();
 

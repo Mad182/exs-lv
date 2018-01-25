@@ -13,9 +13,9 @@ class mdb extends mysqli {
 		//atslēdzam error reporting, lai ignorētu
 		//"client library minor version mismatch" paziņojumu
 		//lietojot MariaDB 10
-		$err_level = error_reporting(0);
+		//$err_level = error_reporting(0);
 		parent::__construct($hostname, $username, $password, $database);
-		error_reporting($err_level);
+		//error_reporting($err_level);
 		/**
 		 * atkomentē šo rindu ja tiek darbināts uz servera
 		 * kur mysql nav utf-8 savienojums pēc noklusējuma
@@ -23,7 +23,7 @@ class mdb extends mysqli {
 		//$this->query("set names utf8");
 	}
 
-	function query($query = null) {
+	function query($query = null, $resultmode = NULL) {
 		$this->num_queries++;
 		return parent::query($query);
 	}

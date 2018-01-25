@@ -1925,3 +1925,35 @@ a.friend-right {
     cursor:pointer;
     background:#4f8abb url('//img.exs.lv/bildes/fugue-icons/icons-24/arrow_down.png') no-repeat 50% 50%;
 }
+
+/* login */
+
+
+a.external-login span {
+	height: 18px;
+	display: inline-block;
+	text-indent: -9999px;
+	outline: none;
+	line-height: 18px
+}
+
+a.external-dr span {
+	background: url('//img.exs.lv/bildes/login.png') no-repeat 0 -40px;
+	width: 76px
+}
+
+a.external-fb span {
+	background: url('//img.exs.lv/bildes/login.png') no-repeat 0 -58px;
+	width: 55px
+}
+
+a.external-twitter span {
+	background: url('//img.exs.lv/bildes/twitter_login.png') no-repeat 0 50%;
+	width: 61px
+}
+
+#ext-login {
+	margin-top: 20px;
+	padding-top: 18px;
+	border-top: 1px solid #eee;
+}
