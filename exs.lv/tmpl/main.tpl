@@ -79,7 +79,7 @@
 	<script>var lastid={lastid},mbid={mbid},usrid={usrid},edit_time={edit_time},mbtype="{type}",mbRefreshId=setInterval("update_mb()", mb_refresh_limit);</script>
 	<!-- END BLOCK : mb-head-->
 	<!-- INCLUDE BLOCK : module-head -->
-
+	{plevel}
 </head>
 
 <body{onload} class="{layout-options}">
@@ -127,7 +127,6 @@
 						<!-- START BLOCK : junk-info-->
 						<li><a href="/adm">Junk admin{count}</a></li>
 						<!-- END BLOCK : junk-info-->
-						<li><a href="/flash-speles" title="Online flash spēles">Flash spēles</a></li>
 						<li class="dropdown"><a href="/">exs.lv</a>
 							<ul class="dropdown-menu">
 								<li><a href="https://runescape.exs.lv/" title="RuneScape forums" rel="nofollow">rs.exs.lv</a></li>
@@ -147,6 +146,14 @@
 		<div id="headline" class="container"{page-persona}>
 			<!-- START BLOCK : header-ad-->
 			<div id="tad">
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9907860161851752"
+     data-ad-slot="7904722018"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 			</div>
 			<!-- END BLOCK : header-ad-->
 		</div>
@@ -579,9 +586,8 @@
 					<div class="kontak">
 						<h3 class="title"><span>Kontakti</span></h3>
 						<ul>
-							<li class="email">info@exs.lv</li>
-							<li class="phone"><span id="noindex-phone"></span></li>
-							<li class="teamspeak">Teamspeak 3: ts.exs.lv</li>
+							<li class="email">E-pasts: info@exs.lv</li>
+							<li class="phone">Telefons: <span id="noindex-phone"></span></li>
 						</ul>
 					</div>
 					<div class="c"></div>
@@ -593,7 +599,6 @@
 					<ul class="menu">
 						<li><a href="/statistika">Statistika</a></li>
 						<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
-						<li><a href="/sitemap">Lapas karte</a></li>
 					</ul>
 				</div>
 				<div id="credit" class="fl">
