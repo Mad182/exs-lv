@@ -381,7 +381,6 @@
 	<dt>
 	<span class="username">{comment-anon_nick}</span>
 	<img class="comments-avatar" src="{comment-avatar}" alt="{comment-anon_nick}" />
-	<br />
 	<span class="author-info"><span class="title">Grupa:</span> <span>Viesi</span></span>
 	</dt>
 	<dd>
@@ -391,7 +390,7 @@
 			<a href="?editcom={comment-id}">labot</a>
 			<!-- END BLOCK : comments-anon-adm-->
 		</p>
-		<div class="comment-text">{comment-text}{comment-editedby}</div>
+		<div class="comment-text">{comment-text}{comment-editedby}<div class="c"></div></div>
 	</dd>
 	<!-- END BLOCK : comments-node-anon-->
 	<!-- END BLOCK : comments-node-->
