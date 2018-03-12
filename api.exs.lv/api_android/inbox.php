@@ -107,8 +107,9 @@ if ($var1 === 'received') {
 	} else if (!api_check_xsrf()) {
 		api_error('no hacking, pls');
 		api_log('Sūtot vēstuli, konstatēts XSRF uzbrukums.');
-	} else if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] >= time() - 3) {
+	} else if (isset($_SESSION['antiflood']) && $_SESSION['antiflood'] >= time() - 11) {
 		api_error('exā plūdi. :( Brīdi uzgaidi!');
+		api_log('Sūtot vēstuli, konstatēts floods.');
 	} else if ((int)$_POST['msg_to'] == $auth->id) {
 		api_error('Tik vientuļi, ka raksti sev? :(');
 
