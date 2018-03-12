@@ -67,7 +67,7 @@ if (!$auth->ok) {
 
 		if (isset($_POST['compose-to']) && $_POST['compose-to'] != 0) {
 
-			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 3) {
+			if (!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 11) {
 				$_SESSION['antiflood'] = time();
 				$send_to = (int) $_POST['compose-to'];
 
