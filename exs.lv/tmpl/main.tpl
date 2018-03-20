@@ -564,7 +564,7 @@
 
 				<div class="footer-widget span8 block6">
 					<div class="widget onlusers-widget">
-						<h3 class="title"><span>Lietotāji tiešsaitē</span></h3>
+						<h3 class="title" style="margin-bottom:10px"><span>Lietotāji tiešsaitē</span></h3>
 						<div class="onlusers clearfix">		
 							<div id="online-users">
 								<ul id="ucl">
