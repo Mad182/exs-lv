@@ -16,8 +16,11 @@
 	<meta name="robots" content="{value}">
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="https://feeds.feedburner.com/runes">
 	<meta name="viewport" content="width=device-width">
+	<!-- START BLOCK : canonical-->
+	<link rel="canonical" href="{url}">
+	<!-- END BLOCK : canonical-->
+	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="https://feeds.feedburner.com/runes">
 	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin">
 	<!-- START BLOCK : additional-css-->
@@ -522,17 +525,44 @@
 
 		<footer id="footer" class="row-fluid">
 			<div id="footer-widgets" class="container">
-				<div class="footer-widget span3 block1">
-					<div class="widget widget_latestpost">
-						<h3 class="title"><span>Jaunākie raksti</span></h3>
-						{footer-topics}
 
-						<h3 class="title"><span>Jaunākie miniblogi</span></h3>
-						{footer-mb}
+				<div class="footer-widget span2 block5">
+
+					<div id="socialmedia-2" class="widget widget_social">
+						<br />
+						<div class="socmed textwidget clearfix">		
+							<ul>
+								<li>
+									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank" class="social android">Android</a>
+									<h4>Android</h4>
+									<p>Aplikācija</p>
+								</li>
+								<li>
+									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank" class="social twitter">Twitter</a>
+									<h4>360</h4>
+									<p>Sekotāji</p>
+								</li>
+							</ul>
+						</div>
+
 					</div>
+
+					<div class="c"></div>
 				</div>
 
-				<div class="footer-widget span9 block4">
+				<div class="footer-widget widget span2 block6">
+
+					<div class="kontak">
+						<h3 class="title"><span>Kontakti</span></h3>
+						<ul>
+							<li class="email">E-pasts: info@exs.lv</li>
+							<li class="phone">Telefons: <span id="noindex-phone"></span></li>
+						</ul>
+					</div>
+					<div class="c"></div>
+				</div>
+
+				<div class="footer-widget span8 block6">
 					<div class="widget onlusers-widget">
 						<h3 class="title"><span>Lietotāji tiešsaitē</span></h3>
 						<div class="onlusers clearfix">		
@@ -553,45 +583,6 @@
 					</div>
 				</div>
 
-				<div class="footer-widget span3 block5">
-
-					<div id="socialmedia-2" class="widget widget_social"><h3 class="title"><span>Exs.lv citur</span></h3>
-						<div class="socmed textwidget clearfix">		
-							<ul>
-								<li>
-									<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow" target="_blank" class="social android">Android</a>
-									<h4>Android</h4>
-									<p>Aplikācija</p>
-								</li>
-								<li>
-									<a href="https://twitter.com/exs_lv" rel="nofollow" target="_blank" class="social twitter">Twitter</a>
-									<h4>350</h4>
-									<p>Sekotāji</p>
-								</li>
-								<li>
-									<a href="https://www.facebook.com/exs.lv" rel="nofollow" target="_blank" class="social facebook">Facebook</a>
-									<h4>335</h4>
-									<p>Sekotāji</p>
-								</li>
-							</ul>
-						</div>
-
-					</div>
-
-					<div class="c"></div>
-				</div>
-
-				<div class="footer-widget widget span3 block6">
-
-					<div class="kontak">
-						<h3 class="title"><span>Kontakti</span></h3>
-						<ul>
-							<li class="email">E-pasts: info@exs.lv</li>
-							<li class="phone">Telefons: <span id="noindex-phone"></span></li>
-						</ul>
-					</div>
-					<div class="c"></div>
-				</div>
 			</div>
 
 			<div id="site-info" class="container">

@@ -9,6 +9,8 @@
  */
 require('configdb.php');
 
+$has_yt = false;
+
 /* ielādē kopīgos failus */
 
 require(ROOT_PATH  . '/vendor/autoload.php');
@@ -407,14 +409,19 @@ $tpl->assignGlobal([
 	'page-onlineusers' => get_online_list(),
 	'current-year' => date('Y'),
 	'mb-refresh-limit' => $mb_refresh_limit,
-	'footer-mb' => get_footer_mb(),
-	'footer-topics' => get_footer_topics(),
 	'static-server' => $static_server,
 	'facebook-app-id' => $fb_api_id,
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash,
 	'openidea' => $openidea
 ]);
+
+if($lang !== 1) {
+	$tpl->assignGlobal([
+		'footer-mb' => get_footer_mb(),
+		'footer-topics' => get_footer_topics(),
+	]);
+}
 
 if (!empty($add_css)) {
 	$tpl->newBlock('additional-css');
@@ -537,6 +544,14 @@ if ($skin === 'main') {
 	}
 }
 
+if($category->noindex) {
+	$robotstag = ['noindex'];
+}
+
+if($has_yt) {
+	$robotstag[] = 'noindex';
+}
+
 /* robots meta taga pievienošana */
 if (!empty($robotstag)) {
 	$robotstag = array_unique($robotstag);
@@ -564,6 +579,12 @@ if(!empty($twitter_meta)) {
 			'val' => $val
 		]);
 	}
+}
+
+/* canonical tag */
+if(!empty($canonical)) {
+	$tpl->newBlock('canonical');
+	$tpl->assign('url', htmlspecialchars($canonical));
 }
 
 

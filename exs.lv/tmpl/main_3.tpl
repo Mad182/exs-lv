@@ -16,6 +16,9 @@
 		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+		<!-- START BLOCK : canonical-->
+		<link rel="canonical" href="{url}">
+		<!-- END BLOCK : canonical-->
 		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="https://feeds.feedburner.com/codinglv">
 		<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 		<link rel="stylesheet" href="{static-server}/css/core.css,code.css,prettify.css">
