@@ -65,7 +65,6 @@ if (isset($_POST['submit'])) {
 		$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$auth->id'");
-		$db->query("DELETE FROM `comments` WHERE `author` = '$auth->id'");
 		$db->query("DELETE FROM `images` WHERE `uid` = '$auth->id'");
 		$db->query("UPDATE `comments` SET `removed` = 1 WHERE `author` = '$auth->id'");
 		$db->query("UPDATE `galcom` SET `removed` = 1 WHERE `author` = '$auth->id'");
