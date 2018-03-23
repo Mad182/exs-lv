@@ -7,7 +7,7 @@ $tpl->prepare();
 /**
  * Lietotāja profila apskatīšanas un labošanas modulis
  */
-$submodules = ['edit', 'avatar', 'settings', 'security', 'auth2f', 'email', 'buytitle', 'changenick'];
+$submodules = ['edit', 'avatar', 'settings', 'security', 'auth2f', 'email', 'buytitle', 'changenick', 'delete'];
 
 if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 	$userid = (int) $_GET['var1'];
@@ -456,7 +456,13 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 		if ($lang == 1) {
 			$g_owners = $db->get_results("SELECT title,id FROM clans WHERE owner = '$inprofile->id' ORDER BY title ASC");
-			$g_members = $db->get_results("SELECT `clans_members`.`clan` AS `clan`,`clans_members`.`moderator` AS `moderator`,`clans`.`title` AS `title` FROM `clans_members`,`clans` WHERE `clans_members`.`user` = '$inprofile->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
+
+			$public_clans = '';
+			if(!$auth->ok) {
+				 $public_clans = 'AND `clans`.`noindex` = 0 AND `clans`.`public` = 1';
+			}
+
+			$g_members = $db->get_results("SELECT `clans_members`.`clan` AS `clan`,`clans_members`.`moderator` AS `moderator`,`clans`.`title` AS `title` FROM `clans_members`,`clans` WHERE `clans_members`.`user` = '$inprofile->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` ".$public_clans." ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
 			if ($g_owners or $g_members) {
 				$tpl->newBlock('grouplist');
 				if ($g_owners) {

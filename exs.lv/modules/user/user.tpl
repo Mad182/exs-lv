@@ -427,6 +427,27 @@
 </div>
 <!-- END BLOCK : user-profile-email-->
 
+<!-- START BLOCK : user-profile-delete-->
+<div class="tabMain">
+	<form id="edit-profile" class="form" action="{page-url}" method="post">
+		<fieldset>
+			<legend>Profila dzēšana</legend>
+			<input type="hidden" name="xsrf_token" value="{xsrf}" />
+			<p class="notice">
+				<strong>Šī darbība ir neatgriezeniska!</strong>
+			</p>
+			<p>
+				<label for="password-old">Ievadi savu paroli:</label>
+				<input type="password" class="text" name="password-old" id="password-old" value="" />
+			</p>
+			<p>
+				<input type="submit" name="submit" class="button primary" value="Dzēst profilu" />
+			</p>
+		</fieldset>
+	</form>
+</div>
+<!-- END BLOCK : user-profile-delete-->
+
 <!-- START BLOCK : user-profile-avatar-->
 <div class="tabMain">
 	<form id="edit-profile" class="form" action="{page-url}" method="post" enctype="multipart/form-data">

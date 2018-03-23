@@ -176,6 +176,7 @@
 								<li><a href="/user/settings">Mani iestatījumi</a></li>
 								<li><a href="/user/security">Paroles maiņa</a></li>
 								<li><a href="/user/email">E-pasta adreses maiņa</a></li>
+								<li><a href="/user/delete">Dzēst profilu</a></li>
 								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
 							</ul>
 						</li>
@@ -564,7 +565,7 @@
 
 				<div class="footer-widget span8 block6">
 					<div class="widget onlusers-widget">
-						<h3 class="title" style="margin-bottom:10px"><span>Lietotāji tiešsaitē</span></h3>
+						<h3 class="title" style="margin-bottom:8px"><span>Lietotāji tiešsaitē</span></h3>
 						<div class="onlusers clearfix">		
 							<div id="online-users">
 								<ul id="ucl">
