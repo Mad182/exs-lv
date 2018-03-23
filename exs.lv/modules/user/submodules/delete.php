@@ -59,6 +59,7 @@ if (isset($_POST['submit'])) {
 		$db->query("DELETE FROM `notify` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `notes` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `cat_moderators` WHERE `user_id` = '$auth->id'");
+		$db->query("DELETE FROM `steam_player_info` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `viewprofile` WHERE `profile` = '$auth->id'");
 		$db->query("DELETE FROM `viewprofile` WHERE `viewer` = '$auth->id'");
 		$db->query("DELETE FROM `friends` WHERE `friend1` = '$auth->id'");
