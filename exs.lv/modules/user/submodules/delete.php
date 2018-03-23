@@ -37,6 +37,8 @@ if (isset($_POST['submit'])) {
 				`draugiem_id` = 0,
 				`rating` = 0,
 				`facebook_id` = '0',
+				`twitter_id` = null,
+				`steam_id` = null,
 				`persona` = '',
 				`token` = '',
 				`reset_token` = '',
