@@ -109,6 +109,11 @@ $site_access = get_site_access();
 //izveido aktīvā lietotāja objektu
 $auth = new Auth();
 
+
+if($auth->ip === '195.154.50.178') {
+	die('penis');
+}
+
 //login
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
@@ -544,7 +549,7 @@ if ($skin === 'main') {
 	}
 }
 
-if($category->noindex) {
+if(!empty($category->noindex)) {
 	$robotstag = ['noindex'];
 }
 
