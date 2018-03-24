@@ -1,7 +1,7 @@
 <?php
 
 /**
- * e-pasta adreses maiņa
+ * profila dzēšana
  */
 $robotstag[] = 'noindex';
 
@@ -72,6 +72,9 @@ if (isset($_POST['submit'])) {
 		$db->query("UPDATE `comments` SET `removed` = 1 WHERE `author` = '$auth->id'");
 		$db->query("UPDATE `galcom` SET `removed` = 1 WHERE `author` = '$auth->id'");
 		$db->query("UPDATE `miniblog` SET `private` = 1 WHERE `author` = '$auth->id'");
+
+		$auth->logout();
+		redirect('/');
 
 	} else {
 		set_flash('<strong>Kļūda:</strong> parole ievadīta nepareizi!', 'error');
