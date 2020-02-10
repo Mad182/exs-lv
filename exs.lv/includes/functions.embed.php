@@ -5,7 +5,7 @@
  *
  *  Pagaidām atbalstītie ārējo lapu widgets:
  *
- *      YouTube, Twitter, Spotify, Deezer,
+ *      YouTube, Twitter, Deezer,
  *      Vine, Soundcloud, Instagram, Vimeo,
  *		imgur gifv video, gfycat
  */
@@ -311,7 +311,7 @@ function insert_smilies($txt, $just_return = false) {
  *
  *  Atbalsta:
  *      - YouTube, Twitter
- *      - Spotify, Deezer
+ *      - Deezer
  *      - Soundcloud, Vine, Instagram, Vimeo
  *		- imgur gif video, gfycat
  *
@@ -320,14 +320,22 @@ function insert_smilies($txt, $just_return = false) {
  *  @return $txt
  */
 function embed_widgets($txt, $wide = 0) {
-	
+
+	global $auth, $has_yt, $post_bump;
+
 	// lai nebūtu problēmu, ja vienā HTML paragrāfā uzreiz aiz, piemēram,
 	// YouTube saites ir kāda cita saite, .* vietā jābūt [^>]*,
 	// kas attiecīgajās vietās neļaus atrasties ">", citādi regex
 	// var vienā piegājienā paķert abas saites
 
+	//don't embed old videos
+	//$embed = true;
+	//if(!empty($post_bump) && $post_bump < strtotime('-2 weeks')) {
+		$embed = false;
+	//}
+
 	// youtube videos
-	if (strpos($txt, 'youtu') !== false) {
+	if ($auth->ok && strpos($txt, 'youtu') !== false && $embed) {
 		if ($wide) {
 			$fn = 'get_youtube_video';
 		} else {
@@ -339,6 +347,8 @@ function embed_widgets($txt, $wide = 0) {
 		$txt = preg_replace_callback(
 				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a([^>]*?)>)https?://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)(([^<]*?)</a>)?#im", $fn, $txt
 		);
+	} elseif(strpos($txt, 'youtu') !== false) {
+		$has_yt = true;
 	}
 
 	// twitter posts
@@ -355,30 +365,23 @@ function embed_widgets($txt, $wide = 0) {
 
 	}
 
-	// spotify
-	if (strpos($txt, 'spotify') !== false) {
-		$txt = preg_replace_callback(
-				"#(<code class=\"prettyprint\">(.*?)</code>)(*SKIP)(*F)|(^|[\n ]|<a(.*?)>)https?://(open|play)\.spotify\.com/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)((.*?)</a>)?#im", 'embed_spotify', $txt
-		);
-	}
-
 	// deezer track or album, or even playlist
-	if (strpos($txt, 'deezer') !== false) {
+	if ($auth->ok && strpos($txt, 'deezer') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a[^>]*?>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)(</a>)?#im", 'embed_deezer', $txt
 		);
 	}
 
 	// vine videos
-	if (strpos($txt, 'vine') !== false) {
+	if ($auth->ok && strpos($txt, 'vine') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vine', $txt
 		);
 	}
 
 	// soundcloud tracks, users, and playlists
-	if (strpos($txt, 'soundcloud') !== false ||
-			strpos($txt, 'snd.sc') !== false) {
+	if (($auth->ok && strpos($txt, 'soundcloud') !== false ||
+			strpos($txt, 'snd.sc') !== false) && $embed) {
 		// tā kā soundcloud saites mēdz būt ļoti garas, htmlpurifier tās var
 		// saīsināt, tāpēc īstā saite jānolasa no "href" atribūta;
 		$txt = preg_replace_callback(
@@ -394,21 +397,21 @@ function embed_widgets($txt, $wide = 0) {
 	}
 
 	// vimeo video
-	if (strpos($txt, 'vimeo') !== false) {
+	if ($auth->ok && strpos($txt, 'vimeo') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vimeo\.com\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vimeo', $txt
 		);
 	}
 
 	// gifv video
-	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false) {
+	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([A-Za-z0-9]+)\.(gifv|webm)\/?#im", 'embed_gifv_imgur', $txt
 		);
 	}
 
 	// gfycat
-	if (strpos($txt, 'gfycat') !== false) {
+	if (strpos($txt, 'gfycat') !== false && $embed) {
 
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)(</a>)?#im", 'embed_gifv_gfycat', $txt
@@ -450,6 +453,9 @@ function get_youtube_video_small($matches) {
  */
 function embed_youtube($matches, $wide = 0) {
 
+	global $has_yt;
+	$has_yt = true;
+
 	$safe = mkslug($matches[6], false, false);
 	$video = get_youtube($safe);
 
@@ -464,6 +470,10 @@ function embed_youtube($matches, $wide = 0) {
 		$width = 520;
 		$height = 290;
 		$vq = 'hd720';
+	}
+
+	if($title === 'youtube.com') {
+		return '<a rel="nofollow noopener noreferrer" target="_blank" href="https://www.youtube.com/watch?v='.$safe.'">https://www.youtube.com/watch?v='.$safe.'</a>';
 	}
 
 	// izmanto h, lai norādītu kā parametru javascriptā
@@ -596,33 +606,6 @@ function embed_twitter($params) {
 	}
 
 	return $tweet_html;
-}
-
-/**
- *  Callback metode Spotify ierakstu iekļaušanai tekstā.
- *
- *  @see https://developer.spotify.com/technologies/widgets/examples/
- */
-function embed_spotify($params) {
-	global $m, $embed_ly_key;
-
-	// $matches[0] - ieraksta adrese
-	// nolasa no Memcached vai izveido iframe saturu
-	if (($spotify_html = $m->get('spotify_' . md5($params[0]))) === false) {
-		$spotify_html = $params[0];
-
-		$response = curl_get('https://api.embed.ly/1/oembed?key=' . $embed_ly_key .
-			'&url=' . urlencode(strip_tags($params[0])));
-		if (!empty($response)) {
-			$spotify = json_decode($response);
-			if (empty($spotify->error) && !empty($spotify->html)) {
-				$spotify_html = $spotify->html;
-			}
-		}
-		$m->set('spotify_' . md5($params[0]), $spotify_html, 432000);
-	}
-
-	return $spotify_html;
 }
 
 /**
@@ -774,6 +757,9 @@ function embed_instagram($params) {
  *  Callback metode Vimeo video iekļaušanai tekstā.
  */
 function embed_vimeo($params) {
+
+	global $has_yt;
+	$has_yt = true;
 	
 	// [0] pilns "notvertais" saturs
 	// [1] <a...>

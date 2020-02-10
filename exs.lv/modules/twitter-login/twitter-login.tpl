@@ -55,5 +55,10 @@
 	<div class="c"></div>
 </div>
 
+<div>
+<h3>Reģistrējoties, Tu piekrīti lietošanas noteikumiem:</h3>
+{rules}
+</div>
+
 <!-- END BLOCK : twitter-signup-->
 

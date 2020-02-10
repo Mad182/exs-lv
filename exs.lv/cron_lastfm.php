@@ -30,7 +30,7 @@ unset($password);
 $m = new Memcached;
 $m->addServer($mc_host, $mc_port);
 
-$users = $db->get_results("SELECT `id`, `nick` FROM `users` WHERE `lastfm_username` IS NOT NULL AND `lastfm_updated` < '".(time()-120)."' ORDER BY `lastfm_updated` ASC");
+$users = $db->get_results("SELECT `id`, `nick` FROM `users` WHERE `lastfm_username` IS NOT NULL AND `lastfm_username` != '' AND `lastfm_updated` < '".(time()-120)."' AND `lastseen` > '".date('Y-m-d H:i', strtotime('-6 months'))."' ORDER BY `lastfm_updated` ASC");
 
 foreach ($users as $user) {
 	echo "\nupdating " . $user->nick . '... ';

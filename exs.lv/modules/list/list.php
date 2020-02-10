@@ -137,7 +137,6 @@ if (!$category->mods_only || im_mod()) {
 		`pages`.`intro` AS `intro`,
 		`users`.`nick` AS `nick`,
 		`users`.`level` AS `level`,
-		`users`.`gender` AS `gender`,
 		`users`.`deleted` AS `author_deleted`
 	FROM
 		`pages`,

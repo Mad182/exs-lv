@@ -5,6 +5,28 @@
  */
 if ($auth->ok) {
 
+	if (isset($_GET['delete']) && check_token('delimg-' . $_GET['delete'], $_GET['token'])) {
+		$delete = intval($_GET['delete']);
+		
+		$image = $db->get_row("SELECT * FROM `imgupload` WHERE `user_id` = '$auth->id' AND `id` = '$delete' LIMIT 1");
+
+		if($image) {
+
+			unlink('/home/www/img.exs.lv/' . $image->path . '/' . $image->file);
+			unlink('/home/www/img.exs.lv/' . $image->path . '/small/' . $image->file);
+			$db->query("DELETE FROM `imgupload` WHERE `user_id` = '$auth->id' AND `id` = '$image->id' LIMIT 1");
+
+			$auth->log('Izdzēsa attēlu', 'imgupload', $image->id);
+
+			set_flash('Attēls dzēsts!', 'success');
+
+		} else {
+			set_flash('Kļūdains pieprasījums', 'error');
+		}
+
+		redirect('/img');
+	}
+
 	//max upload file size
 	if (im_mod()) {
 		$max_size = '12M';
@@ -161,6 +183,8 @@ if ($auth->ok) {
 		foreach ($images as $image) {
 			$tpl->newBlock('img-upload-item');
 			$tpl->assign([
+				'id' => $image->id,
+				'token' => make_token('delimg-' . $image->id),
 				'file' => $image->file,
 				'path' => $image->path,
 				'created' => $image->created,

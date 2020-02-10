@@ -139,6 +139,7 @@
 								<li><a href="/user/settings">Mani iestatījumi</a></li>
 								<li><a href="/user/security">Paroles maiņa</a></li>
 								<li><a href="/user/email">E-pasta adreses maiņa</a></li>
+								<li><a href="/user/delete">Dzēst profilu</a></li>
 								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
 							</ul>
 						</li>
@@ -418,28 +419,24 @@
 				<div id="online-users">
 					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px">{page-onlineusers}</span>
 				</div>
-				<div class="infoblock">
+				<div class="infoblock" style="width:33.2%">
 					<div class="inner">
 						Jaunākie raksti: {footer-topics}
 					</div>
 				</div>
-				<div class="infoblock">
+				<div class="infoblock" style="width:33.2%">
 					<div class="inner">
 						Jaunākais miniblogos: {footer-mb}
 					</div>
 				</div>
-				<div class="infoblock">
+				<div class="infoblock" style="width:33.2%">
 					<div class="inner">
 						<p>&copy; {openidea}, 2013-{current-year}</p>
-						<p>lol.exs.lv ir neoficiāls League of Legends spēlētāju forums</p>
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
+						<p>lol.exs.lv ir neoficiāls League of Legends forums</p>
+
 						<ul id="internal-links">
 							<li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 							<li><a href="/sitemap">Lapas karte</a></li>
-							<li><a href="//exs.lv/reklama">Reklāma portālā</a></li>
 						</ul>
 					</div>
 				</div>

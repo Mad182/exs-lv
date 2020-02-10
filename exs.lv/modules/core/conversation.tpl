@@ -76,30 +76,8 @@
 					<a class="post-button report-user" href="/report/miniblog/{id}" title="Ziņot par pārkāpumu!">ziņot</a>
 					<!-- END BLOCK : report-mb -->
 				</p>
-				<div class="post-content">
-					{text}
-				</div>
+				<div class="post-content">{text}</div>
 				<div class="c"></div>
-				<!-- START BLOCK : mb-tags-wrapper-->
-				<div id="mb-tags-wrapper">
-					<!-- START BLOCK : mb-tags-->
-					<ul id="mb-tags" class="list-tags">
-						<!-- START BLOCK : mb-tags-node-->
-						<li><a href="/tag/{slug}" rel="tag">{name}</a></li>
-						<!-- END BLOCK : mb-tags-node-->
-					</ul>
-					<div class="c"></div>
-					<!-- END BLOCK : mb-tags-->
-				</div>
-				<!-- START BLOCK : mb-newtags-->
-				<div class="c"></div>
-				<form action="{page-url}" id="new-tags-mb" class="form" method="post" style="float:right;padding:0;margin:-4px 0 0">
-					<input style="width:140px;font-size:10px;padding:3px 1px 2px" type="text" class="text" name="newtags" id="post-tags-input" />
-					<input style="padding:1px" class="button" type="submit" value="Tag" />
-				</form>
-				<div class="c"></div>
-				<!-- END BLOCK : mb-newtags-->
-				<!-- END BLOCK : mb-tags-wrapper-->
 			</div>
 		</div>
 

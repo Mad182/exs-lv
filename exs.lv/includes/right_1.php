@@ -28,58 +28,65 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 		]);
 	}
 
-	//pm links
-	if ($auth->ok === true && $auth->id != $inprofile->id) {
-		$tpl->newBlock('profilebox-pm-link');
-	}
+	if($auth->ok === true) {
 
-	//avatara maiņas links, ja nav avatara
-	if ($auth->id === $inprofile->id && empty($auth->avatar)) {
-		$tpl->newBlock('profilebox-updateavatar');
-	}
+		//avatara maiņas links, ja nav avatara
+		if ($auth->id === $inprofile->id && empty($auth->avatar)) {
+			$tpl->newBlock('profilebox-updateavatar');
+		}
 
-	//warnu links un skaits
-	if ($auth->ok === true && ($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, [1])) {
-		$tpl->newBlock('profilebox-warn');
-		if ($inprofile->warn_count > 0) {
+		//pm links
+		if ($auth->id != $inprofile->id) {
+			$tpl->newBlock('profilebox-pm-link');
+		}
+
+		//warn links
+		if (($auth->id == $inprofile->id || im_mod()) && !in_array($inprofile->level, [1])) {
+			$tpl->newBlock('profilebox-warn');
+			if ($inprofile->warn_count > 0) {
+				$tpl->assign([
+					'profile-warns' => '&nbsp;(' . $inprofile->warn_count . ')',
+					'class' => ' class="active"'
+				]);
+			}
+		}
+
+		//twitter, youtube, lastfm linki
+		if (!empty($inprofile->twitter)) {
+			$tpl->newBlock('profilebox-twitter-link');
 			$tpl->assign([
-				'profile-warns' => '&nbsp;(' . $inprofile->warn_count . ')',
-				'class' => ' class="active"'
+				'twitter' => $inprofile->twitter
 			]);
 		}
-	}
 
-	if (!empty($inprofile->twitter)) {
-		$tpl->newBlock('profilebox-twitter-link');
-		$tpl->assign([
-			'twitter' => $inprofile->twitter
-		]);
-	}
+		if (!empty($inprofile->yt_name)) {
+			$tpl->newBlock('profilebox-yt-link');
+			$tpl->assign([
+				'yt-name' => $inprofile->yt_name,
+				'yt-slug' => mkslug($inprofile->yt_name)
+			]);
+		}
 
-	if (!empty($inprofile->yt_name)) {
-		$tpl->newBlock('profilebox-yt-link');
-		$tpl->assign([
-			'yt-name' => $inprofile->yt_name,
-			'yt-slug' => mkslug($inprofile->yt_name)
-		]);
-	}
+		if (!empty($inprofile->lastfm_username)) {
+			$tpl->newBlock('profilebox-lastfm-link');
+			$tpl->assign([
+				'name' => $inprofile->lastfm_username
+			]);
+		}
 
-	if (!empty($inprofile->lastfm_username)) {
-		$tpl->newBlock('profilebox-lastfm-link');
-		$tpl->assign([
-			'name' => $inprofile->lastfm_username
-		]);
 	}
 
 	$isblog = get_blog_by_user($inprofile->id);
 	if ($isblog) {
 		$blog = get_cat($isblog);
 		$count = $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '" . $isblog . "' AND `lang` = " . intval($lang));
-		$tpl->newBlock('profilebox-blog-link');
-		$tpl->assign([
-			'url' => '/' . $blog->textid,
-			'count' => $count
-		]);
+		if($count > 0) {
+			$tpl->newBlock('profilebox-blog-link');
+			$tpl->assign([
+				'url' => '/' . $blog->textid,
+				'count' => $count
+			]);
+		}
 	}
 }
 
@@ -284,15 +291,17 @@ if ($category->module === 'movies') {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-//show popup ads only for desktops
-require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
-$detect = new Mobile_Detect;
-$deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18']) && !in_array('noindex', $robotstag)) {
-	$tpl->newBlock('header-ad');
-}
+/*if(!$auth->ok && !in_array('noindex', $robotstag)) {
 
-if(!$auth->ok && !in_array('noindex', $robotstag)) {
-        $tpl->assignGlobal('plevel', '<script>(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-9907860161851752",enable_page_level_ads: true });</script>');
-}
+    $tpl->assignGlobal('plevel', '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-9907860161851752",enable_page_level_ads: true });</script>');
 
+	//show popup ads only for desktops
+	require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
+	$detect = new Mobile_Detect;
+	$deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
+	if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18']) && !in_array('noindex', $robotstag)) {
+		$tpl->newBlock('header-ad');
+	}
+
+}
+*/

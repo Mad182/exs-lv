@@ -53,7 +53,10 @@
 </form>
 <!-- START BLOCK : img-upload-item-->
 <div style="padding:5px 0">
-	<a class="lightbox" href="https://img.exs.lv/{path}/{file}"><img class="av" src="https://img.exs.lv/{path}/small/{file}" alt="" style="width:100px;" /></a>
+	<div style="float:left;">
+		<a class="lightbox" href="https://img.exs.lv/{path}/{file}"><img class="av" src="https://img.exs.lv/{path}/small/{file}" alt="" style="width:100px;" /></a><br />
+		<a href="/img/?delete={id}&amp;token={token}" class="delete confirm">dzēst attēlu</a>
+	</div>
 
 	<div style="font-size:70%">
 

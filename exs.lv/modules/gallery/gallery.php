@@ -3,12 +3,14 @@
 //load css
 $add_css[] = 'gallery.css';
 
-if ($inprofile = get_user(intval($_GET['var1']))) {
+$robotstag = ['noindex', 'nofollow'];
+
+$inprofile = get_user(intval($_GET['var1']));
+
+if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofile->private)) {
 
 	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');
 	$tpl->newBlock('user-gallery');
-
-	include(CORE_PATH . '/includes/class.tags.php');
 
 	//write comment
 	if (isset($_POST['comment-pid']) && !empty($_POST['commenttext']) && $auth->ok) {
@@ -90,7 +92,13 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 	}
 
 	//image list
-	$images = $db->get_results("SELECT id,thb,url,posts FROM images WHERE `uid` = '" . $inprofile->id . "' AND `lang` = '$lang' ORDER BY id DESC");
+
+	$private = '';
+	if(!$auth->ok) {
+		$private = ' AND `private` = 0';
+	}
+
+	$images = $db->get_results("SELECT id,thb,url,posts FROM images WHERE `uid` = '" . $inprofile->id . "' AND `lang` = '$lang' ".$private." ORDER BY id DESC");
 	if ($images) {
 		$tpl->newBlock('image-list');
 		$linkid = 1;
@@ -225,31 +233,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				redirect('/gallery/' . $inprofile->id);
 			}
 
-			//pieliek tagus
-			if ($auth->ok && in_array($auth->level, [1, 2, 3]) && isset($_POST['newtags'])) {
-				$newtags = explode(',', $_POST['newtags']);
-				$tags = new tags;
-				foreach ($newtags as $newtag) {
-					if (strlen(trim($newtag)) > 1) {
-						$newtag = h(ucfirst(strip_tags(trim($newtag))));
-						$nslug = mkslug($newtag);
-						if (!empty($newtag)) {
-							$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-							if (!$tagid) {
-								$db->query("INSERT INTO tags (name,slug) VALUES ('" . sanitize($newtag) . "','$nslug')");
-								$tagid = $db->insert_id;
-							}
-							if ($tags->add_tag($image->id, $tagid, 1)) {
-								$auth->log('Pievienoja tagu (' . $nslug . ')', 'images', $image->id);
-								echo '<li><a href="/tag/' . $nslug . '" rel="tag">' . $newtag . '</a></li>';
-							}
-						}
-					}
-				}
-				exit;
-			}
-
-
 			$db->query("UPDATE `images` SET `views` = `views`+1 WHERE `id` = '$image->id'");
 
 			if ($auth->ok) {
@@ -328,39 +311,6 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 			if (empty($rating_users)) {
 				$rating_users = [];
-			}
-
-			$article_tags = $db->get_results("
-  			SELECT
-  				`taged`.`id` AS `id`,
-  				`taged`.`tag_id` AS `tag_id`,
-  				`tags`.`name` AS `name`,
-  				`tags`.`slug` AS `slug`
-  			FROM
-  				`taged`,
-  				`tags`
-  			WHERE
-  				`taged`.`page_id` = '$image->id' AND
-  				`taged`.`type` = '1' AND
-  				`tags`.`id` = `taged`.`tag_id`
-  			");
-
-			$tpl->newBlock('post-tags-ul');
-			$tagcount = 0;
-			if ($article_tags) {
-				foreach ($article_tags as $article_tag) {
-					$tagcount++;
-					$tpl->newBlock('post-tags-node');
-					$tpl->assign([
-						'tag-title' => $article_tag->name,
-						'tag-id' => $article_tag->tag_id,
-						'slug' => $article_tag->slug,
-					]);
-				}
-			}
-
-			if ($auth->ok && ($auth->level == 1 or $auth->level == 2)) {
-				$tpl->newBlock('post-newtags');
 			}
 
 			//edit image form
@@ -562,8 +512,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 	}
 
 } else {
-	$tpl->newBlock('error-nouser');
-	$page_title = 'Kļūda: profils nav atrasts!';
+	error_404();
 }
 
 $pagepath = '';

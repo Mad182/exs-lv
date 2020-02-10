@@ -28,12 +28,6 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 	require(CORE_PATH . '/modules/wall/tab-news.php');
 }
 
-$tpl->assignGlobal([
-	'text-enc' => urlencode('Spēļu un izklaides portāls exs.lv'),
-	'bookmark-enc' => urlencode('https://exs.lv'),
-	'fb-likes' => get_fb_likes('https://exs.lv')
-]);
-
 $pagepath = '';
 
 $opengraph_meta['title'] = 'Spēļu un izklaides portāls exs.lv';

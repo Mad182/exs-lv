@@ -1,19 +1,2 @@
-#Ads.txt LV
-
-google.com, pub-3182858089993196, RESELLER
-google.com, pub-6818616807676795, RESELLER 
-rubiconproject.com, 16854, RESELLER 
-openx.com, 537151480, RESELLER 
-criteo.com, 4763, RESELLER 
-adform.com, 1360, RESELLER 
-smartadserver.com, 1590, RESELLER 
-facebook.com, 1697747700484542, RESELLER 
-facebook.com, 612639022251208, RESELLER 
-ibillboard.com, 16179, RESELLER
-districtm.io, 100899, RESELLER
-appnexus.com, 1908, RESELLER
-appnexus.com, 7944, RESELLER
-
-
 google.com, pub-9907860161851752, DIRECT, f08c47fec0942fa0
 

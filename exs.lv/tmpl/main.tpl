@@ -20,7 +20,6 @@
 	<!-- START BLOCK : canonical-->
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
-	<link rel="alternate" type="application/rss+xml" title="RSS jaunumi" href="https://feeds.feedburner.com/runes">
 	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,400italic,500&amp;subset=latin-ext,cyrillic,latin">
 	<!-- START BLOCK : additional-css-->
@@ -198,12 +197,9 @@
 								<li{cat-sel-1827}><a href="/reports">Sūdzības{reports-count}</a></li>
 								<li{cat-sel-1132}><a href="/findby">Profilu pārvaldība</a></li>
 								<li{cat-sel-199}><a href="/log">Darbību vēsture</a></li>
-								<li{cat-sel-206}><a href="/?c=206">Random fakti</a></li>
 								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
 								<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
-								<li{cat-sel-451}><a href="/smslog">SMS maksājumi</a></li>
 								<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
-								<li{cat-sel-586}><a href="/csmaps">CS mapimg</a></li>
 								<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
 								<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a></li>
 								<!-- START BLOCK : user-modlink-adm -->
@@ -283,31 +279,33 @@
 
 					<!-- START BLOCK : menu-list-->
 					<h3 class="title"><span>{title}</span></h3>
-					<ul class="menu" id="nav-{topid}">
-						<!-- START BLOCK : menu-node-->
-						<li{sel}><a href="{url}">{title}</a>
-							<!-- START BLOCK : menu-list-sub-->
-							<ul>
-								<!-- START BLOCK : menu-node-sub-->
-								<li{sel}><a href="{url}">{title}</a></li>
-								<!-- END BLOCK : menu-node-sub-->
-							</ul>
-							<!-- END BLOCK : menu-list-sub-->
-						</li>
-						<!-- END BLOCK : menu-node-->
-					</ul>
+					<nav id="sub-categories">
+						<ul class="menu" id="nav-{topid}">
+							<!-- START BLOCK : menu-node-->
+							<li{sel}><a href="{url}">{title}</a>
+								<!-- START BLOCK : menu-list-sub-->
+								<ul>
+									<!-- START BLOCK : menu-node-sub-->
+									<li{sel}><a href="{url}">{title}</a></li>
+									<!-- END BLOCK : menu-node-sub-->
+								</ul>
+								<!-- END BLOCK : menu-list-sub-->
+							</li>
+							<!-- END BLOCK : menu-node-->
+						</ul>
+					</nav>
 					<!-- END BLOCK : menu-list-->
 
 					<div class="widget">
 						<h3 class="title"><span>Jaunākais portālā</span></h3>
-						<div class="tabwidget widget tab-container box"> 
+						<nav id="latest-posts-navigation" class="tabwidget widget tab-container box"> 
 							<ul class="tabnav clearfix">
 								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span class="comments">Raksti</span></a></li>
 								<li><a href="/latest.php?type=images" class="{gallery-selected}remember-gallery ajax"><span class="gallery">Bildes</span></a></li>
 							</ul>
 							<div class="c"></div>
 							<div id="lat" class="ajaxbox">{latest-noscript}</div>
-						</div>
+						</nav>
 					</div>
 
 					<!-- START BLOCK : groups-l-list-->
@@ -316,10 +314,10 @@
 						<div class="box">
 							<p>
 								<!-- START BLOCK : groups-l-node-->
-								<a href="{link}">{title}</a><br />
+								<a href="{link}" rel="nofollow">{title}</a><br />
 								<!-- END BLOCK : groups-l-node-->
 							</p>
-							<a href="/grupas">Visas grupas &raquo;</a>
+							<a href="/grupas" rel="nofollow">Visas grupas &raquo;</a>
 						</div>
 					</div>
 					<!-- END BLOCK : groups-l-list-->
@@ -352,15 +350,17 @@
 					<!-- END BLOCK : page-path-->
 					<!-- START BLOCK : profile-menu-->
 					<h1>{user-nick}{user-menu-add}</h1>
-					<ul class="tabs">
-						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-						<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
-						<li><a href="/awards/{user-id}" class="{active-tab-awards}" rel="nofollow"><span class="awards">Medaļas</span></a></li>
-						<li><a href="/friends/{user-id}" class="{active-tab-friends}" rel="nofollow"><span class="friends">Draugi</span></a></li>
-						<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
-						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
-						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
-					</ul>
+					<nav id="profile-navigation">
+						<ul class="tabs">
+							<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level}">Profils</span></a></li>
+							<li><a href="/gallery/{user-id}" class="{active-tab-gallery}"><span class="gallery">Galerija</span></a></li>
+							<li><a href="/awards/{user-id}" class="{active-tab-awards}" rel="nofollow"><span class="awards">Medaļas</span></a></li>
+							<li><a href="/friends/{user-id}" class="{active-tab-friends}" rel="nofollow"><span class="friends">Draugi</span></a></li>
+							<li><a href="/bookmarks/{user-id}" class="{active-tab-bookmarks}"><span class="bookmarks">Izlase</span></a></li>
+							<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
+							<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
+						</ul>
+					</nav>
 					<!-- END BLOCK : profile-menu-->
 					<!-- START BLOCK : profile-menu-deleted-->
 					<h1>Dzēsts lietotājs</h1>
@@ -384,7 +384,6 @@
 							<!-- START BLOCK : genre-node-->
 							<label style="font-size: 10px;line-height: 13px;"><input style="width:11px;height:11px;padding: 0;margin:2px;" type="checkbox" name="genres[]" value="{genre}"{checked} />{translated}</label>
 							<!-- START BLOCK : genre-node-->
-
 							<input type="submit" value="Meklēt" class="button primary small" />
 						</form>
 					</div>
@@ -442,9 +441,9 @@
 								<li><a href="/mb-latest?pg=0&amp;tab=music" class="{music-selected}remember-music ajax"><span class="music">last.fm</span></a></li>
 							</ul> 
 
-							<div id="miniblog-block" class="ajaxbox">
+							<nav id="miniblog-block" class="ajaxbox">
 								{out}
-							</div>
+							</nav>
 						</div>
 					</div>
 					<!-- END BLOCK : mb-box-->
@@ -587,12 +586,12 @@
 			</div>
 
 			<div id="site-info" class="container">
-				<div id="footer-nav" class="fr">
+				<nav id="footer-nav" class="fr">
 					<ul class="menu">
 						<li><a href="/statistika">Statistika</a></li>
 						<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 					</ul>
-				</div>
+				</nav>
 				<div id="credit" class="fl">
 					<p>&copy; 2005-{current-year}, {openidea} - mājas lapas izstrāde un uzturēšana.</p>
 				</div>

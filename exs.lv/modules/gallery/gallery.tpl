@@ -84,24 +84,6 @@
 			<div class="c"></div>
 			<ul class="article-info"><li class="date">{image-date}</li><li class="comments">{image-posts} komentāri</li><li class="views">skatīts {image-views}x</li></ul><div class="c"></div>
 		</div>
-
-		<div class="c"></div>
-		<div id="post-tags-wrapper">
-			<!-- START BLOCK : post-tags-ul-->
-			<ul id="article-tags" class="list-tags">
-				<!-- START BLOCK : post-tags-node-->
-				<li><a href="/tag/{slug}" rel="tag">{tag-title}</a><!--{tag-remove}--></li>
-				<!-- END BLOCK : post-tags-node-->
-			</ul>
-			<!-- END BLOCK : post-tags-ul-->
-		</div>
-		<!-- START BLOCK : post-newtags-->
-		<div class="c"></div>
-		<form action="{page-url}" id="new-tags" class="form" method="post" style="padding: 12px 0 4px">
-			<label for="post-tags-input">tagi, atdalīti ar komatu:</label><br />
-			<input style="width: 340px;" type="text" class="text" name="newtags" id="post-tags-input" /> <input class="button" type="submit" value="Pielikt" />
-		</form>
-		<!-- END BLOCK : post-newtags-->
 		<div class="c"></div>
 		<!-- START BLOCK : edit-image-form-->
 		<form class="form" action="" method="post">

@@ -57,9 +57,6 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
             $foo->process(CORE_PATH . '/dati/bildes/u_large/' . $avatar_path);
 
             if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $avatar_path . $text . '.jpg')) {
-                if ($inprofile->avatar != 'none.png' && !empty($inprofile->avatar) && !empty($inprofile->av_alt)) {
-                    $db->query("INSERT INTO `avatar_history` (user_id,avatar,changed) VALUES ('$inprofile->id','$inprofile->avatar',NOW())");
-                }
                 $inprofile->avatar = $avatar_path . $text . '.jpg';
                 $inprofile->av_alt = 1;
             }

@@ -117,7 +117,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			exit;
 		}
 
-
 		$tpl->newBlock('junk-view');
 		$add = '';
 		if (im_mod()) {
@@ -144,10 +143,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			'title' => $pic->title . $add,
 			'title-html' => h($pic->title),
 			'image' => $html,
-			'id' => $pic->id,
-			'text-enc' => urlencode($pic->title),
-			'bookmark-enc' => urlencode('https://exs.lv/junk/'.$pic->id),
-			'fb-likes' => get_fb_likes('https://exs.lv/junk/'.$pic->id)
+			'id' => $pic->id
 		]);
 
 		if ($pic->author) {
@@ -157,11 +153,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 				'nick' => usercolor($author->nick, $author->level, false, $author->id),
 				'id' => $author->id
 			]);
-		} else {
-			if(empty($pic->edit_user) && $pic->posts < 3) {
-				$robotstag = ['noindex', 'follow'];
-			}
-		}
+		} 
 
 		$page_title = h($pic->title);
 
@@ -255,6 +247,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		`miniblog`.`reply_to` AS `reply_to`,
 		`miniblog`.`id` AS `id`,
 		`miniblog`.`removed` AS `mb_removed`,
+		`miniblog`.`private` AS `private`,
 		`miniblog`.`hidden` AS `hidden`,
 		`users`.`nick` AS `nick`,
 		`users`.`decos` AS `decos`,
@@ -303,7 +296,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 			]);
 		}
 	} else {
-		redirect('/' . $category->textid);
+		error_404();
 	}
 } else {
 

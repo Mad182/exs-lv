@@ -109,11 +109,6 @@ $site_access = get_site_access();
 //izveido aktīvā lietotāja objektu
 $auth = new Auth();
 
-
-if($auth->ip === '195.154.50.178') {
-	die('penis');
-}
-
 //login
 if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token'])) {
 	$auth->login($_POST['niks'], $_POST['parole'], $_POST['xsrf_token']);
@@ -329,10 +324,8 @@ if (in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18', '06-03']
 }
 
 $in_level = 0;
-$in_gender = 0;
 if (!empty($inprofile)) {
 	$in_level = $inprofile->level;
-	$in_gender = $inprofile->gender;
 }
 
 
@@ -401,7 +394,6 @@ $tpl->assignGlobal([
 	'category-url' => $category->textid,
 	'currentuser-nick' => h($auth->nick),
 	'inprofile-level' => $in_level,
-	'inprofile-gender' => $in_gender,
 	'new-messages' => $new_msg_html,
 	'new-messages-count' => (int) $new_msg_string,
 	'new-approve' => $new_ap_string,
@@ -421,7 +413,7 @@ $tpl->assignGlobal([
 	'openidea' => $openidea
 ]);
 
-if($lang !== 1) {
+if($lang !== 1 && $lang !== 3) {
 	$tpl->assignGlobal([
 		'footer-mb' => get_footer_mb(),
 		'footer-topics' => get_footer_topics(),
@@ -548,12 +540,11 @@ if ($skin === 'main') {
 		}
 	}
 }
-
 if(!empty($category->noindex)) {
 	$robotstag = ['noindex'];
 }
 
-if($has_yt) {
+if($has_yt && $category->module !== 'wall') {
 	$robotstag[] = 'noindex';
 }
 

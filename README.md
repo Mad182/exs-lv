@@ -35,7 +35,7 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 
 ### php7-fpm un vajadzīgo moduļu uzstādīšana uz debian/ubuntu
 
-    apt-get install php7.0-fpm php7.0-memcached php7.0-gd php7.0-xml php7.0-mbstring php7.0-mcrypt php7.0-curl
+    apt-get install php7.4-cli php7.4-common php7.4-curl php7.4-fpm php7.4-gd php7.4-intl php7.4-json php7.4-mbstring php7.4-mysql php7.4-opcache php7.4-readline php7.4-xml php7.4-zip
 
 ### Memcached uz servera ar Windows OS
 
@@ -79,8 +79,7 @@ ip adreses un viss pārējais tiek redirektēts uz exs.lv
 
 ### Let's encrypt ###
 
-    /opt/certbot-auto certonly --webroot -w /home/www/exs.lv -d exs.lv -d www.exs.lv -d coding.lv -d www.coding.lv -d lol.exs.lv -d rp.exs.lv -d rs.exs.lv -d runescape.exs.lv -d secure.exs.lv -d static.exs.lv -w /home/www/m.exs.lv -d m.coding.lv -d m.exs.lv -d mlol.exs.lv -d mrp.exs.lv -d mrs.exs.lv -d mrunescape.exs.lv -w /home/www/api.exs.lv -d api.exs.lv -d android.exs.lv -d ios.exs.lv -w /var/www/munin -d munin.exs.lv -w /home/www/img.exs.lv -d img.exs.lv
-
+    certbot certonly --webroot -w /home/www/exs.lv -d exs.lv -d www.exs.lv -d coding.lv -d www.coding.lv -d lol.exs.lv -d rs.exs.lv -d runescape.exs.lv -w /home/www/m.exs.lv -d m.coding.lv -d m.exs.lv -d mlol.exs.lv -d mrs.exs.lv -w /home/www/api.exs.lv -d api.exs.lv -d android.exs.lv -w /var/www/munin -d munin.exs.lv -w /home/www/img.exs.lv -d img.exs.lv -w /var/www/gif-avatars.com/app/webroot -d gif-avatars.com -d www.gif-avatars.com
 
 ## Nepieciešamo programmu uzstādīšana ##
 

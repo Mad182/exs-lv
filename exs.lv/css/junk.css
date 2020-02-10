@@ -2,6 +2,24 @@
  * /junk sadaļa
  */
 
+#junk-list {
+	list-style: none;
+	margin:0;
+	padding:10px 0
+}
+
+#junk-list li {
+	float:left;
+	background:transparent;
+	padding:0;
+	margin:0
+}
+
+#junk-list li img {
+	float:left;
+	margin:0 5px 10px
+}
+
 #junk-queue-list {
 	list-style: none;
 	padding: 0;

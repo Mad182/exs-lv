@@ -127,8 +127,8 @@ function fetch_tpl($filename = null, $dirname = null) {
 function update_karma($userid, $force_award = false) {
 	global $db; //I feel your pain
 	$userid = intval($userid);
-	$user = $db->get_row("SELECT id,karma,date,today,posts,rating FROM users WHERE id = '" . $userid . "'");
-	if ($user) {
+	$user = $db->get_row("SELECT id,karma,date,today,posts,rating,deleted FROM users WHERE id = '" . $userid . "'");
+	if ($user && !$user->deleted) {
 		$images = (int) $db->get_var("SELECT count(*) FROM images WHERE uid = '" . $user->id . "'");
 		$topics = (int) $db->get_var("SELECT count(*) FROM pages WHERE author = '" . $user->id . "'");
 		$tvotes = $db->get_row("SELECT sum(rating)/sum(rating_count) AS avg, sum(rating_count) AS count FROM pages WHERE author = '" . $user->id . "'");
@@ -178,10 +178,10 @@ function update_karma($userid, $force_award = false) {
 /**
  * Saīsinājums prieks userlog aktuālajam lietotājam
  */
-function push($action, $avatar = '', $multi = '', $private = 0) {
+function push($action, $avatar = '', $multi = '', $private = 0, $group_id = null) {
 	global $auth;
 	if ($auth->ok === true) {
-		return userlog($auth->id, $action, $avatar, $multi, $private);
+		return userlog($auth->id, $action, $avatar, $multi, $private, $group_id);
 	} else {
 		return false;
 	}
@@ -190,15 +190,22 @@ function push($action, $avatar = '', $multi = '', $private = 0) {
 /**
  * Veic ierakstu lietotāja pēdējās darbībās
  */
-function userlog($user, $action, $avatar = '', $multi = '', $private = 0) {
+function userlog($user, $action, $avatar = '', $multi = '', $private = 0, $group_id = null) {
 	global $db;
 	$lang = get_lang();
 
 	if (!empty($multi)) {
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang' LIMIT 2");
 	}
-	$db->query("INSERT INTO `userlogs` (`time`,`user`,`avatar`,`action`,`multi`,`lang`,`private`) 
-				VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang','" . intval($private) . "')");
+
+	if($group_id) {
+		$group_id = intval($group_id);
+	} else {
+		$group_id = null;
+	}
+
+	$db->query("INSERT INTO `userlogs` (`time`,`user`,`avatar`,`action`,`multi`,`lang`,`private`,`group_id`) 
+				VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang','" . intval($private) . "','". $group_id."')");
 	return true;
 }
 
@@ -714,13 +721,6 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 		$text = preg_replace_callback('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uim', [$mention, 'mention'], $text);
 	}
 
-	/* miniblogu #tags */
-	if ($type == 'mb' && strpos($text, '#') !== false) {
-		include_once(CORE_PATH . '/includes/class.hashtag.php');
-		$hashtag = new Hashtag($uniq);
-		$text = preg_replace_callback('/([\s|>])#([0-\x{003b}\x{003d}-\x{024f}\-_]+)/uim', [$hashtag, 'hashtag'], $text);
-	}
-
 	return $text;
 }
 
@@ -1070,28 +1070,22 @@ function get_banlist($force = false) {
  */
 function get_footer_mb($force = false) {
 	global $db, $m, $lang, $auth;
-	if ($force || !($html = $m->get('f_mb_' . $lang))) {
+	if ($force || !($html = $m->get('fmb_' . $lang))) {
 		$html = '';
-
-		//miniblogi kas nav publiski pieejami
-		$priv = '';
-		if (!$auth->ok) {
-			$priv = ' AND `miniblog`.`private` = 0 ';
-		}
 
 		$latest = $db->get_results("
 			SELECT `text`,`id`,`author`
 			FROM `miniblog`
-			WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1609600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang $priv
+			WHERE `date` > '" . date('Y-m-d H:i:s', time() - 1609600) . "' AND `parent` = 0 AND `groupid` = 0 AND `removed` = 0 AND `lang` = $lang
 			ORDER BY `id` DESC
-			LIMIT 8
+			LIMIT 6
 		");
 
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			$i = 1;
 			foreach ($latest as $late) {
-				if($i > 5) {
+				if($i > 4) {
 					continue;
 				}
 				$late->text = trim(mb_get_title($late->text));
@@ -1103,7 +1097,7 @@ function get_footer_mb($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_mb_' . $lang, $html, 120);
+		$m->set('f_mb_' . $lang, $html, 180);
 	}
 	return $html;
 }
@@ -1113,9 +1107,9 @@ function get_footer_mb($force = false) {
  */
 function get_footer_topics($force = false) {
 	global $db, $m, $lang;
-	if ($force || !($html = $m->get('f_topics_' . $lang))) {
+	if ($force || !($html = $m->get('ftpc_' . $lang))) {
 		$html = '';
-		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 5");
+		$latest = $db->get_results("SELECT `lang`,`title`,`strid` FROM `pages` WHERE `category` != '83' AND `category` != '6' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 4");
 		if ($latest) {
 			$html .= '<ul class="internal-links">';
 			foreach ($latest as $late) {
@@ -1123,7 +1117,7 @@ function get_footer_topics($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, 120);
+		$m->set('f_topics_' . $lang, $html, 180);
 	}
 	return $html;
 }
@@ -1144,7 +1138,7 @@ function get_online($force = false) {
 			`users`,
 			`visits`
 		WHERE
-			`visits`.`lastseen` > '" . date('Y-m-d H:i:s', time() - 360) . "' AND
+			`visits`.`lastseen` > '" . date('Y-m-d H:i:s', time() - 280) . "' AND
 			`users`.`id` = `visits`.`user_id`
 		");
 
@@ -1187,7 +1181,7 @@ function get_online_list($force = false) {
 			`users`
 		WHERE
 			`visits`.`site_id` = $lang AND
-			`visits`.`lastseen` > '" . date('Y-m-d H:i:s', time() - 360) . "' AND
+			`visits`.`lastseen` > '" . date('Y-m-d H:i:s', time() - 280) . "' AND
 			`users`.`id` = `visits`.`user_id`
 		ORDER BY
 			`users`.`nick` ASC");
@@ -1259,13 +1253,13 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 			} else {
 				$iepriekseja = 0;
 			}
-			$pager_next = '<a class="pager-next next" title="Iepriekšējā lapa" href="' . $url . $iepriekseja . '">&laquo;</a> <span>-</span>';
+			$pager_next = '<a class="pager-prev prev" title="Iepriekšējā lapa" href="' . $url . $iepriekseja . '" rel="prev">&laquo;</a> <span>-</span>';
 		} else {
 			$pager_next = '';
 		}
 		$pager_prev = '';
 		if ($total > $skip + $end) {
-			$pager_prev = '<span>-</span> <a class="pager-prev prev" title="Nākamā lapa" href="' . $url . ($skip + $end) . '">&raquo;</a>';
+			$pager_prev = '<span>-</span> <a class="pager-next next" title="Nākamā lapa" href="' . $url . ($skip + $end) . '" rel="next">&raquo;</a>';
 		}
 		$startnext = 0;
 		$page_number = 0;
@@ -1692,9 +1686,6 @@ function get_latest_posts() {
 		if (!empty($auth->show_code)) {
 			$add_langs[] = "`pages`.`lang` = '3'";
 		}
-		if (!empty($auth->show_rp)) {
-			$add_langs[] = "`pages`.`lang` = '5'";
-		}
 		if (!empty($auth->show_lol)) {
 			$add_langs[] = "`pages`.`lang` = '7'";
 		}
@@ -1787,7 +1778,7 @@ function get_latest_posts() {
 			if ((isset($_GET['pg']) && $_GET['pg'] == ($i - 1)) || (!isset($_GET['pg']) && $i == 1)) {
 				$out .= 'selected';
 			}
-			$out .= '" href="/latest.php?pg=' . ($i - 1) . '">' . $i . '</a>';
+			$out .= '" href="/latest.php?pg=' . ($i - 1) . '" rel="nofollow">' . $i . '</a>';
 			if ($i != 5) {
 				$out .= ' <span>-</span>';
 			}
@@ -1816,6 +1807,11 @@ function get_latest_images() {
 		$int .= " AND `images`.`interest_id` IN(" . $int_q . ")";
 	}
 
+	$priv = '';
+	if (!$auth->ok) {
+		$priv = ' AND `images`.`private` = 0 ';
+	}
+
 	$latest = $db->get_results("SELECT
 		`images`.`uid` AS `uid`,
 		`images`.`id` AS `id`,
@@ -1829,6 +1825,7 @@ function get_latest_images() {
 	LEFT JOIN
 		`users` ON  `images`.`uid` =  `users`.`id`
 		" . $int . "
+		" . $priv . "
 	ORDER BY
 		`images`.`bump`
 	DESC LIMIT $skip,$lim");
@@ -1870,7 +1867,7 @@ function get_latest_images() {
 		if ((isset($_GET['pg']) && $_GET['pg'] == ($i - 1)) || (!isset($_GET['pg']) && $i == 1)) {
 			$out .= 'selected';
 		}
-		$out .= '" href="/latest.php?type=images&pg=' . ($i - 1) . '">' . $i . '</a>';
+		$out .= '" href="/latest.php?type=images&pg=' . ($i - 1) . '" rel="nofollow">' . $i . '</a>';
 		if ($i != 5) {
 			$out .= ' <span>-</span>';
 		}
@@ -1942,9 +1939,6 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		$add_langs = ["`miniblog`.`lang` = '1'"];
 		if (!empty($auth->show_code)) {
 			$add_langs[] = "`miniblog`.`lang` = '3'";
-		}
-		if (!empty($auth->show_rp)) {
-			$add_langs[] = "`miniblog`.`lang` = '5'";
 		}
 		if (!empty($auth->show_lol)) {
 			$add_langs[] = "`miniblog`.`lang` = '7'";
@@ -2067,7 +2061,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			} elseif ($mb->lang != $lang) {
 				$mb->text = '<em><span>' . $config_domains[$mb->lang]['domain'] . '</span></em>' . textlimit($mb->text, 88 - $koef, '...');
 			} else {
-				$mb->text = textlimit($mb->text, 88 - $koef, '...');
+				$mb->text = textlimit($mb->text, 70 - $koef, '...');
 			}
 
 			$mb->text = str_replace('.', ".<wbr />", $mb->text);
@@ -2109,7 +2103,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		if ((isset($_GET['pg']) && $_GET['pg'] == ($i - 1)) || (!isset($_GET['pg']) && $i == 1)) {
 			$out .= 'selected';
 		}
-		$out .= '" href="/mb-latest?pg=' . ($i - 1) . '&amp;tab=' . $tablink . $grouplink . '">' . $i . '</a>';
+		$out .= '" href="/mb-latest?pg=' . ($i - 1) . '&amp;tab=' . $tablink . $grouplink . '" rel="nofollow">' . $i . '</a>';
 		if ($i != 5) {
 			$out .= ' <span>-</span>';
 		}
@@ -2473,6 +2467,18 @@ function lastfm_update_tracks($user_id) {
 		return true;
 	} else {
 
+		//cleanup of dead accounts
+
+		/*$db->update('users', $user->id, [
+			'lastfm_username' => null,
+			'lastfm_sessionkey' => null,
+			'lastfm_subscriber' => null,
+			'lastfm_token' => null,
+			'lastfm_updated' => null
+		]);
+
+		sleep(2);*/
+
 		return false;
 	}
 }
@@ -2780,37 +2786,6 @@ function error_404() {
 	$category->tmpl = 'main';
 	$category->title = $page_title = 'Kļūda - pieprasītā lapa nav atrasta!';
 
-}
-
-/**
- * Atgriež facebook share/like skaitu
- */
-function get_fb_likes($url, $force = false) {
-	global $m, $category;
-
-	if($url !== 'https://exs.lv' && $category->textid !== 'index') {
-		return '<span class="fblikes">0</span>';
-	}
-
-	$cache_key = md5('fblikes'.$url);
-
-	if ($force || !($likes = $m->get($cache_key))) {
-		$likes = 0;
-		$json = curl_get('https://graph.facebook.com/?fields=og_object%7Blikes.summary(true).limit(0)%7D,share&id='.$url);
-		$json = json_decode($json);
-		if(!empty($json->og_object->likes->summary->total_count)) {
-			$likes += intval($json->og_object->likes->summary->total_count);
-		}
-		if(!empty($json->share->comment_count)) {
-			$likes += intval($json->share->comment_count);
-		}
-		if(!empty($json->share->share_count)) {
-			$likes += intval($json->share->share_count);
-		}
-		$likes = '<span class="fblikes">'.intval($likes).'</span>';
-		$m->set($cache_key, $likes, 43200);
-	}
-	return $likes;
 }
 
 /**

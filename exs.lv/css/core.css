@@ -1375,7 +1375,7 @@ ul.taged.blockhref li span {
 #footer .infoblock .inner {
 	width: auto;
 	color: #777;
-	height: 120px;
+	height: 105px;
 	background: #f2f2f2;
 	border: 1px solid #dfdfdf;
 	font-size: 13px;
@@ -1851,6 +1851,10 @@ input, select, textarea {
 
 #page-options .option-history a {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -144px
+}
+
+#page-options .option-delete a {
+	background: url('//img.exs.lv/bildes/fugue-icons/cross-circle-frame.png') no-repeat 0 2px
 }
 
 #ucl {

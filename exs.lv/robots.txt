@@ -1,8 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /upload/flash-games/swf/
-Disallow: /dati/speles/swf/
-Disallow: /dati/speles/speles/
+Disallow: /upload/
+Disallow: /dati/
 Disallow: /tmpl/
 Disallow: /cache/
 Disallow: /psychostats/
@@ -17,14 +16,28 @@ Disallow: /db.php
 Disallow: /cs.php
 Disallow: /cdn-cgi/
 Disallow: /proxy/
-Disallow: /devana/credits.php
-Disallow: /devana/index.php
-Disallow: /devana/login.php
-Disallow: /devana/map.php
-Disallow: /devana/register.php
-Disallow: /devana/ch_lang.php
+Disallow: /devana/
 Disallow: /calendar/
 Disallow: /awards
+Disallow: /friends
+Disallow: /latest.php
+Disallow: /mb-latest
 
 User-agent: Yandex
-Crawl-delay: 5
+Disallow: /
+
+User-agent: sentibot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot 
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+

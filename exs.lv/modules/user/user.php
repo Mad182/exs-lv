@@ -1,5 +1,7 @@
 <?php
 
+$robotstag = [];
+
 // papildu kods js "cluetip" iekļaušanai
 $tpl->assignInclude('module-head', CORE_PATH . '/modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
@@ -45,11 +47,18 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 	//view profile
 	} else {
 
-		include CORE_PATH . '/includes/class.friend.php';
-		$friend = new Friend();
+		if($auth->ok === true) {
+			include CORE_PATH . '/includes/class.friend.php';
+			$friend = new Friend();
 
-		if (isset($_GET['addfriend']) && $auth->level != 5 && check_token('addfriend', $_GET['token'])) {
-			$friend->add_friend($auth->id, $inprofile->id);
+			if (isset($_GET['addfriend']) && $auth->level != 5 && check_token('addfriend', $_GET['token'])) {
+				$friend->add_friend($auth->id, $inprofile->id);
+			}
+		}
+
+		$url = '/user/' . $inprofile->id;
+		if ($_SERVER['REQUEST_URI'] != $url && !isset($_GET['actions'])) {
+			redirect($url, true);
 		}
 
 		$tpl->newBlock('user-profile');
@@ -130,20 +139,14 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			]);
 		}
 
-		if ($auth->ok && $inprofile->city) {
-			$tpl->newBlock('info-node');
-			$tpl->assign([
-				'title' => 'Pilsēta',
-				'value' => $db->get_var("SELECT `title` FROM `city` WHERE `id` = '$inprofile->city'")
-			]);
-		}
-
 		if ($inprofile->lastseen > date("Y-m-d H:i:s", time() - 480) && $auth->id != $inprofile->id && !empty($inprofile->last_action)) {
 			$tpl->newBlock('user-profile-last_action');
 			$tpl->assign([
 				'user-last_action' => $inprofile->last_action,
 			]);
 		}
+
+		$canonical = 'https://' . $_SERVER['HTTP_HOST'] . '/user/' . $inprofile->id;
 
 		if (im_mod()) {
 			//dabū visus pievienoto (cookies) profilu nikus ar linkiem
@@ -194,7 +197,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		}
 
 		//coding.lv nerādam exs.lv apbalvojumus
-		if($lang !== 3) {
+		if($lang !== 3 && $auth->ok === true) {
 			$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $inprofile->id . " ORDER BY `date` DESC");
 			if ($awards) {
 				$tpl->newBlock('user-profile-awards');
@@ -290,48 +293,8 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
                     ]);
 				}
 			}
-
-
-
 		}
 
-		$articles = $db->get_results("SELECT `title`,`strid` FROM `pages` WHERE `author` = '$inprofile->id' AND `category` != '83' AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 10");
-		if ($articles) {
-			$tpl->newBlock('user-profile-lastpage');
-			foreach ($articles as $article) {
-				$tpl->newBlock('user-profile-lastpage-node');
-				$tpl->assign([
-					'node-url' => '/read/' . $article->strid,
-					'lastpage-title' => textlimit($article->title, 42, '..')
-				]);
-			}
-		}
-
-		$articles = $db->get_results("
-		SELECT
-			`bookmarks`.`pageid` AS `pageid`,
-			`pages`.`title` AS `title`,
-			`pages`.`strid` AS `strid`
-		FROM
-			`bookmarks`,
-			`pages`
-		WHERE
-			`bookmarks`.`userid` = '" . $inprofile->id . "' AND
-			`pages`.`id` = `bookmarks`.`pageid` AND
-			`pages`.`lang` = '$lang'
-		ORDER BY
-			`bookmarks`.`id`
-		DESC LIMIT 10");
-		if ($articles) {
-			$tpl->newBlock('user-profile-lastbookmark');
-			foreach ($articles as $article) {
-				$tpl->newBlock('user-profile-lastbookmark-node');
-				$tpl->assign([
-					'node-url' => '/read/' . $article->strid,
-					'bookmark-title' => textlimit($article->title, 42, '..')
-				]);
-			}
-		}
 
 		if (!empty($auth->mobile)) {
 			$profile_views_limit = 10;
@@ -402,13 +365,13 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 					$action->avatar = $img_server . $action->avatar;
 				}
 				$out .= '<li><img class="av" src="' . str_replace(['http://img.exs.lv', 'http://exs.lv'], ['//img.exs.lv', '//exs.lv'], $action->avatar) . '" alt="" />';
-				$out .= '<span class="post-time">' . time_ago($action->time) . '</span>' . $action->action . '</li>';
+				$out .= '<span class="post-time" title="' . date('d.m.Y. H:i', $action->time) . '">' . time_ago($action->time) . '</span> ' . $action->action . '</li>';
 			}
 			$out .= '</ul>';
 
-		} elseif($lang != 1 && $lang != $inprofile->source_site) {
+		} elseif($lang != $inprofile->source_site) {
 			//liek meklētājiem neindeksēt profilus apakšprojektos, kur tie nav reģistrēti un neko nav darījuši
-			$robotstag[] = 'noindex';
+			$robotstag = ['noindex', 'nofollow'];
 		}
 
 		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ".$private." LIMIT 60");
@@ -423,13 +386,13 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				} else {
 					$iepriekseja = 0;
 				}
-				$pager_next = '<a class="pager-next next" title="Iepriekšējā lapa" href="/user/' . $inprofile->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
+				$pager_next = '<a rel="nofollow" class="pager-next next" title="Iepriekšējā lapa" href="/user/' . $inprofile->id . '/?actions=' . $iepriekseja / $end . '">&laquo;</a>';
 			} else {
 				$pager_next = '';
 			}
 			$pager_prev = '';
 			if ($total > $skip + $end) {
-				$pager_prev = '<span>-</span> <a class="pager-prev prev" title="Nākamā lapa" href="/user/' . $inprofile->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
+				$pager_prev = '<span>-</span> <a rel="nofollow" class="pager-prev prev" title="Nākamā lapa" href="/user/' . $inprofile->id . '/?actions=' . ($skip + $end) / $end . '">&raquo;</a>';
 			}
 			$startnext = 0;
 			$page_number = 0;
@@ -440,7 +403,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				if ($skip == $startnext) {
 					$class = ' class="page-numbers selected"';
 				}
-				$pager_numeric .= '<span>-</span> <a href="/user/' . $inprofile->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
+				$pager_numeric .= '<span>-</span> <a rel="nofollow" href="/user/' . $inprofile->id . '/?actions=' . $startnext / $end . '"' . $class . '>' . $page_number . '</a> ';
 				$startnext = $startnext + $end;
 			}
 			$out .= '<p class="core-pager ajax-pager">' . $pager_next . ' ' . $pager_numeric . ' ' . $pager_prev . '</p>';
@@ -454,15 +417,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			'out' => $out
 		]);
 
-		if ($lang == 1) {
+		if ($lang === 1 && $auth->ok === true) {
 			$g_owners = $db->get_results("SELECT title,id FROM clans WHERE owner = '$inprofile->id' ORDER BY title ASC");
 
-			$public_clans = '';
-			if(!$auth->ok) {
-				 $public_clans = 'AND `clans`.`noindex` = 0 AND `clans`.`public` = 1';
-			}
-
-			$g_members = $db->get_results("SELECT `clans_members`.`clan` AS `clan`,`clans_members`.`moderator` AS `moderator`,`clans`.`title` AS `title` FROM `clans_members`,`clans` WHERE `clans_members`.`user` = '$inprofile->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` ".$public_clans." ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
+			$g_members = $db->get_results("SELECT `clans_members`.`clan` AS `clan`,`clans_members`.`moderator` AS `moderator`,`clans`.`title` AS `title` FROM `clans_members`,`clans` WHERE `clans_members`.`user` = '$inprofile->id' AND `clans_members`.`approve` = '1' AND `clans`.`id` = `clans_members`.`clan` ORDER BY `clans_members`.`moderator` DESC, `clans_members`.`date_added` ASC");
 			if ($g_owners or $g_members) {
 				$tpl->newBlock('grouplist');
 				if ($g_owners) {
@@ -512,7 +470,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		ORDER BY
 			`comments`.`date`
 		DESC
-		LIMIT 20");
+		LIMIT 30");
 
 			if ($comments) {
 				$tpl->newBlock('user-profile-lastcom');
@@ -540,7 +498,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			ORDER BY
 				`galcom`.`date`
 			DESC
-			LIMIT 20");
+			LIMIT 30");
 			if ($comments && $lang == 1) {
 				$tpl->newBlock('user-profile-lastgcom');
 				foreach ($comments as $comment) {
@@ -562,11 +520,11 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 	}
 } else {
 
-	$robotstag[] = 'noindex';
-	$robotstag[] = 'nofollow';
+	$robotstag = ['noindex', 'nofollow'];
 
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';
+
 }
 
 $pagepath = '';

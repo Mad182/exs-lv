@@ -372,7 +372,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && chec
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
 	update_members($group->id);
 
-	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), 'gsign' . $group->id);
+	userlog($auser, 'Tika apstiprināts grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), 'gsign' . $group->id, $group->id);
 
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
@@ -388,12 +388,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && chec
 	redirect($group_link . '/members');
 }
 // lietotājs piesakās būt par grupas biedru
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 && $auth->ok && check_token('apply', $_GET['token'])) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $auth->ok && check_token('apply', $_GET['token'])) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
 
-		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), 'gsign' . $group->id);
+		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), 'gsign' . $group->id, !$group->public, $group->id);
 		notify($group->owner, 4, $group->id, $group_link . '/members', $group->title);
 		if ($group->id == 53 || $group->id == 89) {
 			$db->query("UPDATE `users` SET `show_code` = 1 WHERE `id` = '$auth->id'");
@@ -401,78 +401,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $group->paid == 0 &&
 		redirect($group_link);
 	}
 }
-// lietotājs piesakās par grupas biedru maksas grupā
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'submitpay' && $auth->ok && $group->paid) {
-	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
-
-		$credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = '$auth->id'");
-
-		if ($credit < 3) {
-			set_flash('Nepietiek exs.lv kredīta!', 'error');
-			redirect($group_link);
-		}
-		$db->query("UPDATE users SET credit = credit-'3' WHERE id = ('" . $auth->id . "')");
-		$db->query("INSERT INTO clans_paid (clan_id,user_id,time) VALUES ('$group->id','$auth->id','" . time() . "')");
-		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','1','" . time() . "')");
-		update_members($group->id);
-		push('Pieteicās grupā &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true));
-		redirect($group_link);
-	}
-}
-// iestāšanās maksas grupā
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'pay' && $auth->ok && $group->paid && check_token('apply', $_GET['token'])) {
-	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
-
-		$tpl->assignGlobal('active-tab-info', 'active');
-		$tpl->newBlock('group-pay');
-		$page_title = $group->title . ' - iestāties grupā';
-
-		$credit = $db->get_var("SELECT credit FROM users WHERE id = '$auth->id'");
-		$owner = get_user($group->owner);
-		$tpl->assign([
-			'user-credit' => $credit,
-			'group-text' => add_smile($group->text),
-			'group-posts' => $group->posts,
-			'group-members' => $group->members + 1,
-			'group-admin' => $owner->nick
-		]);
-
-		if ($credit >= 3) {
-			$tpl->assign('pay', '<p><a href="' . $group_link . '/submitpay">Pieteikties grupā</a></p>');
-		}
-
-		$members = $db->get_col("SELECT user, moderator FROM clans_members WHERE clan = '$group->id' AND approve = '1' ORDER BY date_added DESC LIMIT 16");
-		if (count($members) < 16) {
-			$members[] = $group->owner;
-		}
-		if ($members) {
-			$tpl->newBlock('nmembers-pay');
-			foreach ($members as $member) {
-				$m_user = get_user($member);
-
-				$avatar = get_avatar($m_user, 's');
-
-				if ($member->moderator) {
-					$mclas = 'mod';
-				} else {
-					$mclas = 'member';
-				}
-
-				$tpl->newBlock('nmembers-pay-node');
-				$tpl->assign([
-					'member-id' => $m_user->id,
-					'member-nick' => h($m_user->nick),
-					'avatar' => $avatar,
-				]);
-			}
-		}
-	}
-}
 // izstāšanās no grupas
 elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel', $_GET['token'])) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
-		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true));
+		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), '', !$group->public, $group->id);
 	}
 	redirect($group_link);
 }
@@ -520,7 +453,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'text' => $body
 				]);
 
-				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', get_avatar($group, 's', true), 'g' . $ins);
+				push('Izveidoja tematu grupā <a href="' . $group_link . '/forum/' . base_convert($ins, 10, 36) . '">' . $group->title . '</a>', get_avatar($group, 's', true), 'g' . $ins, !$group->public, $group->id);
 
 				update_post_count($group->id);
 
@@ -603,9 +536,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						} else {
 							$tt = '...';
 						}
-						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $gt . $tt. '</a>', get_avatar($group, 's', true), 'g-' . $mainid);
+						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $gt . $tt. '</a>', get_avatar($group, 's', true), 'g-' . $mainid, !$group->public, $group->id);
 					} else {
-						push('Atbildēja ' . $gt, get_avatar($group, 's', true), 'g-' . $mainid);
+						push('Atbildēja ' . $gt, get_avatar($group, 's', true), 'g-' . $mainid, 1, $group->id);
 					}
 
 					// mentions & notifikācijas
@@ -707,11 +640,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$page_title = textlimit(youtube_title($record->text), 64, '...') . ' - forums';
 				}
 
-				// twitter ierakstu fīčas
-				$append = '';
-				if ($record->twitterid && $record->twitteruser != 'rssbot') {
-					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="https://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
-				}
+				$post_bump = $record->bump;
 
 				// lietotāja apbalvojumu ikonas
 				$add_deco = '';
@@ -740,7 +669,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 				$tpl->assign([
 					'url' => $url,
-					'text' => add_smile($record->text) . $append,
+					'text' => add_smile($record->text),
 					'add_deco' => $add_deco,
 					'date' => display_time(strtotime($record->date)),
 					'date-title' => date('d.m.Y. H:i', strtotime($record->date)),
@@ -783,8 +712,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						$tpl->assign('url', $url);
 					}
 
-					// lūdzu, neņem nost laika ierobežojumu :/
-					if (im_mod() && strtotime($record->date) > time() - 86400) {
+					if ((im_mod() && strtotime($record->date) > time() - 286400) || ($record->author == $auth->id) || ($auth->level == 1 && $debug)) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign([
 							'id' => $record->id,
@@ -818,6 +746,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 							`miniblog`.`posts` AS `posts`,
 							`miniblog`.`reply_to` AS `reply_to`,
 							`miniblog`.`removed` AS `mb_removed`,
+							`miniblog`.`private` AS `private`,
 							`miniblog`.`hidden` AS `hidden`,
 							`users`.`nick` AS `nick`,
 							`users`.`decos` AS `decos`,
@@ -896,8 +825,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			// grupas mb sarakstā rāda lappuses
 			if (!isset($_GET['single'])) {
 
-				$total = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = '" . $group->id . "' AND `removed` = '0' AND `parent` = '0'");
-				$pager = pager($total, $skip, $end, $group_link . '/forum/?skip=');
+				if(empty($group->paginator)) {
+					$group->paginator = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = '" . $group->id . "' AND `removed` = '0' AND `parent` = '0'");
+				}
+
+				$pager = pager($group->paginator, $skip, $end, $group_link . '/forum/?skip=');
 				$tpl->newBlock('mb-pager');
 				$tpl->assign([
 					'pager-next' => $pager['next'],
@@ -980,32 +912,6 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				]);
 			}
 
-			// cilnes šārēšana draugos un twitterī
-			$share = '';
-			if ($tab->share) {
-				$share = '
-					<div style="float: left;width: 166px; height: 75px;">
-						<div style="float: right;width: 95px; height: 65px;">
-							<script type="text/javascript" src="//www.draugiem.lv/api/api.js"></script>
-							<div id="draugiemLike"></div>
-							<script type="text/javascript">
-							var p = {
-							 layout:"bubble"
-							};
-							new DApi.Like(p).append(\'draugiemLike\');
-							</script>
-						</div>
-
-						<div style="float: right;width: 65px; height: 65px;">
-
-							<a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical">Tweet</a>
-							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script>
-
-						</div>
-					</div>
-				';
-			}
-
 			// samazina attēlus
 			if ($tab->pic_heavy && stripos($tab->text, 'src="http') !== false) {
 				$tab->text = resize_html_images($tab->text);
@@ -1014,7 +920,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->newBlock('group-tab');
 			$tpl->assign([
 				'tab-module' => $module_content,
-				'tab-text' => $share . add_smile($tab->text, 1)
+				'tab-text' => add_smile($tab->text, 1)
 			]);
 
 			if(!empty($custom_p_title)) {
@@ -1033,7 +939,6 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		redirect($group_link);
 	}
 }
-
 
 
 /**
@@ -1244,6 +1149,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
  * 6. GRUPAS SĀKUMLAPAS CILNE UN TĀS IESPĒJAS
  */ else {
 
+	if (!empty($group->strid) && $group->strid === $category->textid) {
+		$canonical = $opengraph_meta['url'] = 'https://' . $config_domains[$group->lang]['domain'] . '/' . $group->strid;
+	}
+
 	$tpl->assignGlobal('active-tab-info', 'active');
 
 	// grupas statistika
@@ -1276,14 +1185,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	// ...
 	if ($auth->ok && $auth->id != $group->owner) {
 
-		if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $group->paid == 0 && !$group->archived) {
+		if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")  && !$group->archived) {
 			$tpl->newBlock('group-info-apply');
-			$tpl->assign([
-				'group-id' => $group->id,
-				'token' => make_token('apply')
-			]);
-		} elseif (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && !$group->archived) {
-			$tpl->newBlock('group-info-apply-paid');
 			$tpl->assign([
 				'group-id' => $group->id,
 				'token' => make_token('apply')
@@ -1308,7 +1211,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		$q_pid = $db->get_var("SELECT `questions`.`pid` FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid=(SELECT pid FROM `questions` WHERE id='" . intval($_POST['g-questions']) . "' LIMIT 1)");
 		if (empty($q_pid)) {
 			$db->query("INSERT INTO `responses` (`qid`, `user_id`) VALUES ('" . intval($_POST['g-questions']) . "', '" . $auth->id . "')");
-			push('Nobalsoja aptaujā', '/bildes/poll-icon.png');
+			push('Nobalsoja aptaujā', '/bildes/poll-icon.png', '', !$group->public, $group->id);
 			update_karma($auth->id, 1);
 		} else {
 			$error = 'Tu jau nobalsoji!';

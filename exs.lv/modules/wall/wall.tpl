@@ -151,17 +151,3 @@
 <div class="c"></div>
 </div>
 
-<div id="share-block">
-
-	<div class="span4"></div>
-
-	<div class="span2"><a rel="nofollow" href="#" class="tw-btn" onclick="return wnp('https://twitter.com/intent/tweet?original_referer={bookmark-enc}&ref_src=twsrc%5Etfw&text={title-enc}&tw_p=tweetbutton&url={bookmark-enc}&via=exs_lv',545,433)">Tweet</a></div>
-	<div class="span2"><a target="_blank" rel="nofollow" href="//www.facebook.com/sharer.php?u={bookmark-enc}" class="fb-btn" onclick="return wnp(this.href,545,433)">Dalies {fb-likes}</a></div>
-
-	<div class="span4"></div>
-
-	<div class="c"></div>
-
-</div>
-
-

@@ -28,9 +28,6 @@ $CONSUMER_SECRET = 'axdLXZy6tm5pM1nB4VM2IZ9UvZKotH22xZlrvNPOKkge86UFen';
 
 $polls_cat = 2;
 
-// rādāmo profila skatījumu skaits
-$profile_views_limit = 27;
-
 $robotstag[] = 'noodp';
 
 $twitter_meta['site'] = '@exs_lv';

@@ -53,15 +53,10 @@
 	<div class="c"></div>
 </div>
 
-<!-- START BLOCK : dr-friends-->
-<h3>Tavi draugi jau lieto šo portālu</h3>
-<ul style="padding: 6px 0 16px;margin:0;list-style:none">
-	<!-- START BLOCK : dr-friends-node-->
-	<li style="background: transparent; padding: 0;margin: 5px 15px 5px 0;width:110px;height: 150px;text-align: center;font-size:12px;line-height:16px;float: left;"><a href="http://www.draugiem.lv/friend/?{uid}" target="_blank"><img src="{img}" alt="" class="av" style="float:none;" /><br />{name} {surname}<br />{nick}</a></li>
-	<!-- END BLOCK : dr-friends-node-->
-</ul>
-<div class="c"></div>
-<!-- END BLOCK : dr-friends-->
+<div>
+<h3>Reģistrējoties, Tu piekrīti lietošanas noteikumiem:</h3>
+{rules}
+</div>
 
 <!-- END BLOCK : draugiem-signup-->
 

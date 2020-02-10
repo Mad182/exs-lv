@@ -14,9 +14,9 @@
 	<div class="c"></div>
 	<h3>{date}</h3>
 	<div class="c"></div>
-	<ul id="junk-list" style="margin:0;padding:10px 0">
+	<ul id="junk-list">
 		<!-- START BLOCK : junk-item-->
-		<li style="float:left;background:transparent;padding:0;margin:0"><a href="/junk/{id}"><img src="//img.exs.lv{thb}" alt="" style="float:left;margin:0 5px 10px" class="av" /></a></li>
+		<li><a href="/junk/{id}"><img src="//img.exs.lv{thb}" alt="" /></a></li>
 		<!-- END BLOCK : junk-item-->
 	</ul>
 	<!-- END BLOCK : junk-item-date-->
@@ -56,20 +56,6 @@
 			{image}
 
 			<div class="c"></div>
-
-			<div id="share-block">
-				<div class="span4"></div>
-				<div class="span2">
-					<a rel="nofollow" href="#" class="tw-btn" onclick="return wnp('https://twitter.com/intent/tweet?original_referer={bookmark-enc}&ref_src=twsrc%5Etfw&text={title-enc}&tw_p=tweetbutton&url={bookmark-enc}&via=exs_lv',545,433)">Tweet</a>
-				</div>
-				<div class="span2">
-					<a target="_blank" rel="nofollow" href="//www.facebook.com/sharer.php?u={bookmark-enc}" class="fb-btn" onclick="return wnp(this.href,545,433)">Dalies {fb-likes}</a>
-				</div>
-
-				<div class="span4"></div>
-				<div class="c"></div>
-			</div>
-
 
 			<!-- START BLOCK : junk-view-author-->
 			<p>Pievienoja: <a href="/user/{id}">{nick}</a></p>

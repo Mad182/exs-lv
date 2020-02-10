@@ -3,7 +3,7 @@
 $tpl->newBlock('statistics-body');
 
 $tpl->assign([
-	'statistics-users' => $db->get_var("SELECT count(*) FROM users"),
+	'statistics-users' => $db->get_var("SELECT count(*) FROM users WHERE deleted = 0"),
 	'statistics-pages' => $db->get_var("SELECT count(*) FROM pages"),
 	'statistics-images' => $db->get_var("SELECT count(*) FROM images"),
 	'statistics-miniblog' => $db->get_var("SELECT max(id) FROM miniblog"),

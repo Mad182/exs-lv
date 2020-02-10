@@ -16,43 +16,7 @@ if (isset($_POST['submit'])) {
 
 		$auth->log('Izdzēsa profilu (' .  $auth->nick . ')', 'users', $auth->id);
 
-		$db->query("UPDATE users SET 
-				`nick` = 'Dzēsts #" . $auth->id. "',
-				`pwd` = '',
-				`password` = '',
-				`mail` = '',
-				`mail_confirmed` = null,
-				`lastseen` = `date`,
-				`avatar` = '',
-				`av_alt` = '0',
-				`level` = 0,
-				`signature` = '',
-				`skype` = '',
-				`web` = '',
-				`about` = '',
-				`custom_title` = '',
-				`yt_name` = '',
-				`twitter` = '',
-				`last_action` = '',
-				`draugiem_id` = 0,
-				`rating` = 0,
-				`facebook_id` = '0',
-				`twitter_id` = null,
-				`steam_id` = null,
-				`persona` = '',
-				`token` = '',
-				`reset_token` = '',
-				`lastfm_username` = null,
-				`lastfm_sessionkey` = null,
-				`lastfm_subscriber` = null,
-				`lastfm_token` = null,
-				`lastfm_updated` = null,
-				`city` = 0,
-				`connected_profiles` = '',
-				`user_agent` = '',
-				`deleted` = 1
-				WHERE id = '$auth->id'");
-
+		$db->query("DELETE FROM `users` WHERE `id` = '$auth->id'");
 		$db->query("DELETE FROM `clans_members` WHERE `user` = '$auth->id'");
 		$db->query("DELETE FROM `banned` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `warns` WHERE `user_id` = '$auth->id'");
@@ -69,9 +33,14 @@ if (isset($_POST['submit'])) {
 		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$auth->id'");
 		$db->query("DELETE FROM `images` WHERE `uid` = '$auth->id'");
-		$db->query("UPDATE `comments` SET `removed` = 1 WHERE `author` = '$auth->id'");
-		$db->query("UPDATE `galcom` SET `removed` = 1 WHERE `author` = '$auth->id'");
-		$db->query("UPDATE `miniblog` SET `private` = 1 WHERE `author` = '$auth->id'");
+		$db->query("DELETE FROM `pm` WHERE `from_uid` = '$auth->id'");
+		$db->query("DELETE FROM `comments` WHERE `author` = '$auth->id'");
+		$db->query("DELETE FROM `galcom` WHERE `author` = '$auth->id'");
+		$db->query("DELETE FROM `miniblog` WHERE `author` = '$auth->id'");
+		$db->query("DELETE FROM `pages` WHERE `author` = '$auth->id'");
+
+		//refresh in memcached
+		get_user($auth->id, true);
 
 		$auth->logout();
 		redirect('/');

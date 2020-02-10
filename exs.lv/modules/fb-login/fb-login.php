@@ -5,6 +5,8 @@
  */
 $robotstag[] = 'noindex';
 
+$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 57753"));
+
 $facebook = new \Facebook\Facebook([
 	'app_id' => $fb_api_id,
 	'app_secret' => $fb_api_key,
@@ -12,9 +14,7 @@ $facebook = new \Facebook\Facebook([
 ]);
 
 $helper = $facebook->getRedirectLoginHelper();
-$permissions = ['user_likes'];
-
-$fb_like = false;
+$permissions = [];
 
 $me = null;
 
@@ -48,34 +48,11 @@ if (!empty($me)) {
 					$exuser = $db->get_row("SELECT * FROM `users` WHERE `id` = '$auth->id'");
 					if (empty($exuser->facebook_id)) {
 
-						$gender = 0;
-						if ($me['gender'] == 'female') {
-							$gender = 1;
-						}
-
-						$db->query("UPDATE `users` SET `facebook_id` = '" . sanitize($me['id']) . "', `gender` = '$gender', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "' WHERE `id` = '$auth->id'");
+						$db->query("UPDATE `users` SET `facebook_id` = '" . sanitize($me['id']) . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "' WHERE `id` = '$auth->id'");
 						userlog($auth->id, 'Lieto facebook.com', '/bildes/facebook.png');
 
-						//draugiem.lv friends
-						if ($friends = $facebook->api('/me/friends')) {
-							foreach ($friends['data'] as $friend) {
-								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . $friend['id'] . "'");
-								if ($existing && $friend['id'] > 0) {
-									$c1 = $db->get_var("SELECT count(*) FROM friends WHERE friend1 = '$auth->id' AND friend2 = '$existing->id'");
-									$c2 = $db->get_var("SELECT count(*) FROM friends WHERE friend2 = '$auth->id' AND friend1 = '$existing->id'");
-									if (!$c1 && !$c2) {
+					}
 
-										$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
-										VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
-										update_karma($existing->id, true);
-									}
-								}
-							}
-						}
-					}
-					if ($fb_like) {
-						fb_award($auth->id);
-					}
 					update_karma($auth->id);
 					redirect();
 				} else {
@@ -92,33 +69,15 @@ if (!empty($me)) {
 					} else {
 
 						//process register
-						//additional info
-						$gender = 0;
-						if ($me['gender'] == 'female') {
-							$gender = 1;
-						}
 
 						//write down
-						$db->query("INSERT INTO users (id,nick,mail,date,lastip,skin,facebook_id,source_site,gender, `user_agent`)
-						VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($me['id']) . "', '$lang', '$gender', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
+						$db->query("INSERT INTO users (id,nick,mail,date,lastip,skin,facebook_id,source_site, `user_agent`)
+						VALUES (NULL,'" . $nick . "','',NOW(),'" . $auth->ip . "','3','" . sanitize($me['id']) . "', '$lang', '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "')");
 						$newid = $db->insert_id;
 
 						//log registration
 						userlog($newid, 'Reģistrējās mājas lapā. Sveicam exiešu pulkā ;)', '/bildes/users-icon.png');
 						userlog($newid, 'Lieto facebook.com', '/bildes/facebook.png');
-
-						//facebook friends
-						if ($friends = $facebook->api('/me/friends')) {
-							foreach ($friends['data'] as $friend) {
-								$existing = $db->get_row("SELECT * FROM `users` WHERE `facebook_id` = '" . $friend['id'] . "'");
-								if ($existing && $friend['id'] > 0) {
-									$db->query("INSERT INTO friends (`friend1`,`friend2`,`date`,`date_confirmed`,`confirmed`)
-									VALUES ('$auth->id', '$existing->id', NOW(), NOW(), 1)");
-									update_karma($existing->id, true);
-								}
-							}
-						}
-
 
 						$tmp_image = 'tmp/' . uniqid() . '.jpg';
 
@@ -206,10 +165,6 @@ if (!empty($me)) {
 				'avatar' => 'https://graph.facebook.com/' . $me['id'] . '/picture?type=large'
 			]);
 		} else {
-
-			if ($fb_like) {
-				fb_award($userinfo->id);
-			}
 
 			//perform login
 			$_SESSION['auth_id'] = $userinfo->id;

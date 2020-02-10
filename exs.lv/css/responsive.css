@@ -3224,6 +3224,10 @@ a.external-twitter span {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -100px
 }
 
+#page-options .option-delete a {
+	background: url('//img.exs.lv/bildes/fugue-icons/cross-circle-frame.png') no-repeat 0 2px
+}
+
 #page-options .option-history a {
 	background: url('//img.exs.lv/bildes/i.png') no-repeat 0 -144px
 }

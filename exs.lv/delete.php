@@ -22,20 +22,17 @@ $debug = true;
 
 $lang = 1;
 
-//mysql konekcija
-$db = new mdb($username, $password, $database, $hostname);
-
-function reverse_htmlentities($mixed) {
-	$htmltable = get_html_translation_table(HTML_ENTITIES);
-	foreach ($htmltable as $key => $value) {
-		$mixed = ereg_replace(addslashes($value), $key, $mixed);
-	}
-	return $mixed;
-}
-
 $user = (int) $argv[1];
 
 if ($user) {
+
+	//mysql konekcija
+	$db = new mdb($username, $password, $database, $hostname);
+
+	//memcached konekcija
+	$m = new Memcached;
+	$m->addServer($mc_host, $mc_port);
+
 	$db->query("UPDATE users SET 
 			`nick` = 'Dzēsts #" . $user . "',
 			`pwd` = '',
@@ -47,20 +44,36 @@ if ($user) {
 			`av_alt` = '0',
 			`level` = 0,
 			`signature` = '',
+			`max_in_row` = 0,
 			`skype` = '',
 			`web` = '',
 			`about` = '',
 			`custom_title` = '',
 			`yt_name` = '',
+			`yt_updated` = 0,
 			`twitter` = '',
 			`last_action` = '',
 			`draugiem_id` = 0,
+			`posts` = 0,
+			`karma` = 0,
 			`rating` = 0,
 			`facebook_id` = '0',
+			`twitter_id` = null,
+			`steam_id` = null,
+			`email_token` = null,
+			`email_new` = null,
+			`vote_total` = 0,
+			`vote_others` = 0,
 			`persona` = '',
 			`token` = '',
 			`reset_token` = '',
-			`city` = 0,
+			`reset_time` = null,
+			`lastfm_username` = null,
+			`lastfm_sessionkey` = null,
+			`lastfm_subscriber` = null,
+			`lastfm_token` = null,
+			`lastfm_updated` = null,
+			`auth_secret` = null,
 			`connected_profiles` = '',
 			`user_agent` = '',
 			`deleted` = 1
@@ -71,11 +84,16 @@ if ($user) {
 	$db->query("DELETE FROM `notes` WHERE `user_id` = '$user'");
 	$db->query("DELETE FROM `cat_moderators` WHERE `user_id` = '$user'");
 	$db->query("DELETE FROM `viewprofile` WHERE `profile` = '$user'");
+	$db->query("DELETE FROM `viewprofile` WHERE `viewer` = '$user'");
 	$db->query("DELETE FROM `friends` WHERE `friend1` = '$user'");
 	$db->query("DELETE FROM `friends` WHERE `friend2` = '$user'");
 	$db->query("DELETE FROM `bookmarks` WHERE `userid` = '$user'");
 	$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$user'");
 	$db->query("DELETE FROM `userlogs` WHERE `user` = '$user'");
+	$db->query("DELETE FROM `images` WHERE `uid` = '$user'");
+	$db->query("UPDATE `pages` SET `private` = 1 WHERE `author` = '$user'");
+
+	get_user($user, true);
 
 	echo 'user #' . $user . " deleted\n\n";
 }

@@ -22,7 +22,7 @@ function get_top_awards($user) {
 			}
 			$total = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user'");
 			if ($total > 4) {
-				$data .= '<a title="Visas ' . $total . ' medaļas" href="/awards/' . $user . '">(' . $total . ')</a>';
+				$data .= '<a title="Visas ' . $total . ' medaļas" href="/awards/' . $user . '" rel="nofollow">(' . $total . ')</a>';
 			}
 			$data .= '</p>';
 		}
@@ -108,15 +108,15 @@ function list_awards() {
 			'state' => 'inactive'
 		],
 		'rs-pages-1' => [
-			'title' => 'Uzrakstīja 1 rakstu <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'title' => 'Uzrakstīja 1 rakstu <a href="//exs.lv/runescape" title="RuneScape" rel="nofollow">RS</a> sadaļā',
 			'state' => 'inactive'
 		],
 		'rs-pages-5' => [
-			'title' => 'Uzrakstīja 5 rakstus <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'title' => 'Uzrakstīja 5 rakstus <a href="//exs.lv/runescape" title="RuneScape" rel="nofollow">RS</a> sadaļā',
 			'state' => 'inactive'
 		],
 		'rs-pages-10' => [
-			'title' => 'Uzrakstīja 10 rakstus <a href="//exs.lv/runescape" title="RuneScape">RS</a> sadaļā',
+			'title' => 'Uzrakstīja 10 rakstus <a href="//exs.lv/runescape" title="RuneScape" rel="nofollow">RS</a> sadaļā',
 			'state' => 'inactive'
 		],
 		'film-pages-1' => [
@@ -132,15 +132,15 @@ function list_awards() {
 			'state' => 'inactive'
 		],
 		'music-pages-1' => [
-			'title' => 'Raksts <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
+			'title' => 'Raksts <a href="//exs.lv/muzika" rel="nofollow">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		],
 		'music-pages-5' => [
-			'title' => '5 raksti <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
+			'title' => '5 raksti <a href="//exs.lv/muzika" rel="nofollow">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		],
 		'music-pages-10' => [
-			'title' => '10 raksti <a href="//exs.lv/muzika">mūzikas</a> sadaļā',
+			'title' => '10 raksti <a href="//exs.lv/muzika" rel="nofollow">mūzikas</a> sadaļā',
 			'state' => 'inactive'
 		],
 		'history-pages-1' => [
@@ -204,23 +204,19 @@ function list_awards() {
 			'state' => 'inactive'
 		],
 		'desas' => [
-			'title' => 'Uzvarēja 25 <a href="//exs.lv/desas">desu</a> partijas',
-			'state' => 'inactive'
-		],
-		'mta-user' => [
-			'title' => '<a href="//rp.exs.lv/">rp.exs.lv lietotājs</a>',
+			'title' => 'Uzvarēja 25 <a href="//exs.lv/desas" rel="nofollow">desu</a> partijas',
 			'state' => 'inactive'
 		],
 		'coding-user' => [
-			'title' => '<a href="http://coding.lv/">coding.lv lietotājs</a>',
+			'title' => '<a href="//coding.lv/" rel="nofollow">coding.lv lietotājs</a>',
 			'state' => 'inactive'
 		],
 		'lol-exs-lv' => [
-			'title' => '<a href="//lol.exs.lv/">lol.exs.lv lietotājs</a>',
+			'title' => '<a href="//lol.exs.lv/" rel="nofollow">lol.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		],
 		'runescape-exs-lv' => [
-			'title' => '<a href="//runescape.exs.lv/">runescape.exs.lv lietotājs</a>',
+			'title' => '<a href="//runescape.exs.lv/" rel="nofollow">runescape.exs.lv lietotājs</a>',
 			'state' => 'inactive'
 		],
 		'mobile' => [
@@ -231,24 +227,12 @@ function list_awards() {
 			'title' => '<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow">exs.lv android lietotājs</a>',
 			'state' => 'inactive'
 		],
-		'draugiem-follow' => [
-			'title' => 'Draugiem.lv sekotājs',
-			'state' => 'inactive'
-		],
-		'facebook-like' => [
-			'title' => 'Facebook.com <a href="https://www.facebook.com/exs.lv" rel="nofollow">like</a>',
-			'state' => 'inactive'
-		],
-		'twitter-follower' => [
-			'title' => 'Twitter.com <a href="https://twitter.com/exs_lv" rel="nofollow">sekotājs</a>',
-			'state' => 'inactive'
-		],
 		'lastfm' => [
-			'title' => '<a href="https://exs.lv/lastfm">LastFM</a> lietotājs',
+			'title' => '<a href="//exs.lv/lastfm" rel="nofollow">LastFM</a> lietotājs',
 			'state' => 'inactive'
 		],
 		'steam' => [
-			'title' => '<a href="https://exs.lv/steam-online">Steam</a> lietotājs',
+			'title' => '<a href="//exs.lv/steam-online" rel="nofollow">Steam</a> lietotājs',
 			'state' => 'inactive'
 		],
 		'blogs-50' => [
@@ -336,7 +320,7 @@ function list_awards() {
 			'state' => 'inactive'
 		],
 		'hangman' => [
-			'title' => '<a href="//exs.lv/karatavas">Karātavu</a> dienas uzvarētājs',
+			'title' => '<a href="//exs.lv/karatavas" rel="nofollow">Karātavu</a> dienas uzvarētājs',
 			'state' => 'inactive'
 		]
 	];
@@ -377,13 +361,14 @@ function update_awards($user) {
 
 	global $db, $m, $img_server;
 	$user = (int) $user;
-	$awards_list = list_awards();
-	$existing_awards = get_awards_list($user);
 
 	$userr = get_user($user, true);
-	if (!$userr) {
+	if (!$userr || $userr->deleted) {
 		return false;
 	}
+
+	$awards_list = list_awards();
+	$existing_awards = get_awards_list($user);
 
 	//ja lietotajs nav redzets 6 menesus, nemaz necensamies vinjam updatot medaļas, ienāks - saņems
 	if ($userr->lastseen > date('Y-m-d H:i:s', time() - 15778463)) {
@@ -405,12 +390,6 @@ function update_awards($user) {
 		}
 		if ($karma >= 5000) {
 			$awards_list['karma-5000']['state'] = 'active';
-		}
-
-		if (!in_array('draugiem-follow', $existing_awards) && !empty($userr->draugiem_id)) {
-			if ($db->get_var("SELECT count(*) FROM `draugiem_followers` WHERE `id` = '$userr->draugiem_id'")) {
-				$awards_list['draugiem-follow']['state'] = 'active';
-			}
 		}
 
 		if ($userr->posts >= 5) {
@@ -461,12 +440,6 @@ function update_awards($user) {
 		if (!in_array('miniblog-r-100', $existing_awards) && $userr->posts > 5) {
 			if ($db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = '$user' AND `removed` = '0' AND `posts` >= 100")) {
 				$awards_list['miniblog-r-100']['state'] = 'active';
-			}
-		}
-
-		if (!in_array('mta-user', $existing_awards)) {
-			if ($db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$user' AND `lang` = 5") >= 10) {
-				$awards_list['mta-user']['state'] = 'active';
 			}
 		}
 

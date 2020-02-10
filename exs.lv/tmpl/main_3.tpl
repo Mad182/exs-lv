@@ -19,7 +19,6 @@
 		<!-- START BLOCK : canonical-->
 		<link rel="canonical" href="{url}">
 		<!-- END BLOCK : canonical-->
-		<link rel="alternate" type="application/rss+xml" title="RSS jaunumi (visi raksti)" href="https://feeds.feedburner.com/codinglv">
 		<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
 		<link rel="stylesheet" href="{static-server}/css/core.css,code.css,prettify.css">
 		<!-- START BLOCK : additional-css-->
@@ -127,6 +126,7 @@
 								<li><a href="/user/settings">Mani iestatījumi</a></li>
 								<li><a href="/user/security">Paroles maiņa</a></li>
 								<li><a href="/user/email">E-pasta adreses maiņa</a></li>
+								<li><a href="/user/delete">Dzēst profilu</a></li>
 								<li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
 							</ul>
 						</li>
@@ -189,7 +189,6 @@
 						<a href="{url}">
 							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
 						</a>
-						{profile-top-awards}
 						<!-- START BLOCK : profilebox-pm-link-->
 						<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
 						<!-- END BLOCK : profilebox-pm-link-->
@@ -197,10 +196,8 @@
 						<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
 						<!-- END BLOCK : profilebox-warn-->
 						<!-- START BLOCK : profilebox-blog-link-->
-						<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
 						<!-- END BLOCK : profilebox-blog-link-->
 						<!-- START BLOCK : profilebox-twitter-link-->
-						<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
 						<!-- END BLOCK : profilebox-twitter-link-->
 						<!-- START BLOCK : profilebox-yt-link-->
 						<!-- END BLOCK : profilebox-yt-link-->
@@ -297,8 +294,6 @@
 
 					<ul class="tabs">
 						<li><a href="/user/{user-id}" class="{active-tab-profile}"><span class="profile user-level-{inprofile-level} user-gender-{inprofile-gender}">Profils</span></a></li>
-						<li><a href="/awards/{user-id}" class="{active-tab-awards}"><span class="awards">Medaļas</span></a></li>
-						<li><a href="/friends/{user-id}" class="{active-tab-friends}"><span class="friends">Draugi</span></a></li>
 						<li><a href="/topics/{user-id}" class="{active-tab-usertopics}"><span class="pages">Raksti</span></a></li>
 						<li><a href="/say/{user-id}" class="{active-tab-miniblog}"><span class="comments">Miniblogs</span></a></li>
 					</ul>
@@ -335,23 +330,12 @@
 					</ul>
 					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px">{page-onlineusers}</span>
 				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Jaunākie raksti: {footer-topics}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						Jaunākais miniblogos: {footer-mb}
-					</div>
-				</div>
-				<div class="infoblock">
-					<div class="inner">
-						<p>&copy; {openidea}, 2012-{current-year}</p>
-						<p>
-							E-pasts: info@exs.lv<br />
-							Tālrunis: <span id="noindex-phone"></span><br />
-							Mājas lapu izstrāde un hostings.
+				<div class="infoblock" style="width:100%">
+					<div class="inner" style="height:25px">
+						<p style="float:left">&copy; {openidea}, 2012-{current-year}</p>
+						<p style="float:right">
+							E-pasts: info@exs.lv,
+							Tālrunis: <span id="noindex-phone"></span>
 						</p>
 					</div>
 				</div>

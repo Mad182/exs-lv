@@ -1,9 +1,16 @@
 <!-- START BLOCK : page-options-->
 <ul id="page-options">
 	<li class="option-edit"><a href="?mode=edit">labot</a></li>
+	<li class="option-delete"><a class="confirm" href="?mode=delete&amp;token={token}">dzēst</a></li>
 	<li class="option-history"><a href="?mode=history">vēsture</a></li>
 </ul>
 <!-- END BLOCK : page-options-->
+
+<!-- START BLOCK : page-delete-->
+<ul id="page-options">
+	<li class="option-delete"><a class="confirm" href="?mode=delete&amp;token={token}">dzēst</a></li>
+</ul>
+<!-- END BLOCK : page-delete-->
 
 <!-- START BLOCK : page-history-->
 <h1>Saglabātās versijas</h1>
@@ -148,15 +155,6 @@
 					</a>
 				</li>
 				<!-- END BLOCK : add-bookmark-->
-				<!--
-				<!-- START BLOCK : post-tags-->
-				<li class="tagz"><img src="{img-server}/bildes/tags-icon.png" alt="">
-					<!-- START BLOCK : post-tags-node-->
-					<a href="/tag/{slug}" rel="tag">{tag-title}</a>, 
-					<!-- END BLOCK : post-tags-node-->
-				<br /></li>
-				<!-- END BLOCK : post-tags-->
-				-->
 			</ul>
 		</div>
 	</header>
@@ -241,16 +239,6 @@
 
 	<div class="c"></div>
 
-	<!-- START BLOCK : post-newtags-->
-	<div class="c"></div>
-	<form action="{page-url}" id="new-tags" class="form" method="post" style="padding: 12px 0 4px">
-		<fieldset>
-			<legend>Tagi, atdalīti ar komatu</legend>
-			<input style="width:340px" type="text" class="text" name="newtags" id="post-tags-input" /> <input class="button" type="submit" value="Pielikt" />
-		</fieldset>
-	</form>
-	<!-- END BLOCK : post-newtags-->
-
 	<!-- START BLOCK : post-tools-->
 	<form class="simple-form" action="" method="post">
 		<fieldset>
@@ -276,30 +264,10 @@
 	<!-- END BLOCK : post-attach-->
 	<!-- END BLOCK : post-tools-->
 
-
-	<div id="share-block">
-
-		<div class="span4"></div>
-
-		<div class="span2">
-			<a rel="nofollow" href="#" class="tw-btn" onclick="return wnp('https://twitter.com/intent/tweet?original_referer={bookmark-enc}&ref_src=twsrc%5Etfw&text={title-enc}&tw_p=tweetbutton&url={bookmark-enc}&via=exs_lv',545,433)">Tweet</a>
-		</div>
-
-		<div class="span2">
-			<a target="_blank" rel="nofollow" href="//www.facebook.com/sharer.php?u={bookmark-enc}" class="fb-btn" onclick="return wnp(this.href,545,433)">Dalies {fb-likes}</a>
-		</div>
-
-		<div class="span4"></div>
-
 		<div class="c"></div>
 
 	</div>
-
-
-
-	</div>
 </article>
-
 
 
 <!-- END BLOCK : read-article-->
@@ -377,22 +345,6 @@
 
 		<div class="c"></div></dd>
 	<!-- END BLOCK : comments-node-user-->
-	<!-- START BLOCK : comments-node-anon-->
-	<dt>
-	<span class="username">{comment-anon_nick}</span>
-	<img class="comments-avatar" src="{comment-avatar}" alt="{comment-anon_nick}" />
-	<span class="author-info"><span class="title">Grupa:</span> <span>Viesi</span></span>
-	</dt>
-	<dd>
-		<p class="inf">
-			<strong><a href="#c{comment-id}" id="c{comment-id}" title="Saite uz komentāru">#{comment-number}</a> </strong>{comment-date}
-			<!-- START BLOCK : comments-anon-adm-->
-			<a href="?editcom={comment-id}">labot</a>
-			<!-- END BLOCK : comments-anon-adm-->
-		</p>
-		<div class="comment-text">{comment-text}{comment-editedby}<div class="c"></div></div>
-	</dd>
-	<!-- END BLOCK : comments-node-anon-->
 	<!-- END BLOCK : comments-node-->
 </dl>
 <p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>

@@ -34,9 +34,6 @@ $page_edit_time = 0;
 // aptauju sadaļa
 $polls_cat = 1129;
 
-// rādāmo profila skatījumu skaits
-$profile_views_limit = 20;
-
 $page_title = 'League of Legends forums';
 
 $twitter_meta['site'] = '@exs_lv';

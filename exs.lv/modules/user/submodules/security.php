@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 
 					$newpass = password_hash($_POST['password-1'], PASSWORD_BCRYPT, ["cost" => 14]);
 
-					$db->update('users', $auth->id, ['pwd' => '', 'password' => $newpass]);
+					$db->update('users', $auth->id, ['password' => $newpass]);
 
 					$auth->log('Nomainīja savu paroli', 'users', $auth->id);
 

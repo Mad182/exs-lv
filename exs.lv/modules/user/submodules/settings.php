@@ -7,7 +7,6 @@ if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])
 
 	$inprofile->show_code = (bool) $_POST['edit-show_code'];
 	$inprofile->show_lol = (bool) $_POST['edit-show_lol'];
-	$inprofile->show_rp = (bool) $_POST['edit-show_rp'];
 	$inprofile->show_rs = (bool) $_POST['edit-show_rs'];
 	$inprofile->showsig = (bool) $_POST['edit-enablesig'];
 	$inprofile->skin = (int) $_POST['edit-skin'];
@@ -16,7 +15,6 @@ if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])
 	$db->update('users', $auth->id, [
 		'show_code' => $inprofile->show_code,
 		'show_lol' => $inprofile->show_lol,
-		'show_rp' => $inprofile->show_rp,
 		'show_rs' => $inprofile->show_rs,
 		'showsig' => $inprofile->showsig,
 		'skin' => $inprofile->skin,
@@ -44,11 +42,6 @@ if ($inprofile->show_lol) {
 	$show_lolmark = ' checked="checked"';
 }
 
-$show_rpmark = '';
-if ($inprofile->show_rp) {
-	$show_rpmark = ' checked="checked"';
-}
-
 $show_rsmark = '';
 if ($inprofile->show_rs) {
 	$show_rsmark = ' checked="checked"';
@@ -61,7 +54,6 @@ $tpl->assign([
 	'edit-enablesig-mark' => $sigmark,
 	'edit-show_code-mark' => $show_codemark,
 	'edit-show_lol-mark' => $show_lolmark,
-	'edit-show_rp-mark' => $show_rpmark,
 	'edit-show_rs-mark' => $show_rsmark,
 	'user-skin-' . $inprofile->skin => ' selected="selected"',
 	'user-pm_notify_email-' . $inprofile->pm_notify_email => ' selected="selected"',

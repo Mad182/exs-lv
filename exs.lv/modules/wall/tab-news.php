@@ -128,7 +128,8 @@ $articles = $db->get_results("
 	WHERE
 		`pages`.`category` = `cat`.`id` AND
 		`cat`.`isblog`!='0' AND
-		`users`.`id` = `pages`.`author`
+		`users`.`id` = `pages`.`author` AND
+		`pages`.`lang` = 1
 	ORDER BY
 		`pages`.`id` DESC
 	LIMIT
@@ -146,7 +147,7 @@ foreach ($articles as $article) {
 
 	$av = '';
 	if (!empty($article->avatar)) {
-		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px; height: 64px;" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	}
 
 	$title = textlimit($article->title, 50, '...');
@@ -192,7 +193,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 		ORDER BY
 			`pages`.`id` DESC
 		LIMIT
-			0,3");
+			0,2");
 
 	foreach ($articles as $article) {
 

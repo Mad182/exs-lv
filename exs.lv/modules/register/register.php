@@ -8,7 +8,7 @@ deny_proxies();
 
 if (!$auth->ok) {
 
-	$botstring = 'Es tiešām nēesmu ļauns spambots! ' . md5($auth->xsrf . '-' . 'neesmuspambots') . '!';
+	$botstring = 'Es tiešām nēesmu ļauns spambots! ' . md5($auth->xsrf . '-' . 'neesmĻaunsuspambots') . '!';
 
 	/* show registration form */
 	$tpl->newBlock('registration-form');
@@ -150,7 +150,8 @@ if (!$auth->ok) {
 				</p>
 				<p style="font-size:90%;margin: 20px 0 10px;color: #888">
 					Profils tika reģistrēts no IP adreses ' . $auth->ip . '.<br />
-					Ja neesi veicis šo darbību, ignorē šo vēstuli, un mēs Tevi vairs netraucēsim.
+					Ja neesi veicis šo darbību, ignorē šo vēstuli, un mēs Tevi vairs netraucēsim.<br />
+					Neapstiprināts profils tiks automātiski dzēsts pēc vienas nedēļas.
 				</p>';
 
 		send_email(stripslashes($regdata['mail']), $subject, $message);

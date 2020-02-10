@@ -273,6 +273,19 @@ class AuthBase {
 
 	function update_counter() {
 		global $db, $m;
+
+		if (
+				strpos($_SERVER['HTTP_USER_AGENT'],"Googlebot") !== false ||
+				        strpos($_SERVER['HTTP_USER_AGENT'],"bingbot") !== false ||
+				strpos($_SERVER['HTTP_USER_AGENT'],"YandexBot") !== false ||
+				        strpos($_SERVER['HTTP_USER_AGENT'],"YandexImages") !== false ||
+				strpos($_SERVER['HTTP_USER_AGENT'],"Mediapartners") !== false ||
+				strpos($_SERVER['HTTP_USER_AGENT'],"SemrushBot") !== false ||
+				strpos($_SERVER['HTTP_USER_AGENT'],"AhrefsBot") !== false
+			) {
+			return false;
+		}
+
 		$lang = get_lang();
 
 		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$lang)) {
@@ -282,7 +295,7 @@ class AuthBase {
 		}
 
 		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
-			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 300 SECOND > `last_hit`");
+			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 280 SECOND > `last_hit`");
 			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$lang);
 			$m->set('online_count_' . $lang, "$this->hosts_online", 10);
 		}

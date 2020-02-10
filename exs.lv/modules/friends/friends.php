@@ -3,7 +3,7 @@
 /**
  * Lietotāja draugu saraksts
  */
-$robotstag = ['noindex', 'follow'];
+$robotstag = ['noindex', 'nofollow'];
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
@@ -12,7 +12,8 @@ if (isset($_GET['var1'])) {
 	$inprofile = get_user($auth->id);
 }
 
-if ($inprofile && !$inprofile->deleted) {
+
+if ($inprofile && !$inprofile->deleted && ($auth->ok === true || !$inprofile->private)) {
 
 	include(CORE_PATH . '/includes/class.friend.php');
 	$friend = new Friend();

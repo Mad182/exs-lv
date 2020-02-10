@@ -1,7 +1,0 @@
-<?php
-
-$cat = $db->get_results("SELECT * FROM cat");
-
-foreach ($cat as $c) {
-	update_stats($c->id);
-}

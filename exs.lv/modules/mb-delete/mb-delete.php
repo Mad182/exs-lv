@@ -11,7 +11,7 @@ if ($auth->ok && isset($_GET['var1']) && check_token('delmb', $_GET['token'])) {
 	$mbid = intval($_GET['var1']);
 	$mb = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$mbid' AND `lang` = '$lang'");
 
-	if (!empty($mbid) && !empty($mb) && $mb->removed == 0 && ( (im_mod() && strtotime($mb->date) > time() - 86400) || ($mb->author == $auth->id && $auth->level == 3 && strtotime($mb->date) > time() - 1800) || ($auth->level == 1 && $debug))) {
+	if (!empty($mbid) && !empty($mb) && $mb->removed == 0 && ( (im_mod() && strtotime($mb->date) > time() - 286400) || ($mb->author == $auth->id) || ($auth->level == 1 && $debug))) {
 
 		//level 2
 		if ($mb->parent != 0 && $mb->reply_to != 0) {
@@ -57,9 +57,17 @@ if ($auth->ok && isset($_GET['var1']) && check_token('delmb', $_GET['token'])) {
 		} else {
 			$db->query("UPDATE miniblog SET removed = '1' WHERE id = '" . $mbid . "' LIMIT 1");
 			$db->query("UPDATE miniblog SET removed = '1' WHERE parent = '" . $mbid . "'");
+			$db->query("DELETE FROM `userlogs` WHERE `multi` = 'mb-answ-" . $mbid . "'");
+			$db->query("DELETE FROM `userlogs` WHERE `multi` = 'g-" . $mbid . "'");
+			$db->query("DELETE FROM `notify` WHERE `foreign_key` = '" . $mbid . "'");
 			$auth->log('Izdzēsa miniblogu', 'miniblog', $mbid);
 		}
 	}
+
+	if(!empty($mb->groupid)) {
+		redirect('/group/' . $mb->groupid);
+	}
+
 }
 
 redirect();

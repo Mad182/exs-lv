@@ -12,7 +12,7 @@ if (isset($_GET['var1'])) {
 	$inprofile = get_user($auth->id);
 }
 
-if (!empty($inprofile) && empty($inprofile->deleted)) {
+if (!empty($inprofile) && empty($inprofile->deleted) && ($auth->ok === true || !$inprofile->private)) {
 
 	if ($inprofile->id === $auth->id) {
 

@@ -18,8 +18,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 	$category = get_cat($article->category);
 
-	include(CORE_PATH . '/includes/class.tags.php');
-
 	$end = $comments_per_page;
 
 	if (isset($_GET['var2']) && $_GET['var2'] == 'com_page') {
@@ -143,30 +141,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 		}
 	}
 
-	//pieliek tagus
-	if ($auth->ok && in_array($auth->level, [1, 2, 3]) && isset($_POST['newtags'])) {
-		$newtags = explode(',', $_POST['newtags']);
-		$tags = new tags;
-		foreach ($newtags as $newtag) {
-			if (strlen(trim($newtag)) > 1) {
-				$newtag = h(ucfirst(strip_tags(trim($newtag))));
-				$nslug = mkslug($newtag);
-				if (!empty($newtag)) {
-					$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-					if (!$tagid) {
-						$db->query("INSERT INTO tags (name,slug) VALUES ('" . sanitize($newtag) . "','$nslug')");
-						$tagid = $db->insert_id;
-					}
-					if ($tags->add_tag($article->id, $tagid)) {
-						$auth->log('Pievienoja tagu (' . $nslug . ')', 'pages', $article->id);
-						echo '<li><a href="/tag/' . $nslug . '" rel="tag">' . $newtag . '</a></li>';
-					}
-				}
-			}
-		}
-		exit;
-	}
-
 	// lietotāja paraksta dzēšana
 	if (im_mod()) {
 		if (isset($_GET['remove_signature'])) {
@@ -286,7 +260,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 		if (can_edit_page($article)) {
 			$tpl->newBlock('page-options');
 			$tpl->assign([
-				'article-id' => $article->id
+				'article-id' => $article->id,
+				'token' => make_token('delpage' .  $article->id)
+			]);
+		} elseif($auth->id == $article->author) { 
+			$tpl->newBlock('page-delete');
+			$tpl->assign([
+				'article-id' => $article->id,
+				'token' => make_token('delpage' .  $article->id)
 			]);
 		}
 
@@ -312,6 +293,25 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana rakstam: &quot;' . $article->title . '&quot; | ' . $category->title;
+		}
+
+		// raksta dzēšana
+		elseif ($auth->ok && isset($_GET['mode']) && $_GET['mode'] == 'delete' && (can_edit_page($article) || $auth->id == $article->author) && check_token('delpage' .  $article->id, $_GET['token'])) {
+
+			$db->query("DELETE FROM `pages` WHERE `id` = " . $article->id);
+			$db->query("DELETE FROM `bookmarks` WHERE `pageid` = " . $article->id . " AND `foreign_table` = 'pages'");
+			$db->query("DELETE FROM `taged` WHERE `page_id` = " . $article->id . " AND `type` = 0");
+			$db->query("UPDATE `comments` SET `removed` = 1 WHERE `pid` = ".$article->id);
+			$db->query("DELETE FROM `userlogs` WHERE `action` LIKE '%/read/".$article->strid."#%'");
+			$db->query("DELETE FROM `userlogs` WHERE `action` LIKE '%/read/".$article->strid."\"%'");
+			$db->query("DELETE FROM `notify` WHERE `url` LIKE '/read/".$article->strid."'");
+
+			if($auth->id != 1) {
+				$auth->log('Izdzēsa rakstu ('.$article->title.')', 'pages', $article->id);
+			}
+
+			redirect('/' . $category->textid);
+
 		}
 
 		// raksta rediģēšanas forma
@@ -781,6 +781,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$date = display_time(strtotime($article->date));
 			$updated = display_time(strtotime($article->updated));
+			$post_bump = strtotime($article->bump);
 
 			if ($article->edit_times > 0 && empty($article->custom_include)) {
 				$edit_usrinfo = get_user($article->edit_user);
@@ -815,11 +816,9 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			$tpl->assign([
 				'title' => $article->title,
 				'text' => $article_text,
-				'text-enc' => urlencode($article_text),
 				'custom_content' => $custom_content,
 				'id' => $article->id,
 				'bookmark' => $permalink,
-				'bookmark-enc' => urlencode($permalink),
 				'views' => $article->views + 1,
 				'date' => $date,
 				'updated' => $updated,
@@ -827,16 +826,13 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'updated_atom' => date(DATE_ATOM, strtotime($article->updated)),
 				'author' => $author_link,
 				'level' => $author->level,
-				'gender' => $author->gender,
 				'posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count,
 				'avatar' => get_avatar($author, 's'),
-				'fb-likes' => get_fb_likes($permalink)	
 			]);
 
 			$page_title = $article->title . ' - ' . $category->title;
-
 
 			// filmu rakstiem specifiska informācija
 			if ($category->textid == 'filmas') {
@@ -849,7 +845,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					if (!$auth->mobile) {
 						$opengraph_meta['title'] = 'Filma ' . h($article->title);
 						$opengraph_meta['type'] = 'article';
-						$opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
+						$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
 						$opengraph_meta['image'] = 'https://img.exs.lv' . $avatar->image;
 						$opengraph_meta['description'] = h(textlimit($article->text, 200));
 						$twitter_meta['card'] = 'summary';
@@ -1000,7 +996,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				if (!$auth->mobile) {
 					$opengraph_meta['title'] = $article->title;
 					$opengraph_meta['type'] = 'article';
-					$opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
+					$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
 					$opengraph_meta['description'] = h(textlimit($article->text, 200));
 
 					if (!empty($article->image)) {
@@ -1043,37 +1039,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						}
 					}
 				}
-			}
-
-			$article_tags = $db->get_results("SELECT
-			`taged`.`id` AS `id`,
-			`tags`.`name` AS `name`,
-			`tags`.`slug` AS `slug`
-		FROM
-			`taged`,
-			`tags`
-		WHERE
-			`taged`.`page_id` = '$article->id' AND
-			`taged`.`type` = '0' AND
-			`taged`.`lang` = '$lang' AND
-			`tags`.`id` = `taged`.`tag_id`
-		LIMIT 16");
-			$tagcount = 0;
-
-			if ($article_tags) {
-				$tpl->newBlock('post-tags');
-				foreach ($article_tags as $article_tag) {
-					$tagcount++;
-					$tpl->newBlock('post-tags-node');
-					$tpl->assign([
-						'tag-title' => $article_tag->name,
-						'slug' => $article_tag->slug,
-					]);
-				}
-			}
-
-			if ($auth->ok && in_array($auth->level, [1, 2, 3])) {
-				$tpl->newBlock('post-newtags');
 			}
 
 			if ($auth->ok && (($auth->id == $article->author) || im_mod() || im_cat_mod())) {
@@ -1129,255 +1094,226 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				$author = [];
 				foreach ($parents as $comment) {
 
-					//REGISTERED USERS
-					if ($comment->author != 0) {
-						if (empty($author[$comment->author])) {
-							$author[$comment->author] = get_user($comment->author);
+
+					if (empty($author[$comment->author])) {
+						$author[$comment->author] = get_user($comment->author);
+					}
+
+					$tpl->newBlock('comments-node');
+					$tpl->newBlock('comments-node-user');
+
+					$editedby = '';
+					if ($comment->edit_times > 0 && $auth->ok) {
+						if (empty($author[$comment->edit_user])) {
+							$author[$comment->edit_user] = get_user($comment->edit_user);
 						}
+						$editedby = '<p class="comment-edited-by">Laboja ' . $author[$comment->edit_user]->nick . ', ' . $comment->edit_times . 'x</p>';
+					}
 
-						$tpl->newBlock('comments-node');
-						$tpl->newBlock('comments-node-user');
-
-						$editedby = '';
-						if ($comment->edit_times > 0 && $auth->ok) {
-							if (empty($author[$comment->edit_user])) {
-								$author[$comment->edit_user] = get_user($comment->edit_user);
-							}
-							$editedby = '<p class="comment-edited-by">Laboja ' . $author[$comment->edit_user]->nick . ', ' . $comment->edit_times . 'x</p>';
-						}
-
-						$comment->date = display_time(strtotime($comment->date));
-						
-						if (!$author[$comment->author]->deleted) {
-							$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
-							$author_box .= usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author) . '</a>';
-							$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="" /></a>';
-							$author_box .= '<span class="custom-title">' . custom_user_title($author[$comment->author]) . '</span>';
-							$author_box .= '<span class="author-info">Karma: ' . $author[$comment->author]->karma . '</span>';
-						} else {
-							$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
-							$author_box .= '<img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="{title}" />';
-						}
-						
-
-						$tpl->assign([
-							'comment-id' => $comment->id,
-							'comment-number' => $comment_number,
-							'comment-text' => add_smile($comment->text),
-							'comment-date' => $comment->date,
-							'author' => $author_box,
-							'comment-editedby' => $editedby
-						]);
-
-						if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {
-							$signature = '<div class="comment-signature">' . $author[$comment->author]->signature . '</div>';
-							if (im_mod() && $author[$comment->author]->level != 1) {
-								$signature .= '[<a onclick="prompt_why_delete(\'?remove_signature=' . $comment->author . '\');" href="#"><span class="red">dzēst parakstu</span></a>]';
-							}
-							$tpl->assign('signature', add_smile($signature));
-						}
-
-						$pluslnk = '<span class="voted1"></span>';
-						$minuslnk = '<span class="voted2"></span>';
-
-						if ($auth->ok && !$auth->mobile) {
-							$check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
-
-							if (!empty($comment->vote_users)) {
-								$voters = unserialize($comment->vote_users);
-							} else {
-								$voters = [];
-							}
-							$voted = in_array($auth->id, $voters);
-
-							if (!$voted && $auth->id != $comment->author) {
-								if (isset($_GET['com_page'])) {
-									$skips = (int) $_GET['com_page'];
-									$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-									$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-								} else {
-									$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-									$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-								}
-							}
-						}
-
-						if ($comment->vote_value > 0) {
-							$comment->vote_value = '+' . $comment->vote_value;
-							$vclass = 'positive';
-						} elseif ($comment->vote_value < 0) {
-							$vclass = 'negative';
-						} else {
-							$vclass = 'zero';
-						}
-
-						if (!$auth->mobile) {
-							$tpl->newBlock('comments-vote');
-							$tpl->assign([
-								'comment-id' => $comment->id,
-								'comment-vote_value' => $comment->vote_value,
-								'comment-plus' => $pluslnk,
-								'comment-minus' => $minuslnk,
-								'comment-vclass' => $vclass
-							]);
-						}
-
-						if (im_mod()) {
-							$tpl->newBlock('comments-adm');
-							$tpl->assign([
-								'delete' => '?delcom=' . $comment->id . '&token=' . make_token('delcom'),
-								'edit' => '?editcom=' . $comment->id,
-							]);
-						} elseif ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $comment->author) {
-							$tpl->newBlock('comments-own');
-							$tpl->assign([
-								'edit' => '?editcom=' . $comment->id,
-							]);
-						}
-
-						if ($auth->ok && !$article->closed && empty($auth->mobile)) {
-							$tpl->newBlock('comments-reply');
-							$tpl->assign([
-								'comment-id' => $comment->id,
-								'page-id' => $article->id
-							]);
-						}
-
-						//	pārkāpuma ziņošanas podziņa komentāra labajā pusē
-						if ($auth->ok && !$auth->mobile && in_array($lang, [1, 7, 9])) {
-							$tpl->newBlock('report-comment');
-							$tpl->assign('comment-id', $comment->id);
-						}
-
-						if ($comment->replies > 0) {
-
-							if (!empty($childs[$comment->id])) {
-								$tpl->newBlock('com-replies');
-								foreach ($childs[$comment->id] as $reply) {
-									$tpl->newBlock('com-reply');
-									if (empty($author[$reply->author])) {
-										$author[$reply->author] = get_user($reply->author);
-									}
-
-									$reply->date = strtolower(display_time(strtotime($reply->date)));
-
-									$avatar = get_avatar($author[$reply->author], 's');
-
-									if (!$author[$reply->author]->deleted) {
-										$author_link = '<a href="/user/' . $reply->author . '">' . usercolor($author[$reply->author]->nick, $author[$reply->author]->level, false, $reply->author) . '</a>';
-									} else {
-										$author_link = '<em>dzēsts</em>';
-									}
-
-									$tpl->assign([
-										'rpl-id' => $reply->id,
-										'rpl-text' => add_smile($reply->text),
-										'rpl-date' => $reply->date,
-										'rpl-author' => $author_link,
-										'rpl-author-id' => $reply->author,
-										'rpl-avatar' => $avatar
-									]);
-
-
-									$pluslnk = '<span class="voted1"></span>';
-									$minuslnk = '<span class="voted2"></span>';
-
-									if ($auth->ok && !$auth->mobile) {
-										$check = substr(md5($reply->id . $remote_salt . $auth->id), 0, 5);
-
-										if (!empty($reply->vote_users)) {
-											$voters = unserialize($reply->vote_users);
-										} else {
-											$voters = [];
-										}
-										$voted = in_array($auth->id, $voters);
-
-										if (!$voted && $auth->id != $reply->author) {
-											if (isset($_GET['com_page'])) {
-												$skips = (int) $_GET['com_page'];
-												$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-												$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-											} else {
-												$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-												$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-											}
-										}
-									}
-
-									if ($reply->vote_value > 0) {
-										$reply->vote_value = '+' . $reply->vote_value;
-										$vclass = 'positive';
-									} elseif ($reply->vote_value < 0) {
-										$vclass = 'negative';
-									} else {
-										$vclass = 'zero';
-									}
-
-									if (!$auth->mobile) {
-										$tpl->newBlock('reply-vote');
-										$tpl->assign([
-											'comment-id' => $reply->id,
-											'comment-vote_value' => $reply->vote_value,
-											'comment-plus' => $pluslnk,
-											'comment-minus' => $minuslnk,
-											'comment-vclass' => $vclass
-										]);
-									}
-
-									if (!$auth->mobile && (im_mod() || ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $reply->author))) {
-										$tpl->newBlock('reply-adm');
-										$tpl->assign([
-											'edit' => '?editcom=' . $reply->id,
-											'delete' => '?delcom=' . $reply->id . '&token=' . make_token('delcom')
-										]);
-									}
-
-									// komentāra atbildes ziņošanas podziņa
-									if (!$auth->mobile && $auth->ok && $lang == 1) {
-										$tpl->newBlock('report-reply');
-										$tpl->assign('comment-id', $reply->id);
-									}
-								}
-							}
-						}
-
-						if (!$auth->mobile && $lang == 1) {
-							$tpl->newBlock('comment-tools');
-							$tpl->assign('id', $comment->author);
-							if ($auth->ok) {
-								$tpl->newBlock('comments-pm');
-								$tpl->assign('id', $comment->author);
-							}
-						}
-
-						//ANONIMOUS COMMENTS
+					$comment->date = display_time(strtotime($comment->date));
+					
+					if (!$author[$comment->author]->deleted) {
+						$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
+						$author_box .= usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author) . '</a>';
+						$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="" /></a>';
+						$author_box .= '<span class="custom-title">' . custom_user_title($author[$comment->author]) . '</span>';
+						$author_box .= '<span class="author-info">Karma: ' . $author[$comment->author]->karma . '</span>';
 					} else {
-						$tpl->newBlock('comments-node');
-						$tpl->newBlock('comments-node-anon');
+						$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
+						$author_box .= '<img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="{title}" />';
+					}
+					
 
-						if (empty($comment->anon_nick)) {
-							$comment->anon_nick = 'Viesis';
+					$tpl->assign([
+						'comment-id' => $comment->id,
+						'comment-number' => $comment_number,
+						'comment-text' => add_smile($comment->text),
+						'comment-date' => $comment->date,
+						'author' => $author_box,
+						'comment-editedby' => $editedby
+					]);
+
+					if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {
+						$signature = '<div class="comment-signature">' . $author[$comment->author]->signature . '</div>';
+						if (im_mod() && $author[$comment->author]->level != 1) {
+							$signature .= '[<a onclick="prompt_why_delete(\'?remove_signature=' . $comment->author . '\');" href="#"><span class="red">dzēst parakstu</span></a>]';
 						}
+						$tpl->assign('signature', add_smile($signature));
+					}
 
-						$comment->date = display_time(strtotime($comment->date));
+					$pluslnk = '<span class="voted1"></span>';
+					$minuslnk = '<span class="voted2"></span>';
 
-						$tpl->assign([
-							'comment-id' => $comment->id,
-							'comment-number' => $comment_number,
-							'comment-text' => add_smile($comment->text),
-							'comment-date' => $comment->date,
-							'comment-anon_nick' => $comment->anon_nick,
-							'comment-avatar' => '/dati/bildes/useravatar/none.png'
-						]);
-						if (im_mod()) {
-							$tpl->newBlock('comments-anon-adm');
-							$tpl->assign([
-								'comment-id' => $comment->id,
-								'page-id' => $article->id,
-								'comment-ip' => $comment->ip,
-							]);
+					if ($auth->ok && !$auth->mobile) {
+						$check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
+
+						if (!empty($comment->vote_users)) {
+							$voters = unserialize($comment->vote_users);
+						} else {
+							$voters = [];
+						}
+						$voted = in_array($auth->id, $voters);
+
+						if (!$voted && $auth->id != $comment->author) {
+							if (isset($_GET['com_page'])) {
+								$skips = (int) $_GET['com_page'];
+								$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+								$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
+							} else {
+								$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+								$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
+							}
 						}
 					}
+
+					if ($comment->vote_value > 0) {
+						$comment->vote_value = '+' . $comment->vote_value;
+						$vclass = 'positive';
+					} elseif ($comment->vote_value < 0) {
+						$vclass = 'negative';
+					} else {
+						$vclass = 'zero';
+					}
+
+					if (!$auth->mobile) {
+						$tpl->newBlock('comments-vote');
+						$tpl->assign([
+							'comment-id' => $comment->id,
+							'comment-vote_value' => $comment->vote_value,
+							'comment-plus' => $pluslnk,
+							'comment-minus' => $minuslnk,
+							'comment-vclass' => $vclass
+						]);
+					}
+
+					if (im_mod()) {
+						$tpl->newBlock('comments-adm');
+						$tpl->assign([
+							'delete' => '?delcom=' . $comment->id . '&token=' . make_token('delcom'),
+							'edit' => '?editcom=' . $comment->id,
+						]);
+					} elseif ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $comment->author) {
+						$tpl->newBlock('comments-own');
+						$tpl->assign([
+							'edit' => '?editcom=' . $comment->id,
+						]);
+					}
+
+					if ($auth->ok && !$article->closed && empty($auth->mobile)) {
+						$tpl->newBlock('comments-reply');
+						$tpl->assign([
+							'comment-id' => $comment->id,
+							'page-id' => $article->id
+						]);
+					}
+
+					//	pārkāpuma ziņošanas podziņa komentāra labajā pusē
+					if ($auth->ok && !$auth->mobile && in_array($lang, [1, 7, 9])) {
+						$tpl->newBlock('report-comment');
+						$tpl->assign('comment-id', $comment->id);
+					}
+
+					if ($comment->replies > 0) {
+
+						if (!empty($childs[$comment->id])) {
+							$tpl->newBlock('com-replies');
+							foreach ($childs[$comment->id] as $reply) {
+								$tpl->newBlock('com-reply');
+								if (empty($author[$reply->author])) {
+									$author[$reply->author] = get_user($reply->author);
+								}
+
+								$reply->date = strtolower(display_time(strtotime($reply->date)));
+
+								$avatar = get_avatar($author[$reply->author], 's');
+
+								if (!$author[$reply->author]->deleted) {
+									$author_link = '<a href="/user/' . $reply->author . '">' . usercolor($author[$reply->author]->nick, $author[$reply->author]->level, false, $reply->author) . '</a>';
+								} else {
+									$author_link = '<em>dzēsts</em>';
+								}
+
+								$tpl->assign([
+									'rpl-id' => $reply->id,
+									'rpl-text' => add_smile($reply->text),
+									'rpl-date' => $reply->date,
+									'rpl-author' => $author_link,
+									'rpl-author-id' => $reply->author,
+									'rpl-avatar' => $avatar
+								]);
+
+
+								$pluslnk = '<span class="voted1"></span>';
+								$minuslnk = '<span class="voted2"></span>';
+
+								if ($auth->ok && !$auth->mobile) {
+									$check = substr(md5($reply->id . $remote_salt . $auth->id), 0, 5);
+
+									if (!empty($reply->vote_users)) {
+										$voters = unserialize($reply->vote_users);
+									} else {
+										$voters = [];
+									}
+									$voted = in_array($auth->id, $voters);
+
+									if (!$voted && $auth->id != $reply->author) {
+										if (isset($_GET['com_page'])) {
+											$skips = (int) $_GET['com_page'];
+											$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+											$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
+										} else {
+											$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+											$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
+										}
+									}
+								}
+
+								if ($reply->vote_value > 0) {
+									$reply->vote_value = '+' . $reply->vote_value;
+									$vclass = 'positive';
+								} elseif ($reply->vote_value < 0) {
+									$vclass = 'negative';
+								} else {
+									$vclass = 'zero';
+								}
+
+								if (!$auth->mobile) {
+									$tpl->newBlock('reply-vote');
+									$tpl->assign([
+										'comment-id' => $reply->id,
+										'comment-vote_value' => $reply->vote_value,
+										'comment-plus' => $pluslnk,
+										'comment-minus' => $minuslnk,
+										'comment-vclass' => $vclass
+									]);
+								}
+
+								if (!$auth->mobile && (im_mod() || ($auth->ok && $auth->karma >= $min_post_edit && $auth->id == $reply->author))) {
+									$tpl->newBlock('reply-adm');
+									$tpl->assign([
+										'edit' => '?editcom=' . $reply->id,
+										'delete' => '?delcom=' . $reply->id . '&token=' . make_token('delcom')
+									]);
+								}
+
+								// komentāra atbildes ziņošanas podziņa
+								if (!$auth->mobile && $auth->ok && $lang == 1) {
+									$tpl->newBlock('report-reply');
+									$tpl->assign('comment-id', $reply->id);
+								}
+							}
+						}
+					}
+
+					if (!$auth->mobile && $lang == 1) {
+						$tpl->newBlock('comment-tools');
+						$tpl->assign('id', $comment->author);
+						if ($auth->ok) {
+							$tpl->newBlock('comments-pm');
+							$tpl->assign('id', $comment->author);
+						}
+					}
+
 
 					$comment_number++;
 				}

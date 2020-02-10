@@ -40,6 +40,57 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 			$private = 1;
 		}
 
+		if(
+			stristr($body, 'fano.in') || 
+			stristr($body, 'ielūgum') || 
+			stristr($body, 'ielugum') || 
+			stristr($body, 'ieluugum') || 
+			stristr($body, 'skatīties') || 
+			stristr($body, 'stream') || 
+			stristr($body, 'filmas onl') || 
+			stristr($body, 'online film') || 
+			stristr($body, 'weed') || 
+			stristr($body, 'menti') || 
+			stristr($body, 'legalize') || 
+			stristr($body, 'sex') || 
+			stristr($body, 'huj') || 
+			stristr($body, 'dirs') || 
+			stristr($body, 'pimp') || 
+			stristr($body, 'pipel') || 
+			stristr($body, 'sūkā') || 
+			stristr($body, 'balinātāju') || 
+			stristr($body, 'kys') || 
+			stristr($body, 'mauka') || 
+			stristr($body, 'poker') || 
+			stristr($body, 'optibet') || 
+			stristr($body, ' vs ') || 
+			stristr($body, ' vs. ') || 
+			stristr($body, 'olybet') || 
+			stristr($body, 'likm') || 
+			stristr($body, 'ugunsgr') || 
+			stristr($body, 'svešā seja') || 
+			stristr($body, 'svešo seju') || 
+			stristr($body, 'casino') || 
+			stristr($body, 'kazino') || 
+			stristr($body, 'torrent') || 
+			stristr($body, 'nokačāt') || 
+			stristr($body, 'kačājat') || 
+			stristr($body, 'novilkt') || 
+			stristr($body, 'autism') || 
+			stristr($body, 'autist') || 
+			stristr($body, 'crack') || 
+			stristr($body, 'drug') || 
+			stristr($body, 'cdkey') || 
+			stristr($body, 'kreku') || 
+			stristr($body, 'penis') || 
+			stristr($body, 'sezonas') || 
+			stristr($body, 'casino') || 
+			stristr($body, 'zaļo') || 
+			stristr($body, 'narkotikas')
+		) {
+			$private = 1;
+		}
+
 		$lastins = post_mb([
 			'text' => $body,
 			'private' => $private
@@ -262,33 +313,8 @@ if (!empty($inprofile)) {
 				if (isset($_GET['single'])) {
 
 					//noindex
-					if($record->private) {
+					if($record->private || $record->noindex || (strlen(strip_tags($record->text)) < 70 && $record->posts < 5 && $record->id != 2389427)) {
 						$robotstag = ['noindex', 'nofollow'];
-					}
-
-					// pieliek tagus
-					if (im_mod() && isset($_POST['newtags'])) {
-
-						include_once(CORE_PATH . '/includes/class.tags.php');
-						$newtags = explode(',', $_POST['newtags']);
-						$tags = new tags;
-						foreach ($newtags as $newtag) {
-							if (strlen(trim($newtag)) > 1) {
-								$newtag = h(ucfirst(strip_tags(trim($newtag))));
-								$nslug = mkslug($newtag);
-								if (!empty($newtag)) {
-									$tagid = $db->get_var("SELECT id FROM tags WHERE slug = '$nslug'");
-									if (!$tagid) {
-										$db->query("INSERT INTO tags (name,slug) VALUES ('" . sanitize($newtag) . "','$nslug')");
-										$tagid = $db->insert_id;
-									}
-									if ($tags->add_tag($record->id, $tagid, 2)) {
-										echo '<li><a href="/tag/' . $nslug . '" rel="tag">' . $newtag . '</a></li>';
-									}
-								}
-							}
-						}
-						exit;
 					}
 
 					if (!isset($_GET['vc']) && !isset($_GET['close'])) {
@@ -307,14 +333,14 @@ if (!empty($inprofile)) {
 								$page_title .= ' | ' . $inprofile->nick;
 							}
 						}
+
 					}
+
+					$canonical = get_protocol($record->lang) . $config_domains[$record->lang]['domain'] . $url;
+
 				}
 
-				// Twitter profila dati
-				$append = '';
-				if ($record->twitterid) {
-					$append .= '<p><a title="' . $record->twitteruser . ' iekš Twitter" href="https://twitter.com/' . $record->twitteruser . '/status/' . $record->twitterid . '" rel="nofollow" class="mb-api-twitter">@' . $record->twitteruser . '</a></p>';
-				}
+				$post_bump = $record->bump;
 
 				// apbalvojumu ikonas pie lietotājvārda
 				$add_deco = '';
@@ -338,7 +364,7 @@ if (!empty($inprofile)) {
 
 				$tpl->assign([
 					'url' => $url,
-					'text' => add_smile($record->text) . $append,
+					'text' => add_smile($record->text),
 					'add_deco' => $add_deco,
 					'date' => display_time(strtotime($record->date)),
 					'date-title' => date('Y-m-d H:i:s', strtotime($record->date)),
@@ -378,8 +404,7 @@ if (!empty($inprofile)) {
 					}
 
 					// ieraksta dzēšana;
-					// lūdzu neņem nost laika ierobežojumu :/
-					if ((im_mod() && strtotime($record->date) > time() - 86400) || ($auth->level == 1 && $debug)) {
+					if ((im_mod() && strtotime($record->date) > time() - 286400) || ($record->author == $auth->id) || ($auth->level == 1 && $debug)) {
 						$tpl->newBlock('mb-delete');
 						$tpl->assign([
 							'id' => $record->id,
@@ -463,35 +488,6 @@ if (!empty($inprofile)) {
 						$tpl->newBlock('miniblog-no');
 					}
 
-					$tpl->newBlock('mb-tags-wrapper');
-					$tags = $db->get_results("
-						SELECT
-							`tags`.`name` AS `name`,
-							`tags`.`slug` AS `slug`
-						FROM
-							`taged`,
-							`tags`
-						WHERE
-							`taged`.`page_id` = '$record->id' AND
-							`taged`.`type` = '2' AND
-							`taged`.`lang` = '$lang' AND
-							`tags`.`id` = `taged`.`tag_id`
-						LIMIT 6
-					");
-
-					if ($tags) {
-						$tpl->newBlock('mb-tags');
-						foreach ($tags as $tag) {
-							$tpl->newBlock('mb-tags-node');
-							$tpl->assign([
-								'slug' => $tag->slug,
-								'name' => $tag->name
-							]);
-						}
-					}
-					if (im_mod()) {
-						$tpl->newBlock('mb-newtags');
-					}
 				}
 			} else {
 				if(!empty($single)) {
@@ -558,7 +554,7 @@ if (!empty($inprofile)) {
 		$robotstag = ['noindex', 'nofollow'];
 		error_404();
 	} else {
-		 $robotstag = ['noindex'];
+		$robotstag = ['noindex'];
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');

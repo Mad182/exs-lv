@@ -108,7 +108,7 @@
 		<!-- END BLOCK : user-actions-->
 	</div>
 
-	<div style="float:right;width:30%">
+	<div style="float:right;width:31%">
 		<!-- START BLOCK : user-profile-views-->
 		<h3>Profilu apskatījuši</h3>
 		<div class="box">
@@ -136,35 +136,9 @@
 
 	<div class="c"></div>
 
-	<!-- START BLOCK : user-profile-lastpage-->
-	<div class="half-left">
-		<h3>Jaunākās {user-nick} tēmas</h3>
-		<div class="box">
-			<ul class="bloglist">
-				<!-- START BLOCK : user-profile-lastpage-node-->
-				<li><a href="{node-url}">{lastpage-title}</a></li>
-				<!-- END BLOCK : user-profile-lastpage-node-->
-			</ul>
-		</div>
-	</div>
-	<!-- END BLOCK : user-profile-lastpage-->
-
-	<!-- START BLOCK : user-profile-lastbookmark-->
-	<div class="half-right">
-		<h3>Rakstu izlasei pievienots</h3>
-		<div class="box">
-			<ul class="bloglist">
-				<!-- START BLOCK : user-profile-lastbookmark-node-->
-				<li><a href="{node-url}">{bookmark-title}</a></li>
-				<!-- END BLOCK : user-profile-lastbookmark-node-->
-			</ul>
-		</div>
-	</div>
-	<!-- END BLOCK : user-profile-lastbookmark-->
-
-	<div class="c"></div>
-
 	<!-- START BLOCK : user-profile-lastcom-->
+	<br />
+	<div class="c"></div>
 	<div class="half-left">
 		<h3>Pēdējie komentāri rakstos</h3>
 		<div class="box">
@@ -287,15 +261,6 @@
 			<p>
 				<label for="edit-web">Mājaslapa:<br /><span class="description">(jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
 				<input type="text" class="text" name="edit-web" id="edit-web" value="{user-web}" maxlength="128" />
-			</p>
-			<p>
-				<label for="edit-city">Pilsēta:</label>
-				<select class="text" name="edit-city" id="edit-city">
-					<option value="0">Neteikšu</option>
-					<!-- START BLOCK : user-profile-edit-city-->
-					<option value="{city-id}"{city-sel}>{city-title}</option>
-					<!-- END BLOCK : user-profile-edit-city-->
-				</select>
 			</p>
 
 			<!-- START BLOCK : sig-about-edit-->
@@ -434,7 +399,9 @@
 			<legend>Profila dzēšana</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p class="notice">
-				<strong>Šī darbība ir neatgriezeniska!</strong>
+				<strong>Šī darbība ir neatgriezeniska!</strong><br />
+				Dzēšot profilu tiks dzēsts arī pievienotais saturs - visas tēmas, komentāri un attēli, ko esi izveidojis vai augšupielādējis.<br />
+				Ja vēlies izdzēst tikai kādu noteiktu satura daļu, nevis visu profilu, vai ir kādi citi jautājumi, <a href="/pm/write/?to=1">nosūti ziņu @<span class="admins">mad</span></a>
 			</p>
 			<p>
 				<label for="password-old">Ievadi savu paroli:</label>
@@ -488,9 +455,6 @@
 			</p>
 			<p>
 				<label for="edit-show_lol"><input type="checkbox" name="edit-show_lol" id="edit-show_lol"{edit-show_lol-mark} />lol.exs.lv</label>
-			</p>
-			<p>
-				<label for="edit-show_rp"><input type="checkbox" name="edit-show_rp" id="edit-show_rp"{edit-show_rp-mark} />rp.exs.lv</label>
 			</p>
 			<p>
 				<label for="edit-show_rs"><input type="checkbox" name="edit-show_rs" id="edit-show_rs"{edit-show_rs-mark} />runescape.exs.lv</label>

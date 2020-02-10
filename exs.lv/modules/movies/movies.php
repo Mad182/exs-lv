@@ -31,8 +31,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		`pages`.`views` AS `views`,
 		`pages`.`intro` AS `intro`,
 		`users`.`nick` AS `nick`,
-		`users`.`level` AS `level`,
-		`users`.`gender` AS `gender`
+		`users`.`level` AS `level`
 	FROM
 		`pages`,
 		`users`
@@ -86,7 +85,6 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'author' => usercolor($article->nick, $article->level),
 			'posts' => $article->posts,
 			'level' => $article->level,
-			'gender' => $article->gender,
 			'intro' => $article->text,
 			'avatar' => $avatar
 		]);
@@ -178,8 +176,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		`pages`.`views` AS `views`,
 		`pages`.`intro` AS `intro`,
 		`users`.`nick` AS `nick`,
-		`users`.`level` AS `level`,
-		`users`.`gender` AS `gender`
+		`users`.`level` AS `level`
 	FROM
 		`pages`,
 		`users`
@@ -217,8 +214,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'date' => $date,
 			'author' => usercolor($article->nick, $article->level),
 			'posts' => $article->posts,
-			'level' => $article->level,
-			'gender' => $article->gender
+			'level' => $article->level
 		]);
 
 

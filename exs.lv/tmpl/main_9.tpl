@@ -211,6 +211,7 @@
                         <li><a href="/user/settings">Mani iestatījumi</a></li>
                         <li><a href="/user/security">Paroles maiņa</a></li>
                         <li><a href="/user/email">E-pasta adreses maiņa</a></li>
+						<li><a href="/user/delete">Dzēst profilu</a></li>
                         <li><a href="/user/changenick">Mainīt lietotājvārdu</a></li>
                         <li>&nbsp;</li>
                     </ul>

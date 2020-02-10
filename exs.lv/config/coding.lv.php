@@ -34,9 +34,6 @@ $page_edit_time = 86400; //1 diena
 
 $page_title = 'Web programmēšanas forums';
 
-// rādāmo profila skatījumu skaits
-$profile_views_limit = 20;
-
 // izslēdz smaidiņus foruma tēmās pēc noklusējuma
 $disable_emotions = 1;
 

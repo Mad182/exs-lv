@@ -5,6 +5,8 @@
  */
 $robotstag[] = 'noindex';
 
+$tpl->assignGlobal('rules', $db->get_var("SELECT text FROM pages WHERE id = 57753"));
+
 require(LIB_PATH . '/twitteroauth/twitteroauth/twitteroauth.php');
 
 if (!isset($_SESSION['twitter_id']) && !isset($_GET['oauth_token']) && !isset($_POST['submit'])) {

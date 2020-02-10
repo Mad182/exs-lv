@@ -3,7 +3,7 @@
 /**
  * Populārākie raksti
  */
-$pages = $db->get_results("SELECT `title`, `strid`, `lang`, `views` FROM `pages` ORDER BY `views` DESC LIMIT 25");
+$pages = $db->get_results("SELECT `title`, `strid`, `lang`, `views` FROM `pages` WHERE `lang` != 5 ORDER BY `views` DESC LIMIT 30");
 if ($pages) {
 	$tpl->newBlock('top-views');
 	foreach ($pages as $page) {
@@ -17,7 +17,7 @@ if ($pages) {
 }
 
 
-$pages = $db->get_results("SELECT `title`, `strid`, `lang`, `posts` FROM `pages` ORDER BY `posts` DESC LIMIT 25");
+$pages = $db->get_results("SELECT `title`, `strid`, `lang`, `posts` FROM `pages` WHERE `lang` != 5 ORDER BY `posts` DESC LIMIT 30");
 if ($pages) {
 	$tpl->newBlock('top-comments');
 	foreach ($pages as $page) {

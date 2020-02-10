@@ -34,13 +34,9 @@ if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 		$inprofile->about = htmlpost2db($_POST['edit-about']);
 	}
 
-	$inprofile->city = (int) $_POST['edit-city'];
-
 	$db->update('users', $auth->id, [
 		'web' => $inprofile->web,
-		'city' => $inprofile->city,
 		'skype' => $inprofile->skype,
-		'rs_nick' => $inprofile->rs_nick,
 		'signature' => $inprofile->signature,
 		'about' => $inprofile->about,
 		'yt_name' => $inprofile->yt_name,
@@ -84,22 +80,6 @@ if ($inprofile->karma >= 500 || im_mod() || $inprofile->custom_title_paid) {
 	]);
 } else {
 	$tpl->newBlock('custom_title_buy');
-}
-
-$citys = $db->get_results("SELECT * FROM `city` ORDER BY `id` ASC");
-
-foreach ($citys as $city) {
-	$tpl->newBlock('user-profile-edit-city');
-	if ($inprofile->city == $city->id) {
-		$sel = ' selected="selected"';
-	} else {
-		$sel = '';
-	}
-	$tpl->assign([
-		'city-id' => $city->id,
-		'city-title' => $city->title,
-		'city-sel' => $sel
-	]);
 }
 
 $page_title = 'Tavs profils';
