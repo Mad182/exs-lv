@@ -10,7 +10,7 @@
 	<fieldset>
 		<legend>Pievienot jaunu karti</legend>
 		<p class="notice">Faila nosaukumam jābūt vienādam ar kartes nosaukumu. Formāts - jpg.</p>
-		<p><label>Attēls no PC:</label><br />
+		<p><label>Attēls no PC:</label><br>
 			<input type="file" name="new-image" /></p>
 		<p><input type="submit" class="button" value="Upload!"  /></p>
 	</fieldset>

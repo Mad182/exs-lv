@@ -101,36 +101,22 @@ class Auth extends AuthBase {
 		session_regenerate_id(true);
 
 		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
-			sleep(rand(2, 4));
+			sleep(1);
 			$this->error = 2;
 			return false;
 		}
 
 		$login = sanitize($username);
 
-		$tmp = $db->get_row("SELECT `id`, `password`, `pwd` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
+		$tmp = $db->get_row("SELECT `id`, `password` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
 
 		$found = false;
 		if (!empty($tmp)) {
 
-			//log in using old SHA password
-			if (empty($tmp->password) && !empty($tmp->pwd)) {
-
-				if ($tmp->pwd === pwd($password)) {
-					$found = $tmp->id;
-
-					//create new bcrypt hash and delete old one
-					$hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 14]);
-					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
-				}
-
-				//using bcrypt
-			} elseif (!empty($tmp->password)) {
-
-				if (password_verify($password, $tmp->password)) {
-					$found = $tmp->id;
-				}
+			if (!empty($tmp->password) && password_verify($password, $tmp->password)) {
+				$found = $tmp->id;
 			}
+
 		}
 
 		if ($found) {

@@ -95,7 +95,7 @@ class Rshelp extends Controller {
                 $article->text = $article->intro;
             } else {
                 $article->text = str_replace('<li>', ' • ', 
-                    str_replace(['&nbsp;', '<br />'], ' ', 
+                    str_replace(['&nbsp;', '<br>'], ' ', 
                                 youtube_title($article->text))
                 );
                 $article->text = textlimit(strip_tags(trim(

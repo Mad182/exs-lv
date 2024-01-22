@@ -12,7 +12,7 @@ Tags:white,two-columns,flexible-width,custom-background,threaded-comments
 body {
 	background: #f3f5f8 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAABlBMVEXs7Ozz8u8U0Qc3AAAAFklEQVQI12MAg9C7VxnwssAE6WIEWAB1PR5qSrDnsQAAAABJRU5ErkJggg==) repeat 0 0;
 	color: #334;
-	font-family: Roboto, sans-serif;
+	font-family: Verdana, Geneva, sans-serif;
 	font-weight: normal;
 	font-size: 13px;
 	line-height: 1.5
@@ -4542,7 +4542,7 @@ li.view_more {
 	background: #eee
 }
 
-#noindex-phone {
+#m-phone{
 	width: 90px;
 	height: 11px;
 	display: inline-block;
@@ -5767,3 +5767,6 @@ p.images-5 img {
 .ca-form input[type=text] {
     width:400px;
 }
+
+
+

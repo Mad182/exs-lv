@@ -20,8 +20,8 @@
 			{add}
 		</h3>
 		<p>
-			Biedri: {members}<br />
-			Posti: {posts}<br />
+			Biedri: {members}<br>
+			Posti: {posts}<br>
 			Admins: {admin}
 		</p>
 	</li>

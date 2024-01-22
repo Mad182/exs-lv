@@ -1,0 +1,23 @@
+<form class="form" action="{page-url}" method="post" enctype="multipart/form-data">
+	<fieldset>
+		<p>
+			<label>Attēls:</label><br />
+			<input type="file" name="new-image" />
+		</p>
+		<p>
+			<label><input type="checkbox" name="resize" /> samazināt (640px)</label>
+			<label><input type="checkbox" name="resize960" /> samazināt (960px)</label>
+		</p>
+        <!-- START BLOCK : rs-watermark-checkbox -->
+        <p>
+			<label><input type="checkbox" name="add-watermark" /> pievienot runescape.exs.lv ūdenszīmi</label>
+		</p>
+        <p>
+			<label><input type="checkbox" name="position-left" /> novietot ūdenszīmi kreisajā apakšējā stūrī (pēc noklusējuma - apakšējais labais stūris)</label>
+		</p>
+        <!-- END BLOCK : rs-watermark-checkbox -->
+		<p>
+			<input type="submit" class="button primary" value="Upload!" />
+		</p>
+	</fieldset>
+</form>

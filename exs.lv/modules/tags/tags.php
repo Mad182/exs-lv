@@ -5,6 +5,9 @@
  */
 $robotstag = ['noindex', 'follow'];
 
+header('Location: /');
+exit;
+
 if (isset($_GET['tag'])) {
 	$tagid = (int) $_GET['tag'];
 	$tag = $db->get_row("SELECT * FROM `tags` WHERE `id` = '$tagid'");

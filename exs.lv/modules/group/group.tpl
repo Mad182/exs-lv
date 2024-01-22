@@ -60,8 +60,8 @@
 		<!-- END BLOCK : nmembers-pay-->
 		<h3>Grupas statistika</h3>
 		<p style="font-size: 90%;">
-			Biedri: {group-members}<br />
-			Posti: {group-posts}<br />
+			Biedri: {group-members}<br>
+			Posti: {group-posts}<br>
 			Admins: {group-admin}
 		</p>
 	</div>
@@ -104,7 +104,7 @@
 				</li>
 				<!-- END BLOCK : g-poll-answers-node-->
 			</ol>
-			Balsojuši: {poll-totalvotes}<br />
+			Balsojuši: {poll-totalvotes}<br>
 			<!-- END BLOCK : g-poll-answers-->
 			<!-- START BLOCK : g-poll-questions-->
 			<form method="post" action="">
@@ -139,8 +139,8 @@
 
 		<h3>Statistika</h3>
 		<p style="font-size: 90%">
-			Biedri: {group-members}<br />
-			Posti: {group-posts}<br />
+			Biedri: {group-members}<br>
+			Posti: {group-posts}<br>
 			Admins: {group-admin}
 		</p>
 		<!-- START BLOCK : group-info-cancel-->
@@ -156,7 +156,7 @@
 			<fieldset>
 				<legend>Mainīt grupas īpašnieku</legend>
 				<p>
-					<label for="group-chown">Junā īpašnieka ID:</label><br />
+					<label for="group-chown">Junā īpašnieka ID:</label><br>
 					<input type="text" name="group-chown" id="group-chown" class="text number" value="" maxlength="10" />
 				</p>
 				<p>
@@ -169,7 +169,7 @@
 			<fieldset>
 				<legend>Dzēst grupu</legend>
 				<p>
-					<label for="group-delete">Ieraksti "jā":</label><br />
+					<label for="group-delete">Ieraksti "jā":</label><br>
 					<input type="text" name="group-delete" id="group-delete" class="text number" value="" maxlength="2" />
 				</p>
 				<p>
@@ -228,11 +228,11 @@
 			<legend>Labot grupas informāciju</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="edit-group-title">Nosaukums:</label><br />
+				<label for="edit-group-title">Nosaukums:</label><br>
 				<input type="text" name="edit-group-title" id="edit-group-title" class="text" value="{group-title}" maxlength="64" disabled="disabled" />
 			</p>
 			<p>
-				<label for="edit-group-text">Teksts:</label><br />
+				<label for="edit-group-text">Teksts:</label><br>
 				<textarea name="edit-group-text" id="edit-group-text" cols="94" rows="40" style="width: 60%; height: 700px">{group-text}</textarea>
 			</p>
 			<!-- START BLOCK : edit-group-av-->
@@ -241,12 +241,12 @@
 			</p>
 			<!-- END BLOCK : edit-group-av-->
 			<p>
-				<label for="edit-avatar">Grupas avatars:</label><br />
+				<label for="edit-avatar">Grupas avatars:</label><br>
 				<input type="file" class="long" name="edit-avatar" id="edit-avatar" />
 			</p>
 			<!-- START BLOCK : group-edit-category-->
 			<p>
-				<label for="edit-category_id">Kategorija:</label><br />
+				<label for="edit-category_id">Kategorija:</label><br>
 				<select name="edit-category_id" id="edit-category_id">
 					<!-- START BLOCK : select-category-->
 					<option value="{id}"{sel}>{title}</option>
@@ -256,7 +256,7 @@
 			<!-- END BLOCK : group-edit-category-->
 			<!-- START BLOCK : group-edit-interest-->
 			<p>
-				<label for="edit-interest_id">Interešu grupa:</label><br />
+				<label for="edit-interest_id">Interešu grupa:</label><br>
 				<select name="edit-interest_id" id="edit-interest_id">
 					<option value="0">--</option>
 					<!-- START BLOCK : select-interest-->
@@ -297,9 +297,9 @@
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<ul id="friend-list">
 		<!-- START BLOCK : members-node-->
-		<li class="{member-class}{has-postcount}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br />
+		<li class="{member-class}{has-postcount}"><a class="profile-link" href="/user/{member-id}"><img src="{avatar}" alt="" /><br>
                         <!-- START BLOCK : member-posts-->
-                        <span style="color:#333">Posti: {posts}</span><br />
+                        <span style="color:#333">Posti: {posts}</span><br>
                         <!-- END BLOCK : member-posts-->
 {member-nick}</a>
 			<!-- START BLOCK : member-delete-->
@@ -331,7 +331,7 @@
 		<fieldset>
 			<legend>Minibloga slēgšana</legend>
 			<p>
-				<label for="reason">Iemesls</label><br />
+				<label for="reason">Iemesls</label><br>
 				<input type="text" name="reason" id="reason" class="text" />
 			</p>
 			<input class="button danger" type="submit" name="submit-close" id="submit-close" value="Slēgt" />
@@ -349,11 +349,11 @@
 			<legend>Ielogoties</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="login-nick-inline">Niks:</label><br />
+				<label for="login-nick-inline">Niks:</label><br>
 				<input id="login-nick-inline" class="text" name="niks" type="text" />
 			</p>
 			<p>
-				<label for="login-pass-inline">Parole:</label><br />
+				<label for="login-pass-inline">Parole:</label><br>
 				<input id="login-pass-inline" class="text" name="parole" type="password" />
 			</p>
 			<p>
@@ -486,7 +486,7 @@
 							<input type="hidden" name="response-to" id="response-to" value="{id}" />
 							<input type="hidden" name="token" id="token" value="{token}" />
 							<!-- START BLOCK : resp-tools-->
-							<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br />
+							<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br>
 							<!-- END BLOCK : resp-tools-->
 							<textarea class="mb-textarea" tabindex="1" rows="5" cols="42" name="responseminiblog" id="responseminiblog"></textarea>
 							<p>
@@ -535,10 +535,10 @@
 		<fieldset>
 			<legend>Meklētājs</legend>
 			<p>
-				<label for="search-q">Meklējamais vārds vai frāze</label><br />
+				<label for="search-q">Meklējamais vārds vai frāze</label><br>
 				<input type="text" name="q" id="search-q" class="text" value="{qstr}" />
 				<!-- START BLOCK : form-search-mine-->
-				<br /><label class="checkbox"><input type="checkbox" name="mine" value="1"{mine-sel} /> meklēt tikai manis rakstīto</label><br />
+				<br><label class="checkbox"><input type="checkbox" name="mine" value="1"{mine-sel} /> meklēt tikai manis rakstīto</label><br>
 				<!-- END BLOCK : form-search-mine-->
 			</p>
 			<p>
@@ -595,7 +595,7 @@
 		<fieldset>
 			<legend>Izveidot jaunu tabu</legend>
 			<p>
-				<label for="tab-title">Nosaukums</label><br />
+				<label for="tab-title">Nosaukums</label><br>
 				<input class="text" type="text" id="tab-title" name="tab-title" maxlength="12" />
 			</p>
 			<p>
@@ -647,7 +647,7 @@
 	<!-- START BLOCK : polls_admin-success-->
 	<div class="form">
 		<p class="success">
-			Jautājums izveidots...<br />
+			Jautājums izveidots...<br>
 			Atbilžu varianti izveidoti...
 		</p>
 	</div>
@@ -658,47 +658,47 @@
 		<fieldset>
 			<legend>Grupas aptauja</legend>
 			<p>
-				<label for="new-poll-q">Aptaujas jautājums</label><br />
+				<label for="new-poll-q">Aptaujas jautājums</label><br>
 				<input type="text" class="title" name="new-poll-q" id="new-poll-q" />
 			</p>
 			<p>
-				<label for="new-poll-q">1. atbilde</label><br />
+				<label for="new-poll-q">1. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">2. atbilde</label><br />
+				<label for="new-poll-q">2. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">3. atbilde</label><br />
+				<label for="new-poll-q">3. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">4. atbilde</label><br />
+				<label for="new-poll-q">4. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">5. atbilde</label><br />
+				<label for="new-poll-q">5. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">6. atbilde</label><br />
+				<label for="new-poll-q">6. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">7. atbilde</label><br />
+				<label for="new-poll-q">7. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">8. atbilde</label><br />
+				<label for="new-poll-q">8. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">9. atbilde</label><br />
+				<label for="new-poll-q">9. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">10. atbilde</label><br />
+				<label for="new-poll-q">10. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>

@@ -3,11 +3,11 @@
 <form class="form" action="" method="post">
 	<fieldset>
 		<p>
-			<label for="title">Nosaukums:</label><br />
+			<label for="title">Nosaukums:</label><br>
 			<input type="text" class="title" name="title" />
 		</p>
 		<p>
-			<label for="content">Apraksts:</label><br />
+			<label for="content">Apraksts:</label><br>
 			<input type="text" class="text" name="content" />
 		</p>
 		<p>

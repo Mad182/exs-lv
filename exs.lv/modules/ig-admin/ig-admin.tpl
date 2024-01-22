@@ -4,7 +4,7 @@
 <form id="new-igame" class="form" action="{page-url}" method="post">
 	<fieldset>
 		<p>
-			<label for="newgame-date">Datums (GGGG-MM-DD):</label><br />
+			<label for="newgame-date">Datums (GGGG-MM-DD):</label><br>
 			<input type="text" class="text" name="newgame-date" id="newgame-date" value="" />
 		</p>
 		<p>
@@ -73,19 +73,19 @@
 		<p class="success">Priekšmets pievienots!</p>
 		<!-- END BLOCK : ig-newimage-success-->
 		<p>
-			<label for="newimage-title">Nosaukums (atbilde):</label><br />
+			<label for="newimage-title">Nosaukums (atbilde):</label><br>
 			<input type="text" class="text" name="newimage-title" id="newimage-title" value="" />
 		</p>
 		<p>
-			<label for="newimage-image">Attēls:</label><br />
+			<label for="newimage-image">Attēls:</label><br>
 			<input type="text" class="text" name="newimage-image" id="newimage-image" value="" />
 		</p>
 		<p>
-			<label for="newimage-hint">Hints:</label><br />
+			<label for="newimage-hint">Hints:</label><br>
 			<input type="text" class="text" name="newimage-hint" id="newimage-hint" value="" />
 		</p>
 		<p>
-			<label for="newimage-dif">Grūtības pakāpe:</label><br />
+			<label for="newimage-dif">Grūtības pakāpe:</label><br>
 			<select class="text" name="newimage-dif" id="newimage-dif">
 				<option value="1">Viegls</option>
 				<option value="2" selected="selected">Vidējs</option>

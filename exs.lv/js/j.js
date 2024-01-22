@@ -411,20 +411,28 @@ $(document).ready(function($) {
 		var clicked = $(this);
 
 		var tabs = {
-			'last-sidebar-tab': {tab1: 'events', tab2: 'pages', tab3: 'gallery'},
+			'last-sidebar-tab': {tab1: 'pages', tab3: 'gallery'},
 			'last-facts-tab': {tab1: 'fact-all', tab2: 'fact-rs'},
 			'last-mbs-tab': {tab1: 'all', tab2: 'friends', tab3: 'music'},
 			'last-rsnews-tab' : {tab1: 'runescape', tab2: 'oldschool'}
 		};
 
 		$.each(tabs, function(position, values) {
+			var i = 0;
 			$.each(values, function(key, tab) {
+
 				if (clicked.hasClass('remember-' + tab)) {
-					$.cookie(position, tab, {
-						expires: 7,
-						path: '/'
-					});
+					if(i == 0) {
+						$.removeCookie(position, { path: '/' });
+					} else {
+						$.cookie(position, tab, {
+							expires: 7,
+							path: '/'
+						});
+					}
 				}
+
+				i++;
 			});
 		});
 

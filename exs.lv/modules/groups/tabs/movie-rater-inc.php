@@ -44,10 +44,10 @@ if (!empty($series)) {
 		</td>
 		<td class="mr-inf">
 			<strong>' . $s->title . '</strong>
-			<br />' . $s->title_lv . '
-			<br />
-			<br />Gads: ' . $s->year . '
-			<br />IMDB: ' . $s->rating . '
+			<br>' . $s->title_lv . '
+			<br>
+			<br>Gads: ' . $s->year . '
+			<br>IMDB: ' . $s->rating . '
 		</td>';
 
 		/* vertejuma pievienošana */

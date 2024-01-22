@@ -37,7 +37,7 @@
 <div class="clearfix"></div>
 <div class="report-response"></div>
 
-<script type="text/javascript">
+<script>
     $(document).ready(function($) {
         /**
          *  Nospiežot uz "submit" pogas, iesniegts sūdzību.

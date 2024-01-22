@@ -174,7 +174,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 					$tpl->assign([
 						'hint' => 'Tu uzvarēji un ieguvi ' . $points . ' punktus ;) atbilde ir:',
-						'guess' => $outstr . '<br /><br /><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
+						'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
 						'img' => $wrongs,
 					]);
 
@@ -205,7 +205,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 				$tpl->assign([
 					'hint' => $strs[0] . ' atbilde ir:',
-					'guess' => $outstr . '<br /><br /><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
+					'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
 					'img' => 10,
 				]);
 

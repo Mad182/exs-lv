@@ -41,7 +41,7 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 		}
 
 		if(
-			stristr($body, 'fano.in') || 
+			stristr($body, 'fano') || 
 			stristr($body, 'ielūgum') || 
 			stristr($body, 'ielugum') || 
 			stristr($body, 'ieluugum') || 
@@ -58,6 +58,8 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 			stristr($body, 'pimp') || 
 			stristr($body, 'pipel') || 
 			stristr($body, 'sūkā') || 
+			stristr($body, 'ērkš') || 
+			stristr($body, 'erksk') || 
 			stristr($body, 'balinātāju') || 
 			stristr($body, 'kys') || 
 			stristr($body, 'mauka') || 
@@ -313,7 +315,7 @@ if (!empty($inprofile)) {
 				if (isset($_GET['single'])) {
 
 					//noindex
-					if($record->private || $record->noindex || (strlen(strip_tags($record->text)) < 70 && $record->posts < 5 && $record->id != 2389427)) {
+					if($record->private || $record->noindex || (strlen(strip_tags($record->text)) < 60 && $record->posts < 4 && $record->id != 2389427)) {
 						$robotstag = ['noindex', 'nofollow'];
 					}
 
@@ -525,7 +527,7 @@ if (!empty($inprofile)) {
 			}
 			if (!empty($record->closed_by)) {
 				$closer = get_user($record->closed_by);
-				$tpl->assign('by', '<br />Aizslēdza: ' . usercolor($closer->nick, $closer->level, false, $record->closed_by));
+				$tpl->assign('by', '<br>Aizslēdza: ' . usercolor($closer->nick, $closer->level, false, $record->closed_by));
 			}
 		}
 		// paziņojums, ka, lai komentētu, jāautorizējas

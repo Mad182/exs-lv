@@ -34,8 +34,8 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="{static-server}/js/masonry.pkgd.min.js"></script>
-	<script type="text/javascript" >
+	<script src="{static-server}/js/masonry.pkgd.min.js"></script>
+	<script >
 		$(window).load(function() {
 			/* masonry priekš steam lapas, uztaisa glītu layoutu  */
 			var $container = $('#steam-online');

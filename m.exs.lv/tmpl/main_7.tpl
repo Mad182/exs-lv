@@ -25,7 +25,7 @@
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
 		<!-- START BLOCK : tinymce-enabled-->
-        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
 		<script>
 			tinymce.init({
 				selector: "textarea",
@@ -138,9 +138,7 @@
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		  ga('create', 'UA-4190387-2', 'auto');
-		  ga('send', 'pageview');
+		  ga('create', 'UA-4190387-2', 'auto');ga('set','anonymizeIp',true);ga('send', 'pageview');
 		</script>
 
 	</body>

@@ -22,7 +22,7 @@
 			<div id="autosave-status"></div>
 			<!-- START BLOCK : notepad-title-->
 			<p>
-				<label>Nosaukums:</label><br />
+				<label>Nosaukums:</label><br>
 				<input type="text" name="title" value="" class="text" />
 			</p>
 			<!-- END BLOCK : notepad-title-->

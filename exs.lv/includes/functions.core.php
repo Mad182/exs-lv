@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  functions.core.php
  *
@@ -35,21 +36,21 @@ function as_json($content) {
  *  Atgriezīs pareizu apakšprojekta $lang vērtību.
  */
 function get_lang($get_super_lang = false) {
-	
+
 	$tmp_lang = get_global('lang', 1);
-	
+
 	// uzreiz atgriezīs atvērtā projekta vērtību, nepārbaudot, vai
 	// projektā ir definēti "apakšprojekti"
 	if ($get_super_lang) {
 		return $tmp_lang;
 	}
-	
+
 	// android|ios.exs.lv vienmēr būs 2 vai 4, lai kādu projektu caur to skatītu,
 	// bet pareizai datu atlasei jāzina tieši skatītā apakšprojekta vērtība
 	if ($tmp_lang === 2 || $tmp_lang === 4) {
 		$tmp_lang = get_global('api_lang', 1);
 	}
-	
+
 	return $tmp_lang;
 }
 
@@ -87,32 +88,32 @@ function h($str) {
  */
 function fetch_tpl($filename = null, $dirname = null) {
 	global $category;
-    
-    $filename = trim((string)$filename);
-    $dirname = trim((string)$dirname);
 
-    // nenorādot nosaukumu, meklēs failu, kuram nosaukumā ir aktīvā moduļa
-    // nosaukums, bet tam nepieciešams parametrs no sadaļas
+	$filename = trim((string)$filename);
+	$dirname = trim((string)$dirname);
+
+	// nenorādot nosaukumu, meklēs failu, kuram nosaukumā ir aktīvā moduļa
+	// nosaukums, bet tam nepieciešams parametrs no sadaļas
 	if (is_null($filename) && empty($category->module)) return null;
 
-    // pēc noklusējuma failu meklēs moduļa mapē ar moduļa nosaukumu
-    $dir = 'modules/'.$category->module;
-    $file = $category->module;
-    
-    // custom vērtības...
-    if (!empty($filename)) {
-        $file = $filename;
-    }
-    if (!empty($dirname)) {
-        $dir = $dirname;
-        if ($dir !== 'tmpl') $dir = 'modules/'.$dir;
-    }
-    
-    if (!file_exists(CORE_PATH.'/'.$dir.'/'.$file.'.tpl')) {
-        return null;
-    }
+	// pēc noklusējuma failu meklēs moduļa mapē ar moduļa nosaukumu
+	$dir = 'modules/' . $category->module;
+	$file = $category->module;
 
-	$tpl = new TemplatePower(CORE_PATH.'/'.$dir.'/'.$file.'.tpl');
+	// custom vērtības...
+	if (!empty($filename)) {
+		$file = $filename;
+	}
+	if (!empty($dirname)) {
+		$dir = $dirname;
+		if ($dir !== 'tmpl') $dir = 'modules/' . $dir;
+	}
+
+	if (!file_exists(CORE_PATH . '/' . $dir . '/' . $file . '.tpl')) {
+		return null;
+	}
+
+	$tpl = new TemplatePower(CORE_PATH . '/' . $dir . '/' . $file . '.tpl');
 	$tpl->prepare();
 
 	return $tpl;
@@ -140,8 +141,8 @@ function update_karma($userid, $force_award = false) {
 		$awards = $db->get_var("SELECT count(*) FROM `autoawards` WHERE `user_id` = '$user->id'");
 		$days = ceil((time() - strtotime($user->date)) / 60 / 60 / 24);
 		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$user->id' AND removed = '0'") +
-				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$user->id' AND removed = '0'") +
-				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$user->id'");
+			$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$user->id' AND removed = '0'") +
+			$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$user->id'");
 		$rating = ceil(($tvotes->avg - 3) * $tvotes->count / 10) + ceil(($ivotes->avg - 3) * $ivotes->count / 20);
 		if ($rating > 100) {
 			$rating = 100;
@@ -192,20 +193,25 @@ function push($action, $avatar = '', $multi = '', $private = 0, $group_id = null
  */
 function userlog($user, $action, $avatar = '', $multi = '', $private = 0, $group_id = null) {
 	global $db;
+
+	if (empty($user)) {
+		return false;
+	}
+
 	$lang = get_lang();
 
 	if (!empty($multi)) {
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang' LIMIT 2");
 	}
 
-	if($group_id) {
+	if ($group_id) {
 		$group_id = intval($group_id);
 	} else {
 		$group_id = null;
 	}
 
 	$db->query("INSERT INTO `userlogs` (`time`,`user`,`avatar`,`action`,`multi`,`lang`,`private`,`group_id`) 
-				VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang','" . intval($private) . "','". $group_id."')");
+				VALUES ('" . time() . "','" . intval($user) . "','" . sanitize($avatar) . "','" . sanitize($action) . "','$multi','$lang','" . intval($private) . "','" . $group_id . "')");
 	return true;
 }
 
@@ -340,14 +346,13 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 					$class = 3;
 
 					//hide text for unauthorized users if the group has hide_intro = 1
-					if(!$auth->ok || $auth->id != $user_id) {
+					if (!$auth->ok || $auth->id != $user_id) {
 						$gr = $db->get_var("SELECT `groupid` FROM `miniblog` WHERE `id` = '$notify->foreign_key'");
 						$hide = $db->get_row("SELECT `hide_intro`, `title` FROM `clans` WHERE `id` = '$gr'");
-						if(!empty($hide->hide_intro)) {
+						if (!empty($hide->hide_intro)) {
 							$notify->info = $hide->title;
 						}
 					}
-
 				}
 				$out .= '<li class="notification-' . $class . '"><a ';
 				if (!empty($notify->info) && $notify->info != 'twitter') {
@@ -423,7 +428,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 			if (!empty($online_users['androidusers']) && in_array($nick, $online_users['androidusers'])) {
 				$star = '<span class="lb">*</span>';
 			} else if (!empty($online_users['iosusers']) && in_array($nick, $online_users['iosusers'])) {
-                // pagaidām krāsa sakritīs ar android, lai neizceļas, kamēr lietotne tiešām nav gatava
+				// pagaidām krāsa sakritīs ar android, lai neizceļas, kamēr lietotne tiešām nav gatava
 				$star = '<span class="lb">*</span>';
 			} else if (!empty($online_users['mobileusers']) && in_array($nick, $online_users['mobileusers'])) {
 				$star = '<span class="g">*</span>';
@@ -467,7 +472,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 function userlink($user) {
 
 	//ja padots id, atrodam lietotāja datus
-	if(is_numeric($user)) {
+	if (is_numeric($user)) {
 		$user = get_user($user);
 	}
 
@@ -529,18 +534,18 @@ function im_cat_mod($id = null) {
 }
 
 function textlimit($string, $setlength, $replacer = '...') {
-	$string = strip_tags(str_replace(['<li>', '</li>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"], ' ', $string));
+	$string = strip_tags(str_replace(['<li>', '</li>', '<br>', '<p>', '</p>', '&nbsp;', "\n", "\r"], ' ', $string));
 
 	//labojam shitty rakstības stilu :)
 	$string = str_replace([',', ' ,', ' : ', ' . '], [', ', ',', ': ', '. '], $string);
 
 	//aizvāc dubultos space un space no teksta galiem
-	$string = preg_replace('%\s+%u', ' ', $string); 
+	$string = preg_replace('%\s+%u', ' ', $string);
 	$string = trim(preg_replace('/\s+/', ' ', $string));
 
 	$length = $setlength;
 	if ($length < strlen($string)) {
-		while (($string{$length} != " ") AND ( $length > 0)) {
+		while (($string[$length] != " ") and ($length > 0)) {
 			$length--;
 		}
 		if ($length == 0)
@@ -695,6 +700,7 @@ function get_sitelist($table) {
 			$m->set($storage, $$storage, 3600);
 		}
 	}
+
 	return $$storage;
 }
 
@@ -729,27 +735,27 @@ function createPassword($length) {
 	$i = 0;
 	$password = "";
 	while ($i <= $length) {
-		$password .= $chars{mt_rand(0, strlen($chars))};
+		$password .= $chars[mt_rand(0, strlen($chars))];
 		$i++;
 	}
 	return $password;
 }
 
 function createRandomString($length) {
-    $chs = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $chs_len = strlen($chs);
-    $str = '';
-    for ($i = 0; $i < $length; $i++) {
-        $str .= $chs[rand(0, $chs_len - 1)];
-    }
-    return $str;
+	$chs = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$chs_len = strlen($chs);
+	$str = '';
+	for ($i = 0; $i < $length; $i++) {
+		$str .= $chs[rand(0, $chs_len - 1)];
+	}
+	return $str;
 }
 
 function get_between($text, $s1, $s2) {
 	$mid_url = "";
 	$pos_s = strpos($text, $s1);
 	$pos_e = strpos($text, $s2);
-	for ($i = $pos_s + strlen($s1); ( ( $i < ($pos_e)) && $i < strlen($text)); $i++) {
+	for ($i = $pos_s + strlen($s1); (($i < ($pos_e)) && $i < strlen($text)); $i++) {
 		$mid_url .= $text[$i];
 	}
 	return $mid_url;
@@ -761,8 +767,7 @@ function time_ago($tm) {
 	$pds = ['sekundēm', 'minūtēm', 'stundām', 'dienām', 'nedēļām', 'mēnešiem', 'gadiem'];
 	$pd = ['sekundes', 'minūtes', 'stundas', 'dienas', 'nedēļas', 'mēneša', 'gada'];
 	$lngh = [1, 60, 3600, 86400, 604800, 2630880, 31570560];
-	for ($v = sizeof($lngh) - 1; ($v >= 0) && (($no = $dif / $lngh[$v]) <= 1); $v--)
-		;
+	for ($v = sizeof($lngh) - 1; ($v >= 0) && (($no = $dif / $lngh[$v]) <= 1); $v--);
 	if ($v < 0) {
 		$v = 0;
 		$_tm = $cur_tm - ($dif % $lngh[$v]);
@@ -784,8 +789,7 @@ function time_ago_m($tm) {
 	$dif = $cur_tm - $tm;
 	$pd = ['s', 'm', 'h', 'd', 'n', 'mēn', 'g'];
 	$lngh = [1, 60, 3600, 86400, 604800, 2630880, 31570560];
-	for ($v = sizeof($lngh) - 1; ($v >= 0) && (($no = $dif / $lngh[$v]) <= 1); $v--)
-		;
+	for ($v = sizeof($lngh) - 1; ($v >= 0) && (($no = $dif / $lngh[$v]) <= 1); $v--);
 	if ($v < 0) {
 		$v = 0;
 		$_tm = $cur_tm - ($dif % $lngh[$v]);
@@ -812,8 +816,8 @@ function date_lv($date, $time = '') {
 function display_time($time, $include_hours = true) {
 	if (!$time) {
 		$out = '';
-	} elseif($include_hours) {
-	
+	} elseif ($include_hours) {
+
 		if ($time >= strtotime('today')) {
 			$out = 'Šodien, ' . date('G:i', $time);
 		} elseif ($time >= strtotime('yesterday')) {
@@ -821,9 +825,8 @@ function display_time($time, $include_hours = true) {
 		} else {
 			$out = date('d.m.Y. H:i', $time);
 		}
-	
 	} else {
-	
+
 		if ($time >= strtotime('today')) {
 			$out = 'Šodien, ' . date('G:i', $time);
 		} elseif ($time >= strtotime('yesterday')) {
@@ -831,9 +834,8 @@ function display_time($time, $include_hours = true) {
 		} else {
 			$out = date('d.m.Y', $time);
 		}
-	
 	}
-	
+
 	return $out;
 }
 
@@ -877,7 +879,7 @@ function strTime($s) {
 
 function mb_get_title($body = 'Bez nosaukuma') {
 	$body = youtube_title($body);
-	$body = strip_tags(str_replace(['<br/>', '<br>', '<br />', '<p>', '</p>', '&nbsp;', "\n", "\r"], ' ', $body));
+	$body = strip_tags(str_replace(['<br/>', '<br>', '<br>', '<p>', '</p>', '&nbsp;', "\n", "\r"], ' ', $body));
 	return $body;
 }
 
@@ -1000,9 +1002,9 @@ function get_cat($id, $force = false) {
 		} else {
 			$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
 		}
-        if (empty($data)) {
-            return null;
-        }
+		if (empty($data)) {
+			return null;
+		}
 		$data->mods = [];
 		if ($mods = $db->get_results("SELECT `user_id` FROM `cat_moderators` WHERE `category_id` = '$data->id'")) {
 			foreach ($mods as $mod) {
@@ -1085,19 +1087,19 @@ function get_footer_mb($force = false) {
 			$html .= '<ul class="internal-links">';
 			$i = 1;
 			foreach ($latest as $late) {
-				if($i > 4) {
+				if ($i > 4) {
 					continue;
 				}
 				$late->text = trim(mb_get_title($late->text));
 				$url_title = mkslug(textlimit($late->text, 36, ''));
-				if(!empty($late->text)) {
+				if (!empty($late->text)) {
 					$html .= '<li><a href="/say/' . $late->author . '/' . $late->id . '-' . $url_title . '">' . textlimit($late->text, 36, '') . '</a></li>';
 					$i++;
 				}
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_mb_' . $lang, $html, 180);
+		$m->set('fmb_' . $lang, $html, 600);
 	}
 	return $html;
 }
@@ -1117,7 +1119,7 @@ function get_footer_topics($force = false) {
 			}
 			$html .= '</ul>';
 		}
-		$m->set('f_topics_' . $lang, $html, 180);
+		$m->set('ftpc_' . $lang, $html, 1800);
 	}
 	return $html;
 }
@@ -1146,7 +1148,7 @@ function get_online($force = false) {
 			'onlineusers' => [],
 			'mobileusers' => [],
 			'androidusers' => [],
-            'iosusers' => []
+			'iosusers' => []
 		];
 		if ($lastseen) {
 			foreach ($lastseen as $usr) {
@@ -1160,7 +1162,7 @@ function get_online($force = false) {
 				}
 			}
 		}
-		$m->set('onlineusers', $data, 10);
+		$m->set('onlineusers', $data, 12);
 	}
 	return $data;
 }
@@ -1190,7 +1192,7 @@ function get_online_list($force = false) {
 				$data .= '<a href="/user/' . $usr->id . '">' . usercolor($usr->nick, $usr->level, true, $usr->id) . '</a> ';
 			}
 		}
-		$m->set('onlinelist-' . $lang, $data, 10);
+		$m->set('onlinelist-' . $lang, $data, 12);
 	}
 	return $data;
 }
@@ -1276,17 +1278,17 @@ function pager($total = 0, $skip = 20, $end = 20, $url = '?skip=', $ajax = false
 			}
 			if ($total / $end < 10 || $page_number < 4 || $page_number > $total / $end - 2 || $startnext === $skip || $startnext === $skip + $end || $startnext === $skip - $end) {
 				if ($page_number != 1) {
-					$pager_numeric .='<span>-</span> ';
+					$pager_numeric .= '<span>-</span> ';
 				}
 				$pager_numeric .= '<a href="' . $url . $startnext . '"' . $class . '>' . $page_number . '</a> ';
 			} elseif ($startnext === $skip + $end * 2 || $startnext === $skip - $end * 2) {
 				if ($page_number !== 1) {
-					$pager_numeric .='<span>-</span> ';
+					$pager_numeric .= '<span>-</span> ';
 				}
 				$pager_numeric .= ' ... ';
 			} elseif ($page_number === 4 && $skip / $end < 5) {
 				if ($page_number !== 1) {
-					$pager_numeric .='<span>-</span> ';
+					$pager_numeric .= '<span>-</span> ';
 				}
 				$pager_numeric .= ' ... ';
 			}
@@ -1346,7 +1348,7 @@ function filterb4db($text) {
 	];
 
 	if (strpos($text, 'code') === false) {
-		$text = str_replace('<br /><br />', "\n\n", $text);
+		$text = str_replace('<br><br>', "\n\n", $text);
 	}
 
 	$text = str_replace($shit, '', $text);
@@ -1358,24 +1360,23 @@ function filterb4db($text) {
 	$text = str_replace('!!!!', '!!!', $text);
 
 
-        if(stripos($text, 'http://') !== false) {
+	if (stripos($text, 'http://') !== false) {
 
-                //force https for known supported sites
-                $https_sites = get_sitelist('https');
-                foreach ($https_sites as $site) {
-                        if (strpos($text, $site) !== false) {
-                                $text = str_ireplace('http://' . $site, 'https://' . $site, $text);
-                        } elseif(stripos($site, '*') !== false) {
+		//force https for known supported sites
+		$https_sites = get_sitelist('https');
+		foreach ($https_sites as $site) {
+			if (strpos($text, $site) !== false) {
+				$text = str_ireplace('http://' . $site, 'https://' . $site, $text);
+			} elseif (stripos($site, '*') !== false) {
 
-                                //wildcard
-                                $check = str_replace('*', '', $site);
-                                if (strpos($text, $check) !== false) {
-                                        $text = preg_replace('/http:\/\/([a-zA-Z0-9]+)'.$check.'/', 'https://$1'.$check, $text);
-                                }
-
-                        }
-                }
-        }
+				//wildcard
+				$check = str_replace('*', '', $site);
+				if (strpos($text, $check) !== false) {
+					$text = preg_replace('/http:\/\/([a-zA-Z0-9]+)' . $check . '/', 'https://$1' . $check, $text);
+				}
+			}
+		}
+	}
 
 
 	return $text;
@@ -1399,9 +1400,9 @@ function htmlpost2db($text, $sanitize = true) {
 	$config->set('AutoFormat.AutoParagraph', true);
 	$config->set('AutoFormat.RemoveSpansWithoutAttributes', true);
 	$config->set('AutoFormat.RemoveEmpty', true);
-    // atribūts fancybox attēlu grupēšanai (to pievieno BB kodu klase)
-    $def = $config->getHTMLDefinition(true);
-    $def->addAttribute('a', 'data-fancybox-group', 'Text');
+	// atribūts fancybox attēlu grupēšanai (to pievieno BB kodu klase)
+	$def = $config->getHTMLDefinition(true);
+	$def->addAttribute('a', 'data-fancybox-group', 'Text');
 	$purifier = new HTMLPurifier($config);
 	$text = $purifier->purify($text);
 	$text = str_replace('href="http://' . $_SERVER['HTTP_HOST'] . '/', 'href="/', $text);
@@ -1409,11 +1410,11 @@ function htmlpost2db($text, $sanitize = true) {
 	$text = str_replace(' rel="nofollow"', '', $text);
 	$text = str_replace('<code>', '<code class="prettyprint">', $text);
 	$text = str_replace('<pre>', '<pre class="prettyprint">', $text);
-	
-	if($sanitize) {
+
+	if ($sanitize) {
 		$text = sanitize($text);
 	}
-	
+
 	return $text;
 }
 
@@ -1482,7 +1483,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 		$level++;
 		foreach ($data[$key] as $val) {
 
-			if(!empty($val->private) && !$auth->ok) {
+			if (!empty($val->private) && !$auth->ok) {
 				continue;
 			}
 
@@ -1534,13 +1535,15 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			//labot (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && !$intro && ($val->date > time() - 1800 || ($auth->level == 2 && $val->author == $auth->id && $val->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
-					(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))) {
+			if (
+				$val->mb_removed == 0 && !$intro && ($val->date > time() - 1800 || ($auth->level == 2 && $val->author == $auth->id && $val->date > time() - 86400) || $auth->level == 1 || $auth->id == 115) &&
+				(im_mod() || (!$closed && $auth->karma >= $min_post_edit && $val->author == $auth->id))
+			) {
 				$out .= ' <a href="/edit/' . $val->id . '" class="post-button post-edit" title="Labot komentāru">labot</a>';
 			}
 
 			//dzēst (ja ieraksts jau nav dzēsts)
-			if ($val->mb_removed == 0 && !$intro && $auth->ok === true && ( (!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400) )) {
+			if ($val->mb_removed == 0 && !$intro && $auth->ok === true && ((!$closed && $auth->id == $val->author && $auth->level == 3 && $val->date > time() - 1800) || (im_mod() && $val->date > time() - 86400))) {
 				$out .= ' <a href="/delete/' . $val->id . '?token=' . make_token('delmb') . '" class="post-button post-delete delete-fast" title="Dzēst komentāru">dzēst</a>';
 			}
 
@@ -1565,7 +1568,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				}
 
 				$out .= '<div class="post-content"';
-				if($val->hidden) {
+				if ($val->hidden) {
 					$out .= ' style="display:none"';
 				}
 				$out .= '>' . add_smile($val->text) . '</div>';
@@ -1756,7 +1759,7 @@ function get_latest_posts() {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
 
-			$out .= '<li><a href="' . $url . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
+			$out .= '<li><a href="' . $url . $skip . '"><img src="/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
 
 			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
 
@@ -1765,7 +1768,6 @@ function get_latest_posts() {
 			} else {
 				$out .= $prefix . $late->title . '&nbsp;[<span class="r">' . $late->posts . '</span>]</a></li>';
 			}
-
 		}
 
 		$out .= '</ul><p class="core-pager ajax-pager">';
@@ -1790,8 +1792,8 @@ function get_latest_posts() {
 
 function get_latest_images() {
 	global $db, $auth, $lang, $img_server;
-    
-    $lim = ($lang === 9) ? 8 : 15; // #rs
+
+	$lim = ($lang === 9) ? 8 : 15; // #rs
 
 	if (isset($_GET['pg'])) {
 		$skip = $lim * intval($_GET['pg']);
@@ -1894,8 +1896,8 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	} else {
 		$skip = 0;
 	}
-	
-	if(!empty($group_id)) {
+
+	if (!empty($group_id)) {
 		$groupquery = "`miniblog`.`groupid` = " . intval($group_id);
 	} else {
 		if ($auth->level == 1) {
@@ -1919,17 +1921,17 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$groupquery = implode(' OR ', $usergroups);
 		}
 	}
-	
+
 	//liedz iespēju skatīt grupu sarakstes tiem, uz kuriem tās neattiecas
-	if(!empty($group_id)) {
+	if (!empty($group_id)) {
 		$group = $db->get_row("SELECT `id`, `public`, `owner` FROM `clans` WHERE `id` = '" . intval($group_id) . "'");
-		if(empty($group) || (!$group->public && !$auth->ok)) {
+		if (empty($group) || (!$group->public && !$auth->ok)) {
 			return '';
 		}
-		
-		if(!$group->public) {
+
+		if (!$group->public) {
 			$member = $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' AND `approve` = 1");
-			if(empty($member) && $auth->id != $group->owner && $auth->level != 1) {
+			if (empty($member) && $auth->id != $group->owner && $auth->level != 1) {
 				return '';
 			}
 		}
@@ -1969,7 +1971,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	if (!$auth->ok) {
 		$priv = ' AND `miniblog`.`private` = 0 ';
 	}
-    $limit = ($lang === 9) ? 5 : 6; // #rs
+	$limit = ($lang === 9) ? 5 : 6; // #rs
 
 	$mbs = $db->get_results("SELECT
 		`miniblog`.`id` AS `id`,
@@ -1999,7 +2001,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	ORDER BY
 		`miniblog`.`bump`
 	DESC LIMIT $skip, $limit");
-	
+
 
 	if ($mbs) {
 		foreach ($mbs as $mb) {
@@ -2022,11 +2024,11 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			}
 
 			if ($mb->groupid != 0) {
-			
-				if(empty($group_id)) {
+
+				if (empty($group_id)) {
 					$spec = ' class="group"';
 				}
-                
+
 				$group = $db->get_row("SELECT `title`,`avatar`,`strid` FROM `clans` WHERE `id` = '$mb->groupid'");
 
 				if ($group->avatar && empty($group_id)) {
@@ -2074,7 +2076,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$out .= '<li' . $spec . '><a href="' . $url . '">';
 			$out .= '<img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
 			$out .= '<span class="entry"><span class="author">' . h($mb->nick) . '</span> ';
-            $out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
+			$out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
 			if ($lang === 9) { // #rs
 				$out .= $mb->text . '&nbsp;(' . $mb->posts . ')';
 			} else {
@@ -2089,9 +2091,9 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	if ($tab === 'friends') {
 		$tablink = 'friends';
 	}
-	
+
 	$grouplink = '';
-	if(!empty($group_id)) {
+	if (!empty($group_id)) {
 		$grouplink = '&amp;group=' . intval($group_id);
 	}
 
@@ -2138,6 +2140,11 @@ function update_stats($category_id) {
 
 function post_mb($post) {
 	global $db, $auth, $lang;
+
+
+	if (!$auth->id) {
+		return $auth->logout();
+	}
 
 	$default = [
 		'groupid' => 0,
@@ -2194,18 +2201,14 @@ function post_mb($post) {
 		}
 	}
 
-	if(!empty($post['groupid'])) {
-		$user_group_posts = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = ".intval($post['groupid'])." AND `author` = ".intval($auth->id)." AND `removed` = 0");
-		$db->query("UPDATE `clans_members` SET `posts` = " . intval($user_group_posts) . " WHERE `user` = ".intval($auth->id)." AND `clan` = ".intval($post['groupid']));
+	if (!empty($post['groupid'])) {
+		$user_group_posts = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = " . intval($post['groupid']) . " AND `author` = " . intval($auth->id) . " AND `removed` = 0");
+		$db->query("UPDATE `clans_members` SET `posts` = " . intval($user_group_posts) . " WHERE `user` = " . intval($auth->id) . " AND `clan` = " . intval($post['groupid']));
 	}
 
 	update_karma($post['author']);
 
 	return $return;
-}
-
-function pwd($pwd) {
-	return hash('sha256', $pwd . 'hLaYVQ7TjapIBS8QWxf7jAn8eDKksq5LuCUrJ');
 }
 
 function human_filesize($bytes, $decimals = 2) {
@@ -2219,7 +2222,7 @@ function human_filesize($bytes, $decimals = 2) {
  */
 function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 	global $auth, $img_server;
-    
+
 	if (empty($auth->mobile) || $ignore_mobile) {
 		$path = 'medium';
 		$real_path = 'useravatar';
@@ -2264,13 +2267,13 @@ function remake_thb($large, $thb) {
 	$thb = CORE_PATH . '/' . $thb;
 	$large = CORE_PATH . '/' . $large;
 	$size = 72;
-	if(file_exists($thb)) {
+	if (file_exists($thb)) {
 		$thb_size = getimagesize($thb);
 		if ($thb_size[0] != $size) {
 			exec("convert " . $large . " -resize '" . $size . "x" . $size . "^' -gravity center -crop " . $size . "x" . $size . "+0+0 +repage -strip " . $thb);
 		}
-	} elseif(file_exists($large)) {
-			exec("convert " . $large . " -resize '" . $size . "x" . $size . "^' -gravity center -crop " . $size . "x" . $size . "+0+0 +repage -strip " . $thb);
+	} elseif (file_exists($large)) {
+		exec("convert " . $large . " -resize '" . $size . "x" . $size . "^' -gravity center -crop " . $size . "x" . $size . "+0+0 +repage -strip " . $thb);
 	}
 }
 
@@ -2349,7 +2352,7 @@ function profile_menu($user, $active, $title, $action = null) {
 		set_action($user->nick . ' ' . $action);
 	}
 
-	if($user->deleted) {
+	if ($user->deleted) {
 
 		$tpl->newBlock('profile-menu-deleted');
 
@@ -2359,7 +2362,6 @@ function profile_menu($user, $active, $title, $action = null) {
 		]);
 
 		$page_title = 'Dzēsts lietotājs ' . $title;
-
 	} else {
 		$tpl->newBlock('profile-menu');
 
@@ -2373,7 +2375,6 @@ function profile_menu($user, $active, $title, $action = null) {
 
 		$page_title = $user->nick . ' ' . $title;
 	}
-
 }
 
 /**
@@ -2456,9 +2457,8 @@ function lastfm_update_tracks($user_id) {
 		$i = 0;
 		foreach ($tracks as $track) {
 
-			if($i < 20) {
+			if ($i < 20) {
 				$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_medium`, `created`) VALUES ($user->id, '" . sanitize($track['name']) . "', '" . sanitize($track['mbid']) . "', '" . sanitize($track['url']) . "', " . intval($track['date']) . ", '" . sanitize($track['artist']['name']) . "', '" . sanitize($track['artist']['mbid']) . "', '" . sanitize($track['album']['name']) . "', '" . sanitize($track['album']['mbid']) . "', '" . sanitize($track['images']['medium']) . "', NOW())");
-
 			}
 
 			$i++;
@@ -2589,16 +2589,17 @@ function get_game_monitor($url, $force = false) {
  */
 function send_email($to, $subject, $content) {
 
-	if(empty($to)) {
+	if (empty($to)) {
 		return false;
 	}
 
 	//suta e-pastu
-	require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
+	//require_once(LIB_PATH . '/swiftmailer/lib/swift_required.php');
 
 	global $smtp_hostname, $smtp_port, $smtp_encryption, $smtp_account, $smtp_password, $lang;
 
-	$transport = Swift_SmtpTransport::newInstance($smtp_hostname, $smtp_port, $smtp_encryption)->setUsername($smtp_account)->setPassword($smtp_password);
+	$transport = new Swift_SmtpTransport($smtp_hostname, $smtp_port, $smtp_encryption);
+	$transport->setUsername($smtp_account)->setPassword($smtp_password);
 
 	//load email template
 	$tpl = new TemplatePower(CORE_PATH . '/tmpl/email.tpl');
@@ -2609,8 +2610,9 @@ function send_email($to, $subject, $content) {
 		'protocol' => get_protocol($lang)
 	]);
 
-	$mailer = Swift_Mailer::newInstance($transport);
-	$message = Swift_Message::newInstance()->setCharset('UTF-8');
+	$mailer = new Swift_Mailer($transport);
+	$message = new Swift_Message();
+	$message->setCharset('UTF-8');
 	$message->setSubject($subject);
 	$message->setFrom(['info@exs.lv' => ucfirst($_SERVER['HTTP_HOST']) . ' kopiena']);
 	$message->setTo($to);
@@ -2629,13 +2631,13 @@ function deny_proxies() {
 
 	/* pārbauda vai lietotājs neizmanto tor */
 	if ($auth->is_tor_exit()) {
-		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
+		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br>Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
 		redirect();
 	}
 
 	/* ja nav ieslēgts debug (lokāla testēšana) vai lietotājs nenāk caur cloudflare, neļaujam reģistrēties */
 	/*if(!$debug && empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br />Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
+		set_flash('Atvaino, piekļuve šai portāla sadaļai no tavas IP adreses šobrīd nav iespējama!<br>Ja uzskati, ka tas noticis kļūdas dēļ, sazinies ar info@exs.lv, norādot IP adresi, izmantoto pārlūkprogrammu un ko tieši mēģini darīt.', 'error');
 		redirect();
 	}*/
 }
@@ -2645,13 +2647,13 @@ function deny_proxies() {
  */
 function get_asn($ip) {
 	global $m;
-	if(strlen($ip) <5) {
+	if (strlen($ip) < 5) {
 		return '';
 	}
 
-	if(strpos($ip, '.')) {
+	if (strpos($ip, '.')) {
 		$parts = explode('.', $ip);
-		$key = 'i_' . md5($parts[0] . '.' . $parts[1] . '.' . $parts[2]. '.*');
+		$key = 'i_' . md5($parts[0] . '.' . $parts[1] . '.' . $parts[2] . '.*');
 	} else {
 		$key = 'i_' . md5($ip);
 	}
@@ -2662,7 +2664,7 @@ function get_asn($ip) {
 		$m->set($key, $asn, 864000);
 	}
 
-	return '<br /><small>' . $asn . '</small>';
+	return '<br><small>' . $asn . '</small>';
 }
 
 /**
@@ -2674,8 +2676,8 @@ function user_top() {
 	$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
 	if ($tusers) {
 		foreach ($tusers as $tuser) {
-			$out .= '<li><a href="/user/'. $tuser->id.'"><img class="av" src="'.get_avatar($tuser).'" alt="" />';
-			$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id).'</a><span class="count">('.$tuser->today.')</span></li>';
+			$out .= '<li><a href="/user/' . $tuser->id . '"><img class="av" src="' . get_avatar($tuser) . '" alt="" />';
+			$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id) . '</a><span class="count">(' . $tuser->today . ')</span></li>';
 		}
 	}
 	$out .= '</ul><div class="c"></div>';
@@ -2693,7 +2695,7 @@ function group_top() {
 	if ($tgroups) {
 
 		foreach ($tgroups as $group) {
-		
+
 			if (!empty($group->strid)) {
 				$group->link = '/' . $group->strid;
 			} else {
@@ -2701,11 +2703,10 @@ function group_top() {
 			}
 
 			$group->av_alt = 1;
-			
-			$out .= '<li><a href="'.$group->link.'"><img class="av" src="'. get_avatar($group).'" alt="" />';
-			$out .= '<small>'.$group->title.'</small></a><span class="count">('.$group->posts_today.')</span></li>';
-		}
 
+			$out .= '<li><a href="' . $group->link . '"><img class="av" src="' . get_avatar($group) . '" alt="" />';
+			$out .= '<small>' . $group->title . '</small></a><span class="count">(' . $group->posts_today . ')</span></li>';
+		}
 	}
 	$out .= '</ul><div class="c"></div>';
 	return $out;
@@ -2714,7 +2715,7 @@ function group_top() {
 function get_bookmarked_id($id, $user, $table = 'pages') {
 	global $db;
 
-	if(empty($user) or empty($id)) {
+	if (empty($user) or empty($id)) {
 		return 0;
 	}
 
@@ -2724,9 +2725,9 @@ function get_bookmarked_id($id, $user, $table = 'pages') {
 		FROM
 			`bookmarks`
 		WHERE
-			`userid` = ".intval($user)." AND
-			`pageid` = ".intval($id)." AND
-			`foreign_table` = '".sanitize($table)."'
+			`userid` = " . intval($user) . " AND
+			`pageid` = " . intval($id) . " AND
+			`foreign_table` = '" . sanitize($table) . "'
 		LIMIT 1
 	");
 }
@@ -2734,10 +2735,10 @@ function get_bookmarked_id($id, $user, $table = 'pages') {
 function add_bookmark($id, $user, $table = 'pages') {
 	global $db;
 
-	if(!get_bookmarked_id($id, $user, $table)) {
+	if (!get_bookmarked_id($id, $user, $table)) {
 		$db->query("
 			INSERT INTO `bookmarks` (`userid`, `pageid`, `foreign_table`)
-			VALUES (".intval($user).", ".intval($id).", '".sanitize($table)."')
+			VALUES (" . intval($user) . ", " . intval($id) . ", '" . sanitize($table) . "')
 		");
 	}
 	count_bookmarks($user);
@@ -2746,16 +2747,16 @@ function add_bookmark($id, $user, $table = 'pages') {
 function remove_bookmark($id) {
 	global $db;
 
-	$db->query("DELETE FROM `bookmarks` WHERE `id` = ".intval($id)." LIMIT 1");
+	$db->query("DELETE FROM `bookmarks` WHERE `id` = " . intval($id) . " LIMIT 1");
 	count_bookmarks($auth->id);
 }
 
 function count_bookmarks($user_id) {
 	global $db, $auth;
 
-	$count = $db->get_var("SELECT count(*) FROM `bookmarks` WHERE `userid` = '".intval($user_id)."'");
-	if($auth->bookmarks != $count || $user_id != $auth->id) {
-		$db->query("UPDATE `users` SET `bookmarks` = $count WHERE `id` = '".intval($user_id)."' LIMIT 1");
+	$count = $db->get_var("SELECT count(*) FROM `bookmarks` WHERE `userid` = '" . intval($user_id) . "'");
+	if ($auth->bookmarks != $count || $user_id != $auth->id) {
+		$db->query("UPDATE `users` SET `bookmarks` = $count WHERE `id` = '" . intval($user_id) . "' LIMIT 1");
 		$auth->reset();
 	}
 
@@ -2765,7 +2766,7 @@ function count_bookmarks($user_id) {
 function error_404() {
 	global $tpl, $category, $page_title;
 
-	if(empty($tpl)) {
+	if (empty($tpl)) {
 		$tpl = new TemplatePower(CORE_PATH . '/tmpl/main.tpl');
 	}
 
@@ -2785,13 +2786,12 @@ function error_404() {
 	$category->module = '';
 	$category->tmpl = 'main';
 	$category->title = $page_title = 'Kļūda - pieprasītā lapa nav atrasta!';
-
 }
 
 /**
  * Array average
  */
 function array_average_nonzero($arr) {
-    $arr = array_filter($arr);
-    return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
+	$arr = array_filter($arr);
+	return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
 }

@@ -40,6 +40,8 @@ if ($session) {//Authentication successful
 		$userinfo = $db->get_row("SELECT * FROM `users` WHERE `draugiem_id` = '" . intval($user['uid']) . "'");
 		if (!$userinfo) {
 
+			redirect();
+
 			$tpl->newBlock('draugiem-signup');
 			if (isset($_POST['existing-nick']) && isset($_POST['existing-password'])) {
 				$auth->login($_POST['existing-nick'], $_POST['existing-password']);

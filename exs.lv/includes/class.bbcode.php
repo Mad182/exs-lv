@@ -282,7 +282,7 @@ class BBCode {
 	function process_tag(&$item) {
 		global $lang, $db;
 		$tag = $item['tag'];
-		//echo 'process_tag(', $tag, ')<br />';
+		//echo 'process_tag(', $tag, ')<br>';
 		$start = substr($this->text, $item['start'], $item['start_len']);
 		$end = substr($this->text, $item['end'], $item['end_len']);
 		$content = substr($this->text, $item['start'] + $item['start_len'], $item['end'] - $item['start'] - $item['start_len']);
@@ -1127,7 +1127,7 @@ class BBCode {
 			$replace = [
 				' &nbsp;',
 				' &nbsp; &nbsp;',
-				'<br />',
+				'<br>',
 				''
 			];
 			$text = str_replace($search, $replace, $text);
@@ -1337,7 +1337,7 @@ class BBCode {
 
 // Recusive function that converts text to bbcode tree
 	function push($start, $level, $prev_tags) {
-		//echo '<b>push</b>(', $start, ', ', $level, ', (', implode(',', $prev_tags), '))<br />';
+		//echo '<b>push</b>(', $start, ', ', $level, ', (', implode(',', $prev_tags), '))<br>';
 		$items = [];
 		$pos_start_bbcode = $this->allow_bbcode ? strpos($this->text, '[', $start) : false;
 		$pos_start_html = $this->allow_html ? strpos($this->text, '<', $start) : false;
@@ -1492,7 +1492,7 @@ class BBCode {
 					$first = false;
 					echo $var, '="', h($value), '"';
 				}
-				echo ")<br />\n";
+				echo ")<br>\n";
 				$this->debug($item['items']);
 			}
 		}
@@ -1547,7 +1547,7 @@ class BBCode {
 					['&amp;', '>', '<', '"', '&amp;#'], ['&amp;amp;', '&gt;', '&lt;', '&quot;', '&#'], $text);
 		}
 		if ($br) {
-			$text = str_replace("\n", "<br />\n", $text);
+			$text = str_replace("\n", "<br>\n", $text);
 		}
 		return $text;
 	}
@@ -1715,7 +1715,7 @@ class BBCode {
 		  $this->debug($this->data);
 		  $str = ob_get_contents();
 		  ob_end_clean();
-		  $this->html = 'Debug:<br />' . $str;
+		  $this->html = 'Debug:<br>' . $str;
 		  return $this->html;
 		 */
 
@@ -1962,9 +1962,9 @@ function bbcode_killer_mg($text, $bbcode_uid) {
 
 function plain_message_mg($text, $bbcode_uid) {
 	$text = bbcode_killer_mg($text, $bbcode_uid);
-//$text = preg_replace("/\r\n/", "<br />", $text);
+//$text = preg_replace("/\r\n/", "<br>", $text);
 	$text = preg_replace("/\r\n/", "\n", $text);
-	$text = str_replace('<br />', "\n", $text);
+	$text = str_replace('<br>', "\n", $text);
 
 	return $text;
 }
@@ -2015,7 +2015,7 @@ function br2nl($str) {
 
 function nl2br_mg($text) {
 	$text = preg_replace("/\r\n/", "\n", $text);
-	$text = str_replace('<br />', "\n", $text);
+	$text = str_replace('<br>', "\n", $text);
 
 	return $text;
 }

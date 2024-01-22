@@ -124,7 +124,7 @@
 			<legend>Rakstīt jaunu vēstuli</legend>
 			<input type="hidden" name="die-motherfcker-wannabes" value="{pm-check}" />
 			<p id="compose-to-local">
-				<label for="compose-to">Kam:</label><br />
+				<label for="compose-to">Kam:</label><br>
 				<select name="compose-to">
 					<option value="0">&nbsp;</option>
 					<!-- START BLOCK : pm-compose-option-->
@@ -133,7 +133,7 @@
 				</select>
 			</p>
 			<p>
-				<label for="compose-title">Tēma:</label><br />
+				<label for="compose-title">Tēma:</label><br>
 				<input type="text" name="compose-title" id="compose-title" class="text" value="{compose-title}" maxlength="64" />
 			</p>
 			<textarea cols="80" rows="3" style="width:100%;height:300px" name="compose-body"></textarea>

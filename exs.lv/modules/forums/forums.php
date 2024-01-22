@@ -85,7 +85,11 @@ if (!empty($cats)) {
 
 		$add = '';
 		if (!im_mod()) {
-			$add = ' AND `mods_only` = 0';
+			$add .= ' AND `mods_only` = 0';
+		}
+
+		if($auth->ok !== true) {
+			$add .= ' AND `private` = 0';
 		}
 
 		$forums = $db->get_results("SELECT `title`, `textid`, `icon`, `id`, `content`, `stat_topics`, `stat_com`, `mods_only_post`, `status` FROM `cat` WHERE `parent` = '$cat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
@@ -112,7 +116,7 @@ if (!empty($cats)) {
 			$add = '';
 			$finfo = get_cat($forum->textid);
 			if (!empty($finfo->mods)) {
-				$add = '<br />Moderatori: ';
+				$add = '<br>Moderatori: ';
 				$mods = [];
 				foreach ($finfo->mods as $mod) {
 					$mods[] = userlink($mod);
@@ -142,7 +146,7 @@ if (!empty($cats)) {
 				$tpl->assign([
 					'uplink' => ' <a class="forum-admin-tool" href="?moveup=' . $forum->id . '">&#8593;</a> ',
 					'downlink' => ' <a class="forum-admin-tool" href="?movedown=' . $forum->id . '">&#8595;</a> ',
-					'addlink' => '<br /><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
+					'addlink' => '<br><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
 					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">edit</a> '
 				]);
 			}

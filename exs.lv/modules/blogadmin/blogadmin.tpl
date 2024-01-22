@@ -18,7 +18,7 @@
 	</div>
 </div>
 
-<script type="text/javascript">
+<script>
 	$(document).ready(function() {
 		$('#default-payment-link').click();
 	});
@@ -58,13 +58,13 @@
             
 			<input type="hidden" name="token" value="{blog-check}" />
 			<p>
-				<label for="new-topic-title">Nosaukums:</label><br />
+				<label for="new-topic-title">Nosaukums:</label><br>
 				<input type="text" name="new-topic-title" id="new-topic-title" class="new-title text" maxlength="64" />
 			</p>
-			<label for="new-topic-body">Teksts:</label><br />
+			<label for="new-topic-body">Teksts:</label><br>
 			<textarea name="new-topic-body" id="new-topic-body" cols="94" rows="40" style="width: 100%; height: 400px;"></textarea>
 			<p>
-				<label for="new-avatar">Raksta avatars:</label><br />
+				<label for="new-avatar">Raksta avatars:</label><br>
 				<input type="file" class="long" name="new-avatar" id="new-avatar" />
 			</p>
 			<p>
@@ -100,11 +100,11 @@
 			<p class="error">Saiti jānorāda oblogāti!</p>
 			<!-- END BLOCK : error-nolink-->
 			<p>
-				<label for="new-sidelink-title">Nosaukums:</label><br />
+				<label for="new-sidelink-title">Nosaukums:</label><br>
 				<input type="text" name="new-sidelink-title" id="new-sidelink-title" class="text" maxlength="64" />
 			</p>
 			<p>
-				<label for="new-sidelink-url">Saite:</label><br />
+				<label for="new-sidelink-url">Saite:</label><br>
 				<input type="text" value="http://" name="new-sidelink-url" id="new-sidelink-url" class="text" maxlength="256" />
 			</p>
 			<p>
@@ -121,11 +121,11 @@
 			<p class="error">Saiti jānorāda oblogāti!</p>
 			<!-- END BLOCK : error-nolink2-->
 			<p>
-				<label for="edit-sidelink-title">Nosaukums:</label><br />
+				<label for="edit-sidelink-title">Nosaukums:</label><br>
 				<input type="text" name="edit-sidelink-title" id="edit-sidelink-title" value="{title}" class="text" maxlength="64" />
 			</p>
 			<p>
-				<label for="edit-sidelink-url">Saite:</label><br />
+				<label for="edit-sidelink-url">Saite:</label><br>
 				<input type="text" value="{url}" name="edit-sidelink-url" id="edit-sidelink-url" class="text" maxlength="256" />
 			</p>
 			<p>

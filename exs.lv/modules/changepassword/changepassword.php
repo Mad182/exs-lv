@@ -40,7 +40,7 @@ if (!$auth->ok) {
 					</p>';
 
 			if (send_email($userdata->mail, $subject, $message)) {
-				$db->query("UPDATE `users` SET `password` = '$newhash', `pwd` = '', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
+				$db->query("UPDATE `users` SET `password` = '$newhash', `reset_token` = '', `reset_time` = '0000-00-00 00:00:00' WHERE `id` = '$userdata->id'");
 				$auth->log('Nomainīta parole (e-pasts nosūtīts)', 'users', $userdata->id);
 				set_flash('Tava jaunā parole nosūtīta uz e-pastu!', 'success');
 			} else {
@@ -55,7 +55,7 @@ if (!$auth->ok) {
 	if (isset($_POST['pwd-nick']) && isset($_POST['pwd-mail'])) {
 		$nick = sanitize($_POST['pwd-nick']);
 		$mail = sanitize($_POST['pwd-mail']);
-		$userdata = $db->get_row("SELECT * FROM `users` WHERE `nick` = '$nick' AND `mail` = '$mail' AND `pwd` != 'none_kirbis' AND `pwd` != 'fake'");
+		$userdata = $db->get_row("SELECT * FROM `users` WHERE `nick` = '$nick' AND `mail` = '$mail'");
 		if ($userdata) {
 
 			$pwd_token = substr(hash('sha256', uniqid() . $userdata->mail . $auth->ip), 0, 16);
@@ -77,7 +77,7 @@ if (!$auth->ok) {
 					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/forgot-password/' . $pwd_token . '</a>
 				</p>
 				<p style="font-size:90%;margin: 20px 0 10px;color: #888">
-					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
+					Paroles maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br>
 					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.
 				</p>';
 

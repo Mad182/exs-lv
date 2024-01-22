@@ -41,8 +41,6 @@ $profile_views_limit = 20;
 
 $page_title = 'MTA:SA roleplay serveris';
 
-$twitter_meta['site'] = '@exs_lv';
-
 
 /*
 |--------------------------------------------------------------------------

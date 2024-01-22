@@ -106,11 +106,11 @@
 		<fieldset>
 			<legend>Pievienot attēlu</legend>
 			<p>
-				<label for="new-image">Attēls:</label><br />
+				<label for="new-image">Attēls:</label><br>
 				<input type="file" name="new-image" id="new-image" />
 			</p>
 			<p>
-				<label for="title">Nosaukums/komentārs</label><br />
+				<label for="title">Nosaukums/komentārs</label><br>
 				<input type="text" class="text" value="" name="title" id="title" />
 			</p>
 			<p>

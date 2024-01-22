@@ -39,13 +39,13 @@
 		</td>
 		<!-- START BLOCK : forum-item-stats-->
 		<td class="stat">
-			{topics}&nbsp;{txt-topics}<br />
+			{topics}&nbsp;{txt-topics}<br>
 			{posts}&nbsp;{txt-posts}
 		</td>
 		<!-- END BLOCK : forum-item-stats-->
 		<td class="last">
-			{topic}<br />
-			{date}<br />
+			{topic}<br>
+			{date}<br>
 			no: {author}
 		</td>
 	</tr>
@@ -60,18 +60,18 @@
 		<legend>Jauna tēma</legend>
 		<input type="hidden" name="token" value="{forum-check}" />
 		<p>
-			<label for="new-topic-title">Tēmas nosaukums:</label><br />
+			<label for="new-topic-title">Tēmas nosaukums:</label><br>
 			<input type="text" name="new-topic-title" id="new-topic-title" class="text" maxlength="72" />
 		</p>
 		<p>
-			<label for="new-topic-title">Foruma kategorija:</label><br />
+			<label for="new-topic-title">Foruma kategorija:</label><br>
 			<select name="new-topic-category">
 				<!-- START BLOCK : select-category-->
 				<option value="{id}"{sel}>{title}</option>
 				<!-- END BLOCK : select-category-->
 			</select>
 		</p>
-		<label for="new-topic-title">Teksts:</label><br />
+		<label for="new-topic-title">Teksts:</label><br>
 		<textarea name="new-topic-body" id="new-topic-body" style="width:100%;height:300px" rows="5" cols="50">{forum-content}</textarea>
 		<p><input type="submit" name="submit" value="Pievienot" class="button primary" /></p>
 	</fieldset>

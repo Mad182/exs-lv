@@ -8,11 +8,11 @@
 		<a class="red" href="/forgot-password">Aizmirsi paroli?</a>
 		<!-- END BLOCK : login-form-error1-->
 		<p>
-			Niks:<br />
+			Niks:<br>
 			<input class="text" name="niks" type="text" />
 		</p>
 		<p>
-			Parole:<br />
+			Parole:<br>
 			<input class="text" name="parole" type="password" />
 		</p>
 		<p>

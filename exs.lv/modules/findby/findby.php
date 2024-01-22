@@ -194,7 +194,7 @@ if (isset($_GET['display']) && is_numeric($_GET['display'])) {
 	$content = '';
 
 	$user = $db->get_row("
-        SELECT `id`, `nick`, `pwd`, `level` FROM `users` WHERE `id` = ".$userid
+        SELECT `id`, `nick`, `level` FROM `users` WHERE `id` = ".$userid
     );
 	if (!$user) {
 		echo ''; exit;

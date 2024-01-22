@@ -46,29 +46,30 @@
 
 
 		<!-- START BLOCK : greetings-->
-		<p class="success">Paldies, ka reģistrējies!<br />Pārbaudi savu e-pasta kastīti - tur jābūt saitei, kuru atverot Tavs profils tiks apstiprināts :)<br />Ja neredzi vēstuli, pārliecinies, kai tā nav nejauši iekritusi spama sadaļā :/</p>
+		<p class="success">Paldies, ka reģistrējies!<br>Pārbaudi savu e-pasta kastīti - tur jābūt saitei, kuru atverot Tavs profils tiks apstiprināts :)<br>Ja neredzi vēstuli, pārliecinies, kai tā nav nejauši iekritusi spama sadaļā :/</p>
 		<!-- END BLOCK : greetings-->
 
 		<!-- START BLOCK : form-fields-->
 		<input type="hidden" name="reg_token" value="{reg_token}" />
 		<p>
-			<label for="{field_nick}">Iesauka:<br /><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label>
+			<label for="{field_nick}">Iesauka:<br><span class="description">Vārds, ar kādu Tevi pazīs lapā</span></label>
 			<input tabindex="1" type="text" class="text usercheck" name="{field_nick}" id="{field_nick}" value="{new-nick}" maxlength="14" /> <span class="usercheck-response" id="userexists"></span>
 		</p>
 		<p>
-			<label for="{field_mail}">E-pasta adrese:<br />
-				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts<br />
-					reģistrācijas apstiprinājuma e-pasts.</span>
+			<label for="{field_mail}">E-pasta adrese:<br>
+				<span class="description">Jābūt reālai, jo uz to tiks nosūtīts reģistrācijas apstiprinājuma e-pasts.<br>
+					E-pasta adrese tiek izmantota nozaudētas paroles gadījumā.<br>Uz to netiks sūtīti komerciāli paziņojumi.
+				</span>
 			</label>
 			<input tabindex="2" type="text" class="text" name="{field_mail}" id="{field_mail}" value="{new-mail}" maxlength="64" />
 		</p>
 		<p>
 			<label for="omnomnom">Parole:</label>
-			<input tabindex="3" type="password" class="text" name="omnomnom" id="omnomnom" />
+			<input tabindex="3" type="password" class="text" name="omnomnom" id="omnomnom" autocomplete="new-password" />
 		</p>
 		<p>
 			<label for="url">Parole atkārtoti:</label>
-			<input tabindex="4" type="password" class="text" name="url" id="url" />
+			<input tabindex="4" type="password" class="text" name="url" id="url" autocomplete="new-password" />
 		</p>
 		<p id="required-registration-field">
 			<label for="reg-www">Homepage:</label>

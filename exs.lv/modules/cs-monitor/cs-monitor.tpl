@@ -1,6 +1,6 @@
 <!-- START BLOCK : csmon-->
 <h1>CS/CSS servera statusa monitors</h1>
-<script type="text/javascript" src="/modules/cs-monitor/jscolor/jscolor.js"></script>
+<script src="/modules/cs-monitor/jscolor/jscolor.js"></script>
 <form class="form" action="/cs_servera_monitors/" method="get">
 	<fieldset>
 		<legend>Izveidot monitoru</legend>
@@ -10,19 +10,19 @@
 			</a>
 		</p>
 		<p>
-			<label>Adrese (IP vai domēns) : ports</label><br />
+			<label>Adrese (IP vai domēns) : ports</label><br>
 			<input style="width: 160px;" type="text" class="text" name="adr" value="{adr}" /><input style="width: 50px;margin-left: 3px;" type="text" class="text" name="port" value="{port}" />
 		</p>
 		<table>
 			<tr>
 				<td style="width: 140px;">
 					<p>
-						<label>Fona krāsa</label><br />#<input style="width: 60px;" type="text" class="text color" name="bgcolor" value="{bgcolor}" />
+						<label>Fona krāsa</label><br>#<input style="width: 60px;" type="text" class="text color" name="bgcolor" value="{bgcolor}" />
 					</p>
 				</td>
 				<td style="width: 140px;">
 					<p>
-						<label>Teksta krāsa</label><br />#<input style="width: 60px;" type="text" class="text color" name="color" value="{color}" />
+						<label>Teksta krāsa</label><br>#<input style="width: 60px;" type="text" class="text color" name="color" value="{color}" />
 					</p>
 				</td>
 			</tr>
@@ -31,17 +31,17 @@
 			<tr>
 				<td style="width: 140px;">
 					<p>
-						<label>Platums</label><br /><input style="width: 35px;" type="text" class="text" name="width" value="{width}" />&nbsp;px
+						<label>Platums</label><br><input style="width: 35px;" type="text" class="text" name="width" value="{width}" />&nbsp;px
 					</p>
 				</td>
 				<td style="width: 140px;">
 					<p>
-						<label>Augstums</label><br /><input style="width: 35px;" type="text" class="text" name="height" value="{height}" />&nbsp;px
+						<label>Augstums</label><br><input style="width: 35px;" type="text" class="text" name="height" value="{height}" />&nbsp;px
 					</p>
 				</td>
 				<td style="width: 140px;">
 					<p>
-						<label>Atkāpe no malām</label><br /><input style="width: 35px;" type="text" class="text" name="padding" value="{padding}" />&nbsp;px
+						<label>Atkāpe no malām</label><br><input style="width: 35px;" type="text" class="text" name="padding" value="{padding}" />&nbsp;px
 					</p>
 				</td>
 			</tr>

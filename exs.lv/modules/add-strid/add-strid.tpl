@@ -3,11 +3,11 @@
 <form class="form" action="" method="post">
 	<fieldset>
 		<p>
-			<label for="title">Strid:</label><br />
+			<label for="title">Strid:</label><br>
 			<input type="text" class="title" name="strid" />
 		</p>
 		<p>
-			<label for="content">ID:</label><br />
+			<label for="content">ID:</label><br>
 			<input type="text" class="text" name="id" />
 		</p>
 		<p>

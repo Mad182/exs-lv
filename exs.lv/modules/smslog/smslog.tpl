@@ -11,7 +11,7 @@
 	<tr>
 		<td>{id}</td>
 		<td>{nick}</td>
-		<td>msg: {message}<br />msg_id: {message_id}<br />sender: {sender}</td>
+		<td>msg: {message}<br>msg_id: {message_id}<br>sender: {sender}</td>
 		<td>{suspended}</td>
 	</tr>
 	<!-- END BLOCK : smslog-node-->

@@ -191,9 +191,6 @@ if (!empty($me)) {
 } else {
 
 	$protocol = 'https://';
-	if (empty($config_domains[$lang]['ssl'])) {
-		$protocol = 'http://';
-	}
 
 	if(!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']))  {
 		$_SESSION['redirect_after_login'] = $_SERVER['HTTP_REFERER'];

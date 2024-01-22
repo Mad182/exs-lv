@@ -1,5 +1,5 @@
 <p style="text-align: center; font-size: 32px; font-weight: bold;margin:.1em 0 0.5em">eXs.lv 2015. gads skaitļos</p>
-<p style="text-align: center; line-height: 1.5; padding: 10px 12px; margin-bottom:0;background: #55bcda; color: #fff;">&Scaron;eit ir apkopota exs.lv statistika laika posmā no 2015. gada 1. janvāra līdz 31. decembrim.<br />Visi skaitļi attiecināmi tie&scaron;i uz exs.lv, neiekļaujot datus par exs.lv apak&scaron;projektiem.</p>
+<p style="text-align: center; line-height: 1.5; padding: 10px 12px; margin-bottom:0;background: #55bcda; color: #fff;">&Scaron;eit ir apkopota exs.lv statistika laika posmā no 2015. gada 1. janvāra līdz 31. decembrim.<br>Visi skaitļi attiecināmi tie&scaron;i uz exs.lv, neiekļaujot datus par exs.lv apak&scaron;projektiem.</p>
 
 <div style="background: #eceded; padding: 10px 12px;margin-top:0">
 	<p style="padding: 5px 10px 0; margin:0; text-align: center; font-size: 20px; font-weight: bold;">GADA LAIKĀ...</p>

@@ -53,6 +53,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 
 	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_sitelist('dofollow');
+
 	foreach ($dofollow_sites as $site) {
 		if (strpos($txt, $site) !== false) {
 			$find = [
@@ -329,13 +330,13 @@ function embed_widgets($txt, $wide = 0) {
 	// var vienā piegājienā paķert abas saites
 
 	//don't embed old videos
-	//$embed = true;
+	$embed = true;
 	//if(!empty($post_bump) && $post_bump < strtotime('-2 weeks')) {
-		$embed = false;
+	//	$embed = false;
 	//}
 
 	// youtube videos
-	if ($auth->ok && strpos($txt, 'youtu') !== false && $embed) {
+	if (strpos($txt, 'youtu') !== false && $embed) {
 		if ($wide) {
 			$fn = 'get_youtube_video';
 		} else {
@@ -457,11 +458,6 @@ function embed_youtube($matches, $wide = 0) {
 	$has_yt = true;
 
 	$safe = mkslug($matches[6], false, false);
-	$video = get_youtube($safe);
-
-	$title = str_replace("'", "&#39;", h(textlimit(
-							stripslashes($video->yt_title), 100)));
-	$title = str_replace("&amp;amp;", "&amp;", $title);
 
 	$width = 380;
 	$height = 240;
@@ -470,10 +466,6 @@ function embed_youtube($matches, $wide = 0) {
 		$width = 520;
 		$height = 290;
 		$vq = 'hd720';
-	}
-
-	if($title === 'youtube.com') {
-		return '<a rel="nofollow noopener noreferrer" target="_blank" href="https://www.youtube.com/watch?v='.$safe.'">https://www.youtube.com/watch?v='.$safe.'</a>';
 	}
 
 	// izmanto h, lai norādītu kā parametru javascriptā
@@ -485,22 +477,22 @@ function embed_youtube($matches, $wide = 0) {
 	$videocode .= '?wmode=transparent&autoplay=1&autohide=1&hl=lv_LV&vq=' . $vq . '&origin=';
 	$videocode .= urlencode('http://exs.lv') . '" frameborder="0"';
 	$videocode .= ' webkitallowfullscreen mozallowfullscreen allowfullscreen>';
-	$videocode .= '</iframe><br /><a title="Atvērt video mājas lapā" ';
+	$videocode .= '</iframe><br><a title="Atvērt video mājas lapā" ';
 	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
 	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
-	$videocode .= '<strong>' . $title . '</strong><div class="c"></div></div>';
+	$videocode .= '<div class="c"></div></div>';
 	$videocode = h($videocode);
 
 	// saturs, uz kura nospiežot, caur javascript ielādēs $videocode
 	$return = '<div><div class="auto-embed-placeholder">';
 	$return .= '<img style="width:240px;height:180px" ';
 	$return .= 'src="https://i4.ytimg.com/vi/' . $safe . '/0.jpg" ';
-	$return .= 'alt="' . $title . '" /><a class="play-button" ';
+	$return .= 'alt="" /><a class="play-button" ';
 	$return .= 'onclick="$(this).parent().parent().html(\'' . $videocode . '\');';
-	$return .= 'return false;" title="Atskaņot ' . $title . '" ';
+	$return .= 'return false;" title="Atskaņot video" ';
 	$return .= 'rel="nofollow" ';
 	$return .= 'href="https://www.youtube.com/watch?v=' . $safe . '"><span>';
-	$return .= '<span>' . $title . '</span></span></a></div></div>';
+	$return .= '</span></a></div></div>';
 
 	return $return;
 }
@@ -513,39 +505,7 @@ function embed_youtube($matches, $wide = 0) {
  *  @return $data   objekts ar video informāciju
  */
 function get_youtube($videoid, $force = false) {
-	global $db, $m;
-
-	// saglabā informāciju Memcached uz stundu
-	if ($force || !($data = $m->get($videoid))) {
-
-		$data = $db->get_row("
-			SELECT * FROM `ytlocal`
-			WHERE `yt_id` = '" . sanitize($videoid) . "'
-		");
-
-		// saglabā info arī datubāzē, ja tādas tur nav
-		if (empty($data)) {
-
-			$json = curl_get('https://www.googleapis.com/youtube/v3/videos?id='.$videoid.'&key=AIzaSyAY_u1YzIGq8jeDufkmsNGRKbJ4_bea0AI&part=snippet');
-			$ytdata = json_decode($json);
-			$data = new Stdclass;
-			$data->yt_title = esr($ytdata->items[0]->snippet->title, 'youtube.com');
-			$data->yt_description = esr($ytdata->items[0]->snippet->description, '');
-			$data->yt_id = $videoid;
-
-			$db->query("
-				INSERT INTO `ytlocal`
-					(yt_id, yt_title, yt_description)
-				VALUES(
-					'" . sanitize($videoid) . "',
-					'" . sanitize($data->yt_title) . "',
-					'" . sanitize($data->yt_description) . "'
-				)");
-		}
-
-		$m->set($videoid, $data, 3600);
-	}
-	return $data;
+    return false;
 }
 
 /**
@@ -555,23 +515,7 @@ function get_youtube($videoid, $force = false) {
  *  @return $text
  */
 function youtube_title($text) {
-	if (strpos($text, 'youtu') !== false) {
-		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtube\.com/watch\?v=([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
-		$text = preg_replace_callback("#(^|[\n ]|<a(.*?)>)http://(www\.)?youtu\.be/([a-zA-Z0-9\-_]+)((.*?)</a>)?#im", 'youtube_title_callback', $text);
-	}
 	return $text;
-}
-
-/**
- *  Callback metode YouTube video nosaukumu iekļaušanai tekstā
- *
- *  @param $matches YouTube video parametri
- *  @return string  video nosaukums
- */
-function youtube_title_callback($matches) {
-	$safe = mkslug($matches[4], false, false);
-	$video = get_youtube($safe);
-	return ' Video: ' . $video->yt_title . ' ';
 }
 
 /**
@@ -602,7 +546,7 @@ function embed_twitter($params) {
 				$tweet_html = $tweet->html;
 			}
 		}
-		$m->set($tweet_unique, $tweet_html, 3600);
+		$m->set($tweet_unique, $tweet_html, 7200);
 	}
 
 	return $tweet_html;
@@ -729,7 +673,7 @@ function embed_soundcloud($params) {
 		if (empty($scloud_html)) {
 			$scloud_html = $params[0];
 		}
-		$m->set('scloud_' . md5($params[4]), $scloud_html, 1800);
+		$m->set('scloud_' . md5($params[4]), $scloud_html, 7200);
 	}
 
 	return $scloud_html;
@@ -813,7 +757,7 @@ function embed_gifv_gfycat($params) {
 		$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
 		$html .= 'width="' . (int)$width . '" height="' . (int)$height . '"></iframe>';
 		
-		$m->set($cache_key, $html, 3600);
+		$m->set($cache_key, $html, 7200);
 	
 	}
 
@@ -844,11 +788,11 @@ function embed_gifv_imgur($params) {
  */
 function replace_spoiler($text) {
 
-	$text = str_replace(['<p>', '</p>', '%5B/spoiler%5D'], ['<br />', '<br />', ''], $text[1]);
+	$text = str_replace(['<p>', '</p>', '%5B/spoiler%5D'], ['<br>', '<br>', ''], $text[1]);
 
 	$content = '<span class="spoiler"><a href="javascript:void(0);" ';
 	$content .= 'class="spoiler-title" title="Slēpt/rādīt spoilera saturu">';
-	$content .= 'Rādīt spoileri</a><br /><span style="display:none" ';
+	$content .= 'Rādīt spoileri</a><br><span style="display:none" ';
 	$content .= 'class="spoiler-content">' . $text . '</span></span>';
 
 	return $content;

@@ -28,7 +28,7 @@ function make_thumb($data, $path, $id) {
 	if ($foo->processed) {
 		return $foo->file_dst_name;
 	} else {
-		echo $foo->error . '<br />';
+		echo $foo->error . '<br>';
 		return false;
 	}
 }

@@ -4,7 +4,7 @@
 <form class="form" action="" method="post">
 	<fieldset>
 		<p>
-			<label for="content">Apraksts:</label><br />
+			<label for="content">Apraksts:</label><br>
 			<textarea name="content" cols="30" rows="3">{content}</textarea>
 		</p>
 		<p>

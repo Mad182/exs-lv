@@ -35,7 +35,7 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 
 ### php7-fpm un vajadzīgo moduļu uzstādīšana uz debian/ubuntu
 
-    apt-get install php7.4-cli php7.4-common php7.4-curl php7.4-fpm php7.4-gd php7.4-intl php7.4-json php7.4-mbstring php7.4-mysql php7.4-opcache php7.4-readline php7.4-xml php7.4-zip
+    apt install php8.3-cli php8.3-common php8.3-curl php8.3-fpm php8.3-gd php8.3-intl php8.3-mbstring php8.3-mysql php8.3-opcache php8.3-readline php8.3-xml php8.3-zip
 
 ### Memcached uz servera ar Windows OS
 

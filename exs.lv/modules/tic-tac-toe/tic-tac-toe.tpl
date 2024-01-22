@@ -78,9 +78,9 @@
 <div class="box">
 	<div id="desas"><a href="/desas" id="start-desas">Sākt spēli</a></div>
 	<div id="desas-info" style="display: none">
-		Pretinieks: <span id="desas-opponent">Nav</span><br />
-		Tavi stati: <span id="desas-my-win" class="rautors"></span>/<span id="desas-my-lose" class="admins"></span><br />
-		Pretinieka stati: <span id="desas-op-win" class="rautors"></span>/<span id="desas-op-lose" class="admins"></span><br />
+		Pretinieks: <span id="desas-opponent">Nav</span><br>
+		Tavi stati: <span id="desas-my-win" class="rautors"></span>/<span id="desas-my-lose" class="admins"></span><br>
+		Pretinieka stati: <span id="desas-op-win" class="rautors"></span>/<span id="desas-op-lose" class="admins"></span><br>
 		<a id="desas-drop" href="/desas/drop">Pamest partiju</a>
 	</div>
 </div>

@@ -38,17 +38,17 @@
 		<legend>Pievienot jaunu</legend>
 
 		<p>
-			<label for="userid">Lietotāja #ID</label><br />
+			<label for="userid">Lietotāja #ID</label><br>
 			<input type="text" class="text" name="userid" id="userid" />
 		</p>
 
 		<p>
-			<label for="title">Nosaukums</label><br />
+			<label for="title">Nosaukums</label><br>
 			<input type="text" class="text" name="title" id="title" />
 		</p>
 
 		<p>
-			<label for="icon">Links uz ikonu (16x16px !!!!!!!!!!!!!)</label><br />
+			<label for="icon">Links uz ikonu (16x16px !!!!!!!!!!!!!)</label><br>
 			<input type="text" class="text" name="icon" id="icon" />
 		</p>
 

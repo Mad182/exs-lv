@@ -46,7 +46,7 @@ if(!empty($articles)) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace(['&nbsp;', '<br />', '<li>'], ' ', youtube_title($article->text)))), 680);
+			$article->text = textlimit(strip_tags(trim(str_replace(['&nbsp;', '<br>', '<li>'], ' ', youtube_title($article->text)))), 680);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
@@ -202,7 +202,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', add_smile($article->text))))), 600);
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 600);
 		}
 
 		$av = '';

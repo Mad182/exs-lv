@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend>Jaunas grupas izveide</legend>
 		<p>
-			<label for="new-title">Nosaukums:<br /><span class="description">Grupas nosaukums vēlāk <strong>nav maināms!</strong></span></label><br />
+			<label for="new-title">Nosaukums:<br><span class="description">Grupas nosaukums vēlāk <strong>nav maināms!</strong></span></label><br>
 			<input type="text" class="text" name="new-title" id="new-title" value="" maxlength="64" />
 		</p>
 		<p>
@@ -20,7 +20,7 @@
 			</div>
 		</div>
 
-		<script type="text/javascript">
+		<script>
 			$(document).ready(function() {
 				$('#default-payment-link').click();
 			});

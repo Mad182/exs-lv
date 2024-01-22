@@ -90,29 +90,6 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 	}
 }
 
-/*$wallpaper = $db->get_var("SELECT `image` FROM `wallpapers` WHERE `date` <= '" . date('Y-m-d') . "' ORDER BY `date` DESC LIMIT 1");
-if ($wallpaper) {
-	$tpl->newBlock('daily-wallpaper');
-	$tpl->assignGlobal('wallpaper-image', $wallpaper);
-	unset($wallpaper);
-}*/
-
-//jaunākās junk bildes
-$junks = $db->get_results("SELECT `id`, `thb`, `title`, `posts` FROM `junk` WHERE `removed` = 0 ORDER BY `bump` DESC LIMIT 6");
-if ($junks) {
-	$tpl->newBlock('side-junk');
-	foreach ($junks as $junk) {
-		$tpl->newBlock('side-junk-node');
-		$tpl->assign([
-			'id' => $junk->id,
-			'thb' => $junk->thb,
-			'title' => h($junk->title),
-			'posts' => $junk->posts
-		]);
-	}
-	unset($junks);
-}
-
 $tpl->newBlock('mb-box');
 $sel = 'all';
 if (!empty($_COOKIE['last-mbs-tab']) && $_COOKIE['last-mbs-tab'] === 'friends') {
@@ -141,19 +118,6 @@ if (!empty($best)) {
 	$tpl->assign($best);
 }
 
-//neapstiprināto junk bilžu skaits modiem
-if (im_mod()) {
-	$newimgs = $db->get_var("SELECT count(*) FROM `junk_queue` WHERE `approved` = 0");;
-	$iappstr = '';
-	if ($newimgs) {
-		$iappstr = '&nbsp;(<strong class="r">' . $newimgs . '</strong>)';
-	}
-	$tpl->newBlock('junk-info');
-	$tpl->assign([
-		'count' => $iappstr
-	]);
-}
-
 if ($auth->ok === true) {
 	$tpl->assignGlobal('miniblog-add', '&nbsp;<a href="/say/' . $auth->id . '#content" class="mb-create" title="Pievienot jaunu ierakstu">Izveidot</a>');
 }
@@ -177,15 +141,6 @@ if ($auth->ok === true) {
 
 $tpl->assignGlobal([
 	'latest-noscript' => $out,
-
-	//'csgo-monitor' => get_game_monitor('http://csgo.exs.lv/monitor/index.php'),
-	/*
-	<h3><strong>CS:GO</strong> csgo.exs.lv</h3>
-	<div class="box">
-		{csgo-monitor}
-	</div>
-	*/
-
 	'user-top' => user_top(),
 	$sel . '-selected' => 'active '
 ]);
@@ -241,23 +196,25 @@ if ($parent_id != 0) {
 }
 
 //grupas
-if ($groups = get_latest_groups()) {
-	$tpl->newBlock('groups-l-list');
-	foreach ($groups as $group) {
-		$tpl->newBlock('groups-l-node');
+if($auth->ok === true) {
+	if ($groups = get_latest_groups()) {
+		$tpl->newBlock('groups-l-list');
+		foreach ($groups as $group) {
+			$tpl->newBlock('groups-l-node');
 
-		if (!empty($group->strid)) {
-			$group->link = '/' . $group->strid;
-		} else {
-			$group->link = '/group/' . $group->id;
+			if (!empty($group->strid)) {
+				$group->link = '/' . $group->strid;
+			} else {
+				$group->link = '/group/' . $group->id;
+			}
+
+			$tpl->assign([
+				'title' => $group->title,
+				'link' => $group->link
+			]);
 		}
-
-		$tpl->assign([
-			'title' => $group->title,
-			'link' => $group->link
-		]);
+		unset($groups);
 	}
-	unset($groups);
 }
 
 //filmu meklētājs
@@ -291,17 +248,3 @@ if ($category->module === 'movies') {
 
 include(CORE_PATH . '/modules/core/poll.php');
 
-/*if(!$auth->ok && !in_array('noindex', $robotstag)) {
-
-    $tpl->assignGlobal('plevel', '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-9907860161851752",enable_page_level_ads: true });</script>');
-
-	//show popup ads only for desktops
-	require(LIB_PATH . '/Mobile-Detect/Mobile_Detect.php');
-	$detect = new Mobile_Detect;
-	$deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-	if($deviceType === 'computer' && !in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18']) && !in_array('noindex', $robotstag)) {
-		$tpl->newBlock('header-ad');
-	}
-
-}
-*/

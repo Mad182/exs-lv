@@ -37,10 +37,10 @@ if (isset($_POST['submit'])) {
 					Lai apstiprinātu e-pasta maiņu, nospied uz saites vai iekopē to pārlūkprogrammas adreses joslā.
 				</p>
 				<p>
-					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br />
+					<a href="' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '">' . $proto . $_SERVER['HTTP_HOST'] . '/confirm-email/' . $email_token . '</a><br>
 				</p>
 				<p style="font-size:90%;margin: 20px 0 10px;color: #888">
-					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br />
+					E-pasta maiņa tika pieprasīta no IP adreses ' . $auth->ip . '.<br>
 					Ja neesi veicis šo darbību, lūdzu informē par to ' . $_SERVER['HTTP_HOST'] . ' administrāciju, norādot minēto IP adresi.
 				</p>';
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 
 					$auth->reset();
 					update_karma($auth->id, true);
-					set_flash('Izmaiņas saglabātas!<br />Savā jaunajā e-pasta adresē pēc brīža saņemsi apstiprinājuma linku, lai varētu pabeigt e-pasta maiņu.', 'success');
+					set_flash('Izmaiņas saglabātas!<br>Savā jaunajā e-pasta adresē pēc brīža saņemsi apstiprinājuma linku, lai varētu pabeigt e-pasta maiņu.', 'success');
 
 					$auth->log('Pieprasīja e-pasta maiņu (apstiprinājuma e-pasts nosūtīts)', 'users', $auth->id);
 				} else {

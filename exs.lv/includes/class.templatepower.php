@@ -1,41 +1,29 @@
 <?php
 
-/**
- * http://templatepower.codocad.com/manual/index.php
- * (modificēts)
- */
-
-//aizvāc whitespace
 function file_strip($url) {
+
 	$out = [];
 	$data = file($url);
 	if (!$data) {
 		return false;
 	}
-	foreach($data as $line) {
-		if($line === "\n") {
-			continue;
-		}
+	foreach ($data as $line) {
 		$line = str_replace('    ', ' ', $line);
 		$line = str_replace('   ', ' ', $line);
 		$line = str_replace('  ', ' ', $line);
 		$line = str_replace('	', '', $line);;
-		$line = str_replace("</li>\n", "</li>", $line);
-		$line = str_replace("</ul>\n", "</ul>", $line);
-		$line = str_replace("<ul>\n", "<ul>", $line);
-		$line = str_replace("</p>\n", "</p>", $line);
-		$line = str_replace("<p>\n", "<p>", $line);
-		$line = str_replace("</div>\n", "</div>", $line);
-		$line = str_replace(" />\n", " />", $line);
+		$line = str_replace(">\n", ">", $line);
 		$out[] = $line;
 	}
 	return $out;
 }
 
+
 define("T_BYFILE", 0);
 define("T_BYVAR", 1);
 define("TP_ROOTBLOCK", '_ROOT');
 
+#[AllowDynamicProperties]
 class TemplatePowerParser {
 
 	protected $tpl_base;
@@ -55,7 +43,7 @@ class TemplatePowerParser {
 	protected function __errorAlert($message) {
 		global $debug;
 		if (!empty($debug)) {
-			print '<br />' . $message . '<br />' . PHP_EOL;
+			print '<br>' . $message . '<br>' . PHP_EOL;
 		}
 	}
 
@@ -252,7 +240,6 @@ class TemplatePowerParser {
 	public function assignInclude($iblockname, $value, $type = T_BYFILE) {
 		$this->tpl_include["$iblockname"] = [$value, $type];
 	}
-
 }
 
 class TemplatePower extends TemplatePowerParser {
@@ -449,5 +436,4 @@ class TemplatePower extends TemplatePowerParser {
 		$this->printToScreen();
 		return ob_get_clean();
 	}
-
 }

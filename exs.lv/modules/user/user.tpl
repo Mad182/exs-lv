@@ -34,7 +34,6 @@
 		<dt><i>E-pasts</i></dt><dd><i>{mail}</i></dd>
 		<dt><i>Pēdējā IP</i></dt><dd><i><a href="/findby?ip={lastip}">{lastip}</a>{asn}</i></dd>
 		<dt><i>UserAgent</i></dt><dd><i>{user_agent}</i></dd>
-		<dt><i>Profili</i></dt><dd>{cookie_users}</dd>
 		<!-- END BLOCK : user-modinfo-->
 	</dl>
 
@@ -137,7 +136,7 @@
 	<div class="c"></div>
 
 	<!-- START BLOCK : user-profile-lastcom-->
-	<br />
+	<br>
 	<div class="c"></div>
 	<div class="half-left">
 		<h3>Pēdējie komentāri rakstos</h3>
@@ -193,7 +192,7 @@
 				</div>
 			</div>
 
-			<script type="text/javascript">
+			<script>
 				$(document).ready(function() {
 					$('#default-payment-link').click();
 				});
@@ -208,7 +207,7 @@
 <!-- START BLOCK : user-profile-buytitle-->
 <div class="tabMain">
 	{pay}
-	<p>Lietotāja nosaukums parādās zem profila attēliem. Brīvi izvēlētu nosaukumu var iegūt vai nu sasniedzot 500. karmas līmeni, vai nopērkot iespēju to mainīt par <strong>3</strong> exs.lv kredīta punktiem. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti.<br />Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Minka"><span class="admins">Minka</span></a>.</p>
+	<p>Lietotāja nosaukums parādās zem profila attēliem. Brīvi izvēlētu nosaukumu var iegūt vai nu sasniedzot 500. karmas līmeni, vai nopērkot iespēju to mainīt par <strong>3</strong> exs.lv kredīta punktiem. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti.<br>Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Minka"><span class="admins">Minka</span></a>.</p>
 
 	<h4>Kā iegādāties 5 kredīta punktus?</h4>
 	<div class="box">
@@ -219,7 +218,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
+	<script>
 		$(document).ready(function() {
 			$('#default-payment-link').click();
 		});
@@ -259,20 +258,20 @@
 				<input type="text" class="text" name="edit-twitter" id="edit-twitter" value="{user-twitter}" maxlength="64" />
 			</p>
 			<p>
-				<label for="edit-web">Mājaslapa:<br /><span class="description">(jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
+				<label for="edit-web">Mājaslapa:<br><span class="description">(jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
 				<input type="text" class="text" name="edit-web" id="edit-web" value="{user-web}" maxlength="128" />
 			</p>
 
 			<!-- START BLOCK : sig-about-edit-->
-			<label for="edit-signature">Paraksts:<br /><span class="description">(parādās zem komentāriem)</span></label>
+			<label for="edit-signature">Paraksts:<br><span class="description">(parādās zem komentāriem)</span></label>
 			<textarea rows="4" cols="20" name="edit-signature" id="edit-signature">{user-signature}</textarea>
 
-			<br />
+			<br>
 
-			<label for="edit-signature">Par mani<br /><span class="description">(redzams citiem atverot Tavu profilu, jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
+			<label for="edit-signature">Par mani<br><span class="description">(redzams citiem atverot Tavu profilu, jābūt vismaz 10 postiem lai parādītos profilā)</span></label>
 			<textarea rows="4" cols="20" style="width:98%;height:300px" name="edit-about" id="edit-about">{user-about}</textarea>
 
-			<br />
+			<br>
 			<!-- END BLOCK : sig-about-edit-->
 
 			<!-- START BLOCK : sig-about-disabled-->
@@ -297,15 +296,15 @@
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="password-old">Esošā parole:</label>
-				<input type="password" class="text" name="password-old" id="password-old" value="" />
+				<input type="password" class="text" name="password-old" id="password-old" autocomplete="current-password" />
 			</p>
 			<p>
 				<label for="password-1">Jaunā parole:</label>
-				<input type="password" class="text" name="password-1" id="password-1" value="" />
+				<input type="password" class="text" name="password-1" id="password-1" autocomplete="new-password" />
 			</p>
 			<p>
 				<label for="password-2">Atkārto jauno paroli:</label>
-				<input type="password" class="text" name="password-2" id="password-2" value="" />
+				<input type="password" class="text" name="password-2" id="password-2" autocomplete="new-password" />
 			</p>
 			<p>
 				<input type="submit" name="submit" class="button primary" value="Saglabāt" />
@@ -321,16 +320,16 @@
 		<fieldset>
 			<legend>Divu Faktoru Autentifikācija</legend>
 			<p class="notice">
-				Lai izmantotu divu faktoru autentifikāciju, nepieciešams telefonā uzstādīt Google Authenticator.<br />
+				Lai izmantotu divu faktoru autentifikāciju, nepieciešams telefonā uzstādīt Google Authenticator.<br>
 
-				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br />
-				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br />
+				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br>
+				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br>
 			</p>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 
 			<p>
-				Noskenē kodu ar Google Authenticator:<br />
-				<br />
+				Noskenē kodu ar Google Authenticator:<br>
+				<br>
 				<img src="{qrCodeUrl}" alt="" />
 			</p>
 
@@ -358,12 +357,12 @@
 		<fieldset>
 			<legend>Divu Faktoru Autentifikācija</legend>
 			<p class="success">
-				<strong>Divu Faktoru Autentifikācija ir ieslēgta!</strong><br />
-				<br />
-				Lai izmantotu divu faktoru autentifikāciju, nepieciešams telefonā uzstādīt Google Authenticator.<br />
+				<strong>Divu Faktoru Autentifikācija ir ieslēgta!</strong><br>
+				<br>
+				Lai izmantotu divu faktoru autentifikāciju, nepieciešams telefonā uzstādīt Google Authenticator.<br>
 	
-				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br />
-				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br />
+				Lejupielāde Android: <a target="_blank" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en">https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en</a><br>
+				Lejupielāde iOS: <a target="_blank" href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8">https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8</a><br>
 			</p>
 		</fieldset>
 	</form>
@@ -399,9 +398,9 @@
 			<legend>Profila dzēšana</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p class="notice">
-				<strong>Šī darbība ir neatgriezeniska!</strong><br />
-				Dzēšot profilu tiks dzēsts arī pievienotais saturs - visas tēmas, komentāri un attēli, ko esi izveidojis vai augšupielādējis.<br />
-				Ja vēlies izdzēst tikai kādu noteiktu satura daļu, nevis visu profilu, vai ir kādi citi jautājumi, <a href="/pm/write/?to=1">nosūti ziņu @<span class="admins">mad</span></a>
+				<strong>Šī darbība ir neatgriezeniska!</strong><br>
+				Dzēšot profilu tiks dzēsts arī pievienotais saturs - visas tēmas, komentāri, attēli, nosūtītās vēstules un citi ieraksti ko esi izveidojis vai augšupielādējis.<br>
+				Ja vēlies izdzēst tikai kādu noteiktu satura daļu, nevis visu profilu, vai ir kādi citi jautājumi, <a href="/pm/write/?to=1">nosūti privāto ziņu @<span class="admins">mad</span></a> vai e-pastu uz info@exs.lv
 			</p>
 			<p>
 				<label for="password-old">Ievadi savu paroli:</label>
@@ -470,7 +469,7 @@
 					<option value="0"{user-skin-0}>Gaiša</option>
 					<option value="1"{user-skin-1}>Tumša</option>
 				</select>
-				<br />
+				<br>
 				<a href="/augsa" target="_blank">Pielāgot augšu</a>
 			</p>
 			<p>

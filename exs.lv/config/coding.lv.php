@@ -54,7 +54,7 @@ if (!$is_local) {
 	} else {
         // drošam savienojumam nepieciešamie uzstādījumi, kas pie reizes
         // arī autorizēs lietotāju visos subdomēnos
-		ini_set('session.name', 'CODING');
+		ini_set('session.name', '__Secure-CD');
 		ini_set('session.cookie_domain', '.coding.lv');
 		ini_set('session.cookie_httponly', 1);
 		ini_set('session.cookie_secure', 1);

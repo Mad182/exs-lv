@@ -15,7 +15,7 @@
 			</ul>
 			<!-- END BLOCK : subcats-->
 
-		</td><td class="stat">{topics}&nbsp;{txt-topics}<br />{posts}&nbsp;{txt-posts}</td><td class="last">{topic}<br />{date}<br />no: {author}</td></tr>
+		</td><td class="stat">{topics}&nbsp;{txt-topics}<br>{posts}&nbsp;{txt-posts}</td><td class="last">{topic}<br>{date}<br>no: {author}</td></tr>
 	<!-- END BLOCK : listsubcats-node-->
 </table>
 <!-- END BLOCK : listsubcats-->
@@ -84,7 +84,7 @@
 		<td><img width="19" height="18" src="//img.exs.lv/bildes/{timg}" alt="" /></td>
 		<td><h3><a href="{url}">{title}</a></h3></td>
 		<td class="center">{posts}</td>
-		<td class="last">{date}<br />no:&nbsp;{author}</td>
+		<td class="last">{date}<br>no:&nbsp;{author}</td>
 	</tr>
 	<!-- END BLOCK : list-forum-node-->
 </table>

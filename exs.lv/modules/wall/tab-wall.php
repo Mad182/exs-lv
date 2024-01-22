@@ -128,7 +128,7 @@ foreach ($images as $image) {
 	$time = time_ago_m(strtotime($image->bump));
 
 	$image->text = wordwrap(hide_spoilers(strip_tags($image->text)), 32, "\n", 1);
-	$image->text = textlimit($image->text, 140, '...') . '<br /><img class="attels_centrets" style="width:200px;" src="' . $image->url . '" alt="" />';
+	$image->text = textlimit($image->text, 140, '...') . '<br><img class="attels_centrets" style="width:200px;" src="' . $image->url . '" alt="" />';
 
 	$where = ' &raquo; <span class="where">galerija</span>';
 

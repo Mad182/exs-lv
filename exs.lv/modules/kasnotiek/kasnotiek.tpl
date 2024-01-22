@@ -7,7 +7,7 @@
 		<li>
 			<img class="av" src="{action-avatar}" alt="" />
 			<div class="event-content">
-				<span>{usrnick} pirms {action-date}</span><br />
+				<span>{usrnick} pirms {action-date}</span><br>
 				{action}
 			</div>
 			<div class="clear"></div>

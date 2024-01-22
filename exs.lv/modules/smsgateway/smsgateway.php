@@ -1,5 +1,7 @@
 <?php
 
+die('Šī iespēja šobrīd ir atslēgta!');
+
 if ($auth->ok) {
 
 	$tpl = new TemplatePower('modules/smsgateway/smsgateway.tpl');

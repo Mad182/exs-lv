@@ -20,56 +20,57 @@ require(CORE_PATH . '/includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
 require(CORE_PATH . '/includes/class.templatepower.php');
 require(CORE_PATH . '/includes/class.site_storage.php');
-require(CORE_PATH . '/includes/class.cookie.tracking.php');
 
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
 
 //rewrite hack
-if(!empty($_GET['fakeurl'])) {
+if (!empty($_GET['fakeurl'])) {
 	$parts = explode('/', $_GET['fakeurl']);
 	$_GET['viewcat'] = $parts[0];
-	if(!empty($parts[1])) {
+	if (!empty($parts[1])) {
 		$_GET['var1'] = $parts[1];
 	}
-	if(!empty($parts[2])) {
+	if (!empty($parts[2])) {
 		$_GET['var2'] = $parts[2];
 	}
-	if(!empty($parts[3])) {
+	if (!empty($parts[3])) {
 		$_GET['var3'] = $parts[3];
 	}
-	if(!empty($parts[4])) {
+	if (!empty($parts[4])) {
 		$_GET['var4'] = $parts[4];
 	}
 
-	if($_GET['viewcat'] === 'say') {
+	if ($_GET['viewcat'] === 'say') {
 		$_GET['m'] = $parts[1];
-		if(!empty($parts[2])) {
+		if (!empty($parts[2])) {
 			$mbid = explode('-', $parts[2]);
-			if($mbid[0] === 'skip') {
+			if ($mbid[0] === 'skip') {
 				$_GET['skip'] = $mbid[1];
 			} else {
 				$_GET['single'] = $mbid[0];
 			}
 		}
 	}
-
 }
 
-if(empty($_GET['viewcat'])) {
+if (empty($_GET['viewcat'])) {
 	$_GET['viewcat'] = null;
 }
 
 //izslēdz sesijas botiem, paātrina ielādi un nepiemēslo ar nevajadzīgiem sesiju failiem
 if (
-		strpos($_SERVER['HTTP_USER_AGENT'],"Googlebot") === false &&
-                strpos($_SERVER['HTTP_USER_AGENT'],"bingbot") === false &&
-		strpos($_SERVER['HTTP_USER_AGENT'],"YandexBot") === false &&
-                strpos($_SERVER['HTTP_USER_AGENT'],"YandexImages") === false &&
-		strpos($_SERVER['HTTP_USER_AGENT'],"Mediapartners") === false &&
-		strpos($_SERVER['HTTP_USER_AGENT'],"SemrushBot") === false &&
-		strpos($_SERVER['HTTP_USER_AGENT'],"AhrefsBot") === false
-	) {
+	strpos($_SERVER['HTTP_USER_AGENT'], "Googlebot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "bingbot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "YandexBot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "Mail.RU_Bot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "YandexImages") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "Mediapartners") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "SemrushBot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "CCBot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "DotBot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "AhrefsBot") === false
+) {
 	session_start();
 }
 
@@ -116,11 +117,6 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	if ($auth->error === 1) {
 		set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
 	}
-	if ($auth->ok === true || $auth->error === 3) {
-		update_karma($auth->id);
-		$cookies = new cookieTracker('_steam', 'T3vN3bu5MusC4k4r3T!!!1', $db);
-		$cookies->setCookie();
-	}
 }
 
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
@@ -149,7 +145,7 @@ if (isset($_GET['viewcat']) && $_GET['viewcat'] === 'get' && isset($_GET['var1']
 		$data['in-tabs'] = get_latest_posts();
 	}
 	if (isset($_GET['loadmb'])) {
-        if (!isset($_GET['tab'])) $_GET['tab'] = '';
+		if (!isset($_GET['tab'])) $_GET['tab'] = '';
 		$data['mb-latest'] = get_latest_mbs($_GET['tab']);
 	}
 	echo json_encode($data);
@@ -246,7 +242,7 @@ if (isset($_GET['u'])) {
 		}
 
 		/* ielādē moduli */
-        require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
+		require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
 
 		/* ajax pieprasījumus te arī izbeidzam */
 		if (isset($_GET['_'])) {
@@ -305,22 +301,22 @@ if ($skin === 'main') {
 
 $persona = '';
 if (!empty($inprofile) && !empty($inprofile->persona)) {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'/bildes/personas/' . $inprofile->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($ingroup) && !empty($ingroup->persona)) {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'/bildes/personas/' . $ingroup->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($auth->persona)) {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $auth->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'/bildes/personas/' . $auth->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif (!empty($category->persona)) {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/' . $category->persona . '\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'/bildes/personas/' . $category->persona . '\') repeat-x 0 0;background-size:cover;"';
 } elseif ($lang == 3) {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/gear.png\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'/bildes/personas/gear.png\') repeat-x 0 0;background-size:cover;"';
 } else {
-	$persona = ' style="background:url(\'//exs.lv/bildes/personas/gaming.jpg\') repeat-x 0 0;background-size:cover;"';
+	$persona = ' style="background:url(\'/bildes/personas/gaming.jpg\') repeat-x 0 0;background-size:cover;"';
 }
 
 //Latvijas valsts svētki
 if (in_array(date('m-d'), ['01-20', '05-01', '05-04', '11-11', '11-18', '06-03'])) {
-	$persona = ' style="height:157px;background:url(\'//exs.lv/bildes/personas/lielvardes_josta.jpg\') repeat-x 50% -25px;background-size:cover;"';
+	$persona = ' style="height:157px;background:url(\'/bildes/personas/lielvardes_josta.jpg\') repeat-x 50% -25px;background-size:cover;"';
 }
 
 $in_level = 0;
@@ -378,12 +374,6 @@ if (im_mod()) {
 	$new_reports_count = 0;
 }
 
-//links uz openidea.lv, aktīvs tikai sākumlapās
-$openidea = 'SIA Open Idea';
-if($_SERVER['REQUEST_URI'] === '/' || $category->textid === 'html-pamati' || $category->textid === 'css-pamati') {
-	$openidea = '<a href="https://openidea.lv/" title="Mājas lapas izstrāde un uzturēšana" rel="nofollow">SIA Open Idea</a>';
-}
-
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal([
 	'page-title' => hide_spoilers($page_title),
@@ -409,11 +399,10 @@ $tpl->assignGlobal([
 	'static-server' => $static_server,
 	'facebook-app-id' => $fb_api_id,
 	'img-server' => $img_server,
-	'logout-hash' => $auth->logout_hash,
-	'openidea' => $openidea
+	'logout-hash' => $auth->logout_hash
 ]);
 
-if($lang !== 1 && $lang !== 3) {
+if ($lang !== 1 && $lang !== 3) {
 	$tpl->assignGlobal([
 		'footer-mb' => get_footer_mb(),
 		'footer-topics' => get_footer_topics(),
@@ -540,24 +529,30 @@ if ($skin === 'main') {
 		}
 	}
 }
-if(!empty($category->noindex)) {
-	$robotstag = ['noindex'];
-}
 
-if($has_yt && $category->module !== 'wall') {
-	$robotstag[] = 'noindex';
-}
 
-/* robots meta taga pievienošana */
-if (!empty($robotstag)) {
-	$robotstag = array_unique($robotstag);
-	$tpl->newBlock('robots');
-	$tpl->assign('value', implode(',', $robotstag));
+if ($auth->ok !== true) {
+	$robotstag[] = 'noarchive';
+
+	if (!empty($category->noindex)) {
+		$robotstag = ['noindex'];
+	}
+
+	//if($has_yt && $category->module !== 'wall') {
+	//	$robotstag[] = 'noindex';
+	//}
+
+	/* robots meta taga pievienošana */
+	if (!empty($robotstag)) {
+		$robotstag = array_unique($robotstag);
+		$tpl->newBlock('robots');
+		$tpl->assign('value', implode(',', $robotstag));
+	}
 }
 
 /* opengraph meta tagi */
-if(!empty($opengraph_meta)) {
-	foreach($opengraph_meta as $key => $val) {
+if (!empty($opengraph_meta)) {
+	foreach ($opengraph_meta as $key => $val) {
 		$tpl->newBlock('og-meta');
 		$tpl->assign([
 			'key' => $key,
@@ -567,8 +562,8 @@ if(!empty($opengraph_meta)) {
 }
 
 /* twitter meta tagi */
-if(!empty($twitter_meta)) {
-	foreach($twitter_meta as $key => $val) {
+if (!empty($twitter_meta)) {
+	foreach ($twitter_meta as $key => $val) {
 		$tpl->newBlock('twitter-meta');
 		$tpl->assign([
 			'key' => $key,
@@ -578,7 +573,7 @@ if(!empty($twitter_meta)) {
 }
 
 /* canonical tag */
-if(!empty($canonical)) {
+if (!empty($canonical)) {
 	$tpl->newBlock('canonical');
 	$tpl->assign('url', htmlspecialchars($canonical));
 }
@@ -603,7 +598,7 @@ if (isset($_GET['vc'])) {
 
 $tpl->printToScreen();
 
-if ($debug && !$requested_json) {
+/*if ($debug && !$requested_json) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
 	echo '<div>atmiņa: ' . round((memory_get_usage() / 1024 / 1024), 3) . ' mb';
 	echo ' | peak atmiņa: ' . round((memory_get_peak_usage() / 1024 / 1024), 3) . ' mb';
@@ -614,5 +609,4 @@ if ($debug && !$requested_json) {
 		echo ' | cat_id:' . $category->id . ' (textid:' . $category->textid . ', module:' . $category->module . ')';
 	}
 	echo '</div></div></div>';
-}
-
+}*/

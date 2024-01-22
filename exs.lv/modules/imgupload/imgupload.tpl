@@ -28,33 +28,15 @@
 	<img src="https://img.exs.lv/{path}/{file}" alt="" />
 </div>
 <!-- END BLOCK : img-upload-success-->
-<form class="form" action="{page-url}" method="post" enctype="multipart/form-data">
-	<fieldset>
-		<p>
-			<label>Attēls:</label><br />
-			<input type="file" name="new-image" />
-		</p>
-		<p>
-			<label><input type="checkbox" name="resize" /> samazināt (640px)</label>
-			<label><input type="checkbox" name="resize960" /> samazināt (960px)</label>
-		</p>
-        <!-- START BLOCK : rs-watermark-checkbox -->
-        <p>
-			<label><input type="checkbox" name="add-watermark" /> pievienot runescape.exs.lv ūdenszīmi</label>
-		</p>
-        <p>
-			<label><input type="checkbox" name="position-left" /> novietot ūdenszīmi kreisajā apakšējā stūrī (pēc noklusējuma - apakšējais labais stūris)</label>
-		</p>
-        <!-- END BLOCK : rs-watermark-checkbox -->
-		<p>
-			<input type="submit" class="button primary" value="Upload!" />
-		</p>
-	</fieldset>
-</form>
+
+<p style="padding:100px">
+	<a style="font-size:200%;" href="https://imgur.com/" target="_blank">https://imgur.com/</a>
+</p>
+
 <!-- START BLOCK : img-upload-item-->
 <div style="padding:5px 0">
 	<div style="float:left;">
-		<a class="lightbox" href="https://img.exs.lv/{path}/{file}"><img class="av" src="https://img.exs.lv/{path}/small/{file}" alt="" style="width:100px;" /></a><br />
+		<a class="lightbox" href="https://img.exs.lv/{path}/{file}"><img class="av" src="https://img.exs.lv/{path}/small/{file}" alt="" style="width:100px;" /></a><br>
 		<a href="/img/?delete={id}&amp;token={token}" class="delete confirm">dzēst attēlu</a>
 	</div>
 

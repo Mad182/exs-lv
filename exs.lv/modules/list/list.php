@@ -41,6 +41,8 @@ if ($category->parent) {
 	$pagepath = '';
 }
 
+$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $category->textid;
+
 //list sub cats
 if ($category->isforum) {
 	$add = '';
@@ -64,7 +66,7 @@ if ($category->isforum) {
 			$add = '';
 			$finfo = get_cat($forum->textid);
 			if (!empty($finfo->mods)) {
-				$add = '<br />Moderatori: ';
+				$add = '<br>Moderatori: ';
 				$mods = [];
 				foreach ($finfo->mods as $mod) {
 					$minfo = get_user($mod);
@@ -99,7 +101,7 @@ if ($category->isforum) {
 			if ($auth->level == 1) {
 				//foruma apakškategoriju pievienošana/labošana
 				$tpl->assign([
-					'addlink' => '<br /><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
+					'addlink' => '<br><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
 					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">+edit</a> '
 				]);
 			}
@@ -280,7 +282,7 @@ if (!$category->mods_only || im_mod()) {
 				if (!empty($article->intro)) {
 					$article->text = $article->intro;
 				} else {
-					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', add_smile($article->text))))), 600);
+					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 600);
 					$article->intro = sanitize($article->text);
 					$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 				}

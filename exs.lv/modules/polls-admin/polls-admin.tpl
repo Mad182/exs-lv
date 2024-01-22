@@ -11,8 +11,8 @@
 	<!-- START BLOCK : polls_admin-success-->
 	<div class="form">
 		<p class="success">
-			Jautājums izveidots...<br />
-			Komentāru tēma izveidota...<br />
+			Jautājums izveidots...<br>
+			Komentāru tēma izveidota...<br>
 			Atbilžu varianti izveidoti...
 		</p>
 	</div>
@@ -22,55 +22,55 @@
 	<form class="form" action="" method="post">
 		<fieldset>
 			<p>
-				<label for="new-poll-q">Aptaujas jautājums</label><br />
+				<label for="new-poll-q">Aptaujas jautājums</label><br>
 				<input type="text" class="title" name="new-poll-q" id="new-poll-q" />
 			</p>
 			<p>
-				<label for="new-poll-q">1. atbilde</label><br />
+				<label for="new-poll-q">1. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">2. atbilde</label><br />
+				<label for="new-poll-q">2. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">3. atbilde</label><br />
+				<label for="new-poll-q">3. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">4. atbilde</label><br />
+				<label for="new-poll-q">4. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">5. atbilde</label><br />
+				<label for="new-poll-q">5. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">6. atbilde</label><br />
+				<label for="new-poll-q">6. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">7. atbilde</label><br />
+				<label for="new-poll-q">7. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">8. atbilde</label><br />
+				<label for="new-poll-q">8. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">9. atbilde</label><br />
+				<label for="new-poll-q">9. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">10. atbilde</label><br />
+				<label for="new-poll-q">10. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">11. atbilde</label><br />
+				<label for="new-poll-q">11. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 			<p>
-				<label for="new-poll-q">12. atbilde</label><br />
+				<label for="new-poll-q">12. atbilde</label><br>
 				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a" />
 			</p>
 

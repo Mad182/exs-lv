@@ -5,7 +5,7 @@
 	<fieldset>
 		<legend>Importēt avataru no <a href="https://gif-avatars.com/" target="_blank">gif-avatars.com</a></legend>
 		<p>
-			<label>Avatara ID:</label><br />
+			<label>Avatara ID:</label><br>
 			<input type="text" name="gif_avatars_id" class="text number" />
 			<input type="submit" name="gif_avatars_import" class="button primary" value="Importēt" />
 		</p>
@@ -18,7 +18,7 @@
 			<!-- START BLOCK : av-node-->
 			<li style="background:transparent;float:left;width:146px;padding:6px 0 1px;margin:3px 1px;height:146px;text-align:center;{owned}">
 				<label for="av-{id}" style="font-size:90%;font-weight:normal">
-					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" /><br />
+					<img src="/dati/bildes/useravatar/{image}" alt="{id}" style="width: 90px;height: 90px;" /><br>
 					{title}
 				</label>
 				<input id="av-{id}" type="radio" name="avatarid" value="{id}" />
@@ -34,7 +34,7 @@
 		</p>
 
 		<p>
-			Animētais avatars &quot;maksā&quot; 5 exs.lv kredīta punktus.<br />
+			Animētais avatars &quot;maksā&quot; 5 exs.lv kredīta punktus.<br>
 			Par to tu iegūsti vienu avataru, ko izvēlies. Citiem šis avatars vairs nebūs pieejams, un Tu to jebkurā brīdī varēsi uzlikt atpakaļ, ja būsi nomainijis.
 		</p>
 
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 
-		<script type="text/javascript">
+		<script>
 			$(document).ready(function() {
 				$('#default-payment-link').click();
 			});

@@ -1,5 +1,10 @@
 <?php
 
+$priv = '';
+if (!$auth->ok) {
+	$priv = ' AND `userlogs`.`private` = 0 ';
+}
+
 $actions = $db->get_results("SELECT
 		`userlogs`.`action`,
 		`userlogs`.`time`,
@@ -14,6 +19,7 @@ $actions = $db->get_results("SELECT
 	WHERE
 		`users`.`id` = `userlogs`.`user` AND
 		`userlogs`.`lang` = '$lang'
+		$priv
 	ORDER BY
 		`userlogs`.`time` DESC
 	LIMIT 40");

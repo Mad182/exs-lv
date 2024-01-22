@@ -36,8 +36,6 @@ $polls_cat = 1129;
 
 $page_title = 'League of Legends forums';
 
-$twitter_meta['site'] = '@exs_lv';
-
 
 /*
 |--------------------------------------------------------------------------

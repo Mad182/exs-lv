@@ -4,6 +4,7 @@
  * Primitīvs "drop in" aizvietotājs ezSQL
  * balstīts uz php iebūvēto mysqli klasi
  */
+
 class mdb extends mysqli {
 
 	var $num_queries = 0;
@@ -23,6 +24,7 @@ class mdb extends mysqli {
 		//$this->query("set names utf8");
 	}
 
+	#[\ReturnTypeWillChange]
 	function query($query = null, $resultmode = NULL) {
 		$this->num_queries++;
 		return parent::query($query);
@@ -72,7 +74,7 @@ class mdb extends mysqli {
 
 		if (empty($table) || empty($params) || empty($data)) {
 			return false;
-        }
+		}
 
 		$criteria = [];
 		$updates = [];
@@ -99,7 +101,7 @@ class mdb extends mysqli {
 
 		if (empty($updates) || empty($criteria)) {
 			return false;
-        }
+		}
 
 		$updates = implode(', ', $updates);
 		$criteria = implode(' AND ', $criteria);

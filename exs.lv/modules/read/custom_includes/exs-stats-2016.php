@@ -1,6 +1,6 @@
 <p style="text-align:center;font-size:26px;margin:0;background:#086b88;padding:20px 0 10px;color:#bef0ff;border-bottom:1px solid #0c8db3;">eXs.lv 2016. gads skaitļos</p>
 
-<p style="text-align: center; line-height: 1.5; padding: 10px 12px; margin-bottom:0;margin-top:0;background: #0c8db3; color: #fff;border-bottom: 10px solid #086b88;border-top: 10px solid #086b88;">&Scaron;eit ir apkopota exs.lv statistika laika posmā no 2016. gada 1. janvāra līdz 31. decembrim.<br />Skaitļi attiecināmi tie&scaron;i uz exs.lv projektu, ja vien nav norādīts citādi.</p>
+<p style="text-align: center; line-height: 1.5; padding: 10px 12px; margin-bottom:0;margin-top:0;background: #0c8db3; color: #fff;border-bottom: 10px solid #086b88;border-top: 10px solid #086b88;">&Scaron;eit ir apkopota exs.lv statistika laika posmā no 2016. gada 1. janvāra līdz 31. decembrim.<br>Skaitļi attiecināmi tie&scaron;i uz exs.lv projektu, ja vien nav norādīts citādi.</p>
 
 <div style="background: #eceded; padding: 10px 12px;margin-top:0">
 

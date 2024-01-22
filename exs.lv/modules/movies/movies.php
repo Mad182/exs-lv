@@ -67,7 +67,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
 		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br />'], ' ', add_smile($article->text))))), 500);
+			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 500);
 			$article->intro = sanitize($article->text);
 			$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
 		}
@@ -96,11 +96,11 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			}
 
 			if (!empty($movie_data->year)) {
-				$tpl->assign('year', '<strong>Gads:</strong> ' . $movie_data->year . '<br />');
+				$tpl->assign('year', '<strong>Gads:</strong> ' . $movie_data->year . '<br>');
 			}
 
 			if (!empty($movie_data->runtime)) {
-				$tpl->assign('runtime', '<strong>Garums:</strong> ' . $movie_data->runtime . ' minūtes<br />');
+				$tpl->assign('runtime', '<strong>Garums:</strong> ' . $movie_data->runtime . ' minūtes<br>');
 			}
 
 			if (!empty($movie_data->type) && $movie_data->type == 'series') {
@@ -114,7 +114,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			foreach ($genres as $genre) {
 				$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
 			}
-			$tpl->assign('genres', '<strong>Žanrs:</strong> ' . implode(' / ', $gen) . '<br />');
+			$tpl->assign('genres', '<strong>Žanrs:</strong> ' . implode(' / ', $gen) . '<br>');
 		}
 
 

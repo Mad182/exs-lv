@@ -7,14 +7,14 @@
 		<p class="error">Lietotājvārds vai e-pasts datubāzē nav atrasti, vai arī tie nesakrīt!</p>
 		<!-- END BLOCK : invalid-namemail-->
 		<!-- START BLOCK : greetings-->
-		<p class="success">Dati pieņemti!<br />Pārbaudi savu e-pastu.</p>
+		<p class="success">Dati pieņemti!<br>Pārbaudi savu e-pastu.</p>
 		<!-- END BLOCK : greetings-->
 		<p>
-			<label for="pwd-nick">Lietotājvārds:</label><br />
+			<label for="pwd-nick">Lietotājvārds:</label><br>
 			<input type="text" class="text" name="pwd-nick" id="pwd-nick" maxlength="18" />
 		</p>
 		<p>
-			<label for="pwd-mail">E-pasta adrese:</label><br />
+			<label for="pwd-mail">E-pasta adrese:</label><br>
 			<input type="text" class="text" name="pwd-mail" id="pwd-mail" maxlength="128" />
 		</p>
 		<p>

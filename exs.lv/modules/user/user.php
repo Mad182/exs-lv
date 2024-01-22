@@ -102,7 +102,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		}
 		if ($auth->level != 5 && $inprofile->level != 5 && $auth->ok && $auth->id != $inprofile->id && !$friend->pending_friendship($auth->id, $inprofile->id) && !$friend->get_friendship_id($auth->id, $inprofile->id)) {
 			$tpl->assign([
-				'friend-link' => '<a class="button primary" href="/user/' . $inprofile->id . '/?addfriend=true&amp;token=' . make_token('addfriend') . '">Draudzēties</a><br />'
+				'friend-link' => '<a class="button primary" href="/user/' . $inprofile->id . '/?addfriend=true&amp;token=' . make_token('addfriend') . '">Draudzēties</a><br>'
 			]);
 		}
 		if ($auth->ok && $auth->id != $inprofile->id && $auth->level != 5) {
@@ -149,39 +149,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		$canonical = 'https://' . $_SERVER['HTTP_HOST'] . '/user/' . $inprofile->id;
 
 		if (im_mod()) {
-			//dabū visus pievienoto (cookies) profilu nikus ar linkiem
-			$profiles = 'nav!';
-			if(!empty($inprofile->connected_profiles)) {
-				$profiles = explode(',', $inprofile->connected_profiles);
-
-				foreach ($profiles as $key => $id) {
-
-					if(!empty($id)) {
-
-						$nick = get_user($id);
-
-						if(!empty($nick) && !$nick->deleted) {
-							$profiles[$key] = userlink($nick);
-						} else {
-							unset($profiles[$key]);
-						}
-				
-					}
-				}
-
-				array_splice($profiles, count($profiles) - 1);
-				$profiles = implode(', ', $profiles);
-				if (!$profiles) {
-					$profiles = 'nav!';
-				}
-			}
 
 			$tpl->newBlock('user-modinfo');
 			$tpl->assign([
 				'lastip' => $inprofile->lastip,
 				'user_agent' => $inprofile->user_agent,
-				'mail' => $inprofile->mail,
-				'cookie_users' => $profiles
+				'mail' => $inprofile->mail
 			]);
 			if ($inprofile->lastip != '127.0.0.1') {
 				$tpl->assign('asn', get_asn($inprofile->lastip));

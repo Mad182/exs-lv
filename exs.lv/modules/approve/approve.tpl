@@ -23,14 +23,14 @@
 			<p class="notice">
 				Lūdzu nepievieno zagtus rakstus! Tas var beigties ar banu!
 			</p>
-			<p><label for="new-topic-title">Raksta nosaukums:</label><br /><input type="text" name="new-topic-title" id="new-topic-title" class="text" maxlength="64" value="{draft-title}" /></p>
+			<p><label for="new-topic-title">Raksta nosaukums:</label><br><input type="text" name="new-topic-title" id="new-topic-title" class="text" maxlength="64" value="{draft-title}" /></p>
 			<p>
-				<label for="new-topic-body">Teksts:</label><br />
+				<label for="new-topic-body">Teksts:</label><br>
 				<textarea name="new-topic-body" id="new-topic-body" cols="94" rows="40" style="width: 100%;height:500px"></textarea>
 			</p>
-			<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
+			<p><label for="edit-avatar">Raksta avatars:</label><br><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
 			<p>
-				<label for="new-topic-category">Lapas sadaļa:</label><br />
+				<label for="new-topic-category">Lapas sadaļa:</label><br>
                 <!-- START BLOCK : rs-cat-selection -->
 				<select name="new-topic-category">
                     <!-- START BLOCK : rs-catgroup-->
@@ -58,21 +58,21 @@
 	<!-- START BLOCK : approve-edit-->
 	<h4>{article-showtitle}</h4>
 	<p>
-		<strong>Autors:</strong> <a href="{aurl}">{article-author-nick}</a><br />
-		<strong>Datums:</strong> {article-date}<br />
-		<strong>IP:</strong> {article-ip}<br />
+		<strong>Autors:</strong> <a href="{aurl}">{article-author-nick}</a><br>
+		<strong>Datums:</strong> {article-date}<br>
+		<strong>IP:</strong> {article-ip}<br>
 		{article-avatar}
 	</p>
 	<form action="{page-url}" class="form" method="post">
 		<fieldset>
 			<legend>Raksta pārbaude</legend>
-			<p><label for="ap-topic-title">Nosaukums:</label><br /><input type="text" name="ap-topic-title" id="ap-topic-title" class="text" value="{article-title}" maxlength="64" /></p>
+			<p><label for="ap-topic-title">Nosaukums:</label><br><input type="text" name="ap-topic-title" id="ap-topic-title" class="text" value="{article-title}" maxlength="64" /></p>
 			<p>
-				<label for="ap-topic-body">Saturs:</label><br />
+				<label for="ap-topic-body">Saturs:</label><br>
 				<textarea name="ap-topic-body" id="ap-topic-body" cols="94" rows="40" style="width: 100%; height: 400px;">{article-text}</textarea>
 			</p>
 			<p>
-				<label for="ap-topic-category">Sadaļa:</label><br />
+				<label for="ap-topic-category">Sadaļa:</label><br>
 
                 <!-- START BLOCK : rs-cat-app-selection -->
 				<select name="ap-topic-category">
@@ -99,7 +99,7 @@
 			<input type="hidden" name="ap-topic-ip" value="{article-ip}" />
 			<input type="hidden" name="ap-topic-wide" value="{article-wide}" />
 			<input type="submit" name="submit" value="Pievienot" class="button" />
-			<br />
+			<br>
 			<p style="text-align:right">[<a class="red" href="/write/delete/{article-id}">Dzēst</a>]</p>
 		</fieldset>
 	</form>

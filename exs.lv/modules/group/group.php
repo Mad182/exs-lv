@@ -48,7 +48,7 @@ else if ($group->lang != $lang) {
 
 //disable google indexing for some groups
 if($group->noindex) {
-	$robotstag = ['noindex', 'follow'];
+	//$robotstag = ['noindex', 'follow'];
 }
 
 // grupas avatars
@@ -818,7 +818,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				}
 				if (!empty($record->closed_by)) {
 					$closer = get_user($record->closed_by);
-					$tpl->assign('by', '<br />Aizslēdza: ' . usercolor($closer->nick, $closer->level, false, $record->closed_by));
+					$tpl->assign('by', '<br>Aizslēdza: ' . usercolor($closer->nick, $closer->level, false, $record->closed_by));
 				}
 			}
 
@@ -951,12 +951,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	if ($is_admin) {
 
 		// cilnes dzēšana
-		if (isset($_GET['deltab']) && check_token('deltab', $_GET['token'])) {
+		if (isset($_GET['deltab']) && check_token('deltab' . $_GET['deltab'], $_GET['token'])) {
 			$delete = intval($_GET['deltab']);
-			if ($delete && $delete != 303) {
-				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = '$group->id' AND `id` = '$delete' AND `module` = '' LIMIT 1");
+			if ($delete) {
+				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = '$group->id' AND `id` = '$delete' LIMIT 1");
+				$auth->log('Izdzēsa tabu', 'clans', $group->id);
 			}
-			$auth->log('Izdzēsa tabu', 'clans', $group->id);
 			redirect($group_link . '/options');
 		}
 
@@ -994,7 +994,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'id' => $tab->id,
 					'slug' => $tab->slug,
 					'title' => $tab->title,
-					'token' => make_token('deltab')
+					'token' => make_token('deltab' . $tab->id)
 				]);
 			}
 		}
@@ -1185,24 +1185,30 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	// ...
 	if ($auth->ok && $auth->id != $group->owner) {
 
-		if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")  && !$group->archived) {
-			$tpl->newBlock('group-info-apply');
-			$tpl->assign([
-				'group-id' => $group->id,
-				'token' => make_token('apply')
-			]);
-		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '0'")) {
-			$tpl->newBlock('group-info-cancel');
-			$tpl->assign([
-				'group-id' => $group->id,
-				'token' => make_token('cancel')
-			]);
-		} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
-			$tpl->newBlock('group-info-quit');
-			$tpl->assign([
-				'group-id' => $group->id,
-				'token' => make_token('cancel')
-			]);
+		if($auth->id == 42358 && $group->id == 411) {
+
+		} else {
+
+			if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")  && !$group->archived) {
+				$tpl->newBlock('group-info-apply');
+				$tpl->assign([
+					'group-id' => $group->id,
+					'token' => make_token('apply')
+				]);
+			} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '0'")) {
+				$tpl->newBlock('group-info-cancel');
+				$tpl->assign([
+					'group-id' => $group->id,
+					'token' => make_token('cancel')
+				]);
+			} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
+				$tpl->newBlock('group-info-quit');
+				$tpl->assign([
+					'group-id' => $group->id,
+					'token' => make_token('cancel')
+				]);
+			}
+
 		}
 	}
 

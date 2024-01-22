@@ -13,10 +13,10 @@
 			<legend>Ielogoties</legend>
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
-				<label for="login-nick-inline">Niks:</label><br /><input id="login-nick-inline" class="text" name="niks" type="text" />
+				<label for="login-nick-inline">Niks:</label><br><input id="login-nick-inline" class="text" name="niks" type="text" />
 			</p>
 			<p>
-				<label for="login-pass-inline">Parole:</label><br /><input id="login-pass-inline" class="text" name="parole" type="password" />
+				<label for="login-pass-inline">Parole:</label><br><input id="login-pass-inline" class="text" name="parole" type="password" />
 			</p>
 			<p>
 				<input name="login-submit" id="login-submit-inline" value="Ienākt" type="submit" />

@@ -17,7 +17,7 @@ $msgs = [
 shuffle($msgs);
 
 if (date('l') == 'Friday') {
-	$out = '<h1 class="a win">PIEGDIENAAAAAAAAH!!!</h1><iframe width="600" height="450" src="https://www.youtube.com/embed/6GggY4TEYbk?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
+	$out = '<h1 class="a win">PIEGDIENAAAAAAAAH!!!</h1><iframe width="600" height="450" src="https://www.youtube.com/embed/wgJfoIyAXjQ?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>';
 } else {
 	$out = '<h1 class="a fail">Nope. Turpini refrešot... :(</h1>' . $msgs[0];
 }

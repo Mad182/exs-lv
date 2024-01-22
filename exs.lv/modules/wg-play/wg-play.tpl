@@ -1,6 +1,6 @@
 <!-- START BLOCK : hm-gbody-top-->
 
-<script type="text/javascript">
+<script>
 
 	$(document).ready(function() {
 		$('#hm-game-alphabet a').on('click', function() {

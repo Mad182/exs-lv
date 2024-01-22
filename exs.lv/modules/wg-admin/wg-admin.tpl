@@ -7,11 +7,11 @@
     <p class="success">Izmaiņas saglabātas!</p>
 		<!-- END BLOCK : facts_admin-successupd-->
 		<p>
-			<label for="edit-fact">Vārds:</label><br />
+			<label for="edit-fact">Vārds:</label><br>
 			<textarea class="text" name="edit-word" id="edit-word" style="width: 300px; height: 20px;" cols="10" rows="4">{word}</textarea>
 		</p>
 		<p>
-			<label for="edit-hint">Jautājums:</label><br />
+			<label for="edit-hint">Jautājums:</label><br>
 			<textarea class="text" name="edit-hint" id="edit-hint" style="width: 300px; height: 80px;" cols="10" rows="4">{hint}</textarea>
 		</p>
 		<p>
@@ -30,11 +30,11 @@
     <p class="success">Jautājums pievienots!</p>
 		<!-- END BLOCK : facts_admin-success-->
 		<p>
-			<label for="new-word">Vārds:</label><br />
+			<label for="new-word">Vārds:</label><br>
 			<textarea class="text" name="new-word" id="new-word" style="width: 300px; height: 20px;" cols="10" rows="4"></textarea>
 		</p>
 		<p>
-			<label for="new-hint">Jautājums:</label><br />
+			<label for="new-hint">Jautājums:</label><br>
 			<textarea class="text" name="new-hint" id="new-hint" style="width: 300px; height: 80px;" cols="10" rows="4"></textarea>
 		</p>
 		<p>

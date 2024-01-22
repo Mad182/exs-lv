@@ -7,6 +7,7 @@
 class getImages {
 
 	public function reddit() {
+		return false;
 		global $db;
 		$data = curl_get('https://www.reddit.com/r/comics+funny+gifs+funnygifs+gaming_gifs+GamePhysics+highqualitygifs+holdmyredbull+EngineeringPorn.json');
 		$junk = json_decode($data);
@@ -46,6 +47,7 @@ class getImages {
 	}
 
 	public function xkcd() {
+		return false;
 		global $db;
 		$data = curl_get('https://xkcd.com/info.0.json');
 		$junk = json_decode($data);

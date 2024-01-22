@@ -12,6 +12,7 @@ require(LIB_PATH . '/bcrypt/lib/password.php');
  */
 require(LIB_PATH . '/GoogleAuthenticator/PHPGangsta/GoogleAuthenticator.php');
 
+#[AllowDynamicProperties]
 class AuthBase {
 
 	var $error = 0;
@@ -34,17 +35,19 @@ class AuthBase {
 		$this->nick = "Viesis";
 		$this->flood = 8;
 		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$this->iphash = substr(md5($_SERVER['HTTP_X_FORWARDED_FOR']), 1, 6);
 		$this->ok = false;
+		$this->hosts_online = 0;
 
 		// lai vēlāk iekš `visits` (un varbūt kur citur) varētu fiksēt tos,
 		// kas saturu ielādē caur Android/iOS appu
 		$this->via_android = (($lang === 2) ? 1 : 0);
-        $this->via_ios = (($lang === 4) ? 1 : 0);
+		$this->via_ios = (($lang === 4) ? 1 : 0);
 
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
-			$this->xsrf = substr(md5($this->ip . microtime(true)),0,8);
+			$this->xsrf = substr(md5($this->ip . microtime(true)), 0, 8);
 			$_SESSION['xsrf'] = $this->xsrf;
 		}
 		$this->check_session();
@@ -78,11 +81,11 @@ class AuthBase {
 
 		$userinfo = get_user($_SESSION['auth_id']);
 
-		$this->check_2fa($userinfo);
-
-		if ($userinfo->deleted) {
+		if (empty($userinfo) || $userinfo->deleted) {
 			return $this->logout();
 		}
+
+		$this->check_2fa($userinfo);
 
 		foreach ($userinfo as $key => $val) {
 			$this->$key = $val;
@@ -105,7 +108,7 @@ class AuthBase {
 		$this->ok = true;
 
 		if (empty($_SESSION['lastseen']) || $_SESSION['lastseen'] < time() - 480) {
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `android` = ".$this->via_android.", `ios` = ".$this->via_ios.", `seen_today` = 1 WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1 WHERE `id` = '$this->id'");
 			$_SESSION['lastseen'] = time();
 		}
 
@@ -121,8 +124,10 @@ class AuthBase {
 		}
 
 		// android|ios.exs.lv pats prot apstrādāt bloķētos profilus
-		if ($this->via_android === 0 && $this->via_ios === 0 && !isset($_GET['_']) &&
-				$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+		if (
+			$this->via_android === 0 && $this->via_ios === 0 && !isset($_GET['_']) &&
+			$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")
+		) {
 			$this->logout();
 			set_flash('Pieeja lapai ir liegta!', 'error');
 			redirect('http://exs.lv/?c=125&bid=' . $ban);
@@ -152,7 +157,6 @@ class AuthBase {
 		global $db, $site_access, $lang;
 
 		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
-			$this->log('Neizdevies login mēģinājums (CSRF check failed, user: ' . h($username) . ', ref: ' . h($_SERVER['HTTP_REFERER']) . ')');
 			set_flash('Ielogoties neizdevās! Mēģini vēlreiz!', 'error');
 			sleep(1);
 			$this->error = 2;
@@ -163,39 +167,18 @@ class AuthBase {
 
 		$login = sanitize($username);
 
-		$tmp = $db->get_row("SELECT `id`, `password`, `pwd` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
+		$tmp = $db->get_row("SELECT `id`, `password` FROM `users` WHERE (`nick` = '" . $login . "' OR `mail` = '" . $login . "') AND `deleted` = 0 ORDER BY `karma` DESC LIMIT 1");
 
 		$found = false;
 		if (!empty($tmp)) {
 
-			//log in using old SHA password
-			if (empty($tmp->password) && !empty($tmp->pwd)) {
-
-				if ($tmp->pwd === pwd($password)) {
-					$found = $tmp->id;
-
-					//create new bcrypt hash and delete old one
-					$hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 14]);
-					$db->query("UPDATE `users` SET `password` = '$hash', `pwd` = '' WHERE `id` = '$tmp->id' LIMIT 1");
-				}
-
-				//using bcrypt
-			} elseif (!empty($tmp->password)) {
-
-				if (password_verify($password, $tmp->password)) {
-					$found = $tmp->id;
-				}
+			if (!empty($tmp->password) && password_verify($password, $tmp->password)) {
+				$found = $tmp->id;
 			}
 		}
 
 		if ($found) {
 			$userinfo = get_user($found, true);
-
-			if($this->is_tor_exit()) {
-				$this->log('Neizdevies login mēģinājums (IS_TOR_EXIT = true)', 'users', $userinfo->id);
-				$this->logout();
-				return false;
-			}
 
 			foreach ($userinfo as $key => $val) {
 				$this->$key = $val;
@@ -226,7 +209,7 @@ class AuthBase {
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = ".$this->via_android.", `ios` = ".$this->via_ios.", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
@@ -235,10 +218,10 @@ class AuthBase {
 
 			$this->check_2fa($userinfo);
 
-			$bad = $db->get_var("SELECT count(*) FROM `bad_passwords` WHERE `shit` = '".sanitize($password)."'");
+			$bad = $db->get_var("SELECT count(*) FROM `bad_passwords` WHERE `shit` = '" . sanitize($password) . "'");
 
-			if($bad) {
-				set_flash('<strong>Tava parole ir draņķīga!</strong><br />Tavu paroli var atrast populārāko paroļu datubāzē.<br />Šoreiz izdomā kaut ko oriģinālāku :shura:', 'error');
+			if ($bad) {
+				set_flash('<strong>Tava parole ir draņķīga!</strong><br>Tavu paroli var atrast populārāko paroļu datubāzē.<br>Šoreiz izdomā kaut ko oriģinālāku :shura:', 'error');
 				redirect('/user/security');
 			}
 
@@ -275,28 +258,29 @@ class AuthBase {
 		global $db, $m;
 
 		if (
-				strpos($_SERVER['HTTP_USER_AGENT'],"Googlebot") !== false ||
-				        strpos($_SERVER['HTTP_USER_AGENT'],"bingbot") !== false ||
-				strpos($_SERVER['HTTP_USER_AGENT'],"YandexBot") !== false ||
-				        strpos($_SERVER['HTTP_USER_AGENT'],"YandexImages") !== false ||
-				strpos($_SERVER['HTTP_USER_AGENT'],"Mediapartners") !== false ||
-				strpos($_SERVER['HTTP_USER_AGENT'],"SemrushBot") !== false ||
-				strpos($_SERVER['HTTP_USER_AGENT'],"AhrefsBot") !== false
-			) {
+			strpos($_SERVER['HTTP_USER_AGENT'], "Googlebot") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "bingbot") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "YandexBot") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "YandexImages") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "Mail.RU_Bot") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "Mediapartners") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "SemrushBot") !== false ||
+			strpos($_SERVER['HTTP_USER_AGENT'], "AhrefsBot") !== false
+		) {
 			return false;
 		}
 
 		$lang = get_lang();
 
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$lang)) {
-			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->ip . "' AND `site_id` = ".$lang);
+		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->iphash . "' AND `site_id` = " . $lang)) {
+			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->iphash . "' AND `site_id` = " . $lang);
 		} else {
-			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->ip . "', CURRENT_TIMESTAMP, ".$lang.")");
+			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->iphash . "', CURRENT_TIMESTAMP, " . $lang . ")");
 		}
 
 		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
-			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 280 SECOND > `last_hit`");
-			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = ".$lang);
+			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 240 SECOND > `last_hit`");
+			$this->hosts_online = (int) $db->get_var("SELECT count(*) FROM `counter_ip` WHERE `site_id` = " . $lang);
 			$m->set('online_count_' . $lang, "$this->hosts_online", 10);
 		}
 	}
@@ -310,86 +294,20 @@ class AuthBase {
 	 * Pārbauda, vai IP nāk no tor
 	 */
 	function is_tor_exit() {
-
-		global $m;
-
-		if(substr($this->ip, 0, 7) === '5.152.2') {
-			return true;
-		}
-
-		if(substr($this->ip, 0, 10) === '62.102.148') {
-			return true;
-		}
-
-		//we are blocked by check.getipintel.net
-		return false;
-
-		$is_tor = 'n';
-
-		$wl = [
-			'77.93.23.137',
-			'77.93.29.110',
-			'83.99.202.248',
-			'85.254.5.40',
-			'85.254.17.118',
-			'85.254.34.183',
-			'85.254.36.48',
-			'86.63.168.151',
-			'86.63.172.49',
-			'86.63.176.19',
-			'86.63.183.96',
-			'87.246.137.132',
-			'87.246.138.209',
-			'89.248.83.3',
-			'92.49.23.241',
-			'109.73.109.194',
-			'136.169.15.221',
-			'159.148.3.185',
-			'159.148.5.232',
-			'159.148.15.150',
-			'159.148.24.132',
-			'159.148.36.129',
-			'159.148.45.194',
-			'159.148.78.44',
-			'159.148.142.85',
-			'176.67.34.96',
-			'176.67.40.27',
-			'212.93.100.40',
-			'212.142.121.225',
-		];
-
-		if(in_array($this->ip, $wl)) {
-			return false;
-		}
-
-		if (($is_tor = $m->get('t-'.md5($this->ip))) === false) {
-		
-			$value = curl_get('http://check.getipintel.net/check.php?ip=' . $this->ip . '&contact=mad182@gmail.com');
-
-			if ($value == "1") {
-				$is_tor = 'y';
-			} else {
-				$is_tor = 'n';
-			}
-			$m->set('t-'.md5($this->ip), $is_tor, 9000);
-
-		}
-
-		if($is_tor === 'y') {
-			return true;
-		}
 		return false;
 	}
 
 	function check_2fa($userinfo) {
 		global $db;
-		if ($this->via_android === 0 && $this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' && 
-			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout') {
+		if (
+			$this->via_android === 0 && $this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' &&
+			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout'
+		) {
 
 			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $userinfo->id");
-			if(!empty($check_existing)) {
-				foreach($check_existing as $device) {
-					if(!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
+			if (!empty($check_existing)) {
+				foreach ($check_existing as $device) {
+					if (!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
 						$_SESSION['2fa'] = 1;
 						return true;
 					}
@@ -399,6 +317,4 @@ class AuthBase {
 			redirect('/2fa');
 		}
 	}
-
 }
-

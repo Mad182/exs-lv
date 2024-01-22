@@ -44,8 +44,6 @@ $cat_guilds = 791;
 $cat_rsnews = 599;
 $cat_padomi = 5;
 
-$twitter_meta['site'] = '@exs_lv';
-
 // runescape jaunumu rakstu bilžu folderis
 $dir_news_images = CORE_PATH.'/bildes/runescape/news/';
 

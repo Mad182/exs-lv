@@ -72,10 +72,6 @@
 		<h1 class="q">Vai šodien ir piektdiena?</h1>
 		{out}
 		<p>&nbsp;</p>
-		<div style="text-align:center">
-			<a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script src="https://platform.twitter.com/widgets.js"></script>
-			<iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexs.lv%2FPiektdiena&amp;layout=button_count&amp;show_faces=false&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="overflow:hidden; width:100px; height:20px; border: 0;margin:0;" allowTransparency="true"></iframe>
-		</div>
 	</div>
 	<script>
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

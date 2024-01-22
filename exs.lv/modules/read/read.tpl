@@ -30,7 +30,7 @@
 <form action="{page-url}" id="comment-edit" class="form" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Labot komentāru</legend>
-		<label for="edit-comment-text">Teksts:</label><br />
+		<label for="edit-comment-text">Teksts:</label><br>
 		<textarea name="edit-comment-text" id="edit-comment-text" cols="94" rows="40" style="width: 100%; height: 300px;">{comment-text}</textarea>
 		<p>
 			<input type="hidden" name="edit-comment-id" value="{comment-id}" /><input type="submit" name="submit" value="Saglabāt izmaiņas" class="button primary" />
@@ -56,7 +56,7 @@
 		<!-- END BLOCK : edit-movie-image-->
 		<div class="c"></div>
 
-		<p><label for="avatar-url">Saite uz bildi:</label><br /><input type="text" name="avatar-url" id="avatar-url" class="text" value="" /></p>
+		<p><label for="avatar-url">Saite uz bildi:</label><br><input type="text" name="avatar-url" id="avatar-url" class="text" value="" /></p>
 
 		<p><input type="hidden" name="edit-topic-id" value="{article-id}" /><input type="submit" name="submit" value="Pievienot avataru" class="button primary" /></p>
 	</fieldset>
@@ -77,25 +77,25 @@
 		<p style="margin-left:20px"><a href="{wide-page-url}&amp;narrow=1">Atvērt šaurā skata režīmu (notiks lapas pārlāde!)</a></p>
 		<!-- END BLOCK : goto-narrow-page -->
 
-		<p><label for="edit-topic-title">Nosaukums:</label><br /><input type="text" name="edit-topic-title" id="edit-topic-title" class="title" value="{article-title}" maxlength="64" /></p>
+		<p><label for="edit-topic-title">Nosaukums:</label><br><input type="text" name="edit-topic-title" id="edit-topic-title" class="title" value="{article-title}" maxlength="64" /></p>
 
 		<!-- START BLOCK : edit-movie-data-->
 
 		<p>
-			<label for="movie-titlelv">Nosaukums latviski:</label><br />
+			<label for="movie-titlelv">Nosaukums latviski:</label><br>
 			<input type="text" name="movie-titlelv" id="movie-titlelv" class="text" value="{title_lv}" maxlength="64" />
 		</p>
 		<p>
-			<label for="movie-year">Gads:</label><br />
+			<label for="movie-year">Gads:</label><br>
 			<input type="text" name="movie-year" id="movie-year" class="text" style="width:50px;" value="{year}" maxlength="4" />
 		</p>
 		<p>
-			<!--<label for="movie-imdb">IMDB id:</label><br />
+			<!--<label for="movie-imdb">IMDB id:</label><br>
 			<input type="text" name="movie-imdb" id="movie-imdb" class="text" style="width:100px;" value="{imdb_id}" maxlength="40" />-->
 			<label><input type="checkbox" class="checkbox" name="imdb-getdata" />&nbsp;iegūt IMDB datus</label>
 		</p>
 		<p>
-			<label for="movie-type">Filmas veids:</label><br />
+			<label for="movie-type">Filmas veids:</label><br>
 			<select name="movie-type">
 				<option value="movie"{sel-movie}>Filma</option>
 				<option value="series"{sel-series}>Seriāls</option>
@@ -106,14 +106,14 @@
 
 		<!-- END BLOCK : edit-movie-data-->
 
-		<label for="edit-topic-body">Teksts:</label><br />
+		<label for="edit-topic-body">Teksts:</label><br>
 		<textarea name="edit-topic-body" id="edit-topic-body" cols="94" rows="40" style="width: 100%; height: 500px;">{article-text}</textarea>
 		<!-- START BLOCK : edit-article-av-->
 		<p><a class="thb-image"><img src="//exs.lv/{img}" alt="Avatars" /></a></p>
 		<!-- END BLOCK : edit-article-av-->
-		<p><label for="edit-avatar">Raksta avatars:</label><br /><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
+		<p><label for="edit-avatar">Raksta avatars:</label><br><input type="file" class="long" name="edit-avatar" id="edit-avatar" /></p>
 		<!-- START BLOCK : edit-article-category -->
-		<p><label for="edit-category">Lapas sadaļa:</label><br />
+		<p><label for="edit-category">Lapas sadaļa:</label><br>
 			<select name="edit-category">
 				<!-- START BLOCK : catgroup-->
 				<optgroup label="{title}">
@@ -199,7 +199,7 @@
 
 		<!-- START BLOCK : movie-likes-->
 		<p>
-			<strong>Iesaka:</strong><br />
+			<strong>Iesaka:</strong><br>
 			<!-- START BLOCK : movie-likes-user-->
 			<img src="{avatar}" class="icon" alt="{nick}" title="{nick}" />
 			<!-- END BLOCK : movie-likes-user-->
@@ -361,7 +361,7 @@
 		<input type="hidden" name="comment-pid" value="{comment-pid}" />
 		<input type="hidden" name="checksrc" value="{comment-pid-check}" />
 		<!-- START BLOCK : resp-tools-->
-		<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br />
+		<label><input type="checkbox" name="no-bump" value="1" /><small>&nbsp;nebumpot</small></label><br>
 		<!-- END BLOCK : resp-tools-->
 		<textarea style="height:150px;width:100%" cols="45" rows="5" name="commenttext" ></textarea>
 		<p>

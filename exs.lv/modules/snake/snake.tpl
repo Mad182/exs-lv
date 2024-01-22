@@ -30,7 +30,7 @@
 </div>
 
 <div class="c"></div>
-<br />
+<br>
 <h2>Highscores</h2>
 <table class="table" style="margin: 10px 0;">
 	<tr>

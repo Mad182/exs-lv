@@ -86,7 +86,7 @@
 <!-- END BLOCK : no-profiles -->
 
 <!-- START BLOCK : scroll-to -->
-<script type="text/javascript">
+<script>
 	$(document).ready(function() {
 		var aTag = $({main-id});
 		aTag.next().removeClass('is-hidden'); 

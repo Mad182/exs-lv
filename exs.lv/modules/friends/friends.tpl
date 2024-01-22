@@ -18,7 +18,7 @@
 	<!-- START BLOCK : user-friend-list-->
 	<ul id="friend-list">
 		<!-- START BLOCK : user-friend-node-->
-		<li><a class="profile-link" href="/user/{friend-id}"><img src="{friend-avatar}" alt="{friend-title}" /><br />{friend-nick}</a>
+		<li><a class="profile-link" href="/user/{friend-id}"><img src="{friend-avatar}" alt="{friend-title}" /><br>{friend-nick}</a>
 			<!-- START BLOCK : user-friend-delete-->
 			<a class="delete confirm" title="Pārtraukt draudzību" href="?deny={friendship-id}&amp;token={token}"><img src="{static-server}/bildes/x.png" alt="x" title="Pārtraukt draudzību" /></a>
 			<!-- END BLOCK : user-friend-delete-->

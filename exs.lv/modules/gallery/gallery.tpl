@@ -23,12 +23,12 @@
 				<legend>Pievienot jaunu attēlu</legend>
 				<input type="hidden" name="unique-form-check" value="{gallery-check}" />
 				<p>
-					<label for="new-image">Attēls:</label><br />
+					<label for="new-image">Attēls:</label><br>
 					<input type="file" class="text" name="new-image" id="new-image" />
 				</p>
 				<!-- START BLOCK : new-image-interest -->
 				<p>
-					<label for="new-image-interest">Attēla kategorija:</label><br />
+					<label for="new-image-interest">Attēla kategorija:</label><br>
 					<select name="new-image-interest">
 						<option value="0">--</option>
 						<!-- START BLOCK : select-new-interest-->
@@ -38,7 +38,7 @@
 				</p>
 				<!-- END BLOCK : new-image-interest -->
 				<p>
-					<label for="new-image-description">Komentārs:</label><br />
+					<label for="new-image-description">Komentārs:</label><br>
 					<input type="text" class="text" name="new-image-description" id="new-image-description" />
 				</p>
 				<p>
@@ -184,7 +184,7 @@
 			<legend>Pievienot komentāru</legend>
 			<input type="hidden" name="comment-pid" value="{comment-pid}" />
 			<input type="hidden" name="checksrc" value="{comment-pid-check}" />
-			<textarea style="height:90px" cols="45" rows="5" name="commenttext" ></textarea><br />
+			<textarea style="height:90px" cols="45" rows="5" name="commenttext" ></textarea><br>
 			<input type="submit" class="button primary" value="Pievienot" />
 		</fieldset>
 	</form>

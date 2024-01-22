@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="lv" prefix="fb:http://www.facebook.com/2008/fbml">
+<html lang="lv">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <title>{page-title}</title>
     <!-- START BLOCK : meta-description-->
     <meta name="description" content="{description}">
@@ -13,7 +13,6 @@
     <meta name="twitter:{key}" content="{val}">
     <!-- END BLOCK : twitter-meta-->
     <!-- START BLOCK : robots-->
-    <meta name="robots" content="{value}">
     <!-- END BLOCK : robots-->
     <link rel="shortcut icon" type="image/x-icon" href="/bildes/faviconrs.ico">
 	<!-- START BLOCK : canonical-->
@@ -27,7 +26,7 @@
     <!-- END BLOCK : additional-css-->
     <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.qtip.min.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
     <!-- START BLOCK : tinymce-enabled-->
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
     <script>
         tinymce.init({
             selector: "textarea",
@@ -60,7 +59,7 @@
         });</script>
     <!-- END BLOCK : tinymce-enabled-->
     <!-- START BLOCK : tinymce-simple-->
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
     <script>
         tinymce.init({
             selector: "textarea",
@@ -101,6 +100,7 @@
         }
     </style>
     <!-- END BLOCK : rs-background-css -->
+	{plevel}
 </head>
 <body class="{layout-options}">
     <div id="scroll-up" title="Uz augšu"></div>
@@ -113,19 +113,7 @@
                     <ul>
                         <li><a href="//exs.lv">exs.lv</a></li>
                         <li><a href="//lol.exs.lv">lol.exs.lv</a></li>
-                        <li><a rel="nofollow" href="https://coding.lv">coding.lv</a></li>
-                        <li>&nbsp;</li>
-                    </ul>
-                </li>
-                <li><a href="javascript:void(0)" class="dropdown">Hiscores</a>
-                    <span class="arrow arrow-down"></span>
-                    <ul>
-                        <li><a href="http://scores.kopideja.lv/Invention.htm" rel="nofollow" target="_blank">Invention HS (LV)</a></li>
-                        <li><a href="http://services.runescape.com/m=hiscore/a=1/ranking?category_type=0&table=27&page=1" rel="nofollow" target="_blank">Invention HS</a></li>
-                        <li class="as-last">&nbsp;</li>
-                        <li><a href="//tops.exs.lv/runescape" rel="nofollow" target="_blank">tops.exs.lv</a></li>
-                        <li><a href="http://www.kopideja.lv/scores" rel="nofollow" target="_blank">LV hiscores</a></li>
-                        <li><a href="http://www.kopideja.lv/oldscores" rel="nofollow" target="_blank">LV OSRS hiscores</a></li>
+                        <li><a href="https://coding.lv">coding.lv</a></li>
                         <li>&nbsp;</li>
                     </ul>
                 </li>
@@ -231,12 +219,6 @@
                             <label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit"></label>
                         </fieldset>
                     </form>
-                </li>
-                <li class="less-padding">
-                    <a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=f7deb7618bdd54f1dabedac5d92943b2&amp;redirect=https%3A%2F%2Frunescape.exs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=f7deb7618bdd54f1dabedac5d92943b2&amp;redirect=https%3A%2F%2Frunescape.exs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
-                </li>
-                <li class="less-padding">
-                    <a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
                 </li>
             </ul>
             <!-- END BLOCK : login-form-->
@@ -363,7 +345,7 @@
                         <!-- END BLOCK : poll-answers-node-->
                     </ol>
                     <span class="poll-text">
-                        Balsojuši: {poll-totalvotes}<br />
+                        Balsojuši: {poll-totalvotes}<br>
                         <a href="{ppage-id}">Komentāri</a> &middot; <a href="/aptaujas">Senākas aptaujas</a>
                     </span>
                     <!-- END BLOCK : poll-answers-->
@@ -496,7 +478,7 @@
 
             <div id="footer">
                 <div id="online-users">
-                    Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:12px">{page-onlineusers}</span>
+                    Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br><span style="font-size:12px">{page-onlineusers}</span>
                 </div>
                 <div class="infoblock infoblock-list">
                     <div class="inner">
@@ -510,7 +492,7 @@
                 </div>
                 <div class="infoblock">
                     <div class="inner">
-                        <p>&copy; {openidea}, 2005-{current-year}</p>
+                        <p>&copy; exs.lv, 2005-{current-year}</p>
                         <p>runescape.exs.lv ir neoficiāls RuneScape spēlētāju sarunu un pamācību forums.</p>
                     </div>
                 </div>
@@ -519,23 +501,12 @@
                         <ul id="internal-links">
                             <li><a href="//exs.lv/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
                             <li><a href="/sitemap">Lapas karte</a></li>
-                            <li><a href="//exs.lv/reklama">Reklāma portālā</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="c"></div>
             </div>
-
         </div>
     </div>
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-4190387-2', 'auto');
-      ga('send', 'pageview');
-    </script>
 </body>
 </html>

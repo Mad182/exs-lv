@@ -27,14 +27,14 @@ switch ($_GET['type']) {
 
 $type = $_GET['type'];
 $elements = explode(',', $_GET['files']);
-
 // Determine last modification date of the files
 $lastmodified = 0;
-while (list(, $element) = each($elements)) {
+foreach ($elements as $element) {
 	$path = realpath($base . '/' . $element);
 
 	if (($type == 'javascript' && substr($path, -3) != '.js') ||
-			($type == 'css' && substr($path, -4) != '.css')) {
+		($type == 'css' && substr($path, -4) != '.css')
+	) {
 		header("HTTP/1.0 403 Forbidden");
 		exit;
 	}
@@ -51,8 +51,10 @@ while (list(, $element) = each($elements)) {
 $hash = $lastmodified . '-' . md5($_GET['files']);
 header("Etag: \"" . $hash . "\"");
 
-if (isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
-		stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) == '"' . $hash . '"') {
+if (
+	isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
+	stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) == '"' . $hash . '"'
+) {
 	// Return visit and no modifications, so do not send anything
 	header("HTTP/1.0 304 Not Modified");
 	header('Content-Length: 0');
@@ -63,14 +65,16 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
 		// Determine supported compression method
 		$encoding = false;
 		if (!empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
-			if(strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+			if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
 				$encoding = 'gzip';
 			}
 		}
 
 		// Check for buggy versions of Internet Explorer
-		if (!empty($_SERVER['HTTP_USER_AGENT']) && !strstr($_SERVER['HTTP_USER_AGENT'], 'Opera') &&
-				preg_match('/^Mozilla\/4\.0 \(compatible; MSIE ([0-9]\.[0-9])/i', $_SERVER['HTTP_USER_AGENT'], $matches)) {
+		if (
+			!empty($_SERVER['HTTP_USER_AGENT']) && !strstr($_SERVER['HTTP_USER_AGENT'], 'Opera') &&
+			preg_match('/^Mozilla\/4\.0 \(compatible; MSIE ([0-9]\.[0-9])/i', $_SERVER['HTTP_USER_AGENT'], $matches)
+		) {
 			$version = floatval($matches[1]);
 
 			if ($version < 6)
@@ -114,11 +118,11 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
 		$i++;
 	}
 
-	if($type == 'javascript') {
+	if ($type == 'javascript') {
 		$contents = JSMin::minify($contents);
 	}
 
-	if($type == 'css') {
+	if ($type == 'css') {
 		$cssmin = new CSSmin();
 		$contents = $cssmin->run($contents);
 	}

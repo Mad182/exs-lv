@@ -14,7 +14,7 @@ function get_blog_latest($category_id, $force = false) {
 		if ($bloglatest = $db->get_results("SELECT strid,title,posts FROM pages WHERE category = '" . $category_id . "' ORDER BY bump DESC LIMIT 5")) {
 			$html = '<h3>Jaunākais blogā</h3><div class="box"><p>';
 			foreach ($bloglatest as $bloglate) {
-				$html .= '<a href="/read/' . $bloglate->strid . '">' . $bloglate->title . '&nbsp;[' . $bloglate->posts . ']</a><br />';
+				$html .= '<a href="/read/' . $bloglate->strid . '">' . $bloglate->title . '&nbsp;[' . $bloglate->posts . ']</a><br>';
 			}
 			$html .= '</p></div>';
 		} else {
@@ -24,7 +24,7 @@ function get_blog_latest($category_id, $force = false) {
 			if ($sidelinks = $db->get_results("SELECT title,url FROM sidelinks WHERE category = '" . $category_id . "' ORDER BY id DESC")) {
 				$html .= '<h3>Manas saites</h3><div class="box"><p>';
 				foreach ($sidelinks as $sidelink) {
-					$html .= '<a href="' . $sidelink->url . '" rel="nofollow">' . $sidelink->title . '</a><br />';
+					$html .= '<a href="' . $sidelink->url . '" rel="nofollow">' . $sidelink->title . '</a><br>';
 				}
 				$html .= '</p></div>';
 			}

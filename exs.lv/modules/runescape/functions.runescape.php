@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Satur tās funkcijas, kurām ir saistība ar RuneScape jaunumu ielasīšanu
  *  no runescape.com RSS feeds un to parādīšanu sākumlapā.
@@ -11,21 +12,23 @@
  *  no runescape.com RSS saglabāts cache failā.
  */
 function fetch_news($type = 'rs3') {
-    
+
     $filename = 'official-news.html';
     if ($type === 'oldschool') {
         $filename = 'oldschool-news.html';
     }
-    
+
     $output = '<p class="simple-note">Neizdevās nolasīt jaunumus. :(<br><br>Pāris minūšu laikā saraksts tiks atjaunots.</p>';
 
-    $file = @fopen(CORE_PATH.'/cache/runescape/'.$filename, 'r');
+    $file = @fopen(CORE_PATH . '/cache/runescape/' . $filename, 'r');
     if ($file !== false) {
-        $output = fread($file, 
-            filesize(CORE_PATH.'/cache/runescape/'.$filename));
+        $output = fread(
+            $file,
+            filesize(CORE_PATH . '/cache/runescape/' . $filename)
+        );
         fclose($file);
     }
-    
+
     return $output;
 }
 
@@ -39,8 +42,9 @@ function fetch_news($type = 'rs3') {
  *  RSS feed lasīšana tiek veikta tikai reizi 10 minūtēs.
  */
 function read_rss($force = false) {
+    return true;
     global $m, $db, $auth, $rsbot_id, $lang, $dir_news_images;
-    
+
     $read_every = 600; // sekundes
     $feed_fetched = false;
 
@@ -48,17 +52,17 @@ function read_rss($force = false) {
         'rs3' => 'http://services.runescape.com/m=news/latest_news.rss',
         'oldschool' => 'http://services.runescape.com/m=news/latest_news.rss?oldschool=true'
     ];
-    
+
     foreach ($urls as $key => $link) {
-    
+
         // memcached glabās tikai pēdējās parsēšanas laiku
-        if (!$force && $m->get('rs-rssfeed-'.$key.'-lastread')) continue;        
-        $m->set('rs-rssfeed-'.$key.'-lastread', time(), $read_every);
+        if (!$force && $m->get('rs-rssfeed-' . $key . '-lastread')) continue;
+        $m->set('rs-rssfeed-' . $key . '-lastread', time(), $read_every);
 
         $news = curl_get($link);
         if ($news === false) continue; // ignorēs un neko nedarīs
         $feed_fetched = true;
-        
+
         // ciklā katru jauno ierakstu saglabās masīvā, kura vērtības pēc tam
         // apgriezīs pretēji, lai pievienotu ierakstus pareizā secībā
         $reversed_objects = [];
@@ -66,21 +70,22 @@ function read_rss($force = false) {
         foreach ($data->channel->item as $single) {
 
             $single->is_oldschool = ($key === 'oldschool') ? 1 : 0;
-            
+
             // pārbaude, vai datubāzē šāds jaunums jau neeksistē
-            $single->hashval = sanitize(md5($single->pubDate.$single->title));        
-            $val = $db->get_var("
+            $single->hashval = sanitize(md5($single->pubDate . $single->title));
+            $val = $db->get_var(
+                "
                 SELECT count(*) FROM `rs_news`
                     JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
                 WHERE 
-                    `rs_news`.`hash_value` = '".$single->hashval."' AND
-                    `rs_news`.`is_oldschool` = ".$single->is_oldschool
+                    `rs_news`.`hash_value` = '" . $single->hashval . "' AND
+                    `rs_news`.`is_oldschool` = " . $single->is_oldschool
             );
             if ($val > 0) continue; // dublikātus nevajag
-            
+
             $reversed_objects[] = $single;
         }
-        
+
         // varbūt jaunu ierakstu nebija
         if (empty($reversed_objects)) continue;
 
@@ -91,12 +96,12 @@ function read_rss($force = false) {
             $append = '';
             if ((int)$single->is_oldschool) {
                 $append = '&nbsp;<span class="rsmb-oldschool">(Oldschool)</span>';
-            }            
-            $mb_text  = '<p class="rsmb-title">'.$single->title.$append.'</p>'.
-                        '<p class="rsmb-text">'.$single->description.'<br><br>'.
-                        'Oriģinālraksts: <a href="'.$single->link.'" '.
-                        'rel="nofollow" target="_blank">'.$single->link.'</a></p>'.
-                        '<p class="rsmb-fade">Ieraksts izveidots automātiski.</p>';
+            }
+            $mb_text  = '<p class="rsmb-title">' . $single->title . $append . '</p>' .
+                '<p class="rsmb-text">' . $single->description . '<br><br>' .
+                'Oriģinālraksts: <a href="' . $single->link . '" ' .
+                'rel="nofollow" target="_blank">' . $single->link . '</a></p>' .
+                '<p class="rsmb-fade">Ieraksts izveidots automātiski.</p>';
 
             $values = [
                 'author'    => (int)$rsbot_id,
@@ -117,18 +122,21 @@ function read_rss($force = false) {
             if ($has_image) {
                 // curl šajā implementācijā nespēs verificēt sertifikātus
                 $single->enclosure['url'] = str_replace(
-                    'https://', 'http://', $single->enclosure['url']);
+                    'https://',
+                    'http://',
+                    $single->enclosure['url']
+                );
                 // attēls tiks saglabāts uz lokālā servera
                 $save = save_rs_image(
                     $single->enclosure['url'], // source_path
                     $dir_news_images, // target_path
-                    $os_prefix.$mb_id.'.jpg' // img_title
+                    $os_prefix . $mb_id . '.jpg' // img_title
                 );
                 // ja lokāli attēlu saglabāt neizdodas, tā arī jāatzīmē,
                 // lai pēcāk varētu rādīt fallback attēlus
                 if ($save === false) $has_image = 0;
             }
-            
+
             $values = [
                 'hash_value'    => input2db((string)$single->hashval, 256),
                 'is_oldschool'  => (int)$single->is_oldschool,
@@ -159,7 +167,7 @@ function read_rss($force = false) {
  */
 function create_news($type = 'rs3') {
     global $db, $rsbot_id, $img_server, $rs_news_count;
-    
+
     $is_oldschool = ($type === 'oldschool') ? 1 : 0;
 
     $news = $db->get_results("
@@ -178,39 +186,39 @@ function create_news($type = 'rs3') {
             JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
         WHERE
             `rs_news`.`deleted_by` = 0 AND
-            `rs_news`.`is_oldschool` = ".$is_oldschool."
+            `rs_news`.`is_oldschool` = " . $is_oldschool . "
         ORDER BY
             `rs_news`.`id` DESC
-        LIMIT 0, ".$rs_news_count."
-    ");    
+        LIMIT 0, " . $rs_news_count . "
+    ");
     if (!$news) return; // slikti, ka tā :(
-    
+
     $img_prefix = ($is_oldschool) ? 'os-' : 'rs3-';
     $out = '<ul class="official-news">';
 
     foreach ($news as $single) { // izies cauri atlasītajiem ierakstiem
-    
+
         // ja ierakstam dzēsts miniblogs, to šeit neiekļaus
         if ($single->removed) continue;
-        
-        $img_path = '/bildes/runescape/news/'.$img_prefix.$single->mb_id.'.jpg';
-        $img_path_2 = '/bildes/runescape/news/'.$img_prefix.$single->mb_id.'_1.jpg';
+
+        $img_path = '/bildes/runescape/news/' . $img_prefix . $single->mb_id . '.jpg';
+        $img_path_2 = '/bildes/runescape/news/' . $img_prefix . $single->mb_id . '_1.jpg';
         if ($type === 'oldschool') {
             $fallback_path = '/bildes/runescape/fallback/os-fallback.png';
         } else {
-            $fallback_path = '/bildes/runescape/fallback/'.get_fallback_image($single->category);
+            $fallback_path = '/bildes/runescape/fallback/' . get_fallback_image($single->category);
         }
-        
+
         // attēls
         $image = '';
-        if ($single->has_image && file_exists(CORE_PATH.$img_path)) {
-            $image = '<img src="'.$img_server.$img_path.'" title="'.$single->title.'" alt="'.$single->title.'">';
-        } else if ($single->has_image && file_exists(CORE_PATH.$img_path_2)) {
-            $image = '<img src="'.$img_server.$img_path_2.'" title="'.$single->title.'" alt="'.$single->title.'">';
+        if ($single->has_image && file_exists(CORE_PATH . $img_path)) {
+            $image = '<img src="' . $img_server . $img_path . '" title="' . $single->title . '" alt="' . $single->title . '">';
+        } else if ($single->has_image && file_exists(CORE_PATH . $img_path_2)) {
+            $image = '<img src="' . $img_server . $img_path_2 . '" title="' . $single->title . '" alt="' . $single->title . '">';
         } else {
-            $image = '<img src="'.$img_server.$fallback_path.'" title="'.$single->title.'" alt="'.$single->title.'">';
+            $image = '<img src="' . $img_server . $fallback_path . '" title="' . $single->title . '" alt="' . $single->title . '">';
         }
-        
+
         $date = date('d.m.Y', strtotime($single->date));
         $cat = translate_category((string)$single->category);
         $lim = (empty($image)) ? 90 : 65;
@@ -218,29 +226,29 @@ function create_news($type = 'rs3') {
         $single->description = textlimit($single->description, $lim, '...');
 
         // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
-        $style = (empty($image) ? 
+        $style = (empty($image) ?
             ' style="padding:0 10px 5px;width:90%"' : '');
-        
-        $out .= '<li><a href="/say/'.$rsbot_id.'/'.$single->mb_id.'-'.mb_get_strid($single->text, $single->mb_id).'">'.
-                    '<div>'.$image.'</div>'.
-                    '<div>'.
-                        '<span>'.$single->title.'</span>'.
-                        '<span class="description has-ellipsis">'.$single->description.'</span>'.
-                        '<span>'.$date.' &middot; '.$cat.'</span>'.
-                    '</div>'.
-                '</a></li>';        
+
+        $out .= '<li><a href="/say/' . $rsbot_id . '/' . $single->mb_id . '-' . mb_get_strid($single->text, $single->mb_id) . '">' .
+            '<div>' . $image . '</div>' .
+            '<div>' .
+            '<span>' . $single->title . '</span>' .
+            '<span class="description has-ellipsis">' . $single->description . '</span>' .
+            '<span>' . $date . ' &middot; ' . $cat . '</span>' .
+            '</div>' .
+            '</a></li>';
     }
-    
+
     // oldschool jaunumos senāki raksti nav apskatāmi
     if (!$is_oldschool) {
-            $out .= '<li class="link">'.
-                '<a href="http://services.runescape.com/m=news/" rel="nofollow" '.
+        $out .= '<li class="link">' .
+            '<a href="http://services.runescape.com/m=news/" rel="nofollow" ' .
             'target="_blank">Skatīt senākus rakstus</a></li>';
     }
     $out .= '</ul>';
-    
+
     $filename = ($is_oldschool) ? 'oldschool-news.html' : 'official-news.html';
-    $file = fopen(CORE_PATH.'/cache/runescape/'.$filename, 'w');
+    $file = fopen(CORE_PATH . '/cache/runescape/' . $filename, 'w');
     fwrite($file, $out);
     fclose($file);
 }
@@ -260,7 +268,7 @@ function save_rs_image($img_url, $target_path, $target_name = 'empty') {
 
     // lejuplādē attēlu no adreses un saglabā uz servera
     $curl = curl_init($img_url);
-    $file = @fopen($target_path.$target_name, 'wb');
+    $file = @fopen($target_path . $target_name, 'wb');
     curl_setopt($curl, CURLOPT_FILE, $file);
     curl_setopt($curl, CURLOPT_HEADER, 0);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
@@ -272,10 +280,10 @@ function save_rs_image($img_url, $target_path, $target_name = 'empty') {
     // pārveido attēlu uz mazāku izmēru
     require_once(LIB_PATH . '/verot/src/class.upload.php');
 
-    $foo = new Upload($target_path.$target_name);
+    $foo = new Upload($target_path . $target_name);
     $foo->image_max_pixels = 200000000;
     if ($foo->uploaded) {
-        $foo->file_new_name_body = str_replace(['.png','.gif','.jpg', '.jpeg'], '', $target_name);
+        $foo->file_new_name_body = str_replace(['.png', '.gif', '.jpg', '.jpeg'], '', $target_name);
         $foo->file_auto_rename = false;
         $foo->image_resize = true;
         $foo->image_convert = 'jpg';
@@ -356,11 +364,12 @@ function translate_category($string = '') {
 function get_news_logo_list($delete_old = false) {
     global $db;
     global $dir_news_images, $rs_news_count;
-    
+
     // nolasa sarakstu ar saglabātajiem attēliem
     $dh = @opendir($dir_news_images);
     if ($dh === false) {
-        echo 'Nav neviena saglabāta attēla.'; exit;
+        echo 'Nav neviena saglabāta attēla.';
+        exit;
     }
     while (false !== ($filename = readdir($dh))) {
         if (in_array($filename, array('.', '..', 'empty'))) {
@@ -368,18 +377,18 @@ function get_news_logo_list($delete_old = false) {
         }
         $files[] = $filename;
     }
-    
+
     $article_titles = [];
     $article_ids = [];
-    
+
     // nolasa sarakstu ar abu tipu rs jaunumiem, kas vēl ir
     // gana aktuāli un tiek rādīti sākumlapā
     $type_arr = [0, 1]; // 0 - rs3, 1 - oldschool
     foreach ($type_arr as $type) {
         $news = $db->get_results("
             SELECT `id`, `mb_id`, `news_title`, `news_link` FROM `rs_news`
-            WHERE `deleted_by` = 0 AND `is_oldschool` = ".$type."
-            ORDER BY `id` DESC LIMIT 0, ".$rs_news_count."
+            WHERE `deleted_by` = 0 AND `is_oldschool` = " . $type . "
+            ORDER BY `id` DESC LIMIT 0, " . $rs_news_count . "
         ");
         if (!$news) continue;
         foreach ($news as $article) {
@@ -387,27 +396,27 @@ function get_news_logo_list($delete_old = false) {
             $article_titles[(int)$article->mb_id] = $article->news_title;
         }
     }
-    
+
     // iziet cauri foldera attēlu sarakstam un parāda,
     // kuri no attēliem ir kandidāti dzēšanai (jo nav starp aktuālajiem)
     $deletable = [];
-    
+
     foreach ($files as $saved_image) {
-        
+
         // iegūst ziņu raksta ID no attēla nosaukuma, kurš ir formātā:
         // rs3-<id>.jpg VAI os-<id>.jpg
-        $img_id = (int) str_replace(array('rs3-','os-','.jpg'), '', $saved_image);
-        
+        $img_id = (int) str_replace(array('rs3-', 'os-', '.jpg'), '', $saved_image);
+
         // ja attēla id nav starp aktuālajām ziņām, attēlu dzēš
         // (ja izdzēsīs kaut ko ne tā, lapā tiks parādīts fallback attēls)
         if (!in_array($img_id, $article_ids)) {
             $deletable[] = $saved_image;
             if ($delete_old) {
-                @unlink($dir_news_images.$saved_image);
+                @unlink($dir_news_images . $saved_image);
             }
         }
     }
-    
+
     as_json([
         'deleted' => $delete_old,
         'GET param to delete' => '?delete=true',

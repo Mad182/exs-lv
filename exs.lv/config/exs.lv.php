@@ -30,7 +30,6 @@ $polls_cat = 2;
 
 $robotstag[] = 'noodp';
 
-$twitter_meta['site'] = '@exs_lv';
 $opengraph_meta['locale'] = 'lv_LV';
 
 /*

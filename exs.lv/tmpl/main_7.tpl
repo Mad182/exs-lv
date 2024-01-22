@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="lv" prefix="fb: http://www.facebook.com/2008/fbml">
-	<head>
-		<meta charset="UTF-8">
+<html lang="lv">
+<head>
+	<meta charset="UTF-8">
 		<title>{page-title}</title>
 		<!-- START BLOCK : meta-description-->
 		<meta name="description" content="{description}">
@@ -13,21 +13,19 @@
 		<meta name="twitter:{key}" content="{val}">
 		<!-- END BLOCK : twitter-meta-->
 		<!-- START BLOCK : robots-->
-		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 		<!-- START BLOCK : canonical-->
 		<link rel="canonical" href="{url}">
 		<!-- END BLOCK : canonical-->
 		<script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
 		<link rel="stylesheet" href="{static-server}/css/core.css,lol.css">
 		<!-- START BLOCK : additional-css-->
 		<link rel="stylesheet" href="{static-server}/css/{filename}">
 		<!-- END BLOCK : additional-css-->
 		<script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,mcp.js,j.js"></script>
 		<!-- START BLOCK : tinymce-enabled-->
-		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
 		<script>
 			tinymce.init({
 				selector: "textarea",
@@ -57,7 +55,7 @@
 			});</script>
 		<!-- END BLOCK : tinymce-enabled-->
 		<!-- START BLOCK : tinymce-simple-->
-		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
 		<script>
 			tinymce.init({
 				selector: "textarea",
@@ -88,6 +86,7 @@
 		</script>
 		<!-- END BLOCK : mb-head-->
 		<!-- INCLUDE BLOCK : module-head -->
+	{plevel}
 	</head>
 
 	<body class="{layout-options}">
@@ -127,7 +126,6 @@
 					<ul id="top-menu-left">
 						<li{cat-sel-1755}><a class="first" href="/">Sākumlapa</a></li>
 						<li{cat-sel-1122}><a href="/forums">Forums</a></li>
-						<li><a href="https://tops.exs.lv/lol" rel="nofollow">Tops</a></li>
 					</ul>
 					<!-- START BLOCK : user-menu-->
 					<ul id="top-menu-right">
@@ -180,12 +178,6 @@
 									<label><input name="login-submit" id="login-submit" class="login-submit" value="Ienākt" type="submit" /></label>
 								</fieldset>
 							</form>
-						</li>
-						<li>
-							<a class="external-login external-dr" title="Ienākt ar draugiem.lv pasi" href="https://api.draugiem.lv/authorize/?app=15005147&amp;hash=6f466204e62a4e68806c19e3bd636794&amp;redirect=https%3A%2F%2Flol.exs.lv%2Fdraugiem-signup%2F" onclick="if(handle=window.open('https://api.draugiem.lv/authorize/?app=15005147&amp;hash=6f466204e62a4e68806c19e3bd636794&amp;redirect=https%3A%2F%2Flol.exs.lv%2Fdraugiem-signup%2F&amp;popup=1','Dr_15005147' ,'width=400, height=400, left='+(screen.width?(screen.width-400)/2:0)+', top='+(screen.height?(screen.height-400)/2:0)+',scrollbars=no')){handle.focus();return false;}"><span>Ienākt</span></a>
-						</li>
-						<li>
-							<a href="/fb-login" class="external-login external-fb" title="Log in with FaceBook"><span>Log in</span></a>
 						</li>
 					</ul>
 					<!-- END BLOCK : login-form-->
@@ -276,25 +268,12 @@
 				<div class="box">
 					<p>
 						<!-- START BLOCK : groups-l-node-->
-						<a href="/group/{id}">{title}</a><br />
+						<a href="/group/{id}">{title}</a><br>
 						<!-- END BLOCK : groups-l-node-->
 					</p>
 					<a href="/grupas">Visas grupas &raquo;</a>
 				</div>
 				<!-- END BLOCK : groups-l-list-->
-				<h3>Meklētājs</h3>
-				<div class="box">
-					Meklēt lapā ar <a href="/search/">google</a>:
-					<form method="get" action="/search/" id="search-form">
-						<fieldset>
-							<input type="hidden" name="cx" value="014557532850324448350:00ymkcfoxlo" />
-							<input type="hidden" name="cof" value="FORID:11" />
-							<input type="hidden" name="ie" value="UTF-8" />
-							<input class="text" name="q" size="16" type="text" value="" />
-							<input value="Meklēt" class="submit button primary" type="submit" />
-						</fieldset>
-					</form>
-				</div>
 
 				<!-- START BLOCK : user-top-->
 				<h3>Šodien aktīvākie</h3>
@@ -323,16 +302,16 @@
 					</a>
 					{profile-top-awards}
 					<!-- START BLOCK : profilebox-pm-link-->
-					<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br />
+					<a href="/pm/write/?to={profile-id}" id="l-pm">Nosūtīt PM</a><br>
 					<!-- END BLOCK : profilebox-pm-link-->
 					<!-- START BLOCK : profilebox-warn-->
-					<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br />
+					<a href="/warns/{profile-id}" id="l-warn"{class}>Brīdinājumi{profile-warns}</a><br>
 					<!-- END BLOCK : profilebox-warn-->
 					<!-- START BLOCK : profilebox-blog-link-->
-					<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br />-->
+					<!--<a href="{url}" id="l-blog">Blogs&nbsp;({count})</a><br>-->
 					<!-- END BLOCK : profilebox-blog-link-->
 					<!-- START BLOCK : profilebox-twitter-link-->
-					<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br />
+					<a rel="nofollow" href="https://twitter.com/{twitter}" id="l-twitter">{twitter}</a><br>
 					<!-- END BLOCK : profilebox-twitter-link-->
 					<!-- START BLOCK : profilebox-yt-link-->
 					<!-- END BLOCK : profilebox-yt-link-->
@@ -367,7 +346,7 @@
 						<li>{poll-answer-question}<div><span>{poll-answer-percentage}%</span><div style="width:{poll-answer-percentage}%"></div></div></li>
 						<!-- END BLOCK : poll-answers-node-->
 					</ol>
-					Balsojuši: {poll-totalvotes}<br />
+					Balsojuši: {poll-totalvotes}<br>
 					<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
 					<!-- END BLOCK : poll-answers-->
 					<!-- START BLOCK : poll-questions-->
@@ -390,34 +369,13 @@
 				</div>
 				<!-- END BLOCK : poll-box-->
 
-				<!-- START BLOCK : lol-top-->
-				<h3>LoL tops</h3>
-				<div class="box">
-					<table id="lol-top">
-						<tr>
-							<th>LoL niks</th>
-							<th class="server">Server</th>
-							<th class="lks">LKS</th>
-						</tr>
-						<!-- START BLOCK : lol-top-node-->
-						<tr>
-							<td>{lol_nick}</td>
-							<td class="server">{server}</td>
-							<td class="lks">{lks}</td>
-						</tr>
-						<!-- END BLOCK : lol-top-node-->
-					</table>
-				</div>
-				<!-- END BLOCK : lol-top-->
-				<p style="text-align: right"><a href="/top">Viss tops &raquo;</a></p>
-
 			</div>
 			<!-- END BLOCK : main-layout-right-->
 			<div class="c"></div>
 
 			<div id="footer">
 				<div id="online-users">
-					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br /><span style="font-size:10px">{page-onlineusers}</span>
+					Lapu šobrīd skatās {page-onlinetotal} lietotāji, no tiem reģistrētie:<br><span style="font-size:10px">{page-onlineusers}</span>
 				</div>
 				<div class="infoblock" style="width:33.2%">
 					<div class="inner">
@@ -431,7 +389,7 @@
 				</div>
 				<div class="infoblock" style="width:33.2%">
 					<div class="inner">
-						<p>&copy; {openidea}, 2013-{current-year}</p>
+						<p>&copy; exs.lv, 2013-{current-year}</p>
 						<p>lol.exs.lv ir neoficiāls League of Legends forums</p>
 
 						<ul id="internal-links">
@@ -443,18 +401,5 @@
 				<div class="c"></div>
 			</div>
 		</div>
-
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		  ga('create', 'UA-4190387-2', 'auto');
-		  ga('send', 'pageview');
-
-		</script>
-
 	</body>
 </html>
-

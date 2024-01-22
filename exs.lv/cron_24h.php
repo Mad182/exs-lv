@@ -76,23 +76,3 @@ if ($user) {
 	update_karma($user->user_id, true);
 }
 
-############################ draugiem.lv sekotāji
-$str = curl_get('http://www.draugiem.lv/exs.lv/js/fans/?count=1000');
-$str = explode('[',$str);
-$str = explode(']',$str[1]);
-$str = json_decode('['.$str[0].']');
-
-foreach ($str as $usr) {
-	if (stristr($usr->url, '/user/')) {
-		$id = str_replace(['/user/', '/'], '', $usr->url);
-	} else {
-		$id = get_between($usr->image, '/i_', '.jpg');
-	}
-	if ($id > 1000) {
-		if (!$db->get_var("SELECT count(*) FROM `draugiem_followers` WHERE id = '$id'")) {
-			$db->query("INSERT INTO `draugiem_followers` (id) VALUES ('$id')");
-			echo $id . "\n";
-		}
-	}
-}
-

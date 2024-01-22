@@ -40,7 +40,7 @@
 		<input type="hidden" name="xsrf_token" value="{xsrf}" />
 		<div class="notice">{reason}</div>
 		<p>
-			<label>Iemesls noņemšanai</label><br />
+			<label>Iemesls noņemšanai</label><br>
 			<textarea cols="20" rows="3" name="remove_reason" style="height: 80px;"></textarea>
 		</p>
 		<p>
@@ -59,7 +59,7 @@
 		<div class="error">
 			<span style="font-size:90%">
 				<a href="{aurl}">{author}</a> {date} {edit} {remove}
-			</span><br />
+			</span><br>
 			<strong>Iemesls:</strong> {reason}    
 			<div class="c"></div>
 		</div>
@@ -69,7 +69,7 @@
 		<div class="notice">
 			<span style="font-size:90%">
 				<a href="{aurl}">{author}</a> {date}
-			</span><br />
+			</span><br>
 			<strong>Iemesls:</strong> {reason}
 			<strong>Noņemšanas iemesls:</strong> {remove_reason}
 			<div class="c"></div>
@@ -89,8 +89,8 @@
 		<p class="error">
 			<span style="font-size:90%">
 				<a href="{aurl}">{author}</a> {date}
-			</span><br />
-			<strong>Ilgums:</strong> {length}<br />
+			</span><br>
+			<strong>Ilgums:</strong> {length}<br>
 			<strong>Iemesls:</strong> {reason}
 		</p>
 		<!-- END BLOCK : bans-active-->
@@ -99,8 +99,8 @@
 		<p class="notice">
 			<span style="font-size:90%">
 				<a href="{aurl}">{author}</a> {date}
-			</span><br />
-			<strong>Ilgums:</strong> {length}<br />
+			</span><br>
+			<strong>Ilgums:</strong> {length}<br>
 			<strong>Iemesls:</strong> {reason}
 		</p>
 		<!-- END BLOCK : bans-inactive-->

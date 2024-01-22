@@ -6,6 +6,6 @@
 
 <!-- START BLOCK : succ-->
 <div class="form">
-	<p class="success">Viss kārtībā :)<br />tagad vari ielogoties...</p>
+	<p class="success">Viss kārtībā :)<br>tagad vari ielogoties...</p>
 </div>
 <!-- END BLOCK : succ-->

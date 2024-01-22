@@ -13,9 +13,9 @@
 		</tr>
 		<!-- START BLOCK : banned-row -->
 		<tr>
-			<td>{nick}<br />{ip}&nbsp;<a title="Noņemt IP banu" class="red" href="/?c={category-id}&amp;delete_ip={banned-id}&amp;token={token}"><img src="{static-server}/bildes/x.png" alt="x" /></a>{asn}</td>
+			<td>{nick}<br>{ip}&nbsp;<a title="Noņemt IP banu" class="red" href="/?c={category-id}&amp;delete_ip={banned-id}&amp;token={token}"><img src="{static-server}/bildes/x.png" alt="x" /></a>{asn}</td>
 			<td>{banned-reason} (<a href="/user/{banned-author}">{anick}</a>)</td>
-			<td style="text-align:right;width:126px;font-size:11px">Vieta:&nbsp;{where}<br />No:&nbsp;{banned-date}<br />Līdz:&nbsp;{banned-until}</td>
+			<td style="text-align:right;width:126px;font-size:11px">Vieta:&nbsp;{where}<br>No:&nbsp;{banned-date}<br>Līdz:&nbsp;{banned-until}</td>
 			<td style="text-align:center">
 				<!-- START BLOCK : remove-ban -->
 				<a title="Noņemt liegumu" class="confirm red" href="/?c={category-id}&amp;delete={banned-id}&amp;token={token}">
