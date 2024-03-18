@@ -108,7 +108,7 @@ if (
 	$contents = '';
 	reset($elements);
 	$i = 0;
-	while (list(, $element) = each($elements)) {
+	foreach ($elements as $element) {
 		$path = realpath($base . '/' . $element);
 		if ($i == 0) {
 			$contents = file_get_contents($path);
