@@ -969,9 +969,11 @@ class BBCode {
 			// check if url is local
 			$url_local = false;
 			global $urls_local;
-			for ($i = 0; $i < count($urls_local); $i++) {
-				if (strlen($url) > strlen($urls_local[$i]) && strpos($url, $urls_local[$i]) === 0) {
-					$url_local = true;
+			if(is_countable($urls_local)) {
+				for ($i = 0; $i < count($urls_local); $i++) {
+					if (strlen($url) > strlen($urls_local[$i]) && strpos($url, $urls_local[$i]) === 0) {
+						$url_local = true;
+					}
 				}
 			}
 			if (!$url_local) {
@@ -1094,16 +1096,16 @@ class BBCode {
 				} else {
 					$userid = $db->get_var("SELECT id FROM users WHERE nick = ('" . sanitize(trim($user)) . "') LIMIT 1");
 					if ($userid) {
-						$html .= '<div class="quote-user"><a class="profile-url" href="/user/' . $userid . '" title="' . $user . '">' . $user . '</a>&nbsp;' . rakstīja . ':&nbsp;' . $post_rev . '</div>';
+						$html .= '<div class="quote-user"><a class="profile-url" href="/user/' . $userid . '" title="' . $user . '">' . $user . '</a>&nbsp;rakstīja:&nbsp;' . $post_rev . '</div>';
 					} else {
-						$html .= '<div class="quote-user">' . $user . '&nbsp;' . rakstīja . ':&nbsp;' . $post_rev . '</div>';
+						$html .= '<div class="quote-user">' . $user . '&nbsp;rakstīja:&nbsp;' . $post_rev . '</div>';
 					}
 				}
 			} else {
 				if ($tag === 'ot') {
-					$html .= '<div class="quote-nouser">&nbsp;<span class="error-message">' . Citāts . '</span>:</div>';
+					$html .= '<div class="quote-nouser">&nbsp;<span class="error-message">Citāts</span>:</div>';
 				} else {
-					$html .= '<div class="quote-nouser">' . Citāts . ':</div>';
+					$html .= '<div class="quote-nouser">Citāts:</div>';
 				}
 			}
 			$html .= '<div class="quote-message">';

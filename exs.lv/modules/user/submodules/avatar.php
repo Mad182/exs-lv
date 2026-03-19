@@ -25,7 +25,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
         $foo->image_y = 90;
         $foo->allowed = ['image/*'];
         $foo->image_ratio_crop = true;
-        $foo->jpeg_quality = 98;
+        $foo->jpeg_quality = 99;
         $foo->file_auto_rename = false;
         $foo->file_overwrite = true;
         $foo->process(CORE_PATH . '/dati/bildes/useravatar/' . $avatar_path);
@@ -38,7 +38,7 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
             $foo->image_y = 45;
             $foo->allowed = ['image/*'];
             $foo->image_ratio_crop = true;
-            $foo->jpeg_quality = 98;
+            $foo->jpeg_quality = 99;
             $foo->file_auto_rename = false;
             $foo->file_overwrite = true;
             $foo->process(CORE_PATH . '/dati/bildes/u_small/' . $avatar_path);
@@ -46,12 +46,12 @@ if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
             $foo->file_new_name_body = $text;
             $foo->image_resize = true;
             $foo->image_convert = 'jpg';
-            $foo->image_x = 260;
-            $foo->image_y = 260;
+            $foo->image_x = 280;
+            $foo->image_y = 280;
             $foo->allowed = ['image/*'];
             $foo->image_ratio_crop = false;
             $foo->image_ratio_no_zoom_in = true;
-            $foo->jpeg_quality = 98;
+            $foo->jpeg_quality = 99;
             $foo->file_auto_rename = false;
             $foo->file_overwrite = true;
             $foo->process(CORE_PATH . '/dati/bildes/u_large/' . $avatar_path);
@@ -83,4 +83,3 @@ $tpl->newBlock('user-profile-avatar');
 $tpl->assign('xsrf', make_token('avatar'));
 
 $page_title = 'Avatara attēla maiņa';
-

@@ -10,25 +10,23 @@
 */ 
 
 // facebook login
-$fb_api_id = '353222841436117';
-$fb_api_key = 'f6ac0e495e8b5a09ff2ea463383dc57c';
+$fb_api_id = '';
+$fb_api_key = '';
 
 // draugiem pase
-$dr_api_id = 15005147;
-$dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
+$dr_api_id = '';
+$dr_api_key = '';
 
 // steam login
-$steam_api_key = "D92CAC5D0E6086FAD16936C2B644EFDA"; // API atslēga
+$steam_api_key = ""; // API atslēga
 $steam_domain_name = "exs.lv"; // domēns, kas rādās steam lapā
 $steam_login_page = "https://exs.lv/steam-login"; // uz kurieni pārvirzīt pēc logina
 
 // twitter login
-$CONSUMER_KEY = 'r7Wjk5VoxlMVdDrkK7wN3X6q2';
-$CONSUMER_SECRET = 'axdLXZy6tm5pM1nB4VM2IZ9UvZKotH22xZlrvNPOKkge86UFen';
+$CONSUMER_KEY = '';
+$CONSUMER_SECRET = '';
 
 $polls_cat = 2;
-
-$robotstag[] = 'noodp';
 
 $opengraph_meta['locale'] = 'lv_LV';
 

@@ -3757,13 +3757,6 @@ li.view_more {
 	background: #eee
 }
 
-#m-phone {
-	width: 90px;
-	height: 11px;
-	display: inline-block;
-	background: url('/bildes/number-light.gif') no-repeat 0 0
-}
-
 /* Neliela info daudzuma fancybox stili */
 .fancy-container {
 	width:500px;

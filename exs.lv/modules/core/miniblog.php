@@ -124,7 +124,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 		redirect();
 	}
 
-	if (get_mb_level($to) > 2 && $auth->level != 1) {
+	if (get_mb_level($to) > 10) {
 		die('Too deep ;(');
 	}
 
@@ -184,13 +184,44 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $str . ' &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private);
 
 				$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
-				$newpost->text = mention($newpost->text, $url, 'mb', $mainid);
+				$newpost->text = mention($newpost->text, $url, 'mb', $mainid, $newid);
 				$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
 				notify($inprofile->id, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
 				if (!empty($reply_to_id) && $inprofile->id != $reply_to->author) {
 					notify($reply_to->author, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
 				}
+
+				//ai stuff
+				if($reply_to->author == 43040) {
+
+					$messages = [
+						["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Atbildi noformē izmantojot html (<p>, <b>, <i>, <a>, <br>, <blockquote>, <code> un līdzīgus tagus, bez dokumenta struktūras). Tu raksti atbildi lietotājam miniblogā. Nesāc atbildi ar @niks vai Eksperts:"],
+						["role" => "user", "content" => strip_tags($newpost->text) . '; Iepriekšējais konteksts: Exsperts:' . $reply_to->text],
+					];
+
+					$response = askAI($messages);
+
+					$aiReply = $response['choices'][0]['message']['content'] ?? null;
+
+					if ($aiReply === null) {
+						// handle error or fallback
+					} else {
+
+						if(!empty($newpost->parent)) {
+							$parent = $newpost->parent;
+						} else {
+							$parent = $newpost->id;
+						}
+						$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '],'',$aiReply);
+
+						post_mb_ai(htmlpost2db($aiReply), $parent, $newpost->id, $newpost->groupid);
+						userlog(43040, 'Atbildēja <a href="' . $url . '#m' . $newid . '">' . $inprofile->nick . ' miniblogā' . ' &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private, 0);
+
+					}
+
+				}
+
 			}
 
 			// ja miniblogā ir vismaz 500 komentāri, to aizver un izveido jaunu miniblogu,
@@ -315,7 +346,7 @@ if (!empty($inprofile)) {
 				if (isset($_GET['single'])) {
 
 					//noindex
-					if($record->private || $record->noindex || (strlen(strip_tags($record->text)) < 60 && $record->posts < 4 && $record->id != 2389427)) {
+					if($record->private || $record->noindex || (strlen(strip_tags($record->text)) < 20 && $record->posts < 2)) {
 						$robotstag = ['noindex', 'nofollow'];
 					}
 
@@ -423,7 +454,6 @@ if (!empty($inprofile)) {
 					$limit = '';
 				} else {
 					$limit = ' LIMIT 0,3';
-					$robotstag = ['noindex', 'follow'];
 				}
 
 				// atvērtiem miniblogiem pievieno komentārus
@@ -467,7 +497,7 @@ if (!empty($inprofile)) {
 							$json[$response->reply_to][] = $response;
 						}
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 4, $record->closed));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 8, $record->closed));
 					}
 				}
 
@@ -493,7 +523,7 @@ if (!empty($inprofile)) {
 				}
 			} else {
 				if(!empty($single)) {
-					$robotstag = ['noindex', 'nofollow'];
+					$robotstag = ['noindex', 'follow'];
 				}
 			}
 		}

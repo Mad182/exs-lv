@@ -3,8 +3,6 @@
 //load css
 $add_css[] = 'gallery.css';
 
-$robotstag = ['noindex', 'nofollow'];
-
 $inprofile = get_user(intval($_GET['var1']));
 
 if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofile->private)) {

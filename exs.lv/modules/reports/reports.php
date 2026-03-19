@@ -241,7 +241,9 @@ if ($active_tab == 'miniblogs') {
 			$query_limit = 'LIMIT 0, 30';
 		}
 
-		$query_reports_{$get_archive} = $db->get_results("
+		$qr = 'query_reports_' . $get_archive;
+
+		$$qr = $db->get_results("
             SELECT
                 $includable_selects,
                 $includable_subquery,
@@ -303,7 +305,9 @@ if ($active_tab == 'miniblogs') {
 			$query_limit = 'LIMIT 0, 30';
 		}
 
-		$query_reports_{$get_archive} = $db->get_results("
+		$qr = 'query_reports_' . $get_archive;
+
+		$$qr = $db->get_results("
             SELECT
                 $includable_selects,
                 $includable_subquery,
@@ -355,7 +359,9 @@ if ($active_tab == 'miniblogs') {
 			$query_limit = 'LIMIT 0, 30';
 		}
 
-		$query_reports_{$get_archive} = $db->get_results("
+		$qr = 'query_reports_' . $get_archive;
+
+		$$qr = $db->get_results("
             SELECT
                 $includable_selects,
                 $includable_subquery,
@@ -418,8 +424,10 @@ foreach ($report_types as $report_type) {
 
 	$tpl->newBlock('report-list-container');
 
+
+	$qr = 'query_reports_' . $report_type;
 	// ja konkrētā veida sūdzības nav atrastas...
-	if (!$query_reports_{$report_type}) {
+	if (!$$qr) {
 		$tpl->newBlock('no-reports-found');
 		if ($report_type == 1) {
 			$tpl->assign('report-type', 'arhivētas sūdzības');
@@ -440,7 +448,8 @@ foreach ($report_types as $report_type) {
 		}
 
 		// saraksts ar sūdzībām
-		foreach ($query_reports_{$report_type} as $report) {
+		$qr = 'query_reports_' . $report_type;
+		foreach ($qr as $report) {
 
 			$report->report_created_at = display_time($report->report_created_at);
 

@@ -338,7 +338,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					$title = title2db($title);
 					$body = htmlpost2db($body);
 
-					if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar'])) {
+					if (isset($_FILES['edit-avatar']) && !empty($_FILES['edit-avatar']['tmp_name'])) {
 						require_once(LIB_PATH . '/verot/src/class.upload.php');
 						$foo = new Upload($_FILES['edit-avatar']);
 						$foo->image_max_pixels = 200000000;
@@ -348,7 +348,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$foo->allowed = ['image/*'];
 						$foo->image_ratio = true;
 						$foo->image_ratio_pixels = 17800;
-						$foo->jpeg_quality = 98;
+						$foo->jpeg_quality = 99;
 						$foo->image_ratio_no_zoom_in = true;
 						$foo->file_auto_rename = false;
 						$foo->file_overwrite = true;
@@ -374,12 +374,12 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->allowed = ['image/*'];
 							$foo->image_resize = true;
 							$foo->image_ratio_crop = true;
-							$foo->image_y = 215;
-							$foo->image_x = 145;
+							$foo->image_y = 230;
+							$foo->image_x = 155;
 							$foo->file_new_name_body = $file_title;
 							$foo->image_ratio_no_zoom_in = false;
 							$foo->image_ratio_crop = true;
-							$foo->jpeg_quality = 98;
+							$foo->jpeg_quality = 99;
 							$foo->file_overwrite = true;
 							$foo->image_convert = 'jpg';
 							$foo->process(IMG_PATH . '/topics/thb/' . $path . '/');
@@ -391,7 +391,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = false;
 							$foo->image_ratio_no_zoom_in = true;
-							$foo->jpeg_quality = 98;
+							$foo->jpeg_quality = 99;
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process(IMG_PATH . '/topics/large/' . $path . '/');
@@ -403,7 +403,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = true;
 							$foo->image_ratio_no_zoom_in = true;
-							$foo->jpeg_quality = 98;
+							$foo->jpeg_quality = 99;
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process(IMG_PATH . '/topics/frontpage/' . $path . '/');
@@ -419,7 +419,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->image_y = 75;
 							$foo->allowed = ['image/*'];
 							$foo->image_ratio_crop = true;
-							$foo->jpeg_quality = 98;
+							$foo->jpeg_quality = 99;
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process('dati/bildes/av_sm/');
@@ -427,6 +427,8 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->clean();
 							$article->avatar = 'dati/bildes/avatari/' . $topicid . '.jpg';
 							$article->sm_avatar = 'dati/bildes/av_sm/' . $topicid . '.jpg';
+						} else {
+							die($foo->error);
 						}
 					}
 
@@ -780,7 +782,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 		} else {
 
 			$date = display_time(strtotime($article->date));
-			$updated = display_time(strtotime($article->updated));
+			if(!empty($article->updated)) {
+				$updated = display_time(strtotime($article->updated));
+			} else {
+				$updated = '';
+			}
 			$post_bump = strtotime($article->bump);
 
 			if ($article->edit_times > 0 && empty($article->custom_include)) {
@@ -813,6 +819,13 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$permalink = get_protocol($lang) . get_domain($lang) . '/read/' . $article->strid;
 
+			$updated_atom = '';
+			if(!empty($article->updated)) {
+				$updated_atom = date(DATE_ATOM, strtotime($article->updated));
+			} else {
+				$updated_atom = date(DATE_ATOM, strtotime($article->date));
+			}
+
 			$tpl->assign([
 				'title' => $article->title,
 				'text' => $article_text,
@@ -823,7 +836,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'date' => $date,
 				'updated' => $updated,
 				'date_atom' => date(DATE_ATOM, strtotime($article->date)),
-				'updated_atom' => date(DATE_ATOM, strtotime($article->updated)),
+				'updated_atom' => $updated_atom,
 				'author' => $author_link,
 				'level' => $author->level,
 				'posts' => $article->posts,
@@ -1372,6 +1385,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			'page-sel-' . $article->id => ' class="selected"',
 			'cur-url' => '/read/' . $article->strid
 		]);
+
+		if (!empty($article->meta_description) && !$auth->mobile) {
+			$tpl->newBlock('meta-description');
+			$tpl->assign('description', h($article->meta_description));
+		}
         
         // poga ritināšanai līdz pašai augšai mobilajā versijā
         if ($auth->mobile) {

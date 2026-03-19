@@ -1,0 +1,420 @@
+body {
+    background: #1a1f25;
+    color: #e9ecef;
+}
+
+#content {
+    background: #222831;
+}
+
+.px {
+    background: #2c343e;
+}
+
+.pxh {
+    background: #343b44;
+}
+
+.mbox {
+    background: #272d36;
+}
+
+.title span,
+#home-middle .title span {
+    background: #14181d;
+    color: #e9ecef;
+}
+
+h3.title,
+#home-middle .title {
+    border-bottom: 1px solid #14181d;
+}
+
+#user-notify li,
+.mbox .user-actions li,
+.mb-col li,
+#latest-topics li,
+.user-actions li {
+    border-bottom: 1px solid #14181d;
+}
+
+#user-notify li a:hover,
+.blockhref li a:hover {
+    background: #2c343e;
+}
+
+.core-pager {
+    border-top: 1px solid #14181d;
+}
+
+h1,
+h2,
+h3 {
+    color: #bbb;
+}
+
+.tabs {
+    background: #161a20
+}
+
+.tabs li a {
+    background-color: #252c35;
+    background-image: linear-gradient(#2c343e, #2c343e 25%, #252c35);
+    border-color: #343b44;
+    border-top-color: #3d4551;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    color: #9c9e9f
+}
+
+.tabs li a:hover {
+    color: #e9ecef
+}
+
+.tabs li a.active,
+.tabs li a.active:hover {
+    color: #e9ecef;
+    background: #222831
+}
+
+.usr-awards li {
+    background: #252c35;
+    border-color: #343b44
+}
+
+body #wall-posts li a {
+    color: #9ba3af
+}
+
+#miniblog-list li ul li {
+    border-bottom: 1px solid #14181d;
+}
+
+#footer-widgets {
+    background: #161a20;
+    border-top: 1px solid #14181d;
+}
+
+#site-info {
+    border-top: 1px solid #14181d;
+    color: #9ba3af;
+    background: #060a10
+}
+
+#intr {
+    background: #161a20;
+    border-color: #343b44
+}
+
+#user-menu li a {
+    background: #252c35;
+    color: #e9ecef;
+    border-color: #343b44
+}
+
+#user-menu li a:hover {
+    background: #2c343e
+}
+
+#user-menu li ul li a {
+    text-shadow: 1px 1px 1px #000
+}
+
+#user-group-menu .is-unread {
+    background-color: #2c343e
+}
+
+#user-group-menu .is-unread:hover {
+    background-color: #343b44 !important
+}
+
+#intr .search input[type="text"],
+.searchform input[type="text"],
+select {
+    background: #2c343e;
+    color: #e9ecef;
+    border-color: #343b44
+}
+
+#header {
+    background: #161a20;
+}
+
+.search form {
+    background: #161a20;
+}
+
+.post-button {
+    background: #2c343e;
+    border-color: #343b44;
+    color: #9ba3af
+}
+
+.post-delete {
+    color: #e57373
+}
+
+.post-warn {
+    color: #ffb74d
+}
+
+.deleted-entry {
+    background: #251c1c;
+    color: #ef9a9a
+}
+
+.deleted-mb-content {
+    border-color: #343b44
+}
+
+.navbar .nav>li>a {
+    border-color: #343b44;
+}
+
+.navbar .nav>li>a:hover,
+.navbar .nav>li>a:focus {
+    background: #2c343e !important;
+}
+
+ul.dropdown-menu {
+    background: #252c35;
+    border-bottom-color: #81b752;
+}
+
+ul.dropdown-menu a {
+    color: #9ba3af !important;
+    border-color: #343b44;
+}
+
+ul.dropdown-menu a:hover,
+ul.dropdown-menu a:active,
+ul.dropdown-menu a:focus {
+    background: #2c343e !important;
+    color: #e9ecef !important;
+}
+
+#user-menu li ul#user-group-menu li span span {
+    background: #d35400;
+}
+
+#headline {
+    background-color: #1a1f25;
+}
+
+#slider .entry {
+    background: rgba(34, 40, 49, 0.8);
+}
+
+#slider .entry h4 {
+    color: #e9ecef;
+}
+
+#slide-right h3 {
+    background: #161a20;
+    color: #e9ecef;
+}
+
+#slide-right ul {
+    background: #1a1f25;
+}
+
+#slide-right ul li {
+    background: #222831;
+    color: #e9ecef;
+}
+
+#slide-right h4 {
+    color: #bbb;
+}
+
+h4.post-title,
+h4.post-title a {
+    color: #e9ecef;
+}
+
+.moretag a {
+    background: #343b44;
+    color: #e9ecef;
+}
+
+.moretag a:hover,
+.moretag a:focus {
+    background: #454d5a;
+}
+
+#home-middle .post,
+#home-bottom .post,
+.latest-posts .post {
+    border-color: #14181d;
+}
+
+.entry-cat {
+    background: #252c35;
+    border-color: #FA8484;
+}
+
+.entry-cat a {
+    color: #e9ecef;
+}
+
+.entry-meta,
+.entry-meta a {
+    color: #9ba3af;
+}
+
+.core-pager .page-numbers {
+    color: #9ba3af;
+}
+
+.core-pager .selected {
+    color: #e9ecef;
+}
+
+.holder,
+.holder2 {
+    background: #161a20;
+}
+
+.holder a,
+.holder2 a {
+    color: #9ba3af;
+}
+
+.holder a.jp-current,
+.holder2 a.jp-current {
+    color: #FF4242;
+}
+
+ul.tabnav li a {
+    background: #252c35;
+    border-color: #343b44;
+    color: #e9ecef;
+}
+
+ul.tabnav li a:hover,
+ul.tabnav li a.active,
+ul.tabnav li a.selected {
+    background: #1a1f25;
+}
+
+ul.recent-tab li,
+#tab3 ul li,
+.latest-post {
+    border-color: #14181d;
+}
+
+.tagcloud a {
+    background-color: #252c35;
+    color: #9ba3af;
+}
+
+.tagcloud a:hover {
+    background-color: #343b44;
+    color: #e9ecef;
+}
+
+article.comment {
+    border-color: #14181d;
+}
+
+.children li .comment {
+    background: #222831;
+}
+
+.comment .reply a {
+    background: #343b44;
+    color: #9ba3af;
+}
+
+.comment-form-comment textarea#comment,
+form#commentform input#author,
+form#commentform input#email,
+body textarea {
+    background: #252c35;
+    border-color: #343b44;
+    color: #e9ecef;
+}
+
+blockquote {
+    background: #161a20;
+    border-color: #343b44;
+    color: #9ba3af;
+}
+
+.note {
+    background-color: #272d36;
+    border-color: #343b44;
+    color: #9ba3af;
+}
+
+#footer-widgets .title span {
+    background: #14181d;
+    color: #e9ecef;
+}
+
+body legend {
+    color: #e9ecef;
+    border-bottom: 1px solid #14181d;
+}
+
+ul#friend-list li {
+    border: 1px solid #343b44;
+    background: #252c35;
+}
+
+body #pm-table td {
+    border-color: #343b44;
+    background-color: #252c35;
+}
+
+body #pm-table tr:hover td {
+    background-color: #2c343e;
+}
+
+body hr {
+    border-color: #343b44;
+}
+
+#comments dd, #comments dt, p.comment-tools {
+    border-color: #343b44;
+}
+
+#comments dt .username, .inf {
+    background: #252c35;
+}
+
+body .index-list li {
+    color: #9ba3af;
+}
+
+/* search */
+.gsc-control-cse, body .gsc-control-cse div {
+    background-color: #262c36 !important;
+    color: #eee !important;
+    border: 0 !important;
+}
+
+.gsc-control-cse a, .gsc-control-cse a b {
+    color: #00aff4 !important;
+}
+
+.gsc-control-cse a:hover {
+    text-decoration: underline !important;
+}
+
+.gsc-control-cse a b {
+    font-weight: bold !important;
+}
+
+.gcsc-find-more-on-google-magnifier {
+    fill: #00aff4 !important;
+}
+
+.gsc-control-cse .gsib_a {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body table.gsc-completion-container td {
+    background-color: #1a1f25 !important;
+    color: #eee !important;
+}

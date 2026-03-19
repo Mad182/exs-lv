@@ -40,7 +40,7 @@ if (!$ajax) {
 
 if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $_GET['var1'] == 'top')) {
 	$tpl->assign([
-		'active-tab-top' => ' activeTab',
+		'active-tab-top' => ' active',
 	]);
 
 	$topusers = $db->get_results("SELECT * FROM wg_results WHERE date = '" . date('Y-m-d') . "' AND user_id != '0' ORDER BY points DESC, games ASC LIMIT 200");
@@ -51,7 +51,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 		foreach ($topusers as $topuser) {
 			$special = '';
 			if ($auth->id == $topuser->user_id) {
-				$special = ' style="background: #ffffaa;font-weight: bold;"';
+				$special = ' style="font-weight:bold"';
 			}
 			if ($i == 1) {
 				$icon = '<img src="/bildes/icons/award_star_gold_3.png" alt="' . $i . '." title="' . $i . '." />';
@@ -78,10 +78,52 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 			$i++;
 		}
 	}
+
+} elseif ((isset($_GET['act']) && $_GET['act'] == 'overall-top') or (isset($_GET['var1']) && $_GET['var1'] == 'overall-top')) {
+	$tpl->assign([
+		'active-tab-overall-top' => ' active',
+	]);
+
+	$topusers = $db->get_results("SELECT user_id, SUM(points) as points, SUM(games) as games FROM wg_results WHERE user_id != '0' GROUP BY user_id ORDER BY points DESC, games ASC LIMIT 250");
+
+	if ($topusers) {
+		$tpl->newBlock('hm-top');
+		$i = 1;
+		foreach ($topusers as $topuser) {
+			$special = '';
+			if ($auth->id == $topuser->user_id) {
+				$special = ' style="font-weight:bold"';
+			}
+			if ($i == 1) {
+				$icon = '<img src="/bildes/icons/award_star_gold_3.png" alt="' . $i . '." title="' . $i . '." />';
+			} elseif ($i == 2) {
+				$icon = '<img src="/bildes/icons/award_star_silver_3.png" alt="' . $i . '." title="' . $i . '." />';
+			} elseif ($i == 3) {
+				$icon = '<img src="/bildes/icons/award_star_bronze_3.png" alt="' . $i . '." title="' . $i . '." />';
+			} else {
+				$icon = $i . '.';
+			}
+
+			$tpl->newBlock('top-node');
+			$usr = $db->get_row("SELECT `nick`,`level` FROM users WHERE id = '$topuser->user_id'");
+			$tpl->assign([
+				'user-place' => $icon,
+				'user-special' => $special,
+				'user-id' => $topuser->user_id,
+				'user-url' => mkurl('user', $topuser->user_id, $usr->nick),
+				'user-nick' => usercolor($usr->nick, $usr->level),
+				'user-ig_points' => $topuser->points,
+				'user-ig_done' => $topuser->games,
+				'p-game' => round($topuser->points / $topuser->games, 3),
+			]);
+			$i++;
+		}
+	}
+
 } else {
 	if (!$ajax) {
 		$tpl->assign([
-			'active-tab-game' => ' activeTab',
+			'active-tab-game' => ' active',
 		]);
 	}
 

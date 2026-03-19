@@ -86,7 +86,7 @@ if ($auth->ok) {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 640;
 			$foo->image_ratio_no_zoom_in = true;
-			$foo->jpeg_quality = 98;
+			$foo->jpeg_quality = 99;
 		}
 
 		if (!empty($_POST['resize960'])) {
@@ -94,7 +94,7 @@ if ($auth->ok) {
 			$foo->image_convert = 'jpg';
 			$foo->image_x = 960;
 			$foo->image_ratio_no_zoom_in = true;
-			$foo->jpeg_quality = 98;
+			$foo->jpeg_quality = 99;
 		}
 
 
@@ -126,10 +126,15 @@ if ($auth->ok) {
 				}
 			}
 		}
+		
 
 		$foo->process(IMG_PATH . '/' . $path . '/');
 
 		if ($foo->processed) {
+
+			$original_file = $foo->file_dst_pathname;
+			$new_filename = $foo->file_dst_name_body . '.avif';
+			$new_file_path = $foo->file_dst_path . $new_filename;
 
 			$foo->image_resize = true;
 			$foo->image_ratio_no_zoom_in = false;
@@ -143,22 +148,27 @@ if ($auth->ok) {
 
 			if (!empty($_POST['resize'])) {
 				$foo->image_convert = 'jpg';
-				$foo->jpeg_quality = 96;
+				$foo->jpeg_quality = 99;
 			}
 
 			$foo->image_watermark = '';
 
 			$foo->process(IMG_PATH . '/' . $path . '/small/');
 
-			$db->query("INSERT INTO `imgupload` (path,user_id,ip,created,file) VALUES ('$path','$auth->id','" . sanitize($auth->ip) . "',NOW(),'" . sanitize($foo->file_dst_name) . "')");
+			// Convert main image to AVIF
+			$original_thumb = $foo->file_dst_pathname;
+			$new_thumb_path = $foo->file_dst_path . $new_filename;
 
-			//optimize png images
-			if ($foo->image_src_type == 'png') {
-				$str = "optipng '" . IMG_PATH . "/" . $path . "/" . $foo->file_dst_name . "'";
-				$str2 = "optipng '" . IMG_PATH . "/" . $path . "/small/" . $foo->file_dst_name . "'";
-				$test = `$str`;
-				$test2 = `$str2`;
+			shell_exec("avifenc '$original_file' '$new_file_path'");
+			shell_exec("avifenc '$original_thumb' '$new_thumb_path'");
+
+			if (file_exists($new_file_path)) {
+				unlink($original_file);
+				unlink($original_thumb);
+				$foo->file_dst_name = $new_filename;
 			}
+
+			$db->query("INSERT INTO `imgupload` (path,user_id,ip,created,file) VALUES ('$path','$auth->id','" . sanitize($auth->ip) . "',NOW(),'" . sanitize($foo->file_dst_name) . "')");
 
 			$tpl->newBlock('img-upload-success');
 

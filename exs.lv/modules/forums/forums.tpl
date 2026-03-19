@@ -25,7 +25,7 @@
 		</td>
 		<!-- END BLOCK : forum-item-avatar-->
 		<td>
-			<h3><a href="/{textid}">{title}</a></h3>
+			<h2><a href="/{textid}">{title}</a></h2>
 			<p>{content}{addlink}{editlink}{uplink}{downlink}</p>
 
 			<!-- START BLOCK : subcats-->

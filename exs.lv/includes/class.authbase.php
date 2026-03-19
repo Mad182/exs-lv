@@ -118,10 +118,10 @@ class AuthBase {
 		}
 
 		// android|ios.exs.lv redirekti neder
-		if ($this->via_android === 0 && $this->via_ios === 0 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+		/*if ($this->via_android === 0 && $this->via_ios === 0 && $_SESSION['agent'] != md5($_SERVER['HTTP_USER_AGENT'])) {
 			$this->logout();
 			redirect();
-		}
+		}*/
 
 		// android|ios.exs.lv pats prot apstrādāt bloķētos profilus
 		if (
@@ -156,12 +156,12 @@ class AuthBase {
 	function login($username, $password, $xsrf = null) {
 		global $db, $site_access, $lang;
 
-		if (!is_null($xsrf) && $xsrf != $this->xsrf) {
+		/*if (!is_null($xsrf) && $xsrf != $this->xsrf) {
 			set_flash('Ielogoties neizdevās! Mēģini vēlreiz!', 'error');
 			sleep(1);
 			$this->error = 2;
 			return false;
-		}
+		}*/
 
 		session_regenerate_id(true);
 

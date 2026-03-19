@@ -19,12 +19,17 @@
 	<!-- START BLOCK : canonical-->
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bootstrap.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
-	<script>var mb_refresh_limit = {mb-refresh-limit}, current_user = {currentuser-id}, new_msg_count = {new-messages-count}, c_url = "{page-url}";</script>
-	<script src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
+	<script>var mb_refresh_limit = {mb-refresh-limit},
+		current_user = {currentuser-id},
+		new_msg_count = {new-messages-count},
+		c_url = "{page-url}";
+	</script>
+	<script
+		src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
 	<script>
@@ -478,9 +483,6 @@
 										class="{friends-selected}remember-friends ajax"><span
 											class="friends">Draugu</span></a></li>
 								<!-- END BLOCK : mb-tabs-->
-								<li><a href="/mb-latest?pg=0&amp;tab=music"
-										class="{music-selected}remember-music ajax"><span
-											class="music">last.fm</span></a></li>
 							</ul>
 
 							<nav id="miniblog-block" class="ajaxbox">
@@ -563,7 +565,6 @@
 						<h3 class="title"><span>Kontakti</span></h3>
 						<ul>
 							<li class="email">E-pasts: info@exs.lv</li>
-							<li class="phone">Telefons: <span id="m-phone"></span></li>
 						</ul>
 					</div>
 					<div class="c"></div>
@@ -595,6 +596,7 @@
 			<div id="site-info" class="container">
 				<nav id="footer-nav" class="fr">
 					<ul class="menu">
+						<li>Mobilā versija: <a href="https://m.exs.lv/">m.exs.lv</a></li>
 						<li><a href="/statistika">Statistika</a></li>
 						<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 					</ul>
@@ -606,8 +608,7 @@
 		</footer>
 	</div>
 
-	<!-- START BLOCK : popup-ads-->
-	<!-- END BLOCK : popup-ads-->
+	<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 	</body>
 
 </html>

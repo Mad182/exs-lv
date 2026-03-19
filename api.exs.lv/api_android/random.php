@@ -225,7 +225,7 @@ if ($var1 === 'notifications') {
 			'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
 			'last_seen' => 'pirms '.$time_ago,
 			'usertitle' => $profile->custom_title,
-			'gender' => (int)$profile->gender,
+			'gender' => 0,
 			'web' => $profile->web,
 			'karma' => (int)$profile->karma,
 			'posts' => (int)$posts,

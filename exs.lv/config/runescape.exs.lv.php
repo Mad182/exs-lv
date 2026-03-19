@@ -20,8 +20,6 @@ $fb_api_key = 'e91d56558adbab5e25c97d3eb46cf2bb';
 $dr_api_id = 15005147;
 $dr_api_key = 'f38c225b8f65df03c5aaa847b1f052a9';
 
-$robotstag[] = 'noodp';
-
 // aptauju sadaļas id (nav, jo aptaujas ieraksta miniblogos)
 $polls_cat = 0;
 

@@ -3,7 +3,6 @@
 /**
  * Visu miniblogu saraksts
  */
-$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];

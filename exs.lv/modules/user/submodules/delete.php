@@ -33,11 +33,11 @@ if (isset($_POST['submit'])) {
 		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$auth->id'");
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$auth->id'");
 		$db->query("DELETE FROM `images` WHERE `uid` = '$auth->id'");
-		$db->query("DELETE FROM `pm` WHERE `from_uid` = '$auth->id'");
-		$db->query("DELETE FROM `comments` WHERE `author` = '$auth->id'");
-		$db->query("DELETE FROM `galcom` WHERE `author` = '$auth->id'");
-		$db->query("DELETE FROM `miniblog` WHERE `author` = '$auth->id'");
-		$db->query("DELETE FROM `pages` WHERE `author` = '$auth->id'");
+		//$db->query("DELETE FROM `pm` WHERE `from_uid` = '$auth->id'");
+		//$db->query("DELETE FROM `comments` WHERE `author` = '$auth->id'");
+		//$db->query("DELETE FROM `galcom` WHERE `author` = '$auth->id'");
+		//$db->query("DELETE FROM `miniblog` WHERE `author` = '$auth->id'");
+		//$db->query("DELETE FROM `pages` WHERE `author` = '$auth->id'");
 
 		//refresh in memcached
 		get_user($auth->id, true);

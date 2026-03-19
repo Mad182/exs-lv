@@ -51,7 +51,7 @@ function get_index_events() {
 		$private = ' AND (`private` = 0 OR group_id IS NULL OR (group_id IN(SELECT clan FROM clans_members WHERE user = '.$auth->id.' AND approve = 1) OR group_id IN(SELECT id FROM clans WHERE owner = '.$auth->id.'))) ';
 	}
 
-	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ".$private." ORDER BY `time` DESC LIMIT 5");
+	$actions = $db->get_results("SELECT `user`, `action`, `avatar`, `time` FROM `userlogs` WHERE `lang` = '$lang' ".$private." ORDER BY `time` DESC LIMIT 6");
 
 	if ($actions) {
 		$out .= '<ul class="user-actions">';

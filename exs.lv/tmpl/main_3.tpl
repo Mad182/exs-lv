@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{page-title}</title>
 	<!-- START BLOCK : meta-description-->
 	<meta name="description" content="{description}">
@@ -18,7 +19,7 @@
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
 	<script>var mb_refresh_limit = {mb-refresh-limit}, current_user = {currentuser-id}, new_msg_count = {new-messages-count}, c_url = "{page-url}";</script>
-	<link rel="stylesheet" href="/css/core.css,code.css,prettify.css">
+	<link rel="stylesheet" href="/css/coding.css,prettify.css">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -103,8 +104,6 @@
 				<div id="tools-bar">
 					<ul id="site-links">
 						<li><a href="https://exs.lv/">exs.lv community</a></li>
-						<li><a href="https://m.coding.lv/" title="Mobilā versija" rel="nofollow">Mobilā versija</a></li>
-						<li><a href="/img">Bilžu hostings</a></li>
 						<li><a href="/sitemap">Lapas karte</a></li>
 					</ul>
 					{current-date}
@@ -113,8 +112,10 @@
 			<div id="top-menu">
 				<ul id="top-menu-left">
 					<li{cat-sel-796}><a href="/">Forums</a></li>
-						<li{cat-sel-234}><a href="/html-pamati">HTML</a></li>
-							<li{cat-sel-235}><a href="/css-pamati">CSS</a></li>
+					<li{cat-sel-234}><a href="/html-pamati">HTML</a></li>
+					<li{cat-sel-235}><a href="/css-pamati">CSS</a></li>
+					<li{cat-sel-2510}><a href="/php-pamati">PHP</a></li>
+					<li{cat-sel-2511}><a href="/javascript-pamati">Javascript</a></li>
 				</ul>
 				<!-- START BLOCK : user-menu-->
 				<ul id="top-menu-right">
@@ -344,8 +345,7 @@
 				<div class="inner" style="height:25px">
 					<p style="float:left">&copy; coding.lv, 2012-{current-year}</p>
 					<p style="float:right">
-						E-pasts: info@exs.lv,
-						Tālrunis: <span id="m-phone"></span>
+						E-pasts: info@exs.lv
 					</p>
 				</div>
 			</div>
@@ -355,3 +355,4 @@
 </body>
 
 </html>
+

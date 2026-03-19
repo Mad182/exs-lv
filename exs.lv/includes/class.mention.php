@@ -8,11 +8,13 @@ class Mention {
 	private $url = null;
 	private $type = null;
 	private $uniq = null;
+	private $newid = null;
 
-	function __construct($url, $type, $uniq) {
+	function __construct($url, $type, $uniq, $newid = 0) {
 		$this->url = $url;
 		$this->type = $type;
 		$this->uniq = $uniq;
+		$this->newid = $newid;
 	}
 
 	public function mention($matches) {
@@ -30,6 +32,62 @@ class Mention {
 		if (empty($usr) && stristr($nick, '-')) {
 			$nick = str_replace('-', ' ', $nick);
 			$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
+		}
+
+		if($usr->id == 43040) {
+			//die('test');
+			if ($this->type == 'mb' || $this->type == 'group') {
+
+				if(!empty($this->newid)) {
+					$mb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($this->newid) . "'");
+				} else {
+					$mb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($this->uniq) . "'");
+				}
+
+				$content = strip_tags($mb->text);
+				if(!empty($mb->reply_to)) {
+					$parentmb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($mb->reply_to) . "'");
+					if(!empty($parentmb->text)) {
+						$content .= '; Iepriekšējais konteksts: ' . strip_tags($parentmb->text);
+					}
+
+					if(!empty($parentmb->reply_to)) {
+						$parentparentmb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($parentmb->reply_to) . "'");
+						if(!empty($parentparentmb->text)) {
+							$content .= '; Iepriekšējais konteksts: ' . strip_tags($parentparentmb->text);
+						}
+					}
+				} elseif(!empty($mb->parent)) {
+					$parentmb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid` FROM `miniblog` WHERE `id` = '" . intval($mb->parent) . "'");
+					if(!empty($parentmb->text)) {
+						$content .= '; Iepriekšējais konteksts: ' . strip_tags($parentmb->text);
+					}
+				}
+
+				$messages = [
+					["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Atbildi noformē izmantojot html (<p>, <b>, <br> un līdzīgus tagus, bez dokumenta struktūras). Tevi izsauca lietotājs ".$auth->nick.", pieminot tavu vārdu @exsperts."],
+					["role" => "user", "content" => $content],
+				];
+
+				$response = askAI($messages);
+
+				$aiReply = $response['choices'][0]['message']['content'] ?? null;
+
+				if ($aiReply === null) {
+					// handle error or fallback
+				} else {
+
+					if(!empty($mb->parent)) {
+						$parent = $mb->parent;
+						$reply_to = $mb->id;
+					} else {
+						$parent = $mb->id;
+						$reply_to = 0;
+					}
+
+					post_mb_ai(htmlpost2db($aiReply), $parent, $reply_to, $mb->groupid);
+				}
+			}
 		}
 
 		if (!empty($usr) && !in_array($nick, ['exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail']) && $mention_counter <= 6) {

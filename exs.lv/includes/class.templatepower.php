@@ -80,7 +80,11 @@ class TemplatePowerParser {
 			}
 		}
 
-		$this->{$tplvar}["size"] = sizeof($this->{$tplvar}["content"]);
+		if(!empty($this->{$tplvar}["content"])) {
+			$this->{$tplvar}["size"] = count($this->{$tplvar}["content"]);
+		} else {
+			$this->{$tplvar}["size"] = 0;
+		}
 		$this->tpl_count++;
 
 		return $tplvar;
@@ -284,19 +288,7 @@ class TemplatePower extends TemplatePowerParser {
 	}
 
 	protected function __assign($varname, $value) {
-		if (sizeof($regs = explode('.', $varname)) == 2) { //this is faster then preg_match
-			$ind_blockname = $regs[0] . '_' . $this->index[$regs[0]];
-
-			$lastitem = sizeof($this->content[$ind_blockname]);
-
-			$lastitem > 1 ? $lastitem-- : $lastitem = 0;
-
-			$block = &$this->content[$ind_blockname][$lastitem];
-			$varname = $regs[1];
-		} else {
-			$block = &$this->currentBlock;
-		}
-		$block["_V:$varname"] = $value;
+		$this->currentBlock["_V:$varname"] = $value;
 	}
 
 	protected function __assignGlobal($varname, $value) {
@@ -356,8 +348,12 @@ class TemplatePower extends TemplatePowerParser {
 	public function newBlock($blockname) {
 		$parent = &$this->content[$this->parent[$blockname] . '_' . $this->index[$this->parent[$blockname]]];
 
-		$lastitem = sizeof($parent);
-		$lastitem > 1 ? $lastitem-- : $lastitem = 0;
+        if(is_array($parent)) {
+		    $lastitem = count($parent);
+		    $lastitem > 1 ? $lastitem-- : $lastitem = 0;
+        } else {
+            $lastitem = 0;
+        }
 
 		$ind_blockname = $blockname . '_' . $this->index[$blockname];
 
@@ -373,7 +369,7 @@ class TemplatePower extends TemplatePowerParser {
 			$parent[$lastitem]["_B:$blockname"] = $ind_blockname;
 		}
 
-		$blocksize = sizeof($this->content[$ind_blockname]);
+		$blocksize = count($this->content[$ind_blockname]);
 
 		$this->content[$ind_blockname][$blocksize] = [$blockname];
 

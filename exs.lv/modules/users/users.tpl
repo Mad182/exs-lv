@@ -13,7 +13,7 @@
   {pager-prev}
 </p>
 <!-- START BLOCK : userlist-item-->
-<a href="/user/{id}">{nick}</a>
+ <a href="/user/{id}">{nick}</a>
 <!-- END BLOCK : userlist-item-->
 <div class="c"></div>
 <p class="core-pager">

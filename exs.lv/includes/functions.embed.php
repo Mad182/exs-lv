@@ -459,25 +459,19 @@ function embed_youtube($matches, $wide = 0) {
 
 	$safe = mkslug($matches[6], false, false);
 
-	$width = 380;
-	$height = 240;
-	$vq = 'large';
+	$width = 500;
+	$height = 282;
+	//$vq = 'hd720';
 	if ($wide) {
-		$width = 520;
-		$height = 290;
-		$vq = 'hd720';
+		$width = 640;
+		$height = 360;
+		//$vq = 'hd720';
 	}
 
 	// izmanto h, lai norādītu kā parametru javascriptā
-	$videocode = '<div class="c"></div><div class="auto-embed" ';
-	$videocode .= 'style="width:' . $width . 'px;">';
-	$videocode .= '<iframe class="youtube-player" type="text/html" ';
-	$videocode .= 'width="' . $width . '" height="' . $height . '" ';
-	$videocode .= 'src="https://www.youtube.com/embed/' . $safe;
-	$videocode .= '?wmode=transparent&autoplay=1&autohide=1&hl=lv_LV&vq=' . $vq . '&origin=';
-	$videocode .= urlencode('http://exs.lv') . '" frameborder="0"';
-	$videocode .= ' webkitallowfullscreen mozallowfullscreen allowfullscreen>';
-	$videocode .= '</iframe><br><a title="Atvērt video mājas lapā" ';
+	/*$videocode = '<div class="c"></div><div class="auto-embed" ';
+	$videocode .= 'style="border:0;width:' . $width . 'px;">';
+	$videocode .= '<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/' . $safe . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><a title="Atvērt video mājas lapā" ';
 	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
 	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
 	$videocode .= '<div class="c"></div></div>';
@@ -492,9 +486,16 @@ function embed_youtube($matches, $wide = 0) {
 	$return .= 'return false;" title="Atskaņot video" ';
 	$return .= 'rel="nofollow" ';
 	$return .= 'href="https://www.youtube.com/watch?v=' . $safe . '"><span>';
-	$return .= '</span></a></div></div>';
+	$return .= '</span></a></div></div>';*/
 
-	return $return;
+	$videocode = '<div class="c"></div><div class="auto-embed" ';
+	$videocode .= 'style="border:0;width:' . $width . 'px;max-width:100%">';
+	$videocode .= '<iframe width="' . $width . '" height="' . $height . '" src="https://www.youtube.com/embed/' . $safe . '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><a title="Atvērt video mājas lapā" ';
+	$videocode .= 'href="https://www.youtube.com/watch?v=' . $safe . '" ';
+	$videocode .= 'target="_blank" rel="nofollow">YouTube video</a> ';
+	$videocode .= '<div class="c"></div></div>';
+
+	return $videocode;
 }
 
 /**

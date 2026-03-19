@@ -589,7 +589,7 @@ function update_awards($user) {
 
 					if ($userr->days_in_row >= 365 || ($userr->days_in_row >= 364 && $userr->seen_today == 1)) {
 						$awards_list['online-year']['state'] = 'active';
-						
+
 						if ($userr->days_in_row >= 730 || ($userr->days_in_row >= 729 && $userr->seen_today == 1)) {
 							$awards_list['online-year-2']['state'] = 'active';
 
@@ -609,7 +609,7 @@ function update_awards($user) {
 		if ($userr->mobile_seen == 1) {
 			$awards_list['mobile']['state'] = 'active';
 		}
-		
+
 		if ($userr->android_seen == 1) {
 			$awards_list['android']['state'] = 'active';
 		}
@@ -643,6 +643,9 @@ function update_awards($user) {
 
 		if (!in_array('active-poster', $existing_awards)) {
 			$days = ceil((time() - strtotime($userr->date)) / 60 / 60 / 24);
+			if ($days < 1) {
+				$days = 1;
+			}
 			$posts = $userr->posts / $days;
 			if ($days >= 30 && $posts >= 5) {
 				$awards_list['active-poster']['state'] = 'active';
@@ -713,7 +716,7 @@ function update_awards($user) {
 			'state' => 'active'
 		);
 	}*/
-	
+
 	// florbola turnīrs
 	/*if (in_array($user, array(115,1351,1621,1822,2145,2222,2357,3650,5056,5205,5876,6963,8096,10065,10595,10734,11525,11722,11807,
 			12108,12304,12382,13004,14782,15390,16261,18057,19604,20858,21450,22518,23282,23512,24437,
@@ -751,7 +754,7 @@ function update_awards($user) {
 				notify($user, 7);
 				$m->delete('aw_' . $user);
 				// 6 - pēdējie 6 svarīgākie apbalvojumi (tik daudz rāda lietotnes profilos)
-				$m->delete('android_awards_'.$user.'-6');
+				$m->delete('android_awards_' . $user . '-6');
 			}
 		}
 	}
@@ -762,14 +765,14 @@ function update_awards($user) {
  *  hashtagu vai atradušies četru stirnu grupā.
  */
 function set_muga_awards() {
-    global $db, $m, $img_server;
-    
-    return false;
+	global $db, $m, $img_server;
 
-    $unique_users[32284] = ['MGP', 0]; // četru stirnu grupas admins
-    
-    // #MUGA hashtagi miniblogos
-    $users_from_posts = $db->get_results("
+	return false;
+
+	$unique_users[32284] = ['MGP', 0]; // četru stirnu grupas admins
+
+	// #MUGA hashtagi miniblogos
+	$users_from_posts = $db->get_results("
         SELECT
             `users`.`id`, `users`.`nick`, count(*) AS `skaits`
         FROM `miniblog`
@@ -782,18 +785,18 @@ function set_muga_awards() {
         GROUP BY `users`.`id`
         ORDER BY `skaits` DESC
     ");
-    
-    if ($users_from_posts) {
-        foreach ($users_from_posts as $single_user) {
-            $unique_users[(int)$single_user->id] = [
-                $single_user->nick,
-                $single_user->skaits
-            ];
-        }
-    }
-    
-    // lietotāji četru stirnu grupā
-    $users_in_group = $db->get_results("
+
+	if ($users_from_posts) {
+		foreach ($users_from_posts as $single_user) {
+			$unique_users[(int)$single_user->id] = [
+				$single_user->nick,
+				$single_user->skaits
+			];
+		}
+	}
+
+	// lietotāji četru stirnu grupā
+	$users_in_group = $db->get_results("
         SELECT
             `users`.`id`, `users`.`nick`
         FROM `clans`
@@ -804,31 +807,31 @@ function set_muga_awards() {
         WHERE
             `clans`.`id` = 621
     ");
-    
-    if ($users_in_group) {
-        foreach ($users_in_group as $single_user) {
-            if (in_array((int)$single_user->id, $unique_users)) continue;
-            $unique_users[(int)$single_user->id] = [$single_user->nick, 0];
-        }
-    }
-    
-    if (!isset($_GET['do']) || $_GET['do'] !== 'setawards') {
-        $i = 1;
-        echo '<html><body>';
-        foreach ($unique_users as $user) {
-            echo $i++.'. '.$user[0].' ['.$user[1].']<br>';
-        }
-        echo '</body></html>';
-        exit;
-    } else {
-        // piešķir medaļas            
-        foreach ($unique_users as $userid => $user) {
-            $db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('".$userid."','muga','<a href=\"/say/24437/4948682-milzigs-paldies-par-atbalstu\">#MUGA</a>',NOW())");
-            $db->update('autoawards', $db->insert_id, ['importance' => $db->insert_id]);
-            userlog($userid, 'Ieguva medaļu &quot;#MUGA&quot;', $img_server . '/dati/bildes/awards/muga.png');
-            notify($userid, 7);
-            $m->delete('aw_' . $userid);
-            $m->delete('android_awards_'.$userid.'-6');
-        }
-    }
+
+	if ($users_in_group) {
+		foreach ($users_in_group as $single_user) {
+			if (in_array((int)$single_user->id, $unique_users)) continue;
+			$unique_users[(int)$single_user->id] = [$single_user->nick, 0];
+		}
+	}
+
+	if (!isset($_GET['do']) || $_GET['do'] !== 'setawards') {
+		$i = 1;
+		echo '<html><body>';
+		foreach ($unique_users as $user) {
+			echo $i++ . '. ' . $user[0] . ' [' . $user[1] . ']<br>';
+		}
+		echo '</body></html>';
+		exit;
+	} else {
+		// piešķir medaļas            
+		foreach ($unique_users as $userid => $user) {
+			$db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('" . $userid . "','muga','<a href=\"/say/24437/4948682-milzigs-paldies-par-atbalstu\">#MUGA</a>',NOW())");
+			$db->update('autoawards', $db->insert_id, ['importance' => $db->insert_id]);
+			userlog($userid, 'Ieguva medaļu &quot;#MUGA&quot;', $img_server . '/dati/bildes/awards/muga.png');
+			notify($userid, 7);
+			$m->delete('aw_' . $userid);
+			$m->delete('android_awards_' . $userid . '-6');
+		}
+	}
 }

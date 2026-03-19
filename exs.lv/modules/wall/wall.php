@@ -26,6 +26,7 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 	}
 
 	require(CORE_PATH . '/modules/wall/tab-news.php');
+	$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/';
 }
 
 $pagepath = '';

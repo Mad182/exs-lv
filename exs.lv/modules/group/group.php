@@ -473,7 +473,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$to = (int) $_POST['response-to'];
 
 			// security pārbaudes...
-			if (get_mb_level($to) > 2 && $auth->level != 1) {
+			if (get_mb_level($to) > 10) {
 				die('Too deep ;(');
 			}
 			if (!isset($_POST['token']) or $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
@@ -528,28 +528,62 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						$gt = $group->title . ' grupā';
 					}
 
-					//ja grupas ieraksti ir slēpti, ievieto userlogā tikai nosaukumu
+					//ja grupas ieraksti ir slēpti, ievieto userlogā tikai nosaukumu
 					if (!$group->hide_intro) {
-
 						if(strlen(textlimit($title, 32, '...')) > 1) {
 							$tt = ' &quot;' . textlimit($title, 32, '...') . '&quot;';
 						} else {
 							$tt = '...';
 						}
-						push('Atbildēja <a href="' . $url . '#m' . $newid . '">' . $gt . $tt. '</a>', get_avatar($group, 's', true), 'g-' . $mainid, !$group->public, $group->id);
+						$nstr = 'Atbildēja <a href="' . $url . '#m' . $newid . '">' . $gt . $tt. '</a>';
+						push($nstr, get_avatar($group, 's', true), 'g-' . $mainid, !$group->public, $group->id);
 					} else {
-						push('Atbildēja ' . $gt, get_avatar($group, 's', true), 'g-' . $mainid, 1, $group->id);
+						$nstr = 'Atbildēja ' . $gt;
+						push($nstr, get_avatar($group, 's', true), 'g-' . $mainid, 1, $group->id);
 					}
 
 					// mentions & notifikācijas
 					$newpost = $db->get_row("SELECT * FROM `miniblog` WHERE id = '$newid'");
-					$newpost->text = mention($newpost->text, $url, 'group', $mainid);
+					$newpost->text = mention($newpost->text, $url, 'group', $mainid, $newid);
 					$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
 					notify($check, 8, $mainid, $url, textlimit($group->title . ' - ' . $title, 64));
 					if (!empty($reply_to_id) && $check != $reply_to->author) {
 						notify($reply_to->author, 8, $mainid, $url, textlimit($group->title . ' - ' . $title, 64));
 					}
+
+					//ai stuff
+					if($reply_to->author == 43040) {
+
+						$messages = [
+							["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Šobrīd tu atrodies lietotāju grupā ar nosaukumu " . $group->title],
+							["role" => "user", "content" => strip_tags($newpost->text) . '; Iepriekšējais konteksts: Exsperts:' . $reply_to->text],
+						];
+
+						$response = askAI($messages);
+
+						$aiReply = $response['choices'][0]['message']['content'] ?? null;
+
+						if ($aiReply === null) {
+							// handle error or fallback
+						} else {
+
+
+							$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '],'',$aiReply);
+							if(!empty($newpost->parent)) {
+								$parent = $newpost->parent;
+							} else {
+								$parent = $newpost->id;
+							}
+							$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '],'',$aiReply);
+
+							post_mb_ai(post2db($aiReply), $parent, $newpost->id, $newpost->groupid);
+
+							userlog(43040, $nstr,  get_avatar($group, 's', true), 'g-' . $mainid, !$group->public, $group->id);
+
+						}
+
+					} 
 
 					update_post_count($group->id);
 
@@ -772,7 +806,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 							$json[$response->reply_to][] = $response;
 						}
 						$tpl->newBlock('miniblog-posts');
-						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 4, $record->closed, $group->disable_vote, $record->pic_heavy));
+						$tpl->assign('mbout', mb_recursive($json, 0, 0, !isset($_GET['single']), 8, $record->closed, $group->disable_vote, $record->pic_heavy));
 					}
 				}
 

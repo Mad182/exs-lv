@@ -44,10 +44,10 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 		require CORE_PATH . '/modules/user/submodules/give.php';
 
-	//view profile
+		//view profile
 	} else {
 
-		if($auth->ok === true) {
+		if ($auth->ok === true) {
 			include CORE_PATH . '/includes/class.friend.php';
 			$friend = new Friend();
 
@@ -64,10 +64,13 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		$tpl->newBlock('user-profile');
 
 		$days = ceil((time() - strtotime($inprofile->date)) / 60 / 60 / 24);
+		if ($days < 1) {
+			$days = 1;
+		}
 
 		$posts = ($db->get_var("SELECT count(*) FROM comments WHERE author = '$inprofile->id' AND `removed` = 0") +
-				$db->get_var("SELECT count(*) FROM galcom WHERE author = '$inprofile->id' AND `removed` = 0") +
-				$db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $inprofile->id . "' AND removed = '0'"));
+			$db->get_var("SELECT count(*) FROM galcom WHERE author = '$inprofile->id' AND `removed` = 0") +
+			$db->get_var("SELECT count(*) FROM miniblog WHERE author = '" . $inprofile->id . "' AND removed = '0'"));
 
 		if ($posts != $inprofile->posts) {
 			$db->update('users', $inprofile->id, ['posts' => $posts]);
@@ -76,8 +79,8 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		$time = time_ago(strtotime($inprofile->lastseen));
 
 		$voteval = $db->get_var("SELECT sum(vote_value) FROM comments WHERE author = '$inprofile->id'") +
-				$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$inprofile->id'") +
-				$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$inprofile->id'");
+			$db->get_var("SELECT sum(vote_value) FROM galcom WHERE author = '$inprofile->id'") +
+			$db->get_var("SELECT sum(vote_value) FROM miniblog WHERE author = '$inprofile->id'");
 
 		$tpl->assign([
 			'user-nick' => h($inprofile->nick),
@@ -170,7 +173,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 		}
 
 		//coding.lv nerādam exs.lv apbalvojumus
-		if($lang !== 3 && $auth->ok === true) {
+		if ($lang !== 3) {
 			$awards = $db->get_results("SELECT * FROM `awards` WHERE `user` = " . $inprofile->id . " ORDER BY `date` DESC");
 			if ($awards) {
 				$tpl->newBlock('user-profile-awards');
@@ -198,23 +201,23 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			}
 			foreach ($comments as $comments) {
 				if (!empty($values[$comments->date])) {
-				    $values[$comments->date] += $comments->count;
+					$values[$comments->date] += $comments->count;
 				} else {
-				    $values[$comments->date] = $comments->count;
+					$values[$comments->date] = $comments->count;
 				}
 			}
 			foreach ($pages as $page) {
 				if (!empty($values[$page->date])) {
-				    $values[$page->date] += $page->count;
+					$values[$page->date] += $page->count;
 				} else {
-				    $values[$page->date] = $page->count;
+					$values[$page->date] = $page->count;
 				}
 			}
 			foreach ($images as $image) {
 				if (!empty($values[$image->date])) {
-				    $values[$image->date] += $image->count;
+					$values[$image->date] += $image->count;
 				} else {
-				    $values[$image->date] = $image->count;
+					$values[$image->date] = $image->count;
 				}
 			}
 
@@ -223,12 +226,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			for ($i = 0; $i <= 374; $i++) {
 				$key = date('Y-m-d', strtotime('-' . $i . ' days'));
 				if (!empty($values[$key])) {
-				    $data[$key] = $values[$key];
-				    /* if($values[$key] > $max) {
+					$data[$key] = $values[$key];
+					/* if($values[$key] > $max) {
 				      $max = $values[$key];
 				      } */
 				} else {
-				    $data[$key] = 0;
+					$data[$key] = 0;
 				}
 			}
 
@@ -242,28 +245,28 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 				if ($key > $date) {
 
-				    if ($i == 1) {
-				        $tpl->newBlock('week');
-				    }
+					if ($i == 1) {
+						$tpl->newBlock('week');
+					}
 
-				    if ($i == 7) {
-				        $i = 1;
-				    } else {
-				        $i++;
-				    }
+					if ($i == 7) {
+						$i = 1;
+					} else {
+						$i++;
+					}
 
-				    $tpl->newBlock('day');
+					$tpl->newBlock('day');
 
-				    $percent = ($max > 0) ? (int) (100 / $max * $val) : 0;
-				    if ($percent > 100) {
-				        $percent = 100;
-				    }
-                    $tpl->assign([
-                        'date' => date('Y.m.d', strtotime($key)),
-                        'count' => $val,
-                        'percent' => $percent,
-                        'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
-                    ]);
+					$percent = ($max > 0) ? (int) (100 / $max * $val) : 0;
+					if ($percent > 100) {
+						$percent = 100;
+					}
+					$tpl->assign([
+						'date' => date('Y.m.d', strtotime($key)),
+						'count' => $val,
+						'percent' => $percent,
+						'decimal' => ($max > 0) ? round((100 / $max * $val / 100), 2) : 0,
+					]);
 				}
 			}
 		}
@@ -318,7 +321,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$private = ' AND `private` = 0';
 		}
 
-		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ".$private." ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
+		$actions = $db->get_results("SELECT * FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' " . $private . " ORDER BY `time` DESC, `id` DESC LIMIT $skip,$end");
 		if ($actions) {
 			$out .= '<ul class="user-actions" id="profile-user-actions">';
 			foreach ($actions as $action) {
@@ -331,7 +334,7 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				if (substr($action->avatar, 0, 22) == '/dati/bildes/topic-av/') {
 					$action->avatar = '//exs.lv' . $action->avatar;
 				}
-				if (substr($action->avatar, 0, 13) == '/dati/bildes/' && !file_exists('.'.$action->avatar)) {
+				if (substr($action->avatar, 0, 13) == '/dati/bildes/' && !file_exists('.' . $action->avatar)) {
 					$action->avatar = '//img.exs.lv/userpic/small/none.png';
 				}
 				if (substr($action->avatar, 0, 8) == '/bildes/') {
@@ -341,13 +344,12 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 				$out .= '<span class="post-time" title="' . date('d.m.Y. H:i', $action->time) . '">' . time_ago($action->time) . '</span> ' . $action->action . '</li>';
 			}
 			$out .= '</ul>';
-
-		} elseif($lang != $inprofile->source_site) {
+		} elseif ($lang != $inprofile->source_site) {
 			//liek meklētājiem neindeksēt profilus apakšprojektos, kur tie nav reģistrēti un neko nav darījuši
 			$robotstag = ['noindex', 'nofollow'];
 		}
 
-		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' ".$private." LIMIT 60");
+		$total = $db->get_var("SELECT count(*) FROM `userlogs` WHERE `user` = '$inprofile->id' AND `lang` = '$lang' " . $private . " LIMIT 60");
 		if ($total > 60) {
 			$total = 60;
 		}
@@ -497,8 +499,6 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 
 	$tpl->newBlock('error-nouser');
 	$page_title = 'Kļūda: profils nav atrasts!';
-
 }
 
 $pagepath = '';
-

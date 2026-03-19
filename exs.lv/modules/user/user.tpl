@@ -43,26 +43,26 @@
 	<div id="year-stats-wrapper">
 
 		<div style="width: 14px;float: left;">
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">P</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">P</span>
 			</div>
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">O</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">O</span>
 			</div>
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">T</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">T</span>
 			</div>
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">C</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">C</span>
 			</div>
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">P</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">P</span>
 			</div>
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">S</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">S</span>
 			</div>
-			<div style="width: 14px;height:11px;background: #fafafa;margin: 1px 1px 0 0">
-				<span style="float: left;width: 13px;height:11px;background: #ddd;font-size:9px;line-height:11px">Sv</span>
+			<div style="width: 14px;" class="px">
+				<span class="pxh">Sv</span>
 			</div>
 		</div>
 
@@ -70,7 +70,7 @@
 
 		<div style="width:1.8%;float:left">
 			<!-- START BLOCK : day-->
-			<div style="height:11px;background:#fafafa;margin:1px 1px 0 0">
+			<div class="px">
 				<a class="cluetip cluetip-userprofile" style="float:left;width:100%;height: 11px;background:#681e23;opacity:{decimal}" href="javascript:void(0)" title="{date} - {count} posti">&nbsp;</a>
 			</div>
 			<!-- END BLOCK : day-->
@@ -441,7 +441,7 @@
 			<input type="hidden" name="xsrf_token" value="{xsrf}" />
 			<p>
 				<label for="edit-pm_notify_email">Saņemt paziņojumu uz e-pastu par saņemtām vēstulēm:</label>
-				<select name="edit-pm_notify_email" id="edit-pm_notify_email">
+				<select name="edit-pm_notify_email" id="edit-pm_notify_email" style="min-width:280px">
 					<option value="0"{user-pm_notify_email-0}>Nekad</option>
 					<option value="1"{user-pm_notify_email-1}>Ja neesmu bijis online vairākas dienas</option>
 					<option value="2"{user-pm_notify_email-2}>Vienmēr</option>
@@ -465,9 +465,10 @@
 			</p>
 			<p>
 				<label for="edit-skin">Tēma:</label>
-				<select name="edit-skin" id="edit-skin">
+				<select name="edit-skin" id="edit-skin" style="min-width:280px">
 					<option value="0"{user-skin-0}>Gaiša</option>
 					<option value="1"{user-skin-1}>Tumša</option>
+					<option value="3"{user-skin-3}>Automātiski pēc pārlūka iestatījumiem</option>
 				</select>
 				<br>
 				<a href="/augsa" target="_blank">Pielāgot augšu</a>

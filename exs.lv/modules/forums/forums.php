@@ -61,6 +61,13 @@ if ($auth->level == 1 && !empty($_GET['moveup'])) {
 	move_cat($_GET['movedown'], 'down');
 }
 
+//canonical
+if($category->textid === 'index') {
+    $canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/';
+} else {
+    $canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $category->textid;
+}
+
 $fcategorys = [];
 $cats = $db->get_results("SELECT `id`,`title`,`textid` FROM `cat` WHERE `parent` = '$category->id' AND `module` = 'forums' ORDER BY `ordered` ASC");
 if (empty($cats)) {

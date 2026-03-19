@@ -16,6 +16,10 @@ if ($category->intro) {
 	$end = 200;
 }
 
+if($category->textid === 'html-pamati' || $category->textid === 'css-pamati' || $category->textid === 'php-pamati' || $category->textid === 'javascript-pamati') {
+	$end = 20;
+}
+
 if ($category->alphabetical) {
 	$sortby = "`pages`.`title` ASC";
 } elseif ($category->intro) {

@@ -1,5 +1,30 @@
 <?php
 
+function askAI($messages) {
+	global $openai_api_key;
+
+    $payload = [
+        "model" => "gpt-4.1-mini",
+        "messages" => $messages
+    ];
+
+    $ch = curl_init("https://api.openai.com/v1/chat/completions");
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            "Authorization: Bearer $openai_api_key",
+            "Content-Type: application/json"
+        ],
+        CURLOPT_POSTFIELDS => json_encode($payload)
+    ]);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    return json_decode($response, true);
+}
+
 /**
  *  functions.core.php
  *
@@ -704,7 +729,7 @@ function get_sitelist($table) {
 	return $$storage;
 }
 
-function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
+function mention($text, $url = '#', $type = 'notype', $uniq = 0, $newid = 0) {
 
 	/* repleisojam bieži pieminētu lietotāju vārdus, lai būtu mazāk kļūdu */
 	$underscore_names = [
@@ -723,7 +748,7 @@ function mention($text, $url = '#', $type = 'notype', $uniq = 0) {
 	/* apstrādā @mentions */
 	if (strpos($text, '@') !== false) {
 		include_once(CORE_PATH . '/includes/class.mention.php');
-		$mention = new Mention($url, $type, $uniq);
+		$mention = new Mention($url, $type, $uniq, $newid);
 		$text = preg_replace_callback('/@([0-\x{003b}\x{003d}-\x{024f}]+)/uim', [$mention, 'mention'], $text);
 	}
 
@@ -1678,8 +1703,12 @@ function get_latest_posts() {
 	$out = '';
 
 	$skip = 0;
+	$total = 8;
+	if($lang == 3) {
+		$total = 10;
+	}
 	if (isset($_GET['pg'])) {
-		$skip = 8 * intval($_GET['pg']);
+		$skip = $total * intval($_GET['pg']);
 	}
 
 	$conditions = [];
@@ -1722,6 +1751,8 @@ function get_latest_posts() {
 					`pages`.`category`,
 					`pages`.`lang`,
 					`pages`.`bump`,
+					`pages`.`avatar`,
+					`pages`.`author`,
 					`cat`.`mods_only`
 				FROM
 					`pages`,
@@ -1730,7 +1761,7 @@ function get_latest_posts() {
 					" . implode(' AND ', $conditions) . $mods_only . "
 					AND `cat`.`id` = `pages`.`category`
 				ORDER BY
-					`pages`.`bump` DESC LIMIT $skip,8");
+					`pages`.`bump` DESC LIMIT $skip,$total");
 
 	if ($latest) {
 		$out = '<ul id="latest-topics" class="blockhref">';
@@ -1759,7 +1790,13 @@ function get_latest_posts() {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
 
-			$out .= '<li><a href="' . $url . $skip . '"><img src="/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
+			if(!empty($late->avatar)) {
+				$avatar = '/dati/bildes/topic-av/' . $late->id . '.jpg';
+			} else {
+				$avatar = get_avatar(get_user($late->author), 's');
+			}
+
+			$out .= '<li><a href="' . $url . $skip . '"><img src="' . $avatar . '" class="av" alt="" />';
 
 			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
 
@@ -1892,7 +1929,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	$out = '<ul id="mb-list" class="blockhref mb-col">';
 
 	if (isset($_GET['pg'])) {
-		$skip = 6 * intval($_GET['pg']);
+		$skip = 8 * intval($_GET['pg']);
 	} else {
 		$skip = 0;
 	}
@@ -1971,7 +2008,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	if (!$auth->ok) {
 		$priv = ' AND `miniblog`.`private` = 0 ';
 	}
-	$limit = ($lang === 9) ? 5 : 6; // #rs
+	$limit = ($lang === 9) ? 5 : 8; // #rs
 
 	$mbs = $db->get_results("SELECT
 		`miniblog`.`id` AS `id`,
@@ -2211,6 +2248,62 @@ function post_mb($post) {
 	return $return;
 }
 
+function post_mb_ai($text, $parent_id, $reply_to = 0, $group_id = 0) {
+	global $db, $lang;
+
+	$post = [
+		'groupid' => 0,
+		'author' => 43040,
+		'date' => 'NOW()',
+		'text' => $text,
+		'private' => 0,
+		'groupid' => $group_id,
+		'parent' => $parent_id,
+		'reply_to' => $reply_to,
+		'ip' => '',
+		'bump' => 0,
+		'type' => 'miniblog',
+		'lang' => $lang,
+		'device' => 0
+	];
+
+	if (empty($post['parent']) && empty($post['bump'])) {
+		$post['bump'] = time();
+	}
+
+	$fields = [];
+	$data = [];
+	foreach ($post as $title => $field) {
+		$fields[] = '`' . $title . '`';
+		if ($field == 'NOW()') {
+			$data[] = $field;
+		} else {
+			$data[] = "'" . $field . "'";
+		}
+	}
+
+	$db->query('INSERT INTO `miniblog` (' . implode(',', $fields) . ') VALUES (' . implode(',', $data) . ')');
+	$return = $db->insert_id;
+
+	if (!empty($post['parent'])) {
+		if (isset($_POST['no-bump'])) {
+			$db->query("UPDATE `" . $post['type'] . "` SET `posts` = `posts`+1 WHERE `id` = '" . $post['parent'] . "'");
+			if (!empty($post['reply_to'])) {
+				$db->query("UPDATE `miniblog` SET `posts` = `posts`+1 WHERE `id` = '" . $post['reply_to'] . "'");
+			}
+		} else {
+			$db->query("UPDATE `" . $post['type'] . "` SET `bump` = '" . time() . "', `posts` = `posts`+1 WHERE `id` = '" . $post['parent'] . "'");
+			if (!empty($post['reply_to'])) {
+				$db->query("UPDATE `miniblog` SET `bump` = '" . time() . "', `posts` = `posts`+1 WHERE `id` = '" . $post['reply_to'] . "'");
+			}
+		}
+	}
+
+	update_karma($post['author']);
+
+	return $return;
+}
+
 function human_filesize($bytes, $decimals = 2) {
 	$sz = 'BKMGTP';
 	$factor = floor((strlen($bytes) - 1) / 3);
@@ -2232,6 +2325,9 @@ function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 		} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
 			$path = 'large';
 			$real_path = 'u_large';
+		}
+		if (is_null($user)) {
+			$user = new stdClass();
 		}
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
@@ -2745,7 +2841,7 @@ function add_bookmark($id, $user, $table = 'pages') {
 }
 
 function remove_bookmark($id) {
-	global $db;
+	global $db, $auth;
 
 	$db->query("DELETE FROM `bookmarks` WHERE `id` = " . intval($id) . " LIMIT 1");
 	count_bookmarks($auth->id);

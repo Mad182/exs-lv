@@ -69,6 +69,7 @@ if (
 	strpos($_SERVER['HTTP_USER_AGENT'], "SemrushBot") === false &&
 	strpos($_SERVER['HTTP_USER_AGENT'], "CCBot") === false &&
 	strpos($_SERVER['HTTP_USER_AGENT'], "DotBot") === false &&
+	strpos($_SERVER['HTTP_USER_AGENT'], "ClaudeBot") === false &&
 	strpos($_SERVER['HTTP_USER_AGENT'], "AhrefsBot") === false
 ) {
 	session_start();
@@ -225,9 +226,9 @@ if (isset($_GET['u'])) {
 
 			$tpl->assignInclude('module-currrent', CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			//iekešojam sadaļas templeitu. mazliet apgrūtina .tpl failu labošanu, toties -20% ielādes laikam
-			if (($tpl2 = $m->get('tpl_' . $lang . '_' . $category->module)) === false || $debug === true) {
+			if (($tpl2 = $m->get('t_' . $lang . '_' . $category->module)) === false || $debug === true) {
 				$tpl->prepare();
-				$m->set('tpl_' . $lang . '_' . $category->module, $tpl, 3600);
+				$m->set('t_' . $lang . '_' . $category->module, $tpl, 3600);
 			} else {
 				$tpl = $tpl2;
 				unset($tpl2);
@@ -360,7 +361,11 @@ if (!empty($secure_login)) {
 }
 
 if ($auth->skin == 1 && $lang == 1) {
-	//$add_css[] = 'dark.css';
+	$add_css[] = 'manual-dark.css';
+} elseif ($auth->ok === true && $auth->skin == 0 && $lang == 1) {
+	//light skin
+} elseif($lang === 1) {
+	$add_css[] = 'auto-dark.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
@@ -532,7 +537,6 @@ if ($skin === 'main') {
 
 
 if ($auth->ok !== true) {
-	$robotstag[] = 'noarchive';
 
 	if (!empty($category->noindex)) {
 		$robotstag = ['noindex'];

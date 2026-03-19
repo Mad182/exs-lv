@@ -148,6 +148,8 @@ foreach ($articles as $article) {
 	$av = '';
 	if (!empty($article->avatar)) {
 		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+	} else {
+		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/dati/bildes/topic-av/' . $article->id . '.jpg" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	}
 
 	$title = textlimit($article->title, 50, '...');
