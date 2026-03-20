@@ -12,7 +12,7 @@ class Comment {
 		} else {
 			$table = 'images';
 		}
-		$pageinfo = $db->get_row("SELECT id FROM " . $table . " WHERE id = '$page_id' AND closed = '0'");
+		$pageinfo = $db->get_row("SELECT `id` FROM " . $table . " WHERE `id` = '$page_id' AND `closed` = '0'");
 		if ($pageinfo) {
 			return true;
 		} else {
@@ -60,30 +60,40 @@ class Comment {
 						$db->query("UPDATE `pages` SET `posts` = posts+1, `readby` = '' WHERE `id` = '$page_id'");
 					}
 
-					$db->query("INSERT INTO `comments` (id,pid,author,text,date,ip,parent) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip','$reply')");
+					$db->query("INSERT INTO `comments` (`id`,`pid`,`author`,`text`,`date`,`ip`,`parent`) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip','$reply')");
 					$newid = $db->insert_id;
 					if ($reply != 0) {
-						$db->query("UPDATE comments SET replies = replies+1 WHERE id = '$reply'");
+						$db->query("UPDATE `comments` SET `replies` = `replies`+1 WHERE `id` = '$reply'");
 					}
 					$url = '/read/' . $article->strid;
 
 					$newpost = $db->get_row("SELECT * FROM `comments` WHERE `id` = '$newid'");
 					$newpost->text = mention($newpost->text, $url, 'page', $page_id);
-					$db->query("UPDATE `comments` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
+					$db->query("UPDATE `comments` SET `text` = '" . sanitize($newpost->text) . "' WHERE `id` = '$newpost->id'");
 
 					if (!isset($_POST['no-bump'])) {
 
-						push('Komentēja rakstu &quot;<a href="' . $url . '#c' . $newid . '">' . $article->title . '</a>&quot;', '/dati/bildes/topic-av/' . $article->id . '.jpg');
+						//if there is no page avatar, use author's avatar directly
+						$avatar = '/dati/bildes/topic-av/' . $article->id . '.jpg';
+						if(empty($article->avatar)) {
+							$author = get_user($article->author);
+							if(!empty($author->avatar)) {
+								$avatar = get_avatar($author, 's');
+							}
+						}
+
+						push('Komentēja rakstu &quot;<a href="' . $url . '#c' . $newid . '">' . $article->title . '</a>&quot;', $avatar);
 						notify($article->author, 2, $article->id, $url, textlimit(hide_spoilers($article->title), 64));
 					}
+
 				} else {
-					$db->query("INSERT INTO galcom (id,bid,author,text,date,ip) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip')");
+					$db->query("INSERT INTO `galcom` (`id`,`bid`,`author`,`text`,`date`,`ip`) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip')");
 					$newid = $db->insert_id;
 					$db->query("UPDATE `images` SET `bump` = NOW(), `posts` = `posts`+1, `readby` = '' WHERE `id` = '$page_id'");
 
 					$newpost = $db->get_row("SELECT * FROM `galcom` WHERE `id` = '$newid'");
 					$newpost->text = mention($newpost->text, '#', 'image', $page_id);
-					$db->query("UPDATE `galcom` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
+					$db->query("UPDATE `galcom` SET `text` = '" . sanitize($newpost->text) . "' WHERE `id` = '$newpost->id'");
 				}
 				update_karma($user_id);
 			} else {
