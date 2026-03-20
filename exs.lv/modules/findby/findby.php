@@ -147,8 +147,8 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'page' &&
             $escaped = str_replace('%', '', trim($_POST['vip']));
             $res->lastip = $res->ip;
             $tmp_ip = $res->lastip;
-            $res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-            $res->lastip = '<a href="https://whois.domaintools.com/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';           
+            $res->lastip = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->lastip));
+            $res->lastip = '<a href="https://whois.domaintools.com/'.h($tmp_ip).'" rel="nofollow">'.$res->lastip.'</a>';           
 			
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);
 			$new_tpl->newBlock('search-page-result');
@@ -354,34 +354,34 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 	if (isset($_POST['nick']) && strlen(trim($_POST['nick'])) >= 2) {
 		$field = 'nick';
 		$criteria = '`nick` LIKE \'%' . sanitize(trim($_POST['nick'])) . '%\'';
-		$tpl->assign('nick', trim($_POST['nick']));
+		$tpl->assign('nick', h(trim($_POST['nick'])));
 	}    
 	// pēc e-pasta
 	else if (isset($_POST['mail']) && strlen(trim($_POST['mail'])) >= 3) {
 		$field = 'mail';
 		$criteria = '`mail` LIKE \'%' . sanitize(trim($_POST['mail'])) . '%\'';
-		$tpl->assign('mail', trim($_POST['mail']));
+		$tpl->assign('mail', h(trim($_POST['mail'])));
 	}    
 	// pēc pēdējās lietotās IP adreses
 	else if (isset($_REQUEST['ip']) && strlen(trim($_REQUEST['ip'])) >= 3) {
 		$field = 'ip';
 		// šeit neder % zīme, jo POST['ip'] laukā to ir ļauts pielietot
 		$criteria = '`lastip` LIKE \'' . sanitize(trim($_REQUEST['ip'])) . '\'';
-		$tpl->assign('ip', trim($_REQUEST['ip']));
+		$tpl->assign('ip', h(trim($_REQUEST['ip'])));
 	}    
 	// pēc IP iekš 'visits'
 	else if (isset($_POST['vip']) && strlen(trim($_POST['vip'])) >= 3) {
 		$field = 'vip';
 		// šeit neder % zīme, jo POST['vip'] laukā tā var tikt izmantota
 		$criteria = '`visits`.`ip` LIKE \'' . sanitize(trim($_POST['vip'])) . '\'';
-		$tpl->assign('vip', trim($_POST['vip']));
+		$tpl->assign('vip', h(trim($_POST['vip'])));
 	}
 	// pēc user-agent
 	else if (isset($_POST['useragent']) && strlen(trim($_POST['useragent'])) >= 5) {
 		$field = 'useragent';
 		// šeit neder % zīme, jo POST['useragent'] laukā tā var tikt izmantota
 		$criteria = '`users`.`user_agent` LIKE \'' . sanitize(trim($_POST['useragent'])) . '\'';
-		$tpl->assign('useragent', trim($_POST['useragent']));
+		$tpl->assign('useragent', h(trim($_POST['useragent'])));
 	}
 	// kļūdu gadījumā
 	else {
@@ -459,18 +459,18 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 				$escaped = str_replace('%', '', trim($_POST['vip']));
 				$res->lastip = $res->ip;
 				$tmp_ip = $res->lastip;
-				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-				$res->lastip = '<a href="https://whois.domaintools.com/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
+				$res->lastip = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->lastip));
+				$res->lastip = '<a href="https://whois.domaintools.com/'.h($tmp_ip).'" rel="nofollow">'.$res->lastip.'</a>';
 			} 
 			else if ($field == 'mail') {
 				$escaped = trim($_POST['mail']);
-				$res->mail = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->mail);
+				$res->mail = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->mail));
 			} 
 			else if ($field == 'ip') {
 				$escaped = str_replace('%', '', trim($_REQUEST['ip']));
 				$tmp_ip = $res->lastip;
-				$res->lastip = str_replace($escaped, '<strong>' . $escaped . '</strong>', $res->lastip);
-				$res->lastip = '<a href="https://whois.domaintools.com/'.$tmp_ip.'" rel="nofollow">'.$res->lastip.'</a>';
+				$res->lastip = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->lastip));
+				$res->lastip = '<a href="https://whois.domaintools.com/'.h($tmp_ip).'" rel="nofollow">'.$res->lastip.'</a>';
 			}             
 			
 			$res->nick = usercolor($res->nick, $res->level, false, $res->id);

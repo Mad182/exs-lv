@@ -225,7 +225,7 @@ if ($category->module === 'movies') {
 		$_GET['genres'] = [$_GET['genre']];
 
 		if (translate_genres($_GET['genre']) != $_GET['genre']) {
-			$page_title = translate_genres($_GET['genre']);
+			$page_title = h(translate_genres($_GET['genre']));
 		}
 	} elseif (isset($_GET['genres']) && count($_GET['genres']) == 1) {
 		if (translate_genres($_GET['genres'][0]) != $_GET['genres'][0]) {

@@ -159,8 +159,8 @@ if ($auth->ok) {
 			$original_thumb = $foo->file_dst_pathname;
 			$new_thumb_path = $foo->file_dst_path . $new_filename;
 
-			shell_exec("avifenc '$original_file' '$new_file_path'");
-			shell_exec("avifenc '$original_thumb' '$new_thumb_path'");
+			shell_exec("avifenc " . escapeshellarg($original_file) . " " . escapeshellarg($new_file_path));
+			shell_exec("avifenc " . escapeshellarg($original_thumb) . " " . escapeshellarg($new_thumb_path));
 
 			if (file_exists($new_file_path)) {
 				unlink($original_file);

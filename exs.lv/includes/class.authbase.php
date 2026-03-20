@@ -64,11 +64,11 @@ class AuthBase {
 	function update_visits() {
 		global $db;
 		$lang = get_lang();
-		$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = $this->id AND `ip` = '$this->ip' AND `site_id` = $lang");
+		$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = $this->id AND `ip` = '" . sanitize($this->ip) . "' AND `site_id` = $lang");
 		if ($exists) {
 			$db->query("UPDATE `visits` SET `lastseen` = NOW() WHERE `id` = $exists");
 		} else {
-			$db->query("INSERT INTO `visits` (`user_id`, `site_id`, `ip`, `lastseen`) VALUES ($this->id, $lang, '$this->ip', NOW())");
+			$db->query("INSERT INTO `visits` (`user_id`, `site_id`, `ip`, `lastseen`) VALUES ($this->id, $lang, '" . sanitize($this->ip) . "', NOW())");
 		}
 	}
 
@@ -126,7 +126,7 @@ class AuthBase {
 		// android|ios.exs.lv pats prot apstrādāt bloķētos profilus
 		if (
 			$this->via_android === 0 && $this->via_ios === 0 && !isset($_GET['_']) &&
-			$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")
+			$ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '" . sanitize($this->ip) . "') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")
 		) {
 			$this->logout();
 			set_flash('Pieeja lapai ir liegta!', 'error');
@@ -202,14 +202,14 @@ class AuthBase {
 
 			// android|ios.exs.lv pats prot apstrādāt bloķētos profilus un
 			// redirekts kā tāds tam vispār neder
-			if ($this->via_android === 0 && $this->via_ios === 0 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			if ($this->via_android === 0 && $this->via_ios === 0 && $ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '" . sanitize($this->ip) . "') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
 				$this->error = 3;
 				set_flash('Pieeja lapai ir liegta!', 'error');
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . $this->ip . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . sanitize($this->ip) . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
@@ -227,7 +227,7 @@ class AuthBase {
 
 			return true;
 		} else {
-			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '$this->ip')");
+			$db->query("INSERT INTO `failed_logins` (`date`, `username`, `ip`) VALUES (NOW(), '$login', '" . sanitize($this->ip) . "')");
 			sleep(rand(1, 3));
 			$this->error = 1;
 			return false;
@@ -239,7 +239,7 @@ class AuthBase {
 		global $db;
 		$lang = get_lang();
 		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0, `android` = 0, `ios` = 0 WHERE `id` = '$this->id' LIMIT 1");
-		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
+		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '" . sanitize($this->ip) . "'");
 		$this->id = 0;
 		$this->nick = "Guest";
 		$this->level = 0;

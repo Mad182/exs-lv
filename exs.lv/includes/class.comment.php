@@ -60,7 +60,7 @@ class Comment {
 						$db->query("UPDATE `pages` SET `posts` = posts+1, `readby` = '' WHERE `id` = '$page_id'");
 					}
 
-					$db->query("INSERT INTO `comments` (`id`,`pid`,`author`,`text`,`date`,`ip`,`parent`) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip','$reply')");
+					$db->query("INSERT INTO `comments` (`id`,`pid`,`author`,`text`,`date`,`ip`,`parent`) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'" . sanitize($auth->ip) . "','$reply')");
 					$newid = $db->insert_id;
 					if ($reply != 0) {
 						$db->query("UPDATE `comments` SET `replies` = `replies`+1 WHERE `id` = '$reply'");
@@ -87,7 +87,7 @@ class Comment {
 					}
 
 				} else {
-					$db->query("INSERT INTO `galcom` (`id`,`bid`,`author`,`text`,`date`,`ip`) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'$auth->ip')");
+					$db->query("INSERT INTO `galcom` (`id`,`bid`,`author`,`text`,`date`,`ip`) VALUES (NULL,'$page_id','$user_id','$text',NOW(),'" . sanitize($auth->ip) . "')");
 					$newid = $db->insert_id;
 					$db->query("UPDATE `images` SET `bump` = NOW(), `posts` = `posts`+1, `readby` = '' WHERE `id` = '$page_id'");
 

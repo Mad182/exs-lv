@@ -192,7 +192,7 @@ if (!$auth->ok) {
 
 					$tpl->gotoBlock('pm-compose');
 					$tpl->assign([
-						'compose-title' => 'Re:' . str_replace('Re:', '', $reply_content->title)
+						'compose-title' => 'Re:' . str_replace('Re:', '', h($reply_content->title))
 					]);
 				}
 			}
@@ -214,7 +214,7 @@ if (!$auth->ok) {
 
 					$tpl->newBlock('pm-read-outbox');
 					$tpl->assign([
-						'pm-title' => $pm->title,
+						'pm-title' => h($pm->title),
 						'pm-text' => add_smile($pm->text),
 						'pm-id' => $pm->id,
 						'pm-date' => substr($pm->date, 0, 16),
@@ -366,7 +366,7 @@ if (!$auth->ok) {
 
 					$tpl->newBlock('pm-read-inbox');
 					$tpl->assign([
-						'pm-title' => $pm->title,
+						'pm-title' => h($pm->title),
 						'pm-text' => add_smile($pm->text),
 						'pm-id' => $pm->id,
 						'pm-date' => substr($pm->date, 0, 16),
