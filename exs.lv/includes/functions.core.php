@@ -1500,6 +1500,70 @@ function return2mb($mb) {
 	}
 }
 
+function get_ai_thread_context_recursive($data, $key = 0, $level = 0) {
+	$out = '';
+	if (!empty($data[$key])) {
+		foreach ($data[$key] as $val) {
+			$indent = str_repeat('  ', $level);
+			$reply_info = '';
+			if ($val->reply_to) {
+				$reply_info = ' [atbild uz #' . $val->reply_to . ']';
+			}
+			$out .= $indent . 'Ieraksts #' . $val->id . ' no ' . str_replace('@', '', $val->nick) . $reply_info . ': ' . trim(strip_tags($val->text)) . "\n";
+			$out .= get_ai_thread_context_recursive($data, $val->id, $level + 1);
+		}
+	}
+	return $out;
+}
+
+function get_ai_thread_context($target_id) {
+	global $db;
+	$post = $db->get_row("SELECT m.*, u.nick FROM `miniblog` m LEFT JOIN `users` u ON m.author = u.id WHERE m.`id` = '" . intval($target_id) . "'");
+	if (!$post) return '';
+
+	$parent_id = !empty($post->parent) ? $post->parent : $post->id;
+	
+	// Get the root post
+	$root = $db->get_row("SELECT m.*, u.nick FROM `miniblog` m LEFT JOIN `users` u ON m.author = u.id WHERE m.`id` = '$parent_id'");
+
+	$responses = $db->get_results("
+		SELECT
+			`miniblog`.`text`,
+			`miniblog`.`author`,
+			`miniblog`.`reply_to`,
+			`miniblog`.`id`,
+			`users`.`nick`
+		FROM
+			`miniblog`
+		LEFT JOIN
+			`users` ON `users`.`id` = `miniblog`.`author`
+		WHERE
+			`miniblog`.`parent` = '$parent_id'
+		ORDER BY
+			`miniblog`.`id` ASC
+	");
+
+	$json = [];
+	if ($responses) {
+		foreach ($responses as $response) {
+			$json[$response->reply_to][] = $response;
+		}
+	}
+
+	$out = "Konteksts - viss iepriekšējās sarunas pavediens:\n";
+	if ($root) {
+		$out .= "Ieraksts #" . $root->id . " (Sākotnējais tēmas autors " . str_replace('@', '', $root->nick) . "): " . trim(strip_tags($root->text)) . "\n";
+	}
+	
+	$out .= get_ai_thread_context_recursive($json, 0, 1);
+	
+	$target_nick = $post->nick ? $post->nick : "Lietotājs";
+	$out .= "\nŠobrīd tev jāatbild uz šo " . str_replace('@', '', $target_nick) . " ierakstu:\n";
+	$out .= "Ieraksts #" . $post->id . ": " . trim(strip_tags($post->text));
+
+	return $out;
+}
+
 //atgriez visas minibloga atbildes html formā, rekursīvi
 function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3, $closed = 0, $disable_vote = 0, $pic_heavy = 0) {
 	global $auth, $min_post_edit, $lang;

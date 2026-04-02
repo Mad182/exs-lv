@@ -195,9 +195,11 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				//ai stuff
 				if($reply_to->author == 43040) {
 
+					$content = get_ai_thread_context($newpost->id);
+
 					$messages = [
 						["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Atbildi noformē izmantojot html (<p>, <b>, <i>, <a>, <br>, <blockquote>, <code> un līdzīgus tagus, bez dokumenta struktūras). Tu raksti atbildi lietotājam miniblogā. Nesāc atbildi ar @niks vai Eksperts:"],
-						["role" => "user", "content" => strip_tags($newpost->text) . '; Iepriekšējais konteksts: Exsperts:' . $reply_to->text],
+						["role" => "user", "content" => $content],
 					];
 
 					$response = askAI($messages);

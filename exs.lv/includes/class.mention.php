@@ -44,25 +44,7 @@ class Mention {
 					$mb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($this->uniq) . "'");
 				}
 
-				$content = strip_tags($mb->text);
-				if(!empty($mb->reply_to)) {
-					$parentmb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($mb->reply_to) . "'");
-					if(!empty($parentmb->text)) {
-						$content .= '; Iepriekšējais konteksts: ' . strip_tags($parentmb->text);
-					}
-
-					if(!empty($parentmb->reply_to)) {
-						$parentparentmb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($parentmb->reply_to) . "'");
-						if(!empty($parentparentmb->text)) {
-							$content .= '; Iepriekšējais konteksts: ' . strip_tags($parentparentmb->text);
-						}
-					}
-				} elseif(!empty($mb->parent)) {
-					$parentmb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid` FROM `miniblog` WHERE `id` = '" . intval($mb->parent) . "'");
-					if(!empty($parentmb->text)) {
-						$content .= '; Iepriekšējais konteksts: ' . strip_tags($parentmb->text);
-					}
-				}
+				$content = get_ai_thread_context($mb->id);
 
 				$messages = [
 					["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Atbildi noformē izmantojot html (<p>, <b>, <br> un līdzīgus tagus, bez dokumenta struktūras). Tevi izsauca lietotājs ".$auth->nick.", pieminot tavu vārdu @exsperts."],

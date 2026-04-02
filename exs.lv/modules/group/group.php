@@ -555,9 +555,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					//ai stuff
 					if($reply_to->author == 43040) {
 
+						$content = get_ai_thread_context($newpost->id);
+
 						$messages = [
 							["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Šobrīd tu atrodies lietotāju grupā ar nosaukumu " . $group->title],
-							["role" => "user", "content" => strip_tags($newpost->text) . '; Iepriekšējais konteksts: Exsperts:' . $reply_to->text],
+							["role" => "user", "content" => $content],
 						];
 
 						$response = askAI($messages);
