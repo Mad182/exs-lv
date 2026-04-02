@@ -558,7 +558,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						$content = get_ai_thread_context($newpost->id);
 
 						$messages = [
-							["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Šobrīd tu atrodies lietotāju grupā ar nosaukumu " . $group->title],
+							["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Šobrīd tu atrodies lietotāju grupā ar nosaukumu " . $group->title],
 							["role" => "user", "content" => $content],
 						];
 

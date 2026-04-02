@@ -47,7 +47,7 @@ class Mention {
 				$content = get_ai_thread_context($mb->id);
 
 				$messages = [
-					["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildēm jābūt īsām, līdz 200 vārdiem. Atbildi noformē izmantojot html (<p>, <b>, <br> un līdzīgus tagus, bez dokumenta struktūras). Tevi izsauca lietotājs ".$auth->nick.", pieminot tavu vārdu @exsperts."],
+					["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildi noformē izmantojot html (<p>, <b>, <br> un līdzīgus tagus, bez dokumenta struktūras). Tevi izsauca lietotājs ".$auth->nick.", pieminot tavu vārdu @exsperts."],
 					["role" => "user", "content" => $content],
 				];
 
