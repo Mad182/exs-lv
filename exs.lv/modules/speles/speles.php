@@ -124,10 +124,30 @@ $games_list = [
 		'title' => 'Space Invaders',
 		'url' => '/invaders',
 		'icon' => '👾',
-		'badge' => 'Jaunums',
-		'badge_class' => 'label-success',
+		'badge' => 'Arkāde',
+		'badge_class' => 'label-info',
 		'desc' => 'Klasiskā kosmosa iebrucēju spēle bezgalīgā režīmā. Aizstāvi Zemi, vāc punktus un uzstādi jaunu rekordu!',
 		'game_code' => 'invaders'
+	],
+	[
+		'id' => 'augsup',
+		'title' => 'Augšup',
+		'url' => '/augsup',
+		'icon' => '🦘',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Lēkā pa platformām ar savu avatāru, sasniedz mākoņus un uzstādi jaunu augstuma rekordu!',
+		'game_code' => 'augsup'
+	],
+	[
+		'id' => 'vardes',
+		'title' => 'Vardes',
+		'url' => '/vardes',
+		'icon' => '🐸',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Šķērso bīstamo šoseju un upi ar baļķiem, lai sasniegtu liliju lapas un uzstādītu rekordu!',
+		'game_code' => 'vardes'
 	]
 ];
 
