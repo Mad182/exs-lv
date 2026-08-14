@@ -1368,14 +1368,15 @@ ul#menu-footer {
 	right: 0
 }
 
-/* Sub-Categories Sidebar Navigation */
+/* Sub-Categories Sidebar Navigation (Styled like Top Menu Dropdowns) */
 #sub-categories {
-	background: #ffffff;
-	border: 1px solid #e2e8f0;
-	border-radius: 10px;
-	padding: 8px 6px;
+	background: #303e45;
+	border: none;
+	border-radius: 0 !important;
+	border-bottom: 3px solid #81b752;
+	padding: 0;
 	margin: 0 0 16px 0;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+	box-shadow: none;
 }
 
 #sub-categories .menu,
@@ -1394,7 +1395,8 @@ ul#menu-footer {
 	background: transparent !important;
 	padding: 0 !important;
 	margin: 0 !important;
-	border-bottom: 1px solid #f1f5f9 !important;
+	border-bottom: 1px solid #37474f !important;
+	border-radius: 0 !important;
 	list-style: none !important;
 }
 
@@ -1405,45 +1407,46 @@ ul#menu-footer {
 
 #sub-categories .menu a,
 .menu a {
-	font-weight: 600;
+	font-weight: 500;
 	display: flex;
 	align-items: center;
 	outline: none;
-	margin: 2px 0;
-	padding: 7px 10px;
+	margin: 0;
+	padding: 9px 12px;
 	font-size: 13px;
-	color: #334155;
+	color: #a9b9c1;
 	text-decoration: none;
-	border-radius: 6px;
+	border-radius: 0 !important;
 	border-left: 3px solid transparent;
-	transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 #sub-categories .menu a:hover,
 #sub-categories .menu a:focus,
 .menu a:hover,
 .menu a:focus {
-	color: #0284c7;
-	background: #f0f9ff;
-	border-left-color: #2090cc;
-	transform: translateX(2px);
+	color: #ffffff !important;
+	background: #2c393f !important;
+	border-left: 3px solid #81b752 !important;
+	transform: none !important;
 	text-decoration: none;
 }
 
 #wrapper #sub-categories .menu .selected > a,
 #wrapper .menu .selected > a,
 .menu .selected > a {
-	color: #0284c7;
+	color: #ffffff !important;
 	font-weight: 700;
-	background: linear-gradient(90deg, rgba(32, 144, 204, 0.12) 0%, rgba(32, 144, 204, 0.03) 100%);
-	border-left: 3px solid #2090cc;
+	background: #2c393f !important;
+	border-left: 3px solid #81b752 !important;
 }
 
 #sub-categories .menu ul,
 .menu ul {
-	padding: 0 0 0 8px !important;
-	margin: 2px 0 6px 12px !important;
-	border-left: 2px solid #e2e8f0;
+	background: #253137;
+	padding: 0 !important;
+	margin: 0 !important;
+	border-left: none !important;
 }
 
 #sub-categories .menu ul li,
@@ -1452,7 +1455,8 @@ ul#menu-footer {
 	background: transparent !important;
 	padding: 0 !important;
 	margin: 0 !important;
-	border-bottom: 1px dashed #f1f5f9 !important;
+	border-bottom: 1px solid #2e3a40 !important;
+	border-radius: 0 !important;
 	list-style: none !important;
 }
 
@@ -1465,34 +1469,34 @@ ul#menu-footer {
 #sub-categories .menu ul li a,
 .menu ul li a {
 	font-size: 12px;
-	font-weight: 500;
+	font-weight: 400;
 	display: block;
 	outline: none;
-	margin: 1px 0;
-	padding: 4px 8px;
-	color: #64748b;
-	border-radius: 5px;
-	border-left: none;
-	transition: all 0.15s ease;
+	margin: 0;
+	padding: 7px 12px 7px 22px;
+	color: #92a4ad;
+	border-radius: 0 !important;
+	border-left: none !important;
+	transition: background 0.15s ease, color 0.15s ease;
 }
 
 #sub-categories .menu ul li a:hover,
 #sub-categories .menu ul li a:focus,
 .menu ul li a:hover,
 .menu ul li a:focus {
-	color: #0284c7;
-	background: #f8fafc;
-	padding-left: 11px;
+	color: #ffffff !important;
+	background: #1f282e !important;
+	padding-left: 22px !important;
 	text-decoration: none;
 }
 
 #wrapper .menu .selected .selected a,
 #sub-categories .menu ul li.selected > a,
 .menu ul li.selected > a {
-	color: #0284c7;
+	color: #ffffff !important;
 	font-weight: 700;
-	background: #e0f2fe;
-	border-left: none;
+	background: #1f282e !important;
+	border-left: none !important;
 }
 
 /* In-Content Sub-Category Pill Badges */
