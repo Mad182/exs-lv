@@ -2087,7 +2087,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		`users`.`av_alt` AS `av_alt`,
 		`users`.`nick` AS `nick`
 	FROM
-		`miniblog` USE INDEX(`parent_2`),
+		`miniblog` USE INDEX(`miniblog_list`, `parent_2`),
 		`users` USE INDEX(`PRIMARY`)
 	WHERE
 		`miniblog`.`removed` = '0' AND

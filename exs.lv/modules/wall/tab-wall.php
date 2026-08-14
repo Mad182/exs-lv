@@ -211,7 +211,7 @@ $mbs = $db->get_results("SELECT
 	`users`.`level` AS `level`,
 	`users`.`nick` AS `nick`
 FROM
-	`miniblog` USE INDEX(`parent_2`),
+	`miniblog` USE INDEX(`miniblog_list`, `parent_2`),
 	`users` USE INDEX(`PRIMARY`)
 WHERE
 	`miniblog`.`removed` = '0' AND
