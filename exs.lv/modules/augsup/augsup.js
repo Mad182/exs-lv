@@ -476,6 +476,10 @@
 		if (!canvas) return;
 		ctx = canvas.getContext('2d');
 
+		if (window.AUGSUP_USER_AVATAR) {
+			avatarImg.src = window.AUGSUP_USER_AVATAR;
+		}
+
 		highScore = window.AUGSUP_USER_HIGHSCORE || 0;
 
 		// Canvas Polyfill for roundRect if needed
