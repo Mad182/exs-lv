@@ -10,16 +10,6 @@ $tpl->prepare();
 // List of available games
 $games_list = [
 	[
-		'id' => 'flappy',
-		'title' => 'Lidojošais Eksis',
-		'url' => '/flappy',
-		'icon' => '🐥',
-		'badge' => 'Jaunums',
-		'badge_class' => 'label-success',
-		'desc' => 'Vadā savu pārlūka avatāru cauri šķēršļiem, vāc punktus un uzstādi jaunu rekordu!',
-		'game_code' => 'flappy'
-	],
-	[
 		'id' => 'tetris',
 		'title' => 'Tetris',
 		'url' => '/tetris',
@@ -118,6 +108,16 @@ $games_list = [
 		'badge_class' => 'label-inverse',
 		'desc' => 'Klasiskā desu (Tic-Tac-Toe) spēle.',
 		'game_code' => 'desas'
+	],
+	[
+		'id' => 'flappy',
+		'title' => 'Lidojošais Eksis',
+		'url' => '/flappy',
+		'icon' => '🐥',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Vadā savu pārlūka avatāru cauri šķēršļiem, vāc punktus un uzstādi jaunu rekordu!',
+		'game_code' => 'flappy'
 	]
 ];
 
