@@ -479,9 +479,15 @@
 
 	/* Karātavas dark mode */
 	#hm-game-body {
-		background-color: #181c24 !important;
+		background-color: #e7e3dc !important;
 		border-color: #2a313e;
-		color: #e9ecef;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+		filter: invert(0.88) hue-rotate(180deg);
+	}
+
+	#hm-game-question,
+	#hm-game-alphabet {
+		filter: invert(1) hue-rotate(180deg);
 	}
 
 	#hm-game-question {

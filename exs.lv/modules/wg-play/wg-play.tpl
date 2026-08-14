@@ -56,7 +56,7 @@
 	<!-- END BLOCK : hm-login-->
 
 	<!-- START BLOCK : hm-game-->
-	<div style="background-image: url('/modules/wg-play/images/{img}.jpg'); background-repeat: no-repeat; background-position: -60px -50px;" id="hm-game-body">
+	<div style="background-image: url('/modules/wg-play/images/{img}.png'); background-repeat: no-repeat; background-position: -60px -50px;" id="hm-game-body">
 
 		<div id="hm-game-question">{hint} <div id="hm-game-answer">{guess}</div>
 		</div>
