@@ -517,4 +517,18 @@
 		border-color: #21262d;
 	}
 
+	.game-description-box {
+		background: #181c24;
+		border-color: #2a313e;
+		color: #c9d1d9;
+	}
+
+	.game-description-box h2 {
+		color: #58a6ff;
+	}
+
+	.game-description-box h3 {
+		color: #e9ecef;
+	}
+
 }

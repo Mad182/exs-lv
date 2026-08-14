@@ -10,6 +10,7 @@
 	<meta property="og:{key}" content="{val}">
 	<!-- END BLOCK : og-meta-->
 	<!-- START BLOCK : twitter-meta-->
+	<meta name="twitter:{key}" content="{val}">
 	<!-- END BLOCK : twitter-meta-->
 	<!-- START BLOCK : robots-->
 	<meta name="robots" content="{value}">

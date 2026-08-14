@@ -1,4 +1,4 @@
-﻿/*
+/*
 Theme Name:Magazine
 Description:A responsive multipurpose magazine WordPress theme
 Version:1.4
@@ -6038,4 +6038,41 @@ p.images-5 img {
 	background: #ddd;
 	font-size:9px;
 	line-height:11px
+}
+
+.game-description-box {
+	margin-top: 30px;
+	padding: 20px;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	color: #334155;
+	line-height: 1.6;
+}
+
+.game-description-box h2 {
+	margin-top: 0;
+	color: #0f172a;
+	font-size: 20px;
+	margin-bottom: 12px;
+}
+
+.game-description-box h3 {
+	color: #1e293b;
+	font-size: 16px;
+	margin-top: 16px;
+	margin-bottom: 8px;
+}
+
+.game-description-box p {
+	margin-bottom: 12px;
+}
+
+.game-description-box ul {
+	padding-left: 20px;
+	margin-bottom: 0;
+}
+
+.game-description-box li {
+	margin-bottom: 6px;
 }

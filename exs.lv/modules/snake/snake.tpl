@@ -126,21 +126,14 @@
 <!-- END BLOCK : snake-top -->
 
 <!-- START BLOCK : seo-text -->
-<div class="game-seo-box" style="margin-top: 30px; padding: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
-	<h2 style="margin-top: 0; color: #0f172a; font-size: 20px;">Par Čūskas (Snake) spēli un kā spēlēt</h2>
-	<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
-		<div style="flex: 1; min-width: 280px; color: #334155; line-height: 1.6;">
-			<p><strong>Čūska (Snake)</strong> ir klasiska arkādes spēle. Vadot čūsku pa laukumu, tavs uzdevums ir apēst pēc iespējas vairāk sarkanos ābolus un izaugt pēc iespējas garākam.</p>
-			<h3 style="color: #1e293b; font-size: 16px; margin-top: 15px;">Spēles noteikumi un vadība:</h3>
-			<ul style="padding-left: 20px; margin-bottom: 0;">
-				<li>Izmanto <strong>Tastatūras bultiņas</strong> vai <strong>W, A, S, D</strong> taustiņus, lai mainītu čūskas kustības virzienu.</li>
-				<li>Katrs apēstais ābols palielina čūskas garumu un tavu punktu skaitu.</li>
-				<li>Uzmanies — neietriecies spēles laukuma malās vai savas čūskas astē!</li>
-			</ul>
-		</div>
-		<div style="width: 300px; max-width: 100%;">
-			<img src="/bildes/speles/snake.png" alt="Čūskas spēle EXS.LV" style="width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" />
-		</div>
-	</div>
+<div class="game-description-box">
+	<h2>Par Čūskas (Snake) spēli un kā spēlēt</h2>
+	<p><strong>Čūska (Snake)</strong> ir klasiska arkādes spēle. Vadot čūsku pa laukumu, tavs uzdevums ir apēst pēc iespējas vairāk sarkanos ābolus un izaugt pēc iespējas garākam.</p>
+	<h3>Spēles noteikumi un vadība:</h3>
+	<ul>
+		<li>Izmanto <strong>Tastatūras bultiņas</strong> vai <strong>W, A, S, D</strong> taustiņus, lai mainītu čūskas kustības virzienu.</li>
+		<li>Katrs apēstais ābols palielina čūskas garumu un tavu punktu skaitu.</li>
+		<li>Uzmanies — neietriecies spēles laukuma malās vai savas čūskas astē!</li>
+	</ul>
 </div>
 <!-- END BLOCK : seo-text -->

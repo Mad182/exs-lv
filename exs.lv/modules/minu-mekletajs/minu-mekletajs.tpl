@@ -85,21 +85,14 @@
 </div>
 
 <!-- START BLOCK : seo-text -->
-<div class="game-seo-box" style="margin-top: 30px; padding: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
-	<h2 style="margin-top: 0; color: #0f172a; font-size: 20px;">Par Mīnu Meklētāju (Minesweeper) un kā spēlēt</h2>
-	<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
-		<div style="flex: 1; min-width: 280px; color: #334155; line-height: 1.6;">
-			<p><strong>Mīnu Meklētājs (Minesweeper)</strong> ir klasiskā loģikas spēle. Tavs uzdevums ir atsegt visus drošos lauciņus, neuzkāpjot uz nevienas apslēptās mīnas.</p>
-			<h3 style="color: #1e293b; font-size: 16px; margin-top: 15px;">Spēles noteikumi un vadība:</h3>
-			<ul style="padding-left: 20px; margin-bottom: 0;">
-				<li><strong>Kreisais klikšķis</strong> atsedz lauciņu. Skaitlis lauciņā norāda, cik mīnas atrodas 8 kaimiņu rāmīšos.</li>
-				<li><strong>Labais klikšķis</strong> (vai karodziņa režīms mobilajā) uzliek karodziņu uz aizdomīgā lauciņa.</li>
-				<li>Pirmais klikšķis vienmēr ir 100% drošs un garantēti neatsegs mīnu!</li>
-			</ul>
-		</div>
-		<div style="width: 300px; max-width: 100%;">
-			<img src="/bildes/speles/minu-mekletajs.png" alt="Mīnu meklētājs EXS.LV" style="width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" />
-		</div>
-	</div>
+<div class="game-description-box">
+	<h2>Par Mīnu Meklētāju (Minesweeper) un kā spēlēt</h2>
+	<p><strong>Mīnu Meklētājs (Minesweeper)</strong> ir klasiskā loģikas spēle. Tavs uzdevums ir atsegt visus drošos lauciņus, neuzkāpjot uz nevienas apslēptās mīnas.</p>
+	<h3>Spēles noteikumi un vadība:</h3>
+	<ul>
+		<li><strong>Kreisais klikšķis</strong> atsedz lauciņu. Skaitlis lauciņā norāda, cik mīnas atrodas 8 kaimiņu rāmīšos.</li>
+		<li><strong>Labais klikšķis</strong> (vai karodziņa režīms mobilajā) uzliek karodziņu uz aizdomīgā lauciņa.</li>
+		<li>Pirmais klikšķis vienmēr ir 100% drošs un garantēti neatsegs mīnu!</li>
+	</ul>
 </div>
 <!-- END BLOCK : seo-text -->
