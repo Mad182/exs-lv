@@ -118,6 +118,16 @@ $games_list = [
 		'badge_class' => 'label-success',
 		'desc' => 'Vadā savu pārlūka avatāru cauri šķēršļiem, vāc punktus un uzstādi jaunu rekordu!',
 		'game_code' => 'flappy'
+	],
+	[
+		'id' => 'invaders',
+		'title' => 'Space Invaders',
+		'url' => '/invaders',
+		'icon' => '👾',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Klasiskā kosmosa iebrucēju spēle bezgalīgā režīmā. Aizstāvi Zemi, vāc punktus un uzstādi jaunu rekordu!',
+		'game_code' => 'invaders'
 	]
 ];
 

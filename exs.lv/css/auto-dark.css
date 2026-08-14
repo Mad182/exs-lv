@@ -716,4 +716,64 @@
 		color: #6e7681;
 	}
 
+	/* Space Invaders dark mode */
+	.invaders-wrapper {
+		color: #c9d1d9;
+	}
+
+	.invaders-header h2 {
+		color: #e9ecef;
+	}
+
+	.invaders-subtitle {
+		color: #9ba3af;
+	}
+
+	.invaders-controls-bar {
+		background: #1e2631;
+		border-color: #2a313e;
+	}
+
+	.stat-pill strong {
+		color: #58a6ff;
+	}
+
+	.invaders-btn.btn-small {
+		background: #161d26;
+		color: #c9d1d9;
+		border-color: #2a313e;
+	}
+
+	.invaders-btn.btn-small:hover {
+		background: #2a313e;
+		color: #ffffff;
+	}
+
+	.invaders-card {
+		background: #1e2631;
+		border-color: #2a313e;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.invaders-card h3 {
+		color: #58a6ff;
+		border-bottom-color: #2a313e;
+	}
+
+	.invaders-top-list li {
+		border-bottom-color: #2a313e;
+	}
+
+	.invaders-top-list .top-user {
+		color: #c9d1d9;
+	}
+
+	.invaders-top-list .top-score {
+		color: #58a6ff;
+	}
+
+	.invaders-top-list .empty-msg {
+		color: #6e7681;
+	}
+
 }
