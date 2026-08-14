@@ -90,6 +90,16 @@ $games_list = [
 		'game_code' => 'wordle'
 	],
 	[
+		'id' => 'rulete',
+		'title' => 'Rulete',
+		'url' => '/rulete',
+		'icon' => '🎰',
+		'badge' => 'Kazino',
+		'badge_class' => 'label-warning',
+		'desc' => 'Klasiskā Eiropas kazino rulete ar 100 zelta sākuma kapitālu un ikdienas bilances atjaunošanu.',
+		'game_code' => 'rulete'
+	],
+	[
 		'id' => 'desas',
 		'title' => 'Desas',
 		'url' => '/desas',
