@@ -107,6 +107,7 @@
 .ms-board-scroll {
 	max-width: 100%;
 	overflow-x: auto;
+	overflow-y: hidden;
 	border: 3px inset #ffffff;
 }
 
@@ -114,6 +115,8 @@
 	display: grid;
 	gap: 0px;
 	background: #7b7b7b;
+	width: max-content;
+	box-sizing: border-box;
 }
 
 .ms-cell {
@@ -130,12 +133,21 @@
 	font-family: Arial, sans-serif;
 	cursor: pointer;
 	user-select: none;
+	overflow: hidden;
+	line-height: 1;
 }
 
 .ms-medium .ms-cell {
 	width: 24px;
 	height: 24px;
 	font-size: 13px;
+}
+
+.ms-medium .ms-cell.flagged,
+.ms-medium .ms-cell.mine,
+.ms-medium .ms-cell.exploded,
+.ms-medium .ms-cell.false-flag {
+	font-size: 11px;
 }
 
 .ms-hard .ms-cell {
@@ -145,7 +157,10 @@
 	border-width: 1px;
 }
 
-.ms-hard .ms-cell.flagged {
+.ms-hard .ms-cell.flagged,
+.ms-hard .ms-cell.mine,
+.ms-hard .ms-cell.exploded,
+.ms-hard .ms-cell.false-flag {
 	font-size: 10px;
 }
 
