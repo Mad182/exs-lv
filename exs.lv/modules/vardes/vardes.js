@@ -113,19 +113,19 @@
 
 	// Obstacles & Water Rides
 	var rowsConfig = [
-		// River Rows (1 to 5)
-		{ row: 1, type: 'river', isLog: true, speed: 1.5, length: 3, spacing: 140, items: [] },
-		{ row: 2, type: 'river', isLog: false, speed: -2.0, length: 2, spacing: 120, items: [] },
-		{ row: 3, type: 'river', isLog: true, speed: 2.4, length: 4, spacing: 180, items: [] },
-		{ row: 4, type: 'river', isLog: true, speed: 1.8, length: 2, spacing: 110, items: [] },
-		{ row: 5, type: 'river', isLog: false, speed: -1.6, length: 3, spacing: 130, items: [] },
+		// River Rows (1 to 5) - Optimized spacing & coverage so next log/turtle is always reachable
+		{ row: 1, type: 'river', isLog: true, speed: 1.4, length: 3, spacing: 65, items: [] },
+		{ row: 2, type: 'river', isLog: false, speed: -1.8, length: 3, spacing: 60, items: [] },
+		{ row: 3, type: 'river', isLog: true, speed: 2.0, length: 4, spacing: 75, items: [] },
+		{ row: 4, type: 'river', isLog: true, speed: 1.5, length: 3, spacing: 65, items: [] },
+		{ row: 5, type: 'river', isLog: false, speed: -1.4, length: 3, spacing: 60, items: [] },
 
 		// Road Rows (7 to 11)
-		{ row: 7, type: 'road', carType: 'race', speed: -3.2, length: 1, spacing: 140, items: [] },
-		{ row: 8, type: 'road', carType: 'truck', speed: 1.6, length: 2, spacing: 160, items: [] },
-		{ row: 9, type: 'road', carType: 'taxi', speed: -2.2, length: 1, spacing: 130, items: [] },
-		{ row: 10, type: 'road', carType: 'sports', speed: 2.8, length: 1, spacing: 150, items: [] },
-		{ row: 11, type: 'road', carType: 'sedan', speed: -1.5, length: 1, spacing: 120, items: [] }
+		{ row: 7, type: 'road', carType: 'race', speed: -3.0, length: 1, spacing: 130, items: [] },
+		{ row: 8, type: 'road', carType: 'truck', speed: 1.6, length: 2, spacing: 150, items: [] },
+		{ row: 9, type: 'road', carType: 'taxi', speed: -2.0, length: 1, spacing: 120, items: [] },
+		{ row: 10, type: 'road', carType: 'sports', speed: 2.5, length: 1, spacing: 140, items: [] },
+		{ row: 11, type: 'road', carType: 'sedan', speed: -1.4, length: 1, spacing: 110, items: [] }
 	];
 
 	function initObstacles() {
@@ -311,7 +311,7 @@
 				var fCenterX = frog.x + GRID_SIZE / 2;
 				for (var n = 0; n < riverRow.items.length; n++) {
 					var log = riverRow.items[n];
-					if (fCenterX >= log.x && fCenterX <= log.x + log.width) {
+					if (fCenterX >= log.x - 8 && fCenterX <= log.x + log.width + 8) {
 						ridingItem = log;
 						break;
 					}
