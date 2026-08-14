@@ -201,18 +201,23 @@
 	function moveFrog(dc, dr, dirName) {
 		if (!isRunning || isGameOver) return;
 
-		var newCol = frog.col + dc;
 		var newRow = frog.row + dr;
+		var newTargetX = frog.targetX + dc * GRID_SIZE;
+		var newTargetY = newRow * GRID_SIZE;
 
-		if (newCol < 0 || newCol >= COLS || newRow < 0 || newRow >= ROWS - 1) return;
+		// Boundary checks
+		if (newTargetX < 0 || newTargetX > (COLS - 1) * GRID_SIZE) return;
+		if (newRow < 0 || newRow >= ROWS - 1) return;
 
-		frog.col = newCol;
+		frog.targetX = newTargetX;
+		frog.targetY = newTargetY;
+		frog.col = Math.round(frog.targetX / GRID_SIZE);
 		frog.row = newRow;
-		frog.targetX = newCol * GRID_SIZE;
-		frog.targetY = newRow * GRID_SIZE;
 		frog.dir = dirName;
 
-		score += 10; // 10 points for forward progress
+		if (dr < 0) {
+			score += 10; // 10 points for forward progress
+		}
 		playSound('hop');
 	}
 
@@ -228,10 +233,11 @@
 	}
 
 	function checkHomeSlot() {
+		var frogCenterCol = Math.round((frog.x + GRID_SIZE / 2) / GRID_SIZE);
 		var found = false;
 		for (var i = 0; i < homeSlots.length; i++) {
 			var slot = homeSlots[i];
-			if (frog.col === slot.col && !slot.filled) {
+			if (frogCenterCol === slot.col && !slot.filled) {
 				slot.filled = true;
 				found = true;
 				score += 500 + timerCurrent * 10;
