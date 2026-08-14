@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			const totalCurrentBet = calculateTotalBet();
 
 			if (totalCurrentBet + currentSelectedChip > currentGold) {
-				resultDisplay.innerHTML = '<span style="color:#ef4444;">Nepietiekams zelta daudzums šai likmei!</span>';
+				resultDisplay.innerHTML = '<span style="color:#ef4444;">Nepietiekams žetonu daudzums šai likmei!</span>';
 				return;
 			}
 
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		if (total === 0) return;
 		if (total * 2 > currentGold) {
-			resultDisplay.innerHTML = '<span style="color:#ef4444;">Nepietiek zelta, lai dubultotu likmes!</span>';
+			resultDisplay.innerHTML = '<span style="color:#ef4444;">Nepietiek žetonu, lai dubultotu likmes!</span>';
 			return;
 		}
 
@@ -250,9 +250,9 @@ document.addEventListener('DOMContentLoaded', function () {
 				let outcomeText = '';
 
 				if (data.net_gain > 0) {
-					outcomeText = '<span style="color:#4ade80;">Uzvara! Apsveicam! +' + data.net_gain + ' zelts!</span>';
+					outcomeText = '<span style="color:#4ade80;">Uzvara! Apsveicam! +' + data.net_gain + ' žetoni!</span>';
 				} else if (data.net_gain < 0) {
-					outcomeText = '<span style="color:#f87171;">Šoreiz zaudējums (-' + Math.abs(data.net_gain) + ' zelts).</span>';
+					outcomeText = '<span style="color:#f87171;">Šoreiz zaudējums (-' + Math.abs(data.net_gain) + ' žetoni).</span>';
 				} else {
 					outcomeText = '<span style="color:#38bdf8;">Likme atgriezta bešā.</span>';
 				}

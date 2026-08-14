@@ -10,21 +10,21 @@
 
 <!-- START BLOCK : game-login -->
 <div class="alert alert-info">
-	<strong>Piezīme:</strong> Tu spēlē kā viesis (demo režīmā ar 100 zelta žetoniem). <a href="/login">Reģistrējies vai ieej profilā</a>, lai saglabātu savu zeltu un sacenstos EXS.LV topos!
+	<strong>Piezīme:</strong> Tu spēlē kā viesis (demo režīmā ar 100 žetoniem). <a href="/login">Reģistrējies vai ieej profilā</a>, lai saglabātu savus žetonus un sacenstos EXS.LV topos!
 </div>
 <!-- END BLOCK : game-login -->
 
 <!-- START BLOCK : game-play -->
 <div class="roulette-main-container">
-	<!-- Top Bar: Gold Balance & Reset Notice -->
+	<!-- Top Bar: Chip Balance & Reset Notice -->
 	<div class="roulette-status-bar">
 		<div class="roulette-balance-card">
-			<span class="gold-icon">💰</span>
-			<span class="gold-label">Zelta Bilance:</span>
+			<span class="chip-icon">🎰</span>
+			<span class="chip-label">Žetonu Bilance:</span>
 			<strong id="user-gold-val">{user-gold}</strong>
 		</div>
 		<div class="roulette-daily-note">
-			🎁 <em>Ja tev ir mazāk par 100 zeltu, katru dienu tava bilance automātiski atjaunojas uz 100 zeltu!</em>
+			🎁 <em>Ja tev ir mazāk par 100 žetoniem, katru dienu tava bilance automātiski atjaunojas uz 100 žetoniem!</em>
 		</div>
 	</div>
 
@@ -37,7 +37,7 @@
 				<canvas id="roulette-wheel" width="340" height="340"></canvas>
 			</div>
 			<div id="roulette-result-display" class="roulette-result-display">
-				Spied <strong>Vērpt</strong>, lai sāktu spēli!
+				Spied <strong>Griezt</strong>, lai sāktu spēli!
 			</div>
 		</div>
 
@@ -140,12 +140,12 @@
 			<div class="roulette-actions-bar">
 				<div class="bet-info-card">
 					<span>Kopējā likme: <strong id="total-bet-val">0</strong></span>
-					<span>Pēdējo laimests: <strong id="last-win-val">0</strong></span>
+					<span>Pēdējais laimests: <strong id="last-win-val">0</strong></span>
 				</div>
 				<div class="action-buttons">
 					<button type="button" id="clear-btn" class="btn btn-warning">🧹 Attīrīt</button>
 					<button type="button" id="double-btn" class="btn btn-info">✖️2 Dubultot</button>
-					<button type="button" id="spin-btn" class="btn btn-success btn-large">🔴 VĒRPT RULETI</button>
+					<button type="button" id="spin-btn" class="btn btn-success btn-large">🔴 GRIEZT RULETI</button>
 				</div>
 			</div>
 		</div>
@@ -159,7 +159,7 @@
 		<tr>
 			<th style="width: 70px;">Vieta</th>
 			<th>Lietotājs</th>
-			<th style="width: 200px; text-align: right;">Zelta daudzums</th>
+			<th style="width: 200px; text-align: right;">Žetonu daudzums</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -182,10 +182,10 @@
 <!-- START BLOCK : seo-text -->
 <div class="game-description-box">
 	<h2>Par Kazino Ruleti un kā spēlēt</h2>
-	<p><strong>Rulete</strong> ir viena no populārākajām un aizraujošākajām kazino spēlēm pasaulē. EXS.LV platformā vari spēlēt Eiropas ruleti ar 100 zelta sākuma kapitālu bez maksas!</p>
+	<p><strong>Rulete</strong> ir viena no populārākajām un aizraujošākajām kazino spēlēm pasaulē. EXS.LV platformā vari spēlēt Eiropas ruleti ar 100 žetonu sākuma kapitālu bez maksas!</p>
 	<h3>Spēles noteikumi un vadība:</h3>
 	<ul>
-		<li><strong>Katras dienas papildinājums:</strong> Ja tavs zelta krājums noslīd zem 100 zeltam, katru dienu tas tiek automātiski papildināts atpakaļ uz 100 zeltu!</li>
+		<li><strong>Katras dienas papildinājums:</strong> Ja tavs žetonu krājums noslīd zem 100 žetoniem, katru dienu tas tiek automātiski papildināts atpakaļ uz 100 žetoniem!</li>
 		<li><strong>Likmju veikšana:</strong> Izvēlies žetona nominālu (1, 5, 10, 25, 100) un uzklikšķini uz izvēlētā lauka spēles galdā.</li>
 		<li><strong>Laimestu izmaksas:</strong>
 			<ul>
@@ -194,7 +194,7 @@
 				<li>Desmiti (1-12, 13-24, 25-36) un Slejas (2:1): <strong>2:1</strong></li>
 			</ul>
 		</li>
-		<li><strong>Topejot ar zeltu:</strong> Pašreizējais tops parāda spēlētāju aktīvo zelta bilanci, bet visu laiku tops saglabā augstāko nåkad sasniegto zelta rekordu!</li>
+		<li><strong>Topejot ar žetoniem:</strong> Pašreizējais tops parāda spēlētāju aktīvo žetonu bilanci, bet visu laiku tops saglabā augstāko nekad sasniegto žetonu rekordu!</li>
 	</ul>
 </div>
 <!-- END BLOCK : seo-text -->

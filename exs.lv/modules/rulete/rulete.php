@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `roulette_balance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ");
 
-// Helper function to get & check user gold balance with daily reset
+// Helper function to get & check user chip balance with daily reset
 function get_user_roulette_balance($user_id) {
 	global $db;
 	if (!$user_id || $user_id <= 0) {
@@ -88,7 +88,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 		$current_gold = $bal_data['gold'];
 
 		if ($total_bet > $current_gold) {
-			echo json_encode(['error' => 'Nepietiekams zelta daudzums! Tev ir ' . $current_gold . ' zelts.']);
+			echo json_encode(['error' => 'Nepietiekams žetonu daudzums! Tev ir ' . $current_gold . ' žetoni.']);
 			exit;
 		}
 	}
@@ -236,7 +236,7 @@ if ($act === 'top' || $act === 'today' || $act === 'all') {
 			elseif ($i === 3) $icon = '🥉 3.';
 			else $icon = $i . '.';
 
-			$score_str = number_format($topuser->score) . ' 💰 zelts';
+			$score_str = number_format($topuser->score) . ' 🎰 žetoni';
 
 			$tpl->assign([
 				'user-place' => $icon,
