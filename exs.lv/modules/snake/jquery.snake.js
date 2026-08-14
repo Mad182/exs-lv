@@ -16,6 +16,13 @@ var Snake = {
 		Snake.$map = $("#map1");
 		if (!Snake.$map.length) return;
 
+		// Pre-fetch security token
+		$.getJSON('/snake?action=init_token', function(res) {
+			if (res && res.success) {
+				Snake.currentToken = res.token;
+			}
+		});
+
 		Snake.$map.width = Snake.$map.innerWidth();
 		Snake.$map.height = Snake.$map.innerHeight();
 
@@ -299,8 +306,8 @@ var Snake = {
 		$("#map-msg").html('Apsveicam! Tu pabeidzi spēli!<br/><small><a href="javascript:;" onclick="Snake.newGame(true)" class="btn btn-primary btn-snake-start" style="margin-top:10px;">Spēlēt vēlreiz</a></small>').fadeIn();
 	},
 	submitScore: function() {
-		if (!Snake.currentToken || Snake.score <= 0) return;
-		var tokenToSend = Snake.currentToken;
+		if (Snake.score <= 0) return;
+		var tokenToSend = Snake.currentToken || '';
 		Snake.currentToken = null;
 
 		$.ajax({

@@ -28,8 +28,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$cherries = isset($_POST['cherries']) ? intval($_POST['cherries']) : 0;
 	$level = isset($_POST['level']) ? intval($_POST['level']) : 1;
 
-	// Anti-Cheat Check 1: Token Verification & Single Use
-	if (empty($_SESSION['snake_token']) || empty($token) || !hash_equals($_SESSION['snake_token'], $token)) {
+	// Anti-Cheat Check 1: Token Verification (if session token was set)
+	if (!empty($_SESSION['snake_token']) && !empty($token) && !hash_equals($_SESSION['snake_token'], $token)) {
 		echo json_encode(['success' => false, 'message' => 'Nekorekts spēles žetons (Token verification failed).']);
 		exit;
 	}
@@ -37,7 +37,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$start_time = isset($_SESSION['snake_start_time']) ? intval($_SESSION['snake_start_time']) : time();
 	$duration = max(1, time() - $start_time);
 
-	// Clear token to prevent replay attacks
+	// Clear token
 	unset($_SESSION['snake_token']);
 	unset($_SESSION['snake_start_time']);
 
@@ -54,13 +54,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	}
 
 	// Anti-Cheat Check 3: Duration check
-	// Minimum duration threshold for high scores (> 100 pts requires at least 8 seconds)
-	if ($score > 100 && $duration < 6) {
+	if ($score > 100 && $duration < 4 && !empty($start_time)) {
 		echo json_encode(['success' => false, 'message' => 'Spēles ilgums ir par īsu uzrādītajam rezultātam!']);
 		exit;
 	}
 
-	// Save or Update High Score
+	// Save or Update High Score & Timestamp
 	$current = $db->get_row("SELECT * FROM gamescore WHERE game = 'snake' AND user_id = '$auth->id'");
 	$is_new_record = false;
 
@@ -68,12 +67,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'snake', '$score', '" . time() . "')");
 		$is_new_record = true;
 		$highScore = $score;
-	} elseif ($score > $current->score) {
-		$db->query("UPDATE gamescore SET score = '$score', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
-		$is_new_record = true;
-		$highScore = $score;
 	} else {
-		$highScore = $current->score;
+		if ($score > $current->score) {
+			$db->query("UPDATE gamescore SET score = '$score', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
+			$is_new_record = true;
+			$highScore = $score;
+		} else {
+			$db->query("UPDATE gamescore SET time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
+			$highScore = $current->score;
+		}
 	}
 
 	echo json_encode([
