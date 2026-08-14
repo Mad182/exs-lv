@@ -10,6 +10,7 @@ $(document).ready(function () {
 	var score = 0;
 	var movesCount = 0;
 	var previousState = null;
+	var undoesLeft = 3;
 	var isGameOver = false;
 	var isWon = false;
 	var sessionToken = '';
@@ -33,11 +34,12 @@ $(document).ready(function () {
 		score = 0;
 		movesCount = 0;
 		previousState = null;
+		undoesLeft = 3;
 		isGameOver = false;
 		isWon = false;
 
 		$('#twenty48-current-score').text(0);
-		$('#twenty48-btn-undo').prop('disabled', true);
+		$('#twenty48-btn-undo').text('↩ Atcelt gājienu (3)').prop('disabled', true);
 		$('#twenty48-overlay').removeClass('active win gameover');
 
 		initSession();
@@ -52,18 +54,21 @@ $(document).ready(function () {
 			score: score,
 			movesCount: movesCount
 		};
-		$('#twenty48-btn-undo').prop('disabled', false);
+		if (undoesLeft > 0) {
+			$('#twenty48-btn-undo').prop('disabled', false);
+		}
 	}
 
 	function undoMove() {
-		if (!previousState) return;
+		if (!previousState || undoesLeft <= 0) return;
 		board = JSON.parse(JSON.stringify(previousState.board));
 		score = previousState.score;
 		movesCount = previousState.movesCount;
 		previousState = null;
+		undoesLeft--;
 
 		$('#twenty48-current-score').text(score);
-		$('#twenty48-btn-undo').prop('disabled', true);
+		$('#twenty48-btn-undo').text('↩ Atcelt gājienu (' + undoesLeft + ')').prop('disabled', true);
 		$('#twenty48-overlay').removeClass('active win gameover');
 		renderBoard();
 	}
