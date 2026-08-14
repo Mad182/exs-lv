@@ -423,7 +423,7 @@ if (isset($category) && !empty($category->content)) {
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', h(strip_tags($category->content)));
 
-	$game_img_file = '/var/www/exs-lv/exs.lv/bildes/speles/' . $category->textid . '.png';
+	$game_img_file = CORE_PATH . '/bildes/speles/' . $category->textid . '.png';
 	if (file_exists($game_img_file)) {
 		$img_url = 'https://exs.lv/bildes/speles/' . $category->textid . '.png';
 		$opengraph_meta['image'] = $img_url;
