@@ -13,9 +13,21 @@
 				<div id="invaders-start-overlay" class="invaders-overlay">
 					<div class="invaders-overlay-content">
 						<div class="invaders-title-art">
-							<span class="invader-art-sprite squid">👾</span>
-							<span class="invader-art-sprite crab">👾</span>
-							<span class="invader-art-sprite octopus">👾</span>
+							<span class="invader-art-sprite squid">
+								<svg width="32" height="32" viewBox="0 0 8 8" shape-rendering="crispEdges">
+									<path fill="#00e5ff" d="M3,0 h2 v1 h-2 z M2,1 h4 v1 h-4 z M1,2 h6 v1 h-6 z M0,3 h2 v1 h-2 z M3,3 h2 v1 h-2 z M6,3 h2 v1 h-2 z M0,4 h8 v1 h-8 z M2,5 h1 v1 h-1 z M5,5 h1 v1 h-1 z M1,6 h1 v1 h-1 z M3,6 h2 v1 h-2 z M6,6 h1 v1 h-1 z M0,7 h1 v1 h-1 z M2,7 h1 v1 h-1 z M5,7 h1 v1 h-1 z M7,7 h1 v1 h-1 z" />
+								</svg>
+							</span>
+							<span class="invader-art-sprite crab">
+								<svg width="32" height="32" viewBox="0 0 8 8" shape-rendering="crispEdges">
+									<path fill="#ff007f" d="M2,0 h1 v1 h-1 z M5,0 h1 v1 h-1 z M3,1 h2 v1 h-2 z M2,2 h4 v1 h-4 z M1,3 h2 v1 h-2 z M5,3 h2 v1 h-2 z M0,4 h8 v1 h-8 z M0,5 h1 v1 h-1 z M2,5 h4 v1 h-4 z M7,5 h1 v1 h-1 z M0,6 h1 v1 h-1 z M2,6 h1 v1 h-1 z M5,6 h1 v1 h-1 z M7,6 h1 v1 h-1 z M3,7 h2 v1 h-2 z" />
+								</svg>
+							</span>
+							<span class="invader-art-sprite octopus">
+								<svg width="32" height="32" viewBox="0 0 8 8" shape-rendering="crispEdges">
+									<path fill="#00ff66" d="M3,0 h2 v1 h-2 z M1,1 h6 v1 h-6 z M0,2 h8 v1 h-8 z M0,3 h2 v1 h-2 z M3,3 h2 v1 h-2 z M6,3 h2 v1 h-2 z M0,4 h8 v1 h-8 z M2,5 h1 v1 h-1 z M5,5 h1 v1 h-1 z M1,6 h1 v1 h-1 z M3,6 h2 v1 h-2 z M6,6 h1 v1 h-1 z M1,7 h1 v1 h-1 z M6,7 h1 v1 h-1 z" />
+								</svg>
+							</span>
 						</div>
 						<h3>Gatavs Cīņai?</h3>
 						<p>Izmanto bultiņas vai taustiņus <kbd>A</kbd> / <kbd>D</kbd> kustībai un <kbd>Spacebar</kbd> šaušanai.</p>
@@ -122,10 +134,39 @@
 			<div class="invaders-card" style="margin-top: 15px;">
 				<h3>🎯 Punktu Vērtības</h3>
 				<ul class="invaders-info-list">
-					<li><span class="invader-icon legend-ufo">🛸</span> NLO Kosmosa Kuģis: <strong>100 - 300 p</strong></li>
-					<li><span class="invader-icon legend-squid">👾</span> Kalmārs (Augšējā rinda): <strong>30 p</strong></li>
-					<li><span class="invader-icon legend-crab">👾</span> Krabis (Vidus rindas): <strong>20 p</strong></li>
-					<li><span class="invader-icon legend-octopus">👾</span> Astoņkājis (Apakšējās rindas): <strong>10 p</strong></li>
+					<li>
+						<span class="invader-icon">
+							<svg class="invader-svg ufo-svg" width="22" height="14" viewBox="0 0 12 8" shape-rendering="crispEdges">
+								<path fill="#ff0055" d="M3,1 h6 v1 h-6 z M1,2 h10 v2 h-10 z M0,4 h12 v2 h-12 z" />
+								<path fill="#ffe600" d="M3,3 h2 v1 h-2 z M7,3 h2 v1 h-2 z" />
+							</svg>
+						</span>
+						NLO Kosmosa Kuģis: <strong>100 - 300 p</strong>
+					</li>
+					<li>
+						<span class="invader-icon">
+							<svg class="invader-svg squid-svg" width="18" height="18" viewBox="0 0 8 8" shape-rendering="crispEdges">
+								<path fill="#00e5ff" d="M3,0 h2 v1 h-2 z M2,1 h4 v1 h-4 z M1,2 h6 v1 h-6 z M0,3 h2 v1 h-2 z M3,3 h2 v1 h-2 z M6,3 h2 v1 h-2 z M0,4 h8 v1 h-8 z M2,5 h1 v1 h-1 z M5,5 h1 v1 h-1 z M1,6 h1 v1 h-1 z M3,6 h2 v1 h-2 z M6,6 h1 v1 h-1 z M0,7 h1 v1 h-1 z M2,7 h1 v1 h-1 z M5,7 h1 v1 h-1 z M7,7 h1 v1 h-1 z" />
+							</svg>
+						</span>
+						Kalmārs (Augšējā rinda): <strong>30 p</strong>
+					</li>
+					<li>
+						<span class="invader-icon">
+							<svg class="invader-svg crab-svg" width="18" height="18" viewBox="0 0 8 8" shape-rendering="crispEdges">
+								<path fill="#ff007f" d="M2,0 h1 v1 h-1 z M5,0 h1 v1 h-1 z M3,1 h2 v1 h-2 z M2,2 h4 v1 h-4 z M1,3 h2 v1 h-2 z M5,3 h2 v1 h-2 z M0,4 h8 v1 h-8 z M0,5 h1 v1 h-1 z M2,5 h4 v1 h-4 z M7,5 h1 v1 h-1 z M0,6 h1 v1 h-1 z M2,6 h1 v1 h-1 z M5,6 h1 v1 h-1 z M7,6 h1 v1 h-1 z M3,7 h2 v1 h-2 z" />
+							</svg>
+						</span>
+						Krabis (Vidus rindas): <strong>20 p</strong>
+					</li>
+					<li>
+						<span class="invader-icon">
+							<svg class="invader-svg octopus-svg" width="18" height="18" viewBox="0 0 8 8" shape-rendering="crispEdges">
+								<path fill="#00ff66" d="M3,0 h2 v1 h-2 z M1,1 h6 v1 h-6 z M0,2 h8 v1 h-8 z M0,3 h2 v1 h-2 z M3,3 h2 v1 h-2 z M6,3 h2 v1 h-2 z M0,4 h8 v1 h-8 z M2,5 h1 v1 h-1 z M5,5 h1 v1 h-1 z M1,6 h1 v1 h-1 z M3,6 h2 v1 h-2 z M6,6 h1 v1 h-1 z M1,7 h1 v1 h-1 z M6,7 h1 v1 h-1 z" />
+							</svg>
+						</span>
+						Astoņkājis (Apakšējās rindas): <strong>10 p</strong>
+					</li>
 				</ul>
 			</div>
 		</div>
