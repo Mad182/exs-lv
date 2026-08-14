@@ -427,5 +427,40 @@ table.table,
 	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4) !important;
 }
 
+/* Karātavas dark mode */
+#hm-game-body {
+	background-color: #222 !important;
+	border-color: #444 !important;
+	color: #eee !important;
+}
+
+#hm-game-question {
+	color: #aaa !important;
+}
+
+#hm-game-answer {
+	color: #ffc !important;
+}
+
+#hm-game-alphabet a {
+	background: #333 !important;
+	color: #ffc !important;
+	border-color: #555 !important;
+}
+
+#hm-game-alphabet a:hover {
+	background: #444 !important;
+	color: #fff !important;
+	border-color: #777 !important;
+}
+
+#hm-game-alphabet span.correct,
+#hm-game-alphabet span.wrong {
+	background: #1a1a1a !important;
+	color: #666 !important;
+	border-color: #333 !important;
+}
+
+
 
 
