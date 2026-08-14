@@ -199,55 +199,74 @@
 
 	/* Dark mode sub-categories styling */
 	#sub-categories {
-		background: #1e2631;
-		border-color: #2d3748;
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+		background: #1e2631 !important;
+		border: 1px solid #2d3748 !important;
+		border-bottom: 3px solid #81b752 !important;
+		border-radius: 0 !important;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
 	}
 
+	#sub-categories .menu > li,
 	.menu > li {
-		border-bottom-color: #2d3748;
+		border-bottom: 1px solid #2d3748 !important;
+		border-radius: 0 !important;
 	}
 
-	.menu ul li {
-		border-bottom-color: #2d3748;
-	}
-
+	#sub-categories .menu a,
 	.menu a {
-		color: #cbd5e1;
+		color: #cbd5e1 !important;
+		border-radius: 0 !important;
 	}
 
-	.menu a:hover, .menu a:focus {
-		color: #38bdf8;
-		background: #0f172a;
-		border-left-color: #38bdf8;
+	#sub-categories .menu a:hover,
+	#sub-categories .menu a:focus,
+	.menu a:hover,
+	.menu a:focus {
+		color: #ffffff !important;
+		background: #0f172a !important;
+		border-left: 3px solid #81b752 !important;
 	}
 
+	#wrapper #sub-categories .menu .selected > a,
 	#wrapper .menu .selected > a,
 	.menu .selected > a {
-		color: #38bdf8;
-		background: linear-gradient(90deg, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0.04) 100%);
-		border-left-color: #38bdf8;
+		color: #ffffff !important;
+		background: #0f172a !important;
+		border-left: 3px solid #81b752 !important;
 	}
 
+	#sub-categories .menu ul,
 	.menu ul {
-		border-left-color: #334155;
+		background: #161d26 !important;
+		border-left: none !important;
+	}
+
+	#sub-categories .menu ul li,
+	.menu ul li {
+		border-bottom: 1px solid #26303e !important;
+		border-radius: 0 !important;
 	}
 
 	#wrapper .menu li.selected li a,
+	#sub-categories .menu ul li a,
 	.menu ul li a {
-		color: #94a3b8;
+		color: #94a3b8 !important;
+		border-radius: 0 !important;
 	}
 
+	#sub-categories .menu ul li a:hover,
+	#sub-categories .menu ul li a:focus,
 	.menu ul li a:hover,
 	.menu ul li a:focus {
-		color: #38bdf8;
-		background: #0f172a;
+		color: #ffffff !important;
+		background: #0f172a !important;
 	}
 
 	#wrapper .menu .selected .selected a,
+	#sub-categories .menu ul li.selected > a,
 	.menu ul li.selected > a {
-		color: #38bdf8;
-		background: rgba(56, 189, 248, 0.15);
+		color: #ffffff !important;
+		background: #0f172a !important;
 	}
 
 	ul.subcat-list li a {

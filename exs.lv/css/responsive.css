@@ -1366,17 +1366,15 @@ ul#menu-footer {
 .widget .searchform input#searchsubmit {
 	position: absolute;
 	right: 0
-}
-
-/* Sub-Categories Sidebar Navigation (Styled like Top Menu Dropdowns) */
+}/* Sub-Categories Sidebar Navigation (Light Mode) */
 #sub-categories {
-	background: #303e45;
-	border: none;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
 	border-radius: 0 !important;
-	border-bottom: 3px solid #81b752;
+	border-bottom: 3px solid #2090cc;
 	padding: 0;
 	margin: 0 0 16px 0;
-	box-shadow: none;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 #sub-categories .menu,
@@ -1395,7 +1393,7 @@ ul#menu-footer {
 	background: transparent !important;
 	padding: 0 !important;
 	margin: 0 !important;
-	border-bottom: 1px solid #37474f !important;
+	border-bottom: 1px solid #e2e8f0 !important;
 	border-radius: 0 !important;
 	list-style: none !important;
 }
@@ -1407,14 +1405,14 @@ ul#menu-footer {
 
 #sub-categories .menu a,
 .menu a {
-	font-weight: 500;
+	font-weight: 600;
 	display: flex;
 	align-items: center;
 	outline: none;
 	margin: 0;
-	padding: 9px 12px;
+	padding: 8px 12px;
 	font-size: 13px;
-	color: #a9b9c1;
+	color: #334155;
 	text-decoration: none;
 	border-radius: 0 !important;
 	border-left: 3px solid transparent;
@@ -1425,9 +1423,9 @@ ul#menu-footer {
 #sub-categories .menu a:focus,
 .menu a:hover,
 .menu a:focus {
-	color: #ffffff !important;
-	background: #2c393f !important;
-	border-left: 3px solid #81b752 !important;
+	color: #0284c7 !important;
+	background: #f0f9ff !important;
+	border-left: 3px solid #2090cc !important;
 	transform: none !important;
 	text-decoration: none;
 }
@@ -1435,15 +1433,15 @@ ul#menu-footer {
 #wrapper #sub-categories .menu .selected > a,
 #wrapper .menu .selected > a,
 .menu .selected > a {
-	color: #ffffff !important;
+	color: #0284c7 !important;
 	font-weight: 700;
-	background: #2c393f !important;
-	border-left: 3px solid #81b752 !important;
+	background: #e0f2fe !important;
+	border-left: 3px solid #2090cc !important;
 }
 
 #sub-categories .menu ul,
 .menu ul {
-	background: #253137;
+	background: #f8fafc;
 	padding: 0 !important;
 	margin: 0 !important;
 	border-left: none !important;
@@ -1455,7 +1453,7 @@ ul#menu-footer {
 	background: transparent !important;
 	padding: 0 !important;
 	margin: 0 !important;
-	border-bottom: 1px solid #2e3a40 !important;
+	border-bottom: 1px solid #e2e8f0 !important;
 	border-radius: 0 !important;
 	list-style: none !important;
 }
@@ -1469,12 +1467,12 @@ ul#menu-footer {
 #sub-categories .menu ul li a,
 .menu ul li a {
 	font-size: 12px;
-	font-weight: 400;
+	font-weight: 500;
 	display: block;
 	outline: none;
 	margin: 0;
-	padding: 7px 12px 7px 22px;
-	color: #92a4ad;
+	padding: 6px 12px 6px 22px;
+	color: #64748b;
 	border-radius: 0 !important;
 	border-left: none !important;
 	transition: background 0.15s ease, color 0.15s ease;
@@ -1484,8 +1482,8 @@ ul#menu-footer {
 #sub-categories .menu ul li a:focus,
 .menu ul li a:hover,
 .menu ul li a:focus {
-	color: #ffffff !important;
-	background: #1f282e !important;
+	color: #0284c7 !important;
+	background: #e0f2fe !important;
 	padding-left: 22px !important;
 	text-decoration: none;
 }
@@ -1493,9 +1491,9 @@ ul#menu-footer {
 #wrapper .menu .selected .selected a,
 #sub-categories .menu ul li.selected > a,
 .menu ul li.selected > a {
-	color: #ffffff !important;
+	color: #0284c7 !important;
 	font-weight: 700;
-	background: #1f282e !important;
+	background: #e0f2fe !important;
 	border-left: none !important;
 }
 
