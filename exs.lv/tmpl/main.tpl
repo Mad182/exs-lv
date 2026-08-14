@@ -134,6 +134,7 @@
 								<li><a href="/karatavas">Karātavas</a></li>
 								<li><a href="/memory">Atmiņas spēle</a></li>
 								<li><a href="/2048-spele">2048</a></li>
+								<li><a href="/minu-mekletajs">Mīnu Meklētājs</a></li>
 							</ul>
 						</li>
 						<li><a href="/blogs">Blogi</a></li>

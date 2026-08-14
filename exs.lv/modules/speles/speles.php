@@ -54,10 +54,20 @@ $games_list = [
 		'title' => '2048',
 		'url' => '/2048-spele',
 		'icon' => '🔢',
-		'badge' => 'Jaunums',
-		'badge_class' => 'label-success',
+		'badge' => 'Populāra',
+		'badge_class' => 'label-important',
 		'desc' => 'Bīdi un apvieno vienādos skaitļu lauciņus, lai sasniegtu 2048 flīzi un uzstādītu rekordu!',
 		'game_code' => '2048'
+	],
+	[
+		'id' => 'minu-mekletajs',
+		'title' => 'Mīnu Meklētājs',
+		'url' => '/minu-mekletajs',
+		'icon' => '💣',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Klasiskā Minesweeper spēle ar 3 grūtības līmeņiem un ātruma rekordu topu.',
+		'game_code' => 'minu-mekletajs'
 	],
 	[
 		'id' => 'desas',
