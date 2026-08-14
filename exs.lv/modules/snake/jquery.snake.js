@@ -84,6 +84,9 @@ var Snake = {
 		Snake.animateTimer = 0;
 
 		if (reset) {
+			if (Snake.score > 0) {
+				Snake.submitScore();
+			}
 			Snake.currentToken = null;
 			$.getJSON('/snake?action=init_token', function(res) {
 				if (res && res.success) {
@@ -307,7 +310,12 @@ var Snake = {
 	},
 	submitScore: function() {
 		if (Snake.score <= 0) return;
+		var scoreToSend = Snake.score;
 		var tokenToSend = Snake.currentToken || '';
+		var cherriesToSend = Snake.cherriesEaten;
+		var levelToSend = Snake.level;
+
+		Snake.score = 0;
 		Snake.currentToken = null;
 
 		$.ajax({
@@ -315,9 +323,9 @@ var Snake = {
 			type: 'POST',
 			data: {
 				token: tokenToSend,
-				score: Snake.score,
-				cherries: Snake.cherriesEaten,
-				level: Snake.level
+				score: scoreToSend,
+				cherries: cherriesToSend,
+				level: levelToSend
 			},
 			dataType: 'json',
 			success: function(res) {

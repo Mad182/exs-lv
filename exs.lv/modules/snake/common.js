@@ -9,4 +9,10 @@ $(function() {
 		e.preventDefault();
 		Snake.newGame(true);
 	});
+
+	$(window).on('beforeunload unload', function() {
+		if (typeof Snake !== 'undefined' && Snake.score > 0) {
+			Snake.submitScore();
+		}
+	});
 });
