@@ -426,14 +426,9 @@ if (isset($category) && !empty($category->content)) {
 	$game_img_file = '/var/www/exs-lv/exs.lv/bildes/speles/' . $category->textid . '.png';
 	if (file_exists($game_img_file)) {
 		$img_url = 'https://exs.lv/bildes/speles/' . $category->textid . '.png';
-
-		$tpl->newBlock('og-meta');
-		$tpl->assign(['key' => 'image', 'val' => $img_url]);
-
-		$tpl->newBlock('twitter-meta');
-		$tpl->assign(['key' => 'card', 'val' => 'summary_large_image']);
-		$tpl->newBlock('twitter-meta');
-		$tpl->assign(['key' => 'image', 'val' => $img_url]);
+		$opengraph_meta['image'] = $img_url;
+		$twitter_meta['card'] = 'summary_large_image';
+		$twitter_meta['image'] = $img_url;
 	}
 }
 
