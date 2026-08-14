@@ -236,7 +236,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 				// Mark game as finished atomically to avoid race-condition multi-scoring
 				$db->query("UPDATE wg_games SET status = 1 WHERE id = '$game_id' AND status = 0");
-				if ($db->rows_affected() > 0) {
+				if ($db->affected_rows > 0) {
 					if ($auth->ok && $auth->id > 0) {
 						$date = date('Y-m-d');
 						if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
@@ -282,7 +282,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 			]);
 
 			$db->query("UPDATE wg_games SET status = 1 WHERE id = '$game_id' AND status = 0");
-			if ($db->rows_affected() > 0) {
+			if ($db->affected_rows > 0) {
 				if ($auth->ok && $auth->id > 0) {
 					$date = date('Y-m-d');
 					if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
