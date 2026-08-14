@@ -149,9 +149,16 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 		$word_id = $db->get_var("SELECT id FROM `wg_words` " . $query . " ORDER BY rand() LIMIT 1");
 		$user_id_val = ($auth->ok && $auth->id > 0) ? $auth->id : 0;
 		$db->query("INSERT INTO wg_games (word_id, correct, wrong, user_id, created_at, status) VALUES ('$word_id', '" . serialize([]) . "', '" . serialize([]) . "', '$user_id_val', '" . time() . "', 0)");
-		set_wg_id($db->insert_id);
-		redirect('/' . $category->textid);
-	} else {
+		$game_id = $db->insert_id;
+		set_wg_id($game_id);
+		$game = $db->get_row("SELECT * FROM wg_games WHERE id = '$game_id'");
+
+		if (!$ajax) {
+			redirect('/' . $category->textid);
+		}
+	}
+
+	if ($game_id && $game) {
 
 		if (!$auth->ok) {
 			$tpl->newBlock('hm-login');
