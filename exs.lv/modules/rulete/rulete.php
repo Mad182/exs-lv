@@ -175,7 +175,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 		$db->query("UPDATE `roulette_balance` SET `gold` = " . intval($new_gold) . ", `max_gold` = " . intval($max_gold) . ", `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
 
 		if ($new_gold > 0) {
-			save_score('rulete', $max_gold);
+			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($auth->id) . ", 'rulete', " . intval($max_gold) . ", " . time() . ")");
 		}
 	}
 
