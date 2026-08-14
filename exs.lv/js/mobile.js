@@ -18,7 +18,11 @@ function update_mb() {
 					refreshlim = mb_refresh_limit;
 					$.each(val, function(ckey, cval) {
 						$.each(cval, function(rkey, rval) {
-							$('<li>' + rval + '</li>').hide().appendTo('ul.responses-' + ckey).fadeIn('slow');
+							var $target = $('ul.responses-' + ckey);
+							if ($target.length) {
+								$target.parents('li').show();
+								$('<li>' + rval + '</li>').hide().appendTo($target).fadeIn('fast');
+							}
 						});
 					});
 				}
