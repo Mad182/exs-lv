@@ -132,17 +132,19 @@
 		for (var i = 0; i < rowsConfig.length; i++) {
 			var r = rowsConfig[i];
 			r.items = [];
-			var currentX = 0;
 			var speedMult = 1 + (level - 1) * 0.10;
 			var actualSpeed = r.speed * speedMult;
+			var itemWidth = r.length * GRID_SIZE;
+			var totalStep = itemWidth + r.spacing;
 
-			while (currentX < canvas.width + r.spacing) {
+			var currentX = -itemWidth - r.spacing;
+			while (currentX < canvas.width + itemWidth + r.spacing) {
 				r.items.push({
 					x: currentX,
-					width: r.length * GRID_SIZE,
+					width: itemWidth,
 					speed: actualSpeed
 				});
-				currentX += r.length * GRID_SIZE + r.spacing;
+				currentX += totalStep;
 			}
 		}
 	}
@@ -263,15 +265,14 @@
 		// Update Obstacle positions
 		for (var i = 0; i < rowsConfig.length; i++) {
 			var r = rowsConfig[i];
-			for (var j = 0; j < r.items.push; j++) {}
 			for (var k = 0; k < r.items.length; k++) {
 				var item = r.items[k];
 				item.x += item.speed;
 
-				if (item.speed > 0 && item.x > canvas.width) {
-					item.x = -item.width - 20;
-				} else if (item.speed < 0 && item.x + item.width < 0) {
-					item.x = canvas.width + 20;
+				if (item.speed > 0 && item.x > canvas.width + 40) {
+					item.x = -item.width - 40;
+				} else if (item.speed < 0 && item.x + item.width < -40) {
+					item.x = canvas.width + 40;
 				}
 			}
 		}
@@ -311,7 +312,7 @@
 				var fCenterX = frog.x + GRID_SIZE / 2;
 				for (var n = 0; n < riverRow.items.length; n++) {
 					var log = riverRow.items[n];
-					if (fCenterX >= log.x - 8 && fCenterX <= log.x + log.width + 8) {
+					if (fCenterX >= log.x - 12 && fCenterX <= log.x + log.width + 12) {
 						ridingItem = log;
 						break;
 					}
@@ -323,7 +324,7 @@
 					frog.x += ridingItem.speed;
 
 					// Offscreen river drift kill
-					if (frog.x < -10 || frog.x > canvas.width - 30) {
+					if (frog.x < -20 || frog.x > canvas.width - 20) {
 						killFrog('splash');
 					}
 				} else {
