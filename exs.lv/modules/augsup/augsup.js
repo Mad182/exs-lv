@@ -115,15 +115,22 @@
 		var type = forceType || 'normal';
 
 		if (!forceType) {
+			var lastPlat = platforms.length > 0 ? platforms[platforms.length - 1] : null;
 			var r = Math.random();
-			if (r < 0.55) {
-				type = 'normal'; // 55% Green static
-			} else if (r < 0.75) {
-				type = 'moving'; // 20% Blue moving
-			} else if (r < 0.88) {
-				type = 'broken'; // 13% Brown breaking
+
+			// Never spawn two broken platforms consecutively
+			if (lastPlat && lastPlat.type === 'broken') {
+				type = r < 0.65 ? 'normal' : (r < 0.85 ? 'moving' : 'spring');
 			} else {
-				type = 'spring'; // 12% Spring platform
+				if (r < 0.60) {
+					type = 'normal'; // 60% Green static
+				} else if (r < 0.78) {
+					type = 'moving'; // 18% Blue moving
+				} else if (r < 0.88) {
+					type = 'broken'; // 10% Brown breaking
+				} else {
+					type = 'spring'; // 12% Spring platform
+				}
 			}
 		}
 
@@ -133,7 +140,7 @@
 			width: PLATFORM_WIDTH,
 			height: PLATFORM_HEIGHT,
 			type: type,
-			vx: type === 'moving' ? (Math.random() > 0.5 ? 2 : -2) : 0,
+			vx: type === 'moving' ? (Math.random() > 0.5 ? 1.8 : -1.8) : 0,
 			broken: false,
 			hasSpring: type === 'spring',
 			springCompressed: false
@@ -176,11 +183,11 @@
 			hasSpring: false
 		});
 
-		// Initial platforms stack
-		var currentY = canvas.height - 140;
+		// Initial platforms stack with safe 45-70px vertical spacing
+		var currentY = canvas.height - 130;
 		while (currentY > 0) {
 			platforms.push(createPlatform(currentY));
-			currentY -= Math.floor(Math.random() * 40 + 55);
+			currentY -= Math.floor(Math.random() * 25 + 45);
 		}
 
 		startTime = Date.now();
@@ -307,8 +314,8 @@
 			}
 		}
 
-		if (highestY > 60) {
-			var newY = highestY - Math.floor(Math.random() * 40 + 55);
+		if (highestY > 50) {
+			var newY = highestY - Math.floor(Math.random() * 25 + 45);
 			platforms.push(createPlatform(newY));
 		}
 

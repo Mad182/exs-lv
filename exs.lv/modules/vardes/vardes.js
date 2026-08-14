@@ -113,19 +113,19 @@
 
 	// Obstacles & Water Rides
 	var rowsConfig = [
-		// River Rows (1 to 5) - Optimized spacing & coverage so next log/turtle is always reachable
-		{ row: 1, type: 'river', isLog: true, speed: 1.4, length: 3, spacing: 65, items: [] },
-		{ row: 2, type: 'river', isLog: false, speed: -1.8, length: 3, spacing: 60, items: [] },
-		{ row: 3, type: 'river', isLog: true, speed: 2.0, length: 4, spacing: 75, items: [] },
-		{ row: 4, type: 'river', isLog: true, speed: 1.5, length: 3, spacing: 65, items: [] },
-		{ row: 5, type: 'river', isLog: false, speed: -1.4, length: 3, spacing: 60, items: [] },
+		// River Rows (1 to 5) - Smooth & accessible initial speeds
+		{ row: 1, type: 'river', isLog: true, speed: 1.0, length: 3, spacing: 65, items: [] },
+		{ row: 2, type: 'river', isLog: false, speed: -1.2, length: 3, spacing: 60, items: [] },
+		{ row: 3, type: 'river', isLog: true, speed: 1.4, length: 4, spacing: 75, items: [] },
+		{ row: 4, type: 'river', isLog: true, speed: 1.1, length: 3, spacing: 65, items: [] },
+		{ row: 5, type: 'river', isLog: false, speed: -0.9, length: 3, spacing: 60, items: [] },
 
-		// Road Rows (7 to 11)
-		{ row: 7, type: 'road', carType: 'race', speed: -3.0, length: 1, spacing: 130, items: [] },
-		{ row: 8, type: 'road', carType: 'truck', speed: 1.6, length: 2, spacing: 150, items: [] },
-		{ row: 9, type: 'road', carType: 'taxi', speed: -2.0, length: 1, spacing: 120, items: [] },
-		{ row: 10, type: 'road', carType: 'sports', speed: 2.5, length: 1, spacing: 140, items: [] },
-		{ row: 11, type: 'road', carType: 'sedan', speed: -1.4, length: 1, spacing: 110, items: [] }
+		// Road Rows (7 to 11) - Smooth initial traffic speeds
+		{ row: 7, type: 'road', carType: 'race', speed: -2.2, length: 1, spacing: 130, items: [] },
+		{ row: 8, type: 'road', carType: 'truck', speed: 1.2, length: 2, spacing: 150, items: [] },
+		{ row: 9, type: 'road', carType: 'taxi', speed: -1.5, length: 1, spacing: 120, items: [] },
+		{ row: 10, type: 'road', carType: 'sports', speed: 1.8, length: 1, spacing: 140, items: [] },
+		{ row: 11, type: 'road', carType: 'sedan', speed: -1.0, length: 1, spacing: 110, items: [] }
 	];
 
 	function initObstacles() {
@@ -133,7 +133,7 @@
 			var r = rowsConfig[i];
 			r.items = [];
 			var currentX = 0;
-			var speedMult = 1 + (level - 1) * 0.15;
+			var speedMult = 1 + (level - 1) * 0.10;
 			var actualSpeed = r.speed * speedMult;
 
 			while (currentX < canvas.width + r.spacing) {
