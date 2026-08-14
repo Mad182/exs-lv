@@ -55,15 +55,24 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
+	// Check if this is a new personal best time (lower is better)
+	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'minu-mekletajs' AND user_id = '$auth->id'");
+	$is_new_record = (empty($prev_best) || $time_sec < (int)$prev_best);
+
 	// Store time_sec directly into gamescore (lower time is better!)
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'minu-mekletajs', '$time_sec', '" . time() . "')");
 	$insert_id = $db->insert_id();
 
 	if ($insert_id) {
-		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'minu-mekletajs' AND score < '$time_sec'");
 		$mins = floor($time_sec / 60);
 		$s = $time_sec % 60;
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);
+
+		if ($is_new_record) {
+			push('Uzstādīja jaunu rekordu spēlē <a href="/minu-mekletajs">Mīnu Meklētājs</a> (' . $formatted_time . ')', '/bildes/icons/award_star_gold_3.png', 'game-minu-mekletajs-' . $auth->id);
+		}
+
+		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'minu-mekletajs' AND score < '$time_sec'");
 
 		echo json_encode([
 			'success' => true,

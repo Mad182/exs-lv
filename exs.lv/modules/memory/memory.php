@@ -132,12 +132,19 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'memory', '$score', '" . time() . "')");
 		$is_new_record = true;
 		$highScore = $score;
-	} elseif ($score > $current->score) {
-		$db->query("UPDATE gamescore SET score = '$score', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
-		$is_new_record = true;
-		$highScore = $score;
 	} else {
-		$highScore = $current->score;
+		if ($score > $current->score) {
+			$db->query("UPDATE gamescore SET score = '$score', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
+			$is_new_record = true;
+			$highScore = $score;
+		} else {
+			$db->query("UPDATE gamescore SET time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
+			$highScore = $current->score;
+		}
+	}
+
+	if ($is_new_record) {
+		push('Uzstādīja jaunu rekordu <a href="/memory">Atmiņas spēlē</a> (' . number_format($highScore, 0, '', ' ') . ' punkti)', '/bildes/icons/award_star_gold_3.png', 'game-memory-' . $auth->id);
 	}
 
 	echo json_encode([

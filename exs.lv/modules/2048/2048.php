@@ -52,11 +52,19 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
+	// Check if this score is a new personal record
+	$prev_best = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = '2048' AND user_id = '$auth->id'");
+	$is_new_record = (empty($prev_best) || $score > $prev_best);
+
 	// Insert into gamescore table
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', '2048', '$score', '" . time() . "')");
 	$insert_id = $db->insert_id();
 
 	if ($insert_id) {
+		if ($is_new_record) {
+			push('Uzstādīja jaunu rekordu spēlē <a href="/2048-spele">2048</a> (' . number_format($score, 0, '', ' ') . ' punkti)', '/bildes/icons/award_star_gold_3.png', 'game-2048-' . $auth->id);
+		}
+
 		// Calculate player rank for this score
 		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = '2048' AND score > '$score'");
 		echo json_encode([

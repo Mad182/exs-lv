@@ -52,18 +52,23 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
-	// Score formula: Lower score is better! (guesses * 1000 + time_sec)
-	// Example: 2 guesses in 25s = 2025 score. 5 guesses in 12s = 5012 score.
-	$composite_score = ($guesses * 1000) + min(999, $time_sec);
+	// Check if this is a new personal best score (lower is better)
+	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id'");
+	$is_new_record = (empty($prev_best) || $composite_score < (int)$prev_best);
 
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'wordle', '$composite_score', '" . time() . "')");
 	$insert_id = $db->insert_id();
 
 	if ($insert_id) {
-		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'wordle' AND score < '$composite_score'");
 		$mins = floor($time_sec / 60);
 		$s = $time_sec % 60;
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);
+
+		if ($is_new_record) {
+			push('Uzstādīja jaunu rekordu spēlē <a href="/wordle">Wordle</a> (' . $guesses . ' mēģinājumi, ' . $formatted_time . ')', '/bildes/icons/award_star_gold_3.png', 'game-wordle-' . $auth->id);
+		}
+
+		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'wordle' AND score < '$composite_score'");
 
 		echo json_encode([
 			'success' => true,
