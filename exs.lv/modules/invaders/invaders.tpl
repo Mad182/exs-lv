@@ -123,9 +123,9 @@
 				<h3>🎯 Punktu Vērtības</h3>
 				<ul class="invaders-info-list">
 					<li><span class="invader-icon legend-ufo">🛸</span> NLO Kosmosa Kuģis: <strong>100 - 300 p</strong></li>
-					<li><span class="invader-icon legend-squid">👾</span> Astoņkājis (Augša): <strong>30 p</strong></li>
-					<li><span class="invader-icon legend-crab">👾</span> Krabis (Viduskārts): <strong>20 p</strong></li>
-					<li><span class="invader-icon legend-octopus">👾</span> Kalmārs (Apakša): <strong>10 p</strong></li>
+					<li><span class="invader-icon legend-squid">👾</span> Kalmārs (Augšējā rinda): <strong>30 p</strong></li>
+					<li><span class="invader-icon legend-crab">👾</span> Krabis (Vidus rindas): <strong>20 p</strong></li>
+					<li><span class="invader-icon legend-octopus">👾</span> Astoņkājis (Apakšējās rindas): <strong>10 p</strong></li>
 				</ul>
 			</div>
 		</div>
