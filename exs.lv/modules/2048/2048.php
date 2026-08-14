@@ -62,7 +62,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 
 	if ($insert_id) {
 		if ($is_new_record) {
-			push('Uzstādīja jaunu rekordu spēlē <a href="/2048-spele">2048</a> (' . number_format($score, 0, '', ' ') . ' punkti)', '/bildes/icons/award_star_gold_3.png', 'game-2048-' . $auth->id);
+			push('Uzstādīja jaunu rekordu spēlē <a href="/2048-spele">2048</a> (' . number_format($score, 0, '', ' ') . ' punkti)', '/bildes/icons/games/2048.png', 'game-2048-' . $auth->id);
 		}
 
 		// Calculate player rank for this score

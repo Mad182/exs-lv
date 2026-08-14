@@ -65,7 +65,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);
 
 		if ($is_new_record) {
-			push('Uzstādīja jaunu rekordu spēlē <a href="/wordle">Wordle</a> (' . $guesses . ' mēģinājumi, ' . $formatted_time . ')', '/bildes/icons/award_star_gold_3.png', 'game-wordle-' . $auth->id);
+			push('Uzstādīja jaunu rekordu spēlē <a href="/wordle">Wordle</a> (' . $guesses . ' mēģinājumi, ' . $formatted_time . ')', '/bildes/icons/games/wordle.png', 'game-wordle-' . $auth->id);
 		}
 
 		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'wordle' AND score < '$composite_score'");

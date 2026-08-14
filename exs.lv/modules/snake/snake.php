@@ -79,7 +79,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	}
 
 	if ($is_new_record) {
-		push('Uzstādīja jaunu rekordu spēlē <a href="/snake">Čūska</a> (' . number_format($highScore, 0, '', ' ') . ' punkti)', '/bildes/icons/award_star_gold_3.png', 'game-snake-' . $auth->id);
+		push('Uzstādīja jaunu rekordu spēlē <a href="/snake">Čūska</a> (' . number_format($highScore, 0, '', ' ') . ' punkti)', '/bildes/icons/games/snake.png', 'game-snake-' . $auth->id);
 	}
 
 	echo json_encode([

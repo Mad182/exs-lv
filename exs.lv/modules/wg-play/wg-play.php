@@ -257,7 +257,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 						}
 
 						if ($today_points > $prev_score) {
-							push('Uzstādīja jaunu rekordu spēlē <a href="/karatavas">Karātavas</a> (' . number_format($today_points, 0, '', ' ') . ' punkti)', '/bildes/icons/award_star_gold_3.png', 'game-karatavas-' . $auth->id);
+							push('Uzstādīja jaunu rekordu spēlē <a href="/karatavas">Karātavas</a> (' . number_format($today_points, 0, '', ' ') . ' punkti)', '/bildes/icons/games/karatavas.png', 'game-karatavas-' . $auth->id);
 						}
 					}
 				}

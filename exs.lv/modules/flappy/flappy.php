@@ -67,7 +67,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	}
 
 	if ($is_new_record) {
-		push('Uzstādīja jaunu rekordu spēlē <a href="/flappy">Lidojošais Eksis</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/award_star_gold_3.png', 'game-flappy-' . $auth->id);
+		push('Uzstādīja jaunu rekordu spēlē <a href="/flappy">Lidojošais Eksis</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/games/flappy.png', 'game-flappy-' . $auth->id);
 	}
 
 	echo json_encode([

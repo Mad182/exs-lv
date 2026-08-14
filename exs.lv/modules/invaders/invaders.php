@@ -70,7 +70,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	}
 
 	if ($is_new_record) {
-		push('Uzstādīja jaunu rekordu spēlē <a href="/invaders">Space Invaders</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/award_star_gold_3.png', 'game-invaders-' . $auth->id);
+		push('Uzstādīja jaunu rekordu spēlē <a href="/invaders">Space Invaders</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/games/invaders.png', 'game-invaders-' . $auth->id);
 	}
 
 	echo json_encode([

@@ -74,7 +74,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);
 
 		if ($is_new_record) {
-			push('Uzstādīja jaunu rekordu spēlē <a href="/minu-mekletajs">Mīnu Meklētājs</a> (' . $formatted_time . ')', '/bildes/icons/award_star_gold_3.png', 'game-minu-mekletajs-' . $auth->id);
+			push('Uzstādīja jaunu rekordu spēlē <a href="/minu-mekletajs">Mīnu Meklētājs</a> (' . $formatted_time . ')', '/bildes/icons/games/minu-mekletajs.png', 'game-minu-mekletajs-' . $auth->id);
 		}
 
 		if ($difficulty == 'easy') {

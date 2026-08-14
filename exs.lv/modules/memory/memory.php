@@ -144,7 +144,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	}
 
 	if ($is_new_record) {
-		push('Uzstādīja jaunu rekordu <a href="/memory">Atmiņas spēlē</a> (' . number_format($highScore, 0, '', ' ') . ' punkti)', '/bildes/icons/award_star_gold_3.png', 'game-memory-' . $auth->id);
+		push('Uzstādīja jaunu rekordu <a href="/memory">Atmiņas spēlē</a> (' . number_format($highScore, 0, '', ' ') . ' punkti)', '/bildes/icons/games/memory.png', 'game-memory-' . $auth->id);
 	}
 
 	echo json_encode([

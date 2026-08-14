@@ -69,7 +69,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);
 
 		if ($is_new_record) {
-			push('Uzstādīja jaunu rekordu spēlē <a href="/sudoku">Sudoku</a> (' . $formatted_time . ')', '/bildes/icons/award_star_gold_3.png', 'game-sudoku-' . $auth->id);
+			push('Uzstādīja jaunu rekordu spēlē <a href="/sudoku">Sudoku</a> (' . $formatted_time . ')', '/bildes/icons/games/sudoku.png', 'game-sudoku-' . $auth->id);
 		}
 
 		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'sudoku' AND score < '$time_sec'");

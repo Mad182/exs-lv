@@ -201,10 +201,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($auth->id));
 		if (!$existing_score) {
 			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($auth->id) . ", 'rulete', " . intval($max_gold) . ", " . time() . ")");
-			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($max_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/award_star_gold_3.png', 'game-rulete-' . $auth->id);
+			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($max_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/games/rulete.png', 'game-rulete-' . $auth->id);
 		} else if ($max_gold > $existing_score->score) {
 			$db->query("UPDATE `gamescore` SET `score` = " . intval($max_gold) . ", `time` = " . time() . " WHERE `id` = " . intval($existing_score->id));
-			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($max_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/award_star_gold_3.png', 'game-rulete-' . $auth->id);
+			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($max_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/games/rulete.png', 'game-rulete-' . $auth->id);
 		}
 	} else {
 		$max_gold = $new_gold;
