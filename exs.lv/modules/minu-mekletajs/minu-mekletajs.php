@@ -61,9 +61,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 
 	if ($insert_id) {
 		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'minu-mekletajs' AND score < '$time_sec'");
-		$m = floor($time_sec / 60);
+		$mins = floor($time_sec / 60);
 		$s = $time_sec % 60;
-		$formatted_time = sprintf('%02d:%02d', $m, $s);
+		$formatted_time = sprintf('%02d:%02d', $mins, $s);
 
 		echo json_encode([
 			'success' => true,
@@ -106,9 +106,9 @@ if ($act == 'top') {
 			$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
 			if ($usr) {
 				$tpl->newBlock('top-node');
-				$m = floor($topuser->score / 60);
+				$mins = floor($topuser->score / 60);
 				$s = $topuser->score % 60;
-				$time_str = sprintf('%02d:%02d sek', $m, $s);
+				$time_str = sprintf('%02d:%02d sek', $mins, $s);
 
 				$tpl->assign([
 					'user-place' => $icon,
@@ -145,9 +145,9 @@ if ($act == 'top') {
 			$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
 			if ($usr) {
 				$tpl->newBlock('top-node');
-				$m = floor($topuser->score / 60);
+				$mins = floor($topuser->score / 60);
 				$s = $topuser->score % 60;
-				$time_str = sprintf('%02d:%02d sek', $m, $s);
+				$time_str = sprintf('%02d:%02d sek', $mins, $s);
 
 				$tpl->assign([
 					'user-place' => $icon,
@@ -177,9 +177,9 @@ if ($act == 'top') {
 	}
 	$formatted_best = '--:--';
 	if ($best_sec > 0) {
-		$m = floor($best_sec / 60);
+		$mins = floor($best_sec / 60);
 		$s = $best_sec % 60;
-		$formatted_best = sprintf('%02d:%02d', $m, $s);
+		$formatted_best = sprintf('%02d:%02d', $mins, $s);
 	}
 
 	$tpl->assign(['user-best-time' => $formatted_best]);
