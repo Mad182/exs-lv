@@ -3,12 +3,46 @@
 <script>
 
 	$(document).ready(function () {
-		$('#hm-game-alphabet a').on('click', function () {
+		// Delegated click handler for alphabet links and new game button
+		$(document).off('click.karatavas', '#hm-game-alphabet a, #hm-new-game').on('click.karatavas', '#hm-game-alphabet a, #hm-new-game', function () {
 			$('#hm-game-answer').fadeTo(200, 0.6);
 			$('#hm-game-container').load($(this).attr('href'), function () {
 				$(this).fadeTo(300, 1);
 			});
 			return false;
+		});
+
+		// Keyboard input support for Karātavas
+		$(document).off('keydown.karatavas').on('keydown.karatavas', function (e) {
+			if ($(e.target).is('input, textarea, select')) {
+				return;
+			}
+
+			var key = e.key ? e.key.toLowerCase() : '';
+			
+			// Enter or Space key starts new game if game finished
+			if (key === 'enter' || key === ' ') {
+				var $newGame = $('#hm-new-game');
+				if ($newGame.length > 0) {
+					e.preventDefault();
+					$newGame.trigger('click');
+					return;
+				}
+			}
+
+			if (!key || key.length > 1) {
+				return;
+			}
+
+			// Match pressed key with available letters in #hm-game-alphabet
+			$('#hm-game-alphabet a').each(function () {
+				var letter = $(this).text().trim().toLowerCase();
+				if (letter === key) {
+					e.preventDefault();
+					$(this).trigger('click');
+					return false;
+				}
+			});
 		});
 	});
 
@@ -70,6 +104,11 @@
 
 	</div>
 	<div class="c"></div>
+
+	<div class="alert alert-info karatavas-keyboard-tip" style="margin-top: 15px; margin-bottom: 10px;">
+		<strong>Padoms:</strong> Burtiem vari uzspiest arī, izmantojot klaviatūru!
+	</div>
+
 	<p style="color: #888;" class="comment-edited-by">Kļūdas? Ieteikumi? <a
 			href="/?c=104&amp;act=compose&amp;to=1">Raksti man</a> ;)
 
