@@ -236,6 +236,18 @@ if (isset($_GET['u'])) {
 		}
 
 		$pagepath = $category->title;
+		if (!empty($category->parent)) {
+			$category2 = get_cat($category->parent);
+			if ($category2) {
+				$pagepath = '<a href="/' . $category2->textid . '">' . $category2->title . '</a> / ' . $pagepath;
+				if (!empty($category2->parent)) {
+					$category3 = get_cat($category2->parent);
+					if ($category3) {
+						$pagepath = '<a href="/' . $category3->textid . '">' . $category3->title . '</a> / ' . $pagepath;
+					}
+				}
+			}
+		}
 
 		/* ielādē moduļa funkcijas */
 		if (file_exists(CORE_PATH . '/modules/' . $category->module . '/functions.' . $category->module . '.php')) {
