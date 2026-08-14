@@ -135,16 +135,19 @@
 			var speedMult = 1 + (level - 1) * 0.10;
 			var actualSpeed = r.speed * speedMult;
 			var itemWidth = r.length * GRID_SIZE;
-			var totalStep = itemWidth + r.spacing;
+			var step = itemWidth + r.spacing;
 
-			var currentX = -itemWidth - r.spacing;
-			while (currentX < canvas.width + itemWidth + r.spacing) {
+			// Seamless ring buffer: calculate pattern width to cover canvas plus offscreen margins
+			var minCoverage = canvas.width + itemWidth + r.spacing;
+			var numItems = Math.ceil(minCoverage / step);
+			r.patternWidth = numItems * step;
+
+			for (var k = 0; k < numItems; k++) {
 				r.items.push({
-					x: currentX,
+					x: k * step,
 					width: itemWidth,
 					speed: actualSpeed
 				});
-				currentX += totalStep;
 			}
 		}
 	}
@@ -262,17 +265,22 @@
 		frog.x += (frog.targetX - frog.x) * 0.4;
 		frog.y += (frog.targetY - frog.y) * 0.4;
 
-		// Update Obstacle positions
+		// Update Obstacle positions using seamless ring buffer
 		for (var i = 0; i < rowsConfig.length; i++) {
 			var r = rowsConfig[i];
+			var pw = r.patternWidth || (canvas.width + 120);
 			for (var k = 0; k < r.items.length; k++) {
 				var item = r.items[k];
 				item.x += item.speed;
 
-				if (item.speed > 0 && item.x > canvas.width + 40) {
-					item.x = -item.width - 40;
-				} else if (item.speed < 0 && item.x + item.width < -40) {
-					item.x = canvas.width + 40;
+				if (item.speed > 0) {
+					if (item.x >= pw - item.width) {
+						item.x -= pw;
+					}
+				} else {
+					if (item.x + item.width <= 0) {
+						item.x += pw;
+					}
 				}
 			}
 		}
