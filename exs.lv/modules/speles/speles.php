@@ -74,10 +74,20 @@ $games_list = [
 		'title' => 'Sudoku',
 		'url' => '/sudoku',
 		'icon' => '🧩',
-		'badge' => 'Jaunums',
-		'badge_class' => 'label-success',
+		'badge' => 'Populāra',
+		'badge_class' => 'label-important',
 		'desc' => 'Klasiskā Sudoku mīkla ar 3 sarežģītības līmeņiem, zīmuļa piezīmēm un mājieniem.',
 		'game_code' => 'sudoku'
+	],
+	[
+		'id' => 'wordle',
+		'title' => 'Wordle',
+		'url' => '/wordle',
+		'icon' => '🔤',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Populārā 5 burtu vārdu minēšanas spēle latviešu valodā ar dienas vārdu un treniņu režīmu.',
+		'game_code' => 'wordle'
 	],
 	[
 		'id' => 'desas',
