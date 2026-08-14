@@ -138,3 +138,24 @@
 	</tbody>
 </table>
 <!-- END BLOCK : tetris-top -->
+
+<!-- START BLOCK : seo-text -->
+<div class="game-seo-box" style="margin-top: 30px; padding: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
+	<h2 style="margin-top: 0; color: #0f172a; font-size: 20px;">Par Tetris spēli un kā spēlēt</h2>
+	<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+		<div style="flex: 1; min-width: 280px; color: #334155; line-height: 1.6;">
+			<p><strong>Tetris</strong> ir viena no vispopulārākajām un leģendārākajām loģikas spēlēm pasaulē. EXS.LV platformā vari spēlēt uzlabotu Tetris versiju tieši savā pārlūkprogrammā bez maksas!</p>
+			<h3 style="color: #1e293b; font-size: 16px; margin-top: 15px;">Spēles noteikumi un vadība:</h3>
+			<ul style="padding-left: 20px; margin-bottom: 0;">
+				<li>Izmanto <strong>Bultiņas (Pa kreisi / Pa labi)</strong> vai <strong>A / D</strong> taustiņus, lai pārvietotu krītošās figūras.</li>
+				<li>Spied <strong>Bultiņu uz augšu / W</strong> vai <strong>Space</strong>, lai pagrieztu figūru.</li>
+				<li>Spied <strong>Bultiņu uz leju / S</strong> ātrākai nolaišanai.</li>
+				<li>Aizpildi pilnas horizontālās līnijas, lai tās izdzēstu un iegūtu punktus. Vācot 4 līnijas vienlaikus (Tetris!), saņemsi vislielāko punktu bonusu.</li>
+			</ul>
+		</div>
+		<div style="width: 300px; max-width: 100%;">
+			<img src="/bildes/speles/tetris.png" alt="Tetris spēle EXS.LV" style="width: 100%; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" />
+		</div>
+	</div>
+</div>
+<!-- END BLOCK : seo-text -->

@@ -167,6 +167,7 @@ if ($act == 'top') {
 
 	if (!$auth->ok) {
 		$tpl->newBlock('game-login');
+		$tpl->newBlock('seo-text');
 	}
 
 	$tpl->newBlock('game-play');

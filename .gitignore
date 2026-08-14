@@ -11,6 +11,8 @@
 /exs.lv/mad182/*
 /exs.lv/pmaexs/*
 /exs.lv/bildes/*
+!/exs.lv/bildes/speles
+!/exs.lv/bildes/speles/*
 /exs.lv/dati/bildes/auto.exs.lv/*
 /exs.lv/dati/bildes/av_sm/*
 /exs.lv/dati/bildes/avatari/*

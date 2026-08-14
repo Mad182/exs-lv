@@ -247,6 +247,7 @@ if ($active_sub === 'top') {
 
 	if (!$auth->ok) {
 		$tpl->newBlock('guest-notice');
+		$tpl->newBlock('seo-text');
 	}
 
 	$sidebar_scores = $db->get_results("SELECT * FROM gamescore WHERE game = 'memory' ORDER BY score DESC LIMIT 10");

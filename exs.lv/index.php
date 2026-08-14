@@ -419,6 +419,11 @@ $tpl->assignGlobal([
 	'logout-hash' => $auth->logout_hash
 ]);
 
+if (isset($category) && !empty($category->content)) {
+	$tpl->newBlock('meta-description');
+	$tpl->assign('description', h(strip_tags($category->content)));
+}
+
 if ($lang !== 1 && $lang !== 3) {
 	$tpl->assignGlobal([
 		'footer-mb' => get_footer_mb(),

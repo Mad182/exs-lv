@@ -33,6 +33,9 @@ if (!$ajax) {
 	$tpl->assign([
 		'cat-id' => $category->id,
 	]);
+	if (!$auth->ok) {
+		$tpl->newBlock('seo-text');
+	}
 } else {
 	$tpl = new TemplatePower('modules/wg-play/wg-play.tpl');
 	$tpl->prepare();
