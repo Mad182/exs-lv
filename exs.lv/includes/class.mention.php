@@ -34,40 +34,34 @@ class Mention {
 			$usr = $db->get_row("SELECT * FROM `users` WHERE `nick` = '" . sanitize($nick) . "'");
 		}
 
-		if($usr->id == 43040) {
-			//die('test');
+		if ($usr->id == 43040) {
 			if ($this->type == 'mb' || $this->type == 'group') {
-
-				if(!empty($this->newid)) {
+				if (!empty($this->newid)) {
 					$mb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($this->newid) . "'");
 				} else {
 					$mb = $db->get_row("SELECT `text`, `id`, `author`,`parent`,`groupid`,`reply_to` FROM `miniblog` WHERE `id` = '" . intval($this->uniq) . "'");
 				}
 
-				$content = get_ai_thread_context($mb->id);
+				if ($mb) {
+					touch_ai_bot_online();
+					$invoker = (!empty($auth) && !empty($auth->nick)) ? $auth->nick : '';
+					$messages = get_ai_thread_messages($mb->id, $invoker);
+					$response = askAI($messages);
 
-				$messages = [
-					["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildi noformē izmantojot html (<p>, <b>, <br> un līdzīgus tagus, bez dokumenta struktūras). Tevi izsauca lietotājs ".$auth->nick.", pieminot tavu vārdu @exsperts."],
-					["role" => "user", "content" => $content],
-				];
+					$aiReply = $response['choices'][0]['message']['content'] ?? null;
 
-				$response = askAI($messages);
+					if ($aiReply !== null) {
+						if (!empty($mb->parent)) {
+							$parent = $mb->parent;
+							$reply_to = $mb->id;
+						} else {
+							$parent = $mb->id;
+							$reply_to = 0;
+						}
 
-				$aiReply = $response['choices'][0]['message']['content'] ?? null;
-
-				if ($aiReply === null) {
-					// handle error or fallback
-				} else {
-
-					if(!empty($mb->parent)) {
-						$parent = $mb->parent;
-						$reply_to = $mb->id;
-					} else {
-						$parent = $mb->id;
-						$reply_to = 0;
+						$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '], '', $aiReply);
+						post_mb_ai(htmlpost2db($aiReply), $parent, $reply_to, $mb->groupid);
 					}
-
-					post_mb_ai(htmlpost2db($aiReply), $parent, $reply_to, $mb->groupid);
 				}
 			}
 		}

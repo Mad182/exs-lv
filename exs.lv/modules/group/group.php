@@ -557,38 +557,28 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					}
 
 					//ai stuff
-					if($reply_to->author == 43040) {
+					if ($reply_to->author == 43040) {
+						$already_replied = $db->get_var("SELECT `id` FROM `miniblog` WHERE `reply_to` = '$newid' AND `author` = 43040 LIMIT 1");
+						if (!$already_replied) {
+							touch_ai_bot_online();
+							$invoker = (!empty($auth) && !empty($auth->nick)) ? $auth->nick : '';
+							$messages = get_ai_thread_messages($newpost->id, $invoker);
+							$response = askAI($messages);
 
-						$content = get_ai_thread_context($newpost->id);
+							$aiReply = $response['choices'][0]['message']['content'] ?? null;
 
-						$messages = [
-							["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Šobrīd tu atrodies lietotāju grupā ar nosaukumu " . $group->title],
-							["role" => "user", "content" => $content],
-						];
+							if ($aiReply !== null) {
+								if (!empty($newpost->parent)) {
+									$parent = $newpost->parent;
+								} else {
+									$parent = $newpost->id;
+								}
+								$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '], '', $aiReply);
 
-						$response = askAI($messages);
-
-						$aiReply = $response['choices'][0]['message']['content'] ?? null;
-
-						if ($aiReply === null) {
-							// handle error or fallback
-						} else {
-
-
-							$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '],'',$aiReply);
-							if(!empty($newpost->parent)) {
-								$parent = $newpost->parent;
-							} else {
-								$parent = $newpost->id;
+								post_mb_ai(post2db($aiReply), $parent, $newpost->id, $newpost->groupid);
+								userlog(43040, $nstr, get_avatar($group, 's', true), 'g-' . $mainid, !$group->public, $group->id);
 							}
-							$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '],'',$aiReply);
-
-							post_mb_ai(post2db($aiReply), $parent, $newpost->id, $newpost->groupid);
-
-							userlog(43040, $nstr,  get_avatar($group, 's', true), 'g-' . $mainid, !$group->public, $group->id);
-
 						}
-
 					} 
 
 					update_post_count($group->id);

@@ -1501,68 +1501,143 @@ function return2mb($mb) {
 	}
 }
 
-function get_ai_thread_context_recursive($data, $key = 0, $level = 0) {
-	$out = '';
-	if (!empty($data[$key])) {
-		foreach ($data[$key] as $val) {
-			$indent = str_repeat('  ', $level);
-			$reply_info = '';
-			if ($val->reply_to) {
-				$reply_info = ' [atbild uz #' . $val->reply_to . ']';
+/**
+ * Atjauno AI bota @exsperts (ID 43040) online statusu un pēdējo redzamību
+ */
+function touch_ai_bot_online() {
+	global $db, $lang;
+	$bot_id = 43040;
+	$site_id = !empty($lang) ? intval($lang) : 1;
+
+	$db->query("UPDATE `users` SET `lastseen` = NOW(), `seen_today` = 1 WHERE `id` = '$bot_id'");
+
+	$exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = '$bot_id' AND `site_id` = '$site_id' LIMIT 1");
+	if ($exists) {
+		$db->query("UPDATE `visits` SET `lastseen` = NOW() WHERE `id` = '$exists'");
+	} else {
+		$db->query("INSERT INTO `visits` (`user_id`, `site_id`, `ip`, `lastseen`) VALUES ('$bot_id', '$site_id', '127.0.0.1', NOW())");
+	}
+}
+
+/**
+ * Attīra tekstu no HTML tagiem, saglabājot rindstarpas un salasāmību AI kontekstam
+ */
+function clean_ai_text($text) {
+	if (empty($text)) return '';
+	$text = preg_replace('/<br\s*\/?>/i', "\n", $text);
+	$text = preg_replace('/<\/p>/i', "\n", $text);
+	$text = preg_replace('/<\/div>/i', "\n", $text);
+	$text = strip_tags($text);
+	$text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+	$text = preg_replace("/\n\s*\n+/", "\n", $text);
+	return trim($text);
+}
+
+/**
+ * Izveido strukturētu OpenAI ziņojumu masīvu ar pilnu pavediena kontekstu un grupas informāciju
+ */
+function get_ai_thread_messages($target_id, $invoked_by_user = '') {
+	global $db;
+
+	$bot_id = 43040;
+	$target_id = intval($target_id);
+
+	$target_post = $db->get_row("SELECT m.*, u.nick FROM `miniblog` m LEFT JOIN `users` u ON m.author = u.id WHERE m.`id` = '$target_id'");
+	if (!$target_post) {
+		return [];
+	}
+
+	$parent_id = !empty($target_post->parent) ? intval($target_post->parent) : intval($target_post->id);
+
+	// Iegūstam grupas kontekstu, ja ieraksts atrodas grupā
+	$group_info = '';
+	if (!empty($target_post->groupid)) {
+		$group = $db->get_row("SELECT `title`, `description` FROM `clans` WHERE `id` = '" . intval($target_post->groupid) . "'");
+		if ($group) {
+			$group_info = "Darbība notiek lietotāju grupā '" . $group->title . "'.";
+			if (!empty($group->description)) {
+				$clean_desc = clean_ai_text($group->description);
+				if ($clean_desc) {
+					$group_info .= " Grupas apraksts: " . textlimit($clean_desc, 200, '...');
+				}
 			}
-			$out .= $indent . 'Ieraksts #' . $val->id . ' no ' . str_replace('@', '', $val->nick) . $reply_info . ': ' . trim(strip_tags($val->text)) . "\n";
-			$out .= get_ai_thread_context_recursive($data, $val->id, $level + 1);
 		}
 	}
-	return $out;
+
+	// Iegūstam visus tēmas ierakstus hronoloģiskā secībā līdz mērķa ierakstam
+	$posts = $db->get_results("
+		SELECT m.`id`, m.`parent`, m.`reply_to`, m.`author`, m.`text`, m.`date`, u.`nick`
+		FROM `miniblog` m
+		LEFT JOIN `users` u ON u.`id` = m.`author`
+		WHERE (m.`id` = '$parent_id' OR m.`parent` = '$parent_id')
+		  AND m.`id` <= '$target_id'
+		  AND m.`removed` = '0'
+		ORDER BY m.`id` ASC
+	");
+
+	if (!$posts) {
+		$posts = [$target_post];
+	}
+
+	// Garu sarunu gadījumā saglabājam tēmas sākumu un pēdējos 20 ierakstus
+	if (count($posts) > 22) {
+		$root_post = $posts[0];
+		$recent_posts = array_slice($posts, -20);
+		if ($recent_posts[0]->id != $root_post->id) {
+			array_unshift($recent_posts, $root_post);
+		}
+		$posts = $recent_posts;
+	}
+
+	// Sistēmas instrukcija bota uzvedībai
+	$system_content = "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais, gudrais un atsaucīgais AI asistents. Tev draudzīgi, precīzi un lietderīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem.";
+	if ($group_info) {
+		$system_content .= " " . $group_info;
+	}
+	if ($invoked_by_user) {
+		$system_content .= " Tevi izsauca lietotājs " . str_replace('@', '', $invoked_by_user) . ".";
+	}
+	$system_content .= " Atbildi noformē izmantojot tīrus HTML tagus (<p>, <b>, <i>, <a>, <br>, <blockquote>, <code>), bez <html> vai <body> wrapperiem. Nesāc atbildi ar savu vārdu 'Exsperts:' vai '@niks:'.";
+
+	$messages = [
+		["role" => "system", "content" => $system_content]
+	];
+
+	foreach ($posts as $p) {
+		$clean_text = clean_ai_text($p->text);
+		if (empty($clean_text)) continue;
+
+		if ($p->author == $bot_id) {
+			$messages[] = [
+				"role" => "assistant",
+				"content" => $clean_text
+			];
+		} else {
+			$author_nick = $p->nick ? str_replace('@', '', $p->nick) : "Lietotājs";
+			$reply_str = "";
+			if (!empty($p->reply_to)) {
+				$reply_str = " (atbild uz #" . $p->reply_to . ")";
+			}
+			$is_root = ($p->id == $parent_id) ? " [Tēmas sākums]" : "";
+			$user_content = "Ieraksts #" . $p->id . $is_root . " no " . $author_nick . $reply_str . ":\n" . $clean_text;
+
+			$messages[] = [
+				"role" => "user",
+				"content" => $user_content
+			];
+		}
+	}
+
+	return $messages;
 }
 
 function get_ai_thread_context($target_id) {
-	global $db;
-	$post = $db->get_row("SELECT m.*, u.nick FROM `miniblog` m LEFT JOIN `users` u ON m.author = u.id WHERE m.`id` = '" . intval($target_id) . "'");
-	if (!$post) return '';
-
-	$parent_id = !empty($post->parent) ? $post->parent : $post->id;
-	
-	// Get the root post
-	$root = $db->get_row("SELECT m.*, u.nick FROM `miniblog` m LEFT JOIN `users` u ON m.author = u.id WHERE m.`id` = '$parent_id'");
-
-	$responses = $db->get_results("
-		SELECT
-			`miniblog`.`text`,
-			`miniblog`.`author`,
-			`miniblog`.`reply_to`,
-			`miniblog`.`id`,
-			`users`.`nick`
-		FROM
-			`miniblog`
-		LEFT JOIN
-			`users` ON `users`.`id` = `miniblog`.`author`
-		WHERE
-			`miniblog`.`parent` = '$parent_id'
-		ORDER BY
-			`miniblog`.`id` ASC
-	");
-
-	$json = [];
-	if ($responses) {
-		foreach ($responses as $response) {
-			$json[$response->reply_to][] = $response;
-		}
+	$msgs = get_ai_thread_messages($target_id);
+	$out = "";
+	foreach ($msgs as $m) {
+		$out .= "[" . $m['role'] . "] " . $m['content'] . "\n\n";
 	}
-
-	$out = "Konteksts - viss iepriekšējās sarunas pavediens:\n";
-	if ($root) {
-		$out .= "Ieraksts #" . $root->id . " (Sākotnējais tēmas autors " . str_replace('@', '', $root->nick) . "): " . trim(strip_tags($root->text)) . "\n";
-	}
-	
-	$out .= get_ai_thread_context_recursive($json, 0, 1);
-	
-	$target_nick = $post->nick ? $post->nick : "Lietotājs";
-	$out .= "\nŠobrīd tev jāatbild uz šo " . str_replace('@', '', $target_nick) . " ierakstu:\n";
-	$out .= "Ieraksts #" . $post->id . ": " . trim(strip_tags($post->text));
-
-	return $out;
+	return trim($out);
 }
 
 //atgriez visas minibloga atbildes html formā, rekursīvi
@@ -2315,6 +2390,8 @@ function post_mb($post) {
 
 function post_mb_ai($text, $parent_id, $reply_to = 0, $group_id = 0) {
 	global $db, $lang;
+
+	touch_ai_bot_online();
 
 	$post = [
 		'groupid' => 0,

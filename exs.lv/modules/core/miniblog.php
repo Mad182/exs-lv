@@ -193,35 +193,28 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				}
 
 				//ai stuff
-				if($reply_to->author == 43040) {
+				if ($reply_to->author == 43040) {
+					$already_replied = $db->get_var("SELECT `id` FROM `miniblog` WHERE `reply_to` = '$newid' AND `author` = 43040 LIMIT 1");
+					if (!$already_replied) {
+						touch_ai_bot_online();
+						$invoker = (!empty($auth) && !empty($auth->nick)) ? $auth->nick : '';
+						$messages = get_ai_thread_messages($newpost->id, $invoker);
+						$response = askAI($messages);
 
-					$content = get_ai_thread_context($newpost->id);
+						$aiReply = $response['choices'][0]['message']['content'] ?? null;
 
-					$messages = [
-						["role" => "system", "content" => "Tu esi Exsperts - foruma un sociālā tīkla exs.lv izpalīdzīgais bots. Tev draudzīgi jāatbild uz lietotāju uzdotajiem jautājumiem un komentāriem, kur esi pieminēts. Atbildi noformē izmantojot html (<p>, <b>, <i>, <a>, <br>, <blockquote>, <code> un līdzīgus tagus, bez dokumenta struktūras). Tu raksti atbildi lietotājam miniblogā. Nesāc atbildi ar @niks vai Eksperts:"],
-						["role" => "user", "content" => $content],
-					];
+						if ($aiReply !== null) {
+							if (!empty($newpost->parent)) {
+								$parent = $newpost->parent;
+							} else {
+								$parent = $newpost->id;
+							}
+							$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '], '', $aiReply);
 
-					$response = askAI($messages);
-
-					$aiReply = $response['choices'][0]['message']['content'] ?? null;
-
-					if ($aiReply === null) {
-						// handle error or fallback
-					} else {
-
-						if(!empty($newpost->parent)) {
-							$parent = $newpost->parent;
-						} else {
-							$parent = $newpost->id;
+							post_mb_ai(htmlpost2db($aiReply), $parent, $newpost->id, $newpost->groupid);
+							userlog(43040, 'Atbildēja <a href="' . $url . '#m' . $newid . '">' . $inprofile->nick . ' miniblogā' . ' &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private, 0);
 						}
-						$aiReply = str_replace(['@exsperts: ', '@exsperts:', '@exsperts '],'',$aiReply);
-
-						post_mb_ai(htmlpost2db($aiReply), $parent, $newpost->id, $newpost->groupid);
-						userlog(43040, 'Atbildēja <a href="' . $url . '#m' . $newid . '">' . $inprofile->nick . ' miniblogā' . ' &quot;' . textlimit(hide_spoilers($title), 32, '...') . '&quot;</a>', '', 'mb-answ-' . $mainid, $private, 0);
-
 					}
-
 				}
 
 			}
