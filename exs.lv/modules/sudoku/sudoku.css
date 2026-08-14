@@ -1,0 +1,360 @@
+/**
+ * Sudoku Stylesheet for EXS.LV
+ */
+
+#sudoku-container {
+	padding: 15px;
+	background: #f8fafc;
+	border-radius: 8px;
+}
+
+.sdk-wrapper {
+	max-width: 600px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.sdk-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.sdk-diff-selector label {
+	font-weight: bold;
+	margin-right: 8px;
+	color: #334155;
+}
+
+.sdk-select {
+	padding: 6px 12px;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	background: #ffffff;
+	font-weight: bold;
+	color: #0f172a;
+	cursor: pointer;
+}
+
+.sdk-stats {
+	display: flex;
+	gap: 10px;
+}
+
+.sdk-stat-badge {
+	background: #e2e8f0;
+	padding: 6px 12px;
+	border-radius: 6px;
+	font-size: 13px;
+	color: #334155;
+}
+
+/* 9x9 Sudoku Board */
+.sdk-board-wrapper {
+	background: #0f172a;
+	padding: 4px;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+	margin-bottom: 15px;
+}
+
+.sdk-board {
+	display: grid;
+	grid-template-columns: repeat(9, 44px);
+	grid-template-rows: repeat(9, 44px);
+	gap: 1px;
+	background: #94a3b8;
+	border: 2px solid #0f172a;
+	user-select: none;
+}
+
+.sdk-cell {
+	width: 44px;
+	height: 44px;
+	background: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	font-weight: bold;
+	color: #0f172a;
+	cursor: pointer;
+	position: relative;
+	transition: background 0.1s, border-color 0.1s;
+	box-sizing: border-box;
+}
+
+/* Thick 3x3 Block Borders */
+.sdk-cell[data-c="2"],
+.sdk-cell[data-c="5"] {
+	border-right: 3px solid #0f172a !important;
+}
+
+.sdk-cell[data-r="2"],
+.sdk-cell[data-r="5"] {
+	border-bottom: 3px solid #0f172a !important;
+}
+
+/* Cell States & Highlights */
+.sdk-given {
+	background: #f1f5f9;
+	color: #0f172a;
+	font-weight: 900;
+}
+
+.sdk-user {
+	color: #2563eb;
+}
+
+.sdk-related {
+	background: #e0f2fe;
+}
+
+.sdk-match {
+	background: #bae6fd;
+}
+
+.sdk-selected {
+	background: #60a5fa !important;
+	color: #ffffff !important;
+}
+
+.sdk-error {
+	background: #fca5a5 !important;
+	color: #991b1b !important;
+}
+
+/* Pencil Candidate Grid */
+.sdk-pencil-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	width: 100%;
+	height: 100%;
+	padding: 2px;
+	box-sizing: border-box;
+}
+
+.sdk-p-num {
+	font-size: 10px;
+	font-weight: 600;
+	color: #64748b;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
+}
+
+/* Action Controls & Numpad */
+.sdk-action-bar {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+.sdk-btn {
+	padding: 8px 14px;
+	font-size: 13px;
+	font-weight: bold;
+	border-radius: 6px;
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	color: #334155;
+	cursor: pointer;
+	transition: background 0.15s, border-color 0.15s;
+}
+
+.sdk-btn-primary {
+	background: #3b82f6;
+	color: #ffffff;
+	border-color: #2563eb;
+}
+
+.sdk-btn-primary:hover {
+	background: #2563eb;
+}
+
+.sdk-btn-secondary.active {
+	background: #10b981;
+	color: #ffffff;
+	border-color: #059669;
+}
+
+.sdk-numpad {
+	display: flex;
+	gap: 6px;
+	margin-bottom: 15px;
+	width: 100%;
+	justify-content: center;
+}
+
+.sdk-num-btn {
+	width: 44px;
+	height: 44px;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 8px;
+	border: 1px solid #cbd5e1;
+	background: #ffffff;
+	color: #0f172a;
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	transition: transform 0.08s, background 0.1s;
+}
+
+.sdk-num-btn:active {
+	transform: scale(0.94);
+	background: #e2e8f0;
+}
+
+/* Guide Box */
+.sdk-guide-box {
+	margin-top: 15px;
+	padding: 15px;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	color: #475569;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.sdk-guide-box h4 {
+	margin: 0 0 10px 0;
+	color: #0f172a;
+	font-size: 15px;
+}
+
+.sdk-guide-box ul {
+	margin: 0;
+	padding-left: 20px;
+}
+
+.sdk-guide-box li {
+	margin-bottom: 6px;
+	font-size: 13px;
+}
+
+/* Responsive Scaling */
+@media (max-width: 480px) {
+	.sdk-board {
+		grid-template-columns: repeat(9, 36px);
+		grid-template-rows: repeat(9, 36px);
+	}
+	.sdk-cell {
+		width: 36px;
+		height: 36px;
+		font-size: 16px;
+	}
+	.sdk-num-btn {
+		width: 36px;
+		height: 36px;
+		font-size: 16px;
+	}
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+	#sudoku-container {
+		background: #181c24;
+	}
+
+	.sdk-diff-selector label {
+		color: #e2e8f0;
+	}
+
+	.sdk-select {
+		background: #252d3a;
+		border-color: #3b4658;
+		color: #f8fafc;
+	}
+
+	.sdk-stat-badge {
+		background: #252d3a;
+		color: #cbd5e1;
+	}
+
+	.sdk-board-wrapper {
+		background: #090d16;
+	}
+
+	.sdk-board {
+		background: #334155;
+		border-color: #090d16;
+	}
+
+	.sdk-cell {
+		background: #1e293b;
+		color: #f8fafc;
+	}
+
+	.sdk-cell[data-c="2"],
+	.sdk-cell[data-c="5"] {
+		border-right: 3px solid #090d16 !important;
+	}
+
+	.sdk-cell[data-r="2"],
+	.sdk-cell[data-r="5"] {
+		border-bottom: 3px solid #090d16 !important;
+	}
+
+	.sdk-given {
+		background: #334155;
+		color: #f8fafc;
+	}
+
+	.sdk-user {
+		color: #60a5fa;
+	}
+
+	.sdk-related {
+		background: #1e3a8a;
+	}
+
+	.sdk-match {
+		background: #1d4ed8;
+	}
+
+	.sdk-selected {
+		background: #3b82f6 !important;
+		color: #ffffff !important;
+	}
+
+	.sdk-error {
+		background: #991b1b !important;
+		color: #fca5a5 !important;
+	}
+
+	.sdk-p-num {
+		color: #94a3b8;
+	}
+
+	.sdk-btn {
+		background: #252d3a;
+		border-color: #3b4658;
+		color: #e2e8f0;
+	}
+
+	.sdk-num-btn {
+		background: #252d3a;
+		border-color: #3b4658;
+		color: #f8fafc;
+	}
+
+	.sdk-guide-box {
+		background: #1e2430;
+		border-color: #2e3848;
+		color: #cbd5e1;
+	}
+
+	.sdk-guide-box h4 {
+		color: #38bdf8;
+	}
+}

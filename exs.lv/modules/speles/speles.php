@@ -64,10 +64,20 @@ $games_list = [
 		'title' => 'Mīnu Meklētājs',
 		'url' => '/minu-mekletajs',
 		'icon' => '💣',
-		'badge' => 'Jaunums',
-		'badge_class' => 'label-success',
+		'badge' => 'Populāra',
+		'badge_class' => 'label-important',
 		'desc' => 'Klasiskā Minesweeper spēle ar 3 grūtības līmeņiem un ātruma rekordu topu.',
 		'game_code' => 'minu-mekletajs'
+	],
+	[
+		'id' => 'sudoku',
+		'title' => 'Sudoku',
+		'url' => '/sudoku',
+		'icon' => '🧩',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Klasiskā Sudoku mīkla ar 3 sarežģītības līmeņiem, zīmuļa piezīmēm un mājieniem.',
+		'game_code' => 'sudoku'
 	],
 	[
 		'id' => 'desas',

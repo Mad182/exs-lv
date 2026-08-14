@@ -1,0 +1,453 @@
+/**
+ * Sudoku Engine for EXS.LV
+ */
+
+$(document).ready(function () {
+	if ($('#sdk-board').length === 0) return;
+
+	var currentDiff = 'easy';
+	var solutionGrid = []; // 9x9 solved grid
+	var initialGrid = [];  // 9x9 initial board (numbers or 0)
+	var userGrid = [];     // 9x9 current values (numbers or 0)
+	var pencilGrid = [];   // 9x9 array of Set/Array of candidate numbers
+	var selectedCell = null; // { r: int, c: int }
+	var pencilMode = false;
+	var hintsLeft = 3;
+	var isWon = false;
+	var timerInterval = null;
+	var timerSeconds = 0;
+	var sessionToken = '';
+
+	function initSession() {
+		$.getJSON('/sudoku/?action=init_token', function (res) {
+			if (res && res.success) {
+				sessionToken = res.token;
+			}
+		});
+	}
+
+	function startNewGame() {
+		currentDiff = $('#sdk-difficulty').val() || 'easy';
+		hintsLeft = 3;
+		isWon = false;
+		selectedCell = null;
+		pencilMode = false;
+		timerSeconds = 0;
+
+		clearInterval(timerInterval);
+		timerInterval = null;
+		updateTimerDisplay(0);
+
+		$('#sdk-btn-pencil').text('✏️ Zīmulis (OFF)').removeClass('active');
+		$('#sdk-btn-hint').text('💡 Mājiena padoms (' + hintsLeft + ')').prop('disabled', false);
+
+		initSession();
+		generateSudoku(currentDiff);
+		renderBoard();
+		startTimer();
+	}
+
+	// 1. Sudoku Generator & Solver
+	function generateSudoku(diff) {
+		solutionGrid = createEmptyGrid();
+		solveSudoku(solutionGrid, true); // Fill full valid solution with randomness
+
+		initialGrid = copyGrid(solutionGrid);
+		var clues = 38;
+		if (diff === 'medium') clues = 30;
+		if (diff === 'hard') clues = 24;
+
+		var holes = 81 - clues;
+		while (holes > 0) {
+			var r = Math.floor(Math.random() * 9);
+			var c = Math.floor(Math.random() * 9);
+			if (initialGrid[r][c] !== 0) {
+				initialGrid[r][c] = 0;
+				holes--;
+			}
+		}
+
+		userGrid = copyGrid(initialGrid);
+		pencilGrid = [];
+		for (var r = 0; r < 9; r++) {
+			var pRow = [];
+			for (var c = 0; c < 9; c++) {
+				pRow.push([]);
+			}
+			pencilGrid.push(pRow);
+		}
+	}
+
+	function createEmptyGrid() {
+		var g = [];
+		for (var r = 0; r < 9; r++) {
+			g.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+		}
+		return g;
+	}
+
+	function copyGrid(g) {
+		var res = [];
+		for (var r = 0; r < 9; r++) {
+			res.push(g[r].slice());
+		}
+		return res;
+	}
+
+	function isValidPlacement(grid, r, c, val) {
+		for (var i = 0; i < 9; i++) {
+			if (grid[r][i] === val) return false;
+			if (grid[i][c] === val) return false;
+		}
+		var startR = Math.floor(r / 3) * 3;
+		var startC = Math.floor(c / 3) * 3;
+		for (var dr = 0; dr < 3; dr++) {
+			for (var dc = 0; dc < 3; dc++) {
+				if (grid[startR + dr][startC + dc] === val) return false;
+			}
+		}
+		return true;
+	}
+
+	function solveSudoku(grid, randomize) {
+		for (var r = 0; r < 9; r++) {
+			for (var c = 0; c < 9; c++) {
+				if (grid[r][c] === 0) {
+					var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+					if (randomize) {
+						nums.sort(function () { return Math.random() - 0.5; });
+					}
+					for (var i = 0; i < nums.length; i++) {
+						var val = nums[i];
+						if (isValidPlacement(grid, r, c, val)) {
+							grid[r][c] = val;
+							if (solveSudoku(grid, randomize)) return true;
+							grid[r][c] = 0;
+						}
+					}
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	// 2. Rendering & UI
+	function renderBoard() {
+		var $board = $('#sdk-board');
+		$board.empty();
+
+		var errors = checkErrors();
+
+		for (var r = 0; r < 9; r++) {
+			for (var c = 0; c < 9; c++) {
+				var isGiven = initialGrid[r][c] !== 0;
+				var val = userGrid[r][c];
+				var pencils = pencilGrid[r][c];
+				var hasError = errors[r][c];
+
+				var $cell = $('<div></div>')
+					.addClass('sdk-cell')
+					.attr('data-r', r)
+					.attr('data-c', c);
+
+				if (isGiven) {
+					$cell.addClass('sdk-given').text(val);
+				} else if (val > 0) {
+					$cell.addClass('sdk-user').text(val);
+				} else if (pencils.length > 0) {
+					$cell.addClass('sdk-pencil-grid');
+					for (var p = 1; p <= 9; p++) {
+						var $pItem = $('<span></span>').addClass('sdk-p-num');
+						if (pencils.indexOf(p) !== -1) {
+							$pItem.text(p);
+						}
+						$cell.append($pItem);
+					}
+				}
+
+				if (hasError && !isGiven) {
+					$cell.addClass('sdk-error');
+				}
+
+				$board.append($cell);
+			}
+		}
+
+		applyHighlights();
+	}
+
+	function applyHighlights() {
+		$('.sdk-cell').removeClass('sdk-selected sdk-related sdk-match');
+
+		if (!selectedCell) return;
+
+		var selR = selectedCell.r;
+		var selC = selectedCell.c;
+		var selVal = userGrid[selR][selC];
+
+		$('.sdk-cell[data-r="' + selR + '"][data-c="' + selC + '"]').addClass('sdk-selected');
+
+		var boxR = Math.floor(selR / 3);
+		var boxC = Math.floor(selC / 3);
+
+		for (var r = 0; r < 9; r++) {
+			for (var c = 0; c < 9; c++) {
+				if (r === selR && c === selC) continue;
+
+				var isSameRow = (r === selR);
+				var isSameCol = (c === selC);
+				var isSameBox = (Math.floor(r / 3) === boxR && Math.floor(c / 3) === boxC);
+
+				var $cell = $('.sdk-cell[data-r="' + r + '"][data-c="' + c + '"]');
+
+				if (isSameRow || isSameCol || isSameBox) {
+					$cell.addClass('sdk-related');
+				}
+
+				if (selVal > 0 && userGrid[r][c] === selVal) {
+					$cell.addClass('sdk-match');
+				}
+			}
+		}
+	}
+
+	function checkErrors() {
+		var errs = [];
+		for (var r = 0; r < 9; r++) {
+			errs.push([false, false, false, false, false, false, false, false, false]);
+		}
+
+		for (var r = 0; r < 9; r++) {
+			for (var c = 0; c < 9; c++) {
+				var val = userGrid[r][c];
+				if (val === 0) continue;
+
+				// Check row
+				for (var c2 = 0; c2 < 9; c2++) {
+					if (c !== c2 && userGrid[r][c2] === val) {
+						errs[r][c] = true;
+						errs[r][c2] = true;
+					}
+				}
+				// Check col
+				for (var r2 = 0; r2 < 9; r2++) {
+					if (r !== r2 && userGrid[r2][c] === val) {
+						errs[r][c] = true;
+						errs[r2][c] = true;
+					}
+				}
+				// Check box
+				var startR = Math.floor(r / 3) * 3;
+				var startC = Math.floor(c / 3) * 3;
+				for (var dr = 0; dr < 3; dr++) {
+					for (var dc = 0; dc < 3; dc++) {
+						var nr = startR + dr;
+						var nc = startC + dc;
+						if ((nr !== r || nc !== c) && userGrid[nr][nc] === val) {
+							errs[r][c] = true;
+							errs[nr][nc] = true;
+						}
+					}
+				}
+			}
+		}
+		return errs;
+	}
+
+	function handleInputNumber(num) {
+		if (isWon || !selectedCell) return;
+		var r = selectedCell.r;
+		var c = selectedCell.c;
+
+		if (initialGrid[r][c] !== 0) return; // Cannot edit pre-filled cells
+
+		if (pencilMode) {
+			userGrid[r][c] = 0; // Clear solid number
+			var arr = pencilGrid[r][c];
+			var idx = arr.indexOf(num);
+			if (idx !== -1) {
+				arr.splice(idx, 1);
+			} else {
+				arr.push(num);
+				arr.sort(function (a, b) { return a - b; });
+			}
+		} else {
+			userGrid[r][c] = num;
+			pencilGrid[r][c] = []; // Clear pencil notes when solid number entered
+		}
+
+		renderBoard();
+		checkWinCondition();
+	}
+
+	function eraseCell() {
+		if (isWon || !selectedCell) return;
+		var r = selectedCell.r;
+		var c = selectedCell.c;
+
+		if (initialGrid[r][c] !== 0) return;
+
+		userGrid[r][c] = 0;
+		pencilGrid[r][c] = [];
+		renderBoard();
+	}
+
+	function giveHint() {
+		if (isWon || hintsLeft <= 0 || !selectedCell) return;
+		var r = selectedCell.r;
+		var c = selectedCell.c;
+
+		if (initialGrid[r][c] !== 0 || userGrid[r][c] === solutionGrid[r][c]) return;
+
+		userGrid[r][c] = solutionGrid[r][c];
+		pencilGrid[r][c] = [];
+		hintsLeft--;
+
+		$('#sdk-btn-hint').text('💡 Mājiena padoms (' + hintsLeft + ')');
+		if (hintsLeft <= 0) {
+			$('#sdk-btn-hint').prop('disabled', true);
+		}
+
+		renderBoard();
+		checkWinCondition();
+	}
+
+	function checkWinCondition() {
+		var errors = checkErrors();
+		var hasAnyError = false;
+		var isFull = true;
+
+		for (var r = 0; r < 9; r++) {
+			for (var c = 0; c < 9; c++) {
+				if (userGrid[r][c] === 0) isFull = false;
+				if (errors[r][c]) hasAnyError = true;
+			}
+		}
+
+		if (isFull && !hasAnyError && !isWon) {
+			isWon = true;
+			clearInterval(timerInterval);
+			var m = floorSec(timerSeconds);
+			alert('Apsveicam! Tu veiksmīgi atrisināji Sudoku ar laiku ' + m + '!');
+			submitScore();
+		}
+	}
+
+	function floorSec(sec) {
+		var mins = Math.floor(sec / 60);
+		var s = sec % 60;
+		return sprintf2(mins) + ':' + sprintf2(s);
+	}
+
+	function sprintf2(n) {
+		return (n < 10 ? '0' : '') + n;
+	}
+
+	function startTimer() {
+		if (timerInterval) return;
+		timerInterval = setInterval(function () {
+			timerSeconds++;
+			updateTimerDisplay(timerSeconds);
+		}, 1000);
+	}
+
+	function updateTimerDisplay(sec) {
+		$('#sdk-timer').text(floorSec(sec));
+	}
+
+	function submitScore() {
+		if (timerSeconds <= 0 || !sessionToken) return;
+
+		$.post('/sudoku/?action=push', {
+			token: sessionToken,
+			time_sec: timerSeconds,
+			difficulty: currentDiff
+		}, function (res) {
+			if (res && res.success) {
+				alert(res.message || 'Rezultāts veiksmīgi saglabāts!');
+			}
+		}, 'json');
+	}
+
+	// 3. Event Listeners
+	$('#sdk-board').on('click', '.sdk-cell', function () {
+		var r = parseInt($(this).attr('data-r'));
+		var c = parseInt($(this).attr('data-c'));
+		selectedCell = { r: r, c: c };
+		applyHighlights();
+	});
+
+	$('.sdk-num-btn').on('click', function () {
+		var num = parseInt($(this).attr('data-num'));
+		handleInputNumber(num);
+	});
+
+	$('#sdk-btn-erase').on('click', function () {
+		eraseCell();
+	});
+
+	$('#sdk-btn-pencil').on('click', function () {
+		pencilMode = !pencilMode;
+		if (pencilMode) {
+			$(this).text('✏️ Zīmulis (ON)').addClass('active');
+		} else {
+			$(this).text('✏️ Zīmulis (OFF)').removeClass('active');
+		}
+	});
+
+	$('#sdk-btn-hint').on('click', function () {
+		giveHint();
+	});
+
+	$('#sdk-btn-new').on('click', function () {
+		startNewGame();
+	});
+
+	$('#sdk-difficulty').on('change', function () {
+		startNewGame();
+	});
+
+	// Keyboard Shortcuts
+	$(document).on('keydown', function (e) {
+		if ($('#sdk-board').length === 0) return;
+
+		// Digits 1-9
+		if (e.key >= '1' && e.key <= '9') {
+			handleInputNumber(parseInt(e.key));
+			return;
+		}
+
+		// Delete / Backspace
+		if (e.key === 'Backspace' || e.key === 'Delete') {
+			eraseCell();
+			return;
+		}
+
+		// Pencil toggle key 'n' or 'N'
+		if (e.key === 'n' || e.key === 'N') {
+			$('#sdk-btn-pencil').click();
+			return;
+		}
+
+		// Arrow Keys Navigation
+		if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) !== -1) {
+			e.preventDefault();
+			if (!selectedCell) {
+				selectedCell = { r: 0, c: 0 };
+			} else {
+				var r = selectedCell.r;
+				var c = selectedCell.c;
+				if (e.key === 'ArrowUp') r = Math.max(0, r - 1);
+				if (e.key === 'ArrowDown') r = Math.min(8, r + 1);
+				if (e.key === 'ArrowLeft') c = Math.max(0, c - 1);
+				if (e.key === 'ArrowRight') c = Math.min(8, c + 1);
+				selectedCell = { r: r, c: c };
+			}
+			applyHighlights();
+		}
+	});
+
+	// Initial start
+	startNewGame();
+});
