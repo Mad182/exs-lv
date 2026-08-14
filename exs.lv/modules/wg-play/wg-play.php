@@ -237,14 +237,21 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				// Mark game as finished atomically to avoid race-condition multi-scoring
 				$db->query("UPDATE wg_games SET status = 1 WHERE id = '$game_id' AND status = 0");
 				if ($db->rows_affected() > 0) {
-					$duration = time() - intval($game->created_at);
-					// Anti-cheat: Only award score if logged in AND played for at least 1 second
-					if ($auth->ok && $auth->id > 0 && $duration >= 1) {
+					if ($auth->ok && $auth->id > 0) {
 						$date = date('Y-m-d');
 						if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
 							$db->query("UPDATE wg_results SET games = games+1, points = points+$points WHERE user_id = '$auth->id' AND date = '$date'");
 						} else {
 							$db->query("INSERT INTO wg_results (user_id, date, points, games) VALUES ('$auth->id', '$date', '$points', '1')");
+						}
+
+						// Sync with gamescore table for global leaderboards
+						$today_points = (int) $db->get_var("SELECT points FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'");
+						$existing_gs = $db->get_row("SELECT * FROM gamescore WHERE game = 'karatavas' AND user_id = '$auth->id'");
+						if (!$existing_gs) {
+							$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'karatavas', '$today_points', '" . time() . "')");
+						} else {
+							$db->query("UPDATE gamescore SET score = '$today_points', time = '" . time() . "' WHERE id = '$existing_gs->id'");
 						}
 					}
 				}
