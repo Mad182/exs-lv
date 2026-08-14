@@ -77,13 +77,13 @@
 	opacity: 0.6;
 }
 
-/* Native Dark mode styles */
+/* Native Dark mode styles - Cool slate blue background tone */
 @media (prefers-color-scheme: dark) {
 	#hm-game-body {
-		background-color: #e7e3dc !important;
-		border-color: #2a313e;
+		background-color: #e2e8f0 !important;
+		border-color: #2a313e !important;
 		box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-		filter: invert(0.88) hue-rotate(180deg);
+		filter: invert(0.9) hue-rotate(180deg);
 	}
 
 	#hm-game-question,
