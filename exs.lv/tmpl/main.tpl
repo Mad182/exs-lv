@@ -136,6 +136,7 @@
 								<li><a href="https://lol.exs.lv/" title="League of Legends forums">lol.exs.lv</a></li>
 								<li><a href="https://coding.lv/"
 										title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
+								<li><a href="https://exs.lv/latvian-games/">Latvian Games</a></li>
 							</ul>
 						</li>
 
