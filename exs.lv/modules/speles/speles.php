@@ -50,6 +50,16 @@ $games_list = [
 		'game_code' => 'memory'
 	],
 	[
+		'id' => '2048',
+		'title' => '2048',
+		'url' => '/2048',
+		'icon' => '🔢',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Bīdi un apvieno vienādos skaitļu lauciņus, lai sasniegtu 2048 flīzi un uzstādītu rekordu!',
+		'game_code' => '2048'
+	],
+	[
 		'id' => 'desas',
 		'title' => 'Desas',
 		'url' => '/desas',

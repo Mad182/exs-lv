@@ -1022,10 +1022,9 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 function get_cat($id, $force = false) {
 	global $db, $m, $debug, $lang;
 	if ($debug || $force || !($data = $m->get('cat_' . $lang . '_' . $id))) {
-		if (is_numeric($id)) {
+		$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
+		if (empty($data) && is_numeric($id)) {
 			$data = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($id) . "' AND (`lang` = $lang OR `lang` = 0)");
-		} else {
-			$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
 		}
 		if (empty($data)) {
 			return null;

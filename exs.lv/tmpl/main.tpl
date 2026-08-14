@@ -126,7 +126,16 @@
 								<li><a href="/spelu-apskati">Spēļu apskati</a></li>
 							</ul>
 						</li>
-						<li><a href="/speles">Spēles</a></li>
+						<li class="dropdown"><a href="/speles">Spēles</a>
+							<ul class="dropdown-menu">
+								<li><a href="/speles">Viss katalogs</a></li>
+								<li><a href="/tetris">Tetris</a></li>
+								<li><a href="/snake">Čūska</a></li>
+								<li><a href="/karatavas">Karātavas</a></li>
+								<li><a href="/memory">Atmiņas spēle</a></li>
+								<li><a href="/2048">2048</a></li>
+							</ul>
+						</li>
 						<li><a href="/blogs">Blogi</a></li>
 						<li><a href="/grupas">Grupas</a></li>
 						<li><a href="/steam-online">Steam</a></li>
