@@ -35,6 +35,13 @@ $(document).ready(function () {
 		});
 	}
 
+	function updateBestTimeDisplay() {
+		var diff = $('#ms-difficulty').val() || 'easy';
+		var $select = $('#ms-difficulty');
+		var bestVal = $select.attr('data-best-' + diff) || '--:--';
+		$('#ms-user-best').text(bestVal);
+	}
+
 	function startNewGame() {
 		currentDiff = $('#ms-difficulty').val() || 'easy';
 		var cfg = CONFIGS[currentDiff] || CONFIGS.easy;
@@ -54,6 +61,7 @@ $(document).ready(function () {
 		updateTimerDisplay(0);
 		updateMineCounter(mineCount);
 		setFace('😊');
+		updateBestTimeDisplay();
 
 		initSession();
 		buildGrid();

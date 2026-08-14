@@ -7,48 +7,59 @@
 </div>
 
 <div class="tabMain" id="minesweeper-container">
-	<!-- START BLOCK : top-table-->
-	<table class="table table-striped table-hover tetris-top-table">
-		<thead>
-			<tr>
-				<th style="width: 50px;">Vieta</th>
-				<th>Spēlētājs</th>
-				<th style="width: 120px; text-align: right;">Laiks</th>
-				<th style="width: 150px; text-align: right;">Datums</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!-- START BLOCK : top-node-->
-			<tr>
-				<td{user-special}>{user-place}</td>
-				<td{user-special}><a href="{user-url}">{user-nick}</a></td>
-				<td{user-special} style="text-align: right; font-weight: bold;">{user-score}</td>
-				<td{user-special} style="text-align: right; color: #888;">{user-time}</td>
-			</tr>
-			<!-- END BLOCK : top-node-->
-		</tbody>
-	</table>
-	<!-- END BLOCK : top-table-->
+	<!-- START BLOCK : diff-section -->
+	<div class="ms-top-section">
+		<h3 class="ms-top-heading"><span class="ms-top-icon">{diff-icon}</span> {diff-title}</h3>
+		<!-- START BLOCK : top-table -->
+		<table class="table table-striped table-hover tetris-top-table ms-top-table">
+			<thead>
+				<tr>
+					<th style="width: 50px;">Vieta</th>
+					<th>Spēlētājs</th>
+					<th style="width: 120px; text-align: right;">Laiks</th>
+					<th style="width: 150px; text-align: right;">Datums</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- START BLOCK : top-node -->
+				<tr>
+					<td{user-special}>{user-place}</td>
+					<td{user-special}><a href="{user-url}">{user-nick}</a></td>
+					<td{user-special} style="text-align: right; font-weight: bold;">{user-score}</td>
+					<td{user-special} style="text-align: right; color: #888;">{user-time}</td>
+				</tr>
+				<!-- END BLOCK : top-node -->
+			</tbody>
+		</table>
+		<!-- END BLOCK : top-table -->
 
-	<!-- START BLOCK : game-login-->
+		<!-- START BLOCK : no-scores -->
+		<div class="alert alert-info ms-no-scores">
+			Šajā sarežģītības pakāpē pagaidām nav ierakstītu rezultātu.
+		</div>
+		<!-- END BLOCK : no-scores -->
+	</div>
+	<!-- END BLOCK : diff-section -->
+
+	<!-- START BLOCK : game-login -->
 	<div class="alert alert-info karatavas-guest-alert" style="margin-bottom: 15px;">
 		<strong>Piezīme:</strong> Tu spēlē kā viesis. <a href="/register">Reģistrējies</a> vai ieej profilā, lai saglabātu savu laika rezultātu topā!
 	</div>
-	<!-- END BLOCK : game-login-->
+	<!-- END BLOCK : game-login -->
 
-	<!-- START BLOCK : game-play-->
+	<!-- START BLOCK : game-play -->
 	<div class="ms-wrapper">
 		<div class="ms-toolbar">
 			<div class="ms-diff-selector">
 				<label>Sarežģītība:</label>
-				<select id="ms-difficulty" class="ms-select">
+				<select id="ms-difficulty" class="ms-select" data-best-easy="{user-best-easy}" data-best-medium="{user-best-medium}" data-best-hard="{user-best-hard}">
 					<option value="easy" selected>Iesācējs (9x9, 10 mīnas)</option>
 					<option value="medium">Vidējs (16x16, 40 mīnas)</option>
 					<option value="hard">Eksperts (30x16, 99 mīnas)</option>
 				</select>
 			</div>
 			<div class="ms-stat-badge">
-				<span>Labākais: <strong>{user-best-time}</strong></span>
+				<span>Labākais: <strong id="ms-user-best">{user-best-time}</strong></span>
 			</div>
 		</div>
 
@@ -81,7 +92,7 @@
 			</ul>
 		</div>
 	</div>
-	<!-- END BLOCK : game-play-->
+	<!-- END BLOCK : game-play -->
 </div>
 
 <!-- START BLOCK : seo-text -->
