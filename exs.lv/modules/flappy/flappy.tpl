@@ -57,32 +57,32 @@
 			<div class="flappy-card">
 				<h3>🏆 Šodienas Tops</h3>
 				<ul class="flappy-top-list">
-					<!-- START BLOCK today-top-node -->
+					<!-- START BLOCK : today-top-node -->
 					<li>
 						<span class="top-rank">{rank}.</span>
 						<span class="top-user">{user-nick}</span>
 						<strong class="top-score">{score}</strong>
 					</li>
-					<!-- END BLOCK today-top-node -->
-					<!-- START BLOCK today-empty -->
+					<!-- END BLOCK : today-top-node -->
+					<!-- START BLOCK : today-empty -->
 					<li class="empty-msg">Šodien vēl nav uzstādītu rezultātu!</li>
-					<!-- END BLOCK today-empty -->
+					<!-- END BLOCK : today-empty -->
 				</ul>
 			</div>
 
 			<div class="flappy-card" style="margin-top: 15px;">
 				<h3>👑 Visu Laiku Tops</h3>
 				<ul class="flappy-top-list">
-					<!-- START BLOCK alltime-top-node -->
+					<!-- START BLOCK : alltime-top-node -->
 					<li>
 						<span class="top-rank">{rank}.</span>
 						<span class="top-user">{user-nick}</span>
 						<strong class="top-score">{score}</strong>
 					</li>
-					<!-- END BLOCK alltime-top-node -->
-					<!-- START BLOCK alltime-empty -->
+					<!-- END BLOCK : alltime-top-node -->
+					<!-- START BLOCK : alltime-empty -->
 					<li class="empty-msg">Vēl nav uzstādītu rezultātu!</li>
-					<!-- END BLOCK alltime-empty -->
+					<!-- END BLOCK : alltime-empty -->
 				</ul>
 			</div>
 		</div>
