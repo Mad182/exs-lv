@@ -74,7 +74,6 @@ $(function() {
 	var avatarImg = new Image();
 	var avatarLoaded = false;
 	if (window.FLAPPY_USER_AVATAR && window.FLAPPY_USER_AVATAR.length > 0) {
-		avatarImg.crossOrigin = "Anonymous";
 		avatarImg.onload = function() { avatarLoaded = true; };
 		avatarImg.onerror = function() { avatarLoaded = false; };
 		avatarImg.src = window.FLAPPY_USER_AVATAR;
@@ -349,7 +348,7 @@ $(function() {
 		ctx.fillStyle = '#15803d';
 		ctx.fillRect(0, groundY + 12, canvas.width, 3);
 
-		// Draw Bird (Avatar or procedurally styled bird)
+		// Draw Player Avatar Character
 		ctx.save();
 		ctx.translate(bird.x, bird.y);
 		ctx.rotate(bird.rotation);
@@ -363,46 +362,18 @@ $(function() {
 
 			ctx.drawImage(avatarImg, -bird.radius, -bird.radius, bird.radius * 2, bird.radius * 2);
 
-			// Border ring
+			// Gold border ring
 			ctx.lineWidth = 3;
 			ctx.strokeStyle = '#f59e0b';
 			ctx.stroke();
 		} else {
-			// Procedural Bird
-			// Body
+			// Placeholder circular avatar badge while loading
 			ctx.beginPath();
 			ctx.arc(0, 0, bird.radius, 0, Math.PI * 2);
-			ctx.fillStyle = '#facc15';
+			ctx.fillStyle = '#3b82f6';
 			ctx.fill();
-			ctx.lineWidth = 2;
-			ctx.strokeStyle = '#ca8a04';
-			ctx.stroke();
-
-			// Eye
-			ctx.beginPath();
-			ctx.arc(6, -5, 4, 0, Math.PI * 2);
-			ctx.fillStyle = '#ffffff';
-			ctx.fill();
-			ctx.beginPath();
-			ctx.arc(7, -5, 2, 0, Math.PI * 2);
-			ctx.fillStyle = '#0f172a';
-			ctx.fill();
-
-			// Beak
-			ctx.beginPath();
-			ctx.moveTo(12, 0);
-			ctx.lineTo(22, 4);
-			ctx.lineTo(12, 8);
-			ctx.closePath();
-			ctx.fillStyle = '#f97316';
-			ctx.fill();
-
-			// Wing
-			var wingY = Math.sin(bird.wingPhase) * 4;
-			ctx.beginPath();
-			ctx.ellipse(-6, 2 + wingY, 8, 5, -0.3, 0, Math.PI * 2);
-			ctx.fillStyle = '#fde047';
-			ctx.fill();
+			ctx.lineWidth = 3;
+			ctx.strokeStyle = '#f59e0b';
 			ctx.stroke();
 		}
 
