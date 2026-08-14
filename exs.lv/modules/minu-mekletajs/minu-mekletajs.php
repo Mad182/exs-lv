@@ -184,5 +184,3 @@ if ($act == 'top') {
 
 	$tpl->assign(['user-best-time' => $formatted_best]);
 }
-
-$tpl->printToScreen();

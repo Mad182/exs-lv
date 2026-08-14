@@ -169,5 +169,3 @@ if ($act == 'top') {
 		'all-high-score' => number_format($all_high_score, 0, '', ' ')
 	]);
 }
-
-$tpl->printToScreen();
