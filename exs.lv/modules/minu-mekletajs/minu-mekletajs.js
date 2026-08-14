@@ -122,9 +122,16 @@ $(document).ready(function () {
 		var $board = $('#ms-board');
 		$board.empty().removeClass('ms-easy ms-medium ms-hard').addClass('ms-' + currentDiff);
 
+		var cellSize = '28px';
+		if (currentDiff === 'hard') {
+			cellSize = '18px';
+		} else if (currentDiff === 'medium') {
+			cellSize = '24px';
+		}
+
 		$board.css({
-			'grid-template-columns': 'repeat(' + cols + ', 28px)',
-			'grid-template-rows': 'repeat(' + rows + ', 28px)'
+			'grid-template-columns': 'repeat(' + cols + ', ' + cellSize + ')',
+			'grid-template-rows': 'repeat(' + rows + ', ' + cellSize + ')'
 		});
 
 		for (var r = 0; r < rows; r++) {

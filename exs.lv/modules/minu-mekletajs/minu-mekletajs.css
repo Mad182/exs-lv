@@ -132,6 +132,23 @@
 	user-select: none;
 }
 
+.ms-medium .ms-cell {
+	width: 24px;
+	height: 24px;
+	font-size: 13px;
+}
+
+.ms-hard .ms-cell {
+	width: 18px;
+	height: 18px;
+	font-size: 11px;
+	border-width: 1px;
+}
+
+.ms-hard .ms-cell.flagged {
+	font-size: 10px;
+}
+
 .ms-cell:active:not(.revealed):not(.flagged) {
 	border: 1px solid #7b7b7b;
 	background: #bdbdbd;
