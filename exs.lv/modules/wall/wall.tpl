@@ -102,7 +102,7 @@
 	</div>
 
 	<div class="fp-latest" id="latest-games">
-		<h2 class="title"><a href="/speles"><span>Spēļu apskati</span></a></h2>
+		<h2 class="title"><a href="/spelu-apskati"><span>Spēļu apskati</span></a></h2>
 		<ul class="index-list secondary">
 			<!-- START BLOCK : index-games-node-->
 			<li>

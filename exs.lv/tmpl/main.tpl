@@ -123,9 +123,10 @@
 							<ul class="dropdown-menu">
 								<li><a href="/filmas">Filmas</a></li>
 								<li><a href="/muzika">Mūzika</a></li>
-								<li><a href="/speles">Spēles</a></li>
+								<li><a href="/spelu-apskati">Spēļu apskati</a></li>
 							</ul>
 						</li>
+						<li><a href="/speles">Spēles</a></li>
 						<li><a href="/blogs">Blogi</a></li>
 						<li><a href="/grupas">Grupas</a></li>
 						<li><a href="/steam-online">Steam</a></li>
