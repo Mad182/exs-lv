@@ -626,58 +626,147 @@ html .banned {
 	margin: 6px 0 2px
 }
 
+/* Modern Sub-Categories Sidebar Navigation */
+#sub-categories {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 8px 6px;
+	margin: 0 0 16px 0;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
 .menu {
 	padding: 0;
-	margin: 0 5px
+	margin: 0;
+	list-style: none;
 }
 
 .menu li {
-	display: inline;
+	display: block;
 	background: transparent;
-	padding: 0
+	padding: 0;
+	margin: 2px 0;
 }
 
 .menu a {
-	font-weight: 700;
-	display: block;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
 	outline: none;
 	margin: 0;
-	padding: 0 0 0 6px;
-	font-size: 12px
+	padding: 7px 10px;
+	font-size: 13px;
+	color: #334155;
+	text-decoration: none;
+	border-radius: 6px;
+	border-left: 3px solid transparent;
+	transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu a:hover, .menu a:focus {
-	border-left: 6px solid #eee
+	color: #0284c7;
+	background: #f0f9ff;
+	border-left-color: #2090cc;
+	transform: translateX(2px);
+	text-decoration: none;
 }
 
-#wrapper .menu .selected a {
-	color: #000;
-	border-left: 6px solid #ddd
-}
-
-#wrapper .menu .selected .selected a {
-	color: #000;
-	border-left: 4px solid #ddd
-}
-
-#wrapper .menu .selected li a {
-	color: #000;
-	border: 0
+#wrapper .menu .selected > a,
+.menu .selected > a {
+	color: #0284c7;
+	font-weight: 700;
+	background: linear-gradient(90deg, rgba(32, 144, 204, 0.12) 0%, rgba(32, 144, 204, 0.03) 100%);
+	border-left: 3px solid #2090cc;
 }
 
 .menu ul {
-	padding: 0;
-	margin: 3px 0 8px 10px
+	padding: 0 0 0 8px;
+	margin: 3px 0 6px 12px;
+	list-style: none;
+	border-left: 2px solid #e2e8f0;
 }
 
-#wrapper .menu li.selected li a {
-	font-size: 11px;
+#wrapper .menu li.selected li a,
+.menu ul li a {
+	font-size: 12px;
+	font-weight: 500;
 	display: block;
 	outline: none;
-	margin: 2px 0;
-	padding: 0 0 0 3px;
+	margin: 1px 0;
+	padding: 4px 8px;
+	color: #64748b;
+	border-radius: 5px;
+	border-left: none;
+	transition: all 0.15s ease;
+}
+
+.menu ul li a:hover,
+.menu ul li a:focus {
+	color: #0284c7;
+	background: #f8fafc;
+	padding-left: 11px;
+	text-decoration: none;
+}
+
+#wrapper .menu .selected .selected a,
+.menu ul li.selected > a {
+	color: #0284c7;
+	font-weight: 700;
+	background: #e0f2fe;
+	border-left: none;
+}
+
+/* Modern In-Content Sub-Category Pill Badges */
+ul.subcat-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 8px;
+	padding: 4px 0;
+	margin: 6px 0;
+	list-style: none;
+}
+
+ul.subcat-list li {
+	display: inline-flex;
+	padding: 0;
+	margin: 0;
+	background: none;
+}
+
+ul.subcat-list li a {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 3px 10px;
+	font-size: 11px;
+	font-weight: 600;
+	color: #475569;
+	background: #f1f5f9;
+	border: 1px solid #cbd5e1;
+	border-radius: 12px;
+	text-decoration: none;
+	transition: all 0.15s ease;
+}
+
+ul.subcat-list li a::before {
+	content: "↳";
+	font-size: 10px;
+	color: #94a3b8;
 	font-weight: 400;
-	color: #0A4E81
+}
+
+ul.subcat-list li a:hover {
+	color: #ffffff;
+	background: #2563eb;
+	border-color: #1d4ed8;
+	box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+	transform: translateY(-1px);
+	text-decoration: none;
+}
+
+ul.subcat-list li a:hover::before {
+	color: #bfdbfe;
 }
 
 #wrapper .group-profile {

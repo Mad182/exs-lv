@@ -197,6 +197,67 @@
 		background: #d35400;
 	}
 
+	/* Dark mode sub-categories styling */
+	#sub-categories {
+		background: #1e2631;
+		border-color: #2d3748;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	}
+
+	.menu a {
+		color: #cbd5e1;
+	}
+
+	.menu a:hover, .menu a:focus {
+		color: #38bdf8;
+		background: #0f172a;
+		border-left-color: #38bdf8;
+	}
+
+	#wrapper .menu .selected > a,
+	.menu .selected > a {
+		color: #38bdf8;
+		background: linear-gradient(90deg, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0.04) 100%);
+		border-left-color: #38bdf8;
+	}
+
+	.menu ul {
+		border-left-color: #334155;
+	}
+
+	#wrapper .menu li.selected li a,
+	.menu ul li a {
+		color: #94a3b8;
+	}
+
+	.menu ul li a:hover,
+	.menu ul li a:focus {
+		color: #38bdf8;
+		background: #0f172a;
+	}
+
+	#wrapper .menu .selected .selected a,
+	.menu ul li.selected > a {
+		color: #38bdf8;
+		background: rgba(56, 189, 248, 0.15);
+	}
+
+	ul.subcat-list li a {
+		color: #cbd5e1;
+		background: #1e293b;
+		border-color: #334155;
+	}
+
+	ul.subcat-list li a::before {
+		color: #64748b;
+	}
+
+	ul.subcat-list li a:hover {
+		color: #ffffff;
+		background: #2563eb;
+		border-color: #3b82f6;
+	}
+
 	#headline {
 		background-color: #1a1f25;
 	}
