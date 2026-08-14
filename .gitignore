@@ -13,6 +13,8 @@
 /exs.lv/bildes/*
 !/exs.lv/bildes/speles
 !/exs.lv/bildes/speles/*
+!/exs.lv/bildes/icons
+!/exs.lv/bildes/icons/*
 !/exs.lv/bildes/icons/games
 !/exs.lv/bildes/icons/games/*
 /exs.lv/dati/bildes/auto.exs.lv/*
