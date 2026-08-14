@@ -58,26 +58,6 @@ $games_list = [
 		'badge_class' => 'label-inverse',
 		'desc' => 'Klasiskā desu (Tic-Tac-Toe) spēle.',
 		'game_code' => 'desas'
-	],
-	[
-		'id' => 'minecraft',
-		'title' => 'Minecraft',
-		'url' => '/minecraft',
-		'icon' => '⛏️',
-		'badge' => 'Kopiena',
-		'badge_class' => 'label-info',
-		'desc' => 'EXS.LV Minecraft servera informācija, jaunumi un pamācības.',
-		'game_code' => ''
-	],
-	[
-		'id' => 'android',
-		'title' => 'Android spēles',
-		'url' => '/android-speles',
-		'icon' => '📱',
-		'badge' => 'Mobilās',
-		'badge_class' => 'label-info',
-		'desc' => 'Mobilās spēles un pamācības Android lietotājiem.',
-		'game_code' => ''
 	]
 ];
 
