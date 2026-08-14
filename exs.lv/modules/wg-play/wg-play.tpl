@@ -50,8 +50,8 @@
 		<!-- END BLOCK : hm-top-->
 
 		<!-- START BLOCK : hm-login-->
-	<div class="form">
-		<p class="notice">Tu neesi ielogojies!</p>
+	<div class="alert alert-info karatavas-guest-alert" style="margin-bottom: 15px;">
+		<strong>Piezīme:</strong> Tu spēlē kā viesis. <a href="/register">Reģistrējies</a> vai ieej profilā, lai saglabātu savu rezultātu topā!
 	</div>
 	<!-- END BLOCK : hm-login-->
 

@@ -1,61 +1,57 @@
 /*
- *
- * jquery.snake.js - a nibbles clone
+ * jquery.snake.js - a nibbles clone with EXS.LV anti-cheat integration
  * Copyright (c) 2008 Richard Willis
- * MIT license	: http://www.opensource.org/licenses/mit-license.php
- * Project	: http://jquery-snakey.googlecode.com/
- * Contact 	: willis.rh@gmail.com
- *
+ * Refactored for EXS.LV 2026
  */
 
 var Snake = {
 	$map: {}, $cherry: {}, $overlay: {}, seg: {}, wallseg: {}, cache: {},
-	cacheimages: ['images/cherry.jpg'],
+	cacheimages: [],
 	animateTimer: 0, score: 0, grid: 0, level: 1, lives: 3, speed: 0, cherriesEaten: 0,
-	wall: 0, // are the outer map walls an obsticle?
+	wall: 0,
+	currentToken: null,
 
 	setup: function() {
-
-		// pre-cache images
-		for (var i in Snake.cacheimages) {
-			var img = new Image();
-			img.src = Snake.cacheimages[i];
-		}
-
 		// build map
 		Snake.$map = $("#map1");
+		if (!Snake.$map.length) return;
+
 		Snake.$map.width = Snake.$map.innerWidth();
 		Snake.$map.height = Snake.$map.innerHeight();
 
 		// build and prepend overlay to map
-		Snake.$overlay = $('<div id="overlay"></div>').hide().prependTo(Snake.$map);
+		Snake.$overlay = $('#overlay');
+		if (!Snake.$overlay.length) {
+			Snake.$overlay = $('<div id="overlay"></div>').hide().prependTo(Snake.$map);
+		}
 
 		// build and append cherry to map
-		Snake.$cherry = $('<div id="cherry"></div>').appendTo(Snake.$map);
+		Snake.$cherry = $('#cherry');
+		if (!Snake.$cherry.length) {
+			Snake.$cherry = $('<div id="cherry"></div>').appendTo(Snake.$map);
+		}
 
-		// listen for key press, store keycode
+		// listen for key press
 		Snake.cache.keyCode = [0, 0];
 		document.onkeydown = function(event) {
-			// preventing default event behaviour causes issues with IE;
-			// need to research further!
 			var keycode = (!!event && !!event.keyCode) ? event.keyCode : event.which;
 			switch (keycode) {
-				case 71 :
+				case 71 : // G key - toggle grid
 					event.preventDefault();
 					Snake.toggleGrid();
 					break;
-				case 80 :
+				case 80 : // P key - pause
 					event.preventDefault();
 					Snake.pause();
 					break;
-				case 78 :
+				case 78 : // N key - new game
 					event.preventDefault();
 					Snake.newGame(true);
 					break;
-				case 37 :
-				case 38 :
-				case 39 :
-				case 40 :
+				case 37 : // Left
+				case 38 : // Up
+				case 39 : // Right
+				case 40 : // Down
 					event.preventDefault();
 					Snake.cache.keyCode[0] = Snake.cache.keyCode[1];
 					Snake.cache.keyCode[1] = keycode;
@@ -74,12 +70,20 @@ var Snake = {
 		});
 	},
 	newGame: function(reset) {
-
 		Snake.cherriesEaten = 0;
 
 		// reset animation timer
 		clearInterval(Snake.animateTimer);
 		Snake.animateTimer = 0;
+
+		if (reset) {
+			Snake.currentToken = null;
+			$.getJSON('/snake?action=init_token', function(res) {
+				if (res && res.success) {
+					Snake.currentToken = res.token;
+				}
+			});
+		}
 
 		// reset score
 		Snake.score = reset ? 0 : Snake.score;
@@ -104,15 +108,12 @@ var Snake = {
 		Snake.$cherry.hide();
 
 		// update map message
-		$("#map-msg").hide().html('Level ' + Snake.level + ' <br/>Eat <strong>' + Level[Snake.level][0].cherries + '</strong> cherries<small><br/>' +
-						'<small style="font-size:80%"><strong>(' + Snake.lives + '</strong> ' + (Snake.lives > 1 ? 'lives' : 'life') + ' remaining)</small></small>'
+		$("#map-msg").hide().html('Līmenis ' + Snake.level + ' <br/>Apēd <strong>' + Level[Snake.level][0].cherries + '</strong> ķiršus<br/><small style="font-size:80%">Atlikušās dzīvības: <strong>' + Snake.lives + '</strong></small>'
 						).fadeIn(500, function() {
 
 			setTimeout(function() {
-
 				// hide map message
 				$("#map-msg").fadeOut(500, function() {
-
 					// hide overlay
 					Snake.$overlay.hide();
 
@@ -132,13 +133,13 @@ var Snake = {
 
 					// start animation
 					setTimeout(function() {
-						// reset direction
+						// reset direction to right
 						Snake.cache.keyCode[0] = 0;
 						Snake.cache.keyCode[1] = 39;
 						Snake.start();
-					}, 1000);
+					}, 800);
 				});
-			}, 2500);
+			}, 1800);
 		});
 	},
 	animate: function() {
@@ -150,52 +151,46 @@ var Snake = {
 
 		var keycode = Snake.cache.keyCode;
 		if (
-						// if key pressed is opposite of current direction
-						keycode[0] == 37 && keycode[1] == 39 ||
-						keycode[0] == 39 && keycode[1] == 37 ||
-						keycode[0] == 38 && keycode[1] == 40 ||
-						keycode[0] == 40 && keycode[1] == 38
-						) {
-			// reset the keyCode
+			keycode[0] == 37 && keycode[1] == 39 ||
+			keycode[0] == 39 && keycode[1] == 37 ||
+			keycode[0] == 38 && keycode[1] == 40 ||
+			keycode[0] == 40 && keycode[1] == 38
+		) {
 			Snake.cache.keyCode[1] = Snake.cache.keyCode[0];
 		}
 
 		keycode = Snake.cache.keyCode[1];
 		// adjust leading segment properties
-		if (keycode == 39) {
-			//right
+		if (keycode == 39) { // right
 			Snake.seg[0].left += 10;
 			if (Snake.seg[0].left > Snake.$map.width - 10) {
 				Snake.wall && Snake.gameOver();
 				Snake.seg[0].left = 0;
 			}
-		} else if (keycode == 40) {
-			//down
+		} else if (keycode == 40) { // down
 			Snake.seg[0].top += 10;
 			if (Snake.seg[0].top > Snake.$map.height - 10) {
 				Snake.wall && Snake.gameOver();
 				Snake.seg[0].top = 0;
 			}
-		} else if (keycode == 38) {
-			//up
+		} else if (keycode == 38) { // up
 			Snake.seg[0].top -= 10;
 			if (Snake.seg[0].top < 0) {
 				Snake.wall && Snake.gameOver();
 				Snake.seg[0].top = Snake.$map.height - 10;
 			}
-		} else if (keycode == 37) {
-			//left
+		} else if (keycode == 37) { // left
 			Snake.seg[0].left -= 10;
 			if (Snake.seg[0].left < 0) {
 				Snake.wall && Snake.gameOver();
 				Snake.seg[0].left = Snake.$map.width - 10;
 			}
 		}
+
 		// check if snake has eaten a cherry
 		(Snake.seg[0].left == Snake.Cherry.left && Snake.seg[0].top == Snake.Cherry.top) &&
-						Snake.advance();
+			Snake.advance();
 
-		// unset Snake.seg[0], gotta be an easier way!
 		var seg = {};
 		for (var i = 1; i < Snake.seg.length; i++) {
 			seg[i - 1] = Snake.seg[i];
@@ -203,31 +198,30 @@ var Snake = {
 
 		// check if snake has slithered into itself
 		(Snake.in_obj(Snake.seg[0], seg)) &&
-						Snake.gameOver();
+			Snake.gameOver();
 
 		// check if snake has slithered into a wall obstacle
 		(Snake.in_obj(Snake.seg[0], Snake.wallseg)) &&
-						Snake.gameOver();
+			Snake.gameOver();
 
-		// check if cherries eaten match total: finished level.. advance to next level
+		// check if cherries eaten match total for level
 		(Snake.cherriesEaten == Level[Snake.level][0].cherries) &&
-						Snake.advanceLevel();
+			Snake.advanceLevel();
 
 		// reposition snake segments on map
 		for (var i = 0; i < Snake.seg.length; i++) {
 			Snake.seg[i].css({top: Snake.seg[i].top + "px", left: Snake.seg[i].left + "px", display: "block"});
 		}
 	},
-	advance: function(val) {
-
+	advance: function() {
 		// increase snake segments
 		Snake.seg.length++;
 
 		var x = Snake.seg.length - 1;
 		Snake.seg[x] =
-						$('<span class="snake ' + x + '"></span>')
-						.css({left: Snake.seg[1].left + "px", top: Snake.seg[1].top + "px", display: "block"})
-						.appendTo(Snake.$map);
+			$('<span class="snake ' + x + '"></span>')
+			.css({left: Snake.seg[1].left + "px", top: Snake.seg[1].top + "px", display: "block"})
+			.appendTo(Snake.$map);
 
 		// position new snake segment
 		Snake.seg[x].top = Snake.seg[x - 1].top;
@@ -239,15 +233,13 @@ var Snake = {
 		// adjust score
 		Snake.score += 10;
 		$("#stats-score").html(Snake.score);
-		$.get("/Snake/", {action: "push", score: Snake.score});
 
 		// update cherries eaten
 		Snake.cherriesEaten++;
 		$("#stats-eaten").html(Snake.cherriesEaten);
 
 		// adjust speed
-		Snake.speed -= 1;
-		$("#stats-speed").html(Snake.speed);
+		Snake.speed = Math.max(30, Snake.speed - 1);
 
 		clearInterval(Snake.animateTimer);
 		Snake.animateTimer = setInterval(Snake.animate, Snake.speed);
@@ -259,7 +251,7 @@ var Snake = {
 		} else {
 			Snake.level++;
 			Snake.speed = Level[Snake.level][0].speed;
-			Snake.newGame();
+			Snake.newGame(false);
 		}
 	},
 	toggleGrid: function() {
@@ -282,21 +274,53 @@ var Snake = {
 			clearInterval(Snake.animateTimer);
 			Snake.animateTimer = 0;
 			Snake.$overlay.show();
-			$("#map-msg").html("<br/>Paused").fadeIn();
+			$("#map-msg").html("Pauze").fadeIn();
 		}
 	},
 	gameOver: function() {
-		if (Snake.lives - 1) {
+		if (Snake.lives > 1) {
 			Snake.lives--;
-			Snake.newGame();
+			Snake.newGame(false);
 		} else {
-			Snake.pause();
-			$("#map-msg").html('<br/>You Died<small><br/><a href="javascript:;" onclick="Snake.newGame(true)">Play again?</a></small>');
+			Snake.lives = 0;
+			$("#stats-lives").html(0);
+			clearInterval(Snake.animateTimer);
+			Snake.animateTimer = 0;
+			Snake.$overlay.show();
+			Snake.submitScore();
+			$("#map-msg").html('Spēle beigusies!<br/><small><a href="javascript:;" onclick="Snake.newGame(true)" class="btn btn-primary btn-snake-start" style="margin-top:10px;">Spēlēt vēlreiz</a></small>').fadeIn();
 		}
 	},
 	finishedGame: function() {
-		Snake.pause();
-		$("#map-msg").html('<br/>Well Done! You finished.<small><br/><a href="javascript:;" onclick="Snake.newGame(true)">Play again?</a></small>');
+		clearInterval(Snake.animateTimer);
+		Snake.animateTimer = 0;
+		Snake.$overlay.show();
+		Snake.submitScore();
+		$("#map-msg").html('Apsveicam! Tu pabeidzi spēli!<br/><small><a href="javascript:;" onclick="Snake.newGame(true)" class="btn btn-primary btn-snake-start" style="margin-top:10px;">Spēlēt vēlreiz</a></small>').fadeIn();
+	},
+	submitScore: function() {
+		if (!Snake.currentToken || Snake.score <= 0) return;
+		var tokenToSend = Snake.currentToken;
+		Snake.currentToken = null;
+
+		$.ajax({
+			url: '/snake?action=push',
+			type: 'POST',
+			data: {
+				token: tokenToSend,
+				score: Snake.score,
+				cherries: Snake.cherriesEaten,
+				level: Snake.level
+			},
+			dataType: 'json',
+			success: function(res) {
+				if (res && res.success) {
+					if (res.highScore !== undefined) {
+						$('#stat-highscore').text(res.highScore);
+					}
+				}
+			}
+		});
 	},
 	Cherry: {
 		left: 0,
@@ -314,19 +338,14 @@ var Snake = {
 			show == undefined && Snake.$cherry.hide().fadeIn();
 		}
 	},
-	// wall obstacles
 	Wall: {
 		generate: function() {
+			var walls = Level[Snake.level],
+				c = 0, t, l, i, n;
 
-			var
-							walls = Level[Snake.level],
-							c = 0, t, l, i, n;
-
-			// append multiple walls
 			for (i = 1; i < walls.length; i++) {
 				t = walls[i].top;
 				l = walls[i].left;
-				// append wall segments to map
 				for (n = 0; n < walls[i].seg; n++) {
 					Snake.wallseg[c] = $('<span class="wall ' + c + '"></span>').css({top: t + "px", left: l + "px"}).appendTo(Snake.$map);
 					Snake.wallseg[c].left = l;
@@ -337,7 +356,6 @@ var Snake = {
 			}
 		}
 	},
-	// check for an object in an object collection
 	in_obj: function(obj_needle, obj_haystack) {
 		for (var i in obj_haystack) {
 			if (obj_haystack[i].left === obj_needle.left && obj_haystack[i].top === obj_needle.top) {
@@ -346,9 +364,9 @@ var Snake = {
 		}
 		return false;
 	}
+};
 
-},
-Level = [
+var Level = [
 	,
 	[
 		{cherries: 5, length: 10, speed: 100},
