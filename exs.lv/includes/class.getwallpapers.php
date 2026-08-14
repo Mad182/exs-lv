@@ -62,7 +62,9 @@ class getWallpapers {
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 
 		$response = curl_exec($ch);
-		curl_close($ch);
+		if (PHP_VERSION_ID < 80500) {
+			@curl_close($ch);
+		}
 		$response = json_decode($response);
 		$token = $response->access_token;
 
@@ -82,7 +84,9 @@ class getWallpapers {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
 		$response = curl_exec($ch);
-		curl_close($ch);
+		if (PHP_VERSION_ID < 80500) {
+			@curl_close($ch);
+		}
 		$response = json_decode($response);
 		$wallpapers = $response->data;
 

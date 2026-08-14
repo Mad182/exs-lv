@@ -234,18 +234,22 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		// pirms biedru saraksta pievieno grupas administratoru
 		$m_owner = get_user($group->owner);
 
-		$avatar = get_avatar($m_owner);
+		if (!empty($m_owner)) {
+			$avatar = get_avatar($m_owner);
 
-		$tpl->newBlock('members-node');
-		$tpl->assign([
-			'group-id' => $group->id,
-			'member-class' => 'owner',
-			'member-id' => $m_owner->id,
-			'member-nick' => usercolor($m_owner->nick, $m_owner->level, false, $m_owner->id),
-			'avatar' => $avatar
-		]);
+			$tpl->newBlock('members-node');
+			$tpl->assign([
+				'group-id' => $group->id,
+				'member-class' => 'owner',
+				'member-id' => $m_owner->id,
+				'member-nick' => usercolor($m_owner->nick, $m_owner->level, false, $m_owner->id),
+				'avatar' => $avatar
+			]);
 
-		 $end = 59;
+			$end = 59;
+		} else {
+			$end = 60;
+		}
 	} else {
 		 $end = 60;
 	}
@@ -1206,7 +1210,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		'group-text' => add_smile($group->text, 0),
 		'group-posts' => $group->posts,
 		'group-members' => $group->members + 1,
-		'group-admin' => $owner->nick,
+		'group-admin' => !empty($owner->nick) ? $owner->nick : 'dzēsts',
 		'module_content' => $module_content
 	]);
 

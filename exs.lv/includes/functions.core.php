@@ -96,7 +96,7 @@ function &get_global($key_name, $default_value = null) {
  * htmlspecialchars() saīsinājums
  */
 function h($str) {
-	return htmlspecialchars($str);
+	return htmlspecialchars((string)($str ?? ''));
 }
 
 /**
@@ -465,7 +465,7 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 
 	$cakeday = '';
 	if (!empty($cday_users)) {
-		if (!empty($cday_users[$userid]) || in_array($nick, $cday_users)) {
+		if ((!empty($userid) && !empty($cday_users[$userid])) || in_array($nick, $cday_users)) {
 			$cakeday = '<img src="' . $img_server . '/bildes/cakeday.png" alt="" title="Cake Day!" style="display:inline-block;width:16px;height:16px;max-width:16px;min-width:16px;min-height:16px" />';
 		}
 	}
@@ -1011,7 +1011,9 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	$contents = curl_exec($ch);
-	curl_close($ch);
+	if (PHP_VERSION_ID < 80500) {
+		@curl_close($ch);
+	}
 
 	return $contents;
 }
@@ -2379,6 +2381,12 @@ function human_filesize($bytes, $decimals = 2) {
 function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 	global $auth, $img_server;
 
+	if (empty($user) || !is_object($user)) {
+		$user = new stdClass();
+	}
+	$user->avatar = $user->avatar ?? 'none.png';
+	$user->av_alt = $user->av_alt ?? 0;
+
 	if (empty($auth->mobile) || $ignore_mobile) {
 		$path = 'medium';
 		$real_path = 'useravatar';
@@ -2388,9 +2396,6 @@ function get_avatar($user, $size = 'm', $ignore_mobile = false) {
 		} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
 			$path = 'large';
 			$real_path = 'u_large';
-		}
-		if (is_null($user)) {
-			$user = new stdClass();
 		}
 		if (empty($user->avatar)) {
 			$user->avatar = 'none.png';
@@ -2446,7 +2451,7 @@ function get_cakeday() {
 	$out = [];
 
 	if (($out = $m->get('cday_' . date('Y-m-d'))) === false) {
-
+		$out = [];
 		$users = $db->get_results("SELECT `id`, `nick` FROM `users` WHERE `date` < '" . date('Y') . "-01-01 00:00:00' AND `date` LIKE '%-" . date('m') . "-" . date('d') . " %' ORDER BY `users`.`lastseen` DESC");
 		if (!empty($users)) {
 			foreach ($users as $user) {
@@ -2934,7 +2939,6 @@ function error_404() {
 
 	$robotstag = ['noindex', 'nofollow'];
 
-	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	http_response_code(404);
 
 	$category = new stdClass();

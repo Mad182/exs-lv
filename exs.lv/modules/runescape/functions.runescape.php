@@ -274,7 +274,9 @@ function save_rs_image($img_url, $target_path, $target_name = 'empty') {
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
     curl_setopt($curl, CURLOPT_TIMEOUT, 4);
     $exec = curl_exec($curl);
-    curl_close($curl);
+    if (PHP_VERSION_ID < 80500) {
+        @curl_close($curl);
+    }
     fclose($file);
 
     // pārveido attēlu uz mazāku izmēru
