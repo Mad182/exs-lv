@@ -21,7 +21,7 @@ function reset_wg_id() {
 	$_SESSION['hm_cgame_id'] = '';
 }
 
-if (isset($_GET['_'])) {
+if (isset($_GET['_']) || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')) {
 	$ajax = true;
 } else {
 	$ajax = false;
@@ -220,7 +220,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 					} elseif (in_array($letter, $wrong)) {
 						$lstr = '<span class="wrong">' . $letter . '</span>';
 					} else {
-						$lstr = '<a rel="nofollow" href="/' . $category->textid . '/?guess=' . urlencode($letter) . '">' . $letter . '</a>';
+						$lstr = '<a rel="nofollow" href="/' . $category->textid . '/?guess=' . urlencode($letter) . '&_">' . $letter . '</a>';
 					}
 					$tpl->assign('letter', $lstr);
 				}
@@ -230,7 +230,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 				$tpl->assign([
 					'hint' => 'Tu uzvarēji un ieguvi ' . $points . ' punktus ;) atbilde ir:',
-					'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
+					'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '?_">Jauna spēle</a>',
 					'img' => $wrongs,
 				]);
 
@@ -277,7 +277,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 			$tpl->assign([
 				'hint' => $strs[0] . ' atbilde ir:',
-				'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
+				'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '?_">Jauna spēle</a>',
 				'img' => 10,
 			]);
 

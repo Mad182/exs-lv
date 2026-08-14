@@ -4,10 +4,16 @@
 
 	$(document).ready(function () {
 		// Delegated click handler for alphabet links and new game button
-		$(document).off('click.karatavas', '#hm-game-alphabet a, #hm-new-game').on('click.karatavas', '#hm-game-alphabet a, #hm-new-game', function () {
-			$('#hm-game-answer').fadeTo(200, 0.6);
-			$('#hm-game-container').load($(this).attr('href'), function () {
-				$(this).fadeTo(300, 1);
+		$(document).off('click.karatavas', '#hm-game-alphabet a, #hm-new-game').on('click.karatavas', '#hm-game-alphabet a, #hm-new-game', function (e) {
+			e.preventDefault();
+			var href = $(this).attr('href');
+			if (!href) return false;
+			if (href.indexOf('_') === -1) {
+				href += (href.indexOf('?') > -1 ? '&_' : '?_');
+			}
+			$('#hm-game-container').fadeTo(150, 0.5);
+			$('#hm-game-container').load(href, function () {
+				$('#hm-game-container').stop(true, true).fadeTo(150, 1);
 			});
 			return false;
 		});
