@@ -11,7 +11,7 @@
 	border-radius: 8px;
 	position: relative;
 	box-sizing: border-box;
-	box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 #hm-game-question {
@@ -40,13 +40,14 @@
 
 #hm-game-alphabet {
 	float: right;
-	margin: 130px 10px 0;
+	margin: 110px 10px 0;
 	font-weight: bold;
 	width: 399px;
 	text-align: right;
 }
 
-#hm-game-alphabet a, #hm-game-alphabet span {
+#hm-game-alphabet a,
+#hm-game-alphabet span {
 	text-transform: uppercase;
 	color: #0066cc;
 	border: 1px solid #cbd5e1;
@@ -82,7 +83,7 @@
 	#hm-game-body {
 		background-color: #e2e8f0 !important;
 		border-color: #2a313e !important;
-		box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 		filter: invert(0.9) hue-rotate(180deg);
 	}
 
