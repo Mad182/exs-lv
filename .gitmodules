@@ -1,9 +1,6 @@
 [submodule "libs/htmlpurifier"]
 	path = libs/htmlpurifier
 	url = https://github.com/ezyang/htmlpurifier
-[submodule "libs/GameQ"]
-	path = libs/GameQ
-	url = https://github.com/Austinb/GameQ
 [submodule "libs/imdb-grabber"]
 	path = libs/imdb-grabber
 	url = https://github.com/FabianBeiner/PHP-IMDB-Grabber.git
@@ -16,9 +13,6 @@
 [submodule "libs/phplastfm"]
 	path = libs/phplastfm
 	url = https://github.com/matto1990/PHP-Last.fm-API.git
-[submodule "libs/Mobile-Detect"]
-	path = libs/Mobile-Detect
-	url = https://github.com/serbanghita/Mobile-Detect.git
 [submodule "libs/GoogleAuthenticator"]
 	path = libs/GoogleAuthenticator
 	url = https://github.com/PHPGangsta/GoogleAuthenticator.git
