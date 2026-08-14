@@ -636,17 +636,24 @@ html .banned {
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-.menu {
+.menu,
+.menu ul {
 	padding: 0;
 	margin: 0;
-	list-style: none;
+	list-style: none !important;
+	list-style-type: none !important;
 }
 
-.menu li {
+.menu > li {
 	display: block;
 	background: transparent;
 	padding: 0;
-	margin: 2px 0;
+	margin: 0;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.menu > li:last-child {
+	border-bottom: none;
 }
 
 .menu a {
@@ -654,7 +661,7 @@ html .banned {
 	display: flex;
 	align-items: center;
 	outline: none;
-	margin: 0;
+	margin: 2px 0;
 	padding: 7px 10px;
 	font-size: 13px;
 	color: #334155;
@@ -682,9 +689,20 @@ html .banned {
 
 .menu ul {
 	padding: 0 0 0 8px;
-	margin: 3px 0 6px 12px;
-	list-style: none;
+	margin: 2px 0 6px 12px;
 	border-left: 2px solid #e2e8f0;
+}
+
+.menu ul li {
+	display: block;
+	background: transparent;
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px dashed #f1f5f9;
+}
+
+.menu ul li:last-child {
+	border-bottom: none;
 }
 
 #wrapper .menu li.selected li a,
