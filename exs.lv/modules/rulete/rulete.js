@@ -17,6 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	const chipBtns = document.querySelectorAll('.chip-btn');
 	const cells = document.querySelectorAll('.cell');
 
+	// Guest Mode LocalStorage Persistence
+	const isGuestView = document.querySelector('.alert-info') !== null;
+	if (isGuestView) {
+		const todayStr = new Date().toISOString().slice(0, 10);
+		const lastReset = localStorage.getItem('rulete_guest_reset');
+		let guestGold = parseInt(localStorage.getItem('rulete_guest_gold'));
+
+		if (isNaN(guestGold) || lastReset !== todayStr) {
+			if (isNaN(guestGold) || guestGold < 100) {
+				guestGold = 100;
+			}
+			localStorage.setItem('rulete_guest_reset', todayStr);
+			localStorage.setItem('rulete_guest_gold', guestGold);
+		}
+
+		if (userGoldVal) {
+			userGoldVal.textContent = guestGold;
+		}
+	}
+
 	// European Wheel Order
 	const wheelNumbers = [
 		0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36,
@@ -30,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	let currentRotationAngle = 0;
 	let isSpinning = false;
 	let placedBets = {}; // key -> { type, val, amount, element }
-	let lastBetsBackup = null;
 
 	// Canvas dimensions
 	const centerX = canvas.width / 2;
@@ -223,11 +242,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		spinBtn.disabled = true;
 		resultDisplay.innerHTML = '🌀 <em>Griežam ruleti... Lai veicas!</em>';
 
+		const currentGoldVal = parseInt(userGoldVal.textContent) || 100;
+
 		// Send spin request to PHP backend
 		fetch('/rulete?action=spin', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ bets: betsArray })
+			body: JSON.stringify({ bets: betsArray, guest_gold: currentGoldVal })
 		})
 		.then(res => res.json())
 		.then(data => {
@@ -245,6 +266,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 				userGoldVal.textContent = data.new_gold;
 				lastWinVal.textContent = data.payout;
+
+				if (data.is_guest) {
+					localStorage.setItem('rulete_guest_gold', data.new_gold);
+				}
 
 				let colorClass = data.color === 'red' ? 'red' : (data.color === 'black' ? 'black' : 'green');
 				let outcomeText = '';

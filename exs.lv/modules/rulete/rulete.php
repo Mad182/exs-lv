@@ -91,6 +91,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 			echo json_encode(['error' => 'Nepietiekams žetonu daudzums! Tev ir ' . $current_gold . ' žetoni.']);
 			exit;
 		}
+	} else {
+		if (isset($data['guest_gold']) && is_numeric($data['guest_gold'])) {
+			$current_gold = max(0, intval($data['guest_gold']));
+		}
+		if ($total_bet > $current_gold) {
+			echo json_encode(['error' => 'Nepietiekams žetonu daudzums! Tev ir ' . $current_gold . ' žetoni.']);
+			exit;
+		}
 	}
 
 	// Perform spin
