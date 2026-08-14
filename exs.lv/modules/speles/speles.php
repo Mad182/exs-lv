@@ -158,19 +158,51 @@ foreach ($games_list as $game) {
 }
 
 // Recent high scores banner across all games
+$game_meta_map = [
+	'tetris' => ['title' => 'Tetris', 'url' => '/tetris', 'is_time' => false],
+	'snake' => ['title' => 'Čūska', 'url' => '/snake', 'is_time' => false],
+	'karatavas' => ['title' => 'Karātavas', 'url' => '/karatavas', 'is_time' => false],
+	'memory' => ['title' => 'Atmiņas spēle', 'url' => '/memory', 'is_time' => false],
+	'2048' => ['title' => '2048', 'url' => '/2048-spele', 'is_time' => false],
+	'minu-mekletajs' => ['title' => 'Mīnu Meklētājs', 'url' => '/minu-mekletajs', 'is_time' => true],
+	'minu-mekletajs-easy' => ['title' => 'Mīnu Meklētājs (Iesācējs)', 'url' => '/minu-mekletajs', 'is_time' => true],
+	'minu-mekletajs-medium' => ['title' => 'Mīnu Meklētājs (Vidējs)', 'url' => '/minu-mekletajs', 'is_time' => true],
+	'minu-mekletajs-hard' => ['title' => 'Mīnu Meklētājs (Eksperts)', 'url' => '/minu-mekletajs', 'is_time' => true],
+	'sudoku' => ['title' => 'Sudoku', 'url' => '/sudoku', 'is_time' => true],
+	'wordle' => ['title' => 'Wordle', 'url' => '/wordle', 'is_time' => false],
+	'rulete' => ['title' => 'Rulete', 'url' => '/rulete', 'is_time' => false],
+	'flappy' => ['title' => 'Lidojošais Eksis', 'url' => '/flappy', 'is_time' => false],
+	'invaders' => ['title' => 'Space Invaders', 'url' => '/invaders', 'is_time' => false],
+];
+
 $recent_scores = $db->get_results("SELECT * FROM gamescore ORDER BY time DESC LIMIT 8");
 if ($recent_scores) {
 	$tpl->newBlock('recent-scores-block');
 	foreach ($recent_scores as $sc) {
 		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
 		if ($u) {
+			$g_key = $sc->game;
+			$meta = isset($game_meta_map[$g_key]) ? $game_meta_map[$g_key] : [
+				'title' => ucfirst(str_replace('-', ' ', $g_key)),
+				'url' => '/' . strtok($g_key, '-'),
+				'is_time' => false
+			];
+
+			if (!empty($meta['is_time'])) {
+				$mins = floor($sc->score / 60);
+				$secs = $sc->score % 60;
+				$score_str = sprintf('%02d:%02d', $mins, $secs);
+			} else {
+				$score_str = number_format($sc->score, 0, '', ' ');
+			}
+
 			$tpl->newBlock('recent-score-node');
 			$tpl->assign([
 				'user-url' => mkurl('user', $u->id, $u->nick),
 				'user-nick' => usercolor($u->nick, $u->level),
-				'game-name' => ucfirst($sc->game),
-				'game-url' => '/' . $sc->game,
-				'score' => number_format($sc->score, 0, '', ' '),
+				'game-name' => $meta['title'],
+				'game-url' => $meta['url'],
+				'score' => $score_str,
 				'time-ago' => time_ago($sc->time)
 			]);
 		}
