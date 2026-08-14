@@ -370,3 +370,62 @@ dl.list-attr dt {
 	border: 1px solid #222;
 }
 
+/* Results tables dark mode styles */
+table.table,
+.table-striped,
+.table-hover,
+.tetris-top-table,
+.tetris-mini-table {
+	color: #eee;
+}
+
+.table th,
+.tetris-top-table th {
+	background-color: #333 !important;
+	color: #ffc;
+	border-bottom: 2px solid #444 !important;
+}
+
+.table td,
+.tetris-top-table td {
+	border-top: 1px solid #3a3a3a !important;
+	color: #ddd;
+}
+
+.table-striped tbody tr:nth-child(odd) td,
+.table-striped tbody tr:nth-child(odd) th {
+	background-color: #333;
+}
+
+.table-striped tbody tr:nth-child(even) td,
+.table-striped tbody tr:nth-child(even) th {
+	background-color: #3a3a3a;
+}
+
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+	background-color: #444 !important;
+}
+
+.tetris-guide-box {
+	background: #333 !important;
+	border-color: #444 !important;
+}
+
+.tetris-guide-box h4 {
+	color: #ffc !important;
+}
+
+.tetris-guide-box li {
+	color: #ccc !important;
+}
+
+.tetris-guide-box kbd {
+	background-color: #444 !important;
+	border-color: #555 !important;
+	color: #ffc !important;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+
+

@@ -76,7 +76,6 @@ $arr_domains = [
 	// apakšprojekti
     'api.exs.lv' => 6,
 	'android.exs.lv' => 2,
-	$android_local_ip => 2,   
     'ios.exs.lv' => 4,
 	'rp.exs.lv' => 5,
 	'lol.exs.lv' => 7,
@@ -93,21 +92,28 @@ $arr_domains = [
 	// apzināti izvairāmies no tā paša "exs.lv" domēna izmantošanas,
 	// lai lokāli nerastos problēmas ar pārlūkiem un HSTS
 	// (https://stackoverflow.com/questions/25277457/google-chrome-redirecting-localhost-to-https)
-	'exs.dev' => 1,
-	'api.exs.dev' => 6,
-	'android.exs.dev' => 2,
-    'ios.exs.dev' => 4,
-	'coding.dev' => 3,
-	'rp.exs.dev' => 5,
-	'lol.exs.dev' => 7,
-	'rs.exs.dev' => 9,
+	'exs.local' => 1,
+	'api.exs.local' => 6,
+	'android.exs.local' => 2,
+    'ios.exs.local' => 4,
+	'coding.local' => 3,
+	'rp.exs.local' => 5,
+	'lol.exs.local' => 7,
+	'rs.exs.local' => 9,
 	
 	// mobilās izstrādes versijas
-	'm.exs.dev' => 1,
-	'm.coding.dev' => 3,
-	'mlol.exs.dev' => 7,
-	'mrs.exs.dev' => 9
+	'm.exs.local' => 1,
+	'm.coding.local' => 3,
+	'mlol.exs.local' => 7,
+	'mrs.exs.local' => 9
 ];
+
+if (!empty($android_local_ip)) {
+	$arr_domains[$android_local_ip] = 2;
+}
+if (!empty($ios_local_ip)) {
+	$arr_domains[$ios_local_ip] = 4;
+}
 
 
 /*
@@ -120,7 +126,7 @@ if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {
   
 	$lang = $arr_domains[$_SERVER['HTTP_HOST']];
 	
-	if (substr($_SERVER['HTTP_HOST'], -4) === '.dev') {
+	if (substr($_SERVER['HTTP_HOST'], -6) === '.local') {
 		$is_local = 1;
 	}
 	

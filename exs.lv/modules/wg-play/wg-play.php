@@ -10,7 +10,7 @@ function mbStringToArray($string) {
 }
 
 function get_wg_id() {
-	return intval($_SESSION['hm_cgame_id']);
+	return isset($_SESSION['hm_cgame_id']) ? intval($_SESSION['hm_cgame_id']) : 0;
 }
 
 function set_wg_id($id = false) {
@@ -129,18 +129,26 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 	$letters = ['a', 'ā', 'b', 'c', 'č', 'd', 'e', 'ē', 'f', 'g', 'ģ', 'h', 'i', 'ī', 'j', 'k', 'ķ', 'l', 'ļ', 'm', 'n', 'ņ', 'o', 'p', 'r', 's', 'š', 't', 'u', 'ū', 'v', 'z', 'ž', 'w', 'x', 'y', 'q'];
 
-	if (!get_wg_id()) {
+	$game_id = get_wg_id();
+	$game = null;
+	if ($game_id) {
+		$game = $db->get_row("SELECT * FROM wg_games WHERE id = '$game_id' AND status = 0");
+	}
 
+	if (!$game_id || !$game) {
 		$query = 'WHERE 1 = 1';
-		$lastgames = $db->get_results("SELECT * FROM `wg_games` WHERE `user_id` = '$auth->id' ORDER BY `id` DESC LIMIT 100");
-		if ($lastgames) {
-			foreach ($lastgames as $lastgame) {
-				$query .= " AND `id` != '$lastgame->word_id'";
+		if ($auth->ok && $auth->id > 0) {
+			$lastgames = $db->get_results("SELECT * FROM `wg_games` WHERE `user_id` = '$auth->id' ORDER BY `id` DESC LIMIT 100");
+			if ($lastgames) {
+				foreach ($lastgames as $lastgame) {
+					$query .= " AND `id` != '$lastgame->word_id'";
+				}
 			}
 		}
 
 		$word_id = $db->get_var("SELECT id FROM `wg_words` " . $query . " ORDER BY rand() LIMIT 1");
-		$db->query("INSERT INTO wg_games (word_id,correct,wrong,user_id) VALUES ('$word_id','" . serialize([]) . "','" . serialize([]) . "','$auth->id')");
+		$user_id_val = ($auth->ok && $auth->id > 0) ? $auth->id : 0;
+		$db->query("INSERT INTO wg_games (word_id, correct, wrong, user_id, created_at, status) VALUES ('$word_id', '" . serialize([]) . "', '" . serialize([]) . "', '$user_id_val', '" . time() . "', 0)");
 		set_wg_id($db->insert_id);
 		redirect('/' . $category->textid);
 	} else {
@@ -149,119 +157,125 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 			$tpl->newBlock('hm-login');
 		}
 
-		$game_id = get_wg_id();
-		$game = $db->get_row("SELECT * FROM wg_games WHERE id = '$game_id'");
+		$tpl->newBlock('hm-game');
 
-		if ($game) {
-			$tpl->newBlock('hm-game');
+		$word = $db->get_row("SELECT * FROM `wg_words` WHERE `id` = '$game->word_id'");
 
-			$word = $db->get_row("SELECT * FROM `wg_words` WHERE `id` = '$game->word_id'");
+		$wrong = unserialize($game->wrong);
+		$correct = unserialize($game->correct);
+		$guessed = array_merge($wrong, $correct);
 
-			$wrong = unserialize($game->wrong);
-			$correct = unserialize($game->correct);
-			$guessed = $wrong + $correct;
+		if (isset($_GET['guess']) && in_array($_GET['guess'], $letters) && !in_array($_GET['guess'], $guessed)) {
+			$guess = $_GET['guess'];
 
-			if (isset($_GET['guess']) && in_array($_GET['guess'], $letters) && !in_array($_GET['guess'], $guessed)) {
-				$guess = $_GET['guess'];
+			if (stristr($word->word, $guess)) {
+				$correct[] = $guess;
+			} else {
+				$wrong[] = $guess;
+			}
+			$guessed[] = $guess;
+		}
 
-				if (stristr($word->word, $guess)) {
-					$correct[] = $guess;
+		$wrongs = count($wrong);
+
+		$word_letters = mbStringToArray($word->word);
+
+		if ($wrongs < 10) {
+
+			$outstr = '';
+			$hasempty = false;
+			foreach ($word_letters as $word_letter) {
+				if ($word_letter == ' ') {
+					$outstr .= '&nbsp; ';
+				} elseif (in_array($word_letter, $correct)) {
+					$outstr .= $word_letter . '&nbsp;';
 				} else {
-					$wrong[] = $guess;
+					$outstr .= '_&nbsp;';
+					$hasempty = true;
 				}
-				$guessed[] = $guess;
 			}
 
-			$wrongs = count($wrong);
-
-			$word_letters = mbStringToArray($word->word);
-
-			if ($wrongs < 10) {
-
-				$outstr = '';
-				$hasempty = false;
-				foreach ($word_letters as $word_letter) {
-					if ($word_letter == ' ') {
-						$outstr .= '&nbsp; ';
-					} elseif (in_array($word_letter, $correct)) {
-						$outstr .= $word_letter . '&nbsp;';
-					} else {
-						$outstr .= '_&nbsp;';
-						$hasempty = true;
-					}
-				}
-
-				if ($hasempty) {
-
-					$tpl->assign([
-						'hint' => $word->hint,
-						'guess' => $outstr,
-						'img' => $wrongs,
-					]);
-
-					foreach ($letters as $letter) {
-						$tpl->newBlock('hm-letter');
-						if (in_array($letter, $correct)) {
-							$lstr = '<span class="correct">' . $letter . '</span>';
-						} elseif (in_array($letter, $wrong)) {
-							$lstr = '<span class="wrong">' . $letter . '</span>';
-						} else {
-							$lstr = '<a rel="nofollow" href="/' . $category->textid . '/?guess=' . urlencode($letter) . '">' . $letter . '</a>';
-						}
-						$tpl->assign('letter', $lstr);
-					}
-				} else {
-
-					$points = 10 - $wrongs;
-
-					$tpl->assign([
-						'hint' => 'Tu uzvarēji un ieguvi ' . $points . ' punktus ;) atbilde ir:',
-						'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
-						'img' => $wrongs,
-					]);
-
-					$date = date('Y-m-d');
-					if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
-						$db->query("UPDATE wg_results SET games = games+1, points = points+$points WHERE user_id = '$auth->id' AND date = '$date'");
-					} else {
-						$db->query("INSERT INTO wg_results (user_id,date,points,games) VALUES ('$auth->id','$date','$points','1')");
-					}
-					reset_wg_id();
-				}
-
-				$db->query("UPDATE wg_games SET correct = '" . serialize($correct) . "', wrong = '" . serialize($wrong) . "' WHERE id = '$game_id' LIMIT 1");
-			} else {
-
-				foreach ($word_letters as $word_letter) {
-					if ($word_letter == ' ') {
-						$outstr .= '&nbsp; ';
-					} elseif (in_array($word_letter, $correct)) {
-						$outstr .= $word_letter . '&nbsp;';
-					} else {
-						$outstr .= '<span style="color: #900;">' . $word_letter . '</span>&nbsp;';
-					}
-				}
-
-				$strs = ['Tu zaudēji ;(', 'Ha ha! Tu zaudēji :P', 'Šoreiz nepaviecās :|', 'Tu zaudēji, es uzvarēju :P', 'Karājies, karājies, zaudētāj :P'];
-				shuffle($strs);
+			if ($hasempty) {
 
 				$tpl->assign([
-					'hint' => $strs[0] . ' atbilde ir:',
-					'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
-					'img' => 10,
+					'hint' => $word->hint,
+					'guess' => $outstr,
+					'img' => $wrongs,
 				]);
 
-				$db->query("UPDATE wg_games SET correct = '" . serialize($correct) . "', wrong = '" . serialize($wrong) . "' WHERE id = '$game_id' LIMIT 1");
+				foreach ($letters as $letter) {
+					$tpl->newBlock('hm-letter');
+					if (in_array($letter, $correct)) {
+						$lstr = '<span class="correct">' . $letter . '</span>';
+					} elseif (in_array($letter, $wrong)) {
+						$lstr = '<span class="wrong">' . $letter . '</span>';
+					} else {
+						$lstr = '<a rel="nofollow" href="/' . $category->textid . '/?guess=' . urlencode($letter) . '">' . $letter . '</a>';
+					}
+					$tpl->assign('letter', $lstr);
+				}
+			} else {
+				// WIN logic - Anti-cheat race condition & time verification
+				$points = 10 - $wrongs;
 
-				$date = date('Y-m-d');
+				$tpl->assign([
+					'hint' => 'Tu uzvarēji un ieguvi ' . $points . ' punktus ;) atbilde ir:',
+					'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
+					'img' => $wrongs,
+				]);
 
-				if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
-					$db->query("UPDATE wg_results SET games = games+1 WHERE user_id = '$auth->id' AND date = '$date'");
-				} else {
-					$db->query("INSERT INTO wg_results (user_id,date,points,games) VALUES ('$auth->id','$date','0','1')");
+				// Mark game as finished atomically to avoid race-condition multi-scoring
+				$db->query("UPDATE wg_games SET status = 1 WHERE id = '$game_id' AND status = 0");
+				if ($db->rows_affected() > 0) {
+					$duration = time() - intval($game->created_at);
+					// Anti-cheat: Only award score if logged in AND played for at least 1 second
+					if ($auth->ok && $auth->id > 0 && $duration >= 1) {
+						$date = date('Y-m-d');
+						if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
+							$db->query("UPDATE wg_results SET games = games+1, points = points+$points WHERE user_id = '$auth->id' AND date = '$date'");
+						} else {
+							$db->query("INSERT INTO wg_results (user_id, date, points, games) VALUES ('$auth->id', '$date', '$points', '1')");
+						}
+					}
 				}
 				reset_wg_id();
 			}
+
+			$db->query("UPDATE wg_games SET correct = '" . serialize($correct) . "', wrong = '" . serialize($wrong) . "' WHERE id = '$game_id' LIMIT 1");
+		} else {
+			// LOSS logic
+			$outstr = '';
+			foreach ($word_letters as $word_letter) {
+				if ($word_letter == ' ') {
+					$outstr .= '&nbsp; ';
+				} elseif (in_array($word_letter, $correct)) {
+					$outstr .= $word_letter . '&nbsp;';
+				} else {
+					$outstr .= '<span style="color: #900;">' . $word_letter . '</span>&nbsp;';
+				}
+			}
+
+			$strs = ['Tu zaudēji ;(', 'Ha ha! Tu zaudēji :P', 'Šoreiz nepaviecās :|', 'Tu zaudēji, es uzvarēju :P', 'Karājies, karājies, zaudētāj :P'];
+			shuffle($strs);
+
+			$tpl->assign([
+				'hint' => $strs[0] . ' atbilde ir:',
+				'guess' => $outstr . '<br><br><a id="hm-new-game" href="/' . $category->textid . '">Jauna spēle</a>',
+				'img' => 10,
+			]);
+
+			$db->query("UPDATE wg_games SET status = 1 WHERE id = '$game_id' AND status = 0");
+			if ($db->rows_affected() > 0) {
+				if ($auth->ok && $auth->id > 0) {
+					$date = date('Y-m-d');
+					if ($db->get_var("SELECT count(*) FROM wg_results WHERE user_id = '$auth->id' AND date = '$date'")) {
+						$db->query("UPDATE wg_results SET games = games+1 WHERE user_id = '$auth->id' AND date = '$date'");
+					} else {
+						$db->query("INSERT INTO wg_results (user_id, date, points, games) VALUES ('$auth->id', '$date', '0', '1')");
+					}
+				}
+			}
+			reset_wg_id();
 		}
 	}
 }
@@ -272,4 +286,3 @@ if (!$ajax) {
 	$tpl->printToScreen();
 	exit;
 }
-

@@ -41,5 +41,7 @@ if (!$is_local && (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_loc
 	$secure_login = true;
 
 } else if (!isset($ios_local_ip) || $_SERVER['SERVER_NAME'] !== $ios_local_ip) {
-    ini_set('session.cookie_domain', '.exs.dev');
+	if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], '.local')) {
+		ini_set('session.cookie_domain', '.exs.local');
+	}
 }

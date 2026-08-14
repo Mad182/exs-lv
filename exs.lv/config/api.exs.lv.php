@@ -26,5 +26,7 @@ if (!$is_local) { // ja nedarbina lokālā vidē
 	$secure_login = true;
 
 } else {
-    ini_set('session.cookie_domain', '.exs.dev');
+	if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], '.local')) {
+		ini_set('session.cookie_domain', '.exs.local');
+	}
 }

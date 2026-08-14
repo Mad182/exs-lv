@@ -420,4 +420,61 @@
         color: #eee !important;
     }
 
+	/* Dark mode styles for tables & results */
+	table.table,
+	.table-striped,
+	.table-hover,
+	.tetris-top-table,
+	.tetris-mini-table {
+		color: #e9ecef;
+	}
+
+	.table th,
+	.tetris-top-table th {
+		background-color: #272d36 !important;
+		color: #58a6ff;
+		border-bottom-color: #343b44 !important;
+	}
+
+	.table td,
+	.tetris-top-table td {
+		border-top-color: #2c343e !important;
+		color: #c9d1d9;
+	}
+
+	.table-striped tbody tr:nth-child(odd) td,
+	.table-striped tbody tr:nth-child(odd) th {
+		background-color: #1e242c;
+	}
+
+	.table-striped tbody tr:nth-child(even) td,
+	.table-striped tbody tr:nth-child(even) th {
+		background-color: #222831;
+	}
+
+	.table-hover tbody tr:hover td,
+	.table-hover tbody tr:hover th {
+		background-color: #2c343e !important;
+	}
+
+	.tetris-guide-box {
+		background: #1e242c;
+		border-color: #343b44;
+	}
+
+	.tetris-guide-box h4 {
+		color: #58a6ff;
+	}
+
+	.tetris-guide-box li {
+		color: #c9d1d9;
+	}
+
+	.tetris-guide-box kbd {
+		background-color: #2c343e;
+		border-color: #3d4551;
+		color: #58a6ff;
+		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+	}
+
 }

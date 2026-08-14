@@ -35,7 +35,7 @@ Konfigurācijas failā obligāti jānorāda mysql, memcache konfigs un absolūti
 
 ### php7-fpm un vajadzīgo moduļu uzstādīšana uz debian/ubuntu
 
-    apt install php8.3-cli php8.3-common php8.3-curl php8.3-fpm php8.3-gd php8.3-intl php8.3-mbstring php8.3-mysql php8.3-opcache php8.3-readline php8.3-xml php8.3-zip
+    apt install php8.5-cli php8.5-common php8.5-curl php8.5-fpm php8.5-gd php8.5-intl php8.5-mbstring php8.5-mysql php8.5-readline php8.5-xml php8.5-zip mariadb-server
 
 ### Memcached uz servera ar Windows OS
 

@@ -60,4 +60,8 @@ if (!$is_local) {
 		ini_set('session.cookie_secure', 1);
 		ini_set('session.use_only_cookies', 1);
 	}
+} else {
+	if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], '.local')) {
+		ini_set('session.cookie_domain', '.coding.local');
+	}
 }

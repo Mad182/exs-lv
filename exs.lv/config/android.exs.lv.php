@@ -42,5 +42,7 @@ if (!$is_local && $_SERVER['SERVER_NAME'] !== $android_local_ip) {
 	$secure_login = true;
 
 } else if ($_SERVER['SERVER_NAME'] !== $android_local_ip) {
-    ini_set('session.cookie_domain', '.exs.dev');
+	if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], '.local')) {
+		ini_set('session.cookie_domain', '.exs.local');
+	}
 }
