@@ -233,11 +233,12 @@
 	}
 
 	function checkHomeSlot() {
-		var frogCenterCol = Math.round((frog.x + GRID_SIZE / 2) / GRID_SIZE);
+		var frogTargetCenter = frog.targetX + GRID_SIZE / 2;
 		var found = false;
 		for (var i = 0; i < homeSlots.length; i++) {
 			var slot = homeSlots[i];
-			if (frogCenterCol === slot.col && !slot.filled) {
+			var slotCenter = slot.col * GRID_SIZE + GRID_SIZE / 2;
+			if (Math.abs(frogTargetCenter - slotCenter) <= 24 && !slot.filled) {
 				slot.filled = true;
 				found = true;
 				score += 500 + timerCurrent * 10;
@@ -291,8 +292,8 @@
 			}
 		}
 
-		// Row 0 Collision check (Home Slot Row)
-		if (frog.row === 0) {
+		// Row 0 Collision check (Home Slot Row) - check once frog finishes hop to row 0
+		if (frog.row === 0 && Math.abs(frog.y - frog.targetY) < 8) {
 			checkHomeSlot();
 			return;
 		}
