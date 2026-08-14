@@ -11,7 +11,7 @@ $tpl->prepare();
 $red_numbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 $black_numbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
 
-// Ensure table exists
+// Ensure tables exist
 $db->query("
 CREATE TABLE IF NOT EXISTS `roulette_balance` (
   `user_id` int(11) NOT NULL,
@@ -36,6 +36,13 @@ function get_user_roulette_balance($user_id) {
 
 	if (!$row) {
 		$db->query("INSERT INTO `roulette_balance` (`user_id`, `gold`, `max_gold`, `last_reset_date`) VALUES (" . intval($user_id) . ", 100, 100, '" . $today . "')");
+
+		// Sync with gamescore table
+		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($user_id));
+		if (!$existing_score) {
+			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($user_id) . ", 'rulete', 100, " . time() . ")");
+		}
+
 		return ['gold' => 100, 'max_gold' => 100];
 	}
 
@@ -47,6 +54,15 @@ function get_user_roulette_balance($user_id) {
 		}
 		$max_gold = max($row->max_gold, $new_gold);
 		$db->query("UPDATE `roulette_balance` SET `gold` = " . intval($new_gold) . ", `max_gold` = " . intval($max_gold) . ", `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($user_id));
+
+		// Sync with gamescore table
+		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($user_id));
+		if (!$existing_score) {
+			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($user_id) . ", 'rulete', " . intval($max_gold) . ", " . time() . ")");
+		} else if ($max_gold > $existing_score->score) {
+			$db->query("UPDATE `gamescore` SET `score` = " . intval($max_gold) . ", `time` = " . time() . " WHERE `id` = " . intval($existing_score->id));
+		}
+
 		return ['gold' => $new_gold, 'max_gold' => $max_gold];
 	}
 
@@ -173,7 +189,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 
 	$net_gain = $total_payout - $total_bet;
 	$new_gold = $current_gold + $net_gain;
-	$max_gold = $current_gold;
 
 	if ($is_logged_in) {
 		$bal_data = get_user_roulette_balance($auth->id);
@@ -182,9 +197,15 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 		$today = date('Y-m-d');
 		$db->query("UPDATE `roulette_balance` SET `gold` = " . intval($new_gold) . ", `max_gold` = " . intval($max_gold) . ", `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
 
-		if ($new_gold > 0) {
+		// Sync with gamescore table for platform leaderboards
+		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($auth->id));
+		if (!$existing_score) {
 			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($auth->id) . ", 'rulete', " . intval($max_gold) . ", " . time() . ")");
+		} else if ($max_gold > $existing_score->score) {
+			$db->query("UPDATE `gamescore` SET `score` = " . intval($max_gold) . ", `time` = " . time() . " WHERE `id` = " . intval($existing_score->id));
 		}
+	} else {
+		$max_gold = $new_gold;
 	}
 
 	echo json_encode([
