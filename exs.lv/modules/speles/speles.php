@@ -52,7 +52,7 @@ $games_list = [
 	[
 		'id' => '2048',
 		'title' => '2048',
-		'url' => '/2048',
+		'url' => '/2048-spele',
 		'icon' => '🔢',
 		'badge' => 'Jaunums',
 		'badge_class' => 'label-success',

@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 	// Initialize new session token
 	function initSession() {
-		$.getJSON('/2048/?action=init_token', function (res) {
+		$.getJSON('/2048-spele/?action=init_token', function (res) {
 			if (res && res.success) {
 				sessionToken = res.token;
 			}
@@ -238,7 +238,7 @@ $(document).ready(function () {
 	function submitScore() {
 		if (score <= 0 || !sessionToken) return;
 
-		$.post('/2048/?action=push', {
+		$.post('/2048-spele/?action=push', {
 			token: sessionToken,
 			score: score,
 			max_tile: getMaxTile(),

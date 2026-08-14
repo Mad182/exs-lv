@@ -1,9 +1,9 @@
 <h1>2048 - skaitļu apvienošanas spēle</h1>
 
 <div class="tabs">
-	<li><a href="/2048" class="tab{active-tab-game}">Spēle</a></li>
-	<li><a href="/2048/top" class="tab{active-tab-top}">Šodienas tops</a></li>
-	<li><a href="/2048/overall-top" class="tab{active-tab-overall-top}">Visu laiku tops</a></li>
+	<li><a href="/2048-spele" class="tab{active-tab-game}">Spēle</a></li>
+	<li><a href="/2048-spele/top" class="tab{active-tab-top}">Šodienas tops</a></li>
+	<li><a href="/2048-spele/overall-top" class="tab{active-tab-overall-top}">Visu laiku tops</a></li>
 </div>
 
 <div class="tabMain" id="twenty48-container">
