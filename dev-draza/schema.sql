@@ -1920,6 +1920,7 @@ CREATE TABLE `users` (
   `user_agent` text CHARACTER SET utf8mb3 COLLATE utf8mb3_latvian_ci NOT NULL,
   `draugiem_id` int(11) NOT NULL DEFAULT 0,
   `facebook_id` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT '0',
+  `google_id` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `twitter_id` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `steam_id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `lastfm_username` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
@@ -1966,6 +1967,7 @@ CREATE TABLE `users` (
   KEY `lastfm_username` (`lastfm_username`),
   KEY `steam_id` (`steam_id`),
   KEY `facebook_id` (`facebook_id`),
+  KEY `google_id` (`google_id`),
   KEY `twitter_id` (`twitter_id`),
   KEY `deleted` (`deleted`),
   KEY `avatar` (`avatar`)
