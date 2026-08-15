@@ -133,7 +133,7 @@ $articles = $db->get_results("
 	ORDER BY
 		`pages`.`id` DESC
 	LIMIT
-		0,3");
+		0,2");
 
 foreach ($articles as $article) {
 
