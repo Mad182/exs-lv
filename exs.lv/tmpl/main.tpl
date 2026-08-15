@@ -611,7 +611,7 @@
 			<div id="site-info" class="container">
 				<nav id="footer-nav" class="fr">
 					<ul class="menu">
-						<li>Mobilā versija: <a href="https://m.exs.lv/">m.exs.lv</a></li>
+						<li>Mobilā versija:&nbsp;<a href="https://m.exs.lv/">m.exs.lv</a></li>
 						<li><a href="/statistika">Statistika</a></li>
 						<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 					</ul>

@@ -1303,7 +1303,8 @@ ul#menu-footer {
 
 #footer-nav li {
 	list-style: none;
-	float: left
+	float: left;
+	white-space: nowrap
 }
 
 #footer-nav li:after {
