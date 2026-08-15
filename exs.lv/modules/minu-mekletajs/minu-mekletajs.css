@@ -254,6 +254,35 @@
 	font-size: 13px;
 }
 
+/* Leaderboard Sections per Difficulty */
+.ms-top-section {
+	margin-bottom: 30px;
+}
+
+.ms-top-heading {
+	font-size: 16px;
+	font-weight: 700;
+	color: #1e293b;
+	margin: 0 0 10px 0;
+	padding-bottom: 6px;
+	border-bottom: 2px solid #e2e8f0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ms-top-icon {
+	font-size: 16px;
+}
+
+.ms-top-table {
+	margin-bottom: 0;
+}
+
+.ms-no-scores {
+	margin-bottom: 0;
+}
+
 /* Dark Mode Overrides */
 @media (prefers-color-scheme: dark) {
 	#minesweeper-container {
@@ -345,31 +374,8 @@
 	}
 }
 
-/* Leaderboard Sections per Difficulty */
-.ms-top-section {
-	margin-bottom: 30px;
-}
-
-.ms-top-heading {
-	font-size: 16px;
-	font-weight: 700;
-	color: #1e293b;
-	margin: 0 0 10px 0;
-	padding-bottom: 6px;
-	border-bottom: 2px solid #e2e8f0;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.ms-top-icon {
-	font-size: 16px;
-}
-
-.ms-top-table {
-	margin-bottom: 0;
-}
-
-.ms-no-scores {
-	margin-bottom: 0;
+body.auto-dark .ms-top-heading,
+body.dark-mode .ms-top-heading {
+	color: #f1f5f9;
+	border-bottom-color: #334155;
 }
