@@ -636,15 +636,18 @@ html .banned {
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-.menu,
-.menu ul {
+#left .menu,
+#left .menu ul,
+#sub-categories .menu,
+#sub-categories .menu ul {
 	padding: 0;
 	margin: 0;
 	list-style: none !important;
 	list-style-type: none !important;
 }
 
-.menu > li {
+#left .menu > li,
+#sub-categories .menu > li {
 	display: block;
 	background: transparent;
 	padding: 0;
@@ -652,11 +655,13 @@ html .banned {
 	border-bottom: 1px solid #f1f5f9;
 }
 
-.menu > li:last-child {
+#left .menu > li:last-child,
+#sub-categories .menu > li:last-child {
 	border-bottom: none;
 }
 
-.menu a {
+#left .menu a,
+#sub-categories .menu a {
 	font-weight: 600;
 	display: flex;
 	align-items: center;
@@ -671,7 +676,8 @@ html .banned {
 	transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.menu a:hover, .menu a:focus {
+#left .menu a:hover, #left .menu a:focus,
+#sub-categories .menu a:hover, #sub-categories .menu a:focus {
 	color: #0284c7;
 	background: #f0f9ff;
 	border-left-color: #2090cc;
@@ -679,21 +685,25 @@ html .banned {
 	text-decoration: none;
 }
 
-#wrapper .menu .selected > a,
-.menu .selected > a {
+#wrapper #left .menu .selected > a,
+#wrapper #sub-categories .menu .selected > a,
+#left .menu .selected > a,
+#sub-categories .menu .selected > a {
 	color: #0284c7;
 	font-weight: 700;
 	background: linear-gradient(90deg, rgba(32, 144, 204, 0.12) 0%, rgba(32, 144, 204, 0.03) 100%);
 	border-left: 3px solid #2090cc;
 }
 
-.menu ul {
+#left .menu ul,
+#sub-categories .menu ul {
 	padding: 0 0 0 8px;
 	margin: 2px 0 6px 12px;
 	border-left: 2px solid #e2e8f0;
 }
 
-.menu ul li {
+#left .menu ul li,
+#sub-categories .menu ul li {
 	display: block;
 	background: transparent;
 	padding: 0;
@@ -701,12 +711,15 @@ html .banned {
 	border-bottom: 1px dashed #f1f5f9;
 }
 
-.menu ul li:last-child {
+#left .menu ul li:last-child,
+#sub-categories .menu ul li:last-child {
 	border-bottom: none;
 }
 
-#wrapper .menu li.selected li a,
-.menu ul li a {
+#wrapper #left .menu li.selected li a,
+#wrapper #sub-categories .menu li.selected li a,
+#left .menu ul li a,
+#sub-categories .menu ul li a {
 	font-size: 12px;
 	font-weight: 500;
 	display: block;
@@ -719,16 +732,18 @@ html .banned {
 	transition: all 0.15s ease;
 }
 
-.menu ul li a:hover,
-.menu ul li a:focus {
+#left .menu ul li a:hover, #left .menu ul li a:focus,
+#sub-categories .menu ul li a:hover, #sub-categories .menu ul li a:focus {
 	color: #0284c7;
 	background: #f8fafc;
 	padding-left: 11px;
 	text-decoration: none;
 }
 
-#wrapper .menu .selected .selected a,
-.menu ul li.selected > a {
+#wrapper #left .menu .selected .selected a,
+#wrapper #sub-categories .menu .selected .selected a,
+#left .menu ul li.selected > a,
+#sub-categories .menu ul li.selected > a {
 	color: #0284c7;
 	font-weight: 700;
 	background: #e0f2fe;

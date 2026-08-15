@@ -1315,15 +1315,27 @@ ul#menu-footer {
 	content: ""
 }
 
-#footer-nav li a {
+#footer-nav li a,
+#footer-nav .menu a {
 	color: #959cab;
+	display: inline;
+	font-weight: normal;
 	padding: 0 0.5em;
+	margin: 0;
+	border: 0;
+	border-left: none;
+	background: transparent;
+	border-radius: 0;
+	transform: none;
 	transition: all 0.8s linear 0s;
 }
 
-#footer-nav li a:hover {
+#footer-nav li a:hover,
+#footer-nav .menu a:hover {
 	color: #fff;
-	text-decoration: none
+	background: transparent;
+	text-decoration: none;
+	transform: none;
 }
 
 #footer-nav li:first-child a {
