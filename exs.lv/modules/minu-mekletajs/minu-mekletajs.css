@@ -377,11 +377,13 @@
 		background-color: #1e293b;
 		border-color: #334155;
 		color: #cbd5e1;
+		text-shadow: none;
 	}
 
 	.alert-info strong,
 	.alert-info a {
 		color: #38bdf8;
+		text-shadow: none;
 	}
 }
 
@@ -396,6 +398,7 @@ body.dark-mode .alert-info {
 	background-color: #1e293b;
 	border-color: #334155;
 	color: #cbd5e1;
+	text-shadow: none;
 }
 
 body.auto-dark .alert-info strong,
@@ -403,4 +406,5 @@ body.auto-dark .alert-info a,
 body.dark-mode .alert-info strong,
 body.dark-mode .alert-info a {
 	color: #38bdf8;
+	text-shadow: none;
 }
