@@ -13,10 +13,6 @@
 $fb_api_id = '';
 $fb_api_key = '';
 
-// draugiem pase
-$dr_api_id = '';
-$dr_api_key = '';
-
 // steam login
 $steam_api_key = ""; // API atslēga
 $steam_domain_name = "exs.lv"; // domēns, kas rādās steam lapā

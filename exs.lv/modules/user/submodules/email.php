@@ -12,7 +12,7 @@ $tpl->newBlock('user-profile-email');
 //write changes
 if (isset($_POST['submit'])) {
 
-	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id))) && check_token('email', $_POST['xsrf_token'])) {
+	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && !empty($inprofile->facebook_id)) && check_token('email', $_POST['xsrf_token'])) {
 
 		if (filter_var($_POST['edit-mail'], FILTER_VALIDATE_EMAIL)) {
 

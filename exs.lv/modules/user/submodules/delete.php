@@ -12,7 +12,7 @@ $tpl->newBlock('user-profile-delete');
 //write changes
 if (isset($_POST['submit'])) {
 
-	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->draugiem_id) || !empty($inprofile->facebook_id) || !empty($inprofile->twitter_id))) && check_token('delete', $_POST['xsrf_token'])) {
+	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && (!empty($inprofile->facebook_id) || !empty($inprofile->twitter_id))) && check_token('delete', $_POST['xsrf_token'])) {
 
 		$auth->log('Izdzēsa profilu (' .  $auth->nick . ')', 'users', $auth->id);
 

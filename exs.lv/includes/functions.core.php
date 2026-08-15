@@ -226,7 +226,7 @@ function userlog($user, $action, $avatar = '', $multi = '', $private = 0, $group
 	$lang = get_lang();
 
 	if (!empty($multi)) {
-		$multi = substr($multi, 0, 16);
+		$multi = substr($multi, 0, 32);
 		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang'");
 	}
 

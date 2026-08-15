@@ -66,7 +66,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	}
 
 	if ($is_new_record) {
-		push('Uzstādīja jaunu rekordu spēlē <a href="/vardes">Vardes</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/games/vardes.png', 'g-vardes-' . $auth->id);
+		push('Uzstādīja jaunu rekordu spēlē <a href="/vardes">Vardes</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/games/vardes.png', 'game-vardes-' . $auth->id);
 	}
 
 	echo json_encode([
