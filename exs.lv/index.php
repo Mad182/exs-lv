@@ -42,7 +42,9 @@ if (!empty($_GET['fakeurl'])) {
 	}
 
 	if ($_GET['viewcat'] === 'say') {
-		$_GET['m'] = $parts[1];
+		if (!empty($parts[1])) {
+			$_GET['m'] = $parts[1];
+		}
 		if (!empty($parts[2])) {
 			$mbid = explode('-', $parts[2]);
 			if ($mbid[0] === 'skip') {
@@ -99,11 +101,15 @@ if ($requested_json) {
 if (isset($_GET['kategorija']) && isset($_GET['id'])) {
 	//raksti
 	$redirect = $db->get_row("SELECT `strid` FROM `pages` WHERE `textid` = '" . sanitize($_GET['id']) . "'");
-	redirect('https://exs.lv/read/' . $redirect->strid, true);
+	if ($redirect && !empty($redirect->strid)) {
+		redirect('https://exs.lv/read/' . $redirect->strid, true);
+	}
 } elseif (isset($_GET['id']) && !isset($_GET['viewcat'])) {
 	//kategorijas
 	$category = get_cat($_GET['id']);
-	redirect('https://exs.lv/' . $category->textid, true);
+	if ($category && !empty($category->textid)) {
+		redirect('https://exs.lv/' . $category->textid, true);
+	}
 }
 
 $site_access = get_site_access();

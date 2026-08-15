@@ -550,8 +550,7 @@ if (!empty($inprofile)) {
 			if (!empty($record->close_reason)) {
 				$tpl->assign('reason', add_smile($record->close_reason));
 			}
-			if (!empty($record->closed_by)) {
-				$closer = get_user($record->closed_by);
+			if (!empty($record->closed_by) && ($closer = get_user($record->closed_by))) {
 				$tpl->assign('by', '<br>Aizslēdza: ' . usercolor($closer->nick, $closer->level, false, $record->closed_by));
 			}
 		}

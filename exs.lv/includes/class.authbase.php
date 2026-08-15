@@ -272,11 +272,7 @@ class AuthBase {
 
 		$lang = get_lang();
 
-		if ($db->get_var("SELECT count(*) FROM `counter_ip` WHERE `ip_addr` = '" . $this->iphash . "' AND `site_id` = " . $lang)) {
-			$db->query("UPDATE `counter_ip` SET `last_hit` = CURRENT_TIMESTAMP WHERE `ip_addr` = '" . $this->iphash . "' AND `site_id` = " . $lang);
-		} else {
-			$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->iphash . "', CURRENT_TIMESTAMP, " . $lang . ")");
-		}
+		$db->query("INSERT INTO `counter_ip` (`ip_addr`, `last_hit`, `site_id`) VALUES ('" . $this->iphash . "', CURRENT_TIMESTAMP, " . $lang . ") ON DUPLICATE KEY UPDATE `last_hit` = CURRENT_TIMESTAMP");
 
 		if (!($this->hosts_online = $m->get('online_count_' . $lang))) {
 			$db->query("DELETE FROM `counter_ip` WHERE CURRENT_TIMESTAMP - INTERVAL 240 SECOND > `last_hit`");

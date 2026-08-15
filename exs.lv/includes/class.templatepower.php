@@ -42,9 +42,11 @@ class TemplatePowerParser {
 
 	protected function __errorAlert($message) {
 		global $debug;
+		$msg = 'Kļūda: ' . $message;
 		if (!empty($debug)) {
-			print '<br>' . $message . '<br>' . PHP_EOL;
+			print '<br>' . $msg . '<br>' . PHP_EOL;
 		}
+		return $msg;
 	}
 
 	protected function __prepare() {
