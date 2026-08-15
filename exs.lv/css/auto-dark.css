@@ -776,4 +776,57 @@
 		color: #6e7681;
 	}
 
+	/* Alert boxes for dark mode */
+	.alert-info {
+		background-color: #1e293b;
+		border-color: #334155;
+		color: #cbd5e1;
+	}
+
+	.alert-info strong,
+	.alert-info h4,
+	.alert-info a {
+		color: #38bdf8;
+	}
+
+	.alert-success {
+		background-color: #142e23;
+		border-color: #1e4a36;
+		color: #a7f3d0;
+	}
+
+	.alert-success strong,
+	.alert-success h4,
+	.alert-success a {
+		color: #34d399;
+	}
+
+	.alert-danger,
+	.alert-error {
+		background-color: #36171a;
+		border-color: #5c2227;
+		color: #fca5a5;
+	}
+
+	.alert-danger strong,
+	.alert-danger h4,
+	.alert-error strong,
+	.alert-error h4,
+	.alert-danger a,
+	.alert-error a {
+		color: #f87171;
+	}
+
+	.alert-warning {
+		background-color: #332412;
+		border-color: #543b1c;
+		color: #fde68a;
+	}
+
+	.alert-warning strong,
+	.alert-warning h4,
+	.alert-warning a {
+		color: #fbbf24;
+	}
+
 }
