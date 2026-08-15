@@ -226,7 +226,8 @@ function userlog($user, $action, $avatar = '', $multi = '', $private = 0, $group
 	$lang = get_lang();
 
 	if (!empty($multi)) {
-		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang' LIMIT 2");
+		$multi = substr($multi, 0, 16);
+		$db->query("DELETE FROM `userlogs` WHERE `user` = '$user' AND `multi` = '$multi' AND `lang` = '$lang'");
 	}
 
 	if ($group_id) {
