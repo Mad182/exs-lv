@@ -66,8 +66,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		if ($time_sec < $current->score) {
 			$db->query("UPDATE gamescore SET score = '$time_sec', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
 			$is_new_record = true;
-		} else {
-			$db->query("UPDATE gamescore SET time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
 		}
 	}
 

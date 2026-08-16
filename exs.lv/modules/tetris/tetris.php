@@ -85,7 +85,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 			$is_new_record = true;
 			$highScore = $score;
 		} else {
-			$db->query("UPDATE gamescore SET time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
 			$highScore = $current->score;
 		}
 	}
