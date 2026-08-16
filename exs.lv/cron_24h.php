@@ -33,10 +33,11 @@ $m->addServer($mc_host, $mc_port);
 
 ########################## TOPA TĪRĪŠANA
 
-$daily_first = $db->get_var("SELECT id FROM users ORDER BY today DESC LIMIT 1");
-$db->query("UPDATE `users` SET `daily_first` = `daily_first`+1, `credit` = `credit`+1 WHERE `id` = '$daily_first'");
-
-update_karma($daily_first, true);
+$daily_first = $db->get_var("SELECT id FROM users WHERE today > 0 ORDER BY today DESC LIMIT 1");
+if ($daily_first) {
+	$db->query("UPDATE `users` SET `daily_first` = `daily_first`+1, `credit` = `credit`+1 WHERE `id` = '$daily_first'");
+	update_karma($daily_first, true);
+}
 
 $db->query("UPDATE `users` SET `days_in_row` = `days_in_row`+1 WHERE `seen_today` = 1");
 $db->query("UPDATE `users` SET `max_in_row` = `days_in_row` WHERE `days_in_row` > `max_in_row`");
