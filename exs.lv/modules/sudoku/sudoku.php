@@ -55,33 +55,37 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
-	// Check if this is a new personal best time (lower is better)
-	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'sudoku' AND user_id = '$auth->id'");
-	$is_new_record = (empty($prev_best) || $time_sec < (int)$prev_best);
+	// Save or Update High Score (lower time is better)
+	$current = $db->get_row("SELECT * FROM gamescore WHERE game = 'sudoku' AND user_id = '$auth->id'");
+	$is_new_record = false;
 
-	// Store time_sec directly into gamescore (lower time is better!)
-	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'sudoku', '$time_sec', '" . time() . "')");
-	$insert_id = $db->insert_id();
-
-	if ($insert_id) {
-		$mins = floor($time_sec / 60);
-		$s = $time_sec % 60;
-		$formatted_time = sprintf('%02d:%02d', $mins, $s);
-
-		if ($is_new_record) {
-			push('Uzstādīja jaunu rekordu spēlē <a href="/sudoku">Sudoku</a> (' . $formatted_time . ')', '/bildes/icons/games/sudoku.png', 'game-sudoku-' . $auth->id);
-		}
-
-		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'sudoku' AND score < '$time_sec'");
-
-		echo json_encode([
-			'success' => true,
-			'message' => 'Tavs risinājuma laiks (' . $formatted_time . ') veiksmīgi saglabāts topos!',
-			'rank' => $rank
-		]);
+	if (!$current) {
+		$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'sudoku', '$time_sec', '" . time() . "')");
+		$is_new_record = true;
 	} else {
-		echo json_encode(['success' => false, 'message' => 'Kļūda saglabājot rezultātu datubāzē!']);
+		if ($time_sec < $current->score) {
+			$db->query("UPDATE gamescore SET score = '$time_sec', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
+			$is_new_record = true;
+		} else {
+			$db->query("UPDATE gamescore SET time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
+		}
 	}
+
+	$mins = floor($time_sec / 60);
+	$s = $time_sec % 60;
+	$formatted_time = sprintf('%02d:%02d', $mins, $s);
+
+	if ($is_new_record) {
+		push('Uzstādīja jaunu rekordu spēlē <a href="/sudoku">Sudoku</a> (' . $formatted_time . ')', '/bildes/icons/games/sudoku.png', 'game-sudoku-' . $auth->id);
+	}
+
+	$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'sudoku' AND score < '$time_sec'");
+
+	echo json_encode([
+		'success' => true,
+		'message' => 'Tavs risinājuma laiks (' . $formatted_time . ') veiksmīgi saglabāts topos!',
+		'rank' => $rank
+	]);
 	exit;
 }
 
