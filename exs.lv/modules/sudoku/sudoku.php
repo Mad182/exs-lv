@@ -55,19 +55,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
-	// Save or Update High Score (lower time is better)
-	$current = $db->get_row("SELECT * FROM gamescore WHERE game = 'sudoku' AND user_id = '$auth->id'");
-	$is_new_record = false;
+	// Save High Score (lower time is better)
+	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'sudoku' AND user_id = '$auth->id'");
+	$is_new_record = (empty($prev_best) || $time_sec < (int)$prev_best);
 
-	if (!$current) {
-		$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'sudoku', '$time_sec', '" . time() . "')");
-		$is_new_record = true;
-	} else {
-		if ($time_sec < $current->score) {
-			$db->query("UPDATE gamescore SET score = '$time_sec', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
-			$is_new_record = true;
-		}
-	}
+	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'sudoku', '$time_sec', '" . time() . "')");
 
 	$mins = floor($time_sec / 60);
 	$s = $time_sec % 60;
@@ -77,7 +69,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		push('Uzstādīja jaunu rekordu spēlē <a href="/sudoku">Sudoku</a> (' . $formatted_time . ')', '/bildes/icons/games/sudoku.png', 'game-sudoku-' . $auth->id);
 	}
 
-	$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'sudoku' AND score < '$time_sec'");
+	$rank = $db->get_var("SELECT COUNT(DISTINCT user_id) + 1 FROM gamescore WHERE game = 'sudoku' AND score < '$time_sec'");
 
 	echo json_encode([
 		'success' => true,
@@ -97,7 +89,7 @@ if ($act == 'top') {
 	// Today's Top Scores (Lowest time is best)
 	$tpl->assign(['active-tab-top' => ' active']);
 	$today_start = strtotime('today midnight');
-	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = 'sudoku' AND time >= '$today_start' ORDER BY score ASC LIMIT 100");
+	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'sudoku' AND time >= '$today_start' GROUP BY user_id ORDER BY score ASC LIMIT 100");
 
 	if ($topusers) {
 		$tpl->newBlock('top-table');
@@ -136,7 +128,7 @@ if ($act == 'top') {
 } elseif ($act == 'overall-top') {
 	// All-Time Top Scores (Lowest time is best)
 	$tpl->assign(['active-tab-overall-top' => ' active']);
-	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = 'sudoku' ORDER BY score ASC LIMIT 100");
+	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'sudoku' GROUP BY user_id ORDER BY score ASC LIMIT 100");
 
 	if ($topusers) {
 		$tpl->newBlock('top-table');

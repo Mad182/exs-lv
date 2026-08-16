@@ -50,23 +50,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 		exit;
 	}
 
-	// Save or Update High Score & Timestamp
-	$current = $db->get_row("SELECT * FROM gamescore WHERE game = 'invaders' AND user_id = '$auth->id'");
-	$is_new_record = false;
+	// Save High Score
+	$prev_best = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'invaders' AND user_id = '$auth->id'");
+	$is_new_record = (empty($prev_best) || $score > $prev_best);
 
-	if (!$current) {
-		$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'invaders', '$score', '" . time() . "')");
-		$is_new_record = true;
-		$highScore = $score;
-	} else {
-		if ($score > $current->score) {
-			$db->query("UPDATE gamescore SET score = '$score', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
-			$is_new_record = true;
-			$highScore = $score;
-		} else {
-			$highScore = $current->score;
-		}
-	}
+	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'invaders', '$score', '" . time() . "')");
+	$highScore = max($prev_best, $score);
 
 	if ($is_new_record) {
 		push('Uzstādīja jaunu rekordu spēlē <a href="/invaders">Space Invaders</a> (' . number_format($highScore, 0, '', ' ') . ' punktu)', '/bildes/icons/games/invaders.png', 'game-invaders-' . $auth->id);
@@ -91,7 +80,7 @@ $user_high_score = 0;
 
 if ($auth->ok) {
 	$user_avatar = get_avatar($auth, 's');
-	$user_high_score = (int) $db->get_var("SELECT score FROM gamescore WHERE game = 'invaders' AND user_id = '$auth->id'");
+	$user_high_score = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'invaders' AND user_id = '$auth->id'");
 }
 
 $tpl->assign([
@@ -102,7 +91,7 @@ $tpl->assign([
 
 // 4. Today's Leaderboard
 $start_of_today = strtotime('today midnight');
-$today_scores = $db->get_results("SELECT * FROM gamescore WHERE game = 'invaders' AND time >= '$start_of_today' ORDER BY score DESC LIMIT 10");
+$today_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'invaders' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 10");
 
 if (!empty($today_scores)) {
 	$rank = 1;
@@ -122,7 +111,7 @@ if (!empty($today_scores)) {
 }
 
 // 5. All-Time Leaderboard
-$alltime_scores = $db->get_results("SELECT * FROM gamescore WHERE game = 'invaders' ORDER BY score DESC LIMIT 10");
+$alltime_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'invaders' GROUP BY user_id ORDER BY score DESC LIMIT 10");
 
 if (!empty($alltime_scores)) {
 	$rank = 1;

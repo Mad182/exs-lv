@@ -59,23 +59,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
-	// Save or Update High Score & Timestamp
-	$current = $db->get_row("SELECT * FROM gamescore WHERE game = 'snake' AND user_id = '$auth->id'");
-	$is_new_record = false;
+	// Save High Score
+	$prev_best = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'snake' AND user_id = '$auth->id'");
+	$is_new_record = (empty($prev_best) || $score > $prev_best);
 
-	if (!$current) {
-		$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'snake', '$score', '" . time() . "')");
-		$is_new_record = true;
-		$highScore = $score;
-	} else {
-		if ($score > $current->score) {
-			$db->query("UPDATE gamescore SET score = '$score', time = '" . time() . "' WHERE id = '$current->id' AND user_id = '$auth->id'");
-			$is_new_record = true;
-			$highScore = $score;
-		} else {
-			$highScore = $current->score;
-		}
-	}
+	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'snake', '$score', '" . time() . "')");
+	$highScore = max($prev_best, $score);
 
 	if ($is_new_record) {
 		push('Uzstādīja jaunu rekordu spēlē <a href="/snake">Čūska</a> (' . number_format($highScore, 0, '', ' ') . ' punkti)', '/bildes/icons/games/snake.png', 'game-snake-' . $auth->id);
@@ -99,7 +88,7 @@ if ($active_sub === 'top') {
 	$tpl->assign(['active-tab-top' => ' active']);
 
 	$start_of_today = strtotime('today midnight');
-	$scores = $db->get_results("SELECT * FROM gamescore WHERE game = 'snake' AND time >= '$start_of_today' ORDER BY score DESC LIMIT 100");
+	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'snake' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 100");
 	$tpl->newBlock('snake-top');
 	$tpl->assign('top-title', 'Šodienas tops');
 
@@ -137,7 +126,7 @@ if ($active_sub === 'top') {
 } elseif ($active_sub === 'overall-top') {
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 
-	$scores = $db->get_results("SELECT * FROM gamescore WHERE game = 'snake' ORDER BY score DESC LIMIT 100");
+	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'snake' GROUP BY user_id ORDER BY score DESC LIMIT 100");
 	$tpl->newBlock('snake-top');
 	$tpl->assign('top-title', 'Visu laiku tops');
 
@@ -178,7 +167,7 @@ if ($active_sub === 'top') {
 
 	$user_high_score = 0;
 	if ($auth->ok) {
-		$user_high_score = (int) $db->get_var("SELECT score FROM gamescore WHERE game = 'snake' AND user_id = '$auth->id'");
+		$user_high_score = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'snake' AND user_id = '$auth->id'");
 	}
 
 	$tpl->assign([
@@ -191,7 +180,7 @@ if ($active_sub === 'top') {
 		$tpl->newBlock('seo-text');
 	}
 
-	$sidebar_scores = $db->get_results("SELECT * FROM gamescore WHERE game = 'snake' ORDER BY score DESC LIMIT 10");
+	$sidebar_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'snake' GROUP BY user_id ORDER BY score DESC LIMIT 10");
 	if ($sidebar_scores) {
 		$i = 1;
 		foreach ($sidebar_scores as $score) {
