@@ -34,8 +34,9 @@ class AuthBase {
 		$this->showsig = 1;
 		$this->nick = "Viesis";
 		$this->flood = 8;
-		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		$this->iphash = substr(md5($_SERVER['HTTP_X_FORWARDED_FOR']), 1, 6);
+		$client_ip = !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? strtok($_SERVER['HTTP_X_FORWARDED_FOR'], ',') : ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
+		$this->ip = trim($client_ip);
+		$this->iphash = substr(md5($this->ip), 1, 6);
 		$this->ok = false;
 		$this->hosts_online = 0;
 
@@ -295,9 +296,10 @@ class AuthBase {
 
 	function check_2fa($userinfo) {
 		global $db;
+		$viewcat = $_GET['viewcat'] ?? '';
 		if (
-			$this->via_android === 0 && $this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $_GET['viewcat'] !== '2fa' && $_GET['viewcat'] !== 'mb-latest' &&
-			$_GET['viewcat'] !== 'mb-latest' && $_GET['viewcat'] !== 'page-avatars' && $_GET['viewcat'] !== 'logout'
+			$this->via_android === 0 && $this->via_ios === 0 && $userinfo->auth_2fa && empty($_SESSION['2fa']) && $viewcat !== '2fa' && $viewcat !== 'mb-latest' &&
+			$viewcat !== 'page-avatars' && $viewcat !== 'logout'
 		) {
 
 			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $userinfo->id");

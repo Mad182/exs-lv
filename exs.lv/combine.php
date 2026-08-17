@@ -1,6 +1,6 @@
 <?php
 
-$expires = 7200;
+$expires = 604800; // 7 days
 header('Pragma: public');
 header('Cache-Control: max-age=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
