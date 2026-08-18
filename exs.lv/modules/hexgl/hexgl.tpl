@@ -1,6 +1,6 @@
 <div class="hexgl-wrapper">
 	<h1>HexGL 3D Nākotnes Sacīkstes</h1>
-	<p>Stūrē anti-gravitācijas gaisa kuģi nākotnes 3D trasē, vāc ātruma paātrinājumus, izvairies no sadursmēm un uzstādi jaunu rekordu!</p>
+	<p>Oficiālā 3D anti-gravitācijas gaisa kuģu sacīkšu spēle (BKcore HexGL). Uzstādi jaunu rekordu pabeidzot 3 apļus visātrākajā laikā!</p>
 
 	<ul class="nav nav-tabs">
 		<li class="{active-tab-game}"><a href="/hexgl">Spēle</a></li>
@@ -9,69 +9,47 @@
 	</ul>
 
 	<!-- START BLOCK : game-play -->
-	<div class="hexgl-container">
-		<div id="hexgl-canvas" class="hexgl-canvas-box"></div>
-
-		<!-- HUD Overlay -->
-		<div class="hexgl-hud">
-			<div class="hexgl-hud-top">
-				<div class="hexgl-hud-card">
-					APLIS <span id="hexgl-lap-val" class="val">1 / 3</span>
-				</div>
-				<div class="hexgl-hud-card hexgl-shield-container">
-					VAIROGS
-					<div class="hexgl-shield-bar-bg">
-						<div id="hexgl-shield-bar" class="hexgl-shield-bar-fill"></div>
-					</div>
-				</div>
-				<div class="hexgl-hud-card">
-					LAIKS <span id="hexgl-time-val" class="val">0.00s</span>
-				</div>
-			</div>
-
-			<div class="hexgl-hud-bottom">
-				<div class="hexgl-speedometer">
-					<div id="hexgl-speed-val" class="speed-val">0</div>
-					<div class="speed-unit">KM / H</div>
+	<div id="hexgl-game-box" style="position: relative; width: 100%; height: 550px; background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 243, 255, 0.2); margin-bottom: 20px;">
+		<div id="step-1">
+			<div id="global"></div>
+			<div id="title"></div>
+			<div id="menucontainer">
+				<div id="menu">
+					<div id="start">Sākt spēli</div>
+					<div id="s-controlType">Vadība: Keyboard</div>
+					<div id="s-quality">Kvalitāte: High</div>
+					<div id="s-hud">HUD: On</div>
+					<div id="s-godmode" style="display: none">Godmode: Off</div>
+					<div id="s-credits">Autori (Credits)</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Boost Banner -->
-		<div id="hexgl-boost-banner" class="hexgl-boost-msg">⚡ TURBO BOOST! ⚡</div>
-
-		<!-- Start Overlay Screen -->
-		<div id="hexgl-start-overlay" class="hexgl-overlay">
-			<h2>HexGL 3D Racing</h2>
-			<p>Izmanto klaviatūru vai ekrāna pogas, lai stūrētu gaisa kuģi trīs apļus un sasniegtu visātrāko laiku!</p>
-
-			<div class="hexgl-controls-info">
-				<div class="hexgl-control-badge"><kbd>W</kbd> / <kbd>&uarr;</kbd> Uz priekšu</div>
-				<div class="hexgl-control-badge"><kbd>A</kbd> / <kbd>D</kbd> Stūrēt pa kreisi / pa labi</div>
-				<div class="hexgl-control-badge"><kbd>S</kbd> / <kbd>&darr;</kbd> Bremzēt</div>
-				<div class="hexgl-control-badge"><kbd>Space</kbd> Turbo spēks</div>
-			</div>
-
-			<button id="hexgl-start-btn" class="hexgl-btn">SĀKT SPĒLI &raquo;</button>
+		<div id="step-2" style="display: none">
+			<div id="ctrl-help">Klikšķini vai pieskaries, lai turpinātu.</div>
 		</div>
 
-		<!-- End Overlay Screen -->
-		<div id="hexgl-end-overlay" class="hexgl-overlay" style="display:none;">
-			<h2 id="hexgl-end-title">FINIŠS!</h2>
-			<p id="hexgl-end-msg">Rezultāts tika saglabāts topos.</p>
-			<button id="hexgl-restart-btn" class="hexgl-btn">MĒĢINĀT VĒLREIZ &raquo;</button>
+		<div id="step-3" style="display: none">
+			<div id="progressbar"></div>
 		</div>
 
-		<!-- Touch Controls for Mobile -->
-		<div class="hexgl-touch-controls">
-			<div class="hexgl-touch-group">
-				<div id="hexgl-touch-left" class="hexgl-touch-btn">&larr;</div>
-				<div id="hexgl-touch-right" class="hexgl-touch-btn">&rarr;</div>
-			</div>
-			<div class="hexgl-touch-group">
-				<div id="hexgl-touch-accel" class="hexgl-touch-btn">&uarr;</div>
-				<div id="hexgl-touch-boost" class="hexgl-touch-btn">⚡</div>
-			</div>
+		<div id="step-4" style="display: none">
+			<div id="overlay"></div>
+			<div id="main"></div>
+		</div>
+
+		<div id="step-5" style="display: none">
+			<div id="finish-title" style="font-size: 2.2em; color: #00f3ff; margin-bottom: 10px;">FINIŠS</div>
+			<div id="time">00'00''00</div>
+			<div id="score-push-msg" style="font-size: 0.6em; color: #00f3ff; margin-top: 15px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.8);"></div>
+			<div id="ctrl-help" style="margin-top: 25px; cursor: pointer;">Klikšķini jebkur, lai spēlētu vēlreiz.</div>
+		</div>
+
+		<div id="credits" style="display: none">
+			<h3>Izstrādātāji</h3>
+			<p><b>Koncepcija un izstrāde</b><br>Thibaut Despoulain (BKcore)</p>
+			<p><b>Tehnoloģijas</b><br>WebGL, JavaScript, Three.js</p>
+			<h4>Klikšķini jebkur, lai atgrieztos.</h4>
 		</div>
 	</div>
 
