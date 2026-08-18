@@ -148,6 +148,16 @@ $games_list = [
 		'badge_class' => 'label-success',
 		'desc' => 'Šķērso bīstamo šoseju un upi ar baļķiem, lai sasniegtu liliju lapas un uzstādītu rekordu!',
 		'game_code' => 'vardes'
+	],
+	[
+		'id' => 'hexgl',
+		'title' => 'HexGL 3D',
+		'url' => '/hexgl',
+		'icon' => '🏎️',
+		'badge' => '3D Arkāde',
+		'badge_class' => 'label-important',
+		'desc' => 'Futūristiskas 3D anti-gravitācijas gaisa kuģu sacīkstes ar topos saglabājamiem laikiem un punktiem!',
+		'game_code' => 'hexgl'
 	]
 ];
 
@@ -193,6 +203,7 @@ $game_meta_map = [
 	'rulete' => ['title' => 'Rulete', 'url' => '/rulete', 'is_time' => false],
 	'flappy' => ['title' => 'Lidojošais Eksis', 'url' => '/flappy', 'is_time' => false],
 	'invaders' => ['title' => 'Space Invaders', 'url' => '/invaders', 'is_time' => false],
+	'hexgl' => ['title' => 'HexGL 3D', 'url' => '/hexgl', 'is_time' => false],
 ];
 
 $recent_scores = $db->get_results("SELECT * FROM gamescore ORDER BY time DESC LIMIT 8");

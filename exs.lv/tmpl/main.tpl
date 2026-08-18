@@ -138,6 +138,7 @@
 								<li><a href="/minu-mekletajs">Mīnu Meklētājs</a></li>
 								<li><a href="/sudoku">Sudoku</a></li>
 								<li><a href="/wordle">Wordle</a></li>
+								<li><a href="/hexgl">HexGL 3D</a></li>
 							</ul>
 						</li>
 						<li><a href="/blogs">Blogi</a></li>
