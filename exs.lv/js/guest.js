@@ -1,6 +1,82 @@
 document.addEventListener('DOMContentLoaded', function () {
+	// Mobile Sidr Menu for Guests
+	var sidr = document.getElementById('sidr-right');
+	var swipeMenu = document.getElementById('swipe-menu-responsive');
+
+	function initGuestMobileMenu() {
+		if (!sidr && swipeMenu) {
+			sidr = document.createElement('div');
+			sidr.id = 'sidr-right';
+			sidr.className = 'sidr right';
+			sidr.style.display = 'none';
+			sidr.style.position = 'fixed';
+			sidr.style.top = '0';
+			sidr.style.right = '-476px';
+			sidr.style.height = '100%';
+			sidr.style.zIndex = '999999';
+			sidr.style.transition = 'right 0.2s ease-in-out';
+
+			var inner = document.createElement('div');
+			inner.className = 'sidr-inner';
+			inner.innerHTML = swipeMenu.innerHTML;
+
+			var closeBtn = inner.querySelector('.close-this-menu');
+			if (closeBtn) {
+				closeBtn.classList.add('sidr-class-close-this-menu');
+			}
+
+			sidr.appendChild(inner);
+			document.body.appendChild(sidr);
+		}
+	}
+
+	initGuestMobileMenu();
+
+	function openMobileMenu() {
+		if (!sidr) initGuestMobileMenu();
+		if (!sidr) return;
+		sidr.style.display = 'block';
+		void sidr.offsetWidth; // Force reflow
+		sidr.style.right = '0px';
+	}
+
+	function closeMobileMenu() {
+		if (!sidr) return;
+		sidr.style.right = '-476px';
+		setTimeout(function () {
+			if (sidr && sidr.style.right !== '0px') {
+				sidr.style.display = 'none';
+			}
+		}, 200);
+	}
+
 	// Global delegated click listener for guest interactivity
 	document.addEventListener('click', function (e) {
+		// 0. Mobile Sidr Menu toggle & Close
+		var menuBtn = e.target.closest('#responsive-menu-button');
+		if (menuBtn) {
+			e.preventDefault();
+			if (sidr && sidr.style.display === 'block' && sidr.style.right === '0px') {
+				closeMobileMenu();
+			} else {
+				openMobileMenu();
+			}
+			return;
+		}
+
+		var closeBtn = e.target.closest('.close-this-menu, .sidr-class-close-this-menu, #close-menu');
+		if (closeBtn) {
+			e.preventDefault();
+			closeMobileMenu();
+			return;
+		}
+
+		if (sidr && sidr.style.display === 'block' && sidr.style.right === '0px') {
+			if (!e.target.closest('#sidr-right') && !e.target.closest('#responsive-menu-button')) {
+				closeMobileMenu();
+			}
+		}
+
 		// 1. Gallery Left / Right buttons
 		var leftBtn = e.target.closest('#gallery-image-list .left');
 		if (leftBtn) {
