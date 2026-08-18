@@ -5321,3 +5321,20 @@ p.images-5 img {
 	margin-right:.5%;
 	float: left
 }
+
+.exs-tooltip {
+	position: fixed;
+	display: none;
+	background: rgba(20, 20, 20, 0.95);
+	color: #fff;
+	padding: 5px 9px;
+	font-size: 11px;
+	line-height: 1.3;
+	border-radius: 4px;
+	z-index: 10000;
+	pointer-events: none;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	white-space: nowrap;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	font-family: sans-serif;
+}

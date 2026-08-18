@@ -17,9 +17,6 @@ function fancyContent(url) {
 
 $(document).ready(function () {
 
-    /* Custom Cluetip. */
-    $('.cluetip').qtip();
-
     /**
      *  RuneScape random fakta atjaunotājs.
      */

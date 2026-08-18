@@ -1,5 +1,4 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-<script src="{static-server}/js/jquery.qtip.min.js"></script>
 <script>
 	function savePosition(arr) {
 		$.post("{page-url}", {position: arr});
@@ -14,21 +13,14 @@
 			}
 		});
 
-		$('a.clue').qtip({
-            content: {
-                text: function(event, api) {
-                    $.ajax({
-                        url: $(this).attr('data-url')
-                    })
-                    .then(function(content) {
-                        api.set('content.text', content);
-                    }, function(xhr, status, error) {
-                        api.set('content.text', 'Ielādes kļūda.');
-                    });
-                    return /*'Ielādē...'*/'';
-                }
-            }
-        });
+		$('body').on('mouseenter', 'a.clue', function() {
+			var $el = $(this);
+			if ($el.data('loaded')) return;
+			var url = $el.attr('data-url');
+			if (!url) return;
+			$.ajax({ url: url }).done(function(content) {
+				$el.attr('title', content).data('loaded', true);
+			});
+		});
 	});
 </script>
-<link rel="stylesheet" href="{static-server}/css/jquery.qtip.min.css">
