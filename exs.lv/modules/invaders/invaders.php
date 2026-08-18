@@ -44,8 +44,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 		exit;
 	}
 
-	// Basic duration verification (e.g. at least 0.15s per 10 points)
-	if ($score > 500 && $duration < ($score * 0.05)) {
+	// Basic duration verification (max 200 points/sec rate limit)
+	if ($score > 500 && $duration < ($score / 200)) {
 		echo json_encode(['success' => false, 'message' => 'Aizdomīgi ātra punktu ieguve!']);
 		exit;
 	}
