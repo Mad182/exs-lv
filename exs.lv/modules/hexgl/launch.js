@@ -31,10 +31,9 @@
       progressbar = $('progressbar');
       return hexGL.load({
         onLoad: function() {
-          console.log('LOADED.');
-          hexGL.init();
           $('step-3').style.display = 'none';
           $('step-4').style.display = 'block';
+          hexGL.init();
           return hexGL.start();
         },
         onError: function(s) {

@@ -40,7 +40,7 @@ THREE.BloomPass = function ( strength, kernelSize, sigma, resolution ) {
 
 	this.convolutionUniforms = THREE.UniformsUtils.clone( convolutionShader.uniforms );
 
-	this.convolutionUniforms[ "uImageIncrement" ].value = THREE.BloomPass.blurx;
+	this.convolutionUniforms[ "uImageIncrement" ].value = THREE.BloomPass.blurX;
 	this.convolutionUniforms[ "cKernel" ].value = THREE.ShaderExtras.buildKernel( sigma );
 
 	this.materialConvolution = new THREE.ShaderMaterial( {
