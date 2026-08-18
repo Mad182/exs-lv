@@ -54,6 +54,17 @@
 				<button id="btn-pause" class="btn btn-warning" onclick="Snake.pause();">Pauze (P)</button>
 				<button id="btn-newgame" class="btn btn-info" onclick="Snake.newGame(true);">Jauna spēle (N)</button>
 			</div>
+
+			<div class="snake-dpad">
+				<div class="dpad-row dpad-row-up">
+					<button type="button" class="btn dpad-btn" onclick="Snake.handleDirectionInput(38);">&uarr;</button>
+				</div>
+				<div class="dpad-row dpad-row-mid">
+					<button type="button" class="btn dpad-btn" onclick="Snake.handleDirectionInput(37);">&larr;</button>
+					<button type="button" class="btn dpad-btn" onclick="Snake.handleDirectionInput(40);">&darr;</button>
+					<button type="button" class="btn dpad-btn" onclick="Snake.handleDirectionInput(39);">&rarr;</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -86,7 +97,7 @@
 		<div class="snake-guide-box">
 			<h4>Vadība</h4>
 			<ul>
-				<li><kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> - Kustības virziens</li>
+				<li><kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> jeb <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> - Virziens</li>
 				<li><kbd>P</kbd> - Pauze</li>
 				<li><kbd>N</kbd> - Sākt jaunu spēli</li>
 				<li><kbd>G</kbd> - Ieslēgt / izslēgt tīklu (Grid)</li>

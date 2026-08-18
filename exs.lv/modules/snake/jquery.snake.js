@@ -9,7 +9,30 @@ var Snake = {
 	cacheimages: [],
 	animateTimer: 0, score: 0, grid: 0, level: 1, lives: 3, speed: 0, cherriesEaten: 0,
 	wall: 0,
-	currentToken: null,
+	currentDir: 39,
+	dirQueue: [],
+
+	isOppositeDir: function(d1, d2) {
+		return (d1 === 37 && d2 === 39) ||
+		       (d1 === 39 && d2 === 37) ||
+		       (d1 === 38 && d2 === 40) ||
+		       (d1 === 40 && d2 === 38);
+	},
+
+	handleDirectionInput: function(keycode) {
+		// Map WASD to Arrow keys
+		if (keycode === 65 || keycode === 97) keycode = 37; // A / a
+		if (keycode === 87 || keycode === 119) keycode = 38; // W / w
+		if (keycode === 68 || keycode === 100) keycode = 39; // D / d
+		if (keycode === 83 || keycode === 115) keycode = 40; // S / s
+
+		if (keycode >= 37 && keycode <= 40) {
+			var lastDir = Snake.dirQueue.length > 0 ? Snake.dirQueue[Snake.dirQueue.length - 1] : Snake.currentDir;
+			if (keycode !== lastDir && Snake.dirQueue.length < 2) {
+				Snake.dirQueue.push(keycode);
+			}
+		}
+	},
 
 	setup: function() {
 		// build map
@@ -38,8 +61,37 @@ var Snake = {
 			Snake.$cherry = $('<div id="cherry"></div>').appendTo(Snake.$map);
 		}
 
+		// Touch / Swipe controls on map
+		var touchStartX = 0, touchStartY = 0;
+		Snake.$map.on('touchstart', function(e) {
+			if (e.originalEvent && e.originalEvent.touches) {
+				touchStartX = e.originalEvent.touches[0].clientX;
+				touchStartY = e.originalEvent.touches[0].clientY;
+			}
+		});
+
+		Snake.$map.on('touchmove', function(e) {
+			if (Snake.animateTimer) {
+				e.preventDefault();
+			}
+		});
+
+		Snake.$map.on('touchend', function(e) {
+			if (e.originalEvent && e.originalEvent.changedTouches) {
+				var touch = e.originalEvent.changedTouches[0];
+				var dx = touch.clientX - touchStartX;
+				var dy = touch.clientY - touchStartY;
+				var minSwipe = 20;
+
+				if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipe) {
+					Snake.handleDirectionInput(dx > 0 ? 39 : 37);
+				} else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > minSwipe) {
+					Snake.handleDirectionInput(dy > 0 ? 40 : 38);
+				}
+			}
+		});
+
 		// listen for key press
-		Snake.cache.keyCode = [0, 0];
 		document.onkeydown = function(event) {
 			var keycode = (!!event && !!event.keyCode) ? event.keyCode : event.which;
 			switch (keycode) {
@@ -59,9 +111,12 @@ var Snake = {
 				case 38 : // Up
 				case 39 : // Right
 				case 40 : // Down
+				case 65 : case 97 :  // A / a
+				case 87 : case 119 : // W / w
+				case 68 : case 100 : // D / d
+				case 83 : case 115 : // S / s
 					event.preventDefault();
-					Snake.cache.keyCode[0] = Snake.cache.keyCode[1];
-					Snake.cache.keyCode[1] = keycode;
+					Snake.handleDirectionInput(keycode);
 					break;
 				default :
 					break;
@@ -144,8 +199,8 @@ var Snake = {
 					// start animation
 					setTimeout(function() {
 						// reset direction to right
-						Snake.cache.keyCode[0] = 0;
-						Snake.cache.keyCode[1] = 39;
+						Snake.currentDir = 39;
+						Snake.dirQueue = [];
 						Snake.start();
 					}, 800);
 				});
@@ -159,17 +214,15 @@ var Snake = {
 			Snake.seg[i].left = Snake.seg[(i == Snake.seg.length - 1 ? 0 : i + 1)].left;
 		}
 
-		var keycode = Snake.cache.keyCode;
-		if (
-			keycode[0] == 37 && keycode[1] == 39 ||
-			keycode[0] == 39 && keycode[1] == 37 ||
-			keycode[0] == 38 && keycode[1] == 40 ||
-			keycode[0] == 40 && keycode[1] == 38
-		) {
-			Snake.cache.keyCode[1] = Snake.cache.keyCode[0];
+		while (Snake.dirQueue.length > 0) {
+			var nextDir = Snake.dirQueue.shift();
+			if (!Snake.isOppositeDir(Snake.currentDir, nextDir)) {
+				Snake.currentDir = nextDir;
+				break;
+			}
 		}
 
-		keycode = Snake.cache.keyCode[1];
+		var keycode = Snake.currentDir;
 		// adjust leading segment properties
 		if (keycode == 39) { // right
 			Snake.seg[0].left += 10;
