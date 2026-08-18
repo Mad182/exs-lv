@@ -1388,6 +1388,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 		if (!$auth->mobile) {
 			$tpl->newBlock('meta-description');
+			$meta_description_added = true;
 			if (!empty($article->meta_description)) {
 				$tpl->assign('description', h($article->meta_description));
 			} else {
