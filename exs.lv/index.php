@@ -446,6 +446,7 @@ $tpl->assignGlobal([
 if (isset($category) && !empty($category->content)) {
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', h(strip_tags($category->content)));
+	$meta_description_added = true;
 
 	$game_img_file = CORE_PATH . '/bildes/speles/' . $category->textid . '.png';
 	if (file_exists($game_img_file)) {
@@ -603,6 +604,23 @@ if ($auth->ok !== true) {
 	}
 }
 
+/* meta description fallback */
+if (empty($meta_description_added)) {
+	$desc_val = '';
+	if (!empty($meta_description)) {
+		$desc_val = $meta_description;
+	} elseif (isset($category) && !empty($category->intro) && is_string($category->intro) && strlen(trim($category->intro)) > 5) {
+		$desc_val = $category->intro;
+	} elseif (!empty($opengraph_meta['description'])) {
+		$desc_val = $opengraph_meta['description'];
+	} else {
+		$desc_val = 'EXS.LV ir viens no senākajiem un populārākajiem spēļu un izklaides portāliem Latvijā. Diskusijas, spēles, filmu un spēļu apskati, jaunumi.';
+	}
+
+	$tpl->newBlock('meta-description');
+	$tpl->assign('description', h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($desc_val))), 0, 160)));
+}
+
 /* opengraph meta tagi */
 if (!empty($opengraph_meta)) {
 	foreach ($opengraph_meta as $key => $val) {
@@ -625,11 +643,84 @@ if (!empty($twitter_meta)) {
 	}
 }
 
-/* canonical tag */
+/* canonical tag fallback */
+if (empty($canonical) && isset($category)) {
+	$cat_slug = ($category->textid === 'home' || $category->textid === '' ? '' : $category->textid);
+	$canonical = get_protocol($lang) . get_domain($lang) . '/' . $cat_slug;
+}
+
 if (!empty($canonical)) {
 	$tpl->newBlock('canonical');
 	$tpl->assign('url', htmlspecialchars($canonical));
 }
+
+/* JSON-LD Structured Data */
+$json_ld_items = [
+	[
+		'@context' => 'https://schema.org',
+		'@type' => 'WebSite',
+		'name' => 'exs.lv',
+		'url' => 'https://exs.lv',
+		'potentialAction' => [
+			'@type' => 'SearchAction',
+			'target' => 'https://exs.lv/search?q={search_term_string}',
+			'query-input' => 'required name=search_term_string'
+		]
+	],
+	[
+		'@context' => 'https://schema.org',
+		'@type' => 'Organization',
+		'name' => 'EXS.LV',
+		'url' => 'https://exs.lv',
+		'logo' => 'https://img.exs.lv/bildes/logos/logo_exs_small.png'
+	]
+];
+
+if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas'])) {
+	$game_names = [
+		'snake' => 'Čūska', 'tetris' => 'Tetris', 'minu-mekletajs' => 'Mīnu Meklētājs',
+		'wordle' => 'Wordle', '2048' => '2048', 'flappy' => 'Lidojošais Eksis',
+		'sudoku' => 'Sudoku', 'memory' => 'Atmiņas spēle', 'rulete' => 'Rulete',
+		'augsup' => 'Augšup', 'vardes' => 'Vardes', 'invaders' => 'Space Invaders',
+		'karatavas' => 'Karātavas'
+	];
+	$g_name = isset($game_names[$category->module]) ? $game_names[$category->module] : $category->title;
+	$json_ld_items[] = [
+		'@context' => 'https://schema.org',
+		'@type' => 'VideoGame',
+		'name' => $g_name,
+		'gamePlatform' => 'Web Browser',
+		'applicationCategory' => 'Game',
+		'operatingSystem' => 'Any',
+		'url' => 'https://exs.lv/' . $category->textid
+	];
+}
+
+if (isset($article) && !empty($article->title)) {
+	$json_ld_items[] = [
+		'@context' => 'https://schema.org',
+		'@type' => 'BlogPosting',
+		'headline' => $article->title,
+		'datePublished' => date(DATE_ATOM, strtotime($article->date)),
+		'dateModified' => !empty($article->updated) ? date(DATE_ATOM, strtotime($article->updated)) : date(DATE_ATOM, strtotime($article->date)),
+		'mainEntityOfPage' => 'https://exs.lv/read/' . $article->strid,
+		'author' => [
+			'@type' => 'Person',
+			'name' => isset($author->nick) ? $author->nick : 'EXS.LV Autors'
+		],
+		'publisher' => [
+			'@type' => 'Organization',
+			'name' => 'EXS.LV',
+			'logo' => [
+				'@type' => 'ImageObject',
+				'url' => 'https://img.exs.lv/bildes/logos/logo_exs_small.png'
+			]
+		]
+	];
+}
+
+$tpl->newBlock('json-ld');
+$tpl->assign('json-ld-content', json_encode($json_ld_items, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
 
 /* flash error or success message */

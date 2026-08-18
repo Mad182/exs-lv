@@ -20,6 +20,11 @@
 	<!-- START BLOCK : canonical-->
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
+	<!-- START BLOCK : json-ld-->
+	<script type="application/ld+json">
+	{json-ld-content}
+	</script>
+	<!-- END BLOCK : json-ld-->
 	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
@@ -102,7 +107,7 @@
 			<div id="mast-head">
 				<div id="logo">
 					<a href="/" title="exs.lv spēļu portāls" rel="home"><img
-							src="{img-server}/bildes/logos/logo_exs_small.png" alt="logo" /></a>
+							src="{img-server}/bildes/logos/logo_exs_small.png" alt="EXS.LV spēļu portāls" /></a>
 				</div>
 			</div>
 

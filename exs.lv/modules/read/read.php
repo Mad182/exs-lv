@@ -1386,9 +1386,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			'cur-url' => '/read/' . $article->strid
 		]);
 
-		if (!empty($article->meta_description) && !$auth->mobile) {
+		if (!$auth->mobile) {
 			$tpl->newBlock('meta-description');
-			$tpl->assign('description', h($article->meta_description));
+			if (!empty($article->meta_description)) {
+				$tpl->assign('description', h($article->meta_description));
+			} else {
+				$clean_desc = trim(preg_replace('/\s+/', ' ', strip_tags($article->text)));
+				$tpl->assign('description', h(mb_substr($clean_desc, 0, 160)));
+			}
 		}
         
         // poga ritināšanai līdz pašai augšai mobilajā versijā
