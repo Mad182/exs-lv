@@ -297,7 +297,7 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 // Spēles un moduļi, kuriem nepieciešama pilnā JS bibliotēka (jQuery)
 $jquery_modules = [
 	'2048', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
-	'memory', 'minu-mekletajs', 'rulete', 'snake', 'speles',
+	'memory', 'minu-mekletajs', 'register', 'rulete', 'snake', 'speles',
 	'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle'
 ];
 if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
