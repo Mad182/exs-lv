@@ -297,9 +297,11 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 //lietotājam specifiskās fīčas
 if ($skin === 'main') {
 	if ($auth->ok !== true) {
+		$tpl->newBlock('guest-js');
 		$tpl->newBlock('login-form');
 		$tpl->assignGlobal('xsrf', $auth->xsrf);
 	} else {
+		$tpl->newBlock('user-js');
 		$tpl->newBlock('user-menu');
 
 		if (im_mod()) {
