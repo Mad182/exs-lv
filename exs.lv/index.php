@@ -294,28 +294,44 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 	$tpl_options = $category->options;
 }
 
+// Spēles un moduļi, kuriem nepieciešama pilnā JS bibliotēka (jQuery)
+$jquery_modules = [
+	'2048', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
+	'memory', 'minu-mekletajs', 'rulete', 'snake', 'speles',
+	'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle'
+];
+if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
+	$require_jquery = true;
+}
+
 //lietotājam specifiskās fīčas
 if ($skin === 'main') {
-	if ($auth->ok !== true) {
+	if ($auth->ok !== true && empty($require_jquery) && empty($force_full_js)) {
 		$tpl->newBlock('guest-js');
 		$tpl->newBlock('login-form');
 		$tpl->assignGlobal('xsrf', $auth->xsrf);
 	} else {
 		$tpl->newBlock('user-js');
-		$tpl->newBlock('user-menu');
 
-		if (im_mod()) {
-			$tpl->newBlock('user-modlink');
-			if (($auth->id == 1 || $auth->id == 115) && $lang == 1) {
-				$tpl->newBlock('user-modlink-adm');
-			}
-			$tpl->newBlock('user-approvelink');
-			$new_approve = $db->get_var("SELECT count(*) FROM `approve` WHERE `removed` = 0 AND `lang` = '$lang'");
-			if ($new_approve) {
-				$new_ap_string = '&nbsp;(<span class="r">' . $new_approve . '</span>)';
-			}
+		if ($auth->ok !== true) {
+			$tpl->newBlock('login-form');
+			$tpl->assignGlobal('xsrf', $auth->xsrf);
 		} else {
-			$tpl->newBlock('user-write');
+			$tpl->newBlock('user-menu');
+
+			if (im_mod()) {
+				$tpl->newBlock('user-modlink');
+				if (($auth->id == 1 || $auth->id == 115) && $lang == 1) {
+					$tpl->newBlock('user-modlink-adm');
+				}
+				$tpl->newBlock('user-approvelink');
+				$new_approve = $db->get_var("SELECT count(*) FROM `approve` WHERE `removed` = 0 AND `lang` = '$lang'");
+				if ($new_approve) {
+					$new_ap_string = '&nbsp;(<span class="r">' . $new_approve . '</span>)';
+				}
+			} else {
+				$tpl->newBlock('user-write');
+			}
 		}
 	}
 }
