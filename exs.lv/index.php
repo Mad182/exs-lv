@@ -298,7 +298,7 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 $jquery_modules = [
 	'2048', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
 	'memory', 'minu-mekletajs', 'register', 'rulete', 'snake', 'speles',
-	'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle'
+	'sudoku', 'tetris', 'tic-tac-toe', 'user', 'users', 'vardes', 'wordle'
 ];
 if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
 	$require_jquery = true;
