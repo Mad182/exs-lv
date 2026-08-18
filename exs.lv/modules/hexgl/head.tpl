@@ -1,3 +1,4 @@
+<script>window.hexGLBasePath = '/modules/hexgl/';</script>
 <link rel="stylesheet" href="/modules/hexgl/css/multi.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" href="/modules/hexgl/css/fonts.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" href="/modules/hexgl/hexgl.css" type="text/css" charset="utf-8">

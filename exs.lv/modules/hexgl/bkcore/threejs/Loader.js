@@ -160,7 +160,9 @@ bkcore.threejs.Loader.prototype.loaded = function(type, name)
 
 bkcore.threejs.Loader.prototype.fixPath = function(url) {
 	if (typeof url === 'string' && url.length > 0 && url.charAt(0) !== '/' && url.indexOf('http') !== 0) {
-		return '/modules/hexgl/' + url;
+		var basePath = window.hexGLBasePath || '/modules/hexgl/';
+		if (basePath.charAt(basePath.length - 1) !== '/') basePath += '/';
+		return basePath + url;
 	}
 	return url;
 };
