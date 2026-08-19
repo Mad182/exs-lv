@@ -49,3 +49,5 @@
 /phpmyadmin/*
 /.*
 /vendor/*
+/exs.lv/latvian-games/*
+
