@@ -1,7 +1,11 @@
-FROM php:8.2-apache
+FROM php:8.5-fpm
 
-# Install system dependencies & libraries
+# Install Composer binary from official image
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install Nginx, system dependencies & libraries
 RUN apt-get update && apt-get install -y \
+    nginx \
     libmemcached-dev \
     zlib1g-dev \
     libpng-dev \
@@ -17,21 +21,20 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && pecl install memcached \
     && docker-php-ext-enable memcached
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Copy PHP limits configuration
+COPY dev-draza/custom-php.ini $PHP_INI_DIR/conf.d/custom-php.ini
 
-# Configure Apache DocumentRoot to point to /var/www/exs-lv/exs.lv
-ENV APACHE_DOCUMENT_ROOT /var/www/exs-lv/exs.lv
-
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-# Allow .htaccess overrides and configure Directory permissions
-RUN echo '<Directory /var/www/exs-lv/exs.lv/>\n\
-    Options Indexes FollowSymLinks\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/exs-override.conf \
-    && a2enconf exs-override
+# Copy Nginx configuration
+COPY dev-draza/nginx-docker.conf /etc/nginx/sites-available/default
+RUN rm -f /etc/nginx/sites-enabled/default \
+    && ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 WORKDIR /var/www/exs-lv
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+EXPOSE 80
+
+ENTRYPOINT ["docker-entrypoint.sh"]

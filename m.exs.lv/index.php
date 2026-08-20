@@ -3,7 +3,9 @@
 require('../exs.lv/configdb.php');
 
 /* load cammon libraries */
-require(ROOT_PATH  . '/vendor/autoload.php');
+if (file_exists(ROOT_PATH . '/vendor/autoload.php')) {
+	require(ROOT_PATH . '/vendor/autoload.php');
+}
 
 require(CORE_PATH . '/includes/class.mdb.php');
 require('includes/class.auth.php');

@@ -89,12 +89,12 @@ if (!isset($dev_ips) || !is_array($dev_ips)) {
 }
 
 //domēns no kura lādēt pseido-statiskos (/css, /js) failus
-//testējot lapu uz sava lokālā servera var aizvietot ar tukšumu
-$static_server = 'https://static.exs.lv';
+//testējot lapu uz sava lokālā servera aizvietot ar tukšumu
+$static_server = getenv('STATIC_SERVER') !== false ? getenv('STATIC_SERVER') : '';
 
 //domēns, no kura ielādēt attēlus
-//uz lokālā servera var aizvietot ar tukšumu
-$img_server = 'https://img.exs.lv';
+//uz lokālā servera aizvietot ar tukšumu
+$img_server = getenv('IMG_SERVER') !== false ? getenv('IMG_SERVER') : '';
 
 /**
  * Pareizas klienta IP adreses noteikšana ir somewhat tricky,
