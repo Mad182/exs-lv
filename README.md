@@ -17,11 +17,10 @@ git submodule update --init --recursive
 
 ### 2. Konfigurācijas faila sagatavošana ###
 
-Izveido `configdb.php` no parauga faila un atjaunina absolūtos ceļus:
+Izveido `configdb.php` no parauga faila (Docker konteinerā ceļš automātiski ir `/var/www/exs-lv`):
 
 ```bash
 cp exs.lv/configdb.sample.php exs.lv/configdb.php
-sed -i "s|/var/www/exs-lv|$PWD|g" exs.lv/configdb.php
 ```
 
 ### 3. Konteineru palaide ###
