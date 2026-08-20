@@ -6,27 +6,12 @@ Web portal and gaming platform backend.
 
 ## Ātrā palaide ar Docker (Ieteicamais veids) ##
 
-Visātrākais un ērtākais veids, kā palaist EXS.LV lokālās izstrādes vidi, ir izmantojot Docker un Docker Compose. Vides konteineri nodrošina visu nepieciešamo (PHP 8.2-Apache, MariaDB ar automātiski ielādētu datubāzes shēmu un testa datiem, kā arī Memcached).
+Visātrākais un ērtākais veids, kā palaist EXS.LV lokālās izstrādes vidi, ir izmantojot Docker un Docker Compose. Vides konteineri nodrošina visu nepieciešamo (PHP 8.5-FPM + Nginx, MariaDB ar automātiski ielādētu datubāzes shēmu un testa datiem, Composer atkarības un Memcached).
 
-### 1. Koda lejupielāde un submoduļu atjaunināšana ###
-
-```bash
-git clone https://github.com/Mad182/exs-lv.git && cd exs-lv
-git submodule update --init --recursive
-```
-
-### 2. Konfigurācijas faila sagatavošana ###
-
-Izveido `configdb.php` no parauga faila (Docker konteinerā ceļš automātiski ir `/var/www/exs-lv`):
+### Vienas komandas palaide (One-liner) ###
 
 ```bash
-cp exs.lv/configdb.sample.php exs.lv/configdb.php
-```
-
-### 3. Konteineru palaide ###
-
-```bash
-docker compose up -d
+git clone https://github.com/Mad182/exs-lv.git && cd exs-lv && git submodule update --init --recursive && cp exs.lv/configdb.sample.php exs.lv/configdb.php && docker compose up -d
 ```
 
 Pēc konteineru palaišanas projekts būs pieejams jūsu pārlūkā:
@@ -34,7 +19,8 @@ Pēc konteineru palaišanas projekts būs pieejams jūsu pārlūkā:
 
 ### Kas tiek nodrošināts automātiski: ###
 
-* **Tīmekļa serveris (`exs-web`)**: PHP 8.2 ar Apache uz porta `8080` (`http://localhost:8080`).
+* **Tīmekļa serveris (`exs-web`)**: Nginx ar PHP 8.5-FPM uz porta `8080` (`http://localhost:8080`).
+* **Composer atkarības**: Automātiska `composer install` inicializācija konteinera startēšanas laikā.
 * **Datubāze (`exs-db`)**: MariaDB 10.11 ar automātiski inicializētu shēmu (`dev-draza/schema.sql`), kategorijām (`dev-draza/cat.sql`) un parauga izstrādes datiem (`dev-draza/seed_dev.sql`).
 * **Testa lietotāji**: Ielādēti 10 parauga lietotāji (piem., `Madars`, `Jānis`, `Pēteris`, `Artūrs`). Visu lokālo izstrādes lietotāju parole ir: `password123`.
 * **Kešatmiņa (`exs-memcached`)**: Memcached serveris kešošanai.
