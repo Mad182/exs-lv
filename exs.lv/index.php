@@ -697,13 +697,16 @@ if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-me
 }
 
 if (isset($article) && !empty($article->title)) {
+	$art_date = !empty($article->date) ? strtotime($article->date) : time();
+	$art_updated = !empty($article->updated) ? strtotime($article->updated) : $art_date;
+
 	$json_ld_items[] = [
 		'@context' => 'https://schema.org',
 		'@type' => 'BlogPosting',
 		'headline' => $article->title,
-		'datePublished' => date(DATE_ATOM, strtotime($article->date)),
-		'dateModified' => !empty($article->updated) ? date(DATE_ATOM, strtotime($article->updated)) : date(DATE_ATOM, strtotime($article->date)),
-		'mainEntityOfPage' => 'https://exs.lv/read/' . $article->strid,
+		'datePublished' => date(DATE_ATOM, $art_date),
+		'dateModified' => date(DATE_ATOM, $art_updated),
+		'mainEntityOfPage' => 'https://exs.lv/read/' . (!empty($article->strid) ? $article->strid : ''),
 		'author' => [
 			'@type' => 'Person',
 			'name' => isset($author->nick) ? $author->nick : 'EXS.LV Autors'

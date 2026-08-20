@@ -998,9 +998,9 @@ CREATE TABLE `miniblog` (
   `posts` smallint(4) NOT NULL DEFAULT 0,
   `closed` tinyint(1) NOT NULL DEFAULT 0,
   `closed_by` mediumint(9) NOT NULL DEFAULT 0,
-  `close_reason` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `close_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `vote_value` smallint(4) NOT NULL DEFAULT 0,
-  `vote_users` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `vote_users` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `edit_time` int(10) NOT NULL DEFAULT 0,
   `edit_user` mediumint(6) NOT NULL DEFAULT 0,
   `edit_times` smallint(6) NOT NULL DEFAULT 0,
@@ -1969,7 +1969,7 @@ CREATE TABLE `users` (
   KEY `twitter_id` (`twitter_id`),
   KEY `deleted` (`deleted`),
   KEY `avatar` (`avatar`)
-) ENGINE=InnoDB AUTO_INCREMENT=43065 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=43065 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

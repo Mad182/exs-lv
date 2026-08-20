@@ -1,6 +1,7 @@
 -- EXS.LV Local Development Minimal Seed Data
 -- Standard password for all users is: password123
 
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 1. Fake Users (10 users)
@@ -20,10 +21,17 @@ password=VALUES(password), level=VALUES(level), karma=VALUES(karma);
 
 -- 2. Fake Topics / Articles (pages)
 INSERT INTO `pages` (id, strid, textid, category, title, intro, text, author, date, bump, ip, posts, views, avatar, sm_avatar, readby, redirect, rating_users) VALUES
-(1, 'laipni-lugti-jaunaja-exs-lv', 'p1', 232, 'Laipni lūgti jaunajā EXS.LV portalā!', 'Sveicieni visiem exs.lv biedriem un apmeklētājiem!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed semper risus id metus. Phasellus dapibus semper urna. Duis iaculis porttitor num.', 1, NOW(), NOW(), '127.0.0.1', 4, 150, '', '', '', '', ''),
-(2, 'labakas-2026-gada-speles', 'p2', 98, 'Labākās 2026. gada spēles un jaunumi', 'Kopsavilkums par šī gada spilgtākajām spēlēm.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at multo.', 4, NOW(), NOW(), '127.0.0.1', 3, 98, '', '', '', '', ''),
-(3, 'ka-optimizet-datora-veiktspeju', 'p3', 89, 'Kā optimizēt datora veiktspēju spēlēm', 'Daži praktiski padomi un triki datora ātrdarbības uzlabošanai.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.', 9, NOW(), NOW(), '127.0.0.1', 2, 74, '', '', '', '', ''),
-(4, 'augsup-speles-rekordu-konkurss', 'p4', 2516, 'Spēles Augšup jaunais rekordu konkurss', 'Aicinām visus izmēģināt spēku jaunajā spēlē Augšup!', 'Sveiki visi! Esam atjauninājuši spēli Augšup. Izmēģiniet atlekt no brūnajām platformām un uzstādiet jaunus rekordus!', 7, NOW(), NOW(), '127.0.0.1', 5, 210, '', '', '', '', '')
+(1, 'laipni-lugti-jaunaja-exs-lv', 'p1', 1, 'Laipni lūgti jaunajā EXS.LV portālā!', 'Sveicieni visiem exs.lv biedriem un apmeklētājiem!', 'Sveiki visiem! EXS.LV ir atjaunināts ar jaunu vizuālo tēlu, ātrāku datubāzi un ērtāku mobilo versiju. Paldies ikvienam, kas piedalās mūsu kopienas veidošanā un uzturēšanā.', 1, NOW(), NOW(), '127.0.0.1', 4, 150, '', '', '', '', ''),
+(2, 'labakas-2026-gada-speles', 'p2', 81, 'Labākās 2026. gada spēles un jaunumi', 'Kopsavilkums par šī gada spilgtākajām spēlēm un izlaidumiem.', 'Šogad spēļu industrija mūs priecē ar neparasti daudziem augstas kvalitātes izlaidumiem. No iespaidīgiem atvērtās pasaules RPG līdz aizraujošām indiju spēlēm – katrs atradīs sev ko piemērotu.', 4, NOW(), NOW(), '127.0.0.1', 3, 98, '', '', '', '', ''),
+(3, 'ka-optimizet-datora-veiktspeju', 'p3', 89, 'Kā optimizēt datora veiktspēju spēlēm', 'Daži praktiski padomi un triki datora ātrdarbības uzlabošanai.', 'Ja jūsu dators sāk aizturēt kadrus jaunākajās spēlēs, pirms jaunas aparatūras iegādes vērts veikt fona procesu tīrīšanu, draiveru atjaunināšanu un operatīvās atmiņas optimizāciju.', 9, NOW(), NOW(), '127.0.0.1', 2, 74, '', '', '', '', ''),
+(4, 'augsup-speles-rekordu-konkurss', 'p4', 2516, 'Spēles Augšup jaunais rekordu konkurss', 'Aicinām visus izmēģināt spēku jaunajā spēlē Augšup!', 'Sveiki visi! Esam atjauninājuši spēli Augšup. Izmēģiniet atlekt no brūnajām platformām un uzstādiet jaunus rekordus!', 7, NOW(), NOW(), '127.0.0.1', 5, 210, '', '', '', '', ''),
+(5, 'geforce-rtx-5090-pazinojums', 'p5', 89, 'Nvidia izziņo GeForce RTX 5090 videokarti', 'Nvidia oficiāli prezentējusi jauno Flagmaņu sērijas videokarti RTX 5090 ar Blackwell arhitektūru.', 'Jaunā RTX 5090 videokarte nodrošina līdz pat 70% veiktspējas pieaugumu salīdzinājumā ar iepriekšējo paaudzi. Ar 32 GB GDDR7 atmiņu un DLSS 4 atbalstu, spēlētāji varēs baudīt 4K izšķirtspēju ar maksimāliem stariņu izsekošanas iestatījumiem un augstu kadru skaits sekundē.', 9, NOW(), NOW(), '127.0.0.1', 2, 340, '', '', '', '', ''),
+(6, 'gta-6-jaunais-treileris-un-izdosanas-datums', 'p6', 1, 'GTA 6 saņem jaunu gameplay treileri un oficiālo izdošanas datumu', 'Rockstar Games demonstrē jaunu spēles gaitas video un apstiprina izdošanas datumu rudenī.', 'Rockstar Games šodien publiskoja ilgi gaidīto GTA 6 spēles gaitas treileri. Video atklāj plašās Vice City ielas, uzlabotu fizikas dzinēju, reālistiskas pūļa reakcijas un jaunu dinamisku laika apstākļu sistēmu. Spēle būs pieejama uz PS5 un Xbox Series X/S jau šā gada rudenī.', 4, NOW(), NOW(), '127.0.0.1', 2, 510, '', '', '', '', ''),
+(7, 'counter-strike-2-liela-atjauninajuma-zinas', 'p7', 1, 'CS2 lielais atjauninājums: atgriežas klasiskās kartes un antireitinga sistēma', 'Valve izlaidusi vērienīgu Counter-Strike 2 atjauninājumu ar jaunām kartēm un pretkrāpšanas uzlabojumiem.', 'Valve atjauninājusi CS2 ar vairākām populārām kopienas kartēm, tostarp Cache un Train atjaunotajām versijām. Tāpat ir uzlabots Sub-Tick tīkla kods, samazinot aizturi un padarot šaušanas mehāniku precīzāku un atsaucīgāku.', 2, NOW(), NOW(), '127.0.0.1', 2, 290, '', '', '', '', ''),
+(8, 'latvijas-esporta-liga-sakas-jauna-sezona', 'p8', 1, 'Latvijas e-sporta līga uzsāk jauno 2026. gada sezonu', 'Sākas pieteikšanās Latvijas lielākajam CS2 un League of Legends turnīram ar 10,000 EUR balvu fondu.', 'Latvijas e-sporta asociācija paziņo par 2026. gada pavasara sezonas atklāšanu. Komandas no visas Latvijas var pieteikties tiešsaistes kvalifikācijas posmiem. Fināla spēles norisināsies klātienē Rīgā, kur labākās komandas cīnīesies par čempiona titulu.', 7, NOW(), NOW(), '127.0.0.1', 2, 180, '', '', '', '', ''),
+(9, 'nakamas-paaudzes-ai-spelu-izstrade', 'p9', 1, 'Mākslīgais intelekts un spēļu izstrādes nākotne 2026. gadā', 'Pārskats par to, kā AI rīki un procedurālā ģenerēšana maina mūsdienu video spēļu izstrādi.', 'Mākslīgais intelekts 2026. gadā kļuvis par neatņemamu spēļu izstrādes sastāvdaļu. No gudrākiem NPC tēliem līdz dinamiskai pasaules ģenerēšanai reāllaikā – izstrādātāji spēj radīt daudz plašākas un dzīvākas pasaules īsākā laikā. Rakstā aplūkojam spilgtākos piemērus un nākotnes tendences.', 1, NOW(), NOW(), '127.0.0.1', 1, 420, '', '', '', '', ''),
+(10, 'cyberpunk-2077-turpinajums-project-orion', 'p10', 80, 'CD Projekt Red atklāj pirmās detaļas par Cyberpunk 2077 turpinājumu', 'Kompānija uzsākusi aktīvu izstrādes fāzi projekta "Orion" nākamajai spēlei.', 'CD Projekt Red komanda paziņojusi, ka nākamā Cyberpunk spēle tiks veidota uz Unreal Engine 5 dzinēja. Izstrādātāji sola vēl dziļāku lomu spēles elementu integrāciju, uzlabotu stāstījumu un jaunus reģionus ārpus Night City robām. Spēles koncepti solās pārsteigt pat rūdītākos žanra cienītājus.', 4, NOW(), NOW(), '127.0.0.1', 1, 380, '', '', '', '', ''),
+(11, 'elektriskie-sporta-auto-un-simulaciju-speles', 'p11', 1, 'Jaunākie auto simulāciju uzlabojumi un elektroauto sports', 'Kā mūsdienu autosporta simulācijas sasniedz nepārspētu reālismu ar jaunajiem fizikas dzinējiem.', 'Sacīkšu simulāciju spēles sniedz neticamu precizitāti un reālismu, ļaujot spēlētājiem izjust jaunāko hibrīda un elektrisko sacīkšu automašīnu uzvedību trasē. Rakstā pētām jauno riepu nodiluma fiziku, aerodinamikas modeļus un labākos stūru komplektus mājas lietošanai.', 2, NOW(), NOW(), '127.0.0.1', 1, 260, '', '', '', '', '')
 ON DUPLICATE KEY UPDATE
 title=VALUES(title), text=VALUES(text);
 
@@ -37,7 +45,18 @@ INSERT INTO `comments` (id, pid, author, text, date, ip, vote_users) VALUES
 (6, 2, 7, 'Gaidu nākamās spēles iznākšanu rudenī.', NOW(), '127.0.0.1', ''),
 (7, 3, 2, 'Labs raksts, īpaši daļa par videokartes draiveriem.', NOW(), '127.0.0.1', ''),
 (8, 4, 3, 'Man ļoti patīk brūnās platformas uzlabojums!', NOW(), '127.0.0.1', ''),
-(9, 4, 5, 'Šodien uzstādīju savu personīgo rekordu 4500m!', NOW(), '127.0.0.1', '')
+(9, 4, 5, 'Šodien uzstādīju savu personīgo rekordu 4500m!', NOW(), '127.0.0.1', ''),
+(10, 5, 8, '32GB VRAM izskatās iespaidīgi! Laiks krāt naudu.', NOW(), '127.0.0.1', ''),
+(11, 5, 9, 'Fascinējošs lēciens veiktspējā. Gaidu testus reālās spēlēs.', NOW(), '127.0.0.1', ''),
+(12, 6, 1, 'Vice City atmosfēra izskatās neaprakstāmi labi!', NOW(), '127.0.0.1', ''),
+(13, 6, 3, 'Nevaru sagaidīt izdošanas dienu rudenī.', NOW(), '127.0.0.1', ''),
+(14, 7, 4, 'Beidzot atgriežas Train karte! Paldies Valve.', NOW(), '127.0.0.1', ''),
+(15, 7, 2, 'Sub-tick uzlabojumi tiešām bija ļoti nepieciešami.', NOW(), '127.0.0.1', ''),
+(16, 8, 7, 'Pieteicu mūsu komandu kvalifikācijai! Tiekamies spēlē.', NOW(), '127.0.0.1', ''),
+(17, 8, 10, 'Lai veicas visiem turnīra dalībniekiem!', NOW(), '127.0.0.1', ''),
+(18, 9, 3, 'Ļoti aizraujošs raksts! AI NPC uzvedība patiešām ir sperts liels solis uz priekšu.', NOW(), '127.0.0.1', ''),
+(19, 10, 5, 'Unreal Engine 5 sniegs neticamu grafiku. Ļoti gaidu kadrus no spēles!', NOW(), '127.0.0.1', ''),
+(20, 11, 8, 'Autosporta simulācijas pēdējos gados ir kļuvušas neticami reālistiskas.', NOW(), '127.0.0.1', '')
 ON DUPLICATE KEY UPDATE
 text=VALUES(text);
 

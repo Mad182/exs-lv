@@ -69,6 +69,7 @@ $config_domains = [
 $arr_domains = [
 
 	'localhost' => 1,
+	'127.0.0.1' => 1,
 	'exs.lv' => 1,    
 	'coding.lv' => 3,
 	'secure.exs.lv' => 8,    
@@ -122,11 +123,14 @@ if (!empty($ios_local_ip)) {
 |--------------------------------------------------------------------------
 */
 
-if (isset($arr_domains[$_SERVER['HTTP_HOST']])) {  
+$http_host_raw = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$host_clean = preg_replace('/:\d+$/', '', $http_host_raw);
+
+if (isset($arr_domains[$host_clean])) {  
   
-	$lang = $arr_domains[$_SERVER['HTTP_HOST']];
+	$lang = $arr_domains[$host_clean];
 	
-	if (substr($_SERVER['HTTP_HOST'], -6) === '.local') {
+	if (substr($host_clean, -6) === '.local' || $host_clean === 'localhost' || strpos($host_clean, '127.') === 0) {
 		$is_local = 1;
 	}
 	

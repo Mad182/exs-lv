@@ -1,0 +1,53 @@
+name: exs-dev
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: exs-web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/exs-lv
+    environment:
+      - APP_ENV=development
+      - DB_HOST=db
+      - DB_USER=exs
+      - DB_PASS=dev
+      - DB_NAME=exs
+      - MC_HOST=memcached
+      - MC_PORT=11211
+      - ROOT_PATH=/var/www/exs-lv
+    depends_on:
+      db:
+        condition: service_healthy
+      memcached:
+        condition: service_started
+
+  db:
+    image: mariadb:10.11
+    container_name: exs-db
+    command: --sql-mode="NO_ENGINE_SUBSTITUTION"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=exs
+      - MYSQL_USER=exs
+      - MYSQL_PASSWORD=dev
+    volumes:
+      - exs_db_data:/var/lib/mysql
+      - ./dev-draza/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./dev-draza/cat.sql:/docker-entrypoint-initdb.d/02-cat.sql:ro
+      - ./dev-draza/seed_dev.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 3s
+      timeout: 5s
+      retries: 15
+
+  memcached:
+    image: memcached:alpine
+    container_name: exs-memcached
+
+volumes:
+  exs_db_data:

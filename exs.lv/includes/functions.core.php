@@ -233,7 +233,7 @@ function userlog($user, $action, $avatar = '', $multi = '', $private = 0, $group
 	if ($group_id) {
 		$group_id = intval($group_id);
 	} else {
-		$group_id = null;
+		$group_id = 0;
 	}
 
 	$db->query("INSERT INTO `userlogs` (`time`,`user`,`avatar`,`action`,`multi`,`lang`,`private`,`group_id`) 
@@ -2336,7 +2336,9 @@ function post_mb($post) {
 		'bump' => 0,
 		'type' => 'miniblog',
 		'lang' => $lang,
-		'device' => 0
+		'device' => 0,
+		'close_reason' => '',
+		'vote_users' => ''
 	];
 
 	$post = array_merge($default, $post);
@@ -2407,7 +2409,9 @@ function post_mb_ai($text, $parent_id, $reply_to = 0, $group_id = 0) {
 		'bump' => 0,
 		'type' => 'miniblog',
 		'lang' => $lang,
-		'device' => 0
+		'device' => 0,
+		'close_reason' => '',
+		'vote_users' => ''
 	];
 
 	if (empty($post['parent']) && empty($post['bump'])) {

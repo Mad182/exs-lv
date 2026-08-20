@@ -2,16 +2,60 @@
 
 Web portal and gaming platform backend.
 
-## Nepieciešamā nodrošinājuma prasības ##
+---
+
+## Ātrā palaide ar Docker (Ieteicamais veids) ##
+
+Visātrākais un ērtākais veids, kā palaist EXS.LV lokālās izstrādes vidi, ir izmantojot Docker un Docker Compose. Vides konteineri nodrošina visu nepieciešamo (PHP 8.2-Apache, MariaDB ar automātiski ielādētu datubāzes shēmu un testa datiem, kā arī Memcached).
+
+### 1. Koda lejupielāde un submoduļu atjaunināšana ###
+
+```bash
+git clone git@github.com:Mad182/exs-lv.git && cd exs-lv
+git submodule update --init --recursive
+```
+
+### 2. Konteineru palaide ###
+
+```bash
+docker compose up -d
+```
+
+Pēc konteineru palaišanas projekts būs pieejams jūsu pārlūkā:
+👉 **[http://localhost:8080](http://localhost:8080)**
+
+### Kas tiek nodrošināts automātiski: ###
+
+* **Tīmekļa serveris (`exs-web`)**: PHP 8.2 ar Apache uz porta `8080` (`http://localhost:8080`).
+* **Datubāze (`exs-db`)**: MariaDB 10.11 ar automātiski inicializētu shēmu (`dev-draza/schema.sql`), kategorijām (`dev-draza/cat.sql`) un parauga izstrādes datiem (`dev-draza/seed_dev.sql`).
+* **Testa lietotāji**: Ielādēti 10 parauga lietotāji (piem., `Madars`, `Jānis`, `Pēteris`, `Artūrs`). Visu lokālo izstrādes lietotāju parole ir: `password123`.
+* **Kešatmiņa (`exs-memcached`)**: Memcached serveris kešošanai.
+
+### Noderīgas Docker komandas: ###
+
+* **Skatīt žurnālierakstus (logs):**
+  ```bash
+  docker compose logs -f
+  ```
+* **Apturēt vidi:**
+  ```bash
+  docker compose down
+  ```
+* **Pilnībā atiestatīt datubāzi un ielādēt svaigus parauga datus:**
+  ```bash
+  docker compose down -v && docker compose up -d
+  ```
+
+---
+
+## Manuālā uzstādīšana (Bez Docker) ##
+
+### Nepieciešamā nodrošinājuma prasības ###
 
 * **PHP 8.5** (`php8.5-cli`, `php8.5-fpm`, `php8.5-curl`, `php8.5-gd`, `php8.5-igbinary`, `php8.5-intl`, `php8.5-mbstring`, `php8.5-memcached`, `php8.5-msgpack`, `php8.5-mysql`, `php8.5-readline`, `php8.5-xml`, `php8.5-zip`)
 * **Nginx** (vai Apache)
 * **MariaDB** / **MySQL**
 * **Memcached**
-
----
-
-## Uzstādīšana uz Debian / Ubuntu ##
 
 ### 1. Koda lejupielāde un submoduļu atjaunināšana ###
 
