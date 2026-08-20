@@ -88,7 +88,7 @@ if (
 		$cachefile = 'cache-' . $hash . '.' . $type . ($encoding !== false ? '.' . $encoding : '');
 
 		if (file_exists($cachedir . '/' . $cachefile)) {
-			if ($fp = fopen($cachedir . '/' . $cachefile, 'rb')) {
+			if ($fp = @fopen($cachedir . '/' . $cachefile, 'rb')) {
 
 				if (!empty($encoding)) {
 					header("Content-Encoding: " . $encoding);
@@ -144,7 +144,10 @@ if (
 
 	// Store cache
 	if ($cache) {
-		if ($fp = fopen($cachedir . '/' . $cachefile, 'wb')) {
+		if (!is_dir($cachedir)) {
+			@mkdir($cachedir, 0777, true);
+		}
+		if ($fp = @fopen($cachedir . '/' . $cachefile, 'wb')) {
 			fwrite($fp, $contents);
 			fclose($fp);
 		}
