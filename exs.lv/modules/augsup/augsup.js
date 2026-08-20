@@ -248,6 +248,7 @@
 					footY >= p.y
 				) {
 					if (p.type === 'broken') {
+						player.vy = JUMP_FORCE;
 						p.broken = true;
 						playSound('break');
 					} else if (p.hasSpring) {
