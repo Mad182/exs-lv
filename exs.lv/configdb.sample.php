@@ -80,7 +80,13 @@ if (!defined('API_PATH')) {
 //exit;
 
 //debug konfigurācija
-include('../developer_ips.php');
+$dev_ips_file = (defined('ROOT_PATH') ? ROOT_PATH : __DIR__ . '/..') . '/developer_ips.php';
+if (file_exists($dev_ips_file)) {
+	include_once($dev_ips_file);
+}
+if (!isset($dev_ips) || !is_array($dev_ips)) {
+	$dev_ips = ['127.0.0.1', '::1'];
+}
 
 //domēns no kura lādēt pseido-statiskos (/css, /js) failus
 //testējot lapu uz sava lokālā servera var aizvietot ar tukšumu
@@ -101,27 +107,27 @@ $img_server = 'https://img.exs.lv';
  */
 
 //cloudflare gadījums, vienalga vai ar vai bez varnish
-if(!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
-		$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+	$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
 
 //ja pieprasījums ir bez varnish
-} elseif(empty($_SERVER['HTTP_X_VARNISH'])) {
-		$_SERVER['HTTP_X_FORWARDED_FOR'] = $_SERVER['REMOTE_ADDR'];
-
+} elseif (empty($_SERVER['HTTP_X_VARNISH'])) {
+	$_SERVER['HTTP_X_FORWARDED_FOR'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
 }
 
-//paņemam pēdējo IP adresi (jebšu pirmo, ja skatamies no klienta puses),
-//ja HTTP_X_FORWARDED_FOR satur vairākas
-if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
-	$addr = explode(",",$_SERVER['HTTP_X_FORWARDED_FOR']);
-	$_SERVER['HTTP_X_FORWARDED_FOR'] = trim($addr[sizeof($addr)-1]);
+if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
+	$addr = explode(",", $_SERVER['HTTP_X_FORWARDED_FOR']);
+	$_SERVER['HTTP_X_FORWARDED_FOR'] = trim(end($addr));
 }
 
-if (in_array($_SERVER['HTTP_X_FORWARDED_FOR'], $dev_ips) && !isset($_GET['_']) && !isset($_POST['newtags']) && substr($_SERVER['REQUEST_URI'], -4) != '.jpg') {
+$client_ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '127.0.0.1';
+$req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+
+if ((in_array($client_ip, $dev_ips) || !empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 8080 || getenv('IS_DEV')) && !isset($_GET['_']) && !isset($_POST['newtags']) && substr($req_uri, -4) != '.jpg') {
 	$start_time = microtime(true);
 	$debug = true;
 	ini_set('display_errors', 'On');
-	error_reporting(E_ALL);
+	error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 } else {
 	error_reporting(0);
 	$debug = false;
