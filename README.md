@@ -11,7 +11,7 @@ Visātrākais un ērtākais veids, kā palaist EXS.LV lokālās izstrādes vidi,
 ### 1. Koda lejupielāde un submoduļu atjaunināšana ###
 
 ```bash
-git clone git@github.com:Mad182/exs-lv.git && cd exs-lv
+git clone https://github.com/Mad182/exs-lv.git && cd exs-lv
 git submodule update --init --recursive
 ```
 
