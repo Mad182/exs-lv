@@ -99,15 +99,14 @@ mysql -u exs -p exs < dev-draza/schema.sql
 mysql -u exs -p exs < dev-draza/cat.sql
 ```
 
-### 4. Konfigurācijas faila izveide ###
+### 4. Konfigurācijas faila izveide un ceļu atjaunināšana ###
 
 ```bash
 cp exs.lv/configdb.sample.php exs.lv/configdb.php
+sed -i "s|/var/www/exs-lv|$PWD|g" exs.lv/configdb.php
 ```
 
-Konfigurācijas failā `exs.lv/configdb.php` norādi korektus datubāzes pieslēguma datus un absolūtos ceļus:
-* `$root_dir` un `$core_dir` uz `exs.lv` direktoriju (piem., `/var/www/exs-lv/exs.lv`)
-* `LIB_PATH` uz `libs` direktoriju (piem., `/var/www/exs-lv/libs`)
+Šī komanda automātiski iestata absolūtos ceļus (`ROOT_PATH`, `CORE_PATH`, `LIB_PATH` u.c.) uz pašreizējo projekta direktoriju. Nepieciešamības gadījumā failā `exs.lv/configdb.php` norādi atbilstošus datubāzes pieslēguma datus.
 
 ### 5. Nginx konfigurācija vietējai izstrādei ###
 
