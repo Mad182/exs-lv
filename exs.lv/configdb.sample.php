@@ -14,10 +14,10 @@
 }*/
 
 //mysql master
-$hostname = 'localhost';
-$username = 'exs';
-$password = 'test';
-$database = 'exs';
+$hostname = getenv('DB_HOST') ?: 'localhost';
+$username = getenv('DB_USER') ?: 'exs';
+$password = getenv('DB_PASS') ?: 'dev';
+$database = getenv('DB_NAME') ?: 'exs';
 
 //smtp
 $smtp_hostname = 'smtp.gmail.com';
@@ -27,8 +27,8 @@ $smtp_account = 'user@gmail.com';
 $smtp_password = '***';
 
 //memcached
-$mc_host = 'localhost';
-$mc_port = 11211;
+$mc_host = getenv('MC_HOST') ?: 'localhost';
+$mc_port = getenv('MC_PORT') ?: 11211;
 
 //last.fm
 $lastfm_apikey = '';
@@ -59,11 +59,21 @@ $steam_login_page = ""; 	//uz kurieni redirektēt pēc logina
 $embed_ly_key = 'your_key';
 
 //include folderi
-define('ROOT_PATH', '/home/www');
-define('CORE_PATH', ROOT_PATH . '/exs.lv');
-define('IMG_PATH', ROOT_PATH . '/img.exs.lv');
-define('LIB_PATH', ROOT_PATH . '/libs');
-define('API_PATH', ROOT_PATH . '/api.exs.lv');
+if (!defined('ROOT_PATH')) {
+	define('ROOT_PATH', getenv('ROOT_PATH') ?: '/var/www/exs-lv');
+}
+if (!defined('CORE_PATH')) {
+	define('CORE_PATH', ROOT_PATH . '/exs.lv');
+}
+if (!defined('IMG_PATH')) {
+	define('IMG_PATH', ROOT_PATH . '/img.exs.lv');
+}
+if (!defined('LIB_PATH')) {
+	define('LIB_PATH', ROOT_PATH . '/libs');
+}
+if (!defined('API_PATH')) {
+	define('API_PATH', ROOT_PATH . '/api.exs.lv');
+}
 
 // paziņojums ja lapā tiek veikti darbi un tā nav piejama
 //echo(file_get_contents(CORE_PATH . '/tmpl/maintenance.tpl'));

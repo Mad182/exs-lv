@@ -15,7 +15,15 @@ git clone https://github.com/Mad182/exs-lv.git && cd exs-lv
 git submodule update --init --recursive
 ```
 
-### 2. Konteineru palaide ###
+### 2. Konfigurācijas faila sagatavošana ###
+
+Izveido `configdb.php` no parauga faila:
+
+```bash
+cp exs.lv/configdb.sample.php exs.lv/configdb.php
+```
+
+### 3. Konteineru palaide ###
 
 ```bash
 docker compose up -d
