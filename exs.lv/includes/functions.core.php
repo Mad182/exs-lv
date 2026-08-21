@@ -2304,6 +2304,23 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$out .= '</span></a></li>';
 		}
 	}
+
+	$total_count = (int) $db->get_var("SELECT COUNT(*)
+		FROM `miniblog`
+		WHERE
+			`miniblog`.`removed` = '0' AND
+			`miniblog`.`parent` = '0' AND
+			`miniblog`.`type` = 'miniblog' AND
+			" . $addlang . " AND
+			(" . $groupquery . ")
+			$friendsquery
+			$priv");
+
+	$max_pages = min(5, (int) ceil($total_count / $limit));
+	if ($max_pages < 1) {
+		$max_pages = 1;
+	}
+
 	$out .= '</ul><p class="core-pager ajax-pager">';
 
 	$tablink = 'all';
@@ -2316,7 +2333,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		$grouplink = '&amp;group=' . intval($group_id);
 	}
 
-	for ($i = 1; $i <= 5; $i++) {
+	for ($i = 1; $i <= $max_pages; $i++) {
 		$out .= ' <a class="page-numbers ';
 		if ($i == 1) {
 			$out .= 'default-minibog-tab ';
@@ -2325,7 +2342,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			$out .= 'selected';
 		}
 		$out .= '" href="/mb-latest?pg=' . ($i - 1) . '&amp;tab=' . $tablink . $grouplink . '" rel="nofollow">' . $i . '</a>';
-		if ($i != 5) {
+		if ($i != $max_pages) {
 			$out .= ' <span>-</span>';
 		}
 	}
