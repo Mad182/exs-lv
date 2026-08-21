@@ -4557,24 +4557,26 @@ a:hover .lp-prefix {
 	background: transparent;
 	border-bottom: 1px solid #E3E3E3;
 	margin: 0;
-	padding: 5px 0
+	padding: 12px 0;
+	clear: both;
 }
 
 #latest-blogs li div.author {
 	float: left;
 	width: 90px;
-	height: 100px;
 	text-align: center;
-	line-height: 13px
+	line-height: 14px;
+	margin-right: 12px;
 }
 
 #latest-blogs .author img {
-	width: 75px;
-	height: 75px;
-	display: inline;
+	width: 90px;
+	height: 90px;
+	display: block;
 	float: none;
-	margin: 0;
-	padding: 0
+	margin: 0 auto 5px;
+	padding: 0;
+	border-radius: 4px;
 }
 
 /* wallpaper */

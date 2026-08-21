@@ -32,8 +32,9 @@ $articles = $db->get_results(
 	`pages`.`text` AS `text`,
 	`pages`.`strid` AS `strid`,
 	`pages`.`author` AS `authorid`,
-	`users`.`avatar` AS `avatar`,
-	`users`.`nick` AS `nick`,
+	`pages`.`date` AS `date`,
+	`pages`.`posts` AS `comments_count`,
+	`pages`.`views` AS `views`,
 	`pages`.`id` AS `id`
 FROM
 	`pages`,
@@ -52,10 +53,9 @@ LIMIT $skip, $end"
 if ($articles) {
 	foreach ($articles as $article) {
 		$tpl->newBlock('blogs-featured');
-		if ($article->avatar == '') {
-			$article->avatar = 'none.png';
-		}
-		$article->avatar = '/dati/bildes/useravatar/' . $article->avatar;
+
+		$usr = get_user($article->authorid);
+		$avatar = get_avatar($usr, 'm');
 
 		if (!empty($article->intro)) {
 			$article->text = $article->intro;
@@ -65,14 +65,19 @@ if ($articles) {
 			$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
 		}
 
+		$date_formatted = display_time(strtotime($article->date));
+
 		$tpl->assign([
-			'newest-title' => textlimit($article->title, 52),
+			'newest-title' => textlimit($article->title, 68),
 			'newest-text' => $article->text,
+			'newest-date' => $date_formatted,
+			'newest-comments' => (int) $article->comments_count,
+			'newest-views' => number_format((int) $article->views, 0, '', ' '),
 			'url' => '/read/' . $article->strid,
 			'aurl' => '/user/' . $article->authorid,
 			'newest-author-id' => $article->authorid,
-			'newest-author-avatar' => $article->avatar,
-			'newest-author-title' => h($article->nick),
+			'newest-author-avatar' => $avatar,
+			'newest-author-title' => h($usr->nick),
 		]);
 	}
 }

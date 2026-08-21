@@ -31,12 +31,21 @@
 		border-bottom: 1px solid #14181d;
 	}
 
+	#latest-blogs li,
 	#user-notify li,
 	.mbox .user-actions li,
 	.mb-col li,
 	#latest-topics li,
 	.user-actions li {
 		border-bottom: 1px solid #14181d;
+	}
+
+	#latest-blogs .blog-content .blog-meta {
+		color: #9ba3af;
+	}
+
+	#latest-blogs .blog-content .intro-text {
+		color: #c9d1d9;
 	}
 
 	#user-notify li a:hover,
