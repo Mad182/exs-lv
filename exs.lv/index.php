@@ -445,7 +445,8 @@ $tpl->assignGlobal([
 	'static-server' => $static_server,
 	'facebook-app-id' => $fb_api_id,
 	'img-server' => $img_server,
-	'logout-hash' => $auth->logout_hash
+	'logout-hash' => $auth->logout_hash,
+	'css-version' => file_exists(ROOT_PATH . '/css/bs.css') ? filemtime(ROOT_PATH . '/css/bs.css') : time()
 ]);
 
 if (isset($category) && !empty($category->content)) {

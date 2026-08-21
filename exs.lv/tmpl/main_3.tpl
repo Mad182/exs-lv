@@ -19,9 +19,9 @@
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
 	<script>var mb_refresh_limit = {mb-refresh-limit}, current_user = {currentuser-id}, new_msg_count = {new-messages-count}, c_url = "{page-url}";</script>
-	<link rel="stylesheet" href="/css/coding.css,prettify.css">
+	<link rel="stylesheet" href="/css/coding.css,prettify.css?v={css-version}">
 	<!-- START BLOCK : additional-css-->
-	<link rel="stylesheet" href="/css/{filename}">
+	<link rel="stylesheet" href="/css/{filename}?v={css-version}">
 	<!-- END BLOCK : additional-css-->
 	<!-- START BLOCK : guest-js -->
 	<script src="{static-server}/js/guest.js"></script>

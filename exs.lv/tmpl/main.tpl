@@ -25,9 +25,9 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css?v={css-version}" media="all">
 	<!-- START BLOCK : additional-css-->
-	<link rel="stylesheet" href="{static-server}/css/{filename}">
+	<link rel="stylesheet" href="{static-server}/css/{filename}?v={css-version}">
 	<!-- END BLOCK : additional-css-->
 	<script>var mb_refresh_limit = {mb-refresh-limit},
 		current_user = {currentuser-id},

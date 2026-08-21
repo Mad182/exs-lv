@@ -20,9 +20,9 @@
 	<!-- END BLOCK : canonical-->
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css">
+    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css?v={css-version}">
     <!-- START BLOCK : additional-css-->
-    <link rel="stylesheet" href="{static-server}/css/{filename}">
+    <link rel="stylesheet" href="{static-server}/css/{filename}?v={css-version}">
     <!-- END BLOCK : additional-css-->
     <!-- START BLOCK : guest-js -->
     <script src="{static-server}/js/guest.js"></script>
