@@ -118,19 +118,7 @@
 					<ul class="nav">
 
 						<li><a href="/forums">Forums</a></li>
-						<li class="dropdown"><a href="/speles">Spēles</a>
-							<ul class="dropdown-menu">
-								<li><a href="/speles">Viss katalogs</a></li>
-								<li><a href="/tetris">Tetris</a></li>
-								<li><a href="/snake">Čūska</a></li>
-								<li><a href="/karatavas">Karātavas</a></li>
-								<li><a href="/memory">Atmiņas spēle</a></li>
-								<li><a href="/2048-spele">2048</a></li>
-								<li><a href="/minu-mekletajs">Mīnu Meklētājs</a></li>
-								<li><a href="/sudoku">Sudoku</a></li>
-								<li><a href="/wordle">Wordle</a></li>
-							</ul>
-						</li>
+						<li><a href="/speles">Spēles</a></li>
 						<li><a href="/grupas">Grupas</a></li>
 
 					</ul>
