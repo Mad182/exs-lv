@@ -299,7 +299,7 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 // Spēles un moduļi, kuriem nepieciešama pilnā JS bibliotēka (jQuery)
 $jquery_modules = [
 	'2048', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
-	'memory', 'minu-mekletajs', 'register', 'rulete', 'snake', 'speles',
+	'memory', 'minu-mekletajs', 'register', 'rulete', 'runner', 'snake', 'speles',
 	'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle'
 ];
 if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
@@ -678,13 +678,13 @@ $json_ld_items = [
 	]
 ];
 
-if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas'])) {
+if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner'])) {
 	$game_names = [
 		'snake' => 'Čūska', 'tetris' => 'Tetris', 'minu-mekletajs' => 'Mīnu Meklētājs',
 		'wordle' => 'Wordle', '2048' => '2048', 'flappy' => 'Lidojošais Eksis',
 		'sudoku' => 'Sudoku', 'memory' => 'Atmiņas spēle', 'rulete' => 'Rulete',
 		'augsup' => 'Augšup', 'vardes' => 'Vardes', 'invaders' => 'Space Invaders',
-		'karatavas' => 'Karātavas'
+		'karatavas' => 'Karātavas', 'runner' => 'Runner'
 	];
 	$g_name = isset($game_names[$category->module]) ? $game_names[$category->module] : $category->title;
 	$json_ld_items[] = [
