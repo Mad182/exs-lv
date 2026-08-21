@@ -340,13 +340,13 @@ $(document).ready(function () {
 		}
 
 		// Spawn Rare Bonuses
-		if (gameSpeed >= 10.0 && Math.random() < 0.25) {
+		if (gameSpeed >= 10.0 && Math.random() < 0.2) {
 			var bonusType = 'big_star';
 			// Tortoise bonus reduces speed by 1x
-			if (gameSpeed >= 15.0 && Math.random() < 0.3) {
+			if (gameSpeed >= 15.0 && Math.random() < 0.2) {
 				bonusType = 'tortoise';
 			}
-			// Reachable height: GROUND_Y - 45 (ground/duck height) up to GROUND_Y - 110 (jump height)
+			// Rechable height: GROUND_Y - 45 (ground/duck height) up to GROUND_Y - 110 (jump height)
 			var bonusY = GROUND_Y - 45 - (Math.random() * 65);
 			bonuses.push({
 				type: bonusType,
