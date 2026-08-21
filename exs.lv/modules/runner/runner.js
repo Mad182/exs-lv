@@ -85,6 +85,39 @@ $(document).ready(function () {
 				gain.connect(audioCtx.destination);
 				osc.start(now);
 				osc.stop(now + 0.35);
+			} else if (type === 'big_star') {
+				var osc1 = audioCtx.createOscillator();
+				var osc2 = audioCtx.createOscillator();
+				var gain = audioCtx.createGain();
+				osc1.type = 'sine';
+				osc2.type = 'triangle';
+				osc1.frequency.setValueAtTime(880, now);
+				osc1.frequency.setValueAtTime(1318.51, now + 0.08);
+				osc1.frequency.setValueAtTime(1760, now + 0.16);
+				osc2.frequency.setValueAtTime(440, now);
+				osc2.frequency.setValueAtTime(659.25, now + 0.08);
+				osc2.frequency.setValueAtTime(880, now + 0.16);
+				gain.gain.setValueAtTime(0.35, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+				osc1.connect(gain);
+				osc2.connect(gain);
+				gain.connect(audioCtx.destination);
+				osc1.start(now);
+				osc2.start(now);
+				osc1.stop(now + 0.35);
+				osc2.stop(now + 0.35);
+			} else if (type === 'tortoise') {
+				var osc = audioCtx.createOscillator();
+				var gain = audioCtx.createGain();
+				osc.type = 'sine';
+				osc.frequency.setValueAtTime(600, now);
+				osc.frequency.exponentialRampToValueAtTime(220, now + 0.3);
+				gain.gain.setValueAtTime(0.4, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+				osc.connect(gain);
+				gain.connect(audioCtx.destination);
+				osc.start(now);
+				osc.stop(now + 0.3);
 			}
 		} catch (e) {}
 	}
@@ -231,10 +264,12 @@ $(document).ready(function () {
 		}
 	};
 
-	// Obstacle & Item Arrays
+	// Obstacle, Item & Bonus Arrays
 	var obstacles = [];
 	var coins = [];
+	var bonuses = [];
 	var particles = [];
+	var floatingTexts = [];
 
 	// Game Engine Stats
 	var gameSpeed = 6.0;
@@ -247,7 +282,9 @@ $(document).ready(function () {
 		player.reset();
 		obstacles = [];
 		coins = [];
+		bonuses = [];
 		particles = [];
+		floatingTexts = [];
 		gameSpeed = 6.0;
 		distanceRun = 0;
 		coinsCollected = 0;
@@ -301,6 +338,35 @@ $(document).ready(function () {
 				});
 			}
 		}
+
+		// Spawn Rare Bonuses (Large Glowing Star or Tortoise) at reachable heights
+		if (Math.random() < 0.22) {
+			var bonusType = 'big_star';
+			// Tortoise bonus reduces speed by 1x (only available at 3x+ speed: gameSpeed >= 18.0)
+			if (gameSpeed >= 18.0 && Math.random() < 0.5) {
+				bonusType = 'tortoise';
+			}
+			// Reachable height: GROUND_Y - 45 (ground/duck height) up to GROUND_Y - 110 (jump height)
+			var bonusY = GROUND_Y - 45 - (Math.random() * 65);
+			bonuses.push({
+				type: bonusType,
+				x: canvas.width + 160,
+				y: bonusY,
+				radius: (bonusType === 'big_star') ? 16 : 14,
+				animFrame: 0,
+				collected: false
+			});
+		}
+	}
+
+	function addFloatingText(text, x, y, color) {
+		floatingTexts.push({
+			text: text,
+			x: x,
+			y: y,
+			color: color || '#ffffff',
+			alpha: 1.0
+		});
 	}
 
 	function updateGame() {
@@ -309,7 +375,7 @@ $(document).ready(function () {
 		// Increase distance & speed over time
 		distanceRun += gameSpeed * 0.15;
 		gameSpeed += 0.0012; // Gradually ramp difficulty
-		if (gameSpeed > 17.0) gameSpeed = 17.0;
+		if (gameSpeed > 24.0) gameSpeed = 24.0;
 
 		player.update();
 
@@ -360,6 +426,44 @@ $(document).ready(function () {
 			}
 		}
 
+		// Update Bonuses
+		for (var i = bonuses.length - 1; i >= 0; i--) {
+			var b = bonuses[i];
+			b.x -= gameSpeed;
+
+			// Collision check with player
+			if (!b.collected && checkCircleBoxCollision(b, player)) {
+				b.collected = true;
+				if (b.type === 'big_star') {
+					coinsCollected += 5;
+					distanceRun += 50;
+					playSynthSound('big_star');
+					createSparkles(b.x, b.y, '#fbbf24', 16);
+					addFloatingText('+5 ⭐', b.x, b.y, '#f59e0b');
+				} else if (b.type === 'tortoise') {
+					// Reduces speed by 1x (6.0 units in gameSpeed = 1.0x multiplier)
+					gameSpeed = Math.max(6.0, gameSpeed - 6.0);
+					playSynthSound('tortoise');
+					createSparkles(b.x, b.y, '#4ade80', 16);
+					addFloatingText('-1x ĀTRUMS! 🐢', b.x, b.y, '#22c55e');
+				}
+			}
+
+			if (b.x < -40) {
+				bonuses.splice(i, 1);
+			}
+		}
+
+		// Update Floating Texts
+		for (var i = floatingTexts.length - 1; i >= 0; i--) {
+			var ft = floatingTexts[i];
+			ft.y -= 0.8;
+			ft.alpha -= 0.02;
+			if (ft.alpha <= 0) {
+				floatingTexts.splice(i, 1);
+			}
+		}
+
 		// Update Particles
 		for (var i = particles.length - 1; i >= 0; i--) {
 			var p = particles[i];
@@ -400,15 +504,17 @@ $(document).ready(function () {
 		return (distanceX * distanceX + distanceY * distanceY) < (circle.radius * circle.radius);
 	}
 
-	function createSparkles(x, y) {
-		for (var i = 0; i < 8; i++) {
+	function createSparkles(x, y, customColor, count) {
+		var pColor = customColor || '#f59e0b';
+		var pCount = count || 8;
+		for (var i = 0; i < pCount; i++) {
 			particles.push({
 				x: x,
 				y: y,
 				vx: (Math.random() - 0.5) * 6,
 				vy: (Math.random() - 0.5) * 6,
 				alpha: 1.0,
-				color: '#f59e0b'
+				color: pColor
 			});
 		}
 	}
@@ -490,6 +596,116 @@ $(document).ready(function () {
 			ctx.restore();
 		}
 
+		// Draw Bonuses (Large Star and Tortoise)
+		for (var i = 0; i < bonuses.length; i++) {
+			var b = bonuses[i];
+			if (b.collected) continue;
+			b.animFrame++;
+
+			ctx.save();
+			if (b.type === 'big_star') {
+				var pulse = Math.sin(b.animFrame * 0.12) * 3;
+				var r = b.radius + pulse;
+
+				// Outer radial glow
+				var grad = ctx.createRadialGradient(b.x, b.y, 2, b.x, b.y, r + 8);
+				grad.addColorStop(0, 'rgba(251, 191, 36, 0.9)');
+				grad.addColorStop(0.6, 'rgba(245, 158, 11, 0.4)');
+				grad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+				ctx.fillStyle = grad;
+				ctx.beginPath();
+				ctx.arc(b.x, b.y, r + 8, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Star body
+				ctx.fillStyle = '#fbbf24';
+				ctx.strokeStyle = '#ffffff';
+				ctx.lineWidth = 2;
+
+				ctx.beginPath();
+				for (var s = 0; s < 5; s++) {
+					var outerAngle = (s * 4 * Math.PI / 5) - Math.PI / 2;
+					var innerAngle = outerAngle + (2 * Math.PI / 10);
+					var xOuter = b.x + Math.cos(outerAngle) * r;
+					var yOuter = b.y + Math.sin(outerAngle) * r;
+					var xInner = b.x + Math.cos(innerAngle) * (r * 0.45);
+					var yInner = b.y + Math.sin(innerAngle) * (r * 0.45);
+
+					if (s === 0) ctx.moveTo(xOuter, yOuter);
+					else ctx.lineTo(xOuter, yOuter);
+					ctx.lineTo(xInner, yInner);
+				}
+				ctx.closePath();
+				ctx.fill();
+				ctx.stroke();
+
+				// Inner "+5" text emblem
+				ctx.fillStyle = '#78350f';
+				ctx.font = '900 11px sans-serif';
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'middle';
+				ctx.fillText('+5', b.x, b.y + 1);
+			} else if (b.type === 'tortoise') {
+				var pulse = Math.sin(b.animFrame * 0.12) * 2;
+				var r = b.radius + pulse;
+
+				// Green slow-down aura
+				var grad = ctx.createRadialGradient(b.x, b.y, 2, b.x, b.y, r + 8);
+				grad.addColorStop(0, 'rgba(74, 222, 128, 0.9)');
+				grad.addColorStop(0.6, 'rgba(34, 197, 94, 0.4)');
+				grad.addColorStop(1, 'rgba(34, 197, 94, 0)');
+				ctx.fillStyle = grad;
+				ctx.beginPath();
+				ctx.arc(b.x, b.y, r + 8, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Shell
+				ctx.fillStyle = '#166534';
+				ctx.beginPath();
+				ctx.ellipse(b.x + 2, b.y, 13, 9, 0, 0, Math.PI * 2);
+				ctx.fill();
+
+				ctx.fillStyle = '#22c55e';
+				ctx.beginPath();
+				ctx.ellipse(b.x + 2, b.y - 2, 11, 7, 0, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Shell patterns
+				ctx.strokeStyle = '#15803d';
+				ctx.lineWidth = 1.5;
+				ctx.beginPath();
+				ctx.moveTo(b.x - 3, b.y - 2); ctx.lineTo(b.x + 7, b.y - 2);
+				ctx.moveTo(b.x - 1, b.y + 2); ctx.lineTo(b.x + 5, b.y + 2);
+				ctx.moveTo(b.x + 2, b.y - 7); ctx.lineTo(b.x + 2, b.y + 4);
+				ctx.stroke();
+
+				// Tortoise Head (facing left)
+				ctx.fillStyle = '#4ade80';
+				ctx.beginPath();
+				ctx.arc(b.x - 12, b.y + 1, 4.5, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Eye
+				ctx.fillStyle = '#0f172a';
+				ctx.beginPath();
+				ctx.arc(b.x - 13.5, b.y, 1, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Feet
+				ctx.fillStyle = '#15803d';
+				ctx.fillRect(b.x - 6, b.y + 5, 3, 4);
+				ctx.fillRect(b.x + 2, b.y + 5, 3, 4);
+				ctx.fillRect(b.x + 8, b.y + 5, 3, 4);
+
+				// Speed slow emblem "-1x"
+				ctx.fillStyle = '#86efac';
+				ctx.font = 'bold 10px sans-serif';
+				ctx.textAlign = 'center';
+				ctx.fillText('-1x', b.x, b.y - 12);
+			}
+			ctx.restore();
+		}
+
 		// Draw Obstacles (All obstacles are Community User Avatars)
 		for (var i = 0; i < obstacles.length; i++) {
 			var obs = obstacles[i];
@@ -540,6 +756,20 @@ $(document).ready(function () {
 
 		// Draw Player
 		player.draw();
+
+		// Draw Floating Texts
+		for (var i = 0; i < floatingTexts.length; i++) {
+			var ft = floatingTexts[i];
+			ctx.save();
+			ctx.globalAlpha = ft.alpha;
+			ctx.fillStyle = ft.color;
+			ctx.font = '900 15px sans-serif';
+			ctx.textAlign = 'center';
+			ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+			ctx.shadowBlur = 4;
+			ctx.fillText(ft.text, ft.x, ft.y);
+			ctx.restore();
+		}
 	}
 
 	function gameLoop() {
