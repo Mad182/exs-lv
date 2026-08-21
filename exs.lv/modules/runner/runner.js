@@ -441,11 +441,11 @@ $(document).ready(function () {
 					createSparkles(b.x, b.y, '#fbbf24', 16);
 					addFloatingText('+5 ⭐', b.x, b.y, '#f59e0b');
 				} else if (b.type === 'tortoise') {
-					// Reduces speed by 1x (6.0 units in gameSpeed = 1.0x multiplier)
-					gameSpeed = Math.max(6.0, gameSpeed - 6.0);
+					// Reduces speed by 0.5x (3.0 units in gameSpeed = 0.5x multiplier)
+					gameSpeed = Math.max(6.0, gameSpeed - 3.0);
 					playSynthSound('tortoise');
 					createSparkles(b.x, b.y, '#4ade80', 16);
-					addFloatingText('-1x ĀTRUMS! 🐢', b.x, b.y, '#22c55e');
+					addFloatingText('-0.5x ĀTRUMS! 🐢', b.x, b.y, '#22c55e');
 				}
 			}
 
@@ -697,11 +697,11 @@ $(document).ready(function () {
 				ctx.fillRect(b.x + 2, b.y + 5, 3, 4);
 				ctx.fillRect(b.x + 8, b.y + 5, 3, 4);
 
-				// Speed slow emblem "-1x"
+				// Speed slow emblem "-0.5x"
 				ctx.fillStyle = '#86efac';
 				ctx.font = 'bold 10px sans-serif';
 				ctx.textAlign = 'center';
-				ctx.fillText('-1x', b.x, b.y - 12);
+				ctx.fillText('-0.5x', b.x, b.y - 12);
 			}
 			ctx.restore();
 		}

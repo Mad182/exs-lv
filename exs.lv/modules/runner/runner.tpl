@@ -68,7 +68,7 @@
 				<li><strong>Pārvarēšanas laiks & ātrums:</strong> Spēles ātrums pakāpeniski pieaug ar katru noskrieto kilometru!</li>
 				<li><strong>Zvaigznes:</strong> Vāc zelta zvaigznes ⭐ par papildu punktiem!</li>
 				<li><strong>Lielā Mirdzošā Zvaigzne:</strong> Dod <strong>+5 zvaigznes</strong>!</li>
-				<li><strong>Bruņurupucis 🐢:</strong> samazina ātrumu par 1x!</li>
+				<li><strong>Bruņurupucis 🐢:</strong> samazina ātrumu par 0.5x!</li>
 			</ul>
 		</div>
 
