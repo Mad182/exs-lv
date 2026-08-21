@@ -7578,6 +7578,9 @@ a.badge:focus {
 	.nav-collapse .nav > li {
 		float: left !important;
 	}
+	.nav-collapse .nav > li.nav-extra {
+		display: none !important;
+	}
 	.nav-collapse .nav > li > a {
 		color: #fff !important;
 		border-right: 1px solid #485a63;

@@ -118,8 +118,26 @@
 					<ul class="nav">
 
 						<li><a href="/forums">Forums</a></li>
+						<li class="nav-extra dropdown"><a href="/raksti">Raksti</a>
+							<ul class="dropdown-menu">
+								<li><a href="/filmas">Filmas</a></li>
+								<li><a href="/muzika">Mūzika</a></li>
+								<li><a href="/spelu-apskati">Spēļu apskati</a></li>
+							</ul>
+						</li>
 						<li><a href="/speles">Spēles</a></li>
+						<li class="nav-extra"><a href="/blogs">Blogi</a></li>
 						<li><a href="/grupas">Grupas</a></li>
+						<li class="nav-extra"><a href="/steam-online">Steam</a></li>
+						<li class="nav-extra dropdown"><a href="/">exs.lv</a>
+							<ul class="dropdown-menu">
+								<li><a href="https://runescape.exs.lv/" title="RuneScape forums">rs.exs.lv</a></li>
+								<li><a href="https://lol.exs.lv/" title="League of Legends forums">lol.exs.lv</a></li>
+								<li><a href="https://coding.lv/"
+										title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
+								<li><a href="https://exs.lv/latvian-games/">Latvian Games</a></li>
+							</ul>
+						</li>
 
 					</ul>
 
