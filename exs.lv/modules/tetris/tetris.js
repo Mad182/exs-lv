@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Game Board Configuration
 	var COLS = 10;
 	var ROWS = 20;
-	var BLOCK_SIZE = 30;
+	var BLOCK_SIZE = 32;
 
 	// Tetrominoes definitions (Standard SRS orientation)
 	var SHAPES = {

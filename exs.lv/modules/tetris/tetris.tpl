@@ -1,6 +1,6 @@
 <h1>Tetris - klasiskā bluķīšu spēle</h1>
 
-<div class="tabs">
+<div class="tabs tetris-tabs">
 	<li><a href="/tetris" class="tab{active-tab-game}">Spēle</a></li>
 	<li><a href="/tetris/top" class="tab{active-tab-top}">Šodienas tops</a></li>
 	<li><a href="/tetris/overall-top" class="tab{active-tab-overall-top}">Visu laiku tops</a></li>
@@ -18,7 +18,7 @@
 		<div class="tetris-main-panel">
 			<div class="tetris-game-row">
 				<div class="tetris-board-container">
-					<canvas id="tetris-canvas" width="300" height="600"></canvas>
+					<canvas id="tetris-canvas" width="320" height="640"></canvas>
 					
 					<div id="tetris-overlay" class="tetris-overlay">
 						<div id="overlay-content" class="overlay-card">
