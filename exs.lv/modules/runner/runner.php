@@ -75,7 +75,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 
 	if ($is_new_record) {
 		$star_str = ($coins > 0) ? ', ⭐ ' . $coins : '';
-		push('Uzstādīja jaunu rekordu spēlē <a href="/runner">Runner</a> (' . number_format($highScore, 0, '', ' ') . ' m' . $star_str . ')', '/bildes/icons/award_star_gold_3.png', 'game-runner-' . $auth->id);
+		push('Uzstādīja jaunu rekordu spēlē <a href="/runner">Runner</a> (' . number_format($highScore, 0, '', ' ') . ' m' . $star_str . ')', '/bildes/icons/games/runner.png', 'game-runner-' . $auth->id);
 	}
 
 	$rank = $db->get_var("SELECT COUNT(DISTINCT user_id) + 1 FROM gamescore WHERE game = 'runner' AND score > '$score'");
