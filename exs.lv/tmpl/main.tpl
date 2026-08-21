@@ -98,7 +98,7 @@
 	{plevel}
 </head>
 
-<body{onload} class="{layout-options}">
+<body{onload} class="{layout-options} {is-game-page} page-{category-url} module-{category-module}">
 	<div id="scroll-up" title="Uz augšu"></div>
 
 	<div id="page">

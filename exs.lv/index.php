@@ -300,11 +300,12 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 $jquery_modules = [
 	'2048', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
 	'memory', 'minu-mekletajs', 'register', 'rulete', 'runner', 'snake', 'speles',
-	'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle'
+	'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle', 'karatavas'
 ];
 if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
 	$require_jquery = true;
 }
+$is_game = (isset($category) && ((!empty($category->module) && in_array($category->module, $jquery_modules)) || (!empty($category->parent) && $category->parent == 2516)));
 
 //lietotājam specifiskās fīčas
 if ($skin === 'main') {
@@ -424,7 +425,9 @@ $tpl->assignGlobal([
 	'page-time' => time(),
 	'page-url' => h($_SERVER['REQUEST_URI']),
 	'page-domain' => $_SERVER['HTTP_HOST'],
-	'category-url' => $category->textid,
+	'category-url' => isset($category->textid) ? $category->textid : '',
+	'category-module' => isset($category->module) ? $category->module : '',
+	'is-game-page' => (!empty($is_game) ? 'is-game-page' : ''),
 	'currentuser-nick' => h($auth->nick),
 	'inprofile-level' => $in_level,
 	'new-messages' => $new_msg_html,

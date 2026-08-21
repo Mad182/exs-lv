@@ -7589,6 +7589,17 @@ a.badge:focus {
 	.nav-collapse .dropdown-menu {
 		display: none !important;
 	}
+	body.is-game-page #sidebar-left,
+	body.page-speles #sidebar-left,
+	body.module-speles #sidebar-left {
+		display: none !important;
+	}
+	body.is-game-page #main-left,
+	body.page-speles #main-left,
+	body.module-speles #main-left {
+		width: 100% !important;
+		margin-left: 0 !important;
+	}
 }
 
 @media (max-width: 480px) {
