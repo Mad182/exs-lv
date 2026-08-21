@@ -43,7 +43,7 @@
 }
 
 .tetris-controls-row {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	gap: 8px;
 	width: 100%;
@@ -185,7 +185,7 @@
 }
 
 .tetris-touch-controls {
-	display: grid;
+	display: none;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 6px;
 	margin-top: 4px;
@@ -434,7 +434,12 @@
 		padding: 6px 0;
 	}
 
+	.tetris-controls-row {
+		display: flex;
+	}
+
 	.tetris-touch-controls {
+		display: grid;
 		margin-top: 2px;
 	}
 }
