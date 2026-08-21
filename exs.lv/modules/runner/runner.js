@@ -788,12 +788,6 @@ $(document).ready(function () {
 				ctx.lineWidth = 2;
 				ctx.strokeRect(obs.x, drawY + 4, obs.width, obs.height - 8);
 
-				// Warning text emblem above triple obstacle
-				ctx.fillStyle = '#ef4444';
-				ctx.font = '900 11px sans-serif';
-				ctx.textAlign = 'center';
-				ctx.fillText('⚠️ TRĪSKĀRŠS! PIETUPIES!', obs.x + obs.width / 2, drawY - 8);
-
 				// Draw 3 Individual Drones
 				for (var k = 0; k < 3; k++) {
 					var subX = obs.x + k * (obs.subSize + obs.gap);
