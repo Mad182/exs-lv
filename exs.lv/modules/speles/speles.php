@@ -148,6 +148,16 @@ $games_list = [
 		'badge_class' => 'label-success',
 		'desc' => 'Šķērso bīstamo šoseju un upi ar baļķiem, lai sasniegtu liliju lapas un uzstādītu rekordu!',
 		'game_code' => 'vardes'
+	],
+	[
+		'id' => 'runner',
+		'title' => 'Bezgalīgais Bēdzējs',
+		'url' => '/runner',
+		'icon' => '🏃',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Bēdz no šķēršļiem un citu lietotāju avatariem, vāc zvaigznes un uzstādi jaunu rekordu!',
+		'game_code' => 'runner'
 	]
 ];
 
@@ -208,6 +218,9 @@ $game_meta_map = [
 	'rulete' => ['title' => 'Rulete', 'url' => '/rulete', 'is_time' => false],
 	'flappy' => ['title' => 'Lidojošais Eksis', 'url' => '/flappy', 'is_time' => false],
 	'invaders' => ['title' => 'Space Invaders', 'url' => '/invaders', 'is_time' => false],
+	'augsup' => ['title' => 'Augšup', 'url' => '/augsup', 'is_time' => false],
+	'vardes' => ['title' => 'Vardes', 'url' => '/vardes', 'is_time' => false],
+	'runner' => ['title' => 'Bezgalīgais Bēdzējs', 'url' => '/runner', 'is_time' => false],
 ];
 
 $recent_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 8");
