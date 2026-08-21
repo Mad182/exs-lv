@@ -66,14 +66,6 @@ if (!empty($inprofile) && !$inprofile->deleted && ($auth->ok === true || !$inpro
 				'yt-slug' => mkslug($inprofile->yt_name)
 			]);
 		}
-
-		if (!empty($inprofile->lastfm_username)) {
-			$tpl->newBlock('profilebox-lastfm-link');
-			$tpl->assign([
-				'name' => $inprofile->lastfm_username
-			]);
-		}
-
 	}
 
 	$isblog = get_blog_by_user($inprofile->id);

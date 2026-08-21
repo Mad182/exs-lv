@@ -1808,18 +1808,6 @@ function get_friends($user_id, $force = false) {
 	return $friends;
 }
 
-function get_friends_lastfm($user_id, $force = false) {
-	global $db, $m;
-
-	if ($force || !($friends = $m->get('friends_lastfm_' . $user_id))) {
-		$f1 = $db->get_col("SELECT `friends`.`friend1` FROM `friends` INNER JOIN `users` ON `users`.`id` = `friends`.`friend1` AND `users`.`lastfm_username` IS NOT NULL WHERE `friends`.`friend2` = $user_id AND `friends`.`confirmed` = 1");
-		$f2 = $db->get_col("SELECT `friends`.`friend2` FROM `friends` INNER JOIN `users` ON `users`.`id` = `friends`.`friend2` AND `users`.`lastfm_username` IS NOT NULL WHERE `friends`.`friend1` = $user_id AND `friends`.`confirmed` = 1");
-		$friends = (array) array_merge($f1, $f2);
-		$m->set('friends_lastfm_' . $user_id, $friends, 600);
-	}
-
-	return $friends;
-}
 
 /**
  * Uzlēcošais paziņojums, parādās lietotājam vienu reizi
@@ -2103,7 +2091,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 	global $auth, $db, $m, $lang, $config_domains, $img_server;
 
 	if ($tab === 'music') {
-		return get_latest_music();
+		return '';
 	}
 
 	$pg = isset($_GET['pg']) ? intval($_GET['pg']) : 0;
@@ -2713,158 +2701,7 @@ function check_token($action, $token) {
 	return (make_token($action) === $token);
 }
 
-/**
- * Update last.fm last played tracks
- */
-function lastfm_update_tracks($user_id) {
-	global $lastfm_apikey, $lastfm_secret, $db;
 
-	$user = get_user($user_id);
-
-	if (empty($user->lastfm_sessionkey) || $user->lastfm_updated > time() - 100) {
-		return false;
-	}
-
-	$authVars = [
-		'apiKey' => $lastfm_apikey,
-		'secret' => $lastfm_secret,
-		'username' => $user->lastfm_username,
-		'sessionKey' => $user->lastfm_sessionkey,
-		'subscriber' => $user->lastfm_subscriber
-	];
-
-	$config = [
-		'enabled' => false
-	];
-
-	$lastfm_auth = new lastfmApiAuth('setsession', $authVars);
-
-	$apiClass = new lastfmApi();
-	$userClass = $apiClass->getPackage($lastfm_auth, 'user', $config);
-
-	$methodVars = [
-		'user' => $user->lastfm_username
-	];
-
-	$db->update('users', $user->id, [
-		'lastfm_updated' => time()
-	]);
-
-	if ($tracks = $userClass->getRecentTracks($methodVars)) {
-
-		$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$user->id'");
-
-		$i = 0;
-		foreach ($tracks as $track) {
-
-			if ($i < 20) {
-				$db->query("INSERT INTO `lastfm_tracks` (`user_id`, `name`, `mbid`, `url`, `date`, `artist_name`, `artist_mbid`, `album_name`, `album_mbid`, `images_medium`, `created`) VALUES ($user->id, '" . sanitize($track['name']) . "', '" . sanitize($track['mbid']) . "', '" . sanitize($track['url']) . "', " . intval($track['date']) . ", '" . sanitize($track['artist']['name']) . "', '" . sanitize($track['artist']['mbid']) . "', '" . sanitize($track['album']['name']) . "', '" . sanitize($track['album']['mbid']) . "', '" . sanitize($track['images']['medium']) . "', NOW())");
-			}
-
-			$i++;
-		}
-
-		return true;
-	} else {
-
-		//cleanup of dead accounts
-
-		/*$db->update('users', $user->id, [
-			'lastfm_username' => null,
-			'lastfm_sessionkey' => null,
-			'lastfm_subscriber' => null,
-			'lastfm_token' => null,
-			'lastfm_updated' => null
-		]);
-
-		sleep(2);*/
-
-		return false;
-	}
-}
-
-/**
- * Parāda pēdējās draugu klausītās dziesmas mūzikas tabā
- */
-function get_latest_music() {
-	global $auth, $db, $lang, $config_domains, $img_server;
-
-	$out = '<ul id="mb-list" class="blockhref mb-col">';
-
-	if (isset($_GET['pg'])) {
-		$skip = 6 * intval($_GET['pg']);
-	} else {
-		$skip = 0;
-	}
-
-	$friendsquery = '';
-	if ($auth->ok === true && $auth->lastfm_onlyfriends) {
-		$myfriends = get_friends_lastfm($auth->id);
-		if (!empty($myfriends)) {
-			$myfriends[] = $auth->id;
-			$friendsquery = 'AND `lastfm_tracks`.`user_id` IN(' . implode(',', $myfriends) . ')';
-		}
-	}
-
-	$tracks = $db->get_results("SELECT
-		`lastfm_tracks`.*,
-		`users`.`avatar` AS `avatar`,
-		`users`.`deleted` AS `deleted`,
-		`users`.`av_alt` AS `av_alt`,
-		`users`.`level` AS `level`,
-		`users`.`nick` AS `nick`
-	FROM
-		`lastfm_tracks`,
-		`users`
-	WHERE
-		`lastfm_tracks`.`date` < " . time() . " AND
-		`users`.`id` = `lastfm_tracks`.`user_id`
-		$friendsquery
-	GROUP BY
-		`users`.`id`, `lastfm_tracks`.`name`
-	ORDER BY
-		`lastfm_tracks`.`date` DESC
-	LIMIT $skip, 6");
-
-	if ($tracks) {
-		foreach ($tracks as $track) {
-
-			$time = time_ago($track->date);
-
-			if (!empty($track->images_medium)) {
-				$img = str_replace('http://', '//', $track->images_medium);
-			} else {
-				//ja last.fm nedod avataru, rādam lietotāju
-				$img = get_avatar($track, 's');
-			}
-
-			$out .= '<li><span class="wrap"><img class="av" width="45" height="45" src="' . $img . '" alt="' . h($track->name) . '" /><a href="/user/' . $track->user_id . '">' . usercolor($track->nick, $track->level, false, $track->user_id) . '</a> <span class="post-time">' . $time . '</span> <a href="' . h($track->url) . '" rel="nofollow" target="_blank">' . h($track->artist_name) . ' - ' . h($track->name) . '</a></span></li>';
-		}
-	}
-
-	$out .= '</ul><p class="core-pager ajax-pager">';
-
-	for ($i = 1; $i <= 5; $i++) {
-		$out .= ' <a class="page-numbers ';
-		if ($i == 1) {
-			$out .= 'default-minibog-tab ';
-		}
-		if ((isset($_GET['pg']) && $_GET['pg'] == ($i - 1)) || (!isset($_GET['pg']) && $i == 1)) {
-			$out .= 'selected';
-		}
-		$out .= '" href="/mb-latest?pg=' . ($i - 1) . '&amp;tab=music">' . $i . '</a>';
-		if ($i != 5) {
-			$out .= ' <span>-</span>';
-		}
-	}
-	$out .= '</p>';
-
-	if ($auth->ok === true) {
-		$out .= '<p style="text-align:right"><a class="button button-xs primary" href="/lastfm">Iestatījumi</a></p>';
-	}
-
-	return $out;
-}
 
 /**
  * Atgriež spēles monitora html (ar cache)

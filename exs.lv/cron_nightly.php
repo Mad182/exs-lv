@@ -87,7 +87,6 @@ foreach($users as $user) {
 	$db->query("DELETE FROM `viewprofile` WHERE `viewer` = '$user->id'");
 	$db->query("DELETE FROM `bookmarks` WHERE `userid` = '$user->id'");
 	$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$user->id'");
-	$db->query("DELETE FROM `lastfm_tracks` WHERE `user_id` = '$user->id'");
 	$db->query("DELETE FROM `userlogs` WHERE `user` = '$user->id'");
 	$db->query("DELETE FROM `images` WHERE `uid` = '$user->id'");
 	$db->query("UPDATE `comments` SET `removed` = 1 WHERE `author` = '$user->id'");

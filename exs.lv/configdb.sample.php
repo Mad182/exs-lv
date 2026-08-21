@@ -30,10 +30,6 @@ $smtp_password = '***';
 $mc_host = getenv('MC_HOST') ?: 'localhost';
 $mc_port = getenv('MC_PORT') ?: 11211;
 
-//last.fm
-$lastfm_apikey = '';
-$lastfm_secret = '';
-
 //formu tokenu salt
 $remote_salt = 'BgpgSvz21ku6C2tcEGVLqwWj8fXkeSA9';
 
@@ -41,14 +37,6 @@ $remote_salt = 'BgpgSvz21ku6C2tcEGVLqwWj8fXkeSA9';
 // lai no lietotnes lokāli varētu veikt pieprasījumus uz šo IP
 $android_local_ip = null; // piemēram, '192.168.88.5'
 $ios_local_ip = null;
-
-//facebook login
-$fb_api_id = null;
-$fb_api_key = null;
-
-//draugiem pase
-$dr_api_id = null;
-$dr_api_key = null;
 
 //Steam login
 $steam_api_key = ""; 		//API atslēga

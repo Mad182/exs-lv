@@ -443,7 +443,6 @@ $tpl->assignGlobal([
 	'current-year' => date('Y'),
 	'mb-refresh-limit' => $mb_refresh_limit,
 	'static-server' => $static_server,
-	'facebook-app-id' => $fb_api_id,
 	'img-server' => $img_server,
 	'logout-hash' => $auth->logout_hash
 ]);

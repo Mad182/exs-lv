@@ -11,14 +11,6 @@
 
 $tpl_options = 'no-left';
 
-// facebok login
-$fb_api_id = '352399534849590';
-$fb_api_key = 'efa5f43f11a7c37a924e7164707579e0';
-
-// draugiem pase
-$dr_api_id = 15010793;
-$dr_api_key = 'c77481ff03e49feb76cddf54c6ef4929';
-
 // karma, no kuras sākot var labot savus postus
 $min_post_edit = 10;
 

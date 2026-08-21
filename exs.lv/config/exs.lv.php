@@ -9,10 +9,6 @@
 |--------------------------------------------------------------------------
 */ 
 
-// facebook login
-$fb_api_id = '';
-$fb_api_key = '';
-
 // steam login
 $steam_api_key = ""; // API atslēga
 $steam_domain_name = "exs.lv"; // domēns, kas rādās steam lapā

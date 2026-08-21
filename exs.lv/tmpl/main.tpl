@@ -463,11 +463,6 @@
 							<a rel="nofollow" target="_blank" href="https://www.youtube.com/{yt-slug}" id="l-yt"><span
 									class="yt">{yt-name}</span></a><br>
 							<!-- END BLOCK : profilebox-yt-link-->
-
-							<!-- START BLOCK : profilebox-lastfm-link-->
-							<a rel="nofollow" target="_blank" href="https://www.last.fm/user/{name}"
-								id="l-lastfm">{name}</a><br>
-							<!-- END BLOCK : profilebox-lastfm-link-->
 						</div>
 						<div class="c"></div>
 					</div>

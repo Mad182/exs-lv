@@ -227,10 +227,7 @@ function list_awards() {
 			'title' => '<a href="https://play.google.com/store/apps/details?id=lv.exs.android" rel="nofollow">exs.lv android lietotājs</a>',
 			'state' => 'inactive'
 		],
-		'lastfm' => [
-			'title' => '<a href="//exs.lv/lastfm" rel="nofollow">LastFM</a> lietotājs',
-			'state' => 'inactive'
-		],
+
 		'steam' => [
 			'title' => '<a href="//exs.lv/steam-online" rel="nofollow">Steam</a> lietotājs',
 			'state' => 'inactive'
@@ -396,9 +393,7 @@ function update_awards($user) {
 			$awards_list['first-post']['state'] = 'active';
 		}
 
-		if (!empty($userr->lastfm_username)) {
-			$awards_list['lastfm']['state'] = 'active';
-		}
+
 
 		if (!empty($userr->steam_id)) {
 			$awards_list['steam']['state'] = 'active';
