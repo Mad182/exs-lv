@@ -76,6 +76,7 @@ if (
 	strpos($_SERVER['HTTP_USER_AGENT'], "ClaudeBot") === false &&
 	strpos($_SERVER['HTTP_USER_AGENT'], "AhrefsBot") === false
 ) {
+	session_cache_limiter('public');
 	session_start();
 }
 
@@ -150,9 +151,11 @@ if ($is_guest_cacheable) {
 	$cached_page = $m->get($guest_cache_key);
 
 	if ($cached_page !== false && !empty($cached_page)) {
-		header('Content-Type: text/html; charset=UTF-8');
-		header('X-Cache-Status: HIT');
-		header('Cache-Control: public, max-age=60, s-maxage=120');
+		header_remove('Pragma');
+		header_remove('Expires');
+		header('Content-Type: text/html; charset=UTF-8', true);
+		header('X-Cache-Status: HIT', true);
+		header('Cache-Control: public, max-age=60, s-maxage=120', true);
 		echo $cached_page;
 		$db->close();
 		exit;
@@ -777,8 +780,10 @@ if (isset($_GET['vc'])) {
 }
 
 if (!empty($is_guest_cacheable) && !empty($guest_cache_key)) {
-	header('X-Cache-Status: MISS');
-	header('Cache-Control: public, max-age=60, s-maxage=120');
+	header_remove('Pragma');
+	header_remove('Expires');
+	header('X-Cache-Status: MISS', true);
+	header('Cache-Control: public, max-age=60, s-maxage=120', true);
 	$output_html = $tpl->getOutputContent();
 	$m->set($guest_cache_key, $output_html, 60);
 	echo $output_html;
