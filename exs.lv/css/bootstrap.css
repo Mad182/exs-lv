@@ -7586,7 +7586,9 @@ a.badge:focus {
 		border-right: 1px solid #485a63;
 		padding: 15px 10px !important;
 	}
-	.nav-collapse .dropdown-menu {
+	.nav-collapse .dropdown-menu,
+	ul.nav li.dropdown:hover > ul.dropdown-menu,
+	.nav-collapse ul.nav li.dropdown:hover > ul.dropdown-menu {
 		display: none !important;
 	}
 	body.is-game-page #sidebar-left,
