@@ -264,9 +264,9 @@ $(document).ready(function () {
 			avatarImg = obstacleAvatars[Math.floor(Math.random() * obstacleAvatars.length)];
 		}
 
-		if (typeRand < 0.45) {
+		if (typeRand < 0.50) {
 			// Ground User Avatar Obstacle
-			var size = 42;
+			var size = 44;
 			obstacles.push({
 				type: 'ground_avatar',
 				x: canvas.width + 40,
@@ -275,9 +275,9 @@ $(document).ready(function () {
 				height: size,
 				img: avatarImg
 			});
-		} else if (typeRand < 0.75) {
-			// Flying Droid User Avatar Obstacle (Must duck or high jump)
-			var size = 38;
+		} else {
+			// Flying Droid User Avatar Obstacle (Must duck or time jump)
+			var size = 40;
 			obstacles.push({
 				type: 'flying_avatar',
 				x: canvas.width + 40,
@@ -286,17 +286,6 @@ $(document).ready(function () {
 				height: size,
 				img: avatarImg,
 				hoverOffset: 0
-			});
-		} else {
-			// Spikes Obstacle
-			var width = 36;
-			var height = 36;
-			obstacles.push({
-				type: 'spikes',
-				x: canvas.width + 40,
-				y: GROUND_Y - height,
-				width: width,
-				height: height
 			});
 		}
 
@@ -493,57 +482,42 @@ $(document).ready(function () {
 			ctx.restore();
 		}
 
-		// Draw Obstacles
+		// Draw Obstacles (All obstacles are Community User Avatars)
 		for (var i = 0; i < obstacles.length; i++) {
 			var obs = obstacles[i];
+			var drawY = obs.y;
+			if (obs.type === 'flying_avatar') {
+				drawY += Math.sin(obs.hoverOffset) * 6;
+			}
 
-			if (obs.type === 'ground_avatar' || obs.type === 'flying_avatar') {
-				var drawY = obs.y;
-				if (obs.type === 'flying_avatar') {
-					drawY += Math.sin(obs.hoverOffset) * 6;
-				}
+			ctx.save();
+			// Hazard Glow Outer Ring
+			ctx.strokeStyle = '#ef4444';
+			ctx.lineWidth = 3;
+			ctx.beginPath();
+			ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, obs.width / 2 + 2, 0, Math.PI * 2);
+			ctx.stroke();
 
-				ctx.save();
-				// Red Hazard Glow Outer Ring
-				ctx.strokeStyle = '#ef4444';
-				ctx.lineWidth = 3;
-				ctx.beginPath();
-				ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, obs.width / 2 + 2, 0, Math.PI * 2);
-				ctx.stroke();
+			// Circular Clip for User Avatar
+			ctx.beginPath();
+			ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, obs.width / 2, 0, Math.PI * 2);
+			ctx.closePath();
+			ctx.clip();
 
-				// Circular Clip for User Avatar
-				ctx.beginPath();
-				ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, obs.width / 2, 0, Math.PI * 2);
-				ctx.closePath();
-				ctx.clip();
-
-				if (obs.img && obs.img.complete && obs.img.naturalWidth !== 0) {
-					ctx.drawImage(obs.img, obs.x, drawY, obs.width, obs.height);
-				} else {
-					ctx.fillStyle = '#ef4444';
-					ctx.fillRect(obs.x, drawY, obs.width, obs.height);
-				}
-				ctx.restore();
-
-				if (obs.type === 'flying_avatar') {
-					// Drone Thruster Jet Flame
-					ctx.fillStyle = '#f97316';
-					ctx.beginPath();
-					ctx.arc(obs.x + obs.width / 2, drawY + obs.height + 4, 5, 0, Math.PI * 2);
-					ctx.fill();
-				}
-			} else if (obs.type === 'spikes') {
+			if (obs.img && obs.img.complete && obs.img.naturalWidth !== 0) {
+				ctx.drawImage(obs.img, obs.x, drawY, obs.width, obs.height);
+			} else {
 				ctx.fillStyle = '#ef4444';
-				ctx.beginPath();
-				ctx.moveTo(obs.x, obs.y + obs.height);
-				ctx.lineTo(obs.x + obs.width / 2, obs.y);
-				ctx.lineTo(obs.x + obs.width, obs.y + obs.height);
-				ctx.closePath();
-				ctx.fill();
+				ctx.fillRect(obs.x, drawY, obs.width, obs.height);
+			}
+			ctx.restore();
 
-				ctx.strokeStyle = '#b91c1c';
-				ctx.lineWidth = 2;
-				ctx.stroke();
+			if (obs.type === 'flying_avatar') {
+				// Drone Thruster Jet Flame
+				ctx.fillStyle = '#f97316';
+				ctx.beginPath();
+				ctx.arc(obs.x + obs.width / 2, drawY + obs.height + 4, 5, 0, Math.PI * 2);
+				ctx.fill();
 			}
 		}
 
