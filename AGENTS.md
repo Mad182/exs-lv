@@ -44,11 +44,13 @@ exs-lv/
 ### Deployment Workflow
 When delivering fixes, new features, or new games, execute the following steps:
 
-1. **Verify Code Locally:**
-   Run PHP syntax check on modified/new PHP files:
+1. **Verify Code & Minify Game JS Locally:**
+   Run PHP syntax check on modified/new PHP files and minify game assets:
    ```bash
    php -l exs.lv/modules/<module>/<module>.php
+   php exs.lv/scripts/minify_games.php
    ```
+   *(Note: Local `pre-commit` git hook and production `post-merge` git hook also run `php exs.lv/scripts/minify_games.php` automatically on commit & deployment).*
 
 2. **Commit & Push to Remote:**
    ```bash
@@ -58,7 +60,7 @@ When delivering fixes, new features, or new games, execute the following steps:
    ```
 
 3. **Deploy to Production Server via SSH:**
-   Pull the latest changes directly on the production server:
+   Pull the latest changes directly on the production server (triggers post-merge minification hook automatically):
    ```bash
    ssh root@exs.lv "cd /home/www/exs.lv && git pull"
    ```
