@@ -113,30 +113,11 @@
 
 			<nav class="navbar clearfix nobot">
 
-				<a id="responsive-menu-button" href="#swipe-menu">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-
 				<div class="nav-collapse" id="swipe-menu-responsive">
 
 					<ul class="nav">
 
-						<li>
-							<span id="close-menu">
-								<a href="#" class="close-this-menu">Close</a>
-							</span>
-						</li>
-
 						<li><a href="/forums">Forums</a></li>
-						<li class="dropdown"><a href="/raksti">Raksti</a>
-							<ul class="dropdown-menu">
-								<li><a href="/filmas">Filmas</a></li>
-								<li><a href="/muzika">Mūzika</a></li>
-								<li><a href="/spelu-apskati">Spēļu apskati</a></li>
-							</ul>
-						</li>
 						<li class="dropdown"><a href="/speles">Spēles</a>
 							<ul class="dropdown-menu">
 								<li><a href="/speles">Viss katalogs</a></li>
@@ -150,18 +131,7 @@
 								<li><a href="/wordle">Wordle</a></li>
 							</ul>
 						</li>
-						<li><a href="/blogs">Blogi</a></li>
 						<li><a href="/grupas">Grupas</a></li>
-						<li><a href="/steam-online">Steam</a></li>
-						<li class="dropdown"><a href="/">exs.lv</a>
-							<ul class="dropdown-menu">
-								<li><a href="https://runescape.exs.lv/" title="RuneScape forums">rs.exs.lv</a></li>
-								<li><a href="https://lol.exs.lv/" title="League of Legends forums">lol.exs.lv</a></li>
-								<li><a href="https://coding.lv/"
-										title="Mājas lapu veidošanas un programmēšanas forums">coding.lv</a></li>
-								<li><a href="https://exs.lv/latvian-games/">Latvian Games</a></li>
-							</ul>
-						</li>
 
 					</ul>
 
