@@ -281,7 +281,7 @@ $(document).ready(function () {
 			obstacles.push({
 				type: 'flying_avatar',
 				x: canvas.width + 40,
-				y: GROUND_Y - 78, // Positioned so ducking allows passing underneath safely
+				y: GROUND_Y - 65, // Positioned lower so standing player hits it, requiring ducking
 				width: size,
 				height: size,
 				img: avatarImg,
@@ -374,13 +374,21 @@ $(document).ready(function () {
 		updateHUD();
 	}
 
+	function getObstacleY(obs) {
+		if (obs.type === 'flying_avatar') {
+			return obs.y + Math.sin(obs.hoverOffset) * 4;
+		}
+		return obs.y;
+	}
+
 	function checkCollision(p, o) {
 		var pMargin = 4;
+		var oY = getObstacleY(o);
 		return (
 			p.x + pMargin < o.x + o.width - pMargin &&
 			p.x + p.width - pMargin > o.x + pMargin &&
-			p.y + pMargin < o.y + o.height - pMargin &&
-			p.y + p.height - pMargin > o.y + pMargin
+			p.y + pMargin < oY + o.height - pMargin &&
+			p.y + p.height - pMargin > oY + pMargin
 		);
 	}
 
@@ -485,10 +493,7 @@ $(document).ready(function () {
 		// Draw Obstacles (All obstacles are Community User Avatars)
 		for (var i = 0; i < obstacles.length; i++) {
 			var obs = obstacles[i];
-			var drawY = obs.y;
-			if (obs.type === 'flying_avatar') {
-				drawY += Math.sin(obs.hoverOffset) * 6;
-			}
+			var drawY = getObstacleY(obs);
 
 			ctx.save();
 			// Hazard Glow Outer Ring
