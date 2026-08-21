@@ -19,6 +19,12 @@ $(document).ready(function () {
 	var timerInterval = null;
 	var timerSeconds = 0;
 	var sessionToken = '';
+	var dailyCompleted = false;
+
+	function getTodayDateStr() {
+		var today = new Date();
+		return today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+	}
 
 	// 1. Fetch word list
 	$.getJSON('/modules/wordle/latvian-5letters.json', function (data) {
@@ -29,16 +35,47 @@ $(document).ready(function () {
 		}
 	});
 
-	function initSession() {
+	function initSession(callback) {
 		$.getJSON('/wordle/?action=init_token', function (res) {
 			if (res && res.success) {
 				sessionToken = res.token;
+				if (res.daily_completed) {
+					dailyCompleted = true;
+					markDailyCompletedUI();
+					if (currentMode === 'daily') {
+						currentMode = 'practice';
+						$('.wdl-mode-btn').removeClass('active');
+						$('#wdl-btn-practice').addClass('active');
+						startNewGame();
+					}
+				}
 			}
+			if (typeof callback === 'function') callback();
 		});
+	}
+
+	function markDailyCompletedUI() {
+		$('#wdl-btn-daily').addClass('disabled-mode').attr('title', 'Šodienas vārds jau izspēlēts');
 	}
 
 	function startNewGame() {
 		if (solutions.length === 0) return;
+
+		var todayKey = getTodayDateStr();
+		if (localStorage.getItem('wordle_daily_' + todayKey) === 'true') {
+			dailyCompleted = true;
+		}
+
+		if (currentMode === 'daily' && dailyCompleted) {
+			showToast('Šodienas dienas vārds jau ir izspēlēts! Pārslēgts uz treniņa režīmu.');
+			currentMode = 'practice';
+			$('.wdl-mode-btn').removeClass('active');
+			$('#wdl-btn-practice').addClass('active');
+		}
+
+		if (dailyCompleted) {
+			markDailyCompletedUI();
+		}
 
 		currentRow = 0;
 		currentTile = 0;
@@ -199,11 +236,21 @@ $(document).ready(function () {
 				isWon = true;
 				isGameOver = true;
 				clearInterval(timerInterval);
+				if (currentMode === 'daily') {
+					dailyCompleted = true;
+					localStorage.setItem('wordle_daily_' + getTodayDateStr(), 'true');
+					markDailyCompletedUI();
+				}
 				showToast('Lieliski! Uzminēji vārdu ' + (currentRow + 1) + '. mēģinājumā! 🎉');
 				submitScore(currentRow + 1);
 			} else if (currentRow === 5) {
 				isGameOver = true;
 				clearInterval(timerInterval);
+				if (currentMode === 'daily') {
+					dailyCompleted = true;
+					localStorage.setItem('wordle_daily_' + getTodayDateStr(), 'true');
+					markDailyCompletedUI();
+				}
 				showToast('Spēle beigusies! Pareizais vārds bija: ' + targetWord);
 			} else {
 				currentRow++;
@@ -303,6 +350,11 @@ $(document).ready(function () {
 	});
 
 	$('#wdl-btn-daily').on('click', function () {
+		var todayKey = getTodayDateStr();
+		if (dailyCompleted || localStorage.getItem('wordle_daily_' + todayKey) === 'true') {
+			showToast('Šodienas dienas vārdu jau esi izspēlējis! Spēlē treniņa režīmu.');
+			return;
+		}
 		currentMode = 'daily';
 		$('.wdl-mode-btn').removeClass('active');
 		$(this).addClass('active');
@@ -317,6 +369,13 @@ $(document).ready(function () {
 	});
 
 	$('#wdl-btn-new').on('click', function () {
+		var todayKey = getTodayDateStr();
+		if (currentMode === 'daily' && (dailyCompleted || localStorage.getItem('wordle_daily_' + todayKey) === 'true')) {
+			showToast('Šodienas dienas vārds jau izspēlēts! Sākam treniņa spēli.');
+			currentMode = 'practice';
+			$('.wdl-mode-btn').removeClass('active');
+			$('#wdl-btn-practice').addClass('active');
+		}
 		startNewGame();
 	});
 });

@@ -10,7 +10,18 @@ if (isset($_GET['action']) && $_GET['action'] == 'init_token') {
 	$token = bin2hex(random_bytes(16));
 	$_SESSION['wordle_token'] = $token;
 	$_SESSION['wordle_start_time'] = time();
-	echo json_encode(['success' => true, 'token' => $token]);
+
+	$today_start = strtotime('today midnight');
+	$daily_completed = false;
+	if ($auth->ok && $auth->id > 0) {
+		$daily_completed = ($db->get_var("SELECT COUNT(*) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id' AND time >= '$today_start'") > 0);
+	}
+
+	echo json_encode([
+		'success' => true,
+		'token' => $token,
+		'daily_completed' => (bool)$daily_completed
+	]);
 	exit;
 }
 
@@ -27,6 +38,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$time_sec = isset($_POST['time_sec']) ? intval($_POST['time_sec']) : 0;
 	$guesses = isset($_POST['guesses']) ? intval($_POST['guesses']) : 0;
 	$mode = isset($_POST['mode']) ? trim($_POST['mode']) : 'daily';
+
+	// Block duplicate daily score submission on the same day
+	if ($mode == 'daily') {
+		$today_start = strtotime('today midnight');
+		$already_played = $db->get_var("SELECT COUNT(*) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id' AND time >= '$today_start'");
+		if ($already_played > 0) {
+			echo json_encode(['success' => false, 'message' => 'Šodienas dienas vārdu jau esi izspēlējis!']);
+			exit;
+		}
+	}
 
 	// Anti-Cheat Check 1: Token Verification
 	if (empty($_SESSION['wordle_token']) || empty($token) || !hash_equals($_SESSION['wordle_token'], $token)) {

@@ -47,6 +47,11 @@
 	border-color: #059669;
 }
 
+.wdl-mode-btn.disabled-mode {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
 .wdl-stats {
 	display: flex;
 	gap: 8px;
