@@ -119,7 +119,7 @@ $(document).ready(function () {
 				osc.start(now);
 				osc.stop(now + 0.3);
 			}
-		} catch (e) {}
+		} catch (e) { }
 	}
 
 	// Preloaded Avatars
@@ -340,10 +340,10 @@ $(document).ready(function () {
 		}
 
 		// Spawn Rare Bonuses (Large Glowing Star from 2x+ speed, Tortoise from 3x+ speed) at reachable heights
-		if (gameSpeed >= 12.0 && Math.random() < 0.25) {
+		if (gameSpeed >= 12.0 && Math.random() < 0.2) {
 			var bonusType = 'big_star';
 			// Tortoise bonus reduces speed by 1x (only available at 3x+ speed: gameSpeed >= 18.0)
-			if (gameSpeed >= 18.0 && Math.random() < 0.5) {
+			if (gameSpeed >= 18.0 && Math.random() < 0.4) {
 				bonusType = 'tortoise';
 			}
 			// Reachable height: GROUND_Y - 45 (ground/duck height) up to GROUND_Y - 110 (jump height)
