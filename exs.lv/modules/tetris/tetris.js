@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		isPaused = false;
 		isPlaying = true;
 
-		if (btnPause) btnPause.disabled = false;
+		updatePauseButtonsUI();
 		overlay.style.display = 'none';
 
 		updateStats();
@@ -603,18 +603,32 @@ document.addEventListener('DOMContentLoaded', function () {
 		animFrameId = requestAnimationFrame(updateGame);
 	}
 
+	function updatePauseButtonsUI() {
+		var btns = document.querySelectorAll('#btn-pause, #btn-pause-mobile');
+		for (var i = 0; i < btns.length; i++) {
+			btns[i].disabled = !isPlaying || isGameOver;
+			btns[i].textContent = isPaused ? 'Atsākt (P)' : 'Nopauzēt (P)';
+		}
+	}
+
+	function updateSoundButtonsUI() {
+		var btns = document.querySelectorAll('#btn-sound, #btn-sound-mobile');
+		for (var i = 0; i < btns.length; i++) {
+			btns[i].textContent = audioEnabled ? 'Skaņa: IESL.' : 'Skaņa: IZSL.';
+		}
+	}
+
 	function togglePause() {
 		if (!isPlaying || isGameOver) return;
 		isPaused = !isPaused;
 
+		updatePauseButtonsUI();
 		if (isPaused) {
-			if (btnPause) btnPause.textContent = 'Atsākt (P)';
 			overlayTitle.textContent = 'PAUZE';
 			overlayMsg.textContent = 'Spēle ir nopauzēta.';
 			btnStart.textContent = 'Turpināt';
 			overlay.style.display = 'flex';
 		} else {
-			if (btnPause) btnPause.textContent = 'Nopauzēt (P)';
 			overlay.style.display = 'none';
 			lastTime = performance.now();
 			animFrameId = requestAnimationFrame(updateGame);
@@ -624,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	function handleGameOver() {
 		isGameOver = true;
 		isPlaying = false;
-		if (btnPause) btnPause.disabled = true;
+		updatePauseButtonsUI();
 
 		playSound('gameover');
 
@@ -724,16 +738,18 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
-	if (btnPause) {
-		btnPause.addEventListener('click', function () {
+	var btnPauses = document.querySelectorAll('#btn-pause, #btn-pause-mobile');
+	for (var p = 0; p < btnPauses.length; p++) {
+		btnPauses[p].addEventListener('click', function () {
 			togglePause();
 		});
 	}
 
-	if (btnSound) {
-		btnSound.addEventListener('click', function () {
+	var btnSounds = document.querySelectorAll('#btn-sound, #btn-sound-mobile');
+	for (var s = 0; s < btnSounds.length; s++) {
+		btnSounds[s].addEventListener('click', function () {
 			audioEnabled = !audioEnabled;
-			btnSound.textContent = audioEnabled ? 'Skaņa: IESL.' : 'Skaņa: IZSL.';
+			updateSoundButtonsUI();
 		});
 	}
 
