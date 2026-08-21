@@ -276,7 +276,24 @@ $(document).ready(function () {
 	var distanceRun = 0;
 	var coinsCollected = 0;
 	var spawnTimer = 0;
+	var targetSpawnInterval = 90;
 	var startTime = 0;
+
+	function getNextSpawnInterval(lastType) {
+		// Base interval shrinks as game speed increases (from ~95 frames down to ~38 frames)
+		var baseInterval = Math.max(38, 95 - (gameSpeed - 6.0) * 4.0);
+
+		// Add random variance: 70% to 140% of base interval
+		var randomFactor = 0.70 + (Math.random() * 0.70);
+		var interval = Math.floor(baseInterval * randomFactor);
+
+		// If previous obstacle was a wide triple obstacle, add extra clearance frames
+		if (lastType === 'triple_flying') {
+			interval += Math.floor(28 + Math.random() * 20);
+		}
+
+		return interval;
+	}
 
 	function resetGame() {
 		player.reset();
@@ -289,6 +306,7 @@ $(document).ready(function () {
 		distanceRun = 0;
 		coinsCollected = 0;
 		spawnTimer = 0;
+		targetSpawnInterval = getNextSpawnInterval();
 		startTime = Date.now();
 
 		updateHUD();
@@ -301,9 +319,13 @@ $(document).ready(function () {
 			avatarImg = obstacleAvatars[Math.floor(Math.random() * obstacleAvatars.length)];
 		}
 
-		if (typeRand < 0.78) {
-			// Ground User Avatar Obstacle (78% - Jump over)
-			var size = 44;
+		var spawnedType = '';
+
+		if (typeRand < 0.55) {
+			// 1. Ground User Avatar Obstacle (55% - Jump over)
+			// Height/Size Variation: size ranges randomly from 34 to 52 px
+			spawnedType = 'ground_avatar';
+			var size = Math.floor(34 + Math.random() * 19);
 			obstacles.push({
 				type: 'ground_avatar',
 				x: canvas.width + 40,
@@ -312,22 +334,63 @@ $(document).ready(function () {
 				height: size,
 				img: avatarImg
 			});
-		} else {
-			// High Flying User Avatar Drone (22% - Must duck / run under)
-			var size = 38;
+		} else if (typeRand < 0.78) {
+			// 2. Single Flying Drone Avatar (23% - Duck under)
+			// Height/Elevation Variation: Y position varies between GROUND_Y - 73 and GROUND_Y - 61
+			spawnedType = 'flying_avatar';
+			var size = Math.floor(34 + Math.random() * 10);
+			var yElev = Math.floor(61 + Math.random() * 13);
 			obstacles.push({
 				type: 'flying_avatar',
 				x: canvas.width + 40,
-				y: GROUND_Y - 65, // Positioned lower so standing player hits it, requiring ducking
+				y: GROUND_Y - yElev,
 				width: size,
 				height: size,
 				img: avatarImg,
-				hoverOffset: 0
+				hoverOffset: Math.random() * Math.PI * 2
+			});
+		} else {
+			// 3. Triple Flying Drone Obstacle (22% - CANNOT BE JUMPED OVER, ONLY DUCKED!)
+			spawnedType = 'triple_flying';
+			var subSize = 36;
+			var gap = 8;
+			var totalWidth = (subSize * 3) + (gap * 2); // 124px wide!
+
+			// Pick 3 avatar images from pool if available
+			var imgs = [];
+			for (var i = 0; i < 3; i++) {
+				if (obstacleAvatars.length > 0) {
+					imgs.push(obstacleAvatars[Math.floor(Math.random() * obstacleAvatars.length)]);
+				} else {
+					imgs.push(null);
+				}
+			}
+
+			obstacles.push({
+				type: 'triple_flying',
+				x: canvas.width + 40,
+				y: GROUND_Y - 65, // Positioned at ducking clearance height
+				width: totalWidth,
+				height: subSize,
+				subSize: subSize,
+				gap: gap,
+				imgs: imgs,
+				hoverOffset: Math.random() * Math.PI * 2
 			});
 		}
 
-		// Spawn Golden Star Coins in air or line
-		if (Math.random() < 0.6) {
+		// Spawn Golden Star Coins in air or underneath triple obstacle
+		if (spawnedType === 'triple_flying') {
+			// Reward ducking under triple obstacle with 3 coins
+			for (var c = 0; c < 3; c++) {
+				coins.push({
+					x: canvas.width + 58 + (c * 36),
+					y: GROUND_Y - 15,
+					radius: 9,
+					collected: false
+				});
+			}
+		} else if (Math.random() < 0.6) {
 			var coinY = (Math.random() < 0.5) ? GROUND_Y - 35 : GROUND_Y - 85;
 			for (var c = 0; c < 3; c++) {
 				coins.push({
@@ -342,11 +405,9 @@ $(document).ready(function () {
 		// Spawn Rare Bonuses
 		if (gameSpeed >= 10.0 && Math.random() < 0.2) {
 			var bonusType = 'big_star';
-			// Tortoise bonus reduces speed by 1x
 			if (gameSpeed >= 15.0 && Math.random() < 0.2) {
 				bonusType = 'tortoise';
 			}
-			// Rechable height: GROUND_Y - 45 (ground/duck height) up to GROUND_Y - 110 (jump height)
 			var bonusY = GROUND_Y - 45 - (Math.random() * 65);
 			bonuses.push({
 				type: bonusType,
@@ -357,6 +418,8 @@ $(document).ready(function () {
 				collected: false
 			});
 		}
+
+		return spawnedType;
 	}
 
 	function addFloatingText(text, x, y, color) {
@@ -379,12 +442,12 @@ $(document).ready(function () {
 
 		player.update();
 
-		// Spawn Obstacles with variable frequency
+		// Spawn Obstacles with dynamic variable spacing
 		spawnTimer++;
-		var nextSpawnLimit = Math.max(45, 110 - Math.floor((gameSpeed - 6) * 4));
-		if (spawnTimer >= nextSpawnLimit) {
-			spawnObstacle();
+		if (spawnTimer >= targetSpawnInterval) {
+			var spawnedType = spawnObstacle();
 			spawnTimer = 0;
+			targetSpawnInterval = getNextSpawnInterval(spawnedType);
 		}
 
 		// Update Obstacles
@@ -392,7 +455,7 @@ $(document).ready(function () {
 			var obs = obstacles[i];
 			obs.x -= gameSpeed;
 
-			if (obs.type === 'flying_avatar') {
+			if (obs.type === 'flying_avatar' || obs.type === 'triple_flying') {
 				obs.hoverOffset += 0.08;
 			}
 
@@ -712,34 +775,91 @@ $(document).ready(function () {
 			var drawY = getObstacleY(obs);
 
 			ctx.save();
-			// Hazard Glow Outer Ring
-			ctx.strokeStyle = '#ef4444';
-			ctx.lineWidth = 3;
-			ctx.beginPath();
-			ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, obs.width / 2 + 2, 0, Math.PI * 2);
-			ctx.stroke();
+			if (obs.type === 'triple_flying') {
+				// Connected Hazard Beam / Frame for Triple Obstacle
+				var beamGrad = ctx.createLinearGradient(obs.x, drawY, obs.x + obs.width, drawY);
+				beamGrad.addColorStop(0, 'rgba(239, 68, 68, 0.4)');
+				beamGrad.addColorStop(0.5, 'rgba(220, 38, 38, 0.8)');
+				beamGrad.addColorStop(1, 'rgba(239, 68, 68, 0.4)');
+				ctx.fillStyle = beamGrad;
+				ctx.fillRect(obs.x, drawY + 4, obs.width, obs.height - 8);
 
-			// Circular Clip for User Avatar
-			ctx.beginPath();
-			ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, obs.width / 2, 0, Math.PI * 2);
-			ctx.closePath();
-			ctx.clip();
+				ctx.strokeStyle = '#f87171';
+				ctx.lineWidth = 2;
+				ctx.strokeRect(obs.x, drawY + 4, obs.width, obs.height - 8);
 
-			if (obs.img && obs.img.complete && obs.img.naturalWidth !== 0) {
-				ctx.drawImage(obs.img, obs.x, drawY, obs.width, obs.height);
-			} else {
+				// Warning text emblem above triple obstacle
 				ctx.fillStyle = '#ef4444';
-				ctx.fillRect(obs.x, drawY, obs.width, obs.height);
+				ctx.font = '900 11px sans-serif';
+				ctx.textAlign = 'center';
+				ctx.fillText('⚠️ TRĪSKĀRŠS! PIETUPIES!', obs.x + obs.width / 2, drawY - 8);
+
+				// Draw 3 Individual Drones
+				for (var k = 0; k < 3; k++) {
+					var subX = obs.x + k * (obs.subSize + obs.gap);
+					var img = obs.imgs ? obs.imgs[k] : null;
+
+					ctx.save();
+					// Hazard Glow Outer Ring
+					ctx.strokeStyle = '#ef4444';
+					ctx.lineWidth = 3;
+					ctx.beginPath();
+					ctx.arc(subX + obs.subSize / 2, drawY + obs.subSize / 2, obs.subSize / 2 + 2, 0, Math.PI * 2);
+					ctx.stroke();
+
+					// Circular Clip for User Avatar
+					ctx.beginPath();
+					ctx.arc(subX + obs.subSize / 2, drawY + obs.subSize / 2, obs.subSize / 2, 0, Math.PI * 2);
+					ctx.closePath();
+					ctx.clip();
+
+					if (img && img.complete && img.naturalWidth !== 0) {
+						ctx.drawImage(img, subX, drawY, obs.subSize, obs.subSize);
+					} else {
+						ctx.fillStyle = '#ef4444';
+						ctx.fillRect(subX, drawY, obs.subSize, obs.subSize);
+					}
+					ctx.restore();
+
+					// Thruster jet flame for each of 3 drones
+					ctx.fillStyle = '#f97316';
+					ctx.beginPath();
+					ctx.arc(subX + obs.subSize / 2, drawY + obs.subSize + 4, 5, 0, Math.PI * 2);
+					ctx.fill();
+				}
+			} else {
+				// Single Ground or Flying Avatar Obstacle
+				var radius = Math.min(obs.width, obs.height) / 2;
+
+				ctx.strokeStyle = '#ef4444';
+				ctx.lineWidth = 3;
+				ctx.beginPath();
+				ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, radius + 2, 0, Math.PI * 2);
+				ctx.stroke();
+
+				// Circular Clip for User Avatar
+				ctx.beginPath();
+				ctx.arc(obs.x + obs.width / 2, drawY + obs.height / 2, radius, 0, Math.PI * 2);
+				ctx.closePath();
+				ctx.clip();
+
+				if (obs.img && obs.img.complete && obs.img.naturalWidth !== 0) {
+					ctx.drawImage(obs.img, obs.x, drawY, obs.width, obs.height);
+				} else {
+					ctx.fillStyle = '#ef4444';
+					ctx.fillRect(obs.x, drawY, obs.width, obs.height);
+				}
+				ctx.restore();
+
+				if (obs.type === 'flying_avatar') {
+					// Drone Thruster Jet Flame
+					ctx.fillStyle = '#f97316';
+					ctx.beginPath();
+					ctx.arc(obs.x + obs.width / 2, drawY + obs.height + 4, 5, 0, Math.PI * 2);
+					ctx.fill();
+				}
 			}
 			ctx.restore();
-
-			if (obs.type === 'flying_avatar') {
-				// Drone Thruster Jet Flame
-				ctx.fillStyle = '#f97316';
-				ctx.beginPath();
-				ctx.arc(obs.x + obs.width / 2, drawY + obs.height + 4, 5, 0, Math.PI * 2);
-				ctx.fill();
-			}
 		}
 
 		// Draw Particles
