@@ -67,8 +67,8 @@
 				<li><strong>S / Bultiņa uz leju / Liekties poga:</strong> Liekties zem lidojošajiem avatāru droīdiem.</li>
 				<li><strong>Pārvarēšanas laiks & ātrums:</strong> Spēles ātrums pakāpeniski pieaug ar katru noskrieto kilometru!</li>
 				<li><strong>Zvaigznes:</strong> Vāc zelta zvaigznes ⭐ par papildu punktiem!</li>
-				<li><strong>Lielā Mirdzošā Zvaigzne:</strong> Reti sastopama no 2.0x+ ātruma, dod <strong>+5 zvaigznes</strong>!</li>
-				<li><strong>Bruņurupucis 🐢:</strong> Reti sastopams no 3.0x+ ātruma, <strong>samazina ātrumu par 1x</strong>!</li>
+				<li><strong>Lielā Mirdzošā Zvaigzne:</strong> Dod <strong>+5 zvaigznes</strong>!</li>
+				<li><strong>Bruņurupucis 🐢:</strong> samazina ātrumu par 1x!</li>
 			</ul>
 		</div>
 
