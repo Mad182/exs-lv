@@ -89,11 +89,7 @@
 			<label for="movie-year">Gads:</label><br>
 			<input type="text" name="movie-year" id="movie-year" class="text" style="width:50px;" value="{year}" maxlength="4" />
 		</p>
-		<p>
-			<!--<label for="movie-imdb">IMDB id:</label><br>
-			<input type="text" name="movie-imdb" id="movie-imdb" class="text" style="width:100px;" value="{imdb_id}" maxlength="40" />-->
-			<label><input type="checkbox" class="checkbox" name="imdb-getdata" />&nbsp;iegūt IMDB datus</label>
-		</p>
+
 		<p>
 			<label for="movie-type">Filmas veids:</label><br>
 			<select name="movie-type">

@@ -484,45 +484,6 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						} else {
 							$db->query("INSERT INTO `movie_data` (`page_id`, `title_lv`, `imdb_id`, `year`, `type`) VALUES ('$article->id', '$title_lv', '$imdb_id', '$year', '$movie_type')");
 						}
-
-
-						//iegūst datus no IMDB pēc nosaukuma
-						if ($_POST['imdb-getdata']) {
-
-							include(LIB_PATH . '/imdb-grabber/imdb.class.php');
-							$oIMDB = new IMDB($title);
-							if ($oIMDB->isReady) {
-
-								if ($year = $oIMDB->getYear()) {
-									$db->query("UPDATE `movie_data` SET `year` = '$year' WHERE `page_id` = '$article->id'");
-								}
-
-								if ($runtime = $oIMDB->getRuntime()) {
-									$db->query("UPDATE `movie_data` SET `runtime` = '$runtime' WHERE `page_id` = '$article->id'");
-								}
-
-								if ($rating = $oIMDB->getRating()) {
-									$db->query("UPDATE `movie_data` SET `rating` = '$rating' WHERE `page_id` = '$article->id'");
-								}
-
-								//pievieno žanrus
-								if ($genres = $oIMDB->getGenre()) {
-									$genres = explode('/', $genres);
-									foreach ($genres as $genre) {
-										$genre = sanitize(trim($genre));
-										if (!empty($genre) && !$db->get_var("SELECT count(*) FROM `movie_genres` WHERE `page_id` = '$article->id' AND `genre` = '$genre'")) {
-											$db->query("INSERT INTO `movie_genres` (`page_id`, `genre`) VALUES ('$article->id', '$genre')");
-										}
-									}
-								}
-
-								set_flash("IMDB dati veiksmīgi iegūti!", "success");
-
-								$auth->log('Atjaunoja IMDB datus', 'pages', $topicid);
-							} else {
-								set_flash("Neizdevās iegūt IMDB datus, lūdzu ievadi derīgu linku vai nosaukumu!", "error");
-							}
-						}
 					}
 
 					$auth->log('Laboja rakstu', 'pages', $topicid);
