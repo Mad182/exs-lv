@@ -128,6 +128,37 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 	}
 }
 
+// Caching check for non-logged-in (guest) visitors
+$guest_cache_key = '';
+$is_guest_cacheable = (
+	$_SERVER['REQUEST_METHOD'] === 'GET' &&
+	$auth->ok !== true &&
+	empty($_POST) &&
+	empty($_SESSION['flash_message']) &&
+	!isset($_GET['_']) &&
+	!isset($_GET['action']) &&
+	!isset($_GET['loadpm']) &&
+	!isset($_GET['loadgallery']) &&
+	!isset($_GET['loadposts']) &&
+	!isset($_GET['loadmb']) &&
+	!isset($_GET['vc']) &&
+	!$requested_json
+);
+
+if ($is_guest_cacheable) {
+	$guest_cache_key = 'gpage_' . $lang . '_' . md5($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+	$cached_page = $m->get($guest_cache_key);
+
+	if ($cached_page !== false && !empty($cached_page)) {
+		header('Content-Type: text/html; charset=UTF-8');
+		header('X-Cache-Status: HIT');
+		header('Cache-Control: public, max-age=60, s-maxage=120');
+		echo $cached_page;
+		$db->close();
+		exit;
+	}
+}
+
 //jaunu vēstuļu skaits, tiek izmantots pie vēstuļu linka un notifikācijās
 if ($auth->ok === true) {
 	if ($new_messages = $db->get_var("SELECT count(*) FROM `pm` WHERE `to_uid` = " . $auth->id . " AND `is_read` = 0")) {
@@ -745,7 +776,15 @@ if (isset($_GET['vc'])) {
 	die('');
 }
 
-$tpl->printToScreen();
+if (!empty($is_guest_cacheable) && !empty($guest_cache_key)) {
+	header('X-Cache-Status: MISS');
+	header('Cache-Control: public, max-age=60, s-maxage=120');
+	$output_html = $tpl->getOutputContent();
+	$m->set($guest_cache_key, $output_html, 60);
+	echo $output_html;
+} else {
+	$tpl->printToScreen();
+}
 
 /*if ($debug && !$requested_json) {
 	echo '<div style="color:#eee;background:#222;font-size:9px;padding:0;margin:0;width:100%;"><div style="padding:2px 0;margin:0 auto;width:960px;">';
