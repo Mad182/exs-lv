@@ -287,8 +287,10 @@ $(document).ready(function () {
 		var randomFactor = 0.70 + (Math.random() * 0.70);
 		var interval = Math.floor(baseInterval * randomFactor);
 
-		// If previous obstacle was a wide triple obstacle, add extra clearance frames
-		if (lastType === 'triple_flying') {
+		// If previous obstacle was a wide double/triple obstacle, add extra clearance frames
+		if (lastType === 'double_flying') {
+			interval += Math.floor(18 + Math.random() * 14);
+		} else if (lastType === 'triple_flying') {
 			interval += Math.floor(28 + Math.random() * 20);
 		}
 
@@ -321,8 +323,8 @@ $(document).ready(function () {
 
 		var spawnedType = '';
 
-		if (typeRand < 0.55) {
-			// 1. Ground User Avatar Obstacle (55% - Jump over)
+		if (typeRand < 0.52) {
+			// 1. Single Ground User Avatar Obstacle (52% - Jump over)
 			// Height/Size Variation: size ranges randomly from 34 to 52 px
 			spawnedType = 'ground_avatar';
 			var size = Math.floor(34 + Math.random() * 19);
@@ -334,8 +336,8 @@ $(document).ready(function () {
 				height: size,
 				img: avatarImg
 			});
-		} else if (typeRand < 0.78) {
-			// 2. Single Flying Drone Avatar (23% - Duck under)
+		} else if (typeRand < 0.82) {
+			// 2. Single Flying Drone Avatar (30% - Duck under)
 			// Height/Elevation Variation: Y position varies between GROUND_Y - 73 and GROUND_Y - 61
 			spawnedType = 'flying_avatar';
 			var size = Math.floor(34 + Math.random() * 10);
@@ -349,14 +351,40 @@ $(document).ready(function () {
 				img: avatarImg,
 				hoverOffset: Math.random() * Math.PI * 2
 			});
+		} else if (typeRand < 0.92) {
+			// 3. Double Flying Drone Obstacle (10% - Double Width Hazard)
+			spawnedType = 'double_flying';
+			var subSize = 36;
+			var gap = 8;
+			var totalWidth = (subSize * 2) + gap; // 80px wide
+
+			var imgs = [];
+			for (var i = 0; i < 2; i++) {
+				if (obstacleAvatars.length > 0) {
+					imgs.push(obstacleAvatars[Math.floor(Math.random() * obstacleAvatars.length)]);
+				} else {
+					imgs.push(null);
+				}
+			}
+
+			obstacles.push({
+				type: 'double_flying',
+				x: canvas.width + 40,
+				y: GROUND_Y - 65,
+				width: totalWidth,
+				height: subSize,
+				subSize: subSize,
+				gap: gap,
+				imgs: imgs,
+				hoverOffset: Math.random() * Math.PI * 2
+			});
 		} else {
-			// 3. Triple Flying Drone Obstacle (22% - CANNOT BE JUMPED OVER, ONLY DUCKED!)
+			// 4. Triple Flying Drone Obstacle (8% - Triple Width Hazard)
 			spawnedType = 'triple_flying';
 			var subSize = 36;
 			var gap = 8;
 			var totalWidth = (subSize * 3) + (gap * 2); // 124px wide!
 
-			// Pick 3 avatar images from pool if available
 			var imgs = [];
 			for (var i = 0; i < 3; i++) {
 				if (obstacleAvatars.length > 0) {
@@ -369,7 +397,7 @@ $(document).ready(function () {
 			obstacles.push({
 				type: 'triple_flying',
 				x: canvas.width + 40,
-				y: GROUND_Y - 65, // Positioned at ducking clearance height
+				y: GROUND_Y - 65,
 				width: totalWidth,
 				height: subSize,
 				subSize: subSize,
@@ -379,8 +407,18 @@ $(document).ready(function () {
 			});
 		}
 
-		// Spawn Golden Star Coins in air or underneath triple obstacle
-		if (spawnedType === 'triple_flying') {
+		// Spawn Golden Star Coins in air or underneath double/triple obstacles
+		if (spawnedType === 'double_flying') {
+			// Reward ducking under double obstacle with 2 coins
+			for (var c = 0; c < 2; c++) {
+				coins.push({
+					x: canvas.width + 58 + (c * 36),
+					y: GROUND_Y - 15,
+					radius: 9,
+					collected: false
+				});
+			}
+		} else if (spawnedType === 'triple_flying') {
 			// Reward ducking under triple obstacle with 3 coins
 			for (var c = 0; c < 3; c++) {
 				coins.push({
@@ -455,7 +493,7 @@ $(document).ready(function () {
 			var obs = obstacles[i];
 			obs.x -= gameSpeed;
 
-			if (obs.type === 'flying_avatar' || obs.type === 'triple_flying') {
+			if (obs.type === 'flying_avatar' || obs.type === 'double_flying' || obs.type === 'triple_flying') {
 				obs.hoverOffset += 0.08;
 			}
 
@@ -542,7 +580,7 @@ $(document).ready(function () {
 	}
 
 	function getObstacleY(obs) {
-		if (obs.type === 'flying_avatar') {
+		if (obs.type === 'flying_avatar' || obs.type === 'double_flying' || obs.type === 'triple_flying') {
 			return obs.y + Math.sin(obs.hoverOffset) * 4;
 		}
 		return obs.y;
@@ -775,8 +813,10 @@ $(document).ready(function () {
 			var drawY = getObstacleY(obs);
 
 			ctx.save();
-			if (obs.type === 'triple_flying') {
-				// Connected Hazard Beam / Frame for Triple Obstacle
+			if (obs.type === 'double_flying' || obs.type === 'triple_flying') {
+				var count = (obs.type === 'double_flying') ? 2 : 3;
+
+				// Connected Hazard Beam / Frame for Multi-Drone Obstacle
 				var beamGrad = ctx.createLinearGradient(obs.x, drawY, obs.x + obs.width, drawY);
 				beamGrad.addColorStop(0, 'rgba(239, 68, 68, 0.4)');
 				beamGrad.addColorStop(0.5, 'rgba(220, 38, 38, 0.8)');
@@ -788,8 +828,8 @@ $(document).ready(function () {
 				ctx.lineWidth = 2;
 				ctx.strokeRect(obs.x, drawY + 4, obs.width, obs.height - 8);
 
-				// Draw 3 Individual Drones
-				for (var k = 0; k < 3; k++) {
+				// Draw Individual Drones
+				for (var k = 0; k < count; k++) {
 					var subX = obs.x + k * (obs.subSize + obs.gap);
 					var img = obs.imgs ? obs.imgs[k] : null;
 
@@ -815,7 +855,7 @@ $(document).ready(function () {
 					}
 					ctx.restore();
 
-					// Thruster jet flame for each of 3 drones
+					// Thruster jet flame for each drone
 					ctx.fillStyle = '#f97316';
 					ctx.beginPath();
 					ctx.arc(subX + obs.subSize / 2, drawY + obs.subSize + 4, 5, 0, Math.PI * 2);
