@@ -7,28 +7,30 @@ class getWallpapers {
 		$wallpapers = json_decode($data);
 		$files = [];
 
-		foreach ($wallpapers->data->children as $data) {
-			$file = false;
-			$thumb = $data->data->thumbnail;
-			if (in_array(substr($data->data->url, -3), ['jpg', 'png'])) {
-				$file = $data->data->url;
-			}
-			if (stristr($data->data->url, 'imgur.com')) {
-				$addr = str_replace('http://imgur.com/', 'http://i.imgur.com/', $data->data->url);
-
-				if (@fsockopen($addr . '.jpg', 80, $errno, $errstr, 5)) {
-					$file = $addr . '.jpg';
-				} elseif (@fsockopen($addr . '.png', 80, $errno, $errstr, 5)) {
-					$file = $addr . '.png';
+		if (!empty($wallpapers->data->children) && (is_array($wallpapers->data->children) || is_object($wallpapers->data->children))) {
+			foreach ($wallpapers->data->children as $data) {
+				$file = false;
+				$thumb = isset($data->data->thumbnail) ? $data->data->thumbnail : '';
+				if (isset($data->data->url) && in_array(substr($data->data->url, -3), ['jpg', 'png'])) {
+					$file = $data->data->url;
 				}
+				if (isset($data->data->url) && stristr($data->data->url, 'imgur.com')) {
+					$addr = str_replace('http://imgur.com/', 'http://i.imgur.com/', $data->data->url);
 
-				$thumb = preg_replace('/(\.[jpg|png])/', 's\1', $file);
-			}
-			if (strpos($thumb, 'http') === 0 && $file) {
-				$files[] = [
-					'thumb' => $thumb,
-					'file' => $file
-				];
+					if (@fsockopen($addr . '.jpg', 80, $errno, $errstr, 5)) {
+						$file = $addr . '.jpg';
+					} elseif (@fsockopen($addr . '.png', 80, $errno, $errstr, 5)) {
+						$file = $addr . '.png';
+					}
+
+					$thumb = preg_replace('/(\.[jpg|png])/', 's\1', $file);
+				}
+				if ($thumb && strpos($thumb, 'http') === 0 && $file) {
+					$files[] = [
+						'thumb' => $thumb,
+						'file' => $file
+					];
+				}
 			}
 		}
 		return $files;
@@ -66,6 +68,9 @@ class getWallpapers {
 			@curl_close($ch);
 		}
 		$response = json_decode($response);
+		if (empty($response->access_token)) {
+			return [];
+		}
 		$token = $response->access_token;
 
 		// search for wallpapers
@@ -88,19 +93,19 @@ class getWallpapers {
 			@curl_close($ch);
 		}
 		$response = json_decode($response);
-		$wallpapers = $response->data;
-
 		$files = [];
 
-		foreach ($wallpapers as $wallpaper) {
-			if ($wallpaper->nsfw || $wallpaper->is_album) {
-				continue;
-			}
+		if (!empty($response->data) && (is_array($response->data) || is_object($response->data))) {
+			foreach ($response->data as $wallpaper) {
+				if (!empty($wallpaper->nsfw) || !empty($wallpaper->is_album)) {
+					continue;
+				}
 
-			$files[] = [
-				'thumb' => 'http://i.imgur.com/' . $wallpaper->id . 's.jpg',
-				'file' => $wallpaper->link
-			];
+				$files[] = [
+					'thumb' => 'http://i.imgur.com/' . $wallpaper->id . 's.jpg',
+					'file' => $wallpaper->link
+				];
+			}
 		}
 
 		return $files;
