@@ -9,7 +9,7 @@ require_once __DIR__ . '/../includes/cssmin.php';
 $game_modules = [
 	'2048' => ['js' => ['2048.js'], 'css' => ['2048.css']],
 	'augsup' => ['js' => ['augsup.js'], 'css' => ['augsup.css']],
-	'desas' => ['js' => ['desas.js'], 'css' => []],
+	'desas' => ['js' => ['desas.js'], 'css' => ['desas.css']],
 	'flappy' => ['js' => ['flappy.js'], 'css' => ['flappy.css']],
 	'invaders' => ['js' => ['invaders.js'], 'css' => ['invaders.css']],
 	'memory' => ['js' => ['memory.js'], 'css' => ['memory.css']],
