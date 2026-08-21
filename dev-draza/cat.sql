@@ -257,7 +257,6 @@ INSERT INTO `cat` VALUES
 (353,'finduser',1,'Finduser',1,'finduser',0,0,0,0,0,0,0,'','main','',0,0,0,0,'','','',452,1,'active',0,0),
 (355,'snake',1,'Čūska',1,'snake',0,0,0,0,0,0,2516,'Klasiskā Čūskas (Snake) spēle tiešsaistē. Vāc ābolus, audzē čūsku un izvairies no ietriekšanās sienās vai savā astē. Sacenties par augstāko vietu topā.','main','',0,0,0,0,'','','',450,1,'active',0,0),
 (356,'mindgeek',1,'Gek blogs',1,'list',0,12108,0,0,0,0,110,'','main','',116466,36,2569,0,'','','',449,1,'active',0,0),
-(357,'flash-speles',1,'Flash spēles',1,'redirect',0,0,0,0,0,0,0,'/','main','no-left',0,0,0,0,'','','',448,0,'archived',0,0),
 (362,'latvian1111',1,'Viesty blogs',1,'list',0,4489,0,0,0,0,110,'','main','',4636,2,106,0,'','','',443,1,'active',0,0),
 (372,'reply',0,'',1,'reply',0,0,0,0,0,0,0,'','empty','',0,0,0,0,'','','',433,1,'active',0,0),
 (376,'rubliks',1,'Rubļiks. blogs',1,'list',0,10646,0,0,0,0,110,'','main','',18797,7,195,0,'','','',429,1,'active',0,0),
