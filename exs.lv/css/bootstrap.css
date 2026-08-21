@@ -7600,6 +7600,10 @@ a.badge:focus {
 		width: 100% !important;
 		margin-left: 0 !important;
 	}
+body.is-game-page .widget-poll,
+body.page-speles .widget-poll,
+body.module-speles .widget-poll {
+	display: none !important;
 }
 
 @media (max-width: 480px) {

@@ -494,7 +494,7 @@
 					<!-- END BLOCK : mb-box-->
 
 					<!-- START BLOCK : poll-box-->
-					<div class="widget">
+					<div class="widget widget-poll">
 						<h3 class="title"><a href="/aptaujas"><span>Aptauja: {poll-title}</span></a></h3>
 						<div class="box">
 							<!-- START BLOCK : poll-answers-->
