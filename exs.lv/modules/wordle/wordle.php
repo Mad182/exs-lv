@@ -52,8 +52,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		exit;
 	}
 
+	$composite_score = ($guesses * 1000) + min(999, $time_sec);
+
 	// Check if this is a new personal best score (lower is better)
-	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id'");
+	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id' AND score > 0");
 	$is_new_record = (empty($prev_best) || $composite_score < (int)$prev_best);
 
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'wordle', '$composite_score', '" . time() . "')");
@@ -68,7 +70,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 			push('Uzstādīja jaunu rekordu spēlē <a href="/wordle">Wordle</a> (' . $guesses . ' mēģinājumi, ' . $formatted_time . ')', '/bildes/icons/games/wordle.png', 'game-wordle-' . $auth->id);
 		}
 
-		$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = 'wordle' AND score < '$composite_score'");
+		$rank = $db->get_var("SELECT COUNT(DISTINCT user_id) + 1 FROM gamescore WHERE game = 'wordle' AND score < '$composite_score' AND score > 0");
 
 		echo json_encode([
 			'success' => true,
@@ -88,10 +90,10 @@ $tpl->prepare();
 $act = isset($_GET['act']) ? $_GET['act'] : (isset($_GET['var1']) ? $_GET['var1'] : '');
 
 if ($act == 'top') {
-	// Today's Top Scores (Lowest composite score is best)
+	// Today's Top Scores (Lowest composite score is best, grouped per user)
 	$tpl->assign(['active-tab-top' => ' active']);
 	$today_start = strtotime('today midnight');
-	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = 'wordle' AND time >= '$today_start' ORDER BY score ASC LIMIT 100");
+	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'wordle' AND time >= '$today_start' AND score > 0 GROUP BY user_id ORDER BY score ASC LIMIT 100");
 
 	if ($topusers) {
 		$tpl->newBlock('top-table');
@@ -130,9 +132,9 @@ if ($act == 'top') {
 		}
 	}
 } elseif ($act == 'overall-top') {
-	// All-Time Top Scores
+	// All-Time Top Scores (Lowest composite score is best, grouped per user)
 	$tpl->assign(['active-tab-overall-top' => ' active']);
-	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = 'wordle' ORDER BY score ASC LIMIT 100");
+	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'wordle' AND score > 0 GROUP BY user_id ORDER BY score ASC LIMIT 100");
 
 	if ($topusers) {
 		$tpl->newBlock('top-table');
@@ -183,7 +185,7 @@ if ($act == 'top') {
 
 	$best_score = 0;
 	if ($auth->ok && $auth->id > 0) {
-		$best_score = intval($db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id'"));
+		$best_score = intval($db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id' AND score > 0"));
 	}
 	$formatted_best = '--';
 	if ($best_score > 0) {

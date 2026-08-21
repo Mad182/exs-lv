@@ -156,11 +156,26 @@ foreach ($games_list as $game) {
 
 	$top_player_info = '';
 	if (!empty($game['game_code'])) {
-		$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . $game['game_code'] . "' ORDER BY score DESC LIMIT 1");
+		$is_asc = in_array($game['game_code'], ['wordle', 'minu-mekletajs', 'sudoku']);
+		$order = $is_asc ? 'ASC' : 'DESC';
+		$where_extra = $is_asc ? " AND score > 0" : "";
+		$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . $game['game_code'] . "' $where_extra ORDER BY score $order LIMIT 1");
 		if ($top_score) {
 			$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$top_score->user_id'");
 			if ($u) {
-				$top_player_info = usercolor($u->nick, $u->level) . ' (' . number_format($top_score->score, 0, '', ' ') . ' pīk)';
+				if ($game['game_code'] == 'wordle') {
+					$g_cnt = floor($top_score->score / 1000);
+					$sec = $top_score->score % 1000;
+					$mins = floor($sec / 60);
+					$s = $sec % 60;
+					$top_player_info = usercolor($u->nick, $u->level) . ' (' . $g_cnt . '/6, ' . sprintf('%02d:%02d', $mins, $s) . ')';
+				} elseif (in_array($game['game_code'], ['minu-mekletajs', 'sudoku'])) {
+					$mins = floor($top_score->score / 60);
+					$s = $top_score->score % 60;
+					$top_player_info = usercolor($u->nick, $u->level) . ' (' . sprintf('%02d:%02d', $mins, $s) . ')';
+				} else {
+					$top_player_info = usercolor($u->nick, $u->level) . ' (' . number_format($top_score->score, 0, '', ' ') . ' pīk)';
+				}
 			}
 		}
 	}
@@ -195,7 +210,7 @@ $game_meta_map = [
 	'invaders' => ['title' => 'Space Invaders', 'url' => '/invaders', 'is_time' => false],
 ];
 
-$recent_scores = $db->get_results("SELECT * FROM gamescore ORDER BY time DESC LIMIT 8");
+$recent_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 8");
 if ($recent_scores) {
 	$tpl->newBlock('recent-scores-block');
 	foreach ($recent_scores as $sc) {
@@ -208,7 +223,13 @@ if ($recent_scores) {
 				'is_time' => false
 			];
 
-			if (!empty($meta['is_time'])) {
+			if ($g_key == 'wordle') {
+				$g_cnt = floor($sc->score / 1000);
+				$sec = $sc->score % 1000;
+				$mins = floor($sec / 60);
+				$s = $sec % 60;
+				$score_str = $g_cnt . '/6 (' . sprintf('%02d:%02d', $mins, $s) . ')';
+			} elseif (!empty($meta['is_time'])) {
 				$mins = floor($sc->score / 60);
 				$secs = $sc->score % 60;
 				$score_str = sprintf('%02d:%02d', $mins, $secs);
