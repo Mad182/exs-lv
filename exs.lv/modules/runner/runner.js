@@ -264,8 +264,8 @@ $(document).ready(function () {
 			avatarImg = obstacleAvatars[Math.floor(Math.random() * obstacleAvatars.length)];
 		}
 
-		if (typeRand < 0.50) {
-			// Ground User Avatar Obstacle
+		if (typeRand < 0.78) {
+			// Ground User Avatar Obstacle (78% - Jump over)
 			var size = 44;
 			obstacles.push({
 				type: 'ground_avatar',
@@ -276,12 +276,12 @@ $(document).ready(function () {
 				img: avatarImg
 			});
 		} else {
-			// Flying Droid User Avatar Obstacle (Must duck or time jump)
-			var size = 40;
+			// High Flying User Avatar Drone (22% - Must duck / run under)
+			var size = 38;
 			obstacles.push({
 				type: 'flying_avatar',
 				x: canvas.width + 40,
-				y: GROUND_Y - 72, // Head height
+				y: GROUND_Y - 78, // Positioned so ducking allows passing underneath safely
 				width: size,
 				height: size,
 				img: avatarImg,
