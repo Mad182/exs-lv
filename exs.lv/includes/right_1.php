@@ -149,7 +149,10 @@ unset($out);
 //izvēlne
 $parent_id = get_top($category->id);
 if ($parent_id != 0) {
-	$menuitems = $db->get_results("SELECT `id`,`title`,`textid`,`parent` FROM `cat` WHERE `parent` = '" . $parent_id . "' AND `parent` != '110' AND `parent` != '101' AND `parent` != '319' AND `mods_only` = '0' ORDER BY `title` ASC");
+	if (($menuitems = $m->get('cat_submenu_' . $parent_id)) === false) {
+		$menuitems = $db->get_results("SELECT `id`,`title`,`textid`,`parent` FROM `cat` WHERE `parent` = '" . $parent_id . "' AND `parent` != '110' AND `parent` != '101' AND `parent` != '319' AND `mods_only` = '0' ORDER BY `title` ASC");
+		$m->set('cat_submenu_' . $parent_id, $menuitems, 21600);
+	}
 
 	if ($menuitems) {
 		$tpl->newBlock('menu-list');
@@ -173,7 +176,10 @@ if ($parent_id != 0) {
 			]);
 
 			if (in_array($menuitem->id, [79]) && !empty($sel)) {
-				$children = $db->get_results("SELECT `textid`,`id`,`title` FROM `cat` WHERE `parent` = '$menuitem->id' ORDER BY `id` ASC");
+				if (($children = $m->get('cat_submenu_' . $menuitem->id)) === false) {
+					$children = $db->get_results("SELECT `textid`,`id`,`title` FROM `cat` WHERE `parent` = '$menuitem->id' ORDER BY `id` ASC");
+					$m->set('cat_submenu_' . $menuitem->id, $children, 21600);
+				}
 				if ($children) {
 					$tpl->newBlock('menu-list-sub');
 					foreach ($children as $child) {

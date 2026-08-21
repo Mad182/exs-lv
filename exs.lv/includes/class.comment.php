@@ -96,6 +96,7 @@ class Comment {
 					$db->query("UPDATE `galcom` SET `text` = '" . sanitize($newpost->text) . "' WHERE `id` = '$newpost->id'");
 				}
 				update_karma($user_id);
+				clear_latest_posts_cache();
 			} else {
 				set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu komentāru!', 'error');
 			}

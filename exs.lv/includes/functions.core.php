@@ -424,19 +424,22 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 function get_site_access() {
 	global $db, $m, $lang;
 
-	$site_access = [
-		1 => [],
-		2 => [],
-		3 => [],
-		4 => [],
-		5 => []
-	];
+	if (($site_access = $m->get('site_access_' . $lang)) === false) {
+		$site_access = [
+			1 => [],
+			2 => [],
+			3 => [],
+			4 => [],
+			5 => []
+		];
 
-	$site_access_data = $db->get_results("SELECT `user_id`, `level` FROM `site_admins` WHERE `site_id` = '$lang'");
-	if (!empty($site_access_data)) {
-		foreach ($site_access_data as $usr) {
-			$site_access[$usr->level][] = $usr->user_id;
+		$site_access_data = $db->get_results("SELECT `user_id`, `level` FROM `site_admins` WHERE `site_id` = '$lang'");
+		if (!empty($site_access_data)) {
+			foreach ($site_access_data as $usr) {
+				$site_access[$usr->level][] = $usr->user_id;
+			}
 		}
+		$m->set('site_access_' . $lang, $site_access, 3600);
 	}
 
 	return $site_access;
@@ -1839,17 +1842,51 @@ function redirect($location = '/', $perm = false) {
 	exit;
 }
 
+function clear_latest_mbs_cache($lang = null) {
+	global $m;
+	if (!empty($lang)) {
+		$m->set('v_latest_mbs_' . intval($lang), time(), 86400);
+	} else {
+		for ($i = 1; $i <= 9; $i++) {
+			$m->set('v_latest_mbs_' . $i, time(), 86400);
+		}
+	}
+}
+
+function clear_latest_posts_cache($lang = null) {
+	global $m;
+	if (!empty($lang)) {
+		$m->set('v_latest_posts_' . intval($lang), time(), 86400);
+	} else {
+		for ($i = 1; $i <= 9; $i++) {
+			$m->set('v_latest_posts_' . $i, time(), 86400);
+		}
+	}
+}
+
 function get_latest_posts() {
-	global $auth, $db, $lang, $comments_per_page, $config_domains;
+	global $auth, $db, $m, $lang, $comments_per_page, $config_domains;
+
+	$pg = isset($_GET['pg']) ? intval($_GET['pg']) : 0;
+	if (($v = $m->get('v_latest_posts_' . $lang)) === false) {
+		$v = time();
+		$m->set('v_latest_posts_' . $lang, $v, 86400);
+	}
+
+	$cache_key = 'lp_' . $lang . '_' . $pg . '_' . intval($auth->id) . '_' . intval($auth->show_code ?? 0) . '_' . intval($auth->show_lol ?? 0) . '_' . intval($auth->show_rs ?? 0) . '_' . $v;
+	if (($cached_html = $m->get($cache_key)) !== false) {
+		return $cached_html;
+	}
+
 	$out = '';
 
 	$skip = 0;
 	$total = 8;
-	if($lang == 3) {
+	if ($lang == 3) {
 		$total = 10;
 	}
-	if (isset($_GET['pg'])) {
-		$skip = $total * intval($_GET['pg']);
+	if ($pg > 0) {
+		$skip = $total * $pg;
 	}
 
 	$conditions = [];
@@ -1931,7 +1968,7 @@ function get_latest_posts() {
 				$late->title = '<em>' . $late->title . '</em>';
 			}
 
-			if(!empty($late->avatar)) {
+			if (!empty($late->avatar)) {
 				$avatar = '/dati/bildes/topic-av/' . $late->id . '.jpg';
 			} else {
 				$avatar = get_avatar(get_user($late->author), 's');
@@ -1965,6 +2002,8 @@ function get_latest_posts() {
 		}
 		$out .= '</p>';
 	}
+
+	$m->set($cache_key, $out, 600);
 	return $out;
 }
 
@@ -2061,10 +2100,21 @@ function get_latest_images() {
  * Parāda pēdējos miniblogus
  */
 function get_latest_mbs($tab = 'all', $group_id = null) {
-	global $auth, $db, $lang, $config_domains, $img_server;
+	global $auth, $db, $m, $lang, $config_domains, $img_server;
 
 	if ($tab === 'music') {
 		return get_latest_music();
+	}
+
+	$pg = isset($_GET['pg']) ? intval($_GET['pg']) : 0;
+	if (($v = $m->get('v_latest_mbs_' . $lang)) === false) {
+		$v = time();
+		$m->set('v_latest_mbs_' . $lang, $v, 86400);
+	}
+
+	$cache_key = 'lmb_' . $lang . '_' . $tab . '_' . $pg . '_' . intval($group_id) . '_' . intval($auth->id) . '_' . intval($auth->show_code ?? 0) . '_' . intval($auth->show_lol ?? 0) . '_' . intval($auth->show_rs ?? 0) . '_' . $v;
+	if (($cached_html = $m->get($cache_key)) !== false) {
+		return $cached_html;
 	}
 
 	$out = '<ul id="mb-list" class="blockhref mb-col">';
@@ -2289,6 +2339,8 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		}
 	}
 	$out .= '</p>';
+
+	$m->set($cache_key, $out, 600);
 	return $out;
 }
 
@@ -2387,6 +2439,7 @@ function post_mb($post) {
 	}
 
 	update_karma($post['author']);
+	clear_latest_mbs_cache($lang);
 
 	return $return;
 }
@@ -2447,6 +2500,7 @@ function post_mb_ai($text, $parent_id, $reply_to = 0, $group_id = 0) {
 	}
 
 	update_karma($post['author']);
+	clear_latest_mbs_cache($lang);
 
 	return $return;
 }
@@ -2917,16 +2971,21 @@ function get_asn($ip) {
  * Top users
  */
 function user_top() {
-	global $db;
-	$out = '<ul id="today-top">';
-	$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
-	if ($tusers) {
-		foreach ($tusers as $tuser) {
-			$out .= '<li><a href="/user/' . $tuser->id . '"><img class="av" src="' . get_avatar($tuser) . '" alt="" />';
-			$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id) . '</a><span class="count">(' . $tuser->today . ')</span></li>';
+	global $db, $m;
+
+	if (($out = $m->get('user_top_html')) === false) {
+		$out = '<ul id="today-top">';
+		$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
+		if ($tusers) {
+			foreach ($tusers as $tuser) {
+				$out .= '<li><a href="/user/' . $tuser->id . '"><img class="av" src="' . get_avatar($tuser) . '" alt="" />';
+				$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id) . '</a><span class="count">(' . $tuser->today . ')</span></li>';
+			}
 		}
+		$out .= '</ul><div class="c"></div>';
+		$m->set('user_top_html', $out, 600);
 	}
-	$out .= '</ul><div class="c"></div>';
+
 	return $out;
 }
 

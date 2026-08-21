@@ -38,6 +38,7 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 			update_stats($newcat);
 			userlog($auth->id, 'Aizsāka foruma tēmu <a href="/read/' . $strid . '">' . $title . '</a>');
 			update_karma($auth->id);
+			clear_latest_posts_cache($lang);
 
 			redirect('/read/' . $strid);
 		} else {
