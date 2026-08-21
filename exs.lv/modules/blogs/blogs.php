@@ -3,10 +3,30 @@
 /**
  * Jaunākie ieraksti blogos
  */
+
+if (isset($_GET['skip'])) {
+	$skip = (int) $_GET['skip'];
+	if ($skip < 0) {
+		$skip = 0;
+	}
+} else {
+	$skip = 0;
+}
+$end = 15;
+
 $tpl->newBlock('blogs-body');
 
+$total = (int) $db->get_var(
+	"SELECT COUNT(*)
+	FROM `pages`, `users`, `cat`
+	WHERE `pages`.`category` = `cat`.`id` AND
+		`pages`.`lang` = $lang AND
+		`cat`.`isblog` != 0 AND
+		`users`.`id` = `pages`.`author`"
+);
+
 $articles = $db->get_results(
-		"SELECT
+	"SELECT
 	`pages`.`title` AS `title`,
 	`pages`.`intro` AS `intro`,
 	`pages`.`text` AS `text`,
@@ -26,7 +46,8 @@ WHERE
 	`users`.`id` = `pages`.`author`
 ORDER BY
 	`pages`.`date` DESC
-LIMIT 15");
+LIMIT $skip, $end"
+);
 
 if ($articles) {
 	foreach ($articles as $article) {
@@ -56,5 +77,12 @@ if ($articles) {
 	}
 }
 
-unset($pagepath);
+$pager = pager($total, $skip, $end, '/blogs?skip=');
 
+$tpl->assignGlobal([
+	'pager-next' => $pager['next'],
+	'pager-prev' => $pager['prev'],
+	'pager-numeric' => $pager['pages']
+]);
+
+unset($pagepath);
