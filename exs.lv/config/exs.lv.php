@@ -18,10 +18,6 @@ $steam_api_key = ""; // API atslēga
 $steam_domain_name = "exs.lv"; // domēns, kas rādās steam lapā
 $steam_login_page = "https://exs.lv/steam-login"; // uz kurieni pārvirzīt pēc logina
 
-// twitter login
-$CONSUMER_KEY = '';
-$CONSUMER_SECRET = '';
-
 $polls_cat = 2;
 
 $opengraph_meta['locale'] = 'lv_LV';

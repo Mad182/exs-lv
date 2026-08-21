@@ -80,7 +80,7 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 
 }
 
-if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_GET['viewcat'] != 'forgot-password' && $_GET['viewcat'] != 'fb-login' && $_GET['viewcat'] != 'twitter-login'))) {
+if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_GET['viewcat'] != 'forgot-password' && $_GET['viewcat'] != 'fb-login'))) {
 	$tpl = new TemplatePower('tmpl/login.tpl');
 	$tpl->prepare();
 
