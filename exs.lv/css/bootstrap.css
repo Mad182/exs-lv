@@ -7584,14 +7584,17 @@ a.badge:focus {
 	.nav-collapse .nav > li > a {
 		color: #fff !important;
 		border-right: 1px solid #485a63;
-		padding: 15px 12px !important;
+		padding: 15px 10px !important;
 	}
 	.nav-collapse .dropdown-menu {
-		position: absolute !important;
-		top: 100% !important;
-		left: auto !important;
-		background: #303e45 !important;
-		box-shadow: none !important;
+		display: none !important;
+	}
+}
+
+@media (max-width: 480px) {
+	.nav-collapse .nav > li > a {
+		padding: 15px 6px !important;
+		font-size: 12px;
 	}
 }
 

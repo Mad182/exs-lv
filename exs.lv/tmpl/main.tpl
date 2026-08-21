@@ -118,7 +118,7 @@
 					<ul class="nav">
 
 						<li><a href="/forums">Forums</a></li>
-						<li class="nav-extra dropdown"><a href="/raksti">Raksti</a>
+						<li class="dropdown"><a href="/raksti">Raksti</a>
 							<ul class="dropdown-menu">
 								<li><a href="/filmas">Filmas</a></li>
 								<li><a href="/muzika">Mūzika</a></li>
