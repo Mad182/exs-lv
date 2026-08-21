@@ -1,14 +1,14 @@
 <div class="groups-header-bar">
-	<h1>Domubiedru grupas</h1>
-
-	<div class="groups-toolbar">
+	<div class="groups-title-group">
+		<h1>Domubiedru grupas</h1>
 		<a href="/group-create" class="groups-create-btn"><strong>+ Izveidot grupu</strong></a>
-		<div class="groups-sort-options">
-			<span class="sort-label">Kārtot pēc:</span>
-			<a href="/grupas" class="sort-link {sort_members_active}">Biedri</a>
-			<a href="/grupas/?order=posts" class="sort-link {sort_posts_active}">Posti</a>
-			<a href="/grupas/?order=abc" class="sort-link {sort_abc_active}">Nosaukums</a>
-		</div>
+	</div>
+
+	<div class="groups-sort-options">
+		<span class="sort-label">Kārtot pēc:</span>
+		<a href="/grupas" class="sort-link {sort_members_active}">Biedri</a>
+		<a href="/grupas/?order=posts" class="sort-link {sort_posts_active}">Posti</a>
+		<a href="/grupas/?order=abc" class="sort-link {sort_abc_active}">Nosaukums</a>
 	</div>
 </div>
 

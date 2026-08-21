@@ -2308,19 +2308,9 @@ a.mb-api-twitter {
 	padding: 0 0 0 16px
 }
 
+.exs-groups li,
 #exs-groups li {
-	background: transparent;
-	height: 87px;
-	width: 32%;
-	float: left;
-	margin: 0;
-	padding: 5px
-}
-
-#exs-groups li p {
-	font-size: 90%;
-	color: #888;
-	line-height: 1.2
+	box-sizing: border-box;
 }
 
 .rpl-avatar {
