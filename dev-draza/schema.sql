@@ -484,7 +484,8 @@ CREATE TABLE `comments` (
   KEY `parent` (`parent`),
   KEY `pid_parent` (`pid`,`parent`,`removed`),
   KEY `author_removed` (`author`,`removed`),
-  KEY `vote_value` (`vote_value`)
+  KEY `vote_value` (`vote_value`),
+  KEY `idx_comments_removed_date` (`removed`,`date`)
 ) ENGINE=MyISAM AUTO_INCREMENT=785140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -712,7 +713,8 @@ CREATE TABLE `galcom` (
   KEY `bid_existing` (`bid`,`removed`),
   KEY `author_removed` (`author`,`removed`),
   KEY `vote_value` (`vote_value`),
-  KEY `author_vote` (`author`,`vote_value`)
+  KEY `author_vote` (`author`,`vote_value`),
+  KEY `idx_galcom_removed_date` (`removed`,`date`)
 ) ENGINE=MyISAM AUTO_INCREMENT=546933 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -731,7 +733,8 @@ CREATE TABLE `gamescore` (
   `coins` int(11) NOT NULL DEFAULT 0,
   `time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `idx_gamescore_game_user` (`game`,`user_id`,`score`)
 ) ENGINE=MyISAM AUTO_INCREMENT=399 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1023,7 +1026,9 @@ CREATE TABLE `miniblog` (
   KEY `author_vote` (`author`,`vote_value`) COMMENT 'for karma update',
   KEY `author_removed` (`author`,`removed`) COMMENT 'Karma update',
   KEY `author_removed_posts` (`author`,`removed`,`posts`) COMMENT 'Karma update',
-  KEY `miniblog_list` (`parent`,`groupid`,`removed`,`lang`,`bump`)
+  KEY `miniblog_list` (`parent`,`groupid`,`removed`,`lang`,`bump`),
+  KEY `idx_miniblog_id_list` (`parent`,`groupid`,`removed`,`lang`,`id`),
+  KEY `idx_miniblog_removed_date` (`removed`,`date`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5215598 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
