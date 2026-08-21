@@ -343,7 +343,7 @@ $(document).ready(function () {
 		if (gameSpeed >= 10.0 && Math.random() < 0.25) {
 			var bonusType = 'big_star';
 			// Tortoise bonus reduces speed by 1x
-			if (gameSpeed >= 15.0 && Math.random() < 0.5) {
+			if (gameSpeed >= 15.0 && Math.random() < 0.3) {
 				bonusType = 'tortoise';
 			}
 			// Reachable height: GROUND_Y - 45 (ground/duck height) up to GROUND_Y - 110 (jump height)
