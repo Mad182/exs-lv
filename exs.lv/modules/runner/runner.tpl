@@ -1,4 +1,4 @@
-<h1>Bezgalīgais Bēdzējs</h1>
+<h1>Runner</h1>
 
 <div class="tabs">
 	<li><a href="/runner" class="tab active">Spēle</a></li>
@@ -29,7 +29,7 @@
 			<!-- Start Screen Overlay -->
 			<div id="runner-start-overlay" class="runner-overlay">
 				<div class="overlay-card">
-					<h2>🏃 Bezgalīgais Bēdzējs</h2>
+					<h2>🏃 Runner</h2>
 					<p>Bēdz no akadēmijas šķēršļiem un lietotāju avatariem, vāc zvaigznes un uzstādi jaunu rekordu!</p>
 					<button id="runner-start-btn" class="runner-btn runner-btn-lg">Sākt Spēli 🚀</button>
 				</div>

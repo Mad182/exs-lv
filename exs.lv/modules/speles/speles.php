@@ -151,7 +151,7 @@ $games_list = [
 	],
 	[
 		'id' => 'runner',
-		'title' => 'Bezgalīgais Bēdzējs',
+		'title' => 'Runner',
 		'url' => '/runner',
 		'icon' => '🏃',
 		'badge' => 'Jaunums',
@@ -220,7 +220,7 @@ $game_meta_map = [
 	'invaders' => ['title' => 'Space Invaders', 'url' => '/invaders', 'is_time' => false],
 	'augsup' => ['title' => 'Augšup', 'url' => '/augsup', 'is_time' => false],
 	'vardes' => ['title' => 'Vardes', 'url' => '/vardes', 'is_time' => false],
-	'runner' => ['title' => 'Bezgalīgais Bēdzējs', 'url' => '/runner', 'is_time' => false],
+	'runner' => ['title' => 'Runner', 'url' => '/runner', 'is_time' => false],
 ];
 
 $recent_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 8");
