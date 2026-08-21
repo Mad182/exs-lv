@@ -19,16 +19,16 @@
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
 	<script>var mb_refresh_limit = {mb-refresh-limit}, current_user = {currentuser-id}, new_msg_count = {new-messages-count}, c_url = "{page-url}";</script>
-	<link rel="stylesheet" href="/css/coding.css,prettify.css?v={css-version}">
+	<link rel="stylesheet" href="/css/coding.css,prettify.css">
 	<!-- START BLOCK : additional-css-->
-	<link rel="stylesheet" href="/css/{filename}?v={css-version}">
+	<link rel="stylesheet" href="/css/{filename}">
 	<!-- END BLOCK : additional-css-->
 	<!-- START BLOCK : guest-js -->
-	<script src="{static-server}/js/guest.js?v={css-version}"></script>
+	<script src="{static-server}/js/guest.js"></script>
 	<!-- END BLOCK : guest-js -->
 	<!-- START BLOCK : user-js -->
 	<script
-		src="/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,prettify/prettify.js?v={css-version}"></script>
+		src="/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,prettify/prettify.js"></script>
 	<!-- END BLOCK : user-js -->
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>

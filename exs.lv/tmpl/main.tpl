@@ -25,9 +25,9 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css?v={css-version}" media="all">
+	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css" media="all">
 	<!-- START BLOCK : additional-css-->
-	<link rel="stylesheet" href="{static-server}/css/{filename}?v={css-version}">
+	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
 	<script>var mb_refresh_limit = {mb-refresh-limit},
 		current_user = {currentuser-id},
@@ -35,11 +35,11 @@
 		c_url = "{page-url}";
 	</script>
 	<!-- START BLOCK : guest-js -->
-	<script src="{static-server}/js/guest.js?v={css-version}"></script>
+	<script src="{static-server}/js/guest.js"></script>
 	<!-- END BLOCK : guest-js -->
 	<!-- START BLOCK : user-js -->
 	<script
-		src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js?v={css-version}"></script>
+		src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
 	<!-- END BLOCK : user-js -->
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>

@@ -20,15 +20,15 @@
 	<!-- END BLOCK : canonical-->
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css?v={css-version}">
+    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css">
     <!-- START BLOCK : additional-css-->
-    <link rel="stylesheet" href="{static-server}/css/{filename}?v={css-version}">
+    <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->
     <!-- START BLOCK : guest-js -->
-    <script src="{static-server}/js/guest.js?v={css-version}"></script>
+    <script src="{static-server}/js/guest.js"></script>
     <!-- END BLOCK : guest-js -->
     <!-- START BLOCK : user-js -->
-    <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js?v={css-version}"></script>
+    <script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,runescape.js,mcp.js,j.js"></script>
     <!-- END BLOCK : user-js -->
     <!-- START BLOCK : tinymce-enabled-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
