@@ -7593,12 +7593,22 @@ a.badge:focus {
 	}
 	body.is-game-page #sidebar-left,
 	body.page-speles #sidebar-left,
-	body.module-speles #sidebar-left {
+	body.module-speles #sidebar-left,
+	body.page-grupas #sidebar-left,
+	body.page-group #sidebar-left,
+	body.module-groups #sidebar-left,
+	body.module-group #sidebar-left,
+	body.module-group-create #sidebar-left {
 		display: none !important;
 	}
 	body.is-game-page #main-left,
 	body.page-speles #main-left,
-	body.module-speles #main-left {
+	body.module-speles #main-left,
+	body.page-grupas #main-left,
+	body.page-group #main-left,
+	body.module-groups #main-left,
+	body.module-group #main-left,
+	body.module-group-create #main-left {
 		width: 100% !important;
 		margin-left: 0 !important;
 	}
