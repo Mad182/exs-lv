@@ -46,6 +46,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 
 	$token = isset($_POST['token']) ? trim($_POST['token']) : '';
 	$score = isset($_POST['score']) ? intval($_POST['score']) : 0;
+	$coins = isset($_POST['coins']) ? intval($_POST['coins']) : 0;
 	$duration = isset($_POST['duration']) ? intval($_POST['duration']) : 0;
 
 	// Anti-cheat checks
@@ -69,11 +70,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	$prev_best = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'runner' AND user_id = '$auth->id'");
 	$is_new_record = (empty($prev_best) || $score > $prev_best);
 
-	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'runner', '$score', '" . time() . "')");
+	$db->query("INSERT INTO gamescore (user_id, game, score, coins, time) VALUES ('$auth->id', 'runner', '$score', '$coins', '" . time() . "')");
 	$highScore = max($prev_best, $score);
 
 	if ($is_new_record) {
-		push('Uzstādīja jaunu rekordu spēlē <a href="/runner">Runner</a> (' . number_format($highScore, 0, '', ' ') . ' m)', '/bildes/icons/award_star_gold_3.png', 'game-runner-' . $auth->id);
+		$star_str = ($coins > 0) ? ', ⭐ ' . $coins : '';
+		push('Uzstādīja jaunu rekordu spēlē <a href="/runner">Runner</a> (' . number_format($highScore, 0, '', ' ') . ' m' . $star_str . ')', '/bildes/icons/award_star_gold_3.png', 'game-runner-' . $auth->id);
 	}
 
 	$rank = $db->get_var("SELECT COUNT(DISTINCT user_id) + 1 FROM gamescore WHERE game = 'runner' AND score > '$score'");
@@ -92,6 +94,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 
+// Guest Notice Alert
+if (!$auth->ok) {
+	$tpl->newBlock('guest-notice');
+}
+
 // User Avatar & Personal High Score
 $user_avatar = '/dati/bildes/u_small/none.png';
 $user_high_score = 0;
@@ -108,7 +115,7 @@ $tpl->assign([
 
 // 4. Today's Leaderboard
 $start_of_today = strtotime('today midnight');
-$today_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'runner' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+$today_scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(coins) as coins FROM gamescore WHERE game = 'runner' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 10");
 
 if (!empty($today_scores)) {
 	$rank = 1;
@@ -119,6 +126,7 @@ if (!empty($today_scores)) {
 			$tpl->assign([
 				'rank' => $rank++,
 				'user-nick' => usercolor($u->nick, $u->level),
+				'coins' => number_format($sc->coins, 0, '', ' '),
 				'score' => number_format($sc->score, 0, '', ' ')
 			]);
 		}
@@ -128,7 +136,7 @@ if (!empty($today_scores)) {
 }
 
 // 5. All-Time Leaderboard
-$alltime_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'runner' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+$alltime_scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(coins) as coins FROM gamescore WHERE game = 'runner' GROUP BY user_id ORDER BY score DESC LIMIT 10");
 
 if (!empty($alltime_scores)) {
 	$rank = 1;
@@ -139,6 +147,7 @@ if (!empty($alltime_scores)) {
 			$tpl->assign([
 				'rank' => $rank++,
 				'user-nick' => usercolor($u->nick, $u->level),
+				'coins' => number_format($sc->coins, 0, '', ' '),
 				'score' => number_format($sc->score, 0, '', ' ')
 			]);
 		}

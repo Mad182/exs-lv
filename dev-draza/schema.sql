@@ -728,6 +728,7 @@ CREATE TABLE `gamescore` (
   `user_id` mediumint(9) NOT NULL DEFAULT 0,
   `game` varchar(32) NOT NULL DEFAULT 'snake',
   `score` int(11) NOT NULL DEFAULT 0,
+  `coins` int(11) NOT NULL DEFAULT 0,
   `time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)

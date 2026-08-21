@@ -4,6 +4,12 @@
 	<li><a href="/runner" class="tab active">Spēle</a></li>
 </div>
 
+<!-- START BLOCK : guest-notice -->
+<div class="alert alert-info runner-guest-alert" style="margin-bottom: 15px;">
+	<strong>Piezīme:</strong> Tu spēlē kā viesis. <a href="/register">Reģistrējies</a> vai ieej profilā, lai saglabātu savu rezultātu topā!
+</div>
+<!-- END BLOCK : guest-notice -->
+
 <div class="tabMain" id="runner-container">
 	<div class="runner-wrapper">
 		<!-- Game Toolbar HUD -->
@@ -71,8 +77,9 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th style="width: 50px;">Vieta</th>
+							<th style="width: 40px;">Vieta</th>
 							<th>Spēlētājs</th>
+							<th style="text-align: center;">Zvaigznes</th>
 							<th style="text-align: right;">Distance</th>
 						</tr>
 					</thead>
@@ -81,12 +88,13 @@
 						<tr>
 							<td>{rank}.</td>
 							<td>{user-nick}</td>
+							<td style="text-align: center;">⭐ {coins}</td>
 							<td style="text-align: right; font-weight: bold;">{score} m</td>
 						</tr>
 						<!-- END BLOCK : today-top-node -->
 						<!-- START BLOCK : today-empty -->
 						<tr>
-							<td colspan="3" style="text-align: center; color: #888;">Šodien vēl nav uzstādīts neviens rezultāts. Esi pirmais!</td>
+							<td colspan="4" style="text-align: center; color: #888;">Šodien vēl nav uzstādīts neviens rezultāts. Esi pirmais!</td>
 						</tr>
 						<!-- END BLOCK : today-empty -->
 					</tbody>
@@ -98,8 +106,9 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th style="width: 50px;">Vieta</th>
+							<th style="width: 40px;">Vieta</th>
 							<th>Spēlētājs</th>
+							<th style="text-align: center;">Zvaigznes</th>
 							<th style="text-align: right;">Distance</th>
 						</tr>
 					</thead>
@@ -108,12 +117,13 @@
 						<tr>
 							<td>{rank}.</td>
 							<td>{user-nick}</td>
+							<td style="text-align: center;">⭐ {coins}</td>
 							<td style="text-align: right; font-weight: bold;">{score} m</td>
 						</tr>
 						<!-- END BLOCK : alltime-top-node -->
 						<!-- START BLOCK : alltime-empty -->
 						<tr>
-							<td colspan="3" style="text-align: center; color: #888;">Visu laiku tops pagaidām ir tukšs!</td>
+							<td colspan="4" style="text-align: center; color: #888;">Visu laiku tops pagaidām ir tukšs!</td>
 						</tr>
 						<!-- END BLOCK : alltime-empty -->
 					</tbody>

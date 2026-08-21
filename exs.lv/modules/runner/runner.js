@@ -565,6 +565,7 @@ $(document).ready(function () {
 			$.post('/runner/?action=push', {
 				token: sessionToken,
 				score: finalScore,
+				coins: coinsCollected,
 				duration: durationSec
 			}, function (res) {
 				if (res && res.success) {
