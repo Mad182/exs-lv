@@ -14,56 +14,67 @@
 <!-- END BLOCK : guest-notice -->
 
 <div class="tetris-wrapper">
-	<div class="tetris-main-panel">
-		<div class="tetris-board-container">
-			<canvas id="tetris-canvas" width="300" height="600"></canvas>
-			
-			<div id="tetris-overlay" class="tetris-overlay">
-				<div id="overlay-content" class="overlay-card">
-					<h2 id="overlay-title">SĀKT SPĒLI</h2>
-					<p id="overlay-msg">Spied Sākt pogu vai atstarpi, lai sāktu spēli!</p>
-					<button id="btn-start" class="btn btn-primary btn-large btn-tetris-action">Sākt spēli</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="tetris-sidebar-panel">
-			<div class="tetris-box">
-				<h3>Nākamais</h3>
-				<div class="canvas-box">
-					<canvas id="next-canvas" width="100" height="100"></canvas>
+	<div class="tetris-scaler-wrapper">
+		<div class="tetris-main-panel">
+			<div class="tetris-board-container">
+				<canvas id="tetris-canvas" width="300" height="600"></canvas>
+				
+				<div id="tetris-overlay" class="tetris-overlay">
+					<div id="overlay-content" class="overlay-card">
+						<h2 id="overlay-title">SĀKT SPĒLI</h2>
+						<p id="overlay-msg">Spied Sākt pogu vai atstarpi, lai sāktu spēli!</p>
+						<button id="btn-start" class="btn btn-primary btn-large btn-tetris-action">Sākt spēli</button>
+					</div>
 				</div>
 			</div>
 
-			<div class="tetris-box">
-				<h3>Turēt (Hold)</h3>
-				<div class="canvas-box">
-					<canvas id="hold-canvas" width="100" height="100"></canvas>
+			<div class="tetris-sidebar-panel">
+				<div class="tetris-box">
+					<h3>Nākamais</h3>
+					<div class="canvas-box">
+						<canvas id="next-canvas" width="100" height="100"></canvas>
+					</div>
 				</div>
-			</div>
 
-			<div class="tetris-box tetris-stats-box">
-				<div class="stat-item">
-					<span class="stat-label">Punkti</span>
-					<span id="stat-score" class="stat-value">0</span>
+				<div class="tetris-box">
+					<h3>Turēt (Hold)</h3>
+					<div class="canvas-box">
+						<canvas id="hold-canvas" width="100" height="100"></canvas>
+					</div>
 				</div>
-				<div class="stat-item">
-					<span class="stat-label">Līmenis</span>
-					<span id="stat-level" class="stat-value">1</span>
-				</div>
-				<div class="stat-item">
-					<span class="stat-label">Līnijas</span>
-					<span id="stat-lines" class="stat-value">0</span>
-				</div>
-				<div class="stat-item">
-					<span class="stat-label">Mans rekords</span>
-					<span id="stat-highscore" class="stat-value">{user-highscore}</span>
-				</div>
-			</div>
 
-			<div class="tetris-controls-btns">
-				<button id="btn-pause" class="btn btn-warning" disabled>Nopauzēt (P)</button>
-				<button id="btn-sound" class="btn btn-info">Skaņa: IESL.</button>
+				<div class="tetris-box tetris-stats-box">
+					<div class="stat-item">
+						<span class="stat-label">Punkti</span>
+						<span id="stat-score" class="stat-value">0</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-label">Līmenis</span>
+						<span id="stat-level" class="stat-value">1</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-label">Līnijas</span>
+						<span id="stat-lines" class="stat-value">0</span>
+					</div>
+					<div class="stat-item">
+						<span class="stat-label">Mans rekords</span>
+						<span id="stat-highscore" class="stat-value">{user-highscore}</span>
+					</div>
+				</div>
+
+				<div class="tetris-touch-controls">
+					<button type="button" id="btn-touch-left" class="btn btn-touch" aria-label="Pa kreisi">&larr;</button>
+					<button type="button" id="btn-touch-rotate" class="btn btn-touch" aria-label="Pagriezt">&#8635;</button>
+					<button type="button" id="btn-touch-right" class="btn btn-touch" aria-label="Pa labi">&rarr;</button>
+					<button type="button" id="btn-touch-down" class="btn btn-touch" aria-label="Uz leju">&darr;</button>
+					<button type="button" id="btn-touch-drop" class="btn btn-touch btn-touch-drop" aria-label="Krist">&#9196;</button>
+					<button type="button" id="btn-touch-hold" class="btn btn-touch" aria-label="Turēt">HOLD</button>
+				</div>
+
+				<div class="tetris-controls-btns">
+					<button id="btn-pause" class="btn btn-warning" disabled>Nopauzēt (P)</button>
+					<button id="btn-sound" class="btn btn-info">Skaņa: IESL.</button>
+				</div>
 			</div>
 		</div>
 	</div>

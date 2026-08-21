@@ -11,6 +11,16 @@
 	margin-bottom: 30px;
 }
 
+.tetris-scaler-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
 .tetris-main-panel {
 	display: flex;
 	gap: 15px;
@@ -19,6 +29,10 @@
 	border-radius: 10px;
 	box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 	border: 1px solid #2a313e;
+	transform-origin: top center;
+	transition: transform 0.15s ease-out;
+	box-sizing: border-box;
+	flex-shrink: 0;
 }
 
 .tetris-board-container {
@@ -145,6 +159,45 @@
 	font-weight: bold;
 	color: #58a6ff;
 	font-family: monospace, monospace;
+}
+
+.tetris-touch-controls {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 6px;
+	margin-top: 4px;
+}
+
+.btn-touch {
+	background: #21262d;
+	border: 1px solid #30363d;
+	color: #c9d1d9;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 8px 0;
+	border-radius: 6px;
+	cursor: pointer;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	line-height: 1;
+}
+
+.btn-touch:hover, .btn-touch:active {
+	background: #30363d;
+	color: #58a6ff;
+	border-color: #58a6ff;
+}
+
+.btn-touch-drop {
+	background: #1f6feb;
+	color: #ffffff;
+	border-color: #388bfd;
+}
+
+.btn-touch-drop:hover, .btn-touch-drop:active {
+	background: #388bfd;
+	color: #ffffff;
 }
 
 .tetris-controls-btns {

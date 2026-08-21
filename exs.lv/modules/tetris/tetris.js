@@ -737,6 +737,88 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 
+	// Touch Controls Listener Binding
+	var btnTouchLeft = document.getElementById('btn-touch-left');
+	var btnTouchRight = document.getElementById('btn-touch-right');
+	var btnTouchDown = document.getElementById('btn-touch-down');
+	var btnTouchRotate = document.getElementById('btn-touch-rotate');
+	var btnTouchDrop = document.getElementById('btn-touch-drop');
+	var btnTouchHold = document.getElementById('btn-touch-hold');
+
+	function bindTouchBtn(el, action) {
+		if (!el) return;
+		var handler = function (e) {
+			e.preventDefault();
+			initAudio();
+			action();
+		};
+		el.addEventListener('touchstart', handler, { passive: false });
+		el.addEventListener('click', function (e) {
+			if (e.detail === 0 || !('ontouchstart' in window)) {
+				initAudio();
+				action();
+			}
+		});
+	}
+
+	bindTouchBtn(btnTouchLeft, moveLeft);
+	bindTouchBtn(btnTouchRight, moveRight);
+	bindTouchBtn(btnTouchDown, softDrop);
+	bindTouchBtn(btnTouchRotate, rotateCurrentPiece);
+	bindTouchBtn(btnTouchDrop, hardDrop);
+	bindTouchBtn(btnTouchHold, doHold);
+
+	// Dynamic Window Scaling Logic
+	function autoScaleGame() {
+		var scalerWrapper = document.querySelector('.tetris-scaler-wrapper');
+		var mainPanel = document.querySelector('.tetris-main-panel');
+		if (!scalerWrapper || !mainPanel) return;
+
+		// Clear inline styles to accurately measure unscaled bounding box
+		mainPanel.style.transform = 'none';
+		scalerWrapper.style.width = '';
+		scalerWrapper.style.height = '';
+
+		var unscaledWidth = mainPanel.offsetWidth;
+		var unscaledHeight = mainPanel.offsetHeight;
+
+		if (!unscaledWidth || !unscaledHeight) return;
+
+		var container = scalerWrapper.parentElement || document.body;
+		var availableWidth = container.clientWidth;
+		if (!availableWidth || availableWidth > window.innerWidth) {
+			availableWidth = window.innerWidth;
+		}
+		// 20px padding buffer
+		availableWidth = Math.max(280, availableWidth - 20);
+
+		// Fit inside available viewport height (30px margin)
+		var availableHeight = Math.max(300, window.innerHeight - 30);
+
+		var scaleX = availableWidth / unscaledWidth;
+		var scaleY = availableHeight / unscaledHeight;
+
+		// Scale factor constrained between 0.35 and 1.0
+		var scale = Math.min(scaleX, scaleY, 1);
+		if (scale < 0.35) scale = 0.35;
+
+		if (scale < 0.99) {
+			mainPanel.style.transform = 'scale(' + scale + ')';
+			scalerWrapper.style.width = Math.round(unscaledWidth * scale) + 'px';
+			scalerWrapper.style.height = Math.round(unscaledHeight * scale) + 'px';
+		} else {
+			mainPanel.style.transform = 'none';
+			scalerWrapper.style.width = '';
+			scalerWrapper.style.height = '';
+		}
+	}
+
+	window.addEventListener('resize', autoScaleGame);
+	window.addEventListener('orientationchange', function () {
+		setTimeout(autoScaleGame, 100);
+	});
+
 	board = createBoard();
 	draw();
+	autoScaleGame();
 });
