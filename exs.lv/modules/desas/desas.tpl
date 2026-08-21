@@ -1,5 +1,5 @@
 <!-- START BLOCK : desas-->
-<script src="/modules/desas/desas.js"></script>
+<script src="/modules/desas/desas.d343a278.min.js"></script>
 <style>
 	#desas {
 		width: 171px;
