@@ -156,6 +156,15 @@ $(document).ready(function () {
 
 		var guess = gridState[currentRow].join('');
 
+		// Check if word has already been guessed in a previous row
+		for (var r = 0; r < currentRow; r++) {
+			if (gridState[r].join('') === guess) {
+				showToast('Vārds "' + guess + '" jau ir mēģināts!');
+				shakeRow(currentRow);
+				return;
+			}
+		}
+
 		// Check dictionary validity
 		if (validWords.indexOf(guess) === -1 && solutions.indexOf(guess) === -1) {
 			showToast('Vārds "' + guess + '" nav vārdnīcā!');
