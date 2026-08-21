@@ -48,6 +48,8 @@
 /dump.exs.lv/*
 /phpmyadmin/*
 /.*
+!/.githooks
+!/.githooks/**
 /vendor/*
 /exs.lv/latvian-games/*
 

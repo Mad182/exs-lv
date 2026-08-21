@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ -f "/home/www/exs.lv/scripts/minify_games.php" ]; then
+    php /home/www/exs.lv/scripts/minify_games.php
+elif [ -f "exs.lv/scripts/minify_games.php" ]; then
+    php exs.lv/scripts/minify_games.php
+fi
