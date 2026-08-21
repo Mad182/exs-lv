@@ -6272,3 +6272,21 @@ p.images-5 img {
 .game-description-box li {
 	margin-bottom: 6px;
 }
+
+/* Groups module responsive rules */
+@media (max-width: 991px) {
+	.exs-groups li {
+		flex: 0 0 calc(50% - 7px);
+	}
+}
+
+@media (max-width: 576px) {
+	.groups-header-bar {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.exs-groups li {
+		flex: 0 0 100%;
+	}
+}
+

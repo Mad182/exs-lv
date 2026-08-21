@@ -850,4 +850,73 @@
 		text-shadow: none;
 	}
 
+	/* Groups Module Dark Mode */
+	.groups-header-bar {
+		border-bottom-color: #2d3748;
+	}
+
+	.groups-sort-options {
+		color: #94a3b8;
+	}
+
+	.groups-sort-options .sort-link {
+		color: #cbd5e1;
+	}
+
+	.groups-sort-options .sort-link:hover {
+		background: #2d3748;
+		color: #ffffff;
+	}
+
+	.groups-sort-options .sort-link.active {
+		background: #3b82f6;
+		color: #ffffff !important;
+	}
+
+	.groups-cat-title {
+		color: #e2e8f0;
+		border-bottom-color: #3b82f6;
+	}
+
+	.exs-groups li {
+		background: #1e2631;
+		border-color: #2d3748;
+	}
+
+	.exs-groups li:hover {
+		background: #252e3d;
+		border-color: #475569;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+	}
+
+	.exs-groups li.is-member {
+		border-left-color: #22c55e;
+		background: #13241b;
+	}
+
+	.exs-groups li.is-member:hover {
+		background: #192e22;
+	}
+
+	.group-avatar {
+		border-color: #334155;
+	}
+
+	.group-title a {
+		color: #f1f5f9;
+	}
+
+	.group-title a:hover {
+		color: #60a5fa;
+	}
+
+	.group-meta {
+		color: #94a3b8;
+	}
+
+	.group-meta .meta-item strong {
+		color: #cbd5e1;
+	}
+
 }
+

@@ -34,6 +34,16 @@ if ($auth->ok) {
 	}
 }
 
+$sort_members_active = (!isset($_GET['order']) || $_GET['order'] == 'members') ? 'active' : '';
+$sort_posts_active = (isset($_GET['order']) && $_GET['order'] == 'posts') ? 'active' : '';
+$sort_abc_active = (isset($_GET['order']) && $_GET['order'] == 'abc') ? 'active' : '';
+
+$tpl->assignGlobal([
+	'sort_members_active' => $sort_members_active,
+	'sort_posts_active' => $sort_posts_active,
+	'sort_abc_active' => $sort_abc_active,
+]);
+
 if ($categories) {
 	foreach ($categories as $group_category) {
 		if (!empty($groups_by_cat[$group_category->id])) {
@@ -41,13 +51,11 @@ if ($categories) {
 			$tpl->assign('title', $group_category->title);
 			foreach ($groups_by_cat[$group_category->id] as $group) {
 				$user = $user_memberships[$group->id] ?? null;
-				if (($auth->ok && $user) || $group->owner == $auth->id) {
-					$istyle = ' style="background:green;width:75px;height:75px;margin-top:15px;" ';
-				} else {
-					$istyle = ' style="width:75px;height:75px;margin-top:15px;" ';
-				}
+				$is_member = ($auth->ok && $user) || $group->owner == $auth->id;
+
 				if ($auth->ok && $user && ($group->posts - $user->seenposts) > 0) {
-					$add = '&nbsp;(<a style="font-size: 16px;" href="/group/' . $group->id . '/forum/"><span class="red">' . ($group->posts - $user->seenposts) . '</span></a>)';
+					$unread_count = $group->posts - $user->seenposts;
+					$add = '<a class="group-unread-badge" href="/group/' . $group->id . '/forum/" title="' . $unread_count . ' unread posts">+' . $unread_count . '</a>';
 				} else {
 					$add = '';
 				}
@@ -67,10 +75,10 @@ if ($categories) {
 					'title' => $group->title,
 					'link' => $group->link,
 					'avatar' => $avatar,
-					'posts' => $group->posts,
-					'members' => $group->members + 1,
+					'posts' => number_format($group->posts, 0, '', ' '),
+					'members' => number_format($group->members + 1, 0, '', ' '),
 					'admin' => $group->admin ?? '',
-					'style' => $istyle,
+					'member_class' => $is_member ? 'is-member' : '',
 					'add' => $add,
 				]);
 			}
