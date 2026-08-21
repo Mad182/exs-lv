@@ -28,8 +28,8 @@ $user_memberships = [];
 if ($auth->ok) {
 	$memberships = $db->get_results("SELECT clan, seenposts FROM clans_members WHERE user = '$auth->id' AND approve = '1'");
 	if ($memberships) {
-		foreach ($memberships as $m) {
-			$user_memberships[$m->clan] = $m;
+		foreach ($memberships as $membership) {
+			$user_memberships[$membership->clan] = $membership;
 		}
 	}
 }
