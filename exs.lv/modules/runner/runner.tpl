@@ -48,7 +48,7 @@
 					<p class="final-stats">Sasnniegtā distance: <strong id="final-score">0 m</strong></p>
 					<p class="final-stats">Savāktās zvaigznes: <strong id="final-coins">0</strong></p>
 					<div id="runner-record-badge" class="record-badge" style="display: none;">🎉 JAUNS REKORDS!</div>
-					<button id="runner-restart-btn" class="runner-btn runner-btn-lg">Mēģināt Vēlreiz 🔄</button>
+					<button id="runner-restart-btn" class="runner-btn runner-btn-lg">Mēģināt Vēlreiz 🔄 (Enter)</button>
 				</div>
 			</div>
 		</div>

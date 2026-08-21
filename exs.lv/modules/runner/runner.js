@@ -605,9 +605,27 @@ $(document).ready(function () {
 		if ($('#runner-container').length === 0) return;
 
 		var key = e.key;
+		if (key === 'Enter' || key === 'N' || key === 'n') {
+			if (gameState === STATE_GAMEOVER) {
+				e.preventDefault();
+				$('#runner-restart-btn').trigger('click');
+				return;
+			} else if (gameState === STATE_START) {
+				e.preventDefault();
+				$('#runner-start-btn').trigger('click');
+				return;
+			}
+		}
+
 		if (key === 'ArrowUp' || key === 'w' || key === 'W' || key === ' ') {
 			e.preventDefault();
-			handleJumpStart();
+			if (gameState === STATE_START) {
+				$('#runner-start-btn').trigger('click');
+			} else if (gameState === STATE_GAMEOVER) {
+				$('#runner-restart-btn').trigger('click');
+			} else {
+				handleJumpStart();
+			}
 		} else if (key === 'ArrowDown' || key === 's' || key === 'S') {
 			e.preventDefault();
 			handleDuckStart();
