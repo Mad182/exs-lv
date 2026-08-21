@@ -687,6 +687,9 @@ function mkslug($string, $lower = true, $remove_dashes = true) {
 	if ($lower) {
 		$string = strtolower($string);
 	}
+	if (ctype_digit($string)) {
+		$string = 'grupa-' . $string;
+	}
 	return $string;
 }
 
