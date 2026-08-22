@@ -27,7 +27,7 @@ $template_bundles = [
 	'main.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main.tpl'),
 		'output_prefix' => 'main',
-		'sources' => ['responsive.css', 'bs.css'],
+		'sources' => ['responsive.css'],
 		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*"\s*media="all">/i',
 	],
 	'main_3.tpl' => [
