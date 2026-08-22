@@ -3,7 +3,8 @@
 //load css
 $add_css[] = 'gallery.css';
 
-$inprofile = get_user(intval($_GET['var1']));
+$user_id = isset($_GET['var1']) ? intval($_GET['var1']) : 0;
+$inprofile = get_user($user_id);
 
 if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofile->private)) {
 
