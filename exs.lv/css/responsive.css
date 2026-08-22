@@ -1191,22 +1191,6 @@ margin:0 0 0 57px;word-wrap:break-word
 word-wrap:break-word
 }
 
-#miniblog-list {
-list-style:none;padding:0;margin:0
-}
-
-#miniblog-list li, #miniblog-list li li, .mb-col li, .responses li {
-height:65px;min-height:65px;background:transparent;margin:0;padding:0
-}
-
-#miniblog-list li, #miniblog-list li li, #mb-list li, .mb-col li, .responses li {
-height:auto !important;min-height:45px;background:transparent;margin:0
-}
-
-.imgs, ul#mainlist, #latest-blogs, #wallpapers, .small-userlist, .responses li p, #miniblog-list, .mb-col, .bloglist {
-margin:0;padding:0;list-style:none
-}
-
 .mb-col li {
 border-bottom:1px solid #eee;height:auto !important;min-height:45px;margin:0;padding:1px 0
 }
@@ -1227,48 +1211,8 @@ padding:0 0 0 40px
 padding:0 18px 0 0
 }
 
-.blockhref li {
-text-decoration:none
-}
-
-.blockhref li a, .blockhref li .wrap {
-display:block;text-decoration:none;padding:3px 1px;height:auto !important;height:51px;min-height:51px
-}
-
-.blockhref li a:hover {
-background:#f5f5f6
-}
-
-.blockhref li span.entry {
-margin-left:56px;display:block
-}
-
-.blockhref li span span {
-display:block;color:#888;line-height:1.2
-}
-
-.blockhref li span.wrap span {
-display:inline
-}
-
-.post-time, .blockhref li span.wrap span.post-time {
-display:block
-}
-
 .post-time:before, .notification-date:before {
 content:"pirms "
-}
-
-.blockhref li span.post-rating {
-color:green
-}
-
-.blockhref li span.wrap a {
-display:inline;height:auto !important;height:auto;min-height:auto;padding:0
-}
-
-ul.taged.blockhref li span {
-display:block
 }
 
 .article-info {
@@ -2307,18 +2251,6 @@ position:absolute;bottom:1px;right:1px;height:14px;width:68px;background:#333;fo
 left:0
 }
 
-.admins, .blockhref li span.admins {
-color:#500
-}
-
-.mods, .blockhref li span.mods {
-color:#00b
-}
-
-.rautors, .blockhref li span.rautors {
-color:#070
-}
-
 .bot {
 color:#777
 }
@@ -2549,10 +2481,6 @@ background:url('//img.exs.lv/bildes/i.png') no-repeat 0 -212px;padding:0 0 0 19p
 
 .l-gadmin {
 background:url('//img.exs.lv/bildes/i.png') no-repeat 0 -234px;padding:0 0 0 19px
-}
-
-html .red, html .r, .blockhref li span.r, body #content .r {
-color:#ef6000
 }
 
 html .green, html .g, body #content .g {
@@ -6219,4 +6147,160 @@ padding:15px 6px !important;font-size:12px
 height:auto !important;overflow:visible !important
 }
 }
+}
+
+
+
+/* Restored Miniblog & Blockhref Rules */
+.mb-col li .av {
+width:45px;height:45px;position:relative
+}
+.mb-col li:last-child {
+border-bottom:0
+}
+.mb-col li .author {
+color:#888;font-weight:500
+}
+#miniblog-list {
+list-style:none;padding:0;margin:0
+}
+#miniblog-list li,
+#miniblog-list li li,
+.mb-col li,
+.responses li {
+height:auto !important;min-height:65px;height:65px;background:transparent;margin:0;padding:0
+}
+#miniblog-list li {
+padding:3px 0 7px
+}
+#miniblog-list li .av {
+width:45px;height:45px
+}
+.imgs,
+ul#mainlist,
+#downloads,
+.video-thb p,
+#latest-blogs,
+#wallpapers,
+.small-userlist,
+.responses li p,
+#miniblog-list,
+.mb-col,
+.bloglist {
+margin:0;padding:0;list-style:none
+}
+.mb-col li {
+border-bottom:1px solid #eee;height:55px;min-height:55px;margin:0;padding:1px 0
+}
+.mb-col li.linkcode {
+border-bottom:1px solid #99e600
+}
+.mb-col li.rs-linkcode {
+border-bottom:1px solid #F1686D
+}
+#miniblog-list li ul {
+padding:4px 6px 4px 26px;margin:0;clear:both;list-style:none
+}
+#miniblog-list li ul#mb-tags li {
+height:auto;min-height:0
+}
+#miniblog-list li ul ul {
+padding:1px 0;margin:0 0 0 -30px;list-style:none
+}
+#miniblog-list li ul li {
+border-bottom:1px solid #f2f2f2;height:60px;min-height:60px;margin:0;padding:6px 4px 2px 0
+}
+#miniblog-list li ul li ul li {
+border:0;height:52px;min-height:52px;padding:3px 0 3px 0
+}
+#miniblog-list li ul li ul li .miniblog-response {
+padding:0 18px 0 0;margin:0
+}
+#miniblog-list li ul li.more {
+height:auto !important;min-height:20px;margin:0;border:0;padding:3px 0
+}
+#miniblog-list li ul li.more a {
+padding:0 0 0 20px;background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -754px;display:block;height:16px;line-height:16px;margin-left:50px
+}
+#miniblog-list li .post-info,
+.responses li .post-info {
+color:#888;line-height:20px;margin:0;padding:0;background:transparent
+}
+.blockhref li {
+text-decoration:none
+}
+.blockhref li a,
+.blockhref li .wrap {
+display:block;text-decoration:none;padding:3px 1px;height:auto !important;height:51px;min-height:51px
+}
+.blockhref li a:hover {
+background:#f5f5f6
+}
+.blockhref li span.entry {
+margin-left:56px;display:block
+}
+.blockhref li span span {
+display:block;color:#888;line-height:1.2
+}
+.blockhref li span.wrap span {
+display:inline
+}
+.post-time,
+.blockhref li span.wrap span.post-time {
+display:block
+}
+.blockhref li span.post-rating {
+color:green
+}
+.blockhref li span.wrap a {
+display:inline;height:auto !important;height:auto;min-height:auto;padding:0
+}
+ul.taged.blockhref li span {
+display:block
+}
+#full-story img,
+#miniblog-list li img {
+max-width:100%
+}
+#miniblog-list li div.post-content ul,
+.entry-content ul,
+.comment-text .response-content ul {
+overflow:hidden;margin:8px 10px 16px 20px;padding:0 0 0 22px;list-style-type:disc;clear:none
+}
+#miniblog-list li div.post-content ol,
+.entry-content ol,
+.comment-text .response-content ol {
+overflow:hidden;margin:8px 10px 16px 10px;padding:0 0 0 32px;clear:none
+}
+#miniblog-list li div.post-content li,
+.entry-content ul li,
+.entry-content ol li,
+.comment-text .response-content ul li,
+.comment-text .response-content ol li {
+border:0;height:auto;min-height:0;margin:0;padding:3px 4px 0 0;background:transparent
+}
+#latest-topics.blockhref li span.r,
+#latest-topics.blockhref li span.lp-prefix {
+display:inline
+}
+#latest-topics.blockhref li a {
+height:auto !important;height:32px;min-height:32px;padding-left:3px
+}
+.admins,
+.blockhref li span.admins {
+color:#500
+}
+.mods,
+.blockhref li span.mods {
+color:#00b
+}
+.rautors,
+.blockhref li span.rautors {
+color:#070
+}
+html .red,
+html .r,
+.blockhref li span.r,
+body #content .r {
+color:#ef6000
 }
