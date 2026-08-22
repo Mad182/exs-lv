@@ -1,3 +1,6 @@
+<div style="float: right;">
+	<a href="/polladmin" class="button primary">Izveidot jaunu aptauju</a>
+</div>
 <h1>Iepriekšējo aptauju arhīvs</h1>
 <!-- START BLOCK : polls-box-->
 <div class="poll-archive-box">

@@ -502,7 +502,7 @@
 								<!-- END BLOCK : poll-answers-node-->
 							</ol>
 							Balsojuši: {poll-totalvotes}<br>
-							<a href="{ppage-id}">Komentāri</a>
+							<a href="{ppage-id}">Komentāri</a> | <a href="/polladmin">Izveidot jaunu aptauju</a>
 							<!-- END BLOCK : poll-answers-->
 							<!-- START BLOCK : poll-questions-->
 							<form name="poll" method="post" action="">
@@ -521,6 +521,7 @@
 									<!-- END BLOCK : poll-options-->
 								</fieldset>
 							</form>
+							<p style="margin-top: 6px;"><a href="/polladmin">Izveidot jaunu aptauju</a></p>
 							<!-- END BLOCK : poll-questions-->
 						</div>
 					</div>
