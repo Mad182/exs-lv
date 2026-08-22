@@ -192,19 +192,28 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 
 	if ($is_logged_in) {
 		$bal_data = get_user_roulette_balance($auth->id);
-		$max_gold = max($bal_data['max_gold'], $new_gold);
+		$prev_max_gold = intval($bal_data['max_gold']);
+
+		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($auth->id));
+		$existing_high = $existing_score ? intval($existing_score->score) : 0;
+
+		$highest_previous = max($prev_max_gold, $existing_high);
+		$is_new_record = ($new_gold > $highest_previous);
+		$max_gold = max($highest_previous, $new_gold);
 
 		$today = date('Y-m-d');
 		$db->query("UPDATE `roulette_balance` SET `gold` = " . intval($new_gold) . ", `max_gold` = " . intval($max_gold) . ", `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
 
 		// Sync with gamescore table for platform leaderboards
-		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($auth->id));
 		if (!$existing_score) {
 			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($auth->id) . ", 'rulete', " . intval($max_gold) . ", " . time() . ")");
-			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($max_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/games/rulete.png', 'game-rulete-' . $auth->id);
 		} else if ($max_gold > $existing_score->score) {
 			$db->query("UPDATE `gamescore` SET `score` = " . intval($max_gold) . ", `time` = " . time() . " WHERE `id` = " . intval($existing_score->id));
-			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($max_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/games/rulete.png', 'game-rulete-' . $auth->id);
+		}
+
+		// Only push to activity stream if player set a genuine new high score record on this spin
+		if ($is_new_record && $new_gold > 100) {
+			push('Uzstādīja jaunu rekordu spēlē <a href="/rulete">Rulete</a> (' . number_format($new_gold, 0, '', ' ') . ' zelta)', '/bildes/icons/games/rulete.png', 'game-rulete-' . $auth->id);
 		}
 	} else {
 		$max_gold = $new_gold;
