@@ -6400,6 +6400,7 @@ p.images-5 img {
 
 .ca-form input[type=text] {
 	width: 400px;
+	max-width: 100%;
 }
 
 .px {

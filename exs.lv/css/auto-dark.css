@@ -971,5 +971,28 @@
 		color: #e9ecef;
 	}
 
+	/* Custom awards section (.ca-form, .ca-list) */
+	.ca-form {
+		background: #181c24;
+		border: 1px solid #2a313e;
+		color: #c9d1d9;
+	}
+
+	.ca-form label {
+		color: #e9ecef;
+	}
+
+	.ca-form input[type=text],
+	.ca-form select {
+		background: #161d26;
+		border: 1px solid #2a313e;
+		color: #e9ecef;
+	}
+
+	.ca-list .ca-title-block {
+		border-bottom: 1px solid #2a313e;
+		color: #c9d1d9;
+	}
+
 }
 
