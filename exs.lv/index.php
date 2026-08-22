@@ -407,7 +407,7 @@ if ($auth->skin == 1 && $lang == 1) {
 } elseif ($auth->ok === true && $auth->skin == 0 && $lang == 1) {
 	//light skin
 } elseif($lang === 1) {
-	$add_css[] = 'auto-dark.1713827e.min.css';
+	$add_css[] = 'auto-dark.09c8edbd.min.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei

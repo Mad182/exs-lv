@@ -22,36 +22,37 @@ if ($old_min_css) {
 }
 
 // Define template CSS bundles (concatenates source files into a single minified CSS per template)
+// Note: bs.css (Bootstrap) comes before responsive.css so custom site styles override Bootstrap defaults
 $template_bundles = [
 	'main.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main.tpl'),
 		'output_prefix' => 'main',
-		'sources' => ['responsive.css', 'bs.css'],
+		'sources' => ['bs.css', 'responsive.css'],
 		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*"\s*media="all">/i',
 	],
 	'main_3.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main_3.tpl'),
 		'output_prefix' => 'main_3',
 		'sources' => ['coding.css', 'prettify.css'],
-		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*coding[^"]*">/i',
+		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*main_3[^"]*">/i',
 	],
 	'main_7.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main_7.tpl'),
 		'output_prefix' => 'main_7',
 		'sources' => ['core.css', 'lol.css'],
-		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*lol[^"]*">/i',
+		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*main_7[^"]*">/i',
 	],
 	'main_8.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main_8.tpl'),
 		'output_prefix' => 'main_8',
 		'sources' => ['mobile.css'],
-		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*mobile[^"]*">/i',
+		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*main_8[^"]*">/i',
 	],
 	'main_9.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main_9.tpl'),
 		'output_prefix' => 'main_9',
 		'sources' => ['core.css', 'runescape.css'],
-		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*runescape[^"]*">/i',
+		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*main_9[^"]*">/i',
 	],
 ];
 
@@ -111,21 +112,30 @@ foreach ($individual_sources as $src_path) {
 		continue;
 	}
 
-	$code = file_get_contents($src_path);
-	$hash = substr(md5($code), 0, 8);
 	$base_name = pathinfo($filename, PATHINFO_FILENAME);
+	$code = file_get_contents($src_path);
+
+	// For auto-dark.css, inline manual-dark.css inside @media (prefers-color-scheme: dark)
+	// to avoid CSS @import cascade issues overriding main stylesheet rules.
+	if ($base_name === 'auto-dark') {
+		$manual_dark_path = $css_dir . '/manual-dark.css';
+		if (file_exists($manual_dark_path)) {
+			$manual_dark_code = file_get_contents($manual_dark_path);
+			$code = "@media (prefers-color-scheme: dark) {\n" . $manual_dark_code . "\n}";
+		}
+	}
+
+	$hash = substr(md5($code), 0, 8);
 	$min_filename = $base_name . '.' . $hash . '.min.css';
 	$target_path = $css_dir . '/' . $min_filename;
 
-	// If not already written as part of bundle name conflict, write it
-	if (!file_exists($target_path)) {
-		try {
-			$minified = $cssmin->run($code);
-			file_put_contents($target_path, $minified);
-			echo "Minified CSS: $filename -> $min_filename (" . strlen($code) . "B -> " . strlen($minified) . "B)\n";
-		} catch (Exception $e) {
-			echo "Error minifying $filename: " . $e->getMessage() . "\n";
-		}
+	// Write minified file
+	try {
+		$minified = $cssmin->run($code);
+		file_put_contents($target_path, $minified);
+		echo "Minified CSS: $filename -> $min_filename (" . strlen($code) . "B -> " . strlen($minified) . "B)\n";
+	} catch (Exception $e) {
+		echo "Error minifying $filename: " . $e->getMessage() . "\n";
 	}
 	$indiv_mappings[$base_name] = $min_filename;
 }
