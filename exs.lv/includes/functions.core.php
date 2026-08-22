@@ -2019,7 +2019,7 @@ function get_latest_images() {
 
 	$priv = '';
 	if (!$auth->ok) {
-		$priv = ' AND `images`.`private` = 0 ';
+		$priv = ' AND `images`.`private` = 0 AND `users`.`private` = 0 AND `users`.`deleted` = 0 ';
 	}
 
 	$latest = $db->get_results("SELECT
