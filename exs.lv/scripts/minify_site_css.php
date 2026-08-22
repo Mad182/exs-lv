@@ -22,12 +22,12 @@ if ($old_min_css) {
 }
 
 // Define template CSS bundles (concatenates source files into a single minified CSS per template)
-// Note: bs.css (Bootstrap) comes before responsive.css so custom site styles override Bootstrap defaults
+// Order matches original template inclusions (responsive.css,bs.css) to preserve typography & styles
 $template_bundles = [
 	'main.tpl' => [
 		'file' => realpath(__DIR__ . '/../tmpl/main.tpl'),
 		'output_prefix' => 'main',
-		'sources' => ['bs.css', 'responsive.css'],
+		'sources' => ['responsive.css', 'bs.css'],
 		'pattern' => '/<link\s+rel="stylesheet"\s+href="([^"]*\/css\/)[^"]*"\s*media="all">/i',
 	],
 	'main_3.tpl' => [
