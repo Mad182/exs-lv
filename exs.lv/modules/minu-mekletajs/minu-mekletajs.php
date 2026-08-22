@@ -74,13 +74,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);
 
 		if ($is_new_record) {
-			push('Uzstādīja jaunu rekordu spēlē <a href="/minu-mekletajs">Mīnu Meklētājs</a> (' . $formatted_time . ')', '/bildes/icons/games/minu-mekletajs.png', 'game-minu-mekletajs-' . $auth->id);
+			$diff_names = ['easy' => 'Iesācējs', 'medium' => 'Vidējs', 'hard' => 'Eksperts'];
+			$diff_label = isset($diff_names[$difficulty]) ? $diff_names[$difficulty] : 'Iesācējs';
+			push('Uzstādīja jaunu rekordu spēlē <a href="/minu-mekletajs">Mīnu Meklētājs</a> (' . $diff_label . ', ' . $formatted_time . ')', '/bildes/icons/games/minu-mekletajs.png', 'game-minu-mekletajs-' . $difficulty . '-' . $auth->id);
 		}
 
 		if ($difficulty == 'easy') {
-			$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game IN ('minu-mekletajs-easy', 'minu-mekletajs') AND score < '$time_sec'");
+			$rank = $db->get_var("SELECT COUNT(DISTINCT user_id) + 1 FROM gamescore WHERE game IN ('minu-mekletajs-easy', 'minu-mekletajs') AND score < '$time_sec'");
 		} else {
-			$rank = $db->get_var("SELECT COUNT(*) + 1 FROM gamescore WHERE game = '$game_key' AND score < '$time_sec'");
+			$rank = $db->get_var("SELECT COUNT(DISTINCT user_id) + 1 FROM gamescore WHERE game = '$game_key' AND score < '$time_sec'");
 		}
 
 		echo json_encode([
@@ -129,7 +131,7 @@ if ($act == 'top' || $act == 'overall-top') {
 		}
 
 		$where_time = ($act == 'top') ? " AND time >= '$today_start'" : "";
-		$topusers = $db->get_results("SELECT * FROM gamescore WHERE $where_game $where_time ORDER BY score ASC LIMIT 100");
+		$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE $where_game $where_time GROUP BY user_id ORDER BY score ASC LIMIT 100");
 
 		if ($topusers) {
 			$tpl->newBlock('top-table');
