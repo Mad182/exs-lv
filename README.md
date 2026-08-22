@@ -21,7 +21,7 @@ Pēc konteineru palaišanas projekts būs pieejams jūsu pārlūkā:
 
 * **Tīmekļa serveris (`exs-web`)**: Nginx ar PHP 8.5-FPM uz porta `8080` (`http://localhost:8080`).
 * **Composer atkarības**: Automātiska `composer install` inicializācija konteinera startēšanas laikā.
-* **Datubāze (`exs-db`)**: MariaDB 10.11 ar automātiski inicializētu shēmu (`dev-draza/schema.sql`), kategorijām (`dev-draza/cat.sql`) un parauga izstrādes datiem (`dev-draza/seed_dev.sql`).
+* **Datubāze (`exs-db`)**: MariaDB 11.8 ar automātiski inicializētu shēmu (`dev-draza/schema.sql`), kategorijām (`dev-draza/cat.sql`) un parauga izstrādes datiem (`dev-draza/seed_dev.sql`).
 * **Testa lietotāji**: Ielādēti 10 parauga lietotāji (piem., `Madars`, `Jānis`, `Pēteris`, `Artūrs`). Visu lokālo izstrādes lietotāju parole ir: `password123`.
 * **Kešatmiņa (`exs-memcached`)**: Memcached serveris kešošanai.
 
@@ -58,7 +58,7 @@ git clone git@github.com:Mad182/exs-lv.git && cd exs-lv
 git submodule update --init --recursive
 ```
 
-### 2. Repozitorija un paku uzstādīšana (Debian 12 / Ubuntu) ###
+### 2. Repozitorija un paku uzstādīšana (Debian 13 / Ubuntu) ###
 
 Pievieno sury.org PHP krātuvi un uzstādi PHP 8.5 un pārējās servisa pakotnes:
 
