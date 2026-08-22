@@ -198,7 +198,8 @@ class AuthBase {
 			$this->ok = true;
 			$_SESSION['auth_id'] = $userinfo->id;
 			$_SESSION['lastseen'] = time();
-			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+			$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+			$_SESSION['agent'] = md5($user_agent);
 			$this->error = 0;
 
 			// android|ios.exs.lv pats prot apstrādāt bloķētos profilus un
@@ -210,7 +211,7 @@ class AuthBase {
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . sanitize($this->ip) . "', `user_agent` = '" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . sanitize($this->ip) . "', `user_agent` = '" . sanitize($user_agent) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
@@ -258,15 +259,16 @@ class AuthBase {
 	function update_counter() {
 		global $db, $m;
 
+		$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 		if (
-			strpos($_SERVER['HTTP_USER_AGENT'], "Googlebot") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "bingbot") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "YandexBot") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "YandexImages") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "Mail.RU_Bot") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "Mediapartners") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "SemrushBot") !== false ||
-			strpos($_SERVER['HTTP_USER_AGENT'], "AhrefsBot") !== false
+			strpos($user_agent, "Googlebot") !== false ||
+			strpos($user_agent, "bingbot") !== false ||
+			strpos($user_agent, "YandexBot") !== false ||
+			strpos($user_agent, "YandexImages") !== false ||
+			strpos($user_agent, "Mail.RU_Bot") !== false ||
+			strpos($user_agent, "Mediapartners") !== false ||
+			strpos($user_agent, "SemrushBot") !== false ||
+			strpos($user_agent, "AhrefsBot") !== false
 		) {
 			return false;
 		}

@@ -5,12 +5,12 @@
  */
 if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])) {
 
-	$inprofile->show_code = (bool) $_POST['edit-show_code'];
-	$inprofile->show_lol = (bool) $_POST['edit-show_lol'];
-	$inprofile->show_rs = (bool) $_POST['edit-show_rs'];
-	$inprofile->showsig = (bool) $_POST['edit-enablesig'];
-	$inprofile->skin = (int) $_POST['edit-skin'];
-	$inprofile->pm_notify_email = (int) $_POST['edit-pm_notify_email'];
+	$inprofile->show_code = !empty($_POST['edit-show_code']) ? 1 : 0;
+	$inprofile->show_lol = !empty($_POST['edit-show_lol']) ? 1 : 0;
+	$inprofile->show_rs = !empty($_POST['edit-show_rs']) ? 1 : 0;
+	$inprofile->showsig = !empty($_POST['edit-enablesig']) ? 1 : 0;
+	$inprofile->skin = isset($_POST['edit-skin']) ? (int) $_POST['edit-skin'] : 0;
+	$inprofile->pm_notify_email = isset($_POST['edit-pm_notify_email']) ? (int) $_POST['edit-pm_notify_email'] : 0;
 
 	$db->update('users', $auth->id, [
 		'show_code' => $inprofile->show_code,

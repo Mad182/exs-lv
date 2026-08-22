@@ -63,18 +63,19 @@ if (empty($_GET['viewcat'])) {
 }
 
 //izslēdz sesijas botiem, paātrina ielādi un nepiemēslo ar nevajadzīgiem sesiju failiem
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 if (
-	strpos($_SERVER['HTTP_USER_AGENT'], "Googlebot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "bingbot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "YandexBot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "Mail.RU_Bot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "YandexImages") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "Mediapartners") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "SemrushBot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "CCBot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "DotBot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "ClaudeBot") === false &&
-	strpos($_SERVER['HTTP_USER_AGENT'], "AhrefsBot") === false
+	strpos($user_agent, "Googlebot") === false &&
+	strpos($user_agent, "bingbot") === false &&
+	strpos($user_agent, "YandexBot") === false &&
+	strpos($user_agent, "Mail.RU_Bot") === false &&
+	strpos($user_agent, "YandexImages") === false &&
+	strpos($user_agent, "Mediapartners") === false &&
+	strpos($user_agent, "SemrushBot") === false &&
+	strpos($user_agent, "CCBot") === false &&
+	strpos($user_agent, "DotBot") === false &&
+	strpos($user_agent, "ClaudeBot") === false &&
+	strpos($user_agent, "AhrefsBot") === false
 ) {
 	session_start();
 }
