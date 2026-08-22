@@ -28,7 +28,7 @@ $(document).ready(function () {
 	var sessionToken = '';
 
 	function initSession() {
-		$.getJSON('/minu-mekletajs/?action=init_token', function (res) {
+		$.getJSON('/minu-mekletajs?action=init_token', function (res) {
 			if (res && res.success) {
 				sessionToken = res.token;
 			}
@@ -358,7 +358,7 @@ $(document).ready(function () {
 	function submitScore() {
 		if (timerSeconds <= 0 || !sessionToken) return;
 
-		$.post('/minu-mekletajs/?action=push', {
+		$.post('/minu-mekletajs?action=push', {
 			token: sessionToken,
 			time_sec: timerSeconds,
 			difficulty: currentDiff
