@@ -448,8 +448,7 @@ foreach ($report_types as $report_type) {
 		}
 
 		// saraksts ar sūdzībām
-		$qr = 'query_reports_' . $report_type;
-		foreach ($qr as $report) {
+		foreach ($$qr as $report) {
 
 			$report->report_created_at = display_time($report->report_created_at);
 

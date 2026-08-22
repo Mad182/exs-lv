@@ -409,19 +409,22 @@ if ($auth->skin == 1 && $lang == 1) {
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
 if (im_mod()) {
-	$new_reports_count = $db->get_var("
-		SELECT count(*) FROM `reports`
-		WHERE `archived` = 0 AND `site_id` = $lang AND `removed` = 0
+	$new_reports_count = (int) $db->get_var("
+		SELECT (
+			(SELECT count(*) FROM `reports` JOIN `miniblog` ON `reports`.`entry_id` = `miniblog`.`id` WHERE `reports`.`type` = 0 AND `reports`.`archived` = 0 AND `reports`.`removed` = 0 AND `reports`.`site_id` = $lang) +
+			(SELECT count(*) FROM `reports` JOIN `comments` ON `reports`.`entry_id` = `comments`.`id` WHERE `reports`.`type` = 1 AND `reports`.`archived` = 0 AND `reports`.`removed` = 0 AND `reports`.`site_id` = $lang) +
+			(SELECT count(*) FROM `reports` JOIN `galcom` ON `reports`.`entry_id` = `galcom`.`id` WHERE `reports`.`type` = 2 AND `reports`.`archived` = 0 AND `reports`.`removed` = 0 AND `reports`.`site_id` = $lang)
+		)
 	");
-	$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
+	$new_reports_count = $new_reports_count ? ' (<span class="r">' . $new_reports_count . '</span>)' : '';
 
-	$new_polls_count = $db->get_var("
+	$new_polls_count = (int) $db->get_var("
 		SELECT count(*) FROM `poll`
 		WHERE `approved` = 0 AND `lang` = '$lang'
 	");
 	$new_polls_count_str = $new_polls_count ? ' (<span class="r">' . $new_polls_count . '</span>)' : '';
 } else {
-	$new_reports_count = 0;
+	$new_reports_count = '';
 	$new_polls_count_str = '';
 }
 

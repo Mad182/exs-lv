@@ -184,6 +184,11 @@ $db->query("DELETE FROM `clans_members` WHERE user not in(SELECT id FROM users W
 $db->query("DELETE FROM `clans_members` WHERE clan not in(SELECT id FROM clans)");
 $db->query("DELETE FROM `miniblog` WHERE `groupid` > 0 and `groupid` NOT IN(select id from clans)");
 
+// reports cleanup
+$db->query("DELETE FROM `reports` WHERE `type` = 0 AND `entry_id` NOT IN(SELECT id FROM miniblog)");
+$db->query("DELETE FROM `reports` WHERE `type` = 1 AND `entry_id` NOT IN(SELECT id FROM comments)");
+$db->query("DELETE FROM `reports` WHERE `type` = 2 AND `entry_id` NOT IN(SELECT id FROM galcom)");
+
 //junk
 $db->query("DELETE FROM `junk` WHERE `approved_by` NOT IN(SELECT id FROM users WHERE deleted =0)");
 $db->query("DELETE FROM `junk` WHERE `author` != 0 AND `author` NOT IN(SELECT id FROM users WHERE deleted =0)");
