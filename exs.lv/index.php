@@ -126,6 +126,8 @@ if (isset($_POST['niks']) && isset($_POST['parole']) && isset($_POST['xsrf_token
 
 	if ($auth->error === 1) {
 		set_flash('Nepareizs niks un/vai parole! Mēģini vēlreiz, vai izmanto "<a href="/forgot-password">Aizmirsu paroli</a>".', 'error');
+	} else {
+		redirect($_SERVER['REQUEST_URI']);
 	}
 }
 

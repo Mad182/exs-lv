@@ -37,9 +37,7 @@ if (!$is_local) {
 		ini_set('session.use_only_cookies', 1);
 	}
 } else {
-	if (isset($_SERVER['HTTP_HOST']) && str_contains($_SERVER['HTTP_HOST'], '.local')) {
-		ini_set('session.cookie_domain', '.exs.local');
-	}
+	// Local dev mode: do not restrict cookie domain so session cookies work across localhost/127.0.0.1/exs.local
 }
 
 require(CORE_PATH . '/includes/functions.exs.php');
