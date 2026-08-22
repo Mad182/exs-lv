@@ -25,7 +25,7 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/main.3d4c1d1e.min.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/main.b51bb7ed.min.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
