@@ -4,9 +4,6 @@
  * Lietotāja autorizācija un globāls aktīvā lietotāja objekts ($auth)
  *
  * paroles tiek glabātas izmantojot bcrypt
- */
-require(LIB_PATH . '/bcrypt/lib/password.php');
-
 /**
  * Google 2FA lib
  */
