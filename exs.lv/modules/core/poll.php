@@ -29,7 +29,7 @@ if (isset($_POST['vote']) && isset($_POST['questions'])) {
 
 
 // atlasa informāciju par aktīvo aptauju
-$poll = $db->get_row("SELECT * FROM `poll` WHERE `group` = '0' AND `lang` = '$lang' ORDER BY `id` DESC LIMIT 1");
+$poll = $db->get_row("SELECT * FROM `poll` WHERE `group` = '0' AND `lang` = '$lang' AND `approved` = '1' ORDER BY `id` DESC LIMIT 1");
 $title = 'Nav aptaujas!';
 
 if ($poll) {

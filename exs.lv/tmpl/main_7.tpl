@@ -152,7 +152,7 @@
 							<ul>
 								<li{cat-sel-125}><a href="/banned">Liegumi</a></li>
 								<li{cat-sel-1827}><a href="/reports">Sūdzības{reports-count}</a></li>
-								<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+								<li{cat-sel-255}><a href="/polladmin">Aptaujas{new-polls-count}</a></li>
 								<li{cat-sel-199}><a href="/log">Darbību vēsture</a></li>
 							</ul>
 						</li>

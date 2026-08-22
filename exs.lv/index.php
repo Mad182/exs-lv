@@ -414,8 +414,15 @@ if (im_mod()) {
 		WHERE `archived` = 0 AND `site_id` = $lang AND `removed` = 0
 	");
 	$new_reports_count = ' (<span class="r">' . $new_reports_count . '</span>)';
+
+	$new_polls_count = $db->get_var("
+		SELECT count(*) FROM `poll`
+		WHERE `approved` = 0 AND `lang` = '$lang'
+	");
+	$new_polls_count_str = $new_polls_count ? ' (<span class="r">' . $new_polls_count . '</span>)' : '';
 } else {
 	$new_reports_count = 0;
+	$new_polls_count_str = '';
 }
 
 //assigno visur izmantotas vērtības
@@ -434,6 +441,7 @@ $tpl->assignGlobal([
 	'new-messages-count' => (int) $new_msg_string,
 	'new-approve' => $new_ap_string,
 	'reports-count' => $new_reports_count,
+	'new-polls-count' => $new_polls_count_str,
 	'layout-options' => $tpl_options,
 	'currentuser-id' => $auth->id,
 	'current-date' => $today_date,

@@ -176,7 +176,7 @@ $db->query("DELETE FROM `clans_ver` WHERE `group_id` NOT IN (select id from clan
 $db->query("DELETE FROM `banned` WHERE `ip` LIKE '--' and `user_id` not in(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `banned` WHERE `user_id` not in(SELECT id FROM users WHERE deleted = 0) AND `time` < '" . strtotime('-1 month') . "' ");
 $db->query("DELETE FROM `banned` WHERE `author` NOT IN(SELECT id FROM users)");
-$db->query("DELETE FROM `poll` WHERE `group` = 0 and topic not in(select id from pages)");
+$db->query("DELETE FROM `poll` WHERE `group` = 0 AND `approved` = 1 AND topic NOT IN (SELECT id FROM pages)");
 $db->query("DELETE FROM `poll` WHERE `group` > 0 and `group` not in(select id from clans)");
 $db->query("DELETE FROM `questions` WHERE pid not in(select id from poll)");
 $db->query("DELETE FROM `responses` WHERE qid not in(select id from questions);");

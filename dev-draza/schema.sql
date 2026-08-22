@@ -1342,8 +1342,12 @@ CREATE TABLE `poll` (
   `topic` mediumint(9) NOT NULL DEFAULT 0,
   `group` mediumint(9) NOT NULL DEFAULT 0,
   `lang` smallint(6) NOT NULL DEFAULT 1,
+  `author` mediumint(9) NOT NULL DEFAULT 0,
+  `approved` tinyint(1) NOT NULL DEFAULT 1,
+  `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `group` (`group`)
+  KEY `group` (`group`),
+  KEY `approved` (`approved`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1289 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

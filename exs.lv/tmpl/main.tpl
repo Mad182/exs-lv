@@ -193,7 +193,7 @@
 							<li{cat-sel-1827}><a href="/reports">Sūdzības{reports-count}</a></li>
 								<li{cat-sel-1132}><a href="/findby">Profilu pārvaldība</a></li>
 									<li{cat-sel-199}><a href="/log">Darbību vēsture</a></li>
-										<li{cat-sel-255}><a href="/polladmin">Aptaujas</a></li>
+										<li{cat-sel-255}><a href="/polladmin">Aptaujas{new-polls-count}</a></li>
 											<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
 												<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
 													<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>

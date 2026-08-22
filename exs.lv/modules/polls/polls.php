@@ -1,6 +1,6 @@
 <?php
 
-$polls = $db->get_results("SELECT * FROM poll WHERE `group` = '0' AND `lang` = '$lang' ORDER BY id DESC LIMIT 45");
+$polls = $db->get_results("SELECT * FROM poll WHERE `group` = '0' AND `lang` = '$lang' AND `approved` = '1' ORDER BY id DESC LIMIT 45");
 
 foreach ($polls as $poll) {
 

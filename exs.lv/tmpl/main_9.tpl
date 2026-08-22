@@ -175,7 +175,7 @@
                         <li><a href="/crows">Atbrīvotās vārnas</a></li>
                         <li><a href="/reports">Sūdzības {reports-count}</a></li>
                         <li><a href="/log">Darbību vēsture</a></li>
-                        <li><a href="/polladmin">Aptaujas</a></li>
+                        <li><a href="/polladmin">Aptaujas{new-polls-count}</a></li>
                         <li>&nbsp;</li>
                     </ul>
                 </li>
