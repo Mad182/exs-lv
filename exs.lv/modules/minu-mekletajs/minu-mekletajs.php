@@ -66,9 +66,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	// Store time_sec directly into gamescore per difficulty
 	$game_key = 'minu-mekletajs-' . $difficulty;
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', '$game_key', '$time_sec', '" . time() . "')");
-	$insert_id = $db->insert_id();
+	$insert_id = $db->insert_id;
 
-	if ($insert_id) {
+	if ($insert_id || $db->affected_rows > 0) {
 		$mins = floor($time_sec / 60);
 		$s = $time_sec % 60;
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);

@@ -58,9 +58,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 
 	// Insert into gamescore table
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', '2048', '$score', '" . time() . "')");
-	$insert_id = $db->insert_id();
+	$insert_id = $db->insert_id;
 
-	if ($insert_id) {
+	if ($insert_id || $db->affected_rows > 0) {
 		if ($is_new_record) {
 			push('Uzstādīja jaunu rekordu spēlē <a href="/2048-spele">2048</a> (' . number_format($score, 0, '', ' ') . ' punkti)', '/bildes/icons/games/2048.png', 'game-2048-' . $auth->id);
 		}
