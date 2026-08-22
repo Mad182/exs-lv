@@ -5328,3 +5328,177 @@ p.images-5 img {
 	border: 1px solid rgba(255, 255, 255, 0.15);
 	font-family: sans-serif;
 }
+
+/* ==========================================================================
+   Poll Module & Poll Admin Styles
+   ========================================================================== */
+
+#poll-questions {
+	list-style: none;
+	margin: 6px 0 10px;
+	padding: 0;
+}
+
+#poll-questions li {
+	margin: 4px 0;
+	padding: 0;
+}
+
+#poll-questions li label {
+	display: flex;
+	align-items: center;
+	padding: 6px 10px;
+	border-radius: 6px;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	cursor: pointer;
+	font-size: 12px;
+	color: #334155;
+	transition: all 0.15s ease;
+}
+
+#poll-questions li label:hover {
+	background: #f0f9ff;
+	border-color: #38bdf8;
+	color: #0284c7;
+}
+
+#poll-questions li input[type="radio"] {
+	margin-right: 8px;
+	accent-color: #2090cc;
+}
+
+.poll-form-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	padding: 24px;
+	margin: 10px 0 20px;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.poll-form-header {
+	margin-bottom: 20px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.poll-form-header h2 {
+	margin: 0 0 6px 0;
+	font-size: 18px;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.poll-form-header p {
+	margin: 0;
+	font-size: 13px;
+	color: #64748b;
+}
+
+.poll-admin-form .poll-field-group {
+	margin-bottom: 20px;
+}
+
+.poll-admin-form .poll-label {
+	display: block;
+	font-size: 14px;
+	font-weight: 600;
+	color: #334155;
+	margin-bottom: 6px;
+}
+
+.poll-admin-form .poll-label .required {
+	color: #ef4444;
+}
+
+.poll-admin-form .poll-sublabel {
+	font-size: 12px;
+	font-weight: 400;
+	color: #64748b;
+	margin-left: 4px;
+}
+
+.poll-admin-form .poll-input {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px 14px;
+	font-size: 13px;
+	color: #1e293b;
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	outline: none;
+	transition: all 0.2s ease;
+}
+
+.poll-admin-form .poll-input:focus {
+	background: #ffffff;
+	border-color: #2090cc;
+	box-shadow: 0 0 0 3px rgba(32, 144, 204, 0.15);
+}
+
+.poll-admin-form .title-input {
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.poll-answers-section {
+	margin-bottom: 24px;
+}
+
+.poll-answers-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 12px;
+	margin-top: 10px;
+}
+
+.poll-answer-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.poll-answer-item .answer-num {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	min-width: 28px;
+	background: #e0f2fe;
+	color: #0369a1;
+	font-weight: 700;
+	font-size: 12px;
+	border-radius: 50%;
+}
+
+.poll-form-actions {
+	display: flex;
+	justify-content: flex-end;
+	padding-top: 12px;
+	border-top: 1px solid #f1f5f9;
+}
+
+.btn-submit-poll {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 22px;
+	font-size: 14px;
+	font-weight: 600;
+	border-radius: 8px;
+	background: #2090cc;
+	color: #ffffff;
+	border: none;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(32, 144, 204, 0.25);
+	transition: all 0.18s ease;
+}
+
+.btn-submit-poll:hover {
+	background: #1b7bb0;
+	box-shadow: 0 4px 12px rgba(32, 144, 204, 0.35);
+	transform: translateY(-1px);
+}

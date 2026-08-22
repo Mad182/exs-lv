@@ -26,59 +26,63 @@
 	<!-- END BLOCK : polls_admin-success-->
 
 	<!-- START BLOCK : polls_admin-add-->
-	<form class="form" action="/polladmin" method="post">
-		<fieldset>
-			<p>
-				<label for="new-poll-q"><strong>Aptaujas jautājums</strong></label><br>
-				<input type="text" class="title" name="new-poll-q" id="new-poll-q" style="width: 100%; max-width: 500px;" required />
-			</p>
-			<p><em>Ievadiet vismaz 2 atbilžu variantus:</em></p>
-			<p>
-				<label for="new-poll-a-1">1. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-1" required />
-			</p>
-			<p>
-				<label for="new-poll-a-2">2. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-2" required />
-			</p>
-			<p>
-				<label for="new-poll-a-3">3. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-3" />
-			</p>
-			<p>
-				<label for="new-poll-a-4">4. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-4" />
-			</p>
-			<p>
-				<label for="new-poll-a-5">5. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-5" />
-			</p>
-			<p>
-				<label for="new-poll-a-6">6. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-6" />
-			</p>
-			<p>
-				<label for="new-poll-a-7">7. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-7" />
-			</p>
-			<p>
-				<label for="new-poll-a-8">8. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-8" />
-			</p>
-			<p>
-				<label for="new-poll-a-9">9. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-9" />
-			</p>
-			<p>
-				<label for="new-poll-a-10">10. atbilde</label><br>
-				<input type="text" class="text" name="new-poll-a[]" id="new-poll-a-10" />
-			</p>
+	<div class="poll-form-card">
+		<div class="poll-form-header">
+			<h2>Izveidot jaunu aptauju</h2>
+			<p>Iesniedz savu aptaujas jautājumu un atbilžu variantus. Pēc moderatora apstiprināšanas tā tiks publicēta portālā!</p>
+		</div>
 
-			<p>
-				<input class="button primary" type="submit" value="Iesniegt aptauju" />
-			</p>
-		</fieldset>
-	</form>
+		<form action="/polladmin" method="post" class="poll-admin-form">
+			<div class="poll-field-group">
+				<label for="new-poll-q" class="poll-label">Aptaujas jautājums <span class="required">*</span></label>
+				<input type="text" class="poll-input title-input" name="new-poll-q" id="new-poll-q" placeholder="Piemēram: Kura ir tava mīļākā spēle?" required />
+			</div>
+
+			<div class="poll-answers-section">
+				<label class="poll-label">Atbilžu varianti <span class="poll-sublabel">(ievasdiet vismaz 2 atbildes)</span></label>
+				<div class="poll-answers-grid">
+					<div class="poll-answer-item">
+						<span class="answer-num">1</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-1" placeholder="1. atbilde" required />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">2</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-2" placeholder="2. atbilde" required />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">3</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-3" placeholder="3. atbilde (neobligāti)" />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">4</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-4" placeholder="4. atbilde (neobligāti)" />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">5</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-5" placeholder="5. atbilde (neobligāti)" />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">6</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-6" placeholder="6. atbilde (neobligāti)" />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">7</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-7" placeholder="7. atbilde (neobligāti)" />
+					</div>
+					<div class="poll-answer-item">
+						<span class="answer-num">8</span>
+						<input type="text" class="poll-input" name="new-poll-a[]" id="new-poll-a-8" placeholder="8. atbilde (neobligāti)" />
+					</div>
+				</div>
+			</div>
+
+			<div class="poll-form-actions">
+				<button class="button primary btn-submit-poll" type="submit">
+					Iesniegt aptauju &rarr;
+				</button>
+			</div>
+		</form>
+	</div>
 	<!-- END BLOCK : polls_admin-add-->
 
 	<!-- START BLOCK : polls_admin-pending-->

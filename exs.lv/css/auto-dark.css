@@ -918,5 +918,58 @@
 		color: #cbd5e1;
 	}
 
+	/* Poll Creation Form Dark Mode */
+	.poll-form-card {
+		background: #1e293b;
+		border-color: #334155;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+	}
+
+	.poll-form-header {
+		border-bottom-color: #334155;
+	}
+
+	.poll-form-header h2 {
+		color: #f8fafc;
+	}
+
+	.poll-form-header p,
+	.poll-admin-form .poll-sublabel {
+		color: #94a3b8;
+	}
+
+	.poll-admin-form .poll-label {
+		color: #cbd5e1;
+	}
+
+	.poll-admin-form .poll-input {
+		background: #0f172a;
+		border-color: #334155;
+		color: #f1f5f9;
+	}
+
+	.poll-admin-form .poll-input:focus {
+		background: #1e293b;
+		border-color: #38bdf8;
+		box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+	}
+
+	.poll-answer-item .answer-num {
+		background: #0369a1;
+		color: #e0f2fe;
+	}
+
+	#poll-questions li label {
+		background: #1e293b;
+		border-color: #334155;
+		color: #cbd5e1;
+	}
+
+	#poll-questions li label:hover {
+		background: #0f172a;
+		border-color: #38bdf8;
+		color: #38bdf8;
+	}
+
 }
 
