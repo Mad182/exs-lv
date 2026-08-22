@@ -237,7 +237,11 @@ if (!$category->mods_only || im_mod()) {
 					$closed = '_locked';
 				}
 				$read = 'read';
-				if ($auth->ok && !in_array($auth->id, unserialize($article->readby))) {
+				$readby = !empty($article->readby) ? @unserialize($article->readby) : [];
+				if (!is_array($readby)) {
+					$readby = [];
+				}
+				if ($auth->ok && !in_array($auth->id, $readby)) {
 					$read = 'unread';
 				}
 				$timg = $type . $read . $closed . '.gif';

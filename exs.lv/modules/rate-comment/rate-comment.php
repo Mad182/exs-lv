@@ -50,7 +50,10 @@ if ($auth->ok) {
 		$check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
 
 		if (!empty($comment->vote_users)) {
-			$voters = unserialize($comment->vote_users);
+			$voters = @unserialize($comment->vote_users);
+			if (!is_array($voters)) {
+				$voters = [];
+			}
 		} else {
 			$voters = [];
 		}

@@ -205,7 +205,10 @@ if ($article && ($auth->ok === true || !$article->private)) {
 		if (empty($article->readby)) {
 			$db->query("UPDATE pages SET readby = ('" . serialize([$auth->id]) . "') WHERE id = '$article->id'");
 		} else {
-			$readby = unserialize($article->readby);
+			$readby = @unserialize($article->readby);
+			if (!is_array($readby)) {
+				$readby = [];
+			}
 			if (!in_array($auth->id, $readby)) {
 				$readby[] = $auth->id;
 				$db->query("UPDATE pages SET readby = ('" . serialize($readby) . "') WHERE id = '$article->id'");
