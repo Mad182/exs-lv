@@ -25,7 +25,7 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/responsive.css,bs.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/main.312fa7af.min.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -59,7 +59,7 @@
 			menubar: false,
 			statusbar: false,
 			toolbar_items_size: 'small',
-			content_css: "{static-server}/css/style.css",
+			content_css: "{static-server}/css/style.e1dc9197.min.css",
 			style_formats: [
 				{ title: 'Sarkans', inline: 'span', classes: 'red' },
 				{ title: 'Admins', inline: 'span', classes: 'admins' },
@@ -87,7 +87,7 @@
 			menubar: false,
 			statusbar: false,
 			toolbar_items_size: 'small',
-			content_css: "{static-server}/css/style.css"
+			content_css: "{static-server}/css/style.e1dc9197.min.css"
 
 		});</script>
 	<!-- END BLOCK : tinymce-simple-->

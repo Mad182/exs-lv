@@ -1,7 +1,7 @@
 <?php
 
 //load css
-$add_css[] = 'gallery.css';
+$add_css[] = 'gallery.21c1846c.min.css';
 
 $user_id = isset($_GET['var1']) ? intval($_GET['var1']) : 0;
 $inprofile = get_user($user_id);

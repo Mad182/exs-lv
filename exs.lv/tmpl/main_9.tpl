@@ -20,7 +20,7 @@
 	<!-- END BLOCK : canonical-->
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/core.css,runescape.css">
+    <link rel="stylesheet" href="{static-server}/css/main_9.c870b226.min.css">
     <!-- START BLOCK : additional-css-->
     <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->
@@ -48,7 +48,7 @@
             menubar: false,
             statusbar: false,
             toolbar_items_size: 'small',
-            content_css: "{static-server}/css/style.css",
+            content_css: "{static-server}/css/style.e1dc9197.min.css",
             style_formats: [
                 {title: 'Sarkans', inline: 'span', classes: 'red'},
                 {title: 'Admins', inline: 'span', classes: 'admins'},
@@ -79,7 +79,7 @@
             menubar: false,
             statusbar: false,
             toolbar_items_size: 'small',
-            content_css: "{static-server}/css/style.css"
+            content_css: "{static-server}/css/style.e1dc9197.min.css"
 
         });</script>
     <!-- END BLOCK : tinymce-simple-->

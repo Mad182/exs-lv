@@ -28,7 +28,7 @@ if (isset($_GET['_']) || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower
 }
 
 if (!$ajax) {
-	$add_css[] = 'hangman.css';
+	$add_css[] = 'hangman.ef4ff447.min.css';
 	$tpl->newBlock('hm-gbody-top');
 	$tpl->assign([
 		'cat-id' => $category->id,

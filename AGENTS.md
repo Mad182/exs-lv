@@ -44,13 +44,14 @@ exs-lv/
 ### Deployment Workflow
 When delivering fixes, new features, or new games, execute the following steps:
 
-1. **Verify Code & Minify Game JS Locally:**
-   Run PHP syntax check on modified/new PHP files and minify game assets:
+1. **Verify Code & Minify Assets Locally:**
+   Run PHP syntax check on modified/new PHP files and minify game assets & site stylesheets:
    ```bash
    php -l exs.lv/modules/<module>/<module>.php
    php exs.lv/scripts/minify_games.php
+   php exs.lv/scripts/minify_site_css.php
    ```
-   *(Note: Local `pre-commit` git hook and production `post-merge` git hook also run `php exs.lv/scripts/minify_games.php` automatically on commit & deployment).*
+   *(Note: Local `pre-commit` git hook and production `post-merge` git hook also run `php exs.lv/scripts/minify_games.php` and `php exs.lv/scripts/minify_site_css.php` automatically on commit & deployment).*
 
 2. **Commit & Push to Remote:**
    ```bash

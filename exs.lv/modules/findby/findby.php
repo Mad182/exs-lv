@@ -8,7 +8,7 @@
  * 	Moduļa adrese: /findby
  */
 
-$add_css[] = 'grouped-profiles.css';
+$add_css[] = 'grouped-profiles.3a5bf74b.min.css';
  
 // ne-moderatorus sūtām prom
 if (!im_mod()) {

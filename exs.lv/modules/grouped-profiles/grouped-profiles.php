@@ -8,7 +8,7 @@
  */
 
 $robotstag[] = 'noindex';
-$add_css[] = 'grouped-profiles.css';
+$add_css[] = 'grouped-profiles.3a5bf74b.min.css';
 
 // šāda mainīgā eksistenci pārbaudīs failos, kas tiek iekļauti šajā failā
 $sub_include = true;

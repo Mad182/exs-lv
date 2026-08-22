@@ -1,7 +1,7 @@
 <?php
 
 //load css
-$add_css[] = 'wall.css';
+$add_css[] = 'wall.99174903.min.css';
 
 /**
  * Sākumlapa

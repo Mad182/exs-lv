@@ -1,7 +1,7 @@
 <?php
 
 //load css
-$add_css[] = 'steam.css';
+$add_css[] = 'steam.f2e9da32.min.css';
 
 $grouped = [];
 

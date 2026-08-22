@@ -1,3 +1,4 @@
 #!/bin/sh
 php exs.lv/scripts/minify_games.php
-git add exs.lv/modules/*/*.min.js exs.lv/modules/*/*.min.css exs.lv/modules/*/*.tpl 2>/dev/null
+php exs.lv/scripts/minify_site_css.php
+git add exs.lv/modules/*/*.min.js exs.lv/modules/*/*.min.css exs.lv/modules/*/*.tpl exs.lv/css/*.min.css exs.lv/tmpl/*.tpl exs.lv/index.php exs.lv/modules/*/*.php 2>/dev/null

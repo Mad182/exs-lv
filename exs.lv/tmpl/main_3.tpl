@@ -19,7 +19,7 @@
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
 	<script>var mb_refresh_limit = {mb-refresh-limit}, current_user = {currentuser-id}, new_msg_count = {new-messages-count}, c_url = "{page-url}";</script>
-	<link rel="stylesheet" href="/css/coding.css,prettify.css">
+	<link rel="stylesheet" href="/css/main_3.89483349.min.css">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -48,7 +48,7 @@
 			menubar: false,
 			statusbar: false,
 			toolbar_items_size: 'small',
-			content_css: "/css/style.css",
+			content_css: "/css/style.e1dc9197.min.css",
 			style_formats: [
 				{ title: 'Sarkans', inline: 'span', classes: 'red' },
 				{ title: 'Admins', inline: 'span', classes: 'admins' },
@@ -76,7 +76,7 @@
 			menubar: false,
 			statusbar: false,
 			toolbar_items_size: 'small',
-			content_css: "/css/style.css"
+			content_css: "/css/style.e1dc9197.min.css"
 
 		});</script>
 	<!-- END BLOCK : tinymce-simple-->
