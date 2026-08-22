@@ -20,7 +20,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 	$end = $comments_per_page;
 
-	if (isset($_GET['var2']) && $_GET['var2'] == 'com_page') {
+	if (isset($_GET['var2']) && $_GET['var2'] == 'com_page' && isset($_GET['var3'])) {
 		$skip = (int) $_GET['var3'];
 	} else {
 		$skip = 0;

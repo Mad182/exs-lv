@@ -367,21 +367,21 @@ function embed_widgets($txt, $wide = 0) {
 	}
 
 	// deezer track or album, or even playlist
-	if ($auth->ok && strpos($txt, 'deezer') !== false && $embed) {
+	if (!empty($auth) && $auth->ok && strpos($txt, 'deezer') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a[^>]*?>)https?://(www\.)?deezer\.com/(track|album|playlist)/([0-9]+)(</a>)?#im", 'embed_deezer', $txt
 		);
 	}
 
 	// vine videos
-	if ($auth->ok && strpos($txt, 'vine') !== false && $embed) {
+	if (!empty($auth) && $auth->ok && strpos($txt, 'vine') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vine', $txt
 		);
 	}
 
 	// soundcloud tracks, users, and playlists
-	if (($auth->ok && strpos($txt, 'soundcloud') !== false ||
+	if (!empty($auth) && $auth->ok && (strpos($txt, 'soundcloud') !== false ||
 			strpos($txt, 'snd.sc') !== false) && $embed) {
 		// tā kā soundcloud saites mēdz būt ļoti garas, htmlpurifier tās var
 		// saīsināt, tāpēc īstā saite jānolasa no "href" atribūta;
@@ -398,7 +398,7 @@ function embed_widgets($txt, $wide = 0) {
 	}
 
 	// vimeo video
-	if ($auth->ok && strpos($txt, 'vimeo') !== false && $embed) {
+	if (!empty($auth) && $auth->ok && strpos($txt, 'vimeo') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vimeo\.com\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vimeo', $txt
 		);

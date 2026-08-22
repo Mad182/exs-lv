@@ -348,14 +348,23 @@ class TemplatePower extends TemplatePowerParser {
 	}
 
 	public function newBlock($blockname) {
-		$parent = &$this->content[$this->parent[$blockname] . '_' . $this->index[$this->parent[$blockname]]];
+		if (!isset($this->parent[$blockname]) || !isset($this->index[$this->parent[$blockname]])) {
+			return;
+		}
 
-        if(is_array($parent)) {
-		    $lastitem = count($parent);
-		    $lastitem > 1 ? $lastitem-- : $lastitem = 0;
-        } else {
-            $lastitem = 0;
-        }
+		$parent_key = $this->parent[$blockname] . '_' . $this->index[$this->parent[$blockname]];
+		$parent = &$this->content[$parent_key];
+
+		if (is_array($parent)) {
+			$lastitem = count($parent);
+			$lastitem > 1 ? $lastitem-- : $lastitem = 0;
+		} else {
+			$lastitem = 0;
+		}
+
+		if (!isset($this->index[$blockname])) {
+			$this->index[$blockname] = 0;
+		}
 
 		$ind_blockname = $blockname . '_' . $this->index[$blockname];
 
@@ -368,7 +377,13 @@ class TemplatePower extends TemplatePowerParser {
 				$this->content[$ind_blockname] = [];
 			}
 
-			$parent[$lastitem]["_B:$blockname"] = $ind_blockname;
+			if (is_array($parent) && isset($parent[$lastitem])) {
+				$parent[$lastitem]["_B:$blockname"] = $ind_blockname;
+			}
+		}
+
+		if (!isset($this->content[$ind_blockname])) {
+			$this->content[$ind_blockname] = [];
 		}
 
 		$blocksize = count($this->content[$ind_blockname]);
