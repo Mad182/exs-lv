@@ -141,7 +141,7 @@ $(document).ready(function () {
 
 	// Fetch Session Token and Community Avatars
 	function initSessionToken() {
-		$.getJSON('/runner/?action=init_token', function (res) {
+		$.getJSON('/runner?action=init_token', function (res) {
 			if (res && res.success) {
 				sessionToken = res.token;
 				if (res.avatars) {
@@ -951,7 +951,7 @@ $(document).ready(function () {
 		// Submit score via AJAX
 		var durationSec = Math.max(1, Math.floor((Date.now() - startTime) / 1000));
 		if (sessionToken && finalScore > 0) {
-			$.post('/runner/?action=push', {
+			$.post('/runner?action=push', {
 				token: sessionToken,
 				score: finalScore,
 				coins: coinsCollected,

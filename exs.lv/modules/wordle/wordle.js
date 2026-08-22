@@ -36,7 +36,7 @@ $(document).ready(function () {
 	});
 
 	function initSession(callback) {
-		$.getJSON('/wordle/?action=init_token', function (res) {
+		$.getJSON('/wordle?action=init_token', function (res) {
 			if (res && res.success) {
 				sessionToken = res.token;
 				if (res.daily_completed) {
@@ -318,7 +318,7 @@ $(document).ready(function () {
 	function submitScore(guessesCount) {
 		if (timerSeconds <= 0 || !sessionToken) return;
 
-		$.post('/wordle/?action=push', {
+		$.post('/wordle?action=push', {
 			token: sessionToken,
 			time_sec: timerSeconds,
 			guesses: guessesCount,

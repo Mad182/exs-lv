@@ -19,7 +19,7 @@ $(document).ready(function () {
 	var sessionToken = '';
 
 	function initSession() {
-		$.getJSON('/sudoku/?action=init_token', function (res) {
+		$.getJSON('/sudoku?action=init_token', function (res) {
 			if (res && res.success) {
 				sessionToken = res.token;
 			}
@@ -359,7 +359,7 @@ $(document).ready(function () {
 	function submitScore() {
 		if (timerSeconds <= 0 || !sessionToken) return;
 
-		$.post('/sudoku/?action=push', {
+		$.post('/sudoku?action=push', {
 			token: sessionToken,
 			time_sec: timerSeconds,
 			difficulty: currentDiff
