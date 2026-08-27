@@ -710,7 +710,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$page_title = 'Saglabātās versijas &quot;' . $article->title . '&quot; | ' . $category->title;
 
-			$records = $db->get_results("SELECT * FROM pages_ver WHERE pid = '$article->id' ORDER BY time DESC");
+			$records = $db->get_results("SELECT `pages_ver`.*, `users`.`nick` FROM `pages_ver` LEFT JOIN `users` ON `users`.`id` = `pages_ver`.`nextmod` WHERE `pages_ver`.`pid` = '$article->id' ORDER BY `pages_ver`.`time` DESC");
 
 			if ($records) {
 				$tpl->newBlock('page-history-list');
@@ -720,7 +720,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						'title' => $record->title,
 						'time' => date('Y-m-d H:i', $record->time),
 						'id' => $record->id,
-						'user' => $db->get_var("SELECT nick FROM users WHERE id = '$record->nextmod' LIMIT 1"),
+						'user' => $record->nick ?? 'Nezināms',
 						'symbols' => strlen($record->text)
 					]);
 				}
@@ -1001,19 +1001,16 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$stag = $db->get_var("SELECT `tags`.`id` FROM `taged`,`tags` WHERE `taged`.`page_id` = '$article->id' AND `tags`.`special` = '1' AND `tags`.`id` = `taged`.`tag_id` AND `taged`.`lang` = '$lang' LIMIT 1");
 			if ($stag) {
-				$article_tags = $db->get_results("SELECT * FROM `taged` WHERE `tag_id` = '$stag'");
+				$tag_pages = $db->get_results("SELECT `pages`.`id`, `pages`.`title`, `pages`.`strid` FROM `taged` JOIN `pages` ON `pages`.`id` = `taged`.`page_id` WHERE `taged`.`tag_id` = '$stag' AND `pages`.`id` != '$article->id'");
 
 				$tpl->newBlock('post-stags');
-				if ($article_tags) {
-					foreach ($article_tags as $article_tag) {
-						$tag_page = $db->get_row("SELECT `title`,`strid` FROM `pages` WHERE `id` = '$article_tag->page_id'");
-						if (!empty($tag_page) && $article->id != $article_tag->page_id) {
-							$tpl->newBlock('post-stags-node');
-							$tpl->assign([
-								'title' => $tag_page->title,
-								'url' => '/read/' . $tag_page->strid
-							]);
-						}
+				if (!empty($tag_pages)) {
+					foreach ($tag_pages as $tag_page) {
+						$tpl->newBlock('post-stags-node');
+						$tpl->assign([
+							'title' => $tag_page->title,
+							'url' => '/read/' . $tag_page->strid
+						]);
 					}
 				}
 			}
@@ -1059,7 +1056,14 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 				$tpl->newBlock('comments-block');
 				$comment_number = $skip + 1;
-				$childs_q = $db->get_results("SELECT `id`,`date`,`parent`,`author`,`text`,`vote_value`,`vote_users` FROM `comments` WHERE pid = '" . $article->id . "' AND parent != 0 AND removed = 0 ORDER BY id ASC");
+
+				$parent_ids = [];
+				foreach ($parents as $p) {
+					$parent_ids[] = (int) $p->id;
+				}
+				$parent_id_in = implode(',', $parent_ids);
+
+				$childs_q = $db->get_results("SELECT `id`,`date`,`parent`,`author`,`text`,`vote_value`,`vote_users` FROM `comments` WHERE `pid` = '" . $article->id . "' AND `parent` IN ($parent_id_in) AND `removed` = 0 ORDER BY `id` ASC");
 
 				$childs = [];
 				if (!empty($childs_q)) {
@@ -1068,9 +1072,43 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					}
 				}
 
-				$author = [];
-				foreach ($parents as $comment) {
+				// Collect all user IDs from parents, replies, and edit users to pre-warm in batch
+				$all_user_ids = [];
+				foreach ($parents as $p) {
+					if ($p->author) $all_user_ids[] = (int) $p->author;
+					if ($p->edit_user) $all_user_ids[] = (int) $p->edit_user;
+				}
+				if (!empty($childs_q)) {
+					foreach ($childs_q as $c) {
+						if ($c->author) $all_user_ids[] = (int) $c->author;
+					}
+				}
+				$all_user_ids = array_unique(array_filter($all_user_ids));
 
+				$author = [];
+				if (!empty($all_user_ids)) {
+					$needed_uids = [];
+					foreach ($all_user_ids as $uid) {
+						$cached_u = $m->get('user_' . $uid);
+						if ($cached_u !== false) {
+							$author[$uid] = $cached_u;
+						} else {
+							$needed_uids[] = $uid;
+						}
+					}
+					if (!empty($needed_uids)) {
+						$uid_in = implode(',', $needed_uids);
+						$u_rows = $db->get_results("SELECT * FROM `users` WHERE `id` IN ($uid_in)");
+						if (!empty($u_rows)) {
+							foreach ($u_rows as $u_row) {
+								$author[$u_row->id] = $u_row;
+								$m->set('user_' . $u_row->id, $u_row, 3600);
+							}
+						}
+					}
+				}
+
+				foreach ($parents as $comment) {
 
 					if (empty($author[$comment->author])) {
 						$author[$comment->author] = get_user($comment->author);
@@ -1089,7 +1127,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 					$comment->date = display_time(strtotime($comment->date));
 					
-					if (!$author[$comment->author]->deleted) {
+					if (!empty($author[$comment->author]) && !$author[$comment->author]->deleted) {
 						$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
 						$author_box .= usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author) . '</a>';
 						$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="" /></a>';
@@ -1097,7 +1135,8 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						$author_box .= '<span class="author-info">Karma: ' . $author[$comment->author]->karma . '</span>';
 					} else {
 						$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
-						$author_box .= '<img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="{title}" />';
+						$u_obj = !empty($author[$comment->author]) ? $author[$comment->author] : null;
+						$author_box .= '<img class="comments-avatar" src="' . get_avatar($u_obj) . '" alt="{title}" />';
 					}
 					
 
@@ -1110,7 +1149,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						'comment-editedby' => $editedby
 					]);
 
-					if ($auth->ok && $auth->showsig && $author[$comment->author]->signature && !$auth->mobile) {
+					if ($auth->ok && $auth->showsig && !empty($author[$comment->author]) && $author[$comment->author]->signature && !$auth->mobile) {
 						$signature = '<div class="comment-signature">' . $author[$comment->author]->signature . '</div>';
 						if (im_mod() && $author[$comment->author]->level != 1) {
 							$signature .= '[<a onclick="prompt_why_delete(\'?remove_signature=' . $comment->author . '\');" href="#"><span class="red">dzēst parakstu</span></a>]';
@@ -1202,9 +1241,9 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 								$reply->date = strtolower(display_time(strtotime($reply->date)));
 
-								$avatar = get_avatar($author[$reply->author], 's');
+								$avatar = get_avatar($author[$reply->author] ?? null, 's');
 
-								if (!$author[$reply->author]->deleted) {
+								if (!empty($author[$reply->author]) && !$author[$reply->author]->deleted) {
 									$author_link = '<a href="/user/' . $reply->author . '">' . usercolor($author[$reply->author]->nick, $author[$reply->author]->level, false, $reply->author) . '</a>';
 								} else {
 									$author_link = '<em>dzēsts</em>';
@@ -1298,18 +1337,20 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				unset($childs);
 				unset($parents);
 
-				//pager
-				$total = $db->get_var("SELECT count(*) FROM `comments` WHERE `pid` = '" . $article->id . "' AND `parent` = '0' AND `removed` = 0");
-				if ($total > $end) {
-					$total = $total / $end;
-					$skip = $skip / $end;
+				//pager (only query count if multiple pages possible)
+				if ($skip > 0 || count($parent_ids) >= $end) {
+					$total = $db->get_var("SELECT count(*) FROM `comments` WHERE `pid` = '" . $article->id . "' AND `parent` = '0' AND `removed` = 0");
+					if ($total > $end) {
+						$total = $total / $end;
+						$skip = $skip / $end;
 
-					$pager = pager($total, $skip, 1, '/read/' . $article->strid . '/com_page/');
-					$tpl->assignGlobal([
-						'pager-next' => $pager['next'],
-						'pager-prev' => $pager['prev'],
-						'pager-numeric' => $pager['pages']
-					]);
+						$pager = pager($total, $skip, 1, '/read/' . $article->strid . '/com_page/');
+						$tpl->assignGlobal([
+							'pager-next' => $pager['next'],
+							'pager-prev' => $pager['prev'],
+							'pager-numeric' => $pager['pages']
+						]);
+					}
 				}
 			}
 
