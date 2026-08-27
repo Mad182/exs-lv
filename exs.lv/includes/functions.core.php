@@ -946,7 +946,7 @@ function user_age($date) {
 function get_top($id, $depth = 0) {
 	global $m, $debug, $lang;
 	$id = (int) $id;
-	if ($debug || ($data = $m->get('ctop_' . $id)) === false) {
+	if ($debug || ($data = $m->get('ctop_' . $id . '_' . $lang)) === false) {
 		$data = get_top_rec($id, $depth);
 		$m->set('ctop_' . $id . '_' . $lang, $data, 43200);
 	}
@@ -1031,9 +1031,16 @@ function curl_get($url, $connect_timeout = 2, $timeout = 4) {
 function get_cat($id, $force = false) {
 	global $db, $m, $debug, $lang;
 	if ($debug || $force || !($data = $m->get('cat_' . $lang . '_' . $id))) {
-		$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
-		if (empty($data) && is_numeric($id)) {
+		if (is_numeric($id)) {
 			$data = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($id) . "' AND (`lang` = $lang OR `lang` = 0)");
+			if (empty($data)) {
+				$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
+			}
+		} else {
+			$data = $db->get_row("SELECT * FROM `cat` WHERE `textid` = '" . sanitize(trim($id)) . "' AND (`lang` = $lang OR `lang` = 0)");
+			if (empty($data) && is_numeric($id)) {
+				$data = $db->get_row("SELECT * FROM `cat` WHERE `id` = '" . intval($id) . "' AND (`lang` = $lang OR `lang` = 0)");
+			}
 		}
 		if (empty($data)) {
 			return null;

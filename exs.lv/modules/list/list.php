@@ -57,26 +57,66 @@ if ($category->isforum) {
 
 	if (!empty($subcats)) {
 		$tpl->newBlock('listsubcats');
+
+		$subcat_ids = [];
+		foreach ($subcats as $s) {
+			$subcat_ids[] = (int) $s->id;
+		}
+
+		$subcat_id_in = implode(',', $subcat_ids);
+
+		// Batch fetch 2nd level subcategories
+		$subcats2_by_parent = [];
+		$subcats2_results = $db->get_results("SELECT `id`, `parent`, `title`, `textid` FROM `cat` WHERE `parent` IN ($subcat_id_in) AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
+		if (!empty($subcats2_results)) {
+			foreach ($subcats2_results as $s2) {
+				$subcats2_by_parent[$s2->parent][] = $s2;
+			}
+		}
+
+		// Batch fetch moderators for all subcategories
+		$moderators_by_cat = [];
+		$mods_results = $db->get_results("SELECT `category_id`, `user_id` FROM `cat_moderators` WHERE `category_id` IN ($subcat_id_in)");
+		if (!empty($mods_results)) {
+			foreach ($mods_results as $m_row) {
+				$moderators_by_cat[$m_row->category_id][] = $m_row->user_id;
+			}
+		}
+
+		// Batch fetch latest topics for each subcategory
+		$latest_topics = [];
+		$topic_rows = $db->get_results("
+			SELECT `category`, `title`, `strid`, `bump`, `author`
+			FROM (
+				SELECT `category`, `title`, `strid`, `bump`, `author`,
+				       ROW_NUMBER() OVER (PARTITION BY `category` ORDER BY `bump` DESC) AS `rn`
+				FROM `pages`
+				WHERE `category` IN ($subcat_id_in)
+			) AS `sub`
+			WHERE `rn` = 1
+		");
+		if (!empty($topic_rows)) {
+			foreach ($topic_rows as $t_row) {
+				$latest_topics[$t_row->category] = $t_row;
+			}
+		}
+
 		foreach ($subcats as $forum) {
 
 			$tpl->newBlock('listsubcats-node');
-
-			$subcats2 = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `parent` = '$forum->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
 			if (empty($forum->icon)) {
 				$forum->icon = $generic_f_icon;
 			}
 
-			$add = '';
-			$finfo = get_cat($forum->textid);
-			if (!empty($finfo->mods)) {
-				$add = '<br>Moderatori: ';
+			$add_mods = '';
+			if (!empty($moderators_by_cat[$forum->id])) {
+				$add_mods = '<br>Moderatori: ';
 				$mods = [];
-				foreach ($finfo->mods as $mod) {
-					$minfo = get_user($mod);
-					$mods[] = '<a href="/user/' . $minfo->id . '">' . usercolor($minfo->nick, $minfo->level, false, $minfo->id) . '</a>';
+				foreach ($moderators_by_cat[$forum->id] as $mod_uid) {
+					$mods[] = userlink($mod_uid);
 				}
-				$add .= implode(', ', $mods);
+				$add_mods .= implode(', ', $mods);
 			}
 
 			$tpl->assign([
@@ -84,23 +124,21 @@ if ($category->isforum) {
 				'title' => $forum->title,
 				'textid' => $forum->textid,
 				'icon' => $forum->icon,
-				'content' => $forum->content . $add,
+				'content' => $forum->content . $add_mods,
 				'posts' => $forum->stat_com,
 				'topics' => $forum->stat_topics,
 				'txt-posts' => lv_dsk($forum->stat_com, 'posts', 'posti'),
 				'txt-topics' => lv_dsk($forum->stat_topics, 'tēma', 'tēmas')
 			]);
 
-			$topic = $db->get_row("SELECT `title`, `strid`, `bump`, `author` FROM `pages` WHERE `category` = '" . $forum->id . "' ORDER BY `bump` DESC LIMIT 1");
-			if (!empty($topic)) {
-				$author = get_user($topic->author);
+			if (isset($latest_topics[$forum->id])) {
+				$topic = $latest_topics[$forum->id];
 				$tpl->assign([
 					'date' => display_time(strtotime($topic->bump)),
 					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
-					'author' => '<a href="/user/' . $author->id . '">' . usercolor($author->nick, $author->level, false, $author->id) . '</a>'
+					'author' => userlink($topic->author)
 				]);
 			}
-
 
 			if ($auth->level == 1) {
 				//foruma apakškategoriju pievienošana/labošana
@@ -110,9 +148,9 @@ if ($category->isforum) {
 				]);
 			}
 
-			if (!empty($subcats2)) {
+			if (!empty($subcats2_by_parent[$forum->id])) {
 				$tpl->newBlock('subcats');
-				foreach ($subcats2 as $subcat2) {
+				foreach ($subcats2_by_parent[$forum->id] as $subcat2) {
 					$tpl->newBlock('subcats-node');
 					$tpl->assign([
 						'title' => $subcat2->title,
@@ -126,14 +164,14 @@ if ($category->isforum) {
 
 if (!$category->mods_only || im_mod()) {
 
-	if ($category->intro) {
-		$articles = $db->get_results("SELECT
+	$user_avatar_field = ($category->intro) ? ", `users`.`avatar` AS `user_avatar`" : "";
+
+	$articles = $db->get_results("SELECT
 		`pages`.`id` AS `id`,
 		`pages`.`title` AS `title`,
 		`pages`.`strid` AS `strid`,
 		`pages`.`date` AS `date`,
 		`pages`.`author` AS `author`,
-		`pages`.`posts` AS `posts`,
 		`pages`.`closed` AS `closed`,
 		`pages`.`text` AS `text`,
 		`pages`.`avatar` AS `avatar`,
@@ -141,47 +179,22 @@ if (!$category->mods_only || im_mod()) {
 		`pages`.`views` AS `views`,
 		`pages`.`attach` AS `attach`,
 		`pages`.`intro` AS `intro`,
-		`users`.`nick` AS `nick`,
-		`users`.`level` AS `level`,
-		`users`.`deleted` AS `author_deleted`
-	FROM
-		`pages`,
-		`users`
-	WHERE
-		`pages`.`category` = " . $category->id . " AND
-		`pages`.`lang` = $lang AND
-		`users`.`id` = `pages`.`author`
-	ORDER BY
-		" . $sortby . "
-	LIMIT
-		$skip,$end");
-	} else {
-		$articles = $db->get_results("SELECT
-		`pages`.`id` AS `id`,
-		`pages`.`title` AS `title`,
-		`pages`.`strid` AS `strid`,
-		`pages`.`date` AS `date`,
-		`pages`.`author` AS `author`,
-		`pages`.`closed` AS `closed`,
-		`pages`.`attach` AS `attach`,
-		`pages`.`views` AS `views`,
-		`pages`.`readby` AS `readby`,
 		`pages`.`posts` AS `posts`,
 		`users`.`nick` AS `nick`,
 		`users`.`level` AS `level`,
-		`users`.`deleted` AS `author_deleted`
+		`users`.`deleted` AS `author_deleted`" . $user_avatar_field . "
 	FROM
-		`pages`,
-		`users`
+		`pages`
+	LEFT JOIN
+		`users` ON `users`.`id` = `pages`.`author`
 	WHERE
-		`pages`.`category` = " . $category->id . " AND
-		`pages`.`lang` = $lang AND
-		`users`.`id` = `pages`.`author`
+		`pages`.`category` = " . (int)$category->id . " AND
+		`pages`.`lang` = " . (int)$lang . "
 	ORDER BY
 		" . $sortby . "
 	LIMIT
 		$skip,$end");
-	}
+
 	if ($category->module == 'list') {
 
 		if ($skip) {
@@ -200,67 +213,65 @@ if (!$category->mods_only || im_mod()) {
 			$tpl->assign([
 				'title' => $category->title,
 				'catid' => $category->id,
-				'strid' => $root_cat->textid
+				'strid' => ($root_cat ? $root_cat->textid : '')
 			]);
 			
 			if($auth->ok) {
 				$tpl->newBlock('forum-new');
 				$tpl->assign([
 					'catid' => $category->id,
-					'strid' => $root_cat->textid
+					'strid' => ($root_cat ? $root_cat->textid : '')
 				]);
 			}
 
-			foreach ($articles as $article) {
-				if (!$article->nick) {
-					$article->nick = 'Nezināms';
-					$article->level = 0;
-				}
-				$tpl->newBlock('list-forum-node');
+			if (!empty($articles)) {
+				foreach ($articles as $article) {
+					if (!$article->nick) {
+						$article->nick = 'Nezināms';
+						$article->level = 0;
+					}
+					$tpl->newBlock('list-forum-node');
 
-				$date = display_time(strtotime($article->date));
+					$date = display_time(strtotime($article->date));
 
-				$title_clear = $article->title;
+					if ($article->attach) {
+						$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
+					}
 
-				if ($article->attach) {
-					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
-				} else {
-					$article->title = $article->title;
-				}
+					$type = 'topic_';
+					if ($article->attach) {
+						$type = 'sticky_';
+					}
+					$closed = '';
+					if ($article->closed) {
+						$closed = '_locked';
+					}
+					$read = 'read';
+					$readby = !empty($article->readby) ? @unserialize($article->readby) : [];
+					if (!is_array($readby)) {
+						$readby = [];
+					}
+					if ($auth->ok && !in_array($auth->id, $readby)) {
+						$read = 'unread';
+					}
+					$timg = $type . $read . $closed . '.gif';
 
-				$type = 'topic_';
-				if ($article->attach) {
-					$type = 'sticky_';
-				}
-				$closed = '';
-				if ($article->closed) {
-					$closed = '_locked';
-				}
-				$read = 'read';
-				$readby = !empty($article->readby) ? @unserialize($article->readby) : [];
-				if (!is_array($readby)) {
-					$readby = [];
-				}
-				if ($auth->ok && !in_array($auth->id, $readby)) {
-					$read = 'unread';
-				}
-				$timg = $type . $read . $closed . '.gif';
+					if (!$article->author_deleted && !empty($article->nick)) {
+						$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+					} else {
+						$author_link = '<em>dzēsts</em>';
+					}
 
-				if (!$article->author_deleted) {
-					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
-				} else {
-					$author_link = '<em>dzēsts</em>';
+					$tpl->assign([
+						'id' => $article->id,
+						'url' => '/read/' . $article->strid,
+						'title' => $article->title,
+						'timg' => $timg,
+						'date' => $date,
+						'author' => $author_link,
+						'posts' => $article->posts,
+					]);
 				}
-
-				$tpl->assign([
-					'id' => $article->id,
-					'url' => '/read/' . $article->strid,
-					'title' => $article->title,
-					'timg' => $timg,
-					'date' => $date,
-					'author' => $author_link,
-					'posts' => $article->posts,
-				]);
 			}
 
 			//list for categories with intro text
@@ -272,56 +283,56 @@ if (!$category->mods_only || im_mod()) {
 				'strid' => $category->textid
 			]);
 
-			foreach ($articles as $article) {
-				if (!$article->nick) {
-					$article->nick = 'Nezināms';
-					$article->level = 0;
-				}
-				$tpl->newBlock('list');
+			if (!empty($articles)) {
+				foreach ($articles as $article) {
+					if (!$article->nick) {
+						$article->nick = 'Nezināms';
+						$article->level = 0;
+					}
+					$tpl->newBlock('list');
 
-				$date = display_time(strtotime($article->date));
+					$date = display_time(strtotime($article->date));
 
-				if ($article->attach) {
-					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
-				} else {
-					$article->title = $article->title;
-				}
+					if ($article->attach) {
+						$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
+					}
 
-				if (!empty($article->intro)) {
-					$article->text = $article->intro;
-				} else {
-					$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 600);
-					$article->intro = sanitize($article->text);
-					$db->query("UPDATE pages SET intro = '$article->intro' WHERE id = '$article->id' LIMIT 1");
-				}
-				
-				if (!$article->author_deleted) {
-					$author_link = '<a rel="author" href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
-				} else {
-					$author_link = '<em>dzēsts</em>';
-				}
-				
-				$user = get_user($article->author);
+					if (!empty($article->intro)) {
+						$article->text = $article->intro;
+					} else {
+						$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 600);
+						$article->intro = sanitize($article->text);
+						$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
+					}
+					
+					if (!$article->author_deleted && !empty($article->nick)) {
+						$author_link = '<a rel="author" href="/user/' . $article->author . '">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+					} else {
+						$author_link = '<em>dzēsts</em>';
+					}
 
-				$tpl->assign([
-					'id' => $article->id,
-					'url' => '/read/' . $article->strid,
-					'title' => $article->title,
-					'views' => $article->views,
-					'date' => $date,
-					'author' => $author_link,
-					'posts' => $article->posts,
-					'intro' => $article->text,
-					'avatar' => get_avatar($user, 's')
-				]);
+					$u_avatar = !empty($article->user_avatar) ? '/bildes/avatari/s_' . $article->user_avatar : '/bildes/avatari/s_none.png';
 
-				if ($article->avatar) {
-					$tpl->newBlock('list-avatar');
 					$tpl->assign([
+						'id' => $article->id,
 						'url' => '/read/' . $article->strid,
-						'image' => '/' . trim($article->avatar),
-						'node-avatar-alt' => trim(h($article->title))
+						'title' => $article->title,
+						'views' => $article->views,
+						'date' => $date,
+						'author' => $author_link,
+						'posts' => $article->posts,
+						'intro' => $article->text,
+						'avatar' => $u_avatar
 					]);
+
+					if ($article->avatar) {
+						$tpl->newBlock('list-avatar');
+						$tpl->assign([
+							'url' => '/read/' . $article->strid,
+							'image' => '/' . trim($article->avatar),
+							'node-avatar-alt' => trim(h($article->title))
+						]);
+					}
 				}
 			}
 		} else {
@@ -334,31 +345,37 @@ if (!$category->mods_only || im_mod()) {
 				'strid' => $category->textid
 			]);
 
-			foreach ($articles as $article) {
+			if (!empty($articles)) {
+				foreach ($articles as $article) {
 
-				$tpl->newBlock('list-articles-short-node');
+					$tpl->newBlock('list-articles-short-node');
 
-				if ($article->attach) {
-					$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" />' . $article->title . '</strong>';
+					if ($article->attach) {
+						$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" />' . $article->title . '</strong>';
+					}
+					
+					if (!$article->author_deleted && !empty($article->nick)) {
+						$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+					} else {
+						$author_link = '<em>dzēsts</em>';
+					}
+
+					$tpl->assign([
+						'id' => $article->id,
+						'url' => '/read/' . $article->strid,
+						'title' => $article->title,
+						'date' => $article->date,
+						'author' => $author_link
+					]);
 				}
-				
-				if (!$article->author_deleted) {
-					$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
-				} else {
-					$author_link = '<em>dzēsts</em>';
-				}
-
-				$tpl->assign([
-					'id' => $article->id,
-					'url' => '/read/' . $article->strid,
-					'title' => $article->title,
-					'date' => $article->date,
-					'author' => $author_link
-				]);
 			}
 		}
 
-		$pager = pager($db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'"), $skip, $end, '/' . $category->textid . '/?skip=');
+		$total_count = (isset($category->stat_topics) && is_numeric($category->stat_topics) && (int)$category->stat_topics > 0)
+			? (int)$category->stat_topics
+			: (int)$db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'");
+
+		$pager = pager($total_count, $skip, $end, '/' . $category->textid . '/?skip=');
 		$tpl->assignGlobal([
 			'pager-next' => $pager['next'],
 			'pager-prev' => $pager['prev'],
@@ -372,4 +389,3 @@ if (!$category->mods_only || im_mod()) {
 	set_flash('Tu nevari apskatīt šo lapu!', 'error');
 	redirect();
 }
-
