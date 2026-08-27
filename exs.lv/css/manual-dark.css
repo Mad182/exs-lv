@@ -1324,8 +1324,27 @@ body #wrapper {
 
 #wrapper #footer .infoblock,
 #footer .infoblock {
-	border-top-color: #28313d;
+	background: #1e2631;
+	border: 1px solid #2d3748;
+	border-radius: 6px;
+	padding: 10px 14px;
 	color: #9ba3af;
+	font-size: 11.5px;
+	box-sizing: border-box;
+}
+
+#wrapper #footer .infoblock .inner,
+#footer .infoblock .inner {
+	height: auto !important;
+	overflow: hidden;
+}
+
+#wrapper #footer .infoblock p,
+#footer .infoblock p {
+	color: #9ba3af;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
 }
 
 #wrapper #online-users,

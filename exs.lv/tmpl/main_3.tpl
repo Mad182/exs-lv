@@ -19,7 +19,7 @@
 	<link rel="canonical" href="{url}">
 	<!-- END BLOCK : canonical-->
 	<script>var mb_refresh_limit = {mb-refresh-limit}, current_user = {currentuser-id}, new_msg_count = {new-messages-count}, c_url = "{page-url}";</script>
-	<link rel="stylesheet" href="/css/main_3.36cec04e.min.css">
+	<link rel="stylesheet" href="/css/main_3.d39858b8.min.css">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="/css/{filename}">
 	<!-- END BLOCK : additional-css-->
