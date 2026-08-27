@@ -1324,27 +1324,31 @@ body #wrapper {
 
 #wrapper #footer .infoblock,
 #footer .infoblock {
-	background: #1e2631;
-	border: 1px solid #2d3748;
-	border-radius: 6px;
-	padding: 10px 14px;
-	color: #9ba3af;
-	font-size: 11.5px;
-	box-sizing: border-box;
+	background: #1e2631 !important;
+	border: 1px solid #2d3748 !important;
+	border-radius: 6px !important;
+	padding: 10px 14px !important;
+	color: #9ba3af !important;
+	font-size: 11.5px !important;
+	box-sizing: border-box !important;
 }
 
 #wrapper #footer .infoblock .inner,
 #footer .infoblock .inner {
+	background: transparent !important;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
 	height: auto !important;
-	overflow: hidden;
+	overflow: hidden !important;
 }
 
 #wrapper #footer .infoblock p,
 #footer .infoblock p {
-	color: #9ba3af;
-	margin: 0;
-	padding: 0;
-	line-height: 1.5;
+	color: #9ba3af !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1.5 !important;
 }
 
 #wrapper #online-users,
