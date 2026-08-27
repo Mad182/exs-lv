@@ -270,7 +270,7 @@ if (!$category->mods_only || im_mod()) {
 
 	} elseif ($category->module == 'list') {
 
-		$user_avatar_field = ($category->intro) ? ", `users`.`avatar` AS `user_avatar`" : "";
+		$user_avatar_field = ($category->intro) ? ", `users`.`avatar` AS `user_avatar`, `users`.`av_alt` AS `user_av_alt`" : "";
 
 		$articles = $db->get_results("SELECT
 			`pages`.`id` AS `id`,
@@ -341,7 +341,10 @@ if (!$category->mods_only || im_mod()) {
 						$author_link = '<em>dzēsts</em>';
 					}
 
-					$u_avatar = !empty($article->user_avatar) ? '/bildes/avatari/s_' . $article->user_avatar : '/bildes/avatari/s_none.png';
+					$u_avatar = get_avatar((object)[
+						'avatar' => $article->user_avatar ?? 'none.png',
+						'av_alt' => $article->user_av_alt ?? 0
+					], 's');
 
 					$tpl->assign([
 						'id' => $article->id,

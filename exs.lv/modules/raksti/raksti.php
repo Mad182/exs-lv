@@ -37,7 +37,8 @@ $articles = $db->get_results("
 		`users`.`nick` AS `nick`,
 		`users`.`level` AS `level`,
 		`users`.`deleted` AS `author_deleted`,
-		`users`.`avatar` AS `user_avatar`
+		`users`.`avatar` AS `user_avatar`,
+		`users`.`av_alt` AS `user_av_alt`
 	FROM
 		`pages`
 	LEFT JOIN
@@ -94,7 +95,10 @@ if ($articles) {
 			$author_link = '<em>dzēsts</em>';
 		}
 
-		$user_avatar = !empty($article->user_avatar) ? $article->user_avatar : 'none.png';
+		$u_avatar = get_avatar((object)[
+			'avatar' => $article->user_avatar ?? 'none.png',
+			'av_alt' => $article->user_av_alt ?? 0
+		], 's');
 
 		$tpl->assign([
 			'cat' => $cat_title,
@@ -107,7 +111,7 @@ if ($articles) {
 			'author' => $author_link,
 			'posts' => $article->posts,
 			'intro' => $article->text,
-			'avatar' => '/bildes/avatari/s_' . $user_avatar
+			'avatar' => $u_avatar
 		]);
 		if ($article->avatar) {
 			$tpl->newBlock('list-avatar');
