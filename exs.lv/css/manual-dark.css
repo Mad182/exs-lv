@@ -354,8 +354,23 @@ h4.post-title a {
 }
 
 .entry-meta,
+#wrapper .entry-meta {
+	border-bottom-color: #2e3846;
+}
+
+.entry-meta,
 .entry-meta a {
 	color: #9ba3af;
+}
+
+.entry-meta ul li,
+#wrapper .entry-meta ul li {
+	border-right-color: #2e3846;
+}
+
+.entry-meta ul li:last-child,
+#wrapper .entry-meta ul li:last-child {
+	border-right: 0;
 }
 
 .core-pager .page-numbers {
