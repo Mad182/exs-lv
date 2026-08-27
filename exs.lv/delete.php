@@ -31,6 +31,9 @@ if ($user) {
 
 	//memcached konekcija
 	$m = new Memcached;
+	if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
+		$m->setOption(Memcached::OPT_SERIALIZER, Memcached::SERIALIZER_IGBINARY);
+	}
 	$m->addServer($mc_host, $mc_port);
 
 	$db->query("UPDATE users SET 
