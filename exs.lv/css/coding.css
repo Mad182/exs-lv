@@ -6046,7 +6046,11 @@ span.c,
 }
 
 #online-users {
-	margin-bottom: 8px;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 6px;
+	padding: 10px 14px;
+	margin-bottom: 12px;
 	color: #64748b;
 }
 

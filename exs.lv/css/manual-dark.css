@@ -1314,19 +1314,27 @@ body #wrapper {
 	color: #58a6ff;
 }
 
-/* coding.lv Footer */
-#wrapper #footer {
+/* Footer Dark Mode */
+#wrapper #footer,
+#footer {
 	background: #161a20;
 	border-top-color: #28313d;
 	color: #9ba3af;
 }
 
-#wrapper #footer .infoblock {
+#wrapper #footer .infoblock,
+#footer .infoblock {
 	border-top-color: #28313d;
 	color: #9ba3af;
 }
 
-#wrapper #online-users {
+#wrapper #online-users,
+#online-users {
+	background: #1e2631;
+	border: 1px solid #2d3748;
+	border-radius: 6px;
+	padding: 10px 14px;
+	margin-bottom: 12px;
 	color: #9ba3af;
 }
 
