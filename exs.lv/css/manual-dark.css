@@ -993,87 +993,151 @@ table.table,
 	color: #c9d1d9;
 }
 
+body #forum,
+body .forum-table,
+#wrapper #forum,
+#wrapper .forum-table,
 #forum,
 .forum-table {
-	background: #1e242c;
-	border-color: #2e3846;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	background: #1e242c !important;
+	border-color: #2e3846 !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
+body #forum th,
+body .forum-table th,
+#wrapper #forum th,
+#wrapper .forum-table th,
 #forum th,
-.forum-table th {
-	background: #252d37;
-	color: #e9ecef;
-	border-bottom-color: #2e3846;
+.forum-table th,
+#forum tr.forum-cat-header th {
+	background: #252d37 !important;
+	color: #e9ecef !important;
+	border-bottom-color: #2e3846 !important;
+	text-shadow: none !important;
 }
 
+body #forum th a,
+body .forum-table th a,
+#wrapper #forum th a,
+#wrapper .forum-table th a,
 #forum th a,
 .forum-table th a {
-	color: #f1f5f9;
+	color: #f1f5f9 !important;
 }
 
+body #forum th a:hover,
+body .forum-table th a:hover,
+#wrapper #forum th a:hover,
+#wrapper .forum-table th a:hover,
 #forum th a:hover,
 .forum-table th a:hover {
-	color: #60a5fa;
+	color: #60a5fa !important;
 }
 
+body #forum .forum-topics-header th,
+body .forum-table .forum-topics-header th,
+#wrapper #forum .forum-topics-header th,
 #forum .forum-topics-header th {
-	background: #1f2630;
-	color: #9ba3af;
+	background: #1f2630 !important;
+	color: #9ba3af !important;
+	border-bottom-color: #2e3846 !important;
 }
 
+body #forum td,
+body .forum-table td,
+#wrapper #forum td,
+#wrapper .forum-table td,
 #forum td,
 .forum-table td {
-	border-bottom-color: #28313d;
-	color: #9ba3af;
+	background-color: #1e242c !important;
+	border-color: #28313d !important;
+	border-bottom-color: #28313d !important;
+	border-top-color: #28313d !important;
+	color: #9ba3af !important;
 }
 
+body #forum tr.forum-row:hover td,
+body #forum tr.topic-row:hover td,
+body #forum tbody tr:hover td,
+body .forum-table tr:hover td,
+#wrapper #forum tr.forum-row:hover td,
+#wrapper #forum tr.topic-row:hover td,
+#wrapper #forum tbody tr:hover td,
 #forum tr.forum-row:hover td,
 #forum tr.topic-row:hover td,
 #forum tbody tr:hover td {
-	background-color: #28323e;
+	background-color: #28323e !important;
 }
 
+body #forum td h2 a,
+body #forum td h3 a,
+#wrapper #forum td h2 a,
+#wrapper #forum td h3 a,
 #forum td h2 a,
 #forum td h3 a {
-	color: #e9ecef;
+	color: #e9ecef !important;
 }
 
+body #forum td h2 a:hover,
+body #forum td h3 a:hover,
+#wrapper #forum td h2 a:hover,
+#wrapper #forum td h3 a:hover,
 #forum td h2 a:hover,
 #forum td h3 a:hover {
-	color: #60a5fa;
+	color: #60a5fa !important;
 }
 
+body #forum td p,
+body #forum .forum-desc,
+#wrapper #forum td p,
+#wrapper #forum .forum-desc,
 #forum td p,
 #forum .forum-desc {
-	color: #9ba3af;
+	color: #9ba3af !important;
 }
 
+body ul.subcat-list li a,
+#wrapper ul.subcat-list li a,
 ul.subcat-list li a {
-	background: #28323e;
-	border-color: #384556;
-	color: #c9d1d9;
+	background: #28323e !important;
+	border-color: #384556 !important;
+	color: #c9d1d9 !important;
 }
 
+body ul.subcat-list li a:hover,
+#wrapper ul.subcat-list li a:hover,
 ul.subcat-list li a:hover {
-	background: #344050;
-	color: #ffffff;
-	border-color: #4a5c72;
+	background: #344050 !important;
+	color: #ffffff !important;
+	border-color: #4a5c72 !important;
 }
 
+body #forum td.stat,
+body #forum td.td-replies,
+body #forum td.center,
+#wrapper #forum td.stat,
+#wrapper #forum td.td-replies,
+#wrapper #forum td.center,
 #forum td.stat,
 #forum td.td-replies,
 #forum td.center {
-	color: #9ba3af;
+	color: #9ba3af !important;
 }
 
+body #forum td.last,
+body #forum td.last a,
+#wrapper #forum td.last,
+#wrapper #forum td.last a,
 #forum td.last,
 #forum td.last a {
-	color: #c9d1d9;
+	color: #c9d1d9 !important;
 }
 
+body #forum td.last a:hover,
+#wrapper #forum td.last a:hover,
 #forum td.last a:hover {
-	color: #60a5fa;
+	color: #60a5fa !important;
 }
 
 /* ==========================================================================

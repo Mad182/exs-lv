@@ -174,7 +174,7 @@ if (!$category->mods_only || im_mod()) {
 		if ($skip) {
 			$page_title = $page_title . ' (lapa ' . ($skip / $end + 1) . ')';
 		}
-		$add_css[] = 'forum.4215ef3f.min.css';
+		$add_css[] = 'forum.754633cf.min.css';
 		$page_title = $page_title . ' - forums';
 		$root_cat = get_cat(get_top($category->parent));
 

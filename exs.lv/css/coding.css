@@ -5869,7 +5869,7 @@ h4 { font-size: 13px; }
 }
 
 /* Forum Table Light Mode */
-#wrapper #forum,
+#forum,
 .forum-table {
 	border-collapse: separate;
 	border-spacing: 0;
@@ -5881,7 +5881,7 @@ h4 { font-size: 13px; }
 	margin-bottom: 16px;
 }
 
-#wrapper #forum th,
+#forum th,
 .forum-table th {
 	background: #f8fafc;
 	color: #1e293b;
@@ -5893,18 +5893,18 @@ h4 { font-size: 13px; }
 	border-bottom: 1px solid #e2e8f0;
 }
 
-#wrapper #forum th a,
+#forum th a,
 .forum-table th a {
 	color: #1e293b;
 	text-decoration: none;
 }
 
-#wrapper #forum th a:hover,
+#forum th a:hover,
 .forum-table th a:hover {
 	color: #2563eb;
 }
 
-#wrapper #forum td,
+#forum td,
 .forum-table td {
 	border: 0;
 	border-top: 1px solid #f1f5f9;
@@ -5913,9 +5913,9 @@ h4 { font-size: 13px; }
 	color: #475569;
 }
 
-#wrapper #forum tr.forum-row:hover td,
-#wrapper #forum tr.topic-row:hover td,
-#wrapper #forum tbody tr:hover td {
+#forum tr.forum-row:hover td,
+#forum tr.topic-row:hover td,
+#forum tbody tr:hover td {
 	background-color: #f8fafc;
 }
 
