@@ -147,10 +147,12 @@ if ($category->isforum) {
 					                  display_time(strtotime($t_row->bump)) . '<br>no: ' . $author_link;
 				}
 
-				$sub_out .= '<tr><td class="forum-avatar"><a href="/' . $forum->textid . '"><img width="48" height="48" src="/' . $icon . '" alt="" /></a></td>' .
-				            '<td><h3><a href="/' . $forum->textid . '">' . $forum->title . '</a></h3><p>' . $forum->content . $add_mods . $admin_links . '</p>' . $sub2_html . '</td>' .
-				            '<td class="stat">' . $forum->stat_topics . '&nbsp;' . lv_dsk($forum->stat_topics, 'tēma', 'tēmas') . '<br>' . $forum->stat_com . '&nbsp;' . lv_dsk($forum->stat_com, 'posts', 'posti') . '</td>' .
-				            '<td class="last">' . $last_topic_str . '</td></tr>';
+				$sub_out .= '<tr class="forum-row"><td class="forum-avatar"><a href="/' . $forum->textid . '"><img class="forum-icon" width="40" height="40" src="/' . $icon . '" alt="" /></a></td>' .
+				            '<td class="forum-main"><h3><a href="/' . $forum->textid . '">' . $forum->title . '</a></h3>' .
+				            (!empty($forum->content) || !empty($add_mods) || !empty($admin_links) ? '<p class="forum-desc">' . $forum->content . $add_mods . $admin_links . '</p>' : '') .
+				            $sub2_html . '</td>' .
+				            '<td class="stat td-stats"><span class="stat-item">' . $forum->stat_topics . '&nbsp;' . lv_dsk($forum->stat_topics, 'tēma', 'tēmas') . '</span><span class="stat-item">' . $forum->stat_com . '&nbsp;' . lv_dsk($forum->stat_com, 'posts', 'posti') . '</span></td>' .
+				            '<td class="last td-last">' . $last_topic_str . '</td></tr>';
 			}
 			$sub_out .= '</table>';
 			$subcats_html = $sub_out;
@@ -172,7 +174,7 @@ if (!$category->mods_only || im_mod()) {
 		if ($skip) {
 			$page_title = $page_title . ' (lapa ' . ($skip / $end + 1) . ')';
 		}
-		$add_css[] = 'forum.26989092.min.css';
+		$add_css[] = 'forum.4215ef3f.min.css';
 		$page_title = $page_title . ' - forums';
 		$root_cat = get_cat(get_top($category->parent));
 
@@ -222,7 +224,7 @@ if (!$category->mods_only || im_mod()) {
 
 			$t_out = '';
 			if (!empty($articles)) {
-				$t_out .= '<table id="forum"><tr><th colspan="2" class="first">Tēmas</th><th>Atbildes</th><th class="last">Datums</th></tr>';
+				$t_out .= '<table id="forum" class="forum-table forum-topics"><thead><tr class="forum-topics-header"><th colspan="2" class="first th-topics">Tēmas</th><th class="stat th-replies">Atbildes</th><th class="last th-date">Datums</th></tr></thead><tbody>';
 				foreach ($articles as $article) {
 					if (!$article->nick) {
 						$article->nick = 'Nezināms';
@@ -245,12 +247,12 @@ if (!$category->mods_only || im_mod()) {
 						$author_link = '<em>dzēsts</em>';
 					}
 
-					$t_out .= '<tr><td><img width="19" height="18" src="//img.exs.lv/bildes/' . $timg . '" alt="" /></td>' .
-					          '<td><h3><a href="/read/' . $article->strid . '">' . $title_display . '</a></h3></td>' .
-					          '<td class="center">' . $article->posts . '</td>' .
-					          '<td class="last">' . $date . '<br>no:&nbsp;' . $author_link . '</td></tr>';
+					$t_out .= '<tr class="topic-row"><td class="topic-icon-cell"><img class="topic-icon" width="19" height="18" src="//img.exs.lv/bildes/' . $timg . '" alt="" /></td>' .
+					          '<td class="topic-title-cell"><h3><a href="/read/' . $article->strid . '">' . $title_display . '</a></h3></td>' .
+					          '<td class="stat td-replies"><span class="stat-num">' . $article->posts . '</span></td>' .
+					          '<td class="last td-last td-date">' . $date . '<br><span class="topic-author-label">no:&nbsp;</span>' . $author_link . '</td></tr>';
 				}
-				$t_out .= '</table>';
+				$t_out .= '</tbody></table>';
 			}
 
 			$total_count = (isset($category->stat_topics) && is_numeric($category->stat_topics) && (int)$category->stat_topics > 0)

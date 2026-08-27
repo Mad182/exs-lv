@@ -992,3 +992,87 @@ table.table,
 	border-bottom: 1px solid #2a313e;
 	color: #c9d1d9;
 }
+
+#forum,
+.forum-table {
+	background: #1e242c;
+	border-color: #2e3846;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#forum th,
+.forum-table th {
+	background: #252d37;
+	color: #e9ecef;
+	border-bottom-color: #2e3846;
+}
+
+#forum th a,
+.forum-table th a {
+	color: #f1f5f9;
+}
+
+#forum th a:hover,
+.forum-table th a:hover {
+	color: #60a5fa;
+}
+
+#forum .forum-topics-header th {
+	background: #1f2630;
+	color: #9ba3af;
+}
+
+#forum td,
+.forum-table td {
+	border-bottom-color: #28313d;
+	color: #9ba3af;
+}
+
+#forum tr.forum-row:hover td,
+#forum tr.topic-row:hover td,
+#forum tbody tr:hover td {
+	background-color: #28323e;
+}
+
+#forum td h2 a,
+#forum td h3 a {
+	color: #e9ecef;
+}
+
+#forum td h2 a:hover,
+#forum td h3 a:hover {
+	color: #60a5fa;
+}
+
+#forum td p,
+#forum .forum-desc {
+	color: #9ba3af;
+}
+
+ul.subcat-list li a {
+	background: #28323e;
+	border-color: #384556;
+	color: #c9d1d9;
+}
+
+ul.subcat-list li a:hover {
+	background: #344050;
+	color: #ffffff;
+	border-color: #4a5c72;
+}
+
+#forum td.stat,
+#forum td.td-replies,
+#forum td.center {
+	color: #9ba3af;
+}
+
+#forum td.last,
+#forum td.last a {
+	color: #c9d1d9;
+}
+
+#forum td.last a:hover {
+	color: #60a5fa;
+}
+

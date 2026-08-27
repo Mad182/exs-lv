@@ -3,7 +3,7 @@
 /**
  * Foruma kategoriju saraksta skats
  */
-$add_css[] = 'forum.26989092.min.css';
+$add_css[] = 'forum.4215ef3f.min.css';
 
 $columns = 4;
 if ($auth->mobile) {
@@ -213,11 +213,11 @@ if ($cached_data !== false && is_array($cached_data)) {
 
 	// 5. Build HTML table string
 	$fcategorys = [];
-	$out = '<table id="forum">';
+	$out = '<table id="forum" class="forum-table">';
 
 	foreach ($forum_list_data as $cat_id => $group_data) {
 		$cat = $group_data['cat'];
-		$out .= '<tr><th class="first" colspan="' . $columns . '"><a href="/' . $cat->textid . '">' . $cat->title . '</a>';
+		$out .= '<tr class="forum-cat-header"><th class="first" colspan="' . $columns . '"><a href="/' . $cat->textid . '">' . $cat->title . '</a>';
 		if ($is_admin) {
 			$out .= '<span style="float:right;font-size:9px;"><a href="/forum-add/' . $cat->id . '">+pievienot</a></span>';
 		}
@@ -314,24 +314,24 @@ if ($cached_data !== false && is_array($cached_data)) {
 				            display_time(strtotime($topic->bump)) . '<br>no: ' . $author_link;
 			}
 
-			$out .= '<tr>';
+			$out .= '<tr class="forum-row">';
 			if ($columns == 4) {
 				$icon = !empty($forum->icon) ? $forum->icon : $generic_f_icon;
-				$out .= '<td class="forum-avatar"><a href="/' . $forum->textid . '"><img width="48" height="48" src="/' . $icon . '" alt="" /></a></td>';
+				$out .= '<td class="forum-avatar"><a href="/' . $forum->textid . '"><img class="forum-icon" width="40" height="40" src="/' . $icon . '" alt="" /></a></td>';
 			}
 
-			$out .= '<td><h2><a href="/' . $forum->textid . '">' . $forum->title . '</a></h2>' .
-			        '<p>' . $forum->content . $add . $admin_links . '</p>' .
+			$out .= '<td class="forum-main"><h2><a href="/' . $forum->textid . '">' . $forum->title . '</a></h2>' .
+			        (!empty($forum->content) || !empty($add) || !empty($admin_links) ? '<p class="forum-desc">' . $forum->content . $add . $admin_links . '</p>' : '') .
 			        $subcats_html . '</td>';
 
 			if ($columns == 4) {
-				$out .= '<td class="stat">' .
-				        $forum->stat_topics . '&nbsp;' . lv_dsk($forum->stat_topics, 'tēma', 'tēmas') . '<br>' .
-				        $forum->stat_com . '&nbsp;' . lv_dsk($forum->stat_com, 'posts', 'posti') .
+				$out .= '<td class="stat td-stats">' .
+				        '<span class="stat-item">' . $forum->stat_topics . '&nbsp;' . lv_dsk($forum->stat_topics, 'tēma', 'tēmas') . '</span>' .
+				        '<span class="stat-item">' . $forum->stat_com . '&nbsp;' . lv_dsk($forum->stat_com, 'posts', 'posti') . '</span>' .
 				        '</td>';
 			}
 
-			$out .= '<td class="last">' . $last_col . '</td>';
+			$out .= '<td class="last td-last">' . $last_col . '</td>';
 			$out .= '</tr>';
 		}
 	}
