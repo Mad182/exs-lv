@@ -1862,6 +1862,26 @@ function clear_latest_posts_cache($lang = null) {
 	}
 }
 
+function clear_forum_cache($lang = null) {
+	global $m;
+	if (!empty($lang)) {
+		$m->set('v_forum_' . intval($lang), time(), 86400 * 7);
+	} else {
+		for ($i = 1; $i <= 9; $i++) {
+			$m->set('v_forum_' . $i, time(), 86400 * 7);
+		}
+	}
+}
+
+function get_forum_cache_version($lang = 1) {
+	global $m;
+	if (($v = $m->get('v_forum_' . intval($lang))) === false) {
+		$v = time();
+		$m->set('v_forum_' . intval($lang), $v, 86400 * 7);
+	}
+	return $v;
+}
+
 function get_latest_posts() {
 	global $auth, $db, $m, $lang, $comments_per_page, $config_domains;
 

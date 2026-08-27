@@ -28,6 +28,7 @@ if (isset($_GET['var1'])) {
 
 		$db->query("INSERT INTO `cat` (`textid`, `lang`, `module`, `title`, `content`, `parent`, `isforum`) VALUES ('$textid', '$parent->lang', 'list', '$title', '$content', '$parent->id', '1')");
 		$db->query("UPDATE `cat` SET `ordered` = '$db->insert_id' WHERE id = '$db->insert_id'");
+		clear_forum_cache($parent->lang);
 		redirect('/' . $parent->textid);
 	}
 }

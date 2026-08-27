@@ -6,52 +6,7 @@
 
 <h1>{title}</h1>
 
-<table id="forum">
-	<!-- START BLOCK : forum-list-->
-	<tr>
-		<th class="first" colspan="{columns}">
-			<a href="/{textid}">{title}</a>
-			<!-- START BLOCK : forum-list-add-->
-			<span style="float:right;font-size:9px;"><a href="/forum-add/{id}">+pievienot</a></span>
-			<!-- END BLOCK : forum-list-add-->
-
-		</th>
-	</tr>
-	<!-- START BLOCK : forum-item-->
-	<tr>
-		<!-- START BLOCK : forum-item-avatar-->
-		<td class="forum-avatar">
-			<a href="/{textid}"><img width="48" height="48" src="/{icon}" alt="" /></a>
-		</td>
-		<!-- END BLOCK : forum-item-avatar-->
-		<td>
-			<h2><a href="/{textid}">{title}</a></h2>
-			<p>{content}{addlink}{editlink}{uplink}{downlink}</p>
-
-			<!-- START BLOCK : subcats-->
-			<ul class="subcat-list">
-				<!-- START BLOCK : subcats-node-->
-				<li><a href="/{textid}">{title}</a></li>
-				<!-- END BLOCK : subcats-node-->
-			</ul>
-			<!-- END BLOCK : subcats-->
-
-		</td>
-		<!-- START BLOCK : forum-item-stats-->
-		<td class="stat">
-			{topics}&nbsp;{txt-topics}<br>
-			{posts}&nbsp;{txt-posts}
-		</td>
-		<!-- END BLOCK : forum-item-stats-->
-		<td class="last">
-			{topic}<br>
-			{date}<br>
-			no: {author}
-		</td>
-	</tr>
-	<!-- END BLOCK : forum-item-->
-	<!-- END BLOCK : forum-list-->
-</table>
+{forum-table-html}
 
 <!-- START BLOCK : forum-addtopic-->
 <h2 id="new">Pievienot jaunu tēmu</h2>

@@ -97,6 +97,7 @@ class Comment {
 				}
 				update_karma($user_id);
 				clear_latest_posts_cache();
+				clear_forum_cache();
 			} else {
 				set_flash('Izskatās pēc flooda. Pagaidi 10 sekundes, pirms pievieno jaunu komentāru!', 'error');
 			}

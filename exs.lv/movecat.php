@@ -36,6 +36,7 @@ echo "changed parent for " . $db->affected_rows . " categories...\n";
 $db->query("UPDATE `pages` SET `category` = '$destionation' WHERE `category` = '$source'");
 echo "changed category for " . $db->affected_rows . " pages...\n";
 update_stats($destionation);
+clear_forum_cache();
 echo "stats updated...\n";
 
 die("finished!\n\n");

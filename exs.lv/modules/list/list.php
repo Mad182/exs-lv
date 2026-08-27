@@ -49,233 +49,263 @@ $canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' .
 
 //list sub cats
 if ($category->isforum) {
-	$add = '';
-	if (!im_mod()) {
-		$add = ' AND `mods_only` = 0';
+	$v = get_forum_cache_version($lang);
+	$is_admin = ($auth->level == 1 && !$auth->mobile);
+	$cache_key_subcats = 'forum_subcats_' . $category->id . '_' . $lang . '_' . intval($is_admin) . '_' . intval(im_mod()) . '_' . $v;
+
+	$subcats_html = $m->get($cache_key_subcats);
+	if ($subcats_html === false) {
+		$add = '';
+		if (!im_mod()) {
+			$add = ' AND `mods_only` = 0';
+		}
+		$subcats = $db->get_results("SELECT * FROM `cat` WHERE `parent` = '$category->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
+
+		if (!empty($subcats)) {
+			$subcat_ids = [];
+			foreach ($subcats as $s) {
+				$subcat_ids[] = (int) $s->id;
+			}
+			$subcat_id_in = implode(',', $subcat_ids);
+
+			// Batch fetch 2nd level subcategories
+			$subcats2_by_parent = [];
+			$subcats2_results = $db->get_results("SELECT `id`, `parent`, `title`, `textid` FROM `cat` WHERE `parent` IN ($subcat_id_in) AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
+			if (!empty($subcats2_results)) {
+				foreach ($subcats2_results as $s2) {
+					$subcats2_by_parent[$s2->parent][] = $s2;
+				}
+			}
+
+			// Batch fetch moderators for all subcategories
+			$moderators_by_cat = [];
+			$mods_results = $db->get_results("SELECT `category_id`, `user_id` FROM `cat_moderators` WHERE `category_id` IN ($subcat_id_in)");
+			if (!empty($mods_results)) {
+				foreach ($mods_results as $m_row) {
+					$moderators_by_cat[$m_row->category_id][] = $m_row->user_id;
+				}
+			}
+
+			// Batch fetch latest topics for each subcategory
+			$latest_topics = [];
+			$topic_rows = $db->get_results("
+				SELECT `category`, `title`, `strid`, `bump`, `author`
+				FROM (
+					SELECT `category`, `title`, `strid`, `bump`, `author`,
+					       ROW_NUMBER() OVER (PARTITION BY `category` ORDER BY `bump` DESC) AS `rn`
+					FROM `pages`
+					WHERE `category` IN ($subcat_id_in)
+				) AS `sub`
+				WHERE `rn` = 1
+			");
+			if (!empty($topic_rows)) {
+				foreach ($topic_rows as $t_row) {
+					$latest_topics[$t_row->category] = $t_row;
+				}
+			}
+
+			$sub_out = '<table id="forum"><tr><th class="first" colspan="4">Apakšsadaļas</th></tr>';
+			foreach ($subcats as $forum) {
+				$icon = !empty($forum->icon) ? $forum->icon : $generic_f_icon;
+
+				$add_mods = '';
+				if (!empty($moderators_by_cat[$forum->id])) {
+					$add_mods = '<br>Moderatori: ';
+					$mods = [];
+					foreach ($moderators_by_cat[$forum->id] as $mod_uid) {
+						$mod_usr = get_user($mod_uid);
+						if ($mod_usr && !empty($mod_usr->nick)) {
+							$mods[] = '<a href="/user/' . $mod_uid . '">' . usercolor($mod_usr->nick, $mod_usr->level, 'disable', $mod_uid) . '</a>';
+						}
+					}
+					$add_mods .= implode(', ', $mods);
+				}
+
+				$admin_links = '';
+				if ($auth->level == 1) {
+					$admin_links = '<br><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ' .
+					               ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">+edit</a> ';
+				}
+
+				$sub2_html = '';
+				if (!empty($subcats2_by_parent[$forum->id])) {
+					$sub2_html = '<ul class="subcat-list">';
+					foreach ($subcats2_by_parent[$forum->id] as $subcat2) {
+						$sub2_html .= '<li><a href="/' . $subcat2->textid . '">' . $subcat2->title . '</a></li>';
+					}
+					$sub2_html .= '</ul>';
+				}
+
+				$last_topic_str = '';
+				if (isset($latest_topics[$forum->id])) {
+					$t_row = $latest_topics[$forum->id];
+					$t_usr = get_user($t_row->author);
+					$author_link = ($t_usr && !empty($t_usr->nick) && empty($t_usr->deleted))
+						? '<a href="/user/' . $t_row->author . '" rel="author">' . usercolor($t_usr->nick, $t_usr->level, 'disable', $t_row->author) . '</a>'
+						: '<em>dzēsts</em>';
+					$last_topic_str = '<a href="/read/' . $t_row->strid . '" title="' . h($t_row->title) . '">' . textlimit($t_row->title, 32) . '</a><br>' .
+					                  display_time(strtotime($t_row->bump)) . '<br>no: ' . $author_link;
+				}
+
+				$sub_out .= '<tr><td class="forum-avatar"><a href="/' . $forum->textid . '"><img width="48" height="48" src="/' . $icon . '" alt="" /></a></td>' .
+				            '<td><h3><a href="/' . $forum->textid . '">' . $forum->title . '</a></h3><p>' . $forum->content . $add_mods . $admin_links . '</p>' . $sub2_html . '</td>' .
+				            '<td class="stat">' . $forum->stat_topics . '&nbsp;' . lv_dsk($forum->stat_topics, 'tēma', 'tēmas') . '<br>' . $forum->stat_com . '&nbsp;' . lv_dsk($forum->stat_com, 'posts', 'posti') . '</td>' .
+				            '<td class="last">' . $last_topic_str . '</td></tr>';
+			}
+			$sub_out .= '</table>';
+			$subcats_html = $sub_out;
+		} else {
+			$subcats_html = '';
+		}
+		$m->set($cache_key_subcats, $subcats_html, 21600);
 	}
-	$subcats = $db->get_results("SELECT * FROM `cat` WHERE `parent` = '$category->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 
-	if (!empty($subcats)) {
+	if (!empty($subcats_html)) {
 		$tpl->newBlock('listsubcats');
-
-		$subcat_ids = [];
-		foreach ($subcats as $s) {
-			$subcat_ids[] = (int) $s->id;
-		}
-
-		$subcat_id_in = implode(',', $subcat_ids);
-
-		// Batch fetch 2nd level subcategories
-		$subcats2_by_parent = [];
-		$subcats2_results = $db->get_results("SELECT `id`, `parent`, `title`, `textid` FROM `cat` WHERE `parent` IN ($subcat_id_in) AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
-		if (!empty($subcats2_results)) {
-			foreach ($subcats2_results as $s2) {
-				$subcats2_by_parent[$s2->parent][] = $s2;
-			}
-		}
-
-		// Batch fetch moderators for all subcategories
-		$moderators_by_cat = [];
-		$mods_results = $db->get_results("SELECT `category_id`, `user_id` FROM `cat_moderators` WHERE `category_id` IN ($subcat_id_in)");
-		if (!empty($mods_results)) {
-			foreach ($mods_results as $m_row) {
-				$moderators_by_cat[$m_row->category_id][] = $m_row->user_id;
-			}
-		}
-
-		// Batch fetch latest topics for each subcategory
-		$latest_topics = [];
-		$topic_rows = $db->get_results("
-			SELECT `category`, `title`, `strid`, `bump`, `author`
-			FROM (
-				SELECT `category`, `title`, `strid`, `bump`, `author`,
-				       ROW_NUMBER() OVER (PARTITION BY `category` ORDER BY `bump` DESC) AS `rn`
-				FROM `pages`
-				WHERE `category` IN ($subcat_id_in)
-			) AS `sub`
-			WHERE `rn` = 1
-		");
-		if (!empty($topic_rows)) {
-			foreach ($topic_rows as $t_row) {
-				$latest_topics[$t_row->category] = $t_row;
-			}
-		}
-
-		foreach ($subcats as $forum) {
-
-			$tpl->newBlock('listsubcats-node');
-
-			if (empty($forum->icon)) {
-				$forum->icon = $generic_f_icon;
-			}
-
-			$add_mods = '';
-			if (!empty($moderators_by_cat[$forum->id])) {
-				$add_mods = '<br>Moderatori: ';
-				$mods = [];
-				foreach ($moderators_by_cat[$forum->id] as $mod_uid) {
-					$mods[] = userlink($mod_uid);
-				}
-				$add_mods .= implode(', ', $mods);
-			}
-
-			$tpl->assign([
-				'id' => $forum->id,
-				'title' => $forum->title,
-				'textid' => $forum->textid,
-				'icon' => $forum->icon,
-				'content' => $forum->content . $add_mods,
-				'posts' => $forum->stat_com,
-				'topics' => $forum->stat_topics,
-				'txt-posts' => lv_dsk($forum->stat_com, 'posts', 'posti'),
-				'txt-topics' => lv_dsk($forum->stat_topics, 'tēma', 'tēmas')
-			]);
-
-			if (isset($latest_topics[$forum->id])) {
-				$topic = $latest_topics[$forum->id];
-				$tpl->assign([
-					'date' => display_time(strtotime($topic->bump)),
-					'topic' => '<a href="/read/' . $topic->strid . '" title="' . h($topic->title) . '">' . textlimit($topic->title, 32) . '</a>',
-					'author' => userlink($topic->author)
-				]);
-			}
-
-			if ($auth->level == 1) {
-				//foruma apakškategoriju pievienošana/labošana
-				$tpl->assign([
-					'addlink' => '<br><a class="forum-admin-tool" href="/forum-add/' . $forum->textid . '">+add</a> ',
-					'editlink' => ' <a class="forum-admin-tool" href="/forum-edit/' . $forum->textid . '">+edit</a> '
-				]);
-			}
-
-			if (!empty($subcats2_by_parent[$forum->id])) {
-				$tpl->newBlock('subcats');
-				foreach ($subcats2_by_parent[$forum->id] as $subcat2) {
-					$tpl->newBlock('subcats-node');
-					$tpl->assign([
-						'title' => $subcat2->title,
-						'textid' => $subcat2->textid
-					]);
-				}
-			}
-		}
+		$tpl->assign('forum-subcats-html', $subcats_html);
 	}
 }
 
 if (!$category->mods_only || im_mod()) {
 
-	$user_avatar_field = ($category->intro) ? ", `users`.`avatar` AS `user_avatar`" : "";
-
-	$articles = $db->get_results("SELECT
-		`pages`.`id` AS `id`,
-		`pages`.`title` AS `title`,
-		`pages`.`strid` AS `strid`,
-		`pages`.`date` AS `date`,
-		`pages`.`author` AS `author`,
-		`pages`.`closed` AS `closed`,
-		`pages`.`text` AS `text`,
-		`pages`.`avatar` AS `avatar`,
-		`pages`.`readby` AS `readby`,
-		`pages`.`views` AS `views`,
-		`pages`.`attach` AS `attach`,
-		`pages`.`intro` AS `intro`,
-		`pages`.`posts` AS `posts`,
-		`users`.`nick` AS `nick`,
-		`users`.`level` AS `level`,
-		`users`.`deleted` AS `author_deleted`" . $user_avatar_field . "
-	FROM
-		`pages`
-	LEFT JOIN
-		`users` ON `users`.`id` = `pages`.`author`
-	WHERE
-		`pages`.`category` = " . (int)$category->id . " AND
-		`pages`.`lang` = " . (int)$lang . "
-	ORDER BY
-		" . $sortby . "
-	LIMIT
-		$skip,$end");
-
-	if ($category->module == 'list') {
-
+	if ($category->module == 'list' && $category->isforum) {
 		if ($skip) {
 			$page_title = $page_title . ' (lapa ' . ($skip / $end + 1) . ')';
 		}
+		$add_css[] = 'forum.26989092.min.css';
+		$page_title = $page_title . ' - forums';
+		$root_cat = get_cat(get_top($category->parent));
 
-		if ($category->isforum) {
+		$tpl->newBlock('list-forum');
+		$tpl->assign([
+			'title' => $category->title,
+			'catid' => $category->id,
+			'strid' => ($root_cat ? $root_cat->textid : '')
+		]);
 
-			$add_css[] = 'forum.26989092.min.css';
-
-			$page_title = $page_title . ' - forums';
-
-			$root_cat = get_cat(get_top($category->parent));
-
-			$tpl->newBlock('list-forum');
+		if ($auth->ok) {
+			$tpl->newBlock('forum-new');
 			$tpl->assign([
-				'title' => $category->title,
 				'catid' => $category->id,
 				'strid' => ($root_cat ? $root_cat->textid : '')
 			]);
-			
-			if($auth->ok) {
-				$tpl->newBlock('forum-new');
-				$tpl->assign([
-					'catid' => $category->id,
-					'strid' => ($root_cat ? $root_cat->textid : '')
-				]);
-			}
+		}
 
+		$v = get_forum_cache_version($lang);
+		$cache_key_topics = 'forum_topics_' . $category->id . '_' . $skip . '_' . $lang . '_' . $v;
+		$topics_html = $m->get($cache_key_topics);
+
+		if ($topics_html === false) {
+			$articles = $db->get_results("SELECT
+				`pages`.`id` AS `id`,
+				`pages`.`title` AS `title`,
+				`pages`.`strid` AS `strid`,
+				`pages`.`date` AS `date`,
+				`pages`.`author` AS `author`,
+				`pages`.`closed` AS `closed`,
+				`pages`.`attach` AS `attach`,
+				`pages`.`posts` AS `posts`,
+				`users`.`nick` AS `nick`,
+				`users`.`level` AS `level`,
+				`users`.`deleted` AS `author_deleted`
+			FROM
+				`pages`
+			LEFT JOIN
+				`users` ON `users`.`id` = `pages`.`author`
+			WHERE
+				`pages`.`category` = " . (int)$category->id . " AND
+				`pages`.`lang` = " . (int)$lang . "
+			ORDER BY
+				" . $sortby . "
+			LIMIT
+				$skip,$end");
+
+			$t_out = '';
 			if (!empty($articles)) {
+				$t_out .= '<table id="forum"><tr><th colspan="2" class="first">Tēmas</th><th>Atbildes</th><th class="last">Datums</th></tr>';
 				foreach ($articles as $article) {
 					if (!$article->nick) {
 						$article->nick = 'Nezināms';
 						$article->level = 0;
 					}
-					$tpl->newBlock('list-forum-node');
-
 					$date = display_time(strtotime($article->date));
 
+					$title_display = $article->title;
 					if ($article->attach) {
-						$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
+						$title_display = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" /> ' . $article->title . '</strong>';
 					}
 
-					$type = 'topic_';
-					if ($article->attach) {
-						$type = 'sticky_';
-					}
-					$closed = '';
-					if ($article->closed) {
-						$closed = '_locked';
-					}
-					$read = 'read';
-					$readby = !empty($article->readby) ? @unserialize($article->readby) : [];
-					if (!is_array($readby)) {
-						$readby = [];
-					}
-					if ($auth->ok && !in_array($auth->id, $readby)) {
-						$read = 'unread';
-					}
-					$timg = $type . $read . $closed . '.gif';
+					$type = $article->attach ? 'sticky_' : 'topic_';
+					$closed = $article->closed ? '_locked' : '';
+					$timg = $type . 'read' . $closed . '.gif';
 
 					if (!$article->author_deleted && !empty($article->nick)) {
-						$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+						$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, 'disable', $article->author) . '</a>';
 					} else {
 						$author_link = '<em>dzēsts</em>';
 					}
 
-					$tpl->assign([
-						'id' => $article->id,
-						'url' => '/read/' . $article->strid,
-						'title' => $article->title,
-						'timg' => $timg,
-						'date' => $date,
-						'author' => $author_link,
-						'posts' => $article->posts,
-					]);
+					$t_out .= '<tr><td><img width="19" height="18" src="//img.exs.lv/bildes/' . $timg . '" alt="" /></td>' .
+					          '<td><h3><a href="/read/' . $article->strid . '">' . $title_display . '</a></h3></td>' .
+					          '<td class="center">' . $article->posts . '</td>' .
+					          '<td class="last">' . $date . '<br>no:&nbsp;' . $author_link . '</td></tr>';
 				}
+				$t_out .= '</table>';
 			}
 
-			//list for categories with intro text
-		} elseif ($category->intro) {
+			$total_count = (isset($category->stat_topics) && is_numeric($category->stat_topics) && (int)$category->stat_topics > 0)
+				? (int)$category->stat_topics
+				: (int)$db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'");
+
+			$pager = pager($total_count, $skip, $end, '/' . $category->textid . '/?skip=');
+			if (!empty($pager['pages']) || !empty($pager['next']) || !empty($pager['prev'])) {
+				$t_out .= '<p class="core-pager">' . $pager['next'] . ' ' . $pager['pages'] . ' ' . $pager['prev'] . '</p>';
+			}
+
+			$topics_html = $t_out;
+			$m->set($cache_key_topics, $topics_html, 21600);
+		}
+
+		$tpl->assign('forum-topics-html', $topics_html);
+
+	} elseif ($category->module == 'list') {
+
+		$user_avatar_field = ($category->intro) ? ", `users`.`avatar` AS `user_avatar`" : "";
+
+		$articles = $db->get_results("SELECT
+			`pages`.`id` AS `id`,
+			`pages`.`title` AS `title`,
+			`pages`.`strid` AS `strid`,
+			`pages`.`date` AS `date`,
+			`pages`.`author` AS `author`,
+			`pages`.`closed` AS `closed`,
+			`pages`.`text` AS `text`,
+			`pages`.`avatar` AS `avatar`,
+			`pages`.`readby` AS `readby`,
+			`pages`.`views` AS `views`,
+			`pages`.`attach` AS `attach`,
+			`pages`.`intro` AS `intro`,
+			`pages`.`posts` AS `posts`,
+			`users`.`nick` AS `nick`,
+			`users`.`level` AS `level`,
+			`users`.`deleted` AS `author_deleted`" . $user_avatar_field . "
+		FROM
+			`pages`
+		LEFT JOIN
+			`users` ON `users`.`id` = `pages`.`author`
+		WHERE
+			`pages`.`category` = " . (int)$category->id . " AND
+			`pages`.`lang` = " . (int)$lang . "
+		ORDER BY
+			" . $sortby . "
+		LIMIT
+			$skip,$end");
+
+		if ($skip) {
+			$page_title = $page_title . ' (lapa ' . ($skip / $end + 1) . ')';
+		}
+
+		if ($category->intro) {
 			$tpl->newBlock('list-articles');
 			$tpl->assign([
 				'title' => $category->title,
@@ -336,8 +366,6 @@ if (!$category->mods_only || im_mod()) {
 				}
 			}
 		} else {
-
-			//list for categories w/o intro text
 			$tpl->newBlock('list-articles-short');
 			$tpl->assign([
 				'title' => $category->title,
@@ -347,7 +375,6 @@ if (!$category->mods_only || im_mod()) {
 
 			if (!empty($articles)) {
 				foreach ($articles as $article) {
-
 					$tpl->newBlock('list-articles-short-node');
 
 					if ($article->attach) {

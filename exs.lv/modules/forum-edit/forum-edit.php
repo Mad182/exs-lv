@@ -21,6 +21,7 @@ if (isset($_GET['var1'])) {
 
 			$parent = get_cat($edit->parent);
 			set_flash('Kategorijas apraksts saglabāts!', 'success');
+			clear_forum_cache($edit->lang);
 			redirect('/' . $parent->textid);
 		}
 

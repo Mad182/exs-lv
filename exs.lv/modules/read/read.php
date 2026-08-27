@@ -110,6 +110,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 		$db->query("UPDATE comments SET text = ('$edit_comment_text'), edit_time = '" . time() . "', edit_user = '$auth->id', edit_times = edit_times+1 WHERE id = '$edit_comment_id' AND pid = '$article->id' LIMIT 1");
 		$auth->log('Laboja komentāru', 'comments', $edit_comment_id);
+		clear_forum_cache($article->lang ?? $lang);
 		redirect('/read/' . $article->strid);
 	}
 
@@ -137,6 +138,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			}
 
 			$auth->log('Izdzēsa komentāru', 'comments', $comment->id);
+			clear_forum_cache($article->lang ?? $lang);
 			redirect('/read/' . $article->strid);
 		}
 	}
@@ -229,6 +231,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				} else {
 					$auth->log('Atvēra komentārus rakstam', 'pages', $article->id);
 				}
+				clear_forum_cache($article->lang ?? $lang);
 				die('ok');
 			}
 		}
@@ -243,6 +246,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				} else {
 					$auth->log('Atbloķēja autora komentāru atvēršanu', 'pages', $article->id);
 				}
+				clear_forum_cache($article->lang ?? $lang);
 				die('ok');
 			}
 
@@ -254,6 +258,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				} else {
 					$auth->log('Atsprauda rakstu', 'pages', $article->id);
 				}
+				clear_forum_cache($article->lang ?? $lang);
 				die('ok');
 			}
 		}
@@ -313,6 +318,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				$auth->log('Izdzēsa rakstu ('.$article->title.')', 'pages', $article->id);
 			}
 
+			clear_forum_cache($article->lang ?? $lang);
 			redirect('/' . $category->textid);
 
 		}
@@ -468,6 +474,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 					WHERE `id` = '$topicid'");
 
 					update_stats($topiccat);
+					clear_forum_cache($article->lang ?? $lang);
 
 					if ($category->textid == 'filmas' && im_mod()) {
 						$title_lv = title2db($_POST['movie-titlelv']);
