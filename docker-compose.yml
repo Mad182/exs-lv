@@ -40,7 +40,7 @@ services:
       - ./dev-draza/cat.sql:/docker-entrypoint-initdb.d/02-cat.sql:ro
       - ./dev-draza/seed_dev.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 3s
       timeout: 5s
       retries: 15
