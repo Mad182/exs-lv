@@ -74,7 +74,7 @@ if($category->textid === 'index') {
 
 $v = get_forum_cache_version($lang);
 $is_admin = ($auth->level == 1 && !$auth->mobile);
-$cache_key = 'forum_idx_' . $lang . '_' . $columns . '_' . intval($is_admin) . '_' . intval(im_mod()) . '_' . intval($auth->ok) . '_' . $v;
+$cache_key = 'forum_idx_' . (int)$category->id . '_' . $lang . '_' . $columns . '_' . intval($is_admin) . '_' . intval(im_mod()) . '_' . intval($auth->ok) . '_' . $v;
 
 $cached_data = $m->get($cache_key);
 if ($cached_data !== false && is_array($cached_data)) {
