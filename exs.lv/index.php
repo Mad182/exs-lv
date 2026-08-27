@@ -402,12 +402,12 @@ if (!empty($secure_login)) {
 	$login_url = h('https://secure.exs.lv/');
 }
 
-if ($auth->skin == 1 && $lang == 1) {
-	$add_css[] = 'manual-dark.bcd4a609.min.css';
-} elseif ($auth->ok === true && $auth->skin == 0 && $lang == 1) {
+if ($auth->skin == 1 && ($lang == 1 || $lang == 3)) {
+	$add_css[] = 'manual-dark.71829d19.min.css';
+} elseif ($auth->ok === true && $auth->skin == 0 && ($lang == 1 || $lang == 3)) {
 	//light skin
-} elseif($lang === 1) {
-	$add_css[] = 'auto-dark.fa6b3f78.min.css';
+} elseif ($lang === 1 || $lang === 3) {
+	$add_css[] = 'auto-dark.13a0da7c.min.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei

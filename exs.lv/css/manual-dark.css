@@ -1076,3 +1076,267 @@ ul.subcat-list li a:hover {
 	color: #60a5fa;
 }
 
+/* ==========================================================================
+   coding.lv Dark Theme & Code Blocks
+   ========================================================================== */
+
+/* coding.lv Container & Layout */
+body #wrapper {
+	background: #222831;
+	border-left-color: #2e3846;
+	border-right-color: #2e3846;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+#wrapper #header {
+	background: #161a20;
+}
+
+#wrapper #logo {
+	background: #161a20;
+}
+
+#wrapper #tools-bar {
+	background: #14181d;
+	color: #9ba3af;
+	border-bottom: 1px solid #1f2630;
+}
+
+#wrapper #tools-bar #site-links li:before {
+	color: #334155;
+}
+
+#wrapper #tools-bar #site-links a {
+	color: #9ba3af;
+}
+
+#wrapper #tools-bar #site-links a:hover {
+	color: #ffffff;
+}
+
+#wrapper #top-menu {
+	background: #161d26;
+	border-bottom-color: #3b82f6;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#wrapper #top-menu li a {
+	color: #cbd5e1;
+}
+
+#wrapper #top-menu li:hover > a,
+#wrapper #top-menu li.selected > a {
+	background: #252c35;
+	color: #ffffff;
+}
+
+#wrapper #top-menu li ul {
+	background: #252c35;
+	border-color: #343b44;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+#wrapper #top-menu li ul li a,
+#wrapper #top-menu li.selected ul li a,
+#wrapper #top-menu li:hover ul li a {
+	background: #252c35;
+	color: #cbd5e1;
+}
+
+#wrapper #top-menu li ul li a:hover,
+#wrapper #top-menu li ul li:hover a {
+	background: #2c343e;
+	color: #ffffff;
+}
+
+#wrapper #login-form label {
+	color: #9ba3af;
+}
+
+#wrapper #login-form input[type="text"],
+#wrapper #login-form input[type="password"] {
+	background: #1a1f25;
+	border-color: #343b44;
+	color: #e9ecef;
+}
+
+/* coding.lv Sidebar */
+#inner-sidebar h3 {
+	background: #161a20;
+	color: #58a6ff;
+	border-color: #2d3748;
+	border-top-color: #3b82f6;
+}
+
+#inner-sidebar .box {
+	background: #252c35;
+	border-color: #2d3748;
+	color: #c9d1d9;
+}
+
+#wrapper #latest-topics li {
+	border-bottom-color: #2d3748;
+}
+
+#wrapper #latest-topics li a {
+	color: #e9ecef;
+}
+
+#wrapper #latest-topics li a:hover {
+	color: #58a6ff;
+}
+
+#wrapper #inner-content {
+	color: #e9ecef;
+}
+
+#wrapper #breadcrumbs {
+	color: #9ba3af;
+}
+
+#wrapper #breadcrumbs a {
+	color: #58a6ff;
+}
+
+/* coding.lv Forum Comments */
+#wrapper #comments dt {
+	background: #1e242c;
+	border-color: #2d3748;
+	color: #9ba3af;
+}
+
+#wrapper #comments dt a.username {
+	color: #e9ecef;
+}
+
+#wrapper #comments dt img {
+	border-color: #343b44;
+}
+
+#wrapper #comments dd {
+	background: #222831;
+	border-color: #2d3748;
+	color: #c9d1d9;
+}
+
+#wrapper .comment-text {
+	color: #c9d1d9;
+}
+
+#wrapper #bottom-tools {
+	border-top-color: #2d3748;
+}
+
+#wrapper #bottom-tools a {
+	color: #9ba3af;
+}
+
+#wrapper #bottom-tools a:hover {
+	color: #58a6ff;
+}
+
+/* coding.lv Footer */
+#wrapper #footer {
+	background: #161a20;
+	border-top-color: #28313d;
+	color: #9ba3af;
+}
+
+#wrapper #footer .infoblock {
+	border-top-color: #28313d;
+	color: #9ba3af;
+}
+
+#wrapper #online-users {
+	color: #9ba3af;
+}
+
+/* Code Blocks & Google Prettify Dark Mode */
+code,
+pre,
+.code,
+span.c,
+.codebox,
+.prettyprint {
+	background: #121820 !important;
+	color: #e2e8f0 !important;
+	border: 1px solid #26303e !important;
+	border-left: 4px solid #3b82f6 !important;
+}
+
+.inlinecode {
+	background: #1e2631 !important;
+	color: #79c0ff !important;
+	border: 1px solid #2d3748 !important;
+}
+
+.prettyprint .pln,
+pre .pln,
+code .pln {
+	color: #e2e8f0 !important;
+}
+
+.prettyprint .str,
+.prettyprint .atv,
+pre .str,
+code .str {
+	color: #7ee787 !important;
+}
+
+.prettyprint .kwd,
+.prettyprint .tag,
+pre .kwd,
+code .kwd {
+	color: #ff7b72 !important;
+	font-weight: 600 !important;
+}
+
+.prettyprint .com,
+pre .com,
+code .com {
+	color: #8b949e !important;
+	font-style: italic !important;
+}
+
+.prettyprint .typ,
+.prettyprint .atn,
+.prettyprint .dec,
+.prettyprint .var,
+pre .typ,
+code .typ {
+	color: #79c0ff !important;
+}
+
+.prettyprint .lit,
+pre .lit,
+code .lit {
+	color: #f0883e !important;
+}
+
+.prettyprint .pun,
+.prettyprint .opn,
+.prettyprint .clo,
+pre .pun,
+code .pun {
+	color: #c9d1d9 !important;
+}
+
+.prettyprint .fun,
+pre .fun,
+code .fun {
+	color: #d2a8ff !important;
+}
+
+ol.linenums {
+	color: #6e7681 !important;
+}
+
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 {
+	background: #161d26 !important;
+}
+
+

@@ -132,6 +132,9 @@ if (isset($arr_domains[$host_clean])) {
 	
 	if (substr($host_clean, -6) === '.local' || $host_clean === 'localhost' || strpos($host_clean, '127.') === 0) {
 		$is_local = 1;
+		if (isset($_GET['__site']) && isset($config_domains[(int) $_GET['__site']])) {
+			$lang = (int) $_GET['__site'];
+		}
 	}
 	
 // valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'
