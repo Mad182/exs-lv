@@ -47,9 +47,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	}
 
 	// Anti-Cheat Check 2: Max theoretical score check
-	// Snake has 6 levels with total 45 cherries * 10 points = 450 max score
-	if ($score > 450) {
-		echo json_encode(['success' => false, 'message' => 'Uzrādītais rezultāts pārsniedz spēles maksimāli iespējamos punktus (450)!']);
+	// Snake has 7 levels with total 57 cherries * 10 points = 570 max score
+	if ($score > 570) {
+		echo json_encode(['success' => false, 'message' => 'Uzrādītais rezultāts pārsniedz spēles maksimāli iespējamos punktus (570)!']);
 		exit;
 	}
 

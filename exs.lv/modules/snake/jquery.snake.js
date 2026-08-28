@@ -546,5 +546,18 @@ var Level = [
 		{seg: 30, top: 50, left: 340},
 		{seg: 40, top: 0, left: 0},
 		{seg: 40, top: 0, left: 390}
+	],
+	[
+		{cherries: 12, length: 12, speed: 70},
+		{seg: 10, top: 40, left: 200},
+		{seg: 10, top: 260, left: 200},
+		{seg: 16, top: 120, left: 140},
+		{seg: 16, top: 120, left: 260},
+		{seg: 8, top: 60, left: 60},
+		{seg: 8, top: 260, left: 60},
+		{seg: 8, top: 60, left: 340},
+		{seg: 8, top: 260, left: 340},
+		{seg: 4, top: 180, left: 20},
+		{seg: 4, top: 180, left: 380}
 	]
 ];
