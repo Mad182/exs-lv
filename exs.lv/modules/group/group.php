@@ -668,6 +668,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 				if (isset($_GET['single'])) {
 					$page_title = textlimit(youtube_title($record->text), 64, '...') . ' - forums';
+					if ($group->public) {
+						$canonical = $opengraph_meta['url'] = get_protocol($group->lang) . get_domain($group->lang) . $url;
+						$opengraph_meta['title'] = textlimit(youtube_title($record->text), 64, '...') . ' - ' . $group->title;
+						$opengraph_meta['description'] = h(textlimit(strip_tags($record->text), 200));
+						$opengraph_meta['type'] = 'article';
+					}
 				}
 
 				$post_bump = $record->bump;
@@ -854,6 +860,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			// grupas mb sarakstā rāda lappuses
 			if (!isset($_GET['single'])) {
 
+				if ($group->public && $skip === 0) {
+					$canonical = $opengraph_meta['url'] = get_protocol($group->lang) . get_domain($group->lang) . $group_link . '/forum';
+				}
+
 				if(empty($group->paginator)) {
 					$group->paginator = $db->get_var("SELECT count(*) FROM `miniblog` WHERE `groupid` = '" . $group->id . "' AND `removed` = '0' AND `parent` = '0'");
 				}
@@ -956,6 +966,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$page_title =  $custom_p_title . ' - ' . $group->title;
 			} else {
 				$page_title = $group->title . ' - ' . $tab->title;
+			}
+
+			if ($group->public && $tab->public) {
+				$canonical = $opengraph_meta['url'] = get_protocol($group->lang) . get_domain($group->lang) . $group_link . '/tab/' . $tab->slug;
 			}
 
 		} else {
@@ -1178,8 +1192,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
  * 6. GRUPAS SĀKUMLAPAS CILNE UN TĀS IESPĒJAS
  */ else {
 
-	if (!empty($group->strid) && $group->strid === $category->textid) {
-		$canonical = $opengraph_meta['url'] = 'https://' . $config_domains[$group->lang]['domain'] . '/' . $group->strid;
+	if ($group->public) {
+		$canonical = $opengraph_meta['url'] = get_protocol($group->lang) . get_domain($group->lang) . $group_link;
 	}
 
 	$tpl->assignGlobal('active-tab-info', 'active');
