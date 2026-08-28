@@ -24,6 +24,7 @@
 }
 
 #map1 {
+	box-sizing: content-box;
 	width: 400px;
 	height: 400px;
 	position: relative;
