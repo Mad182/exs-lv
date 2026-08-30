@@ -6378,10 +6378,10 @@ color:#fff !important;border-right:1px solid #485a63;padding:15px 10px !importan
 .nav-collapse .dropdown-menu, ul.nav li.dropdown:hover > ul.dropdown-menu, .nav-collapse ul.nav li.dropdown:hover > ul.dropdown-menu {
 display:none !important
 }
-body.is-game-page #sidebar-left, body.page-speles #sidebar-left, body.module-speles #sidebar-left, body.page-grupas #sidebar-left, body.page-group #sidebar-left, body.module-groups #sidebar-left, body.module-group #sidebar-left, body.module-group-create #sidebar-left {
+body.is-game-page #sidebar-left, body.page-speles #sidebar-left, body.module-speles #sidebar-left, body.page-grupas #sidebar-left, body.page-group #sidebar-left, body.module-groups #sidebar-left, body.module-group #sidebar-left, body.module-group-create #sidebar-left, body.page-forums #sidebar-left, body.module-forums #sidebar-left {
 display:none !important
 }
-body.is-game-page #main-left, body.page-speles #main-left, body.module-speles #main-left, body.page-grupas #main-left, body.page-group #main-left, body.module-groups #main-left, body.module-group #main-left, body.module-group-create #main-left {
+body.is-game-page #main-left, body.page-speles #main-left, body.module-speles #main-left, body.page-grupas #main-left, body.page-group #main-left, body.module-groups #main-left, body.module-group #main-left, body.module-group-create #main-left, body.page-forums #main-left, body.module-forums #main-left {
 width:100% !important;margin-left:0 !important
 }
 body.is-game-page .widget-poll, body.page-speles .widget-poll, body.module-speles .widget-poll {

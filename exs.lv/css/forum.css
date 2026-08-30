@@ -332,6 +332,19 @@ ul.subcat-list li a:hover {
 	}
 }
 
+@media (max-width: 979px) {
+	body.page-forums #sidebar-left,
+	body.module-forums #sidebar-left {
+		display: none !important;
+	}
+
+	body.page-forums #main-left,
+	body.module-forums #main-left {
+		width: 100% !important;
+		margin-left: 0 !important;
+	}
+}
+
 @media (max-width: 520px) {
 	#forum td.last {
 		width: 105px;
