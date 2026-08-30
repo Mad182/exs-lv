@@ -5,7 +5,9 @@
 	<!-- START BLOCK : game-card -->
 	<div class="speles-card">
 		<div class="speles-card-header">
-			<span class="speles-card-icon">{game-icon}</span>
+			<a href="{game-url}" class="speles-card-icon-link">
+				<img src="{game-icon}" alt="{game-title}" class="speles-card-icon-img" width="48" height="48" loading="lazy" />
+			</a>
 			<div class="speles-card-title-group">
 				<span class="label {game-badge-class} pull-right">{game-badge}</span>
 				<h3><a href="{game-url}">{game-title}</a></h3>

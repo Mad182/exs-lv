@@ -38,9 +38,25 @@
 	margin-bottom: 10px;
 }
 
-.speles-card-icon {
-	font-size: 32px;
-	line-height: 1;
+.speles-card-icon-link {
+	display: inline-block;
+	flex-shrink: 0;
+	text-decoration: none;
+}
+
+.speles-card-icon-img {
+	width: 48px;
+	height: 48px;
+	border-radius: 10px;
+	display: block;
+	object-fit: cover;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.speles-card:hover .speles-card-icon-img {
+	transform: scale(1.06);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .speles-card-title-group {
