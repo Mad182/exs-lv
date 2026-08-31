@@ -26,7 +26,7 @@
 					<td{user-special}>{user-place}</td>
 					<td{user-special}><a href="{user-url}">{user-nick}</a></td>
 					<td{user-special} style="text-align: right; font-weight: bold;">{user-score}</td>
-					<td{user-special} style="text-align: right; color: #888;">{user-time}</td>
+					<td{user-special} style="text-align: right; color: #888;">{user-date}</td>
 				</tr>
 				<!-- END BLOCK : top-node -->
 			</tbody>

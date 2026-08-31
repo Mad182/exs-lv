@@ -125,13 +125,30 @@ if ($act == 'top' || $act == 'overall-top') {
 		]);
 
 		if ($diff_key == 'easy') {
-			$where_game = "game IN ('minu-mekletajs-easy', 'minu-mekletajs')";
+			$where_game_raw = "game IN ('minu-mekletajs-easy', 'minu-mekletajs')";
+			$where_game_g = "g.game IN ('minu-mekletajs-easy', 'minu-mekletajs')";
 		} else {
-			$where_game = "game = 'minu-mekletajs-" . $diff_key . "'";
+			$where_game_raw = "game = 'minu-mekletajs-" . $diff_key . "'";
+			$where_game_g = "g.game = 'minu-mekletajs-" . $diff_key . "'";
 		}
 
-		$where_time = ($act == 'top') ? " AND time >= '$today_start'" : "";
-		$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE $where_game $where_time GROUP BY user_id ORDER BY score ASC LIMIT 100");
+		$where_time_raw = ($act == 'top') ? " AND time >= '$today_start'" : "";
+		$where_time_g = ($act == 'top') ? " AND g.time >= '$today_start'" : "";
+
+		$topusers = $db->get_results("
+			SELECT g.user_id, g.score, MIN(g.time) as time
+			FROM gamescore g
+			INNER JOIN (
+				SELECT user_id, MIN(score) AS min_score
+				FROM gamescore
+				WHERE $where_game_raw $where_time_raw
+				GROUP BY user_id
+			) b ON g.user_id = b.user_id AND g.score = b.min_score
+			WHERE $where_game_g $where_time_g
+			GROUP BY g.user_id, g.score
+			ORDER BY g.score ASC, time ASC
+			LIMIT 100
+		");
 
 		if ($topusers) {
 			$tpl->newBlock('top-table');
@@ -161,7 +178,8 @@ if ($act == 'top' || $act == 'overall-top') {
 						'user-url' => mkurl('user', $topuser->user_id, $usr->nick),
 						'user-nick' => usercolor($usr->nick, $usr->level),
 						'user-score' => $time_str,
-						'user-time' => time_ago($topuser->time)
+						'user-date' => date('Y-m-d H:i', $topuser->time),
+						'user-time' => date('Y-m-d H:i', $topuser->time)
 					]);
 					$i++;
 				}
