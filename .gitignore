@@ -52,4 +52,5 @@
 !/.githooks/**
 /vendor/*
 /exs.lv/latvian-games/*
-
+/exs.lv/games/ut99/gamedata/*
+!/exs.lv/games/ut99/gamedata/manifest.json

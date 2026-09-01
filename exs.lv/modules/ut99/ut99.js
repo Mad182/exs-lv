@@ -255,7 +255,7 @@
 			window.Module.preRun = window.Module.preRun || [];
 			window.Module.preRun.push(function() {
 				if (typeof syncDataFiles === "function") {
-					var syncer = syncDataFiles('ut99_exs_v3', 'https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/');
+					var syncer = syncDataFiles('ut99_exs_v5', '/games/ut99/gamedata/');
 					syncer.onerror = function(why) {
 						console.error("Syncer error:", why);
 						if (loadingStatus) loadingStatus.textContent = why;
@@ -288,11 +288,10 @@
 									return;
 								}
 								var path = "/" + event.target.result.filename;
-								var ui8arr = new Uint8Array(event.target.result.chunk);
-								var len = event.target.filesize || ui8arr.length;
-								var arr = new Array(len);
-								for (var j = 0; j < len; ++j) {
-									arr[j] = ui8arr[j];
+								var chunk = event.target.result.chunk;
+								var ui8arr = new Uint8Array(chunk);
+								if (event.target.filesize && ui8arr.length !== event.target.filesize) {
+									ui8arr = ui8arr.subarray(0, event.target.filesize);
 								}
 
 								var basedir = path.substring(0, path.lastIndexOf('/')) || '/';
@@ -307,7 +306,7 @@
 								} catch (err) {}
 
 								try {
-									FS.createDataFile(basedir, filename, arr, true, true, true);
+									FS.createDataFile(basedir, filename, ui8arr, true, true, true);
 								} catch (err) {
 									console.warn("createDataFile error for " + path, err);
 								}

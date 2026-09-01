@@ -44,10 +44,18 @@
 								<div class="ut99-form-group">
 									<label for="ut99-map-select">Arēnas Karte:</label>
 									<select id="ut99-map-select" class="ut99-select">
-										<option value="CityIntro" selected>CityIntro (Ievads / Flyby 3D Arēna)</option>
+										<option value="DM-Deck16][" selected>DM-Deck16][ (Klasiskā Arēna)</option>
+										<option value="DM-Turbine">DM-Turbine (Kompakta)</option>
+										<option value="DM-Morpheus">DM-Morpheus (Zema Gravitācija)</option>
+										<option value="DM-Fractal">DM-Fractal (Dinamiska)</option>
+										<option value="DM-Phobos">DM-Phobos (Kosmosa Stacija)</option>
+										<option value="DM-Curse][">DM-Curse][ (Pazemes Arēna)</option>
+										<option value="DM-Liandri">DM-Liandri (Reaktors)</option>
+										<option value="DM-Oblivion">DM-Oblivion (Turnīrs)</option>
+										<option value="DM-Tutorial">DM-Tutorial (Apmācība)</option>
+										<option value="CTF-Face">CTF-Face (Facing Worlds)</option>
+										<option value="CityIntro">CityIntro (Flyby 3D Ievads)</option>
 										<option value="UT-Logo-Map">UT-Logo-Map (Logo telpa)</option>
-										<option value="Entry">Entry (Ieejas arēna)</option>
-										<option value="UTCredits">UTCredits (Titru skats)</option>
 									</select>
 								</div>
 

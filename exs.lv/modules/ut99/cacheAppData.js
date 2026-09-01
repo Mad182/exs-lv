@@ -5,8 +5,8 @@
 
 function syncDataFiles(dbname, baseurl) {
 	var retval = {};
-	if (typeof dbname === "undefined") { dbname = "ut99_exs_v3"; }
-	if (typeof baseurl === "undefined") { baseurl = "https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/"; }
+	if (typeof dbname === "undefined") { dbname = "ut99_exs_v5"; }
+	if (typeof baseurl === "undefined") { baseurl = "/games/ut99/gamedata/"; }
 
 	var urlrandomizerarg = "?nocache=" + (Date.now() / 1000 | 0);
 
