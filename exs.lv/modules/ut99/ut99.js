@@ -191,16 +191,53 @@
 			currentMatchStartTime = Math.floor(Date.now() / 1000);
 
 			if (loadingBox) loadingBox.style.display = 'block';
-			if (loadingStatus) loadingStatus.textContent = 'Pārbauda spēles dzinēju un resursus...';
+			if (loadingStatus) loadingStatus.textContent = 'Ielādē WebAssembly dzinēju (index.wasm)...';
 			if (progressBar) progressBar.style.width = '10%';
+			if (loadingPercent) loadingPercent.textContent = '10%';
 
 			// Configure Emscripten Module
 			window.Module = window.Module || {};
 			window.Module.arguments = commandArgs;
 			window.Module.canvas = canvas;
+			window.Module.wasmBinaryFile = '/games/ut99/index.wasm';
 			window.Module.locateFile = function(path) {
 				return '/games/ut99/' + path;
 			};
+
+			// Pre-fetch index.wasm to pass buffer directly and avoid relative 404s
+			try {
+				const wasmRes = await fetch('/games/ut99/index.wasm');
+				if (wasmRes.ok) {
+					const reader = wasmRes.body ? wasmRes.body.getReader() : null;
+					const contentLength = parseInt(wasmRes.headers.get('Content-Length') || '5123676', 10);
+					let receivedBytes = 0;
+					let chunks = [];
+
+					if (reader) {
+						while (true) {
+							const { done, value } = await reader.read();
+							if (done) break;
+							chunks.push(value);
+							receivedBytes += value.length;
+							const pct = Math.min(100, Math.round((receivedBytes / contentLength) * 100));
+							if (progressBar) progressBar.style.width = pct + '%';
+							if (loadingPercent) loadingPercent.textContent = pct + '%';
+							if (loadingStatus) loadingStatus.textContent = `Ielādē WASM dzinēju (${Math.round(receivedBytes / 1048576 * 10) / 10} MB / ${Math.round(contentLength / 1048576 * 10) / 10} MB)...`;
+						}
+						const fullWasm = new Uint8Array(receivedBytes);
+						let pos = 0;
+						for (const chunk of chunks) {
+							fullWasm.set(chunk, pos);
+							pos += chunk.length;
+						}
+						window.Module.wasmBinary = fullWasm.buffer;
+					} else {
+						window.Module.wasmBinary = await wasmRes.arrayBuffer();
+					}
+				}
+			} catch (err) {
+				console.warn('WASM binary direct stream warning:', err);
+			}
 
 			window.Module.preRun = window.Module.preRun || [];
 			window.Module.preRun.push(function() {
@@ -240,24 +277,13 @@
 			if (!window.UT99_WASM_LOADED) {
 				window.UT99_WASM_LOADED = true;
 				try {
-					const check = await fetch('/games/ut99/index.js');
-					const cType = check.headers.get('content-type') || '';
-					if (check.ok && (cType.includes('javascript') || !cType.includes('html'))) {
-						const script = document.createElement('script');
-						script.src = '/games/ut99/index.js';
-						script.async = true;
-						script.onerror = () => {
-							renderDemoArena();
-						};
-						document.body.appendChild(script);
-					} else {
-						setTimeout(() => {
-							if (loadingBox) loadingBox.style.display = 'none';
-							if (startOverlay) startOverlay.style.display = 'none';
-							isMatchRunning = true;
-							renderDemoArena();
-						}, 500);
-					}
+					const script = document.createElement('script');
+					script.src = '/games/ut99/index.js';
+					script.async = true;
+					script.onerror = () => {
+						renderDemoArena();
+					};
+					document.body.appendChild(script);
 				} catch (err) {
 					renderDemoArena();
 				}
