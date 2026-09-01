@@ -30,14 +30,13 @@
 		const stageContainer = document.getElementById('ut99-stage-container');
 
 		if (!canvas) {
-			return; // Not on the ut99 game stage
+			return;
 		}
 
 		// Tabs
 		const tabButtons = document.querySelectorAll('.ut99-tab-btn');
 		const tabPanes = document.querySelectorAll('.ut99-tab-pane');
 
-		// Tab switching
 		tabButtons.forEach((btn) => {
 			btn.addEventListener('click', () => {
 				tabButtons.forEach((b) => b.classList.remove('active'));
@@ -78,7 +77,7 @@
 			});
 		}
 
-		// Pointer Lock API Handling
+		// Pointer Lock Handling
 		function updatePointerLockStatus() {
 			if (document.pointerLockElement === canvas) {
 				if (pointerStatus) {
@@ -191,24 +190,43 @@
 			await initSessionToken();
 			currentMatchStartTime = Math.floor(Date.now() / 1000);
 
-			// Show loading progress
 			if (loadingBox) loadingBox.style.display = 'block';
-			if (loadingStatus) loadingStatus.textContent = 'Pārbauda un ielādē resursus...';
+			if (loadingStatus) loadingStatus.textContent = 'Pārbauda spēles dzinēju un resursus...';
+			if (progressBar) progressBar.style.width = '10%';
 
-			if (window.UT99AssetCache) {
-				await window.UT99AssetCache.init();
-				window.UT99AssetCache.onProgress = (file, loaded, total) => {
-					const pct = Math.min(100, Math.round((loaded / total) * 100));
-					if (progressBar) progressBar.style.width = pct + '%';
-					if (loadingPercent) loadingPercent.textContent = pct + '%';
-					if (loadingStatus) loadingStatus.textContent = `Ielādē ${file}...`;
-				};
-			}
-
-			// Configure Emscripten Module runtime
+			// Configure Emscripten Module
 			window.Module = window.Module || {};
-			window.Module.canvas = canvas;
 			window.Module.arguments = commandArgs;
+			window.Module.canvas = canvas;
+			window.Module.locateFile = function(path) {
+				return '/games/ut99/' + path;
+			};
+
+			window.Module.preRun = window.Module.preRun || [];
+			window.Module.preRun.push(function() {
+				if (typeof syncDataFiles === "function") {
+					var syncer = syncDataFiles('ut99_exs', '/games/ut99/gamedata/');
+					syncer.onprogress = function(percent, loaded, total, str) {
+						if (progressBar) progressBar.style.width = Math.max(10, percent) + '%';
+						if (loadingPercent) loadingPercent.textContent = percent + '%';
+						if (loadingStatus) loadingStatus.textContent = str;
+					};
+					syncer.onfinish = function() {
+						if (loadingBox) loadingBox.style.display = 'none';
+						if (startOverlay) startOverlay.style.display = 'none';
+						isMatchRunning = true;
+						canvas.focus();
+						canvas.requestPointerLock();
+					};
+					syncer.onerror = function(err) {
+						console.warn("Sync error:", err);
+						if (loadingBox) loadingBox.style.display = 'none';
+						if (startOverlay) startOverlay.style.display = 'none';
+						isMatchRunning = true;
+						renderDemoArena();
+					};
+				}
+			});
 
 			window.Module.onRuntimeInitialized = function () {
 				if (loadingBox) loadingBox.style.display = 'none';
@@ -218,21 +236,31 @@
 				canvas.requestPointerLock();
 			};
 
-			// Load WebAssembly runtime if not already loaded
+			// Load /games/ut99/index.js
 			if (!window.UT99_WASM_LOADED) {
 				window.UT99_WASM_LOADED = true;
-				const script = document.createElement('script');
-				script.src = '/games/ut99/index.js';
-				script.onerror = () => {
-					// Fallback demonstration mode if static assets not yet populated on host
-					setTimeout(() => {
-						if (loadingBox) loadingBox.style.display = 'none';
-						if (startOverlay) startOverlay.style.display = 'none';
-						isMatchRunning = true;
-						renderDemoArena();
-					}, 600);
-				};
-				document.body.appendChild(script);
+				try {
+					const check = await fetch('/games/ut99/index.js');
+					const cType = check.headers.get('content-type') || '';
+					if (check.ok && (cType.includes('javascript') || !cType.includes('html'))) {
+						const script = document.createElement('script');
+						script.src = '/games/ut99/index.js';
+						script.async = true;
+						script.onerror = () => {
+							renderDemoArena();
+						};
+						document.body.appendChild(script);
+					} else {
+						setTimeout(() => {
+							if (loadingBox) loadingBox.style.display = 'none';
+							if (startOverlay) startOverlay.style.display = 'none';
+							isMatchRunning = true;
+							renderDemoArena();
+						}, 500);
+					}
+				} catch (err) {
+					renderDemoArena();
+				}
 			} else {
 				if (startOverlay) startOverlay.style.display = 'none';
 				isMatchRunning = true;
