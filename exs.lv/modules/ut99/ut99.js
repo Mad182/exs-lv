@@ -80,34 +80,6 @@
 			});
 		}
 
-		// Send Keyboard Event to Game Helper
-		function sendKeyToGame(keyCode, keyName, codeName) {
-			if (!canvas) return;
-			canvas.focus();
-			const downEvent = new KeyboardEvent('keydown', {
-				key: keyName,
-				code: codeName || keyName,
-				keyCode: keyCode,
-				which: keyCode,
-				bubbles: true,
-				cancelable: true
-			});
-			const upEvent = new KeyboardEvent('keyup', {
-				key: keyName,
-				code: codeName || keyName,
-				keyCode: keyCode,
-				which: keyCode,
-				bubbles: true,
-				cancelable: true
-			});
-			canvas.dispatchEvent(downEvent);
-			window.dispatchEvent(downEvent);
-			setTimeout(() => {
-				canvas.dispatchEvent(upEvent);
-				window.dispatchEvent(upEvent);
-			}, 60);
-		}
-
 		// Pointer Lock & Focus Handling
 		function updatePointerLockStatus() {
 			if (document.pointerLockElement === canvas) {
@@ -131,35 +103,30 @@
 
 		canvas.addEventListener('click', () => {
 			canvas.focus();
-			if (isMatchRunning) {
-				// Send Escape/Space to start/skip intro if at intro screen
-				sendKeyToGame(27, 'Escape', 'Escape');
-				if (document.pointerLockElement !== canvas) {
-					try {
-						canvas.requestPointerLock();
-					} catch (e) {}
-				}
+			if (isMatchRunning && document.pointerLockElement !== canvas) {
+				try {
+					canvas.requestPointerLock();
+				} catch (e) {}
 			}
 		});
 
-		// Trigger ESC / Start button
+		// Trigger ESC button
 		if (triggerEscBtn) {
 			triggerEscBtn.addEventListener('click', () => {
-				sendKeyToGame(27, 'Escape', 'Escape');
-				sendKeyToGame(32, ' ', 'Space');
+				if (canvas) {
+					canvas.focus();
+					const downEvent = new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true });
+					const upEvent = new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true });
+					canvas.dispatchEvent(downEvent);
+					setTimeout(() => canvas.dispatchEvent(upEvent), 60);
+				}
 			});
 		}
 
-		// Global Key Event Focus Forwarding & Escape override
+		// Global Key Event Focus Forwarding
 		window.addEventListener('keydown', (e) => {
-			if (isMatchRunning) {
-				if (document.activeElement !== canvas) {
-					canvas.focus();
-				}
-				// If user pressed F2 or M or Tilde, trigger Escape/ShowMenu in engine
-				if (e.key === 'F2' || e.key === 'm' || e.key === 'M' || e.key === '`') {
-					sendKeyToGame(27, 'Escape', 'Escape');
-				}
+			if (isMatchRunning && document.activeElement !== canvas) {
+				canvas.focus();
 			}
 		});
 
@@ -353,41 +320,22 @@
 
 								num_requests--;
 								if (num_requests <= 0) {
-									console.log("MEMFS is synchronized. Preparing system configs...");
+									console.log("MEMFS is synchronized. Preparing clean system configs...");
 
-									// Ensure UnrealTournament.ini has UTConsole and RootWindow
+									// Cleanly copy Default.ini -> UnrealTournament.ini & DefUser.ini -> User.ini
 									try {
 										var defIni = FS.findObject('/System/Default.ini');
 										if (defIni && defIni.contents) {
-											var iniText = '';
-											if (typeof TextDecoder !== 'undefined') {
-												iniText = new TextDecoder('utf-8').decode(defIni.contents);
-											} else {
-												iniText = String.fromCharCode.apply(null, defIni.contents);
-											}
-											if (!iniText.includes('[UTMenu.UTConsole]')) {
-												iniText += '\n\n[UTMenu.UTConsole]\nRootWindow=UTMenu.UTMenuRootWindow\nUWindowKey=IK_Esc\nbShowConsole=False\n';
-											}
-											var enc = (typeof TextEncoder !== 'undefined') ? new TextEncoder().encode(iniText) : defIni.contents;
-											FS.createDataFile('/System', 'UnrealTournament.ini', enc, true, true, true);
+											FS.createDataFile('/System', 'UnrealTournament.ini', defIni.contents, true, true, true);
 										}
 									} catch (e) {
 										console.warn("Could not clone UnrealTournament.ini:", e);
 									}
 
-									// Enhance User.ini with multi-key ShowMenu bindings (F1, F2, F10, M, Space, Enter)
 									try {
 										var defUser = FS.findObject('/System/DefUser.ini');
 										if (defUser && defUser.contents) {
-											var userText = '';
-											if (typeof TextDecoder !== 'undefined') {
-												userText = new TextDecoder('utf-8').decode(defUser.contents);
-											} else {
-												userText = String.fromCharCode.apply(null, defUser.contents);
-											}
-											userText = userText.replace(/Escape=ShowMenu/g, 'Escape=ShowMenu\nF1=ShowMenu\nF2=ShowMenu\nF10=ShowMenu\nM=ShowMenu\nTilde=ShowMenu\nSpace=Fire\nEnter=Fire');
-											var encUser = (typeof TextEncoder !== 'undefined') ? new TextEncoder().encode(userText) : defUser.contents;
-											FS.createDataFile('/System', 'User.ini', encUser, true, true, true);
+											FS.createDataFile('/System', 'User.ini', defUser.contents, true, true, true);
 										}
 									} catch (e) {
 										console.warn("Could not clone User.ini:", e);
