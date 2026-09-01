@@ -5,7 +5,7 @@
 
 function syncDataFiles(dbname, baseurl) {
 	var retval = {};
-	if (typeof dbname === "undefined") { dbname = "ut99_exs"; }
+	if (typeof dbname === "undefined") { dbname = "ut99_exs_v3"; }
 	if (typeof baseurl === "undefined") { baseurl = "https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/"; }
 
 	var urlrandomizerarg = "?nocache=" + (Date.now() / 1000 | 0);
@@ -121,7 +121,7 @@ function syncDataFiles(dbname, baseurl) {
 	};
 
 	var download_new_files = function() {
-		if (state.reported_result) { return; }
+		if (state.reported_result) return;
 		progress("Pārbauda lejupielādējamos failus...", 0);
 		var downloadme = [];
 		for (var i in state.remote_manifest) {

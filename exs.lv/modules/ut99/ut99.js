@@ -210,7 +210,7 @@
 			window.Module.preRun = window.Module.preRun || [];
 			window.Module.preRun.push(function() {
 				if (typeof syncDataFiles === "function") {
-					var syncer = syncDataFiles('ut99_exs', 'https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/');
+					var syncer = syncDataFiles('ut99_exs_v3', 'https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/');
 					syncer.onerror = function(why) {
 						console.error("Syncer error:", why);
 						if (loadingStatus) loadingStatus.textContent = why;
@@ -275,7 +275,28 @@
 
 								num_requests--;
 								if (num_requests <= 0) {
-									console.log("MEMFS is synchronized. Starting UT99 engine...");
+									console.log("MEMFS is synchronized. Preparing system configs...");
+
+									// Ensure UnrealTournament.ini and User.ini exist in /System
+									try {
+										var defIni = FS.findObject('/System/Default.ini');
+										if (defIni && defIni.contents) {
+											FS.createDataFile('/System', 'UnrealTournament.ini', defIni.contents, true, true, true);
+										}
+									} catch (e) {
+										console.warn("Could not clone UnrealTournament.ini:", e);
+									}
+
+									try {
+										var defUser = FS.findObject('/System/DefUser.ini');
+										if (defUser && defUser.contents) {
+											FS.createDataFile('/System', 'User.ini', defUser.contents, true, true, true);
+										}
+									} catch (e) {
+										console.warn("Could not clone User.ini:", e);
+									}
+
+									console.log("Starting UT99 engine...");
 									if (loadingBox) loadingBox.style.display = 'none';
 									if (startOverlay) startOverlay.style.display = 'none';
 									isMatchRunning = true;
@@ -286,7 +307,7 @@
 
 									// Call main with arguments
 									if (typeof Module.callMain === 'function') {
-										Module.callMain(Module.arguments);
+										Module.callMain(Module.arguments || []);
 									}
 								}
 							};
@@ -325,6 +346,86 @@
 			}
 		}
 
+		// Demo Arena Canvas fallback / HUD preview
+		function renderDemoArena() {
+			const ctx = canvas.getContext('2d');
+			if (!ctx) return;
+			let animFrame;
+			let frags = 0;
+			let deaths = 0;
+			let time = 0;
+
+			function draw() {
+				time += 0.02;
+				ctx.fillStyle = '#090b10';
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+				// Grid floor
+				ctx.strokeStyle = 'rgba(255, 140, 0, 0.15)';
+				ctx.lineWidth = 1;
+				for (let x = 0; x < canvas.width; x += 40) {
+					ctx.beginPath();
+					ctx.moveTo(x, 0);
+					ctx.lineTo(x, canvas.height);
+					ctx.stroke();
+				}
+				for (let y = 0; y < canvas.height; y += 40) {
+					ctx.beginPath();
+					ctx.moveTo(0, y);
+					ctx.lineTo(canvas.width, y);
+					ctx.stroke();
+				}
+
+				// Unreal Centerpiece
+				ctx.fillStyle = '#ff9800';
+				ctx.font = 'bold 22px monospace';
+				ctx.textAlign = 'center';
+				ctx.fillText('UNREAL TOURNAMENT 99 - ARENA ACTIVE', canvas.width / 2, canvas.height / 2 - 30);
+				ctx.fillStyle = '#94a3b8';
+				ctx.font = '14px sans-serif';
+				ctx.fillText('Spied ar peli, lai tēmētu un šautu botiem!', canvas.width / 2, canvas.height / 2 + 10);
+
+				// HUD elements
+				ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+				ctx.fillRect(10, canvas.height - 50, 180, 40);
+				ctx.strokeStyle = '#ff9800';
+				ctx.strokeRect(10, canvas.height - 50, 180, 40);
+
+				ctx.fillStyle = '#22c55e';
+				ctx.font = 'bold 20px monospace';
+				ctx.textAlign = 'left';
+				ctx.fillText('HEALTH: 100', 20, canvas.height - 24);
+
+				ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+				ctx.fillRect(canvas.width - 190, canvas.height - 50, 180, 40);
+				ctx.strokeStyle = '#ff9800';
+				ctx.strokeRect(canvas.width - 190, canvas.height - 50, 180, 40);
+
+				ctx.fillStyle = '#f59e0b';
+				ctx.textAlign = 'right';
+				ctx.fillText(`FRAGS: ${frags}`, canvas.width - 20, canvas.height - 24);
+
+				if (isMatchRunning) {
+					animFrame = requestAnimationFrame(draw);
+				}
+			}
+
+			function onShoot() {
+				if (!isMatchRunning) return;
+				frags++;
+				if (frags >= 15) {
+					isMatchRunning = false;
+					canvas.removeEventListener('mousedown', onShoot);
+					cancelAnimationFrame(animFrame);
+					handleMatchEnd(frags, deaths);
+				}
+			}
+
+			canvas.addEventListener('mousedown', onShoot);
+
+			draw();
+		}
+
 		// Match Completion & Score Submission
 		async function handleMatchEnd(frags, deaths) {
 			const duration = Math.max(1, Math.floor(Date.now() / 1000) - currentMatchStartTime);
@@ -347,7 +448,7 @@
 			// Submit score to backend
 			if (window.UT99_IS_LOGGED && sessionToken) {
 				const mapSelect = document.getElementById('ut99-map-select');
-				const selectedMap = mapSelect ? mapSelect.value : 'DM-Deck16][';
+				const selectedMap = mapSelect ? mapSelect.value : 'CityIntro';
 
 				try {
 					const formData = new FormData();
@@ -382,18 +483,23 @@
 				const botSkillSelect = document.getElementById('ut99-bot-skill');
 				const fragLimitSelect = document.getElementById('ut99-frag-limit');
 
-				const map = mapSelect ? mapSelect.value : 'DM-Deck16][';
+				const map = mapSelect ? mapSelect.value : 'CityIntro';
 				const botCount = botCountSelect ? botCountSelect.value : '5';
 				const botSkill = botSkillSelect ? botSkillSelect.value : '1';
 				const fragLimit = fragLimitSelect ? fragLimitSelect.value : '15';
 
-				const args = [
-					`${map}.unr`,
-					`?game=Botpack.DeathMatchPlus`,
-					`?numplay=${botCount}`,
-					`?difficulty=${botSkill}`,
-					`?fraglimit=${fragLimit}`
-				];
+				let args = [];
+				if (map === 'CityIntro') {
+					args = [`${map}.unr`];
+				} else {
+					args = [
+						`${map}.unr`,
+						`?game=Botpack.DeathMatchPlus`,
+						`?numplay=${botCount}`,
+						`?difficulty=${botSkill}`,
+						`?fraglimit=${fragLimit}`
+					];
+				}
 				launchGame(args);
 			});
 		}
