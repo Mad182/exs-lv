@@ -20,7 +20,7 @@
 		<div class="ut99-main-stage">
 			<div class="ut99-canvas-container" id="ut99-stage-container">
 				<!-- Emscripten WebGL Canvas -->
-				<canvas id="canvas" class="emscripten" oncontextmenu="event.preventDefault()" tabindex="-1" width="800" height="500"></canvas>
+				<canvas id="canvas" class="emscripten" oncontextmenu="event.preventDefault()" tabindex="1" width="800" height="500"></canvas>
 
 				<!-- START / LAUNCH OVERLAY -->
 				<div id="ut99-start-overlay" class="ut99-overlay">
@@ -85,6 +85,9 @@
 							<div class="ut99-action-row">
 								<button id="ut99-launch-bot-btn" class="ut99-btn ut99-btn-glow primary">
 									<span class="btn-icon">⚡</span> Palaist Spēli ar Botiem
+								</button>
+								<button id="ut99-direct-logo-btn" class="ut99-btn ut99-btn-glow secondary" style="margin-left: 10px;">
+									<span class="btn-icon">⏭️</span> Sākt no Logo / Menu (Bez Ievada)
 								</button>
 							</div>
 						</div>
@@ -203,6 +206,9 @@
 				<div class="stat-pill">
 					<span class="pill-label">Skaņa:</span>
 					<button id="ut99-sound-btn" class="ut99-btn btn-small">🔊 Ieslēgta</button>
+				</div>
+				<div class="stat-pill">
+					<button id="ut99-skip-intro-btn" class="ut99-btn btn-small btn-primary" title="Pāriet uzreiz uz Logo / Menu">⏭️ Izlaist Ievadu</button>
 				</div>
 				<div class="stat-pill">
 					<button id="ut99-reopen-menu-btn" class="ut99-btn btn-small">⚙️ Izvēlne</button>

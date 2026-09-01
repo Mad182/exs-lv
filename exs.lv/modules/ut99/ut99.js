@@ -24,6 +24,8 @@
 		const progressBar = document.getElementById('ut99-progress-bar');
 		const pointerStatus = document.getElementById('ut99-pointer-status');
 		const soundBtn = document.getElementById('ut99-sound-btn');
+		const skipIntroBtn = document.getElementById('ut99-skip-intro-btn');
+		const directLogoBtn = document.getElementById('ut99-direct-logo-btn');
 		const reopenMenuBtn = document.getElementById('ut99-reopen-menu-btn');
 		const theaterToggle = document.getElementById('ut99-theater-toggle');
 		const fullscreenToggle = document.getElementById('ut99-fullscreen-toggle');
@@ -77,7 +79,7 @@
 			});
 		}
 
-		// Pointer Lock Handling
+		// Pointer Lock & Focus Handling
 		function updatePointerLockStatus() {
 			if (document.pointerLockElement === canvas) {
 				if (pointerStatus) {
@@ -95,10 +97,18 @@
 		document.addEventListener('pointerlockchange', updatePointerLockStatus, false);
 
 		canvas.addEventListener('click', () => {
+			canvas.focus();
 			if (isMatchRunning && document.pointerLockElement !== canvas) {
 				try {
 					canvas.requestPointerLock();
 				} catch (e) {}
+			}
+		});
+
+		// Global Key Event Focus Forwarding
+		window.addEventListener('keydown', (e) => {
+			if (isMatchRunning && document.activeElement !== canvas) {
+				canvas.focus();
 			}
 		});
 
@@ -140,6 +150,19 @@
 					document.exitPointerLock();
 				}
 				if (startOverlay) startOverlay.style.display = 'flex';
+			});
+		}
+
+		// Skip Intro / Direct Logo Launchers
+		if (skipIntroBtn) {
+			skipIntroBtn.addEventListener('click', () => {
+				launchGame(['UT-Logo-Map.unr']);
+			});
+		}
+
+		if (directLogoBtn) {
+			directLogoBtn.addEventListener('click', () => {
+				launchGame(['UT-Logo-Map.unr']);
 			});
 		}
 
@@ -277,11 +300,21 @@
 								if (num_requests <= 0) {
 									console.log("MEMFS is synchronized. Preparing system configs...");
 
-									// Ensure UnrealTournament.ini and User.ini exist in /System
+									// Ensure UnrealTournament.ini has UTConsole and RootWindow
 									try {
 										var defIni = FS.findObject('/System/Default.ini');
 										if (defIni && defIni.contents) {
-											FS.createDataFile('/System', 'UnrealTournament.ini', defIni.contents, true, true, true);
+											var iniText = '';
+											if (typeof TextDecoder !== 'undefined') {
+												iniText = new TextDecoder('utf-8').decode(defIni.contents);
+											} else {
+												iniText = String.fromCharCode.apply(null, defIni.contents);
+											}
+											if (!iniText.includes('[UTMenu.UTConsole]')) {
+												iniText += '\n\n[UTMenu.UTConsole]\nRootWindow=UTMenu.UTMenuRootWindow\nUWindowKey=IK_Esc\nbShowConsole=False\n';
+											}
+											var enc = (typeof TextEncoder !== 'undefined') ? new TextEncoder().encode(iniText) : defIni.contents;
+											FS.createDataFile('/System', 'UnrealTournament.ini', enc, true, true, true);
 										}
 									} catch (e) {
 										console.warn("Could not clone UnrealTournament.ini:", e);
