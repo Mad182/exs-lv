@@ -96,7 +96,9 @@
 
 		canvas.addEventListener('click', () => {
 			if (isMatchRunning && document.pointerLockElement !== canvas) {
-				canvas.requestPointerLock();
+				try {
+					canvas.requestPointerLock();
+				} catch (e) {}
 			}
 		});
 
@@ -191,12 +193,13 @@
 			currentMatchStartTime = Math.floor(Date.now() / 1000);
 
 			if (loadingBox) loadingBox.style.display = 'block';
-			if (loadingStatus) loadingStatus.textContent = 'Ielādē WebAssembly dzinēju (index.wasm)...';
-			if (progressBar) progressBar.style.width = '10%';
-			if (loadingPercent) loadingPercent.textContent = '10%';
+			if (loadingStatus) loadingStatus.textContent = 'Pārbauda spēles dzinēju un resursus...';
+			if (progressBar) progressBar.style.width = '5%';
+			if (loadingPercent) loadingPercent.textContent = '5%';
 
 			// Configure Emscripten Module
 			window.Module = window.Module || {};
+			window.Module.noInitialRun = true;
 			window.Module.arguments = commandArgs;
 			window.Module.canvas = canvas;
 			window.Module.wasmBinaryFile = '/games/ut99/index.wasm';
@@ -204,175 +207,122 @@
 				return '/games/ut99/' + path;
 			};
 
-			// Pre-fetch index.wasm to pass buffer directly and avoid relative 404s
-			try {
-				const wasmRes = await fetch('/games/ut99/index.wasm');
-				if (wasmRes.ok) {
-					const reader = wasmRes.body ? wasmRes.body.getReader() : null;
-					const contentLength = parseInt(wasmRes.headers.get('Content-Length') || '5123676', 10);
-					let receivedBytes = 0;
-					let chunks = [];
-
-					if (reader) {
-						while (true) {
-							const { done, value } = await reader.read();
-							if (done) break;
-							chunks.push(value);
-							receivedBytes += value.length;
-							const pct = Math.min(100, Math.round((receivedBytes / contentLength) * 100));
-							if (progressBar) progressBar.style.width = pct + '%';
-							if (loadingPercent) loadingPercent.textContent = pct + '%';
-							if (loadingStatus) loadingStatus.textContent = `Ielādē WASM dzinēju (${Math.round(receivedBytes / 1048576 * 10) / 10} MB / ${Math.round(contentLength / 1048576 * 10) / 10} MB)...`;
-						}
-						const fullWasm = new Uint8Array(receivedBytes);
-						let pos = 0;
-						for (const chunk of chunks) {
-							fullWasm.set(chunk, pos);
-							pos += chunk.length;
-						}
-						window.Module.wasmBinary = fullWasm.buffer;
-					} else {
-						window.Module.wasmBinary = await wasmRes.arrayBuffer();
-					}
-				}
-			} catch (err) {
-				console.warn('WASM binary direct stream warning:', err);
-			}
-
 			window.Module.preRun = window.Module.preRun || [];
 			window.Module.preRun.push(function() {
 				if (typeof syncDataFiles === "function") {
-					var syncer = syncDataFiles('ut99_exs', '/games/ut99/gamedata/');
-					syncer.onprogress = function(percent, loaded, total, str) {
-						if (progressBar) progressBar.style.width = Math.max(10, percent) + '%';
-						if (loadingPercent) loadingPercent.textContent = percent + '%';
+					var syncer = syncDataFiles('ut99_exs', 'https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/');
+					syncer.onerror = function(why) {
+						console.error("Syncer error:", why);
+						if (loadingStatus) loadingStatus.textContent = why;
+					};
+					syncer.onprogress = function(str, pct) {
 						if (loadingStatus) loadingStatus.textContent = str;
+						if (pct > 0) {
+							if (progressBar) progressBar.style.width = pct + '%';
+							if (loadingPercent) loadingPercent.textContent = pct + '%';
+						}
 					};
-					syncer.onfinish = function() {
-						if (loadingBox) loadingBox.style.display = 'none';
-						if (startOverlay) startOverlay.style.display = 'none';
-						isMatchRunning = true;
-						canvas.focus();
-						canvas.requestPointerLock();
-					};
-					syncer.onerror = function(err) {
-						console.warn("Sync error:", err);
-						if (loadingBox) loadingBox.style.display = 'none';
-						if (startOverlay) startOverlay.style.display = 'none';
-						isMatchRunning = true;
-						renderDemoArena();
+					syncer.onsuccess = function(why) {
+						var db = syncer.db;
+						var manifest = syncer.manifest;
+						var total_requests = 0;
+						var num_requests = 0;
+
+						var tx = db.transaction("data", "readonly");
+						var store = tx.objectStore("data");
+						var dataIndex = store.index("data");
+
+						for (var fname in manifest) {
+							total_requests++;
+							num_requests++;
+							var req = dataIndex.get(fname);
+							req.filesize = manifest[fname].filesize;
+							req.onsuccess = function(event) {
+								if (!event.target.result) {
+									num_requests--;
+									return;
+								}
+								var path = "/" + event.target.result.filename;
+								var ui8arr = new Uint8Array(event.target.result.chunk);
+								var len = event.target.filesize || ui8arr.length;
+								var arr = new Array(len);
+								for (var j = 0; j < len; ++j) {
+									arr[j] = ui8arr[j];
+								}
+
+								var basedir = path.substring(0, path.lastIndexOf('/')) || '/';
+								var filename = path.substring(path.lastIndexOf('/') + 1);
+
+								try {
+									if (typeof FS.mkdirTree === 'function') {
+										FS.mkdirTree(basedir);
+									} else if (typeof FS.createPath === 'function') {
+										FS.createPath('/', basedir, true, true);
+									}
+								} catch (err) {}
+
+								try {
+									FS.createDataFile(basedir, filename, arr, true, true, true);
+								} catch (err) {
+									console.warn("createDataFile error for " + path, err);
+								}
+
+								var completed = total_requests - num_requests;
+								var percent = Math.floor((completed / total_requests) * 100);
+								if (progressBar) progressBar.style.width = Math.max(5, percent) + '%';
+								if (loadingPercent) loadingPercent.textContent = percent + '%';
+								if (loadingStatus) loadingStatus.textContent = 'Gatavo spēles failus: ' + percent + '%';
+
+								num_requests--;
+								if (num_requests <= 0) {
+									console.log("MEMFS is synchronized. Starting UT99 engine...");
+									if (loadingBox) loadingBox.style.display = 'none';
+									if (startOverlay) startOverlay.style.display = 'none';
+									isMatchRunning = true;
+									canvas.focus();
+									try {
+										canvas.requestPointerLock();
+									} catch (e) {}
+
+									// Call main with arguments
+									if (typeof Module.callMain === 'function') {
+										Module.callMain(Module.arguments);
+									}
+								}
+							};
+							req.onerror = function() {
+								num_requests--;
+							};
+						}
 					};
 				}
 			});
 
-			window.Module.onRuntimeInitialized = function () {
-				if (loadingBox) loadingBox.style.display = 'none';
-				if (startOverlay) startOverlay.style.display = 'none';
-				isMatchRunning = true;
-				canvas.focus();
-				canvas.requestPointerLock();
-			};
+			// Pre-fetch index.wasm to avoid any 404s
+			try {
+				const wasmRes = await fetch('/games/ut99/index.wasm');
+				if (wasmRes.ok) {
+					window.Module.wasmBinary = await wasmRes.arrayBuffer();
+				}
+			} catch (err) {
+				console.warn('WASM binary direct load warning:', err);
+			}
 
 			// Load /games/ut99/index.js
 			if (!window.UT99_WASM_LOADED) {
 				window.UT99_WASM_LOADED = true;
-				try {
-					const script = document.createElement('script');
-					script.src = '/games/ut99/index.js';
-					script.async = true;
-					script.onerror = () => {
-						renderDemoArena();
-					};
-					document.body.appendChild(script);
-				} catch (err) {
-					renderDemoArena();
-				}
+				const script = document.createElement('script');
+				script.src = '/games/ut99/index.js';
+				script.async = true;
+				document.body.appendChild(script);
 			} else {
 				if (startOverlay) startOverlay.style.display = 'none';
 				isMatchRunning = true;
 				canvas.focus();
-				canvas.requestPointerLock();
+				try {
+					canvas.requestPointerLock();
+				} catch (e) {}
 			}
-		}
-
-		// Demo Arena Canvas fallback / HUD preview
-		function renderDemoArena() {
-			const ctx = canvas.getContext('2d');
-			if (!ctx) return;
-			let animFrame;
-			let frags = 0;
-			let deaths = 0;
-			let time = 0;
-
-			function draw() {
-				time += 0.02;
-				ctx.fillStyle = '#090b10';
-				ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-				// Grid floor
-				ctx.strokeStyle = 'rgba(255, 140, 0, 0.15)';
-				ctx.lineWidth = 1;
-				for (let x = 0; x < canvas.width; x += 40) {
-					ctx.beginPath();
-					ctx.moveTo(x, 0);
-					ctx.lineTo(x, canvas.height);
-					ctx.stroke();
-				}
-				for (let y = 0; y < canvas.height; y += 40) {
-					ctx.beginPath();
-					ctx.moveTo(0, y);
-					ctx.lineTo(canvas.width, y);
-					ctx.stroke();
-				}
-
-				// Unreal Centerpiece
-				ctx.fillStyle = '#ff9800';
-				ctx.font = 'bold 22px monospace';
-				ctx.textAlign = 'center';
-				ctx.fillText('UNREAL TOURNAMENT 99 - ARENA ACTIVE', canvas.width / 2, canvas.height / 2 - 30);
-				ctx.fillStyle = '#94a3b8';
-				ctx.font = '14px sans-serif';
-				ctx.fillText('Spied ar peli, lai tēmētu un šautu botiem!', canvas.width / 2, canvas.height / 2 + 10);
-
-				// HUD elements
-				ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-				ctx.fillRect(10, canvas.height - 50, 180, 40);
-				ctx.strokeStyle = '#ff9800';
-				ctx.strokeRect(10, canvas.height - 50, 180, 40);
-
-				ctx.fillStyle = '#22c55e';
-				ctx.font = 'bold 20px monospace';
-				ctx.textAlign = 'left';
-				ctx.fillText('HEALTH: 100', 20, canvas.height - 24);
-
-				ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-				ctx.fillRect(canvas.width - 190, canvas.height - 50, 180, 40);
-				ctx.strokeStyle = '#ff9800';
-				ctx.strokeRect(canvas.width - 190, canvas.height - 50, 180, 40);
-
-				ctx.fillStyle = '#f59e0b';
-				ctx.textAlign = 'right';
-				ctx.fillText(`FRAGS: ${frags}`, canvas.width - 20, canvas.height - 24);
-
-				if (isMatchRunning) {
-					animFrame = requestAnimationFrame(draw);
-				}
-			}
-
-			function onShoot() {
-				if (!isMatchRunning) return;
-				frags++;
-				if (frags >= 15) {
-					isMatchRunning = false;
-					canvas.removeEventListener('mousedown', onShoot);
-					cancelAnimationFrame(animFrame);
-					handleMatchEnd(frags, deaths);
-				}
-			}
-
-			canvas.addEventListener('mousedown', onShoot);
-
-			draw();
 		}
 
 		// Match Completion & Score Submission

@@ -1,12 +1,12 @@
 /**
- * EXS.LV UT99 WebAssembly Asset Streaming & IndexedDB Cache Layer
- * Original syncDataFiles by Ryan C. Gordon (icculus) / adapted for EXS.LV
+ * EXS.LV Unreal Tournament 99 WebAssembly Asset Cache Layer
+ * Adapted from Ryan C. Gordon (icculus) syncDataFiles
  */
 
 function syncDataFiles(dbname, baseurl) {
 	var retval = {};
 	if (typeof dbname === "undefined") { dbname = "ut99_exs"; }
-	if (typeof baseurl === "undefined") { baseurl = "/games/ut99/gamedata/"; }
+	if (typeof baseurl === "undefined") { baseurl = "https://www.icculus.org/ut99-emscripten/flyby/wasm/gamedata/"; }
 
 	var urlrandomizerarg = "?nocache=" + (Date.now() / 1000 | 0);
 
@@ -47,265 +47,273 @@ function syncDataFiles(dbname, baseurl) {
 		}
 	};
 
-	var progress = function(str, percent, loaded, total) {
-		if (state.reported_result) { return; }
-		debug("[PROGRESS] " + str);
-		if (retval.onprogress) {
-			retval.onprogress(percent || 0, loaded || 0, total || 0, str);
-		}
+	retval.abort = function() {
+		failed("Aborted.");
 	};
 
 	var succeeded = function() {
 		if (state.reported_result) { return; }
 		state.reported_result = true;
-		log("[SUCCESS] Files are synchronized and ready.");
+		var why = "Faili sinhronizēti (" + Math.ceil(state.total_downloaded / 1048576) + " MB no " + state.total_files + " failiem)";
+		log("[SUCCESS] " + why);
+		retval.db = state.db;
+		retval.manifest = state.remote_manifest;
 		clear_state();
-		if (retval.onfinish) {
-			retval.onfinish();
+		if (retval.onsuccess) {
+			retval.onsuccess(why);
 		}
 	};
 
-	var populate_emscripten_fs = function() {
+	var prevprogress = "";
+	var progress = function(str, percent) {
 		if (state.reported_result) { return; }
-		debug("Populating Emscripten filesystem from IndexedDB...");
-
-		if (typeof FS === "undefined") {
-			debug("FS is undefined, skipping local filesystem mount.");
-			succeeded();
-			return;
+		if (str === prevprogress) { return; }
+		prevprogress = str;
+		if (retval.onprogress) {
+			retval.onprogress(str, percent || 0);
 		}
+	};
 
-		var transaction = state.db.transaction(["metadata", "data"], "readonly");
-		var metadata_store = transaction.objectStore("metadata");
-		var data_store = transaction.objectStore("data");
-		var data_index = data_store.index("data");
+	debug("Datubāzes nosaukums: '" + dbname + "'");
+	progress("Atver lokālo kešatmiņu...", 0);
+	var dbopen = window.indexedDB.open(dbname, 1);
 
-		var cursor_req = metadata_store.openCursor();
-		cursor_req.onsuccess = function(e) {
-			var cursor = e.target.result;
-			if (cursor) {
-				var item = cursor.value;
-				var parts = item.filename.split('/');
-				var currentDir = '';
-				for (var p = 0; p < parts.length - 1; p++) {
-					currentDir += (p === 0 ? '' : '/') + parts[p];
-					try {
-						FS.mkdir(currentDir);
-					} catch (err) {}
-				}
+	dbopen.onupgradeneeded = function(event) {
+		var db = event.target.result;
+		if (!db.objectStoreNames.contains("metadata")) {
+			db.createObjectStore("metadata", { keyPath: "filename" });
+		}
+		if (!db.objectStoreNames.contains("data")) {
+			var dataStore = db.createObjectStore("data", { keyPath: "chunkid", autoIncrement: true });
+			dataStore.createIndex("data", "filename", { unique: false });
+		}
+	};
 
-				// Load all chunks for this file
-				var chunk_cursor_req = data_index.openCursor(IDBKeyRange.only(item.filename));
-				var fileBuffer = new Uint8Array(item.filesize);
-				chunk_cursor_req.onsuccess = function(ce) {
-					var chunk_cursor = ce.target.result;
-					if (chunk_cursor) {
-						var chunk = chunk_cursor.value;
-						var chunkData = new Uint8Array(chunk.data);
-						fileBuffer.set(chunkData, chunk.offset);
-						chunk_cursor.continue();
-					} else {
-						try {
-							FS.writeFile(item.filename, fileBuffer);
-							debug("Mounted " + item.filename + " (" + item.filesize + " bytes)");
-						} catch (err) {
-							console.warn("Failed to write " + item.filename, err);
-						}
-					}
-				};
-				cursor.continue();
-			} else {
-				succeeded();
-			}
-		};
-		cursor_req.onerror = function() {
+	dbopen.onerror = function(event) {
+		failed("Neizdevās atvērt IndexedDB: " + event.target.error.message);
+	};
+
+	var finished_file = function(fname) {
+		state.pending_files--;
+		if (state.pending_files < 0) {
+			state.pending_files = 0;
+		}
+		if (state.pending_files === 0) {
 			succeeded();
-		};
+		}
 	};
 
 	var store_file = function(xhr) {
-		if (state.reported_result) { return; }
+		var databuf = xhr.response;
 		var transaction = state.db.transaction(["metadata", "data"], "readwrite");
+		var objstoremetadata = transaction.objectStore("metadata");
+		var objstoredata = transaction.objectStore("data");
+
+		objstoremetadata.put({ filename: xhr.filename, filesize: xhr.filesize, filetime: xhr.filetime });
+		objstoredata.put({ filename: xhr.filename, offset: 0, chunk: databuf });
+
 		transaction.oncomplete = function(event) {
-			debug("IndexedDB transaction committed for " + xhr.filename);
-			state.pending_files--;
-			if (state.pending_files === 0) {
-				populate_emscripten_fs();
-			}
+			finished_file(xhr.filename);
 		};
 		transaction.onerror = function(event) {
-			failed("Failed to save " + xhr.filename + " to IndexedDB: " + event.target.error.message);
+			finished_file(xhr.filename);
 		};
-
-		var metadata = transaction.objectStore("metadata");
-		var data = transaction.objectStore("data");
-
-		metadata.put({
-			filename: xhr.filename,
-			filesize: xhr.filesize,
-			filetime: xhr.filetime
-		});
-
-		// Store file chunks (up to 512KB per chunk)
-		var chunk_size = 524288;
-		var total_chunks = Math.ceil(xhr.response.byteLength / chunk_size);
-		for (var c = 0; c < total_chunks; c++) {
-			var start = c * chunk_size;
-			var end = Math.min(start + chunk_size, xhr.response.byteLength);
-			var chunk_data = xhr.response.slice(start, end);
-			data.put({
-				filename: xhr.filename,
-				chunkid: xhr.filename + "_" + c,
-				offset: start,
-				size: end - start,
-				data: chunk_data
-			});
-		}
 	};
 
 	var download_new_files = function() {
 		if (state.reported_result) { return; }
-		state.pending_files = 0;
-		state.total_to_download = 0;
-		state.total_downloaded = 0;
-
-		var files_to_download = [];
-		for (var fname in state.remote_manifest) {
-			var remote = state.remote_manifest[fname];
-			var local = state.local_manifest[fname];
-			if (!local || local.filesize !== remote.filesize || local.filetime !== remote.filetime) {
-				files_to_download.push(fname);
-				state.total_to_download += remote.filesize;
+		progress("Pārbauda lejupielādējamos failus...", 0);
+		var downloadme = [];
+		for (var i in state.remote_manifest) {
+			var remoteitem = state.remote_manifest[i];
+			var remotefname = i;
+			if (typeof state.local_manifest[remotefname] !== "undefined") {
+				// already cached
+			} else {
+				downloadme.push(remotefname);
+				state.total_to_download += remoteitem.filesize;
 			}
 		}
 
-		if (files_to_download.length === 0) {
-			debug("All files up to date in cache.");
-			populate_emscripten_fs();
+		state.pending_files = downloadme.length;
+		state.total_files = downloadme.length;
+
+		if (downloadme.length === 0) {
+			succeeded();
 			return;
 		}
 
-		state.pending_files = files_to_download.length;
-		progress("Lejuplādē spēles pakotnes...", 0, 0, state.total_to_download);
+		for (var d = 0; d < downloadme.length; d++) {
+			var remotefname = downloadme[d];
+			var remoteitem = state.remote_manifest[remotefname];
+			var xhr = new XMLHttpRequest();
+			state.xhrs[remotefname] = xhr;
+			xhr.filename = remotefname;
+			xhr.previously_loaded = 0;
+			xhr.filesize = remoteitem.filesize;
+			xhr.filetime = remoteitem.filetime;
+			xhr.expected_filesize = remoteitem.filesize;
+			xhr.responseType = "arraybuffer";
 
-		for (var f = 0; f < files_to_download.length; f++) {
-			(function(filename) {
-				var remoteitem = state.remote_manifest[filename];
-				var xhr = new XMLHttpRequest();
-				xhr.filename = filename;
-				xhr.filesize = remoteitem.filesize;
-				xhr.filetime = remoteitem.filetime;
-				xhr.previously_loaded = 0;
-				xhr.responseType = "arraybuffer";
+			xhr.addEventListener("error", function(e) {
+				console.warn("Download error on " + e.target.filename);
+				finished_file(e.target.filename);
+			});
+			xhr.addEventListener("timeout", function(e) {
+				console.warn("Download timeout on " + e.target.filename);
+				finished_file(e.target.filename);
+			});
+			xhr.addEventListener("abort", function(e) {
+				console.warn("Download abort on " + e.target.filename);
+				finished_file(e.target.filename);
+			});
 
-				xhr.addEventListener("progress", function(e) {
-					var diff = e.loaded - xhr.previously_loaded;
-					state.total_downloaded += diff;
-					xhr.previously_loaded = e.loaded;
-					var pct = Math.min(100, Math.floor((state.total_downloaded / state.total_to_download) * 100));
-					progress("Lejuplādē " + filename + "...", pct, state.total_downloaded, state.total_to_download);
-				});
+			xhr.addEventListener("progress", function(e) {
+				if (state.reported_result) return;
+				var x = e.target;
+				var additional = e.loaded - x.previously_loaded;
+				state.total_downloaded += additional;
+				x.previously_loaded = e.loaded;
+				var pct = state.total_to_download ? Math.min(100, Math.floor((state.total_downloaded / state.total_to_download) * 100)) : 0;
+				var currentMB = Math.ceil(state.total_downloaded / 1048576);
+				var totalMB = Math.ceil(state.total_to_download / 1048576);
+				progress("Lejupielādē UT resursus: " + pct + "% (" + currentMB + "/" + totalMB + " MB)", pct);
+			});
 
-				xhr.addEventListener("load", function() {
-					if (xhr.status === 200) {
-						store_file(xhr);
-					} else {
-						console.warn("Could not load asset: " + filename);
-						state.pending_files--;
-						if (state.pending_files === 0) {
-							populate_emscripten_fs();
-						}
+			xhr.addEventListener("load", function(e) {
+				if (state.reported_result) return;
+				var x = e.target;
+				if (x.status !== 200) {
+					console.warn("HTTP " + x.status + " downloading " + x.filename);
+					finished_file(x.filename);
+				} else {
+					state.total_downloaded -= x.previously_loaded;
+					state.total_downloaded += x.expected_filesize;
+					x.previously_loaded = x.expected_filesize;
+					delete state.xhrs[x.filename];
+					var pct = state.total_to_download ? Math.min(100, Math.floor((state.total_downloaded / state.total_to_download) * 100)) : 0;
+					var currentMB = Math.ceil(state.total_downloaded / 1048576);
+					var totalMB = Math.ceil(state.total_to_download / 1048576);
+					progress("Lejupielādē UT resursus: " + pct + "% (" + currentMB + "/" + totalMB + " MB)", pct);
+					store_file(x);
+				}
+			});
+
+			xhr.open("GET", baseurl + remotefname + urlrandomizerarg, true);
+			xhr.send();
+		}
+	};
+
+	var delete_old_files = function() {
+		if (state.reported_result) return;
+		var deleteme = [];
+		for (var i in state.local_manifest) {
+			var localitem = state.local_manifest[i];
+			var localfname = localitem.filename;
+			var removeme = false;
+			if (typeof state.remote_manifest[localfname] === "undefined") {
+				removeme = true;
+			} else {
+				var remoteitem = state.remote_manifest[localfname];
+				if (localitem.filesize !== remoteitem.filesize || localitem.filetime !== remoteitem.filetime) {
+					removeme = true;
+				}
+			}
+
+			if (removeme) {
+				deleteme.push(localfname);
+				delete state.local_manifest[i];
+			}
+		}
+
+		if (deleteme.length === 0) {
+			download_new_files();
+		} else {
+			progress("Tīra vecos failus...", 0);
+			var transaction = state.db.transaction(["data", "metadata"], "readwrite");
+			transaction.oncomplete = function(event) {
+				download_new_files();
+			};
+
+			var objstoremetadata = transaction.objectStore("metadata");
+			var objstoredata = transaction.objectStore("data");
+			var dataindex = objstoredata.index("data");
+			for (var d = 0; d < deleteme.length; d++) {
+				var itemToDelete = deleteme[d];
+				objstoremetadata.delete(itemToDelete);
+				dataindex.openCursor(IDBKeyRange.only(itemToDelete)).onsuccess = function(event) {
+					var cursor = event.target.result;
+					if (cursor) {
+						objstoredata.delete(cursor.value.chunkid);
+						cursor.continue();
 					}
-				});
+				};
+			}
+		}
+	};
 
-				xhr.addEventListener("error", function() {
-					console.warn("XHR error on " + filename);
-					state.pending_files--;
-					if (state.pending_files === 0) {
-						populate_emscripten_fs();
-					}
-				});
-
-				xhr.open("GET", baseurl + filename + urlrandomizerarg, true);
-				xhr.send();
-			})(files_to_download[f]);
+	var manifest_loaded = function() {
+		if (state.reported_result) return;
+		if (state.local_manifest_loaded && state.remote_manifest_loaded) {
+			delete_old_files();
 		}
 	};
 
 	var load_local_manifest = function(db) {
-		var tx = db.transaction("metadata", "readonly");
-		var store = tx.objectStore("metadata");
-		var cursorReq = store.openCursor();
-		cursorReq.onsuccess = function(e) {
-			var cursor = e.target.result;
-			if (cursor) {
-				state.local_manifest[cursor.value.filename] = cursor.value;
-				cursor.continue();
+		if (state.reported_result) return;
+		var transaction = db.transaction("metadata", "readonly");
+		var objstore = transaction.objectStore("metadata");
+		var cursor = objstore.openCursor();
+
+		cursor.onsuccess = function(event) {
+			if (state.reported_result) return;
+			var c = event.target.result;
+			if (c) {
+				state.local_manifest[c.value.filename] = c.value;
+				c.continue();
 			} else {
 				state.local_manifest_loaded = true;
-				if (state.remote_manifest_loaded) {
-					download_new_files();
-				}
+				manifest_loaded();
 			}
 		};
-		cursorReq.onerror = function() {
+		cursor.onerror = function() {
 			state.local_manifest_loaded = true;
-			if (state.remote_manifest_loaded) {
-				download_new_files();
-			}
+			manifest_loaded();
 		};
 	};
 
-	// Open IndexedDB
-	try {
-		var req = indexedDB.open(dbname, 1);
-		req.onupgradeneeded = function(e) {
-			var db = e.target.result;
-			if (!db.objectStoreNames.contains("metadata")) {
-				db.createObjectStore("metadata", { keyPath: "filename" });
-			}
-			if (!db.objectStoreNames.contains("data")) {
-				var dataStore = db.createObjectStore("data", { keyPath: "chunkid" });
-				dataStore.createIndex("data", "filename", { unique: false });
-			}
+	dbopen.onsuccess = function(event) {
+		var db = event.target.result;
+		state.db = db;
+
+		db.onerror = function(event) {
+			failed("IndexedDB kļūda: " + event.target.error.message);
 		};
 
-		req.onsuccess = function(e) {
-			state.db = e.target.result;
-			load_local_manifest(state.db);
+		progress("Pārbauda failu manifestu...", 0);
+		load_local_manifest(db);
 
-			// Fetch remote manifest
-			var xhr = new XMLHttpRequest();
-			xhr.responseType = "text";
-			xhr.addEventListener("load", function() {
-				if (xhr.status === 200) {
-					try {
-						state.remote_manifest = JSON.parse(xhr.responseText);
-						state.remote_manifest_loaded = true;
-						if (state.local_manifest_loaded) {
-							download_new_files();
-						}
-					} catch (err) {
-						failed("Neizdevās apstrādāt manifest.json");
-					}
-				} else {
-					console.warn("Remote manifest returned status " + xhr.status);
-					succeeded();
+		var xhr = new XMLHttpRequest();
+		xhr.responseType = "text";
+		xhr.addEventListener("error", function(e) { failed("Neizdevās lejuplādēt manifest.json"); });
+		xhr.addEventListener("timeout", function(e) { failed("Manifest noildze"); });
+		xhr.addEventListener("abort", function(e) { failed("Manifest pārtraukts"); });
+		xhr.addEventListener("load", function(e) {
+			if (e.target.status !== 200) {
+				failed("Serveris atgrieza statusu " + e.target.status + " manifestam");
+			} else {
+				state.remote_manifest_loaded = true;
+				try {
+					state.remote_manifest = JSON.parse(e.target.responseText);
+				} catch (err) {
+					failed("Kļūdains manifest.json");
 				}
-			});
-			xhr.addEventListener("error", function() {
-				succeeded();
-			});
-			xhr.open("GET", baseurl + "manifest.json" + urlrandomizerarg, true);
-			xhr.send();
-		};
-
-		req.onerror = function() {
-			succeeded();
-		};
-	} catch (e) {
-		succeeded();
-	}
+				manifest_loaded();
+			}
+		});
+		xhr.open("GET", baseurl + "manifest.json" + urlrandomizerarg, true);
+		xhr.send();
+	};
 
 	return retval;
 }
