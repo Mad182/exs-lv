@@ -204,6 +204,7 @@ foreach ($games_list as $game) {
 
 // Recent high scores banner across all games
 $game_meta_map = [
+	'ut99' => ['title' => 'Unreal Tournament 99', 'url' => '/ut99', 'is_time' => false],
 	'tetris' => ['title' => 'Tetris', 'url' => '/tetris', 'is_time' => false],
 	'snake' => ['title' => 'Čūska', 'url' => '/snake', 'is_time' => false],
 	'karatavas' => ['title' => 'Karātavas', 'url' => '/karatavas', 'is_time' => false],
