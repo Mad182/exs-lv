@@ -204,11 +204,14 @@
 					<span id="ut99-pointer-status" class="pill-badge">Klikšķini, lai nofiksētu</span>
 				</div>
 				<div class="stat-pill">
+					<button id="ut99-trigger-esc-btn" class="ut99-btn btn-small btn-primary" title="Nosūtīt ESC spēles dzinējam">🎮 Sākt (ESC / F2 / M)</button>
+				</div>
+				<div class="stat-pill">
 					<span class="pill-label">Skaņa:</span>
 					<button id="ut99-sound-btn" class="ut99-btn btn-small">🔊 Ieslēgta</button>
 				</div>
 				<div class="stat-pill">
-					<button id="ut99-skip-intro-btn" class="ut99-btn btn-small btn-primary" title="Pāriet uzreiz uz Logo / Menu">⏭️ Izlaist Ievadu</button>
+					<button id="ut99-skip-intro-btn" class="ut99-btn btn-small btn-secondary" title="Pāriet uzreiz uz Logo / Menu">⏭️ Izlaist Ievadu</button>
 				</div>
 				<div class="stat-pill">
 					<button id="ut99-reopen-menu-btn" class="ut99-btn btn-small">⚙️ Izvēlne</button>

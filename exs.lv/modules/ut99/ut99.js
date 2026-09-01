@@ -24,6 +24,7 @@
 		const progressBar = document.getElementById('ut99-progress-bar');
 		const pointerStatus = document.getElementById('ut99-pointer-status');
 		const soundBtn = document.getElementById('ut99-sound-btn');
+		const triggerEscBtn = document.getElementById('ut99-trigger-esc-btn');
 		const skipIntroBtn = document.getElementById('ut99-skip-intro-btn');
 		const directLogoBtn = document.getElementById('ut99-direct-logo-btn');
 		const reopenMenuBtn = document.getElementById('ut99-reopen-menu-btn');
@@ -79,12 +80,44 @@
 			});
 		}
 
+		// Send Keyboard Event to Game Helper
+		function sendKeyToGame(keyCode, keyName, codeName) {
+			if (!canvas) return;
+			canvas.focus();
+			const downEvent = new KeyboardEvent('keydown', {
+				key: keyName,
+				code: codeName || keyName,
+				keyCode: keyCode,
+				which: keyCode,
+				bubbles: true,
+				cancelable: true
+			});
+			const upEvent = new KeyboardEvent('keyup', {
+				key: keyName,
+				code: codeName || keyName,
+				keyCode: keyCode,
+				which: keyCode,
+				bubbles: true,
+				cancelable: true
+			});
+			canvas.dispatchEvent(downEvent);
+			window.dispatchEvent(downEvent);
+			setTimeout(() => {
+				canvas.dispatchEvent(upEvent);
+				window.dispatchEvent(upEvent);
+			}, 60);
+		}
+
 		// Pointer Lock & Focus Handling
 		function updatePointerLockStatus() {
 			if (document.pointerLockElement === canvas) {
 				if (pointerStatus) {
 					pointerStatus.textContent = '🔒 Nofiksēta (Esc lai atbrīvotu)';
 					pointerStatus.style.background = '#16a34a';
+				}
+				// Try locking Escape key to prevent browser closing fullscreen
+				if (navigator.keyboard && typeof navigator.keyboard.lock === 'function') {
+					navigator.keyboard.lock(['Escape']).catch(() => {});
 				}
 			} else {
 				if (pointerStatus) {
@@ -98,17 +131,35 @@
 
 		canvas.addEventListener('click', () => {
 			canvas.focus();
-			if (isMatchRunning && document.pointerLockElement !== canvas) {
-				try {
-					canvas.requestPointerLock();
-				} catch (e) {}
+			if (isMatchRunning) {
+				// Send Escape/Space to start/skip intro if at intro screen
+				sendKeyToGame(27, 'Escape', 'Escape');
+				if (document.pointerLockElement !== canvas) {
+					try {
+						canvas.requestPointerLock();
+					} catch (e) {}
+				}
 			}
 		});
 
-		// Global Key Event Focus Forwarding
+		// Trigger ESC / Start button
+		if (triggerEscBtn) {
+			triggerEscBtn.addEventListener('click', () => {
+				sendKeyToGame(27, 'Escape', 'Escape');
+				sendKeyToGame(32, ' ', 'Space');
+			});
+		}
+
+		// Global Key Event Focus Forwarding & Escape override
 		window.addEventListener('keydown', (e) => {
-			if (isMatchRunning && document.activeElement !== canvas) {
-				canvas.focus();
+			if (isMatchRunning) {
+				if (document.activeElement !== canvas) {
+					canvas.focus();
+				}
+				// If user pressed F2 or M or Tilde, trigger Escape/ShowMenu in engine
+				if (e.key === 'F2' || e.key === 'm' || e.key === 'M' || e.key === '`') {
+					sendKeyToGame(27, 'Escape', 'Escape');
+				}
 			}
 		});
 
@@ -123,7 +174,11 @@
 		if (fullscreenToggle && stageContainer) {
 			fullscreenToggle.addEventListener('click', () => {
 				if (!document.fullscreenElement) {
-					stageContainer.requestFullscreen().catch((err) => {
+					stageContainer.requestFullscreen().then(() => {
+						if (navigator.keyboard && typeof navigator.keyboard.lock === 'function') {
+							navigator.keyboard.lock(['Escape']).catch(() => {});
+						}
+					}).catch((err) => {
 						console.warn('Fullscreen error:', err);
 					});
 				} else {
@@ -320,10 +375,19 @@
 										console.warn("Could not clone UnrealTournament.ini:", e);
 									}
 
+									// Enhance User.ini with multi-key ShowMenu bindings (F1, F2, F10, M, Space, Enter)
 									try {
 										var defUser = FS.findObject('/System/DefUser.ini');
 										if (defUser && defUser.contents) {
-											FS.createDataFile('/System', 'User.ini', defUser.contents, true, true, true);
+											var userText = '';
+											if (typeof TextDecoder !== 'undefined') {
+												userText = new TextDecoder('utf-8').decode(defUser.contents);
+											} else {
+												userText = String.fromCharCode.apply(null, defUser.contents);
+											}
+											userText = userText.replace(/Escape=ShowMenu/g, 'Escape=ShowMenu\nF1=ShowMenu\nF2=ShowMenu\nF10=ShowMenu\nM=ShowMenu\nTilde=ShowMenu\nSpace=Fire\nEnter=Fire');
+											var encUser = (typeof TextEncoder !== 'undefined') ? new TextEncoder().encode(userText) : defUser.contents;
+											FS.createDataFile('/System', 'User.ini', encUser, true, true, true);
 										}
 									} catch (e) {
 										console.warn("Could not clone User.ini:", e);
