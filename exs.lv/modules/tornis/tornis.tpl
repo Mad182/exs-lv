@@ -6,7 +6,7 @@
 
 	<!-- START BLOCK : guest-notice -->
 	<div class="alert alert-info tornis-guest-alert" style="margin-bottom: 18px;">
-		Lai piedalītos topos un saglabātu savus rekordus, lūdzu, <a href="/login">ienāc</a> vai <a href="/registreties">reģistrējies</a>!
+		<strong>Piezīme:</strong> Tu spēlē kā viesis. <a href="https://exs.lv/register">Reģistrējies</a> vai ieej profilā, lai saglabātu savu rezultātu topā!
 	</div>
 	<!-- END BLOCK : guest-notice -->
 
