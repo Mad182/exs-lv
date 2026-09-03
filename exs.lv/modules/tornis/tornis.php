@@ -142,7 +142,7 @@ if (!empty($today_scores)) {
 			$is_me = ($auth->ok && $auth->id == $u->id);
 			$tpl->assign([
 				'user-place' => format_rank_badge($rank++),
-				'user-url' => '/lietotajs/' . urlencode($u->nick),
+				'user-url' => mkurl('user', $u->id, $u->nick),
 				'user-nick' => usercolor($u->nick, $u->level),
 				'score' => number_format($sc->score, 0, '', ' '),
 				'user-special' => $is_me ? ' class="my-rank-row" style="background: rgba(99, 102, 241, 0.08); font-weight: bold;"' : ''
@@ -172,7 +172,7 @@ if (!empty($alltime_scores)) {
 			$is_me = ($auth->ok && $auth->id == $u->id);
 			$tpl->assign([
 				'user-place' => format_rank_badge($rank++),
-				'user-url' => '/lietotajs/' . urlencode($u->nick),
+				'user-url' => mkurl('user', $u->id, $u->nick),
 				'user-nick' => usercolor($u->nick, $u->level),
 				'score' => number_format($sc->score, 0, '', ' '),
 				'user-special' => $is_me ? ' class="my-rank-row" style="background: rgba(99, 102, 241, 0.08); font-weight: bold;"' : ''
