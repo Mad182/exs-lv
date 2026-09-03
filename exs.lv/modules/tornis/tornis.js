@@ -173,6 +173,13 @@
 	var combo = 0;
 	var maxCombo = 0;
 	var highScore = window.TORNIS_USER_HIGHSCORE || 0;
+	var localGuestBest = parseInt(localStorage.getItem('tornis_guest_best') || '0', 10);
+	if (localGuestBest > highScore) {
+		highScore = localGuestBest;
+	}
+	if (bottomBestEl) {
+		bottomBestEl.textContent = highScore + ' stāvi';
+	}
 	var sessionToken = null;
 	var gameStartTime = 0;
 	var cameraY = 0;
@@ -496,12 +503,15 @@
 		screenShake = 0;
 		gameStartTime = Date.now();
 
-		// Fetch Anti-cheat Session Token
-		$.getJSON('/tornis?action=init_token', function (res) {
-			if (res && res.token) {
-				sessionToken = res.token;
-			}
-		});
+		// Fetch Anti-cheat Session Token via native fetch
+		fetch('/tornis?action=init_token')
+			.then(function (res) { return res.json(); })
+			.then(function (res) {
+				if (res && res.token) {
+					sessionToken = res.token;
+				}
+			})
+			.catch(function () {});
 
 		// Base Platform Block
 		var baseColor = {
@@ -712,10 +722,11 @@
 		var isNewBest = score > highScore;
 		if (isNewBest) {
 			highScore = score;
+			localStorage.setItem('tornis_guest_best', highScore);
 			if (bottomBestEl) bottomBestEl.textContent = highScore + ' stāvi';
 		}
 
-		// Submit score via AJAX
+		// Submit score via native fetch
 		submitScore(score, maxCombo, duration);
 
 		// Populate Game Over Overlay
@@ -734,12 +745,18 @@
 	function submitScore(finalScore, bestCombo, durationSec) {
 		if (finalScore <= 0 || !sessionToken) return;
 
-		$.post('/tornis?action=push', {
-			token: sessionToken,
-			score: finalScore,
-			combo: bestCombo,
-			duration: durationSec
-		}, function (res) {
+		var formData = new FormData();
+		formData.append('token', sessionToken);
+		formData.append('score', finalScore);
+		formData.append('combo', bestCombo);
+		formData.append('duration', durationSec);
+
+		fetch('/tornis?action=push', {
+			method: 'POST',
+			body: formData
+		})
+		.then(function (res) { return res.json(); })
+		.then(function (res) {
 			if (res && res.success) {
 				if (res.rank && rankInfoBox && rankValEl) {
 					rankValEl.textContent = '#' + res.rank;
@@ -751,7 +768,8 @@
 					if (bottomBestEl) bottomBestEl.textContent = highScore + ' stāvi';
 				}
 			}
-		}, 'json');
+		})
+		.catch(function () {});
 	}
 
 	// Update Floating HUD Stats

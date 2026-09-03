@@ -4,6 +4,12 @@
 		<p class="tornis-subtitle">Liec 3D blokus vienu virs otra ar perfektu laika izjūtu, veido combo sērijas un uzbūvē augstāko debesskrāpi!</p>
 	</div>
 
+	<!-- START BLOCK : guest-notice -->
+	<div class="alert alert-info tornis-guest-alert" style="margin-bottom: 18px;">
+		Lai piedalītos topos un saglabātu savus rekordus, lūdzu, <a href="/login">ienāc</a> vai <a href="/registreties">reģistrējies</a>!
+	</div>
+	<!-- END BLOCK : guest-notice -->
+
 	<div class="tornis-game-layout">
 		<div class="tornis-main-stage">
 			<div class="tornis-canvas-container" id="tornis-container">
