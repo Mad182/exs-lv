@@ -242,9 +242,9 @@
 	// 3D Isometric Math: World (x, y, z) -> Screen (sx, sy)
 	function isoProject(x, y, z) {
 		var originX = logicalW / 2;
-		var originY = logicalH * 0.78;
+		var originY = logicalH * 0.74;
 		var sx = originX + (x - z) * COS_ISO;
-		var sy = originY + (x + z) * SIN_ISO - y - cameraY;
+		var sy = originY + (x + z) * SIN_ISO - y + cameraY;
 		return { x: sx, y: sy };
 	}
 
@@ -379,8 +379,10 @@
 				var twinkle = Math.sin(nowTime * star.speed + s) * 0.3 + 0.7;
 				ctx.fillStyle = '#ffffff';
 				ctx.globalAlpha = star.baseAlpha * starAlphaFactor * twinkle;
+				var starY = (star.y + cameraY * 0.15) % logicalH;
+				if (starY < 0) starY += logicalH;
 				ctx.beginPath();
-				ctx.arc(star.x, (star.y - cameraY * 0.15) % logicalH, star.radius, 0, Math.PI * 2);
+				ctx.arc(star.x, starY, star.radius, 0, Math.PI * 2);
 				ctx.fill();
 			}
 			ctx.restore();
@@ -396,7 +398,7 @@
 				if (cloud.x > logicalW + 100) cloud.x = -100;
 				if (cloud.x < -100) cloud.x = logicalW + 100;
 
-				var cy = cloud.y - cameraY * 0.35;
+				var cy = cloud.y + cameraY * 0.35;
 				if (cy > -50 && cy < logicalH + 50) {
 					ctx.fillStyle = '#ffffff';
 					ctx.globalAlpha = cloud.alpha * cloudAlphaFactor;
@@ -567,7 +569,7 @@
 			index: newIndex
 		};
 
-		targetCameraY = Math.max(0, (newIndex - 6) * BLOCK_HEIGHT);
+		targetCameraY = Math.max(0, (newIndex - 4) * BLOCK_HEIGHT);
 	}
 
 	// Drop / Place Block
@@ -815,7 +817,7 @@
 		for (var i = slicedBlocks.length - 1; i >= 0; i--) {
 			var piece = slicedBlocks[i];
 			piece.update(dt);
-			if (piece.alpha <= 0 || piece.box.y < -300) {
+			if (piece.alpha <= 0 || piece.box.y < cameraY - 400) {
 				slicedBlocks.splice(i, 1);
 			}
 		}
@@ -878,8 +880,8 @@
 		ctx.restore();
 
 		// 3. Render Static Stacked Blocks (Frustum culled for performance)
-		var visibleBottomY = cameraY - 150;
-		var visibleTopY = cameraY + logicalH + 200;
+		var visibleBottomY = cameraY - 350;
+		var visibleTopY = cameraY + 650;
 
 		for (var i = 0; i < blocks.length; i++) {
 			var blk = blocks[i];
