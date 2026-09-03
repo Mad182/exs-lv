@@ -5,11 +5,12 @@
 (function () {
 	'use strict';
 
-	// Canvas & Context
-	var canvas = document.getElementById('tornis-canvas');
-	if (!canvas) return;
-	var ctx = canvas.getContext('2d');
-	var container = document.getElementById('tornis-container');
+	function initTornis() {
+		// Canvas & Context
+		var canvas = document.getElementById('tornis-canvas');
+		if (!canvas) return;
+		var ctx = canvas.getContext('2d');
+		var container = document.getElementById('tornis-container');
 
 	// HUD & UI Elements
 	var hudEl = document.getElementById('tornis-hud');
@@ -1037,6 +1038,13 @@
 		}
 	});
 
-	// Kick off render loop
-	requestAnimationFrame(gameLoop);
+		// Kick off render loop
+		requestAnimationFrame(gameLoop);
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initTornis);
+	} else {
+		initTornis();
+	}
 })();
