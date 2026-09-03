@@ -53,6 +53,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	}
 
 	// Check if this score is a new personal record
+	$prev_top = get_game_top_users('2048');
 	$prev_best = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = '2048' AND user_id = '$auth->id'");
 	$is_new_record = (empty($prev_best) || $score > $prev_best);
 
@@ -61,6 +62,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$insert_id = $db->insert_id;
 
 	if ($insert_id || $db->affected_rows > 0) {
+		check_game_record_loss('2048', $auth->id, $prev_top);
 		if ($is_new_record) {
 			push('Uzstādīja jaunu rekordu spēlē <a href="/2048-spele">2048</a> (' . number_format($score, 0, '', ' ') . ' punkti)', '/bildes/icons/games/2048.png', 'game-2048-' . $auth->id);
 		}

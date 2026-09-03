@@ -56,10 +56,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	}
 
 	// Save High Score (lower time is better)
+	$prev_top = get_game_top_users('sudoku');
 	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'sudoku' AND user_id = '$auth->id'");
 	$is_new_record = (empty($prev_best) || $time_sec < (int)$prev_best);
 
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'sudoku', '$time_sec', '" . time() . "')");
+	check_game_record_loss('sudoku', $auth->id, $prev_top);
 
 	$mins = floor($time_sec / 60);
 	$s = $time_sec % 60;

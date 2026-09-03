@@ -265,6 +265,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 	  14 - @mention miniblogā
 	  15 - @mention topikā
 	  16 - @mention attēla komentos
+	  17 - pārspēts spēles rekords
 	 */
 	$user_id = intval($user_id);
 	$type = intval($type);
@@ -274,7 +275,7 @@ function notify($user_id, $type, $place = 0, $url = '', $info = '') {
 
 	$lang = get_lang();
 
-	if (in_array($type, [5, 6, 7, 9, 10, 11])) {
+	if (in_array($type, [5, 6, 7, 9, 10, 11, 17])) {
 		$lang = 1;
 	}
 
@@ -317,7 +318,8 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 		13 => 'pieminēja grupā',
 		14 => 'pieminēja mb',
 		15 => 'tevi pieminēja',
-		16 => 'pieminēja galerijā'
+		16 => 'pieminēja galerijā',
+		17 => 'pārspēts rekords'
 	];
 	if (!empty($user_id)) {
 
@@ -340,7 +342,7 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 				$site = '';
 
 				$domain = '';
-				if ($notify->lang != $lang && !in_array($notify->type, [5, 6, 7, 9, 10, 11])) {
+				if ($notify->lang != $lang && !in_array($notify->type, [5, 6, 7, 9, 10, 11, 17])) {
 
 					$domain = '//' . $config_domains[$notify->lang]['domain'];
 					if (empty($config_domains[$notify->lang]['ssl'])) {
@@ -416,6 +418,227 @@ function get_notify($user_id, $base = '/events-pager?events-page=') {
 		}
 	}
 	return $out;
+}
+
+/**
+ * Informācija par spēļu konfigurāciju un topos kārtošanu
+ */
+function get_game_info($game_code) {
+	$games = [
+		'tetris' => [
+			'title' => 'Tetris',
+			'url' => '/tetris',
+			'order' => 'DESC',
+			'where' => "game = 'tetris'",
+			'cat_id' => 2514,
+		],
+		'snake' => [
+			'title' => 'Čūska',
+			'url' => '/snake',
+			'order' => 'DESC',
+			'where' => "game = 'snake'",
+			'cat_id' => 355,
+		],
+		'runner' => [
+			'title' => 'Runner',
+			'url' => '/runner',
+			'order' => 'DESC',
+			'where' => "game = 'runner'",
+			'cat_id' => 2516,
+		],
+		'2048' => [
+			'title' => '2048',
+			'url' => '/2048-spele',
+			'order' => 'DESC',
+			'where' => "game = '2048'",
+			'cat_id' => 2517,
+		],
+		'memory' => [
+			'title' => 'Atmiņas spēle',
+			'url' => '/memory',
+			'order' => 'DESC',
+			'where' => "game = 'memory'",
+			'cat_id' => 2515,
+		],
+		'flappy' => [
+			'title' => 'Lidojošais Eksis',
+			'url' => '/flappy',
+			'order' => 'DESC',
+			'where' => "game = 'flappy'",
+			'cat_id' => 2522,
+		],
+		'invaders' => [
+			'title' => 'Space Invaders',
+			'url' => '/invaders',
+			'order' => 'DESC',
+			'where' => "game = 'invaders'",
+			'cat_id' => 2523,
+		],
+		'augsup' => [
+			'title' => 'Augšup',
+			'url' => '/augsup',
+			'order' => 'DESC',
+			'where' => "game = 'augsup'",
+			'cat_id' => 2524,
+		],
+		'vardes' => [
+			'title' => 'Vardes',
+			'url' => '/vardes',
+			'order' => 'DESC',
+			'where' => "game = 'vardes'",
+			'cat_id' => 2516,
+		],
+		'ut99' => [
+			'title' => 'Unreal Tournament 99',
+			'url' => '/ut99',
+			'order' => 'DESC',
+			'where' => "game = 'ut99'",
+			'cat_id' => 2516,
+		],
+		'rulete' => [
+			'title' => 'Rulete',
+			'url' => '/rulete',
+			'order' => 'DESC',
+			'where' => "game = 'rulete'",
+			'cat_id' => 2521,
+		],
+		'karatavas' => [
+			'title' => 'Karātavas',
+			'url' => '/karatavas',
+			'order' => 'DESC',
+			'where' => "game = 'karatavas'",
+			'cat_id' => 264,
+		],
+		'wordle' => [
+			'title' => 'Wordle',
+			'url' => '/wordle',
+			'order' => 'ASC',
+			'where' => "game = 'wordle' AND score > 0",
+			'cat_id' => 2520,
+		],
+		'sudoku' => [
+			'title' => 'Sudoku',
+			'url' => '/sudoku',
+			'order' => 'ASC',
+			'where' => "game = 'sudoku' AND score > 0",
+			'cat_id' => 2519,
+		],
+		'minu-mekletajs' => [
+			'title' => 'Mīnu Meklētājs (Iesācējs)',
+			'url' => '/minu-mekletajs?act=overall-top',
+			'order' => 'ASC',
+			'where' => "game IN ('minu-mekletajs-easy', 'minu-mekletajs') AND score > 0",
+			'cat_id' => 2518,
+		],
+		'minu-mekletajs-easy' => [
+			'title' => 'Mīnu Meklētājs (Iesācējs)',
+			'url' => '/minu-mekletajs?act=overall-top',
+			'order' => 'ASC',
+			'where' => "game IN ('minu-mekletajs-easy', 'minu-mekletajs') AND score > 0",
+			'cat_id' => 2518,
+		],
+		'minu-mekletajs-medium' => [
+			'title' => 'Mīnu Meklētājs (Vidējs)',
+			'url' => '/minu-mekletajs?act=overall-top',
+			'order' => 'ASC',
+			'where' => "game = 'minu-mekletajs-medium' AND score > 0",
+			'cat_id' => 2518,
+		],
+		'minu-mekletajs-hard' => [
+			'title' => 'Mīnu Meklētājs (Eksperts)',
+			'url' => '/minu-mekletajs?act=overall-top',
+			'order' => 'ASC',
+			'where' => "game = 'minu-mekletajs-hard' AND score > 0",
+			'cat_id' => 2518,
+		],
+	];
+
+	if (isset($games[$game_code])) {
+		return $games[$game_code];
+	}
+
+	return [
+		'title' => ucfirst($game_code),
+		'url' => '/' . $game_code,
+		'order' => 'DESC',
+		'where' => "game = '" . sanitize($game_code) . "' AND score > 0",
+		'cat_id' => 0,
+	];
+}
+
+/**
+ * Iegūst spēles visu laiku top 3 lietotājus ar to vietām [user_id => rank]
+ */
+function get_game_top_users($game_code) {
+	global $db;
+	$info = get_game_info($game_code);
+	$where = $info['where'];
+	$order = $info['order'];
+
+	if ($order === 'ASC') {
+		$query = "SELECT user_id, MIN(score) as best_score, MIN(time) as best_time FROM gamescore WHERE $where GROUP BY user_id ORDER BY best_score ASC, best_time ASC LIMIT 3";
+	} else {
+		$query = "SELECT user_id, MAX(score) as best_score, MIN(time) as best_time FROM gamescore WHERE $where GROUP BY user_id ORDER BY best_score DESC, best_time ASC LIMIT 3";
+	}
+
+	$results = $db->get_results($query);
+	$top = [];
+	if ($results) {
+		$rank = 1;
+		foreach ($results as $row) {
+			$top[(int)$row->user_id] = $rank;
+			$rank++;
+		}
+	}
+	return $top;
+}
+
+/**
+ * Pārbauda un nosūta notifikāciju, ja kāds no top 1/2/3 zaudējis savu vietu
+ */
+function check_game_record_loss($game_code, $current_user_id, $prev_top = null) {
+	global $db, $auth;
+
+	$current_user_id = intval($current_user_id);
+	if (empty($current_user_id) || empty($prev_top) || !is_array($prev_top)) {
+		return;
+	}
+
+	$game_info = get_game_info($game_code);
+	$new_top = get_game_top_users($game_code);
+
+	// Kas pārspēja rekordu
+	$actor_nick = '';
+	if ($auth && $auth->ok && $auth->id == $current_user_id) {
+		$actor_nick = $auth->nick;
+	} else {
+		$actor_nick = $db->get_var("SELECT nick FROM users WHERE id = '$current_user_id'");
+	}
+	if (empty($actor_nick)) {
+		$actor_nick = 'Kāds';
+	}
+
+	$game_title = $game_info['title'];
+	$game_url = $game_info['url'];
+	$foreign_key = (crc32($game_code) & 0x7FFFFFFF);
+
+	foreach ($prev_top as $displaced_uid => $old_rank) {
+		$displaced_uid = intval($displaced_uid);
+
+		// Neziņo sev pašam
+		if ($displaced_uid === $current_user_id) {
+			continue;
+		}
+
+		// Kāda ir lietotāja jaunā vieta
+		$new_rank = isset($new_top[$displaced_uid]) ? (int)$new_top[$displaced_uid] : 4;
+
+		// Ja vieta ir zaudēta (bija 1., 2. vai 3. vietā un tagad ir zemāk)
+		if ($new_rank > $old_rank && $old_rank <= 3) {
+			$msg = $actor_nick . ' pārspēja tavu ' . $old_rank . '. vietu spēlē ' . $game_title . '!';
+			notify($displaced_uid, 17, $foreign_key, $game_url, $msg);
+		}
+	}
 }
 
 /**

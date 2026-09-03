@@ -250,11 +250,13 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 						$existing_gs = $db->get_row("SELECT * FROM gamescore WHERE game = 'karatavas' AND user_id = '$auth->id'");
 						$prev_score = $existing_gs ? (int)$existing_gs->score : 0;
 
+						$prev_top = get_game_top_users('karatavas');
 						if (!$existing_gs) {
 							$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'karatavas', '$today_points', '" . time() . "')");
 						} else {
 							$db->query("UPDATE gamescore SET score = '$today_points', time = '" . time() . "' WHERE id = '$existing_gs->id'");
 						}
+						check_game_record_loss('karatavas', $auth->id, $prev_top);
 
 						if ($today_points > $prev_score) {
 							push('Uzstādīja jaunu rekordu spēlē <a href="/karatavas">Karātavas</a> (' . number_format($today_points, 0, '', ' ') . ' punkti)', '/bildes/icons/games/karatavas.png', 'game-karatavas-' . $auth->id);

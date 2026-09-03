@@ -205,11 +205,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 		$db->query("UPDATE `roulette_balance` SET `gold` = " . intval($new_gold) . ", `max_gold` = " . intval($max_gold) . ", `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
 
 		// Sync with gamescore table for platform leaderboards
+		$prev_top = get_game_top_users('rulete');
 		if (!$existing_score) {
 			$db->query("INSERT INTO `gamescore` (`user_id`, `game`, `score`, `time`) VALUES (" . intval($auth->id) . ", 'rulete', " . intval($max_gold) . ", " . time() . ")");
 		} else if ($max_gold > $existing_score->score) {
 			$db->query("UPDATE `gamescore` SET `score` = " . intval($max_gold) . ", `time` = " . time() . " WHERE `id` = " . intval($existing_score->id));
 		}
+		check_game_record_loss('rulete', $auth->id, $prev_top);
 
 		// Only push to activity stream if player set a genuine new high score record on this spin
 		if ($is_new_record && $new_gold > 100) {

@@ -125,10 +125,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$score = max(50, $raw_score);
 
 	// Save High Score
+	$prev_top = get_game_top_users('memory');
 	$prev_best = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'memory' AND user_id = '$auth->id'");
 	$is_new_record = (empty($prev_best) || $score > $prev_best);
 
 	$db->query("INSERT INTO gamescore (user_id, game, score, time) VALUES ('$auth->id', 'memory', '$score', '" . time() . "')");
+	check_game_record_loss('memory', $auth->id, $prev_top);
 	$highScore = max($prev_best, $score);
 
 	if ($is_new_record) {

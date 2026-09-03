@@ -20,7 +20,7 @@
 	<!-- END BLOCK : canonical-->
     <script>var mb_refresh_limit={mb-refresh-limit},current_user={currentuser-id},new_msg_count={new-messages-count},c_url="{page-url}";</script>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/main_9.e308b3b2.min.css">
+    <link rel="stylesheet" href="{static-server}/css/main_9.8f68dddb.min.css">
     <!-- START BLOCK : additional-css-->
     <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->

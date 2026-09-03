@@ -76,6 +76,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$composite_score = ($guesses * 1000) + min(999, $time_sec);
 
 	// Check if this is a new personal best score (lower is better)
+	$prev_top = get_game_top_users('wordle');
 	$prev_best = $db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'wordle' AND user_id = '$auth->id' AND score > 0");
 	$is_new_record = (empty($prev_best) || $composite_score < (int)$prev_best);
 
@@ -83,6 +84,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$insert_id = $db->insert_id;
 
 	if ($insert_id || $db->affected_rows > 0) {
+		check_game_record_loss('wordle', $auth->id, $prev_top);
 		$mins = floor($time_sec / 60);
 		$s = $time_sec % 60;
 		$formatted_time = sprintf('%02d:%02d', $mins, $s);

@@ -2897,6 +2897,10 @@ dl.list-attr dd {
 	background-position: 0 -482px
 }
 
+#user-notify li.notification-17 a .notification-icon {
+	background-position: 0 -306px
+}
+
 #user-notify li a {
 	display: block;
 	text-decoration: none;

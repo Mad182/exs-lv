@@ -17,7 +17,8 @@ $texts = [
 	13 => 'tevi pieminēja grupā',
 	14 => 'tevi pieminēja mb',
 	15 => 'tevi pieminēja',
-	16 => 'tevi pieminēja galerijā'
+	16 => 'tevi pieminēja galerijā',
+	17 => 'pārspēts spēles rekords'
 ];
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'rss') {

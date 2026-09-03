@@ -31,7 +31,8 @@ if ($var1 === 'notifications') {
 		13 => 'tevi pieminēja grupā',
 		14 => 'tevi pieminēja mb',
 		15 => 'tevi pieminēja rakstā',
-		16 => 'tevi pieminēja galerijā'
+		16 => 'tevi pieminēja galerijā',
+		17 => 'pārspēts rekords'
 	);*/
 	
 	// id tām notifikācijām, kas saistītas ar grupām, lai pēc tam varētu
