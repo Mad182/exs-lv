@@ -954,7 +954,8 @@ INSERT INTO `cat` VALUES
 (2521,'rulete',1,'Rulete - Kazino spēle',1,'rulete',0,0,0,0,0,0,2516,'Spēlē Ruleti tiešsaistē par brīvu! Klasiskā kazino ruletes spēle ar 100 žetonu sākuma kapitālu, ikdienas bilances papildināšanu, sarkanās/melnās, pāra/nepāra, skaitļu un sleju likmēm. Sacenties topos par lielāko žetonu krājumu!','main','',0,0,0,0,'','','',0,1,'active',0,0),
 (2522,'flappy',1,'Lidojošais Eksis',1,'flappy',0,0,0,0,0,0,2516,'Vadā Lidojošo Eksi cauri šķēršļiem un uzstādi jaunu rekordu!','main','',0,0,0,0,'','','',460,1,'active',0,0),
 (2523,'invaders',1,'Space Invaders',1,'invaders',0,0,0,0,0,0,2516,'Klasiskā Space Invaders spēle bezgalīgā režīmā ar punktu skaitīšanu un līderu topu.','main','',0,0,0,0,'','','',470,1,'active',0,0),
-(2524,'augsup',1,'Augšup',1,'augsup',0,0,0,0,0,0,2516,'Spēlē Augšup tiešsaistē! Lec pa platformām un sasniedz jaunu augstuma rekordu.','main','',0,0,0,0,'','','',480,1,'active',0,0);
+(2524,'augsup',1,'Augšup',1,'augsup',0,0,0,0,0,0,2516,'Spēlē Augšup tiešsaistē! Lec pa platformām un sasniedz jaunu augstuma rekordu.','main','',0,0,0,0,'','','',480,1,'active',0,0),
+(2525,'tornis',1,'Tornis',1,'tornis',0,0,0,0,0,0,2516,'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!','main','',0,0,0,0,'','','',490,1,'active',0,0);
 /*!40000 ALTER TABLE `cat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

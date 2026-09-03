@@ -158,6 +158,16 @@ $games_list = [
 		'badge_class' => 'label-success',
 		'desc' => 'Bēdz no šķēršļiem un citu lietotāju avatariem, vāc zvaigznes un uzstādi jaunu rekordu!',
 		'game_code' => 'runner'
+	],
+	[
+		'id' => 'tornis',
+		'title' => 'Tornis',
+		'url' => '/tornis',
+		'icon' => '/bildes/icons/games/tornis.png',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!',
+		'game_code' => 'tornis'
 	]
 ];
 

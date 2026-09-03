@@ -495,6 +495,13 @@ function get_game_info($game_code) {
 			'where' => "game = 'ut99'",
 			'cat_id' => 2516,
 		],
+		'tornis' => [
+			'title' => 'Tornis',
+			'url' => '/tornis',
+			'order' => 'DESC',
+			'where' => "game = 'tornis'",
+			'cat_id' => 2525,
+		],
 		'rulete' => [
 			'title' => 'Rulete',
 			'url' => '/rulete',
