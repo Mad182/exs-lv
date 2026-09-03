@@ -91,16 +91,12 @@ $opengraph_meta['description'] = $meta_description;
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 
-// Guest Notice Alert
-if (!$auth->ok) {
-	$tpl->newBlock('guest-notice');
-}
-
 // User Avatar & High Score
-$user_avatar = get_avatar($auth->ok ? $auth : null, 's');
+$user_avatar = '/dati/bildes/u_small/none.png';
 $user_high_score = 0;
 
 if ($auth->ok) {
+	$user_avatar = get_avatar($auth, 's');
 	$user_high_score = (int)$db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'tornis' AND user_id = '$auth->id'");
 }
 
@@ -108,6 +104,11 @@ $tpl->assign([
 	'user-avatar' => $user_avatar,
 	'user-high-score' => $user_high_score
 ]);
+
+// Guest Notice Alert
+if (!$auth->ok) {
+	$tpl->newBlock('guest-notice');
+}
 
 // Helper for top rank medal icons
 function format_rank_badge($rank) {
