@@ -432,7 +432,7 @@ if ($article && ($auth->ok === true || !$article->private)) {
 							$foo->file_auto_rename = false;
 							$foo->file_overwrite = true;
 							$foo->process('dati/bildes/av_sm/');
-							unlink('dati/bildes/topic-av/' . $topicid . '.jpg');
+							if (file_exists('dati/bildes/topic-av/' . $topicid . '.jpg')) { @unlink('dati/bildes/topic-av/' . $topicid . '.jpg'); }
 							$foo->clean();
 							$article->avatar = 'dati/bildes/avatari/' . $topicid . '.jpg';
 							$article->sm_avatar = 'dati/bildes/av_sm/' . $topicid . '.jpg';
