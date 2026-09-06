@@ -98,6 +98,7 @@ if (!empty($today_scores)) {
 			$tpl->newBlock('today-top-node');
 			$tpl->assign([
 				'rank' => $rank++,
+				'user-url' => mkurl('user', $u->id, $u->nick),
 				'user-nick' => usercolor($u->nick, $u->level),
 				'score' => number_format($sc->score, 0, '', ' ')
 			]);
@@ -118,6 +119,7 @@ if (!empty($alltime_scores)) {
 			$tpl->newBlock('alltime-top-node');
 			$tpl->assign([
 				'rank' => $rank++,
+				'user-url' => mkurl('user', $u->id, $u->nick),
 				'user-nick' => usercolor($u->nick, $u->level),
 				'score' => number_format($sc->score, 0, '', ' ')
 			]);

@@ -71,7 +71,7 @@
 					<!-- START BLOCK : today-top-node -->
 					<li>
 						<span class="top-rank">{rank}.</span>
-						<span class="top-user">{user-nick}</span>
+						<span class="top-user"><a href="{user-url}">{user-nick}</a></span>
 						<strong class="top-score">{score}</strong>
 					</li>
 					<!-- END BLOCK : today-top-node -->
@@ -87,7 +87,7 @@
 					<!-- START BLOCK : alltime-top-node -->
 					<li>
 						<span class="top-rank">{rank}.</span>
-						<span class="top-user">{user-nick}</span>
+						<span class="top-user"><a href="{user-url}">{user-nick}</a></span>
 						<strong class="top-score">{score}</strong>
 					</li>
 					<!-- END BLOCK : alltime-top-node -->
