@@ -1,4 +1,4 @@
-<h1>2048 - skaitļu apvienošanas spēle</h1>
+<h1>2048 - skaitļu apvienošanas spēle {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/2048-spele" class="tab{active-tab-game}">Spēle</a></li>

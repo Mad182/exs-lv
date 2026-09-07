@@ -1,4 +1,4 @@
-<h1>Mīnu Meklētājs (Minesweeper)</h1>
+<h1>Mīnu Meklētājs (Minesweeper) {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/minu-mekletajs" class="tab{active-tab-game}">Spēle</a></li>

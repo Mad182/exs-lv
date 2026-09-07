@@ -1,4 +1,4 @@
-<h1>Atmiņas spēle - EXS.LV Avatari</h1>
+<h1>Atmiņas spēle - EXS.LV Avatari {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/memory" class="tab{active-tab-game}">Spēle</a></li>

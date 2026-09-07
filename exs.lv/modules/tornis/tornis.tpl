@@ -1,6 +1,6 @@
 <div class="tornis-wrapper">
 	<div class="tornis-header">
-		<h2><span class="tornis-icon">🏢</span> Tornis <span class="tornis-subtitle-tag">Tower Stacker</span></h2>
+		<h2><span class="tornis-icon">🏢</span> Tornis <span class="tornis-subtitle-tag">Tower Stacker</span> {game-rate}</h2>
 		<p class="tornis-subtitle">Liec 3D blokus vienu virs otra ar perfektu laika izjūtu, veido combo sērijas un uzbūvē augstāko debesskrāpi!</p>
 	</div>
 

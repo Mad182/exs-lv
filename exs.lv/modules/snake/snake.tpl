@@ -1,4 +1,4 @@
-<h1>Čūska - klasiskā spēle</h1>
+<h1>Čūska - klasiskā spēle {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/snake" class="tab{active-tab-game}">Spēle</a></li>

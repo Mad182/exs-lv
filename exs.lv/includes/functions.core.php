@@ -1607,6 +1607,52 @@ function mb_rater($mb) {
 	return $html;
 }
 
+function get_game_rate_html($game) {
+	global $auth, $remote_salt;
+
+	if (is_array($game)) {
+		$game = (object)$game;
+	}
+
+	$pluslnk = '<span class="voted1" title="Lai balsotu, autorizējies!"></span>';
+	$minuslnk = '<span class="voted2" title="Lai balsotu, autorizējies!"></span>';
+
+	if (!empty($auth) && $auth->ok === true) {
+		$check = substr(md5($game->id . $remote_salt . $auth->id), 0, 5);
+		if (!empty($game->vote_users)) {
+			$voters = @unserialize($game->vote_users);
+			if (!is_array($voters)) {
+				$voters = [];
+			}
+		} else {
+			$voters = [];
+		}
+		$voted = in_array($auth->id, $voters);
+
+		if (!$voted) {
+			$pluslnk = '<a href="/rate-comment/?vc=' . $game->id . '&amp;type=game&amp;check=' . $check . '&amp;action=plus" class="plus" title="Patīk (+1)">plus</a>';
+			$minuslnk = '<a href="/rate-comment/?vc=' . $game->id . '&amp;type=game&amp;check=' . $check . '&amp;action=minus" class="minus" title="Nepatīk (-1)">minus</a>';
+		} else {
+			$pluslnk = '<span class="voted1" title="Jau esi nobalsojis"></span>';
+			$minuslnk = '<span class="voted2" title="Jau esi nobalsojis"></span>';
+		}
+	}
+
+	$val = (int)$game->vote_value;
+	if ($val > 0) {
+		$display_val = '+' . $val;
+		$vclass = 'positive';
+	} elseif ($val < 0) {
+		$display_val = $val;
+		$vclass = 'negative';
+	} else {
+		$display_val = '0';
+		$vclass = 'zero';
+	}
+
+	return '<span class="c-rate game-rate"><span class="r-val ' . $vclass . '">' . $display_val . '</span>' . $pluslnk . $minuslnk . '</span>';
+}
+
 function filterb4db($text) {
 	$shit = [
 		'&feature=youtu.be',

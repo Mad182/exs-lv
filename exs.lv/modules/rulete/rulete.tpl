@@ -1,4 +1,4 @@
-<h1>Rulete - Klasiskā Kazino Spēle</h1>
+<h1>Rulete - Klasiskā Kazino Spēle {game-rate}</h1>
 
 <div class="tabs-container" style="margin-bottom: 20px;">
 	<ul class="tabs clearfix">

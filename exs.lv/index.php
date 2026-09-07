@@ -304,14 +304,21 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 
 // Spēles un moduļi, kuriem nepieciešama pilnā JS bibliotēka (jQuery)
 $jquery_modules = [
-	'2048', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
+	'2048', 'arkanoid', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
 	'memory', 'minu-mekletajs', 'register', 'rulete', 'runner', 'snake', 'speles',
-	'steam-online', 'sudoku', 'tetris', 'tic-tac-toe', 'vardes', 'wordle', 'karatavas'
+	'steam-online', 'sudoku', 'tetris', 'tic-tac-toe', 'tornis', 'vardes', 'wordle', 'karatavas'
 ];
 if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
 	$require_jquery = true;
 }
 $is_game = (isset($category) && ((!empty($category->module) && in_array($category->module, $jquery_modules)) || (!empty($category->parent) && $category->parent == 2516)));
+
+if ($is_game && isset($tpl)) {
+	$game_info = $db->get_row("SELECT * FROM `games` WHERE `slug` = '" . sanitize($category->textid) . "' OR `slug` = '" . sanitize($category->module) . "' OR `game_code` = '" . sanitize($category->module) . "' LIMIT 1");
+	if ($game_info) {
+		$tpl->assignGlobal('game-rate', get_game_rate_html($game_info));
+	}
+}
 
 //lietotājam specifiskās fīčas
 if ($skin === 'main') {

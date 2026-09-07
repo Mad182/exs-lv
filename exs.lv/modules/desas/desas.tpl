@@ -1,7 +1,7 @@
 <!-- START BLOCK : desas-->
 <link rel="stylesheet" href="/modules/desas/desas.2066a638.min.css" />
 <script src="/modules/desas/desas.d343a278.min.js"></script>
-<h3>Desas</h3>
+<h3>Desas {game-rate}</h3>
 <div class="box">
 	<div id="desas"><a href="/desas_server" id="start-desas">Sākt spēli</a></div>
 	<div id="desas-info" style="display: none">

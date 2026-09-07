@@ -19,6 +19,7 @@ if ($auth->ok) {
 	}
 	$_SESSION["antiflood_rate"] = microtime(true);
 
+	$is_game = (isset($_GET['type']) && $_GET['type'] == 'game');
 	$table = 'comments';
 
 	if (isset($_GET['type'])) {
@@ -26,6 +27,8 @@ if ($auth->ok) {
 			$table = 'galcom';
 		} elseif ($_GET['type'] == 'mb') {
 			$table = 'miniblog';
+		} elseif ($_GET['type'] == 'game') {
+			$table = 'games';
 		}
 	}
 
@@ -43,7 +46,7 @@ if ($auth->ok) {
 			}
 		}
 
-		if ($comment->author == $auth->id) {
+		if (!$is_game && isset($comment->author) && $comment->author == $auth->id) {
 			die('Par savu komentāru? Tiešām?');
 		}
 
@@ -70,20 +73,26 @@ if ($auth->ok) {
 				$limit += 50;
 			}
 
-			if ($auth->vote_today >= $limit) {
+			if (!$is_game && $auth->vote_today >= $limit) {
 				die('Sasniegts dienas limits');
 			} elseif ($_GET['action'] == 'plus') {
-
-				$db->query("UPDATE `" . $table . "` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
-				$db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+				if ($is_game) {
+					$db->query("UPDATE `games` SET vote_value = vote_value+1, votes_up = votes_up+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
+				} else {
+					$db->query("UPDATE `" . $table . "` SET vote_value = vote_value+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
+					$db->query("UPDATE users SET vote_others = vote_others+1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+					get_user($auth->id, true);
+				}
 				$comment->vote_value++;
-				get_user($auth->id, true);
 			} else {
-
-				$db->query("UPDATE `" . $table . "` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
-				$db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+				if ($is_game) {
+					$db->query("UPDATE `games` SET vote_value = vote_value-1, votes_down = votes_down+1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
+				} else {
+					$db->query("UPDATE `" . $table . "` SET vote_value = vote_value-1, vote_users = '" . $comment->vote_users . "' WHERE id = '$vc'");
+					$db->query("UPDATE users SET vote_others = vote_others-1, vote_total = vote_total+1, vote_today = vote_today+1 WHERE id = '$auth->id'");
+					get_user($auth->id, true);
+				}
 				$comment->vote_value = $comment->vote_value - 1;
-				get_user($auth->id, true);
 			}
 
 			if (isset($_GET['_'])) {

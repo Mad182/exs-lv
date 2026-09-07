@@ -1,6 +1,6 @@
 <div class="flappy-wrapper">
 	<div class="flappy-header">
-		<h2><span class="flappy-icon">🐥</span> Lidojošais Eksis</h2>
+		<h2><span class="flappy-icon">🐥</span> Lidojošais Eksis {game-rate}</h2>
 		<p class="flappy-subtitle">Spied <strong>Spacebar</strong> vai klikšķini, lai lidotu cauri šķēršļiem un uzstādītu jaunu rekordu!</p>
 	</div>
 

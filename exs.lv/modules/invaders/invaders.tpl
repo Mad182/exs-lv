@@ -1,6 +1,6 @@
 <div class="invaders-wrapper">
 	<div class="invaders-header">
-		<h2><span class="invaders-icon">👾</span> Space Invaders</h2>
+		<h2><span class="invaders-icon">👾</span> Space Invaders {game-rate}</h2>
 		<p class="invaders-subtitle">Izmanto <kbd>←</kbd> <kbd>→</kbd> vai <kbd>A</kbd> <kbd>D</kbd> lai kustētos, un <kbd>Spacebar</kbd> / <kbd>↑</kbd> lai šautu!</p>
 	</div>
 

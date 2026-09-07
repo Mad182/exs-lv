@@ -1,6 +1,6 @@
 <div class="augsup-wrapper">
 	<div class="augsup-header">
-		<h2><span class="augsup-icon">🦘</span> Augšup</h2>
+		<h2><span class="augsup-icon">🦘</span> Augšup {game-rate}</h2>
 		<p class="augsup-subtitle">Lēkā pa platformām ar savu avatāru, sasniedz mākoņus un uzstādi jaunu augstuma rekordu!</p>
 	</div>
 

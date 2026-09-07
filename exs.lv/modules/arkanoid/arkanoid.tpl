@@ -1,6 +1,6 @@
 <div class="arkanoid-wrapper">
 	<div class="arkanoid-header">
-		<h2><span class="arkanoid-title-icon">🧱</span> Arkanoid</h2>
+		<h2><span class="arkanoid-title-icon">🧱</span> Arkanoid {game-rate}</h2>
 		<p class="arkanoid-subtitle">
 			Kustini <strong>Vaus</strong> ar peli vai <kbd>←</kbd> <kbd>→</kbd> / <kbd>A</kbd> <kbd>D</kbd>, palaid bumbiņu vai šauj ar <kbd>Spacebar</kbd> / kreiso peles klikšķi!
 		</p>

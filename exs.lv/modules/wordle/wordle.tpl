@@ -1,4 +1,4 @@
-<h1>Wordle (Vārdu mīkla)</h1>
+<h1>Wordle (Vārdu mīkla) {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/wordle" class="tab{active-tab-game}">Spēle</a></li>

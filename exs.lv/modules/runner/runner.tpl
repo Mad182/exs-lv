@@ -1,4 +1,4 @@
-<h1>Runner</h1>
+<h1>Runner {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/runner" class="tab active">Spēle</a></li>

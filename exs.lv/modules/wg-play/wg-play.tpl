@@ -54,7 +54,7 @@
 
 </script>
 
-<h1>Karātavas - vārdu minēšanas spēle</h1>
+<h1>Karātavas - vārdu minēšanas spēle {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/karatavas" class="tab{active-tab-game}">Spēle</a></li>

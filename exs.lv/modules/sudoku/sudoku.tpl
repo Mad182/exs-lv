@@ -1,4 +1,4 @@
-<h1>Sudoku</h1>
+<h1>Sudoku {game-rate}</h1>
 
 <div class="tabs">
 	<li><a href="/sudoku" class="tab{active-tab-game}">Spēle</a></li>

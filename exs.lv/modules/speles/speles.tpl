@@ -10,7 +10,7 @@
 			</a>
 			<div class="speles-card-title-group">
 				<span class="label {game-badge-class} pull-right">{game-badge}</span>
-				<h3><a href="{game-url}">{game-title}</a></h3>
+				<h3><a href="{game-url}">{game-title}</a> {game-rate}</h3>
 			</div>
 		</div>
 		<p class="speles-card-desc">{game-desc}</p>

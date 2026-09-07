@@ -1,4 +1,4 @@
-<h1>Tetris - klasiskā bluķīšu spēle</h1>
+<h1>Tetris - klasiskā bluķīšu spēle {game-rate}</h1>
 
 <div class="tabs tetris-tabs">
 	<li><a href="/tetris" class="tab{active-tab-game}">Spēle</a></li>
