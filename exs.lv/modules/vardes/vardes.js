@@ -493,13 +493,14 @@
 
 		// 5. Draw HUD Bar (Row 13)
 		ctx.save();
-		ctx.font = 'bold 15px "Noto Color Emoji", sans-serif';
+		ctx.font = 'bold 15px sans-serif';
 		ctx.fillStyle = '#f8fafc';
 		ctx.textAlign = 'left';
 		ctx.fillText('Punkti: ' + score, 10, 13 * GRID_SIZE + 24);
 
 		// Lives
 		ctx.textAlign = 'center';
+		ctx.font = 'bold 15px "Noto Color Emoji", sans-serif';
 		var livesText = '';
 		for (var l = 0; l < lives; l++) livesText += '❤️ ';
 		ctx.fillText(livesText, canvas.width / 2, 13 * GRID_SIZE + 24);

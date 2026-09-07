@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic,latin-ext">
-    <link rel="stylesheet" href="{static-server}/css/main_9.a758fa7a.min.css">
+    <link rel="stylesheet" href="{static-server}/css/main_9.910f7ca1.min.css">
     <!-- START BLOCK : additional-css-->
     <link rel="stylesheet" href="{static-server}/css/{filename}">
     <!-- END BLOCK : additional-css-->
