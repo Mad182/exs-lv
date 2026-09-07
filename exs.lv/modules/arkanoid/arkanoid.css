@@ -25,6 +25,9 @@
 
 .arkanoid-title-icon {
 	font-size: 30px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .arkanoid-subtitle {
@@ -184,6 +187,7 @@
 	justify-content: center;
 	cursor: pointer;
 	font-size: 14px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 	transition: background 0.15s, border-color 0.15s;
 }
 
