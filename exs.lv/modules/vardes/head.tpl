@@ -1,2 +1,2 @@
-<link rel="stylesheet" href="/modules/vardes/vardes.6ef5da8c.min.css" />
-<script src="/modules/vardes/vardes.65be9090.min.js"></script>
+<link rel="stylesheet" href="/modules/vardes/vardes.b0adb826.min.css" />
+<script src="/modules/vardes/vardes.deae2769.min.js"></script>

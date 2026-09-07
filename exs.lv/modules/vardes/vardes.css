@@ -293,8 +293,83 @@
 	font-style: italic;
 }
 
+/* Leaves Indicator Bar */
+.vardes-leaves-bar {
+	width: 100%;
+	max-width: 440px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 7px 12px;
+	margin-bottom: 8px;
+	box-sizing: border-box;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.leaves-bar-title {
+	font-size: 12px;
+	font-weight: 700;
+	color: #475569;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.leaves-slots-row {
+	display: flex;
+	gap: 6px;
+}
+
+.leaf-slot-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	padding: 3px 8px;
+	border-radius: 6px;
+	font-size: 12px;
+	font-weight: 700;
+	transition: all 0.25s ease;
+	user-select: none;
+}
+
+.leaf-slot-badge.free {
+	background: #f0fdf4;
+	border: 1px solid #86efac;
+	color: #166534;
+}
+
+.leaf-slot-badge.taken {
+	background: linear-gradient(135deg, #15803d 0%, #047857 100%);
+	border: 1px solid #fbbf24;
+	color: #ffffff;
+	box-shadow: 0 0 10px rgba(251, 191, 36, 0.45);
+	transform: scale(1.06);
+}
+
+.leaf-icon {
+	font-size: 13px;
+}
+
+.leaf-label {
+	font-size: 11px;
+}
+
 /* Dark mode overrides */
 @media (prefers-color-scheme: dark) {
+	.vardes-leaves-bar {
+		background: #1e293b;
+		border-color: #334155;
+	}
+	.leaves-bar-title {
+		color: #94a3b8;
+	}
+	.leaf-slot-badge.free {
+		background: rgba(34, 197, 94, 0.12);
+		border-color: rgba(34, 197, 94, 0.35);
+		color: #86efac;
+	}
 	.vardes-header h2 { color: #4ade80; }
 	.vardes-subtitle { color: #94a3b8; }
 	.vardes-controls-bar { background: #1e293b; }

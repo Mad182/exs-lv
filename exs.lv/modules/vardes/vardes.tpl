@@ -6,6 +6,28 @@
 
 	<div class="vardes-game-layout">
 		<div class="vardes-main-stage">
+			<!-- Leaves Indicator Bar -->
+			<div class="vardes-leaves-bar">
+				<span class="leaves-bar-title">Mērķa lapas:</span>
+				<div class="leaves-slots-row" id="vardes-leaves-slots">
+					<div class="leaf-slot-badge free" data-slot="0" title="1. lapa (kreisā)">
+						<span class="leaf-icon">🪷</span> <span class="leaf-label">1</span>
+					</div>
+					<div class="leaf-slot-badge free" data-slot="1" title="2. lapa">
+						<span class="leaf-icon">🪷</span> <span class="leaf-label">2</span>
+					</div>
+					<div class="leaf-slot-badge free" data-slot="2" title="3. lapa (centra)">
+						<span class="leaf-icon">🪷</span> <span class="leaf-label">3</span>
+					</div>
+					<div class="leaf-slot-badge free" data-slot="3" title="4. lapa">
+						<span class="leaf-icon">🪷</span> <span class="leaf-label">4</span>
+					</div>
+					<div class="leaf-slot-badge free" data-slot="4" title="5. lapa (labā)">
+						<span class="leaf-icon">🪷</span> <span class="leaf-label">5</span>
+					</div>
+				</div>
+			</div>
+
 			<div class="vardes-canvas-container">
 				<canvas id="vardes-canvas" width="440" height="560"></canvas>
 
