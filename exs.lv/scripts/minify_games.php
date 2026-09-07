@@ -26,6 +26,7 @@ $game_modules = [
 	'ut99' => ['js' => ['cacheAppData.js', 'ut99.js'], 'css' => ['ut99.css']],
 	'vardes' => ['js' => ['vardes.js'], 'css' => ['vardes.css']],
 	'wordle' => ['js' => ['wordle.js'], 'css' => ['wordle.css']],
+	'rezonanse' => ['js' => ['rezonanse.js'], 'css' => ['rezonanse.css']],
 ];
 
 $modules_dir = realpath(__DIR__ . '/../modules');
