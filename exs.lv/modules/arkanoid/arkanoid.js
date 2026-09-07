@@ -459,7 +459,12 @@
 				this.mouseControl = true;
 			});
 
-			this.canvas.addEventListener('click', () => {
+			let lastActionTime = 0;
+			const triggerAction = () => {
+				const now = performance.now();
+				if (now - lastActionTime < 120) return;
+				lastActionTime = now;
+
 				this.sound.init();
 				if (this.state === 'START') {
 					this.startGame();
@@ -468,6 +473,16 @@
 				} else {
 					this.handleActionInput();
 				}
+			};
+
+			this.canvas.addEventListener('mousedown', (e) => {
+				if (e.button === 0) {
+					triggerAction();
+				}
+			});
+
+			this.canvas.addEventListener('click', () => {
+				triggerAction();
 			});
 
 			// Touch drag on canvas
@@ -527,7 +542,7 @@
 				let caughtBall = false;
 				for (const ball of this.balls) {
 					if (ball.stuckToVaus) {
-						ball.stuckToVaus = false;
+						this.releaseCaughtBall(ball);
 						caughtBall = true;
 					}
 				}
@@ -613,6 +628,7 @@
 			for (const ball of this.balls) {
 				if (ball.stuckToVaus) {
 					ball.stuckToVaus = false;
+					ball.stuckTimer = 0;
 					// Initial angle: slight random slant
 					const angle = -Math.PI / 2 + (Math.random() * 0.4 - 0.2);
 					ball.vx = Math.cos(angle) * ball.speed;
@@ -620,6 +636,28 @@
 				}
 			}
 			this.state = 'PLAYING';
+			this.sound.paddleHit();
+		}
+
+		releaseCaughtBall(ball) {
+			if (!ball.stuckToVaus) return;
+			ball.stuckToVaus = false;
+			ball.stuckTimer = 0;
+
+			// Angular deflection based on paddle position where ball was caught
+			const hitOffset = (ball.stuckOffset - this.vaus.width / 2) / (this.vaus.width / 2);
+			const clampedOffset = Math.max(-0.85, Math.min(0.85, hitOffset));
+			let bounceAngle = clampedOffset * (Math.PI / 3); // Max 60 deg
+
+			// Avoid purely vertical trajectory to prevent dead loops
+			if (Math.abs(bounceAngle) < 0.1) {
+				bounceAngle = (Math.random() > 0.5 ? 1 : -1) * 0.15;
+			}
+
+			const speed = ball.speed || BALL_INITIAL_SPEED;
+			ball.vx = speed * Math.sin(bounceAngle);
+			ball.vy = -speed * Math.cos(bounceAngle);
+			ball.y = this.vaus.y - ball.radius - 2;
 			this.sound.paddleHit();
 		}
 
@@ -784,6 +822,13 @@
 			this.vaus.isExpanded = false;
 			this.vaus.width = VAUS_NORMAL_WIDTH;
 			this.warpPortal = null;
+			if (this.state === 'PLAYING' && this.balls) {
+				for (const ball of this.balls) {
+					if (ball.stuckToVaus) {
+						this.releaseCaughtBall(ball);
+					}
+				}
+			}
 			this.updateHUD();
 		}
 
@@ -1033,6 +1078,11 @@
 				if (ball.stuckToVaus) {
 					ball.x = this.vaus.x + ball.stuckOffset;
 					ball.y = this.vaus.y - ball.radius - 1;
+					ball.stuckTimer = (ball.stuckTimer || 0) + dt;
+					// Auto release after 4.5 seconds if player hasn't launched it
+					if (this.state === 'PLAYING' && ball.stuckTimer >= 4.5) {
+						this.releaseCaughtBall(ball);
+					}
 					continue;
 				}
 
@@ -1066,7 +1116,9 @@
 
 					if (this.vaus.hasCatch) {
 						ball.stuckToVaus = true;
-						ball.stuckOffset = ball.x - this.vaus.x;
+						ball.stuckOffset = Math.max(ball.radius + 2, Math.min(this.vaus.width - ball.radius - 2, ball.x - this.vaus.x));
+						ball.stuckTimer = 0;
+						ball.speed = Math.min(BALL_MAX_SPEED, (ball.speed || BALL_INITIAL_SPEED) + 0.05);
 						ball.vy = 0;
 						ball.vx = 0;
 						this.sound.paddleHit();
