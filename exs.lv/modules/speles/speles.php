@@ -168,6 +168,16 @@ $games_list = [
 		'badge_class' => 'label-success',
 		'desc' => 'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!',
 		'game_code' => 'tornis'
+	],
+	[
+		'id' => 'arkanoid',
+		'title' => 'Arkanoid',
+		'url' => '/arkanoid',
+		'icon' => '/bildes/icons/games/arkanoid.png',
+		'badge' => 'Jaunums',
+		'badge_class' => 'label-success',
+		'desc' => 'Klasiskā arkādes spēle! Vadi Vaus, atsit bumbu, sašķaidi blokus un ķer leģendāros kapsulu bonusus.',
+		'game_code' => 'arkanoid'
 	]
 ];
 
