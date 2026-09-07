@@ -9,7 +9,7 @@
 				<img src="{game-icon}" alt="{game-title}" class="speles-card-icon-img" width="48" height="48" loading="lazy" />
 			</a>
 			<div class="speles-card-title-group">
-				<span class="label {game-badge-class} pull-right">{game-badge}</span>
+				{game-badge}
 				<h3><a href="{game-url}">{game-title}</a> {game-rate}</h3>
 			</div>
 		</div>

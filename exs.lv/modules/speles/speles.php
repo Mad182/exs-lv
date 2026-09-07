@@ -14,6 +14,10 @@ $games_list = $db->get_results("
 	ORDER BY `vote_value` DESC, `id` ASC
 ");
 
+// Determine the 3 latest games to display "Jaunums" badge
+$latest_game_ids = $db->get_results("SELECT id FROM `games` WHERE `status` = 'active' ORDER BY `id` DESC LIMIT 3");
+$latest_ids = !empty($latest_game_ids) ? array_map(function($g) { return (int)$g->id; }, $latest_game_ids) : [];
+
 if (!empty($games_list)) {
 	foreach ($games_list as $game) {
 		$tpl->newBlock('game-card');
@@ -44,13 +48,14 @@ if (!empty($games_list)) {
 			}
 		}
 
+		$badge_html = in_array((int)$game->id, $latest_ids) ? '<span class="label label-success pull-right">Jaunums</span>' : '';
+
 		$tpl->assign([
 			'game-id' => $game->slug,
 			'game-title' => $game->title,
 			'game-url' => $game->url,
 			'game-icon' => $game->icon,
-			'game-badge' => $game->badge,
-			'game-badge-class' => $game->badge_class,
+			'game-badge' => $badge_html,
 			'game-desc' => $game->desc,
 			'game-rate' => get_game_rate_html($game),
 			'top-player' => $top_player_info ? 'Līderis: ' . $top_player_info : ''
