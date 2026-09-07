@@ -40,22 +40,6 @@
 		{ col: 9, filled: false }
 	];
 
-	function updateLeavesUI() {
-		$('#vardes-leaves-slots .leaf-slot-badge').each(function(index) {
-			if (index < homeSlots.length) {
-				var isFilled = homeSlots[index].filled;
-				var $badge = $(this);
-				if (isFilled) {
-					$badge.removeClass('free').addClass('taken');
-					$badge.html('<span class="leaf-icon">🐸</span> <span class="leaf-label">' + (index + 1) + ' ✓</span>');
-				} else {
-					$badge.removeClass('taken').addClass('free');
-					$badge.html('<span class="leaf-icon">🪷</span> <span class="leaf-label">' + (index + 1) + '</span>');
-				}
-			}
-		});
-	}
-
 	// Audio Synth
 	var audioCtx = null;
 
@@ -188,7 +172,6 @@
 		for (var i = 0; i < homeSlots.length; i++) {
 			homeSlots[i].filled = false;
 		}
-		updateLeavesUI();
 
 		initObstacles();
 		resetFrog();
@@ -260,7 +243,6 @@
 				found = true;
 				score += 500 + timerCurrent * 10;
 				playSound('home');
-				updateLeavesUI();
 				break;
 			}
 		}
@@ -275,7 +257,6 @@
 				for (var j = 0; j < homeSlots.length; j++) {
 					homeSlots[j].filled = false;
 				}
-				updateLeavesUI();
 				initObstacles();
 			}
 			resetFrog();
@@ -373,27 +354,9 @@
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// 1. Draw Environment Zones
-		// Row 0: Goal docks and bays (Height 40px)
-		// Water base across bays
-		ctx.fillStyle = '#0f3a68';
+		// Row 0: Home Slot Water Base
+		ctx.fillStyle = '#1e3a8a';
 		ctx.fillRect(0, 0, canvas.width, GRID_SIZE);
-
-		// Draw grass / hedge barriers on columns 0, 2, 4, 6, 8, 10
-		for (var c = 0; c < 11; c += 2) {
-			var gx = c * GRID_SIZE;
-			ctx.fillStyle = '#14532d';
-			ctx.fillRect(gx, 0, GRID_SIZE, GRID_SIZE);
-			// Decorative hedge / bush pattern
-			ctx.fillStyle = '#15803d';
-			ctx.beginPath();
-			ctx.arc(gx + GRID_SIZE / 2, GRID_SIZE / 2, 17, 0, Math.PI * 2);
-			ctx.fill();
-			ctx.fillStyle = '#166534';
-			ctx.beginPath();
-			ctx.arc(gx + 12, GRID_SIZE / 2 - 2, 10, 0, Math.PI * 2);
-			ctx.arc(gx + 28, GRID_SIZE / 2 + 3, 9, 0, Math.PI * 2);
-			ctx.fill();
-		}
 
 		// Home Slot Lilies (Columns 1, 3, 5, 7, 9)
 		for (var s = 0; s < homeSlots.length; s++) {
@@ -402,82 +365,32 @@
 			var cx = sx + GRID_SIZE / 2;
 			var cy = GRID_SIZE / 2;
 
+			// Base lily pad
+			ctx.fillStyle = '#15803d';
+			ctx.beginPath();
+			ctx.arc(cx, cy, 16, 0, Math.PI * 2);
+			ctx.fill();
+
 			if (slot.filled) {
-				// TAKEN LILY PAD: Glowing golden border and settled frog
+				// Taken leaf: show the frog and checkmark
 				ctx.save();
-				ctx.shadowColor = '#fbbf24';
-				ctx.shadowBlur = 10;
-				ctx.fillStyle = '#15803d';
-				ctx.beginPath();
-				ctx.arc(cx, cy, 17, 0, Math.PI * 2);
-				ctx.fill();
-
-				ctx.lineWidth = 3;
-				ctx.strokeStyle = '#fbbf24';
-				ctx.stroke();
-				ctx.restore();
-
-				// Vector frog body
-				ctx.fillStyle = '#22c55e';
-				ctx.beginPath();
-				ctx.ellipse(cx, cy + 2, 12, 9, 0, 0, Math.PI * 2);
-				ctx.fill();
-
-				// Frog eyes
-				ctx.fillStyle = '#ffffff';
-				ctx.beginPath();
-				ctx.arc(cx - 5, cy - 6, 4, 0, Math.PI * 2);
-				ctx.arc(cx + 5, cy - 6, 4, 0, Math.PI * 2);
-				ctx.fill();
-
-				// Eye pupils
-				ctx.fillStyle = '#0f172a';
-				ctx.beginPath();
-				ctx.arc(cx - 5, cy - 6, 2, 0, Math.PI * 2);
-				ctx.arc(cx + 5, cy - 6, 2, 0, Math.PI * 2);
-				ctx.fill();
-
-				// Frog emoji overlay
-				ctx.save();
-				ctx.font = '18px sans-serif';
+				ctx.font = '22px "Noto Color Emoji", sans-serif';
 				ctx.textAlign = 'center';
 				ctx.textBaseline = 'middle';
 				ctx.fillText('🐸', cx, cy);
 				ctx.restore();
 
-				// Golden checkmark badge in upper-right corner
-				ctx.fillStyle = '#fbbf24';
-				ctx.beginPath();
-				ctx.arc(cx + 12, cy - 10, 6, 0, Math.PI * 2);
-				ctx.fill();
-				ctx.fillStyle = '#0f172a';
-				ctx.font = 'bold 9px sans-serif';
+				// Checkmark
+				ctx.save();
+				ctx.font = 'bold 14px sans-serif';
+				ctx.fillStyle = '#22c55e';
+				ctx.strokeStyle = '#ffffff';
+				ctx.lineWidth = 3;
 				ctx.textAlign = 'center';
 				ctx.textBaseline = 'middle';
-				ctx.fillText('✓', cx + 12, cy - 9);
-			} else {
-				// FREE / AVAILABLE LILY PAD: Vibrant green with gentle blossom
-				ctx.fillStyle = '#16a34a';
-				ctx.beginPath();
-				ctx.arc(cx, cy, 16, 0, Math.PI * 2);
-				ctx.fill();
-
-				ctx.lineWidth = 1.5;
-				ctx.strokeStyle = '#86efac';
-				ctx.stroke();
-
-				// Lotus petal / open pad marker
-				ctx.fillStyle = '#fbcfe8';
-				ctx.beginPath();
-				ctx.arc(cx, cy, 5, 0, Math.PI * 2);
-				ctx.fill();
-
-				// Slot number label
-				ctx.fillStyle = '#ffffff';
-				ctx.font = 'bold 11px sans-serif';
-				ctx.textAlign = 'center';
-				ctx.textBaseline = 'middle';
-				ctx.fillText(s + 1, cx, cy);
+				ctx.strokeText('✓', cx + 10, cy - 8);
+				ctx.fillText('✓', cx + 10, cy - 8);
+				ctx.restore();
 			}
 		}
 
@@ -572,7 +485,7 @@
 
 		// 4. Draw Frog Player Character
 		ctx.save();
-		ctx.font = '28px sans-serif';
+		ctx.font = '28px "Noto Color Emoji", sans-serif';
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText('🐸', frog.x + GRID_SIZE / 2, frog.y + GRID_SIZE / 2);
@@ -580,7 +493,7 @@
 
 		// 5. Draw HUD Bar (Row 13)
 		ctx.save();
-		ctx.font = 'bold 15px sans-serif';
+		ctx.font = 'bold 15px "Noto Color Emoji", sans-serif';
 		ctx.fillStyle = '#f8fafc';
 		ctx.textAlign = 'left';
 		ctx.fillText('Punkti: ' + score, 10, 13 * GRID_SIZE + 24);
@@ -716,6 +629,8 @@
 			$(this).text(soundEnabled ? '🔊 Ieslēgta' : '🔇 Izslēgta');
 		});
 
-		updateLeavesUI();
+		if (document.fonts && document.fonts.load) {
+			document.fonts.load('28px "Noto Color Emoji"');
+		}
 	});
 })();
