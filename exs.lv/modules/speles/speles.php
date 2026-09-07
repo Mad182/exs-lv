@@ -12,28 +12,28 @@ $games_list = $db->get_results("
 	SELECT * FROM `games` 
 	WHERE `status` = 'active' 
 	ORDER BY `vote_value` DESC, `id` ASC
-", ARRAY_A);
+");
 
 if (!empty($games_list)) {
 	foreach ($games_list as $game) {
 		$tpl->newBlock('game-card');
 
 		$top_player_info = '';
-		if (!empty($game['game_code'])) {
-			$is_asc = in_array($game['game_code'], ['wordle', 'minu-mekletajs', 'sudoku']);
+		if (!empty($game->game_code)) {
+			$is_asc = in_array($game->game_code, ['wordle', 'minu-mekletajs', 'sudoku']);
 			$order = $is_asc ? 'ASC' : 'DESC';
 			$where_extra = $is_asc ? " AND score > 0" : "";
-			$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . $game['game_code'] . "' $where_extra ORDER BY score $order LIMIT 1");
+			$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . $game->game_code . "' $where_extra ORDER BY score $order LIMIT 1");
 			if ($top_score) {
 				$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$top_score->user_id'");
 				if ($u) {
-					if ($game['game_code'] == 'wordle') {
+					if ($game->game_code == 'wordle') {
 						$g_cnt = floor($top_score->score / 1000);
 						$sec = $top_score->score % 1000;
 						$mins = floor($sec / 60);
 						$s = $sec % 60;
 						$top_player_info = usercolor($u->nick, $u->level) . ' (' . $g_cnt . '/6, ' . sprintf('%02d:%02d', $mins, $s) . ')';
-					} elseif (in_array($game['game_code'], ['minu-mekletajs', 'sudoku'])) {
+					} elseif (in_array($game->game_code, ['minu-mekletajs', 'sudoku'])) {
 						$mins = floor($top_score->score / 60);
 						$s = $top_score->score % 60;
 						$top_player_info = usercolor($u->nick, $u->level) . ' (' . sprintf('%02d:%02d', $mins, $s) . ')';
@@ -45,13 +45,13 @@ if (!empty($games_list)) {
 		}
 
 		$tpl->assign([
-			'game-id' => $game['slug'],
-			'game-title' => $game['title'],
-			'game-url' => $game['url'],
-			'game-icon' => $game['icon'],
-			'game-badge' => $game['badge'],
-			'game-badge-class' => $game['badge_class'],
-			'game-desc' => $game['desc'],
+			'game-id' => $game->slug,
+			'game-title' => $game->title,
+			'game-url' => $game->url,
+			'game-icon' => $game->icon,
+			'game-badge' => $game->badge,
+			'game-badge-class' => $game->badge_class,
+			'game-desc' => $game->desc,
 			'game-rate' => get_game_rate_html($game),
 			'top-player' => $top_player_info ? 'Līderis: ' . $top_player_info : ''
 		]);
