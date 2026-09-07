@@ -7,6 +7,12 @@ if [ ! -f /var/www/exs-lv/vendor/autoload.php ]; then
     cd /var/www/exs-lv && composer install --no-dev --prefer-dist --no-interaction || true
 fi
 
+# Ensure games table and game data are loaded into database
+if [ -f /var/www/exs-lv/dev-draza/init_games.php ]; then
+    echo "Ensuring games table and data are loaded..."
+    php /var/www/exs-lv/dev-draza/init_games.php || true
+fi
+
 # Start PHP-FPM in background
 php-fpm -D
 

@@ -10,6 +10,7 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/exs-lv
+      - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
     environment:
       - APP_ENV=development
       - DB_HOST=db
@@ -39,6 +40,7 @@ services:
       - ./dev-draza/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
       - ./dev-draza/cat.sql:/docker-entrypoint-initdb.d/02-cat.sql:ro
       - ./dev-draza/seed_dev.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
+      - ./dev-draza/games_table.sql:/docker-entrypoint-initdb.d/04-games.sql:ro
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 3s

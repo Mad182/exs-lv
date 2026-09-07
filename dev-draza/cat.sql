@@ -955,7 +955,10 @@ INSERT INTO `cat` VALUES
 (2522,'flappy',1,'Lidojošais Eksis',1,'flappy',0,0,0,0,0,0,2516,'Vadā Lidojošo Eksi cauri šķēršļiem un uzstādi jaunu rekordu!','main','',0,0,0,0,'','','',460,1,'active',0,0),
 (2523,'invaders',1,'Space Invaders',1,'invaders',0,0,0,0,0,0,2516,'Klasiskā Space Invaders spēle bezgalīgā režīmā ar punktu skaitīšanu un līderu topu.','main','',0,0,0,0,'','','',470,1,'active',0,0),
 (2524,'augsup',1,'Augšup',1,'augsup',0,0,0,0,0,0,2516,'Spēlē Augšup tiešsaistē! Lec pa platformām un sasniedz jaunu augstuma rekordu.','main','',0,0,0,0,'','','',480,1,'active',0,0),
-(2525,'tornis',1,'Tornis',1,'tornis',0,0,0,0,0,0,2516,'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!','main','',0,0,0,0,'','','',490,1,'active',0,0);
+(2525,'vardes',1,'Vardes',1,'vardes',0,0,0,0,0,0,2516,'Šķērso šoseju un upi, lai uzstādītu jaunu rekordu!','main','',0,0,0,0,'','','',2525,1,'active',0,0),
+(2528,'runner',1,'Runner',1,'runner',0,0,0,0,0,0,2516,'Spēlē Runner tiešsaistē EXS.LV! Bēdz no lietotāju avatāru šķēršļiem un lidojošiem droīdiem, vāc zelta zvaigznes, cīnies par vietu topā un pārspēj rekordus.','main','',0,0,0,0,'','','',2528,1,'active',0,0),
+(2581,'tornis',1,'Tornis',1,'tornis',0,0,0,0,0,0,2516,'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!','main','',0,0,0,0,'','','',2581,1,'active',0,0),
+(2583,'arkanoid',1,'Arkanoid',1,'arkanoid',0,0,0,0,0,0,2516,'Klasiskā Arkanoid arkādes spēle ar līmeņiem un kapsulu bonusiem','main','',0,0,0,0,'','','',0,1,'active',0,0);
 /*!40000 ALTER TABLE `cat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -719,6 +719,35 @@ CREATE TABLE `galcom` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `games`
+--
+
+DROP TABLE IF EXISTS `games`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `games` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `slug` varchar(64) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `url` varchar(128) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `badge` varchar(64) NOT NULL DEFAULT '',
+  `badge_class` varchar(64) NOT NULL DEFAULT '',
+  `desc` text NOT NULL,
+  `game_code` varchar(64) NOT NULL,
+  `vote_value` smallint(6) NOT NULL DEFAULT 0,
+  `vote_users` text NOT NULL DEFAULT '',
+  `votes_up` int(11) NOT NULL DEFAULT 0,
+  `votes_down` int(11) NOT NULL DEFAULT 0,
+  `status` enum('active','hidden') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `vote_value` (`vote_value`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `gamescore`
 --
 

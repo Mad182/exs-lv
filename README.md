@@ -21,7 +21,7 @@ Pēc konteineru palaišanas projekts būs pieejams jūsu pārlūkā:
 
 * **Tīmekļa serveris (`exs-web`)**: Nginx ar PHP 8.5-FPM uz porta `8080` (`http://localhost:8080`).
 * **Composer atkarības**: Automātiska `composer install` inicializācija konteinera startēšanas laikā.
-* **Datubāze (`exs-db`)**: MariaDB 11.8 ar automātiski inicializētu shēmu (`dev-draza/schema.sql`), kategorijām (`dev-draza/cat.sql`) un parauga izstrādes datiem (`dev-draza/seed_dev.sql`).
+* **Datubāze (`exs-db`)**: MariaDB 11.8 ar automātiski inicializētu shēmu (`dev-draza/schema.sql`), kategorijām (`dev-draza/cat.sql`), spēļu tabulu un datiem (`dev-draza/games_table.sql`) un parauga izstrādes datiem (`dev-draza/seed_dev.sql`).
 * **Testa lietotāji**: Ielādēti 10 parauga lietotāji (piem., `Madars`, `Jānis`, `Pēteris`, `Artūrs`). Visu lokālo izstrādes lietotāju parole ir: `password123`.
 * **Kešatmiņa (`exs-memcached`)**: Memcached serveris kešošanai.
 
@@ -83,6 +83,7 @@ Izveido datubāzi un lietotāju MySQL un importē shēmu:
 mysql -u root -p -e "CREATE DATABASE exs; CREATE USER 'exs'@'localhost' IDENTIFIED BY 'parole'; GRANT ALL PRIVILEGES ON exs.* TO 'exs'@'localhost';"
 mysql -u exs -p exs < dev-draza/schema.sql
 mysql -u exs -p exs < dev-draza/cat.sql
+mysql -u exs -p exs < dev-draza/games_table.sql
 ```
 
 ### 4. Konfigurācijas faila izveide un ceļu atjaunināšana ###
