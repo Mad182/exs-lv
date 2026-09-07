@@ -86,8 +86,51 @@ $game_meta_map = [
 	'rezonanse' => ['title' => 'Rezonanse', 'url' => '/rezonanse', 'is_time' => false],
 ];
 
-$recent_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 8");
-if ($recent_scores) {
+$start_of_today = strtotime('today midnight');
+$is_asc_games = ['wordle', 'minu-mekletajs', 'sudoku'];
+
+// Fetch recent scores to identify distinct (user_id, game)
+$raw_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 100");
+$recent_scores = [];
+$seen_keys = [];
+
+if (!empty($raw_scores)) {
+	foreach ($raw_scores as $sc) {
+		$key = $sc->user_id . '_' . $sc->game;
+		if (isset($seen_keys[$key])) {
+			continue;
+		}
+		$seen_keys[$key] = true;
+
+		$is_asc = in_array($sc->game, $is_asc_games);
+		$order = $is_asc ? 'ASC' : 'DESC';
+
+		if ($sc->time >= $start_of_today) {
+			// If player has records today, pick their highest (or lowest for asc games) today
+			$best_today = $db->get_row("
+				SELECT * FROM gamescore 
+				WHERE user_id = '{$sc->user_id}' AND game = '{$sc->game}' AND time >= '$start_of_today' AND score > 0 
+				ORDER BY score $order, time DESC 
+				LIMIT 1
+			");
+			$recent_scores[] = $best_today ? $best_today : $sc;
+		} else {
+			// If no today records, just show the latest
+			$recent_scores[] = $sc;
+		}
+
+		if (count($recent_scores) >= 8) {
+			break;
+		}
+	}
+
+	// Sort recent scores by time DESC
+	usort($recent_scores, function($a, $b) {
+		return $b->time - $a->time;
+	});
+}
+
+if (!empty($recent_scores)) {
 	$tpl->newBlock('recent-scores-block');
 	foreach ($recent_scores as $sc) {
 		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
