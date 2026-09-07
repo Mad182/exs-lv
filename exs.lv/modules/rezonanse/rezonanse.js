@@ -1133,8 +1133,12 @@
 				this.ctx.translate(dx, dy);
 			}
 
-			// Clear background
-			this.ctx.fillStyle = '#050813';
+			// Clear background with lighter cyber-slate gradient
+			const bgGrad = this.ctx.createRadialGradient(CENTER_X, CENTER_Y, 20, CENTER_X, CENTER_Y, ARENA_RADIUS * 1.25);
+			bgGrad.addColorStop(0, '#1c263c');
+			bgGrad.addColorStop(0.65, '#131b2e');
+			bgGrad.addColorStop(1, '#0e1424');
+			this.ctx.fillStyle = bgGrad;
 			this.ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
 			// Draw Arena Boundary & Radial Equalizer
@@ -1162,10 +1166,21 @@
 		}
 
 		renderArena() {
+			// Subtle radial grid lines
+			this.ctx.strokeStyle = 'rgba(148, 163, 184, 0.08)';
+			this.ctx.lineWidth = 1;
+			for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+				this.ctx.beginPath();
+				this.ctx.moveTo(CENTER_X, CENTER_Y);
+				this.ctx.lineTo(CENTER_X + Math.cos(a) * ARENA_RADIUS, CENTER_Y + Math.sin(a) * ARENA_RADIUS);
+				this.ctx.stroke();
+			}
+
 			// Center pulse glow
-			const glowRadius = 30 + Math.sin(this.gameTime * 4) * 6;
+			const glowRadius = 36 + Math.sin(this.gameTime * 4) * 8;
 			const grad = this.ctx.createRadialGradient(CENTER_X, CENTER_Y, 2, CENTER_X, CENTER_Y, glowRadius);
-			grad.addColorStop(0, 'rgba(6, 182, 212, 0.45)');
+			grad.addColorStop(0, 'rgba(6, 182, 212, 0.55)');
+			grad.addColorStop(0.6, 'rgba(6, 182, 212, 0.18)');
 			grad.addColorStop(1, 'rgba(6, 182, 212, 0)');
 			this.ctx.fillStyle = grad;
 			this.ctx.beginPath();
@@ -1173,14 +1188,14 @@
 			this.ctx.fill();
 
 			// Arena boundary circle
-			this.ctx.strokeStyle = this.overdrive.active ? '#f59e0b' : 'rgba(99, 102, 241, 0.35)';
-			this.ctx.lineWidth = 2;
+			this.ctx.strokeStyle = this.overdrive.active ? '#f59e0b' : 'rgba(99, 102, 241, 0.5)';
+			this.ctx.lineWidth = 2.5;
 			this.ctx.beginPath();
 			this.ctx.arc(CENTER_X, CENTER_Y, ARENA_RADIUS, 0, Math.PI * 2);
 			this.ctx.stroke();
 
 			// Concentric reference rings
-			this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+			this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.09)';
 			this.ctx.lineWidth = 1;
 			[0.35, 0.65].forEach(scale => {
 				this.ctx.beginPath();
