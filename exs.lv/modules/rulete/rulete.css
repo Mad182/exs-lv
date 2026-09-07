@@ -29,6 +29,11 @@
 
 .chip-icon {
 	font-size: 22px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+}
+
+#clear-btn, #double-btn, #spin-btn {
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 }
 
 .chip-label {

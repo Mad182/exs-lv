@@ -134,6 +134,10 @@
 	animation: utPulse 2s infinite;
 }
 
+.ut99-pulsing-badge, .ut99-tab-btn, .ut99-btn {
+	font-family: inherit, "Noto Color Emoji", sans-serif;
+}
+
 @keyframes utPulse {
 	0%, 100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
 	50% { box-shadow: 0 0 0 6px rgba(255, 152, 0, 0); }

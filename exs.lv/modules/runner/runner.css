@@ -39,6 +39,10 @@
 	font-size: 16px;
 }
 
+#runner-coins, .overlay-card h2, #runner-start-btn, .gameover-title {
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+}
+
 .runner-canvas-container {
 	position: relative;
 	width: 100%;

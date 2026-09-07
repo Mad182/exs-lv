@@ -163,6 +163,7 @@
 	padding: 8px 14px;
 	font-size: 13px;
 	font-weight: bold;
+	font-family: inherit, "Noto Color Emoji", sans-serif;
 	border-radius: 6px;
 	border: 1px solid #cbd5e1;
 	background: #ffffff;

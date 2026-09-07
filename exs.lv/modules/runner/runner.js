@@ -917,7 +917,7 @@ $(document).ready(function () {
 			ctx.save();
 			ctx.globalAlpha = ft.alpha;
 			ctx.fillStyle = ft.color;
-			ctx.font = '900 15px sans-serif';
+			ctx.font = '900 15px "Noto Color Emoji", sans-serif';
 			ctx.textAlign = 'center';
 			ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
 			ctx.shadowBlur = 4;

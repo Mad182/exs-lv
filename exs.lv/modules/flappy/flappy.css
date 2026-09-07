@@ -23,6 +23,9 @@
 
 .flappy-header .flappy-icon {
 	font-size: 32px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .flappy-subtitle {

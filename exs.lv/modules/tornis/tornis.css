@@ -27,6 +27,7 @@
 
 .tornis-icon {
 	font-size: 28px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 

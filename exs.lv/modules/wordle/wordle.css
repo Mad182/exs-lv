@@ -35,10 +35,15 @@
 	border-radius: 6px;
 	background: #ffffff;
 	font-weight: bold;
+	font-family: inherit, "Noto Color Emoji", sans-serif;
 	font-size: 13px;
 	color: #334155;
 	cursor: pointer;
 	transition: background 0.15s;
+}
+
+.wdl-btn, .wdl-key-wide {
+	font-family: inherit, "Noto Color Emoji", sans-serif;
 }
 
 .wdl-mode-btn.active {

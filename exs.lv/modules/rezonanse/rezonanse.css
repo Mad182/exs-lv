@@ -319,8 +319,9 @@
 	gap: 3px;
 }
 
-.guide-icon {
+.guide-icon, .center-core, #sound-icon {
 	font-size: 18px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 }
 
 .guide-item strong {

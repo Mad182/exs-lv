@@ -751,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			ctx.arc(p.x + 8, p.y + 8, 8, 0, Math.PI * 2);
 			ctx.fill();
 			ctx.fillStyle = '#030611';
-			ctx.font = 'bold 10px monospace';
+			ctx.font = 'bold 10px "Noto Color Emoji", monospace';
 			ctx.fillText('⚡', p.x + 4, p.y + 12);
 		}
 

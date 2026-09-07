@@ -386,7 +386,7 @@
 			if (s.collected) continue;
 
 			ctx.save();
-			ctx.font = '18px sans-serif';
+			ctx.font = '18px "Noto Color Emoji", sans-serif';
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
 			ctx.fillText('⭐', s.x + s.width / 2, s.y + s.height / 2);

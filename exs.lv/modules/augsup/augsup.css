@@ -20,6 +20,12 @@
 	gap: 10px;
 }
 
+.augsup-icon {
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .augsup-subtitle {
 	margin: 0;
 	color: #7f8c8d;
