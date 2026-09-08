@@ -31,14 +31,15 @@ INSERT INTO `games` (`slug`, `title`, `url`, `icon`, `badge`, `badge_class`, `de
 ('sudoku', 'Sudoku', '/sudoku', '/bildes/icons/games/sudoku.png', '', '', 'Klasiskā Sudoku mīkla ar 3 sarežģītības līmeņiem, zīmuļa piezīmēm un mājieniem.', 'sudoku', 0, '', 0, 0, 'active'),
 ('wordle', 'Wordle', '/wordle', '/bildes/icons/games/wordle.png', '', '', 'Populārā 5 burtu vārdu minēšanas spēle latviešu valodā ar dienas vārdu un treniņu režīmu.', 'wordle', 0, '', 0, 0, 'active'),
 ('rulete', 'Rulete', '/rulete', '/bildes/icons/games/rulete.png', '', '', 'Klasiskā Eiropas kazino rulete ar 100 zelta sākuma kapitālu un ikdienas bilances atjaunošanu.', 'rulete', 0, '', 0, 0, 'active'),
-('desas', 'Desas', '/desas', '/bildes/icons/games/desas.png', '', '', 'Klasiskā desu (Tic-Tac-Toe) spēle.', 'desas', 0, '', 0, 0, 'active'),
+('desas', 'Desas', '/desas', '/bildes/icons/games/desas.png', '', '', 'Klasiskā 3x3 desu (Tic-Tac-Toe) spēle. Spēlē pret datoru vai draugu un uzstādi labāko rezultātu!', 'desas', 0, '', 0, 0, 'active'),
 ('flappy', 'Lidojošais Eksis', '/flappy', '/bildes/icons/games/flappy.png', '', '', 'Vadā savu pārlūka avatāru cauri šķēršļiem, vāc punktus un uzstādi jaunu rekordu!', 'flappy', 0, '', 0, 0, 'active'),
 ('invaders', 'Space Invaders', '/invaders', '/bildes/icons/games/invaders.png', '', '', 'Klasiskā kosmosa iebrucēju spēle bezgalīgā režīmā. Aizstāvi Zemi, vāc punktus un uzstādi jaunu rekordu!', 'invaders', 0, '', 0, 0, 'active'),
 ('augsup', 'Augšup', '/augsup', '/bildes/icons/games/augsup.png', '', '', 'Lēkā pa platformām ar savu avatāru, sasniedz mākoņus un uzstādi jaunu augstuma rekordu!', 'augsup', 0, '', 0, 0, 'active'),
 ('vardes', 'Vardes', '/vardes', '/bildes/icons/games/vardes.png', '', '', 'Šķērso bīstamo šoseju un upi ar baļķiem, lai sasniegtu liliju lapas un uzstādītu rekordu!', 'vardes', 0, '', 0, 0, 'active'),
 ('runner', 'Runner', '/runner', '/bildes/icons/games/runner.png', 'Jaunums', 'label-success', 'Bēdz no šķēršļiem un citu lietotāju avatariem, vāc zvaigznes un uzstādi jaunu rekordu!', 'runner', 0, '', 0, 0, 'active'),
 ('tornis', 'Tornis', '/tornis', '/bildes/icons/games/tornis.png', 'Jaunums', 'label-success', 'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!', 'tornis', 0, '', 0, 0, 'active'),
-('arkanoid', 'Arkanoid', '/arkanoid', '/bildes/icons/games/arkanoid.png', 'Jaunums', 'label-success', 'Klasiskā arkādes spēle! Vadi Vaus, atsit bumbu, sašķaidi blokus un ķer leģendāros kapsulu bonusus.', 'arkanoid', 0, '', 0, 0, 'active')
+('arkanoid', 'Arkanoid', '/arkanoid', '/bildes/icons/games/arkanoid.png', 'Jaunums', 'label-success', 'Klasiskā arkādes spēle! Vadi Vaus, atsit bumbu, sašķaidi blokus un ķer leģendāros kapsulu bonusus.', 'arkanoid', 0, '', 0, 0, 'active'),
+('rezonanse', 'Rezonanse', '/rezonanse', '/bildes/icons/games/rezonanse.png', 'Jaunums', 'label-success', 'Stratēģiska krāsu ķēdes reakcijas spēle 2–4 spēlētājiem. Izvieto orbītas, radi sprādzienu kaskādes un pārņem laukumu.', 'rezonanse', 0, '', 0, 0, 'active')
 ON DUPLICATE KEY UPDATE
   `title` = VALUES(`title`),
   `url` = VALUES(`url`),

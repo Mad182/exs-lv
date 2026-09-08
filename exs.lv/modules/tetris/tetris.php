@@ -93,6 +93,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	exit;
 }
 
+$meta_description = 'Spēlē klasisko Tetris spēli tiešsaistē bez maksas! Krāmē krītošos blokus, vāc līnijas, cel sērijas un uzstādi labāko rezultātu EXS.LV spēļu topā.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

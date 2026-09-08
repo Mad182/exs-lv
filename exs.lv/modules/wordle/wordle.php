@@ -107,6 +107,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
+$meta_description = 'Spēlē Wordle latviešu valodā par brīvu! 5 burtu vārdu minēšana ar dienas vārdu un treniņu režīmu, 25 000+ vārdu krātuvi un spēlētāju rezultātu topu.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

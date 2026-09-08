@@ -4,6 +4,9 @@
  * EXS.LV Spēļu katalogs (/speles)
  */
 
+$meta_description = 'Spēlē labākās bezmaksas tiešsaistes spēles EXS.LV! Tetris, Čūska, Wordle, 2048, Mīnu meklētājs, Space Invaders un citas pārlūka spēles ar rekordu topiem.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

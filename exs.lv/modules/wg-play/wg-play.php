@@ -28,6 +28,9 @@ if (isset($_GET['_']) || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower
 }
 
 if (!$ajax) {
+	$meta_description = 'Vārdu minēšanas spēle Karātavas latviešu valodā. Uzmini apslēptos vārdus pa burtiem, saņem mājienus un pārbaudi savu vārdu krājumu tiešsaistē.';
+	$opengraph_meta['description'] = $meta_description;
+
 	$add_css[] = 'hangman.ef4ff447.min.css';
 	$tpl->newBlock('hm-gbody-top');
 	$tpl->assign([

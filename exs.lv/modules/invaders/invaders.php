@@ -73,6 +73,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page Rendering
+$meta_description = 'Spēlē leģendāro Space Invaders tiešsaistē bez maksas! Aizstāvi Zemi no kosmosa iebrucēju viļņiem, vāc punktus, izmanto aizsegus un uzstādi jaunu rekordu.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

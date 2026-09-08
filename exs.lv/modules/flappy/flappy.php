@@ -70,6 +70,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page Rendering
+$meta_description = 'Spēlē Lidojošais Eksis (Flappy Bird) tiešsaistē par brīvu! Vadi savu avatāru cauri šķēršļu caurulēm, trenē reakciju un cīnies par pirmo vietu dienas topā.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

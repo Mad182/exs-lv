@@ -242,7 +242,7 @@ INSERT INTO `cat` VALUES
 (316,'euuuuuuuuuuu',1,'Abdul blogs',1,'list',0,8506,0,0,0,0,110,'','main','',20690,8,225,0,'','','',489,1,'active',0,0),
 (320,'skola',1,'Skola',1,'list',0,0,1,0,0,0,663,'Mājas darbi, notikumi skolā, shit happens...','main','',193519,54,1176,0,'','','modules/forums/images/school.png',716,1,'active',0,0),
 (604,'admin-simulate',0,'Simulēt lietotāju',1,'admin-simulate',0,0,0,1,0,0,0,'','main','',0,0,0,0,'','','',201,1,'active',0,0),
-(2516,'speles',1,'Spēles',1,'speles',0,0,0,0,0,0,0,'','main','',0,0,0,0,'','','',0,1,'active',0,0),
+(2516,'speles',1,'Spēles',1,'speles',0,0,0,0,0,0,0,'Spēlē labākās bezmaksas tiešsaistes spēles EXS.LV! Tetris, Čūska, Wordle, 2048, Mīnu meklētājs, Space Invaders un citas pārlūka spēles ar rekordu topiem.','main','',0,0,0,0,'','','',0,1,'active',0,0),
 (329,'anderhils',1,'Anderhils blogs',1,'list',0,398,0,0,0,0,110,'','main','',24744,10,278,0,'','','',476,1,'active',0,0),
 (331,'wg_admin',1,'Karātavu administrācija',1,'wg-admin',0,0,0,0,0,0,0,'','main','',0,0,0,0,'','','',474,1,'active',0,0),
 (335,'minecraft',1,'Minecraft',1,'list',0,0,0,0,0,1,81,'','main','',111121,13,215,0,'','minecraft.jpg','',470,1,'active',0,0),
@@ -327,7 +327,7 @@ INSERT INTO `cat` VALUES
 (2121,'lastfm',1,'Last.FM',1,'lastfm',0,0,0,0,0,0,0,'','main','',0,0,0,0,'','','',2121,1,'active',0,0),
 (540,'latviastr',1,'Latviastr blogs',1,'list',0,7281,0,0,0,0,110,'','main','',0,0,0,0,'','','',265,1,'active',0,0),
 (541,'augsa',0,'Izvēlies lapas noformējumu',1,'topimg',0,0,0,0,0,0,0,'','main','',0,0,0,0,'','','',264,1,'active',0,0),
-(548,'desas',1,'Desas',1,'desas',0,0,0,0,0,0,2516,'','main','',0,0,0,0,'','','',257,1,'active',0,0),
+(548,'desas',1,'Desas',1,'desas',0,0,0,0,0,0,2516,'Spēlē klasisko Desas (Tic-Tac-Toe) spēli tiešsaistē par brīvu! Pārbaudi savu loģisko domāšanu, uzveic pretinieku 3x3 laukumā un uzstādi labāko rezultātu.','main','',0,0,0,0,'','','',257,1,'active',0,0),
 (553,'maljokk',1,'Maljokk blogs',1,'list',0,18948,0,0,0,0,110,'','main','',6519,4,55,0,'','','',252,1,'active',0,0),
 (558,'top-secret',1,'S J blogs',1,'list',0,16433,0,0,0,0,110,'','main','',2550,1,75,0,'','','',247,1,'active',0,0),
 (560,'roltons12',1,'Roltons12 blogs',1,'list',0,13501,0,0,0,0,110,'','main','',13895,8,107,0,'','','',245,1,'active',0,0),
@@ -950,15 +950,17 @@ INSERT INTO `cat` VALUES
 (2511,'javascript-pamati',3,'JavaScript pamati',1,'list',1,0,0,0,0,1,0,'','main','no-left',2293,13,0,0,'','','',558,1,'active',0,0),
 (2512,'wordpress',3,'WordPress',1,'list',0,0,1,0,0,0,808,'WordPress ir populāra PHP bāzēta blogošanas un vienkāršu mājas lapu platforma','main','',603,1,0,0,'','','',2512,1,'active',0,0),
 (2519,'sudoku',1,'Sudoku',1,'sudoku',0,0,0,0,0,0,2516,'Risināt Sudoku mīklas tiešsaistē par brīvu. Trīs sarežģītības līmeņi, zīmuļa piezīmes, kļūdu pārbaude un mājieni. Trenē prātu un uzstādi ātruma rekordu.','main','',0,0,0,0,'','','',0,1,'active',0,0),
-(2520,'wordle',1,'Wordle',1,'wordle',0,0,0,0,0,0,2516,'Spēlē Wordle latviešu valodā! 5 burtu vārdu minēšanas spēle ar dienas vārdu un treniņu režīmu. Plaša 25,000+ latviešu vārdu krātuve, tastatūra un topos saglabāšana.','main','',0,0,0,0,'','','',0,1,'active',0,0),
-(2521,'rulete',1,'Rulete - Kazino spēle',1,'rulete',0,0,0,0,0,0,2516,'Spēlē Ruleti tiešsaistē par brīvu! Klasiskā kazino ruletes spēle ar 100 žetonu sākuma kapitālu, ikdienas bilances papildināšanu, sarkanās/melnās, pāra/nepāra, skaitļu un sleju likmēm. Sacenties topos par lielāko žetonu krājumu!','main','',0,0,0,0,'','','',0,1,'active',0,0),
-(2522,'flappy',1,'Lidojošais Eksis',1,'flappy',0,0,0,0,0,0,2516,'Vadā Lidojošo Eksi cauri šķēršļiem un uzstādi jaunu rekordu!','main','',0,0,0,0,'','','',460,1,'active',0,0),
-(2523,'invaders',1,'Space Invaders',1,'invaders',0,0,0,0,0,0,2516,'Klasiskā Space Invaders spēle bezgalīgā režīmā ar punktu skaitīšanu un līderu topu.','main','',0,0,0,0,'','','',470,1,'active',0,0),
-(2524,'augsup',1,'Augšup',1,'augsup',0,0,0,0,0,0,2516,'Spēlē Augšup tiešsaistē! Lec pa platformām un sasniedz jaunu augstuma rekordu.','main','',0,0,0,0,'','','',480,1,'active',0,0),
-(2525,'vardes',1,'Vardes',1,'vardes',0,0,0,0,0,0,2516,'Šķērso šoseju un upi, lai uzstādītu jaunu rekordu!','main','',0,0,0,0,'','','',2525,1,'active',0,0),
+(2520,'wordle',1,'Wordle',1,'wordle',0,0,0,0,0,0,2516,'Spēlē Wordle latviešu valodā par brīvu! 5 burtu vārdu minēšana ar dienas vārdu un treniņu režīmu, 25 000+ vārdu krātuvi un spēlētāju rezultātu topu.','main','',0,0,0,0,'','','',0,1,'active',0,0),
+(2521,'rulete',1,'Rulete - Kazino spēle',1,'rulete',0,0,0,0,0,0,2516,'Spēlē Eiropas Ruleti tiešsaistē par brīvu! Veic likmes uz skaitļiem, krāsām un slejām, pārbaudi veiksmi ar ikdienas žetoniem un sacenties par lielāko banku.','main','',0,0,0,0,'','','',0,1,'active',0,0),
+(2522,'flappy',1,'Lidojošais Eksis',1,'flappy',0,0,0,0,0,0,2516,'Spēlē Lidojošais Eksis (Flappy Bird) tiešsaistē par brīvu! Vadi savu avatāru cauri šķēršļu caurulēm, trenē reakciju un cīnies par pirmo vietu dienas topā.','main','',0,0,0,0,'','','',460,1,'active',0,0),
+(2523,'invaders',1,'Space Invaders',1,'invaders',0,0,0,0,0,0,2516,'Spēlē leģendāro Space Invaders tiešsaistē bez maksas! Aizstāvi Zemi no kosmosa iebrucēju viļņiem, vāc punktus, izmanto aizsegus un uzstādi jaunu rekordu.','main','',0,0,0,0,'','','',470,1,'active',0,0),
+(2524,'augsup',1,'Augšup',1,'augsup',0,0,0,0,0,0,2516,'Spēlē Augšup (Doodle Jump tipa spēle) tiešsaistē par brīvu! Lēkā pa platformām ar savu avatāru, sasniedz mākoņus un cīnies par augstāko vietu rekordu topā.','main','',0,0,0,0,'','','',480,1,'active',0,0),
+(2525,'vardes',1,'Vardes',1,'vardes',0,0,0,0,0,0,2516,'Spēlē klasisko Vardes (Frogger) spēli tiešsaistē bez maksas! Šķērso trakojošu šoseju un bīstamu upi ar peldošiem baļķiem, glāb vardītes un pārspēj rekordus.','main','',0,0,0,0,'','','',2525,1,'active',0,0),
 (2528,'runner',1,'Runner',1,'runner',0,0,0,0,0,0,2516,'Spēlē Runner tiešsaistē EXS.LV! Bēdz no lietotāju avatāru šķēršļiem un lidojošiem droīdiem, vāc zelta zvaigznes, cīnies par vietu topā un pārspēj rekordus.','main','',0,0,0,0,'','','',2528,1,'active',0,0),
-(2581,'tornis',1,'Tornis',1,'tornis',0,0,0,0,0,0,2516,'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!','main','',0,0,0,0,'','','',2581,1,'active',0,0),
-(2583,'arkanoid',1,'Arkanoid',1,'arkanoid',0,0,0,0,0,0,2516,'Klasiskā Arkanoid arkādes spēle ar līmeņiem un kapsulu bonusiem','main','',0,0,0,0,'','','',0,1,'active',0,0);
+(2580,'ut99',1,'Unreal Tournament 99',1,'ut99',0,0,0,0,0,0,0,'Spēlē leģendāro Unreal Tournament 99 tiešsaistē tieši savā pārlūkā! Izbaudi kulta 3D šūteri bez instalēšanas, cīnies ar botiem un uzstādi labāko fragu skaitu.','main','',0,0,0,0,'','','',2580,1,'active',0,0),
+(2581,'tornis',1,'Tornis',1,'tornis',0,0,0,0,0,0,2516,'Spēlē Tornis (Tower Stacker) tiešsaistē bez maksas! Būvē debesskrāpi no 3D blokiem, trenē precizitāti un ritma izjūtu, veido combo sērijas un sasniedz kosmosu.','main','',0,0,0,0,'','','',2581,1,'active',0,0),
+(2583,'arkanoid',1,'Arkanoid',1,'arkanoid',0,0,0,0,0,0,2516,'Spēlē klasisko Arkanoid arkādes spēli tiešsaistē par brīvu! Atsit bumbu ar Vaus kuģi, sašķaidi krāsainos blokus, ķer kapsulu bonusus un iekaro spēlētāju topu.','main','',0,0,0,0,'','','',0,1,'active',0,0),
+(2584,'rezonanse',1,'Rezonanse',1,'rezonanse',0,0,0,0,0,0,2516,'Spēlē Rezonanse tiešsaistē bez maksas! Hipnotiska ritma un izdzīvošanas arkāde ar reāllaika sintezatora mūziku. Ķer bītu, veido kaskādes un uzstādi rekordu.','main','',0,0,0,0,'','','',2584,1,'active',0,0);
 /*!40000 ALTER TABLE `cat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

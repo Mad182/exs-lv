@@ -472,9 +472,14 @@ $tpl->assignGlobal([
 ]);
 
 if (isset($category) && !empty($category->content)) {
+	$clean_desc = h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($category->content))), 0, 160));
 	$tpl->newBlock('meta-description');
-	$tpl->assign('description', h(strip_tags($category->content)));
+	$tpl->assign('description', $clean_desc);
 	$meta_description_added = true;
+
+	if (empty($opengraph_meta['description'])) {
+		$opengraph_meta['description'] = $clean_desc;
+	}
 
 	$game_img_file = CORE_PATH . '/bildes/speles/' . $category->textid . '.png';
 	if (file_exists($game_img_file)) {
@@ -645,8 +650,13 @@ if (empty($meta_description_added)) {
 		$desc_val = 'EXS.LV ir viens no senākajiem un populārākajiem spēļu un izklaides portāliem Latvijā. Diskusijas, spēles, filmu un spēļu apskati, jaunumi.';
 	}
 
+	$clean_desc = h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($desc_val))), 0, 160));
 	$tpl->newBlock('meta-description');
-	$tpl->assign('description', h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($desc_val))), 0, 160)));
+	$tpl->assign('description', $clean_desc);
+
+	if (empty($opengraph_meta['description'])) {
+		$opengraph_meta['description'] = $clean_desc;
+	}
 }
 
 /* opengraph meta tagi */
@@ -704,24 +714,33 @@ $json_ld_items = [
 	]
 ];
 
-if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner'])) {
+if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'ut99'])) {
 	$game_names = [
 		'snake' => 'Čūska', 'tetris' => 'Tetris', 'minu-mekletajs' => 'Mīnu Meklētājs',
 		'wordle' => 'Wordle', '2048' => '2048', 'flappy' => 'Lidojošais Eksis',
 		'sudoku' => 'Sudoku', 'memory' => 'Atmiņas spēle', 'rulete' => 'Rulete',
 		'augsup' => 'Augšup', 'vardes' => 'Vardes', 'invaders' => 'Space Invaders',
-		'karatavas' => 'Karātavas', 'runner' => 'Runner'
+		'karatavas' => 'Karātavas', 'runner' => 'Runner', 'tornis' => 'Tornis',
+		'arkanoid' => 'Arkanoid', 'rezonanse' => 'Rezonanse', 'desas' => 'Desas',
+		'ut99' => 'Unreal Tournament 99'
 	];
 	$g_name = isset($game_names[$category->module]) ? $game_names[$category->module] : $category->title;
-	$json_ld_items[] = [
+	$game_schema = [
 		'@context' => 'https://schema.org',
 		'@type' => 'VideoGame',
 		'name' => $g_name,
 		'gamePlatform' => 'Web Browser',
 		'applicationCategory' => 'Game',
 		'operatingSystem' => 'Any',
+		'inLanguage' => 'lv',
 		'url' => 'https://exs.lv/' . $category->textid
 	];
+	if (!empty($category->content)) {
+		$game_schema['description'] = h(strip_tags($category->content));
+	} elseif (!empty($meta_description)) {
+		$game_schema['description'] = h(strip_tags($meta_description));
+	}
+	$json_ld_items[] = $game_schema;
 }
 
 if (isset($article) && !empty($article->title)) {

@@ -91,7 +91,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē klasisko Arkanoid arkādes spēli tiešsaistē EXS.LV! Vadi Vaus kuģīti, atsit enerģijas bumbu, iznīcini krāsainos blokus, vāc kapsulu bonusus (Lāzeri, Multi-ball, Paplašinātājs) un uzstādi labāko rekordu!';
+$meta_description = 'Spēlē klasisko Arkanoid arkādes spēli tiešsaistē par brīvu! Atsit bumbu ar Vaus kuģi, sašķaidi krāsainos blokus, ķer kapsulu bonusus un iekaro spēlētāju topu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

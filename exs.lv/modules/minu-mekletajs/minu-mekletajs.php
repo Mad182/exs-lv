@@ -99,6 +99,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
+$meta_description = 'Klasiskā Minesweeper (Mīnu Meklētājs) spēle ar 3 grūtības līmeņiem: Vienkāršs, Vidējs un Eksperts. Drošs pirmais klikšķis, skārienekrāna režīms un rekordu tops.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

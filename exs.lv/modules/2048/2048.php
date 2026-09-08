@@ -81,6 +81,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
+$meta_description = 'Populārā 2048 skaitļu mīklas spēle. Bīdi un apvieno vienādās flīzes, lai sasniegtu 2048 skaitli un iegūtu maksimālo punktu skaitu. Atbalsts mobilajām ierīcēm.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

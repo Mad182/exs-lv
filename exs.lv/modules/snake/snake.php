@@ -81,6 +81,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	exit;
 }
 
+$meta_description = 'Klasiskā Čūskas (Snake) spēle tiešsaistē. Vāc ābolus, audzē čūsku un izvairies no ietriekšanās sienās vai savā astē. Sacenties par augstāko vietu topā.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

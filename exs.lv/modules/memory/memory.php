@@ -146,6 +146,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	exit;
 }
 
+$meta_description = 'Atmiņas spēle (Memory) - atver un atrodi vienādos kārtis pārus. Trenē savu redzes atmiņu, izvēlies režīmus un uzstādi ātrāko laiku spēļu topā.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

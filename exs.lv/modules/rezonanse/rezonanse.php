@@ -86,7 +86,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē Rezonanse (Synth Pulse Arena) tiešsaistē EXS.LV! Hipnotiska ritma un izdzīvošanas arkāde, kur spēles pasaule ir reāllaika sintezators.';
+$meta_description = 'Spēlē Rezonanse tiešsaistē bez maksas! Hipnotiska ritma un izdzīvošanas arkāde ar reāllaika sintezatora mūziku. Ķer bītu, veido kaskādes un uzstādi rekordu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

@@ -4,6 +4,9 @@
  * EXS.LV Kazino Rulete
  */
 
+$meta_description = 'Spēlē Eiropas Ruleti tiešsaistē par brīvu! Veic likmes uz skaitļiem, krāsām un slejām, pārbaudi veiksmi ar ikdienas žetoniem un sacenties par lielāko banku.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 

@@ -82,6 +82,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
+$meta_description = 'Risināt Sudoku mīklas tiešsaistē par brīvu. Trīs sarežģītības līmeņi, zīmuļa piezīmes, kļūdu pārbaude un mājieni. Trenē prātu un uzstādi ātruma rekordu.';
+$opengraph_meta['description'] = $meta_description;
+
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 
