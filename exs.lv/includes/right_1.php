@@ -152,14 +152,36 @@ if ($parent_id != 0) {
 			'topid' => $parent_id,
 			'title' => get_cat($parent_id)->title
 		]);
-		foreach ($menuitems as $menuitem) {
-			$tpl->newBlock('menu-node');
-			$sel = '';
-			if (!empty($category)) {
-				if ($category->id == $menuitem->id || $category->parent == $menuitem->id) {
-					$sel = ' class="active"';
+
+		$menuitem_ids = array_map(function($item) { return (int) $item->id; }, $menuitems);
+		$subchildren_by_parent = [];
+		if (!empty($menuitem_ids)) {
+			$sub_cache_key = 'cat_subchildren_' . implode('_', $menuitem_ids);
+			if (($all_subchildren = $m->get($sub_cache_key)) === false) {
+				$all_subchildren = $db->get_results("SELECT `textid`,`id`,`title`,`parent` FROM `cat` WHERE `parent` IN (" . implode(',', $menuitem_ids) . ") AND `status` = 'active' AND `mods_only` = '0' ORDER BY `id` ASC");
+				$m->set($sub_cache_key, $all_subchildren ?: [], 21600);
+			}
+			if (!empty($all_subchildren)) {
+				foreach ($all_subchildren as $sc) {
+					$subchildren_by_parent[$sc->parent][] = $sc;
 				}
 			}
+		}
+
+		foreach ($menuitems as $menuitem) {
+			$tpl->newBlock('menu-node');
+			$is_active = false;
+			if (!empty($category)) {
+				if ($category->id == $menuitem->id || $category->parent == $menuitem->id) {
+					$is_active = true;
+				} elseif (!empty($category->parent)) {
+					$cat_parent = get_cat($category->parent);
+					if ($cat_parent && $cat_parent->parent == $menuitem->id) {
+						$is_active = true;
+					}
+				}
+			}
+			$sel = $is_active ? ' class="selected active"' : '';
 			$tpl->assign([
 				'title' => $menuitem->title,
 				'url' => '/' . $menuitem->textid,
@@ -167,26 +189,21 @@ if ($parent_id != 0) {
 				'id' => $menuitem->id,
 			]);
 
-			if (in_array($menuitem->id, [79]) && !empty($sel)) {
-				if (($children = $m->get('cat_submenu_' . $menuitem->id)) === false) {
-					$children = $db->get_results("SELECT `textid`,`id`,`title` FROM `cat` WHERE `parent` = '$menuitem->id' ORDER BY `id` ASC");
-					$m->set('cat_submenu_' . $menuitem->id, $children, 21600);
-				}
-				if ($children) {
-					$tpl->newBlock('menu-list-sub');
-					foreach ($children as $child) {
-						if ($category->id == $child->id) {
-							$sel = ' class="active"';
-						} else {
-							$sel = '';
+			if (!empty($subchildren_by_parent[$menuitem->id])) {
+				$tpl->newBlock('menu-list-sub');
+				foreach ($subchildren_by_parent[$menuitem->id] as $child) {
+					$sub_sel = '';
+					if (!empty($category)) {
+						if ($category->id == $child->id || $category->parent == $child->id) {
+							$sub_sel = ' class="selected active"';
 						}
-						$tpl->newBlock('menu-node-sub');
-						$tpl->assign([
-							'title' => $child->title,
-							'url' => '/' . $child->textid,
-							'sel' => $sel
-						]);
 					}
+					$tpl->newBlock('menu-node-sub');
+					$tpl->assign([
+						'title' => $child->title,
+						'url' => '/' . $child->textid,
+						'sel' => $sub_sel
+					]);
 				}
 			}
 		}

@@ -686,9 +686,13 @@ html .banned {
 }
 
 #wrapper #left .menu .selected > a,
+#wrapper #left .menu .active > a,
 #wrapper #sub-categories .menu .selected > a,
+#wrapper #sub-categories .menu .active > a,
 #left .menu .selected > a,
-#sub-categories .menu .selected > a {
+#left .menu .active > a,
+#sub-categories .menu .selected > a,
+#sub-categories .menu .active > a {
 	color: #0284c7;
 	font-weight: 700;
 	background: linear-gradient(90deg, rgba(32, 144, 204, 0.12) 0%, rgba(32, 144, 204, 0.03) 100%);
@@ -717,7 +721,9 @@ html .banned {
 }
 
 #wrapper #left .menu li.selected li a,
+#wrapper #left .menu li.active li a,
 #wrapper #sub-categories .menu li.selected li a,
+#wrapper #sub-categories .menu li.active li a,
 #left .menu ul li a,
 #sub-categories .menu ul li a {
 	font-size: 12px;
@@ -741,9 +747,14 @@ html .banned {
 }
 
 #wrapper #left .menu .selected .selected a,
+#wrapper #left .menu .active .active a,
 #wrapper #sub-categories .menu .selected .selected a,
+#wrapper #sub-categories .menu .active .active a,
+#wrapper #sub-categories .menu .selected .active a,
 #left .menu ul li.selected > a,
-#sub-categories .menu ul li.selected > a {
+#left .menu ul li.active > a,
+#sub-categories .menu ul li.selected > a,
+#sub-categories .menu ul li.active > a {
 	color: #0284c7;
 	font-weight: 700;
 	background: #e0f2fe;
