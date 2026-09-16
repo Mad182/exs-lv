@@ -28,6 +28,7 @@ if (php_sapi_name() !== 'cli') {
 chdir(__DIR__ . '/..');
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $_SERVER['REQUEST_URI'] = '/';
+$_SERVER['HTTP_HOST'] = 'exs.lv';
 require_once('configdb.php');
 
 if (!defined('IMG_PATH')) {
