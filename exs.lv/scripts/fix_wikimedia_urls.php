@@ -104,7 +104,7 @@ function fetch_wayback_image($url) {
     $body = curl_exec($ch);
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $effective_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    curl_close($ch);
+
 
     if ($code == 200 && !empty($body)) {
         $finfo = new finfo(FILEINFO_MIME_TYPE);
