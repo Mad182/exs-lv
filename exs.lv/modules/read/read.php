@@ -1328,13 +1328,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 						}
 					}
 
-					if (!$auth->mobile && $lang == 1) {
+					if (!$auth->mobile && $auth->ok && $lang == 1) {
 						$tpl->newBlock('comment-tools');
 						$tpl->assign('id', $comment->author);
-						if ($auth->ok) {
-							$tpl->newBlock('comments-pm');
-							$tpl->assign('id', $comment->author);
-						}
+						$tpl->newBlock('comments-pm');
+						$tpl->assign('id', $comment->author);
 					}
 
 
