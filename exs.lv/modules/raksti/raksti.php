@@ -44,7 +44,7 @@ $articles = $db->get_results("
 	LEFT JOIN
 		`users` ON `users`.`id` = `pages`.`author`
 	WHERE
-		`pages`.`category` IN (11,80,323,565,611,651)
+		`pages`.`category` IN (11,80,81,323,565,611)
 	ORDER BY
 		`pages`.`date` DESC
 	LIMIT
@@ -64,7 +64,7 @@ if ($articles) {
 
 	// Pre-fetch category titles for the article categories
 	$article_cats = [];
-	$cat_rows = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `id` IN (11,80,323,565,611,651)");
+	$cat_rows = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `id` IN (11,80,81,323,565,611)");
 	if (!empty($cat_rows)) {
 		foreach ($cat_rows as $cr) {
 			$article_cats[$cr->id] = $cr;
