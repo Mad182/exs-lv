@@ -35,7 +35,8 @@ $db = new mdb($username, $password, $database, $hostname);
 
 // Parse CLI options
 $options = getopt('', [
-    'domain:',    // Required: one or more domains comma-separated (e.g. socawlege.com,usvsth3m.com)
+    'domain:',    // One or more domains comma-separated (e.g. socawlege.com,usvsth3m.com)
+    'url:',       // Specific single image URL to restore
     'table:',     // Table to process: pages, miniblog, comments, or all (default: all)
     'id:',        // Specific record ID
     'limit:',     // Limit records per table
@@ -48,16 +49,27 @@ $options = getopt('', [
     'help'        // Show help
 ]);
 
-if (isset($options['help']) || empty($options['domain'])) {
+if (isset($options['help']) || (empty($options['domain']) && empty($options['url']))) {
     echo "Usage:\n";
     echo "  php restore_domain_images.php --domain=<domain1,domain2> [--table=pages|miniblog|comments|all] [--dry-run] [--verbose]\n";
+    echo "  php restore_domain_images.php --url=<image_url> [--table=pages|miniblog|comments|all] [--dry-run] [--verbose]\n";
     echo "  php restore_domain_images.php --domain=<domain> --id=<id> [--table=pages|miniblog|comments]\n";
     echo "  php restore_domain_images.php --domain=<domain> --stats\n";
     echo "  php restore_domain_images.php --domain=<domain> --reset-404\n";
     exit(0);
 }
 
-$raw_domains = array_filter(array_map('trim', explode(',', $options['domain'])));
+$target_single_url = !empty($options['url']) ? trim($options['url']) : null;
+if ($target_single_url) {
+    $parsed_u = parse_url($target_single_url);
+    if (empty($parsed_u['host'])) {
+        die("Error: Invalid URL specified in --url.\n");
+    }
+    $raw_domains = [$parsed_u['host']];
+} else {
+    $raw_domains = array_filter(array_map('trim', explode(',', $options['domain'])));
+}
+
 if (empty($raw_domains)) {
     die("Error: No valid domains specified.\n");
 }
@@ -73,6 +85,7 @@ function domain_to_slug($domain) {
     $clean = preg_replace('#^https?://#i', '', $domain);
     $clean = preg_replace('#^www\.#i', '', $clean);
     $clean = explode('/', $clean)[0];
+    $clean = preg_replace('#^(i|images|img|static|media)\.#i', '', $clean);
     $clean = preg_replace('#\.[a-z]{2,8}$#i', '', $clean); // strip tld
     return strtolower(preg_replace('/[^a-z0-9_-]/i', '_', $clean));
 }
@@ -304,24 +317,26 @@ foreach ($raw_domains as $domain) {
     $state_dirty = false;
     $batch_save_counter = 0;
 
+    $search_term = $target_single_url ? $db->real_escape_string(clean_remote_url($target_single_url)) : $db->real_escape_string($domain);
+
     $tables_config = [
         'pages' => [
             'id_col' => 'id',
             'title_col' => 'title',
             'content_cols' => ['intro', 'text'],
-            'condition' => "`text` LIKE '%$domain%' OR `intro` LIKE '%$domain%'"
+            'condition' => "`text` LIKE '%$search_term%' OR `intro` LIKE '%$search_term%'"
         ],
         'miniblog' => [
             'id_col' => 'id',
             'title_col' => 'id',
             'content_cols' => ['text'],
-            'condition' => "`text` LIKE '%$domain%'"
+            'condition' => "`text` LIKE '%$search_term%'"
         ],
         'comments' => [
             'id_col' => 'id',
             'title_col' => 'id',
             'content_cols' => ['text'],
-            'condition' => "`text` LIKE '%$domain%'"
+            'condition' => "`text` LIKE '%$search_term%'"
         ]
     ];
 
@@ -330,7 +345,7 @@ foreach ($raw_domains as $domain) {
             continue;
         }
 
-        echo "--- Scanning table `$tbl_name` for $domain ---\n";
+        echo "--- Scanning table `$tbl_name` for " . ($target_single_url ?: $domain) . " ---\n";
         $where = $tbl_cfg['condition'];
         if ($record_id) {
             $where = "`{$tbl_cfg['id_col']}` = $record_id";
@@ -357,9 +372,22 @@ foreach ($raw_domains as $domain) {
                 $combined_content .= ' ' . ($row->$c_col ?? '');
             }
 
-            $escaped_d = preg_quote($domain, '#');
-            if (!preg_match_all('#https?://[^\s"\'<>\[\]()]*' . $escaped_d . '[^\s"\'<>\[\]()]*#i', $combined_content, $matches)) {
-                continue;
+            if ($target_single_url) {
+                $escaped_target = preg_quote(clean_remote_url($target_single_url), '#');
+                if (!preg_match_all('#https?://[^\s"\'<>\[\]()]*' . $escaped_target . '[^\s"\'<>\[\]()]*#i', $combined_content, $matches)) {
+                    // Try exact substring match if protocol or slash differs
+                    $clean_single = clean_remote_url($target_single_url);
+                    if (strpos($combined_content, $clean_single) !== false) {
+                        $matches = [[$clean_single]];
+                    } else {
+                        continue;
+                    }
+                }
+            } else {
+                $escaped_d = preg_quote($domain, '#');
+                if (!preg_match_all('#https?://[^\s"\'<>\[\]()]*' . $escaped_d . '[^\s"\'<>\[\]()]*#i', $combined_content, $matches)) {
+                    continue;
+                }
             }
 
             $raw_urls = array_unique($matches[0]);
