@@ -1449,4 +1449,68 @@ li.L9 {
 	background: #161d26 !important;
 }
 
+/* User Topics List dark mode */
+.user-topic-item {
+	background: #1e2631 !important;
+	border-color: #2d3748 !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+.user-topic-item:hover {
+	background: #252e3d !important;
+	border-color: #3b82f6 !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.user-topic-title {
+	color: #f1f5f9 !important;
+}
+
+.user-topic-title:hover {
+	color: #60a5fa !important;
+}
+
+.user-topic-meta {
+	color: #94a3b8 !important;
+}
+
+.user-topic-cat {
+	background: #161d26 !important;
+	border-color: #2d3748 !important;
+	color: #cbd5e1 !important;
+}
+
+.user-topic-dot {
+	color: #475569 !important;
+}
+
+.user-topic-date {
+	color: #94a3b8 !important;
+}
+
+.user-topic-badge.badge-closed {
+	background: #36171a !important;
+	border-color: #5c2227 !important;
+	color: #f87171 !important;
+}
+
+.user-topic-stat {
+	background: #161d26 !important;
+	border-color: #2d3748 !important;
+	color: #94a3b8 !important;
+}
+
+.user-topic-stat.stat-replies {
+	background: #161d26 !important;
+	border-color: #2d3748 !important;
+	color: #cbd5e1 !important;
+}
+
+.user-topic-stat.stat-replies.has-replies {
+	background: #172554 !important;
+	border-color: #1e3a8a !important;
+	color: #60a5fa !important;
+}
+
+
 

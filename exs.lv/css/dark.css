@@ -466,6 +466,68 @@ table.table,
 	border-color: #333 !important;
 }
 
+/* User Topics List */
+.user-topic-item {
+	background: #272d36 !important;
+	border-color: #343b44 !important;
+}
+
+.user-topic-item:hover {
+	background: #2c343e !important;
+	border-color: #454d5a !important;
+}
+
+.user-topic-title {
+	color: #e9ecef !important;
+}
+
+.user-topic-title:hover {
+	color: #58a6ff !important;
+}
+
+.user-topic-meta {
+	color: #9ba3af !important;
+}
+
+.user-topic-cat {
+	background: #1a1f25 !important;
+	border-color: #343b44 !important;
+	color: #c9d1d9 !important;
+}
+
+.user-topic-dot {
+	color: #475569 !important;
+}
+
+.user-topic-date {
+	color: #9ba3af !important;
+}
+
+.user-topic-badge.badge-closed {
+	background: #36171a !important;
+	border-color: #5c2227 !important;
+	color: #f87171 !important;
+}
+
+.user-topic-stat {
+	background: #1a1f25 !important;
+	border-color: #343b44 !important;
+	color: #9ba3af !important;
+}
+
+.user-topic-stat.stat-replies {
+	background: #1a1f25 !important;
+	border-color: #343b44 !important;
+	color: #c9d1d9 !important;
+}
+
+.user-topic-stat.stat-replies.has-replies {
+	background: #172554 !important;
+	border-color: #1e3a8a !important;
+	color: #58a6ff !important;
+}
+
+
 
 
 
