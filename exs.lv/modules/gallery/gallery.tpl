@@ -49,7 +49,7 @@
 	<!-- END BLOCK : add-image-form-->
 
 	<!-- START BLOCK : empty-gallery-->
-		<p class="note" style="padding: 15px 0;">Šajā galerijā vēl nav pievienots neviens attēls.</p>
+		<p class="note" style="padding: 15px;">Šajā galerijā vēl nav pievienots neviens attēls.</p>
 	<!-- END BLOCK : empty-gallery-->
 
 	<!-- START BLOCK : image-list-->
