@@ -138,6 +138,9 @@ if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofi
 			$linkid++;
 			$i++;
 		}
+	} else {
+		$robotstag = ['noindex', 'follow'];
+		$tpl->newBlock('empty-gallery');
 	}
 
 	unset($image);
@@ -504,6 +507,8 @@ if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofi
 				$tpl->newBlock('login-to-comment');
 			}
 		}
+	} else {
+		$robotstag = ['noindex', 'follow'];
 	}
 
 	if ($auth->ok && $auth->id == $inprofile->id) {

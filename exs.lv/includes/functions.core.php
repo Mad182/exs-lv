@@ -3229,7 +3229,7 @@ function count_bookmarks($user_id) {
 }
 
 function error_404() {
-	global $tpl, $category, $page_title;
+	global $tpl, $category, $page_title, $robotstag;
 
 	if (empty($tpl)) {
 		$tpl = new TemplatePower(CORE_PATH . '/tmpl/main.tpl');
