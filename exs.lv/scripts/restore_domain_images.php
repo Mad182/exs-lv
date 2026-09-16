@@ -412,16 +412,13 @@ foreach ($raw_domains as $domain) {
 
                 // Check cache in state
                 if (isset($state[$clean_url]) && in_array($state[$clean_url]['status'], ['recovered', 'exists'])) {
-                    $dest_file = $storage_base . '/' . $state[$clean_url]['rel_path'];
+                    $dest_file = $storage_base . '/' . urldecode($state[$clean_url]['rel_path']);
                     if (file_exists($dest_file) && filesize($dest_file) > 100) {
                         $total_stats['urls_cached_ok']++;
                         $replacements[$clean_url] = $state[$clean_url]['new_url'];
                         continue;
                     }
-                }
-
-                // Check if known 404
-                if (isset($state[$clean_url]) && $state[$clean_url]['status'] === 'not_found') {
+                } elseif (($state[$clean_url]['status'] ?? '') === 'not_found') {
                     $total_stats['urls_cached_fail']++;
                     if ($is_verbose) {
                         echo "  [PREVIOUS 404] $clean_url\n";
@@ -431,7 +428,7 @@ foreach ($raw_domains as $domain) {
 
                 // Check if local file exists
                 $rel_path = $target_info['subpath'];
-                $dest_file = $storage_base . '/' . $rel_path;
+                $dest_file = $storage_base . '/' . urldecode($rel_path);
                 $new_url = $target_url_base . '/' . $rel_path;
                 if ($target_info['has_ext'] && file_exists($dest_file) && filesize($dest_file) > 100) {
                     $total_stats['urls_cached_ok']++;
@@ -461,7 +458,7 @@ foreach ($raw_domains as $domain) {
                         if (!$target_info['has_ext']) {
                             $ext = mime_to_ext($res['mime']);
                             $rel_path = rtrim($target_info['subpath'], '/') . $ext;
-                            $dest_file = $storage_base . '/' . $rel_path;
+                            $dest_file = $storage_base . '/' . urldecode($rel_path);
                             $new_url = $target_url_base . '/' . $rel_path;
                         }
 
