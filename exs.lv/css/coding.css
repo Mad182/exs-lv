@@ -3049,6 +3049,10 @@ a.friend-right {
 	color: #445
 }
 
+.inf strong {
+	margin-right: 6px;
+}
+
 .comment-text {
 	height: auto !important;
 	min-height: 120px;
