@@ -240,6 +240,8 @@ foreach ($articles as $art) {
         }
     }
 
+    $titleDb = title2db($title);
+
     // Generate unique slug
     $baseSlug = mkslug_newpage($title);
     if (empty($baseSlug)) {
@@ -247,8 +249,8 @@ foreach ($articles as $art) {
     }
     $strid = $baseSlug;
 
-    // Check if article already exists (by title or slug)
-    $existing = $db->get_row("SELECT id, strid, title FROM pages WHERE category = " . TARGET_CATEGORY_ID . " AND (title = '" . sanitize($title) . "' OR strid = '" . sanitize($strid) . "' OR strid = '" . sanitize($baseSlug . '-' . $oldId) . "')");
+    // Check if article already exists (by title, sanitized title, or slug)
+    $existing = $db->get_row("SELECT id, strid, title FROM pages WHERE category = " . TARGET_CATEGORY_ID . " AND (title = '{$titleDb}' OR title = '" . sanitize($title) . "' OR strid = '" . sanitize($baseSlug) . "' OR strid = '" . sanitize($baseSlug . '-' . $oldId) . "')");
 
     // Ensure unique strid globally in pages table if creating new
     if (!$existing) {
@@ -259,6 +261,7 @@ foreach ($articles as $art) {
     } else {
         $strid = $existing->strid;
     }
+
 
     // Intro teaser image handling
     $imageField = '';
@@ -281,9 +284,9 @@ foreach ($articles as $art) {
 
     // Note: title2db() and htmlpost2db() ALREADY call sanitize() (which applies real_escape_string).
     // Do NOT call real_escape_string() again to avoid double-escaping slashes/newlines!
-    $titleDb = title2db($title);
     $bodyDb = htmlpost2db($cleanBody);
     $introDb = sanitize($intro);
+
     $textidDb = sanitize(date('YmdHis', strtotime($date)));
     $imageDb = sanitize($imageField);
     $stridDb = sanitize($strid);
