@@ -214,8 +214,29 @@ function parse_bildites_target($url) {
     return null;
 }
 
+function get_curl_handle($reset = false) {
+    static $ch = null;
+    if ($reset && $ch !== null) {
+        @curl_close($ch);
+        $ch = null;
+    }
+    if ($ch === null) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+        curl_setopt($ch, CURLOPT_TCP_KEEPALIVE, 1);
+        curl_setopt($ch, CURLOPT_TCP_KEEPIDLE, 120);
+        curl_setopt($ch, CURLOPT_TCP_KEEPINTVL, 30);
+    }
+    return $ch;
+}
+
 /**
- * Fetch image bytes from Wayback Machine with backoff & retry.
+ * Fetch image bytes from Wayback Machine with persistent connection & backoff.
  */
 function fetch_from_wayback($url, $delay_ms) {
     $wayback_url = "https://web.archive.org/web/0id_/" . $url;
@@ -226,13 +247,8 @@ function fetch_from_wayback($url, $delay_ms) {
     $curl_err = '';
 
     for ($attempt = 1; $attempt <= $max_retries; $attempt++) {
-        $ch = curl_init($wayback_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 25);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+        $ch = get_curl_handle();
+        curl_setopt($ch, CURLOPT_URL, $wayback_url);
         
         $body = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -260,10 +276,14 @@ function fetch_from_wayback($url, $delay_ms) {
             }
         }
         
-        // Rate limit (429) or temporary server error (500-504) or timeout/reset (0)
+        // Rate limit (429) or temporary server error (500-504) or connection reset (0)
         if ($http_code == 429 || ($http_code >= 500 && $http_code <= 504) || $http_code == 0) {
-            $backoff_sec = $attempt * 4;
-            echo "    [WAIT] Wayback returned HTTP $http_code (" . ($curl_err ?: 'throttled') . "). Backing off {$backoff_sec}s (attempt $attempt/$max_retries)...\n";
+            $backoff_sec = $attempt * 2;
+            echo "    [WAIT] Wayback HTTP $http_code (" . ($curl_err ?: 'throttled') . "). Reconnecting in {$backoff_sec}s (attempt $attempt/$max_retries)...\n";
+            // Re-open handle on connection drop
+            if ($http_code == 0) {
+                get_curl_handle(true);
+            }
             sleep($backoff_sec);
             continue;
         }
