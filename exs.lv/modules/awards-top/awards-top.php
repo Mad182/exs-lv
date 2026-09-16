@@ -19,14 +19,17 @@ $num = 1;
 $count = 0;
 
 if (!empty($awards)) {
+	$half = (int) ceil(count($awards) / 2);
 	foreach ($awards as $award) {
-		$tpl->newBlock('aw-top');
+		$block = ($i <= $half) ? 'aw-top-left' : 'aw-top-right';
+		$tpl->newBlock($block);
 		if ($award->c != $count) {
 			$num = $i;
 			$count = $award->c;
 		}
 		$tpl->assign([
-			'nick' => $award->nick,
+			'url' => '/user/' . $award->user_id,
+			'nick' => usercolor($award->nick, $award->level),
 			'c' => $award->c,
 			'num' => $num
 		]);

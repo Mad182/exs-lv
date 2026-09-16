@@ -8,9 +8,19 @@
 </ul>
 
 <div class="tabMain">
-	<ul>
-		<!-- START BLOCK : aw-top-->
-		<li>{num}. {nick} - {c}</li>
-		<!-- END BLOCK : aw-top-->
-	</ul>
+	<div class="half-left">
+		<ol>
+			<!-- START BLOCK : aw-top-left-->
+			<li value="{num}"><a href="{url}">{nick}</a> - {c}</li>
+			<!-- END BLOCK : aw-top-left-->
+		</ol>
+	</div>
+	<div class="half-right">
+		<ol>
+			<!-- START BLOCK : aw-top-right-->
+			<li value="{num}"><a href="{url}">{nick}</a> - {c}</li>
+			<!-- END BLOCK : aw-top-right-->
+		</ol>
+	</div>
+	<div class="c"></div>
 </div>
