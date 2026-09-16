@@ -34,7 +34,7 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		$tpl->newBlock('user-usertopics-list');
 
 		if ($total > $end) {
-			$pager = pager($total, $skip, $end, '/topics/' . $inprofile->id . '?skip=', true);
+			$pager = pager($total, $skip, $end, '/topics/' . $inprofile->id . '?skip=', false);
 			$tpl->newBlock('user-usertopics-pager-top');
 			$tpl->assign([
 				'pager-next' => $pager['next'],
