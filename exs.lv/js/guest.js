@@ -253,4 +253,40 @@ document.addEventListener('DOMContentLoaded', function () {
 			tip.style.display = 'none';
 		}
 	});
+
+	// Rating Stars Display for Guests (Read-only)
+	var starContainer = document.getElementById('star');
+	var ratingSpan = document.querySelector('#post-rating .current-rating, .current-rating');
+	if (starContainer && ratingSpan) {
+		var score = parseFloat(ratingSpan.textContent.trim()) || 0;
+		var path = '/bildes/raty/';
+		var starOn = 'star-on-big.png';
+		var starOff = 'star-off-big.png';
+		var starHalf = 'star-half-big.png';
+
+		starContainer.innerHTML = '';
+		starContainer.style.cursor = 'default';
+
+		for (var i = 1; i <= 5; i++) {
+			var src = starOff;
+			if (score >= i) {
+				src = starOn;
+			} else if (score > i - 1) {
+				var diff = score - (i - 1);
+				if (diff >= 0.25 && diff < 0.75) {
+					src = starHalf;
+				} else if (diff >= 0.75) {
+					src = starOn;
+				}
+			}
+
+			var img = document.createElement('img');
+			img.src = path + src;
+			img.alt = i;
+			img.title = score > 0 ? 'Vērtējums: ' + score : 'Nav vērtēts';
+			img.style.marginRight = (i < 5) ? '4px' : '0';
+			img.style.verticalAlign = 'middle';
+			starContainer.appendChild(img);
+		}
+	}
 });

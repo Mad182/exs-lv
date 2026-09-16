@@ -462,7 +462,8 @@ $(document).ready(function($) {
 	});
 
 	/* vertesana */
-	$('#star').raty({
+	var isGuest = (typeof current_user === 'undefined' || current_user <= 0);
+	$('#star').empty().raty({
 		half: true,
 		size: 24,
 		start: $('.current-rating').html(),
@@ -471,7 +472,8 @@ $(document).ready(function($) {
 		starOff: 'star-off-big.png',
 		starOn: 'star-on-big.png',
 		targetType: 'number',
-		click: function(score, evt) {
+		readOnly: isGuest,
+		click: isGuest ? undefined : function(score, evt) {
 			$.ajax({
 				type: "POST",
 				url: c_url,
