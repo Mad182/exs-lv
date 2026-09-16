@@ -25,6 +25,9 @@
 	</fieldset>
 </form>
 <!-- END BLOCK : user-miniblog-form-->
+<!-- START BLOCK : empty-miniblog-->
+<p class="note">Šim lietotājam vēl nav neviena minibloga ieraksta.</p>
+<!-- END BLOCK : empty-miniblog-->
 <!-- START BLOCK : user-miniblog-list-->
 <ul id="miniblog-list">
 

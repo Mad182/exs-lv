@@ -15,6 +15,10 @@
 	<div class="c"></div>
 	<!-- END BLOCK : user-friend-pending-->
 
+	<!-- START BLOCK : empty-friends-->
+	<p class="note">Šim lietotājam vēl nav neviena drauga.</p>
+	<!-- END BLOCK : empty-friends-->
+
 	<!-- START BLOCK : user-friend-list-->
 	<ul id="friend-list">
 		<!-- START BLOCK : user-friend-node-->

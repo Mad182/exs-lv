@@ -1,5 +1,8 @@
 <!-- START BLOCK : user-usertopics-->
 <div class="tabMain">
+	<!-- START BLOCK : empty-usertopics-->
+	<p class="note">Šis lietotājs vēl nav izveidojis nevienu rakstu.</p>
+	<!-- END BLOCK : empty-usertopics-->
 	<!-- START BLOCK : user-usertopics-list-->
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 	<ul>
@@ -8,6 +11,6 @@
 		<!-- END BLOCK : user-usertopics-node-->
 	</ul>
 	<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
-	<!-- START BLOCK : user-usertopics-list-->
+	<!-- END BLOCK : user-usertopics-list-->
 </div>
 <!-- END BLOCK : user-usertopics-->

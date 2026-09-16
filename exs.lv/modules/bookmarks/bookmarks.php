@@ -51,6 +51,9 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 				]);
 			}
 		}
+	} else {
+		$robotstag = ['noindex', 'follow'];
+		$tpl->newBlock('empty-bookmarks');
 	}
 	$pagepath = '';
 } else {

@@ -3,7 +3,7 @@
 /**
  * Lietotāja draugu saraksts
  */
-$robotstag = ['noindex', 'nofollow'];
+$robotstag = ['noindex', 'follow'];
 
 if (isset($_GET['var1'])) {
 	$userid = (int) $_GET['var1'];
@@ -65,6 +65,9 @@ if ($inprofile && !$inprofile->deleted && ($auth->ok === true || !$inprofile->pr
 				]);
 			}
 		}
+	} else {
+		$robotstag = ['noindex', 'follow'];
+		$tpl->newBlock('empty-friends');
 	}
 
 	//pending

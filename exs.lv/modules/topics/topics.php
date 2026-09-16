@@ -42,6 +42,9 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 				'articles-node-posts' => $article->posts
 			]);
 		}
+	} else {
+		$robotstag = ['noindex', 'follow'];
+		$tpl->newBlock('empty-usertopics');
 	}
 
 	if ($total) {

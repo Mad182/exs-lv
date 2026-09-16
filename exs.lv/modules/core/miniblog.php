@@ -580,7 +580,8 @@ if (!empty($inprofile)) {
 		$robotstag = ['noindex', 'nofollow'];
 		error_404();
 	} else {
-		$robotstag = ['noindex'];
+		$robotstag = ['noindex', 'follow'];
+		$tpl->newBlock('empty-miniblog');
 	}
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('mb-sel', ' class="selected"');
