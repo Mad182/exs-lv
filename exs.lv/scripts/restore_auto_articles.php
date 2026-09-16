@@ -38,6 +38,9 @@ require_once(CORE_PATH . '/includes/class.mdb.php');
 require_once(CORE_PATH . '/includes/functions.core.php');
 $db = new mdb($username, $password, $database, $hostname);
 
+$m = new Memcached;
+$m->addServer($mc_host, $mc_port);
+
 // Parse CLI options
 $options = getopt('', [
     'dry-run',
