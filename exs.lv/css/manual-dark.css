@@ -98,6 +98,18 @@ body #wall-posts li a {
 	border-bottom: 1px solid #14181d;
 }
 
+.rpl-list li {
+	border-bottom: 1px solid #343b44 !important;
+}
+
+.rpl-list li:last-child {
+	border-bottom: 0 !important;
+}
+
+.rpl-list li p.comment-author {
+	color: #9ba3af !important;
+}
+
 #footer-widgets {
 	background: #161a20;
 	border-top: 1px solid #14181d;

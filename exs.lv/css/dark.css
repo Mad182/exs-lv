@@ -527,6 +527,19 @@ table.table,
 	color: #58a6ff !important;
 }
 
+.rpl-list li {
+	border-bottom: 1px solid #343434 !important;
+}
+
+.rpl-list li:last-child {
+	border-bottom: 0 !important;
+}
+
+.rpl-list li p.comment-author {
+	color: #aaa !important;
+}
+
+
 
 
 
