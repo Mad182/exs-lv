@@ -8,7 +8,7 @@
 
 	<!-- START BLOCK : guest-notice -->
 	<div class="alert alert-info arkanoid-guest-notice">
-		<i class="icon-info-sign"></i> Tu neesi pieslēdzies sistēmai. Lai tavi rekordi tiktu saglabāti topā un rādīti aktivitāšu plūsmā, lūdzu, <a href="/login">autorizējies</a> vai <a href="/register">reģistrējies</a>!
+		<i class="icon-info-sign"></i> Tu neesi pieslēdzies sistēmai. Lai tavi rekordi tiktu saglabāti topā un rādīti aktivitāšu plūsmā, lūdzu, autorizējies vai <a href="/register">reģistrējies</a>!
 	</div>
 	<!-- END BLOCK : guest-notice -->
 
