@@ -379,7 +379,4 @@ if ($category->parent) {
 	$page_title = $page_title . ' | ' . $category2->title;
 }
 
-if ($category->textid == 'index' && !empty($category->content) && !$auth->mobile) {
-	$tpl->newBlock('meta-description');
-	$tpl->assign('description', h($category->content));
-}
+

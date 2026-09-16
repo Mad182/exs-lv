@@ -471,16 +471,7 @@ $tpl->assignGlobal([
 	'logout-hash' => $auth->logout_hash
 ]);
 
-if (isset($category) && !empty($category->content)) {
-	$clean_desc = h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($category->content))), 0, 160));
-	$tpl->newBlock('meta-description');
-	$tpl->assign('description', $clean_desc);
-	$meta_description_added = true;
-
-	if (empty($opengraph_meta['description'])) {
-		$opengraph_meta['description'] = $clean_desc;
-	}
-
+if (isset($category) && !empty($category->textid)) {
 	$game_img_file = CORE_PATH . '/bildes/speles/' . $category->textid . '.png';
 	if (file_exists($game_img_file)) {
 		$img_url = 'https://exs.lv/bildes/speles/' . $category->textid . '.png';
@@ -637,11 +628,13 @@ if ($auth->ok !== true) {
 	}
 }
 
-/* meta description fallback */
+/* meta description */
 if (empty($meta_description_added)) {
 	$desc_val = '';
 	if (!empty($meta_description)) {
 		$desc_val = $meta_description;
+	} elseif (isset($category) && !empty($category->content)) {
+		$desc_val = $category->content;
 	} elseif (isset($category) && !empty($category->intro) && is_string($category->intro) && strlen(trim($category->intro)) > 5) {
 		$desc_val = $category->intro;
 	} elseif (!empty($opengraph_meta['description'])) {
@@ -653,6 +646,7 @@ if (empty($meta_description_added)) {
 	$clean_desc = h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($desc_val))), 0, 160));
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', $clean_desc);
+	$meta_description_added = true;
 
 	if (empty($opengraph_meta['description'])) {
 		$opengraph_meta['description'] = $clean_desc;

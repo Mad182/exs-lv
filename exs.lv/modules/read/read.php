@@ -1398,15 +1398,18 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			'cur-url' => '/read/' . $article->strid
 		]);
 
-		if (!$auth->mobile) {
-			$tpl->newBlock('meta-description');
-			$meta_description_added = true;
-			if (!empty($article->meta_description)) {
-				$tpl->assign('description', h($article->meta_description));
-			} else {
-				$clean_desc = trim(preg_replace('/\s+/', ' ', strip_tags($article->text)));
-				$tpl->assign('description', h(mb_substr($clean_desc, 0, 160)));
-			}
+		$clean_meta = (!empty($article->meta_description)) ? trim(trim($article->meta_description, "'\" \t\n\r\0\x0B")) : '';
+		if ($clean_meta !== '') {
+			$art_desc = $article->meta_description;
+		} else {
+			$clean_text = trim(preg_replace('/\s+/', ' ', strip_tags($article->text)));
+			$art_desc = mb_substr($clean_text, 0, 160);
+		}
+		$tpl->newBlock('meta-description');
+		$tpl->assign('description', h($art_desc));
+		$meta_description_added = true;
+		if (empty($opengraph_meta['description'])) {
+			$opengraph_meta['description'] = h($art_desc);
 		}
         
         // poga ritināšanai līdz pašai augšai mobilajā versijā
