@@ -240,7 +240,7 @@ foreach ($articles as $art) {
     $strid = $baseSlug;
 
     // Check if article already exists (by title or slug)
-    $existing = $db->get_row("SELECT id, strid, title FROM pages WHERE category = " . TARGET_CATEGORY_ID . " AND (title = '" . $db->escape($title) . "' OR strid = '" . $db->escape($strid) . "')");
+    $existing = $db->get_row("SELECT id, strid, title FROM pages WHERE category = " . TARGET_CATEGORY_ID . " AND (title = '" . $db->real_escape_string($title) . "' OR strid = '" . $db->real_escape_string($strid) . "')");
     if ($existing) {
         if ($verbose) {
             echo "[SKIPPED] ID {$oldId}: '{$title}' already exists (page #{$existing->id}, slug: {$existing->strid})\n";
@@ -250,7 +250,7 @@ foreach ($articles as $art) {
     }
 
     // Ensure unique strid globally in pages table
-    $slugCollision = (int)$db->get_var("SELECT COUNT(*) FROM pages WHERE strid = '" . $db->escape($strid) . "'");
+    $slugCollision = (int)$db->get_var("SELECT COUNT(*) FROM pages WHERE strid = '" . $db->real_escape_string($strid) . "'");
     if ($slugCollision > 0) {
         $strid = $baseSlug . '-' . $oldId;
     }
@@ -276,9 +276,9 @@ foreach ($articles as $art) {
 
     $titleDb = title2db($title);
     $bodyDb = htmlpost2db($cleanBody);
-    $introDb = $db->escape($intro);
+    $introDb = $db->real_escape_string($intro);
     $textid = date('YmdHis', strtotime($date));
-    $imageDb = $db->escape($imageField);
+    $imageDb = $db->real_escape_string($imageField);
 
     if ($verbose || $dryRun) {
         echo "[IMPORT] ID {$oldId}: '{$title}'\n";
@@ -295,16 +295,16 @@ foreach ($articles as $art) {
             strid, textid, category, text, intro, title, author,
             date, bump, updated, ip, lang, views, is_wide, posts, image
         ) VALUES (
-            '" . $db->escape($strid) . "',
-            '" . $db->escape($textid) . "',
+            '" . $db->real_escape_string($strid) . "',
+            '" . $db->real_escape_string($textid) . "',
             " . TARGET_CATEGORY_ID . ",
-            '" . $db->escape($bodyDb) . "',
+            '" . $db->real_escape_string($bodyDb) . "',
             '" . $introDb . "',
-            '" . $db->escape($titleDb) . "',
+            '" . $db->real_escape_string($titleDb) . "',
             " . $authorId . ",
-            '" . $db->escape($date) . "',
-            '" . $db->escape($date) . "',
-            '" . $db->escape($date) . "',
+            '" . $db->real_escape_string($date) . "',
+            '" . $db->real_escape_string($date) . "',
+            '" . $db->real_escape_string($date) . "',
             '127.0.0.1',
             1,
             " . $views . ",
