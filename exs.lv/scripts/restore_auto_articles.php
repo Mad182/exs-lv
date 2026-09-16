@@ -182,7 +182,7 @@ function cleanArticleBody($bodyHtml, $dryRun, $imgDir) {
             $src = $wbMatch[1];
         }
 
-        // If local upload path
+        // If local upload path (e.g. /upload/images_1/... or auto.exs.lv/upload/...)
         if (preg_match('/(?:\/upload\/|auto\.exs\.lv\/upload\/)(.*)/i', $src, $uMatch)) {
             $subPath = $uMatch[1];
             $localFilename = preg_replace('/[^a-zA-Z0-9_\.\-]/', '_', basename($subPath));
@@ -190,14 +190,18 @@ function cleanArticleBody($bodyHtml, $dryRun, $imgDir) {
             $publicUrl = 'https://img.exs.lv/auto/' . $localFilename;
 
             if (!file_exists($destFile) && !$dryRun) {
-                // Try to download via Wayback Machine
-                $wbSrc = 'http://web.archive.org/web/20120119154418id_/http://auto.exs.lv/upload/' . $subPath;
-                downloadAsset($wbSrc, $destFile);
+                // Check if existing in local upload directory first
+                $existingLocal = ROOT_PATH . '/exs.lv/upload/' . $subPath;
+                if (file_exists($existingLocal)) {
+                    copy($existingLocal, $destFile);
+                } else {
+                    // Try to download via Wayback Machine
+                    $wbSrc = 'http://web.archive.org/web/20120119154418id_/http://auto.exs.lv/upload/' . $subPath;
+                    downloadAsset($wbSrc, $destFile);
+                }
             }
 
-            if (file_exists($destFile) || $dryRun) {
-                return "<img{$before}src=\"{$publicUrl}\"{$after}>";
-            }
+            return "<img{$before}src=\"{$publicUrl}\"{$after}>";
         }
 
         // Fix protocol relative or http image hotlinks
@@ -244,19 +248,16 @@ foreach ($articles as $art) {
     $strid = $baseSlug;
 
     // Check if article already exists (by title or slug)
-    $existing = $db->get_row("SELECT id, strid, title FROM pages WHERE category = " . TARGET_CATEGORY_ID . " AND (title = '" . $db->real_escape_string($title) . "' OR strid = '" . $db->real_escape_string($strid) . "')");
-    if ($existing) {
-        if ($verbose) {
-            echo "[SKIPPED] ID {$oldId}: '{$title}' already exists (page #{$existing->id}, slug: {$existing->strid})\n";
-        }
-        $skippedCount++;
-        continue;
-    }
+    $existing = $db->get_row("SELECT id, strid, title FROM pages WHERE category = " . TARGET_CATEGORY_ID . " AND (title = '" . sanitize($title) . "' OR strid = '" . sanitize($strid) . "' OR strid = '" . sanitize($baseSlug . '-' . $oldId) . "')");
 
-    // Ensure unique strid globally in pages table
-    $slugCollision = (int)$db->get_var("SELECT COUNT(*) FROM pages WHERE strid = '" . $db->real_escape_string($strid) . "'");
-    if ($slugCollision > 0) {
-        $strid = $baseSlug . '-' . $oldId;
+    // Ensure unique strid globally in pages table if creating new
+    if (!$existing) {
+        $slugCollision = (int)$db->get_var("SELECT COUNT(*) FROM pages WHERE strid = '" . sanitize($strid) . "'");
+        if ($slugCollision > 0) {
+            $strid = $baseSlug . '-' . $oldId;
+        }
+    } else {
+        $strid = $existing->strid;
     }
 
     // Intro teaser image handling
@@ -278,14 +279,19 @@ foreach ($articles as $art) {
         $intro = mb_substr(strip_tags($cleanBody), 0, 300);
     }
 
+    // Note: title2db() and htmlpost2db() ALREADY call sanitize() (which applies real_escape_string).
+    // Do NOT call real_escape_string() again to avoid double-escaping slashes/newlines!
     $titleDb = title2db($title);
     $bodyDb = htmlpost2db($cleanBody);
-    $introDb = $db->real_escape_string($intro);
-    $textid = date('YmdHis', strtotime($date));
-    $imageDb = $db->real_escape_string($imageField);
+    $introDb = sanitize($intro);
+    $textidDb = sanitize(date('YmdHis', strtotime($date)));
+    $imageDb = sanitize($imageField);
+    $stridDb = sanitize($strid);
+    $dateDb = sanitize($date);
 
     if ($verbose || $dryRun) {
-        echo "[IMPORT] ID {$oldId}: '{$title}'\n";
+        $action = $existing ? "[UPDATE]" : "[IMPORT]";
+        echo "{$action} ID {$oldId}: '{$title}'\n";
         echo "  Date:     {$date}\n";
         echo "  Author:   {$rawAuthorNick} -> User ID {$authorId}\n";
         echo "  Slug:     {$strid}\n";
@@ -294,27 +300,49 @@ foreach ($articles as $art) {
         echo "  Body Len: " . strlen($cleanBody) . " chars\n";
     }
 
+    if ($existing) {
+        if (!$dryRun) {
+            $query = "UPDATE pages SET
+                text = '{$bodyDb}',
+                intro = '{$introDb}',
+                title = '{$titleDb}',
+                image = '{$imageDb}'
+                WHERE id = {$existing->id}";
+            $db->query($query);
+            $updatedCount++;
+            if ($verbose) {
+                echo "  => Updated page #{$existing->id}\n\n";
+            }
+        } else {
+            $updatedCount++;
+            if ($verbose) {
+                echo "  => [DRY-RUN] Update simulated for page #{$existing->id}\n\n";
+            }
+        }
+        continue;
+    }
+
     if (!$dryRun) {
         $query = "INSERT INTO pages (
             strid, textid, category, text, intro, title, author,
             date, bump, updated, ip, lang, views, is_wide, posts, image
         ) VALUES (
-            '" . $db->real_escape_string($strid) . "',
-            '" . $db->real_escape_string($textid) . "',
+            '{$stridDb}',
+            '{$textidDb}',
             " . TARGET_CATEGORY_ID . ",
-            '" . $db->real_escape_string($bodyDb) . "',
-            '" . $introDb . "',
-            '" . $db->real_escape_string($titleDb) . "',
-            " . $authorId . ",
-            '" . $db->real_escape_string($date) . "',
-            '" . $db->real_escape_string($date) . "',
-            '" . $db->real_escape_string($date) . "',
+            '{$bodyDb}',
+            '{$introDb}',
+            '{$titleDb}',
+            {$authorId},
+            '{$dateDb}',
+            '{$dateDb}',
+            '{$dateDb}',
             '127.0.0.1',
             1,
-            " . $views . ",
+            {$views},
             0,
             0,
-            '" . $imageDb . "'
+            '{$imageDb}'
         )";
 
         $res = $db->query($query);
@@ -335,8 +363,9 @@ foreach ($articles as $art) {
     }
 }
 
+
 // Update category stats
-if (!$dryRun && $insertedCount > 0) {
+if (!$dryRun && ($insertedCount > 0 || $updatedCount > 0)) {
     if (function_exists('update_stats')) {
         update_stats(TARGET_CATEGORY_ID);
     }
@@ -346,5 +375,7 @@ if (!$dryRun && $insertedCount > 0) {
 echo "\n=== Migration Summary ===\n";
 echo "Total Processed: " . count($articles) . "\n";
 echo "Inserted:        " . $insertedCount . "\n";
-echo "Skipped/Exists:  " . $skippedCount . "\n";
+echo "Updated:         " . $updatedCount . "\n";
+echo "Skipped:         " . $skippedCount . "\n";
 echo "Done!\n";
+
