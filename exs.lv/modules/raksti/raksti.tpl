@@ -1,5 +1,6 @@
 <!-- START BLOCK : list-articles-->
 <h1>{articles-title}</h1>
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 
 <!-- START BLOCK : list-node-->
 
@@ -32,6 +33,6 @@
 </article>
 <!-- END BLOCK : list-node-->
 
-<p class="pagination core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
+<p class="core-pager">{pager-next} {pager-numeric} {pager-prev}</p>
 <!-- END BLOCK : list-articles-->
 

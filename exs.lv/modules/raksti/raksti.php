@@ -6,6 +6,9 @@ if (!isset($_GET['viewcat']) || $_GET['viewcat'] !== $category->textid) {
 
 if (isset($_GET['skip'])) {
 	$skip = (int) $_GET['skip'];
+	if ($skip < 0) {
+		$skip = 0;
+	}
 } else {
 	$skip = 0;
 }
@@ -17,6 +20,10 @@ if ($category->parent) {
 	$category2 = get_cat($category->parent);
 	$pagepath = '<a href="/' . $category2->textid . '">' . $category2->title . '</a> / ' . $pagepath;
 }
+
+$raksti_cats = '11,80,81,323,335,565,603,611';
+
+$total = (int) $db->get_var("SELECT COUNT(*) FROM `pages` WHERE `category` IN ($raksti_cats)");
 
 $articles = $db->get_results("
 	SELECT
@@ -44,7 +51,7 @@ $articles = $db->get_results("
 	LEFT JOIN
 		`users` ON `users`.`id` = `pages`.`author`
 	WHERE
-		`pages`.`category` IN (11,80,81,323,565,611)
+		`pages`.`category` IN ($raksti_cats)
 	ORDER BY
 		`pages`.`date` DESC
 	LIMIT
@@ -64,7 +71,7 @@ if ($articles) {
 
 	// Pre-fetch category titles for the article categories
 	$article_cats = [];
-	$cat_rows = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `id` IN (11,80,81,323,565,611)");
+	$cat_rows = $db->get_results("SELECT `id`, `title`, `textid` FROM `cat` WHERE `id` IN ($raksti_cats)");
 	if (!empty($cat_rows)) {
 		foreach ($cat_rows as $cr) {
 			$article_cats[$cr->id] = $cr;
@@ -122,5 +129,13 @@ if ($articles) {
 		}
 	}
 }
+
+$pager = pager($total, $skip, $end, '/raksti?skip=');
+
+$tpl->assignGlobal([
+	'pager-next' => $pager['next'],
+	'pager-prev' => $pager['prev'],
+	'pager-numeric' => $pager['pages']
+]);
 
 unset($pagepath);
