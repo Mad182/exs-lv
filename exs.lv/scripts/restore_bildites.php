@@ -36,10 +36,11 @@ $options = getopt('', [
     'limit:',     // Process first N pages
     'all',        // Process all pages
     'dry-run',    // Do not download images or update DB
-    'delay:',     // Milliseconds delay between Wayback requests (default: 100)
+    'delay:',     // Milliseconds delay between Wayback requests (default: 400)
     'state-file:',// Custom path to state JSON file
     'verbose',    // Verbose debug logging
     'stats',      // Display stats from state file and exit
+    'reset-404',  // Clear all cached not_found entries to re-evaluate them
     'help'        // Show help
 ]);
 
@@ -47,8 +48,9 @@ if (isset($options['help'])) {
     echo "Usage:\n";
     echo "  php restore_bildites.php --page=<id> [--dry-run] [--verbose]\n";
     echo "  php restore_bildites.php --limit=<n> [--dry-run] [--verbose]\n";
-    echo "  php restore_bildites.php --all [--dry-run] [--delay=100]\n";
+    echo "  php restore_bildites.php --all [--dry-run] [--delay=400]\n";
     echo "  php restore_bildites.php --stats\n";
+    echo "  php restore_bildites.php --reset-404\n";
     exit(0);
 }
 
@@ -56,7 +58,7 @@ $is_dry_run = isset($options['dry-run']);
 $is_verbose = isset($options['verbose']);
 $single_page_id = isset($options['page']) ? (int) $options['page'] : null;
 $limit = isset($options['limit']) ? (int) $options['limit'] : null;
-$delay_ms = isset($options['delay']) ? (int) $options['delay'] : 100;
+$delay_ms = isset($options['delay']) ? (int) $options['delay'] : 400;
 
 // State tracking file
 $state_dir = __DIR__ . '/data';
@@ -74,6 +76,19 @@ if (file_exists($state_file)) {
             $state = $decoded;
         }
     }
+}
+
+if (isset($options['reset-404'])) {
+    $before_count = count($state);
+    foreach ($state as $k => $v) {
+        if (($v['status'] ?? '') === 'not_found') {
+            unset($state[$k]);
+        }
+    }
+    file_put_contents($state_file, json_encode($state, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    $after_count = count($state);
+    echo "Reset complete. Removed " . ($before_count - $after_count) . " not_found entries. Remaining: $after_count\n";
+    exit(0);
 }
 
 if (isset($options['stats'])) {
@@ -200,42 +215,61 @@ function parse_bildites_target($url) {
 }
 
 /**
- * Fetch image bytes from Wayback Machine.
+ * Fetch image bytes from Wayback Machine with backoff & retry.
  */
 function fetch_from_wayback($url, $delay_ms) {
     $wayback_url = "https://web.archive.org/web/0id_/" . $url;
-    
-    $ch = curl_init($wayback_url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-    
-    $body = curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-    $effective_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-    $curl_err = curl_error($ch);
-    
-    if ($delay_ms > 0) {
-        usleep($delay_ms * 1000);
-    }
-    
-    if ($http_code == 200 && !empty($body)) {
-        // Validate that this is actually an image, not an HTML error
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $detected_mime = $finfo->buffer($body);
-        if (strpos($detected_mime, 'image/') === 0) {
-            return [
-                'ok' => true,
-                'data' => $body,
-                'mime' => $detected_mime,
-                'size' => strlen($body),
-                'wayback_url' => $effective_url
-            ];
+    $max_retries = 3;
+    $http_code = 0;
+    $content_type = '';
+    $effective_url = '';
+    $curl_err = '';
+
+    for ($attempt = 1; $attempt <= $max_retries; $attempt++) {
+        $ch = curl_init($wayback_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 25);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+        
+        $body = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+        $effective_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        $curl_err = curl_error($ch);
+        
+        if ($delay_ms > 0) {
+            usleep($delay_ms * 1000);
         }
+        
+        // Success case
+        if ($http_code == 200 && !empty($body)) {
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $detected_mime = $finfo->buffer($body);
+            if (strpos($detected_mime, 'image/') === 0) {
+                return [
+                    'ok' => true,
+                    'data' => $body,
+                    'mime' => $detected_mime,
+                    'size' => strlen($body),
+                    'wayback_url' => $effective_url,
+                    'http_code' => 200
+                ];
+            }
+        }
+        
+        // Rate limit (429) or temporary server error (500-504) or timeout/reset (0)
+        if ($http_code == 429 || ($http_code >= 500 && $http_code <= 504) || $http_code == 0) {
+            $backoff_sec = $attempt * 4;
+            echo "    [WAIT] Wayback returned HTTP $http_code (" . ($curl_err ?: 'throttled') . "). Backing off {$backoff_sec}s (attempt $attempt/$max_retries)...\n";
+            sleep($backoff_sec);
+            continue;
+        }
+        
+        // Definite 404 or other 4xx: do not retry this URL
+        break;
     }
     
     return [
@@ -320,10 +354,12 @@ foreach ($pages as $p_idx => $page) {
         
         // 3. Query Wayback Machine with probe URLs
         $success = false;
+        $last_http_code = 0;
         echo "  [QUERYING WAYBACK] $clean_url ...\n";
         
         foreach ($target_info['probe_urls'] as $probe_url) {
             $res = fetch_from_wayback($probe_url, $delay_ms);
+            $last_http_code = $res['http_code'] ?? 0;
             if ($res['ok']) {
                 $success = true;
                 echo "    -> RECOVERED via {$res['wayback_url']} ({$res['mime']}, " . round($res['size'] / 1024, 1) . " KB)\n";
@@ -355,13 +391,18 @@ foreach ($pages as $p_idx => $page) {
         }
         
         if (!$success) {
-            echo "    -> NOT FOUND in Wayback Machine\n";
-            $stats['urls_failed']++;
-            $state[$clean_url] = [
-                'status' => 'not_found',
-                'time' => date('Y-m-d H:i:s')
-            ];
-            $state_dirty = true;
+            if ($last_http_code == 404) {
+                echo "    -> NOT FOUND (404) in Wayback Machine\n";
+                $stats['urls_failed']++;
+                $state[$clean_url] = [
+                    'status' => 'not_found',
+                    'time' => date('Y-m-d H:i:s')
+                ];
+                $state_dirty = true;
+            } else {
+                echo "    -> TEMPORARY ERROR (HTTP $last_http_code) in Wayback Machine (will retry on next run)\n";
+                $stats['urls_failed']++;
+            }
         }
         
         $batch_save_counter++;
