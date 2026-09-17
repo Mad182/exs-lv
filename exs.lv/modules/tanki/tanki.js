@@ -282,8 +282,8 @@
 		],
 		// Stage 5
 		[
-			"........######............",
-			"........######............",
+			"........####..............",
+			"........####..............",
 			"........##......======....",
 			"==..##..##..........==....",
 			"==..##......##............",
@@ -398,8 +398,8 @@
 		],
 		// Stage 9
 		[
-			"............########......",
-			"............########......",
+			"..............######......",
+			"..............######......",
 			"..######..........##......",
 			"..########..##....##......",
 			"........##..##........####",
@@ -1289,6 +1289,17 @@
 			}
 		}
 
+		// Authentic NES Battle City: Ensure the 3 enemy spawn zones (top-left, center, top-right) and player spawn are clear
+		var clearSpawnZones = [
+			{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 },       // Left enemy spawn (Block 0)
+			{ x: 12, y: 0 }, { x: 13, y: 0 }, { x: 12, y: 1 }, { x: 13, y: 1 },   // Center enemy spawn (Block 6)
+			{ x: 24, y: 0 }, { x: 25, y: 0 }, { x: 24, y: 1 }, { x: 25, y: 1 },   // Right enemy spawn (Block 12)
+			{ x: 8, y: 24 }, { x: 9, y: 24 }, { x: 8, y: 25 }, { x: 9, y: 25 }     // P1 spawn (Block 4)
+		];
+		clearSpawnZones.forEach(function (pt) {
+			if (mapGrid[pt.y]) mapGrid[pt.y][pt.x] = TILE.EMPTY;
+		});
+
 		baseDestroyed = false;
 	}
 
@@ -1319,7 +1330,7 @@
 	function PlayerTank() {
 		this.w = 26;
 		this.h = 26;
-		this.x = 9 * TILE_SIZE + 3;
+		this.x = 8 * TILE_SIZE + 3; // Block 4 (cols 8-9): Authentic NES P1 spawn
 		this.y = 24 * TILE_SIZE + 3;
 		this.dir = DIR.UP;
 		this.tier = 1;         // 1=Standard, 2=Fast Shot, 3=Twin Shot, 4=Heavy Buster
@@ -1473,8 +1484,17 @@
 		}
 	};
 
+	// Authentic NES Battle City Enemy Spawn Points (Left, Center, Right)
+	// ROM $E474 EnemySpawnX[3]: $18 (Left), $78 (Center), $D8 (Right)
+	var ENEMY_SPAWN_POINTS = [
+		{ x: 3, y: 3 },                     // Left (Block 0: Cols 0-1, Rows 0-1)
+		{ x: 12 * TILE_SIZE + 3, y: 3 },   // Center (Block 6: Cols 12-13, Rows 0-1)
+		{ x: 24 * TILE_SIZE + 3, y: 3 }    // Right (Block 12: Cols 24-25, Rows 0-1)
+	];
+	var enemySpawnRot = 0;
+
 	// Enemy Tank Constructor
-	function EnemyTank(type, isFlashing) {
+	function EnemyTank(type, isFlashing, spawnIndex) {
 		this.type = type; // 1=Basic, 2=Fast, 3=Power, 4=Heavy Armor
 		this.isFlashing = !!isFlashing;
 		this.w = 26;
@@ -1489,15 +1509,24 @@
 		this.changeDirTimer = Math.max(30, Math.floor((45 + Math.random() * 60) / stageSpeedMult));
 		this.shootTimer = Math.max(40, Math.floor((50 + Math.random() * 60) / stageSpeedMult));
 
-		// Spawn Positions (3 classic spawn points)
-		var spawnPoints = [
-			{ x: 3, y: 3 },
-			{ x: 12 * TILE_SIZE + 3, y: 3 },
-			{ x: 24 * TILE_SIZE + 3, y: 3 }
-		];
-		var sp = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+		// Authentic NES Battle City: Sequential Round-Robin spawn points (Left -> Center -> Right)
+		var spawnIdx = (typeof spawnIndex === 'number') ? (spawnIndex % ENEMY_SPAWN_POINTS.length) : Math.floor(Math.random() * ENEMY_SPAWN_POINTS.length);
+		var sp = ENEMY_SPAWN_POINTS[spawnIdx];
 		this.x = sp.x;
 		this.y = sp.y;
+
+		// Authentic NES Battle City PlaceTileBlock(blank): Clear any wall/obstacle tiles in the 2x2 spawn cell
+		var leftTile = Math.floor(this.x / TILE_SIZE);
+		var rightTile = Math.floor((this.x + this.w - 0.05) / TILE_SIZE);
+		var topTile = Math.floor(this.y / TILE_SIZE);
+		var bottomTile = Math.floor((this.y + this.h - 0.05) / TILE_SIZE);
+		for (var cy = topTile; cy <= bottomTile; cy++) {
+			for (var cx = leftTile; cx <= rightTile; cx++) {
+				if (mapGrid[cy] && (mapGrid[cy][cx] === TILE.BRICK || mapGrid[cy][cx] === TILE.STEEL || mapGrid[cy][cx] === TILE.WATER)) {
+					mapGrid[cy][cx] = TILE.EMPTY;
+				}
+			}
+		}
 
 		// Stats per type (authentic NES Battle City speeds: non-fast enemies move half speed)
 		if (type === 1) { // Basic (slow cannon fodder, ~0.55 px/frame on stage 1)
@@ -1530,6 +1559,24 @@
 		if (this.changeDirTimer <= 0) {
 			this.chooseDirection();
 			this.changeDirTimer = Math.max(30, Math.floor((50 + Math.random() * 80) / this.stageSpeedMult));
+		}
+
+		// Unstick safety check: if currently inside any obstacle, push out immediately
+		if (checkObstacleCollision(this.x, this.y, this.w, this.h, false)) {
+			var escapes = [
+				{ x: 0, y: 2 }, { x: 0, y: 4 }, { x: 0, y: 8 },
+				{ x: 2, y: 0 }, { x: -2, y: 0 }, { x: 4, y: 0 }, { x: -4, y: 0 },
+				{ x: 0, y: -2 }, { x: 0, y: -4 }
+			];
+			for (var ev = 0; ev < escapes.length; ev++) {
+				var ex = this.x + escapes[ev].x;
+				var ey = this.y + escapes[ev].y;
+				if (!checkObstacleCollision(ex, ey, this.w, this.h, false)) {
+					this.x = ex;
+					this.y = ey;
+					break;
+				}
+			}
 		}
 
 		var vec = DIR_VECTORS[this.dir];
@@ -2038,7 +2085,8 @@
 
 		// Authentic Battle City flashing bonus tanks (4th, 12th, and 18th enemy)
 		var isFlashing = (stageEnemiesSpawned === 3 || stageEnemiesSpawned === 11 || stageEnemiesSpawned === 17);
-		enemies.push(new EnemyTank(type, isFlashing));
+		enemies.push(new EnemyTank(type, isFlashing, enemySpawnRot));
+		enemySpawnRot = (enemySpawnRot + 1) % ENEMY_SPAWN_POINTS.length;
 		stageEnemiesSpawned++;
 	}
 
@@ -2523,6 +2571,7 @@
 		lastTime = 0;
 		accumulator = 0;
 		enemySpawnTimer = 0;
+		enemySpawnRot = 0;
 		enemies = [];
 		bullets = [];
 		powerups = [];
@@ -2530,7 +2579,7 @@
 
 		loadStageMap(stage);
 		if (player) {
-			player.x = 9 * TILE_SIZE + 3;
+			player.x = 8 * TILE_SIZE + 3;
 			player.y = 24 * TILE_SIZE + 3;
 			player.dir = DIR.UP;
 			player.shieldTimer = 180;
@@ -2734,6 +2783,7 @@
 		lastTime = 0;
 		accumulator = 0;
 		enemySpawnTimer = 0;
+		enemySpawnRot = 0;
 		enemies = [];
 		bullets = [];
 		powerups = [];
