@@ -3,6 +3,9 @@
 	<li class="option-edit"><a href="?mode=edit">labot</a></li>
 	<li class="option-delete"><a class="confirm" href="?mode=delete&amp;token={token}">dzēst</a></li>
 	<li class="option-history"><a href="?mode=history">vēsture</a></li>
+	<!-- START BLOCK : page-rehost-->
+	<li class="option-rehost"><a class="confirm" href="?mode=rehost&amp;token={rehost-token}" title="Pārnest ārējos attēlus uz img.exs.lv">pārnest attēlus</a></li>
+	<!-- END BLOCK : page-rehost-->
 </ul>
 <!-- END BLOCK : page-options-->
 

@@ -271,6 +271,12 @@ if ($article && ($auth->ok === true || !$article->private)) {
 				'article-id' => $article->id,
 				'token' => make_token('delpage' .  $article->id)
 			]);
+			if ($auth->ok && $auth->level == 1) {
+				$tpl->newBlock('page-rehost');
+				$tpl->assign([
+					'rehost-token' => make_token('rehostpage' . $article->id)
+				]);
+			}
 		} elseif($auth->id == $article->author) { 
 			$tpl->newBlock('page-delete');
 			$tpl->assign([
@@ -301,6 +307,22 @@ if ($article && ($auth->ok === true || !$article->private)) {
 
 			$tpl->newBlock('tinymce-enabled');
 			$page_title = 'Komentāra labošana rakstam: &quot;' . $article->title . '&quot; | ' . $category->title;
+		}
+
+		// raksta ārējo attēlu pārnešana uz img.exs.lv
+		elseif ($auth->ok && $auth->level == 1 && isset($_GET['mode']) && $_GET['mode'] == 'rehost' && check_token('rehostpage' . $article->id, $_GET['token'])) {
+			require_once(CORE_PATH . '/modules/read/functions.read.php');
+			$result = rehost_article_images($article);
+			if ($result['status'] === 'success') {
+				if ($result['count'] > 0) {
+					set_flash('Veiksmīgi pārnesti ' . $result['count'] . ' attēli uz img.exs.lv!', 'success');
+				} else {
+					set_flash('Rakstā netika atrasts neviens ārējs attēls.', 'notice');
+				}
+			} else {
+				set_flash('Kļūda pārnesot attēlus: ' . $result['message'], 'error');
+			}
+			redirect('/read/' . $article->strid);
 		}
 
 		// raksta dzēšana

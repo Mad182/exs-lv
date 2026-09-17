@@ -1873,6 +1873,10 @@ textarea {
 	background: url('//img.exs.lv/bildes/fugue-icons/cross-circle-frame.png') no-repeat 0 2px
 }
 
+#page-options .option-rehost a {
+	background: url('//img.exs.lv/bildes/fugue-icons/image-import.png') no-repeat 0 2px
+}
+
 #ucl {
 	float: right;
 	margin: 0;

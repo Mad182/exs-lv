@@ -71,3 +71,250 @@ function get_page_categories($current = null, $force = false) {
 	}
 	return $return;
 }
+
+/**
+ * Pārbauda, vai attēla URL ir ārējs (nav exs.lv, *.exs.lv, coding.lv, *.coding.lv).
+ */
+function is_external_image_url($url) {
+	$url = trim(html_entity_decode($url, ENT_QUOTES, 'UTF-8'));
+	if (empty($url) || strpos($url, 'data:') === 0 || strpos($url, 'blob:') === 0 || strpos($url, 'javascript:') === 0) {
+		return false;
+	}
+
+	if (strpos($url, '//') === 0) {
+		$url = 'https:' . $url;
+	}
+
+	$parsed = parse_url($url);
+	if (empty($parsed['host'])) {
+		return false; // Relatīvs ceļš uz vietas
+	}
+
+	$host = strtolower($parsed['host']);
+	if (preg_match('/(^|\.)exs\.lv$/i', $host) || preg_match('/(^|\.)coding\.lv$/i', $host)) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Konvertē MIME tipu uz atbilstošo faila paplašinājumu.
+ */
+function image_mime_to_extension($mime, $original_url = '') {
+	switch ($mime) {
+		case 'image/jpeg':
+			return '.jpg';
+		case 'image/png':
+			return '.png';
+		case 'image/gif':
+			return '.gif';
+		case 'image/webp':
+			return '.webp';
+		case 'image/svg+xml':
+			return '.svg';
+		case 'image/avif':
+			return '.avif';
+		case 'image/bmp':
+		case 'image/x-ms-bmp':
+			return '.bmp';
+	}
+
+	if (!empty($original_url)) {
+		$path = parse_url($original_url, PHP_URL_PATH);
+		if ($path) {
+			$ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+			if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'avif'])) {
+				return '.' . ($ext === 'jpeg' ? 'jpg' : $ext);
+			}
+		}
+	}
+
+	return '.jpg';
+}
+
+/**
+ * Lejupielādē attēlu no attālās adreses ar cURL un Wayback Machine rezerves variantu.
+ */
+function fetch_remote_image($url) {
+	$url = html_entity_decode($url, ENT_QUOTES, 'UTF-8');
+	if (strpos($url, '//') === 0) {
+		$url = 'https:' . $url;
+	}
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+	$data = curl_exec($ch);
+	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+
+	if ($http_code == 200 && !empty($data) && strlen($data) > 50) {
+		$finfo = new finfo(FILEINFO_MIME_TYPE);
+		$detected_mime = $finfo->buffer($data);
+		if (strpos($detected_mime, 'image/') === 0) {
+			return [
+				'ok' => true,
+				'data' => $data,
+				'mime' => $detected_mime,
+			];
+		}
+	}
+
+	// Ja tiešais pieprasījums neizdevās, mēģinām caur Wayback Machine (ja vien tas jau nav archive.org)
+	if (strpos($url, 'web.archive.org') === false) {
+		$wb_url = 'https://web.archive.org/web/0id_/' . $url;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $wb_url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+		$data = curl_exec($ch);
+		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+
+		if ($http_code == 200 && !empty($data) && strlen($data) > 50) {
+			$finfo = new finfo(FILEINFO_MIME_TYPE);
+			$detected_mime = $finfo->buffer($data);
+			if (strpos($detected_mime, 'image/') === 0) {
+				return [
+					'ok' => true,
+					'data' => $data,
+					'mime' => $detected_mime,
+				];
+			}
+		}
+	}
+
+	return ['ok' => false];
+}
+
+/**
+ * Atrod visus ārējos img tagus rakstā, lejupielādē un pārceļ uz img.exs.lv, aizstājot saites.
+ */
+function rehost_article_images($article) {
+	global $db, $auth, $lang;
+
+	if (!$auth->ok || $auth->level != 1 || empty($article) || empty($article->id)) {
+		return ['status' => 'error', 'message' => 'Nav administratora tiesību.'];
+	}
+
+	if (!defined('IMG_PATH')) {
+		define('IMG_PATH', ROOT_PATH . '/img.exs.lv');
+	}
+
+	$text = $article->text;
+	$intro = $article->intro ?? '';
+	$combined = $text . ' ' . $intro;
+
+	// Atrodam visus img tagus un to src atribūtus
+	preg_match_all('/<img\b[^>]*?\bsrc\s*=\s*(["\']?)([^"\'\s>]+)\1[^>]*>/i', $combined, $matches);
+	if (empty($matches[2])) {
+		return ['status' => 'success', 'count' => 0];
+	}
+
+	$raw_urls = array_unique($matches[2]);
+	$urls_to_rehost = [];
+	foreach ($raw_urls as $raw_url) {
+		$clean_url = html_entity_decode(trim($raw_url), ENT_QUOTES, 'UTF-8');
+		if (is_external_image_url($clean_url)) {
+			$urls_to_rehost[] = [
+				'raw' => $raw_url,
+				'clean' => $clean_url
+			];
+		}
+	}
+
+	if (empty($urls_to_rehost)) {
+		return ['status' => 'success', 'count' => 0];
+	}
+
+	$storage_dir = IMG_PATH . '/rehost/' . (int)$article->id;
+	if (!is_dir($storage_dir)) {
+		rmkdir($storage_dir, 0775);
+	}
+
+	$rehosted_count = 0;
+	$replacements = [];
+
+	foreach ($urls_to_rehost as $item) {
+		$raw_url = $item['raw'];
+		$clean_url = $item['clean'];
+
+		$res = fetch_remote_image($clean_url);
+		if (!$res['ok']) {
+			continue;
+		}
+
+		$ext = image_mime_to_extension($res['mime'], $clean_url);
+		$path_part = parse_url($clean_url, PHP_URL_PATH) ?? '';
+		$base_name = mkslug(pathinfo($path_part, PATHINFO_FILENAME));
+		$hash = substr(md5($clean_url), 0, 8);
+		$filename = ($base_name !== '' ? substr($base_name, 0, 40) . '_' : 'img_') . $hash . $ext;
+
+		$dest_file = $storage_dir . '/' . $filename;
+		if (!file_exists($dest_file) || filesize($dest_file) === 0) {
+			@file_put_contents($dest_file, $res['data']);
+		}
+
+		$public_url = 'https://img.exs.lv/rehost/' . (int)$article->id . '/' . $filename;
+		$replacements[$raw_url] = $public_url;
+		$replacements[$clean_url] = $public_url;
+		$replacements[htmlspecialchars($clean_url, ENT_QUOTES, 'UTF-8')] = $public_url;
+		$replacements[htmlentities($clean_url, ENT_QUOTES, 'UTF-8')] = $public_url;
+		$replacements[str_replace('&', '&amp;', $clean_url)] = $public_url;
+
+		$rehosted_count++;
+	}
+
+	if ($rehosted_count > 0) {
+		// Aizstājam visus linkus saturā
+		foreach ($replacements as $old_str => $new_str) {
+			$text = str_replace($old_str, $new_str, $text);
+			if (!empty($intro)) {
+				$intro = str_replace($old_str, $new_str, $intro);
+			}
+		}
+
+		// Saglabājam versiju vēsturē
+		$lastmod = $db->get_row("SELECT * FROM pages_ver WHERE pid = '" . (int)$article->id . "' ORDER BY id DESC LIMIT 1");
+		$lastmodu = (!empty($lastmod)) ? $lastmod->nextmod : $article->author;
+		$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category,is_wide,ip) VALUES (
+			'" . (int)$article->id . "',
+			'" . time() . "',
+			'" . sanitize($article->title) . "',
+			'" . sanitize($article->text) . "',
+			'" . sanitize($lastmodu) . "',
+			'" . (int)$article->category . "',
+			'" . (int)$article->is_wide . "',
+			'" . sanitize($auth->ip) . "'
+		)");
+
+		// Atjaunojam pages ierakstu
+		$db->query("UPDATE `pages` SET `text` = ('" . sanitize($text) . "'), `intro` = ('" . sanitize($intro) . "') WHERE `id` = '" . (int)$article->id . "' LIMIT 1");
+
+		$article->text = $text;
+		$article->intro = $intro;
+
+		$auth->log('Pārnesa raksta attēlus (' . $rehosted_count . ' attēli)', 'pages', $article->id);
+		clear_forum_cache($article->lang ?? $lang);
+
+		return ['status' => 'success', 'count' => $rehosted_count];
+	}
+
+	return ['status' => 'error', 'message' => 'Neizdevās lejupielādēt nevienu no ārējiem attēliem (iespējams, saites ir mirušas vai bloķētas).'];
+}
