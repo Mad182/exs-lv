@@ -384,7 +384,8 @@ if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
 			$out .= '<p class="core-pager ajax-pager">' . $pager_next . ' ' . $pager_numeric . ' ' . $pager_prev . '</p>';
 		}
 
-		if (isset($_GET['_']) && isset($_GET['actions'])) {
+		$is_ajax = isset($_GET['_']) || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+		if ($is_ajax && isset($_GET['actions'])) {
 			die($out);
 		}
 

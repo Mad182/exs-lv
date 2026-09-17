@@ -153,7 +153,10 @@ document.addEventListener('DOMContentLoaded', function () {
 						ajaxbox.style.opacity = '0.6';
 						ajaxbox.style.transition = 'opacity 0.25s';
 
-						fetch(url)
+						var fetchUrl = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now();
+						fetch(fetchUrl, {
+							headers: { 'X-Requested-With': 'XMLHttpRequest' }
+						})
 							.then(function (res) { return res.text(); })
 							.then(function (html) {
 								ajaxbox.innerHTML = html;
@@ -187,15 +190,23 @@ document.addEventListener('DOMContentLoaded', function () {
 			var pUrl = pagerLink.getAttribute('href');
 			if (pUrl && pUrl !== '#') {
 				var pContainer = pagerLink.closest('.ajaxbox');
-				if (!pContainer && pagerLink.parentElement && pagerLink.parentElement.parentElement) {
-					pContainer = pagerLink.parentElement.parentElement;
+				if (!pContainer) {
+					var pager = pagerLink.closest('.ajax-pager');
+					if (pager && pager.parentElement) {
+						pContainer = pager.parentElement;
+					} else if (pagerLink.parentElement && pagerLink.parentElement.parentElement) {
+						pContainer = pagerLink.parentElement.parentElement;
+					}
 				}
 
 				if (pContainer) {
 					pContainer.style.opacity = '0.5';
 					pContainer.style.transition = 'opacity 0.25s';
 
-					fetch(pUrl)
+					var fetchUrl = pUrl + (pUrl.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now();
+					fetch(fetchUrl, {
+						headers: { 'X-Requested-With': 'XMLHttpRequest' }
+					})
 						.then(function (res) { return res.text(); })
 						.then(function (html) {
 							pContainer.innerHTML = html;

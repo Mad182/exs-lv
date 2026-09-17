@@ -233,7 +233,9 @@ if (isset($_GET['u'])) {
 	if (!empty($category->module)) {
 		$page_title = strip_tags($category->title);
 
-		if (isset($_GET['_'])) {
+		$is_ajax = isset($_GET['_']) || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+
+		if ($is_ajax) {
 			$tpl = new TemplatePower(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.tpl');
 			$tpl->prepare();
 		} else {
@@ -272,7 +274,7 @@ if (isset($_GET['u'])) {
 		require(CORE_PATH . '/modules/' . $category->module . '/' . $category->module . '.php');
 
 		/* ajax pieprasījumus te arī izbeidzam */
-		if (isset($_GET['_'])) {
+		if ($is_ajax) {
 			$tpl->printToScreen();
 			exit;
 		}
