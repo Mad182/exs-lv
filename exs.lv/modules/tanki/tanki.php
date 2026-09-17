@@ -23,12 +23,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	header('Content-Type: application/json');
 
 	if (!$auth->ok) {
-		echo json_encode(['success' => false, 'error' => 'Tikai reģistrēti lietotāji var saglabāt rezultātus!']);
+		echo json_encode(['success' => false, 'guest' => true, 'error' => 'Tikai reģistrēti lietotāji var saglabāt rezultātus topā!']);
 		exit;
 	}
 
 	$token = isset($_POST['token']) ? trim($_POST['token']) : '';
-	if (empty($token) || empty($_SESSION['tanki_token']) || $token !== $_SESSION['tanki_token']) {
+	if (!empty($_SESSION['tanki_token']) && !empty($token) && !hash_equals($_SESSION['tanki_token'], $token)) {
 		echo json_encode(['success' => false, 'error' => 'Nederīgs sesijas žetons. Lūdzu pārlādējiet spēli.']);
 		exit;
 	}

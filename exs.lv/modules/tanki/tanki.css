@@ -520,6 +520,23 @@
 	to { transform: translateY(-4px); }
 }
 
+.tanki-gameover-status {
+	font-size: 11px;
+	color: #cfd8dc;
+	background: #181d24;
+	border: 1px solid var(--tanki-border);
+	border-radius: 6px;
+	padding: 8px 14px;
+	width: 100%;
+	box-sizing: border-box;
+	line-height: 1.4;
+	text-align: center;
+}
+
+.tanki-gameover-status strong {
+	color: var(--tanki-gold);
+}
+
 /* Touch Controls (Mobile) */
 .tanki-touch-controls {
 	display: none;

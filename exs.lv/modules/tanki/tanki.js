@@ -1245,6 +1245,8 @@
 	var freezeTimer = 0;
 	var sessionToken = '';
 	var gameStartTime = 0;
+	var gameOverLockoutUntil = 0;
+	var stageClearLockoutUntil = 0;
 
 	// Input Keys
 	var keys = {
@@ -1646,7 +1648,8 @@
 				this.alive = false;
 				createExplosion(12 * TILE_SIZE + 16, 23 * TILE_SIZE + 16, true);
 				SoundEngine.bigExplosion();
-				gameOver('Ienaidnieks iznīcināja EXS zelta bāzi!');
+				var reason = this.isPlayer ? 'Tu iznīcināji savu EXS bāzi!' : 'Ienaidnieks iznīcināja EXS zelta bāzi!';
+				gameOver(reason);
 				return;
 			}
 		}
@@ -2408,8 +2411,11 @@
 		isRunning = false;
 		SoundEngine.stageStart();
 
+		stageClearLockoutUntil = Date.now() + 800;
+
 		var overlay = document.getElementById('tanki-stage-overlay');
 		var title = document.getElementById('stage-cleared-title');
+		var nextBtn = document.getElementById('tanki-next-stage-btn');
 		if (title) title.textContent = 'LĪMENIS ' + stage + ' PABEIGTS';
 
 		// Tally counts
@@ -2430,6 +2436,13 @@
 		document.getElementById('tally-total-score').textContent = score;
 
 		if (overlay) overlay.style.display = 'flex';
+
+		if (nextBtn) {
+			nextBtn.disabled = true;
+			setTimeout(function () {
+				if (nextBtn) nextBtn.disabled = false;
+			}, 800);
+		}
 	}
 
 	function nextStage() {
@@ -2437,6 +2450,10 @@
 		if (overlay) overlay.style.display = 'none';
 
 		stage++;
+		baseDestroyed = false;
+		freezeTimer = 0;
+		shovelTimer = 0;
+		stageClearLockoutUntil = 0;
 		stageEnemiesRemaining = 20;
 		stageEnemiesSpawned = 0;
 		stageTanksKilled = { basic: 0, fast: 0, power: 0, armor: 0 };
@@ -2469,18 +2486,36 @@
 		isRunning = false;
 		SoundEngine.gameOver();
 
-		var duration = Math.floor((Date.now() - gameStartTime) / 1000);
+		gameOverLockoutUntil = Date.now() + 1500; // 1.5 seconds input lockout to prevent accidental skip
+
+		var duration = Math.max(1, Math.floor((Date.now() - gameStartTime) / 1000));
 
 		var overlay = document.getElementById('tanki-gameover-overlay');
 		var reasonEl = document.getElementById('gameover-reason');
 		var finalScore = document.getElementById('tanki-final-score');
 		var finalStage = document.getElementById('tanki-final-stage');
 		var finalKills = document.getElementById('tanki-final-kills');
+		var recAlert = document.getElementById('tanki-record-alert');
+		var restartBtn = document.getElementById('tanki-restart-btn');
 
+		if (recAlert) recAlert.style.display = 'none';
 		if (reasonEl) reasonEl.textContent = reason || 'Spēle beigusies!';
 		if (finalScore) finalScore.textContent = score;
 		if (finalStage) finalStage.textContent = stage;
 		if (finalKills) finalKills.textContent = totalTanksKilled;
+
+		if (restartBtn) {
+			restartBtn.disabled = true;
+			restartBtn.style.opacity = '0.7';
+			restartBtn.style.cursor = 'default';
+			setTimeout(function () {
+				if (restartBtn) {
+					restartBtn.disabled = false;
+					restartBtn.style.opacity = '1';
+					restartBtn.style.cursor = 'pointer';
+				}
+			}, 1500);
+		}
 
 		if (overlay) overlay.style.display = 'flex';
 
@@ -2490,7 +2525,28 @@
 
 	// Score Submission
 	function submitScore(finalScore, finalStage, duration) {
-		if (finalScore <= 0 || !sessionToken) return;
+		var statusEl = document.getElementById('tanki-gameover-status');
+
+		if (finalScore <= 0) {
+			if (statusEl) {
+				statusEl.textContent = '';
+				statusEl.style.display = 'none';
+			}
+			return;
+		}
+
+		if (statusEl) {
+			statusEl.textContent = 'Saglabā rezultātu...';
+			statusEl.style.display = 'block';
+		}
+
+		if (!sessionToken) {
+			if (statusEl) {
+				statusEl.textContent = 'Sesijas kļūda: nav saņemts žetons.';
+				statusEl.style.display = 'block';
+			}
+			return;
+		}
 
 		var formData = new FormData();
 		formData.append('score', finalScore);
@@ -2505,15 +2561,35 @@
 		.then(function (res) { return res.json(); })
 		.then(function (data) {
 			if (data.success) {
+				if (statusEl) {
+					statusEl.innerHTML = '✅ Rezultāts saglabāts!' + (data.rank ? ' (Vieta topā: <strong>#' + data.rank + '</strong>)' : '');
+					statusEl.style.display = 'block';
+				}
 				if (data.isNewRecord) {
 					var recAlert = document.getElementById('tanki-record-alert');
 					if (recAlert) recAlert.style.display = 'block';
 				}
 				var bestEl = document.getElementById('tanki-best-score');
 				if (bestEl && data.highScore) bestEl.textContent = data.highScore;
+				var startBestEl = document.getElementById('tanki-start-best-score');
+				if (startBestEl && data.highScore) startBestEl.textContent = data.highScore;
+			} else {
+				if (statusEl) {
+					if (data.guest) {
+						statusEl.innerHTML = 'ℹ️ Rezultāts netika saglabāts topā: lai piedalītos topā, lūdzu, autorizējies vai reģistrējies.';
+					} else {
+						statusEl.textContent = data.error || data.message || 'Neizdevās saglabāt rezultātu.';
+					}
+					statusEl.style.display = 'block';
+				}
 			}
 		})
-		.catch(function () {});
+		.catch(function () {
+			if (statusEl) {
+				statusEl.textContent = 'Tīkla kļūda, saglabājot rezultātu.';
+				statusEl.style.display = 'block';
+			}
+		});
 	}
 
 	// Token Fetching
@@ -2587,6 +2663,11 @@
 		stageTanksKilled = { basic: 0, fast: 0, power: 0, armor: 0 };
 		stageEnemiesRemaining = 20;
 		stageEnemiesSpawned = 0;
+		baseDestroyed = false;
+		freezeTimer = 0;
+		shovelTimer = 0;
+		gameOverLockoutUntil = 0;
+		stageClearLockoutUntil = 0;
 		lastTime = 0;
 		accumulator = 0;
 		enemySpawnTimer = 0;
@@ -2643,16 +2724,44 @@
 			} else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
 				keys.right = true;
 				e.preventDefault();
-			} else if (e.key === ' ' || e.key === 'j' || e.key === 'J' || e.key === 'Enter') {
+			} else if (e.key === ' ' || e.key === 'j' || e.key === 'J') {
 				keys.fire = true;
 				e.preventDefault();
 
-				// Overlay shortcuts
+				// Overlay shortcuts (ONLY Space, NEVER J!)
+				if (e.key === ' ' && !isRunning) {
+					var stageOverlay = document.getElementById('tanki-stage-overlay');
+					var overOverlay = document.getElementById('tanki-gameover-overlay');
+					var startOverlay = document.getElementById('tanki-start-overlay');
+
+					if (stageOverlay && stageOverlay.style.display === 'flex') {
+						if (Date.now() >= stageClearLockoutUntil) {
+							nextStage();
+						}
+					} else if (overOverlay && overOverlay.style.display === 'flex') {
+						if (Date.now() >= gameOverLockoutUntil) {
+							startGame();
+						}
+					} else if (startOverlay && startOverlay.style.display !== 'none') {
+						startGame();
+					}
+				}
+			} else if (e.key === 'Enter') {
+				e.preventDefault();
 				if (!isRunning) {
 					var stageOverlay = document.getElementById('tanki-stage-overlay');
+					var overOverlay = document.getElementById('tanki-gameover-overlay');
+					var startOverlay = document.getElementById('tanki-start-overlay');
+
 					if (stageOverlay && stageOverlay.style.display === 'flex') {
-						nextStage();
-					} else {
+						if (Date.now() >= stageClearLockoutUntil) {
+							nextStage();
+						}
+					} else if (overOverlay && overOverlay.style.display === 'flex') {
+						if (Date.now() >= gameOverLockoutUntil) {
+							startGame();
+						}
+					} else if (startOverlay && startOverlay.style.display !== 'none') {
 						startGame();
 					}
 				}
@@ -2672,7 +2781,7 @@
 			else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') keys.down = false;
 			else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
 			else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
-			else if (e.key === ' ' || e.key === 'j' || e.key === 'J' || e.key === 'Enter') keys.fire = false;
+			else if (e.key === ' ' || e.key === 'j' || e.key === 'J') keys.fire = false;
 		});
 
 		// UI Button Listeners
@@ -2680,10 +2789,22 @@
 		if (startBtn) startBtn.addEventListener('click', startGame);
 
 		var restartBtn = document.getElementById('tanki-restart-btn');
-		if (restartBtn) restartBtn.addEventListener('click', startGame);
+		if (restartBtn) {
+			restartBtn.addEventListener('click', function () {
+				if (Date.now() >= gameOverLockoutUntil) {
+					startGame();
+				}
+			});
+		}
 
 		var nextStageBtn = document.getElementById('tanki-next-stage-btn');
-		if (nextStageBtn) nextStageBtn.addEventListener('click', nextStage);
+		if (nextStageBtn) {
+			nextStageBtn.addEventListener('click', function () {
+				if (Date.now() >= stageClearLockoutUntil) {
+					nextStage();
+				}
+			});
+		}
 
 		var resumeBtn = document.getElementById('tanki-resume-btn');
 		if (resumeBtn) resumeBtn.addEventListener('click', togglePause);

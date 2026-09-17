@@ -70,7 +70,7 @@
 							<div class="start-meta-card">
 								<span class="card-icon">🏆</span>
 								<strong>Rekordi</strong>
-								<small>Tavs labākais: <strong>{user-high-score}</strong> pt</small>
+								<small>Tavs labākais: <strong id="tanki-start-best-score">{user-high-score}</strong> pt</small>
 							</div>
 						</div>
 
@@ -153,8 +153,10 @@
 							🎉 JAUNS PERSONĪGAIS REKORDS! 🎉
 						</div>
 
+						<div id="tanki-gameover-status" class="tanki-gameover-status" style="display: none;"></div>
+
 						<button id="tanki-restart-btn" class="tanki-btn primary-pulse">
-							SPĒLĒT VĒLREIZ (Space)
+							SPĒLĒT VĒLREIZ (Space / Enter)
 						</button>
 					</div>
 				</div>
