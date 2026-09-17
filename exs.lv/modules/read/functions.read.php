@@ -204,12 +204,23 @@ function fetch_remote_image($url) {
 }
 
 /**
+ * Rehost darbību žurnālieraksts (CORE_PATH . /tmp/rehost.log un error_log).
+ */
+function rehost_log($message) {
+	$line = '[' . date('Y-m-d H:i:s') . '] ' . $message . "\n";
+	$log_file = defined('CORE_PATH') ? CORE_PATH . '/tmp/rehost.log' : __DIR__ . '/rehost.log';
+	@file_put_contents($log_file, $line, FILE_APPEND);
+	error_log('[Rehost] ' . $message);
+}
+
+/**
  * Atrod visus ārējos img tagus rakstā, lejupielādē un pārceļ uz img.exs.lv, aizstājot saites.
  */
 function rehost_article_images($article) {
 	global $db, $auth, $lang;
 
 	if (!$auth->ok || $auth->level != 1 || empty($article) || empty($article->id)) {
+		rehost_log("Access denied or invalid article for ID: " . ($article->id ?? 'null'));
 		return ['status' => 'error', 'message' => 'Nav administratora tiesību.'];
 	}
 
@@ -221,9 +232,12 @@ function rehost_article_images($article) {
 	$intro = $article->intro ?? '';
 	$combined = $text . ' ' . $intro;
 
+	rehost_log("Article #{$article->id} ({$article->title}): Starting rehost scan.");
+
 	// Atrodam visus img tagus un to src atribūtus
 	preg_match_all('/<img\b[^>]*?\bsrc\s*=\s*(["\']?)([^"\'\s>]+)\1[^>]*>/i', $combined, $matches);
 	if (empty($matches[2])) {
+		rehost_log("Article #{$article->id}: No <img> tags found in content.");
 		return ['status' => 'success', 'count' => 0];
 	}
 
@@ -240,12 +254,23 @@ function rehost_article_images($article) {
 	}
 
 	if (empty($urls_to_rehost)) {
+		rehost_log("Article #{$article->id}: All " . count($raw_urls) . " <img> URLs are internal. Nothing to rehost.");
 		return ['status' => 'success', 'count' => 0];
 	}
 
+	rehost_log("Article #{$article->id}: Found " . count($urls_to_rehost) . " external image URL(s) to process.");
+
 	$storage_dir = IMG_PATH . '/rehost/' . (int)$article->id;
 	if (!is_dir($storage_dir)) {
-		rmkdir($storage_dir, 0775);
+		if (!rmkdir($storage_dir, 0777)) {
+			rehost_log("ERROR: Article #{$article->id}: Could not create directory {$storage_dir}");
+			return ['status' => 'error', 'message' => 'Neizdevās izveidot mapi attēlu glabāšanai serverī.'];
+		}
+	}
+
+	if (!is_writable($storage_dir)) {
+		rehost_log("ERROR: Article #{$article->id}: Storage directory {$storage_dir} is not writable.");
+		return ['status' => 'error', 'message' => 'Attēlu mape nav pieejama ierakstīšanai serverī.'];
 	}
 
 	$rehosted_count = 0;
@@ -255,8 +280,10 @@ function rehost_article_images($article) {
 		$raw_url = $item['raw'];
 		$clean_url = $item['clean'];
 
+		rehost_log("Article #{$article->id}: Fetching: {$clean_url}");
 		$res = fetch_remote_image($clean_url);
 		if (!$res['ok']) {
+			rehost_log("Article #{$article->id}: Failed to fetch image (direct & archive): {$clean_url}");
 			continue;
 		}
 
@@ -268,7 +295,18 @@ function rehost_article_images($article) {
 
 		$dest_file = $storage_dir . '/' . $filename;
 		if (!file_exists($dest_file) || filesize($dest_file) === 0) {
-			@file_put_contents($dest_file, $res['data']);
+			$bytes_written = @file_put_contents($dest_file, $res['data']);
+			if ($bytes_written === false || $bytes_written === 0) {
+				rehost_log("ERROR: Article #{$article->id}: file_put_contents failed for {$dest_file} ({$clean_url})");
+				continue;
+			}
+		}
+
+		// PĀRBAUDE: Pārliecināmies, ka attēla fails REĀLI eksistē uz diska un nav tukšs pirms linku aizstāšanas
+		clearstatcache(true, $dest_file);
+		if (!file_exists($dest_file) || filesize($dest_file) < 50) {
+			rehost_log("ERROR: Article #{$article->id}: File {$dest_file} not verified on disk after write attempt for {$clean_url}");
+			continue;
 		}
 
 		$public_url = 'https://img.exs.lv/rehost/' . (int)$article->id . '/' . $filename;
@@ -279,10 +317,11 @@ function rehost_article_images($article) {
 		$replacements[str_replace('&', '&amp;', $clean_url)] = $public_url;
 
 		$rehosted_count++;
+		rehost_log("Article #{$article->id}: Verified on disk and queued replacement: {$clean_url} -> {$public_url} (" . filesize($dest_file) . " bytes)");
 	}
 
-	if ($rehosted_count > 0) {
-		// Aizstājam visus linkus saturā
+	if ($rehosted_count > 0 && !empty($replacements)) {
+		// Aizstājam visus pārbaudītos linkus saturā
 		foreach ($replacements as $old_str => $new_str) {
 			$text = str_replace($old_str, $new_str, $text);
 			if (!empty($intro)) {
@@ -290,7 +329,7 @@ function rehost_article_images($article) {
 			}
 		}
 
-		// Saglabājam versiju vēsturē
+		// Saglabājam versiju vēsturē pirms ieraksta atjaunošanas
 		$lastmod = $db->get_row("SELECT * FROM pages_ver WHERE pid = '" . (int)$article->id . "' ORDER BY id DESC LIMIT 1");
 		$lastmodu = (!empty($lastmod)) ? $lastmod->nextmod : $article->author;
 		$db->query("INSERT INTO pages_ver (pid,time,title,text,nextmod,category,is_wide,ip) VALUES (
@@ -313,8 +352,11 @@ function rehost_article_images($article) {
 		$auth->log('Pārnesa raksta attēlus (' . $rehosted_count . ' attēli)', 'pages', $article->id);
 		clear_forum_cache($article->lang ?? $lang);
 
+		rehost_log("Article #{$article->id}: Successfully rehosted {$rehosted_count} image(s) and updated article.");
 		return ['status' => 'success', 'count' => $rehosted_count];
 	}
 
-	return ['status' => 'error', 'message' => 'Neizdevās lejupielādēt nevienu no ārējiem attēliem (iespējams, saites ir mirušas vai bloķētas).'];
+	rehost_log("Article #{$article->id}: No images could be verified on disk. Original article left unchanged.");
+	return ['status' => 'error', 'message' => 'Neizdevās lejupielādēt vai saglabāt nevienu no ārējiem attēliem. Raksta saturs netika mainīts.'];
 }
+
