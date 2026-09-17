@@ -1353,15 +1353,26 @@
 		if (wantedDir !== null) {
 			// Turn snap assist: align with nearest open lane on perpendicular axis
 			if (wantedDir !== this.dir) {
+				var self = this;
 				if (wantedDir === DIR.UP || wantedDir === DIR.DOWN) {
 					var targetX = Math.round((this.x - 3) / 16) * 16 + 3;
 					if (Math.abs(this.x - targetX) <= 8 && !checkObstacleCollision(targetX, this.y, this.w, this.h, false)) {
-						this.x = targetX;
+						var snapsIntoEnemy = enemies.some(function (en) {
+							return checkRectOverlap(targetX, self.y, self.w, self.h, en.x, en.y, en.w, en.h);
+						});
+						if (!snapsIntoEnemy) {
+							this.x = targetX;
+						}
 					}
 				} else {
 					var targetY = Math.round((this.y - 3) / 16) * 16 + 3;
 					if (Math.abs(this.y - targetY) <= 8 && !checkObstacleCollision(this.x, targetY, this.w, this.h, false)) {
-						this.y = targetY;
+						var snapsIntoEnemy = enemies.some(function (en) {
+							return checkRectOverlap(self.x, targetY, self.w, self.h, en.x, en.y, en.w, en.h);
+						});
+						if (!snapsIntoEnemy) {
+							this.y = targetY;
+						}
 					}
 				}
 				this.dir = wantedDir;
@@ -1406,6 +1417,11 @@
 	};
 
 	PlayerTank.prototype.move = function (dx, dy) {
+		// De-penetrate from any enemies if currently touching
+		for (var e = 0; e < enemies.length; e++) {
+			separateTanks(this, enemies[e]);
+		}
+
 		// Unstick safety check: if currently inside any obstacle, push out immediately
 		if (checkObstacleCollision(this.x, this.y, this.w, this.h, false)) {
 			var escapes = [
@@ -1441,10 +1457,10 @@
 				break;
 			}
 
-			// Check collision with other tanks
+			// Check collision with other tanks (allows moving away freely if touching)
 			var collidesTank = false;
 			for (var i = 0; i < enemies.length; i++) {
-				if (checkRectOverlap(nextX, nextY, this.w, this.h, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h)) {
+				if (isBlockedByTank(this.x, this.y, nextX, nextY, this.w, this.h, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h)) {
 					collidesTank = true;
 					break;
 				}
@@ -1525,15 +1541,17 @@
 		} else if (checkObstacleCollision(newX, newY, this.w, this.h, false)) {
 			this.chooseDirection();
 		} else {
-			// Check collision with other enemies and player
+			// Check collision with player and other enemies
 			var collides = false;
-			if (player && checkRectOverlap(newX, newY, this.w, this.h, player.x, player.y, player.w, player.h)) {
+			if (player && isBlockedByTank(this.x, this.y, newX, newY, this.w, this.h, player.x, player.y, player.w, player.h)) {
 				collides = true;
 			}
-			for (var i = 0; i < enemies.length; i++) {
-				if (enemies[i] !== this && checkRectOverlap(newX, newY, this.w, this.h, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h)) {
-					collides = true;
-					break;
+			if (!collides) {
+				for (var i = 0; i < enemies.length; i++) {
+					if (enemies[i] !== this && isBlockedByTank(this.x, this.y, newX, newY, this.w, this.h, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h)) {
+						collides = true;
+						break;
+					}
 				}
 			}
 
@@ -1840,6 +1858,51 @@
 	// Collision Utilities
 	function checkRectOverlap(x1, y1, w1, h1, x2, y2, w2, h2) {
 		return !(x1 + w1 <= x2 || x1 >= x2 + w2 || y1 + h1 <= y2 || y1 >= y2 + h2);
+	}
+
+	function separateTanks(t1, t2) {
+		var ox = Math.min(t1.x + t1.w, t2.x + t2.w) - Math.max(t1.x, t2.x);
+		var oy = Math.min(t1.y + t1.h, t2.y + t2.h) - Math.max(t1.y, t2.y);
+		if (ox > 0 && oy > 0) {
+			if (ox < oy) {
+				var push = ox;
+				if (t1.x < t2.x) {
+					t1.x = Math.max(0, t1.x - push);
+				} else {
+					t1.x = Math.min(CANVAS_SIZE - t1.w, t1.x + push);
+				}
+			} else {
+				var push = oy;
+				if (t1.y < t2.y) {
+					t1.y = Math.max(0, t1.y - push);
+				} else {
+					t1.y = Math.min(CANVAS_SIZE - t1.h, t1.y + push);
+				}
+			}
+		}
+	}
+
+	function isBlockedByTank(curX, curY, nextX, nextY, w, h, tankX, tankY, tankW, tankH) {
+		if (!checkRectOverlap(nextX, nextY, w, h, tankX, tankY, tankW, tankH)) {
+			return false;
+		}
+
+		var curOverlapX = Math.max(0, Math.min(curX + w, tankX + tankW) - Math.max(curX, tankX));
+		var curOverlapY = Math.max(0, Math.min(curY + h, tankY + tankH) - Math.max(curY, tankY));
+
+		if (curOverlapX <= 0 || curOverlapY <= 0) {
+			return true;
+		}
+
+		var nextOverlapX = Math.max(0, Math.min(nextX + w, tankX + tankW) - Math.max(nextX, tankX));
+		var nextOverlapY = Math.max(0, Math.min(nextY + h, tankY + tankH) - Math.max(nextY, tankY));
+
+		// If moving reduces overlap (moving away / separating), allow it!
+		if ((nextOverlapX * nextOverlapY) < (curOverlapX * curOverlapY)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	function checkObstacleCollision(x, y, w, h, isBullet) {
