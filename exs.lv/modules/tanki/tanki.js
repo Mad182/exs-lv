@@ -188,9 +188,9 @@
 			"..##..##..##..##..##..##..",
 			"..##..##..........##..##..",
 			"..##..##..........##..##..",
-			"..##..##...###....##..##..",
-			"...........#B#............",
-			"...........#B#............",
+			"..##..##...####...##..##..",
+			"...........#BB#...........",
+			"...........#BB#...........",
 			".........................."
 		],
 		// Stage 2
@@ -217,9 +217,9 @@
 			"..##..##..##..##..##..##..",
 			"..##..##..........##..##..",
 			"..##..##..........##..##..",
-			"..##..##...###....##..##..",
-			"...........#B#............",
-			"...........#B#............",
+			"..##..##...####...##..##..",
+			"...........#BB#...........",
+			"...........#BB#...........",
 			".........................."
 		],
 		// Stage 3
@@ -246,9 +246,9 @@
 			"..##..##..##..##..##..##..",
 			"..##..##..==..==..##..##..",
 			"..##..##..==..==..##..##..",
-			"...........###............",
-			"...........#B#............",
-			"...........#B#............",
+			"...........####...........",
+			"...........#BB#...........",
+			"...........#BB#...........",
 			".........................."
 		],
 		// Stage 4
@@ -275,9 +275,9 @@
 			"..==..==..........==..==..",
 			"..##..##..........##..##..",
 			"..##..##..........##..##..",
-			"...........###............",
-			"...........#B#............",
-			"...........#B#............",
+			"...........####...........",
+			"...........#BB#...........",
+			"...........#BB#...........",
 			".........................."
 		],
 		// Stage 5
@@ -304,9 +304,9 @@
 			"..##..##..##..##..##..##..",
 			"..==..==..........==..==..",
 			"..==..==..........==..==..",
-			"...........###............",
-			"...........#B#............",
-			"...........#B#............",
+			"...........####...........",
+			"...........#BB#...........",
+			"...........#BB#...........",
 			".........................."
 		]
 	];
@@ -385,14 +385,22 @@
 		var coords = [
 			{ x: 11, y: 22 }, { x: 12, y: 22 }, { x: 13, y: 22 }, { x: 14, y: 22 },
 			{ x: 11, y: 23 },                                     { x: 14, y: 23 },
-			{ x: 11, y: 24 },                                     { x: 14, y: 24 },
-			{ x: 11, y: 25 },                                     { x: 14, y: 25 }
+			{ x: 11, y: 24 },                                     { x: 14, y: 24 }
 		];
 		coords.forEach(function (c) {
 			if (mapGrid[c.y] && !baseDestroyed) {
 				mapGrid[c.y][c.x] = tileType;
 			}
 		});
+	}
+
+	function destroyBase() {
+		baseDestroyed = true;
+		for (var by = 23; by <= 24; by++) {
+			for (var bx = 12; bx <= 13; bx++) {
+				if (mapGrid[by]) mapGrid[by][bx] = TILE.BASE_DEAD;
+			}
+		}
 	}
 
 	// Player Tank Constructor
@@ -719,10 +727,9 @@
 				return;
 			} else if (t === TILE.BASE) {
 				// Destroy EXS Base!
-				mapGrid[tileY][tileX] = TILE.BASE_DEAD;
-				baseDestroyed = true;
+				destroyBase();
 				this.alive = false;
-				createExplosion(12 * TILE_SIZE + 8, 24 * TILE_SIZE + 8, true);
+				createExplosion(12 * TILE_SIZE + 16, 23 * TILE_SIZE + 16, true);
 				SoundEngine.bigExplosion();
 				gameOver('Ienaidnieks iznīcināja EXS zelta bāzi!');
 				return;
@@ -806,12 +813,12 @@
 
 	// Powerup Constructor
 	function Powerup(x, y, type) {
-		this.x = x;
-		this.y = y;
+		this.w = 28;
+		this.h = 28;
+		this.x = Math.max(16, Math.min(416 - 16 - this.w, x));
+		this.y = Math.max(16, Math.min(416 - 16 - this.h, y));
 		this.type = type;
-		this.timer = 600; // 10 seconds before blinking and disappearing
-		this.w = 24;
-		this.h = 24;
+		this.timer = 720; // 12 seconds before expiring
 	}
 
 	function spawnPowerup(x, y) {
@@ -1095,31 +1102,12 @@
 					ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
 					ctx.fillStyle = '#ffffff';
 					ctx.fillRect(px + 4, py + 4, 4, 4);
-				} else if (t === TILE.BASE) {
-					// EXS Golden Eagle Base
-					ctx.fillStyle = '#f5b300';
-					ctx.fillRect(px, py, TILE_SIZE * 2, TILE_SIZE * 2);
-					ctx.fillStyle = '#b28900';
-					ctx.fillRect(px + 4, py + 4, TILE_SIZE * 2 - 8, TILE_SIZE * 2 - 8);
-
-					// "EXS" Logo letters
-					ctx.fillStyle = '#fff';
-					ctx.font = 'bold 11px sans-serif';
-					ctx.textAlign = 'center';
-					ctx.textBaseline = 'middle';
-					ctx.fillText('EXS', px + TILE_SIZE, py + TILE_SIZE);
-				} else if (t === TILE.BASE_DEAD) {
-					// Ruined Base / Skull
-					ctx.fillStyle = '#37474f';
-					ctx.fillRect(px, py, TILE_SIZE * 2, TILE_SIZE * 2);
-					ctx.fillStyle = '#e53935';
-					ctx.font = 'bold 16px sans-serif';
-					ctx.textAlign = 'center';
-					ctx.textBaseline = 'middle';
-					ctx.fillText('☠', px + TILE_SIZE, py + TILE_SIZE);
 				}
 			}
 		}
+
+		// Draw EXS Base (single, perfectly aligned 32x32 entity)
+		drawBase();
 
 		// 3. Draw Powerups
 		for (var pu = 0; pu < powerups.length; pu++) {
@@ -1252,28 +1240,237 @@
 		}
 	}
 
-	// Powerup Drawing
+	// Draw Base (Single 32x32 Composite Entity at columns 12..13, rows 23..24)
+	function drawBase() {
+		var bx = 12 * TILE_SIZE;
+		var by = 23 * TILE_SIZE;
+		var bw = TILE_SIZE * 2; // 32px
+		var bh = TILE_SIZE * 2; // 32px
+
+		if (!baseDestroyed) {
+			// Alive Golden EXS Base
+			// Outer beveled frame
+			ctx.fillStyle = '#8c6b00';
+			ctx.fillRect(bx, by, bw, bh);
+
+			ctx.fillStyle = '#f5b300';
+			ctx.fillRect(bx + 1, by + 1, bw - 2, bh - 2);
+
+			ctx.fillStyle = '#d49600';
+			ctx.fillRect(bx + 3, by + 3, bw - 6, bh - 6);
+
+			// Inner Shield / Crest Plate
+			ctx.fillStyle = '#0f141c';
+			ctx.fillRect(bx + 4, by + 4, bw - 8, bh - 8);
+
+			// Eagle Wings / Golden Crest
+			ctx.fillStyle = '#ffd54f';
+			ctx.beginPath();
+			ctx.moveTo(bx + 6, by + 7);
+			ctx.lineTo(bx + bw / 2, by + 12);
+			ctx.lineTo(bx + bw - 6, by + 7);
+			ctx.lineTo(bx + bw - 8, by + 13);
+			ctx.lineTo(bx + bw / 2, by + 15);
+			ctx.lineTo(bx + 8, by + 13);
+			ctx.closePath();
+			ctx.fill();
+
+			// "EXS" Text in crisp monospace font
+			ctx.fillStyle = '#ffffff';
+			ctx.font = 'bold 9px monospace';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.fillText('EXS', bx + bw / 2, by + 21);
+
+			// Star at top
+			drawStar(bx + bw / 2, by + 8, 5, 3, 1.5, '#ffffff', null);
+		} else {
+			// Ruined / Destroyed Base (Skull on Rubble)
+			ctx.fillStyle = '#1c2024';
+			ctx.fillRect(bx, by, bw, bh);
+
+			// Scorched debris
+			ctx.fillStyle = '#37474f';
+			ctx.fillRect(bx + 2, by + 2, bw - 4, bh - 4);
+			ctx.fillStyle = '#263238';
+			ctx.fillRect(bx + 4, by + 8, 10, 8);
+			ctx.fillRect(bx + 16, by + 14, 12, 6);
+
+			// Red/orange glowing embers
+			ctx.fillStyle = '#ff5722';
+			ctx.fillRect(bx + 6, by + 22, 3, 3);
+			ctx.fillRect(bx + 22, by + 10, 2, 2);
+
+			// Skull icon
+			ctx.fillStyle = '#e53935';
+			ctx.font = 'bold 16px sans-serif';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.fillText('☠', bx + bw / 2, by + bh / 2);
+		}
+	}
+
+	// Star Helper Function
+	function drawStar(cx, cy, spikes, outerRadius, innerRadius, fillCol, strokeCol) {
+		var rot = (Math.PI / 2) * 3;
+		var step = Math.PI / spikes;
+
+		ctx.beginPath();
+		ctx.moveTo(cx, cy - outerRadius);
+		for (var i = 0; i < spikes; i++) {
+			var x = cx + Math.cos(rot) * outerRadius;
+			var y = cy + Math.sin(rot) * outerRadius;
+			ctx.lineTo(x, y);
+			rot += step;
+
+			x = cx + Math.cos(rot) * innerRadius;
+			y = cy + Math.sin(rot) * innerRadius;
+			ctx.lineTo(x, y);
+			rot += step;
+		}
+		ctx.lineTo(cx, cy - outerRadius);
+		ctx.closePath();
+		ctx.fillStyle = fillCol;
+		ctx.fill();
+		if (strokeCol) {
+			ctx.strokeStyle = strokeCol;
+			ctx.lineWidth = 1;
+			ctx.stroke();
+		}
+	}
+
+	// Powerup Drawing (Authentic Canvas Vector Graphics)
 	function drawPowerup(pow) {
-		// Blinking when about to disappear
-		if (pow.timer < 180 && Math.floor(pow.timer / 15) % 2 === 0) return;
+		// Blink on/off during last 3 seconds (timer < 180)
+		if (pow.timer < 180 && Math.floor(pow.timer / 12) % 2 === 0) return;
 
-		ctx.fillStyle = '#000';
-		ctx.fillRect(pow.x, pow.y, pow.w, pow.h);
-		ctx.strokeStyle = '#fff';
-		ctx.lineWidth = 1;
-		ctx.strokeRect(pow.x, pow.y, pow.w, pow.h);
+		var px = pow.x;
+		var py = pow.y;
+		var pw = pow.w || 28;
+		var ph = pow.h || 28;
+		var cx = px + pw / 2;
+		var cy = py + ph / 2;
 
-		var icon = '⭐';
-		if (pow.type === POWERUP_TYPE.BOMB) icon = '💣';
-		else if (pow.type === POWERUP_TYPE.CLOCK) icon = '⏰';
-		else if (pow.type === POWERUP_TYPE.HELMET) icon = '🛡️';
-		else if (pow.type === POWERUP_TYPE.SHOVEL) icon = '⛏️';
-		else if (pow.type === POWERUP_TYPE.TANK) icon = '🎖️';
+		// Arcade badge background: dark box with animated retro border
+		var borderBlink = Math.floor(Date.now() / 200) % 2 === 0;
+		ctx.fillStyle = '#10141d';
+		ctx.fillRect(px, py, pw, ph);
 
-		ctx.font = '14px sans-serif';
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
-		ctx.fillText(icon, pow.x + pow.w / 2, pow.y + pow.h / 2);
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = borderBlink ? '#f5b300' : '#ffffff';
+		ctx.strokeRect(px + 1, py + 1, pw - 2, ph - 2);
+
+		ctx.save();
+
+		if (pow.type === POWERUP_TYPE.STAR) {
+			// Star: Golden 5-point star with bright core
+			drawStar(cx, cy, 5, 9, 4, '#ffd54f', '#ff8f00');
+		} else if (pow.type === POWERUP_TYPE.BOMB) {
+			// Bomb: Spherical bomb with fuse and spark
+			ctx.fillStyle = '#212121';
+			ctx.beginPath();
+			ctx.arc(cx, cy + 2, 7, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.strokeStyle = '#eeeeee';
+			ctx.lineWidth = 1;
+			ctx.stroke();
+			// Specular highlight
+			ctx.fillStyle = '#ffffff';
+			ctx.fillRect(cx - 3, cy - 1, 2, 2);
+			// Fuse cap
+			ctx.fillStyle = '#78909c';
+			ctx.fillRect(cx - 2, cy - 7, 4, 3);
+			// Burning fuse spark
+			ctx.fillStyle = '#ff5722';
+			ctx.beginPath();
+			ctx.arc(cx + 2, cy - 8, 2.5, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.fillStyle = '#ffeb3b';
+			ctx.fillRect(cx + 2, cy - 8, 2, 2);
+		} else if (pow.type === POWERUP_TYPE.CLOCK) {
+			// Clock: White circle with clock hands and top bells
+			ctx.fillStyle = '#eceff1';
+			ctx.beginPath();
+			ctx.arc(cx, cy + 1, 8, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.strokeStyle = '#0288d1';
+			ctx.lineWidth = 1.5;
+			ctx.stroke();
+			// Top bell pegs
+			ctx.fillStyle = '#0288d1';
+			ctx.fillRect(cx - 6, cy - 8, 2, 2);
+			ctx.fillRect(cx + 4, cy - 8, 2, 2);
+			// Clock hands (pointing to 10:10)
+			ctx.strokeStyle = '#c62828';
+			ctx.lineWidth = 1.5;
+			ctx.beginPath();
+			ctx.moveTo(cx, cy + 1);
+			ctx.lineTo(cx, cy - 4);
+			ctx.moveTo(cx, cy + 1);
+			ctx.lineTo(cx + 4, cy + 1);
+			ctx.stroke();
+		} else if (pow.type === POWERUP_TYPE.HELMET) {
+			// Helmet / Shield: Blue glowing knight shield
+			ctx.fillStyle = '#1e88e5';
+			ctx.beginPath();
+			ctx.moveTo(cx, cy - 8);
+			ctx.lineTo(cx + 8, cy - 4);
+			ctx.lineTo(cx + 6, cy + 5);
+			ctx.lineTo(cx, cy + 9);
+			ctx.lineTo(cx - 6, cy + 5);
+			ctx.lineTo(cx - 8, cy - 4);
+			ctx.closePath();
+			ctx.fill();
+			ctx.strokeStyle = '#e3f2fd';
+			ctx.lineWidth = 1.5;
+			ctx.stroke();
+			// Inner emblem
+			ctx.fillStyle = '#ffffff';
+			ctx.fillRect(cx - 1, cy - 4, 2, 7);
+			ctx.fillRect(cx - 3, cy - 2, 6, 2);
+		} else if (pow.type === POWERUP_TYPE.SHOVEL) {
+			// Shovel: Metallic spade head with wooden shaft
+			ctx.strokeStyle = '#8d6e63';
+			ctx.lineWidth = 2.5;
+			ctx.beginPath();
+			ctx.moveTo(cx + 6, cy - 7);
+			ctx.lineTo(cx - 2, cy + 2);
+			ctx.stroke();
+			// Handle grip
+			ctx.fillStyle = '#5d4037';
+			ctx.fillRect(cx + 4, cy - 8, 4, 3);
+			// Spade blade
+			ctx.fillStyle = '#cfd8dc';
+			ctx.beginPath();
+			ctx.moveTo(cx - 1, cy);
+			ctx.lineTo(cx - 7, cy + 6);
+			ctx.lineTo(cx - 4, cy + 9);
+			ctx.lineTo(cx + 2, cy + 3);
+			ctx.closePath();
+			ctx.fill();
+			ctx.strokeStyle = '#90a4ae';
+			ctx.lineWidth = 1;
+			ctx.stroke();
+		} else if (pow.type === POWERUP_TYPE.TANK) {
+			// Extra Tank (1UP): Green mini tank with turret
+			ctx.fillStyle = '#43a047';
+			// Tracks
+			ctx.fillRect(cx - 8, cy - 6, 4, 12);
+			ctx.fillRect(cx + 4, cy - 6, 4, 12);
+			// Body
+			ctx.fillStyle = '#66bb6a';
+			ctx.fillRect(cx - 4, cy - 4, 8, 9);
+			// Turret
+			ctx.fillStyle = '#2e7d32';
+			ctx.beginPath();
+			ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+			ctx.fill();
+			// Cannon barrel pointing up
+			ctx.fillStyle = '#1b5e20';
+			ctx.fillRect(cx - 1, cy - 8, 2, 5);
+		}
+
+		ctx.restore();
 	}
 
 	// Stage Cleared Event
