@@ -36,7 +36,9 @@ $game_cats = [
     'vardes' => ['id' => 2525, 'title' => 'Vardes', 'module' => 'vardes', 'content' => 'Šķērso šoseju un upi, lai uzstādītu jaunu rekordu!'],
     'runner' => ['id' => 2528, 'title' => 'Runner', 'module' => 'runner', 'content' => 'Spēlē Runner tiešsaistē EXS.LV! Bēdz no lietotāju avatāru šķēršļiem un lidojošiem droīdiem, vāc zelta zvaigznes, cīnies par vietu topā un pārspēj rekordus.'],
     'tornis' => ['id' => 2581, 'title' => 'Tornis', 'module' => 'tornis', 'content' => 'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!'],
-    'arkanoid' => ['id' => 2583, 'title' => 'Arkanoid', 'module' => 'arkanoid', 'content' => 'Klasiskā Arkanoid arkādes spēle ar līmeņiem un kapsulu bonusiem']
+    'arkanoid' => ['id' => 2583, 'title' => 'Arkanoid', 'module' => 'arkanoid', 'content' => 'Klasiskā Arkanoid arkādes spēle ar līmeņiem un kapsulu bonusiem'],
+    'rezonanse' => ['id' => 2584, 'title' => 'Rezonanse', 'module' => 'rezonanse', 'content' => 'Stratēģiska krāsu ķēdes reakcijas spēle 2–4 spēlētājiem.'],
+    'tanki' => ['id' => 2585, 'title' => 'Tanki 1990', 'module' => 'tanki', 'content' => 'Klasiskā Tanki 1990 (Battle City) tanku kaujas spēle ar EXS bāzes aizsardzību, uzlabojumiem un tiešsaistes topos.']
 ];
 
 foreach ($game_cats as $slug => $c) {

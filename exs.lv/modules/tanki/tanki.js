@@ -397,10 +397,10 @@
 
 	// Player Tank Constructor
 	function PlayerTank() {
-		this.w = 28;
-		this.h = 28;
-		this.x = 9 * TILE_SIZE;
-		this.y = 24 * TILE_SIZE - 4;
+		this.w = 26;
+		this.h = 26;
+		this.x = 9 * TILE_SIZE + 3;
+		this.y = 24 * TILE_SIZE + 3;
 		this.dir = DIR.UP;
 		this.tier = 1;         // 1=Standard, 2=Fast Shot, 3=Twin Shot, 4=Heavy Buster
 		this.speed = 2.0;
@@ -431,19 +431,23 @@
 		this.isMoving = (wantedDir !== null);
 
 		if (wantedDir !== null) {
-			// Turn snap assist: align with sub-tile grid when turning 90 degrees
+			// Turn snap assist: align with nearest open lane on perpendicular axis
 			if (wantedDir !== this.dir) {
 				if (wantedDir === DIR.UP || wantedDir === DIR.DOWN) {
-					var snapX = Math.round(this.x / (TILE_SIZE / 2)) * (TILE_SIZE / 2);
-					if (Math.abs(this.x - snapX) <= 6) this.x = snapX;
+					var targetX = Math.round((this.x - 3) / 16) * 16 + 3;
+					if (Math.abs(this.x - targetX) <= 8 && !checkObstacleCollision(targetX, this.y, this.w, this.h, false)) {
+						this.x = targetX;
+					}
 				} else {
-					var snapY = Math.round(this.y / (TILE_SIZE / 2)) * (TILE_SIZE / 2);
-					if (Math.abs(this.y - snapY) <= 6) this.y = snapY;
+					var targetY = Math.round((this.y - 3) / 16) * 16 + 3;
+					if (Math.abs(this.y - targetY) <= 8 && !checkObstacleCollision(this.x, targetY, this.w, this.h, false)) {
+						this.y = targetY;
+					}
 				}
 				this.dir = wantedDir;
 			}
 
-			// Move with collision checking
+			// Move with sub-step collision check
 			this.move(dx, dy);
 			this.trackFrame = (this.trackFrame + 1) % 8;
 		}
@@ -482,29 +486,54 @@
 	};
 
 	PlayerTank.prototype.move = function (dx, dy) {
-		var newX = this.x + dx;
-		var newY = this.y + dy;
+		// Unstick safety check: if currently inside any obstacle, push out immediately
+		if (checkObstacleCollision(this.x, this.y, this.w, this.h, false)) {
+			var escapes = [
+				{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 },
+				{ x: 2, y: 0 }, { x: -2, y: 0 }, { x: 0, y: 2 }, { x: 0, y: -2 },
+				{ x: 4, y: 0 }, { x: -4, y: 0 }, { x: 0, y: 4 }, { x: 0, y: -4 }
+			];
+			for (var ev = 0; ev < escapes.length; ev++) {
+				var ex = this.x + escapes[ev].x;
+				var ey = this.y + escapes[ev].y;
+				if (!checkObstacleCollision(ex, ey, this.w, this.h, false)) {
+					this.x = ex;
+					this.y = ey;
+					break;
+				}
+			}
+		}
 
-		// Canvas bounds
-		if (newX < 0) newX = 0;
-		if (newX + this.w > CANVAS_SIZE) newX = CANVAS_SIZE - this.w;
-		if (newY < 0) newY = 0;
-		if (newY + this.h > CANVAS_SIZE) newY = CANVAS_SIZE - this.h;
+		// Move in micro-steps so player reaches the exact boundary of the wall without sticking
+		var stepX = dx !== 0 ? Math.sign(dx) * 0.5 : 0;
+		var stepY = dy !== 0 ? Math.sign(dy) * 0.5 : 0;
+		var remainingDist = Math.max(Math.abs(dx), Math.abs(dy));
 
-		// Check obstacle collision
-		if (!checkObstacleCollision(newX, newY, this.w, this.h, false)) {
+		while (remainingDist >= 0.4) {
+			var nextX = this.x + stepX;
+			var nextY = this.y + stepY;
+
+			if (nextX < 0 || nextX + this.w > CANVAS_SIZE || nextY < 0 || nextY + this.h > CANVAS_SIZE) {
+				break;
+			}
+
+			if (checkObstacleCollision(nextX, nextY, this.w, this.h, false)) {
+				break;
+			}
+
 			// Check collision with other tanks
 			var collidesTank = false;
 			for (var i = 0; i < enemies.length; i++) {
-				if (checkRectOverlap(newX, newY, this.w, this.h, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h)) {
+				if (checkRectOverlap(nextX, nextY, this.w, this.h, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h)) {
 					collidesTank = true;
 					break;
 				}
 			}
-			if (!collidesTank) {
-				this.x = newX;
-				this.y = newY;
-			}
+			if (collidesTank) break;
+
+			this.x = nextX;
+			this.y = nextY;
+			remainingDist -= 0.5;
 		}
 	};
 
@@ -512,8 +541,8 @@
 	function EnemyTank(type, isFlashing) {
 		this.type = type; // 1=Basic, 2=Fast, 3=Power, 4=Heavy Armor
 		this.isFlashing = !!isFlashing;
-		this.w = 28;
-		this.h = 28;
+		this.w = 26;
+		this.h = 26;
 		this.dir = DIR.DOWN;
 		this.changeDirTimer = 30 + Math.floor(Math.random() * 60);
 		this.shootTimer = 40 + Math.floor(Math.random() * 60);
@@ -521,9 +550,9 @@
 
 		// Spawn Positions (3 classic spawn points)
 		var spawnPoints = [
-			{ x: 0, y: 0 },
-			{ x: 12 * TILE_SIZE, y: 0 },
-			{ x: 24 * TILE_SIZE - 12, y: 0 }
+			{ x: 3, y: 3 },
+			{ x: 12 * TILE_SIZE + 3, y: 3 },
+			{ x: 24 * TILE_SIZE + 3, y: 3 }
 		];
 		var sp = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
 		this.x = sp.x;
@@ -890,9 +919,9 @@
 
 	function checkObstacleCollision(x, y, w, h, isBullet) {
 		var leftTile = Math.floor(x / TILE_SIZE);
-		var rightTile = Math.floor((x + w - 1) / TILE_SIZE);
+		var rightTile = Math.floor((x + w - 0.05) / TILE_SIZE);
 		var topTile = Math.floor(y / TILE_SIZE);
-		var bottomTile = Math.floor((y + h - 1) / TILE_SIZE);
+		var bottomTile = Math.floor((y + h - 0.05) / TILE_SIZE);
 
 		for (var ty = topTile; ty <= bottomTile; ty++) {
 			for (var tx = leftTile; tx <= rightTile; tx++) {
@@ -1291,8 +1320,8 @@
 
 		loadStageMap(stage);
 		if (player) {
-			player.x = 9 * TILE_SIZE;
-			player.y = 24 * TILE_SIZE - 4;
+			player.x = 9 * TILE_SIZE + 3;
+			player.y = 24 * TILE_SIZE + 3;
 			player.dir = DIR.UP;
 			player.shieldTimer = 180;
 		} else {

@@ -39,7 +39,8 @@ INSERT INTO `games` (`slug`, `title`, `url`, `icon`, `badge`, `badge_class`, `de
 ('runner', 'Runner', '/runner', '/bildes/icons/games/runner.png', 'Jaunums', 'label-success', 'Bēdz no šķēršļiem un citu lietotāju avatariem, vāc zvaigznes un uzstādi jaunu rekordu!', 'runner', 0, '', 0, 0, 'active'),
 ('tornis', 'Tornis', '/tornis', '/bildes/icons/games/tornis.png', 'Jaunums', 'label-success', 'Būvē augstāko debesskrāpi! Liec 3D blokus vienu virs otra, veido combo sērijas un uzstādi rekordu!', 'tornis', 0, '', 0, 0, 'active'),
 ('arkanoid', 'Arkanoid', '/arkanoid', '/bildes/icons/games/arkanoid.png', 'Jaunums', 'label-success', 'Klasiskā arkādes spēle! Vadi Vaus, atsit bumbu, sašķaidi blokus un ķer leģendāros kapsulu bonusus.', 'arkanoid', 0, '', 0, 0, 'active'),
-('rezonanse', 'Rezonanse', '/rezonanse', '/bildes/icons/games/rezonanse.png', 'Jaunums', 'label-success', 'Stratēģiska krāsu ķēdes reakcijas spēle 2–4 spēlētājiem. Izvieto orbītas, radi sprādzienu kaskādes un pārņem laukumu.', 'rezonanse', 0, '', 0, 0, 'active')
+('rezonanse', 'Rezonanse', '/rezonanse', '/bildes/icons/games/rezonanse.png', 'Jaunums', 'label-success', 'Stratēģiska krāsu ķēdes reakcijas spēle 2–4 spēlētājiem. Izvieto orbītas, radi sprādzienu kaskādes un pārņem laukumu.', 'rezonanse', 0, '', 0, 0, 'active'),
+('tanki', 'Tanki 1990', '/tanki', '/bildes/icons/games/tanki.png', 'Jaunums', 'label-success', 'Klasiskā Battle City tanku spēle. Aizsargā EXS bāzi, iznīcini ienaidnieku tanku viļņus, vāc bonusus un uzstādi rekordu!', 'tanki', 0, '', 0, 0, 'active')
 ON DUPLICATE KEY UPDATE
   `title` = VALUES(`title`),
   `url` = VALUES(`url`),

@@ -960,7 +960,8 @@ INSERT INTO `cat` VALUES
 (2580,'ut99',1,'Unreal Tournament 99',1,'ut99',0,0,0,0,0,0,0,'Spēlē leģendāro Unreal Tournament 99 tiešsaistē tieši savā pārlūkā! Izbaudi kulta 3D šūteri bez instalēšanas, cīnies ar botiem un uzstādi labāko fragu skaitu.','main','',0,0,0,0,'','','',2580,1,'active',0,0),
 (2581,'tornis',1,'Tornis',1,'tornis',0,0,0,0,0,0,2516,'Spēlē Tornis (Tower Stacker) tiešsaistē bez maksas! Būvē debesskrāpi no 3D blokiem, trenē precizitāti un ritma izjūtu, veido combo sērijas un sasniedz kosmosu.','main','',0,0,0,0,'','','',2581,1,'active',0,0),
 (2583,'arkanoid',1,'Arkanoid',1,'arkanoid',0,0,0,0,0,0,2516,'Spēlē klasisko Arkanoid arkādes spēli tiešsaistē par brīvu! Atsit bumbu ar Vaus kuģi, sašķaidi krāsainos blokus, ķer kapsulu bonusus un iekaro spēlētāju topu.','main','',0,0,0,0,'','','',0,1,'active',0,0),
-(2584,'rezonanse',1,'Rezonanse',1,'rezonanse',0,0,0,0,0,0,2516,'Spēlē Rezonanse tiešsaistē bez maksas! Hipnotiska ritma un izdzīvošanas arkāde ar reāllaika sintezatora mūziku. Ķer bītu, veido kaskādes un uzstādi rekordu.','main','',0,0,0,0,'','','',2584,1,'active',0,0);
+(2584,'rezonanse',1,'Rezonanse',1,'rezonanse',0,0,0,0,0,0,2516,'Spēlē Rezonanse tiešsaistē bez maksas! Hipnotiska ritma un izdzīvošanas arkāde ar reāllaika sintezatora mūziku. Ķer bītu, veido kaskādes un uzstādi rekordu.','main','',0,0,0,0,'','','',2584,1,'active',0,0),
+(2585,'tanki',1,'Tanki 1990',1,'tanki',0,0,0,0,0,0,2516,'Klasiskā Tanki 1990 (Battle City) tanku kaujas spēle ar EXS bāzes aizsardzību, uzlabojumiem un tiešsaistes topos.','main','',0,0,0,0,'','','',2585,1,'active',0,0);
 /*!40000 ALTER TABLE `cat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
