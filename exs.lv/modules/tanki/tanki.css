@@ -214,13 +214,13 @@
 
 /* Retro Side HUD Column */
 .tanki-side-hud {
-	width: 74px;
+	width: 86px;
 	background: #686b73;
 	border-left: 2px solid #333;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 12px 8px;
+	padding: 12px 5px;
 	box-sizing: border-box;
 }
 
@@ -231,12 +231,15 @@
 }
 
 .side-hud-title {
-	font-size: 8px;
+	font-size: 6.5px;
 	font-weight: 800;
 	color: #111;
 	font-family: 'Press Start 2P', monospace;
+	letter-spacing: -0.2px;
+	white-space: nowrap;
 	margin-bottom: 8px;
 	text-align: center;
+	width: 100%;
 }
 
 .enemy-queue-grid {
