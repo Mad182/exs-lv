@@ -346,10 +346,9 @@ function rehost_article_images($article) {
 		// Atjaunojam pages ierakstu
 		$db->query("UPDATE `pages` SET `text` = ('" . sanitize($text) . "'), `intro` = ('" . sanitize($intro) . "') WHERE `id` = '" . (int)$article->id . "' LIMIT 1");
 
-		$article->text = $text;
-		$article->intro = $intro;
-
-		$auth->log('Pārnesa raksta attēlus (' . $rehosted_count . ' attēli)', 'pages', $article->id);
+		if (is_object($auth) && method_exists($auth, 'log')) {
+			$auth->log('Pārnesa raksta attēlus (' . $rehosted_count . ' attēli)', 'pages', $article->id);
+		}
 		clear_forum_cache($article->lang ?? $lang);
 
 		rehost_log("Article #{$article->id}: Successfully rehosted {$rehosted_count} image(s) and updated article.");
