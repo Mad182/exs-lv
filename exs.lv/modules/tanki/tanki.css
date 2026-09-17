@@ -18,7 +18,7 @@
 }
 
 .tanki-wrapper {
-	margin: 0 0 30px 0;
+	margin: 0 0 35px 0;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	color: #333;
 }
@@ -74,37 +74,11 @@
 	margin-bottom: 16px;
 }
 
-/* Layout */
-.tanki-game-layout {
-	display: flex;
-	gap: 20px;
-	align-items: flex-start;
-}
-
-@media (max-width: 991px) {
-	.tanki-game-layout {
-		flex-direction: column;
-	}
-}
-
+/* Large Arcade Game Stage */
 .tanki-main-stage {
-	flex: 1 1 540px;
-	min-width: 0;
-	max-width: 100%;
-}
-
-.tanki-sidebar {
-	flex: 0 0 320px;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-}
-
-@media (max-width: 991px) {
-	.tanki-sidebar {
-		flex: 1 1 auto;
-		width: 100%;
-	}
+	width: 100%;
+	max-width: 740px;
+	margin: 0 auto;
 }
 
 /* Top HUD Bar */
@@ -114,11 +88,12 @@
 	justify-content: space-between;
 	background: var(--tanki-panel);
 	border: 2px solid var(--tanki-border);
-	border-radius: 8px 8px 0 0;
-	padding: 10px 16px;
+	border-radius: 10px 10px 0 0;
+	padding: 12px 18px;
 	color: #fff;
-	gap: 12px;
+	gap: 14px;
 	flex-wrap: wrap;
+	box-sizing: border-box;
 }
 
 .hud-item {
@@ -136,7 +111,7 @@
 }
 
 .hud-value {
-	font-size: 16px;
+	font-size: 17px;
 	font-weight: 800;
 	color: #fff;
 	font-family: 'Press Start 2P', monospace, sans-serif;
@@ -149,22 +124,22 @@
 
 .hud-lives {
 	display: flex;
-	gap: 4px;
+	gap: 5px;
 	align-items: center;
 	margin-top: 4px;
 }
 
 .tank-life-icon {
 	display: inline-block;
-	width: 14px;
-	height: 14px;
+	width: 15px;
+	height: 15px;
 	background: var(--tanki-gold);
 	clip-path: polygon(30% 0, 70% 0, 70% 30%, 100% 30%, 100% 100%, 75% 100%, 75% 75%, 25% 75%, 25% 100%, 0 100%, 0 30%, 30% 30%);
 }
 
 .hud-powerup-badge {
 	display: inline-block;
-	padding: 2px 8px;
+	padding: 3px 10px;
 	border-radius: 4px;
 	font-size: 10px;
 	font-weight: 800;
@@ -188,8 +163,8 @@
 	background: #2a313d;
 	border: 1px solid var(--tanki-border);
 	color: #fff;
-	width: 34px;
-	height: 34px;
+	width: 36px;
+	height: 36px;
 	border-radius: 6px;
 	cursor: pointer;
 	display: flex;
@@ -204,15 +179,16 @@
 	border-color: var(--tanki-gold);
 }
 
-/* Viewport Row: Canvas + Side Queue */
+/* Large Arcade Viewport Row */
 .tanki-viewport-row {
 	display: flex;
 	background: #000;
 	border: 2px solid var(--tanki-border);
 	border-top: none;
-	border-radius: 0 0 8px 8px;
+	border-radius: 0 0 10px 10px;
 	overflow: hidden;
 	position: relative;
+	box-sizing: border-box;
 }
 
 .tanki-canvas-container {
@@ -227,7 +203,7 @@
 #tanki-canvas {
 	display: block;
 	width: 100%;
-	max-width: 520px;
+	max-width: 660px;
 	aspect-ratio: 1 / 1;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: -webkit-crisp-edges;
@@ -236,15 +212,15 @@
 	background: #000;
 }
 
-/* Retro Side HUD Column (Classic NES) */
+/* Retro Side HUD Column */
 .tanki-side-hud {
-	width: 64px;
+	width: 74px;
 	background: #686b73;
 	border-left: 2px solid #333;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding: 10px 6px;
+	padding: 12px 8px;
 	box-sizing: border-box;
 }
 
@@ -255,24 +231,24 @@
 }
 
 .side-hud-title {
-	font-size: 7px;
+	font-size: 8px;
 	font-weight: 800;
 	color: #111;
 	font-family: 'Press Start 2P', monospace;
-	margin-bottom: 6px;
+	margin-bottom: 8px;
 	text-align: center;
 }
 
 .enemy-queue-grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 4px;
-	width: 36px;
+	gap: 5px;
+	width: 40px;
 }
 
 .enemy-pip {
-	width: 14px;
-	height: 14px;
+	width: 15px;
+	height: 15px;
 	background: #111;
 	clip-path: polygon(30% 0, 70% 0, 70% 30%, 100% 30%, 100% 100%, 75% 100%, 75% 75%, 25% 75%, 25% 100%, 0 100%, 0 30%, 30% 30%);
 	transition: opacity 0.2s ease;
@@ -284,7 +260,7 @@
 
 .player-stats-box {
 	border-top: 2px solid #555;
-	padding-top: 10px;
+	padding-top: 12px;
 	width: 100%;
 }
 
@@ -293,14 +269,14 @@
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
-	margin-bottom: 6px;
+	margin-bottom: 8px;
 	font-family: 'Press Start 2P', monospace;
-	font-size: 10px;
+	font-size: 11px;
 	color: #000;
 }
 
 .side-stat-icon {
-	font-size: 9px;
+	font-size: 10px;
 	font-weight: 800;
 }
 
@@ -313,46 +289,46 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 20px;
+	padding: 24px;
 	z-index: 10;
 	color: #fff;
 	text-align: center;
 }
 
 .tanki-overlay-content {
-	max-width: 440px;
+	max-width: 460px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 16px;
+	gap: 18px;
 }
 
 .tanki-logo-badge {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 12px;
 }
 
 .logo-text-tanki {
 	font-family: 'Press Start 2P', monospace, sans-serif;
-	font-size: 32px;
+	font-size: 34px;
 	font-weight: 900;
 	color: #e53935;
 	letter-spacing: 2px;
-	text-shadow: 3px 3px 0 #b71c1c, 0 0 12px rgba(229, 57, 53, 0.6);
+	text-shadow: 3px 3px 0 #b71c1c, 0 0 14px rgba(229, 57, 53, 0.6);
 }
 
 .logo-text-year {
 	font-family: 'Press Start 2P', monospace, sans-serif;
-	font-size: 22px;
+	font-size: 24px;
 	font-weight: 900;
 	color: #f5b300;
 	text-shadow: 2px 2px 0 #b28900;
 }
 
 .overlay-lead {
-	font-size: 13px;
+	font-size: 14px;
 	color: #cfd8dc;
 	line-height: 1.5;
 	margin: 0;
@@ -361,23 +337,23 @@
 .start-meta-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
+	gap: 12px;
 	width: 100%;
 }
 
 .start-meta-card {
 	background: var(--tanki-panel);
 	border: 1px solid var(--tanki-border);
-	border-radius: 6px;
-	padding: 10px 8px;
+	border-radius: 8px;
+	padding: 12px 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 4px;
+	gap: 6px;
 }
 
 .start-meta-card .card-icon {
-	font-size: 20px;
+	font-size: 22px;
 }
 
 .start-meta-card strong {
@@ -386,7 +362,7 @@
 }
 
 .start-meta-card small {
-	font-size: 9px;
+	font-size: 10px;
 	color: var(--tanki-muted);
 	line-height: 1.3;
 }
@@ -399,18 +375,18 @@
 	font-size: 12px;
 	font-weight: 800;
 	border: none;
-	padding: 14px 24px;
-	border-radius: 6px;
+	padding: 15px 26px;
+	border-radius: 8px;
 	cursor: pointer;
-	box-shadow: 0 4px 12px rgba(245, 179, 0, 0.4);
+	box-shadow: 0 4px 14px rgba(245, 179, 0, 0.4);
 	transition: all 0.2s ease;
 	width: 100%;
-	max-width: 360px;
+	max-width: 380px;
 }
 
 .tanki-btn:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 6px 16px rgba(245, 179, 0, 0.6);
+	box-shadow: 0 6px 18px rgba(245, 179, 0, 0.6);
 	background: #ffc425;
 }
 
@@ -426,7 +402,7 @@
 /* Stage Cleared Tally Screen */
 .stage-title {
 	font-family: 'Press Start 2P', monospace;
-	font-size: 16px;
+	font-size: 17px;
 	color: var(--tanki-gold);
 	margin: 0;
 	text-shadow: 2px 2px 0 #000;
@@ -435,8 +411,8 @@
 .stage-tally-table {
 	background: #111;
 	border: 2px solid var(--tanki-border);
-	border-radius: 6px;
-	padding: 12px 18px;
+	border-radius: 8px;
+	padding: 14px 20px;
 	width: 100%;
 	font-family: 'Press Start 2P', monospace;
 	font-size: 11px;
@@ -446,13 +422,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 6px 0;
+	padding: 7px 0;
 	color: #ccc;
 }
 
 .tally-tank-icon {
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 	display: inline-block;
 }
 
@@ -462,18 +438,18 @@
 .tally-tank-icon.tank-armor { background: #4caf50; }
 
 .tally-count { color: #fff; font-weight: bold; }
-.tally-pts { color: var(--tanki-muted); font-size: 9px; }
+.tally-pts { color: var(--tanki-muted); font-size: 10px; }
 .tally-total { color: var(--tanki-gold); font-weight: bold; }
 
 .tally-divider {
 	border: 0;
 	border-top: 1px dashed #444;
-	margin: 8px 0;
+	margin: 10px 0;
 }
 
 .tally-row.total-row {
 	color: #fff;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .tally-row.total-row strong {
@@ -483,14 +459,14 @@
 /* Game Over Screen */
 .gameover-title {
 	font-family: 'Press Start 2P', monospace;
-	font-size: 24px;
+	font-size: 26px;
 	color: var(--tanki-red);
 	margin: 0;
-	text-shadow: 2px 2px 0 #000, 0 0 15px rgba(229, 57, 53, 0.7);
+	text-shadow: 2px 2px 0 #000, 0 0 16px rgba(229, 57, 53, 0.7);
 }
 
 .gameover-reason {
-	font-size: 13px;
+	font-size: 14px;
 	color: #bbb;
 	margin: 0;
 }
@@ -498,28 +474,28 @@
 .tanki-score-board {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 10px;
+	gap: 12px;
 	width: 100%;
 }
 
 .score-card {
 	background: #181d24;
 	border: 1px solid var(--tanki-border);
-	border-radius: 6px;
-	padding: 10px;
+	border-radius: 8px;
+	padding: 12px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
 .card-title {
-	font-size: 10px;
+	font-size: 11px;
 	color: var(--tanki-muted);
 	text-transform: uppercase;
 }
 
 .card-num {
-	font-size: 18px;
+	font-size: 19px;
 	font-family: 'Press Start 2P', monospace;
 	color: var(--tanki-gold);
 	margin-top: 4px;
@@ -529,8 +505,8 @@
 	background: linear-gradient(90deg, #ff8f00, #ffc107);
 	color: #000;
 	font-family: 'Press Start 2P', monospace;
-	font-size: 10px;
-	padding: 8px 12px;
+	font-size: 11px;
+	padding: 9px 14px;
 	border-radius: 4px;
 	font-weight: 800;
 	animation: bounce 0.6s infinite alternate;
@@ -545,10 +521,10 @@
 .tanki-touch-controls {
 	display: none;
 	margin-top: 14px;
-	padding: 12px;
+	padding: 14px;
 	background: var(--tanki-panel);
 	border: 2px solid var(--tanki-border);
-	border-radius: 8px;
+	border-radius: 10px;
 	justify-content: space-between;
 	align-items: center;
 	touch-action: manipulation;
@@ -575,20 +551,20 @@
 }
 
 .dpad-center {
-	width: 48px;
-	height: 48px;
+	width: 50px;
+	height: 50px;
 	background: #252a35;
 	border-radius: 4px;
 }
 
 .touch-btn {
-	width: 52px;
-	height: 52px;
+	width: 54px;
+	height: 54px;
 	background: #2e3644;
 	border: 2px solid #4a5568;
 	border-radius: 8px;
 	color: #fff;
-	font-size: 18px;
+	font-size: 19px;
 	font-weight: bold;
 	display: flex;
 	align-items: center;
@@ -610,14 +586,14 @@
 }
 
 .touch-fire {
-	width: 100px;
-	height: 80px;
+	width: 104px;
+	height: 84px;
 	background: #c62828;
 	border-color: #ef5350;
 	font-family: 'Press Start 2P', monospace;
 	font-size: 11px;
 	border-radius: 12px;
-	box-shadow: 0 4px 10px rgba(198, 40, 40, 0.4);
+	box-shadow: 0 4px 12px rgba(198, 40, 40, 0.4);
 }
 
 .touch-fire:active {
@@ -626,24 +602,151 @@
 	transform: scale(0.95);
 }
 
-/* Guide Section */
-.tanki-guide-container {
-	margin-top: 20px;
+/* ==========================================================================
+   Bottom Section: Stats / Leaderboards NEXT TO Instructions
+   ========================================================================== */
+.tanki-bottom-section {
+	margin-top: 26px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	align-items: start;
+}
+
+@media (max-width: 820px) {
+	.tanki-bottom-section {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Leaderboards Card with Tabs */
+.tanki-scores-card {
 	background: #fff;
 	border: 1px solid #e0e0e0;
-	border-radius: 8px;
-	padding: 16px;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 @media (prefers-color-scheme: dark) {
-	.tanki-guide-container {
+	.tanki-scores-card {
 		background: var(--tanki-panel);
+		border-color: var(--tanki-border);
+		box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+	}
+}
+
+.tanki-tab-buttons {
+	display: flex;
+	background: #f1f3f5;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 6px 8px 0 8px;
+	gap: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+	.tanki-tab-buttons {
+		background: #252b36;
 		border-color: var(--tanki-border);
 	}
 }
 
-.tanki-guide-container h4 {
-	margin: 0 0 12px 0;
+.tanki-tab-btn {
+	flex: 1;
+	background: transparent;
+	border: none;
+	border-radius: 6px 6px 0 0;
+	padding: 10px 12px;
+	font-size: 13px;
+	font-weight: 700;
+	color: #666;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+	.tanki-tab-btn {
+		color: #99a2b0;
+	}
+}
+
+.tanki-tab-btn:hover {
+	color: #000;
+	background: rgba(0,0,0,0.03);
+}
+
+@media (prefers-color-scheme: dark) {
+	.tanki-tab-btn:hover {
+		color: #fff;
+		background: rgba(255,255,255,0.05);
+	}
+}
+
+.tanki-tab-btn.active {
+	background: #fff;
+	color: #d32f2f;
+	border-top: 2px solid #d32f2f;
+}
+
+@media (prefers-color-scheme: dark) {
+	.tanki-tab-btn.active {
+		background: var(--tanki-panel);
+		color: var(--tanki-gold);
+		border-top: 2px solid var(--tanki-gold);
+	}
+}
+
+.tanki-tab-content {
+	display: none;
+	padding: 4px 0;
+}
+
+.tanki-tab-content.active {
+	display: block;
+}
+
+.tanki-leaderboard-table {
+	margin: 0;
+	font-size: 13px;
+}
+
+.tanki-leaderboard-table th {
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	color: #888;
+	padding: 8px 12px;
+}
+
+.tanki-leaderboard-table td {
+	padding: 8px 12px;
+}
+
+.empty-leaderboard {
+	padding: 24px !important;
+	color: #888;
+	font-style: italic;
+}
+
+/* Instructions & Arsenal Card */
+.tanki-guide-card {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 10px;
+	padding: 18px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+	.tanki-guide-card {
+		background: var(--tanki-panel);
+		border-color: var(--tanki-border);
+		box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+	}
+}
+
+.tanki-guide-card h4 {
+	margin: 0 0 14px 0;
 	font-size: 15px;
 	font-weight: 700;
 	display: flex;
@@ -653,30 +756,43 @@
 
 .guide-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	grid-template-columns: 1fr;
 	gap: 12px;
 }
 
 .guide-item {
 	display: flex;
 	align-items: flex-start;
-	gap: 10px;
+	gap: 12px;
+	padding-bottom: 8px;
+	border-bottom: 1px dashed #eee;
+}
+
+@media (prefers-color-scheme: dark) {
+	.guide-item {
+		border-bottom-color: #2c3240;
+	}
+}
+
+.guide-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
 }
 
 .item-badge {
-	font-size: 20px;
+	font-size: 22px;
 	flex-shrink: 0;
 }
 
 .guide-item strong {
 	display: block;
-	font-size: 12px;
+	font-size: 13px;
 	margin-bottom: 2px;
 }
 
 .guide-item p {
 	margin: 0;
-	font-size: 11px;
+	font-size: 12px;
 	color: #666;
 	line-height: 1.4;
 }
@@ -685,59 +801,4 @@
 	.guide-item p {
 		color: #aaa;
 	}
-}
-
-/* Leaderboards */
-.tanki-leaderboard-box {
-	background: #fff;
-	border: 1px solid #e0e0e0;
-	border-radius: 8px;
-	overflow: hidden;
-}
-
-@media (prefers-color-scheme: dark) {
-	.tanki-leaderboard-box {
-		background: var(--tanki-panel);
-		border-color: var(--tanki-border);
-	}
-}
-
-.leaderboard-header {
-	background: #f8f9fa;
-	border-bottom: 1px solid #e0e0e0;
-	padding: 10px 14px;
-}
-
-@media (prefers-color-scheme: dark) {
-	.leaderboard-header {
-		background: #252b36;
-		border-color: var(--tanki-border);
-	}
-}
-
-.leaderboard-header h3 {
-	margin: 0;
-	font-size: 14px;
-	font-weight: 700;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.tanki-leaderboard-table {
-	margin: 0;
-	font-size: 12px;
-}
-
-.tanki-leaderboard-table th {
-	font-size: 10px;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-	color: #888;
-}
-
-.empty-leaderboard {
-	padding: 20px !important;
-	color: #888;
-	font-style: italic;
 }

@@ -1589,6 +1589,27 @@
 		bindTouch('touch-left', 'left');
 		bindTouch('touch-right', 'right');
 		bindTouch('touch-fire', 'fire');
+
+		// Leaderboard tabs
+		var tabToday = document.getElementById('tab-today');
+		var tabAlltime = document.getElementById('tab-alltime');
+		var contentToday = document.getElementById('content-today');
+		var contentAlltime = document.getElementById('content-alltime');
+
+		if (tabToday && tabAlltime && contentToday && contentAlltime) {
+			tabToday.addEventListener('click', function () {
+				tabToday.classList.add('active');
+				tabAlltime.classList.remove('active');
+				contentToday.classList.add('active');
+				contentAlltime.classList.remove('active');
+			});
+			tabAlltime.addEventListener('click', function () {
+				tabAlltime.classList.add('active');
+				tabToday.classList.remove('active');
+				contentAlltime.classList.add('active');
+				contentToday.classList.remove('active');
+			});
+		}
 	}
 
 	// Initialization on DOMContentLoaded
