@@ -134,73 +134,172 @@ function image_mime_to_extension($mime, $original_url = '') {
 }
 
 /**
- * Lejupielādē attēlu no attālās adreses ar cURL un Wayback Machine rezerves variantu.
+ * Tīra un normalizē attālo URL.
  */
-function fetch_remote_image($url) {
-	$url = html_entity_decode($url, ENT_QUOTES, 'UTF-8');
-	if (strpos($url, '//') === 0) {
-		$url = 'https:' . $url;
-	}
+function clean_remote_url($raw_url) {
+	$url = html_entity_decode($raw_url, ENT_QUOTES, 'UTF-8');
+	$url = preg_replace('/(%5C|%C2%A0|\xc2\xa0)+$/i', '', $url);
+	$url = trim($url, " \t\n\r\0\x0B.,;:!?)'\"[]<>\\");
+	return $url;
+}
 
+/**
+ * Veic faila lejupielādi ar cURL.
+ */
+function curl_download_file($url, $timeout = 15, $connect_timeout = 6) {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+	curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
 	$data = curl_exec($ch);
 	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
+	$effective_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+	$curl_err = curl_error($ch);
 
 	if ($http_code == 200 && !empty($data) && strlen($data) > 50) {
 		$finfo = new finfo(FILEINFO_MIME_TYPE);
 		$detected_mime = $finfo->buffer($data);
-		if (strpos($detected_mime, 'image/') === 0) {
-			return [
-				'ok' => true,
-				'data' => $data,
-				'mime' => $detected_mime,
-			];
+		return [
+			'ok' => true,
+			'data' => $data,
+			'mime' => $detected_mime,
+			'http_code' => $http_code,
+			'effective_url' => $effective_url,
+			'size' => strlen($data)
+		];
+	}
+
+	return [
+		'ok' => false,
+		'http_code' => $http_code,
+		'error' => $curl_err,
+		'effective_url' => $effective_url
+	];
+}
+
+/**
+ * Sagatavo iespējamās Archive.org meklēšanas URL variācijas.
+ */
+function get_archive_org_url_candidates($url) {
+	$candidates = [$url];
+	$parsed = parse_url($url);
+	if (!$parsed || empty($parsed['host'])) {
+		return $candidates;
+	}
+
+	$scheme = strtolower($parsed['scheme'] ?? 'http');
+	$host = $parsed['host'];
+	$path = $parsed['path'] ?? '/';
+	$query = isset($parsed['query']) ? '?' . $parsed['query'] : '';
+	$other_scheme = ($scheme === 'https') ? 'http' : 'https';
+
+	// Mainām shēmu
+	$candidates[] = "{$other_scheme}://{$host}{$path}{$query}";
+
+	// Ja ir vaicājuma parametri (query string), pievienojam variantu bez tiem
+	if ($query !== '') {
+		$candidates[] = "{$scheme}://{$host}{$path}";
+		$candidates[] = "{$other_scheme}://{$host}{$path}";
+	}
+
+	// www. un bez-www variācijas
+	if (stripos($host, 'www.') === 0) {
+		$non_www = substr($host, 4);
+		$candidates[] = "{$scheme}://{$non_www}{$path}{$query}";
+		$candidates[] = "{$other_scheme}://{$non_www}{$path}{$query}";
+		if ($query !== '') {
+			$candidates[] = "{$scheme}://{$non_www}{$path}";
+			$candidates[] = "{$other_scheme}://{$non_www}{$path}";
+		}
+	} else {
+		$www = 'www.' . $host;
+		$candidates[] = "{$scheme}://{$www}{$path}{$query}";
+		$candidates[] = "{$other_scheme}://{$www}{$path}{$query}";
+		if ($query !== '') {
+			$candidates[] = "{$scheme}://{$www}{$path}";
+			$candidates[] = "{$other_scheme}://{$www}{$path}";
 		}
 	}
 
-	// Ja tiešais pieprasījums neizdevās, mēģinām caur Wayback Machine (ja vien tas jau nav archive.org)
-	if (strpos($url, 'web.archive.org') === false) {
-		$wb_url = 'https://web.archive.org/web/0id_/' . $url;
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $wb_url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+	return array_values(array_unique($candidates));
+}
 
-		$data = curl_exec($ch);
-		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
+/**
+ * Meklē un lejupielādē attēlu no Archive.org (Wayback Machine).
+ */
+function fetch_from_archive_org($url) {
+	$candidates = get_archive_org_url_candidates($url);
 
-		if ($http_code == 200 && !empty($data) && strlen($data) > 50) {
-			$finfo = new finfo(FILEINFO_MIME_TYPE);
-			$detected_mime = $finfo->buffer($data);
-			if (strpos($detected_mime, 'image/') === 0) {
-				return [
-					'ok' => true,
-					'data' => $data,
-					'mime' => $detected_mime,
-				];
+	foreach ($candidates as $candidate) {
+		// 1. Mēģinām tiešo Wayback 0id_ saiti
+		$wb_url = 'https://web.archive.org/web/0id_/' . $candidate;
+		$res = curl_download_file($wb_url, 15, 6);
+		if ($res['ok'] && strpos($res['mime'], 'image/') === 0) {
+			$res['source'] = 'archive.org';
+			$res['archive_url'] = $res['effective_url'] ?? $wb_url;
+			return $res;
+		}
+
+		// 2. Ja 0id_ neatrada, meklējam snapshotu caur Wayback CDX API
+		$cdx_url = 'https://web.archive.org/cdx/search/cdx?url=' . urlencode($candidate) . '&limit=1&output=json';
+		$cdx_res = curl_download_file($cdx_url, 8, 4);
+		if ($cdx_res['ok']) {
+			$cdx_data = json_decode($cdx_res['data'], true);
+			if (is_array($cdx_data) && count($cdx_data) >= 2 && !empty($cdx_data[1][1]) && !empty($cdx_data[1][2])) {
+				$timestamp = $cdx_data[1][1];
+				$orig_url = $cdx_data[1][2];
+				$exact_wb = "https://web.archive.org/web/{$timestamp}id_/{$orig_url}";
+				$exact_res = curl_download_file($exact_wb, 15, 6);
+				if ($exact_res['ok'] && strpos($exact_res['mime'], 'image/') === 0) {
+					$exact_res['source'] = 'archive.org';
+					$exact_res['archive_url'] = $exact_res['effective_url'] ?? $exact_wb;
+					return $exact_res;
+				}
 			}
 		}
+
+		usleep(100000); // 100ms pauze starp mēģinājumiem
 	}
 
 	return ['ok' => false];
+}
+
+/**
+ * Lejupielādē attēlu no attālās adreses. Ja sākotnējā adrese nav sasniedzama vai atgriež 404/kļūdu,
+ * veic meklēšanu un lejupielādi no Archive.org (Wayback Machine).
+ */
+function fetch_remote_image($url) {
+	$clean_url = clean_remote_url($url);
+	if (strpos($clean_url, '//') === 0) {
+		$clean_url = 'https:' . $clean_url;
+	}
+
+	// 1. Mēģinām tiešo lejupielādi no oriģinālā avota
+	$direct_res = curl_download_file($clean_url, 10, 5);
+	if ($direct_res['ok'] && strpos($direct_res['mime'], 'image/') === 0) {
+		$direct_res['source'] = 'direct';
+		return $direct_res;
+	}
+
+	// 2. Ja tiešais pieprasījums nav sasniedzams vai ir 404/kļūda, meklējam Archive.org
+	$fail_info = !empty($direct_res['error']) ? $direct_res['error'] : ('HTTP ' . ($direct_res['http_code'] ?: '0'));
+	rehost_log("Direct fetch failed for {$clean_url} ({$fail_info}). Looking up in Archive.org...");
+
+	if (strpos($clean_url, 'web.archive.org') === false) {
+		$archive_res = fetch_from_archive_org($clean_url);
+		if ($archive_res['ok']) {
+			return $archive_res;
+		}
+	}
+
+	return ['ok' => false, 'direct_fail' => $fail_info];
 }
 
 /**
@@ -234,17 +333,19 @@ function rehost_article_images($article) {
 
 	rehost_log("Article #{$article->id} ({$article->title}): Starting rehost scan.");
 
-	// Atrodam visus img tagus un to src atribūtus
-	preg_match_all('/<img\b[^>]*?\bsrc\s*=\s*(["\']?)([^"\'\s>]+)\1[^>]*>/i', $combined, $matches);
-	if (empty($matches[2])) {
-		rehost_log("Article #{$article->id}: No <img> tags found in content.");
+	// Atrodam visus img tagus un to src atribūtus, kā arī iespējamos [img] bbcode tagus
+	preg_match_all('/<img\b[^>]*?\bsrc\s*=\s*(["\']?)([^"\'\s>]+)\1[^>]*>/i', $combined, $img_matches);
+	preg_match_all('/\[img\]\s*([^\[\]\s]+)\s*\[\/img\]/i', $combined, $bb_matches);
+
+	$raw_urls = array_unique(array_merge($img_matches[2] ?? [], $bb_matches[1] ?? []));
+	if (empty($raw_urls)) {
+		rehost_log("Article #{$article->id}: No image tags found in content.");
 		return ['status' => 'success', 'count' => 0];
 	}
 
-	$raw_urls = array_unique($matches[2]);
 	$urls_to_rehost = [];
 	foreach ($raw_urls as $raw_url) {
-		$clean_url = html_entity_decode(trim($raw_url), ENT_QUOTES, 'UTF-8');
+		$clean_url = clean_remote_url($raw_url);
 		if (is_external_image_url($clean_url)) {
 			$urls_to_rehost[] = [
 				'raw' => $raw_url,
@@ -254,7 +355,7 @@ function rehost_article_images($article) {
 	}
 
 	if (empty($urls_to_rehost)) {
-		rehost_log("Article #{$article->id}: All " . count($raw_urls) . " <img> URLs are internal. Nothing to rehost.");
+		rehost_log("Article #{$article->id}: All " . count($raw_urls) . " image URLs are internal. Nothing to rehost.");
 		return ['status' => 'success', 'count' => 0];
 	}
 
@@ -287,6 +388,12 @@ function rehost_article_images($article) {
 			continue;
 		}
 
+		if (($res['source'] ?? '') === 'archive.org') {
+			rehost_log("Article #{$article->id}: Recovered via Archive.org: {$clean_url} -> " . ($res['archive_url'] ?? 'archive'));
+		} else {
+			rehost_log("Article #{$article->id}: Downloaded directly: {$clean_url}");
+		}
+
 		$ext = image_mime_to_extension($res['mime'], $clean_url);
 		$path_part = parse_url($clean_url, PHP_URL_PATH) ?? '';
 		$base_name = mkslug(pathinfo($path_part, PATHINFO_FILENAME));
@@ -300,6 +407,7 @@ function rehost_article_images($article) {
 				rehost_log("ERROR: Article #{$article->id}: file_put_contents failed for {$dest_file} ({$clean_url})");
 				continue;
 			}
+			@chmod($dest_file, 0664);
 		}
 
 		// PĀRBAUDE: Pārliecināmies, ka attēla fails REĀLI eksistē uz diska un nav tukšs pirms linku aizstāšanas
@@ -315,6 +423,10 @@ function rehost_article_images($article) {
 		$replacements[htmlspecialchars($clean_url, ENT_QUOTES, 'UTF-8')] = $public_url;
 		$replacements[htmlentities($clean_url, ENT_QUOTES, 'UTF-8')] = $public_url;
 		$replacements[str_replace('&', '&amp;', $clean_url)] = $public_url;
+		$trimmed_raw = rtrim($raw_url, '/');
+		if ($trimmed_raw !== $raw_url) {
+			$replacements[$trimmed_raw] = $public_url;
+		}
 
 		$rehosted_count++;
 		rehost_log("Article #{$article->id}: Verified on disk and queued replacement: {$clean_url} -> {$public_url} (" . filesize($dest_file) . " bytes)");
