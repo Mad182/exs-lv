@@ -13,6 +13,7 @@ $(document).ready(function () {
 	var undoesLeft = 3;
 	var isGameOver = false;
 	var isWon = false;
+	var hasWonDismissed = false;
 	var sessionToken = '';
 
 	// Initialize new session token
@@ -37,9 +38,11 @@ $(document).ready(function () {
 		undoesLeft = 3;
 		isGameOver = false;
 		isWon = false;
+		hasWonDismissed = false;
 
 		$('#twenty48-current-score').text(0);
 		$('#twenty48-btn-undo').text('↩ Atcelt gājienu (3)').prop('disabled', true);
+		$('#twenty48-btn-keep-going').hide();
 		$('#twenty48-overlay').removeClass('active win gameover');
 
 		initSession();
@@ -66,6 +69,11 @@ $(document).ready(function () {
 		movesCount = previousState.movesCount;
 		previousState = null;
 		undoesLeft--;
+
+		if (getMaxTile() < 2048) {
+			isWon = false;
+			hasWonDismissed = false;
+		}
 
 		$('#twenty48-current-score').text(score);
 		$('#twenty48-btn-undo').text('↩ Atcelt gājienu (' + undoesLeft + ')').prop('disabled', true);
@@ -116,8 +124,17 @@ $(document).ready(function () {
 		}
 	}
 
+	function dismissWinOverlay() {
+		hasWonDismissed = true;
+		$('#twenty48-overlay').removeClass('active win');
+	}
+
 	function move(direction) {
 		if (isGameOver) return false;
+
+		if ($('#twenty48-overlay').hasClass('active') && $('#twenty48-overlay').hasClass('win')) {
+			dismissWinOverlay();
+		}
 
 		var moved = false;
 		var stateBeforeMove = JSON.parse(JSON.stringify(board));
@@ -209,7 +226,7 @@ $(document).ready(function () {
 			spawnTile();
 			renderBoard();
 
-			if (isWon && !$('#twenty48-overlay').hasClass('active')) {
+			if (isWon && !hasWonDismissed && !$('#twenty48-overlay').hasClass('active')) {
 				showOverlay('Apsveicam! Sasniegta 2048 flīze!', 'Tev izdevās apvienot skaitļus un sasniegt 2048! Vari turpināt spēlēt tālāk, lai uzstādītu lielāku rekordu.', 'win');
 			} else if (checkGameOver()) {
 				isGameOver = true;
@@ -237,7 +254,14 @@ $(document).ready(function () {
 	function showOverlay(title, msg, type) {
 		$('#twenty48-overlay-title').text(title);
 		$('#twenty48-overlay-msg').html(msg);
-		$('#twenty48-overlay').addClass('active ' + type);
+		if (type === 'win') {
+			$('#twenty48-btn-keep-going').show();
+			$('#twenty48-btn-retry').text('Sākt no jauna');
+		} else {
+			$('#twenty48-btn-keep-going').hide();
+			$('#twenty48-btn-retry').text('Spēlēt vēlreiz');
+		}
+		$('#twenty48-overlay').removeClass('win gameover').addClass('active ' + type);
 	}
 
 	function submitScore() {
@@ -323,6 +347,10 @@ $(document).ready(function () {
 	// Action buttons
 	$('#twenty48-btn-restart, #twenty48-btn-retry').on('click', function () {
 		resetGame();
+	});
+
+	$('#twenty48-btn-keep-going').on('click', function () {
+		dismissWinOverlay();
 	});
 
 	$('#twenty48-btn-undo').on('click', function () {

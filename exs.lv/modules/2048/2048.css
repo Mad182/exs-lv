@@ -243,6 +243,13 @@
 	margin-bottom: 20px;
 }
 
+.twenty48-overlay-buttons {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
 /* Mobile Controls */
 .twenty48-mobile-controls {
 	display: none;

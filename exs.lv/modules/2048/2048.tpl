@@ -94,7 +94,10 @@
 				<div class="twenty48-overlay-content">
 					<h3 id="twenty48-overlay-title">Spēle beigusies!</h3>
 					<p id="twenty48-overlay-msg"></p>
-					<button id="twenty48-btn-retry" class="twenty48-btn twenty48-btn-primary">Spēlēt vēlreiz</button>
+					<div class="twenty48-overlay-buttons">
+						<button id="twenty48-btn-keep-going" class="twenty48-btn twenty48-btn-secondary" style="display: none;">Turpināt spēli</button>
+						<button id="twenty48-btn-retry" class="twenty48-btn twenty48-btn-primary">Spēlēt vēlreiz</button>
+					</div>
 				</div>
 			</div>
 		</div>
