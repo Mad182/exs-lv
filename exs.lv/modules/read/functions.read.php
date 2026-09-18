@@ -144,14 +144,14 @@ function clean_remote_url($raw_url) {
 }
 
 /**
- * Veic faila lejupielādi ar cURL.
+ * Veic faila lejupielādi ar cURL ar stingriem noilgumiem.
  */
-function curl_download_file($url, $timeout = 15, $connect_timeout = 6) {
+function curl_download_file($url, $timeout = 4, $connect_timeout = 2) {
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+	curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
 	curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -185,7 +185,7 @@ function curl_download_file($url, $timeout = 15, $connect_timeout = 6) {
 }
 
 /**
- * Sagatavo iespējamās Archive.org meklēšanas URL variācijas.
+ * Sagatavo iespējamās Archive.org meklēšanas URL variācijas (ierobežots līdz augstākās ticamības variantiem).
  */
 function get_archive_org_url_candidates($url) {
 	$candidates = [$url];
@@ -198,37 +198,19 @@ function get_archive_org_url_candidates($url) {
 	$host = $parsed['host'];
 	$path = $parsed['path'] ?? '/';
 	$query = isset($parsed['query']) ? '?' . $parsed['query'] : '';
-	$other_scheme = ($scheme === 'https') ? 'http' : 'https';
 
-	// Mainām shēmu
-	$candidates[] = "{$other_scheme}://{$host}{$path}{$query}";
-
-	// Ja ir vaicājuma parametri (query string), pievienojam variantu bez tiem
+	// Ja ir vaicājuma parametri (query string), primārais alternatīvais variants ir bez tiem
 	if ($query !== '') {
 		$candidates[] = "{$scheme}://{$host}{$path}";
-		$candidates[] = "{$other_scheme}://{$host}{$path}";
 	}
 
-	// www. un bez-www variācijas
-	if (stripos($host, 'www.') === 0) {
-		$non_www = substr($host, 4);
-		$candidates[] = "{$scheme}://{$non_www}{$path}{$query}";
-		$candidates[] = "{$other_scheme}://{$non_www}{$path}{$query}";
-		if ($query !== '') {
-			$candidates[] = "{$scheme}://{$non_www}{$path}";
-			$candidates[] = "{$other_scheme}://{$non_www}{$path}";
-		}
-	} else {
-		$www = 'www.' . $host;
-		$candidates[] = "{$scheme}://{$www}{$path}{$query}";
-		$candidates[] = "{$other_scheme}://{$www}{$path}{$query}";
-		if ($query !== '') {
-			$candidates[] = "{$scheme}://{$www}{$path}";
-			$candidates[] = "{$other_scheme}://{$www}{$path}";
-		}
+	// Shēmas maiņa (https -> http, jo vecie arhīvi gandrīz vienmēr ir ar http)
+	if ($scheme === 'https') {
+		$candidates[] = "http://{$host}{$path}";
 	}
 
-	return array_values(array_unique($candidates));
+	// Ierobežojam līdz maksimums 2 kandidātiem, lai nepārsniegtu noilgumu
+	return array_slice(array_values(array_unique($candidates)), 0, 2);
 }
 
 /**
@@ -238,34 +220,14 @@ function fetch_from_archive_org($url) {
 	$candidates = get_archive_org_url_candidates($url);
 
 	foreach ($candidates as $candidate) {
-		// 1. Mēģinām tiešo Wayback 0id_ saiti
+		// Mēģinām tiešo Wayback 0id_ saiti (ātrs noilgums: 3s / savienojums 2s)
 		$wb_url = 'https://web.archive.org/web/0id_/' . $candidate;
-		$res = curl_download_file($wb_url, 15, 6);
+		$res = curl_download_file($wb_url, 3, 2);
 		if ($res['ok'] && strpos($res['mime'], 'image/') === 0) {
 			$res['source'] = 'archive.org';
 			$res['archive_url'] = $res['effective_url'] ?? $wb_url;
 			return $res;
 		}
-
-		// 2. Ja 0id_ neatrada, meklējam snapshotu caur Wayback CDX API
-		$cdx_url = 'https://web.archive.org/cdx/search/cdx?url=' . urlencode($candidate) . '&limit=1&output=json';
-		$cdx_res = curl_download_file($cdx_url, 8, 4);
-		if ($cdx_res['ok']) {
-			$cdx_data = json_decode($cdx_res['data'], true);
-			if (is_array($cdx_data) && count($cdx_data) >= 2 && !empty($cdx_data[1][1]) && !empty($cdx_data[1][2])) {
-				$timestamp = $cdx_data[1][1];
-				$orig_url = $cdx_data[1][2];
-				$exact_wb = "https://web.archive.org/web/{$timestamp}id_/{$orig_url}";
-				$exact_res = curl_download_file($exact_wb, 15, 6);
-				if ($exact_res['ok'] && strpos($exact_res['mime'], 'image/') === 0) {
-					$exact_res['source'] = 'archive.org';
-					$exact_res['archive_url'] = $exact_res['effective_url'] ?? $exact_wb;
-					return $exact_res;
-				}
-			}
-		}
-
-		usleep(100000); // 100ms pauze starp mēģinājumiem
 	}
 
 	return ['ok' => false];
@@ -275,21 +237,44 @@ function fetch_from_archive_org($url) {
  * Lejupielādē attēlu no attālās adreses. Ja sākotnējā adrese nav sasniedzama vai atgriež 404/kļūdu,
  * veic meklēšanu un lejupielādi no Archive.org (Wayback Machine).
  */
-function fetch_remote_image($url) {
+function fetch_remote_image($url, &$failed_direct_hosts = []) {
 	$clean_url = clean_remote_url($url);
 	if (strpos($clean_url, '//') === 0) {
 		$clean_url = 'https:' . $clean_url;
 	}
 
-	// 1. Mēģinām tiešo lejupielādi no oriģinālā avota
-	$direct_res = curl_download_file($clean_url, 10, 5);
-	if ($direct_res['ok'] && strpos($direct_res['mime'], 'image/') === 0) {
-		$direct_res['source'] = 'direct';
-		return $direct_res;
+	$parsed = parse_url($clean_url);
+	$host = strtolower($parsed['host'] ?? '');
+
+	// 1. Mēģinām tiešo lejupielādi no oriģinālā avota (ja vien šis domēns jau nav zināms kā miris)
+	$should_try_direct = empty($host) || !isset($failed_direct_hosts[$host]);
+
+	if ($should_try_direct) {
+		// Ātrs tiešais pieprasījums: timeout 3s, connect 2s
+		$direct_res = curl_download_file($clean_url, 3, 2);
+		if ($direct_res['ok'] && strpos($direct_res['mime'], 'image/') === 0) {
+			$direct_res['source'] = 'direct';
+			return $direct_res;
+		}
+
+		$fail_info = !empty($direct_res['error']) ? $direct_res['error'] : ('HTTP ' . ($direct_res['http_code'] ?: '0'));
+
+		// Ja saimniekdators neeksistē vai nevar savienoties, atzīmējam to, lai nākamajiem šī raksta attēliem negaidītu lieki
+		if (!empty($host) && (
+			!empty($direct_res['error']) && (
+				stripos($direct_res['error'], 'Could not resolve host') !== false ||
+				stripos($direct_res['error'], 'timed out') !== false ||
+				stripos($direct_res['error'], 'Connection refused') !== false
+			)
+		)) {
+			$failed_direct_hosts[$host] = true;
+			rehost_log("Host {$host} marked as unreachable ({$direct_res['error']}). Subsequent images will skip direct fetch.");
+		}
+	} else {
+		$fail_info = "Host {$host} previously unreachable (skipped direct fetch)";
 	}
 
 	// 2. Ja tiešais pieprasījums nav sasniedzams vai ir 404/kļūda, meklējam Archive.org
-	$fail_info = !empty($direct_res['error']) ? $direct_res['error'] : ('HTTP ' . ($direct_res['http_code'] ?: '0'));
 	rehost_log("Direct fetch failed for {$clean_url} ({$fail_info}). Looking up in Archive.org...");
 
 	if (strpos($clean_url, 'web.archive.org') === false) {
@@ -322,6 +307,10 @@ function rehost_article_images($article) {
 		rehost_log("Access denied or invalid article for ID: " . ($article->id ?? 'null'));
 		return ['status' => 'error', 'message' => 'Nav administratora tiesību.'];
 	}
+
+	@set_time_limit(60);
+	$start_time = microtime(true);
+	$max_budget_seconds = 45; // Maksimālais kopējais izpildes laiks, lai nepārsniegtu web servera 504 Gateway Timeout
 
 	if (!defined('IMG_PATH')) {
 		define('IMG_PATH', ROOT_PATH . '/img.exs.lv');
@@ -376,13 +365,22 @@ function rehost_article_images($article) {
 
 	$rehosted_count = 0;
 	$replacements = [];
+	$failed_direct_hosts = [];
+	$budget_exceeded = false;
 
 	foreach ($urls_to_rehost as $item) {
+		// Pārbaudām kopējo laika limitu pirms katra attēla apstrādes
+		if ((microtime(true) - $start_time) > $max_budget_seconds) {
+			rehost_log("Article #{$article->id}: Time budget ({$max_budget_seconds}s) reached. Stopping further fetches.");
+			$budget_exceeded = true;
+			break;
+		}
+
 		$raw_url = $item['raw'];
 		$clean_url = $item['clean'];
 
 		rehost_log("Article #{$article->id}: Fetching: {$clean_url}");
-		$res = fetch_remote_image($clean_url);
+		$res = fetch_remote_image($clean_url, $failed_direct_hosts);
 		if (!$res['ok']) {
 			rehost_log("Article #{$article->id}: Failed to fetch image (direct & archive): {$clean_url}");
 			continue;
@@ -464,7 +462,15 @@ function rehost_article_images($article) {
 		clear_forum_cache($article->lang ?? $lang);
 
 		rehost_log("Article #{$article->id}: Successfully rehosted {$rehosted_count} image(s) and updated article.");
-		return ['status' => 'success', 'count' => $rehosted_count];
+		$result = ['status' => 'success', 'count' => $rehosted_count];
+		if ($budget_exceeded) {
+			$result['notice'] = 'Sasniegts laika limits pirms visu attēlu apstrādes. Noklikšķiniet vēlreiz uz "pārnest attēlus", lai turpinātu ar atlikušajiem.';
+		}
+		return $result;
+	}
+
+	if ($budget_exceeded) {
+		return ['status' => 'error', 'message' => 'Noilgums: attēlu serveri neatbildēja pietiekami ātri. Lūdzu, mēģiniet vēlreiz.'];
 	}
 
 	rehost_log("Article #{$article->id}: No images could be verified on disk. Original article left unchanged.");

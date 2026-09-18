@@ -315,7 +315,11 @@ if ($article && ($auth->ok === true || !$article->private)) {
 			$result = rehost_article_images($article);
 			if ($result['status'] === 'success') {
 				if ($result['count'] > 0) {
-					set_flash('Veiksmīgi pārnesti ' . $result['count'] . ' attēli uz img.exs.lv!', 'success');
+					$flash_msg = 'Veiksmīgi pārnesti ' . $result['count'] . ' attēli uz img.exs.lv!';
+					if (!empty($result['notice'])) {
+						$flash_msg .= ' (' . $result['notice'] . ')';
+					}
+					set_flash($flash_msg, 'success');
 				} else {
 					set_flash('Rakstā netika atrasts neviens ārējs attēls.', 'notice');
 				}
