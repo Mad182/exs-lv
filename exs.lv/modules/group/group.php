@@ -85,7 +85,7 @@ $tpl->assign([
 	'group-title' => $group->title
 ]);
 
-$has_polls = (bool) $db->get_var("SELECT count(*) FROM `poll` WHERE `group` = '$group->id'");
+$has_polls = (bool) $db->get_var("SELECT count(*) FROM `poll` p WHERE p.`group` = '$group->id' AND EXISTS (SELECT 1 FROM `questions` q JOIN `responses` r ON r.qid = q.id WHERE q.pid = p.id)");
 if ($has_polls) {
 	$tpl->newBlock('group-menu-polls');
 }
@@ -1213,10 +1213,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->assign('group-link', $group_link);
 		}
 
-		$polls = $db->get_results("SELECT * FROM `poll` WHERE `group` = '$group->id' ORDER BY `id` DESC");
+		$polls = $db->get_results("SELECT p.* FROM `poll` p WHERE p.`group` = '$group->id' AND EXISTS (SELECT 1 FROM `questions` q JOIN `responses` r ON r.qid = q.id WHERE q.pid = p.id) ORDER BY p.`id` DESC");
 		if ($polls) {
 			foreach ($polls as $poll) {
 				$total = (int) $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid` = `questions`.`id` AND `pid` = '" . $poll->id . "'");
+				if ($total < 1) {
+					continue;
+				}
 
 				$tpl->newBlock('group-polls-node');
 				$tpl->assign([
