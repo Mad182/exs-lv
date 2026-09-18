@@ -873,6 +873,10 @@ ul.subcat-list li a:hover::before {
 	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -364px
 }
 
+#wrapper .poll {
+	background: url('/bildes/poll-icon.png') no-repeat 0 0
+}
+
 #wrapper .date {
 	background: url('//img.exs.lv/bildes/icons.png') no-repeat 0 -390px
 }

@@ -14,6 +14,9 @@
 	<li class="{active-tab-info}"><a href="{group-link}" class="ajax-module-mobile {active-tab-info}"><span class="group-profile">Sākums</span></a></li>
 	<li class="{active-tab-community}"><a href="{group-link}/forum" class="ajax-module-mobile {active-tab-community}"><span class="comments">Sarunas</span></a></li>
 	<li class="{active-tab-members}"><a href="{group-link}/members" class="ajax-module-mobile {active-tab-members}"><span class="users">Biedri{pending_count}</span></a></li>
+	<!-- START BLOCK : group-menu-polls-->
+	<li class="{active-tab-polls}"><a href="{group-link}/polls" class="ajax-module-mobile {active-tab-polls}"><span class="poll">Aptaujas</span></a></li>
+	<!-- END BLOCK : group-menu-polls-->
 	<!-- START BLOCK : group-menu-add-->
 	<li class="{sel}"><a href="{group-link}/tab/{url}" class="ajax-module-mobile {sel}">{title}</a></li>
 	<!-- END BLOCK : group-menu-add-->
@@ -520,6 +523,54 @@
 </div>
 
 <!-- END BLOCK : group-community-->
+
+<!-- START BLOCK : group-polls-->
+<div class="tabMain">
+	<!-- START BLOCK : group-polls-admin-->
+	<div style="float: right; margin-bottom: 10px;">
+		<a href="{group-link}/options" class="button">Pārvaldīt aptaujas</a>
+	</div>
+	<div class="c"></div>
+	<!-- END BLOCK : group-polls-admin-->
+
+	<!-- START BLOCK : group-polls-node-->
+	<div class="box poll-archive-box" style="margin-bottom: 15px;">
+		<h3 style="margin-top: 0; margin-bottom: 10px;">{poll-title}</h3>
+		<!-- START BLOCK : group-polls-answers-->
+		<ol class="poll-answers">
+			<!-- START BLOCK : group-polls-answers-node-->
+			<li>
+				{poll-answer-question}
+				<div>
+					<span>{poll-answer-percentage}%</span>
+					<div style="width: {poll-answer-percentage}%;"></div>
+				</div>
+			</li>
+			<!-- END BLOCK : group-polls-answers-node-->
+		</ol>
+		<p class="bottom" style="margin-top: 10px; margin-bottom: 0; font-size: 90%; color: #666;">
+			Balsojuši: <strong>{poll-totalvotes}</strong>
+		</p>
+		<!-- END BLOCK : group-polls-answers-->
+		<!-- START BLOCK : group-polls-noanswers-->
+		<p><em>Nav atbilžu variantu.</em></p>
+		<!-- END BLOCK : group-polls-noanswers-->
+	</div>
+	<!-- END BLOCK : group-polls-node-->
+
+	<!-- START BLOCK : group-polls-empty-->
+	<p>Šajā grupā nav aptauju.</p>
+	<!-- END BLOCK : group-polls-empty-->
+</div>
+<!-- END BLOCK : group-polls-->
+
+<!-- START BLOCK : noguestacc-polls-->
+<div class="tabMain">
+	<div class="form">
+		<p class="notice">Šīs grupas aptaujas var apskatīt tikai apstiprinātie biedri!</p>
+	</div>
+</div>
+<!-- END BLOCK : noguestacc-polls-->
 
 <!-- START BLOCK : group-search-->
 <div class="tabMain">

@@ -1381,6 +1381,10 @@ background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -338px
 background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -364px
 }
 
+.poll {
+background:url('/bildes/poll-icon.png') no-repeat 0 0
+}
+
 .date {
 background:url('//img.exs.lv/bildes/icons.png') no-repeat 0 -390px
 }

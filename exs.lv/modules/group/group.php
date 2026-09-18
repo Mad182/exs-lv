@@ -85,6 +85,11 @@ $tpl->assign([
 	'group-title' => $group->title
 ]);
 
+$has_polls = (bool) $db->get_var("SELECT count(*) FROM `poll` WHERE `group` = '$group->id'");
+if ($has_polls) {
+	$tpl->newBlock('group-menu-polls');
+}
+
 // pievienos grupas cilnes un iekrāsos atvērto
 if ($group_tabs) {
 	foreach ($group_tabs as $tab) {
@@ -1184,6 +1189,68 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	}
 
 	$page_title = $group->title . ' - meklēšana';
+}
+
+
+
+/**
+ * GRUPAS APTAUJU CILNE
+ */ elseif (isset($_GET['var2']) && ($_GET['var2'] == 'polls' || $_GET['var2'] == 'aptaujas')) {
+
+	if (!$has_polls) {
+		redirect($group_link);
+	}
+
+	$tpl->assignGlobal('active-tab-polls', 'active');
+	$page_title = $group->title . ' - aptaujas';
+	$pagepath = '<a href="/grupas">Domubiedru grupas</a> / <a href="' . $group_link . '">' . $group->title . '</a> / Aptaujas';
+
+	if ($group->public || ($is_mod || $is_admin || $is_member)) {
+		$tpl->newBlock('group-polls');
+
+		if ($is_admin) {
+			$tpl->newBlock('group-polls-admin');
+			$tpl->assign('group-link', $group_link);
+		}
+
+		$polls = $db->get_results("SELECT * FROM `poll` WHERE `group` = '$group->id' ORDER BY `id` DESC");
+		if ($polls) {
+			foreach ($polls as $poll) {
+				$total = (int) $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid` = `questions`.`id` AND `pid` = '" . $poll->id . "'");
+
+				$tpl->newBlock('group-polls-node');
+				$tpl->assign([
+					'poll-title' => $poll->name,
+					'poll-totalvotes' => $total,
+				]);
+
+				$questions = $db->get_results("SELECT * FROM `questions` WHERE `pid` = '" . $poll->id . "' ORDER BY `id`");
+				if (!empty($questions)) {
+					$tpl->newBlock('group-polls-answers');
+					$tpl->assign('poll-totalvotes', $total);
+
+					foreach ($questions as $question) {
+						$responses = (int) $db->get_var("SELECT count(*) FROM `responses` WHERE `qid` = '" . $question->id . "'");
+						$calc = ($total == 0) ? 0 : round(($responses / $total) * 100);
+
+						$tpl->newBlock('group-polls-answers-node');
+						$tpl->assign([
+							'poll-answer-question' => $question->question,
+							'poll-answer-percentage' => $calc,
+							'poll-answer-votes' => $responses,
+						]);
+					}
+				} else {
+					$tpl->newBlock('group-polls-noanswers');
+				}
+			}
+		} else {
+			$tpl->newBlock('group-polls-empty');
+		}
+	} else {
+		$tpl->newBlock('noguestacc-polls');
+		$robotstag[] = 'noindex';
+	}
 }
 
 
