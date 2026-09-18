@@ -85,7 +85,16 @@ $tpl->assign([
 	'group-title' => $group->title
 ]);
 
-$has_polls = (bool) $db->get_var("SELECT count(*) FROM `poll` p WHERE p.`group` = '$group->id' AND EXISTS (SELECT 1 FROM `questions` q JOIN `responses` r ON r.qid = q.id WHERE q.pid = p.id)");
+$cache_key = 'group_has_polls_' . $group->id;
+$has_polls = ($m instanceof Memcached) ? $m->get($cache_key) : false;
+if ($has_polls === false) {
+	$has_polls = (bool) $db->get_var("SELECT count(*) FROM `poll` p WHERE p.`group` = '$group->id' AND EXISTS (SELECT 1 FROM `questions` q JOIN `responses` r ON r.qid = q.id WHERE q.pid = p.id)");
+	if ($m instanceof Memcached) {
+		$m->set($cache_key, $has_polls ? 1 : 0, 86400);
+	}
+}
+$has_polls = (bool) $has_polls;
+
 if ($has_polls) {
 	$tpl->newBlock('group-menu-polls');
 }
@@ -1105,6 +1114,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				}
 			}
 			$auth->log('Izveidoja aptauju &quot;' . h(trim($_POST['new-poll-q'])) . '&quot;', 'clans', $group->id);
+			if ($m instanceof Memcached) {
+				$m->delete('group_has_polls_' . $group->id);
+			}
 			$tpl->newBlock('polls_admin-success');
 		} else {
 			$tpl->newBlock('polls_admin-add');
@@ -1332,6 +1344,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$db->query("INSERT INTO `responses` (`qid`, `user_id`) VALUES ('" . intval($_POST['g-questions']) . "', '" . $auth->id . "')");
 			push('Nobalsoja aptaujā', '/bildes/poll-icon.png', '', !$group->public, $group->id);
 			update_karma($auth->id, 1);
+			if ($m instanceof Memcached) {
+				$m->delete('group_has_polls_' . $group->id);
+			}
 		} else {
 			$error = 'Tu jau nobalsoji!';
 		}
