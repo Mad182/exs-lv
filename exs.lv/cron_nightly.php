@@ -136,9 +136,7 @@ $db->query("DELETE FROM `cat` WHERE `isblog` > 0 AND `stat_topics` = 0 AND `isbl
 $db->query("DELETE FROM `comments` WHERE `pid` NOT IN(SELECT id FROM pages)");
 $db->query("DELETE FROM `images` WHERE `uid` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `galcom` WHERE `bid` NOT IN(SELECT id FROM images)");
-$db->query("DELETE FROM `galcom` WHERE `author` NOT IN(SELECT id FROM users WHERE deleted =0)");
 $db->query("DELETE FROM `cat` WHERE `module` LIKE 'group' and content not in(select id from clans) and textid != 'group'");
-$db->query("DELETE FROM `ajax_comments` WHERE user_id not in(select id from users where deleted = 0)");
 $db->query("DELETE FROM pages WHERE category NOT IN(SELECT id FROM cat)");
 $db->query("DELETE FROM `desas` WHERE `user_1` NOT IN(SELECT id FROM users WHERE deleted = 0) AND  `user_2` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `taged` WHERE `type` = 0 AND page_id NOT IN(SELECT id FROM pages)");
@@ -186,13 +184,6 @@ $db->query("DELETE FROM `miniblog` WHERE `groupid` > 0 and `groupid` NOT IN(sele
 $db->query("DELETE FROM `reports` WHERE `type` = 0 AND `entry_id` NOT IN(SELECT id FROM miniblog)");
 $db->query("DELETE FROM `reports` WHERE `type` = 1 AND `entry_id` NOT IN(SELECT id FROM comments)");
 $db->query("DELETE FROM `reports` WHERE `type` = 2 AND `entry_id` NOT IN(SELECT id FROM galcom)");
-
-//junk
-$db->query("DELETE FROM `junk` WHERE `approved_by` NOT IN(SELECT id FROM users WHERE deleted =0)");
-$db->query("DELETE FROM `junk` WHERE `author` != 0 AND `author` NOT IN(SELECT id FROM users WHERE deleted =0)");
-$db->query("DELETE FROM `junk_votes` WHERE `junk_id` NOT IN(SELECT id FROM junk)");
-$db->query("DELETE FROM `junk_votes` WHERE `user_id` NOT IN(SELECT id FROM users WHERE deleted = 0)");
-$db->query("DELETE FROM `miniblog` WHERE `type` = 'junk' and parent NOT IN(SELECT id FROM junk)");
 
 $db->query("OPTIMIZE TABLE `notify`");
 $db->query("OPTIMIZE TABLE `logs`");
