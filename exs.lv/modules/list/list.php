@@ -255,9 +255,7 @@ if (!$category->mods_only || im_mod()) {
 				$t_out .= '</tbody></table>';
 			}
 
-			$total_count = (isset($category->stat_topics) && is_numeric($category->stat_topics) && (int)$category->stat_topics > 0)
-				? (int)$category->stat_topics
-				: (int)$db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'");
+			$total_count = (int)$db->get_var("SELECT count(*) FROM `pages` WHERE `category` = " . (int)$category->id . " AND `lang` = " . (int)$lang);
 
 			$pager = pager($total_count, $skip, $end, '/' . $category->textid . '/?skip=');
 			if (!empty($pager['pages']) || !empty($pager['next']) || !empty($pager['prev'])) {
@@ -271,6 +269,13 @@ if (!$category->mods_only || im_mod()) {
 		$tpl->assign('forum-topics-html', $topics_html);
 
 	} elseif ($category->module == 'list') {
+
+		$total_count = (int)$db->get_var("SELECT count(*) FROM `pages` WHERE `category` = " . (int)$category->id . " AND `lang` = " . (int)$lang);
+
+		if ($skip >= $total_count && $total_count > 0 && $skip > 0) {
+			$last_page_skip = (int)(floor(($total_count - 1) / $end) * $end);
+			redirect('/' . $category->textid . ($last_page_skip > 0 ? '/?skip=' . $last_page_skip : ''), true);
+		}
 
 		$user_avatar_field = ($category->intro) ? ", `users`.`avatar` AS `user_avatar`, `users`.`av_alt` AS `user_av_alt`" : "";
 
@@ -402,10 +407,6 @@ if (!$category->mods_only || im_mod()) {
 				}
 			}
 		}
-
-		$total_count = (isset($category->stat_topics) && is_numeric($category->stat_topics) && (int)$category->stat_topics > 0)
-			? (int)$category->stat_topics
-			: (int)$db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$category->id'");
 
 		$pager = pager($total_count, $skip, $end, '/' . $category->textid . '/?skip=');
 		$tpl->assignGlobal([
