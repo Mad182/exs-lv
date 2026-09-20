@@ -134,20 +134,13 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 			}
 		}
 
-		//auto add proxy to all jpg/png images over http
-		if($pos = stripos($txt, 'src="http://')) {
-			$data = substr($txt, $pos, 200);
-			$data = explode('"', $data);
-			if(stripos($data[1], '.jpg') || stripos($data[1], '.jpeg') || stripos($data[1], '.png')) {
-				$find = str_ireplace('http://', '', $data[1]);
-				$txt = str_ireplace('src="http://' . $find, 'src="https://images.weserv.nl/?url=' . $find, $txt);
-				//error_log($find . "\n", 3, "/home/www/exs.lv/tmp/http-img.log");
-			}
-		}
+		//replace all http img src with https
+		$txt = preg_replace('/(<img\b[^>]*?\bsrc=[\'"])http:\/\//i', '$1https://', $txt);
 	}
 
 	$txt = str_replace(['https://m.ss.lv/', 'https://www.ss.lv/', 'https://m.ss.com/'], 'https://www.ss.com/', $txt);
 	$txt = str_replace(['https://www.imgur.com', 'https://m.imgur.com'], 'https://imgur.com', $txt);
+	$txt = str_replace(['http://media.strategywiki.org/', 'https://media.strategywiki.org/'], 'https://cdn.wikimg.net/en/strategywiki/', $txt);
 
 	return $txt;
 }
