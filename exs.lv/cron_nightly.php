@@ -92,10 +92,8 @@ foreach($users as $user) {
 	$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$user->id'");
 	$db->query("DELETE FROM `userlogs` WHERE `user` = '$user->id'");
 	$db->query("DELETE FROM `images` WHERE `uid` = '$user->id'");
-	$db->query("UPDATE `comments` SET `removed` = 1 WHERE `author` = '$user->id'");
 	$db->query("UPDATE `galcom` SET `removed` = 1 WHERE `author` = '$user->id'");
 	$db->query("UPDATE `miniblog` SET `private` = 1 WHERE `author` = '$user->id'");
-	$db->query("UPDATE `pages` SET `private` = 1 WHERE `author` = '$user->id'");
 
 
 }
@@ -124,7 +122,6 @@ foreach($anim as $av) {
 $db->query("DELETE FROM `friends` WHERE `friend1` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `friends` WHERE `friend2` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `miniblog` WHERE `author` NOT IN(SELECT id FROM users WHERE deleted = 0)");
-$db->query("DELETE FROM `pages` WHERE `author` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `pages` WHERE `category` NOT IN(SELECT id FROM cat)");
 $db->query("DELETE FROM `visits` WHERE `user_id` NOT IN(SELECT `id` FROM `users` WHERE `deleted` = 0)");
 $db->query("DELETE FROM `pm` WHERE `from_uid` NOT IN(SELECT id FROM users WHERE deleted = 0)");
@@ -135,10 +132,8 @@ $db->query("DELETE FROM `miniblog` WHERE type = 'miniblog' and parent > 0 and pa
 $db->query("DELETE FROM miniblog WHERE reply_to > 0 and reply_to not in(SELECT * FROM (SELECT id from miniblog) as TAB)");
 $db->query("DELETE FROM `user_interests` WHERE user_id not in(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `movie_ratings` WHERE user_id NOT IN(SELECT id FROM users WHERE deleted = 0)");
-$db->query("DELETE FROM `pages` WHERE `author` NOT IN(SELECT id FROM users WHERE deleted = 0) and category in (select id from cat where isblog > 0)");
-$db->query("DELETE FROM `cat` WHERE `isblog` > 0 and isblog NOT IN(select id from users where deleted = 0)");
+$db->query("DELETE FROM `cat` WHERE `isblog` > 0 AND `stat_topics` = 0 AND `isblog` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `comments` WHERE `pid` NOT IN(SELECT id FROM pages)");
-$db->query("DELETE FROM `comments` WHERE `author` NOT IN(SELECT id FROM users WHERE deleted =0)");
 $db->query("DELETE FROM `images` WHERE `uid` NOT IN(SELECT id FROM users WHERE deleted = 0)");
 $db->query("DELETE FROM `galcom` WHERE `bid` NOT IN(SELECT id FROM images)");
 $db->query("DELETE FROM `galcom` WHERE `author` NOT IN(SELECT id FROM users WHERE deleted =0)");

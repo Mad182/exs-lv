@@ -94,7 +94,6 @@ if ($user) {
 	$db->query("DELETE FROM `autoawards` WHERE `user_id` = '$user'");
 	$db->query("DELETE FROM `userlogs` WHERE `user` = '$user'");
 	$db->query("DELETE FROM `images` WHERE `uid` = '$user'");
-	$db->query("UPDATE `pages` SET `private` = 1 WHERE `author` = '$user'");
 
 	get_user($user, true);
 
