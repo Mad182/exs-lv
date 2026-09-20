@@ -14,6 +14,13 @@ if (php_sapi_name() !== 'cli') {
     die("CLI only.\n");
 }
 
+@ini_set('output_buffering', 'off');
+@ini_set('zlib.output_compression', false);
+@ob_implicit_flush(true);
+while (ob_get_level()) {
+    @ob_end_flush();
+}
+
 chdir(__DIR__ . '/..');
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $_SERVER['REQUEST_URI'] = '/';
@@ -253,9 +260,9 @@ foreach ($articles as $idx => $article) {
             }
             break;
         } else {
-            // Error returned
+            // Error returned (e.g. no external images could be downloaded or timeout)
             $errMsg = $result['message'] ?? 'Unknown error';
-            echo "   Error: {$errMsg}\n";
+            echo "   Notice: {$errMsg}\n";
             $articlesFailed++;
             break;
         }
