@@ -178,21 +178,6 @@ if (!$category->mods_only || im_mod()) {
 		$page_title = $page_title . ' - forums';
 		$root_cat = get_cat(get_top($category->parent));
 
-		$tpl->newBlock('list-forum');
-		$tpl->assign([
-			'title' => $category->title,
-			'catid' => $category->id,
-			'strid' => ($root_cat ? $root_cat->textid : '')
-		]);
-
-		if ($auth->ok) {
-			$tpl->newBlock('forum-new');
-			$tpl->assign([
-				'catid' => $category->id,
-				'strid' => ($root_cat ? $root_cat->textid : '')
-			]);
-		}
-
 		$v = get_forum_cache_version($lang);
 		$cache_key_topics = 'forum_topics_' . $category->id . '_' . $skip . '_' . $lang . '_' . $v;
 		$topics_html = $m->get($cache_key_topics);
@@ -266,7 +251,22 @@ if (!$category->mods_only || im_mod()) {
 			$m->set($cache_key_topics, $topics_html, 21600);
 		}
 
-		$tpl->assign('forum-topics-html', $topics_html);
+		$tpl->newBlock('list-forum');
+		$tpl->assign([
+			'title' => $category->title,
+			'catid' => $category->id,
+			'strid' => ($root_cat ? $root_cat->textid : ''),
+			'forum-topics-html' => $topics_html
+		]);
+		$tpl->assignGlobal('forum-topics-html', $topics_html);
+
+		if ($auth->ok) {
+			$tpl->newBlock('forum-new');
+			$tpl->assign([
+				'catid' => $category->id,
+				'strid' => ($root_cat ? $root_cat->textid : '')
+			]);
+		}
 
 	} elseif ($category->module == 'list') {
 
