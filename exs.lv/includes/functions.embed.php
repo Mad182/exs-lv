@@ -291,6 +291,19 @@ function insert_smilies($txt, $just_return = false) {
         return $smilies;
     }
 
+	// Ja tekstā ir HTML tagi, aizstājam smaidiņus tikai ārpus tagiem, lai nesabojātu tagu atribūtus (piem., alt, title, href)
+	if (strpos($txt, '<') !== false) {
+		$parts = preg_split('/(<[^>]+>)/', $txt, -1, PREG_SPLIT_DELIM_CAPTURE);
+		for ($i = 0; $i < count($parts); $i += 2) {
+			foreach ($smilies as $key => $val) {
+				if (strpos($parts[$i], $key) !== false) {
+					$parts[$i] = str_ireplace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $parts[$i]);
+				}
+			}
+		}
+		return implode('', $parts);
+	}
+
 	foreach ($smilies as $key => $val) {
 		if (strpos($txt, $key) !== false) { // speeds things up
 			$txt = str_ireplace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $txt);
