@@ -1,5 +1,11 @@
 <div id="gallery-content">
 
+<!-- START BLOCK : user-gallery-private-->
+	<div class="tabMain">
+		<p class="note">Šis profils ir privāts. Ielogojies lai apskatītu.</p>
+	</div>
+<!-- END BLOCK : user-gallery-private-->
+
 <!-- START BLOCK : user-gallery-->
 	<div class="tabMain">
 

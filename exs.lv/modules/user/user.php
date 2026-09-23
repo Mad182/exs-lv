@@ -19,14 +19,22 @@ if (isset($_GET['var1']) && !in_array($_GET['var1'], $submodules)) {
 
 $inprofile = $db->get_row("SELECT * FROM `users` WHERE `id` = '" . $userid . "' AND `deleted` = 0");
 
-if ($inprofile && ($auth->ok === true || !$inprofile->private)) {
+if ($inprofile) {
 
 	profile_menu($inprofile, 'profile', 'profils', 'profilu');
 
+	if ($inprofile->private && !$auth->ok) {
+		$url = '/user/' . $inprofile->id;
+		if (strtok($_SERVER['REQUEST_URI'], '?') != $url) {
+			redirect($url, true);
+		}
+		$robotstag = ['noindex', 'nofollow'];
+		$tpl->newBlock('user-profile-private');
+	}
 	/**
 	 * 	Lietotāja profilu bloķēšana
 	 */
-	if (isset($_GET['var2']) && $_GET['var2'] == 'block') {
+	elseif (isset($_GET['var2']) && $_GET['var2'] == 'block') {
 
 		require CORE_PATH . '/modules/user/submodules/banning.php';
 	}

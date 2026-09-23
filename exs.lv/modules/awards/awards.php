@@ -12,33 +12,37 @@ if (isset($_GET['var1'])) {
 	$inprofile = get_user($auth->id);
 }
 
-if (!empty($inprofile) && empty($inprofile->deleted) && ($auth->ok === true || !$inprofile->private)) {
-
-	if ($inprofile->id === $auth->id) {
-
-		update_awards($auth->id);
-
-		if (isset($_POST['position'])) {
-			$i = count($_POST['position']);
-			foreach ($_POST['position'] as $pos) {
-				$num = intval(str_replace('award-pos-', '', $pos));
-				if ($num) {
-					$db->query("UPDATE `autoawards` SET `importance` = '$i' WHERE `id` = '$num' AND `user_id` = '$inprofile->id'");
-					$i--;
-				}
-			}
-			$m->delete('aw_' . $inprofile->id);
-			echo 'ok';
-			exit;
-		}
-
-		$tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
-		$tpl->prepare();
-	}
+if (!empty($inprofile) && empty($inprofile->deleted)) {
 
 	profile_menu($inprofile, 'awards', 'medaļas');
 
-	$tpl->newBlock('user-awards');
+	if ($inprofile->private && !$auth->ok) {
+		$robotstag = ['noindex', 'nofollow'];
+		$tpl->newBlock('user-awards-private');
+	} else {
+		if ($inprofile->id === $auth->id) {
+
+			update_awards($auth->id);
+
+			if (isset($_POST['position'])) {
+				$i = count($_POST['position']);
+				foreach ($_POST['position'] as $pos) {
+					$num = intval(str_replace('award-pos-', '', $pos));
+					if ($num) {
+						$db->query("UPDATE `autoawards` SET `importance` = '$i' WHERE `id` = '$num' AND `user_id` = '$inprofile->id'");
+						$i--;
+					}
+				}
+				$m->delete('aw_' . $inprofile->id);
+				echo 'ok';
+				exit;
+			}
+
+			$tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
+			$tpl->prepare();
+		}
+
+		$tpl->newBlock('user-awards');
 
 	$awards = get_awards($inprofile->id);
 	$existing_awards = [];
@@ -83,6 +87,7 @@ if (!empty($inprofile) && empty($inprofile->deleted) && ($auth->ok === true || !
 				$tpl->assign('add', '&nbsp;<a class="clue" href="javascript:void()" data-url="/award-info/' . $key . '?_=' . time() . '">(?)</a>');
 			}
 		}
+	}
 	}
 	$pagepath = '';
 } else {

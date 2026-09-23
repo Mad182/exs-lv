@@ -6,10 +6,15 @@ $add_css[] = 'gallery.21c1846c.min.css';
 $user_id = isset($_GET['var1']) ? intval($_GET['var1']) : 0;
 $inprofile = get_user($user_id);
 
-if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofile->private)) {
+if ($inprofile && empty($inprofile->deleted)) {
 
 	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');
-	$tpl->newBlock('user-gallery');
+
+	if ($inprofile->private && !$auth->ok) {
+		$robotstag = ['noindex', 'nofollow'];
+		$tpl->newBlock('user-gallery-private');
+	} else {
+		$tpl->newBlock('user-gallery');
 
 	//write comment
 	if (isset($_POST['comment-pid']) && !empty($_POST['commenttext']) && $auth->ok) {
@@ -513,6 +518,7 @@ if ($inprofile && empty($inprofile->deleted) && ($auth->ok === true || !$inprofi
 
 	if ($auth->ok && $auth->id == $inprofile->id) {
 		$tpl->assignGlobal('gal-sel', ' class="selected"');
+	}
 	}
 
 } else {

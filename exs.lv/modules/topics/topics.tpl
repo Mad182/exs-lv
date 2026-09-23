@@ -1,3 +1,8 @@
+<!-- START BLOCK : user-usertopics-private-->
+<div class="tabMain">
+	<p class="note">Šis profils ir privāts. Ielogojies lai apskatītu.</p>
+</div>
+<!-- END BLOCK : user-usertopics-private-->
 <!-- START BLOCK : user-usertopics-->
 <div class="tabMain">
 	<!-- START BLOCK : empty-usertopics-->

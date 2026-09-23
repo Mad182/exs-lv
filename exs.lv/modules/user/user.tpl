@@ -1,3 +1,8 @@
+<!-- START BLOCK : user-profile-private-->
+<div class="tabMain">
+	<p class="note">Šis profils ir privāts. Ielogojies lai apskatītu.</p>
+</div>
+<!-- END BLOCK : user-profile-private-->
 <!-- START BLOCK : user-profile-->
 <div class="tabMain">
 	{edit}

@@ -1,3 +1,9 @@
+<!-- START BLOCK : user-awards-private-->
+<div class="tabMain">
+	<p class="note">Šis profils ir privāts. Ielogojies lai apskatītu.</p>
+</div>
+<!-- END BLOCK : user-awards-private-->
+
 <!-- START BLOCK : user-awards-->
 <div class="tabMain">
 
