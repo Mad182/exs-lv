@@ -16,7 +16,11 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 
 	profile_menu($inprofile, 'bookmarks', 'grāmatzīmes');
 
-	$tpl->newBlock('user-bookmarks');
+	if ($inprofile->private && !$auth->ok) {
+		$robotstag = ['noindex', 'nofollow'];
+		$tpl->newBlock('user-bookmarks-private');
+	} else {
+		$tpl->newBlock('user-bookmarks');
 
 	//delete
 	if ($auth->ok && $auth->id == $inprofile->id && isset($_GET['delete'])) {
@@ -54,6 +58,7 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 	} else {
 		$robotstag = ['noindex', 'follow'];
 		$tpl->newBlock('empty-bookmarks');
+	}
 	}
 	$pagepath = '';
 } else {

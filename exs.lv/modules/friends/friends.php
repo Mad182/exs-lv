@@ -13,26 +13,30 @@ if (isset($_GET['var1'])) {
 }
 
 
-if ($inprofile && !$inprofile->deleted && ($auth->ok === true || !$inprofile->private)) {
-
-	include(CORE_PATH . '/includes/class.friend.php');
-	$friend = new Friend();
-
-	//confirm friendship
-	if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['confirm']) && check_token('friend', $_GET['token'])) {
-		$confirm = (int) $_GET['confirm'];
-		$friend->confirm_friendship($auth->id, $confirm);
-	}
-
-	//deny or delete friendship
-	if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['deny']) && check_token('friend', $_GET['token'])) {
-		$deny = (int) $_GET['deny'];
-		$friend->delete_friend($deny);
-	}
+if ($inprofile && !$inprofile->deleted) {
 
 	profile_menu($inprofile, 'friends', 'draugi', 'draugus');
 
-	$tpl->newBlock('user-friends');
+	if ($inprofile->private && !$auth->ok) {
+		$robotstag = ['noindex', 'nofollow'];
+		$tpl->newBlock('user-friends-private');
+	} else {
+		include(CORE_PATH . '/includes/class.friend.php');
+		$friend = new Friend();
+
+		//confirm friendship
+		if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['confirm']) && check_token('friend', $_GET['token'])) {
+			$confirm = (int) $_GET['confirm'];
+			$friend->confirm_friendship($auth->id, $confirm);
+		}
+
+		//deny or delete friendship
+		if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['deny']) && check_token('friend', $_GET['token'])) {
+			$deny = (int) $_GET['deny'];
+			$friend->delete_friend($deny);
+		}
+
+		$tpl->newBlock('user-friends');
 
 	$friends = $db->get_results("SELECT id,friend1,friend2 FROM friends WHERE (friend1 = ('" . $inprofile->id . "') OR friend2 = ('" . $inprofile->id . "')) AND confirmed = '1' ORDER BY date_confirmed DESC");
 	if ($friends) {
@@ -95,10 +99,10 @@ if ($inprofile && !$inprofile->deleted && ($auth->ok === true || !$inprofile->pr
 			}
 		}
 	}
+	}
+	$pagepath = '';
 } else {
 	set_flash('Šāds lietotājs netika atrasts, iespējams kļūdains links!', 'error');
 	redirect();
 }
-
-$pagepath = '';
 

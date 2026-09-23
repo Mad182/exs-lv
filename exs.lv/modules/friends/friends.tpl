@@ -1,3 +1,8 @@
+<!-- START BLOCK : user-friends-private-->
+<div class="tabMain">
+	<p class="note">Šis profils ir privāts. Ielogojies lai apskatītu.</p>
+</div>
+<!-- END BLOCK : user-friends-private-->
 <!-- START BLOCK : user-friends-->
 <div class="tabMain">
 	<!-- START BLOCK : user-friend-pending-->

@@ -1,3 +1,8 @@
+<!-- START BLOCK : user-bookmarks-private-->
+<div class="tabMain">
+	<p class="note">Šis profils ir privāts. Ielogojies lai apskatītu.</p>
+</div>
+<!-- END BLOCK : user-bookmarks-private-->
 <!-- START BLOCK : user-bookmarks-->
 <div class="tabMain">
 	<!-- START BLOCK : empty-bookmarks-->

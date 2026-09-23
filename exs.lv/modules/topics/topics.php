@@ -22,15 +22,11 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 
 	profile_menu($inprofile, 'usertopics', 'raksti', 'rakstus');
 
-	if ($inprofile->private && !$auth->ok) {
-		$robotstag = ['noindex', 'nofollow'];
-		$tpl->newBlock('user-usertopics-private');
-	} else {
-		if ($skip) {
-			$page_title = $page_title . ' - lapa ' . ($skip / $end + 1);
-		}
+	if ($skip) {
+		$page_title = $page_title . ' - lapa ' . ($skip / $end + 1);
+	}
 
-		$tpl->newBlock('user-usertopics');
+	$tpl->newBlock('user-usertopics');
 
 	$total = $db->get_var("SELECT count(*) FROM `pages` WHERE `author` = '" . $inprofile->id . "' AND `lang` = '$lang' AND `category` != '6'");
 	$articles = $db->get_results("SELECT p.*, c.title AS cat_title FROM `pages` p LEFT JOIN `cat` c ON p.category = c.id WHERE p.author = '" . $inprofile->id . "' AND p.lang = '$lang' AND p.category != '6' ORDER BY p.date DESC LIMIT $skip,$end");
@@ -89,7 +85,6 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 	} else {
 		$robotstag = ['noindex', 'follow'];
 		$tpl->newBlock('empty-usertopics');
-	}
 	}
 	$pagepath = '';
 } else {
