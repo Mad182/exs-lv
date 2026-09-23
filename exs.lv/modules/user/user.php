@@ -28,7 +28,7 @@ if ($inprofile) {
 		if (strtok($_SERVER['REQUEST_URI'], '?') != $url) {
 			redirect($url, true);
 		}
-		$robotstag = ['noindex', 'nofollow'];
+		$robotstag = ['noindex', 'follow'];
 		$tpl->newBlock('user-profile-private');
 	}
 	/**

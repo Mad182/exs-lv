@@ -18,7 +18,7 @@ if ($inprofile && !$inprofile->deleted) {
 	profile_menu($inprofile, 'friends', 'draugi', 'draugus');
 
 	if ($inprofile->private && !$auth->ok) {
-		$robotstag = ['noindex', 'nofollow'];
+		$robotstag = ['noindex', 'follow'];
 		$tpl->newBlock('user-friends-private');
 	} else {
 		include(CORE_PATH . '/includes/class.friend.php');

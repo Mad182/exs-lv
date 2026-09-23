@@ -11,7 +11,7 @@ if ($inprofile && empty($inprofile->deleted)) {
 	profile_menu($inprofile, 'gallery', 'galerija', 'galeriju');
 
 	if ($inprofile->private && !$auth->ok) {
-		$robotstag = ['noindex', 'nofollow'];
+		$robotstag = ['noindex', 'follow'];
 		$tpl->newBlock('user-gallery-private');
 	} else {
 		$tpl->newBlock('user-gallery');
