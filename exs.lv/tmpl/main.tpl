@@ -25,7 +25,7 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/main.2f427052.min.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/main.7728c4eb.min.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -98,7 +98,7 @@
 	{plevel}
 </head>
 
-<body{onload} class="{layout-options} {is-game-page} page-{category-url} module-{category-module}">
+<body{onload} class="{layout-options} {is-game-page} {is-miniblog-page} page-{category-url} module-{category-module}">
 	<div id="scroll-up" title="Uz augšu"></div>
 
 	<div id="page">
@@ -304,22 +304,24 @@
 					<!-- END BLOCK : notification-list-->
 
 					<!-- START BLOCK : menu-list-->
-					<h3 class="title"><span>{title}</span></h3>
-					<nav id="sub-categories">
-						<ul class="menu" id="nav-{topid}">
-							<!-- START BLOCK : menu-node-->
-							<li{sel}><a href="{url}">{title}</a>
-								<!-- START BLOCK : menu-list-sub-->
-								<ul>
-									<!-- START BLOCK : menu-node-sub-->
-									<li{sel}><a href="{url}">{title}</a></li>
-										<!-- END BLOCK : menu-node-sub-->
-								</ul>
-								<!-- END BLOCK : menu-list-sub-->
-								</li>
-								<!-- END BLOCK : menu-node-->
-						</ul>
-					</nav>
+					<div class="widget">
+						<h3 class="title"><span>{title}</span></h3>
+						<nav id="sub-categories">
+							<ul class="menu" id="nav-{topid}">
+								<!-- START BLOCK : menu-node-->
+								<li{sel}><a href="{url}">{title}</a>
+									<!-- START BLOCK : menu-list-sub-->
+									<ul>
+										<!-- START BLOCK : menu-node-sub-->
+										<li{sel}><a href="{url}">{title}</a></li>
+											<!-- END BLOCK : menu-node-sub-->
+									</ul>
+									<!-- END BLOCK : menu-list-sub-->
+									</li>
+									<!-- END BLOCK : menu-node-->
+							</ul>
+						</nav>
+					</div>
 					<!-- END BLOCK : menu-list-->
 
 					<div class="widget">

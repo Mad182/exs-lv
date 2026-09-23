@@ -198,6 +198,9 @@ if (isset($_GET['p'])) {
 		}
 		$category = get_cat($cat);
 	}
+	if (empty($category) && isset($_GET['m'])) {
+		$category = get_cat('say');
+	}
 	if (!empty($category) && $category->tmpl) {
 		$skin = $category->tmpl;
 	}
@@ -314,6 +317,7 @@ if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
 	$require_jquery = true;
 }
 $is_game = (isset($category) && ((!empty($category->module) && in_array($category->module, $jquery_modules)) || (!empty($category->parent) && $category->parent == 2516)));
+$is_miniblog = (isset($_GET['m']) || (isset($category) && in_array($category->textid, ['say', 'miniblogs', 'miniblog'])) || (isset($category) && in_array($category->module, ['miniblogs', 'miniblog'])));
 
 if ($is_game && isset($tpl)) {
 	$game_info = $db->get_row("SELECT * FROM `games` WHERE `slug` = '" . sanitize($category->textid) . "' OR `slug` = '" . sanitize($category->module) . "' OR `game_code` = '" . sanitize($category->module) . "' LIMIT 1");
@@ -453,6 +457,7 @@ $tpl->assignGlobal([
 	'category-url' => isset($category->textid) ? $category->textid : '',
 	'category-module' => isset($category->module) ? $category->module : '',
 	'is-game-page' => (!empty($is_game) ? 'is-game-page' : ''),
+	'is-miniblog-page' => (!empty($is_miniblog) ? 'is-miniblog-page' : ''),
 	'currentuser-nick' => h($auth->nick),
 	'inprofile-level' => $in_level,
 	'new-messages' => $new_msg_html,
