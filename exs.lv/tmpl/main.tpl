@@ -25,7 +25,7 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/main.7728c4eb.min.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/main.2daf5099.min.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -98,7 +98,7 @@
 	{plevel}
 </head>
 
-<body{onload} class="{layout-options} {is-game-page} {is-miniblog-page} page-{category-url} module-{category-module}">
+<body{onload} class="{layout-options} {is-game-page} {is-miniblog-page} {is-read-page} page-{category-url} module-{category-module}">
 	<div id="scroll-up" title="Uz augšu"></div>
 
 	<div id="page">
@@ -324,7 +324,7 @@
 					</div>
 					<!-- END BLOCK : menu-list-->
 
-					<div class="widget">
+					<div class="widget" id="latest-posts-widget">
 						<h3 class="title"><span>Jaunākais portālā</span></h3>
 						<nav id="latest-posts-navigation" class="tabwidget widget tab-container box">
 							<ul class="tabnav clearfix">

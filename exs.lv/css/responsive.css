@@ -6404,6 +6404,27 @@ width:100% !important;margin-left:0 !important
 body.is-game-page .widget-poll, body.page-speles .widget-poll, body.module-speles .widget-poll {
 display:none !important
 }
+body.is-read-page #main, body.page-read #main {
+display:flex !important;flex-direction:column !important
+}
+body.is-read-page #main:before, body.is-read-page #main:after, body.page-read #main:before, body.page-read #main:after, body.is-read-page #main > .c, body.page-read #main > .c {
+display:none !important
+}
+body.is-read-page #main-left, body.page-read #main-left {
+order:1 !important;width:100% !important;margin-left:0 !important
+}
+body.is-read-page #sidebar-left, body.page-read #sidebar-left {
+order:2 !important;width:100% !important;margin-left:0 !important;display:flex !important;flex-direction:column !important
+}
+body.is-read-page #latest-posts-widget, body.page-read #latest-posts-widget {
+order:1 !important
+}
+body.is-read-page #sidebar-left .widget, body.page-read #sidebar-left .widget {
+order:2
+}
+body.is-read-page #sidebar, body.page-read #sidebar {
+order:3 !important;width:100% !important;margin-left:0 !important
+}
 @media (max-width: 480px) {
 .nav-collapse .nav > li > a {
 padding:15px 6px !important;font-size:12px
