@@ -123,7 +123,7 @@
 				<div id="arkanoid-victory-overlay" class="arkanoid-overlay" style="display: none;">
 					<div class="arkanoid-overlay-content">
 						<h3 class="victory-title">👑 VISI LĪMEŅI PIEVEIKTI! 👑</h3>
-						<p>Izcils sniegums! Visi 10 klasiskie Arkanoid līmeņi ir notīrīti.</p>
+						<p>Izcils sniegums! Visi 32 klasiskie Arkanoid līmeņi ir notīrīti.</p>
 						<div class="score-card highlight-card">
 							<span class="card-title">Gala Rezultāts</span>
 							<strong id="arkanoid-victory-score" class="card-num">0</strong>

@@ -17,7 +17,7 @@
 	const BRICK_WIDTH = 38;
 	const BRICK_HEIGHT = 16;
 	const BRICK_PADDING = 4;
-	const BRICK_OFFSET_TOP = 50;
+	const BRICK_OFFSET_TOP = 40;
 	const BRICK_OFFSET_LEFT = 11; // (480 - (11 * 38 + 10 * 4)) / 2 = (480 - 458) / 2 = 11
 
 	const VAUS_NORMAL_WIDTH = 76;
@@ -56,114 +56,559 @@
 	];
 
 	// ==========================================
-	// 2. 10 CLASSIC HANDCRAFTED MAPS
+	// 2. 32 AUTHENTIC TAITO CLASSIC MAPS
 	// ==========================================
 	const CLASSIC_MAPS = [
-		// Round 1: Classic horizontal color tiers with silver top
+		// Round 1: Classic horizontal color tiers with silver crest
 		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
 			"SSSSSSSSSSS",
 			"RRRRRRRRRRR",
-			"YYYYYYYYYYY",
 			"BBBBBBBBBBB",
+			"YYYYYYYYYYY",
 			"PPPPPPPPPPP",
 			"GGGGGGGGGGG"
 		],
-		// Round 2: Stepped pyramids & gates
+		// Round 2: Triangular step ramp with right chute & silver base
 		[
-			"...SS.SS...",
-			"..RRR.RRR..",
-			".YYYY.YYYY.",
-			"BBBBB.BBBBB",
-			".GGG...GGG.",
-			"..OO...OO..",
-			"...C...C..."
+			"...........",
+			"...........",
+			"O..........",
+			"OC.........",
+			"OCG........",
+			"OCGB.......",
+			"OCGBR......",
+			"OCGBRO.....",
+			"OCGBROC....",
+			"OCGBROCG...",
+			"OCGBROCGB..",
+			"OCGBROCGBR.",
+			"SSSSSSSSSSO"
 		],
-		// Round 3: Twin fortress pillars with gold & silver
+		// Round 3: Alternating gold fortress beams and color tiers
 		[
-			"XX.......XX",
-			"SS..YYY..SS",
-			"RR..YPY..RR",
-			"GG..YYY..GG",
-			"BB.......BB",
-			"CC..SSS..CC",
-			"XX..RRR..XX"
-		],
-		// Round 4: Concentric Diamond Formation
-		[
-			".....S.....",
-			"....R.R....",
-			"...Y...Y...",
-			"..B..P..B..",
-			".G..PCP..G.",
-			"..B..P..B..",
-			"...Y...Y...",
-			"....R.R....",
-			".....S....."
-		],
-		// Round 5: Space Invader Pixel Art Tribute!
-		[
-			"..G.....G..",
-			"...G...G...",
-			"..GGGGGGG..",
-			".GG.GGG.GG.",
+			"...........",
+			"...........",
+			"...........",
 			"GGGGGGGGGGG",
-			"G.GGGGGGG.G",
-			"G.G.....G.G",
-			"...GG.GG..."
+			"...........",
+			"WWWXXXXXXXX",
+			"...........",
+			"RRRRRRRRRRR",
+			"...........",
+			"XXXXXXXXWWW",
+			"...........",
+			"PPPPPPPPPPP",
+			"...........",
+			"BBBXXXXXXXX",
+			"...........",
+			"BBBBBBBBBBB",
+			"...........",
+			"XXXXXXXXBBB"
 		],
-		// Round 6: Fortress Honeycomb / Maze
+		// Round 4: Diagonal herringbone woven color tapestry
 		[
-			"R.R.R.R.R.R",
-			"BXBXBXBXBXB",
-			"Y.Y.Y.Y.Y.Y",
-			"GSGSGSGSGSG",
-			"P.P.P.P.P.P",
-			"C.C.C.C.C.C"
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			".SYGP.YGBS.",
+			".BGYR.GYSB.",
+			".GPRY.BSYG.",
+			".YRPG.SBGY.",
+			".RYGB.YGPR.",
+			".PGYS.GYRP.",
+			".GBSY.PRYG.",
+			".YSBG.RPGY.",
+			".SYGP.YGBS.",
+			".BGYR.GYSB.",
+			".GPRY.BSYG.",
+			".YRPG.SBGY.",
+			".RYGB.YGPR.",
+			".PGYS.GYRP."
 		],
-		// Round 7: Dual Hourglass Challenge
+		// Round 5: Space Invader alien tribute with silver exoskeleton
 		[
-			"YYYYY.YYYYY",
-			".RRR...RRR.",
-			"..G.....G..",
-			".SSS...SSS.",
-			"BBBBB.BBBBB",
-			"..X.....X..",
-			".PP.....PP."
+			"...........",
+			"...........",
+			"...Y...Y...",
+			"....Y.Y....",
+			"....Y.Y....",
+			"...SSSSS...",
+			"...SSSSS...",
+			"..SSRSRSS..",
+			"..SSRSRSS..",
+			".SSSSSSSSS.",
+			".SSSSSSSSS.",
+			".S.SSSSS.S.",
+			".S.S...S.S.",
+			".S.S...S.S.",
+			"....S.S....",
+			"....S.S...."
 		],
-		// Round 8: Bunker with Narrow 1-Brick Entrance
+		// Round 6: Vertical striped columns with gold crossbeams
 		[
+			"...........",
+			"...........",
+			"...........",
+			"B.R.G.G.R.B",
+			"B.R.G.G.R.B",
+			"B.R.G.G.R.B",
+			"B.XOXOXOX.B",
+			"B.R.G.G.R.B",
+			"B.R.G.G.R.B",
+			"B.R.G.G.R.B",
+			"B.R.G.G.R.B",
+			"B.R.G.G.R.B",
+			"O.X.X.X.X.O",
+			"B.R.G.G.R.B"
+		],
+		// Round 7: Concentric diamond medallion with rainbow rings
+		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"....YCB....",
+			"...YGBCY...",
+			"...CBGYO...",
+			"..GBCYGRO..",
+			"..BGYORGY..",
+			"..CYGROYG..",
+			"..YORGYCB..",
+			"..GROYGBC..",
+			"..RGYCBGY..",
+			"...YGBCY...",
+			"...CBGYO...",
+			"....CYG...."
+		],
+		// Round 8: Fortified gold corner anchors with central color nodes
+		[
+			"...........",
+			"...........",
+			"...........",
+			".X..X.X..X.",
+			".XX.....XX.",
+			".....O.....",
+			"....XGX....",
+			"..X..Y..X..",
+			".....B.....",
+			"..X..R..X..",
+			"....XGX....",
+			".....Y.....",
+			".XX.....XX.",
+			".X..X.X..X."
+		],
+		// Round 9: Twin gold bunker pillars with lower color cube
+		[
+			"...........",
+			"...........",
+			".X.X...X.X.",
+			".XGX...XGX.",
+			".XBX...XBX.",
+			".XXX...XXX.",
+			"...........",
+			"...PBBBY...",
+			"...PGCGY...",
+			"...PCGCY...",
+			"...PGCGY...",
+			"...PCGCY...",
+			"...PBBBY..."
+		],
+		// Round 10: The Vault - Left gold barrier wall protecting inner diamond
+		[
+			".X.........",
+			"...........",
+			".X.........",
+			".X.........",
+			".X....B....",
+			".X...BCB...",
+			".X..BCBCB..",
+			".X.BCBSBCB.",
+			".X..BCBCB..",
+			".X...BCB...",
+			".X....B....",
+			".X.........",
+			".X.........",
+			".X.........",
+			".X.........",
+			".XXXXXXXXXX"
+		],
+		// Round 11: Concentric rectangular silver maze rings
+		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			".SSSSSSSSS.",
+			".S.......S.",
+			".S.SSSSS.S.",
+			".S.S...S.S.",
+			".S.S.S.S.S.",
+			".S.S...S.S.",
+			".S.SSSSS.S.",
+			".S.......S.",
+			".SSSSSSSSS."
+		],
+		// Round 12: Gold labyrinth corridors with hidden color gems
+		[
+			"...........",
+			"...........",
 			"XXXXXXXXXXX",
-			"XSSSSSSSSSX",
-			"XS.......SX",
-			"XS.PPPPP.SX",
-			"XS.YYYYY.SX",
-			"XS...R...SX",
-			"XXXX.X.XXXX"
+			"....X...XO.",
+			".XG.X...X..",
+			".X..X.X.X..",
+			".X..X.X.X..",
+			".X..XGX.X..",
+			".X.OX.XBX..",
+			".X..XRX.X..",
+			".X..X.X.X..",
+			".X..X.X.X..",
+			".XC...X....",
+			".X....X...O",
+			".XXXXXXXXXX"
 		],
-		// Round 9: St. Andrew's Cross with Silver Anchors
+		// Round 13: Four-quadrant checkerboard formation
 		[
-			"S.........S",
-			".R.......R.",
-			"..Y.....Y..",
-			"...G...G...",
-			"....B.B....",
-			".....P.....",
-			"....B.B....",
-			"...G...G...",
-			"..Y.....Y..",
-			".R.......R.",
-			"S.........S"
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			".YY.WWW.YY.",
+			".WW.YYY.WW.",
+			".BB.RRR.BB.",
+			".PP.GGG.PP.",
+			".GG.PPP.GG.",
+			".RR.BBB.RR.",
+			".YY.WWW.YY.",
+			".WW.YYY.WW."
 		],
-		// Round 10: The Citadel / Grand Finale
+		// Round 14: Tiered silver barriers with side gold blocks
 		[
-			"XX..SSS..XX",
-			"XR..RRR..RX",
-			"XG..GGG..GX",
-			"XB..BBB..BX",
-			"SS.YYYYY.SS",
-			"..PPPPPPP..",
-			"...CCCCC...",
-			"....OOO...."
+			"...........",
+			"...........",
+			"...........",
+			"RSSSSSSSSSR",
+			"X.........X",
+			"BBBBBBBBBBB",
+			"...........",
+			"OSSSSSSSSSO",
+			"X.........X",
+			"BBBBBBBBBBB",
+			"...........",
+			"BSSSSSSSSSB",
+			"X.........X",
+			"RRRRRRRRRRR",
+			"...........",
+			"RRRRRRRRRRR",
+			"X.........X"
+		],
+		// Round 15: Giant hollow diamond with solid cyan & silver frame
+		[
+			"...........",
+			"...........",
+			"...........",
+			"CSSCCCCCSSC",
+			"CSYSCCCSGSC",
+			"CSYYSSSGGSC",
+			"CSYYYSGGGSC",
+			"CSYYYSGGGSC",
+			"CSYYYSGGGSC",
+			"CSYYYSGGGSC",
+			"CSYYYSGGGSC",
+			"CSYYYSGGGSC",
+			"CCSYYSGGSCC",
+			"CCCSYSGSCCC",
+			"CCCCSSSCCCC"
+		],
+		// Round 16: Cascading inverted staircase with gold centerline
+		[
+			"...........",
+			"...........",
+			".....X.....",
+			"...WW.WW...",
+			".WW..X..WW.",
+			"W..YY.YY..W",
+			".YY..X..YY.",
+			"Y..GG.GG..Y",
+			".GG..X..GG.",
+			"G..RR.RR..G",
+			".RR..X..RR.",
+			"R..BB.BB..R",
+			".BB..X..BB.",
+			"B..GG.GG..B",
+			".GG.....GG.",
+			"G.........G"
+		],
+		// Round 17: Sacred Temple with silver crest, white columns & gold altar
+		[
+			"...........",
+			"...........",
+			".....S.....",
+			"...BBSGG...",
+			"..BBWWWGG..",
+			".BBWWWWWGG.",
+			".BBWWWWWGG.",
+			".BBWWWWWGG.",
+			".S.S.S.S.S.",
+			".....S.....",
+			".....S.....",
+			"...X.X.....",
+			"...XXX.....",
+			"....X......"
+		],
+		// Round 18: Twin orange columns, gold archway & green/yellow chamber
+		[
+			"...........",
+			"...........",
+			"...........",
+			"O.XYYYYYX.O",
+			"O.XXYYYXX.O",
+			"O.X.XYX.X.O",
+			"O.X.GSG.X.O",
+			"O.X.G.G.X.O",
+			"O.X.G.G.X.O",
+			"O.X.G.G.X.O",
+			"O.X.G.G.X.O",
+			"O.X.G.G.X.O",
+			"OXXXG.GXXXO"
+		],
+		// Round 19: Gold roof and floor with vertical rainbow bars and gold spine
+		[
+			"...........",
+			"...........",
+			"...........",
+			"..XXXXXXX..",
+			"..GRBXBRG..",
+			"..GRBXBRG..",
+			"..GRBXBRG..",
+			"..GRBXBRG..",
+			"..GRBXBRG..",
+			"..GRBXBRG..",
+			"..GRBXBRG..",
+			"..XXXXXXX.."
+		],
+		// Round 20: Gold grid obstacle course with scattered color targets
+		[
+			"...........",
+			"...........",
+			"...........",
+			"GXOXCXGXPXO",
+			"PXSXSXSXSXC",
+			"..P........",
+			".X.XPX.X.X.",
+			".X.X.XPX.X.",
+			".X.X.X.XPX.",
+			"...........",
+			".X.X.XPX.X.",
+			".X.XPX.X.X.",
+			"..PX.X.X...",
+			"P....X....."
+		],
+		// Round 21: Concentric fortress with gold wall enclosing color core
+		[
+			"...........",
+			"...........",
+			"...........",
+			".XOOOOOOOX.",
+			".X.......X.",
+			".X.XXXXX.X.",
+			".X.XBBBX.X.",
+			".X.XPPPX.X.",
+			".X.XGGGX.X.",
+			".X.XOOOX.X.",
+			".X.XCCCX.X.",
+			".X.......X.",
+			".X.......X.",
+			".XXXXXXXXX."
+		],
+		// Round 22: Yellow parapet, gold fortified bunkers & white base
+		[
+			"...........",
+			"...........",
+			"...........",
+			"YYYYYYYYYYY",
+			"YYYYYYYYYYY",
+			"...........",
+			"RX.XRRRX.XR",
+			"RX.XRRRX.XR",
+			"RX.XRRRX.XR",
+			"RX.XRRRX.XR",
+			"...........",
+			"WWWWWWWWWWW",
+			"WWWWWWWWWWW"
+		],
+		// Round 23: 3x3 matrix of silver pods surrounding color nuclei
+		[
+			"...........",
+			"...........",
+			"BBBBBBBBBBB",
+			"...........",
+			"SSS.SSS.SSS",
+			"SGS.SGS.SGS",
+			"SSS.SSS.SSS",
+			"...........",
+			"..SSS.SSS..",
+			"..SRS.SRS..",
+			"..SSS.SSS..",
+			"...........",
+			"SSS.SSS.SSS",
+			"SBS.SBS.SBS",
+			"SSS.SSS.SSS"
+		],
+		// Round 24: Solid blue and white royal pyramid
+		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"....WWW....",
+			"....WWW....",
+			"....WWW....",
+			"...WBWBW...",
+			"...BBBBB...",
+			"..BBBBBBB..",
+			"..BBBBBBB..",
+			".BBBBBBBBB.",
+			"BBBBBBBBBBB"
+		],
+		// Round 25: Massive gold fortress with underground silver chamber
+		[
+			"...........",
+			"...........",
+			"...........",
+			"RRRRRRRRRRR",
+			"GGGGGGGGGGG",
+			"BBBBBBBBBBB",
+			"XXXXRRRXXXX",
+			"XGGXSSSXGGX",
+			"XRRX...XBBX",
+			"X.........X",
+			"X.........X",
+			"X.........X",
+			"X..XGGGX..X",
+			"XSSXXXXXSSX"
+		],
+		// Round 26: Gold and silver enclosed oval capsule with color core
+		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"..XSSX.....",
+			".X....X....",
+			"X..CC..X...",
+			"X.BBBB.X...",
+			"X..PP..X...",
+			".X....X....",
+			"..XXXX....."
+		],
+		// Round 27: Double sandwich of silver and yellow/red tiers
+		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"SSSSSSSSSSS",
+			"YYYYYYYYYYY",
+			"SSSSSSSSSSS",
+			"...........",
+			"SSSSSSSSSSS",
+			"RRRRRRRRRRR",
+			"SSSSSSSSSSS"
+		],
+		// Round 28: Blue inverted pyramid envelope with nested heart
+		[
+			"...........",
+			"...........",
+			"...........",
+			"BBBBBBBBBBB",
+			"BXXXPXPXXXB",
+			"BX.......XB",
+			"BXP.....PXB",
+			"BXPP...PPXB",
+			".BXPP.PPXB.",
+			"..BXPPPXB..",
+			"...BXPXB...",
+			"....BPB....",
+			".....B....."
+		],
+		// Round 29: Split twin towers separated by gold pillars
+		[
+			"...........",
+			"...........",
+			"...........",
+			"BBBBX.XBBBB",
+			"GGGGX.XGGGG",
+			"XXXXX.XXXXX",
+			"PPPPX.XPPPP",
+			"OOOOX.XOOOO",
+			"BBBBX.XBBBB",
+			"SSSSX.XSSSS",
+			"OOOOX.XOOOO",
+			"PPPPX.XPPPP",
+			"GGGGX.XGGGG"
+		],
+		// Round 30: Stepped diagonal rainbow waves with gold/silver bottom stairs
+		[
+			"...........",
+			"...........",
+			"...........",
+			"...........",
+			"OP.........",
+			"OPCG.......",
+			"OPCGOP.....",
+			"OPCGOPCG...",
+			"SPCGOPCGOP.",
+			".XSGOPCGOPC",
+			"...XSPCGOPC",
+			".....XSGOPC",
+			".......XSPC",
+			".........XS"
+		],
+		// Round 31: Silver dot-matrix grid with alternating color spots
+		[
+			"...........",
+			"...........",
+			"...........",
+			"B.R.G.P.B.R",
+			"S.S.S.S.S.S",
+			".G.R.B.O.G.",
+			".S.S.S.S.S.",
+			"O.B.R.G.P.B",
+			"S.S.S.S.S.S",
+			".P.G.R.B.O.",
+			".S.S.S.S.S.",
+			"G.O.B.R.G.P",
+			"S.S.S.S.S.S",
+			".B.P.G.R.B.",
+			".S.S.S.S.S.",
+			"R.G.O.B.R.G",
+			"S.S.S.S.S.S"
+		],
+		// Round 32: Vertical gold grill prison bars trapping color tiers
+		[
+			"...........",
+			"...........",
+			"...........",
+			"..X.X.X.X..",
+			"..X.X.X.X..",
+			"..X.X.X.X..",
+			"..X.X.XRR..",
+			"..X.X.X.X..",
+			"..X.XBBBB..",
+			"..X.X.X.X..",
+			"..XRRRRRR..",
+			"..X.X.X.X..",
+			"..YYYYYYY..",
+			"..SSSSSSS.."
 		]
 	];
 
@@ -558,6 +1003,7 @@
 		// ------------------------------------------
 		loadRound(roundNum) {
 			this.round = roundNum;
+			this.roundTransitionTimer = 1.8;
 			this.bricks = [];
 			this.capsules = [];
 			this.lasers = [];
@@ -570,7 +1016,8 @@
 			const mapData = CLASSIC_MAPS[mapIndex];
 
 			// Silver brick durability scales with higher loops
-			const silverHits = 2 + Math.floor((roundNum - 1) / 3);
+			// Silver brick durability scales every 8 rounds in classic arcade
+			const silverHits = 2 + Math.floor((roundNum - 1) / 8);
 
 			for (let r = 0; r < mapData.length; r++) {
 				const rowStr = mapData[r];
@@ -918,8 +1365,10 @@
 				this.addScore(warpBonus);
 			}
 
-			// End of classic 10 maps?
-			if (this.round === 10) {
+			// End of classic 32 maps?
+			if (this.round === CLASSIC_MAPS.length) {
+				const duration = Math.max(1, Math.floor((Date.now() - this.startTime) / 1000));
+				this.submitScore(this.score, this.round, duration);
 				setTimeout(() => {
 					this.state = 'VICTORY';
 					if (this.dom.victoryScore) this.dom.victoryScore.textContent = this.score.toLocaleString('lv-LV');
@@ -1063,6 +1512,11 @@
 			// Laser cooldown
 			if (this.vaus.lasersCooldown > 0) {
 				this.vaus.lasersCooldown -= dt;
+			}
+
+			// Round transition banner timer
+			if (this.roundTransitionTimer > 0) {
+				this.roundTransitionTimer -= dt;
 			}
 
 			// Check Warp Portal entry
@@ -1402,6 +1856,21 @@
 				ctx.globalAlpha = p.alpha;
 				ctx.fillStyle = p.color;
 				ctx.fillRect(p.x, p.y, p.size, p.size);
+				ctx.restore();
+			}
+
+			// Render Round Transition Banner
+			if (this.roundTransitionTimer > 0) {
+				const alpha = Math.min(1, this.roundTransitionTimer);
+				ctx.save();
+				ctx.globalAlpha = alpha;
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'middle';
+				ctx.font = '900 24px monospace';
+				ctx.fillStyle = '#38bdf8';
+				ctx.shadowColor = '#38bdf8';
+				ctx.shadowBlur = 12;
+				ctx.fillText(`ROUND ${this.round}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50);
 				ctx.restore();
 			}
 		}
