@@ -415,6 +415,11 @@
 						<!-- INCLUDE BLOCK : module-currrent -->
 					</div>
 					<div class="c"></div>
+					<!-- START BLOCK : game-chat-section -->
+					<div id="game-chat-wrapper" class="game-chat-wrapper" data-game="{game-chat-slug}" data-game-title="{game-chat-title}" data-user-id="{currentuser-id}">
+						{game-chat-html}
+					</div>
+					<!-- END BLOCK : game-chat-section -->
 				</div>
 
 				<div id="sidebar" class="span3">

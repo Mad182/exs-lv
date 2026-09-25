@@ -3259,3 +3259,129 @@ function array_average_nonzero($arr) {
 	$arr = array_filter($arr);
 	return (count($arr) > 0) ? (array_sum($arr) / count($arr)) : 0;
 }
+
+/**
+ * Render shared game chat widget HTML
+ */
+function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
+	global $auth;
+
+	$game_icons = [
+		'tetris' => '🎮', 'snake' => '🐍', 'karatavas' => '🔤', 'memory' => '🧠',
+		'2048' => '🔢', '2048-spele' => '🔢', 'minu-mekletajs' => '💣', 'sudoku' => '🔢',
+		'wordle' => '🟩', 'rulete' => '🎰', 'desas' => '⭕', 'flappy' => '🐦',
+		'invaders' => '👾', 'augsup' => '🚀', 'vardes' => '🐸', 'runner' => '🏃',
+		'tornis' => '🏗️', 'arkanoid' => '🧱', 'rezonanse' => '💥', 'tanki' => '🛡️',
+		'ut99' => '⚔️', 'speles' => '🎲'
+	];
+
+	$icon = isset($game_icons[$game_slug]) ? $game_icons[$game_slug] : '🎮';
+	$safe_game_title = htmlspecialchars($game_title, ENT_QUOTES, 'UTF-8');
+	$safe_game_slug = htmlspecialchars($game_slug, ENT_QUOTES, 'UTF-8');
+
+	$html = '
+	<div class="game-chat-card" id="game-chat-app">
+		<div class="game-chat-header">
+			<div class="game-chat-header-left">
+				<span class="game-chat-icon">💬</span>
+				<h3 class="game-chat-title">Spēļu tērzētava</h3>
+				<span class="game-chat-badge">Kopējais čats</span>
+				<div class="game-chat-online-indicator" id="game-chat-online-wrap" title="Aktīvie spēlētāji tiešsaistē visās spēlēs">
+					<span class="online-pulse"></span>
+					<span id="game-chat-online-count">0</span> spēlē tagad
+				</div>
+			</div>
+			<div class="game-chat-header-right">
+				<button type="button" class="chat-btn-tool" id="chat-toggle-players" title="Rādīt/Paslēpt aktīvo spēlētāju sarakstu">
+					👥 <span class="btn-text">Spēlētāji</span>
+				</button>
+				<button type="button" class="chat-btn-tool" id="chat-toggle-sound" title="Ieslēgt/Izslēgt skaņas paziņojumus">
+					🔊
+				</button>
+				<button type="button" class="chat-btn-tool" id="chat-toggle-collapse" title="Sakļaut/Izvērst tērzētavu">
+					▾
+				</button>
+			</div>
+		</div>
+
+		<div class="game-chat-body" id="game-chat-body">
+			<!-- ACTIVE PLAYERS STRIP -->
+			<div class="game-chat-active-bar" id="game-chat-active-bar" style="display: none;">
+				<div class="active-bar-label">Aktīvie spēlētāji:</div>
+				<div class="active-players-list" id="game-chat-players-list">
+					<span class="empty-players-notice">Ielādē aktīvos spēlētājus...</span>
+				</div>
+			</div>
+
+			<!-- MESSAGES CONTAINER -->
+			<div class="game-chat-messages-container" id="game-chat-messages-container">
+				<div class="game-chat-messages" id="game-chat-messages">
+					<div class="game-chat-loading">
+						<span class="chat-spinner"></span> Ielādē tērzētavas ziņas...
+					</div>
+				</div>
+				<button type="button" id="game-chat-scroll-bottom" class="game-chat-scroll-btn" style="display: none;">
+					Jaunas ziņas ↓
+				</button>
+			</div>';
+
+	if ($auth->ok) {
+		$html .= '
+			<!-- CHAT INPUT FORM (FOR AUTH USERS) -->
+			<form id="game-chat-form" class="game-chat-form">
+				<div class="game-chat-input-row">
+					<div class="current-game-tag" title="Tava pašreizējā spēle">
+						<span class="game-tag-icon">' . $icon . '</span>
+						<span class="game-tag-name">' . $safe_game_title . '</span>
+					</div>
+					<input type="text" id="game-chat-input" class="game-chat-input" placeholder="Raksti ziņu visiem spēlētājiem..." maxlength="400" autocomplete="off" />
+					<button type="button" id="game-chat-emojis-btn" class="chat-emojis-btn" title="Ievietot emocijzīmi">😀</button>
+					<button type="submit" id="game-chat-send-btn" class="game-chat-send-btn">
+						<span>Sūtīt</span> <span class="send-arrow">➔</span>
+					</button>
+				</div>
+				<!-- EMOJIS PICKER POPUP -->
+				<div id="game-chat-emojis-popup" class="game-chat-emojis-popup" style="display: none;">
+					<span class="emoji-opt" data-code=":)">😊</span>
+					<span class="emoji-opt" data-code=":D">😃</span>
+					<span class="emoji-opt" data-code=";-)">😉</span>
+					<span class="emoji-opt" data-code="8-)">😎</span>
+					<span class="emoji-opt" data-code=":P">😛</span>
+					<span class="emoji-opt" data-code=":O">😮</span>
+					<span class="emoji-opt" data-code=":(">🙁</span>
+					<span class="emoji-opt" data-code=":*">😘</span>
+					<span class="emoji-opt" data-code=":game:">🎮</span>
+					<span class="emoji-opt" data-code=":star:">⭐</span>
+					<span class="emoji-opt" data-code="🔥">🔥</span>
+					<span class="emoji-opt" data-code="🏆">🏆</span>
+					<span class="emoji-opt" data-code="🎉">🎉</span>
+					<span class="emoji-opt" data-code="🚀">🚀</span>
+					<span class="emoji-opt" data-code="💯">💯</span>
+					<span class="emoji-opt" data-code="👾">👾</span>
+					<span class="emoji-opt" data-code="🕹️">🕹️</span>
+					<span class="emoji-opt" data-code="⚔️">⚔️</span>
+					<span class="emoji-opt" data-code="🛡️">🛡️</span>
+					<span class="emoji-opt" data-code="💪">💪</span>
+				</div>
+				<div class="game-chat-form-meta">
+					<span class="meta-tip">Kopējs čats visām spēlēm • Spied <kbd>Enter</kbd>, lai nosūtītu</span>
+					<span class="meta-counter"><span id="chat-chars-left">400</span> zīmes</span>
+				</div>
+			</form>';
+	} else {
+		$html .= '
+			<!-- GUEST NOTICE BOX -->
+			<div class="game-chat-guest-box">
+				<span class="guest-icon">ℹ️</span>
+				<span>Tu spēlē kā viesis. Lai piedalītos kopējā spēļu čatā ar savu avatāru un lietotājvārdu, lūdzu, <a href="/login">ienāc profilā</a> vai <a href="/register">reģistrējies</a>!</span>
+			</div>';
+	}
+
+	$html .= '
+		</div>
+	</div>
+	<script src="/js/game-chat.js" defer></script>';
+
+	return $html;
+}
+

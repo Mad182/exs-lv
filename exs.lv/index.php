@@ -327,6 +327,26 @@ if ($is_game && isset($tpl)) {
 	}
 }
 
+$is_real_game = (isset($category) && (
+	(!empty($category->parent) && $category->parent == 2516) ||
+	(!empty($category->module) && $category->module === 'speles') ||
+	(!empty($category->textid) && $category->textid === 'speles') ||
+	!empty($game_info)
+));
+
+if ($is_real_game) {
+	$add_css[] = 'game-chat.18bdf704.min.css';
+	$current_game_slug = 'speles';
+	$current_game_title = 'Spēļu katalogs';
+	if (!empty($game_info)) {
+		$current_game_slug = $game_info->slug;
+		$current_game_title = $game_info->title;
+	} elseif (isset($category) && $category->module !== 'speles') {
+		$current_game_slug = !empty($category->textid) ? $category->textid : $category->module;
+		$current_game_title = $category->title;
+	}
+}
+
 //lietotājam specifiskās fīčas
 if ($skin === 'main') {
 	if ($auth->ok !== true && empty($require_jquery) && empty($force_full_js)) {
@@ -784,6 +804,16 @@ if (!empty($_SESSION['flash_message'])) {
 		'class' => $_SESSION['flash_message']['class']
 	]);
 	$_SESSION['flash_message'] = '';
+}
+
+// Kopējā spēļu tērzētava
+if (!empty($is_real_game) && isset($tpl)) {
+	$tpl->newBlock('game-chat-section');
+	$tpl->assign([
+		'game-chat-slug' => h($current_game_slug),
+		'game-chat-title' => h($current_game_title),
+		'game-chat-html' => get_game_chat_html($current_game_slug, $current_game_title)
+	]);
 }
 
 //aizveram konekciju lai nekarājas, ja satura sūtīšana ieilgst
