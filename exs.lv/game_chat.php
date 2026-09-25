@@ -291,7 +291,7 @@ if ($action === 'send') {
 		exit;
 	}
 
-	$insert_id = $db->insert_id();
+	$insert_id = (int)$db->insert_id;
 
 	// Update presence in game_chat_online
 	$db->query("
