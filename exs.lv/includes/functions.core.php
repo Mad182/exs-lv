@@ -3284,18 +3284,17 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 		<div class="game-chat-header">
 			<div class="game-chat-header-left">
 				<span class="game-chat-icon">💬</span>
-				<h3 class="game-chat-title">Spēļu tērzētava</h3>
-				<span class="game-chat-badge">Kopējais čats</span>
-				<div class="game-chat-online-indicator" id="game-chat-online-wrap" title="Aktīvie spēlētāji tiešsaistē visās spēlēs">
+				<h3 class="game-chat-title">Spēļu čats</h3>
+				<div class="game-chat-online-indicator" id="game-chat-online-wrap" title="Aktīvie spēlētāji visās spēlēs">
 					<span class="online-pulse"></span>
-					<span id="game-chat-online-count">0</span> spēlē tagad
+					<span id="game-chat-online-count">0</span>
 				</div>
 			</div>
 			<div class="game-chat-header-right">
-				<button type="button" class="chat-btn-tool" id="chat-toggle-players" title="Rādīt/Paslēpt aktīvo spēlētāju sarakstu">
-					👥 <span class="btn-text">Spēlētāji</span>
+				<button type="button" class="chat-btn-tool" id="chat-toggle-players" title="Spēlētāji tiešsaistē">
+					👥
 				</button>
-				<button type="button" class="chat-btn-tool" id="chat-toggle-sound" title="Ieslēgt/Izslēgt skaņas paziņojumus">
+				<button type="button" class="chat-btn-tool" id="chat-toggle-sound" title="Ieslēgt/Izslēgt skaņu">
 					🔊
 				</button>
 				<button type="button" class="chat-btn-tool" id="chat-toggle-collapse" title="Sakļaut/Izvērst tērzētavu">
@@ -3307,7 +3306,7 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 		<div class="game-chat-body" id="game-chat-body">
 			<!-- ACTIVE PLAYERS STRIP -->
 			<div class="game-chat-active-bar" id="game-chat-active-bar" style="display: none;">
-				<div class="active-bar-label">Aktīvie spēlētāji:</div>
+				<div class="active-bar-label">Spēlē tagad:</div>
 				<div class="active-players-list" id="game-chat-players-list">
 					<span class="empty-players-notice">Ielādē aktīvos spēlētājus...</span>
 				</div>
@@ -3329,15 +3328,17 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 		$html .= '
 			<!-- CHAT INPUT FORM (FOR AUTH USERS) -->
 			<form id="game-chat-form" class="game-chat-form">
-				<div class="game-chat-input-row">
+				<div class="current-game-tag-bar">
 					<div class="current-game-tag" title="Tava pašreizējā spēle">
 						<span class="game-tag-icon">' . $icon . '</span>
 						<span class="game-tag-name">' . $safe_game_title . '</span>
 					</div>
-					<input type="text" id="game-chat-input" class="game-chat-input" placeholder="Raksti ziņu visiem spēlētājiem..." maxlength="400" autocomplete="off" />
+				</div>
+				<div class="game-chat-input-row">
+					<input type="text" id="game-chat-input" class="game-chat-input" placeholder="Raksti čatā..." maxlength="400" autocomplete="off" />
 					<button type="button" id="game-chat-emojis-btn" class="chat-emojis-btn" title="Ievietot emocijzīmi">😀</button>
-					<button type="submit" id="game-chat-send-btn" class="game-chat-send-btn">
-						<span>Sūtīt</span> <span class="send-arrow">➔</span>
+					<button type="submit" id="game-chat-send-btn" class="game-chat-send-btn" title="Sūtīt (Enter)">
+						<span class="send-arrow">➔</span>
 					</button>
 				</div>
 				<!-- EMOJIS PICKER POPUP -->
@@ -3364,8 +3365,8 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 					<span class="emoji-opt" data-code="💪">💪</span>
 				</div>
 				<div class="game-chat-form-meta">
-					<span class="meta-tip">Kopējs čats visām spēlēm • Spied <kbd>Enter</kbd>, lai nosūtītu</span>
-					<span class="meta-counter"><span id="chat-chars-left">400</span> zīmes</span>
+					<span class="meta-tip">Kopējs čats visām spēlēm • Enter</span>
+					<span class="meta-counter"><span id="chat-chars-left">400</span> z.</span>
 				</div>
 			</form>';
 	} else {
@@ -3373,7 +3374,7 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 			<!-- GUEST NOTICE BOX -->
 			<div class="game-chat-guest-box">
 				<span class="guest-icon">ℹ️</span>
-				<span>Tu spēlē kā viesis. Lai piedalītos kopējā spēļu čatā ar savu avatāru un lietotājvārdu, lūdzu, <a href="/login">ienāc profilā</a> vai <a href="/register">reģistrējies</a>!</span>
+				<span>Viesis: <a href="/login">Ienāc</a> vai <a href="/register">reģistrējies</a>, lai čatotu!</span>
 			</div>';
 	}
 

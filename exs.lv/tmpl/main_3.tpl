@@ -186,6 +186,11 @@
 
 			<div id="inner-sidebar">
 
+				<!-- START BLOCK : game-chat-section -->
+				<div id="game-chat-wrapper" class="game-chat-wrapper widget" data-game="{game-chat-slug}" data-game-title="{game-chat-title}" data-user-id="{currentuser-id}">
+					{game-chat-html}
+				</div>
+				<!-- END BLOCK : game-chat-section -->
 				<!-- START BLOCK : profile-box-->
 				<h3>{profile-nick}</h3>
 				<div class="box">

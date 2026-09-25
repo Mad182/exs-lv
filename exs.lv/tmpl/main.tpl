@@ -415,11 +415,6 @@
 						<!-- INCLUDE BLOCK : module-currrent -->
 					</div>
 					<div class="c"></div>
-					<!-- START BLOCK : game-chat-section -->
-					<div id="game-chat-wrapper" class="game-chat-wrapper" data-game="{game-chat-slug}" data-game-title="{game-chat-title}" data-user-id="{currentuser-id}">
-						{game-chat-html}
-					</div>
-					<!-- END BLOCK : game-chat-section -->
 				</div>
 
 				<div id="sidebar" class="span3">
@@ -437,6 +432,11 @@
 						</form>
 					</div>
 					<!-- END BLOCK : movie-search-->
+					<!-- START BLOCK : game-chat-section -->
+					<div id="game-chat-wrapper" class="game-chat-wrapper widget" data-game="{game-chat-slug}" data-game-title="{game-chat-title}" data-user-id="{currentuser-id}">
+						{game-chat-html}
+					</div>
+					<!-- END BLOCK : game-chat-section -->
 					<!-- START BLOCK : profile-box-->
 					<div class="widget">
 						<h3 class="title"><span>{profile-nick}{custom_title}</span></h3>

@@ -186,8 +186,7 @@
 				var p = players[i];
 				var meTag = p.is_me ? ' <span class="tag-you">(Tu)</span>' : '';
 				html += '<div class="active-player-pill" title="' + p.nick + ' spēlē ' + p.game_title + '">';
-				html += '  <span class="pill-dot"></span>';
-				html += '  <span class="pill-nick">' + p.author_html + meTag + '</span>';
+				html += '  <div class="pill-player"><span class="pill-dot"></span> <span class="pill-nick">' + p.author_html + meTag + '</span></div>';
 				html += '  <a href="' + p.game_url + '" class="pill-game"><span class="pill-icon">' + p.game_icon + '</span> ' + p.game_title + '</a>';
 				html += '</div>';
 			}

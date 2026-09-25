@@ -335,7 +335,7 @@ $is_real_game = (isset($category) && (
 ));
 
 if ($is_real_game) {
-	$add_css[] = 'game-chat.18bdf704.min.css';
+	$add_css[] = 'game-chat.1c37d7cd.min.css';
 	$current_game_slug = 'speles';
 	$current_game_title = 'Spēļu katalogs';
 	if (!empty($game_info)) {
