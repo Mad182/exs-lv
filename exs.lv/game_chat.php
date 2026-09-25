@@ -26,6 +26,9 @@ if (!isset($_SESSION)) {
 
 $site_access = get_site_access();
 $auth = new Auth();
+$busers = get_banlist();
+$online_users = get_online();
+$cday_users = get_cakeday();
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -94,7 +97,7 @@ function format_chat_message($row) {
 	$can_delete = ($auth->ok && (im_mod() || ($is_author && $row->time > (time() - 300))));
 
 	// User formatting
-	$author_html = usercolor($row->nick, $row->level, true, $row->user_id);
+	$author_html = usercolor($row->nick, $row->level, false, $row->user_id);
 	$avatar_url = get_avatar($row, 's');
 
 	// Time formatting
@@ -179,7 +182,7 @@ if ($action === 'fetch') {
 			$online_players[] = [
 				'user_id' => (int)$p->user_id,
 				'nick' => $p->nick,
-				'author_html' => usercolor($p->nick, $p->level, true, $p->user_id),
+				'author_html' => usercolor($p->nick, $p->level, 'disable', $p->user_id),
 				'avatar' => get_avatar($p, 's'),
 				'game_slug' => $p->game,
 				'game_title' => $meta['title'],
@@ -231,6 +234,7 @@ if ($action === 'fetch') {
 		'messages' => $messages,
 		'online_players' => $online_players,
 		'online_count' => count($online_players),
+		'online_uids' => !empty($online_users['onlineusers']) ? array_map('intval', array_keys($online_users['onlineusers'])) : [],
 		'last_id' => $max_id,
 		'current_user_id' => $auth->ok ? (int)$auth->id : 0,
 		'is_logged_in' => (bool)$auth->ok

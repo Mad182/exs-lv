@@ -152,7 +152,7 @@
 				delBtnHtml = '<button type="button" class="chat-msg-del" data-id="' + msg.id + '" title="Dzēst ziņu">✕</button>';
 			}
 
-			var html = '<div class="chat-msg-row' + myClass + '" id="chat-msg-' + msg.id + '" data-id="' + msg.id + '">';
+			var html = '<div class="chat-msg-row' + myClass + '" id="chat-msg-' + msg.id + '" data-id="' + msg.id + '" data-user-id="' + msg.user_id + '">';
 			html += '  <div class="chat-msg-avatar">';
 			html += '    <a href="/user/' + msg.user_id + '"><img src="' + msg.avatar + '" alt="' + msg.nick + '" /></a>';
 			html += '  </div>';
@@ -168,6 +168,41 @@
 			html += '</div>';
 
 			return html;
+		}
+
+		// Synchronize online status indicator (*) on message authors
+		function updateMessagesOnlineStatus(onlineUserIds) {
+			if (!onlineUserIds || !Array.isArray(onlineUserIds)) return;
+			var onlineMap = {};
+			for (var i = 0; i < onlineUserIds.length; i++) {
+				onlineMap[onlineUserIds[i]] = true;
+			}
+
+			$messagesContainer.find('.chat-msg-row').each(function () {
+				var uid = parseInt($(this).data('user-id'), 10);
+				if (!uid) return;
+				var isOnline = !!onlineMap[uid];
+				var $author = $(this).find('.chat-msg-author');
+				var $star = $author.find('.r, .lb, .g');
+
+				if (isOnline) {
+					if (!$star.length) {
+						var $coloredSpan = $author.find('span.admins, span.mods, span.rautors, span.bot').first();
+						if (!$coloredSpan.length) {
+							$coloredSpan = $author.children('span').last();
+						}
+						if ($coloredSpan.length) {
+							$coloredSpan.prepend('<span class="r">*</span>');
+						} else {
+							$author.prepend('<span class="r">*</span>');
+						}
+					}
+				} else {
+					if ($star.length) {
+						$star.remove();
+					}
+				}
+			});
 		}
 
 		// Update active players list
@@ -263,6 +298,11 @@
 
 					// Update active online players
 					updateOnlinePlayers(data.online_players);
+
+					// Dynamically sync online star (*) on chat messages
+					if (data.online_uids) {
+						updateMessagesOnlineStatus(data.online_uids);
+					}
 				},
 				error: function () {
 					isPolling = false;
