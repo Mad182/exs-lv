@@ -3374,7 +3374,7 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 			<!-- GUEST NOTICE BOX -->
 			<div class="game-chat-guest-box">
 				<span class="guest-icon">ℹ️</span>
-				<span>Viesis: <a href="/login">Ienāc</a> vai <a href="/register">reģistrējies</a>, lai čatotu!</span>
+				<span>Viesis: Ienāc vai <a href="/register">reģistrējies</a>, lai čatotu!</span>
 			</div>';
 	}
 

@@ -10,7 +10,7 @@
 
 <!-- START BLOCK : game-login -->
 <div class="alert alert-info">
-	<strong>Piezīme:</strong> Tu spēlē kā viesis (demo režīmā ar 100 žetoniem). <a href="/login">Reģistrējies vai ieej profilā</a>, lai saglabātu savus žetonus un sacenstos EXS.LV topos!
+	<strong>Piezīme:</strong> Tu spēlē kā viesis (demo režīmā ar 100 žetoniem). <a href="/register">Reģistrējies</a> vai ieej profilā, lai saglabātu savus žetonus un sacenstos EXS.LV topos!
 </div>
 <!-- END BLOCK : game-login -->
 
