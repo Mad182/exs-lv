@@ -9,6 +9,7 @@ require('configdb.php');
 require(CORE_PATH . '/includes/class.mdb.php');
 require(CORE_PATH . '/includes/class.auth.php');
 require(CORE_PATH . '/includes/functions.core.php');
+require(CORE_PATH . '/includes/site_loader.php');
 
 // Memcached connection
 $m = new Memcached();
@@ -22,6 +23,8 @@ $db = new mdb($username, $password, $database, $hostname);
 if (!isset($_SESSION)) {
 	session_start();
 }
+
+$site_access = get_site_access();
 $auth = new Auth();
 
 header('Content-Type: application/json; charset=utf-8');

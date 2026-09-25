@@ -91,11 +91,11 @@ class AuthBase {
 
 		$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
 
-		if (in_array($this->id, $site_access[1])) {
+		if (!empty($site_access[1]) && is_array($site_access[1]) && in_array($this->id, $site_access[1])) {
 			$this->level = 1;
 		}
 
-		if (in_array($this->id, $site_access[2])) {
+		if (!empty($site_access[2]) && is_array($site_access[2]) && in_array($this->id, $site_access[2])) {
 			$this->level = 2;
 		}
 
@@ -184,11 +184,11 @@ class AuthBase {
 
 			$this->interests = $db->get_col("SELECT `interest_id` FROM `user_interests` WHERE `user_id` = '$this->id'");
 
-			if (in_array($this->id, $site_access[1])) {
+			if (!empty($site_access[1]) && is_array($site_access[1]) && in_array($this->id, $site_access[1])) {
 				$this->level = 1;
 			}
 
-			if (in_array($this->id, $site_access[2])) {
+			if (!empty($site_access[2]) && is_array($site_access[2]) && in_array($this->id, $site_access[2])) {
 				$this->level = 2;
 			}
 
