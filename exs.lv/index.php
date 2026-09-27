@@ -440,11 +440,11 @@ if (!empty($secure_login)) {
 }
 
 if ($auth->skin == 1 && ($lang == 1 || $lang == 3)) {
-	$add_css[] = 'manual-dark.33579fbb.min.css';
+	$add_css[] = 'manual-dark.7f483b1f.min.css';
 } elseif ($auth->ok === true && $auth->skin == 0 && ($lang == 1 || $lang == 3)) {
 	//light skin
 } elseif ($lang === 1 || $lang === 3) {
-	$add_css[] = 'auto-dark.04cc99f4.min.css';
+	$add_css[] = 'auto-dark.bd9564a1.min.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei

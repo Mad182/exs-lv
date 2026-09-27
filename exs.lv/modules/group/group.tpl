@@ -582,33 +582,85 @@
 	<!-- END BLOCK : noguestacc-search-->
 
 	<!-- START BLOCK : form-search-->
-	<form class="form" action="" method="GET">
-		<fieldset>
-			<legend>Meklētājs</legend>
-			<p>
-				<label for="search-q">Meklējamais vārds vai frāze</label><br>
-				<input type="text" name="q" id="search-q" class="text" value="{qstr}" />
-				<!-- START BLOCK : form-search-mine-->
-				<br><label class="checkbox"><input type="checkbox" name="mine" value="1"{mine-sel} /> meklēt tikai manis rakstīto</label><br>
-				<!-- END BLOCK : form-search-mine-->
-			</p>
-			<p>
-				<input type="submit" value="Meklēt" class="button" />
-			</p>
-		</fieldset>
-	</form>
+	<div class="group-search-box">
+		<form class="group-search-form" action="" method="GET">
+			<div class="group-search-bar">
+				<input type="text" name="q" id="search-q" class="text search-input" value="{qstr}" placeholder="Meklēt sarunās un sadaļās..." autocomplete="off" />
+				<button type="submit" class="button primary search-btn">Meklēt</button>
+			</div>
+			<!-- START BLOCK : form-search-mine-->
+			<div class="group-search-options">
+				<label for="search-mine">
+					<input type="checkbox" name="mine" id="search-mine" value="1"{mine-sel} /> meklēt tikai manis rakstīto
+				</label>
+			</div>
+			<!-- END BLOCK : form-search-mine-->
+		</form>
+	</div>
 	<!-- END BLOCK : form-search-->
 
-	<!-- START BLOCK : res-search-->
-	<ol>
-		<!-- START BLOCK : res-search-node-->
-		<li style="border-bottom: 1px solid #ddd">
-			<p style="padding: 0;margin: 0;font-size: 90%">{author}: {text}</p>
-			<p style="padding: 2px 0 10px;margin:0"><a href="{group-link}/forum/{link}">{group-link}/forum/{link}</a></p>
-		</li>
-		<!-- END BLOCK : res-search-node-->
-	</ol>
-	<!-- END BLOCK : res-search-->
+	<!-- START BLOCK : res-search-summary-->
+	<div class="group-search-summary">
+		Atrasti <strong>{total-count}</strong> rezultāti meklējumam „<strong>{qstr}</strong>”
+	</div>
+	<!-- END BLOCK : res-search-summary-->
+
+	<!-- START BLOCK : res-search-tabs-->
+	<div class="group-search-section">
+		<div class="group-search-section-header">
+			<span class="group-search-count-badge">{tabs-count}</span>
+			<h3 class="group-search-section-title">Grupas cilnes un sadaļas</h3>
+		</div>
+		<div class="group-search-items">
+			<!-- START BLOCK : res-search-tab-node-->
+			<div class="group-search-card card-tab">
+				<div class="group-search-card-top">
+					<span class="group-search-card-badge badge-tab">Cilne</span>
+					<h4 class="group-search-card-title"><a href="{tab-url}">{tab-title}</a></h4>
+				</div>
+				<p class="group-search-snippet">{tab-snippet}</p>
+				<a href="{tab-url}" class="group-search-card-link">{tab-url-text} &rarr;</a>
+			</div>
+			<!-- END BLOCK : res-search-tab-node-->
+		</div>
+	</div>
+	<!-- END BLOCK : res-search-tabs-->
+
+	<!-- START BLOCK : res-search-posts-->
+	<div class="group-search-section">
+		<div class="group-search-section-header">
+			<span class="group-search-count-badge">{posts-count}</span>
+			<h3 class="group-search-section-title">Sarunas un komentāri</h3>
+		</div>
+		<div class="group-search-items">
+			<!-- START BLOCK : res-search-node-->
+			<div class="group-search-card card-post">
+				<div class="group-search-card-top">
+					<div class="group-search-card-meta">
+						<img src="{avatar}" alt="" class="post-author-av" />
+						<span class="search-post-author">{author}</span>
+						<!-- START BLOCK : res-search-node-date-->
+						<span class="search-post-date" title="{date-title}">&bull; {date}</span>
+						<!-- END BLOCK : res-search-node-date-->
+					</div>
+					<span class="group-search-card-badge badge-post">Saruna</span>
+				</div>
+				<p class="group-search-snippet">{text}</p>
+				<a href="{group-link}/forum/{link}" class="group-search-card-link">Atvērt sarunu &rarr;</a>
+			</div>
+			<!-- END BLOCK : res-search-node-->
+		</div>
+	</div>
+	<!-- END BLOCK : res-search-posts-->
+
+	<!-- START BLOCK : res-search-empty-->
+	<div class="group-search-empty">
+		<div class="group-search-empty-icon">&#128269;</div>
+		<h4>Nekas netika atrasts</h4>
+		<p>Pēc pieprasījuma „<strong>{qstr}</strong>” šajā grupā netika atrasta neviena sadaļa vai saruna.<br>Pamēģiniet izmantot citus vai vispārīgākus atslēgvārdus.</p>
+	</div>
+	<!-- END BLOCK : res-search-empty-->
+
 </div>
 <!-- END BLOCK : group-search-->
 

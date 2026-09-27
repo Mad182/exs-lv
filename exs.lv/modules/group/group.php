@@ -1134,6 +1134,45 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
  * 5. GRUPAS MEKLĒŠANAS CILNE
  */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'search') {
 
+	if (!function_exists('group_search_snippet')) {
+		function group_search_snippet($html_content, array $keywords, $length = 240) {
+			$text = html_entity_decode(strip_tags($html_content), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			$text = preg_replace('/\s+/', ' ', $text);
+			$text = trim($text);
+
+			if (mb_strlen($text) <= $length) {
+				$snippet = $text;
+			} else {
+				$first_pos = false;
+				foreach ($keywords as $kw) {
+					$pos = mb_stripos($text, $kw);
+					if ($pos !== false && ($first_pos === false || $pos < $first_pos)) {
+						$first_pos = $pos;
+					}
+				}
+
+				if ($first_pos === false || $first_pos < 50) {
+					$snippet = mb_substr($text, 0, $length) . '...';
+				} else {
+					$start = max(0, $first_pos - 40);
+					$space_pos = mb_strpos($text, ' ', $start);
+					if ($space_pos !== false && $space_pos < $first_pos) {
+						$start = $space_pos + 1;
+					}
+					$snippet = '...' . mb_substr($text, $start, $length) . '...';
+				}
+			}
+
+			$escaped = h($snippet);
+			foreach ($keywords as $kw) {
+				if ($kw !== '') {
+					$escaped = preg_replace('/(' . preg_quote(h($kw), '/') . ')/iu', '<strong>$1</strong>', $escaped);
+				}
+			}
+			return $escaped;
+		}
+	}
+
 	$robotstag = ['noindex', 'follow'];
 	$tpl->assignGlobal('active-tab-search', 'active');
 	$tpl->newBlock('group-search');
@@ -1142,54 +1181,143 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	if ($group->public || ($is_mod || $is_admin || $is_member)) {
 
 		$tpl->newBlock('form-search');
+		if ($auth->ok === true) {
+			$tpl->newBlock('form-search-mine');
+			if (isset($_GET['mine'])) {
+				$tpl->assign('mine-sel', ' checked="checked"');
+			}
+		}
 
 		// meklēšanas forma jau aizpildīta; meklē...
 		if (isset($_GET['q'])) {
 
-			$q_string = str_replace([',', '.', '+', '-', '_'], ' ', $_GET['q']);
-			$q_string = strip_tags($q_string);
-			$tpl->assign('qstr', h($q_string));
-			$q_strings = explode(' ', $q_string);
-			$cond = '';
-
-			if(isset($_GET['mine'])) {
-				$cond .= " AND `author` = '$auth->id'";
+			$q_raw = trim($_GET['q']);
+			$q_string = str_replace([',', '.', '+', '-', '_'], ' ', $q_raw);
+			$q_string = trim(strip_tags($q_string));
+			$tpl->assign('qstr', h($q_raw));
+			$raw_strings = explode(' ', $q_string);
+			$q_strings = [];
+			foreach ($raw_strings as $str) {
+				$str = trim($str);
+				if ($str !== '') {
+					$q_strings[] = $str;
+				}
 			}
 
-			foreach ($q_strings as $str) {
-				$cond .= " AND `text` LIKE '%" . sanitize($str) . "%'";
+			$tab_results = [];
+			$results = [];
+
+			if (!empty($q_strings)) {
+
+				// 1. Meklēšana grupas cilnēs
+				$tab_access = ($is_mod || $is_admin || $is_member) ? '' : ' AND `public` = 1';
+				if (isset($_GET['mine'])) {
+					$tab_access .= " AND (`created_by` = '$auth->id' OR `modified_by` = '$auth->id')";
+				}
+
+				$tab_cond = '';
+				foreach ($q_strings as $str) {
+					$s = sanitize($str);
+					$tab_cond .= " AND (`title` LIKE '%$s%' OR `text` LIKE '%$s%')";
+				}
+
+				$tab_results = $db->get_results("SELECT `id`, `slug`, `title`, `text` FROM `clans_tabs` WHERE `clan_id` = '$group->id' $tab_access $tab_cond ORDER BY `id` ASC LIMIT 20");
+
+				// 2. Meklēšana grupas foruma sarunās
+				$post_cond = '';
+				if (isset($_GET['mine'])) {
+					$post_cond .= " AND `author` = '$auth->id'";
+				}
+
+				foreach ($q_strings as $str) {
+					$post_cond .= " AND `text` LIKE '%" . sanitize($str) . "%'";
+				}
+
+				$results = $db->get_results("SELECT `id`,`author`,`parent`,`date`,`text` FROM `miniblog` WHERE `groupid` = '$group->id' AND `removed` = 0 $post_cond ORDER BY `id` DESC LIMIT 60");
 			}
 
-			// atlasa meklēšanas rezultātus un izvada lapā
-			$results = $db->get_results("SELECT `id`,`author`,`parent`,`text` FROM `miniblog` WHERE `groupid` = '$group->id' AND `removed` = 0 $cond ORDER BY `id` DESC LIMIT 60");
+			$tabs_count = $tab_results ? count($tab_results) : 0;
+			$posts_count = $results ? count($results) : 0;
+			$total_count = $tabs_count + $posts_count;
+
+			// Kopsavilkuma josla
+			if (!empty($q_raw)) {
+				$tpl->newBlock('res-search-summary');
+				$tpl->assign([
+					'total-count' => $total_count,
+					'qstr' => h($q_raw)
+				]);
+			}
+
+			// Ciļņu rezultāti
+			if ($tab_results) {
+				$tpl->newBlock('res-search-tabs');
+				$tpl->assign('tabs-count', $tabs_count);
+
+				foreach ($tab_results as $tab_res) {
+					$tpl->newBlock('res-search-tab-node');
+					$tab_url = $group_link . '/tab/' . $tab_res->slug;
+
+					$highlighted_title = h($tab_res->title);
+					foreach ($q_strings as $str) {
+						if ($str !== '') {
+							$highlighted_title = preg_replace('/(' . preg_quote(h($str), '/') . ')/iu', '<strong>$1</strong>', $highlighted_title);
+						}
+					}
+
+					$snippet = group_search_snippet($tab_res->text, $q_strings, 240);
+
+					$tpl->assign([
+						'tab-url' => $tab_url,
+						'tab-title' => $highlighted_title,
+						'tab-snippet' => $snippet,
+						'tab-url-text' => $tab_url
+					]);
+				}
+			}
+
+			// Foruma sarunu rezultāti
 			if ($results) {
-				$tpl->newBlock('res-search');
+				$tpl->newBlock('res-search-posts');
+				$tpl->assign('posts-count', $posts_count);
+
 				foreach ($results as $result) {
 					$tpl->newBlock('res-search-node');
-					$result->text = strip_tags($result->text);
-					foreach ($q_strings as $str) {
-						$result->text = str_replace($str, '<strong>' . h($str) . '</strong>', $result->text);
-					}
+
+					$clean_post = strip_tags($result->text);
+					$highlighted_post = group_search_snippet($clean_post, $q_strings, 240);
+
 					$link = base_convert($result->id, 10, 36);
 					if (!empty($result->parent)) {
 						$link = base_convert($result->parent, 10, 36) . '#m' . $result->id;
 					}
+
 					$author = get_user($result->author);
+					$avatar = !empty($author) ? get_avatar($author, 's') : '//img.exs.lv/userpic/small/none.png';
+
 					$tpl->assign([
 						'author' => userlink($author),
-						'text' => $result->text,
+						'avatar' => $avatar,
+						'text' => $highlighted_post,
 						'group-id' => $group->id,
 						'link' => $link,
 					]);
+
+					if (!empty($result->date)) {
+						$tpl->newBlock('res-search-node-date');
+						$tpl->assign([
+							'date' => display_time(strtotime($result->date)),
+							'date-title' => date('d.m.Y. H:i', strtotime($result->date))
+						]);
+					}
 				}
 			}
-		}
 
-		if($auth->ok === true) {
-			 $tpl->newBlock('form-search-mine');
-			 if(isset($_GET['mine'])) {
-			 	$tpl->assign('mine-sel', ' checked="checked"');
-			 }
+			// Nekas nav atrasts
+			if ($total_count === 0 && !empty($q_raw)) {
+				$tpl->newBlock('res-search-empty');
+				$tpl->assign('qstr', h($q_raw));
+			}
 		}
 
 	}

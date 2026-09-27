@@ -1533,5 +1533,110 @@ li.L9 {
 	color: #60a5fa !important;
 }
 
+/* Group search dark mode */
+.group-search-box {
+	background: #1e242c !important;
+	border-color: #2d3748 !important;
+}
+
+.group-search-bar .search-input {
+	background: #14181f !important;
+	border-color: #343b44 !important;
+	color: #e2e8f0 !important;
+}
+
+.group-search-bar .search-input:focus {
+	border-color: #58a6ff !important;
+	box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2) !important;
+}
+
+.group-search-options {
+	color: #94a3b8 !important;
+}
+
+.group-search-summary {
+	background: #161d26 !important;
+	border-left-color: #58a6ff !important;
+	color: #cbd5e1 !important;
+}
+
+.group-search-section-header {
+	border-bottom-color: #2d3748 !important;
+}
+
+.group-search-section-title {
+	color: #f1f5f9 !important;
+}
+
+.group-search-count-badge {
+	background: #272d36 !important;
+	color: #58a6ff !important;
+}
+
+.group-search-card {
+	background: #1e242c !important;
+	border-color: #2d3748 !important;
+}
+
+.group-search-card:hover {
+	border-color: #3d4a5c !important;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.group-search-card.card-tab {
+	border-left-color: #10b981 !important;
+}
+
+.group-search-card.card-post {
+	border-left-color: #58a6ff !important;
+}
+
+.badge-tab {
+	background: #064e3b !important;
+	color: #6ee7b7 !important;
+}
+
+.badge-post {
+	background: #1e3a5f !important;
+	color: #93c5fd !important;
+}
+
+.group-search-card-title a {
+	color: #e2e8f0 !important;
+}
+
+.group-search-card-title a:hover {
+	color: #58a6ff !important;
+}
+
+.group-search-card-meta {
+	color: #94a3b8 !important;
+}
+
+.group-search-snippet {
+	color: #cbd5e1 !important;
+}
+
+.group-search-snippet strong,
+.group-search-snippet mark,
+.group-search-card-title strong {
+	background: #854d0e !important;
+	color: #fef08a !important;
+}
+
+.group-search-card-link {
+	color: #58a6ff !important;
+}
+
+.group-search-empty {
+	background: #161d26 !important;
+	border-color: #343b44 !important;
+	color: #94a3b8 !important;
+}
+
+.group-search-empty h4 {
+	color: #e2e8f0 !important;
+}
+
 
 
