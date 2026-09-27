@@ -75,7 +75,7 @@ if (($is_admin || $is_mod) && !$group->public && $pending_count = $db->get_var("
 }
 
 $ingroup = $group;
-$group_tabs = $db->get_results("SELECT `id`,`title`,`slug` FROM `clans_tabs` WHERE `clan_id` = '$group->id'");
+$group_tabs = $db->get_results("SELECT `id`,`title`,`slug` FROM `clans_tabs` WHERE `clan_id` = '$group->id' ORDER BY `id` ASC");
 
 $pagepath = '<a href="/grupas">Domubiedru grupas</a> / ' . $group->title;
 
@@ -103,7 +103,7 @@ if ($has_polls) {
 if ($group_tabs) {
 	foreach ($group_tabs as $tab) {
 		$sel = '';
-		if (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3']) && $_GET['var3'] == $tab->slug) {
+		if (isset($_GET['var2']) && $_GET['var2'] == 'tab' && isset($_GET['var3']) && strcasecmp($_GET['var3'], $tab->slug) === 0) {
 			$sel = 'active';
 		}
 		$tpl->newBlock('group-menu-add');
@@ -1018,7 +1018,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		}
 
 		// cilnes pievienošana
-		if (isset($_POST['tab-title']) && count($group_tabs) < 6 && strlen($_POST['tab-title']) > 2) {
+		if (isset($_POST['tab-title']) && count($group_tabs) < 12 && strlen($_POST['tab-title']) > 2) {
 			$title = trim(substr(strip_tags($_POST['tab-title']), 0, 16));
 			$slug = mkslug($title);
 			$title = sanitize($title);
@@ -1040,7 +1040,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		}
 
 		// ciļņu skaitam ir noteikts limits, lai neaizcūkātu visu skatu
-		if (count($group_tabs) < 6) {
+		if (count($group_tabs) < 12) {
 			$tpl->newBlock('group-settings-newtab');
 		}
 
