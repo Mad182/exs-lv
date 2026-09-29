@@ -19,6 +19,49 @@
 		canvas.width = COLS * TILE;
 		canvas.height = ROWS * TILE;
 
+		// Dynamically fit game window to middle column width and browser window height (whichever is smallest)
+		var hudBar = document.querySelector('.pacman-hud-bar');
+		var canvasContainer = document.querySelector('.pacman-canvas-container');
+		var stage = document.querySelector('.pacman-main-stage');
+
+		function fitGameToWindow() {
+			if (!hudBar || !canvasContainer || !stage) return;
+
+			// Available width in middle column
+			var parentWidth = stage.clientWidth || (stage.parentElement ? stage.parentElement.clientWidth : 0);
+			if (!parentWidth || parentWidth <= 0) {
+				parentWidth = window.innerWidth > 0 ? (window.innerWidth - 30) : 448;
+			}
+
+			// Available height in browser window
+			// Account for HUD bar and comfortable viewport breathing room (navbar, header, margins)
+			var hudHeight = hudBar.offsetHeight || 44;
+			var maxAvailableHeight = Math.max(300, window.innerHeight - hudHeight - 75);
+
+			// Canvas aspect ratio is 448 / 576 (width / height)
+			var maxCanvasWidthFromHeight = Math.floor(maxAvailableHeight * (448 / 576));
+
+			// Target width is whichever is smaller: middle column width or viewport height constraint
+			var targetWidth = Math.min(parentWidth, maxCanvasWidthFromHeight);
+			targetWidth = Math.floor(targetWidth);
+
+			// Clamp minimum width to prevent collapse
+			if (targetWidth < 280) targetWidth = 280;
+
+			// Apply dynamically
+			hudBar.style.maxWidth = targetWidth + 'px';
+			canvasContainer.style.maxWidth = targetWidth + 'px';
+
+			// Canvas container exact height matching 448:576 ratio
+			var targetHeight = Math.round(targetWidth * (576 / 448));
+			canvasContainer.style.height = targetHeight + 'px';
+		}
+
+		fitGameToWindow();
+		$(window).on('resize orientationchange', fitGameToWindow);
+		setTimeout(fitGameToWindow, 50);
+		setTimeout(fitGameToWindow, 300);
+
 		// Direction Enums
 		var DIR_NONE  = 0;
 		var DIR_UP    = 1;

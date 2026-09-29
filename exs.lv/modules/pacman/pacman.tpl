@@ -137,9 +137,12 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- SIDEBAR: LEADERBOARDS & RULES -->
-		<div class="pacman-sidebar">
+	<!-- STATS & INSTRUCTIONS BELOW THE GAME (2 COLUMNS) -->
+	<div class="pacman-bottom-grid">
+		<!-- COLUMN 1: STATS & LEADERBOARDS -->
+		<div class="pacman-bottom-col">
 			<!-- TODAY'S TOP -->
 			<div class="pacman-card">
 				<h3 class="card-title">🏆 Šodienas Tops</h3>
@@ -173,9 +176,12 @@
 					<!-- END BLOCK : alltime-empty -->
 				</ul>
 			</div>
+		</div>
 
+		<!-- COLUMN 2: INSTRUCTIONS & RULES -->
+		<div class="pacman-bottom-col">
 			<!-- PACMAN RULES & BONUSES REFERENCE CARD -->
-			<div class="pacman-card" style="margin-top: 15px;">
+			<div class="pacman-card">
 				<h3 class="card-title">🍒 Noteikumi un Punkti</h3>
 				<div class="pacman-info-section">
 					<div class="info-row">
