@@ -284,22 +284,22 @@
 
 		// Pac-Man Player Object
 		var pacman = {
-			x: 13.5 * TILE,
-			y: 26 * TILE,
+			x: 13 * TILE + TILE / 2,
+			y: 26 * TILE + TILE / 2,
 			dir: DIR_LEFT,
 			nextDir: DIR_LEFT,
-			speed: 2.1,
+			speed: 2.0,
 			radius: 12,
 			mouthAngle: 0.2,
 			mouthDelta: 0.04,
 			isDying: false,
 			deathAngle: 0,
 			reset: function() {
-				this.x = 13.5 * TILE;
-				this.y = 26 * TILE;
+				this.x = 13 * TILE + TILE / 2;
+				this.y = 26 * TILE + TILE / 2;
 				this.dir = DIR_LEFT;
 				this.nextDir = DIR_LEFT;
-				this.speed = Math.min(2.1 + (level - 1) * 0.05, 2.6);
+				this.speed = Math.min(2.0 + (level - 1) * 0.05, 2.5);
 				this.mouthAngle = 0.2;
 				this.mouthDelta = 0.04;
 				this.isDying = false;
@@ -338,13 +338,13 @@
 					id: GHOST_BLINKY,
 					name: 'Blinky',
 					color: ghostColors[0],
-					x: 13.5 * TILE,
-					y: 14 * TILE,
+					x: 13 * TILE + TILE / 2,
+					y: 14 * TILE + TILE / 2,
 					dir: DIR_LEFT,
 					targetX: 0,
 					targetY: 0,
-					mode: 'chase', // 'chase', 'scatter', 'fright', 'eyes', 'house'
-					speed: 1.9,
+					mode: 'chase',
+					speed: 1.85,
 					inHouse: false,
 					scatterTarget: { x: 25, y: -3 },
 					animTimer: 0
@@ -353,15 +353,15 @@
 					id: GHOST_PINKY,
 					name: 'Pinky',
 					color: ghostColors[1],
-					x: 13.5 * TILE,
-					y: 17 * TILE,
+					x: 13 * TILE + TILE / 2,
+					y: 17 * TILE + TILE / 2,
 					dir: DIR_UP,
 					targetX: 0,
 					targetY: 0,
 					mode: 'house',
-					speed: 1.85,
+					speed: 1.8,
 					inHouse: true,
-					exitDelay: 60, // frames until exit
+					exitDelay: 40,
 					scatterTarget: { x: 2, y: -3 },
 					animTimer: 0
 				},
@@ -369,15 +369,15 @@
 					id: GHOST_INKY,
 					name: 'Inky',
 					color: ghostColors[2],
-					x: 11.5 * TILE,
-					y: 17 * TILE,
+					x: 11 * TILE + TILE / 2,
+					y: 17 * TILE + TILE / 2,
 					dir: DIR_UP,
 					targetX: 0,
 					targetY: 0,
 					mode: 'house',
-					speed: 1.85,
+					speed: 1.8,
 					inHouse: true,
-					exitDelay: 180, // frames or 30 dots
+					exitDelay: 140,
 					scatterTarget: { x: 27, y: 34 },
 					animTimer: 0
 				},
@@ -385,15 +385,15 @@
 					id: GHOST_CLYDE,
 					name: 'Clyde',
 					color: ghostColors[3],
-					x: 15.5 * TILE,
-					y: 17 * TILE,
+					x: 15 * TILE + TILE / 2,
+					y: 17 * TILE + TILE / 2,
 					dir: DIR_UP,
 					targetX: 0,
 					targetY: 0,
 					mode: 'house',
-					speed: 1.85,
+					speed: 1.8,
 					inHouse: true,
-					exitDelay: 320, // frames or 60 dots
+					exitDelay: 260,
 					scatterTarget: { x: 0, y: 34 },
 					animTimer: 0
 				}
@@ -693,6 +693,13 @@
 				}
 			}
 
+			// Lock perpendicular axis to corridor center
+			if (pacman.dir === DIR_LEFT || pacman.dir === DIR_RIGHT) {
+				pacman.y = tileCenterY;
+			} else if (pacman.dir === DIR_UP || pacman.dir === DIR_DOWN) {
+				pacman.x = tileCenterX;
+			}
+
 			// Move in current direction if not blocked by wall
 			var dirInfo = DIRS[pacman.dir];
 			if (pacman.dir !== DIR_NONE) {
@@ -857,6 +864,7 @@
 						if (g.y > 17.5 * TILE) g.dir = DIR_UP;
 						return;
 					}
+					return;
 				}
 
 				// Determine speed based on mode & tunnel
@@ -865,89 +873,112 @@
 				var gRow = Math.floor(g.y / TILE);
 
 				if (g.mode === 'eyes') {
-					currentSpeed = 3.6; // Eyes return swiftly
+					currentSpeed = 3.4; // Eyes return swiftly
 				} else if (gRow === 17 && (gCol < 6 || gCol > 21)) {
 					currentSpeed = 1.0; // Tunnel slow down
 				} else if (g.mode === 'fright') {
 					currentSpeed = 1.15;
 				} else if (g.id === GHOST_BLINKY) {
 					// Cruise Elroy: speeds up when few dots remain
-					if (dotsRemaining <= 10) currentSpeed = 2.25;
-					else if (dotsRemaining <= 20) currentSpeed = 2.1;
+					if (dotsRemaining <= 10) currentSpeed = 2.15;
+					else if (dotsRemaining <= 20) currentSpeed = 2.0;
 				}
 
 				// Calculate Target Tile
 				calculateGhostTarget(g);
 
-				// Ghost navigation at tile centers
+				// Center coordinates of current tile
 				var tileCenterX = gCol * TILE + TILE / 2;
 				var tileCenterY = gRow * TILE + TILE / 2;
-				var distCenterX = Math.abs(g.x - tileCenterX);
-				var distCenterY = Math.abs(g.y - tileCenterY);
 
-				if (distCenterX <= currentSpeed && distCenterY <= currentSpeed) {
+				// Lock to corridor centerline
+				if (g.dir === DIR_LEFT || g.dir === DIR_RIGHT) g.y = tileCenterY;
+				if (g.dir === DIR_UP || g.dir === DIR_DOWN) g.x = tileCenterX;
+
+				var dInfo = DIRS[g.dir];
+				var nextX = g.x + dInfo.x * currentSpeed;
+				var nextY = g.y + dInfo.y * currentSpeed;
+
+				// Check if reached or crossed center this frame
+				var crossed = false;
+				if (g.dir === DIR_LEFT && g.x >= tileCenterX && nextX <= tileCenterX) crossed = true;
+				else if (g.dir === DIR_RIGHT && g.x <= tileCenterX && nextX >= tileCenterX) crossed = true;
+				else if (g.dir === DIR_UP && g.y >= tileCenterY && nextY <= tileCenterY) crossed = true;
+				else if (g.dir === DIR_DOWN && g.y <= tileCenterY && nextY >= tileCenterY) crossed = true;
+
+				var frontCol = gCol + dInfo.x;
+				var frontRow = gRow + dInfo.y;
+				var frontBlocked = !isWalkable(frontCol, frontRow, true, g.mode === 'eyes', g.inHouse);
+
+				if (crossed || frontBlocked) {
 					g.x = tileCenterX;
 					g.y = tileCenterY;
 
 					// Check if dead eyes reached ghost house entrance
 					if (g.mode === 'eyes') {
-						if (gCol === 13 || gCol === 14) {
-							if (gRow === 14 || gRow === 15) {
-								g.mode = 'house';
-								g.inHouse = true;
-								g.y = 17 * TILE;
-								g.exitDelay = 30;
-								return;
-							}
+						if ((gCol === 13 || gCol === 14) && (gRow === 14 || gRow === 15)) {
+							g.mode = 'house';
+							g.inHouse = true;
+							g.x = 13 * TILE + TILE / 2;
+							g.y = 17 * TILE + TILE / 2;
+							g.exitDelay = 30;
+							return;
 						}
 					}
 
-					// Choose next direction (no 180 reverse)
+					// Available turns
 					var bestDir = g.dir;
 					var bestDist = Infinity;
 					var validDirs = [DIR_UP, DIR_LEFT, DIR_DOWN, DIR_RIGHT];
+					// Authentic arcade restriction: ghosts cannot turn UP at (12,11), (15,11), (12,23), (15,23)
+					var disableUp = ((gRow === 11 || gRow === 23) && (gCol === 12 || gCol === 15) && g.mode !== 'eyes');
 
-					// Restriction: ghosts cannot turn UP directly above house at tiles (12,14) and (15,14)
-					var disableUp = (gRow === 14 && (gCol === 12 || gCol === 15) && g.mode !== 'eyes');
-
-					if (g.mode === 'fright') {
-						// Pseudo-random turn
-						var available = [];
-						validDirs.forEach(function(d) {
-							if (isOpposite(d, g.dir)) return;
-							if (d === DIR_UP && disableUp) return;
-							var nCol = gCol + DIRS[d].x;
-							var nRow = gRow + DIRS[d].y;
-							if (isWalkable(nCol, nRow, true, false, g.inHouse)) {
-								available.push(d);
-							}
-						});
-						if (available.length > 0) {
-							bestDir = available[Math.floor(Math.random() * available.length)];
+					var available = [];
+					validDirs.forEach(function(d) {
+						if (isOpposite(d, g.dir)) return;
+						if (d === DIR_UP && disableUp) return;
+						var nCol = gCol + DIRS[d].x;
+						var nRow = gRow + DIRS[d].y;
+						if (isWalkable(nCol, nRow, true, g.mode === 'eyes', g.inHouse)) {
+							available.push(d);
 						}
-					} else {
+					});
+
+					// If no non-reverse turns available, allow reversing
+					if (available.length === 0) {
 						validDirs.forEach(function(d) {
-							if (isOpposite(d, g.dir)) return;
-							if (d === DIR_UP && disableUp) return;
 							var nCol = gCol + DIRS[d].x;
 							var nRow = gRow + DIRS[d].y;
 							if (isWalkable(nCol, nRow, true, g.mode === 'eyes', g.inHouse)) {
+								available.push(d);
+							}
+						});
+					}
+
+					if (available.length > 0) {
+						if (g.mode === 'fright') {
+							bestDir = available[Math.floor(Math.random() * available.length)];
+						} else {
+							available.forEach(function(d) {
+								var nCol = gCol + DIRS[d].x;
+								var nRow = gRow + DIRS[d].y;
 								var dist = Math.hypot(nCol - g.targetX, nRow - g.targetY);
 								if (dist < bestDist) {
 									bestDist = dist;
 									bestDir = d;
 								}
-							}
-						});
+							});
+						}
 					}
 
 					g.dir = bestDir;
+					dInfo = DIRS[g.dir];
+					g.x += dInfo.x * currentSpeed;
+					g.y += dInfo.y * currentSpeed;
+				} else {
+					g.x = nextX;
+					g.y = nextY;
 				}
-
-				// Move ghost
-				var dInfo = DIRS[g.dir];
-				g.x += dInfo.x * currentSpeed;
-				g.y += dInfo.y * currentSpeed;
 
 				// Tunnel wrap
 				if (gRow === 17) {
@@ -991,13 +1022,16 @@
 		}
 
 		function releaseGhostFromHouse(g) {
-			// Center ghost horizontally in front of door, then move up
-			if (Math.abs(g.x - 13.5 * TILE) > 2) {
-				g.x += (g.x < 13.5 * TILE ? 1 : -1);
+			var centerX = 13 * TILE + TILE / 2;
+			var exitY = 14 * TILE + TILE / 2;
+
+			if (Math.abs(g.x - centerX) > 1.5) {
+				g.x += (g.x < centerX ? 1.4 : -1.4);
 			} else {
-				g.x = 13.5 * TILE;
-				g.y -= 1.2;
-				if (g.y <= 14 * TILE) {
+				g.x = centerX;
+				g.y -= 1.4;
+				if (g.y <= exitY) {
+					g.y = exitY;
 					g.inHouse = false;
 					g.dir = DIR_LEFT;
 					g.mode = isScatter ? 'scatter' : 'chase';
