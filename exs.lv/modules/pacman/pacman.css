@@ -27,7 +27,15 @@
 
 .pacman-title-icon {
 	font-size: 28px;
+	font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 	filter: drop-shadow(0 2px 4px rgba(234, 179, 8, 0.4));
+}
+
+.hud-btn,
+.card-title,
+.info-icon,
+.fruit-list li {
+	font-family: inherit, "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 }
 
 .pacman-subtitle {

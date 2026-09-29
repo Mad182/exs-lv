@@ -1198,7 +1198,7 @@
 		function renderFruit() {
 			var fObj = getFruitForLevel(level);
 			ctx.save();
-			ctx.font = '16px serif';
+			ctx.font = '16px "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
 			ctx.fillText(fObj.symbol, fruitX, fruitY);
@@ -1388,7 +1388,7 @@
 			for (var f = 0; f < fCount; f++) {
 				var fObj = getFruitForLevel(level - f);
 				ctx.save();
-				ctx.font = '14px serif';
+				ctx.font = '14px "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
 				ctx.textAlign = 'center';
 				ctx.fillText(fObj.symbol, canvas.width - 20 - f * 20, bottomY + 5);
 				ctx.restore();
@@ -1434,6 +1434,10 @@
 		}
 
 		// Initial grid setup and start animation
+		if (document.fonts && document.fonts.load) {
+			document.fonts.load('16px "Noto Color Emoji"');
+			document.fonts.load('14px "Noto Color Emoji"');
+		}
 		initGrid();
 		resetPositions();
 		updateHUD();
