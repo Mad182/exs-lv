@@ -282,28 +282,65 @@
 		var fruitX = 13.5 * TILE;
 		var fruitY = 20 * TILE;
 
+		// Level Speeds (Authentic Arcade Ratio based on Pac-Man Dossier)
+		function getSpeedsForLevel(lvl) {
+			if (lvl === 1) {
+				return {
+					pacmanNormal: 1.60, // 80% max speed
+					pacmanFright: 1.80, // 90% max speed
+					ghostNormal: 1.50,  // 75% max speed
+					ghostFright: 1.00,  // 50% max speed
+					ghostTunnel: 0.80,  // 40% max speed
+					elroy1: 1.60,       // 80% (+5%)
+					elroy2: 1.70        // 85% (+5%)
+				};
+			} else if (lvl >= 2 && lvl <= 4) {
+				return {
+					pacmanNormal: 1.80, // 90% max speed
+					pacmanFright: 1.90, // 95% max speed
+					ghostNormal: 1.70,  // 85% max speed
+					ghostFright: 1.10,  // 55% max speed
+					ghostTunnel: 0.90,  // 45% max speed
+					elroy1: 1.80,
+					elroy2: 1.90
+				};
+			} else {
+				return {
+					pacmanNormal: 2.00, // 100% max speed
+					pacmanFright: 2.00,
+					ghostNormal: 1.90,  // 95% max speed
+					ghostFright: 1.20,  // 60% max speed
+					ghostTunnel: 1.00,  // 50% max speed
+					elroy1: 1.95,
+					elroy2: 2.00
+				};
+			}
+		}
+
 		// Pac-Man Player Object
 		var pacman = {
 			x: 13 * TILE + TILE / 2,
 			y: 26 * TILE + TILE / 2,
 			dir: DIR_LEFT,
 			nextDir: DIR_LEFT,
-			speed: 2.0,
+			speed: 1.60,
 			radius: 12,
 			mouthAngle: 0.2,
 			mouthDelta: 0.04,
 			isDying: false,
 			deathAngle: 0,
+			pauseFrames: 0,
 			reset: function() {
 				this.x = 13 * TILE + TILE / 2;
 				this.y = 26 * TILE + TILE / 2;
 				this.dir = DIR_LEFT;
 				this.nextDir = DIR_LEFT;
-				this.speed = Math.min(2.0 + (level - 1) * 0.05, 2.5);
+				this.speed = getSpeedsForLevel(level).pacmanNormal;
 				this.mouthAngle = 0.2;
 				this.mouthDelta = 0.04;
 				this.isDying = false;
 				this.deathAngle = 0;
+				this.pauseFrames = 0;
 			}
 		};
 
@@ -333,6 +370,7 @@
 		var isScatter = true;
 
 		function initGhosts() {
+			var spd = getSpeedsForLevel(level).ghostNormal;
 			ghosts = [
 				{
 					id: GHOST_BLINKY,
@@ -344,7 +382,7 @@
 					targetX: 0,
 					targetY: 0,
 					mode: 'chase',
-					speed: 1.85,
+					speed: spd,
 					inHouse: false,
 					scatterTarget: { x: 25, y: -3 },
 					animTimer: 0
@@ -359,7 +397,7 @@
 					targetX: 0,
 					targetY: 0,
 					mode: 'house',
-					speed: 1.8,
+					speed: spd,
 					inHouse: true,
 					exitDelay: 40,
 					scatterTarget: { x: 2, y: -3 },
@@ -375,7 +413,7 @@
 					targetX: 0,
 					targetY: 0,
 					mode: 'house',
-					speed: 1.8,
+					speed: spd,
 					inHouse: true,
 					exitDelay: 140,
 					scatterTarget: { x: 27, y: 34 },
@@ -391,7 +429,7 @@
 					targetX: 0,
 					targetY: 0,
 					mode: 'house',
-					speed: 1.8,
+					speed: spd,
 					inHouse: true,
 					exitDelay: 260,
 					scatterTarget: { x: 0, y: 34 },
@@ -619,6 +657,8 @@
 				$('#pacman-pause-overlay').fadeIn(150);
 			} else if (gameState === STATE_PAUSED) {
 				$('#pacman-pause-overlay').fadeOut(150);
+				lastTime = performance.now();
+				accumulator = 0;
 				gameState = prevPlayingState;
 			}
 		}
@@ -628,6 +668,8 @@
 			initAudio();
 			fetchToken();
 			gameStartTime = Date.now();
+			lastTime = performance.now();
+			accumulator = 0;
 			score = 0;
 			level = 1;
 			lives = 3;
@@ -655,6 +697,15 @@
 		// Pac-Man Movement & Pre-Turn Cornering
 		function updatePacman() {
 			if (gameState !== STATE_PLAYING && gameState !== STATE_FRIGHT) return;
+
+			// Authentic chomping delay: eating dot pauses pacman by 1 tick, energizer by 3 ticks
+			if (pacman.pauseFrames > 0) {
+				pacman.pauseFrames--;
+				return;
+			}
+
+			var speeds = getSpeedsForLevel(level);
+			pacman.speed = (gameState === STATE_FRIGHT) ? speeds.pacmanFright : speeds.pacmanNormal;
 
 			// Cornering: Try to apply nextDir if aligned with tile grid
 			var curCol = Math.floor(pacman.x / TILE);
@@ -741,6 +792,7 @@
 					score += 10;
 					dotsRemaining--;
 					dotsEatenRound++;
+					pacman.pauseFrames = 1; // 1-frame pause for authentic chomping feel
 					playSound('waka');
 					checkTriggers();
 				} else if (tileVal === 3) { // Energizer
@@ -748,6 +800,7 @@
 					score += 50;
 					dotsRemaining--;
 					dotsEatenRound++;
+					pacman.pauseFrames = 3; // 3-frame pause for energizer
 					playSound('waka');
 					triggerFrightenedMode();
 					checkTriggers();
@@ -868,20 +921,21 @@
 				}
 
 				// Determine speed based on mode & tunnel
-				var currentSpeed = g.speed;
+				var speeds = getSpeedsForLevel(level);
+				var currentSpeed = speeds.ghostNormal;
 				var gCol = Math.floor(g.x / TILE);
 				var gRow = Math.floor(g.y / TILE);
 
 				if (g.mode === 'eyes') {
-					currentSpeed = 3.4; // Eyes return swiftly
+					currentSpeed = 3.2; // Eyes return swiftly
 				} else if (gRow === 17 && (gCol < 6 || gCol > 21)) {
-					currentSpeed = 1.0; // Tunnel slow down
+					currentSpeed = speeds.ghostTunnel; // Tunnel slow down (0.80 at L1)
 				} else if (g.mode === 'fright') {
-					currentSpeed = 1.15;
+					currentSpeed = speeds.ghostFright; // Fright slow down (1.00 at L1)
 				} else if (g.id === GHOST_BLINKY) {
 					// Cruise Elroy: speeds up when few dots remain
-					if (dotsRemaining <= 10) currentSpeed = 2.15;
-					else if (dotsRemaining <= 20) currentSpeed = 2.0;
+					if (dotsRemaining <= 10) currentSpeed = speeds.elroy2;
+					else if (dotsRemaining <= 20) currentSpeed = speeds.elroy1;
 				}
 
 				// Calculate Target Tile
@@ -1404,8 +1458,12 @@
 			submitScore();
 		}
 
-		// Main Animation Loop
-		function gameLoop() {
+		// Main Animation Loop with fixed 60 FPS physics timestep
+		var lastTime = 0;
+		var accumulator = 0;
+		var TICK_MS = 1000 / 60; // 16.6667ms per tick
+
+		function updateTick() {
 			globalTimer++;
 
 			if (gameState === STATE_READY) {
@@ -1426,6 +1484,19 @@
 					updateHUD();
 					readyRound();
 				}
+			}
+		}
+
+		function gameLoop(timestamp) {
+			if (!lastTime) lastTime = timestamp;
+			var delta = timestamp - lastTime;
+			lastTime = timestamp;
+			if (delta > 200) delta = 200; // Cap spiral of death on background tabs
+
+			accumulator += delta;
+			while (accumulator >= TICK_MS) {
+				updateTick();
+				accumulator -= TICK_MS;
 			}
 
 			render();
