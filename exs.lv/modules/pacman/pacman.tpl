@@ -62,7 +62,7 @@
 
 						<div class="pacman-marquee">
 							<div class="marquee-character avatar-chomper">
-								<img src="{user-avatar}" alt="Pacman" class="avatar-preview-img" onerror="this.src='/bildes/icons/games/pacman.png'" />
+								<img src="{preview-avatar}" alt="Pacman" class="avatar-preview-img" onerror="this.src='/bildes/icons/games/pacman.png'" />
 							</div>
 							<div class="marquee-ghost blinky-sprite"></div>
 							<div class="marquee-ghost pinky-sprite"></div>

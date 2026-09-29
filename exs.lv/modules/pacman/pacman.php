@@ -98,18 +98,24 @@ $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl')
 $tpl->prepare();
 
 // User Avatar & High Score
-$user_avatar = '/dati/bildes/u_small/none.png';
+$user_avatar = '';
 $user_high_score = 0;
 
 if ($auth->ok) {
-	$user_avatar = get_avatar($auth, 's');
+	$av = get_avatar($auth, 's');
+	if (strpos($av, 'none.png') === false) {
+		$user_avatar = $av;
+	}
 	$user_high_score = (int)$db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'pacman' AND user_id = '$auth->id'");
 }
 
+$preview_avatar = !empty($user_avatar) ? $user_avatar : '/bildes/icons/games/pacman.png';
+
 $tpl->assign([
 	'user-avatar' => $user_avatar,
+	'preview-avatar' => $preview_avatar,
 	'user-high-score' => $user_high_score,
-	'is-logged' => $auth->ok ? 1 : 0
+	'is-logged' => ($auth->ok && !empty($user_avatar)) ? 1 : 0
 ]);
 
 // Guest Notice Alert

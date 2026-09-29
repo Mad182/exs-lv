@@ -177,11 +177,17 @@
 		// Avatar Image
 		var avatarImg = new Image();
 		var avatarLoaded = false;
-		if (window.PACMAN_USER_AVATAR && window.PACMAN_USER_AVATAR.length > 0) {
-			avatarImg.crossOrigin = 'Anonymous';
-			avatarImg.onload = function() { avatarLoaded = true; };
-			avatarImg.onerror = function() { avatarLoaded = false; };
+		if (window.PACMAN_IS_LOGGED && window.PACMAN_USER_AVATAR && window.PACMAN_USER_AVATAR.length > 0 && window.PACMAN_USER_AVATAR.indexOf('none.png') === -1) {
+			avatarImg.onload = function() {
+				avatarLoaded = true;
+			};
+			avatarImg.onerror = function() {
+				avatarLoaded = false;
+			};
 			avatarImg.src = window.PACMAN_USER_AVATAR;
+			if (avatarImg.complete && avatarImg.naturalWidth > 0) {
+				avatarLoaded = true;
+			}
 		}
 
 		// Audio Synthesizer via Web Audio API
