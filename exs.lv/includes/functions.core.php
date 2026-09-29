@@ -3272,7 +3272,7 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 		'wordle' => '🟩', 'rulete' => '🎰', 'desas' => '⭕', 'flappy' => '🐦',
 		'invaders' => '👾', 'augsup' => '🚀', 'vardes' => '🐸', 'runner' => '🏃',
 		'tornis' => '🏗️', 'arkanoid' => '🧱', 'rezonanse' => '💥', 'tanki' => '🛡️',
-		'ut99' => '⚔️', 'speles' => '🎲'
+		'pacman' => '🟡', 'wg-play' => '🔤', 'ut99' => '⚔️', 'speles' => '🎲'
 	];
 
 	$icon = isset($game_icons[$game_slug]) ? $game_icons[$game_slug] : '🎮';

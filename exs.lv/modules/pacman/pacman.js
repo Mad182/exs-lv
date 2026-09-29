@@ -607,6 +607,9 @@
 
 		// Keyboard Bindings
 		$(document).on('keydown', function(e) {
+			if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable)) {
+				return;
+			}
 			var code = e.which || e.keyCode;
 			if (code === 37 || code === 65) { // Left or A
 				e.preventDefault();

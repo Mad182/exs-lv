@@ -310,13 +310,21 @@ if (empty($tpl_options) && isset($category) && !empty($category->options)) {
 // Spēles un moduļi, kuriem nepieciešama pilnā JS bibliotēka (jQuery)
 $jquery_modules = [
 	'2048', 'arkanoid', 'augsup', 'crows', 'desas', 'flappy', 'invaders',
-	'memory', 'minu-mekletajs', 'register', 'rulete', 'runner', 'snake', 'speles',
-	'steam-online', 'sudoku', 'tetris', 'tic-tac-toe', 'tornis', 'vardes', 'wordle', 'karatavas'
+	'karatavas', 'memory', 'minu-mekletajs', 'pacman', 'register', 'rezonanse', 'rulete', 'runner', 'snake', 'speles',
+	'steam-online', 'sudoku', 'tanki', 'tetris', 'tic-tac-toe', 'tornis', 'ut99', 'vardes', 'wg-play', 'wordle'
 ];
-if (!empty($category->module) && in_array($category->module, $jquery_modules)) {
+if (isset($category) && (
+	(!empty($category->module) && in_array($category->module, $jquery_modules)) ||
+	(!empty($category->textid) && in_array($category->textid, $jquery_modules)) ||
+	(!empty($category->parent) && $category->parent == 2516)
+)) {
 	$require_jquery = true;
 }
-$is_game = (isset($category) && ((!empty($category->module) && in_array($category->module, $jquery_modules)) || (!empty($category->parent) && $category->parent == 2516)));
+$is_game = (isset($category) && (
+	(!empty($category->module) && in_array($category->module, $jquery_modules)) ||
+	(!empty($category->textid) && in_array($category->textid, $jquery_modules)) ||
+	(!empty($category->parent) && $category->parent == 2516)
+));
 $is_miniblog = (isset($_GET['m']) || (isset($category) && in_array($category->textid, ['say', 'miniblogs', 'miniblog'])) || (isset($category) && in_array($category->module, ['miniblogs', 'miniblog'])));
 $is_read = (isset($_GET['viewcat']) && $_GET['viewcat'] === 'read');
 
@@ -329,12 +337,13 @@ if ($is_game && isset($tpl)) {
 
 $is_real_game = (isset($category) && (
 	(!empty($category->parent) && $category->parent == 2516) ||
-	(!empty($category->module) && $category->module === 'speles') ||
-	(!empty($category->textid) && $category->textid === 'speles') ||
+	(!empty($category->module) && in_array($category->module, ['speles', 'pacman', 'tanki', 'rezonanse', 'wg-play', 'karatavas', 'arkanoid', 'tornis', 'runner', 'flappy', 'invaders', 'tetris', 'snake', 'wordle', 'memory', '2048', 'minu-mekletajs', 'sudoku', 'rulete', 'desas', 'augsup', 'vardes', 'ut99'])) ||
+	(!empty($category->textid) && in_array($category->textid, ['speles', 'pacman', 'tanki', 'rezonanse', 'wg-play', 'karatavas', 'arkanoid', 'tornis', 'runner', 'flappy', 'invaders', 'tetris', 'snake', 'wordle', 'memory', '2048', 'minu-mekletajs', 'sudoku', 'rulete', 'desas', 'augsup', 'vardes', 'ut99'])) ||
 	!empty($game_info)
 ));
 
 if ($is_real_game) {
+	$require_jquery = true;
 	$add_css[] = 'game-chat.1c37d7cd.min.css';
 	$current_game_slug = 'speles';
 	$current_game_title = 'Spēļu katalogs';
@@ -737,17 +746,21 @@ $json_ld_items = [
 	]
 ];
 
-if (isset($category) && in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'ut99'])) {
+if (isset($category) && (
+	in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'tanki', 'pacman', 'wg-play', 'ut99']) ||
+	in_array($category->textid, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'tanki', 'pacman', 'wg-play', 'ut99'])
+)) {
 	$game_names = [
 		'snake' => 'Čūska', 'tetris' => 'Tetris', 'minu-mekletajs' => 'Mīnu Meklētājs',
 		'wordle' => 'Wordle', '2048' => '2048', 'flappy' => 'Lidojošais Eksis',
 		'sudoku' => 'Sudoku', 'memory' => 'Atmiņas spēle', 'rulete' => 'Rulete',
 		'augsup' => 'Augšup', 'vardes' => 'Vardes', 'invaders' => 'Space Invaders',
-		'karatavas' => 'Karātavas', 'runner' => 'Runner', 'tornis' => 'Tornis',
+		'karatavas' => 'Karātavas', 'wg-play' => 'Karātavas', 'runner' => 'Runner', 'tornis' => 'Tornis',
 		'arkanoid' => 'Arkanoid', 'rezonanse' => 'Rezonanse', 'desas' => 'Desas',
-		'ut99' => 'Unreal Tournament 99'
+		'tanki' => 'Tanki 1990', 'pacman' => 'Exs-Man', 'ut99' => 'Unreal Tournament 99'
 	];
-	$g_name = isset($game_names[$category->module]) ? $game_names[$category->module] : $category->title;
+	$lookup_key = isset($game_names[$category->textid]) ? $category->textid : $category->module;
+	$g_name = isset($game_names[$lookup_key]) ? $game_names[$lookup_key] : $category->title;
 	$game_schema = [
 		'@context' => 'https://schema.org',
 		'@type' => 'VideoGame',

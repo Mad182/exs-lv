@@ -56,6 +56,8 @@ $game_catalog_meta = [
 	'arkanoid' => ['title' => 'Arkanoid', 'url' => '/arkanoid', 'icon' => '🧱'],
 	'rezonanse' => ['title' => 'Rezonanse', 'url' => '/rezonanse', 'icon' => '💥'],
 	'tanki' => ['title' => 'Tanki 1990', 'url' => '/tanki', 'icon' => '🛡️'],
+	'pacman' => ['title' => 'Exs-Man', 'url' => '/pacman', 'icon' => '🟡'],
+	'wg-play' => ['title' => 'Karātavas', 'url' => '/karatavas', 'icon' => '🔤'],
 	'ut99' => ['title' => 'Unreal Tournament', 'url' => '/ut99', 'icon' => '⚔️'],
 	'speles' => ['title' => 'Spēļu katalogs', 'url' => '/speles', 'icon' => '🎲'],
 ];
