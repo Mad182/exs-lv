@@ -29,8 +29,16 @@ if ($actions) {
 	foreach ($actions as $action) {
 
 		if (empty($action->action_avatar)) {
-			$action->action_avatar = get_avatar($action, 's');
+			$action->action_avatar = get_avatar($action, 'm');
+		} else {
+			$action->action_avatar = str_replace(
+				['/userpic/small/', '/u_small/'],
+				['/userpic/medium/', '/useravatar/'],
+				$action->action_avatar
+			);
 		}
+
+		$action->action_avatar = str_replace('http://', '//', $action->action_avatar);
 
 		$tpl->newBlock('user-actions-node');
 		$tpl->assign([
