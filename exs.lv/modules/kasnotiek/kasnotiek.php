@@ -22,7 +22,7 @@ $actions = $db->get_results("SELECT
 		$priv
 	ORDER BY
 		`userlogs`.`time` DESC
-	LIMIT 40");
+	LIMIT 50");
 
 if ($actions) {
 	$tpl->newBlock('user-actions');

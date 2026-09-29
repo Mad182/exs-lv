@@ -2,24 +2,24 @@
 
 <style>
 .user-actions-kasnotiek li {
-	min-height: 80px;
-	padding: 8px 4px;
+	min-height: 70px;
+	padding: 7px 4px;
 	line-height: 16px;
 }
 .user-actions-kasnotiek .av {
-	width: 75px !important;
-	height: 75px !important;
-	max-width: 75px !important;
-	max-height: 75px !important;
+	width: 64px !important;
+	height: 64px !important;
+	max-width: 64px !important;
+	max-height: 64px !important;
 	object-fit: cover;
 	border-radius: 4px;
-	margin: 2px 14px 6px 0 !important;
+	margin: 2px 12px 6px 0 !important;
 	float: left;
 	display: block;
 }
 .user-actions-kasnotiek .event-content {
-	margin: 0 0 0 90px !important;
-	min-height: 75px;
+	margin: 0 0 0 78px !important;
+	min-height: 64px;
 	line-height: 18px;
 	font-size: 13px;
 }
@@ -36,7 +36,7 @@
 	<ul class="user-actions user-actions-kasnotiek">
 		<!-- START BLOCK : user-actions-node-->
 		<li>
-			<img class="av" src="{action-avatar}" width="75" height="75" alt="" />
+			<img class="av" src="{action-avatar}" width="64" height="64" alt="" />
 			<div class="event-content">
 				<span class="event-meta">{usrnick} pirms {action-date}</span><br>
 				{action}
