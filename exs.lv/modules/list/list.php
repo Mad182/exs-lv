@@ -94,7 +94,7 @@ if ($category->isforum) {
 					SELECT `category`, `title`, `strid`, `bump`, `author`,
 					       ROW_NUMBER() OVER (PARTITION BY `category` ORDER BY `bump` DESC) AS `rn`
 					FROM `pages`
-					WHERE `category` IN ($subcat_id_in)
+					WHERE `category` IN ($subcat_id_in) AND `needs_review` = 0 AND `private` = 0
 				) AS `sub`
 				WHERE `rn` = 1
 			");
@@ -201,7 +201,9 @@ if (!$category->mods_only || im_mod()) {
 				`users` ON `users`.`id` = `pages`.`author`
 			WHERE
 				`pages`.`category` = " . (int)$category->id . " AND
-				`pages`.`lang` = " . (int)$lang . "
+				`pages`.`lang` = " . (int)$lang . " AND
+				`pages`.`needs_review` = 0 AND
+				`pages`.`private` = 0
 			ORDER BY
 				" . $sortby . "
 			LIMIT
@@ -302,7 +304,9 @@ if (!$category->mods_only || im_mod()) {
 			`users` ON `users`.`id` = `pages`.`author`
 		WHERE
 			`pages`.`category` = " . (int)$category->id . " AND
-			`pages`.`lang` = " . (int)$lang . "
+			`pages`.`lang` = " . (int)$lang . " AND
+			`pages`.`needs_review` = 0 AND
+			`pages`.`private` = 0
 		ORDER BY
 			" . $sortby . "
 		LIMIT

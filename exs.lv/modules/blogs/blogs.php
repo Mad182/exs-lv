@@ -22,7 +22,9 @@ $total = (int) $db->get_var(
 	WHERE `pages`.`category` = `cat`.`id` AND
 		`pages`.`lang` = $lang AND
 		`cat`.`isblog` != 0 AND
-		`users`.`id` = `pages`.`author`"
+		`users`.`id` = `pages`.`author` AND
+		`pages`.`needs_review` = 0 AND
+		`pages`.`private` = 0"
 );
 
 $articles = $db->get_results(
@@ -44,7 +46,9 @@ WHERE
 	`pages`.`category` = `cat`.`id` AND
 	`pages`.`lang` = $lang AND
 	`cat`.`isblog` != 0 AND
-	`users`.`id` = `pages`.`author`
+	`users`.`id` = `pages`.`author` AND
+	`pages`.`needs_review` = 0 AND
+	`pages`.`private` = 0
 ORDER BY
 	`pages`.`date` DESC
 LIMIT $skip, $end"

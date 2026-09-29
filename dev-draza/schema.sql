@@ -1278,6 +1278,7 @@ CREATE TABLE `pages` (
   `disable_emotions` tinyint(1) NOT NULL DEFAULT 0,
   `upd` tinyint(1) NOT NULL DEFAULT 0,
   `private` tinyint(1) NOT NULL DEFAULT 0,
+  `needs_review` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `textid` (`textid`),
   UNIQUE KEY `strid` (`strid`),
@@ -1297,7 +1298,8 @@ CREATE TABLE `pages` (
   KEY `category_id` (`category`,`id`),
   KEY `lang_bump` (`lang`,`bump`),
   KEY `movies_index` (`category`,`lang`,`date`),
-  KEY `custom_param` (`custom_param`)
+  KEY `custom_param` (`custom_param`),
+  KEY `needs_review` (`needs_review`)
 ) ENGINE=MyISAM AUTO_INCREMENT=69761 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

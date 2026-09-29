@@ -32,9 +32,12 @@ $articles = $db->get_results("
 		FROM
 			`pages`
 		WHERE
-			`pages`.`category` = '1'
+			`pages`.`category` = '1' AND
+			`pages`.`needs_review` = 0 AND
+			`pages`.`private` = 0
 		ORDER BY
 			`pages`.`attach` DESC,
+			`pages`.`date` DESC,
 			`pages`.`id` DESC
 		LIMIT
 			$skip,$end");
@@ -129,8 +132,11 @@ $articles = $db->get_results("
 		`pages`.`category` = `cat`.`id` AND
 		`cat`.`isblog`!='0' AND
 		`users`.`id` = `pages`.`author` AND
-		`pages`.`lang` = 1
+		`pages`.`lang` = 1 AND
+		`pages`.`needs_review` = 0 AND
+		`pages`.`private` = 0
 	ORDER BY
+		`pages`.`date` DESC,
 		`pages`.`id` DESC
 	LIMIT
 		0,2");
@@ -191,8 +197,11 @@ foreach ($list_cats as $cat_type => $cat_id) {
 			`users`
 		WHERE
 			`pages`.`category` = " . $cat_id . " AND
-			`users`.`id` = `pages`.`author`
+			`users`.`id` = `pages`.`author` AND
+			`pages`.`needs_review` = 0 AND
+			`pages`.`private` = 0
 		ORDER BY
+			`pages`.`date` DESC,
 			`pages`.`id` DESC
 		LIMIT
 			0,2");

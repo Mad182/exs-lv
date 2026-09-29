@@ -2201,6 +2201,9 @@ function get_latest_posts() {
 		$conditions[] = "`pages`.`lang` = '$lang'";
 	}
 
+	$conditions[] = "`pages`.`needs_review` = 0";
+	$conditions[] = "`pages`.`private` = 0";
+
 	if ($auth->ok) {
 		$ignores = $db->get_col("SELECT `category_id` FROM `cat_ignore` WHERE `user_id` = '$auth->id'");
 		if (!empty($ignores)) {

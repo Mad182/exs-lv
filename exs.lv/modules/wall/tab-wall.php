@@ -36,6 +36,8 @@ $articles = $db->get_results("
 			`users`.`id` = `pages`.`author` AND
 			`cat`.`id` = `pages`.`category` AND
 			" . $mods_only . "
+			`pages`.`needs_review` = 0 AND
+			`pages`.`private` = 0 AND
 			`pages`.`bump` != '0000-00-00 00:00:00' AND
 			`pages`.`lang` = '$lang'
 		ORDER BY
