@@ -202,6 +202,7 @@
 															<!-- START BLOCK : user-modlink-adm -->
 															<li{cat-sel-2387}><a href="/custom_awards">Profila
 																	apbalvojumi</a></li>
+															<li><a href="/review-restored">Atjaunotie raksti</a></li>
 																<!-- END BLOCK : user-modlink-adm -->
 																</ul>
 																</li>
