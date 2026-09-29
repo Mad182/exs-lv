@@ -88,6 +88,8 @@ $game_meta_map = [
 	'runner' => ['title' => 'Runner', 'url' => '/runner', 'is_time' => false],
 	'rezonanse' => ['title' => 'Rezonanse', 'url' => '/rezonanse', 'is_time' => false],
 	'tanki' => ['title' => 'Tanki 1990', 'url' => '/tanki', 'is_time' => false],
+	'arkanoid' => ['title' => 'Arkanoid', 'url' => '/arkanoid', 'is_time' => false],
+	'pacman' => ['title' => 'Exs-Man', 'url' => '/pacman', 'is_time' => false],
 ];
 
 $start_of_today = strtotime('today midnight');

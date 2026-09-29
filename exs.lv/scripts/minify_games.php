@@ -28,6 +28,7 @@ $game_modules = [
 	'wordle' => ['js' => ['wordle.js'], 'css' => ['wordle.css']],
 	'rezonanse' => ['js' => ['rezonanse.js'], 'css' => ['rezonanse.css']],
 	'tanki' => ['js' => ['tanki.js'], 'css' => ['tanki.css']],
+	'pacman' => ['js' => ['pacman.js'], 'css' => ['pacman.css']],
 ];
 
 $modules_dir = realpath(__DIR__ . '/../modules');
