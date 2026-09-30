@@ -11,7 +11,7 @@
 	
 	<div class="entry-meta row-fluid">
 		<ul class="clearfix">
-			<li><img alt="" src="{avatar}" class="userav" /><a href="/user/{author-id}" title="Apskatīt profilu" rel="author">{author}</a></li>
+			<li><img alt="" src="{avatar}" class="userav" />{author-link}</li>
 			<li><img src="{img-server}/bildes/time.png" alt="">{date}</li>
 			<li><img src="{img-server}/bildes/komen.png" alt=""><a href="{node-url}#comments" title="Komentāri">{posts} komentāri</a></li>
 		</ul>

@@ -250,7 +250,7 @@ INSERT INTO `cat` VALUES
 (339,'t3hzb0t',1,'Cordell blogs',1,'list',0,870,0,0,0,0,110,'','main','',1769,1,4,0,'','','',466,1,'active',0,0),
 (340,'niggah',1,'Niggah blogs',1,'list',0,11525,0,0,0,0,110,'','main','',11791,5,115,0,'','','',465,1,'active',0,0),
 (341,'criu',1,'Reaktors blogs',1,'list',0,11411,0,0,0,0,110,'','main','',18009,8,135,0,'','','',464,1,'active',0,0),
-(346,'prasmju_arhivs',9,'RS Rakstu arhīvs',0,'redirect',0,0,0,0,0,0,1863,'http://runescape.exs.lv/padomi','main','',0,0,0,0,'','runescape.jpg','',459,1,'active',0,0),
+(346,'prasmju_arhivs',9,'RS Rakstu arhīvs',0,'list',0,0,0,0,0,0,1863,'','main','',0,0,0,0,'','runescape.jpg','',459,1,'active',0,0),
 (348,'krisjanis',1,'Krisjanis24 blogs',1,'list',0,5024,0,0,0,0,110,'','main','',29956,17,219,0,'','','',457,1,'active',0,0),
 (350,'big-pipmanis',1,'Kreatīvs blogs',1,'list',0,12382,0,0,0,0,110,'','main','',9945,1,36,0,'','','',455,1,'active',0,0),
 (352,'breikeris',1,'breikeris blogs',1,'list',0,10081,0,0,0,0,110,'','main','',10693,5,86,0,'','','',453,1,'active',0,0),

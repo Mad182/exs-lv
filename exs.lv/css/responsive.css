@@ -1161,6 +1161,14 @@ border:0;padding-bottom:0
 padding:3px 0 2px
 }
 
+.mbox .user-actions li .event-meta {
+display:block;margin-bottom:2px
+}
+
+.mbox .user-actions li .event-meta .post-time {
+display:inline;padding:0
+}
+
 #profile-user-actions li {
 height:42px
 }

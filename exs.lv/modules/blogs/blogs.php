@@ -71,6 +71,22 @@ if ($articles) {
 
 		$date_formatted = display_time(strtotime($article->date));
 
+		if (is_valid_user($usr)) {
+			$author_avatar_html = '<a href="/user/' . $article->authorid . '"><img class="av" src="' . $avatar . '" alt="' . h($usr->nick) . '" width="90" height="90" /></a>';
+			$author_name_html = '<a href="/user/' . $article->authorid . '" class="author-name">' . h($usr->nick) . '</a>';
+			$author_meta_html = '<a href="/user/' . $article->authorid . '">' . h($usr->nick) . '</a>';
+			$author_title = h($usr->nick);
+			$aurl = '/user/' . $article->authorid;
+		} else {
+			$author_avatar_html = '<img class="av" src="' . $avatar . '" alt="" width="90" height="90" />';
+			$u_nick = !empty($usr->nick) ? mb_strtolower(trim($usr->nick), 'UTF-8') : '';
+			$nick_display = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? 'nezināms' : 'dzēsts';
+			$author_name_html = '<span class="author-name"><em>' . $nick_display . '</em></span>';
+			$author_meta_html = '<em>' . $nick_display . '</em>';
+			$author_title = $nick_display;
+			$aurl = '#';
+		}
+
 		$tpl->assign([
 			'newest-title' => textlimit($article->title, 68),
 			'newest-text' => $article->text,
@@ -78,10 +94,13 @@ if ($articles) {
 			'newest-comments' => (int) $article->comments_count,
 			'newest-views' => number_format((int) $article->views, 0, '', ' '),
 			'url' => '/read/' . $article->strid,
-			'aurl' => '/user/' . $article->authorid,
+			'aurl' => $aurl,
 			'newest-author-id' => $article->authorid,
 			'newest-author-avatar' => $avatar,
-			'newest-author-title' => h($usr->nick),
+			'newest-author-title' => $author_title,
+			'newest-author-avatar-html' => $author_avatar_html,
+			'newest-author-name-html' => $author_name_html,
+			'newest-author-meta-html' => $author_meta_html,
 		]);
 	}
 }

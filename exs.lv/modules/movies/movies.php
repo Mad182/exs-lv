@@ -75,6 +75,17 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		$user = get_user($article->author);
 		$avatar = get_avatar($user, 's');
 
+		if (is_valid_user($user)) {
+			$author_link = '<a href="/user/' . $article->author . '" title="Apskatīt profilu" rel="author">' . usercolor($article->nick, $article->level) . '</a>';
+		} else {
+			$u_nick = !empty($article->nick) ? mb_strtolower(trim($article->nick), 'UTF-8') : '';
+			if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+				$author_link = '<em>nezināms</em>';
+			} else {
+				$author_link = '<em>dzēsts</em>';
+			}
+		}
+
 		$tpl->assign([
 			'id' => $article->id,
 			'node-url' => '/read/' . $article->strid,
@@ -83,6 +94,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 			'views' => $article->views,
 			'date' => $date,
 			'author' => usercolor($article->nick, $article->level),
+			'author-link' => $author_link,
 			'posts' => $article->posts,
 			'level' => $article->level,
 			'intro' => $article->text,

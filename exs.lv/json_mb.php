@@ -100,7 +100,12 @@ if ($resps) {
 			}
 		}
 
-		$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img class="av" width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
+		$is_valid = is_valid_user($resp);
+		if ($is_valid) {
+			$out = '<div class="mb-av"><a id="m' . $resp->id . '" href="/user/' . $resp->author . '"><img class="av" width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></a>';
+		} else {
+			$out = '<div class="mb-av"><span id="m' . $resp->id . '"><img class="av" width="45" height="45" src="' . get_avatar($resp, 's') . '" alt="" /></span>';
+		}
 
 		if (!empty($resp->decos)) {
 			$decos = unserialize($resp->decos);
@@ -121,7 +126,13 @@ if ($resps) {
 			$out .= '<div class="mb-rater">' . mb_rater($resp, h(strip_tags($_GET['url']))) . '</div>';
 		}
 		$resp->date = strtotime($resp->date);
-		$out .= '<p class="post-info"><a href="/user/' . $resp->author . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a> ' . display_time($resp->date);
+		if ($is_valid) {
+			$author_link = '<a href="/user/' . $resp->author . '">' . usercolor($resp->nick, $resp->level, true, $resp->author) . '</a>';
+		} else {
+			$u_nick = !empty($resp->nick) ? mb_strtolower(trim($resp->nick), 'UTF-8') : '';
+			$author_link = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+		}
+		$out .= '<p class="post-info">' . $author_link . ' ' . display_time($resp->date);
 
 		//permalink
 		$out .= ' <a href="#m' . $resp->id . '" class="post-button comment-permalink" title="Saite uz komentāru">#</a>';

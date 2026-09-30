@@ -212,6 +212,14 @@ if (!$auth->ok) {
 				if ($pm) {
 					$to = get_user($pm->to_uid);
 
+					if (is_valid_user($to)) {
+						$to_card = '<a class="friend friend-right" href="/user/' . $to->id . '" title="' . h($to->nick) . '"><img src="' . get_avatar($to) . '" alt="" />' . usercolor($to->nick, $to->level, false, $to->id) . '</a>';
+					} else {
+						$u_nick = !empty($to->nick) ? mb_strtolower(trim($to->nick), 'UTF-8') : '';
+						$nick_display = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? 'nezināms' : 'dzēsts';
+						$to_card = '<div class="friend friend-right"><img src="' . get_avatar($to) . '" alt="" /><em>' . $nick_display . '</em></div>';
+					}
+
 					$tpl->newBlock('pm-read-outbox');
 					$tpl->assign([
 						'pm-title' => h($pm->title),
@@ -220,6 +228,7 @@ if (!$auth->ok) {
 						'pm-date' => substr($pm->date, 0, 16),
 						'pm-to-nick' => usercolor($to->nick, $to->level, false, $to->id),
 						'pm-to-id' => $pm->to_uid,
+						'pm-to-card' => $to_card,
 						'avatar' => get_avatar($to),
 						'pm-to-title' => h($to->nick),
 						'pm-read' => $pm->is_read,
@@ -257,7 +266,12 @@ if (!$auth->ok) {
 				if ($pms) {
 					foreach ($pms as $pm) {
 						$tpl->newBlock('pm-list-outbox-node');
-						$from = '<a href="/user/' . $pm->to_uid . '">' . usercolor($pm->nick, $pm->level, false, $pm->to_uid) . '</a>';
+						if (is_valid_user($pm->nick) && empty($pm->user_deleted)) {
+							$from = '<a href="/user/' . $pm->to_uid . '">' . usercolor($pm->nick, $pm->level, false, $pm->to_uid) . '</a>';
+						} else {
+							$u_nick = !empty($pm->nick) ? mb_strtolower(trim($pm->nick), 'UTF-8') : '';
+							$from = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+						}
 						$type = 'pm';
 						if ($pm->is_read) {
 							$type = 'pm-read';
@@ -269,10 +283,6 @@ if (!$auth->ok) {
 								$from = wordwrap(textlimit(h($pm->imap_email), 48, '...'), 20, "\n", 1);
 							}
 							$type = 'email';
-						}
-
-						if (!empty($pm->user_deleted)) {
-							$from = '<em>dzēsts</em>';
 						}
 
 						$tpl->assign([
@@ -364,6 +374,14 @@ if (!$auth->ok) {
 					}
 					$from = get_user($pm->from_uid);
 
+					if (is_valid_user($from)) {
+						$from_card = '<a class="friend friend-right" href="/user/' . $from->id . '" title="' . h($from->nick) . '"><img src="' . get_avatar($from) . '" alt="" />' . usercolor($from->nick, $from->level, false, $from->id) . '</a>';
+					} else {
+						$u_nick = !empty($from->nick) ? mb_strtolower(trim($from->nick), 'UTF-8') : '';
+						$nick_display = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? 'nezināms' : 'dzēsts';
+						$from_card = '<div class="friend friend-right"><img src="' . get_avatar($from) . '" alt="" /><em>' . $nick_display . '</em></div>';
+					}
+
 					$tpl->newBlock('pm-read-inbox');
 					$tpl->assign([
 						'pm-title' => h($pm->title),
@@ -372,6 +390,7 @@ if (!$auth->ok) {
 						'pm-date' => substr($pm->date, 0, 16),
 						'pm-from-nick' => usercolor($from->nick, $from->level, false, $from->id),
 						'pm-from-id' => $pm->from_uid,
+						'pm-from-card' => $from_card,
 						'avatar' => get_avatar($from),
 						'pm-from-title' => h($from->nick),
 						'pm-read' => $pm->is_read,
@@ -430,7 +449,12 @@ if (!$auth->ok) {
 				if ($pms) {
 					foreach ($pms as $pm) {
 						$tpl->newBlock('pm-list-inbox-node');
-						$from = '<a href="/user/' . $pm->from_uid . '">' . usercolor($pm->nick, $pm->level, false, $pm->from_uid) . '</a>';
+						if (is_valid_user($pm->nick) && empty($pm->user_deleted)) {
+							$from = '<a href="/user/' . $pm->from_uid . '">' . usercolor($pm->nick, $pm->level, false, $pm->from_uid) . '</a>';
+						} else {
+							$u_nick = !empty($pm->nick) ? mb_strtolower(trim($pm->nick), 'UTF-8') : '';
+							$from = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+						}
 						$type = 'pm';
 						if ($pm->is_read) {
 							$type = 'pm-read';
@@ -442,10 +466,6 @@ if (!$auth->ok) {
 								$from = wordwrap(textlimit(h($pm->imap_email), 48, '...'), 20, "\n", 1);
 							}
 							$type = 'email';
-						}
-
-						if (!empty($pm->user_deleted)) {
-							$from = '<em>dzēsts</em>';
 						}
 
 						$tpl->assign([

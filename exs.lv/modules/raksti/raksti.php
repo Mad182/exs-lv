@@ -96,10 +96,17 @@ if ($articles) {
 		$cat_title = $cat ? $cat->title : '';
 		$cat_textid = $cat ? $cat->textid : '';
 
-		if (!$article->author_deleted && !empty($article->nick)) {
+		if (is_valid_user($article)) {
 			$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+			$aurl = '/user/' . $article->author;
 		} else {
-			$author_link = '<em>dzēsts</em>';
+			$u_nick = !empty($article->nick) ? mb_strtolower(trim($article->nick), 'UTF-8') : '';
+			if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+				$author_link = '<em>nezināms</em>';
+			} else {
+				$author_link = '<em>dzēsts</em>';
+			}
+			$aurl = '#';
 		}
 
 		$u_avatar = get_avatar((object)[
@@ -111,7 +118,7 @@ if ($articles) {
 			'cat' => $cat_title,
 			'cat-strid' => $cat_textid,
 			'url' => '/read/' . $article->strid,
-			'aurl' => '/user/' . $article->author,
+			'aurl' => $aurl,
 			'title' => $article->title,
 			'views' => $article->views,
 			'date' => $date,

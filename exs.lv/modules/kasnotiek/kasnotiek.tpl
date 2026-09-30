@@ -36,7 +36,7 @@
 	<ul class="user-actions user-actions-kasnotiek">
 		<!-- START BLOCK : user-actions-node-->
 		<li>
-			<img class="av" src="{action-avatar}" width="64" height="64" alt="" />
+			{av-html}
 			<div class="event-content">
 				<span class="event-meta">{usrnick} pirms {action-date}</span><br>
 				{action}

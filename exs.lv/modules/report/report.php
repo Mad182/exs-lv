@@ -248,7 +248,9 @@ if ($entry_type == 'miniblog') {
 // saformatēs atgriežamo HTML saturu
 $entry_text = add_smile(textlimit($query_data->text, 300));
 $offender = usercolor($query_data->nick, $query_data->level);
-$offender = '<a href="/user/' . $query_data->userid . '">' . $offender . '</a>';
+if (is_valid_user($query_data->nick) && empty($query_data->deleted)) {
+	$offender = '<a href="/user/' . $query_data->userid . '">' . $offender . '</a>';
+}
 
 $new_tpl = fetch_tpl();
 $new_tpl->newBlock('report-form');

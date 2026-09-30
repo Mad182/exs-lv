@@ -64,7 +64,16 @@ function get_index_events() {
 
 			$action->avatar = str_replace('http://img.exs.lv/dati', $img_server . '/dati', $action->avatar);
 
-			$out .= '<li><img class="av" style="width:45px;height:45px" src="' . $action->avatar . '" alt="" /><div class="event-content"><span class="post-time">' . time_ago($action->time) . ', ' . $user->nick . '</span>' . $action->action . '</div><div class="c"></div></li>';
+			if (is_valid_user($user)) {
+				$user_str = '<a href="/user/' . $user->id . '">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+				$av_html = '<a href="/user/' . $user->id . '"><img class="av" style="width:45px;height:45px" src="' . $action->avatar . '" alt="" /></a>';
+			} else {
+				$u_nick = !empty($user->nick) ? mb_strtolower(trim($user->nick), 'UTF-8') : '';
+				$user_str = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+				$av_html = '<img class="av" style="width:45px;height:45px" src="' . $action->avatar . '" alt="" />';
+			}
+
+			$out .= '<li>' . $av_html . '<div class="event-content"><div class="event-meta">' . $user_str . ' <span class="post-time">' . time_ago($action->time) . '</span></div>' . $action->action . '</div><div class="c"></div></li>';
 		}
 		$out .= '</ul>';
 	}

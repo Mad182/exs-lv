@@ -108,18 +108,28 @@ class Rshelp extends Controller {
                 ");
             }
 
+            if (is_valid_user($article)) {
+                $author_link = '<a href="' . mkurl('user', $article->author, $article->nick) . '">' . usercolor($article->nick, $article->level) . '</a>';
+                $aurl = mkurl('user', $article->author, $article->nick);
+            } else {
+                $u_nick = !empty($article->nick) ? mb_strtolower(trim($article->nick), 'UTF-8') : '';
+                $author_link = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+                $aurl = '#';
+            }
+
             // dati
             $this->view->newBlock('rs-article');
             $this->view->assign([
-                'id'        => $article->id,
-                'url'       => '/read/' . $article->strid,
-                'aurl'      => mkurl('user', $article->author, $article->nick),
-                'title'     => $article->title,
-                'views'     => $article->views,
-                'date'      => $date,
-                'author'    => usercolor($article->nick, $article->level),
-                'posts'     => $article->posts,
-                'intro'     => $article->text
+                'id'          => $article->id,
+                'url'         => '/read/' . $article->strid,
+                'aurl'        => $aurl,
+                'title'       => $article->title,
+                'views'       => $article->views,
+                'date'        => $date,
+                'author'      => usercolor($article->nick, $article->level),
+                'author-link' => $author_link,
+                'posts'       => $article->posts,
+                'intro'       => $article->text
             ]);
             
             // avatars

@@ -404,9 +404,7 @@
 		<li>
 			<div class="mbox">
 				<div class="mb-av">
-					<a id="m{id}" href="/user/{author-id}">
-						<img class="av" src="{avatar}" alt="{author-nick}" width="45" height="45" />
-					</a>
+					{author-avatar}
 					{add_deco}
 				</div>
 				<div id="op-content">

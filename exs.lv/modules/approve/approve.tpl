@@ -58,7 +58,7 @@
 	<!-- START BLOCK : approve-edit-->
 	<h4>{article-showtitle}</h4>
 	<p>
-		<strong>Autors:</strong> <a href="{aurl}">{article-author-nick}</a><br>
+		<strong>Autors:</strong> {author-link}<br>
 		<strong>Datums:</strong> {article-date}<br>
 		<strong>IP:</strong> {article-ip}<br>
 		{article-avatar}

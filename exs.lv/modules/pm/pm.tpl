@@ -14,10 +14,7 @@
 
 	<!-- START BLOCK : pm-read-inbox-->
 	<!-- START BLOCK : pm-read-from-->
-	<a class="friend friend-right" href="/user/{pm-from-id}" title="{pm-from-title}">
-		<img src="{avatar}" alt="" />
-		{pm-from-nick}
-	</a>
+	{pm-from-card}
 	<!-- END BLOCK : pm-read-from-->
 	<h3>{pm-title}</h3>
 	<div class="post-content">
@@ -34,10 +31,7 @@
 	<!-- END BLOCK : pm-read-inbox-->
 
 	<!-- START BLOCK : pm-read-outbox-->
-	<a class="friend friend-right" href="/user/{pm-to-id}" title="{pm-to-title}">
-		<img src="{avatar}" alt="" />
-		{pm-to-nick}
-	</a>
+	{pm-to-card}
 	<h3>{pm-title}</h3>
 	<div class="post-content">
 		{pm-text}

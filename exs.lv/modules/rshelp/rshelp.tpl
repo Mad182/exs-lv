@@ -39,7 +39,7 @@
         <ul class="article-info">
             <li class="date">{date}</li>
             <li class="comments"><a href="{node-url}#comments">{posts} komentāri</a></li>
-            <li class="profile"><a href="{aurl}">{author}</a></li>
+            <li class="profile">{author-link}</li>
             <li class="views">skatīts {views}x</li>
         </ul>
         <div class="c"></div>

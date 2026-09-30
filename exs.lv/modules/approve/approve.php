@@ -187,7 +187,8 @@ if ($auth->ok) {
 			'article-ip' => $article->ip,
 			'article-author' => $article->author,
 			'article-author-nick' => usercolor($author->nick, $author->level, false, $article->author),
-			'aurl' => '/user/' . $article->author,
+			'author-link' => (is_valid_user($author) ? '<a href="/user/' . $article->author . '">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>' : ((!empty($author->nick) && (mb_strtolower(trim($author->nick), 'UTF-8') === 'nezināms' || strtolower(trim($author->nick)) === 'nezinams')) ? '<em>nezināms</em>' : '<em>dzēsts</em>')),
+			'aurl' => is_valid_user($author) ? ('/user/' . $article->author) : '#',
 			'article-date' => $article->date,
             'article-wide' => $article->is_wide
 		]);

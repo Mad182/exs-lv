@@ -400,14 +400,26 @@ if ($inprofile && empty($inprofile->deleted)) {
 
 					$comment->date = display_time(strtotime($comment->date));
 					
-					if (!$comment->author_deleted) {
+					$is_valid_author = is_valid_user((object)[
+						'nick' => $comment->author_nick,
+						'author_nick' => $comment->author_nick,
+						'level' => $comment->author_level,
+						'deleted' => $comment->author_deleted
+					]);
+
+					if ($is_valid_author) {
 						$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
 						$author_box .= usercolor($comment->author_nick, $comment->author_level, false, $comment->author) . '</a>';
 						$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($comment) . '" alt="" /></a>';
 						$author_box .= '<span class="custom-title">' . custom_user_title($comment) . '</span>';
 						$author_box .= '<span class="author-info">Karma: ' . $comment->karma . '</span>';
 					} else {
-						$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
+						$u_nick = !empty($comment->author_nick) ? mb_strtolower(trim($comment->author_nick), 'UTF-8') : '';
+						if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+							$author_box = '<em class="username" id="c' . $comment->id . '">nezināms</em>';
+						} else {
+							$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
+						}
 						$author_box .= '<img class="comments-avatar" src="' . get_avatar($comment) . '" alt="{title}" />';
 					}
 
@@ -488,7 +500,12 @@ if ($inprofile && empty($inprofile->deleted)) {
 						]);
 					}
 
-					if ($auth->ok) {
+					if ($auth->ok && $is_valid_author) {
+						$tpl->newBlock('comment-tools');
+						$tpl->assign([
+							'aurl' => '/user/' . $comment->author,
+							'comment-author-id' => $comment->author
+						]);
 						$tpl->newBlock('comments-pm');
 						$tpl->assign('comment-author-id', $comment->author);
 					}

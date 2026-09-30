@@ -62,16 +62,23 @@ if(!empty($articles)) {
 		
 		$user = get_user($article->author);
 		
-		if (!$user->deleted) {
+		if (is_valid_user($user)) {
 			$author_link = '<a href="/user/' . $user->id . '" rel="author" title="Autora profils">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+			$aurl = '/user/' . $user->id;
 		} else {
-			$author_link = '<em>dzēsts</em>';
+			$u_nick = !empty($user->nick) ? mb_strtolower(trim($user->nick), 'UTF-8') : '';
+			if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+				$author_link = '<em>nezināms</em>';
+			} else {
+				$author_link = '<em>dzēsts</em>';
+			}
+			$aurl = '#';
 		}
 
 		$date = display_time(strtotime($article->date), false);
 		$tpl->assign([
 			'url' => '/read/' . $article->strid,
-			'aurl' => '/user/' . $user->id,
+			'aurl' => $aurl,
 			'title' => $article->title,
 			'date' => $date,
 			'author' => $author_link,

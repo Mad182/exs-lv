@@ -724,19 +724,93 @@ function usercolor($nick, $level = 0, $online = false, $userid = 0) {
 }
 
 /**
- * Atgriež lietotāja linku vai "<em>dzēsts</em>"
+ * Pārbauda vai lietotājs ir derīgs (eksistē, nav dzēsts, nav nezināms)
  *
- * param $user - lietotāja objekts VAI id
+ * @param mixed $user Lietotāja objekts, ID vai vārds
+ * @return bool
+ */
+function is_valid_user($user) {
+	if (empty($user)) {
+		return false;
+	}
+	if (is_numeric($user)) {
+		if ((int)$user <= 0) {
+			return false;
+		}
+		$user = get_user($user);
+		if (empty($user)) {
+			return false;
+		}
+	}
+	if (is_object($user)) {
+		$uid = isset($user->id) ? (int)$user->id : (isset($user->author) ? (int)$user->author : (isset($user->user) ? (int)$user->user : null));
+		if ($uid !== null && $uid <= 0) {
+			return false;
+		}
+		if (!empty($user->deleted) || !empty($user->author_deleted) || !empty($user->user_deleted)) {
+			return false;
+		}
+		if (empty($user->nick) && empty($user->author_nick)) {
+			return false;
+		}
+		$nick = trim(!empty($user->nick) ? $user->nick : $user->author_nick);
+		$nick_lower = mb_strtolower($nick, 'UTF-8');
+		if ($nick_lower === 'nezināms' || $nick_lower === 'nezinams') {
+			return false;
+		}
+		if (mb_stripos($nick_lower, 'dzēsts') === 0 || stripos($nick_lower, 'dzests') === 0) {
+			return false;
+		}
+		return true;
+	}
+	if (is_string($user)) {
+		$nick = trim($user);
+		if ($nick === '') {
+			return false;
+		}
+		$nick_lower = mb_strtolower($nick, 'UTF-8');
+		if ($nick_lower === 'nezināms' || $nick_lower === 'nezinams') {
+			return false;
+		}
+		if (mb_stripos($nick_lower, 'dzēsts') === 0 || stripos($nick_lower, 'dzests') === 0) {
+			return false;
+		}
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Atgriež lietotāja linku vai "<em>dzēsts</em>" / "<em>nezināms</em>"
+ *
+ * @param mixed $user - lietotāja objekts VAI id VAI vārds
+ * @return string
  */
 function userlink($user) {
-
-	//ja padots id, atrodam lietotāja datus
 	if (is_numeric($user)) {
+		if ((int)$user <= 0) {
+			return '<em>dzēsts</em>';
+		}
 		$user = get_user($user);
 	}
 
-	if (!empty($user) && empty($user->deleted)) {
-		return '<a href="/user/' . $user->id . '">' . usercolor($user->nick, $user->level, false, $user->id) . '</a>';
+	if (is_valid_user($user)) {
+		$uid = isset($user->id) ? (int)$user->id : (isset($user->author) ? (int)$user->author : (isset($user->user) ? (int)$user->user : 0));
+		$nick = !empty($user->nick) ? $user->nick : (!empty($user->author_nick) ? $user->author_nick : '');
+		$level = isset($user->level) ? $user->level : (isset($user->author_level) ? $user->author_level : 0);
+		if ($uid > 0) {
+			return '<a href="/user/' . $uid . '">' . usercolor($nick, $level, false, $uid) . '</a>';
+		}
+	}
+
+	if (!empty($user)) {
+		$nick = is_object($user) ? (!empty($user->nick) ? $user->nick : (!empty($user->author_nick) ? $user->author_nick : '')) : (is_string($user) ? $user : '');
+		if ($nick !== '') {
+			$nick_lower = mb_strtolower(trim($nick), 'UTF-8');
+			if ($nick_lower === 'nezināms' || $nick_lower === 'nezinams') {
+				return '<em>nezināms</em>';
+			}
+		}
 	}
 
 	return '<em>dzēsts</em>';
@@ -1461,7 +1535,9 @@ function get_online_list($force = false) {
 			`users`.`nick` ASC");
 		if ($lastseen) {
 			foreach ($lastseen as $usr) {
-				$data .= '<a href="/user/' . $usr->id . '">' . usercolor($usr->nick, $usr->level, true, $usr->id) . '</a> ';
+				if (is_valid_user($usr)) {
+					$data .= '<a href="/user/' . $usr->id . '">' . usercolor($usr->nick, $usr->level, true, $usr->id) . '</a> ';
+				}
 			}
 		}
 		$m->set('onlinelist-' . $lang, $data, 12);
@@ -1946,9 +2022,14 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 
 			$out .= '<li>';
 			$val->date = strtotime($val->date);
+			$is_valid = is_valid_user($val);
 			if (!$auth->mobile) {
-				$out .= '<div class="mb-av"><a id="m' . $val->id . '" href="/user/' . $val->author . '">';
-				$out .= '<img class="av" src="' . get_avatar($val, 's') . '" alt="' . h($val->nick) . '" /></a>';
+				$out .= '<div class="mb-av">';
+				if ($is_valid) {
+					$out .= '<a id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" src="' . get_avatar($val, 's') . '" alt="' . h($val->nick) . '" /></a>';
+				} else {
+					$out .= '<span id="m' . $val->id . '"><img class="av" src="' . get_avatar($val, 's') . '" alt="" /></span>';
+				}
 				if (!empty($val->decos)) {
 					$decos = unserialize($val->decos);
 					if (!empty($decos)) {
@@ -1961,7 +2042,11 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 				}
 				$out .= '</div>';
 			} else {
-				$out .= '<a class="mb-av" id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" width="40" height="40" src="' . get_avatar($val, 's') . '" alt="" /></a>';
+				if ($is_valid) {
+					$out .= '<a class="mb-av" id="m' . $val->id . '" href="/user/' . $val->author . '"><img class="av" width="40" height="40" src="' . get_avatar($val, 's') . '" alt="" /></a>';
+				} else {
+					$out .= '<span class="mb-av" id="m' . $val->id . '"><img class="av" width="40" height="40" src="' . get_avatar($val, 's') . '" alt="" /></span>';
+				}
 			}
 			$out .= '<div class="response-content">';
 			if (!$intro && $auth->ok === true && $level < $answer_limit) {
@@ -1974,10 +2059,15 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 			}
 
 			$out .= '<p class="post-info">';
-			if (!$val->user_deleted) {
+			if ($is_valid) {
 				$out .= '<a href="/user/' . $val->author . '">' . usercolor($val->nick, $val->level, false, $val->author) . '</a>';
 			} else {
-				$out .= '<em>dzēsts</em>';
+				$u_nick = !empty($val->nick) ? mb_strtolower(trim($val->nick), 'UTF-8') : '';
+				if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+					$out .= '<em>nezināms</em>';
+				} else {
+					$out .= '<em>dzēsts</em>';
+				}
 			}
 			$out .= ' <span class="comment-date-time" title="' . date('d.m.Y. H:i', $val->date) . '">' . display_time($val->date) . '</span>';
 
@@ -3140,11 +3230,13 @@ function user_top() {
 
 	if (($out = $m->get('user_top_html')) === false) {
 		$out = '<ul id="today-top">';
-		$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 ORDER BY `today` DESC LIMIT 9");
+		$tusers = $db->get_results("SELECT `id`,`nick`,`today`,`level`,`av_alt`,`avatar` FROM `users` WHERE `today` > 0 AND `deleted` = 0 ORDER BY `today` DESC LIMIT 9");
 		if ($tusers) {
 			foreach ($tusers as $tuser) {
-				$out .= '<li><a href="/user/' . $tuser->id . '"><img class="av" src="' . get_avatar($tuser) . '" alt="" />';
-				$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id) . '</a><span class="count">(' . $tuser->today . ')</span></li>';
+				if (is_valid_user($tuser)) {
+					$out .= '<li><a href="/user/' . $tuser->id . '"><img class="av" src="' . get_avatar($tuser) . '" alt="" />';
+					$out .= usercolor($tuser->nick, $tuser->level, false, $tuser->id) . '</a><span class="count">(' . $tuser->today . ')</span></li>';
+				}
 			}
 		}
 		$out .= '</ul><div class="c"></div>';

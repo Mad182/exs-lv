@@ -44,6 +44,20 @@ if ($mbs) {
 		$usr = get_user($mb->author);
 		$av = get_avatar($usr, 's');
 
+		if (is_valid_user($usr)) {
+			$author_avatar = '<a href="/user/' . $mb->author . '"><img class="av" src="' . $av . '" alt="' . h($usr->nick) . '" /></a>';
+			$author_link = '<a href="/user/' . $mb->author . '">' . h($usr->nick) . '</a>';
+			$nick = $usr->nick;
+			$aurl = '/user/' . $mb->author;
+		} else {
+			$author_avatar = '<img class="av" src="' . $av . '" alt="" />';
+			$u_nick = !empty($usr->nick) ? mb_strtolower(trim($usr->nick), 'UTF-8') : '';
+			$nick_display = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? 'nezināms' : 'dzēsts';
+			$author_link = '<em>' . $nick_display . '</em>';
+			$nick = $nick_display;
+			$aurl = '#';
+		}
+
 		$url = mb_get_strid($mb->text, $mb->id);
 
 		$time = time_ago(strtotime($mb->date));
@@ -51,12 +65,14 @@ if ($mbs) {
 			'id' => $mb->id,
 			'author' => $mb->author,
 			'text' => add_smile($mb->text),
-			'nick' => $usr->nick,
+			'nick' => $nick,
+			'author-avatar' => $author_avatar,
+			'author-link' => $author_link,
 			'time' => $time,
 			'avatar' => $av,
 			'resp' => $mb->posts,
 			'url' => $url,
-			'aurl' => '/user/' . $mb->author
+			'aurl' => $aurl
 		]);
 	}
 

@@ -384,10 +384,18 @@ if (!empty($inprofile)) {
 				}
 
 				// dzēstu profilu lietotājvārdi
-				if (!$inprofile->deleted) {
+				$is_valid = is_valid_user($inprofile);
+				if ($is_valid) {
 					$author = '<a href="/user/' . $inprofile->id . '">' . usercolor($inprofile->nick, $inprofile->level, false, $inprofile->id) . '</a>';
+					$author_avatar = '<a id="m' . $record->id . '" href="/user/' . $inprofile->id . '"><img class="av" src="' . get_avatar($inprofile, 's') . '" alt="' . h($inprofile->nick) . '" width="45" height="45" /></a>';
 				} else {
-					$author = '<em>dzēsts</em>';
+					$u_nick = !empty($inprofile->nick) ? mb_strtolower(trim($inprofile->nick), 'UTF-8') : '';
+					if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+						$author = '<em>nezināms</em>';
+					} else {
+						$author = '<em>dzēsts</em>';
+					}
+					$author_avatar = '<span id="m' . $record->id . '"><img class="av" src="' . get_avatar($inprofile, 's') . '" alt="" width="45" height="45" /></span>';
 				}
 
 				$tpl->assign([
@@ -397,6 +405,7 @@ if (!empty($inprofile)) {
 					'date' => display_time(strtotime($record->date)),
 					'date-title' => date('Y-m-d H:i:s', strtotime($record->date)),
 					'author' => $author,
+					'author-avatar' => $author_avatar,
 					'author-id' => $record->author,
 					'avatar' => get_avatar($inprofile, 's'),
 					'author-nick' => $inprofile->nick,

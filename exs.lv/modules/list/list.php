@@ -140,9 +140,13 @@ if ($category->isforum) {
 				if (isset($latest_topics[$forum->id])) {
 					$t_row = $latest_topics[$forum->id];
 					$t_usr = get_user($t_row->author);
-					$author_link = ($t_usr && !empty($t_usr->nick) && empty($t_usr->deleted))
-						? '<a href="/user/' . $t_row->author . '" rel="author">' . usercolor($t_usr->nick, $t_usr->level, 'disable', $t_row->author) . '</a>'
-						: '<em>dzēsts</em>';
+					if (is_valid_user($t_usr)) {
+						$author_link = '<a href="/user/' . $t_row->author . '" rel="author">' . usercolor($t_usr->nick, $t_usr->level, 'disable', $t_row->author) . '</a>';
+					} elseif (!empty($t_usr->nick) && (mb_strtolower(trim($t_usr->nick), 'UTF-8') === 'nezināms' || strtolower(trim($t_usr->nick)) === 'nezinams')) {
+						$author_link = '<em>nezināms</em>';
+					} else {
+						$author_link = '<em>dzēsts</em>';
+					}
 					$last_topic_str = '<a href="/read/' . $t_row->strid . '" title="' . h($t_row->title) . '">' . textlimit($t_row->title, 32) . '</a><br>' .
 					                  display_time(strtotime($t_row->bump)) . '<br>no: ' . $author_link;
 				}
@@ -213,9 +217,11 @@ if (!$category->mods_only || im_mod()) {
 			if (!empty($articles)) {
 				$t_out .= '<table id="forum" class="forum-table forum-topics"><thead><tr class="forum-topics-header"><th colspan="2" class="first th-topics">Tēmas</th><th class="stat th-replies">Atbildes</th><th class="last th-date">Datums</th></tr></thead><tbody>';
 				foreach ($articles as $article) {
+					$is_unknown = false;
 					if (!$article->nick) {
 						$article->nick = 'Nezināms';
 						$article->level = 0;
+						$is_unknown = true;
 					}
 					$date = display_time(strtotime($article->date));
 
@@ -228,8 +234,10 @@ if (!$category->mods_only || im_mod()) {
 					$closed = $article->closed ? '_locked' : '';
 					$timg = $type . 'read' . $closed . '.gif';
 
-					if (!$article->author_deleted && !empty($article->nick)) {
+					if (is_valid_user($article)) {
 						$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, 'disable', $article->author) . '</a>';
+					} elseif ($is_unknown || mb_strtolower(trim($article->nick), 'UTF-8') === 'nezināms' || strtolower(trim($article->nick)) === 'nezinams') {
+						$author_link = '<em>nezināms</em>';
 					} else {
 						$author_link = '<em>dzēsts</em>';
 					}
@@ -326,9 +334,11 @@ if (!$category->mods_only || im_mod()) {
 
 			if (!empty($articles)) {
 				foreach ($articles as $article) {
+					$is_unknown = false;
 					if (!$article->nick) {
 						$article->nick = 'Nezināms';
 						$article->level = 0;
+						$is_unknown = true;
 					}
 					$tpl->newBlock('list');
 
@@ -346,8 +356,10 @@ if (!$category->mods_only || im_mod()) {
 						$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
 					}
 					
-					if (!$article->author_deleted && !empty($article->nick)) {
+					if (is_valid_user($article)) {
 						$author_link = '<a rel="author" href="/user/' . $article->author . '">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+					} elseif ($is_unknown || mb_strtolower(trim($article->nick), 'UTF-8') === 'nezināms' || strtolower(trim($article->nick)) === 'nezinams') {
+						$author_link = '<em>nezināms</em>';
 					} else {
 						$author_link = '<em>dzēsts</em>';
 					}
@@ -395,8 +407,17 @@ if (!$category->mods_only || im_mod()) {
 						$article->title = '<strong><img src="//img.exs.lv/bildes/attach-small.gif" alt="Piesprausts:" title="Piesprausts" />' . $article->title . '</strong>';
 					}
 					
-					if (!$article->author_deleted && !empty($article->nick)) {
+					$is_unknown = false;
+					if (empty($article->nick)) {
+						$article->nick = 'Nezināms';
+						$article->level = 0;
+						$is_unknown = true;
+					}
+
+					if (is_valid_user($article)) {
 						$author_link = '<a href="/user/' . $article->author . '" rel="author">' . usercolor($article->nick, $article->level, false, $article->author) . '</a>';
+					} elseif ($is_unknown || mb_strtolower(trim($article->nick), 'UTF-8') === 'nezināms' || strtolower(trim($article->nick)) === 'nezinams') {
+						$author_link = '<em>nezināms</em>';
 					} else {
 						$author_link = '<em>dzēsts</em>';
 					}

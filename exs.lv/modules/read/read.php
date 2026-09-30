@@ -799,10 +799,15 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 			$article_text = add_smile($article->text, 1, $article->disable_emotions);
 
-			if (!empty($author) && empty($author->deleted)) {
+			if (is_valid_user($author)) {
 				$author_link = '<span class="author vcard"><a class="url fn n" href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a></span>';
 			} else {
-				$author_link = '<em>dzēsts</em>';
+				$u_nick = !empty($author->nick) ? mb_strtolower(trim($author->nick), 'UTF-8') : '';
+				if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+					$author_link = '<em>nezināms</em>';
+				} else {
+					$author_link = '<em>dzēsts</em>';
+				}
 			}
 
 			$custom_content = '';
@@ -1160,15 +1165,20 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 					$comment->date = display_time(strtotime($comment->date));
 					
-					if (!empty($author[$comment->author]) && !$author[$comment->author]->deleted) {
+					if (is_valid_user($author[$comment->author] ?? null)) {
 						$author_box = '<a class="username" id="c' . $comment->id . '" href="/user/' . $comment->author . '">';
 						$author_box .= usercolor($author[$comment->author]->nick, $author[$comment->author]->level, false, $comment->author) . '</a>';
 						$author_box .= '<a href="/user/' . $comment->author . '"><img class="comments-avatar" src="' . get_avatar($author[$comment->author]) . '" alt="" /></a>';
 						$author_box .= '<span class="custom-title">' . custom_user_title($author[$comment->author]) . '</span>';
 						$author_box .= '<span class="author-info">Karma: ' . $author[$comment->author]->karma . '</span>';
 					} else {
-						$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
 						$u_obj = !empty($author[$comment->author]) ? $author[$comment->author] : null;
+						$u_nick = !empty($u_obj->nick) ? mb_strtolower(trim($u_obj->nick), 'UTF-8') : '';
+						if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+							$author_box = '<em class="username" id="c' . $comment->id . '">nezināms</em>';
+						} else {
+							$author_box = '<em class="username" id="c' . $comment->id . '">dzēsts lietotājs</em>';
+						}
 						$author_box .= '<img class="comments-avatar" src="' . get_avatar($u_obj) . '" alt="{title}" />';
 					}
 					
@@ -1276,10 +1286,13 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 								$avatar = get_avatar($author[$reply->author] ?? null, 's');
 
-								if (!empty($author[$reply->author]) && !$author[$reply->author]->deleted) {
+								if (is_valid_user($author[$reply->author] ?? null)) {
 									$author_link = '<a href="/user/' . $reply->author . '">' . usercolor($author[$reply->author]->nick, $author[$reply->author]->level, false, $reply->author) . '</a>';
+									$rpl_avatar_box = '<a id="c' . $reply->id . '" href="/user/' . $reply->author . '"><img class="rpl-avatar av" src="' . $avatar . '" alt="" /></a>';
 								} else {
-									$author_link = '<em>dzēsts</em>';
+									$u_nick = !empty($author[$reply->author]->nick) ? mb_strtolower(trim($author[$reply->author]->nick), 'UTF-8') : '';
+									$author_link = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+									$rpl_avatar_box = '<span id="c' . $reply->id . '"><img class="rpl-avatar av" src="' . $avatar . '" alt="" /></span>';
 								}
 
 								$tpl->assign([
@@ -1288,7 +1301,8 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 									'rpl-date' => $reply->date,
 									'rpl-author' => $author_link,
 									'rpl-author-id' => $reply->author,
-									'rpl-avatar' => $avatar
+									'rpl-avatar' => $avatar,
+									'rpl-avatar-box' => $rpl_avatar_box
 								]);
 
 
@@ -1354,7 +1368,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 						}
 					}
 
-					if (!$auth->mobile && $auth->ok && $lang == 1) {
+					if (!$auth->mobile && $auth->ok && $lang == 1 && is_valid_user($author[$comment->author] ?? null)) {
 						$tpl->newBlock('comment-tools');
 						$tpl->assign('id', $comment->author);
 						$tpl->newBlock('comments-pm');

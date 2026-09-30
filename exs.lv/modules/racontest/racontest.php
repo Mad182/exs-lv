@@ -29,8 +29,13 @@ if (im_mod() || $auth->level == 3) {
 				$tpl->assign('contest-ctitle', $category_l->title);
 
 				foreach ($get_topics as $topic) {
+					$topic->addedby = '<em>dzēsts</em>';
 					if ($user = get_user($topic->author)) {
-						$topic->addedby = '<a href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
+						if (is_valid_user($user)) {
+							$topic->addedby = '<a href="' . mkurl('user', $user->id, $user->nick) . '">' . usercolor($user->nick, $user->level) . '</a>';
+						} elseif (!empty($user->nick) && (mb_strtolower(trim($user->nick), 'UTF-8') === 'nezināms' || strtolower(trim($user->nick)) === 'nezinams')) {
+							$topic->addedby = '<em>nezināms</em>';
+						}
 					}
 					$tpl->newBlock('contest-topic');
 					$tpl->assignAll($topic);

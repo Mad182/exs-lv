@@ -251,7 +251,7 @@ if ($cached_data !== false && is_array($cached_data)) {
 				$mods = [];
 				foreach ($moderators_by_cat[$forum->id] as $mod_uid) {
 					$mod_usr = get_user($mod_uid);
-					if ($mod_usr && !empty($mod_usr->nick)) {
+					if (is_valid_user($mod_usr)) {
 						$mods[] = '<a href="/user/' . $mod_uid . '">' . usercolor($mod_usr->nick, $mod_usr->level, 'disable', $mod_uid) . '</a>';
 					}
 				}
@@ -304,9 +304,10 @@ if ($cached_data !== false && is_array($cached_data)) {
 			$last_col = '';
 			if (!empty($topic)) {
 				$topic_usr = get_user($topic->author);
-				$author_link = '';
-				if ($topic_usr && !empty($topic_usr->nick) && empty($topic_usr->deleted)) {
+				if (is_valid_user($topic_usr)) {
 					$author_link = '<a href="/user/' . $topic->author . '" rel="author">' . usercolor($topic_usr->nick, $topic_usr->level, 'disable', $topic->author) . '</a>';
+				} elseif (!empty($topic_usr->nick) && (mb_strtolower(trim($topic_usr->nick), 'UTF-8') === 'nezināms' || strtolower(trim($topic_usr->nick)) === 'nezinams')) {
+					$author_link = '<em>nezināms</em>';
 				} else {
 					$author_link = '<em>dzēsts</em>';
 				}

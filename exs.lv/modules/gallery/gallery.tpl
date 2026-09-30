@@ -173,11 +173,14 @@
 				</ul>
 				<!-- END BLOCK : com-replies-->
 			</div>
+			<!-- START BLOCK : comment-tools-->
 			<p class="comment-tools"><a href="{aurl}">profils</a>
-				<!-- END BLOCK : comments-pm-->
+				<!-- START BLOCK : comments-pm-->
 				<a href="/pm/write/?to={comment-author-id}">vēstule</a>
 				<!-- END BLOCK : comments-pm-->
-				<a href="/gallery/{comment-author-id}">galerija</a></p><div class="c"></div></dd>
+				<a href="/gallery/{comment-author-id}">galerija</a></p>
+			<!-- END BLOCK : comment-tools-->
+			<div class="c"></div></dd>
 		<!-- END BLOCK : comments-node-user-->
 		<!-- END BLOCK : comments-node-->
 	</dl>

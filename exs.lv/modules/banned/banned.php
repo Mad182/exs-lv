@@ -68,13 +68,27 @@ if (!$auth->ok) {
 
 			// dzēstiem lietotājiem lietotājvārds var nebūt
 			$user = get_user($banned->user_id);
-			if (!empty($user->nick)) {
+			if (is_valid_user($user)) {
 				$linkuser = '<a href="/user/' . $user->id . '">' . h($user->nick) . '</a>';
+			} elseif (!empty($user->nick) && (mb_strtolower(trim($user->nick), 'UTF-8') === 'nezināms' || strtolower(trim($user->nick)) === 'nezinams')) {
+				$linkuser = '<em>nezināms</em>';
+			} elseif (!empty($user->nick)) {
+				$linkuser = '<em>dzēsts</em>';
 			} else {
 				$linkuser = '--';
 			}
 
 			$author = get_user($banned->author);
+			if (is_valid_user($author)) {
+				$author_link = '<a href="/user/' . $banned->author . '">' . h($author->nick) . '</a>';
+			} elseif (!empty($author->nick) && (mb_strtolower(trim($author->nick), 'UTF-8') === 'nezināms' || strtolower(trim($author->nick)) === 'nezinams')) {
+				$author_link = '<em>nezināms</em>';
+			} elseif (!empty($author->nick)) {
+				$author_link = '<em>dzēsts</em>';
+			} else {
+				$author_link = '--';
+			}
+
 			$tpl->assign([
 				'banned-id' => $banned->id,
 				'banned-user_id' => $banned->user_id,
@@ -85,8 +99,9 @@ if (!$auth->ok) {
 				'banned-date' => date('Y-m-d H:i', $banned->time),
 				'banned-until' => date('Y-m-d H:i', $banned->time + $banned->length),
 				'banned-author' => $banned->author,
+				'author-link' => $author_link,
 				'token' => make_token('remban'),
-				'anick' => h($author->nick)
+				'anick' => h($author->nick ?? '')
 			]);
 
 			if ($banned->lang == 0) {
