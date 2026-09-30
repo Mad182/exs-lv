@@ -13,23 +13,27 @@
  */
 function fetch_news($type = 'rs3') {
 
-    $filename = 'official-news.html';
-    if ($type === 'oldschool') {
-        $filename = 'oldschool-news.html';
+    $filename = ($type === 'oldschool') ? 'oldschool-news.html' : 'official-news.html';
+    $filepath = CORE_PATH . '/cache/runescape/' . $filename;
+
+    if (file_exists($filepath) && filesize($filepath) > 0) {
+        $output = @file_get_contents($filepath);
+        if ($output !== false && !empty($output)) {
+            return $output;
+        }
     }
 
-    $output = '<p class="simple-note">Neizdevās nolasīt jaunumus. :(<br><br>Pāris minūšu laikā saraksts tiks atjaunots.</p>';
+    // Ja cache fails vēl neeksistē vai ir tukšs, uzģenerē no datubāzes
+    create_news($type === 'oldschool' ? 'oldschool' : 'rs3');
 
-    $file = @fopen(CORE_PATH . '/cache/runescape/' . $filename, 'r');
-    if ($file !== false) {
-        $output = fread(
-            $file,
-            filesize(CORE_PATH . '/cache/runescape/' . $filename)
-        );
-        fclose($file);
+    if (file_exists($filepath) && filesize($filepath) > 0) {
+        $output = @file_get_contents($filepath);
+        if ($output !== false && !empty($output)) {
+            return $output;
+        }
     }
 
-    return $output;
+    return '<p class="simple-note">Neizdevās nolasīt jaunumus. :(<br><br>Pāris minūšu laikā saraksts tiks atjaunots.</p>';
 }
 
 /**
@@ -42,59 +46,96 @@ function fetch_news($type = 'rs3') {
  *  RSS feed lasīšana tiek veikta tikai reizi 10 minūtēs.
  */
 function read_rss($force = false) {
-    return true;
     global $m, $db, $auth, $rsbot_id, $lang, $dir_news_images;
+
+    if (empty($rsbot_id)) {
+        $rsbot_id = 33342; // "Wise Old Man"
+    }
+    if (empty($lang)) {
+        $lang = 9;
+    }
+    if (empty($dir_news_images)) {
+        $dir_news_images = CORE_PATH . '/bildes/runescape/news/';
+    }
+    if (empty($m) && class_exists('Memcached')) {
+        global $mc_host, $mc_port;
+        $m = new Memcached;
+        if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
+            $m->setOption(Memcached::OPT_SERIALIZER, Memcached::SERIALIZER_IGBINARY);
+        }
+        $m->addServer(!empty($mc_host) ? $mc_host : '127.0.0.1', !empty($mc_port) ? $mc_port : 11211);
+    }
 
     $read_every = 600; // sekundes
     $feed_fetched = false;
 
     $urls = [
-        'rs3' => 'http://services.runescape.com/m=news/latest_news.rss',
-        'oldschool' => 'http://services.runescape.com/m=news/latest_news.rss?oldschool=true'
+        'rs3' => 'https://secure.runescape.com/m=news/latest_news.rss',
+        'oldschool' => 'https://secure.runescape.com/m=news/latest_news.rss?oldschool=true'
     ];
 
     foreach ($urls as $key => $link) {
 
         // memcached glabās tikai pēdējās parsēšanas laiku
-        if (!$force && $m->get('rs-rssfeed-' . $key . '-lastread')) continue;
-        $m->set('rs-rssfeed-' . $key . '-lastread', time(), $read_every);
+        if (!$force && $m && $m->get('rs-rssfeed-' . $key . '-lastread')) continue;
+        if ($m) {
+            $m->set('rs-rssfeed-' . $key . '-lastread', time(), $read_every);
+        }
 
-        $news = curl_get($link);
-        if ($news === false) continue; // ignorēs un neko nedarīs
-        $feed_fetched = true;
+        $news = curl_get($link, 5, 10);
+        if ($news === false || empty($news)) continue; // ignorēs un neko nedarīs
+
+        try {
+            $data = new SimpleXmlElement($news);
+        } catch (Exception $e) {
+            continue;
+        }
+
+        if (empty($data->channel) || empty($data->channel->item)) {
+            continue;
+        }
 
         // ciklā katru jauno ierakstu saglabās masīvā, kura vērtības pēc tam
         // apgriezīs pretēji, lai pievienotu ierakstus pareizā secībā
         $reversed_objects = [];
-        $data = new SimpleXmlElement($news);
-        foreach ($data->channel->item as $single) {
+        $is_oldschool = ($key === 'oldschool') ? 1 : 0;
 
-            $single->is_oldschool = ($key === 'oldschool') ? 1 : 0;
+        foreach ($data->channel->item as $single) {
+            $title = trim((string)$single->title);
+            $pubDate = trim((string)$single->pubDate);
+            $hashval = md5($pubDate . $title);
 
             // pārbaude, vai datubāzē šāds jaunums jau neeksistē
-            $single->hashval = sanitize(md5($single->pubDate . $single->title));
             $val = $db->get_var(
-                "
-                SELECT count(*) FROM `rs_news`
-                    JOIN `miniblog` ON `rs_news`.`mb_id` = `miniblog`.`id`
-                WHERE 
-                    `rs_news`.`hash_value` = '" . $single->hashval . "' AND
-                    `rs_news`.`is_oldschool` = " . $single->is_oldschool
+                "SELECT count(*) FROM `rs_news`
+                 WHERE `hash_value` = '" . sanitize($hashval) . "' AND `is_oldschool` = " . $is_oldschool
             );
             if ($val > 0) continue; // dublikātus nevajag
 
-            $reversed_objects[] = $single;
+            $item = new stdClass();
+            $item->title = $title;
+            $item->description = trim((string)$single->description);
+            $item->link = trim((string)$single->link);
+            $item->pubDate = $pubDate;
+            $item->category = isset($single->category) ? trim((string)$single->category) : '';
+            $item->image_url = isset($single->enclosure['url']) ? trim((string)$single->enclosure['url']) : '';
+            $item->is_oldschool = $is_oldschool;
+            $item->hashval = $hashval;
+
+            $reversed_objects[] = $item;
         }
 
         // varbūt jaunu ierakstu nebija
         if (empty($reversed_objects)) continue;
+
+        $feed_fetched = true;
 
         // izies cauri jaunajiem ierakstiem pretējā secībā un tos pievienos
         foreach (array_reverse($reversed_objects) as $single) {
 
             // izveidos ierakstu `miniblog` tabulā
             $append = '';
-            if ((int)$single->is_oldschool) {
+            if ($single->is_oldschool) {
                 $append = '&nbsp;<span class="rsmb-oldschool">(Oldschool)</span>';
             }
             $mb_text  = '<p class="rsmb-title">' . $single->title . $append . '</p>' .
@@ -108,27 +149,22 @@ function read_rss($force = false) {
                 'date'      => date("Y-m-d H:i:s", time()),
                 'text'      => sanitize($mb_text),
                 'lang'      => (int)$lang,
-                'bump'      => time()
+                'bump'      => time(),
+                'ip'        => '127.0.0.1'
             ];
             $insert = $db->insert('miniblog', $values);
             if (!$insert) continue;
 
             // izveidos ierakstu `rs_news` tabulā
             $mb_id = $db->insert_id;
-            $has_image = (isset($single->enclosure['url'])) ? 1 : 0;
-            $os_prefix = ((int)$single->is_oldschool) ? 'os-' : 'rs3-';
+            $has_image = !empty($single->image_url) ? 1 : 0;
+            $os_prefix = ($single->is_oldschool) ? 'os-' : 'rs3-';
 
             // ne visiem rakstiem ir pieejams logo
             if ($has_image) {
-                // curl šajā implementācijā nespēs verificēt sertifikātus
-                $single->enclosure['url'] = str_replace(
-                    'https://',
-                    'http://',
-                    $single->enclosure['url']
-                );
                 // attēls tiks saglabāts uz lokālā servera
                 $save = save_rs_image(
-                    $single->enclosure['url'], // source_path
+                    $single->image_url, // source_path
                     $dir_news_images, // target_path
                     $os_prefix . $mb_id . '.jpg' // img_title
                 );
@@ -138,14 +174,14 @@ function read_rss($force = false) {
             }
 
             $values = [
-                'hash_value'    => input2db((string)$single->hashval, 256),
+                'hash_value'    => input2db($single->hashval, 32),
                 'is_oldschool'  => (int)$single->is_oldschool,
                 'mb_id'         => $mb_id,
-                'news_title'    => input2db($single->title, 256),
-                'news_category' => input2db($single->category, 256),
+                'news_title'    => input2db($single->title, 255),
+                'news_category' => input2db($single->category, 255),
                 'news_description' => input2db($single->description, 1000),
-                'news_date'     => input2db($single->pubDate, 256),
-                'news_link'     => input2db($single->link, 400),
+                'news_date'     => input2db($single->pubDate, 255),
+                'news_link'     => input2db($single->link, 255),
                 'has_image'     => $has_image,
                 'created_by'    => (int)$rsbot_id,
                 'created_at'    => time()
@@ -168,6 +204,16 @@ function read_rss($force = false) {
 function create_news($type = 'rs3') {
     global $db, $rsbot_id, $img_server, $rs_news_count;
 
+    if (empty($rsbot_id)) {
+        $rsbot_id = 33342;
+    }
+    if (empty($rs_news_count)) {
+        $rs_news_count = 11;
+    }
+    if (empty($img_server)) {
+        $img_server = '//img.exs.lv';
+    }
+
     $is_oldschool = ($type === 'oldschool') ? 1 : 0;
 
     $news = $db->get_results("
@@ -189,9 +235,9 @@ function create_news($type = 'rs3') {
             `rs_news`.`is_oldschool` = " . $is_oldschool . "
         ORDER BY
             `rs_news`.`id` DESC
-        LIMIT 0, " . $rs_news_count . "
+        LIMIT 0, " . (int)$rs_news_count . "
     ");
-    if (!$news) return; // slikti, ka tā :(
+    if (!$news) return;
 
     $img_prefix = ($is_oldschool) ? 'os-' : 'rs3-';
     $out = '<ul class="official-news">';
@@ -239,18 +285,28 @@ function create_news($type = 'rs3') {
             '</a></li>';
     }
 
-    // oldschool jaunumos senāki raksti nav apskatāmi
-    if (!$is_oldschool) {
+    if ($is_oldschool) {
         $out .= '<li class="link">' .
-            '<a href="http://services.runescape.com/m=news/" rel="nofollow" ' .
+            '<a href="https://secure.runescape.com/m=news/archive?oldschool=true" rel="nofollow" ' .
+            'target="_blank">Skatīt senākus rakstus</a></li>';
+    } else {
+        $out .= '<li class="link">' .
+            '<a href="https://secure.runescape.com/m=news/" rel="nofollow" ' .
             'target="_blank">Skatīt senākus rakstus</a></li>';
     }
     $out .= '</ul>';
 
+    $cachedir = CORE_PATH . '/cache/runescape/';
+    if (!is_dir($cachedir)) {
+        @mkdir($cachedir, 0777, true);
+    }
+
     $filename = ($is_oldschool) ? 'oldschool-news.html' : 'official-news.html';
-    $file = fopen(CORE_PATH . '/cache/runescape/' . $filename, 'w');
-    fwrite($file, $out);
-    fclose($file);
+    $file = @fopen($cachedir . $filename, 'w');
+    if ($file) {
+        fwrite($file, $out);
+        fclose($file);
+    }
 }
 
 /**
@@ -262,46 +318,66 @@ function create_news($type = 'rs3') {
  */
 function save_rs_image($img_url, $target_path, $target_name = 'empty') {
 
-    if ($target_name == 'empty' || empty($target_name)) {
+    if ($target_name == 'empty' || empty($target_name) || empty($img_url)) {
         return false;
     }
 
-    // lejuplādē attēlu no adreses un saglabā uz servera
+    if (!is_dir($target_path)) {
+        @mkdir($target_path, 0777, true);
+    }
+
+    // Lejuplādē attēlu uz pagaidu failu
+    $temp_file = $target_path . 'tmp_' . uniqid() . '_' . $target_name;
+    $file = @fopen($temp_file, 'wb');
+    if (!$file) {
+        return false;
+    }
+
     $curl = curl_init($img_url);
-    $file = @fopen($target_path . $target_name, 'wb');
     curl_setopt($curl, CURLOPT_FILE, $file);
     curl_setopt($curl, CURLOPT_HEADER, 0);
-    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
-    curl_setopt($curl, CURLOPT_TIMEOUT, 4);
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
     $exec = curl_exec($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if (PHP_VERSION_ID < 80500) {
         @curl_close($curl);
     }
     fclose($file);
 
-    // pārveido attēlu uz mazāku izmēru
+    if (!$exec || $http_code >= 400 || !file_exists($temp_file) || filesize($temp_file) === 0) {
+        @unlink($temp_file);
+        return false;
+    }
+
+    // Pārveido attēlu uz mazāku izmēru
     require_once(LIB_PATH . '/verot/src/class.upload.php');
 
-    $foo = new Upload($target_path . $target_name);
+    $foo = new Upload($temp_file);
     $foo->image_max_pixels = 200000000;
     if ($foo->uploaded) {
         $foo->file_new_name_body = str_replace(['.png', '.gif', '.jpg', '.jpeg'], '', $target_name);
         $foo->file_auto_rename = false;
+        $foo->file_overwrite = true;
         $foo->image_resize = true;
         $foo->image_convert = 'jpg';
         $foo->image_x = 170;
         $foo->image_ratio_y = true;
         $foo->allowed = ['image/*'];
-        $foo->Process(CORE_PATH . '/bildes/runescape/news/');
+        $foo->Process($target_path);
     }
 
-    if ($foo->processed) {
+    $processed = $foo->processed;
+    if ($processed) {
         $foo->Clean();
     }
-    if ($exec === false) {
-        return false;
-    }
-    return true;
+    @unlink($temp_file);
+
+    return $processed ? true : false;
 }
 
 /**

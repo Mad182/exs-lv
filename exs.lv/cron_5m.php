@@ -41,3 +41,9 @@ foreach ($cats as $cat) {
 //remove bans
 $db->query("UPDATE `banned` SET `active` = 0 WHERE `time`+`length` < '" . time() . "'");
 
+// RuneScape RSS jaunumu imports
+if (file_exists(CORE_PATH . '/modules/runescape/functions.runescape.php')) {
+	require_once(CORE_PATH . '/modules/runescape/functions.runescape.php');
+	read_rss();
+}
+
