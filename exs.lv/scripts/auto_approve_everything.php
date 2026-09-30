@@ -251,6 +251,16 @@ function updateChunked($db, $pageIds, $reviewIds, $setCategory, $catTitle, $verb
     }
 }
 
+// Populate empty intro / meta_description from text for pending pages
+$db->query("
+    UPDATE pages
+    SET intro = IF(CHAR_LENGTH(TRIM(REPLACE(REPLACE(REPLACE(text, '<br>', ' '), '<p>', ' '), '</p>', ' '))) > 280,
+                   CONCAT(SUBSTRING(TRIM(REPLACE(REPLACE(REPLACE(text, '<br>', ' '), '<p>', ' '), '</p>', ' ')), 1, 280), '...'),
+                   TRIM(REPLACE(REPLACE(REPLACE(text, '<br>', ' '), '<p>', ' '), '</p>', ' '))),
+        meta_description = SUBSTRING(TRIM(REPLACE(REPLACE(REPLACE(text, '<br>', ' '), '<p>', ' '), '</p>', ' ')), 1, 160)
+    WHERE needs_review = 1 AND (intro IS NULL OR intro = '' OR meta_description IS NULL OR meta_description = '')
+");
+
 // 1. Move & approve RuneScape pending articles
 echo "1. Moving & approving RuneScape pending articles...\n";
 updateChunked($db, $toRsArchivePageIds, $toRsArchiveReviewIds, $catRsArchiveId, $catRsArchiveTitle, $verbose, "RS Pending");
