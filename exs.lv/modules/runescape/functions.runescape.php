@@ -144,12 +144,17 @@ function read_rss($force = false) {
                 'rel="nofollow" target="_blank">' . $single->link . '</a></p>' .
                 '<p class="rsmb-fade">Ieraksts izveidots automātiski.</p>';
 
+            $post_time = !empty($single->pubDate) ? strtotime($single->pubDate) : 0;
+            if (!$post_time || $post_time <= 0) {
+                $post_time = time();
+            }
+
             $values = [
                 'author'    => (int)$rsbot_id,
-                'date'      => date("Y-m-d H:i:s", time()),
+                'date'      => date("Y-m-d H:i:s", $post_time),
                 'text'      => sanitize($mb_text),
                 'lang'      => (int)$lang,
-                'bump'      => time(),
+                'bump'      => $post_time,
                 'ip'        => '127.0.0.1'
             ];
             $insert = $db->insert('miniblog', $values);
@@ -184,7 +189,7 @@ function read_rss($force = false) {
                 'news_link'     => input2db($single->link, 255),
                 'has_image'     => $has_image,
                 'created_by'    => (int)$rsbot_id,
-                'created_at'    => time()
+                'created_at'    => $post_time
             ];
             $db->insert('rs_news', $values);
         }
