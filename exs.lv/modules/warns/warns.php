@@ -32,12 +32,22 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 					$edit = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/edit/' . $warn->id . '">labot</a>]';
 					$remove = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/remove/' . $warn->id . '?token=' . make_token('remove') . '">noņemt</a>]';
 				}
+				if (is_valid_user($from)) {
+					$author_link = '<a href="/user/' . $from->id . '">' . usercolor($from->nick, $from->level, false, $from->id) . '</a>';
+					$aurl = '/user/' . $from->id;
+				} else {
+					$u_nick = !empty($from->nick) ? mb_strtolower(trim($from->nick), 'UTF-8') : '';
+					$author_link = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+					$aurl = '#';
+				}
+
 				$tpl->assign([
 					'date' => display_time(strtotime($warn->created)),
 					'reason' => add_smile($warn->reason),
 					'remove_reason' => add_smile($warn->remove_reason),
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
-					'aurl' => '/user/' . $from->id,
+					'author-link' => $author_link,
+					'aurl' => $aurl,
 					'edit' => $edit,
 					'remove' => $remove,
 				]);
@@ -73,9 +83,19 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				} else {
 					$tpl->newBlock('bans-inactive');
 				}
+				if (is_valid_user($from)) {
+					$author_link = '<a href="/user/' . $from->id . '">' . usercolor($from->nick, $from->level, false, $from->id) . '</a>';
+					$aurl = '/user/' . $from->id;
+				} else {
+					$u_nick = !empty($from->nick) ? mb_strtolower(trim($from->nick), 'UTF-8') : '';
+					$author_link = ($u_nick === 'nezināms' || $u_nick === 'nezinams') ? '<em>nezināms</em>' : '<em>dzēsts</em>';
+					$aurl = '#';
+				}
+
 				$tpl->assign([
 					'author' => usercolor($from->nick, $from->level, false, $from->id),
-					'aurl' => '/user/' . $from->id,
+					'author-link' => $author_link,
+					'aurl' => $aurl,
 					'reason' => add_smile($ban->reason),
 					'date' => display_time($ban->time),
 					'length' => strTime($ban->length),

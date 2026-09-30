@@ -1080,7 +1080,10 @@ class BBCode {
 			} elseif (isset($item['params']['user'])) {
 				$user = h($item['params']['user']);
 				if (isset($item['params']['userid']) && intval($item['params']['userid'])) {
-					$user = '<a href="/user/' . intval($item['params']['userid']) . '">' . $user . '</a>';
+					$uid = intval($item['params']['userid']);
+					if (function_exists('is_valid_user') ? is_valid_user($uid) : true) {
+						$user = '<a href="/user/' . $uid . '">' . $user . '</a>';
+					}
 				}
 			}
 			// generate html
@@ -1094,9 +1097,9 @@ class BBCode {
 				if ($tag === 'ot') {
 					$html .= '<div class="quote-user"><span class="error-message">Citējot</span>&nbsp;' . $user . ':&nbsp;' . $post_rev . '</div>';
 				} else {
-					$userid = $db->get_var("SELECT id FROM users WHERE nick = ('" . sanitize(trim($user)) . "') LIMIT 1");
-					if ($userid) {
-						$html .= '<div class="quote-user"><a class="profile-url" href="/user/' . $userid . '" title="' . $user . '">' . $user . '</a>&nbsp;rakstīja:&nbsp;' . $post_rev . '</div>';
+					$target_usr = $db->get_row("SELECT id, nick, deleted FROM users WHERE nick = ('" . sanitize(trim($user)) . "') LIMIT 1");
+					if ($target_usr && (function_exists('is_valid_user') ? is_valid_user($target_usr) : empty($target_usr->deleted))) {
+						$html .= '<div class="quote-user"><a class="profile-url" href="/user/' . $target_usr->id . '" title="' . $user . '">' . $user . '</a>&nbsp;rakstīja:&nbsp;' . $post_rev . '</div>';
 					} else {
 						$html .= '<div class="quote-user">' . $user . '&nbsp;rakstīja:&nbsp;' . $post_rev . '</div>';
 					}

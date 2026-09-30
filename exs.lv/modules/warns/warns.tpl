@@ -58,7 +58,7 @@
 		<!-- START BLOCK : warns-active-->
 		<div class="error">
 			<span style="font-size:90%">
-				<a href="{aurl}">{author}</a> {date} {edit} {remove}
+				{author-link} {date} {edit} {remove}
 			</span><br>
 			<strong>Iemesls:</strong> {reason}    
 			<div class="c"></div>
@@ -68,7 +68,7 @@
 		<!-- START BLOCK : warns-inactive-->
 		<div class="notice">
 			<span style="font-size:90%">
-				<a href="{aurl}">{author}</a> {date}
+				{author-link} {date}
 			</span><br>
 			<strong>Iemesls:</strong> {reason}
 			<strong>Noņemšanas iemesls:</strong> {remove_reason}
@@ -88,7 +88,7 @@
 		<!-- START BLOCK : bans-active-->
 		<p class="error">
 			<span style="font-size:90%">
-				<a href="{aurl}">{author}</a> {date}
+				{author-link} {date}
 			</span><br>
 			<strong>Ilgums:</strong> {length}<br>
 			<strong>Iemesls:</strong> {reason}
@@ -98,7 +98,7 @@
 		<!-- START BLOCK : bans-inactive-->
 		<p class="notice">
 			<span style="font-size:90%">
-				<a href="{aurl}">{author}</a> {date}
+				{author-link} {date}
 			</span><br>
 			<strong>Ilgums:</strong> {length}<br>
 			<strong>Iemesls:</strong> {reason}

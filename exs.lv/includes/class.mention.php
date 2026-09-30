@@ -66,7 +66,7 @@ class Mention {
 			}
 		}
 
-		if (!empty($usr) && !in_array($nick, ['exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail']) && $mention_counter <= 6) {
+		if (!empty($usr) && (function_exists('is_valid_user') ? is_valid_user($usr) : empty($usr->deleted)) && !in_array($nick, ['exs', 'inbox', 'gmail', 'mail', 'twitter', 'hotmail']) && $mention_counter <= 6) {
 			$mention_counter++;
 
 			if ($this->type == 'mb') {
