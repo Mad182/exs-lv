@@ -75,8 +75,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 		set_flash('Raksts &quot;' . h($title) . '&quot; ir veiksmīgi apstiprināts un publicēts!', 'success');
 
-		// Find next pending article
-		$nextPending = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' AND id != {$reviewId} ORDER BY id ASC LIMIT 1");
+		// Find next pending article in comment count order
+		$currentComments = (int)$revRow->comment_count;
+		$nextPending = $db->get_var("
+			SELECT id FROM restored_articles_review
+			WHERE status = 'pending'
+			  AND (comment_count < {$currentComments} OR (comment_count = {$currentComments} AND id > {$reviewId}))
+			ORDER BY comment_count DESC, id ASC
+			LIMIT 1
+		");
+		if (!$nextPending) {
+			$nextPending = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' AND id != {$reviewId} ORDER BY comment_count DESC, id ASC LIMIT 1");
+		}
 		if ($nextPending) {
 			redirect('/review-restored?review=' . $nextPending);
 		} else {
@@ -127,7 +137,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 		$m->flush();
 		set_flash('Raksts tika noraidīts un izdzēsts.', 'notice');
 
-		$nextPending = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' AND id != {$reviewId} ORDER BY id ASC LIMIT 1");
+		$currentComments = (int)$revRow->comment_count;
+		$nextPending = $db->get_var("
+			SELECT id FROM restored_articles_review
+			WHERE status = 'pending'
+			  AND (comment_count < {$currentComments} OR (comment_count = {$currentComments} AND id > {$reviewId}))
+			ORDER BY comment_count DESC, id ASC
+			LIMIT 1
+		");
+		if (!$nextPending) {
+			$nextPending = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' AND id != {$reviewId} ORDER BY comment_count DESC, id ASC LIMIT 1");
+		}
 		if ($nextPending) {
 			redirect('/review-restored?review=' . $nextPending);
 		} else {
@@ -264,22 +284,40 @@ if (isset($_GET['review'])) {
 		}
 	}
 
-	// Queue position among pending articles
-	$pendingIds = $db->get_col("SELECT id FROM restored_articles_review WHERE status = 'pending' ORDER BY id ASC");
+	// Queue position among pending articles (ordered by comment_count DESC, id ASC)
+	$pendingIds = $db->get_col("SELECT id FROM restored_articles_review WHERE status = 'pending' ORDER BY comment_count DESC, id ASC");
+	$prevId = null;
+	$nextId = null;
+
 	if ($pendingIds && in_array($rev->id, $pendingIds)) {
-		$currentPos = array_search($rev->id, $pendingIds) + 1;
+		$currentPosIndex = array_search($rev->id, $pendingIds);
+		$currentPos = $currentPosIndex + 1;
 		$tpl->newBlock('queue-position');
 		$tpl->assign([
 			'pos-current' => $currentPos,
 			'pos-total' => count($pendingIds)
 		]);
+
+		if ($currentPosIndex > 0) {
+			$prevId = $pendingIds[$currentPosIndex - 1];
+		}
+		if ($currentPosIndex < count($pendingIds) - 1) {
+			$nextId = $pendingIds[$currentPosIndex + 1];
+		}
+	} else {
+		// If current article is not pending (e.g. already approved/rejected), navigate among all articles in same order
+		$allIds = $db->get_col("SELECT id FROM restored_articles_review ORDER BY comment_count DESC, id ASC");
+		if ($allIds && in_array($rev->id, $allIds)) {
+			$currentPosIndex = array_search($rev->id, $allIds);
+			if ($currentPosIndex > 0) {
+				$prevId = $allIds[$currentPosIndex - 1];
+			}
+			if ($currentPosIndex < count($allIds) - 1) {
+				$nextId = $allIds[$currentPosIndex + 1];
+			}
+		}
 	}
 
-	// Navigation: Previous & Next IDs
-	$prevId = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' AND id < {$rev->id} ORDER BY id DESC LIMIT 1");
-	if (!$prevId) {
-		$prevId = $db->get_var("SELECT id FROM restored_articles_review WHERE id < {$rev->id} ORDER BY id DESC LIMIT 1");
-	}
 	if ($prevId) {
 		$tpl->newBlock('prev-btn');
 		$tpl->assign('prev-id', $prevId);
@@ -287,10 +325,6 @@ if (isset($_GET['review'])) {
 		$tpl->assign('prev-id', $prevId);
 	}
 
-	$nextId = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' AND id > {$rev->id} ORDER BY id ASC LIMIT 1");
-	if (!$nextId) {
-		$nextId = $db->get_var("SELECT id FROM restored_articles_review WHERE id > {$rev->id} ORDER BY id ASC LIMIT 1");
-	}
 	if ($nextId) {
 		$tpl->newBlock('next-btn');
 		$tpl->assign('next-id', $nextId);
@@ -350,8 +384,8 @@ $tpl->assign([
 	'stat-comments' => number_format($statComments, 0, '', ' ')
 ]);
 
-// Start Reviewing button (first pending)
-$firstPending = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' ORDER BY id ASC LIMIT 1");
+// Start Reviewing button (pending with most comments first)
+$firstPending = $db->get_var("SELECT id FROM restored_articles_review WHERE status = 'pending' ORDER BY comment_count DESC, id ASC LIMIT 1");
 if ($firstPending) {
 	$tpl->newBlock('start-review-btn');
 	$tpl->assign('first-pending-id', $firstPending);
@@ -387,7 +421,7 @@ $pageNum = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
 $offset = ($pageNum - 1) * $perPage;
 
 $totalRows = (int)$db->get_var("SELECT count(*) FROM restored_articles_review {$whereSql}");
-$rows = $db->get_results("SELECT * FROM restored_articles_review {$whereSql} ORDER BY id ASC LIMIT {$offset}, {$perPage}");
+$rows = $db->get_results("SELECT * FROM restored_articles_review {$whereSql} ORDER BY comment_count DESC, id ASC LIMIT {$offset}, {$perPage}");
 
 $statusLabels = [
 	'pending' => 'Gaida',

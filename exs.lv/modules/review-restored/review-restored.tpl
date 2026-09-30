@@ -56,7 +56,7 @@
 				<th>Virsraksts</th>
 				<th style="width: 140px;">Sadaļa</th>
 				<th style="width: 120px;">Autors</th>
-				<th style="width: 80px; text-align: center;">Komentāri</th>
+				<th style="width: 80px; text-align: center;" title="Kārtots pēc komentāru skaita (dilstoši)">Komentāri ▼</th>
 				<th style="width: 120px;">Datums</th>
 				<th style="width: 90px; text-align: center;">Statuss</th>
 				<th style="width: 100px; text-align: right;">Darbības</th>
