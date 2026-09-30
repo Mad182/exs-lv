@@ -799,7 +799,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 			$article_text = add_smile($article->text, 1, $article->disable_emotions);
 
-			if (!$author->deleted) {
+			if (!empty($author) && empty($author->deleted)) {
 				$author_link = '<span class="author vcard"><a class="url fn n" href="/user/' . $article->author . '" rel="author">' . usercolor($author->nick, $author->level, false, $article->author) . '</a></span>';
 			} else {
 				$author_link = '<em>dzēsts</em>';
@@ -835,7 +835,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 				'date_atom' => date(DATE_ATOM, strtotime($article->date)),
 				'updated_atom' => $updated_atom,
 				'author' => $author_link,
-				'level' => $author->level,
+				'level' => $author->level ?? 0,
 				'posts' => $article->posts,
 				'rating' => $rat,
 				'rating_count' => $article->rating_count,
