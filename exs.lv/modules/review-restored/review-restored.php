@@ -184,10 +184,77 @@ if (isset($_GET['review'])) {
 		'xsrf-token' => make_token('review_action')
 	]);
 
-	// Categories options
-	$allCats = $db->get_results("SELECT id, title FROM cat WHERE status = 'active' AND lang = 1 ORDER BY title ASC");
-	if ($allCats) {
-		foreach ($allCats as $catOpt) {
+	// Categories options - exclude groups, personal blogs, games, redirects, and system modules
+	$catRows = $db->get_results("
+		SELECT id, title, module, isforum, parent, lang
+		FROM cat
+		WHERE status = 'active'
+		  AND isblog = 0
+		  AND module IN ('list', 'movies', 'wall', 'rshelp')
+		  AND parent != 2516
+		  AND TRIM(title) != ''
+		  AND (lang = 1 OR module = 'rshelp')
+		ORDER BY title ASC
+	");
+
+	$catsGrouped = [
+		'Forums' => [],
+		'Raksti un apskati' => [],
+		'RuneScape' => []
+	];
+
+	$includedCatIds = [];
+
+	if ($catRows) {
+		foreach ($catRows as $catOpt) {
+			$includedCatIds[] = (int)$catOpt->id;
+			$displayTitle = $catOpt->title;
+			if ($catOpt->id == 335) {
+				$displayTitle = 'Minecraft (apskati)';
+			} elseif ($catOpt->id == 336) {
+				$displayTitle = 'Minecraft (forums)';
+			}
+
+			if ($catOpt->module === 'rshelp' || $catOpt->lang == 9) {
+				$catsGrouped['RuneScape'][] = (object)[
+					'id' => $catOpt->id,
+					'title' => $displayTitle
+				];
+			} elseif ($catOpt->isforum) {
+				$catsGrouped['Forums'][] = (object)[
+					'id' => $catOpt->id,
+					'title' => $displayTitle
+				];
+			} else {
+				$catsGrouped['Raksti un apskati'][] = (object)[
+					'id' => $catOpt->id,
+					'title' => $displayTitle
+				];
+			}
+		}
+	}
+
+	// If article's current category is outside standard categories, keep it in a separate group so it's not lost
+	if (!empty($page->category) && !in_array((int)$page->category, $includedCatIds)) {
+		$curCat = $db->get_row("SELECT id, title FROM cat WHERE id = " . (int)$page->category . " LIMIT 1");
+		if ($curCat && trim($curCat->title) !== '') {
+			$catsGrouped['Pašreizējā sadaļa'] = [
+				(object)[
+					'id' => $curCat->id,
+					'title' => $curCat->title . ' (pašreizējā)'
+				]
+			];
+		}
+	}
+
+	foreach ($catsGrouped as $groupName => $groupCats) {
+		if (empty($groupCats)) {
+			continue;
+		}
+		$tpl->newBlock('cat-group');
+		$tpl->assign('group-label', $groupName);
+
+		foreach ($groupCats as $catOpt) {
 			$tpl->newBlock('cat-option');
 			$tpl->assign([
 				'cat-id' => $catOpt->id,

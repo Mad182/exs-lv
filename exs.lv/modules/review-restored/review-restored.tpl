@@ -164,9 +164,13 @@
 				<div class="rr-form-group">
 					<label class="rr-form-label" for="article_category">Sadaļa (Kategorija):</label>
 					<select name="category" id="article_category" class="rr-form-control">
-						<!-- START BLOCK : cat-option -->
-						<option value="{cat-id}" {cat-selected}>{cat-title}</option>
-						<!-- END BLOCK : cat-option -->
+						<!-- START BLOCK : cat-group -->
+						<optgroup label="{group-label}">
+							<!-- START BLOCK : cat-option -->
+							<option value="{cat-id}" {cat-selected}>{cat-title}</option>
+							<!-- END BLOCK : cat-option -->
+						</optgroup>
+						<!-- END BLOCK : cat-group -->
 					</select>
 				</div>
 
