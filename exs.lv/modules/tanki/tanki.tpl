@@ -217,14 +217,13 @@
 	<div class="tanki-bottom-section">
 		<!-- LEFT COLUMN: LEADERBOARDS -->
 		<div class="tanki-scores-column">
+			<!-- TODAY LEADERBOARD -->
 			<div class="tanki-scores-card">
-				<div class="tanki-tab-buttons">
-					<button id="tab-today" class="tanki-tab-btn active">📅 Šodienas Tops</button>
-					<button id="tab-alltime" class="tanki-tab-btn">🏆 Visu Laiku Rekordi</button>
+				<div class="tanki-card-header">
+					<h4>📅 Šodienas Tops</h4>
+					<span class="tanki-card-badge">Šodien</span>
 				</div>
-
-				<!-- TODAY LEADERBOARD CONTENT -->
-				<div id="content-today" class="tanki-tab-content active">
+				<div class="tanki-table-container">
 					<table class="table table-striped table-hover tanki-leaderboard-table">
 						<thead>
 							<tr>
@@ -249,9 +248,15 @@
 						</tbody>
 					</table>
 				</div>
+			</div>
 
-				<!-- ALL-TIME LEADERBOARD CONTENT -->
-				<div id="content-alltime" class="tanki-tab-content">
+			<!-- ALL-TIME LEADERBOARD -->
+			<div class="tanki-scores-card">
+				<div class="tanki-card-header">
+					<h4>🏆 Visu Laiku Tops</h4>
+					<span class="tanki-card-badge alltime">Kopā</span>
+				</div>
+				<div class="tanki-table-container">
 					<table class="table table-striped table-hover tanki-leaderboard-table">
 						<thead>
 							<tr>
