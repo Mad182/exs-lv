@@ -46,14 +46,12 @@ function fetch_news($type = 'rs3') {
  *  RSS feed lasīšana tiek veikta tikai reizi 10 minūtēs.
  */
 function read_rss($force = false) {
-    global $m, $db, $auth, $rsbot_id, $lang, $dir_news_images;
+    global $m, $db, $auth, $rsbot_id, $dir_news_images;
 
     if (empty($rsbot_id)) {
         $rsbot_id = 33342; // "Wise Old Man"
     }
-    if (empty($lang)) {
-        $lang = 9;
-    }
+    $rs_lang = 9;
     if (empty($dir_news_images)) {
         $dir_news_images = CORE_PATH . '/bildes/runescape/news/';
     }
@@ -153,7 +151,7 @@ function read_rss($force = false) {
                 'author'    => (int)$rsbot_id,
                 'date'      => date("Y-m-d H:i:s", $post_time),
                 'text'      => sanitize($mb_text),
-                'lang'      => (int)$lang,
+                'lang'      => (int)$rs_lang,
                 'bump'      => $post_time,
                 'ip'        => '127.0.0.1'
             ];
@@ -199,6 +197,9 @@ function read_rss($force = false) {
     if ($force || $feed_fetched) {
         create_news('rs3');
         create_news('oldschool');
+        if (function_exists('clear_latest_mbs_cache')) {
+            clear_latest_mbs_cache(9);
+        }
     }
 }
 
