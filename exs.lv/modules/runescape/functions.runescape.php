@@ -158,6 +158,18 @@ function read_rss($force = false) {
             $insert = $db->insert('miniblog', $values);
             if (!$insert) continue;
 
+            // Atjauno Wise Old Man online statusu un pēdējo redzamību
+            $db->query("UPDATE `users` SET `lastseen` = NOW(), `seen_today` = 1 WHERE `id` = " . (int)$rsbot_id);
+            $visit_exists = $db->get_var("SELECT `id` FROM `visits` WHERE `user_id` = " . (int)$rsbot_id . " AND `site_id` = " . (int)$rs_lang . " LIMIT 1");
+            if ($visit_exists) {
+                $db->query("UPDATE `visits` SET `lastseen` = NOW() WHERE `id` = '$visit_exists'");
+            } else {
+                $db->query("INSERT INTO `visits` (`user_id`, `site_id`, `ip`, `lastseen`) VALUES (" . (int)$rsbot_id . ", " . (int)$rs_lang . ", '127.0.0.1', NOW())");
+            }
+            if (!empty($m)) {
+                $m->delete('u_' . (int)$rsbot_id);
+            }
+
             // izveidos ierakstu `rs_news` tabulā
             $mb_id = $db->insert_id;
             $has_image = !empty($single->image_url) ? 1 : 0;
