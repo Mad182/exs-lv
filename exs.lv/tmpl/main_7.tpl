@@ -352,7 +352,10 @@
 						<!-- END BLOCK : poll-answers-node-->
 					</ol>
 					Balsojuši: {poll-totalvotes}<br>
-					<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a> | <a href="/polladmin">Izveidot jaunu aptauju</a>
+					<a href="{ppage-id}">Komentāri</a> | <a href="/aptaujas">Aptaujas</a>
+					<!-- START BLOCK : poll-create-link -->
+					 | <a href="/polladmin">Izveidot jaunu aptauju</a>
+					<!-- END BLOCK : poll-create-link -->
 					<!-- END BLOCK : poll-answers-->
 					<!-- START BLOCK : poll-questions-->
 					<form name="poll" method="post" action="">
@@ -370,7 +373,9 @@
 							<!-- END BLOCK : poll-options-->
 						</fieldset>
 					</form>
+					<!-- START BLOCK : poll-create-link-q -->
 					<p style="margin-top: 6px;"><a href="/polladmin">Izveidot jaunu aptauju</a></p>
+					<!-- END BLOCK : poll-create-link-q -->
 					<!-- END BLOCK : poll-questions-->
 				</div>
 				<!-- END BLOCK : poll-box-->

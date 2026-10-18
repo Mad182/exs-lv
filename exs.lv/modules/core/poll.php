@@ -88,6 +88,10 @@ if ($poll) {
                     'ppage-id' => '/read/' . get_page_strid($poll->topic)
                 ]);
             }
+
+            if ($auth->ok) {
+                $tpl->newBlock('poll-create-link');
+            }
 		}
         
     // lietotājs aptaujā vēl nav balsojis
@@ -114,6 +118,11 @@ if ($poll) {
 					'poll-options-question' => $question->question,
 					'poll-options-id' => $question->id
 				]);
+			}
+
+			if ($auth->ok) {
+				$tpl->gotoBlock('poll-questions');
+				$tpl->newBlock('poll-create-link-q');
 			}
 		}
 	}
