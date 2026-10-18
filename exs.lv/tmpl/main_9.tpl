@@ -132,17 +132,13 @@
                                 <li><a class="paint" href="https://imgur.com/a/m9pUt/all" rel="nofollow" target="_blank">imgur #1</a></li>
                                 <li><a class="paint" href="https://imgur.com/gallery/b1NsF" rel="nofollow" target="_blank">imgur #2</a></li>
                                 <li><a class="paint" href="https://www.flickr.com/photos/126721369@N06/albums/" rel="nofollow" target="_blank">RuneScape Flickr</a></li>
-                                <li><a class="paint" href="http://runescape.wikia.com/wiki/Wallpaper" rel="nofollow" target="_blank">runescape.wikia</a></li>
+                                <li><a class="paint" href="https://runescape.fandom.com/wiki/Wallpaper" rel="nofollow" target="_blank">runescape.wikia</a></li>
                                 <li>&nbsp;</li>
                             </ul>
                         </li>
-                        <li><a href="http://runescape.wikia.com/wiki/RuneScape_Wiki" rel="nofollow" target="_blank">runescape.wikia</a></li>
-                        <li><a href="http://warbandtracker.com/schedule.php" rel="nofollow" target="_blank">Warbands taimeris</a></li>
-                        <li><a href="http://forums.zybez.net/runescape-2007-prices" rel="nofollow" target="_blank">Zybez OSRS market</a></li>
+                        <li><a href="https://runescape.fandom.com/wiki/RuneScape_Wiki" rel="nofollow" target="_blank">runescape.wikia</a></li>
+                        <li><a href="https://warbandtracker.com/schedule.php" rel="nofollow" target="_blank">Warbands taimeris</a></li>
                         <li class="as-last">&nbsp;</li>
-                        <li><a href="http://z8.invisionfree.com/lrc" rel="nofollow" target="_blank">LRC forums</a></li>
-                        <li><a href="http://z13.invisionfree.com/Latvian_Archers" rel="nofollow" target="_blank">Latvian Archers</a></li>
-                        <li><a href="http://z10.invisionfree.com/Janis_Vimba/" rel="nofollow" target="_blank">JV forums</a></li>
                         <li>&nbsp;</li>
                     </ul>
                 </li>
