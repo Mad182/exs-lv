@@ -12,6 +12,7 @@
 	margin-bottom: 20px;
 }
 
+.arkanoid-header h1,
 .arkanoid-header h2 {
 	font-size: 28px;
 	font-weight: 800;
@@ -638,6 +639,7 @@
 		color: #e2e8f0;
 	}
 
+	.arkanoid-header h1,
 	.arkanoid-header h2 {
 		color: #f1f5f9;
 	}
@@ -694,6 +696,9 @@ html.dark .arkanoid-wrapper {
 	color: #e2e8f0;
 }
 
+body.dark-theme .arkanoid-header h1,
+body.dark .arkanoid-header h1,
+html.dark .arkanoid-header h1,
 body.dark-theme .arkanoid-header h2,
 body.dark .arkanoid-header h2,
 html.dark .arkanoid-header h2 {

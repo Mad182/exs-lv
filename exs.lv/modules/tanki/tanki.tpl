@@ -1,6 +1,6 @@
 <div class="tanki-wrapper">
 	<div class="tanki-header">
-		<h2><span class="tanki-title-icon">🎖️</span> Tanki 1990 {game-rate}</h2>
+		<h1><span class="tanki-title-icon">🎖️</span> Tanki 1990 {game-rate}</h1>
 		<p class="tanki-subtitle">
 			Aizsargā <strong>EXS bāzi</strong>! Kusties ar <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> vai <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, šauj ar <kbd>Spacebar</kbd> / <kbd>J</kbd>!
 		</p>

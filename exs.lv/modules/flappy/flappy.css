@@ -10,6 +10,7 @@
 	margin-bottom: 20px;
 }
 
+.flappy-header h1,
 .flappy-header h2 {
 	font-size: 28px;
 	font-weight: 700;
@@ -325,6 +326,7 @@
 		color: #c9d1d9;
 	}
 
+	.flappy-header h1,
 	.flappy-header h2 {
 		color: #e9ecef;
 	}

@@ -1,6 +1,6 @@
 <div class="vardes-wrapper">
 	<div class="vardes-header">
-		<h2><span class="vardes-icon">🐸</span> Vardes {game-rate}</h2>
+		<h1><span class="vardes-icon">🐸</span> Vardes {game-rate}</h1>
 		<p class="vardes-subtitle">Šķērso bīstamo šoseju un upi ar baļķiem, lai sasniegtu liliju lapas un uzstādītu rekordu!</p>
 	</div>
 

@@ -12,6 +12,7 @@
 	margin-bottom: 20px;
 }
 
+.invaders-header h1,
 .invaders-header h2 {
 	font-size: 26px;
 	font-weight: 800;
@@ -415,6 +416,7 @@
 
 /* Dark Mode Overrides */
 @media (prefers-color-scheme: dark) {
+	.invaders-header h1,
 	.invaders-header h2 { color: #f7fafc; }
 	.invaders-controls-bar {
 		background: #1a202c;

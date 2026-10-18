@@ -1,6 +1,6 @@
 <div class="rezonanse-wrapper">
 	<div class="rezonanse-header">
-		<h2><span class="rezonanse-icon"><img src="/bildes/icons/games/rezonanse.png" alt="Rezonanse" width="28" height="28" style="vertical-align: middle; border-radius: 6px;" /></span> Rezonanse <span class="rezonanse-subtitle-tag">Synth Pulse Arena</span> {game-rate}</h2>
+		<h1><span class="rezonanse-icon"><img src="/bildes/icons/games/rezonanse.png" alt="Rezonanse" width="28" height="28" style="vertical-align: middle; border-radius: 6px;" /></span> Rezonanse <span class="rezonanse-subtitle-tag">Synth Pulse Arena</span> {game-rate}</h1>
 		<p class="rezonanse-subtitle">Hipnotiska ritma un izdzīvošanas arkāde, kur spēles pasaule ir reāllaika sintezators! Ķer ritmu, radi melodijas un veido harmoniskas kaskādes.</p>
 	</div>
 

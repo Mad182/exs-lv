@@ -10,6 +10,7 @@
 	margin-bottom: 20px;
 }
 
+.augsup-header h1,
 .augsup-header h2 {
 	margin: 0 0 5px 0;
 	font-size: 28px;
@@ -295,6 +296,7 @@
 
 /* Dark mode overrides */
 @media (prefers-color-scheme: dark) {
+	.augsup-header h1,
 	.augsup-header h2 { color: #f8fafc; }
 	.augsup-subtitle { color: #94a3b8; }
 	.augsup-controls-bar { background: #1e293b; }

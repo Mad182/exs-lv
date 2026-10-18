@@ -1,6 +1,6 @@
 <div class="pacman-wrapper">
 	<div class="pacman-header">
-		<h2><span class="pacman-title-icon">🟡</span> Exs-Man (Pac-Man) {game-rate}</h2>
+		<h1><span class="pacman-title-icon">🟡</span> Exs-Man (Pac-Man) {game-rate}</h1>
 		<p class="pacman-subtitle">
 			Vadi savu profila tēlu ar bultiņām <kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd> vai <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>, ēd punktus, bēdz no spokiem un vāc augļu bonusus!
 		</p>
