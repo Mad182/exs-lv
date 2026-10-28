@@ -617,8 +617,6 @@
 			</div>
 		</footer>
 	</div>
-
-	<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-	</body>
+</body>
 
 </html>
