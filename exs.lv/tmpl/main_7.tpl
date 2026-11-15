@@ -13,6 +13,7 @@
 		<meta name="twitter:{key}" content="{val}">
 		<!-- END BLOCK : twitter-meta-->
 		<!-- START BLOCK : robots-->
+		<meta name="robots" content="{value}">
 		<!-- END BLOCK : robots-->
 		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 		<!-- START BLOCK : canonical-->

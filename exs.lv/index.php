@@ -26,6 +26,17 @@ require(CORE_PATH . '/includes/class.site_storage.php');
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
 require(CORE_PATH . '/includes/site_loader.php');
 
+// Per-domain XML sitemap serving (/sitemap.xml)
+if (!empty($_GET['fakeurl']) && $_GET['fakeurl'] === 'sitemap.xml') {
+	$sitemap_domain = isset($config_domains[$lang]['domain']) ? $config_domains[$lang]['domain'] : 'exs.lv';
+	$sitemap_file = CORE_PATH . '/sitemaps/sitemap-' . $sitemap_domain . '.xml';
+	if (file_exists($sitemap_file)) {
+		header('Content-Type: application/xml; charset=UTF-8');
+		readfile($sitemap_file);
+		exit;
+	}
+}
+
 //rewrite hack
 if (!empty($_GET['fakeurl'])) {
 	$parts = explode('/', $_GET['fakeurl']);

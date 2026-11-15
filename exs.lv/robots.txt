@@ -6,3 +6,6 @@ Disallow: /?c=240
 Disallow: /?c=241
 
 Sitemap: https://exs.lv/sitemap.xml
+Sitemap: https://coding.lv/sitemap.xml
+Sitemap: https://runescape.exs.lv/sitemap.xml
+Sitemap: https://lol.exs.lv/sitemap.xml

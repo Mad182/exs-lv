@@ -9,10 +9,13 @@
 	<meta name="description" content="{description}">
 	<!-- END BLOCK : meta-description-->
 	<!-- START BLOCK : og-meta-->
+	<meta property="og:{key}" content="{val}">
 	<!-- END BLOCK : og-meta-->
 	<!-- START BLOCK : twitter-meta-->
+	<meta name="twitter:{key}" content="{val}">
 	<!-- END BLOCK : twitter-meta-->
 	<!-- START BLOCK : robots-->
+	<meta name="robots" content="{value}">
 	<!-- END BLOCK : robots-->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<!-- START BLOCK : canonical-->
