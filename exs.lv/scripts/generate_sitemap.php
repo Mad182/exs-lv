@@ -16,6 +16,8 @@ if (PHP_SAPI !== 'cli') {
 $root_dir = dirname(__DIR__);
 chdir($root_dir);
 ini_set('memory_limit', '512M');
+$_SERVER['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_HOST'] ?? 'exs.lv';
 
 if (!isset($db) || !is_object($db)) {
 	require_once $root_dir . '/configdb.php';
@@ -99,11 +101,12 @@ $game_modules = [
 ];
 
 $cats = $db->get_results("
-	SELECT `textid`, `module`, `isblog`, `isforum`, `pages`, `parent`
+	SELECT `textid`, `module`, `isblog`, `isforum`, `stat_topics`, `parent`
 	FROM `cat`
 	WHERE `lang` = 1
 	  AND `status` = 'active'
 	  AND `noindex` = 0
+	  AND `private` = 0
 	  AND `mods_only` = 0
 	  AND (`sitemap` = 1 OR `module` = 'ut99')
 	ORDER BY `id` ASC
@@ -118,8 +121,8 @@ if ($cats) {
 		if (in_array($c->module, $excluded_modules, true)) {
 			continue;
 		}
-		// Skip empty personal blogs with 0 pages
-		if ((int) $c->isblog !== 0 && (int) $c->pages < 1) {
+		// Skip empty personal blogs with 0 topics
+		if ((int) $c->isblog !== 0 && (int) $c->stat_topics < 1) {
 			continue;
 		}
 		$loc = $base_url . '/' . $slug;
@@ -193,9 +196,10 @@ while (true) {
 		WHERE `p`.`lang` = 1
 		  AND `p`.`private` = 0
 		  AND `p`.`needs_review` = 0
-		  AND `p`.`is_hidden` = 0
 		  AND `p`.`strid` != ''
+		  AND (`p`.`redirect` = '' OR `p`.`redirect` IS NULL)
 		  AND (`c`.`mods_only` IS NULL OR `c`.`mods_only` = 0)
+		  AND (`c`.`private` IS NULL OR `c`.`private` = 0)
 		  AND (`c`.`noindex` IS NULL OR `c`.`noindex` = 0)
 		ORDER BY `p`.`id` DESC
 		LIMIT $page_offset, $chunk_size
@@ -258,6 +262,7 @@ while (true) {
 		WHERE `lang` = 1
 		  AND `private` = 0
 		  AND `removed` = 0
+		  AND `hidden` = 0
 		  AND `noindex` = 0
 		  AND `parent` = 0
 		  AND `groupid` = 0
