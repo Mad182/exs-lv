@@ -45,7 +45,15 @@ if ($category->parent) {
 	$pagepath = '';
 }
 
-$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $category->textid;
+$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $category->textid . ($skip > 0 ? '/?skip=' . $skip : '');
+
+if (empty($category->content) && (empty($category->intro) || !is_string($category->intro) || strlen(trim($category->intro)) <= 5)) {
+	if ($category->isforum) {
+		$meta_description = $category->title . ' forums — tēmas, jautājumi un diskusijas Latvijas spēļu un izklaides portālā EXS.LV.';
+	} else {
+		$meta_description = $category->title . ' — raksti, apskati un diskusijas Latvijas spēļu un izklaides portālā EXS.LV.';
+	}
+}
 
 //list sub cats
 if ($category->isforum) {
@@ -443,6 +451,7 @@ if (!$category->mods_only || im_mod()) {
 		$tpl->newBlock('error-catempty');
 		$tpl->assign('title', $category->title);
 	}
+	unset($article);
 } else {
 	set_flash('Tu nevari apskatīt šo lapu!', 'error');
 	redirect();

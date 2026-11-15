@@ -263,7 +263,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 			}
 		}
 
-		$author = get_user($article->author);
+		$author = $article_author = get_user($article->author);
 
 		if (can_edit_page($article)) {
 			$tpl->newBlock('page-options');
@@ -848,23 +848,28 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 			]);
 
 			$page_title = $article->title . ' - ' . $category->title;
+			if ($skip > 0 && $end > 0) {
+				$com_page_num = (int) floor($skip / $end);
+				$page_title = $article->title . ' (komentāru lapa ' . ($com_page_num + 1) . ') - ' . $category->title;
+				$com_page_suffix = '/com_page/' . $com_page_num;
+			} else {
+				$com_page_suffix = '';
+			}
 
 			// filmu rakstiem specifiska informācija
 			if ($category->textid == 'filmas') {
 				$avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1");
+				$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid . $com_page_suffix;
+				$opengraph_meta['title'] = 'Filma ' . h($article->title);
+				$opengraph_meta['type'] = 'article';
+				$opengraph_meta['description'] = h(textlimit($article->text, 200));
+				$twitter_meta['card'] = 'summary';
 				if (!empty($avatar)) {
 
 					$tpl->newBlock('movie-avatar');
 					$tpl->assignAll($avatar);
 
-					if (!$auth->mobile) {
-						$opengraph_meta['title'] = 'Filma ' . h($article->title);
-						$opengraph_meta['type'] = 'article';
-						$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
-						$opengraph_meta['image'] = 'https://img.exs.lv' . $avatar->image;
-						$opengraph_meta['description'] = h(textlimit($article->text, 200));
-						$twitter_meta['card'] = 'summary';
-					}
+					$opengraph_meta['image'] = 'https://img.exs.lv' . $avatar->image;
 				}
 				$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
 				if (!empty($movie_data)) {
@@ -1008,18 +1013,16 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 			//NOT FILMAS
 
 				//opengraph tagi
-				if (!$auth->mobile) {
-					$opengraph_meta['title'] = $article->title;
-					$opengraph_meta['type'] = 'article';
-					$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid;
-					$opengraph_meta['description'] = h(textlimit($article->text, 200));
+				$opengraph_meta['title'] = $article->title;
+				$opengraph_meta['type'] = 'article';
+				$canonical = $opengraph_meta['url'] = 'https://' . $_SERVER['HTTP_HOST'] . '/read/' . $article->strid . $com_page_suffix;
+				$opengraph_meta['description'] = h(textlimit($article->text, 200));
 
-					if (!empty($article->image)) {
-						$opengraph_meta['image'] = 'https://img.exs.lv/topics/large/' . $article->image;
-						$twitter_meta['card'] = 'summary_large_image';
-					} else {
-						$twitter_meta['card'] = 'summary';
-					}
+				if (!empty($article->image)) {
+					$opengraph_meta['image'] = 'https://img.exs.lv/topics/large/' . $article->image;
+					$twitter_meta['card'] = 'summary_large_image';
+				} else {
+					$twitter_meta['card'] = 'summary';
 				}
 			}
 

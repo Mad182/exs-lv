@@ -2,6 +2,7 @@
 <html lang="lv">
 
 <head>
+	<meta charset="utf-8">
 	<title>{page-title}</title>
 	<!-- START BLOCK : meta-description-->
 	<meta name="description" content="{description}">
@@ -25,7 +26,7 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/main.98ec39c9.min.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/main.92555e2e.min.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -35,7 +36,7 @@
 		c_url = "{page-url}";
 	</script>
 	<!-- START BLOCK : guest-js -->
-	<script src="{static-server}/js/guest.js"></script>
+	<script src="{static-server}/js/guest.js" defer></script>
 	<!-- END BLOCK : guest-js -->
 	<!-- START BLOCK : user-js -->
 	<script
@@ -107,7 +108,7 @@
 			<div id="mast-head">
 				<div id="logo">
 					<a href="/" title="exs.lv spēļu portāls" rel="home"><img
-							src="{img-server}/bildes/logos/logo_exs_small.png" alt="EXS.LV spēļu portāls" /></a>
+							src="{img-server}/bildes/logos/logo_exs_small.png" alt="EXS.LV spēļu portāls" width="125" height="34" /></a>
 				</div>
 			</div>
 
@@ -157,7 +158,7 @@
 				<div class="span9">
 					<!-- START BLOCK : user-menu-->
 					<ul id="user-menu" class="nav nav-pills">
-						<li><a href="/"><img src="{img-server}/bildes/home.png" alt="Sākumlapa"></a></li>
+						<li><a href="/"><img src="{img-server}/bildes/home.png" width="17" height="15" alt="Sākumlapa"></a></li>
 						<li class="dropdown">
 							<a href="/user/{currentuser-id}">Profils</a>
 							<ul class="dropdown-menu">
@@ -237,6 +238,8 @@
 																							class="nav nav-pills">
 																							<li><a href="/"><img
 																										src="/bildes/home.png"
+																										width="17"
+																										height="15"
 																										alt="Sākumlapa"></a>
 																							</li>
 																							<li{cat-sel-106}><a
@@ -297,7 +300,7 @@
 
 					<!-- START BLOCK : notification-list-->
 					<div class="widget">
-						<h3 class="title"><span>Tavi jaunumi</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Tavi jaunumi</span></div>
 						<div>
 							{html}
 						</div>
@@ -306,7 +309,7 @@
 
 					<!-- START BLOCK : menu-list-->
 					<div class="widget">
-						<h3 class="title"><span>{title}</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>{title}</span></div>
 						<nav id="sub-categories">
 							<ul class="menu" id="nav-{topid}">
 								<!-- START BLOCK : menu-node-->
@@ -326,7 +329,7 @@
 					<!-- END BLOCK : menu-list-->
 
 					<div class="widget" id="latest-posts-widget">
-						<h3 class="title"><span>Jaunākais portālā</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Jaunākais portālā</span></div>
 						<nav id="latest-posts-navigation" class="tabwidget widget tab-container box">
 							<ul class="tabnav clearfix">
 								<li><a href="/latest.php" class="{pages-selected}remember-pages ajax"><span
@@ -342,7 +345,7 @@
 
 					<!-- START BLOCK : groups-l-list-->
 					<div class="widget" id="latest-groups">
-						<h3 class="title"><span>Jaunākās grupas</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Jaunākās grupas</span></div>
 						<div class="box">
 							<p>
 								<!-- START BLOCK : groups-l-node-->
@@ -355,7 +358,7 @@
 					<!-- END BLOCK : groups-l-list-->
 
 					<div class="widget" id="todays-active">
-						<h3 class="title"><span>Šodien aktīvākie</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Šodien aktīvākie</span></div>
 						<div class="box">
 							<ul class="tabs">
 								<li><a rel="nofollow" href="/dailytop/users" class="active ajax"><span
@@ -421,7 +424,7 @@
 				<div id="sidebar" class="span3">
 
 					<!-- START BLOCK : movie-search-->
-					<h3 class="title"><span>Meklēt filmu</span></h3>
+					<div class="title" role="heading" aria-level="2"><span>Meklēt filmu</span></div>
 					<div class="box">
 						<form id="movie-search" method="get" action="/filmas/search">
 							<!-- START BLOCK : genre-node-->
@@ -440,7 +443,7 @@
 					<!-- END BLOCK : game-chat-section -->
 					<!-- START BLOCK : profile-box-->
 					<div class="widget">
-						<h3 class="title"><span>{profile-nick}{custom_title}</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>{profile-nick}{custom_title}</span></div>
 						<a href="{url}">
 							<img id="profile-image" class="pimg-{profile-id}" src="{avatar}" alt="{profile-nick}" />
 						</a>
@@ -477,7 +480,7 @@
 					<!-- END BLOCK : profile-box-->
 					<!-- START BLOCK : mb-box-->
 					<div class="widget">
-						<h3 class="title"><span>Miniblogi{miniblog-add}</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Miniblogi{miniblog-add}</span></div>
 						<div class="tabwidget widget tab-container box">
 							<ul class="tabnav clearfix">
 								<li><a href="/mb-latest?pg=0&amp;tab=all" class="{all-selected}remember-all ajax"><span
@@ -498,7 +501,7 @@
 
 					<!-- START BLOCK : poll-box-->
 					<div class="widget widget-poll">
-						<h3 class="title"><a href="/aptaujas"><span>Aptauja: {poll-title}</span></a></h3>
+						<div class="title" role="heading" aria-level="2"><a href="/aptaujas"><span>Aptauja: {poll-title}</span></a></div>
 						<div class="box">
 							<!-- START BLOCK : poll-answers-->
 							<ol class="poll-answers">
@@ -543,12 +546,12 @@
 					<!-- START BLOCK : daily-best-->
 
 					<div class="widget">
-						<h3 class="title"><span>Dienas komentārs</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Dienas komentārs</span></div>
 						<div class="mbox">
 							<ul class="blockhref mb-col">
 								<li>
 									<a href="{best-link}">
-										<img class="av" src="{best-avatar}" width="45" height="45" alt="" />
+										<img class="av" src="{best-avatar}" width="45" height="45" loading="lazy" alt="" />
 										<span class="author">{best-nick}</span>
 										<span class="post-rating">+{best-rating}</span><br>
 										{best-comment}
@@ -572,7 +575,7 @@
 				<div class="footer-widget widget span2 block6">
 
 					<div class="kontak">
-						<h3 class="title"><span>Kontakti</span></h3>
+						<div class="title" role="heading" aria-level="2"><span>Kontakti</span></div>
 						<ul>
 							<li class="email">E-pasts: info@exs.lv</li>
 						</ul>
@@ -582,7 +585,7 @@
 
 				<div class="footer-widget span10 block6">
 					<div class="widget onlusers-widget">
-						<h3 class="title" style="margin-bottom:8px"><span>Lietotāji tiešsaitē</span></h3>
+						<div class="title" role="heading" aria-level="2" style="margin-bottom:8px"><span>Lietotāji tiešsaitē</span></div>
 						<div class="onlusers clearfix">
 							<div id="online-users">
 								<ul id="ucl">
@@ -606,7 +609,7 @@
 			<div id="site-info" class="container">
 				<nav id="footer-nav" class="fr">
 					<ul class="menu">
-						<li>Mobilā versija:&nbsp;<a href="https://m.exs.lv/">m.exs.lv</a></li>
+						<li>Mobilā versija:&nbsp;<a href="https://m.exs.lv/" rel="nofollow">m.exs.lv</a></li>
 						<li><a href="/statistika">Statistika</a></li>
 						<li><a href="/read/lietosanas-noteikumi">Lietošanas noteikumi</a></li>
 					</ul>

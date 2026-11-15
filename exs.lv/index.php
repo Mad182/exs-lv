@@ -66,6 +66,7 @@ if (empty($_GET['viewcat'])) {
 $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 if (
 	strpos($user_agent, "Googlebot") === false &&
+	strpos($user_agent, "Google-Extended") === false &&
 	strpos($user_agent, "bingbot") === false &&
 	strpos($user_agent, "YandexBot") === false &&
 	strpos($user_agent, "Mail.RU_Bot") === false &&
@@ -75,6 +76,20 @@ if (
 	strpos($user_agent, "CCBot") === false &&
 	strpos($user_agent, "DotBot") === false &&
 	strpos($user_agent, "ClaudeBot") === false &&
+	strpos($user_agent, "GPTBot") === false &&
+	strpos($user_agent, "OAI-SearchBot") === false &&
+	strpos($user_agent, "ChatGPT-User") === false &&
+	strpos($user_agent, "PerplexityBot") === false &&
+	strpos($user_agent, "Applebot") === false &&
+	strpos($user_agent, "DuckDuckBot") === false &&
+	strpos($user_agent, "facebookexternalhit") === false &&
+	strpos($user_agent, "Twitterbot") === false &&
+	strpos($user_agent, "LinkedInBot") === false &&
+	strpos($user_agent, "Discordbot") === false &&
+	strpos($user_agent, "Slackbot") === false &&
+	strpos($user_agent, "WhatsApp") === false &&
+	strpos($user_agent, "Bytespider") === false &&
+	strpos($user_agent, "PetalBot") === false &&
 	strpos($user_agent, "AhrefsBot") === false
 ) {
 	session_start();
@@ -436,7 +451,7 @@ if ($auth->hosts_online > $ss->get('most_online')) {
 }
 
 $page_title = hide_spoilers($page_title);
-if (strlen($page_title) < 55 && $lang != 4) {
+if (mb_strlen($page_title, 'UTF-8') < 55 && $lang != 4) {
 	if (!empty($page_title)) {
 		$page_title .= ' - ';
 	}
@@ -449,11 +464,11 @@ if (!empty($secure_login)) {
 }
 
 if ($auth->skin == 1 && ($lang == 1 || $lang == 3)) {
-	$add_css[] = 'manual-dark.7f483b1f.min.css';
+	$add_css[] = 'manual-dark.77a9846d.min.css';
 } elseif ($auth->ok === true && $auth->skin == 0 && ($lang == 1 || $lang == 3)) {
 	//light skin
 } elseif ($lang === 1 || $lang === 3) {
-	$add_css[] = 'auto-dark.bd9564a1.min.css';
+	$add_css[] = 'auto-dark.59006b81.min.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
@@ -509,13 +524,17 @@ $tpl->assignGlobal([
 	'logout-hash' => $auth->logout_hash
 ]);
 
-if (isset($category) && !empty($category->textid)) {
-	$game_img_file = CORE_PATH . '/bildes/speles/' . $category->textid . '.png';
-	if (file_exists($game_img_file)) {
-		$img_url = 'https://exs.lv/bildes/speles/' . $category->textid . '.png';
-		$opengraph_meta['image'] = $img_url;
-		$twitter_meta['card'] = 'summary_large_image';
-		$twitter_meta['image'] = $img_url;
+if (isset($category) && (!empty($category->textid) || !empty($category->module))) {
+	$game_slug_candidates = array_unique(array_filter([$category->textid ?? '', $category->module ?? '']));
+	foreach ($game_slug_candidates as $game_slug_candidate) {
+		$game_img_file = CORE_PATH . '/bildes/speles/' . $game_slug_candidate . '.png';
+		if (file_exists($game_img_file)) {
+			$img_url = 'https://exs.lv/bildes/speles/' . $game_slug_candidate . '.png';
+			$opengraph_meta['image'] = $img_url;
+			$twitter_meta['card'] = 'summary_large_image';
+			$twitter_meta['image'] = $img_url;
+			break;
+		}
 	}
 }
 
@@ -671,17 +690,26 @@ if (empty($meta_description_added)) {
 	$desc_val = '';
 	if (!empty($meta_description)) {
 		$desc_val = $meta_description;
-	} elseif (isset($category) && !empty($category->content)) {
+	} elseif (isset($category) && !empty($category->content) && !in_array($category->module, ['group', 'search']) && !is_numeric(trim($category->content))) {
 		$desc_val = $category->content;
-	} elseif (isset($category) && !empty($category->intro) && is_string($category->intro) && strlen(trim($category->intro)) > 5) {
+	} elseif (isset($category) && !empty($category->intro) && is_string($category->intro) && strlen(trim($category->intro)) > 5 && !is_numeric(trim($category->intro))) {
 		$desc_val = $category->intro;
 	} elseif (!empty($opengraph_meta['description'])) {
 		$desc_val = $opengraph_meta['description'];
 	} else {
-		$desc_val = 'EXS.LV ir viens no senākajiem un populārākajiem spēļu un izklaides portāliem Latvijā. Diskusijas, spēles, filmu un spēļu apskati, jaunumi.';
+		$desc_val = 'EXS.LV — spēļu un izklaides portāls Latvijā. Bezmaksas tiešsaistes spēles pārlūkā, videospēļu un filmu apskati, jaunumi, aktīvs forums un miniblogi.';
 	}
 
-	$clean_desc = h(mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($desc_val))), 0, 160));
+	$raw_desc = trim(preg_replace('/\s+/', ' ', strip_tags($desc_val)));
+	if (mb_strlen($raw_desc, 'UTF-8') > 160) {
+		$cut_desc = mb_substr($raw_desc, 0, 157, 'UTF-8');
+		$last_space = mb_strrpos($cut_desc, ' ', 0, 'UTF-8');
+		if ($last_space !== false && $last_space > 100) {
+			$cut_desc = mb_substr($cut_desc, 0, $last_space, 'UTF-8');
+		}
+		$raw_desc = rtrim($cut_desc, " \t\n\r\0\x0B.,;:-") . '...';
+	}
+	$clean_desc = h($raw_desc);
 	$tpl->newBlock('meta-description');
 	$tpl->assign('description', $clean_desc);
 	$meta_description_added = true;
@@ -714,12 +742,13 @@ if (!empty($twitter_meta)) {
 }
 
 /* canonical tag fallback */
-if (empty($canonical) && isset($category)) {
+$has_noindex = (!empty($robotstag) && in_array('noindex', $robotstag)) || (!empty($category->noindex));
+if (empty($canonical) && isset($category) && !$has_noindex && http_response_code() !== 404) {
 	$cat_slug = ($category->textid === 'home' || $category->textid === '' ? '' : $category->textid);
 	$canonical = get_protocol($lang) . get_domain($lang) . '/' . $cat_slug;
 }
 
-if (!empty($canonical)) {
+if (!empty($canonical) && !$has_noindex && http_response_code() !== 404) {
 	$tpl->newBlock('canonical');
 	$tpl->assign('url', htmlspecialchars($canonical));
 }
@@ -779,21 +808,26 @@ if (isset($category) && (
 	$json_ld_items[] = $game_schema;
 }
 
-if (isset($article) && !empty($article->title)) {
+if (!empty($is_read) && isset($article) && !empty($article->title)) {
 	$art_date = !empty($article->date) ? strtotime($article->date) : time();
 	$art_updated = !empty($article->updated) ? strtotime($article->updated) : $art_date;
+	$art_author_obj = !empty($article_author) && is_object($article_author) ? $article_author : (isset($author) && is_object($author) ? $author : null);
+	$art_author_schema = [
+		'@type' => 'Person',
+		'name' => !empty($art_author_obj->nick) ? $art_author_obj->nick : 'EXS.LV Autors'
+	];
+	if (!empty($art_author_obj->id)) {
+		$art_author_schema['url'] = 'https://exs.lv/user/' . (int) $art_author_obj->id;
+	}
 
-	$json_ld_items[] = [
+	$blog_posting = [
 		'@context' => 'https://schema.org',
 		'@type' => 'BlogPosting',
-		'headline' => $article->title,
+		'headline' => trim(strip_tags($article->title)),
 		'datePublished' => date(DATE_ATOM, $art_date),
 		'dateModified' => date(DATE_ATOM, $art_updated),
 		'mainEntityOfPage' => 'https://exs.lv/read/' . (!empty($article->strid) ? $article->strid : ''),
-		'author' => [
-			'@type' => 'Person',
-			'name' => isset($author->nick) ? $author->nick : 'EXS.LV Autors'
-		],
+		'author' => $art_author_schema,
 		'publisher' => [
 			'@type' => 'Organization',
 			'name' => 'EXS.LV',
@@ -803,6 +837,10 @@ if (isset($article) && !empty($article->title)) {
 			]
 		]
 	];
+	if (!empty($opengraph_meta['image'])) {
+		$blog_posting['image'] = $opengraph_meta['image'];
+	}
+	$json_ld_items[] = $blog_posting;
 }
 
 $tpl->newBlock('json-ld');

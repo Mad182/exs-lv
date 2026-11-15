@@ -69,6 +69,9 @@ if ($inprofile) {
 			redirect($url, true);
 		}
 
+		$canonical = get_protocol($lang) . get_domain($lang) . '/user/' . $inprofile->id;
+		$meta_description = 'Lietotāja ' . $inprofile->nick . ' profils, statistika, raksti un miniblogs spēļu portālā EXS.LV.';
+
 		$tpl->newBlock('user-profile');
 
 		$days = ceil((time() - strtotime($inprofile->date)) / 60 / 60 / 24);

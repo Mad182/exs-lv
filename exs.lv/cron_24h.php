@@ -80,3 +80,7 @@ if ($user) {
 	update_karma($user->user_id, true);
 }
 
+######################## SITEMAP REGENERATION
+require __DIR__ . '/scripts/generate_sitemap.php';
+
+

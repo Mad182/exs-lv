@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 		<title>Ielogoties - {server-name}</title>
 		<meta http-equiv="content-language" content="lv">
+		<meta name="robots" content="noindex, nofollow">
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="/css/main_8.2bf3be19.min.css">

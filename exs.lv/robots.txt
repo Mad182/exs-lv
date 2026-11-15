@@ -1,2 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /search
+Disallow: /rate-comment/
+Disallow: /?c=240
+Disallow: /?c=241
+
+Sitemap: https://exs.lv/sitemap.xml

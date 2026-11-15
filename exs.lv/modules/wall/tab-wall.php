@@ -93,6 +93,7 @@ foreach ($articles as $article) {
 		'lastpost' => $lastpost
 	];
 }
+unset($article);
 
 
 ########### IMAGES

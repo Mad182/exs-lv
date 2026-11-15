@@ -49,21 +49,21 @@
 	
 			<div class="entry-meta row-fluid">
 				<ul class="clearfix">
-					<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-					<li><img src="{img-server}/bildes/time.png" alt="">{date}</li>
-					<li><img src="{img-server}/bildes/komen.png" alt=""><a href="{url}#comments" title="Komentāri">{posts}</a></li>
+					<li><img alt="" src="{avatar}" class="userav" width="16" height="16" loading="lazy" />{author}</li>
+					<li><img src="{img-server}/bildes/time.png" alt="" width="17" height="17" loading="lazy">{date}</li>
+					<li><img src="{img-server}/bildes/komen.png" alt="" width="17" height="15" loading="lazy"><a href="{url}#comments" title="Komentāri">{posts}</a></li>
 				</ul>
 			</div>
 	
 			<div class="entry-content">
 				<!-- START BLOCK : news-image-->
 				<a class="topic-image image_thumb_zoom" href="{url}" title="{title}" rel="bookmark">
-					<img src="{img-server}/topics/frontpage/{image}" alt="{title}" />
+					<img src="{img-server}/topics/frontpage/{image}" alt="{title}" width="600" height="240" loading="lazy" />
 				</a>
 				<!-- END BLOCK : news-image-->
 				<!-- START BLOCK : news-av-->
 				<a href="{url}" title="{title}" rel="bookmark">
-					<img class="av index-av" src="{img-server}/{image}" alt="{title}" />
+					<img class="av index-av" src="{img-server}/{image}" alt="{title}" loading="lazy" />
 				</a>
 				<!-- END BLOCK : news-av-->
 				<p>{intro}</p>
@@ -141,6 +141,22 @@
 			</li>
 			<!-- END BLOCK : index-music-node-->
 		</ul>
+	</div>
+
+	<div class="fp-latest" id="latest-browser-games">
+		<h2 class="title"><a href="/speles"><span>Tiešsaistes spēles</span></a></h2>
+		<div class="mbox">
+			<p style="margin:0 0 6px;">Spēlē bezmaksas pārlūka spēles un cīnies par rekordiem EXS.LV topos:</p>
+			<p style="margin:0;">
+				<a href="/tetris"><strong>Tetris</strong></a> &bull;
+				<a href="/wordle"><strong>Wordle</strong></a> &bull;
+				<a href="/snake"><strong>Čūska</strong></a> &bull;
+				<a href="/2048-spele"><strong>2048</strong></a> &bull;
+				<a href="/arkanoid"><strong>Arkanoid</strong></a> &bull;
+				<a href="/minu-mekletajs"><strong>Mīnu meklētājs</strong></a> &bull;
+				<a href="/speles">Visas spēles &raquo;</a>
+			</p>
+		</div>
 	</div>
 	<!-- END BLOCK : cindex-right-->
 

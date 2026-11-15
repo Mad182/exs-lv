@@ -341,8 +341,13 @@ if (!empty($inprofile)) {
 				if (isset($_GET['single'])) {
 
 					//noindex
-					if($record->private || $record->noindex || (strlen(strip_tags($record->text)) < 20 && $record->posts < 2)) {
+					if($record->private || $record->noindex || (mb_strlen(trim(strip_tags($record->text)), 'UTF-8') < 60 && $record->posts < 3)) {
 						$robotstag = ['noindex', 'nofollow'];
+					}
+
+					$mb_clean_desc = trim(preg_replace('/\s+/', ' ', strip_tags($record->text)));
+					if (!empty($mb_clean_desc)) {
+						$meta_description = mb_substr($mb_clean_desc, 0, 158, 'UTF-8');
 					}
 
 					if (!isset($_GET['vc']) && !isset($_GET['close'])) {
@@ -569,6 +574,11 @@ if (!empty($inprofile)) {
 		}
 
 		if (!isset($_GET['single'])) {
+
+			$canonical = get_protocol($lang) . $config_domains[$lang]['domain'] . '/say/' . $inprofile->id . ($skip > 0 ? '/skip-' . $skip : '');
+			if (!$inprofile->deleted && !empty($inprofile->nick)) {
+				$meta_description = 'Lietotāja ' . $inprofile->nick . ' minibloga ieraksti un sarunas spēļu portālā EXS.LV.';
+			}
 
 			$private = '';
 			if (!$auth->ok) {

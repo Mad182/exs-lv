@@ -2363,7 +2363,7 @@ function get_latest_posts() {
 				$avatar = get_avatar(get_user($late->author), 's');
 			}
 
-			$out .= '<li><a href="' . $url . $skip . '"><img src="' . $avatar . '" class="av" alt="" />';
+			$out .= '<li><a href="' . $url . $skip . '"><img src="' . $avatar . '" class="av" width="45" height="45" loading="lazy" alt="" />';
 
 			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
 
@@ -2691,7 +2691,7 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			}
 
 			$out .= '<li' . $spec . '><a href="' . $url . '">';
-			$out .= '<img class="av" width="45" height="45" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
+			$out .= '<img class="av" width="45" height="45" loading="lazy" src="' . $avatar . '" alt="' . h($mb->nick) . '" />';
 			$out .= '<span class="entry"><span class="author">' . h($mb->nick) . '</span> ';
 			$out .= '<span class="post-time">' . time_ago($mb->bump) . '</span> ';
 			if ($lang === 9) { // #rs

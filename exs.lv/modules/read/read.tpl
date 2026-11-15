@@ -142,10 +142,10 @@
 		</h1>
 		<div class="entry-meta row-fluid">
 			<ul class="clearfix">
-				<li><img alt="" src="{avatar}" class="userav" />{author}</li>
-				<li><img src="{img-server}/bildes/time.png" alt=""><time class="entry-date published" datetime="{date_atom}">{date}</time><time class="updated" datetime="{updated_atom}">{updated}</time></li>
-				<li><img src="{img-server}/bildes/fugue-icons/eye.png" alt="">{views}</li>
-				<li><img src="{img-server}/bildes/komen.png" alt=""><a href="{bookmark}#comments" title="Raksta &quot;{title}&quot; komentāri">{posts} komentāri</a></li>
+				<li><img alt="" src="{avatar}" class="userav" width="16" height="16" />{author}</li>
+				<li><img src="{img-server}/bildes/time.png" alt="" width="17" height="17"><time class="entry-date published" datetime="{date_atom}">{date}</time><time class="updated" datetime="{updated_atom}">{updated}</time></li>
+				<li><img src="{img-server}/bildes/fugue-icons/eye.png" alt="" width="16" height="16">{views}</li>
+				<li><img src="{img-server}/bildes/komen.png" alt="" width="17" height="15"><a href="{bookmark}#comments" title="Raksta &quot;{title}&quot; komentāri">{posts} komentāri</a></li>
 
 				<!-- START BLOCK : add-bookmark-->
 				<li class="bookmark">

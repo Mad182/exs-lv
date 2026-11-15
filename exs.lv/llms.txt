@@ -1,0 +1,46 @@
+# EXS.LV — Latvijas spēļu un izklaides portāls
+
+> EXS.LV (dibināts 2005. gadā) ir viens no senākajiem un populārākajiem spēļu, tehnoloģiju un izklaides kopienas portāliem Latvijā. Portāls apvieno rakstus, spēļu un filmu apskatus, forumu, miniblogus, domubiedru grupas un bezmaksas tiešsaistes pārlūka spēles ar rekordu topiem.
+
+## Galvenās sadaļas (Core Sections)
+
+- [Sākumlapa un Jaunumi](https://exs.lv/): Portāla jaunumi, aktuālās diskusijas un pēdējās aktivitātes.
+- [Tiešsaistes Spēles](https://exs.lv/speles): Bezmaksas pārlūka spēļu katalogs ar līderu sarakstiem un sasniegumiem.
+- [Forums](https://exs.lv/forums): Diskusiju forums par datorspēlēm, tehnoloģijām, aparatūru un izklaidi.
+- [Raksti](https://exs.lv/raksti): Vispārējie raksti un kopienas publikācijas.
+- [Spēļu apskati](https://exs.lv/spelu-apskati): PC, konsoļu un mobilo videospēļu apskati latviešu valodā.
+- [Filmas un seriāli](https://exs.lv/filmas): Filmu un seriālu apskati, vērtējumi un meklētājs pēc žanriem.
+- [Mūzika](https://exs.lv/muzika): Mūzikas grupu, albumu apskati un jaunumi.
+- [Blogi](https://exs.lv/blogs): Lietotāju autortekstu un personīgo blogu sadaļa.
+- [Miniblogi](https://exs.lv/say): Īso ierakstu un ātro sarunu plūsma.
+- [Domubiedru grupas](https://exs.lv/grupas): Tematiskās interešu un spēļu kopienu grupas.
+- [Steam kopiena](https://exs.lv/steam-online): Latvijas Steam spēlētāju aktivitātes tops.
+- [Lapas karte](https://exs.lv/sitemap): Pilns portāla sadaļu pārskats.
+
+## Populārākās pārlūka spēles (Browser Games on EXS.LV)
+
+- [Tetris](https://exs.lv/tetris): Klasiskā krītošo bloku spēle tiešsaistē ar EXS.LV rekordu topu.
+- [Wordle Latviski](https://exs.lv/wordle): Vārdu minēšanas spēle latviešu valodā.
+- [Čūska (Snake)](https://exs.lv/snake): Klasiskā čūskas arkādes spēle.
+- [2048](https://exs.lv/2048-spele): Skaitļu flīžu apvienošanas loģikas spēle.
+- [Mīnu Meklētājs (Minesweeper)](https://exs.lv/minu-mekletajs): Klasiskais mīnu meklētājs dažādās grūtības pakāpēs.
+- [Arkanoid](https://exs.lv/arkanoid): Ķieģeļu dauzīšanas arkādes spēle.
+- [Tanki 1990](https://exs.lv/tanki): Retro Battle City stila tanku cīņu spēle.
+- [Exs-Man (Pac-Man)](https://exs.lv/pacman): Labirinta arkādes spēle.
+- [Space Invaders](https://exs.lv/invaders): Kosmosa šaušanas arkāde.
+- [Lidojošais Eksis (Flappy Bird)](https://exs.lv/flappy): Šķēršļu pārvarēšanas spēle.
+- [Sudoku](https://exs.lv/sudoku): Skaitļu loģikas mīkla.
+- [Karātavas](https://exs.lv/karatavas): Latviešu vārdu minēšanas spēle.
+- [Atmiņas spēle](https://exs.lv/memory): Kāršu pāru atmiņas treniņš.
+- [Unreal Tournament 99](https://exs.lv/ut99): Klasiskais UT99 pārlūkprogrammā.
+- [Latvian Games (Learn Latvian)](https://exs.lv/latvian-games/): Interaktīvas spēles latviešu valodas apguvei (A1–C2).
+
+## Saistītie apakšprojekti (Related Subprojects)
+
+- [Coding.lv](https://coding.lv/): Programmēšanas un tīmekļa izstrādes kopiena Latvijā.
+- [RuneScape EXS.LV](https://runescape.exs.lv/): Latvijas RuneScape un Old School RuneScape (OSRS) spēlētāju kopiena un ceļveži.
+- [League of Legends EXS.LV](https://lol.exs.lv/): Latvijas League of Legends kopiena.
+
+## Sitemap
+
+- XML Sitemap Index: https://exs.lv/sitemap.xml

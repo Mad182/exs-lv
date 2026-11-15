@@ -64,6 +64,7 @@ if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
 $m->addServer($mc_host, $mc_port);
 
 header('Content-Type: text/html; charset=utf-8');
+header('X-Robots-Tag: noindex, nofollow');
 
 $site_access = get_site_access();
 

@@ -1615,5 +1615,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	}
 
 	$page_title = $group->title;
+	$canonical = get_protocol($lang) . get_domain($lang) . $group_link;
+	$grp_clean_text = !empty($group->text) ? trim(preg_replace('/\s+/', ' ', strip_tags($group->text))) : '';
+	if (mb_strlen($grp_clean_text, 'UTF-8') > 20) {
+		$meta_description = $group->title . ' — ' . $grp_clean_text;
+	} else {
+		$meta_description = 'Domubiedru grupa "' . $group->title . '" portālā EXS.LV — diskusijas, biedri un jaunākie ieraksti.';
+	}
 }
 

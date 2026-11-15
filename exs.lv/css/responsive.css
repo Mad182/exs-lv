@@ -363,11 +363,11 @@ border-bottom:1px solid #eee;border-top:1px solid #eee;padding:0.5em 0
 position:relative
 }
 
-h3.title {
+h3.title, div.title {
 color:#3E4548;border-bottom:1px solid #eee;font-weight:normal;margin:0 0 30px;line-height:2em;font-size:14px
 }
 
-.widget h3.title {
+.widget h3.title, .widget div.title {
 margin-bottom:10px
 }
 
@@ -667,7 +667,7 @@ margin:0
 background:#f1f1f1;padding:20px 30px
 }
 
-.footer-widget h3.title {
+.footer-widget h3.title, .footer-widget div.title {
 margin:20px 0
 }
 

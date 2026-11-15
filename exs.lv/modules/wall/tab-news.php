@@ -160,9 +160,9 @@ foreach ($articles as $article) {
 
 	$av = '';
 	if (!empty($article->avatar)) {
-		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+		$av = '<a href="/read/' . $article->strid . '"><img width="64" height="64" loading="lazy" style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	} else {
-		$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/dati/bildes/topic-av/' . $article->id . '.jpg" alt="' . htmlspecialchars($article->title) . '" /></a>';
+		$av = '<a href="/read/' . $article->strid . '"><img width="64" height="64" loading="lazy" style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/dati/bildes/topic-av/' . $article->id . '.jpg" alt="' . htmlspecialchars($article->title) . '" /></a>';
 	}
 
 	$title = textlimit($article->title, 50, '...');
@@ -225,7 +225,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 
 		$av = '';
 		if (!empty($article->avatar)) {
-			$av = '<a href="/read/' . $article->strid . '"><img style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
+			$av = '<a href="/read/' . $article->strid . '"><img width="64" height="64" loading="lazy" style="width:64px;height:64px" class="av index-av" src="'.$img_server . '/' . $article->avatar . '" alt="' . htmlspecialchars($article->title) . '" /></a>';
 		}
 
 		$title = textlimit($article->title, 50, '...');
@@ -244,6 +244,7 @@ foreach ($list_cats as $cat_type => $cat_id) {
 		]);
 	}
 }
+unset($article);
 
 $tpl->assignGlobal('index-log', get_index_events());
 $tpl->assignGlobal('newsactive', ' class="active"');
