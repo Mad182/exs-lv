@@ -41,6 +41,9 @@
 - [RuneScape EXS.LV](https://runescape.exs.lv/): Latvijas RuneScape un Old School RuneScape (OSRS) spēlētāju kopiena un ceļveži.
 - [League of Legends EXS.LV](https://lol.exs.lv/): Latvijas League of Legends kopiena.
 
-## Sitemap
+## Sitemaps
 
-- XML Sitemap Index: https://exs.lv/sitemap.xml
+- EXS.LV XML Sitemap Index: https://exs.lv/sitemap.xml
+- Coding.lv XML Sitemap Index: https://coding.lv/sitemap.xml
+- RuneScape.exs.lv XML Sitemap Index: https://runescape.exs.lv/sitemap.xml
+- LoL.exs.lv XML Sitemap Index: https://lol.exs.lv/sitemap.xml
