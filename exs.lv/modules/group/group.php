@@ -682,11 +682,18 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 				if (isset($_GET['single'])) {
 					$page_title = textlimit(youtube_title($record->text), 64, '...') . ' - forums';
+					$grp_mb_plain = trim(preg_replace('/\s+/', ' ', strip_tags($record->text)));
+					if ($record->noindex || (mb_strlen($grp_mb_plain, 'UTF-8') < 60 && $record->posts < 3)) {
+						$robotstag = ['noindex', 'follow'];
+					}
 					if ($group->public) {
 						$canonical = $opengraph_meta['url'] = get_protocol($group->lang) . get_domain($group->lang) . $url;
 						$opengraph_meta['title'] = textlimit(youtube_title($record->text), 64, '...') . ' - ' . $group->title;
-						$opengraph_meta['description'] = h(textlimit(strip_tags($record->text), 200));
+						$opengraph_meta['description'] = h(textlimit($grp_mb_plain, 200));
 						$opengraph_meta['type'] = 'article';
+						if (mb_strlen($grp_mb_plain, 'UTF-8') > 20) {
+							$meta_description = $grp_mb_plain;
+						}
 					}
 				}
 
@@ -991,7 +998,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				$page_title = $group->title . ' - ' . $tab->title;
 			}
 
-			if ($group->public && $tab->public) {
+			if ($tab->public) {
 				$canonical = $opengraph_meta['url'] = get_protocol($group->lang) . get_domain($group->lang) . $group_link . '/tab/' . $tab->slug;
 			}
 

@@ -3,7 +3,8 @@
  * CLI Sitemap Generator for EXS.LV, CODING.LV, RUNESCAPE.EXS.LV, and LOL.EXS.LV
  * Generates per-domain sitemaps in /sitemaps/:
  *   - /sitemaps/sitemap-{domain}.xml (Sitemap Index served at https://{domain}/sitemap.xml)
- *   - /sitemaps/{domain}-categories.xml (Homepage, Games, Categories, Forums, Public Groups)
+ *   - /sitemaps/{domain}-categories.xml (Homepage, Games, Categories, Forums)
+ *   - /sitemaps/{domain}-groups-*.xml (Group Main Pages, Public Tabs, Public Group Forums & Threads)
  *   - /sitemaps/{domain}-pages-*.xml (Public Articles & Forum Topics)
  *   - /sitemaps/{domain}-miniblogs-*.xml (Indexable Public Miniblog Discussions)
  */
@@ -97,7 +98,7 @@ foreach ($sites as $site_lang => $domain) {
 	$generated_sitemaps = [];
 
 	// =========================================================================
-	// 1. Categories, Games & Public Groups ({domain}-categories.xml)
+	// 1. Categories & Games ({domain}-categories.xml)
 	// =========================================================================
 	$cat_urls = [];
 	$seen_locs = [];
@@ -153,38 +154,6 @@ foreach ($sites as $site_lang => $domain) {
 		}
 	}
 
-	// Public interest groups / clans
-	$groups = $db->get_results("
-		SELECT `id`, `strid`, `last_activity`
-		FROM `clans`
-		WHERE `lang` = $site_lang
-		  AND `public` = 1
-		  AND `noindex` = 0
-		  AND `archived` = 0
-		ORDER BY `posts` DESC
-	");
-
-	if ($groups) {
-		foreach ($groups as $g) {
-			$g_slug = !empty($g->strid) ? '/' . trim($g->strid) : '/group/' . (int) $g->id;
-			$loc = $base_url . $g_slug;
-			if (isset($seen_locs[$loc])) {
-				continue;
-			}
-			$seen_locs[$loc] = true;
-
-			$ts = !empty($g->last_activity) ? strtotime($g->last_activity) : false;
-			$lastmod = ($ts && $ts > 0) ? date('c', $ts) : $now_iso;
-
-			$cat_urls[] = [
-				'loc' => $loc,
-				'lastmod' => $lastmod,
-				'changefreq' => 'weekly',
-				'priority' => '0.6',
-			];
-		}
-	}
-
 	$cat_filename = $domain . '-categories.xml';
 	write_urlset_sitemap($sitemap_dir . '/' . $cat_filename, $cat_urls);
 	$generated_sitemaps[] = [
@@ -194,7 +163,197 @@ foreach ($sites as $site_lang => $domain) {
 	unset($cat_urls);
 
 	// =========================================================================
-	// 2. Public Articles & Forum Topics ({domain}-pages-*.xml)
+	// 2. Indexable Group Links ({domain}-groups-*.xml)
+	//    - Group main info pages (/{strid} or /group/{id})
+	//    - Public group forum index pages (/{strid}/forum or /group/{id}/forum)
+	//    - Public group tabs (/{strid}/tab/{slug} or /group/{id}/tab/{slug})
+	//    - Public group polls pages (/{strid}/polls or /group/{id}/polls)
+	//    - Indexable public group forum threads (/{strid}/forum/{base36(id)})
+	// =========================================================================
+	$group_urls = [];
+	$group_seen = [];
+	$latest_group_ts = 0;
+	$group_map = [];
+
+	$groups = $db->get_results("
+		SELECT `id`, `strid`, `public`, `last_activity`, `date_modified`, `date_created`, `posts`
+		FROM `clans`
+		WHERE `lang` = $site_lang
+		  AND `id` != 65
+		ORDER BY `posts` DESC
+	");
+
+	if ($groups) {
+		foreach ($groups as $g) {
+			$gid = (int) $g->id;
+			$g_prefix = !empty($g->strid) ? '/' . trim($g->strid) : '/group/' . $gid;
+			$group_map[$gid] = [
+				'prefix' => $g_prefix,
+				'public' => (int) $g->public === 1,
+			];
+
+			$ts = 0;
+			if (!empty($g->last_activity) && $g->last_activity !== '0000-00-00 00:00:00') {
+				$ts = strtotime($g->last_activity);
+			}
+			if ((!$ts || $ts <= 0) && !empty($g->date_modified)) {
+				$ts = (int) $g->date_modified;
+			}
+			if ((!$ts || $ts <= 0) && !empty($g->date_created)) {
+				$ts = (int) $g->date_created;
+			}
+			if ($ts > $latest_group_ts) {
+				$latest_group_ts = $ts;
+			}
+			$lastmod = ($ts && $ts > 0) ? date('c', $ts) : $now_iso;
+
+			// Group main info page (indexable for all groups)
+			$main_loc = $base_url . $g_prefix;
+			if (!isset($group_seen[$main_loc])) {
+				$group_seen[$main_loc] = true;
+				$group_urls[] = [
+					'loc' => $main_loc,
+					'lastmod' => $lastmod,
+					'changefreq' => 'weekly',
+					'priority' => ((int) $g->public === 1) ? '0.7' : '0.5',
+				];
+			}
+
+			// Public group forum main page
+			if ((int) $g->public === 1 && (int) $g->posts > 0) {
+				$forum_loc = $base_url . $g_prefix . '/forum';
+				if (!isset($group_seen[$forum_loc])) {
+					$group_seen[$forum_loc] = true;
+					$group_urls[] = [
+						'loc' => $forum_loc,
+						'lastmod' => $lastmod,
+						'changefreq' => 'daily',
+						'priority' => '0.6',
+					];
+				}
+			}
+		}
+
+		// Public group custom tabs
+		$tabs = $db->get_results("
+			SELECT `t`.`clan_id`, `t`.`slug`, `t`.`date_modified`
+			FROM `clans_tabs` AS `t`
+			JOIN `clans` AS `c` ON `c`.`id` = `t`.`clan_id`
+			WHERE `c`.`lang` = $site_lang
+			  AND `c`.`id` != 65
+			  AND `t`.`public` = 1
+			  AND `t`.`slug` != ''
+			ORDER BY `t`.`id` ASC
+		");
+		if ($tabs) {
+			foreach ($tabs as $t) {
+				$gid = (int) $t->clan_id;
+				if (!isset($group_map[$gid])) {
+					continue;
+				}
+				$tab_loc = $base_url . $group_map[$gid]['prefix'] . '/tab/' . trim($t->slug);
+				if (isset($group_seen[$tab_loc])) {
+					continue;
+				}
+				$group_seen[$tab_loc] = true;
+				$ts = !empty($t->date_modified) ? (int) $t->date_modified : 0;
+				if ($ts > $latest_group_ts) {
+					$latest_group_ts = $ts;
+				}
+				$group_urls[] = [
+					'loc' => $tab_loc,
+					'lastmod' => ($ts > 0) ? date('c', $ts) : $now_iso,
+					'changefreq' => 'monthly',
+					'priority' => '0.6',
+				];
+			}
+		}
+
+		// Public group polls pages
+		$poll_groups = $db->get_results("
+			SELECT DISTINCT `p`.`group`
+			FROM `poll` AS `p`
+			JOIN `clans` AS `c` ON `c`.`id` = `p`.`group`
+			WHERE `c`.`lang` = $site_lang
+			  AND `c`.`public` = 1
+			  AND `c`.`id` != 65
+			  AND EXISTS (
+				SELECT 1 FROM `questions` AS `q`
+				JOIN `responses` AS `r` ON `r`.`qid` = `q`.`id`
+				WHERE `q`.`pid` = `p`.`id`
+			  )
+		");
+		if ($poll_groups) {
+			foreach ($poll_groups as $pg) {
+				$gid = (int) $pg->group;
+				if (!isset($group_map[$gid])) {
+					continue;
+				}
+				$poll_loc = $base_url . $group_map[$gid]['prefix'] . '/polls';
+				if (!isset($group_seen[$poll_loc])) {
+					$group_seen[$poll_loc] = true;
+					$group_urls[] = [
+						'loc' => $poll_loc,
+						'lastmod' => $now_iso,
+						'changefreq' => 'monthly',
+						'priority' => '0.5',
+					];
+				}
+			}
+		}
+
+		// Indexable public group forum threads (/{group}/forum/{base36(id)})
+		$g_mb_rows = $db->get_results("
+			SELECT `m`.`id`, `m`.`groupid`, `m`.`date`, `m`.`bump`
+			FROM `miniblog` AS `m`
+			JOIN `clans` AS `c` ON `c`.`id` = `m`.`groupid`
+			WHERE `c`.`lang` = $site_lang
+			  AND `c`.`public` = 1
+			  AND `c`.`id` != 65
+			  AND `m`.`removed` = 0
+			  AND `m`.`hidden` = 0
+			  AND `m`.`noindex` = 0
+			  AND `m`.`parent` = 0
+			  AND (`m`.`posts` >= 3 OR CHAR_LENGTH(`m`.`text`) >= 100)
+			ORDER BY `m`.`id` DESC
+		");
+		if ($g_mb_rows) {
+			foreach ($g_mb_rows as $gmb) {
+				$gid = (int) $gmb->groupid;
+				if (!isset($group_map[$gid])) {
+					continue;
+				}
+				$thread_loc = $base_url . $group_map[$gid]['prefix'] . '/forum/' . base_convert((int) $gmb->id, 10, 36);
+				$ts = !empty($gmb->bump) ? (int) $gmb->bump : strtotime($gmb->date);
+				if ($ts > $latest_group_ts) {
+					$latest_group_ts = $ts;
+				}
+				$group_urls[] = [
+					'loc' => $thread_loc,
+					'lastmod' => ($ts && $ts > 0) ? date('c', $ts) : $now_iso,
+					'changefreq' => 'monthly',
+					'priority' => '0.5',
+				];
+			}
+		}
+
+		if (!empty($group_urls)) {
+			$g_chunks = array_chunk($group_urls, $chunk_size);
+			foreach ($g_chunks as $idx => $g_chunk) {
+				$g_part = $idx + 1;
+				$g_filename = $domain . '-groups-' . $g_part . '.xml';
+				write_urlset_sitemap($sitemap_dir . '/' . $g_filename, $g_chunk);
+				$generated_sitemaps[] = [
+					'loc' => $base_url . '/sitemaps/' . $g_filename,
+					'lastmod' => ($latest_group_ts > 0) ? date('c', $latest_group_ts) : $now_iso,
+				];
+			}
+		}
+	}
+	unset($group_urls, $group_seen, $group_map);
+
+	// =========================================================================
+	// 3. Public Articles & Forum Topics ({domain}-pages-*.xml)
 	// =========================================================================
 	$page_offset = 0;
 	$page_part = 1;
@@ -261,7 +420,7 @@ foreach ($sites as $site_lang => $domain) {
 	}
 
 	// =========================================================================
-	// 3. Indexable Public Miniblog Threads ({domain}-miniblogs-*.xml)
+	// 4. Indexable Public Miniblog Threads ({domain}-miniblogs-*.xml)
 	// =========================================================================
 	$mb_last_id = PHP_INT_MAX;
 	$mb_part = 1;
@@ -322,7 +481,7 @@ foreach ($sites as $site_lang => $domain) {
 	}
 
 	// =========================================================================
-	// 4. Write Domain Sitemap Index (/sitemaps/sitemap-{domain}.xml)
+	// 5. Write Domain Sitemap Index (/sitemaps/sitemap-{domain}.xml)
 	// =========================================================================
 	$index_xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 	$index_xml .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
