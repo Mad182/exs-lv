@@ -146,7 +146,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	exit;
 }
 
-$meta_description = 'Atmiņas spēle (Memory) - atver un atrodi vienādos kārtis pārus. Trenē savu redzes atmiņu, izvēlies režīmus un uzstādi ātrāko laiku spēļu topā.';
+$page_title = 'Atmiņas spēle (Memory) — Trenē atmiņu tiešsaistē';
+$meta_description = 'Spēlē Atmiņas spēli (Memory) tiešsaistē pārlūkā bez lejupielādes! Atrodi vienādos kāršu pārus 4x4, 6x4 vai 6x6 laukumā, trenē atmiņu un iekļūsti rekordu topā.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -155,6 +156,7 @@ $tpl->prepare();
 $active_sub = isset($_GET['var1']) ? $_GET['var1'] : (isset($_GET['act']) ? $_GET['act'] : '');
 
 if ($active_sub === 'top') {
+	$page_title = 'Atmiņas spēle — Šodienas rekordu tops';
 	$tpl->assign(['active-tab-top' => ' active']);
 
 	$start_of_today = strtotime('today midnight');
@@ -194,6 +196,7 @@ if ($active_sub === 'top') {
 		$tpl->newBlock('no-scores');
 	}
 } elseif ($active_sub === 'overall-top') {
+	$page_title = 'Atmiņas spēle — Visu laiku rekordu tops';
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 
 	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'memory' GROUP BY user_id ORDER BY score DESC LIMIT 100");

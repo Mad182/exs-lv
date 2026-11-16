@@ -93,7 +93,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē Runner tiešsaistē EXS.LV! Bēdz no lietotāju avatāru šķēršļiem un lidojošiem droīdiem, vāc zelta zvaigznes, cīnies par vietu topā un pārspēj rekordus.';
+$page_title = 'Runner — Bezmaksas šķēršļu skrējiena spēle pārlūkā';
+$meta_description = 'Spēlē Runner arkādi tiešsaistē pārlūkā bez lejupielādes telefonā un datorā! Pārlec šķēršļus un lidojošus droīdus, vāc zvaigznes un pārspēj EXS.LV rekordus.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

@@ -81,7 +81,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	exit;
 }
 
-$meta_description = 'Klasiskā Čūskas (Snake) spēle tiešsaistē. Vāc ābolus, audzē čūsku un izvairies no ietriekšanās sienās vai savā astē. Sacenties par augstāko vietu topā.';
+$page_title = 'Čūska (Snake) — Klasiskā spēle pārlūkā bez maksas';
+$meta_description = 'Spēlē klasisko Čūskas (Snake) spēli tiešsaistē pārlūkā bez lejupielādes telefonā un datorā! 6 ātruma līmeņi, šķēršļu režīmi un Latvijas spēlētāju rekordu tops.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -90,6 +91,7 @@ $tpl->prepare();
 $active_sub = isset($_GET['var1']) ? $_GET['var1'] : (isset($_GET['act']) ? $_GET['act'] : '');
 
 if ($active_sub === 'top') {
+	$page_title = 'Čūska (Snake) — Šodienas rekordu tops';
 	$tpl->assign(['active-tab-top' => ' active']);
 
 	$start_of_today = strtotime('today midnight');
@@ -129,6 +131,7 @@ if ($active_sub === 'top') {
 		$tpl->newBlock('no-scores');
 	}
 } elseif ($active_sub === 'overall-top') {
+	$page_title = 'Čūska (Snake) — Visu laiku rekordu tops';
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 
 	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'snake' GROUP BY user_id ORDER BY score DESC LIMIT 100");

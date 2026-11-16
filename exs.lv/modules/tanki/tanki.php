@@ -91,7 +91,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē klasisko Tanki 1990 (Battle City) tanku arkādes spēli tiešsaistē par brīvu! Aizsargā EXS bāzi, iznīcini ienaidnieku tankus, vāc bonusus un kļūsti par līderi topos.';
+$page_title = 'Tanki 1990 (Battle City) — Klasiskā tanku spēle';
+$meta_description = 'Spēlē leģendāro Tanki 1990 (Battle City) arkādes spēli pārlūkā bez lejupielādes! Aizsargā bāzi, iznīcini ienaidnieku tankus, vāc bonusus un iekļūsti topā.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

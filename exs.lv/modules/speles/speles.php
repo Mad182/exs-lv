@@ -4,11 +4,42 @@
  * EXS.LV Spēļu katalogs (/speles)
  */
 
-$meta_description = 'Spēlē labākās bezmaksas tiešsaistes spēles EXS.LV! Tetris, Čūska, Wordle, 2048, Mīnu meklētājs, Space Invaders un citas pārlūka spēles ar rekordu topiem.';
+$page_title = 'Bezmaksas tiešsaistes spēles pārlūkā latviešu valodā';
+$meta_description = 'Spēlē bezmaksas tiešsaistes spēles pārlūkā bez lejupielādes telefonā un datorā latviešu valodā! Arkādes, loģikas, vārdu spēles un spēles 2 spēlētājiem EXS.LV.';
+$opengraph_meta['title'] = $page_title . ' - exs.lv';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
+
+if (!$auth->ok) {
+	$tpl->newBlock('seo-intro');
+}
+
+// Category mapping per game slug
+$game_categories = [
+	'tetris' => ['keys' => 'logikas arkades', 'label' => 'Loģikas'],
+	'snake' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'karatavas' => ['keys' => 'vardu logikas', 'label' => 'Vārdu spēle'],
+	'memory' => ['keys' => 'logikas', 'label' => 'Loģikas'],
+	'2048' => ['keys' => 'logikas', 'label' => 'Loģikas'],
+	'minu-mekletajs' => ['keys' => 'logikas', 'label' => 'Loģikas'],
+	'sudoku' => ['keys' => 'logikas', 'label' => 'Loģikas'],
+	'wordle' => ['keys' => 'vardu logikas', 'label' => 'Vārdu spēle'],
+	'rulete' => ['keys' => 'arkades', 'label' => 'Klasika'],
+	'desas' => ['keys' => 'diviem logikas', 'label' => '2 spēlētājiem'],
+	'flappy' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'invaders' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'augsup' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'vardes' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'runner' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'tornis' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'arkanoid' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'rezonanse' => ['keys' => 'diviem arkades', 'label' => '2 spēlētājiem / Ritma'],
+	'tanki' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'pacman' => ['keys' => 'arkades', 'label' => 'Arkādes'],
+	'ut99' => ['keys' => 'arkades', 'label' => '3D Šūteris'],
+];
 
 // List of available games ordered by votes
 $games_list = $db->get_results("
@@ -52,6 +83,7 @@ if (!empty($games_list)) {
 		}
 
 		$badge_html = in_array((int)$game->id, $latest_ids) ? '<span class="label label-success pull-right">Jaunums</span>' : '';
+		$cat_meta = isset($game_categories[$game->slug]) ? $game_categories[$game->slug] : ['keys' => 'arkades', 'label' => 'Arkādes'];
 
 		$tpl->assign([
 			'game-id' => $game->slug,
@@ -59,6 +91,8 @@ if (!empty($games_list)) {
 			'game-url' => $game->url,
 			'game-icon' => $game->icon,
 			'game-badge' => $badge_html,
+			'game-cat-keys' => $cat_meta['keys'],
+			'game-cat-label' => $cat_meta['label'],
 			'game-desc' => $game->desc,
 			'game-rate' => get_game_rate_html($game),
 			'top-player' => $top_player_info ? 'Līderis: ' . $top_player_info : ''
@@ -173,4 +207,8 @@ if (!empty($recent_scores)) {
 			]);
 		}
 	}
+}
+
+if (!$auth->ok) {
+	$tpl->newBlock('seo-text');
 }

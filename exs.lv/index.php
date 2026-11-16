@@ -475,11 +475,11 @@ if (!empty($secure_login)) {
 }
 
 if ($auth->skin == 1 && ($lang == 1 || $lang == 3)) {
-	$add_css[] = 'manual-dark.77a9846d.min.css';
+	$add_css[] = 'manual-dark.b8242589.min.css';
 } elseif ($auth->ok === true && $auth->skin == 0 && ($lang == 1 || $lang == 3)) {
 	//light skin
 } elseif ($lang === 1 || $lang === 3) {
-	$add_css[] = 'auto-dark.59006b81.min.css';
+	$add_css[] = 'auto-dark.26c2b05a.min.css';
 }
 
 // noteiks vēl nearhivēto sūdzību skaitu mod izvēlnei
@@ -731,6 +731,9 @@ if (empty($meta_description_added)) {
 }
 
 /* opengraph meta tagi */
+if (!empty($is_real_game) && empty($opengraph_meta['title']) && !empty($page_title)) {
+	$opengraph_meta['title'] = h($page_title);
+}
 if (!empty($opengraph_meta)) {
 	foreach ($opengraph_meta as $key => $val) {
 		$tpl->newBlock('og-meta');
@@ -786,9 +789,10 @@ $json_ld_items = [
 	]
 ];
 
-if (isset($category) && (
-	in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'tanki', 'pacman', 'wg-play', 'ut99']) ||
-	in_array($category->textid, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'tanki', 'pacman', 'wg-play', 'ut99'])
+if (isset($category) && $category->module !== 'speles' && (
+	in_array($category->module, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'tic-tac-toe', 'tanki', 'pacman', 'wg-play', 'ut99']) ||
+	in_array($category->textid, ['snake', 'tetris', 'minu-mekletajs', 'wordle', '2048', 'flappy', 'sudoku', 'memory', 'rulete', 'augsup', 'vardes', 'invaders', 'karatavas', 'runner', 'tornis', 'arkanoid', 'rezonanse', 'desas', 'tic-tac-toe', 'tanki', 'pacman', 'wg-play', 'ut99']) ||
+	!empty($game_info)
 )) {
 	$game_names = [
 		'snake' => 'Čūska', 'tetris' => 'Tetris', 'minu-mekletajs' => 'Mīnu Meklētājs',
@@ -796,25 +800,54 @@ if (isset($category) && (
 		'sudoku' => 'Sudoku', 'memory' => 'Atmiņas spēle', 'rulete' => 'Rulete',
 		'augsup' => 'Augšup', 'vardes' => 'Vardes', 'invaders' => 'Space Invaders',
 		'karatavas' => 'Karātavas', 'wg-play' => 'Karātavas', 'runner' => 'Runner', 'tornis' => 'Tornis',
-		'arkanoid' => 'Arkanoid', 'rezonanse' => 'Rezonanse', 'desas' => 'Desas',
+		'arkanoid' => 'Arkanoid', 'rezonanse' => 'Rezonanse', 'desas' => 'Desas', 'tic-tac-toe' => 'Desas',
 		'tanki' => 'Tanki 1990', 'pacman' => 'Exs-Man', 'ut99' => 'Unreal Tournament 99'
 	];
 	$lookup_key = isset($game_names[$category->textid]) ? $category->textid : $category->module;
-	$g_name = isset($game_names[$lookup_key]) ? $game_names[$lookup_key] : $category->title;
+	$g_name = isset($game_names[$lookup_key]) ? $game_names[$lookup_key] : (!empty($game_info->title) ? $game_info->title : $category->title);
 	$game_schema = [
 		'@context' => 'https://schema.org',
 		'@type' => 'VideoGame',
 		'name' => $g_name,
-		'gamePlatform' => 'Web Browser',
+		'gamePlatform' => ['Web Browser', 'Mobile Web Browser'],
 		'applicationCategory' => 'Game',
 		'operatingSystem' => 'Any',
 		'inLanguage' => 'lv',
+		'isAccessibleForFree' => true,
+		'offers' => [
+			'@type' => 'Offer',
+			'price' => '0',
+			'priceCurrency' => 'EUR'
+		],
 		'url' => 'https://exs.lv/' . $category->textid
 	];
-	if (!empty($category->content)) {
-		$game_schema['description'] = h(strip_tags($category->content));
-	} elseif (!empty($meta_description)) {
-		$game_schema['description'] = h(strip_tags($meta_description));
+	if (!empty($meta_description)) {
+		$game_schema['description'] = trim(preg_replace('/\s+/', ' ', strip_tags($meta_description)));
+	} elseif (!empty($category->content) && !is_numeric(trim($category->content))) {
+		$game_schema['description'] = trim(preg_replace('/\s+/', ' ', strip_tags($category->content)));
+	}
+	if (!empty($opengraph_meta['image'])) {
+		$game_schema['image'] = $opengraph_meta['image'];
+	} elseif (!empty($game_info->icon)) {
+		$game_schema['image'] = 'https://exs.lv' . $game_info->icon;
+	}
+	if (empty($game_info) && isset($db)) {
+		$game_info = $db->get_row("SELECT * FROM `games` WHERE `slug` = '" . sanitize($category->textid) . "' OR `slug` = '" . sanitize($category->module) . "' OR `game_code` = '" . sanitize($category->module) . "' LIMIT 1");
+	}
+	if (!empty($game_info)) {
+		$votes_up = max(0, (int) $game_info->votes_up);
+		$votes_down = max(0, (int) $game_info->votes_down);
+		$total_votes = $votes_up + $votes_down;
+		if ($total_votes > 0) {
+			$rating_value = round(1 + (4 * ($votes_up / $total_votes)), 2);
+			$game_schema['aggregateRating'] = [
+				'@type' => 'AggregateRating',
+				'ratingValue' => number_format($rating_value, 2, '.', ''),
+				'ratingCount' => $total_votes,
+				'bestRating' => 5,
+				'worstRating' => 1
+			];
+		}
 	}
 	$json_ld_items[] = $game_schema;
 }

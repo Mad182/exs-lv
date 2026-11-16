@@ -93,7 +93,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	exit;
 }
 
-$meta_description = 'Spēlē klasisko Tetris spēli tiešsaistē bez maksas! Krāmē krītošos blokus, vāc līnijas, cel sērijas un uzstādi labāko rezultātu EXS.LV spēļu topā.';
+$page_title = 'Tetris tiešsaistē — Klasiskā bloku loģikas spēle';
+$meta_description = 'Spēlē klasisko Tetris spēli pārlūkā bez maksas un bez lejupielādes telefonā vai datorā! Krāmē figūras, vāc līnijas un uzstādi rekordu EXS.LV spēlētāju topā.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -102,6 +103,7 @@ $tpl->prepare();
 $active_sub = isset($_GET['var1']) ? $_GET['var1'] : (isset($_GET['act']) ? $_GET['act'] : '');
 
 if ($active_sub === 'top') {
+	$page_title = 'Tetris — Šodienas rekordu tops';
 	$tpl->assign(['active-tab-top' => ' active']);
 	
 	$start_of_today = strtotime('today midnight');
@@ -141,6 +143,7 @@ if ($active_sub === 'top') {
 		$tpl->newBlock('no-scores');
 	}
 } elseif ($active_sub === 'overall-top') {
+	$page_title = 'Tetris — Visu laiku rekordu tops';
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 	
 	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'tetris' GROUP BY user_id ORDER BY score DESC LIMIT 100");

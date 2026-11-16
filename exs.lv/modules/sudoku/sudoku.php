@@ -82,7 +82,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Risināt Sudoku mīklas tiešsaistē par brīvu. Trīs sarežģītības līmeņi, zīmuļa piezīmes, kļūdu pārbaude un mājieni. Trenē prātu un uzstādi ātruma rekordu.';
+$page_title = 'Sudoku latviešu valodā — Bezmaksas loģikas mīkla';
+$meta_description = 'Risini Sudoku mīklas tiešsaistē pārlūkā bez maksas un bez lejupielādes! 3 grūtības pakāpes, zīmuļa piezīmes, mājieni telefonā un datorā, kā arī ātruma tops.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -92,6 +93,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : (isset($_GET['var1']) ? $_GET['var1'
 
 if ($act == 'top') {
 	// Today's Top Scores (Lowest time is best)
+	$page_title = 'Sudoku — Šodienas ātrāko risinātāju tops';
 	$tpl->assign(['active-tab-top' => ' active']);
 	$today_start = strtotime('today midnight');
 	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'sudoku' AND time >= '$today_start' GROUP BY user_id ORDER BY score ASC LIMIT 100");
@@ -132,6 +134,7 @@ if ($act == 'top') {
 	}
 } elseif ($act == 'overall-top') {
 	// All-Time Top Scores (Lowest time is best)
+	$page_title = 'Sudoku — Visu laiku rekordu tops';
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'sudoku' GROUP BY user_id ORDER BY score ASC LIMIT 100");
 

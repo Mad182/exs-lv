@@ -69,7 +69,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page Rendering
-$meta_description = 'Spēlē klasisko Vardes (Frogger) spēli tiešsaistē bez maksas! Šķērso trakojošu šoseju un bīstamu upi ar peldošiem baļķiem, glāb vardītes un pārspēj rekordus.';
+$page_title = 'Vardes (Frogger) — Klasiskā arkādes spēle pārlūkā';
+$meta_description = 'Spēlē klasisko Vardes (Frogger) arkādes spēli tiešsaistē pārlūkā bez lejupielādes telefonā un datorā! Šķērso šoseju un upi ar baļķiem un pārspēj rekordus.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

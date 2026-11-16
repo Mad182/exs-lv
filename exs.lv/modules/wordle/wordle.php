@@ -107,7 +107,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē Wordle latviešu valodā par brīvu! 5 burtu vārdu minēšana ar dienas vārdu un treniņu režīmu, 25 000+ vārdu krātuvi un spēlētāju rezultātu topu.';
+$page_title = 'Wordle latviešu valodā — Dienas vārda spēle pārlūkā';
+$meta_description = 'Spēlē Wordle latviešu valodā bez maksas pārlūkā telefonā un datorā! Uzmini 5 burtu dienas vārdu vai trenējies ar 25 000+ latviešu vārdiem un sacenties topā.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -117,6 +118,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : (isset($_GET['var1']) ? $_GET['var1'
 
 if ($act == 'top') {
 	// Today's Top Scores (Lowest composite score is best, grouped per user)
+	$page_title = 'Wordle latviski — Šodienas dienas vārda tops';
 	$tpl->assign(['active-tab-top' => ' active']);
 	$today_start = strtotime('today midnight');
 	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'wordle' AND time >= '$today_start' AND score > 0 GROUP BY user_id ORDER BY score ASC LIMIT 100");
@@ -159,6 +161,7 @@ if ($act == 'top') {
 	}
 } elseif ($act == 'overall-top') {
 	// All-Time Top Scores (Lowest composite score is best, grouped per user)
+	$page_title = 'Wordle latviski — Visu laiku rekordu tops';
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 	$topusers = $db->get_results("SELECT user_id, MIN(score) as score, MAX(time) as time FROM gamescore WHERE game = 'wordle' AND score > 0 GROUP BY user_id ORDER BY score ASC LIMIT 100");
 

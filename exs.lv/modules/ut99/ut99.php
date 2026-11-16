@@ -113,7 +113,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'server_status') {
 }
 
 // 4. Regular Page Rendering
-$meta_description = 'Spēlē leģendāro Unreal Tournament 99 tiešsaistē tieši savā pārlūkā! Izbaudi kulta 3D šūteri bez instalēšanas, cīnies ar botiem un uzstādi labāko fragu skaitu.';
+$page_title = 'Unreal Tournament 99 pārlūkā — Bezmaksas 3D šūteris';
+$meta_description = 'Spēlē leģendāro Unreal Tournament 99 (UT99) tieši pārlūkā bez lejupielādes un instalēšanas! Klasiskais 3D arēnas šūteris datorā ar botu cīņām un fragu topu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

@@ -85,7 +85,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē Tornis (Tower Stacker) tiešsaistē EXS.LV! Būvē 3D debesskrāpi, liec blokus ar precīzu laika izjūtu, veido combo sērijas un sasniedz kosmosa augstumus.';
+$page_title = 'Tornis (Tower Stacker) — 3D bloku arkādes spēle';
+$meta_description = 'Spēlē Tornis (3D Tower Stacker) tiešsaistē pārlūkā bez lejupielādes telefonā un datorā! Liec blokus ar precīzu reakciju, veido combo un uzbūvē augstāko torni.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

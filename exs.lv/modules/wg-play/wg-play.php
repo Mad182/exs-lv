@@ -28,7 +28,8 @@ if (isset($_GET['_']) || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower
 }
 
 if (!$ajax) {
-	$meta_description = 'Vārdu minēšanas spēle Karātavas latviešu valodā. Uzmini apslēptos vārdus pa burtiem, saņem mājienus un pārbaudi savu vārdu krājumu tiešsaistē.';
+	$page_title = 'Karātavas — Vārdu minēšanas spēle latviešu valodā';
+	$meta_description = 'Spēlē Karātavas latviešu valodā tiešsaistē pārlūkā bez lejupielādes! Uzmini tūkstošiem latviešu vārdu telefonā vai datorā, trenē erudīciju un cīnies topā.';
 	$opengraph_meta['description'] = $meta_description;
 
 	$add_css[] = 'hangman.ef4ff447.min.css';
@@ -45,6 +46,9 @@ if (!$ajax) {
 }
 
 if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $_GET['var1'] == 'top')) {
+	if (!$ajax) {
+		$page_title = 'Karātavas — Šodienas spēlētāju tops';
+	}
 	$tpl->assign([
 		'active-tab-top' => ' active',
 	]);
@@ -86,6 +90,9 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 	}
 
 } elseif ((isset($_GET['act']) && $_GET['act'] == 'overall-top') or (isset($_GET['var1']) && $_GET['var1'] == 'overall-top')) {
+	if (!$ajax) {
+		$page_title = 'Karātavas — Visu laiku spēlētāju tops';
+	}
 	$tpl->assign([
 		'active-tab-overall-top' => ' active',
 	]);

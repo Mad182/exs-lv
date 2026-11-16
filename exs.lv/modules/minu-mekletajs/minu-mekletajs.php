@@ -99,7 +99,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Klasiskā Minesweeper (Mīnu Meklētājs) spēle ar 3 grūtības līmeņiem: Vienkāršs, Vidējs un Eksperts. Drošs pirmais klikšķis, skārienekrāna režīms un rekordu tops.';
+$page_title = 'Mīnu meklētājs (Minesweeper) — Loģikas spēle';
+$meta_description = 'Spēlē klasisko Mīnu meklētāju (Minesweeper) latviešu valodā pārlūkā bez lejupielādes! 3 grūtības līmeņi, drošs pirmais klikšķis, mobilais režīms un rekordi.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -115,9 +116,11 @@ $difficulties = [
 
 if ($act == 'top' || $act == 'overall-top') {
 	if ($act == 'top') {
+		$page_title = 'Mīnu meklētājs — Šodienas ātrāko laiku tops';
 		$tpl->assign(['active-tab-top' => ' active']);
 		$today_start = strtotime('today midnight');
 	} else {
+		$page_title = 'Mīnu meklētājs — Visu laiku rekordu tops';
 		$tpl->assign(['active-tab-overall-top' => ' active']);
 	}
 

@@ -69,7 +69,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page Rendering
-$meta_description = 'Spēlē Augšup (Doodle Jump tipa spēle) tiešsaistē par brīvu! Lēkā pa platformām ar savu avatāru, sasniedz mākoņus un cīnies par augstāko vietu rekordu topā.';
+$page_title = 'Augšup — Bezmaksas platformu lēkāšanas spēle';
+$meta_description = 'Spēlē Augšup (Doodle Jump stila arkādi) pārlūkā bez lejupielādes telefonā un datorā! Lēkā pa platformām ar savu avatāru un cīnies par augstāko rekordu topā.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

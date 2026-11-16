@@ -91,7 +91,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē klasisko Arkanoid arkādes spēli tiešsaistē par brīvu! Atsit bumbu ar Vaus kuģi, sašķaidi krāsainos blokus, ķer kapsulu bonusus un iekaro spēlētāju topu.';
+$page_title = 'Arkanoid — Klasiskā bloku arkādes spēle pārlūkā';
+$meta_description = 'Spēlē klasisko Arkanoid arkādes spēli pārlūkā bez lejupielādes! Atsit bumbu ar Vaus kuģi, sašķaidi blokus, ķer kapsulu bonusus un iekaro EXS.LV spēlētāju topu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

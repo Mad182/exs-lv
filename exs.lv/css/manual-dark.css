@@ -664,6 +664,105 @@ table.table,
 	color: #e9ecef;
 }
 
+/* Speles catalog dark mode (manual & auto-dark) */
+.speles-intro-text {
+	color: #8b949e;
+}
+
+.speles-seo-intro {
+	background: #16202c;
+	border-color: #243b53;
+	border-left-color: #58a6ff;
+	color: #c9d1d9;
+}
+
+.speles-cat-tag {
+	background: #21262d;
+	border-color: #30363d;
+	color: #c9d1d9;
+}
+
+.speles-cat-tag:hover {
+	background: #1f3349;
+	border-color: #58a6ff;
+	color: #79c0ff;
+}
+
+.speles-cat-tag.is-active {
+	background: #1f6feb;
+	border-color: #388bfd;
+	color: #ffffff;
+}
+
+.speles-card {
+	background: #181c24;
+	border-color: #2a313e;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.speles-card:hover {
+	border-color: #58a6ff;
+	box-shadow: 0 8px 20px rgba(88, 166, 255, 0.2);
+}
+
+.speles-card-title-group h3 a {
+	color: #e9ecef;
+}
+
+.speles-card-title-group h3 a:hover {
+	color: #58a6ff;
+}
+
+.speles-card-cat {
+	background: #21262d;
+	color: #94a3b8;
+}
+
+.speles-card-desc,
+.speles-card-top {
+	color: #8b949e;
+}
+
+.speles-card-footer {
+	border-top-color: #262c36;
+}
+
+.speles-recent-block {
+	background: #181c24;
+	border-color: #2a313e;
+}
+
+.speles-recent-block h2 {
+	color: #58a6ff;
+	border-bottom-color: #2a313e;
+}
+
+.recent-score-item {
+	background: #21262d;
+	border-color: #30363d;
+}
+
+.recent-details {
+	color: #c9d1d9;
+}
+
+.recent-time {
+	color: #8b949e;
+}
+
+.speles-reviews-link-box {
+	background: #21262d;
+	border-color: #30363d;
+}
+
+.speles-reviews-link-box h3 {
+	color: #e9ecef;
+}
+
+.speles-reviews-link-box p {
+	color: #8b949e;
+}
+
 /* Flappy Bird (Lidojošais Eksis) dark mode */
 .flappy-wrapper {
 	color: #c9d1d9;

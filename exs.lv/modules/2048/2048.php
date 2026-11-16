@@ -81,7 +81,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Populārā 2048 skaitļu mīklas spēle. Bīdi un apvieno vienādās flīzes, lai sasniegtu 2048 skaitli un iegūtu maksimālo punktu skaitu. Atbalsts mobilajām ierīcēm.';
+$page_title = '2048 — Bezmaksas skaitļu loģikas spēle pārlūkā';
+$meta_description = 'Spēlē populāro 2048 skaitļu loģikas spēli pārlūkā bez lejupielādes telefonā un datorā! Bīdi un apvieno vienādās flīzes, sasniedz 2048 un uzstādi rekordu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -91,6 +92,7 @@ $act = isset($_GET['act']) ? $_GET['act'] : (isset($_GET['var1']) ? $_GET['var1'
 
 if ($act == 'top') {
 	// Today's Top Scores
+	$page_title = '2048 — Šodienas rekordu tops';
 	$tpl->assign(['active-tab-top' => ' active']);
 	$today_start = strtotime('today midnight');
 	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = '2048' AND time >= '$today_start' ORDER BY score DESC LIMIT 100");
@@ -127,6 +129,7 @@ if ($act == 'top') {
 	}
 } elseif ($act == 'overall-top') {
 	// All-Time Top Scores
+	$page_title = '2048 — Visu laiku rekordu tops';
 	$tpl->assign(['active-tab-overall-top' => ' active']);
 	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = '2048' ORDER BY score DESC LIMIT 100");
 

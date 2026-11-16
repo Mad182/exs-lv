@@ -86,7 +86,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē Rezonanse tiešsaistē bez maksas! Hipnotiska ritma un izdzīvošanas arkāde ar reāllaika sintezatora mūziku. Ķer bītu, veido kaskādes un uzstādi rekordu.';
+$page_title = 'Rezonanse — Ritma un reakcijas arkādes spēle';
+$meta_description = 'Spēlē Rezonanse bez maksas pārlūkā bez lejupielādes telefonā vai datorā! Hipnotiska ritma un reakcijas arkāde ar sintezatora mūziku un EXS.LV rekordu topu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

@@ -91,7 +91,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 }
 
 // 3. Regular Page View
-$meta_description = 'Spēlē leģendāro Pac-Man (Exs-Man) tiešsaistē bez maksas! Vadi savu profila tēlu, ēd punktus un augļu bonusus, bēdz no spokiem un uzstādi labāko rekordu topos.';
+$page_title = 'Exs-Man (Pac-Man) — Klasiskā arkādes spēle pārlūkā';
+$meta_description = 'Spēlē leģendāro Pac-Man (Exs-Man) bezmaksas arkādes spēli pārlūkā bez lejupielādes! Vadi tēlu labirintā, vāc punktus un augļus, bēdz no spokiem un cel rekordu.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');

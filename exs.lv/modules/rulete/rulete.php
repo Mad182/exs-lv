@@ -4,7 +4,8 @@
  * EXS.LV Kazino Rulete
  */
 
-$meta_description = 'Spēlē Eiropas Ruleti tiešsaistē par brīvu! Veic likmes uz skaitļiem, krāsām un slejām, pārbaudi veiksmi ar ikdienas žetoniem un sacenties par lielāko banku.';
+$page_title = 'Rulete tiešsaistē — Bezmaksas spēle virtuālā naudā';
+$meta_description = 'Spēlē Eiropas Ruleti tiešsaistē pārlūkā bez maksas virtuālajā spēļu naudā! Liec žetonus uz skaitļiem un krāsām bez īstas naudas riska un sacenties līderu topā.';
 $opengraph_meta['description'] = $meta_description;
 
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
@@ -246,6 +247,7 @@ if ($act === 'top' || $act === 'today' || $act === 'all') {
 	$is_all_time = ($act === 'all');
 
 	if ($is_all_time) {
+		$page_title = 'Rulete — Visu laiku bagātāko spēlētāju tops';
 		$tpl->assign(['active-tab-all' => ' active']);
 		$scores = $db->get_results("
 			SELECT r.user_id, r.max_gold as score, u.nick, u.level
@@ -256,6 +258,7 @@ if ($act === 'top' || $act === 'today' || $act === 'all') {
 			LIMIT 50
 		");
 	} else {
+		$page_title = 'Rulete — Šodienas līderu tops';
 		$tpl->assign(['active-tab-today' => ' active']);
 		$scores = $db->get_results("
 			SELECT r.user_id, r.gold as score, u.nick, u.level
