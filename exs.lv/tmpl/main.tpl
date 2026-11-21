@@ -615,7 +615,7 @@
 					</ul>
 				</nav>
 				<div id="credit" class="fl">
-					<p>&copy; 2005-{current-year}, exs.lv</p>
+					<p>&copy; 2005-{current-year}, exs.lv, nodrošina <a href="https://openidea.lv/" target="_blank">OpenIdea</a></p>
 				</div>
 			</div>
 		</footer>
