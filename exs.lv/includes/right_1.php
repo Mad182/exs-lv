@@ -261,7 +261,7 @@ if ($category->module === 'movies') {
 	}
 }
 
-// UT99 server monitor (cached 15s in Memcached)
+// UT99 server monitor (cached 60s in Memcached)
 if (($ut99_mon = $m->get('ut99_sidebar_monitor_v1')) === false) {
 	$ut99_mon = [
 		'online' => false,
@@ -327,7 +327,7 @@ if (($ut99_mon = $m->get('ut99_sidebar_monitor_v1')) === false) {
 			$ut99_mon['players'] = $plist;
 		}
 	}
-	$m->set('ut99_sidebar_monitor_v1', $ut99_mon, 15);
+	$m->set('ut99_sidebar_monitor_v1', $ut99_mon, 60);
 }
 
 $tpl->newBlock('ut99-server-monitor');
