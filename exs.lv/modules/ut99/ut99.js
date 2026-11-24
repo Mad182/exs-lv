@@ -255,7 +255,7 @@
 			window.Module.preRun = window.Module.preRun || [];
 			window.Module.preRun.push(function() {
 				if (typeof syncDataFiles === "function") {
-					var syncer = syncDataFiles('ut99_exs_v5', '/games/ut99/gamedata/');
+					var syncer = syncDataFiles('ut99_exs_v6', '/games/ut99/gamedata/');
 					syncer.onerror = function(why) {
 						console.error("Syncer error:", why);
 						if (loadingStatus) loadingStatus.textContent = why;
@@ -277,6 +277,46 @@
 						var store = tx.objectStore("data");
 						var dataIndex = store.index("data");
 
+						function checkAllMounted() {
+							num_requests--;
+							if (num_requests <= 0) {
+								console.log("MEMFS is synchronized. Preparing clean system configs...");
+
+								// Cleanly copy Default.ini -> UnrealTournament.ini & DefUser.ini -> User.ini
+								try {
+									var defIni = FS.findObject('/System/Default.ini');
+									if (defIni && defIni.contents) {
+										FS.createDataFile('/System', 'UnrealTournament.ini', defIni.contents, true, true, true);
+									}
+								} catch (e) {
+									console.warn("Could not clone UnrealTournament.ini:", e);
+								}
+
+								try {
+									var defUser = FS.findObject('/System/DefUser.ini');
+									if (defUser && defUser.contents) {
+										FS.createDataFile('/System', 'User.ini', defUser.contents, true, true, true);
+									}
+								} catch (e) {
+									console.warn("Could not clone User.ini:", e);
+								}
+
+								console.log("Starting UT99 engine...");
+								if (loadingBox) loadingBox.style.display = 'none';
+								if (startOverlay) startOverlay.style.display = 'none';
+								isMatchRunning = true;
+								canvas.focus();
+								try {
+									canvas.requestPointerLock();
+								} catch (e) {}
+
+								// Call main with arguments
+								if (typeof Module.callMain === 'function') {
+									Module.callMain(Module.arguments || []);
+								}
+							}
+						}
+
 						for (var fname in manifest) {
 							total_requests++;
 							num_requests++;
@@ -284,7 +324,7 @@
 							req.filesize = manifest[fname].filesize;
 							req.onsuccess = function(event) {
 								if (!event.target.result) {
-									num_requests--;
+									checkAllMounted();
 									return;
 								}
 								var path = "/" + event.target.result.filename;
@@ -311,52 +351,16 @@
 									console.warn("createDataFile error for " + path, err);
 								}
 
-								var completed = total_requests - num_requests;
+								var completed = total_requests - num_requests + 1;
 								var percent = Math.floor((completed / total_requests) * 100);
 								if (progressBar) progressBar.style.width = Math.max(5, percent) + '%';
 								if (loadingPercent) loadingPercent.textContent = percent + '%';
 								if (loadingStatus) loadingStatus.textContent = 'Gatavo spēles failus: ' + percent + '%';
 
-								num_requests--;
-								if (num_requests <= 0) {
-									console.log("MEMFS is synchronized. Preparing clean system configs...");
-
-									// Cleanly copy Default.ini -> UnrealTournament.ini & DefUser.ini -> User.ini
-									try {
-										var defIni = FS.findObject('/System/Default.ini');
-										if (defIni && defIni.contents) {
-											FS.createDataFile('/System', 'UnrealTournament.ini', defIni.contents, true, true, true);
-										}
-									} catch (e) {
-										console.warn("Could not clone UnrealTournament.ini:", e);
-									}
-
-									try {
-										var defUser = FS.findObject('/System/DefUser.ini');
-										if (defUser && defUser.contents) {
-											FS.createDataFile('/System', 'User.ini', defUser.contents, true, true, true);
-										}
-									} catch (e) {
-										console.warn("Could not clone User.ini:", e);
-									}
-
-									console.log("Starting UT99 engine...");
-									if (loadingBox) loadingBox.style.display = 'none';
-									if (startOverlay) startOverlay.style.display = 'none';
-									isMatchRunning = true;
-									canvas.focus();
-									try {
-										canvas.requestPointerLock();
-									} catch (e) {}
-
-									// Call main with arguments
-									if (typeof Module.callMain === 'function') {
-										Module.callMain(Module.arguments || []);
-									}
-								}
+								checkAllMounted();
 							};
 							req.onerror = function() {
-								num_requests--;
+								checkAllMounted();
 							};
 						}
 					};
@@ -533,16 +537,12 @@
 				const fragLimit = fragLimitSelect ? fragLimitSelect.value : '15';
 
 				let args = [];
-				if (map === 'CityIntro') {
+				if (map === 'CityIntro' || map === 'UT-Logo-Map') {
 					args = [`${map}.unr`];
+				} else if (map.startsWith('CTF-')) {
+					args = [`${map}.unr?game=Botpack.CTFGame?NumBots=${botCount}?Difficulty=${botSkill}?GoalTeamScore=${fragLimit}`];
 				} else {
-					args = [
-						`${map}.unr`,
-						`?game=Botpack.DeathMatchPlus`,
-						`?numplay=${botCount}`,
-						`?difficulty=${botSkill}`,
-						`?fraglimit=${fragLimit}`
-					];
+					args = [`${map}.unr?game=Botpack.DeathMatchPlus?NumBots=${botCount}?Difficulty=${botSkill}?FragLimit=${fragLimit}`];
 				}
 				launchGame(args);
 			});

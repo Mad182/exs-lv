@@ -5,7 +5,7 @@
 
 function syncDataFiles(dbname, baseurl) {
 	var retval = {};
-	if (typeof dbname === "undefined") { dbname = "ut99_exs_v5"; }
+	if (typeof dbname === "undefined") { dbname = "ut99_exs_v6"; }
 	if (typeof baseurl === "undefined") { baseurl = "/games/ut99/gamedata/"; }
 
 	var urlrandomizerarg = "?nocache=" + (Date.now() / 1000 | 0);
@@ -143,8 +143,18 @@ function syncDataFiles(dbname, baseurl) {
 			return;
 		}
 
-		for (var d = 0; d < downloadme.length; d++) {
-			var remotefname = downloadme[d];
+		var MAX_CONCURRENT = 6;
+		var queueIndex = 0;
+		var activeCount = 0;
+
+		var start_next = function() {
+			while (!state.reported_result && activeCount < MAX_CONCURRENT && queueIndex < downloadme.length) {
+				download_one(downloadme[queueIndex++], 0);
+			}
+		};
+
+		var download_one = function(remotefname, attempt) {
+			activeCount++;
 			var remoteitem = state.remote_manifest[remotefname];
 			var xhr = new XMLHttpRequest();
 			state.xhrs[remotefname] = xhr;
@@ -155,17 +165,33 @@ function syncDataFiles(dbname, baseurl) {
 			xhr.expected_filesize = remoteitem.filesize;
 			xhr.responseType = "arraybuffer";
 
-			xhr.addEventListener("error", function(e) {
-				console.warn("Download error on " + e.target.filename);
-				finished_file(e.target.filename);
+			var handle_failure = function(reason) {
+				if (state.reported_result) return;
+				delete state.xhrs[remotefname];
+				state.total_downloaded = Math.max(0, state.total_downloaded - xhr.previously_loaded);
+				activeCount--;
+				if (attempt < 2) {
+					console.warn(reason + " (" + remotefname + "), atkārto...");
+					setTimeout(function() {
+						if (!state.reported_result) {
+							download_one(remotefname, attempt + 1);
+						}
+					}, 500 * (attempt + 1));
+				} else {
+					failed("Neizdevās lejupielādēt " + remotefname + ": " + reason);
+				}
+			};
+
+			xhr.addEventListener("error", function() {
+				handle_failure("tīkla kļūda");
 			});
-			xhr.addEventListener("timeout", function(e) {
-				console.warn("Download timeout on " + e.target.filename);
-				finished_file(e.target.filename);
+			xhr.addEventListener("timeout", function() {
+				handle_failure("noildze");
 			});
-			xhr.addEventListener("abort", function(e) {
-				console.warn("Download abort on " + e.target.filename);
-				finished_file(e.target.filename);
+			xhr.addEventListener("abort", function() {
+				if (!state.reported_result) {
+					handle_failure("pārtraukts");
+				}
 			});
 
 			xhr.addEventListener("progress", function(e) {
@@ -184,24 +210,32 @@ function syncDataFiles(dbname, baseurl) {
 				if (state.reported_result) return;
 				var x = e.target;
 				if (x.status !== 200) {
-					console.warn("HTTP " + x.status + " downloading " + x.filename);
-					finished_file(x.filename);
-				} else {
-					state.total_downloaded -= x.previously_loaded;
-					state.total_downloaded += x.expected_filesize;
-					x.previously_loaded = x.expected_filesize;
-					delete state.xhrs[x.filename];
-					var pct = state.total_to_download ? Math.min(100, Math.floor((state.total_downloaded / state.total_to_download) * 100)) : 0;
-					var currentMB = Math.ceil(state.total_downloaded / 1048576);
-					var totalMB = Math.ceil(state.total_to_download / 1048576);
-					progress("Lejupielādē UT resursus: " + pct + "% (" + currentMB + "/" + totalMB + " MB)", pct);
-					store_file(x);
+					handle_failure("HTTP " + x.status);
+					return;
 				}
+				if (!x.response || x.response.byteLength !== x.expected_filesize) {
+					var got = x.response ? x.response.byteLength : 0;
+					handle_failure("izmēra neatbilstība (saņemti " + got + " B, gaidīti " + x.expected_filesize + " B)");
+					return;
+				}
+				state.total_downloaded -= x.previously_loaded;
+				state.total_downloaded += x.expected_filesize;
+				x.previously_loaded = x.expected_filesize;
+				delete state.xhrs[x.filename];
+				activeCount--;
+				var pct = state.total_to_download ? Math.min(100, Math.floor((state.total_downloaded / state.total_to_download) * 100)) : 0;
+				var currentMB = Math.ceil(state.total_downloaded / 1048576);
+				var totalMB = Math.ceil(state.total_to_download / 1048576);
+				progress("Lejupielādē UT resursus: " + pct + "% (" + currentMB + "/" + totalMB + " MB)", pct);
+				store_file(x);
+				start_next();
 			});
 
 			xhr.open("GET", baseurl + remotefname + urlrandomizerarg, true);
 			xhr.send();
-		}
+		};
+
+		start_next();
 	};
 
 	var delete_old_files = function() {
