@@ -268,7 +268,7 @@
 			<!-- TODAY'S TOP -->
 			<div class="ut99-card">
 				<h3>🏆 ŠODIENAS TOPS</h3>
-				<ul class="ut99-top-list">
+				<ul id="ut99-top-today" class="ut99-top-list">
 					{today-top-html}
 				</ul>
 			</div>
@@ -276,7 +276,7 @@
 			<!-- ALL-TIME TOP -->
 			<div class="ut99-card" style="margin-top: 14px;">
 				<h3>👑 VISU LAIKU TOPS</h3>
-				<ul class="ut99-top-list">
+				<ul id="ut99-top-alltime" class="ut99-top-list">
 					{alltime-top-html}
 				</ul>
 			</div>

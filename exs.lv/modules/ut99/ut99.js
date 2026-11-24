@@ -641,9 +641,30 @@
 			});
 		}
 
+		// Refresh Today's & All-Time Tops (static HTML updated every 60s)
+		async function fetchTops() {
+			if (document.hidden) return;
+			try {
+				const res = await fetch('/ut99?action=tops', { cache: 'no-store' });
+				if (!res.ok) return;
+				const data = await res.json();
+				const todayEl = document.getElementById('ut99-top-today');
+				const alltimeEl = document.getElementById('ut99-top-alltime');
+				if (todayEl && typeof data.today === 'string') {
+					todayEl.innerHTML = data.today;
+				}
+				if (alltimeEl && typeof data.alltime === 'string') {
+					alltimeEl.innerHTML = data.alltime;
+				}
+			} catch (e) {
+				// silent fallback
+			}
+		}
+
 		// Init
 		fetchServerStatus();
-		serverStatusInterval = setInterval(fetchServerStatus, 30000);
+		serverStatusInterval = setInterval(fetchServerStatus, 60000);
+		setInterval(fetchTops, 60000);
 	}
 
 	if (document.readyState === 'loading') {

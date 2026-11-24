@@ -75,6 +75,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 // 3. AJAX: Server Status Ping (static JSON generated every 60s by ut99-stats.timer)
 if (isset($_GET['action']) && $_GET['action'] === 'server_status') {
 	header('Content-Type: application/json');
+	header('Cache-Control: no-cache');
 	$status_file = CORE_PATH . '/cache/ut99_status.json';
 	if (is_file($status_file)) {
 		readfile($status_file);
@@ -88,6 +89,30 @@ if (isset($_GET['action']) && $_GET['action'] === 'server_status') {
 		'max_players' => 16,
 		'ping' => 0
 	]);
+	exit;
+}
+
+// 3b. AJAX: Static HTML for Today's & All-Time Tops
+if (isset($_GET['action']) && $_GET['action'] === 'tops') {
+	header('Content-Type: application/json');
+	header('Cache-Control: no-cache');
+	$today_top_file = CORE_PATH . '/cache/ut99_top_today.html';
+	$alltime_top_file = CORE_PATH . '/cache/ut99_top_alltime.html';
+	echo json_encode([
+		'today' => is_file($today_top_file) ? file_get_contents($today_top_file) : '<li class="empty-msg">Šodien vēl nav fiksētu rezultātu!</li>',
+		'alltime' => is_file($alltime_top_file) ? file_get_contents($alltime_top_file) : '<li class="empty-msg">Vēl nav uzstādītu rekordu!</li>'
+	]);
+	exit;
+}
+
+// 3c. AJAX: Static HTML for Right-Sidebar Server Monitor
+if (isset($_GET['action']) && $_GET['action'] === 'monitor') {
+	header('Content-Type: text/html; charset=utf-8');
+	header('Cache-Control: no-cache');
+	$mon_file = CORE_PATH . '/cache/ut99_monitor.html';
+	if (is_file($mon_file)) {
+		readfile($mon_file);
+	}
 	exit;
 }
 

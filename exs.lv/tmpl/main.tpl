@@ -499,7 +499,20 @@
 					</div>
 					<!-- END BLOCK : mb-box-->
 
-					{ut99-server-monitor-html}
+					<div id="ut99-monitor-slot">{ut99-server-monitor-html}</div>
+					<script>
+					(function(){
+						var slot = document.getElementById('ut99-monitor-slot');
+						if (!slot) return;
+						setInterval(function(){
+							if (document.hidden) return;
+							fetch('/ut99?action=monitor', { cache: 'no-store' })
+								.then(function(r){ return r.ok ? r.text() : ''; })
+								.then(function(html){ if (html) slot.innerHTML = html; })
+								.catch(function(){});
+						}, 60000);
+					})();
+					</script>
 
 					<!-- START BLOCK : poll-box-->
 					<div class="widget widget-poll">
