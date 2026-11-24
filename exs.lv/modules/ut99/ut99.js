@@ -236,7 +236,7 @@
 		}
 
 		// Launch Game Mode
-		async function launchGame(commandArgs) {
+		async function launchGame(commandArgs, wsUrl) {
 			await initSessionToken();
 			currentMatchStartTime = Math.floor(Date.now() / 1000);
 
@@ -250,6 +250,12 @@
 			window.Module.noInitialRun = true;
 			window.Module.arguments = commandArgs;
 			window.Module.canvas = canvas;
+			if (wsUrl) {
+				window.Module.websocket = {
+					url: wsUrl,
+					subprotocol: 'binary'
+				};
+			}
 			window.Module.wasmBinaryFile = '/games/ut99/index.wasm';
 			window.Module.locateFile = function(path) {
 				return '/games/ut99/' + path;
@@ -586,8 +592,9 @@
 		const joinServerBtn = document.getElementById('ut99-join-server-btn');
 		if (joinServerBtn) {
 			joinServerBtn.addEventListener('click', () => {
-				const args = ['open', 'wss://exs.lv/ut99-ws'];
-				launchGame(args);
+				const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+				const wsUrl = wsProto + '//' + window.location.host + '/ut99-ws';
+				launchGame(['127.0.0.1:7777'], wsUrl);
 			});
 		}
 
