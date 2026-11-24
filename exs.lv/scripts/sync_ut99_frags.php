@@ -12,6 +12,7 @@ if (PHP_SAPI !== 'cli') {
 }
 
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+$_SERVER['REQUEST_URI'] = '/cli';
 chdir(__DIR__ . '/..');
 
 require_once __DIR__ . '/../configdb.php';
@@ -142,7 +143,7 @@ foreach ($daily_frags as $date => $by_nick) {
 
 $nick_to_uid = [];
 foreach (array_keys($all_nicks) as $lnick) {
-	$esc = $db->escape($lnick);
+	$esc = addslashes($lnick);
 	$uid = (int) $db->get_var("SELECT id FROM users WHERE deleted = 0 AND LOWER(nick) = '$esc' LIMIT 1");
 	if ($uid > 0) {
 		$nick_to_uid[$lnick] = $uid;
