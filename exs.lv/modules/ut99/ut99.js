@@ -298,23 +298,36 @@
 								try {
 									var defUser = FS.findObject('/System/DefUser.ini');
 									if (defUser && defUser.contents) {
-										// Patch bot classes/skins/faces to use SoldierSkins.utx (the only skin package bundled)
+										// Patch bot classes/skins/faces to use matching (skin, face) pairs from SoldierSkins.utx
 										// so DynamicLoadObject never throws an uncaught C++ exception in WASM.
 										var userText = new TextDecoder('latin1').decode(defUser.contents);
-										var validSkins = ['SoldierSkins.blkt', 'SoldierSkins.Gard', 'SoldierSkins.RawS', 'SoldierSkins.sldr', 'SoldierSkins.hkil'];
-										var validFaces = [
-											'SoldierSkins.Malcom', 'SoldierSkins.Othello', 'SoldierSkins.Riker',
-											'SoldierSkins.Drake', 'SoldierSkins.Radkin', 'SoldierSkins.Wraith', 'SoldierSkins.Von',
-											'SoldierSkins.Arkon', 'SoldierSkins.Bruce', 'SoldierSkins.Kregore', 'SoldierSkins.Manwell', 'SoldierSkins.Slain',
-											'SoldierSkins.Brock', 'SoldierSkins.Harlin', 'SoldierSkins.Johnson', 'SoldierSkins.Rankin',
-											'SoldierSkins.Vector', 'SoldierSkins.Matrix', 'SoldierSkins.Tensor'
+										var validPairs = [
+											['SoldierSkins.blkt', 'SoldierSkins.Malcom'],
+											['SoldierSkins.blkt', 'SoldierSkins.Othello'],
+											['SoldierSkins.blkt', 'SoldierSkins.Riker'],
+											['SoldierSkins.Gard', 'SoldierSkins.Drake'],
+											['SoldierSkins.Gard', 'SoldierSkins.Radkin'],
+											['SoldierSkins.Gard', 'SoldierSkins.Wraith'],
+											['SoldierSkins.Gard', 'SoldierSkins.Von'],
+											['SoldierSkins.RawS', 'SoldierSkins.Arkon'],
+											['SoldierSkins.RawS', 'SoldierSkins.Bruce'],
+											['SoldierSkins.RawS', 'SoldierSkins.Kregore'],
+											['SoldierSkins.RawS', 'SoldierSkins.Manwell'],
+											['SoldierSkins.RawS', 'SoldierSkins.Slain'],
+											['SoldierSkins.sldr', 'SoldierSkins.Brock'],
+											['SoldierSkins.sldr', 'SoldierSkins.Harlin'],
+											['SoldierSkins.sldr', 'SoldierSkins.Johnson'],
+											['SoldierSkins.sldr', 'SoldierSkins.Rankin'],
+											['SoldierSkins.hkil', 'SoldierSkins.Vector'],
+											['SoldierSkins.hkil', 'SoldierSkins.Matrix'],
+											['SoldierSkins.hkil', 'SoldierSkins.Tensor']
 										];
 										userText = userText.replace(/^BotClasses\[(\d+)\]=.*$/gm, 'BotClasses[$1]=BotPack.TMale2Bot');
 										userText = userText.replace(/^BotSkins\[(\d+)\]=.*$/gm, function(_, idx) {
-											return 'BotSkins[' + idx + ']=' + validSkins[parseInt(idx, 10) % validSkins.length];
+											return 'BotSkins[' + idx + ']=' + validPairs[parseInt(idx, 10) % validPairs.length][0];
 										});
 										userText = userText.replace(/^BotFaces\[(\d+)\]=.*$/gm, function(_, idx) {
-											return 'BotFaces[' + idx + ']=' + validFaces[parseInt(idx, 10) % validFaces.length];
+											return 'BotFaces[' + idx + ']=' + validPairs[parseInt(idx, 10) % validPairs.length][1];
 										});
 										var patchedUser = new TextEncoder().encode(userText);
 										FS.createDataFile('/System', 'User.ini', patchedUser, true, true, true);
@@ -562,9 +575,9 @@
 				if (map === 'CityIntro' || map === 'UT-Logo-Map') {
 					args = [`${map}.unr`];
 				} else if (map.startsWith('CTF-')) {
-					args = [`${map}.unr?game=Botpack.CTFGame?NumBots=${botCount}?Difficulty=${botSkill}?GoalTeamScore=${fragLimit}`];
+					args = [`${map}.unr?game=Botpack.CTFGame?InitialBots=${botCount}?Difficulty=${botSkill}?GoalTeamScore=${fragLimit}`];
 				} else {
-					args = [`${map}.unr?game=Botpack.DeathMatchPlus?NumBots=${botCount}?Difficulty=${botSkill}?FragLimit=${fragLimit}`];
+					args = [`${map}.unr?game=Botpack.DeathMatchPlus?InitialBots=${botCount}?Difficulty=${botSkill}?FragLimit=${fragLimit}`];
 				}
 				launchGame(args);
 			});
