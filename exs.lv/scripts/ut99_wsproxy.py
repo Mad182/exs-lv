@@ -147,8 +147,12 @@ async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWrit
                     frag_buf.clear()
                 frag_buf.extend(payload)
                 if fin:
-                    udp_transport.sendto(bytes(frag_buf))
+                    pkt = bytes(frag_buf)
                     frag_buf.clear()
+                    # Drop Emscripten SOCKFS 10-byte control packet (\xff\xff\xff\xffport<u16>)
+                    if len(pkt) == 10 and pkt[:8] == b"\xff\xff\xff\xffport":
+                        continue
+                    udp_transport.sendto(pkt)
 
     except (asyncio.IncompleteReadError, ConnectionResetError, BrokenPipeError, asyncio.TimeoutError):
         pass
@@ -183,3 +187,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
