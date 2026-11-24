@@ -105,7 +105,10 @@
 			canvas.focus();
 			if (isMatchRunning && document.pointerLockElement !== canvas) {
 				try {
-					canvas.requestPointerLock();
+					const lockRes = canvas.requestPointerLock();
+					if (lockRes && typeof lockRes.catch === 'function') {
+						lockRes.catch(() => {});
+					}
 				} catch (e) {}
 			}
 		});
@@ -295,7 +298,26 @@
 								try {
 									var defUser = FS.findObject('/System/DefUser.ini');
 									if (defUser && defUser.contents) {
-										FS.createDataFile('/System', 'User.ini', defUser.contents, true, true, true);
+										// Patch bot classes/skins/faces to use SoldierSkins.utx (the only skin package bundled)
+										// so DynamicLoadObject never throws an uncaught C++ exception in WASM.
+										var userText = new TextDecoder('latin1').decode(defUser.contents);
+										var validSkins = ['SoldierSkins.blkt', 'SoldierSkins.Gard', 'SoldierSkins.RawS', 'SoldierSkins.sldr', 'SoldierSkins.hkil'];
+										var validFaces = [
+											'SoldierSkins.Malcom', 'SoldierSkins.Othello', 'SoldierSkins.Riker',
+											'SoldierSkins.Drake', 'SoldierSkins.Radkin', 'SoldierSkins.Wraith', 'SoldierSkins.Von',
+											'SoldierSkins.Arkon', 'SoldierSkins.Bruce', 'SoldierSkins.Kregore', 'SoldierSkins.Manwell', 'SoldierSkins.Slain',
+											'SoldierSkins.Brock', 'SoldierSkins.Harlin', 'SoldierSkins.Johnson', 'SoldierSkins.Rankin',
+											'SoldierSkins.Vector', 'SoldierSkins.Matrix', 'SoldierSkins.Tensor'
+										];
+										userText = userText.replace(/^BotClasses\[(\d+)\]=.*$/gm, 'BotClasses[$1]=BotPack.TMale2Bot');
+										userText = userText.replace(/^BotSkins\[(\d+)\]=.*$/gm, function(_, idx) {
+											return 'BotSkins[' + idx + ']=' + validSkins[parseInt(idx, 10) % validSkins.length];
+										});
+										userText = userText.replace(/^BotFaces\[(\d+)\]=.*$/gm, function(_, idx) {
+											return 'BotFaces[' + idx + ']=' + validFaces[parseInt(idx, 10) % validFaces.length];
+										});
+										var patchedUser = new TextEncoder().encode(userText);
+										FS.createDataFile('/System', 'User.ini', patchedUser, true, true, true);
 									}
 								} catch (e) {
 									console.warn("Could not clone User.ini:", e);
@@ -306,9 +328,6 @@
 								if (startOverlay) startOverlay.style.display = 'none';
 								isMatchRunning = true;
 								canvas.focus();
-								try {
-									canvas.requestPointerLock();
-								} catch (e) {}
 
 								// Call main with arguments
 								if (typeof Module.callMain === 'function') {
@@ -389,7 +408,10 @@
 				isMatchRunning = true;
 				canvas.focus();
 				try {
-					canvas.requestPointerLock();
+					const lockRes = canvas.requestPointerLock();
+					if (lockRes && typeof lockRes.catch === 'function') {
+						lockRes.catch(() => {});
+					}
 				} catch (e) {}
 			}
 		}
