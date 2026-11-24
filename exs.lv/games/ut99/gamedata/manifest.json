@@ -702,5 +702,113 @@
   "Maps/EOL_Assault.unr": {
     "filesize": 611660,
     "filetime": 1788256057
+  },
+  "Textures/BossSkins.utx": {
+    "filesize": 1867811,
+    "filetime": 929226492
+  },
+  "Textures/UTtech3.utx": {
+    "filesize": 285894,
+    "filetime": 939833948
+  },
+  "Textures/SGirlSkins.utx": {
+    "filesize": 7226959,
+    "filetime": 940299358
+  },
+  "Textures/FCommandoSkins.utx": {
+    "filesize": 5093279,
+    "filetime": 940961512
+  },
+  "Textures/JWSky.utx": {
+    "filesize": 583777,
+    "filetime": 895399708
+  },
+  "Textures/UT.utx": {
+    "filesize": 3970257,
+    "filetime": 929972064
+  },
+  "Textures/commandoskins.utx": {
+    "filesize": 4318050,
+    "filetime": 928799056
+  },
+  "Textures/TrenchesFX.utx": {
+    "filesize": 1110811,
+    "filetime": 921952188
+  },
+  "Textures/GreatFire.utx": {
+    "filesize": 13215,
+    "filetime": 895399696
+  },
+  "Textures/SkyCity.utx": {
+    "filesize": 13270191,
+    "filetime": 895399896
+  },
+  "Textures/XbpFX.utx": {
+    "filesize": 2431423,
+    "filetime": 940901650
+  },
+  "Textures/PlayrShp.utx": {
+    "filesize": 3852760,
+    "filetime": 895399810
+  },
+  "Textures/Liquids.utx": {
+    "filesize": 14013,
+    "filetime": 895399716
+  },
+  "Textures/ShaneDay.utx": {
+    "filesize": 388457,
+    "filetime": 895399828
+  },
+  "Textures/GenEarth.utx": {
+    "filesize": 6186030,
+    "filetime": 895399640
+  },
+  "Textures/UTcrypt.utx": {
+    "filesize": 2104575,
+    "filetime": 938884554
+  },
+  "Textures/ShaneChurch.utx": {
+    "filesize": 5064523,
+    "filetime": 941082638
+  },
+  "Textures/Scripted.utx": {
+    "filesize": 245078,
+    "filetime": 932610210
+  },
+  "Textures/CTF.utx": {
+    "filesize": 3192693,
+    "filetime": 936425192
+  },
+  "Textures/HubEffects.utx": {
+    "filesize": 222123,
+    "filetime": 895399700
+  },
+  "Textures/FireEng.utx": {
+    "filesize": 97702,
+    "filetime": 895399636
+  },
+  "Textures/Crypt2.utx": {
+    "filesize": 7370018,
+    "filetime": 911843418
+  },
+  "Textures/DDayFX.utx": {
+    "filesize": 1494874,
+    "filetime": 941058664
+  },
+  "Textures/Coret_FX.utx": {
+    "filesize": 1024846,
+    "filetime": 937758510
+  },
+  "Textures/SkyBox.utx": {
+    "filesize": 930722,
+    "filetime": 941083916
+  },
+  "Textures/ISVFX.utx": {
+    "filesize": 24364,
+    "filetime": 895399704
+  },
+  "Sounds/noxxsnd.uax": {
+    "filesize": 806029,
+    "filetime": 909495570
   }
 }
