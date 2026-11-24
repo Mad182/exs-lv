@@ -298,6 +298,9 @@
 										var iniText = new TextDecoder('latin1').decode(defIni.contents);
 										iniText = iniText.replace(/^AllowDownloads=.*$/gm, 'AllowDownloads=False');
 										iniText = iniText.replace(/^DownloadManagers=.*(\r?\n)?/gm, '');
+										// Upgrade from 1999 28.8k modem default (2600 B/s) to full broadband netspeed (20000 B/s)
+										iniText = iniText.replace(/^ConfiguredInternetSpeed=.*$/gm, 'ConfiguredInternetSpeed=20000');
+										iniText = iniText.replace(/^ConfiguredLanSpeed=.*$/gm, 'ConfiguredLanSpeed=20000');
 										FS.createDataFile('/System', 'UnrealTournament.ini', new TextEncoder().encode(iniText), true, true, true);
 									}
 								} catch (e) {

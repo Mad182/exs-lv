@@ -12,6 +12,7 @@ import base64
 import hashlib
 import os
 import signal
+import socket
 import struct
 import sys
 
@@ -84,6 +85,12 @@ class UDPClientProtocol(asyncio.DatagramProtocol):
 
 
 async def handle_client(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+    sock = writer.get_extra_info("socket")
+    if sock is not None:
+        try:
+            sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        except OSError:
+            pass
     peer = writer.get_extra_info("peername")
     peer_label = f"{peer[0]}:{peer[1]}" if peer else "unknown"
     udp_transport = None
