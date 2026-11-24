@@ -234,16 +234,7 @@
 			<div class="ut99-card">
 				<h3>🏆 Šodienas Tops</h3>
 				<ul class="ut99-top-list">
-					<!-- START BLOCK : today-top-node -->
-					<li>
-						<span class="top-rank">{rank}.</span>
-						<span class="top-user">{user-nick}</span>
-						<strong class="top-score">{score} fr.</strong>
-					</li>
-					<!-- END BLOCK : today-top-node -->
-					<!-- START BLOCK : today-empty -->
-					<li class="empty-msg">Šodien vēl nav fiksētu rezultātu!</li>
-					<!-- END BLOCK : today-empty -->
+					{today-top-html}
 				</ul>
 			</div>
 
@@ -251,16 +242,7 @@
 			<div class="ut99-card" style="margin-top: 15px;">
 				<h3>👑 Visu Laiku Tops</h3>
 				<ul class="ut99-top-list">
-					<!-- START BLOCK : alltime-top-node -->
-					<li>
-						<span class="top-rank">{rank}.</span>
-						<span class="top-user">{user-nick}</span>
-						<strong class="top-score">{score} fr.</strong>
-					</li>
-					<!-- END BLOCK : alltime-top-node -->
-					<!-- START BLOCK : alltime-empty -->
-					<li class="empty-msg">Vēl nav uzstādītu rekordu!</li>
-					<!-- END BLOCK : alltime-empty -->
+					{alltime-top-html}
 				</ul>
 			</div>
 

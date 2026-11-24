@@ -72,43 +72,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	exit;
 }
 
-// 3. AJAX: Server Status Ping
+// 3. AJAX: Server Status Ping (static JSON generated every 60s by ut99-stats.timer)
 if (isset($_GET['action']) && $_GET['action'] === 'server_status') {
 	header('Content-Type: application/json');
-	
-	// Default offline/fallback response if dedicated server isn't active on host
-	$server_info = [
+	$status_file = CORE_PATH . '/cache/ut99_status.json';
+	if (is_file($status_file)) {
+		readfile($status_file);
+		exit;
+	}
+	echo json_encode([
 		'online' => false,
 		'name' => 'EXS.LV Official UT99 Server',
 		'map' => 'DM-Deck16][',
 		'players' => 0,
 		'max_players' => 16,
 		'ping' => 0
-	];
-
-	// Check if local UDP port 7777 / 7778 is listening
-	$fp = @fsockopen('udp://127.0.0.1', 7778, $errno, $errstr, 0.5);
-	if ($fp) {
-		fwrite($fp, "\\status\\");
-		stream_set_timeout($fp, 0, 500000);
-		$response = fread($fp, 2048);
-		fclose($fp);
-
-		if (!empty($response)) {
-			$server_info['online'] = true;
-			if (preg_match('/\\\\mapname\\\\([^\\\\]+)/', $response, $m)) {
-				$server_info['map'] = $m[1];
-			}
-			if (preg_match('/\\\\numplayers\\\\([0-9]+)/', $response, $m)) {
-				$server_info['players'] = (int)$m[1];
-			}
-			if (preg_match('/\\\\maxplayers\\\\([0-9]+)/', $response, $m)) {
-				$server_info['max_players'] = (int)$m[1];
-			}
-		}
-	}
-
-	echo json_encode($server_info);
+	]);
 	exit;
 }
 
@@ -149,43 +128,11 @@ $tpl->assign([
 	'user-nick-js' => json_encode($user_ut99_nick)
 ]);
 
-// 5. Today's Leaderboard
-$start_of_today = strtotime('today midnight');
-$today_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'ut99' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+// 5. Today's & All-Time Leaderboards (static HTML generated every 60s by ut99-stats.timer)
+$today_top_file = CORE_PATH . '/cache/ut99_top_today.html';
+$alltime_top_file = CORE_PATH . '/cache/ut99_top_alltime.html';
 
-if (!empty($today_scores)) {
-	$rank = 1;
-	foreach ($today_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
-		if ($u) {
-			$tpl->newBlock('today-top-node');
-			$tpl->assign([
-				'rank' => $rank++,
-				'user-nick' => usercolor($u->nick, $u->level),
-				'score' => number_format($sc->score, 0, '', ' ')
-			]);
-		}
-	}
-} else {
-	$tpl->newBlock('today-empty');
-}
-
-// 6. All-Time Leaderboard
-$alltime_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'ut99' GROUP BY user_id ORDER BY score DESC LIMIT 10");
-
-if (!empty($alltime_scores)) {
-	$rank = 1;
-	foreach ($alltime_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
-		if ($u) {
-			$tpl->newBlock('alltime-top-node');
-			$tpl->assign([
-				'rank' => $rank++,
-				'user-nick' => usercolor($u->nick, $u->level),
-				'score' => number_format($sc->score, 0, '', ' ')
-			]);
-		}
-	}
-} else {
-	$tpl->newBlock('alltime-empty');
-}
+$tpl->assign([
+	'today-top-html' => is_file($today_top_file) ? file_get_contents($today_top_file) : '<li class="empty-msg">Šodien vēl nav fiksētu rezultātu!</li>',
+	'alltime-top-html' => is_file($alltime_top_file) ? file_get_contents($alltime_top_file) : '<li class="empty-msg">Vēl nav uzstādītu rekordu!</li>'
+]);
