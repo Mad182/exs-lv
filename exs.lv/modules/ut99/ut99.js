@@ -161,7 +161,7 @@
 		if (soundBtn) {
 			soundBtn.addEventListener('click', () => {
 				isAudioEnabled = !isAudioEnabled;
-				soundBtn.textContent = isAudioEnabled ? '🔊 Ieslēgta' : '🔇 Izslēgta';
+				soundBtn.textContent = isAudioEnabled ? '🔊 Skaņa' : '🔇 Klusums';
 				if (window.ut99MasterGain) {
 					window.ut99MasterGain.gain.value = isAudioEnabled ? (parseInt(volInput ? volInput.value : 80, 10) / 100) : 0;
 				}
@@ -204,6 +204,29 @@
 			}
 		}
 
+		// Map preview helper
+		function getMapPreviewSrc(mapName) {
+			if (!mapName) return '/bildes/ut/nopic.jpg';
+			return '/bildes/ut/' + encodeURIComponent(mapName.toLowerCase()).replace(/%5B/g, '[').replace(/%5D/g, ']') + '.jpg';
+		}
+
+		// Sync Bot Match map preview when dropdown changes
+		const botMapSelect = document.getElementById('ut99-map-select');
+		const botMapPreview = document.getElementById('bot-map-preview');
+		const botMapLabel = document.getElementById('bot-map-label');
+		if (botMapSelect) {
+			const updateBotPreview = () => {
+				const m = botMapSelect.value;
+				if (botMapPreview) {
+					botMapPreview.src = getMapPreviewSrc(m);
+					botMapPreview.alt = m;
+				}
+				if (botMapLabel) botMapLabel.textContent = m;
+			};
+			botMapSelect.addEventListener('change', updateBotPreview);
+			updateBotPreview();
+		}
+
 		// Query Multiplayer Server Status
 		async function fetchServerStatus() {
 			try {
@@ -212,23 +235,26 @@
 				const statusIndicator = document.getElementById('server-status-indicator');
 				const statusText = document.getElementById('server-status-text');
 				const serverMap = document.getElementById('server-map-name');
+				const serverMapPreview = document.getElementById('server-map-preview');
 				const playerCount = document.getElementById('server-player-count');
 
 				if (data && data.online) {
+					const mapName = data.map || 'DM-Deck16][';
 					if (statusIndicator) {
 						statusIndicator.className = 'server-status-pill online';
 					}
-					if (statusText) statusText.textContent = 'EXS Serveris Tiešsaistē';
-					if (serverMap) serverMap.textContent = data.map || 'DM-Deck16][';
-					if (playerCount) playerCount.textContent = `${data.players || 0} / ${data.max_players || 16}`;
+					if (statusText) statusText.textContent = 'EXS SERVERIS TIEŠSAISTĒ';
+					if (serverMap) serverMap.textContent = mapName;
+					if (serverMapPreview) {
+						serverMapPreview.src = getMapPreviewSrc(mapName);
+						serverMapPreview.alt = mapName;
+					}
+					if (playerCount) playerCount.textContent = `${data.players || 0} / ${data.max_players || 10}`;
 				} else {
 					if (statusIndicator) {
 						statusIndicator.className = 'server-status-pill offline';
-						statusIndicator.style.color = '#f87171';
-						statusIndicator.style.background = 'rgba(239, 68, 68, 0.15)';
-						statusIndicator.style.borderColor = 'rgba(239, 68, 68, 0.3)';
 					}
-					if (statusText) statusText.textContent = 'Serveris Pašlaik Bezsaistē (Lietot botiem)';
+					if (statusText) statusText.textContent = 'SERVERIS BEZSAISTĒ (SPĒLĒ AR BOTIEM)';
 				}
 			} catch (e) {
 				// silent fallback
