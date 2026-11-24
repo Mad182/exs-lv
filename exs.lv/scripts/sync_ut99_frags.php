@@ -16,9 +16,10 @@ $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $_SERVER['REQUEST_URI'] = '/cli';
 chdir(__DIR__ . '/..');
 
-define('CORE_PATH', realpath(__DIR__ . '/..'));
-
-require_once CORE_PATH . '/configdb.php';
+require_once __DIR__ . '/../configdb.php';
+if (!defined('CORE_PATH')) {
+	define('CORE_PATH', realpath(__DIR__ . '/..'));
+}
 require_once CORE_PATH . '/includes/class.mdb.php';
 require_once CORE_PATH . '/includes/functions.core.php';
 
