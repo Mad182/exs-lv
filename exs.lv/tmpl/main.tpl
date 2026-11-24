@@ -499,6 +499,49 @@
 					</div>
 					<!-- END BLOCK : mb-box-->
 
+					<!-- START BLOCK : ut99-server-monitor-->
+					<div class="widget widget-ut99-monitor">
+						<div class="title" role="heading" aria-level="2"><a href="/ut99"><span>UT99 Serveris</span></a></div>
+						<div class="box ut99-mon-box">
+							<div class="ut99-mon-status {ut99-mon-status-class}">
+								<span class="ut99-mon-dot"></span>
+								<strong>{ut99-mon-status-text}</strong>
+								<span class="ut99-mon-count">{ut99-mon-players}/{ut99-mon-maxplayers}</span>
+							</div>
+							<div class="ut99-mon-meta">
+								<div><span>Adrese:</span> <code>exs.lv:7777</code></div>
+								<div><span>Karte:</span> <strong>{ut99-mon-map}</strong></div>
+							</div>
+							<!-- START BLOCK : ut99-mon-players-table-->
+							<table class="ut99-mon-table">
+								<thead>
+									<tr>
+										<th>Spēlētājs</th>
+										<th class="num">Fragi</th>
+										<th class="num">Ping</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- START BLOCK : ut99-mon-player-row-->
+									<tr>
+										<td class="ut99-mon-pname">{pname}</td>
+										<td class="num">{pfrags}</td>
+										<td class="num">{pping}</td>
+									</tr>
+									<!-- END BLOCK : ut99-mon-player-row-->
+								</tbody>
+							</table>
+							<!-- END BLOCK : ut99-mon-players-table-->
+							<!-- START BLOCK : ut99-mon-empty-->
+							<div class="ut99-mon-empty">Pašlaik serverī nav spēlētāju</div>
+							<!-- END BLOCK : ut99-mon-empty-->
+							<div class="ut99-mon-footer">
+								<a href="/ut99">Spēlēt pārlūkā &raquo;</a>
+							</div>
+						</div>
+					</div>
+					<!-- END BLOCK : ut99-server-monitor-->
+
 					<!-- START BLOCK : poll-box-->
 					<div class="widget widget-poll">
 						<div class="title" role="heading" aria-level="2"><a href="/aptaujas"><span>Aptauja: {poll-title}</span></a></div>

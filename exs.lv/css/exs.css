@@ -503,3 +503,153 @@ body {
 }
 
 
+
+/* UT99 Right Sidebar Server Monitor */
+.ut99-mon-box {
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+.ut99-mon-status {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 6px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.ut99-mon-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.ut99-mon-status.online .ut99-mon-dot {
+	background: #22c55e;
+	box-shadow: 0 0 6px rgba(34, 197, 94, 0.7);
+}
+
+.ut99-mon-status.online strong {
+	color: #16a34a;
+}
+
+.ut99-mon-status.offline .ut99-mon-dot {
+	background: #ef4444;
+}
+
+.ut99-mon-status.offline strong {
+	color: #dc2626;
+}
+
+.ut99-mon-count {
+	margin-left: auto;
+	font-family: monospace;
+	font-weight: 700;
+	font-size: 11px;
+	padding: 1px 6px;
+	border-radius: 10px;
+	background: #f1f5f9;
+	color: #334155;
+}
+
+.ut99-mon-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	margin-bottom: 8px;
+	color: #475569;
+}
+
+.ut99-mon-meta span {
+	color: #64748b;
+}
+
+.ut99-mon-meta code {
+	background: #f1f5f9;
+	padding: 1px 5px;
+	border-radius: 3px;
+	font-size: 11px;
+	color: #0f172a;
+	user-select: all;
+}
+
+.ut99-mon-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 11px;
+	margin-bottom: 6px;
+}
+
+.ut99-mon-table th,
+.ut99-mon-table td {
+	padding: 3px 4px;
+	border-bottom: 1px dashed #e2e8f0;
+	text-align: left;
+}
+
+.ut99-mon-table th {
+	color: #64748b;
+	font-weight: 600;
+	border-bottom: 1px solid #cbd5e1;
+}
+
+.ut99-mon-table .num {
+	text-align: right;
+	font-family: monospace;
+	white-space: nowrap;
+}
+
+.ut99-mon-pname {
+	max-width: 105px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 600;
+}
+
+.ut99-mon-empty {
+	color: #64748b;
+	font-style: italic;
+	font-size: 11px;
+	padding: 4px 0 6px;
+}
+
+.ut99-mon-footer {
+	padding-top: 4px;
+	font-size: 11px;
+}
+
+@media (prefers-color-scheme: dark) {
+	.ut99-mon-status {
+		border-bottom-color: #2d3748;
+	}
+	.ut99-mon-status.online strong {
+		color: #4ade80;
+	}
+	.ut99-mon-count {
+		background: #1e293b;
+		color: #e2e8f0;
+	}
+	.ut99-mon-meta {
+		color: #cbd5e1;
+	}
+	.ut99-mon-meta span {
+		color: #94a3b8;
+	}
+	.ut99-mon-meta code {
+		background: #1e293b;
+		color: #f8fafc;
+	}
+	.ut99-mon-table th {
+		color: #94a3b8;
+		border-bottom-color: #334155;
+	}
+	.ut99-mon-table td {
+		border-bottom-color: #2d3748;
+	}
+	.ut99-mon-empty {
+		color: #94a3b8;
+	}
+}

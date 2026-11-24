@@ -261,5 +261,96 @@ if ($category->module === 'movies') {
 	}
 }
 
+// UT99 server monitor (cached 15s in Memcached)
+if (($ut99_mon = $m->get('ut99_sidebar_monitor_v1')) === false) {
+	$ut99_mon = [
+		'online' => false,
+		'map' => 'DM-Oblivion',
+		'numplayers' => 0,
+		'maxplayers' => 16,
+		'players' => []
+	];
+	$fp = @fsockopen('udp://127.0.0.1', 7778, $errno, $errstr, 0.2);
+	if ($fp) {
+		fwrite($fp, "\\status\\");
+		stream_set_timeout($fp, 0, 150000);
+		$raw = '';
+		for ($pkt = 0; $pkt < 6; $pkt++) {
+			$chunk = fread($fp, 4096);
+			if ($chunk === false || $chunk === '') {
+				break;
+			}
+			$raw .= $chunk;
+			if (strpos($raw, '\\final\\') !== false) {
+				break;
+			}
+		}
+		fclose($fp);
+
+		if (!empty($raw)) {
+			$ut99_mon['online'] = true;
+			$parts = explode('\\', ltrim($raw, '\\'));
+			$kv = [];
+			for ($i = 0; $i + 1 < count($parts); $i += 2) {
+				$kv[strtolower($parts[$i])] = $parts[$i + 1];
+			}
+			if (!empty($kv['mapname'])) {
+				$ut99_mon['map'] = $kv['mapname'];
+			}
+			if (isset($kv['numplayers'])) {
+				$ut99_mon['numplayers'] = (int) $kv['numplayers'];
+			}
+			if (isset($kv['maxplayers'])) {
+				$ut99_mon['maxplayers'] = (int) $kv['maxplayers'];
+			}
+			$players_map = [];
+			foreach ($kv as $k => $v) {
+				if (preg_match('/^(player|frags|ping)_(\d+)$/', $k, $pm)) {
+					$idx = (int) $pm[2];
+					$players_map[$idx][$pm[1]] = $v;
+				}
+			}
+			$plist = [];
+			foreach ($players_map as $p) {
+				if (!isset($p['player']) || trim($p['player']) === '') {
+					continue;
+				}
+				$plist[] = [
+					'name' => $p['player'],
+					'frags' => isset($p['frags']) ? (int) $p['frags'] : 0,
+					'ping' => isset($p['ping']) ? trim($p['ping']) : '0'
+				];
+			}
+			usort($plist, function ($a, $b) {
+				return $b['frags'] <=> $a['frags'];
+			});
+			$ut99_mon['players'] = $plist;
+		}
+	}
+	$m->set('ut99_sidebar_monitor_v1', $ut99_mon, 15);
+}
+
+$tpl->newBlock('ut99-server-monitor');
+$tpl->assign([
+	'ut99-mon-status-class' => $ut99_mon['online'] ? 'online' : 'offline',
+	'ut99-mon-status-text' => $ut99_mon['online'] ? 'Tiešsaistē' : 'Bezsaistē',
+	'ut99-mon-players' => (int) $ut99_mon['numplayers'],
+	'ut99-mon-maxplayers' => (int) $ut99_mon['maxplayers'],
+	'ut99-mon-map' => h($ut99_mon['map'])
+]);
+if (!empty($ut99_mon['players'])) {
+	$tpl->newBlock('ut99-mon-players-table');
+	foreach ($ut99_mon['players'] as $p) {
+		$tpl->newBlock('ut99-mon-player-row');
+		$tpl->assign([
+			'pname' => h($p['name']),
+			'pfrags' => (int) $p['frags'],
+			'pping' => h($p['ping']) . ' ms'
+		]);
+	}
+} else {
+	$tpl->newBlock('ut99-mon-empty');
+}
+
 include(CORE_PATH . '/modules/core/poll.php');
 
