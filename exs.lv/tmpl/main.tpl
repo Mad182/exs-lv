@@ -26,7 +26,7 @@
 	{json-ld-content}
 	</script>
 	<!-- END BLOCK : json-ld-->
-	<link rel="stylesheet" href="{static-server}/css/main.f72083e6.min.css" media="all">
+	<link rel="stylesheet" href="{static-server}/css/main.ea29b15d.min.css" media="all">
 	<!-- START BLOCK : additional-css-->
 	<link rel="stylesheet" href="{static-server}/css/{filename}">
 	<!-- END BLOCK : additional-css-->
@@ -508,6 +508,11 @@
 								<strong>{ut99-mon-status-text}</strong>
 								<span class="ut99-mon-count">{ut99-mon-players}/{ut99-mon-maxplayers}</span>
 							</div>
+							<!-- START BLOCK : ut99-mon-mapimg-->
+							<div class="ut99-mon-mapimg">
+								<a href="/ut99"><img src="{ut99-mon-mapimg}" alt="{ut99-mon-map}" loading="lazy" /></a>
+							</div>
+							<!-- END BLOCK : ut99-mon-mapimg-->
 							<div class="ut99-mon-meta">
 								<div><span>Adrese:</span> <code>exs.lv:7777</code></div>
 								<div><span>Karte:</span> <strong>{ut99-mon-map}</strong></div>

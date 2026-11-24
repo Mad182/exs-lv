@@ -338,6 +338,14 @@ $tpl->assign([
 	'ut99-mon-maxplayers' => (int) $ut99_mon['maxplayers'],
 	'ut99-mon-map' => h($ut99_mon['map'])
 ]);
+$ut99_map_file = strtolower(basename($ut99_mon['map'])) . '.jpg';
+if (file_exists(CORE_PATH . '/bildes/ut/' . $ut99_map_file)) {
+	$tpl->newBlock('ut99-mon-mapimg');
+	$tpl->assign([
+		'ut99-mon-mapimg' => '/bildes/ut/' . rawurlencode($ut99_map_file),
+		'ut99-mon-map' => h($ut99_mon['map'])
+	]);
+}
 if (!empty($ut99_mon['players'])) {
 	$tpl->newBlock('ut99-mon-players-table');
 	foreach ($ut99_mon['players'] as $p) {

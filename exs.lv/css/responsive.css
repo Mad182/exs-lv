@@ -7073,6 +7073,19 @@ color:#ef6000
 	color: #334155;
 }
 
+.ut99-mon-mapimg {
+	margin-bottom: 8px;
+	text-align: center;
+}
+
+.ut99-mon-mapimg img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+	border: 1px solid #cbd5e1;
+}
+
 .ut99-mon-meta {
 	display: flex;
 	flex-direction: column;
@@ -7150,6 +7163,9 @@ color:#ef6000
 	.ut99-mon-count {
 		background: #1e293b;
 		color: #e2e8f0;
+	}
+	.ut99-mon-mapimg img {
+		border-color: #334155;
 	}
 	.ut99-mon-meta {
 		color: #cbd5e1;
