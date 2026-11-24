@@ -339,10 +339,11 @@ $tpl->assign([
 	'ut99-mon-map' => h($ut99_mon['map'])
 ]);
 $ut99_map_file = strtolower(basename($ut99_mon['map'])) . '.jpg';
-if (file_exists(CORE_PATH . '/bildes/ut/' . $ut99_map_file)) {
+$ut99_map_path = CORE_PATH . '/bildes/ut/' . $ut99_map_file;
+if (file_exists($ut99_map_path)) {
 	$tpl->newBlock('ut99-mon-mapimg');
 	$tpl->assign([
-		'ut99-mon-mapimg' => '/bildes/ut/' . rawurlencode($ut99_map_file),
+		'ut99-mon-mapimg' => '/bildes/ut/' . rawurlencode($ut99_map_file) . '?v=' . filemtime($ut99_map_path),
 		'ut99-mon-map' => h($ut99_mon['map'])
 	]);
 }
