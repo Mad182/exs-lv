@@ -1,5 +1,21 @@
 /* Unreal Tournament 99 WASM Stylesheet for EXS.LV */
 
+/* Hide portal left sidebar in UT99 module so the game stage has full width */
+#sidebar-left {
+	display: none !important;
+}
+
+#main-left.span7 {
+	width: 74.35897435897436% !important;
+	margin-left: 0 !important;
+}
+
+@media (max-width: 767px) {
+	#main-left.span7 {
+		width: 100% !important;
+	}
+}
+
 .ut99-wrapper {
 	max-width: 1100px;
 	margin: 0 auto;
