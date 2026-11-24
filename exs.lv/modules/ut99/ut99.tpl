@@ -277,4 +277,5 @@
 	window.UT99_USER_AVATAR = "{user-avatar}";
 	window.UT99_USER_HIGHSCORE = {user-high-score};
 	window.UT99_IS_LOGGED = {is-logged};
+	window.UT99_USER_NICK = {user-nick-js};
 </script>

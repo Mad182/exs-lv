@@ -310,6 +310,9 @@
 										// Patch bot classes/skins/faces to use matching (skin, face) pairs from SoldierSkins.utx
 										// so DynamicLoadObject never throws an uncaught C++ exception in WASM.
 										var userText = new TextDecoder('latin1').decode(defUser.contents);
+										if (window.UT99_USER_NICK && typeof window.UT99_USER_NICK === 'string') {
+											userText = userText.replace(/^Name=.*$/m, 'Name=' + window.UT99_USER_NICK);
+										}
 										var validPairs = [
 											['SoldierSkins.blkt', 'SoldierSkins.Malcom'],
 											['SoldierSkins.blkt', 'SoldierSkins.Othello'],

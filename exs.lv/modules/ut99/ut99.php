@@ -121,19 +121,31 @@ $opengraph_meta['description'] = $meta_description;
 $tpl->assignInclude('module-head', 'modules/' . $category->module . '/head.tpl');
 $tpl->prepare();
 
-// User Avatar & High Score
+// User Avatar, Nick & High Score
 $user_avatar = '/dati/bildes/u_small/none.png';
 $user_high_score = 0;
+$user_ut99_nick = '';
 
 if ($auth->ok) {
 	$user_avatar = get_avatar($auth, 's');
 	$user_high_score = (int) $db->get_var("SELECT MAX(score) FROM gamescore WHERE game = 'ut99' AND user_id = '$auth->id'");
+	$translit = [
+		'ā'=>'a','č'=>'c','ē'=>'e','ģ'=>'g','ī'=>'i','ķ'=>'k','ļ'=>'l','ņ'=>'n','š'=>'s','ū'=>'u','ž'=>'z',
+		'Ā'=>'A','Č'=>'C','Ē'=>'E','Ģ'=>'G','Ī'=>'I','Ķ'=>'K','Ļ'=>'L','Ņ'=>'N','Š'=>'S','Ū'=>'U','Ž'=>'Z'
+	];
+	$clean_nick = strtr((string) $auth->nick, $translit);
+	$clean_nick = preg_replace('/[^A-Za-z0-9_\-\.\[\]]+/', '_', $clean_nick);
+	$clean_nick = trim($clean_nick, '_');
+	if ($clean_nick !== '') {
+		$user_ut99_nick = substr($clean_nick, 0, 20);
+	}
 }
 
 $tpl->assign([
 	'user-avatar' => $user_avatar,
 	'user-high-score' => $user_high_score,
-	'is-logged' => $auth->ok ? 1 : 0
+	'is-logged' => $auth->ok ? 1 : 0,
+	'user-nick-js' => json_encode($user_ut99_nick)
 ]);
 
 // 5. Today's Leaderboard
