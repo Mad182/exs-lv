@@ -295,7 +295,10 @@
 								try {
 									var defIni = FS.findObject('/System/Default.ini');
 									if (defIni && defIni.contents) {
-										FS.createDataFile('/System', 'UnrealTournament.ini', defIni.contents, true, true, true);
+										var iniText = new TextDecoder('latin1').decode(defIni.contents);
+										iniText = iniText.replace(/^AllowDownloads=.*$/gm, 'AllowDownloads=False');
+										iniText = iniText.replace(/^DownloadManagers=.*(\r?\n)?/gm, '');
+										FS.createDataFile('/System', 'UnrealTournament.ini', new TextEncoder().encode(iniText), true, true, true);
 									}
 								} catch (e) {
 									console.warn("Could not clone UnrealTournament.ini:", e);
@@ -419,7 +422,7 @@
 			if (!window.UT99_WASM_LOADED) {
 				window.UT99_WASM_LOADED = true;
 				const script = document.createElement('script');
-				script.src = '/games/ut99/index.js';
+				script.src = '/games/ut99/index.js?v=2';
 				script.async = true;
 				document.body.appendChild(script);
 			} else {
