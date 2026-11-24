@@ -113,6 +113,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'server_status') {
 }
 
 // 4. Regular Page Rendering
+$robotstag[] = 'noindex';
 $tpl_options = 'no-left';
 $page_title = 'Unreal Tournament 99 pārlūkā — Bezmaksas 3D šūteris';
 $meta_description = 'Spēlē leģendāro Unreal Tournament 99 (UT99) tieši pārlūkā bez lejupielādes un instalēšanas! Klasiskais 3D arēnas šūteris datorā ar botu cīņām un fragu topu.';
