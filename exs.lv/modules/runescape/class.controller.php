@@ -15,6 +15,7 @@
  *      A-Z, a-z, 0-9, "_", "-", "/".
  */
 
+#[AllowDynamicProperties]
 class Controller {
     
     // atsauce uz $tpl globālo mainīgo

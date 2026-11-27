@@ -20,8 +20,7 @@ if (isset($_GET['edit'])) {
 		$suc = false;
 		if (isset($_POST['edit-word'])) {
 			$fact->word = sanitize(strtolower(trim($_POST['edit-word'])));
-			$fact->hint = sanitize(trim($_POST['edit-hint']));
-			$editfact = sanitize(trim($_POST['edit-fact']));
+			$fact->hint = sanitize(trim($_POST['edit-hint'] ?? ''));
 			if ($db->query("UPDATE wg_words SET word = ('$fact->word'), hint = ('$fact->hint') WHERE id = $edit")) {
 				$suc = true;
 			}

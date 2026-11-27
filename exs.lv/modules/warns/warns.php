@@ -6,7 +6,7 @@
 
 $mod_levels = [1, 2];
 
-if ($inprofile = get_user(intval($_GET['var1']))) {
+if ($inprofile = get_user(intval($_GET['var1'] ?? 0))) {
 
 	$page_title = $inprofile->nick . ' brīdinājumi';
 
@@ -28,6 +28,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				}
 				$from = get_user($warn->created_by);
 				$edit = '';
+				$remove = '';
 				if (im_mod()) {
 					$edit = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/edit/' . $warn->id . '">labot</a>]';
 					$remove = '[<a class="red" href="/' . $category->textid . '/' . $inprofile->id . '/remove/' . $warn->id . '?token=' . make_token('remove') . '">noņemt</a>]';
@@ -109,8 +110,8 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 		if (im_mod()) {
 
 			//noņemt warnu
-			if (isset($_GET['var2']) && $_GET['var2'] == 'remove' && check_token('remove', $_GET['token'])) {
-				$removable = (int) $_GET['var3'];
+			if (isset($_GET['var2']) && $_GET['var2'] == 'remove' && check_token('remove', $_GET['token'] ?? '')) {
+				$removable = (int) ($_GET['var3'] ?? 0);
 				$remove = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$removable' AND `site_id` = '$lang'");
 
 				if ($remove) {
@@ -120,7 +121,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 						'xsrf' => make_token('removewarn')
 					]);
 
-					if (isset($_POST['remove_warn']) && !empty($_POST['remove_reason']) && check_token('removewarn', $_POST['xsrf_token'])) {
+					if (isset($_POST['remove_warn']) && !empty($_POST['remove_reason']) && check_token('removewarn', $_POST['xsrf_token'] ?? '')) {
 						$reason = post2db($_POST['remove_reason']);
 						$db->query("UPDATE `warns` SET `removed_by` = '$auth->id', `remove_reason` = '$reason', `modified` = NOW(), `removed` = NOW(), `active` = '0' WHERE `id` = '$remove->id'");
 						notify($inprofile->id, 11);
@@ -135,45 +136,50 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 				$tpl->assign('xsrf', make_token('editwarn'));
 
 				if (isset($_GET['var2']) && $_GET['var2'] == 'commentid') {
-					$id = sanitize($_GET['var3']);
+					$id = (int) ($_GET['var3'] ?? 0);
 
-					$commentinfo = $db->get_row("SELECT parent,id,lang,groupid,type,text FROM miniblog WHERE id = $id");
-					$parent = $commentinfo->parent;
-					$body = $db->get_row("SELECT text,author FROM miniblog WHERE id = $parent");
-					$check = $body->author;
-					$title = mb_get_title(stripslashes($body->text));
-					$strid = mb_get_strid($title, $commentinfo->parent);
+					$commentinfo = $id > 0 ? $db->get_row("SELECT parent,id,lang,groupid,type,text FROM miniblog WHERE id = '$id'") : null;
+					if ($commentinfo) {
+						$parent = (int) $commentinfo->parent;
+						$body = $parent > 0 ? $db->get_row("SELECT text,author FROM miniblog WHERE id = '$parent'") : null;
+						if ($body) {
+							$check = $body->author;
+							$title = mb_get_title(stripslashes($body->text));
+							$strid = mb_get_strid($title, $parent);
 
-					if ($commentinfo->groupid > 0) {
-						$url = '/group/' . $commentinfo->groupid . '/forum/' . base_convert($commentinfo->parent, 10, 36);
-					} else {
-						$url = '/say/' . $check . '/' . $parent . '-' . $strid;
+							if ($commentinfo->groupid > 0) {
+								$url = '/group/' . $commentinfo->groupid . '/forum/' . base_convert($parent, 10, 36);
+							} else {
+								$url = '/say/' . $check . '/' . $parent . '-' . $strid;
+							}
+							if ($commentinfo->type == 'junk') {
+								$url = '/junk/' . $parent;
+							}
+
+							$plain_text = strip_tags($commentinfo->text);
+							$reason = substr($plain_text, 0, 1000);
+							if (strlen($plain_text) > 1000) {
+								$reason .= '...' . PHP_EOL . PHP_EOL . 'Tālāk lasi avotā.';
+							}
+							$reason = '<blockquote>' . $reason . '</blockquote>';
+							$reason .= PHP_EOL . 'Avots: ' . get_protocol($commentinfo->lang) . get_domain($commentinfo->lang) . $url . '#m' . $id;
+
+							$tpl->assign('reason', $reason);
+						}
 					}
-					if ($commentinfo->type == 'junk') {
-						$url = '/junk/' . $commentinfo->parent;
-					}
-
-					$reason = substr(strip_tags($commentinfo->text), 0, 1000);
-					if (strlen(strip_tags($commentinfo->text)) > 1000) {
-						$reason .= '...' . PHP_EOL . PHP_EOL . 'Tālāk lasi avotā.';
-					}
-					$reason = '<blockquote>' . $reason . '</blockquote>';
-					$reason .= PHP_EOL . 'Avots: ' . get_protocol($commentinfo->lang) . get_domain($commentinfo->lang) . $url . '#m' . $id;
-
-					$tpl->assign('reason', $reason);
 				}
 
 				$edit = false;
 				if (isset($_GET['var2']) && $_GET['var2'] == 'edit') {
-					$editable = (int) $_GET['var3'];
+					$editable = (int) ($_GET['var3'] ?? 0);
 					$edit = $db->get_row("SELECT * FROM `warns` WHERE `user_id` = '$inprofile->id' AND `id` = '$editable' AND `site_id` = '$lang'");
 				}
 
 				//labot esoso iemeslu
 				if (!empty($edit)) {
 					$tpl->assign('reason', $edit->reason);
-					if (isset($_POST['submit_warn']) && check_token('editwarn', $_POST['xsrf_token'])) {
-						$reason = htmlpost2db($_POST['reason']);
+					if (isset($_POST['submit_warn']) && check_token('editwarn', $_POST['xsrf_token'] ?? '')) {
+						$reason = htmlpost2db($_POST['reason'] ?? '');
 						$db->query("UPDATE `warns` SET `edited_by` = '$auth->id', `reason` = '$reason', `modified` = NOW() WHERE `id` = '$edit->id'");
 						$auth->log('Laboja brīdinājumu', 'users', $inprofile->id);
 						redirect('/' . $category->textid . '/' . $inprofile->id);
@@ -181,7 +187,7 @@ if ($inprofile = get_user(intval($_GET['var1']))) {
 
 					//jauns warns
 				} else {
-					if (isset($_POST['submit_warn']) && !empty($_POST['reason']) && check_token('editwarn', $_POST['xsrf_token'])) {
+					if (isset($_POST['submit_warn']) && !empty($_POST['reason']) && check_token('editwarn', $_POST['xsrf_token'] ?? '')) {
 						$reason = post2db($_POST['reason']);
 						$db->query("INSERT INTO `warns` (user_id,created_by,created,modified,reason,active,`site_id`) VALUES ('$inprofile->id','$auth->id',NOW(),NOW(),'$reason',1,'$lang')");
 						notify($inprofile->id, 10);

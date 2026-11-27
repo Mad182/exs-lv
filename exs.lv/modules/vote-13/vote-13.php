@@ -58,14 +58,14 @@ if ($check)
 if (!$voted && isset($_POST['submit']) && isset($_GET['var1']) && $_GET['var1'] == 'voted') {
 
 	$name = (isset($_POST['user-name'])) ? sanitize(substr($_POST['user-name'], 0, 49)) : 'not entered';
-	$age = (int) $_POST['user-age'];
+	$age = (int) ($_POST['user-age'] ?? 0);
 	//$days		= (isset($_POST['days']) && ($_POST['days'] == 0 || $_POST['days'] == 1)) ? (int)$_POST['days'] : 0;
 	$cost = (isset($_POST['cost']) && ((int) $_POST['cost'] >= 0 && (int) $_POST['cost'] < 6)) ? (int) $_POST['cost'] : 0;
 	$payment = (isset($_POST['payment']) && ((int) $_POST['payment'] >= 0 && (int) $_POST['payment'] < 3)) ? (int) $_POST['payment'] : 0;
 	$distance = (isset($_POST['distance']) && ((int) $_POST['distance'] >= 0 && (int) $_POST['distance'] < 5)) ? (int) $_POST['distance'] : 4;
 
 	// checkbokšu pārbaude pieņemamajiem datumiem
-	if (!empty($_POST['date'])) {
+	if (!empty($_POST['date']) && is_array($_POST['date'])) {
 		foreach ($_POST['date'] as $check) {
 			if ((int) $check < 5 && (int) $check >= 0) {
 				$db->query("INSERT INTO `votes13_dates` (user,date,choice) VALUES (
@@ -99,7 +99,7 @@ if ($voted/* && isset($_GET['var1']) && $_GET['var1'] == 'results' */) {
 	// pieņemamākie datumi
 	$dates = $db->get_results("SELECT `choice`, count(*) AS 'count' FROM `votes13_dates` GROUP BY `choice` ORDER BY `choice` ASC");
 	$data_count = $db->get_var("SELECT count(*) AS 'count' FROM `votes13` ");
-	if ($dates) {
+	if ($dates && $data_count > 0) {
 		$tpl->newBlock('vote-results');
 		$tpl->assign('data-count', $data_count . ' ' . lv_dsk($data_count, 'reizi', 'reizes'));
 		$tpl->newBlock('vote-data');

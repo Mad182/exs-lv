@@ -3,10 +3,20 @@
 /**
  * Rekursīvi parāda lapas karti
  */
-function create_sitemap($parent = 0, $sitemap_modules = 'list') {
+function create_sitemap($parent = 0, $sitemap_modules = 'list', $tree = null) {
 	global $db, $lang, $auth;
 
-	$cats = $db->get_results("SELECT `id`,`textid`,`title`,`content`,`isforum` FROM `cat` WHERE `parent` = '$parent' AND (`lang` = '$lang' OR `lang` = 0) AND `mods_only` = 0 AND `sitemap` = 1 AND `module` IN(" . $sitemap_modules . ") ORDER BY `ordered` ASC");
+	if ($tree === null) {
+		$all_cats = $db->get_results("SELECT `id`,`parent`,`textid`,`title`,`content`,`isforum` FROM `cat` WHERE (`lang` = '$lang' OR `lang` = 0) AND `mods_only` = 0 AND `sitemap` = 1 AND `module` IN(" . $sitemap_modules . ") ORDER BY `ordered` ASC");
+		$tree = [];
+		if (!empty($all_cats)) {
+			foreach ($all_cats as $c) {
+				$tree[(int) $c->parent][] = $c;
+			}
+		}
+	}
+
+	$cats = $tree[(int) $parent] ?? [];
 
 	$out = '';
 	if ($cats) {
@@ -26,7 +36,7 @@ function create_sitemap($parent = 0, $sitemap_modules = 'list') {
 
 			$out .= '<a href="/' . $cat->textid . '" title="' . h($description) . '">' . $cat->title . '</a>';
 
-			$out .= create_sitemap($cat->id, $sitemap_modules);
+			$out .= create_sitemap($cat->id, $sitemap_modules, $tree);
 			$out .= '</li>';
 		}
 

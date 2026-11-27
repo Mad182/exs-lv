@@ -45,55 +45,70 @@ $articles = $db->get_results("
 		LIMIT
 			10");
 
-foreach ($articles as $article) {
-
-	if ($article->article_avatar) {
-		$article->avatar = '/' . $article->article_avatar;
-	} else {
-		$article->avatar = get_avatar($article, 'm');
+if (!empty($articles)) {
+	$art_ids_with_posts = [];
+	foreach ($articles as $a) {
+		if ($a->posts > 0) {
+			$art_ids_with_posts[] = (int) $a->id;
+		}
 	}
-
-	$url = '/read/' . $article->strid;
-	$time = time_ago_m(strtotime($article->bump));
-
-	$article->text = wordwrap(hide_spoilers(strip_tags($article->text)), 32, "\n", 1);
-	$article->text = textlimit($article->text, 140, '...');
-
-	$where = ' &raquo; <span class="where">' . $article->ctitle . '</span> &raquo; <span class="where">' . $article->title . '</span>';
-
-	$lastpost = [];
-	if ($article->posts > 0) {
-		$lastpost = $db->get_row(
-				"SELECT
-				comments.*,
+	$art_lastposts = [];
+	if (!empty($art_ids_with_posts)) {
+		$id_in = implode(',', $art_ids_with_posts);
+		$lp_rows = $db->get_results("
+			SELECT
+				c.*,
 				`users`.`nick` AS `nick`,
 				`users`.`avatar` AS `avatar`,
 				`users`.`av_alt` AS `av_alt`,
 				`users`.`level` AS `level`
-			FROM
-				`comments`,
-				`users`
-			WHERE
-				comments.pid = $article->id AND
-				comments.removed = 0 AND
-				users.id = comments.author
-			ORDER BY comments.id DESC
-			LIMIT 1"
-		);
+			FROM `comments` c
+			JOIN (
+				SELECT pid, MAX(id) AS max_id
+				FROM `comments`
+				WHERE pid IN ($id_in) AND removed = 0
+				GROUP BY pid
+			) latest ON latest.max_id = c.id
+			JOIN `users` ON `users`.`id` = c.author
+		");
+		if (!empty($lp_rows)) {
+			foreach ($lp_rows as $lp) {
+				$art_lastposts[(int) $lp->pid] = $lp;
+			}
+		}
 	}
 
-	$events[strtotime($article->bump) . '-' . $url] = [
-		'url' => $url,
-		'author' => usercolor($article->nick, $article->level),
-		'title' => $article->title,
-		'avatar' => $article->avatar,
-		'time' => $time,
-		'where' => $where,
-		'posts' => $article->posts,
-		'lastpost' => $lastpost
-	];
+	foreach ($articles as $article) {
+
+		if ($article->article_avatar) {
+			$article->avatar = '/' . $article->article_avatar;
+		} else {
+			$article->avatar = get_avatar($article, 'm');
+		}
+
+		$url = '/read/' . $article->strid;
+		$time = time_ago_m(strtotime($article->bump));
+
+		$article->text = wordwrap(hide_spoilers(strip_tags($article->text)), 32, "\n", 1);
+		$article->text = textlimit($article->text, 140, '...');
+
+		$where = ' &raquo; <span class="where">' . $article->ctitle . '</span> &raquo; <span class="where">' . $article->title . '</span>';
+
+		$lastpost = $art_lastposts[(int) $article->id] ?? [];
+
+		$events[strtotime($article->bump) . '-' . $url] = [
+			'url' => $url,
+			'author' => usercolor($article->nick, $article->level),
+			'title' => $article->title,
+			'avatar' => $article->avatar,
+			'time' => $time,
+			'where' => $where,
+			'posts' => $article->posts,
+			'lastpost' => $lastpost
+		];
+	}
+	unset($article);
 }
-unset($article);
 
 
 ########### IMAGES
@@ -123,49 +138,64 @@ $images = $db->get_results("
 		LIMIT
 			10");
 
-foreach ($images as $image) {
-
-	$image->avatar = get_avatar($image, 'm');
-
-	$url = '/gallery/' . $image->author . '/' . $image->id;
-	$time = time_ago_m(strtotime($image->bump));
-
-	$image->text = wordwrap(hide_spoilers(strip_tags($image->text)), 32, "\n", 1);
-	$image->text = textlimit($image->text, 140, '...') . '<br><img class="attels_centrets" style="width:200px;" src="' . $image->url . '" alt="" />';
-
-	$where = ' &raquo; <span class="where">galerija</span>';
-
-	$lastpost = [];
-	if ($image->posts > 0) {
-		$lastpost = $db->get_row(
-				"SELECT
-				galcom.*,
+if (!empty($images)) {
+	$img_ids_with_posts = [];
+	foreach ($images as $im) {
+		if ($im->posts > 0) {
+			$img_ids_with_posts[] = (int) $im->id;
+		}
+	}
+	$img_lastposts = [];
+	if (!empty($img_ids_with_posts)) {
+		$id_in = implode(',', $img_ids_with_posts);
+		$lp_rows = $db->get_results("
+			SELECT
+				g.*,
 				`users`.`nick` AS `nick`,
 				`users`.`avatar` AS `avatar`,
 				`users`.`av_alt` AS `av_alt`,
 				`users`.`level` AS `level`
-			FROM
-				`galcom`,
-				`users`
-			WHERE
-				galcom.bid = $image->id AND
-				galcom.removed = 0 AND
-				users.id = galcom.author
-			ORDER BY galcom.id DESC
-			LIMIT 1"
-		);
+			FROM `galcom` g
+			JOIN (
+				SELECT bid, MAX(id) AS max_id
+				FROM `galcom`
+				WHERE bid IN ($id_in) AND removed = 0
+				GROUP BY bid
+			) latest ON latest.max_id = g.id
+			JOIN `users` ON `users`.`id` = g.author
+		");
+		if (!empty($lp_rows)) {
+			foreach ($lp_rows as $lp) {
+				$img_lastposts[(int) $lp->bid] = $lp;
+			}
+		}
 	}
 
-	$events[strtotime($image->bump) . '-' . $url] = [
-		'url' => $url,
-		'author' => usercolor($image->nick, $image->level),
-		'title' => $image->text,
-		'avatar' => $image->avatar,
-		'time' => $time,
-		'where' => $where,
-		'posts' => $image->posts,
-		'lastpost' => $lastpost
-	];
+	foreach ($images as $image) {
+
+		$image->avatar = get_avatar($image, 'm');
+
+		$url = '/gallery/' . $image->author . '/' . $image->id;
+		$time = time_ago_m(strtotime($image->bump));
+
+		$image->text = wordwrap(hide_spoilers(strip_tags($image->text)), 32, "\n", 1);
+		$image->text = textlimit($image->text, 140, '...') . '<br><img class="attels_centrets" style="width:200px;" src="' . $image->url . '" alt="" />';
+
+		$where = ' &raquo; <span class="where">galerija</span>';
+
+		$lastpost = $img_lastposts[(int) $image->id] ?? [];
+
+		$events[strtotime($image->bump) . '-' . $url] = [
+			'url' => $url,
+			'author' => usercolor($image->nick, $image->level),
+			'title' => $image->text,
+			'avatar' => $image->avatar,
+			'time' => $time,
+			'where' => $where,
+			'posts' => $image->posts,
+			'lastpost' => $lastpost
+		];
+	}
 }
 
 ########### MINIBLOGS
@@ -229,14 +259,61 @@ ORDER BY
 DESC LIMIT 0, 20");
 
 if ($mbs) {
+	$mb_group_ids = [];
+	$mb_ids_with_posts = [];
+	foreach ($mbs as $mb_item) {
+		if ($mb_item->groupid != 0) {
+			$mb_group_ids[] = (int) $mb_item->groupid;
+		}
+		if ($mb_item->posts > 0) {
+			$mb_ids_with_posts[] = (int) $mb_item->id;
+		}
+	}
+
+	$groups_map = [];
+	if (!empty($mb_group_ids)) {
+		$gid_in = implode(',', array_unique($mb_group_ids));
+		$g_rows = $db->get_results("SELECT `id`, `title`, `avatar` FROM `clans` WHERE `id` IN ($gid_in)");
+		if (!empty($g_rows)) {
+			foreach ($g_rows as $gr) {
+				$groups_map[(int) $gr->id] = $gr;
+			}
+		}
+	}
+
+	$mb_lastposts = [];
+	if (!empty($mb_ids_with_posts)) {
+		$id_in = implode(',', $mb_ids_with_posts);
+		$lp_rows = $db->get_results("
+			SELECT
+				m.*,
+				`users`.`nick` AS `nick`,
+				`users`.`avatar` AS `avatar`,
+				`users`.`av_alt` AS `av_alt`,
+				`users`.`level` AS `level`
+			FROM `miniblog` m
+			JOIN (
+				SELECT parent, MAX(id) AS max_id
+				FROM `miniblog`
+				WHERE parent IN ($id_in) AND removed = 0
+				GROUP BY parent
+			) latest ON latest.max_id = m.id
+			JOIN `users` ON `users`.`id` = m.author
+		");
+		if (!empty($lp_rows)) {
+			foreach ($lp_rows as $lp) {
+				$mb_lastposts[(int) $lp->parent] = $lp;
+			}
+		}
+	}
 
 	foreach ($mbs as $mb) {
 
 		$mb->text = mb_get_title($mb->text);
+		$group = $groups_map[(int) $mb->groupid] ?? null;
 
 		if ($mb->groupid != 0) {
-			$group = $db->get_row("SELECT * FROM clans WHERE id = '$mb->groupid'");
-			if ($group->avatar) {
+			if ($group && $group->avatar) {
 				$mb->avatar = $group->avatar;
 				$mb->av_alt = 1;
 			}
@@ -251,34 +328,14 @@ if ($mbs) {
 		$mb->text = wordwrap(hide_spoilers($mb->text), 32, "\n", 1);
 		if ($mb->groupid != 0) {
 			$mb->text = textlimit($mb->text, 140, '...');
-			$where = ' &raquo; <span class="where">' . $group->title . '</span>';
+			$where = ' &raquo; <span class="where">' . ($group ? $group->title : '') . '</span>';
 		} else {
 			$mb->text = textlimit($mb->text, 140, '...');
 			$where = ' &raquo; <span class="where">miniblogs</span>';
 		}
 		$time = time_ago_m($mb->bump);
 
-
-		$lastpost = [];
-		if ($mb->posts > 0) {
-			$lastpost = $db->get_row(
-					"SELECT
-					miniblog.*,
-					`users`.`nick` AS `nick`,
-					`users`.`avatar` AS `avatar`,
-					`users`.`av_alt` AS `av_alt`,
-					`users`.`level` AS `level`
-				FROM
-					`miniblog`,
-					`users`
-				WHERE
-					miniblog.parent = $mb->id AND
-					miniblog.removed = 0 AND
-					users.id = miniblog.author
-				ORDER BY miniblog.id DESC
-				LIMIT 1"
-			);
-		}
+		$lastpost = $mb_lastposts[(int) $mb->id] ?? [];
 
 		$events[$mb->bump . '-' . $url] = [
 			'url' => $url,

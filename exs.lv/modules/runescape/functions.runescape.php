@@ -289,10 +289,6 @@ function create_news($type = 'rs3') {
         $single->title = textlimit($single->title, $lim, '...');
         $single->description = textlimit($single->description, $lim, '...');
 
-        // rakstu, kuriem nav logo, laukumiem ir lielākas atstarpes
-        $style = (empty($image) ?
-            ' style="padding:0 10px 5px;width:90%"' : '');
-
         $out .= '<li><a href="/say/' . $rsbot_id . '/' . $single->mb_id . '-' . mb_get_strid($single->text, $single->mb_id) . '">' .
             '<div>' . $image . '</div>' .
             '<div>' .
@@ -467,12 +463,14 @@ function get_news_logo_list($delete_old = false) {
         echo 'Nav neviena saglabāta attēla.';
         exit;
     }
+    $files = [];
     while (false !== ($filename = readdir($dh))) {
         if (in_array($filename, array('.', '..', 'empty'))) {
             continue;
         }
         $files[] = $filename;
     }
+    closedir($dh);
 
     $article_titles = [];
     $article_ids = [];

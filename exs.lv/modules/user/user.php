@@ -59,7 +59,7 @@ if ($inprofile) {
 			include CORE_PATH . '/includes/class.friend.php';
 			$friend = new Friend();
 
-			if (isset($_GET['addfriend']) && $auth->level != 5 && check_token('addfriend', $_GET['token'])) {
+			if (isset($_GET['addfriend']) && $auth->level != 5 && check_token('addfriend', $_GET['token'] ?? '')) {
 				$friend->add_friend($auth->id, $inprofile->id);
 			}
 		}
@@ -207,28 +207,36 @@ if ($inprofile) {
 			$comments = $db->get_results("SELECT COUNT(*) as `count`, DATE(`date`) as `date` FROM `comments` WHERE `author` = '" . $inprofile->id . "' AND `comments`.`removed` = '0' AND `date` > date('$date') GROUP BY DATE(`comments`.`date`) ORDER BY `date` DESC");
 
 			$values = [];
-			foreach ($mbs as $mb) {
-				$values[$mb->date] = $mb->count;
-			}
-			foreach ($comments as $comments) {
-				if (!empty($values[$comments->date])) {
-					$values[$comments->date] += $comments->count;
-				} else {
-					$values[$comments->date] = $comments->count;
+			if (!empty($mbs)) {
+				foreach ($mbs as $mb) {
+					$values[$mb->date] = $mb->count;
 				}
 			}
-			foreach ($pages as $page) {
-				if (!empty($values[$page->date])) {
-					$values[$page->date] += $page->count;
-				} else {
-					$values[$page->date] = $page->count;
+			if (!empty($comments)) {
+				foreach ($comments as $comment_day) {
+					if (!empty($values[$comment_day->date])) {
+						$values[$comment_day->date] += $comment_day->count;
+					} else {
+						$values[$comment_day->date] = $comment_day->count;
+					}
 				}
 			}
-			foreach ($images as $image) {
-				if (!empty($values[$image->date])) {
-					$values[$image->date] += $image->count;
-				} else {
-					$values[$image->date] = $image->count;
+			if (!empty($pages)) {
+				foreach ($pages as $page) {
+					if (!empty($values[$page->date])) {
+						$values[$page->date] += $page->count;
+					} else {
+						$values[$page->date] = $page->count;
+					}
+				}
+			}
+			if (!empty($images)) {
+				foreach ($images as $image) {
+					if (!empty($values[$image->date])) {
+						$values[$image->date] += $image->count;
+					} else {
+						$values[$image->date] = $image->count;
+					}
 				}
 			}
 
@@ -322,7 +330,7 @@ if ($inprofile) {
 		$end = 10;
 		$out = '';
 		if (isset($_GET['actions'])) {
-			$skip = (int) $_GET['actions'] * $end;
+			$skip = max(0, (int) $_GET['actions']) * $end;
 		} else {
 			$skip = 0;
 		}
@@ -470,7 +478,8 @@ if ($inprofile) {
 				}
 			}
 
-			$comments = $db->get_results("
+			if ($lang == 1) {
+				$comments = $db->get_results("
 			SELECT
 				`galcom`.`bid` AS `bid`,
 				`galcom`.`id` AS `id`,
@@ -486,16 +495,17 @@ if ($inprofile) {
 				`galcom`.`date`
 			DESC
 			LIMIT 30");
-			if ($comments && $lang == 1) {
-				$tpl->newBlock('user-profile-lastgcom');
-				foreach ($comments as $comment) {
-					$tpl->newBlock('user-profile-lastgcom-node');
-					$tpl->assign([
-						'comments-image' => $comment->bid,
-						'comments-uid' => $comment->uid,
-						'comments-id' => $comment->id,
-						'comments-text' => textlimit($comment->text, 42, '..')
-					]);
+				if ($comments) {
+					$tpl->newBlock('user-profile-lastgcom');
+					foreach ($comments as $comment) {
+						$tpl->newBlock('user-profile-lastgcom-node');
+						$tpl->assign([
+							'comments-image' => $comment->bid,
+							'comments-uid' => $comment->uid,
+							'comments-id' => $comment->id,
+							'comments-text' => textlimit($comment->text, 42, '..')
+						]);
+					}
 				}
 			}
 		}

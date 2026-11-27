@@ -192,7 +192,7 @@ if ($entry_type == 'miniblog') {
 		$group = $db->get_row("
             SELECT * FROM `clans` WHERE `id` = '$query_data->groupid'
         ");
-		if (!$group->public && $group->owner !== $auth->id) {
+		if ($group && !$group->public && $group->owner !== $auth->id) {
 			$is_member = $db->get_var("
                 SELECT count(*) FROM `clans_members`
                 WHERE `clan` = '$query_data->groupid' AND

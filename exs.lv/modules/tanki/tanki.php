@@ -11,7 +11,7 @@ if (!isset($_SESSION)) {
 // 1. Anti-Cheat Token Initialization
 if (isset($_GET['action']) && $_GET['action'] === 'init_token') {
 	header('Content-Type: application/json');
-	$token = md5(uniqid(rand(), true));
+	$token = bin2hex(random_bytes(16));
 	$_SESSION['tanki_token'] = $token;
 	$_SESSION['tanki_start_time'] = time();
 	echo json_encode(['success' => true, 'token' => $token]);
@@ -143,7 +143,7 @@ $today_scores = $db->get_results("
 if (!empty($today_scores)) {
 	$rank = 1;
 	foreach ($today_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
+		$u = get_user($sc->user_id);
 		if ($u) {
 			$tpl->newBlock('today-top-node');
 			$is_me = ($auth->ok && $auth->id == $u->id);
@@ -173,7 +173,7 @@ $alltime_scores = $db->get_results("
 if (!empty($alltime_scores)) {
 	$rank = 1;
 	foreach ($alltime_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
+		$u = get_user($sc->user_id);
 		if ($u) {
 			$tpl->newBlock('alltime-top-node');
 			$is_me = ($auth->ok && $auth->id == $u->id);

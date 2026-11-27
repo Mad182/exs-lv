@@ -4,7 +4,7 @@
  * Avatara attēla maiņa
  */
 //write changes
-if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'])) {
+if (isset($_POST['submit']) && check_token('avatar', $_POST['xsrf_token'] ?? '')) {
 
     /* load libraries */
     require_once(LIB_PATH . '/verot/src/class.upload.php');

@@ -11,7 +11,7 @@ if (!isset($_SESSION)) {
 // 1. AJAX: Initialize Session Token
 if (isset($_GET['action']) && $_GET['action'] === 'init_token') {
 	header('Content-Type: application/json');
-	$token = md5(uniqid(rand(), true));
+	$token = bin2hex(random_bytes(16));
 	$_SESSION['ut99_token'] = $token;
 	$_SESSION['ut99_start_time'] = time();
 	echo json_encode(['success' => true, 'token' => $token]);

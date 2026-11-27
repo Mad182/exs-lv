@@ -102,7 +102,7 @@ function rs_get_latest_pages() {
     global $auth, $db, $lang, $comments_per_page, $config_domains;
     
     $out = '';
-    $skip = (isset($_GET['pg'])) ? 8 * intval($_GET['pg']) : 0;
+    $skip = (isset($_GET['pg'])) ? 8 * max(0, intval($_GET['pg'])) : 0;
     
     $conditions = [];
     $conditions[] = '`pages`.`lang` = '.$lang;
@@ -163,7 +163,8 @@ function rs_get_latest_pages() {
             }
             $out .= '<li><a href="' . '/read/' . $late->strid . $skip . '"><img src="//exs.lv/dati/bildes/topic-av/' . $late->id . '.jpg" class="av" alt="" />';
             $out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
-            if (!empty($late->readby) && in_array($auth->id, unserialize($late->readby))) {
+            $readby = !empty($late->readby) ? @unserialize($late->readby, ['allowed_classes' => false]) : false;
+            if (is_array($readby) && in_array($auth->id, $readby)) {
                 $out .= $late->title . '&nbsp;(' . $late->posts . ')</a></li>';
             } else {
                 $out .= $late->title . '&nbsp;(<span class="r">' . $late->posts . '</span>)</a></li>';

@@ -17,8 +17,8 @@ if (isset($_POST['give_deco_all'])) {
         if ($handle = opendir('bildes/fugue-icons/')) {
             while (false !== ($file = readdir($handle))) {
                 if ($file != "." && $file != "..") {
-                    $imageData = getimagesize("bildes/fugue-icons/".$file);
-                    if ( $imageData && $imageData[0] == 0 || $imageData[1] == 0) continue;
+                    $imageData = @getimagesize("bildes/fugue-icons/".$file);
+                    if (!$imageData || $imageData[0] == 0 || $imageData[1] == 0) continue;
                     $ratio = $imageData[0] / $imageData[1];
                     /*
                      * Izrādās, ka ne visas ikonas direktorijā ir 16x16px, bet ņemot vērā to, ka
@@ -35,16 +35,21 @@ if (isset($_POST['give_deco_all'])) {
         $decoUsers = $db->get_results("SELECT id FROM users where decos='' AND lastseen BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()");
 
         //Katram lietotājam pievienojam nejauši izvēlētu ikonu
-        foreach ($decoUsers as $decoUser){
-            $decos = [[
-                'title' => h(''),
-                'icon' => h($decosAll[rand(0, sizeof($decosAll)-1)])
-            ]];
-            $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize($decos)) . "' WHERE `id` = '$decoUser->id'");
+        $decoCount = 0;
+        if (!empty($decoUsers) && !empty($decosAll)) {
+            $maxIdx = count($decosAll) - 1;
+            foreach ($decoUsers as $decoUser) {
+                $decos = [[
+                    'title' => h(''),
+                    'icon' => h($decosAll[rand(0, $maxIdx)])
+                ]];
+                $db->query("UPDATE `users` SET `decos` = '" . sanitize(serialize($decos)) . "' WHERE `id` = '$decoUser->id'");
+                $decoCount++;
+            }
         }
 
-        set_flash('Veiksmīgi pievienotas ikonas ' . sizeof($decoUsers). ' lietototājiem');
-        $auth->log('Pievienoja' . sizeof($decoUsers) .' lietotājiem profila ikonu', 'users');
+        set_flash('Veiksmīgi pievienotas ikonas ' . $decoCount . ' lietototājiem');
+        $auth->log('Pievienoja' . $decoCount . ' lietotājiem profila ikonu', 'users');
         $m->set('give_deco_all', 1, 600);
     }
     else {
@@ -89,11 +94,13 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 	$user = $db->get_row("SELECT * FROM users WHERE id = '$userid'");
 
 	if (!empty($user)) {
-		if (!$user->decos == '') {
-            //Uztaisam arrayu
+		if (empty($user->decos)) {
 			$decos = [];
 		} else {
-			$decos = unserialize($user->decos);
+			$decos = @unserialize($user->decos, ['allowed_classes' => false]);
+			if (!is_array($decos)) {
+				$decos = [];
+			}
 		}
 
 		//Ieliekam iepriekš uztaisītajā arrayā vēl vienu arrayu. What is this
@@ -113,9 +120,10 @@ if (isset($_POST['userid']) && isset($_POST['title']) && isset($_POST['icon'])) 
 
 $listdecos = $db->get_results("SELECT * FROM `users` WHERE `decos` != '' LIMIT 100");
 
+if (!empty($listdecos)) {
 foreach ($listdecos as $decos) {
-	$images = unserialize($decos->decos);
-	if (!empty($images)) {
+	$images = @unserialize($decos->decos, ['allowed_classes' => false]);
+	if (!empty($images) && is_array($images)) {
 		$new = [];
 		foreach ($images as $key => $deco) {
 			if (isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove']) && $_GET['remove'] != $key) {
@@ -145,5 +153,6 @@ foreach ($listdecos as $decos) {
 	} else {
 		$db->query("UPDATE users SET decos = '' WHERE id = '$decos->id'");
 	}
+}
 }
 

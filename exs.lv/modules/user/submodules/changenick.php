@@ -8,7 +8,7 @@ $robotstag[] = 'noindex';
 
 deny_proxies();
 
-if (isset($_POST['new-nick']) && check_token('changenick', $_POST['xsrf_token'])) {
+if (isset($_POST['new-nick']) && check_token('changenick', $_POST['xsrf_token'] ?? '')) {
 
 	if ($inprofile->credit < 5) {
 		set_flash('Nepietiek exs.lv kredīta!', 'error');

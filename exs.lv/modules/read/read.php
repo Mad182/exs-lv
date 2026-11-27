@@ -1,6 +1,6 @@
 <?php
 
-$strid = sanitize($_GET['var1']);
+$strid = sanitize($_GET['var1'] ?? '');
 $article = $db->get_row("SELECT * FROM `pages` WHERE `strid` = '" . $strid . "' LIMIT 1");
 
 if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === true || !$article->private)) {
@@ -21,7 +21,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 	$end = $comments_per_page;
 
 	if (isset($_GET['var2']) && $_GET['var2'] == 'com_page' && isset($_GET['var3'])) {
-		$skip = (int) $_GET['var3'];
+		$skip = max(0, (int) $_GET['var3']);
 	} else {
 		$skip = 0;
 	}
@@ -29,7 +29,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 	// pārvietošanās pa komentāru lapām
 	if (isset($_GET['skip'])) {
-		$skip = (int) $_GET['skip'];
+		$skip = max(0, (int) $_GET['skip']);
 		redirect('/read/' . $article->strid . '/com_page/' . $skip / $comments_per_page);
 	}
 
@@ -59,7 +59,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 
 	// atbildes komentāram pievienošana
-	if (!$article->closed && isset($_POST['rpl-comment']) && !empty($_POST['rpl-txt']) && $auth->ok && $_POST['rpl-page'] == $article->id && check_token('reply', $_POST['xsrf_token'])) {
+	if (!$article->closed && isset($_POST['rpl-comment']) && !empty($_POST['rpl-txt']) && $auth->ok && ($_POST['rpl-page'] ?? 0) == $article->id && check_token('reply', $_POST['xsrf_token'] ?? '')) {
 		$comment = (int) $_POST['rpl-comment'];
 		$comment = $db->get_row("SELECT * FROM `comments` WHERE `id` = '$comment' AND `pid` = '$article->id' AND `parent` = 0");
 		if (!$comment) {
@@ -91,7 +91,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 	// komentāra rediģēšana
 	if ($auth->ok && isset($_POST['edit-comment-id'])) {
 		$edit_comment_id = (int) $_POST['edit-comment-id'];
-		$edit_comment_text = htmlpost2db($_POST['edit-comment-text']);
+		$edit_comment_text = htmlpost2db($_POST['edit-comment-text'] ?? '');
 
 		$edit_comment_author = $db->get_var("SELECT author FROM comments WHERE id = '$edit_comment_id' LIMIT 1");
 		if ((($auth->level == 3 || $article->lang == 5) && $edit_comment_author != $auth->id) && !im_cat_mod() && !im_mod()) {
@@ -115,10 +115,10 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 	}
 
 	// komentāra dzēšana
-	if (im_mod() && isset($_GET['delcom']) && check_token('delcom', $_GET['token'])) {
+	if (im_mod() && isset($_GET['delcom']) && check_token('delcom', $_GET['token'] ?? '')) {
 		$del = (int) $_GET['delcom'];
 		$comment = $db->get_row("SELECT * FROM comments WHERE id = '$del' AND `removed` = 0");
-		if ($del > 0 && $comment->pid == $article->id) {
+		if ($del > 0 && $comment && $comment->pid == $article->id) {
 			$db->query("UPDATE `comments` SET `removed` = 1 WHERE `id` = '$del' AND `pid` = '$article->id'");
 
 			//delete comment replies
@@ -147,7 +147,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 	if (im_mod()) {
 		if (isset($_GET['remove_signature'])) {
 			$remove_signature = (int) $_GET['remove_signature'];
-			$message = sanitize(h(strip_tags($_GET['message'])));
+			$message = sanitize(h(strip_tags($_GET['message'] ?? '')));
 			$db->query("UPDATE `users` SET `signature` = ('<small>Noņēma: " . $auth->nick . ". Iemesls: " . $message . "</small>') WHERE `id` = '" . $remove_signature . "' LIMIT 1");
 			get_user($remove_signature, true);
 			$auth->log('Nodzēsa parakstu (' . $message . ')', 'users', $remove_signature);
@@ -160,7 +160,8 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		redirect($article->redirect, true);
 	}
 
-	if (!$rating_users = unserialize($article->rating_users)) {
+	$rating_users = !empty($article->rating_users) ? @unserialize($article->rating_users, ['allowed_classes' => false]) : [];
+	if (!is_array($rating_users)) {
 		$rating_users = [];
 	}
 
@@ -168,7 +169,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 	if (isset($_POST['vote']) && !isset($_POST['questions'])) {
 
 		if (isset($_POST['vote']) && $auth->ok) {
-			$vote = 1 * $_POST['vote'];
+			$vote = (int) $_POST['vote'];
 
 			//parbauda vai deriga vote vertiba
 			if ($vote < 0 || $vote > 5) {
@@ -207,7 +208,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		if (empty($article->readby)) {
 			$db->query("UPDATE pages SET readby = ('" . serialize([$auth->id]) . "') WHERE id = '$article->id'");
 		} else {
-			$readby = @unserialize($article->readby);
+			$readby = @unserialize($article->readby, ['allowed_classes' => false]);
 			if (!is_array($readby)) {
 				$readby = [];
 			}
@@ -224,7 +225,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		// komentāru slēgšana/atslēgšana
 		if ($auth->ok && (($auth->id == $article->author && !$article->disable_close) || im_mod() || im_cat_mod())) {
 			if (isset($_POST['close-do'])) {
-				$closed = (bool) $_POST['close'];
+				$closed = !empty($_POST['close']) ? 1 : 0;
 				$db->query("UPDATE `pages` SET `closed` = '$closed' WHERE `id` = '$article->id'");
 				if ($closed) {
 					$auth->log('Aizslēdza komentārus rakstam', 'pages', $article->id);
@@ -239,7 +240,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		// autora komentāru atvēršanas bloķēšana
 		if ($auth->ok && (im_mod() || im_cat_mod())) {
 			if (isset($_POST['disable-close-do'])) {
-				$closed = (bool) $_POST['disable-close'];
+				$closed = !empty($_POST['disable-close']) ? 1 : 0;
 				$db->query("UPDATE `pages` SET `disable_close` = '$closed' WHERE `id` = '$article->id'");
 				if ($closed) {
 					$auth->log('Bloķēja autora komentāru atvēršanu', 'pages', $article->id);
@@ -251,7 +252,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 			}
 
 			if (isset($_POST['attach-do']) && ($category->isforum || $category->id == 1)) {
-				$attach = (bool) $_POST['attach'];
+				$attach = !empty($_POST['attach']) ? 1 : 0;
 				$db->query("UPDATE `pages` SET `attach` = '$attach' WHERE `id` = '$article->id'");
 				if ($attach) {
 					$auth->log('Piesprauda rakstu', 'pages', $article->id);
@@ -289,6 +290,9 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		if ($auth->ok && isset($_GET['editcom'])) {
 			$editcom = (int) $_GET['editcom'];
 			$comment = $db->get_row("SELECT text,id,author FROM comments WHERE id = '$editcom' AND pid = '$article->id' AND removed = 0 LIMIT 1");
+			if (!$comment) {
+				redirect('/read/' . $article->strid);
+			}
 			if (($auth->level == 3 && $comment->author != $auth->id) && !im_cat_mod()) {
 				echo 'Tu vari labot tikai savus komentārus!';
 				exit;
@@ -310,7 +314,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		}
 
 		// raksta ārējo attēlu pārnešana uz img.exs.lv
-		elseif ($auth->ok && $auth->level == 1 && isset($_GET['mode']) && $_GET['mode'] == 'rehost' && check_token('rehostpage' . $article->id, $_GET['token'])) {
+		elseif ($auth->ok && $auth->level == 1 && isset($_GET['mode']) && $_GET['mode'] == 'rehost' && check_token('rehostpage' . $article->id, $_GET['token'] ?? '')) {
 			require_once(CORE_PATH . '/modules/read/functions.read.php');
 			$result = rehost_article_images($article);
 			if ($result['status'] === 'success') {
@@ -330,7 +334,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		}
 
 		// raksta dzēšana
-		elseif ($auth->ok && isset($_GET['mode']) && $_GET['mode'] == 'delete' && (can_edit_page($article) || $auth->id == $article->author) && check_token('delpage' .  $article->id, $_GET['token'])) {
+		elseif ($auth->ok && isset($_GET['mode']) && $_GET['mode'] == 'delete' && (can_edit_page($article) || $auth->id == $article->author) && check_token('delpage' .  $article->id, $_GET['token'] ?? '')) {
 
 			$db->query("DELETE FROM `pages` WHERE `id` = " . $article->id);
 			$db->query("DELETE FROM `bookmarks` WHERE `pageid` = " . $article->id . " AND `foreign_table` = 'pages'");
@@ -356,11 +360,11 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 			if (isset($_POST['edit-topic-title']) && isset($_POST['edit-topic-body']) && isset($_POST['edit-topic-id'])) {
 				$body = trim($_POST['edit-topic-body']);
 				$title = trim($_POST['edit-topic-title']);
-				$topicid = (int) $_POST['edit-topic-id'];
+				$topicid = (int) $article->id;
 
 				// rs apakšprojektā mainīt sadaļu iespējams tikai moderatoriem
 				if (im_mod() || $lang != 9) {
-					$topiccat = (int) $_POST['edit-category'];
+					$topiccat = (int) ($_POST['edit-category'] ?? $article->category);
 				} else {
 					$topiccat = $article->category;
 				}
@@ -503,16 +507,16 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 					clear_forum_cache($article->lang ?? $lang);
 
 					if ($category->textid == 'filmas' && im_mod()) {
-						$title_lv = title2db($_POST['movie-titlelv']);
+						$title_lv = title2db($_POST['movie-titlelv'] ?? '');
 						if ($title_lv == 'Bez nosaukuma') {
 							$title_lv = '';
 						}
-						$year = intval($_POST['movie-year']);
+						$year = intval($_POST['movie-year'] ?? 0);
 						if (empty($year)) {
 							$year = '';
 						}
-						$imdb_id = sanitize($_POST['movie-imdb']);
-						$movie_type = sanitize($_POST['movie-type']);
+						$imdb_id = sanitize($_POST['movie-imdb'] ?? '');
+						$movie_type = sanitize($_POST['movie-type'] ?? '');
 
 						$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
 						if (!empty($movie_data)) {
@@ -694,13 +698,14 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 					$q = urlencode($article->title . ' movie poster');
 					$jsonurl = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&tbs=iar:t&q=' . $q;
-					$result = json_decode(curl_get($jsonurl), true);
-					$images = [
-						$result['responseData']['results'][0]['url'],
-						$result['responseData']['results'][1]['url'],
-						$result['responseData']['results'][2]['url'],
-						$result['responseData']['results'][3]['url']
-					];
+					$result = json_decode((string) curl_get($jsonurl), true);
+					if (!empty($result['responseData']['results']) && is_array($result['responseData']['results'])) {
+						foreach (array_slice($result['responseData']['results'], 0, 4) as $img_res) {
+							if (!empty($img_res['url'])) {
+								$images[] = $img_res['url'];
+							}
+						}
+					}
 				}
 
 				$movie_data = $db->get_row("SELECT * FROM `movie_data` WHERE `page_id` = '$article->id'");
@@ -914,7 +919,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 						];
 
 						$tpl->newBlock('movie-info-type');
-						$tpl->assign('type', $types[$movie_data->type]);
+						$tpl->assign('type', $types[$movie_data->type] ?? '');
 						$tpl->assign('title', $article->title);
 					}
 
@@ -1163,7 +1168,8 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 						if (empty($author[$comment->edit_user])) {
 							$author[$comment->edit_user] = get_user($comment->edit_user);
 						}
-						$editedby = '<p class="comment-edited-by">Laboja ' . $author[$comment->edit_user]->nick . ', ' . $comment->edit_times . 'x</p>';
+						$edit_nick = !empty($author[$comment->edit_user]->nick) ? $author[$comment->edit_user]->nick : 'nezināms';
+						$editedby = '<p class="comment-edited-by">Laboja ' . $edit_nick . ', ' . $comment->edit_times . 'x</p>';
 					}
 
 					$comment->date = display_time(strtotime($comment->date));
@@ -1210,21 +1216,18 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 						$check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
 
 						if (!empty($comment->vote_users)) {
-							$voters = unserialize($comment->vote_users);
+							$voters = @unserialize($comment->vote_users, ['allowed_classes' => false]);
+							if (!is_array($voters)) {
+								$voters = [];
+							}
 						} else {
 							$voters = [];
 						}
 						$voted = in_array($auth->id, $voters);
 
 						if (!$voted && $auth->id != $comment->author) {
-							if (isset($_GET['com_page'])) {
-								$skips = (int) $_GET['com_page'];
-								$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-								$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-							} else {
-								$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-								$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-							}
+							$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+							$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
 						}
 					}
 
@@ -1316,21 +1319,18 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 									$check = substr(md5($reply->id . $remote_salt . $auth->id), 0, 5);
 
 									if (!empty($reply->vote_users)) {
-										$voters = unserialize($reply->vote_users);
+										$voters = @unserialize($reply->vote_users, ['allowed_classes' => false]);
+										if (!is_array($voters)) {
+											$voters = [];
+										}
 									} else {
 										$voters = [];
 									}
 									$voted = in_array($auth->id, $voters);
 
 									if (!$voted && $auth->id != $reply->author) {
-										if (isset($_GET['com_page'])) {
-											$skips = (int) $_GET['com_page'];
-											$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-											$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-										} else {
-											$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-											$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-										}
+										$pluslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+										$minuslnk = '<a href="/rate-comment/?vc=' . $reply->id . '&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
 									}
 								}
 
@@ -1431,7 +1431,9 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 		$pagepath = '<a href="/' . $category->textid . '">' . $category->title . '</a> / ' . $article->title;
 		if ($category->parent) {
 			$category2 = get_cat($category->parent);
-			$pagepath = '<a href="/' . $category2->textid . '">' . $category2->title . '</a> / ' . $pagepath;
+			if ($category2) {
+				$pagepath = '<a href="/' . $category2->textid . '">' . $category2->title . '</a> / ' . $pagepath;
+			}
 		}
 
 		$tpl->assignGlobal([

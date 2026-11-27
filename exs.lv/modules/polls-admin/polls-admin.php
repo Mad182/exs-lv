@@ -34,7 +34,7 @@ if ($auth->ok) {
 					VALUES (
 						'$rsbot_id',
 						'".date("Y-m-d H:i:s")."',
-						'".sanitize($mb_text)."',
+						'".$mb_text."',
 						9,
 						'".time()."'
 					)
@@ -65,10 +65,10 @@ if ($auth->ok) {
 				$new_text  = '<p class="mb-poll-question"><strong>Aptauja:</strong> '.h($poll->name).'</p>';
 				$new_text .= '<ul class="mb-poll-li">' . $html_answers . '</ul>';
 				$new_text .= '<p class="mb-poll-vote">Balsot iespējams lapas sānā redzamajā aptaujā.<br>Ieraksts uzģenerēts automātiski aptaujas rezultātu apspriešanai.</p>';
-				$db->query("UPDATE `miniblog` SET `text` = '$new_text' WHERE `id` = '$poll_page_id'");
+				$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($new_text) . "' WHERE `id` = '$poll_page_id'");
 			} else {
 				$new_text = '<p><strong>' . h($poll->name) . '</strong></p><ul>' . $html_answers . '</ul><p>(Atbildi aptaujā lapas malā)</p>';
-				$db->query("UPDATE `pages` SET `text` = '$new_text' WHERE `id` = '$poll_page_id'");
+				$db->query("UPDATE `pages` SET `text` = '" . sanitize($new_text) . "' WHERE `id` = '$poll_page_id'");
 			}
 
 			// Atzīmē aptauju kā apstiprinātu
@@ -127,7 +127,7 @@ if ($auth->ok) {
 				// Autors
 				$author_html = 'Anonīms';
 				if ($p->author > 0) {
-					$user = $db->get_row("SELECT `id`, `nick`, `level` FROM `users` WHERE `id` = '{$p->author}' LIMIT 1");
+					$user = get_user($p->author);
 					if ($user) {
 						$author_html = usercolor($user->nick, $user->level);
 					}
@@ -193,13 +193,12 @@ if ($auth->ok) {
 			if ($is_mod) {
 				// Moderators veido aptauju - tiešā publicēšana
 				if ($lang == 9) {
-					$mb_text = sanitize(trim($new_q));
 					$db->query("INSERT INTO `miniblog`
 						(author, date, text, lang, bump)
 						VALUES (
 							'$rsbot_id',
 							'".date("Y-m-d H:i:s")."',
-							'".sanitize($mb_text)."',
+							'".$new_q."',
 							9,
 							'".time()."'
 						) 

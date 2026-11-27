@@ -24,9 +24,11 @@ if (empty($auth->steam_id)) {
 
 
 //sagrupējam lietotājus pēc spēles id
-foreach ($players_online as $player) {
-    if ($player->gameid) {
-        $grouped[$player->gameid][] = $player;
+if (!empty($players_online)) {
+    foreach ($players_online as $player) {
+        if ($player->gameid) {
+            $grouped[$player->gameid][] = $player;
+        }
     }
 }
 
@@ -39,6 +41,9 @@ foreach ($grouped as $game) {
 
     foreach ($game as $user) {
         $exs_user = get_user($user->user_id);
+        if (!$exs_user) {
+            continue;
+        }
         $tpl->newBlock('steam-player');
         $tpl->assign([
             'profile-url' => $user->profileurl,

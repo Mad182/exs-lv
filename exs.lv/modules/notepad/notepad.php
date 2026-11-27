@@ -8,7 +8,7 @@ if ($auth->ok) {
 	$pagepath = '';
 	$tpl->newBlock('notepad');
 
-	if (isset($_GET['var1']) && $_GET['var1'] == 'delete' && isset($_GET['var2']) && check_token('delnote', $_GET['token'])) {
+	if (isset($_GET['var1']) && $_GET['var1'] == 'delete' && isset($_GET['var2']) && check_token('delnote', $_GET['token'] ?? '')) {
 		$db->query("DELETE FROM `notes` WHERE user_id = '$auth->id' AND id = '" . intval($_GET['var2']) . "'");
 		redirect('/' . $category->textid);
 	} elseif (isset($_GET['var1']) && ($_GET['var1'] == 'read' || $_GET['var1'] == 'edit') && isset($_GET['var2'])) {
@@ -53,7 +53,7 @@ if ($auth->ok) {
 
 		$tpl->newBlock('tinymce-enabled');
 
-		if (isset($_POST['note-text']) && check_token('editnote', $_POST['xsrf_token'])) {
+		if (isset($_POST['note-text']) && check_token('editnote', $_POST['xsrf_token'] ?? '')) {
 			$body = htmlpost2db($_POST['note-text']);
 			$title = 'Piezīmes';
 			if (!empty($_POST['title'])) {

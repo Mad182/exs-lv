@@ -20,6 +20,7 @@ if ($auth->ok === true) {
             if (isset($_GET['login'])) {
                 $openid->identity = 'https://steamcommunity.com/openid';
                 header('Location: ' . $openid->authUrl());
+                exit;
             }
 
             //athentifikācijas templeits
@@ -33,14 +34,16 @@ if ($auth->ok === true) {
 //          Validācija un piesaista lietotājam steam_id
             if ($openid->validate()) {
                 $id = $openid->identity;
-                $ptn = "/^http:\/\/steamcommunity\.com\/openid\/id\/(7[0-9]{15,25}+)$/";
-                preg_match($ptn, $id, $matches);
+                $ptn = "/^https?:\/\/steamcommunity\.com\/openid\/id\/(7[0-9]{15,25})$/";
+                if (preg_match($ptn, $id, $matches)) {
+                    $db->update('users', $auth->id, [
+                        'steam_id' => $matches[1]
+                    ]);
 
-                $db->update('users', $auth->id, [
-                    'steam_id' => $matches[1]
-                ]);
-
-                $tpl->newBlock('steam-success');
+                    $tpl->newBlock('steam-success');
+                } else {
+                    $tpl->newBlock('steam-auth-error');
+                }
             } else {
                 $tpl->newBlock('steam-auth-error');
             }

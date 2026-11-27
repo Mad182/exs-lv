@@ -48,9 +48,13 @@ $games_list = $db->get_results("
 	ORDER BY `vote_value` DESC, `id` ASC
 ");
 
-// Determine the 3 latest games to display "Jaunums" badge
-$latest_game_ids = $db->get_results("SELECT id FROM `games` WHERE `status` = 'active' ORDER BY `id` DESC LIMIT 3");
-$latest_ids = !empty($latest_game_ids) ? array_map(function($g) { return (int)$g->id; }, $latest_game_ids) : [];
+// Determine the 3 latest games to display "Jaunums" badge from already-fetched list
+$latest_ids = [];
+if (!empty($games_list)) {
+	$all_ids = array_map(function($g) { return (int)$g->id; }, $games_list);
+	rsort($all_ids);
+	$latest_ids = array_slice($all_ids, 0, 3);
+}
 
 if (!empty($games_list)) {
 	foreach ($games_list as $game) {
@@ -61,9 +65,9 @@ if (!empty($games_list)) {
 			$is_asc = in_array($game->game_code, ['wordle', 'minu-mekletajs', 'sudoku']);
 			$order = $is_asc ? 'ASC' : 'DESC';
 			$where_extra = $is_asc ? " AND score > 0" : "";
-			$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . $game->game_code . "' $where_extra ORDER BY score $order LIMIT 1");
+			$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . sanitize($game->game_code) . "' $where_extra ORDER BY score $order LIMIT 1");
 			if ($top_score) {
-				$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$top_score->user_id'");
+				$u = get_user($top_score->user_id);
 				if ($u) {
 					if ($game->game_code == 'wordle') {
 						$g_cnt = floor($top_score->score / 1000);
@@ -149,7 +153,7 @@ if (!empty($raw_scores)) {
 			// If player has records today, pick their highest (or lowest for asc games) today
 			$best_today = $db->get_row("
 				SELECT * FROM gamescore 
-				WHERE user_id = '{$sc->user_id}' AND game = '{$sc->game}' AND time >= '$start_of_today' AND score > 0 
+				WHERE user_id = '" . (int)$sc->user_id . "' AND game = '" . sanitize($sc->game) . "' AND time >= '$start_of_today' AND score > 0 
 				ORDER BY score $order, time DESC 
 				LIMIT 1
 			");
@@ -173,7 +177,7 @@ if (!empty($raw_scores)) {
 if (!empty($recent_scores)) {
 	$tpl->newBlock('recent-scores-block');
 	foreach ($recent_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
+		$u = get_user($sc->user_id);
 		if ($u) {
 			$g_key = $sc->game;
 			$meta = isset($game_meta_map[$g_key]) ? $game_meta_map[$g_key] : [

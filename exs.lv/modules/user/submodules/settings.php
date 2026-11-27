@@ -3,7 +3,7 @@
 /**
  * Lietotāja personalizētie lapas iestatījumi
  */
-if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'])) {
+if (isset($_POST['submit']) && check_token('usersettings', $_POST['xsrf_token'] ?? '')) {
 
 	$inprofile->show_code = !empty($_POST['edit-show_code']) ? 1 : 0;
 	$inprofile->show_lol = !empty($_POST['edit-show_lol']) ? 1 : 0;

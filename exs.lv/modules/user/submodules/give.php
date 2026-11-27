@@ -14,17 +14,21 @@ if ($credit) {
 	$tpl->newBlock('user-profile-give');
 	$tpl->assign('xsrf', make_token('givepoints'));
 
-	if (isset($_POST['submit']) && isset($_POST['exs-amount']) && !empty($_POST['exs-amount']) && check_token('givepoints', $_POST['xsrf_token'])) {
+	if (isset($_POST['submit']) && isset($_POST['exs-amount']) && !empty($_POST['exs-amount']) && check_token('givepoints', $_POST['xsrf_token'] ?? '')) {
 		$amount = intval($_POST['exs-amount']);
 		if ($credit >= $amount && $amount > 0) {
-			$db->query("UPDATE users SET credit = credit+'" . $amount . "' WHERE id = ('" . $inprofile->id . "')");
-			$db->query("UPDATE users SET credit = credit-'" . $amount . "' WHERE id = ('" . $auth->id . "')");
+			$db->query("UPDATE users SET credit = credit-'" . $amount . "' WHERE id = ('" . $auth->id . "') AND credit >= " . $amount);
+			if ($db->affected_rows > 0) {
+				$db->query("UPDATE users SET credit = credit+'" . $amount . "' WHERE id = ('" . $inprofile->id . "')");
 
-			userlog($auth->id, 'Uzdāvināja ' . $amount . ' expunktus ' . $inprofile->nick, '/dati/bildes/useravatar/' . $inprofile->avatar);
-			userlog($inprofile->id, 'Saņēma ' . $amount . ' expunktus no ' . $auth->nick, '/dati/bildes/useravatar/' . $auth->avatar);
+				userlog($auth->id, 'Uzdāvināja ' . $amount . ' expunktus ' . $inprofile->nick, '/dati/bildes/useravatar/' . $inprofile->avatar);
+				userlog($inprofile->id, 'Saņēma ' . $amount . ' expunktus no ' . $auth->nick, '/dati/bildes/useravatar/' . $auth->avatar);
 
-			$credit = $credit - $amount;
-			set_flash('Pārskaitījums veikts!', 'success');
+				$credit = $credit - $amount;
+				set_flash('Pārskaitījums veikts!', 'success');
+			} else {
+				set_flash('Kļūda!', 'error');
+			}
 		} else {
 			set_flash('Kļūda!', 'error');
 		}

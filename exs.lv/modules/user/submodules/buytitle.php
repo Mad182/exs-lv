@@ -8,12 +8,12 @@ $robotstag[] = 'noindex';
 
 deny_proxies();
 
-if (isset($_GET['buytitle_pay']) && $_GET['buytitle_pay'] == 'true' && check_token('buytitle', $_GET['token'])) {
+if (isset($_GET['buytitle_pay']) && $_GET['buytitle_pay'] == 'true' && check_token('buytitle', $_GET['token'] ?? '')) {
 
 	if ($inprofile->credit < 3) {
 		set_flash('Nepietiek exs.lv kredīta!');
 	} else {
-		$db->query("UPDATE users SET custom_title_paid = '1', credit = credit-'3' WHERE id = ('" . $inprofile->id . "')");
+		$db->query("UPDATE users SET custom_title_paid = '1', credit = credit-'3' WHERE id = ('" . $inprofile->id . "') AND credit >= 3");
 		set_flash('Tagad Tu vari mainīt savu lietotāja nosaukumu!', 'success');
 	}
 

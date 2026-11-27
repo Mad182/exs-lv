@@ -15,18 +15,21 @@ $tpl->prepare();
 $red_numbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
 $black_numbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
 
-// Ensure tables exist
-$db->query("
-CREATE TABLE IF NOT EXISTS `roulette_balance` (
-  `user_id` int(11) NOT NULL,
-  `gold` int(11) NOT NULL DEFAULT 100,
-  `max_gold` int(11) NOT NULL DEFAULT 100,
-  `last_reset_date` date NOT NULL,
-  PRIMARY KEY (`user_id`),
-  KEY `gold` (`gold`),
-  KEY `max_gold` (`max_gold`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-");
+// Ensure tables exist (cached in memcached to avoid DDL lock on every spin)
+if (!$m->get('rulete_table_ok')) {
+	$db->query("
+	CREATE TABLE IF NOT EXISTS `roulette_balance` (
+	  `user_id` int(11) NOT NULL,
+	  `gold` int(11) NOT NULL DEFAULT 100,
+	  `max_gold` int(11) NOT NULL DEFAULT 100,
+	  `last_reset_date` date NOT NULL,
+	  PRIMARY KEY (`user_id`),
+	  KEY `gold` (`gold`),
+	  KEY `max_gold` (`max_gold`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+	");
+	$m->set('rulete_table_ok', 1, 86400);
+}
 
 // Helper function to get & check user chip balance with daily reset
 function get_user_roulette_balance($user_id) {
@@ -122,7 +125,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 	}
 
 	// Perform spin
-	$winning_number = rand(0, 36);
+	$winning_number = random_int(0, 36);
 
 	// Determine winning color
 	$winning_color = 'green';
@@ -195,7 +198,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 	$new_gold = $current_gold + $net_gain;
 
 	if ($is_logged_in) {
-		$bal_data = get_user_roulette_balance($auth->id);
 		$prev_max_gold = intval($bal_data['max_gold']);
 
 		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($auth->id));

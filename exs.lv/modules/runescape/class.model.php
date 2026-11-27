@@ -5,6 +5,7 @@
  *  Izmantota vairākās RuneScape sadaļās, kuru kods realizēts mvc formātā.
  */
 
+#[AllowDynamicProperties]
 class Model {
 	
 	/**

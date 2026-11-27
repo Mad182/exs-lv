@@ -30,22 +30,23 @@ if (!$auth->ok) {
 	$regdata['botsok'] = false;
 	$regdata['agree'] = false;
 
-	if (isset($_POST[$field_nick]) && $_POST['www'] === $botstring && check_token('reg', $_POST['reg_token'])) {
+	if (isset($_POST[$field_nick]) && ($_POST['www'] ?? '') === $botstring && check_token('reg', $_POST['reg_token'] ?? '')) {
 
 		//check mail
-		if (filter_var($_POST[$field_mail], FILTER_VALIDATE_EMAIL)) {
+		$post_mail = $_POST[$field_mail] ?? '';
+		if (filter_var($post_mail, FILTER_VALIDATE_EMAIL)) {
 
-			$regdata['mail'] = email2db($_POST[$field_mail]);
+			$regdata['mail'] = email2db($post_mail);
 
-			if ($db->get_row("SELECT * FROM users WHERE mail = ('" . $regdata['mail'] . "')") || $db->get_row("SELECT * FROM users_tmp WHERE mail = ('" . $regdata['mail'] . "')")) {
+			if ($db->get_row("SELECT id FROM users WHERE mail = ('" . $regdata['mail'] . "')") || $db->get_row("SELECT id FROM users_tmp WHERE mail = ('" . $regdata['mail'] . "')")) {
 				$tpl->newBlock('invalid-mail-taken');
 				$regdata['mail'] = '';
 			} else {
 				$regdata['mailok'] = true;
 			}
 
-			$emparts = explode('@', $_POST[$field_mail]);
-			if ($db->get_var("SELECT count(*) FROM `email_blacklist` WHERE `domain` = '" . sanitize($emparts[1]) . "'")) {
+			$emparts = explode('@', $post_mail);
+			if (!empty($emparts[1]) && $db->get_var("SELECT count(*) FROM `email_blacklist` WHERE `domain` = '" . sanitize($emparts[1]) . "'")) {
 				set_flash('Neatļauts e-pasts!', 'error');
 				redirect('/' . $category->textid);
 			}
@@ -54,10 +55,12 @@ if (!$auth->ok) {
 		}
 
 		//check nick
-		if (strlen(trim($_POST[$field_nick])) > 2 && strlen(trim($_POST[$field_nick])) <= 16) {
-			$regdata['nick'] = sanitize(trim($_POST[$field_nick]));
+		$trimmed_nick = trim($_POST[$field_nick]);
+		if (strlen($trimmed_nick) > 2 && strlen($trimmed_nick) <= 16) {
+			$regdata['nick'] = sanitize($trimmed_nick);
+			$nick_slug = mkslug($regdata['nick']);
 			$regdata['nickok'] = true;
-			if (mkslug($regdata['nick']) == 'page' || mkslug($regdata['nick']) == '-' || mkslug($regdata['nick']) == 'frostijs' || $db->get_row("SELECT * FROM users WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')") || $db->get_row("SELECT * FROM users_tmp WHERE nick = ('" . $regdata['nick'] . "') OR  nick = ('" . mkslug($regdata['nick']) . "')")) {
+			if ($nick_slug == 'page' || $nick_slug == '-' || $nick_slug == 'frostijs' || $db->get_row("SELECT id FROM users WHERE nick = ('" . $regdata['nick'] . "') OR nick = ('" . $nick_slug . "')") || $db->get_row("SELECT id FROM users_tmp WHERE nick = ('" . $regdata['nick'] . "') OR nick = ('" . $nick_slug . "')")) {
 				$tpl->newBlock('invalid-nick-taken');
 				$regdata['nick'] = '';
 				$regdata['nickok'] = false;
@@ -73,12 +76,14 @@ if (!$auth->ok) {
 		}
 
 		//check password
-		if (strlen($_POST['omnomnom']) < 6) {
+		$post_pass = $_POST['omnomnom'] ?? '';
+		$post_pass2 = $_POST['url'] ?? '';
+		if (strlen($post_pass) < 6) {
 			$tpl->newBlock('invalid-pass-len');
-		} elseif ($_POST['omnomnom'] !== $_POST['url']) {
+		} elseif ($post_pass !== $post_pass2) {
 			$tpl->newBlock('invalid-pass-mach');
 		} else {
-			$regdata['pass'] = password_hash($_POST['omnomnom'], PASSWORD_BCRYPT, ["cost" => 14]);
+			$regdata['pass'] = password_hash($post_pass, PASSWORD_BCRYPT, ["cost" => 14]);
 			$regdata['passok'] = true;
 		}
 
@@ -93,7 +98,7 @@ if (!$auth->ok) {
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
 		$data = ['secret' => '6Lc4eR0TAAAAANtY0bNSr0rcXat9-sgDwWRurRIq',
 		         'response' => $captcha,
-		         'remoteip' => $_SERVER['REMOTE_ADDR']];
+		         'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''];
 
 		$options = [
 		    'http' => [
@@ -104,15 +109,16 @@ if (!$auth->ok) {
 		];
 
 		$context  = stream_context_create($options);
-		$response = json_decode(file_get_contents($url, false, $context));
+		$resp_raw = @file_get_contents($url, false, $context);
+		$response = $resp_raw ? json_decode($resp_raw) : null;
 
-	    if($response->success === true) {
+	    if (!empty($response->success) && $response->success === true) {
 			$regdata['botsok'] = true;
 		} else {
 			$tpl->newBlock('invalid-bots');
 		}
 
-		if ($_POST['agree']) {
+		if (!empty($_POST['agree'])) {
 			$regdata['agree'] = true;
 		} else {
 			$tpl->newBlock('invalid-agree');

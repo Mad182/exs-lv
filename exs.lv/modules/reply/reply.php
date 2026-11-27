@@ -2,8 +2,8 @@
 
 if ($auth->ok) {
 
-	$page = (int) $_GET['var1'];
-	$comment = (int) $_GET['var2'];
+	$page = (int) ($_GET['var1'] ?? 0);
+	$comment = (int) ($_GET['var2'] ?? 0);
 
 	$page = $db->get_row("SELECT * FROM pages WHERE id = '$page'");
 
@@ -21,13 +21,13 @@ if ($auth->ok) {
 		die('Kļūdains lapas vai komentāra ID');
 	}
 
-	$author = $db->get_row("SELECT * FROM users WHERE id = '$comment->author'");
+	$author = get_user($comment->author);
 
 	$tpl->newBlock('rpl-form');
 	$tpl->assign([
 		'page' => $page->id,
 		'comment' => $comment->id,
-		'nick' => h($author->nick),
+		'nick' => h($author ? $author->nick : ''),
 		'xsrf' => make_token('reply')
 	]);
 } else {

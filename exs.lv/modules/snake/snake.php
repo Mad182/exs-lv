@@ -113,7 +113,7 @@ if ($active_sub === 'top') {
 				$icon = $i . '.';
 			}
 
-			$user = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$score->user_id'");
+			$user = get_user($score->user_id);
 			if ($user) {
 				$tpl->newBlock('top-node');
 				$tpl->assign([
@@ -152,7 +152,7 @@ if ($active_sub === 'top') {
 				$icon = $i . '.';
 			}
 
-			$user = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$score->user_id'");
+			$user = get_user($score->user_id);
 			if ($user) {
 				$tpl->newBlock('top-node');
 				$tpl->assign([
@@ -192,7 +192,7 @@ if ($active_sub === 'top') {
 	if ($sidebar_scores) {
 		$i = 1;
 		foreach ($sidebar_scores as $score) {
-			$user = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$score->user_id'");
+			$user = get_user($score->user_id);
 			if ($user) {
 				$tpl->newBlock('mini-top-node');
 				$tpl->assign([

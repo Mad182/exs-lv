@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET['skip'])) {
-	$skip = (int) $_GET['skip'];
+	$skip = max(0, (int) $_GET['skip']);
 } else {
 	$skip = 0;
 }

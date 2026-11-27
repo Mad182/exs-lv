@@ -73,8 +73,11 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				$icon = $i . '.';
 			}
 
+			$usr = get_user($topuser->user_id);
+			if (!$usr) {
+				continue;
+			}
 			$tpl->newBlock('top-node');
-			$usr = $db->get_row("SELECT `nick`,`level` FROM users WHERE id = '$topuser->user_id'");
 			$tpl->assign([
 				'user-place' => $icon,
 				'user-special' => $special,
@@ -83,7 +86,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				'user-nick' => usercolor($usr->nick, $usr->level),
 				'user-ig_points' => $topuser->points,
 				'user-ig_done' => $topuser->games,
-				'p-game' => round($topuser->points / $topuser->games, 3),
+				'p-game' => $topuser->games > 0 ? round($topuser->points / $topuser->games, 3) : 0,
 			]);
 			$i++;
 		}
@@ -117,8 +120,11 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				$icon = $i . '.';
 			}
 
+			$usr = get_user($topuser->user_id);
+			if (!$usr) {
+				continue;
+			}
 			$tpl->newBlock('top-node');
-			$usr = $db->get_row("SELECT `nick`,`level` FROM users WHERE id = '$topuser->user_id'");
 			$tpl->assign([
 				'user-place' => $icon,
 				'user-special' => $special,
@@ -127,7 +133,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				'user-nick' => usercolor($usr->nick, $usr->level),
 				'user-ig_points' => $topuser->points,
 				'user-ig_done' => $topuser->games,
-				'p-game' => round($topuser->points / $topuser->games, 3),
+				'p-game' => $topuser->games > 0 ? round($topuser->points / $topuser->games, 3) : 0,
 			]);
 			$i++;
 		}
@@ -181,8 +187,14 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 
 		$word = $db->get_row("SELECT * FROM `wg_words` WHERE `id` = '$game->word_id'");
 
-		$wrong = unserialize($game->wrong);
-		$correct = unserialize($game->correct);
+		$wrong = @unserialize($game->wrong, ['allowed_classes' => false]);
+		$correct = @unserialize($game->correct, ['allowed_classes' => false]);
+		if (!is_array($wrong)) {
+			$wrong = [];
+		}
+		if (!is_array($correct)) {
+			$correct = [];
+		}
 		$guessed = array_merge($wrong, $correct);
 
 		if (isset($_GET['guess']) && in_array($_GET['guess'], $letters) && !in_array($_GET['guess'], $guessed)) {
@@ -276,7 +288,7 @@ if ((isset($_GET['act']) && $_GET['act'] == 'top') or (isset($_GET['var1']) && $
 				reset_wg_id();
 			}
 
-			$db->query("UPDATE wg_games SET correct = '" . serialize($correct) . "', wrong = '" . serialize($wrong) . "' WHERE id = '$game_id' LIMIT 1");
+			$db->query("UPDATE wg_games SET correct = '" . sanitize(serialize($correct)) . "', wrong = '" . sanitize(serialize($wrong)) . "' WHERE id = '$game_id' LIMIT 1");
 		} else {
 			// LOSS logic
 			$outstr = '';

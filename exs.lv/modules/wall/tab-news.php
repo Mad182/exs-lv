@@ -4,7 +4,7 @@
  * Sākumlapas jaunumi
  */
 if (isset($_GET['skip'])) {
-	$skip = (int) $_GET['skip'];
+	$skip = max(0, (int) $_GET['skip']);
 } else {
 	$skip = 0;
 }
@@ -148,6 +148,7 @@ $articles = $db->get_results("
 	LIMIT
 		0,2");
 
+if (!empty($articles)) {
 foreach ($articles as $article) {
 
 	$tpl->newBlock('index-blogs-node');
@@ -179,6 +180,7 @@ foreach ($articles as $article) {
 		'intro' => trim_intro($article->text, $len),
 		'av' => $av
 	]);
+}
 }
 
 $list_cats = [
@@ -212,6 +214,10 @@ foreach ($list_cats as $cat_type => $cat_id) {
 			`pages`.`id` DESC
 		LIMIT
 			0,2");
+
+	if (empty($articles)) {
+		continue;
+	}
 
 	foreach ($articles as $article) {
 

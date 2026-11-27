@@ -6,14 +6,14 @@
 $tpl->newBlock('user-profile-edit');
 
 //write changes
-if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
+if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'] ?? '')) {
 
-	$inprofile->skype = input2db($_POST['edit-skype'], 20);
-	$inprofile->yt_name = input2db($_POST['edit-yt_name'], 20);
-	$inprofile->twitter = input2db($_POST['edit-twitter'], 30);
+	$inprofile->skype = input2db($_POST['edit-skype'] ?? '', 20);
+	$inprofile->yt_name = input2db($_POST['edit-yt_name'] ?? '', 20);
+	$inprofile->twitter = input2db($_POST['edit-twitter'] ?? '', 30);
 
 	if ($inprofile->karma >= 500 || im_mod() || $inprofile->custom_title_paid) {
-		$inprofile->custom_title = input2db($_POST['edit-custom_title'], 32);
+		$inprofile->custom_title = input2db($_POST['edit-custom_title'] ?? '', 32);
 	}
 
 	$inprofile->web = '';
@@ -30,8 +30,8 @@ if (isset($_POST['submit']) && check_token('edituser', $_POST['xsrf_token'])) {
 
 	//some users are not allowed to add signature
 	if (!empty($inprofile->allow_signature)) {
-		$inprofile->signature = htmlpost2db($_POST['edit-signature']);
-		$inprofile->about = htmlpost2db($_POST['edit-about']);
+		$inprofile->signature = htmlpost2db($_POST['edit-signature'] ?? '');
+		$inprofile->about = htmlpost2db($_POST['edit-about'] ?? '');
 	}
 
 	$db->update('users', $auth->id, [

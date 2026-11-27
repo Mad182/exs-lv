@@ -138,7 +138,7 @@ if ($act == 'top') {
 				$icon = $i . '.';
 			}
 
-			$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
+			$usr = get_user($topuser->user_id);
 			if ($usr) {
 				$tpl->newBlock('top-node');
 				$guesses_cnt = floor($topuser->score / 1000);
@@ -180,7 +180,7 @@ if ($act == 'top') {
 				$icon = $i . '.';
 			}
 
-			$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
+			$usr = get_user($topuser->user_id);
 			if ($usr) {
 				$tpl->newBlock('top-node');
 				$guesses_cnt = floor($topuser->score / 1000);

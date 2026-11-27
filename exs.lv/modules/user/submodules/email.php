@@ -12,17 +12,19 @@ $tpl->newBlock('user-profile-email');
 //write changes
 if (isset($_POST['submit'])) {
 
-	if (password_verify($_POST['password-old'], $inprofile->password) || ($inprofile->password == '' && !empty($inprofile->facebook_id)) && check_token('email', $_POST['xsrf_token'])) {
+	if ((password_verify($_POST['password-old'] ?? '', $inprofile->password) || ($inprofile->password == '' && !empty($inprofile->facebook_id))) && check_token('email', $_POST['xsrf_token'] ?? '')) {
 
-		if (filter_var($_POST['edit-mail'], FILTER_VALIDATE_EMAIL)) {
+		$new_mail = $_POST['edit-mail'] ?? '';
+		if (filter_var($new_mail, FILTER_VALIDATE_EMAIL)) {
 
-			if ($db->get_row("SELECT * FROM users WHERE mail = ('" . sanitize($_POST['edit-mail']) . "')") || $db->get_row("SELECT * FROM users_tmp WHERE mail = ('" . sanitize($_POST['edit-mail']) . "')")) {
+			$sanitized_mail = sanitize($new_mail);
+			if ($db->get_row("SELECT id FROM users WHERE mail = ('" . $sanitized_mail . "')") || $db->get_row("SELECT id FROM users_tmp WHERE mail = ('" . $sanitized_mail . "')")) {
 				set_flash('<strong>Kļūda:</strong> šī e-pasta adrese jau tiek lietota!', 'error');
 			} else {
 
-				$inprofile->mail = email2db($_POST['edit-mail']);
+				$inprofile->mail = email2db($new_mail);
 
-				$email_token = substr(hash('sha256', uniqid() . $inprofile->mail . $auth->ip), 0, 16);
+				$email_token = bin2hex(random_bytes(8));
 
 				//link protocol
 				$proto = get_protocol($lang);

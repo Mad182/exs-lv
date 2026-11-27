@@ -185,8 +185,9 @@ if (isset($_POST['block-reason'])) {
 				LIMIT " . $remove_count . "
 			");
 			if ($get_ids) {
+				$ids = [];
 				foreach ($get_ids as $single_id) {
-					$ids[] = $single_id->id;
+					$ids[] = (int) $single_id->id;
 				}
 				// noņem visus norādītos brīdinājumus
 				if (!empty($ids)) {
@@ -323,7 +324,7 @@ $tpl->newBlock('user-profile-block');
 if ($is_banned) {
 
 	$usr = get_user($find_ban->author);
-	$usr_nick = usercolor($usr->nick, $usr->level, false, $usr->id);
+	$usr_nick = $usr ? usercolor($usr->nick, $usr->level, false, $usr->id) : '<em>dzēsts</em>';
 
 	$tpl->newBlock('has-active-ban');
 	$tpl->assign([
@@ -331,7 +332,7 @@ if ($is_banned) {
 		'from' => date('d.m.Y, H:i', $find_ban->time),
 		'until' => date('d.m.Y, H:i', $find_ban->time + $find_ban->length),
 		'author' => $usr_nick,
-		'id' => $usr->id
+		'id' => $usr ? $usr->id : 0
 	]);
 } else {
 	$tpl->newBlock('ban-form');

@@ -32,7 +32,7 @@ if ($auth->ok) {
 		}
 	}
 
-	$vc = (int) $_GET['vc'];
+	$vc = (int) ($_GET['vc'] ?? 0);
 
 	$comment = $db->get_row("SELECT * FROM `" . $table . "` WHERE `id` = '$vc'");
 
@@ -53,7 +53,7 @@ if ($auth->ok) {
 		$check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
 
 		if (!empty($comment->vote_users)) {
-			$voters = @unserialize($comment->vote_users);
+			$voters = @unserialize($comment->vote_users, ['allowed_classes' => false]);
 			if (!is_array($voters)) {
 				$voters = [];
 			}

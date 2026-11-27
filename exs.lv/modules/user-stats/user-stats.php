@@ -44,7 +44,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'json') {
 				'posts' => (int) $user->posts,
 				'karma' => (int) $user->karma,
 				'days' => (int) $days,
-				'type' => $types[$user->level],
+				'type' => $types[$user->level] ?? 'user',
 				'last_seen' => $user->lastseen,
 				'nick_history' => $history,
 				'avatar' => $avatar

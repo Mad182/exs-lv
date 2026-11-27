@@ -26,7 +26,7 @@ if(!empty($auth->firstpage) && $auth->firstpage === 'wall' && empty($_GET['var1'
 	}
 
 	require(CORE_PATH . '/modules/wall/tab-news.php');
-	$home_skip = isset($_GET['skip']) ? (int) $_GET['skip'] : 0;
+	$home_skip = isset($_GET['skip']) ? max(0, (int) $_GET['skip']) : 0;
 	if ($home_skip > 0) {
 		$page_num = (int) floor($home_skip / 5) + 1;
 		$page_title = 'Spēļu un izklaides portāls (lapa ' . $page_num . ')';

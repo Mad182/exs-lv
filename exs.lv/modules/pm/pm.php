@@ -20,31 +20,35 @@ if (!$auth->ok) {
 			$from = $pm->from_uid;
 			if (empty($pm->imap_email)) {
 				$hmsgs = $db->get_results("SELECT * FROM pm WHERE (`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid') ORDER BY `date` DESC LIMIT 100");
-				foreach ($hmsgs as $hmsg) {
-					$fromuser = get_user($hmsg->from_uid);
-					$tpl->newBlock('pm-h-node');
-					$tpl->assign([
-						'title' => $hmsg->title,
-						'text' => add_smile($hmsg->text),
-						'date' => $hmsg->date,
-						'from_nick' => $fromuser->nick
-					]);
+				if (!empty($hmsgs)) {
+					foreach ($hmsgs as $hmsg) {
+						$fromuser = get_user($hmsg->from_uid);
+						$tpl->newBlock('pm-h-node');
+						$tpl->assign([
+							'title' => $hmsg->title,
+							'text' => add_smile($hmsg->text),
+							'date' => $hmsg->date,
+							'from_nick' => $fromuser ? $fromuser->nick : ''
+						]);
+					}
 				}
 			} else {
-				$hmsgs = $db->get_results("SELECT * FROM pm WHERE ((`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid')) AND imap_email = '$pm->imap_email' ORDER BY `date` DESC LIMIT 40");
-				foreach ($hmsgs as $hmsg) {
-					$tpl->newBlock('pm-h-node');
-					if (!empty($hmsg->imap_name)) {
-						$from = $hmsg->imap_name . ' (' . $hmsg->imap_email . ')';
-					} else {
-						$from = $hmsg->imap_email;
+				$hmsgs = $db->get_results("SELECT * FROM pm WHERE ((`from_uid` = $pm->to_uid AND `to_uid` = $pm->from_uid) OR (from_uid = '$pm->from_uid' AND to_uid = '$pm->to_uid')) AND imap_email = '" . sanitize($pm->imap_email) . "' ORDER BY `date` DESC LIMIT 40");
+				if (!empty($hmsgs)) {
+					foreach ($hmsgs as $hmsg) {
+						$tpl->newBlock('pm-h-node');
+						if (!empty($hmsg->imap_name)) {
+							$from = $hmsg->imap_name . ' (' . $hmsg->imap_email . ')';
+						} else {
+							$from = $hmsg->imap_email;
+						}
+						$tpl->assign([
+							'title' => $hmsg->title,
+							'text' => add_smile($hmsg->text),
+							'date' => $hmsg->date,
+							'from_nick' => $from
+						]);
 					}
-					$tpl->assign([
-						'title' => $hmsg->title,
-						'text' => add_smile($hmsg->text),
-						'date' => $hmsg->date,
-						'from_nick' => $from
-					]);
 				}
 			}
 		}
@@ -81,8 +85,8 @@ if (!$auth->ok) {
 					redirect();
 				}
 
-				$send_title = $_POST['compose-title'];
-				$send_body = htmlpost2db($_POST['compose-body']);
+				$send_title = $_POST['compose-title'] ?? '';
+				$send_body = htmlpost2db($_POST['compose-body'] ?? '');
 
 				if (get_user($send_to) && !empty($send_body)) {
 					$send_title = sanitize(trim(stripslashes(h(strip_tags($send_title)))));
@@ -143,28 +147,33 @@ if (!$auth->ok) {
 			$friends = $db->get_results("SELECT friend1,friend2 FROM friends WHERE (friend1 = ('" . $auth->id . "') OR friend2 = ('" . $auth->id . "')) AND confirmed = '1' ORDER BY `date_confirmed` DESC");
 
 			$doneselect = false;
-			foreach ($friends as $friend) {
-				if ($friend->friend1 == $auth->id) {
-					$theother = $friend->friend2;
-				} else {
-					$theother = $friend->friend1;
-				}
-				$friendinfo = get_user($theother);
+			if (!empty($friends)) {
+				foreach ($friends as $friend) {
+					if ($friend->friend1 == $auth->id) {
+						$theother = $friend->friend2;
+					} else {
+						$theother = $friend->friend1;
+					}
+					$friendinfo = get_user($theother);
+					if (!$friendinfo) {
+						continue;
+					}
 
-				//selected
-				if (isset($_GET['to']) && $_GET['to'] == $theother) {
-					$selected_to = ' selected="selected"';
-					$doneselect = true;
-				} else {
-					$selected_to = '';
-				}
+					//selected
+					if (isset($_GET['to']) && $_GET['to'] == $theother) {
+						$selected_to = ' selected="selected"';
+						$doneselect = true;
+					} else {
+						$selected_to = '';
+					}
 
-				$tpl->newBlock('pm-compose-option');
-				$tpl->assign([
-					'friend-id' => $theother,
-					'friend-nick' => h($friendinfo->nick),
-					'friend-sel' => $selected_to
-				]);
+					$tpl->newBlock('pm-compose-option');
+					$tpl->assign([
+						'friend-id' => $theother,
+						'friend-nick' => h($friendinfo->nick),
+						'friend-sel' => $selected_to
+					]);
+				}
 			}
 
 			if (isset($_GET['to']) && !$doneselect && $_GET['to'] != $auth->id) {
@@ -181,7 +190,7 @@ if (!$auth->ok) {
 			} elseif (isset($_GET['replyto']) && !$doneselect) {
 				$reply_to = (int) $_GET['replyto'];
 				$reply_content = $db->get_row("SELECT * FROM `pm` WHERE `id` = " . $reply_to . " AND `to_uid` = " . $auth->id);
-				$reply_user = get_user($reply_content->from_uid);
+				$reply_user = $reply_content ? get_user($reply_content->from_uid) : false;
 				if ($reply_content && $reply_user) {
 					$tpl->newBlock('pm-compose-option');
 					$tpl->assign([
@@ -242,7 +251,7 @@ if (!$auth->ok) {
 				$tpl->newBlock('pm-list-outbox');
 
 				if (isset($_GET['skip'])) {
-					$skip = (int) $_GET['skip'];
+					$skip = max(0, (int) $_GET['skip']);
 				} else {
 					$skip = 0;
 				}
@@ -317,7 +326,9 @@ if (!$auth->ok) {
 				$q_string = str_replace([',', '.', '+', '-', '_'], ' ', $_GET['q']);
 				$q_string = strip_tags($q_string);
 				$tpl->assign('qstr', h($q_string));
-				$q_strings = explode(' ', $q_string);
+				$q_strings = array_values(array_filter(array_map('trim', explode(' ', $q_string)), function($s) {
+					return $s !== '';
+				}));
 				$cond = '';
 				foreach ($q_strings as $str) {
 					$cond .= " AND (`text` LIKE '%" . sanitize($str) . "%' OR `title` LIKE '%" . sanitize($str) . "%')";
@@ -425,7 +436,7 @@ if (!$auth->ok) {
 				$tpl->newBlock('pm-list-inbox');
 
 				if (isset($_GET['skip'])) {
-					$skip = (int) $_GET['skip'];
+					$skip = max(0, (int) $_GET['skip']);
 				} else {
 					$skip = 0;
 				}

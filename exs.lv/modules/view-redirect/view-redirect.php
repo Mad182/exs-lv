@@ -1,10 +1,14 @@
 <?php
 
-if($_GET['var1'] == 'Flash-speles' && !empty($_GET['var2'])) {
-	redirect('/flash-speles/'.strtolower($_GET['var2']), true);
+if (isset($_GET['var1']) && $_GET['var1'] == 'Flash-speles' && !empty($_GET['var2'])) {
+	redirect('/flash-speles/' . strtolower($_GET['var2']), true);
 }
 
-$cat = get_cat($_GET['var1']);
+$cat = isset($_GET['var1']) ? get_cat($_GET['var1']) : false;
 
-redirect('/'.$cat->textid, true);
+if (!empty($cat)) {
+	redirect('/' . $cat->textid, true);
+}
+
+redirect('/', true);
 

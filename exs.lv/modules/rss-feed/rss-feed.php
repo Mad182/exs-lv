@@ -23,13 +23,16 @@ if ($lang == 3) {
 }
 
 if (isset($_GET['var1']) && $_GET['var1'] == 'all' || !isset($_GET['var1']) && $lang == 3) {
-	$articles = $db->get_results("SELECT * FROM `pages` WHERE `lang` = '$lang' ORDER BY `date` DESC LIMIT 20");
+	$articles = $db->get_results("SELECT * FROM `pages` WHERE `lang` = '$lang' AND `needs_review` = 0 AND `private` = 0 ORDER BY `date` DESC LIMIT 20");
 	$title = 'Visi raksti - ' . $site_title;
 } elseif (isset($_GET['var1']) && $cat = get_cat($_GET['var1'])) {
-	$articles = $db->get_results("SELECT * FROM `pages` WHERE `category` = '$cat->id' AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 20");
+	$articles = $db->get_results("SELECT * FROM `pages` WHERE `category` = '$cat->id' AND `lang` = '$lang' AND `needs_review` = 0 AND `private` = 0 ORDER BY `date` DESC LIMIT 20");
 	$title = $cat->title . ' - ' . $site_title;
+} elseif (!empty($index_categories)) {
+	$articles = $db->get_results("SELECT * FROM `pages` WHERE `category` IN(" . implode(',', $index_categories) . ") AND `lang` = '$lang' AND `needs_review` = 0 AND `private` = 0 ORDER BY `date` DESC LIMIT 20");
+	$title = $site_title;
 } else {
-	$articles = $db->get_results("SELECT * FROM `pages` WHERE `category` IN(" . implode(',', $index_categories) . ") AND `lang` = '$lang' ORDER BY `date` DESC LIMIT 20");
+	$articles = [];
 	$title = $site_title;
 }
 
@@ -64,8 +67,8 @@ if (!empty($articles)) {
 			'link' => h($url),
 			'description' => h($text),
 			'date' => gmdate('r', strtotime($article->date)),
-			'creator' => h($author->nick),
-			'category' => h($cat->title)
+			'creator' => $author ? h($author->nick) : '',
+			'category' => $cat ? h($cat->title) : ''
 		]);
 	}
 

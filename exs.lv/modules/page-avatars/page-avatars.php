@@ -1,26 +1,28 @@
 <?php
 
-$page = intval(str_replace('', '', $_GET['img']));
+$page = intval($_GET['img'] ?? 0);
 
-$pinfo = $db->get_row("SELECT * FROM `pages` WHERE `id` = '$page'");
+$pinfo = $page > 0 ? $db->get_row("SELECT * FROM `pages` WHERE `id` = '$page'") : null;
 
 $original = 'modules/forums/images/generic.png';
 
-if ($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
-	$original = IMG_PATH . $avatar->image;
-} elseif (!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
-	$original = $pinfo->avatar;
-} else {
-	$uinfo = get_user($pinfo->author);
-
-	if (!empty($uinfo->avatar) && file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $uinfo->avatar)) {
-		$original = CORE_PATH . '/dati/bildes/useravatar/' . $uinfo->avatar;
+if ($pinfo) {
+	if ($pinfo->category == 80 && $avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$pinfo->id' LIMIT 1")) {
+		$original = IMG_PATH . $avatar->image;
+	} elseif (!empty($pinfo->avatar) && file_exists($pinfo->avatar)) {
+		$original = $pinfo->avatar;
 	} else {
+		$uinfo = get_user($pinfo->author);
 
-		$category = get_cat($pinfo->category);
+		if (!empty($uinfo->avatar) && file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $uinfo->avatar)) {
+			$original = CORE_PATH . '/dati/bildes/useravatar/' . $uinfo->avatar;
+		} else {
 
-		if (!empty($category->icon) && file_exists($category->icon)) {
-			$original = $category->icon;
+			$category = get_cat($pinfo->category);
+
+			if (!empty($category->icon) && file_exists($category->icon)) {
+				$original = $category->icon;
+			}
 		}
 	}
 }

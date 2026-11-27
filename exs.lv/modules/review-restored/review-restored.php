@@ -20,27 +20,29 @@ $robotstag[] = 'noindex';
 // POST Actions: Approve, Save, Reject
 // -------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-	if (!check_token('review_action', $_POST['xsrf_token'])) {
+	if (!check_token('review_action', $_POST['xsrf_token'] ?? '')) {
 		set_flash('Nederīgs drošības tokens. Lūdzu, mēģini vēlreiz.', 'error');
 		redirect('/review-restored');
 	}
 
 	$action = sanitize($_POST['action']);
-	$reviewId = (int)$_POST['review_id'];
-	$pageId = (int)$_POST['page_id'];
+	$reviewId = (int) ($_POST['review_id'] ?? 0);
 
 	$revRow = $db->get_row("SELECT * FROM restored_articles_review WHERE id = {$reviewId} LIMIT 1");
 	if (!$revRow) {
 		set_flash('Pārbaudes ieraksts netika atrasts!', 'error');
 		redirect('/review-restored');
 	}
+	$pageId = (int) $revRow->page_id;
 
 	if ($action === 'approve') {
-		$title = sanitize(trim($_POST['title']));
-		$category = (int)$_POST['category'];
-		$text = htmlpost2db(trim($_POST['text']));
-		$date = sanitize(trim($_POST['date']));
-		$introText = trim(strip_tags($_POST['text']));
+		$rawTitle = trim($_POST['title'] ?? '');
+		$title = sanitize($rawTitle);
+		$category = (int) ($_POST['category'] ?? 0);
+		$rawText = trim($_POST['text'] ?? '');
+		$text = htmlpost2db($rawText);
+		$date = sanitize(trim($_POST['date'] ?? ''));
+		$introText = trim(strip_tags($rawText));
 		$intro = (mb_strlen($introText) > 280) ? mb_substr($introText, 0, 280) . '...' : $introText;
 		$metaDesc = mb_substr($introText, 0, 160);
 
@@ -49,19 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 		// 1. Update page in `pages` table
 		$db->query("UPDATE pages SET
-			title = '" . sanitize($title) . "',
+			title = '{$title}',
 			category = {$category},
-			text = '" . sanitize($text) . "',
+			text = '{$text}',
 			intro = '" . sanitize($intro) . "',
 			meta_description = '" . sanitize($metaDesc) . "',
-			date = '" . sanitize($date) . "',
+			date = '{$date}',
 			needs_review = 0,
 			private = 0
 		WHERE id = {$pageId} LIMIT 1");
 
 		// 2. Update status in `restored_articles_review`
 		$db->query("UPDATE restored_articles_review SET
-			title = '" . sanitize($title) . "',
+			title = '{$title}',
 			category_id = {$category},
 			category_name = '" . sanitize($catTitle) . "',
 			status = 'approved',
@@ -73,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 		update_stats($category);
 		$m->flush();
 
-		set_flash('Raksts &quot;' . h($title) . '&quot; ir veiksmīgi apstiprināts un publicēts!', 'success');
+		set_flash('Raksts &quot;' . h($rawTitle) . '&quot; ir veiksmīgi apstiprināts un publicēts!', 'success');
 
 		// Find next pending article in comment count order
 		$currentComments = (int)$revRow->comment_count;
@@ -94,27 +96,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 		}
 
 	} elseif ($action === 'save') {
-		$title = sanitize(trim($_POST['title']));
-		$category = (int)$_POST['category'];
-		$text = htmlpost2db(trim($_POST['text']));
-		$date = sanitize(trim($_POST['date']));
-		$introText = trim(strip_tags($_POST['text']));
+		$rawTitle = trim($_POST['title'] ?? '');
+		$title = sanitize($rawTitle);
+		$category = (int) ($_POST['category'] ?? 0);
+		$rawText = trim($_POST['text'] ?? '');
+		$text = htmlpost2db($rawText);
+		$date = sanitize(trim($_POST['date'] ?? ''));
+		$introText = trim(strip_tags($rawText));
 		$intro = (mb_strlen($introText) > 280) ? mb_substr($introText, 0, 280) . '...' : $introText;
 		$metaDesc = mb_substr($introText, 0, 160);
 
 		$catTitle = (string)$db->get_var("SELECT title FROM cat WHERE id = {$category}");
 
 		$db->query("UPDATE pages SET
-			title = '" . sanitize($title) . "',
+			title = '{$title}',
 			category = {$category},
-			text = '" . sanitize($text) . "',
+			text = '{$text}',
 			intro = '" . sanitize($intro) . "',
 			meta_description = '" . sanitize($metaDesc) . "',
-			date = '" . sanitize($date) . "'
+			date = '{$date}'
 		WHERE id = {$pageId} LIMIT 1");
 
 		$db->query("UPDATE restored_articles_review SET
-			title = '" . sanitize($title) . "',
+			title = '{$title}',
 			category_id = {$category},
 			category_name = '" . sanitize($catTitle) . "'
 		WHERE id = {$reviewId} LIMIT 1");
@@ -341,9 +345,8 @@ if (isset($_GET['review'])) {
 
 			$authorNick = 'Lietotājs #' . $c->author;
 			if ($c->author > 0) {
-				if (!isset($usersCache[$c->author])) {
-					$uRow = $db->get_row("SELECT nick, level FROM users WHERE id = {$c->author} LIMIT 1");
-					$usersCache[$c->author] = $uRow;
+				if (!array_key_exists($c->author, $usersCache)) {
+					$usersCache[$c->author] = get_user($c->author);
 				}
 				if (!empty($usersCache[$c->author])) {
 					$authorNick = usercolor($usersCache[$c->author]->nick, $usersCache[$c->author]->level, false, $c->author);
@@ -371,11 +374,19 @@ if (isset($_GET['review'])) {
 // -------------------------------------------------------------
 $tpl->newBlock('review-list');
 
-// Compute statistics
-$statPending = (int)$db->get_var("SELECT count(*) FROM restored_articles_review WHERE status = 'pending'");
-$statApproved = (int)$db->get_var("SELECT count(*) FROM restored_articles_review WHERE status = 'approved'");
-$statRejected = (int)$db->get_var("SELECT count(*) FROM restored_articles_review WHERE status = 'rejected'");
-$statComments = (int)$db->get_var("SELECT coalesce(sum(comment_count), 0) FROM restored_articles_review");
+// Compute statistics in a single query
+$statsRow = $db->get_row("
+	SELECT
+		SUM(status = 'pending') AS cnt_pending,
+		SUM(status = 'approved') AS cnt_approved,
+		SUM(status = 'rejected') AS cnt_rejected,
+		COALESCE(SUM(comment_count), 0) AS total_comments
+	FROM restored_articles_review
+");
+$statPending = (int) ($statsRow->cnt_pending ?? 0);
+$statApproved = (int) ($statsRow->cnt_approved ?? 0);
+$statRejected = (int) ($statsRow->cnt_rejected ?? 0);
+$statComments = (int) ($statsRow->total_comments ?? 0);
 
 $tpl->assign([
 	'stat-pending' => number_format($statPending, 0, '', ' '),

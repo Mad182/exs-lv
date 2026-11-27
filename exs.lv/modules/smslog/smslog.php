@@ -9,7 +9,7 @@ if ($auth->level == 1) {
 			$user = get_user($log->message);
 			$tpl->assign([
 				'id' => $log->id,
-				'nick' => $user->nick,
+				'nick' => $user ? $user->nick : '',
 				'message' => $log->message,
 				'suspended' => $log->suspended,
 				'message_id' => $log->message_id,
