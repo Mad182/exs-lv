@@ -115,7 +115,7 @@ if ($resps) {
 		}
 
 		if (!empty($resp->decos)) {
-			$decos = @unserialize($resp->decos);
+			$decos = @unserialize($resp->decos, ['allowed_classes' => false]);
 			if (is_array($decos) && !empty($decos)) {
 				$di = 0;
 				foreach ($decos as $deco) {
@@ -185,22 +185,65 @@ if ($resps) {
 
 $time = $db->get_var("SELECT `date` FROM `miniblog` WHERE `parent` = '" . $mbid . "' AND `id` = '$lastid'");
 if ($time) {
-	$time = strtotime($time);
-	$json['et'] = $time;
-	$compare = max($time, $lastedit);
-	$edit_since = $db->get_results("SELECT
-		`text`, `id`, `edit_time`
-		FROM
-		`miniblog`
-		WHERE
-		`parent` = " . $mbid . " AND
-		`edit_time` > " . $compare);
-	if ($edit_since) {
-		foreach ($edit_since as $edit) {
-			if ($edit->edit_time > $json['et']) {
-				$json['et'] = $edit->edit_time;
+	$can_view_edits = true;
+	$parent_mb = $db->get_row("SELECT `groupid`, `private` FROM `miniblog` WHERE `id` = '" . $mbid . "' LIMIT 1");
+	if (!$parent_mb) {
+		$can_view_edits = false;
+	} else {
+		$pgid = (int) $parent_mb->groupid;
+		if ($pgid > 0) {
+			$group = $db->get_row("SELECT `id`, `public`, `owner` FROM `clans` WHERE `id` = '$pgid' LIMIT 1");
+			if (!$group) {
+				$can_view_edits = false;
+			} elseif (!$group->public) {
+				if (!isset($auth)) {
+					if (session_status() === PHP_SESSION_NONE) {
+						session_start();
+					}
+					require_once(CORE_PATH . '/includes/class.auth.php');
+					$site_access = get_site_access();
+					$auth = new Auth();
+				}
+				if (!$auth->ok) {
+					$can_view_edits = false;
+				} elseif ($auth->id != $group->owner && $auth->id != 1) {
+					$can_view_edits = (bool) $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' AND `approve` = '1'");
+				}
 			}
-			$json['edits'][$edit->id] = add_smile($edit->text);
+		} elseif (!empty($parent_mb->private)) {
+			if (!isset($auth)) {
+				if (session_status() === PHP_SESSION_NONE) {
+					session_start();
+				}
+				require_once(CORE_PATH . '/includes/class.auth.php');
+				$site_access = get_site_access();
+				$auth = new Auth();
+			}
+			if (!$auth->ok) {
+				$can_view_edits = false;
+			}
+		}
+	}
+
+	if ($can_view_edits) {
+		$time = strtotime($time);
+		$json['et'] = $time;
+		$compare = max($time, $lastedit);
+		$edit_since = $db->get_results("SELECT
+			`text`, `id`, `edit_time`
+			FROM
+			`miniblog`
+			WHERE
+			`parent` = " . $mbid . " AND
+			`removed` = 0 AND
+			`edit_time` > " . $compare);
+		if ($edit_since) {
+			foreach ($edit_since as $edit) {
+				if ($edit->edit_time > $json['et']) {
+					$json['et'] = $edit->edit_time;
+				}
+				$json['edits'][$edit->id] = add_smile($edit->text);
+			}
 		}
 	}
 }

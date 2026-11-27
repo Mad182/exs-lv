@@ -15,6 +15,7 @@
 		var currentGame = $wrapper.data('game') || 'speles';
 		var currentGameTitle = $wrapper.data('game-title') || 'Spēles';
 		var currentUserId = parseInt($wrapper.data('user-id'), 10) || 0;
+		var csrfToken = $('#game-chat-app').data('csrf') || '';
 		var lastId = 0;
 		var pollTimer = null;
 		var isPolling = false;
@@ -295,6 +296,9 @@
 					if (data.last_id && data.last_id > lastId) {
 						lastId = data.last_id;
 					}
+					if (data.csrf_token) {
+						csrfToken = data.csrf_token;
+					}
 
 					// Update active online players
 					updateOnlinePlayers(data.online_players);
@@ -350,7 +354,8 @@
 					data: {
 						message: text,
 						game: currentGame,
-						game_title: currentGameTitle
+						game_title: currentGameTitle,
+						token: csrfToken
 					},
 					success: function (res) {
 						$sendBtn.prop('disabled', false).removeClass('loading');
@@ -397,7 +402,7 @@
 				url: '/game_chat.php?action=delete',
 				type: 'POST',
 				dataType: 'json',
-				data: { id: msgId },
+				data: { id: msgId, token: csrfToken },
 				success: function (res) {
 					if (res && res.success) {
 						var $row = $('#chat-msg-' + msgId);

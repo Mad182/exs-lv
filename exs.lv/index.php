@@ -74,35 +74,7 @@ if (empty($_GET['viewcat'])) {
 }
 
 //izslēdz sesijas botiem, paātrina ielādi un nepiemēslo ar nevajadzīgiem sesiju failiem
-$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-if (
-	strpos($user_agent, "Googlebot") === false &&
-	strpos($user_agent, "Google-Extended") === false &&
-	strpos($user_agent, "bingbot") === false &&
-	strpos($user_agent, "YandexBot") === false &&
-	strpos($user_agent, "Mail.RU_Bot") === false &&
-	strpos($user_agent, "YandexImages") === false &&
-	strpos($user_agent, "Mediapartners") === false &&
-	strpos($user_agent, "SemrushBot") === false &&
-	strpos($user_agent, "CCBot") === false &&
-	strpos($user_agent, "DotBot") === false &&
-	strpos($user_agent, "ClaudeBot") === false &&
-	strpos($user_agent, "GPTBot") === false &&
-	strpos($user_agent, "OAI-SearchBot") === false &&
-	strpos($user_agent, "ChatGPT-User") === false &&
-	strpos($user_agent, "PerplexityBot") === false &&
-	strpos($user_agent, "Applebot") === false &&
-	strpos($user_agent, "DuckDuckBot") === false &&
-	strpos($user_agent, "facebookexternalhit") === false &&
-	strpos($user_agent, "Twitterbot") === false &&
-	strpos($user_agent, "LinkedInBot") === false &&
-	strpos($user_agent, "Discordbot") === false &&
-	strpos($user_agent, "Slackbot") === false &&
-	strpos($user_agent, "WhatsApp") === false &&
-	strpos($user_agent, "Bytespider") === false &&
-	strpos($user_agent, "PetalBot") === false &&
-	strpos($user_agent, "AhrefsBot") === false
-) {
+if (!is_bot_ua()) {
 	session_start();
 }
 
@@ -350,8 +322,10 @@ if ($is_game) {
 $is_miniblog = (isset($_GET['m']) || (isset($category) && in_array($category->textid, ['say', 'miniblogs', 'miniblog'])) || (isset($category) && in_array($category->module, ['miniblogs', 'miniblog'])));
 $is_read = (isset($_GET['viewcat']) && $_GET['viewcat'] === 'read');
 
+$game_info_queried = false;
 if ($is_game && isset($tpl)) {
 	$game_info = $db->get_row("SELECT * FROM `games` WHERE `slug` = '" . sanitize($category->textid) . "' OR `slug` = '" . sanitize($category->module) . "' OR `game_code` = '" . sanitize($category->module) . "' LIMIT 1");
+	$game_info_queried = true;
 	if ($game_info) {
 		$tpl->assignGlobal('game-rate', get_game_rate_html($game_info));
 	}
@@ -505,7 +479,7 @@ $tpl->assignGlobal([
 	'page-loginurl' => $login_url,
 	'page-time' => time(),
 	'page-url' => h($_SERVER['REQUEST_URI']),
-	'page-domain' => $_SERVER['HTTP_HOST'],
+	'page-domain' => h($_SERVER['HTTP_HOST'] ?? 'exs.lv'),
 	'category-url' => isset($category->textid) ? $category->textid : '',
 	'category-module' => isset($category->module) ? $category->module : '',
 	'is-game-page' => (!empty($is_game) ? 'is-game-page' : ''),
@@ -553,8 +527,10 @@ if ($lang !== 1 && $lang !== 3) {
 }
 
 if (!empty($add_css)) {
-	$tpl->newBlock('additional-css');
-	$tpl->assign('filename', implode(',', $add_css));
+	foreach ($add_css as $css_file) {
+		$tpl->newBlock('additional-css');
+		$tpl->assign('filename', $css_file);
+	}
 }
 
 if (!empty($pagepath) && $skin === 'main') {
@@ -582,12 +558,18 @@ if (isset($category) && !isset($_GET['u']) && !isset($_GET['g']) && !isset($_GET
 
 //kreisā kolonna
 if ($tpl_options != 'no-left' && $tpl_options != 'no-left-right') {
-	include(CORE_PATH . '/includes/left_' . $lang . '.php');
+	$left_sidebar_file = CORE_PATH . '/includes/left_' . (int)$lang . '.php';
+	if (is_file($left_sidebar_file)) {
+		include($left_sidebar_file);
+	}
 }
 
 //labā kolonna
 if ($tpl_options != 'no-right' && $tpl_options != 'no-left-right') {
-	include(CORE_PATH . '/includes/right_' . $lang . '.php');
+	$right_sidebar_file = CORE_PATH . '/includes/right_' . (int)$lang . '.php';
+	if (is_file($right_sidebar_file)) {
+		include($right_sidebar_file);
+	}
 }
 
 if ($skin === 'main') {
@@ -610,7 +592,7 @@ if ($skin === 'main') {
 			`clans_members`.`approve` = '1' AND
 			`clans`.`id` = `clans_members`.`clan` AND
 			`clans`.`lang` = '$lang' AND
-			DATE(`clans`.`last_activity`) >= DATE(NOW() - INTERVAL 12 MONTH)
+			`clans`.`last_activity` >= NOW() - INTERVAL 12 MONTH
 		ORDER BY
 			`clans_members`.`moderator` DESC,
 			`clans_members`.`date_added` ASC");
@@ -827,7 +809,7 @@ if (isset($category) && $category->module !== 'speles' && (
 	} elseif (!empty($game_info->icon)) {
 		$game_schema['image'] = 'https://exs.lv' . $game_info->icon;
 	}
-	if (empty($game_info) && isset($db)) {
+	if (empty($game_info) && empty($game_info_queried) && isset($db)) {
 		$game_info = $db->get_row("SELECT * FROM `games` WHERE `slug` = '" . sanitize($category->textid) . "' OR `slug` = '" . sanitize($category->module) . "' OR `game_code` = '" . sanitize($category->module) . "' LIMIT 1");
 	}
 	if (!empty($game_info)) {

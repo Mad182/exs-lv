@@ -15,10 +15,10 @@
  * 6. grupas sākumlapas cilne
  */
 if (!empty($category->content)) {
-	$_GET['var5'] = esr($_GET['var4']);
-	$_GET['var4'] = esr($_GET['var3']);
-	$_GET['var3'] = esr($_GET['var2']);
-	$_GET['var2'] = esr($_GET['var1']);
+	$_GET['var5'] = isset($_GET['var4']) ? esr($_GET['var4']) : null;
+	$_GET['var4'] = isset($_GET['var3']) ? esr($_GET['var3']) : null;
+	$_GET['var3'] = isset($_GET['var2']) ? esr($_GET['var2']) : null;
+	$_GET['var2'] = isset($_GET['var1']) ? esr($_GET['var1']) : null;
 	$_GET['var1'] = $category->content;
 	$group_link = '/' . $category->textid;
 } else {
@@ -949,7 +949,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $auth->ok && check_
 
 	// iekļaus cilnes moduli, ja tāds cilnei ir norādīts
 	if (!empty($tab->module)) {
-		include(CORE_PATH . '/modules/groups/tabs/' . $tab->module . '.php');
+		$tab_mod = basename(mkslug($tab->module));
+		$tab_mod_file = CORE_PATH . '/modules/groups/tabs/' . $tab_mod . '.php';
+		if ($tab_mod !== '' && is_file($tab_mod_file)) {
+			include($tab_mod_file);
+		}
 	}
 	if ($tab) {
 
@@ -1455,7 +1459,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $auth->ok && check_
 	//cilnes moduli var iekļaut arī sākumlapā
 	$module_content = '';
 	if (!empty($group->firstpage_module)) {
-		include(CORE_PATH . '/modules/groups/tabs/' . $group->firstpage_module . '.php');
+		$fp_mod = basename(mkslug($group->firstpage_module));
+		$fp_mod_file = CORE_PATH . '/modules/groups/tabs/' . $fp_mod . '.php';
+		if ($fp_mod !== '' && is_file($fp_mod_file)) {
+			include($fp_mod_file);
+		}
 		$module_content = '<div class="c"></div>' . $module_content . '<div class="c"></div>';
 	}
 

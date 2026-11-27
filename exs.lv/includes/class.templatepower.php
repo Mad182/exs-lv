@@ -272,7 +272,7 @@ class TemplatePower extends TemplatePowerParser {
 			$serializedTPL = $stpl_file;
 		}
 
-		$serializedStuff = unserialize(join('', $serializedTPL));
+		$serializedStuff = unserialize(join('', $serializedTPL), ['allowed_classes' => false]);
 
 		$this->defBlock = $serializedStuff["defBlock"];
 		$this->index = $serializedStuff["index"];

@@ -119,7 +119,7 @@ if ($auth->ok && isset($_POST['new-topic-body'])) {
 if ($auth->ok) {
 
     // raksta dzēšana
-	if (im_mod() && isset($_GET['var1']) && $_GET['var1'] == 'delete') {
+	if (im_mod() && isset($_GET['var1']) && $_GET['var1'] == 'delete' && check_token('delapprove-' . ($_GET['var2'] ?? ''), $_GET['token'] ?? '')) {
 		$delete = (int) ($_GET['var2'] ?? 0);
 		$db->query("UPDATE `approve` SET `removed` = 1 WHERE `id` = '$delete'");
 		@unlink('modules/approve/av_l/' . $delete . '.jpg');
@@ -193,7 +193,8 @@ if ($auth->ok) {
 			'author-link' => (is_valid_user($author) ? '<a href="/user/' . $article->author . '">' . usercolor($author->nick, $author->level, false, $article->author) . '</a>' : ((!empty($author->nick) && (mb_strtolower(trim($author->nick), 'UTF-8') === 'nezināms' || strtolower(trim($author->nick)) === 'nezinams')) ? '<em>nezināms</em>' : '<em>dzēsts</em>')),
 			'aurl' => is_valid_user($author) ? ('/user/' . $article->author) : '#',
 			'article-date' => $article->date,
-            'article-wide' => $article->is_wide
+            'article-wide' => $article->is_wide,
+			'delete-token' => make_token('delapprove-' . $article->id)
 		]);
 
 		if (file_exists('modules/approve/av_l/' . $article->id . '.jpg')) {

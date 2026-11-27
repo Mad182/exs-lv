@@ -36,7 +36,7 @@
 	<tr>
 		<td>{text}</td>
 		<td><a href="/{category-url}{fact-type}&amp;edit={id}">labot</a></td>
-		<td><a class="confirm" href="/{category-url}{fact-type}&amp;delete={id}">dzēst</a></td>
+		<td><a class="confirm" href="/{category-url}{fact-type}&amp;delete={id}&amp;token={token}">dzēst</a></td>
 	</tr>
 	<!-- END BLOCK : facts_admin-list-node-->
 </table>

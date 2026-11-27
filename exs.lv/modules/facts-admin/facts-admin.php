@@ -24,7 +24,7 @@ if (isset($_GET['type']) && $_GET['type'] == 'rs') {
 }
 
 // pievienotā fakta dzēšana
-if (isset($_GET['delete']) && isset($_GET['type'])) {
+if (isset($_GET['delete']) && isset($_GET['type']) && check_token('delfact-' . $_GET['delete'], $_GET['token'] ?? '')) {
 
 	$delete = (int) $_GET['delete'];
 	$db->query("DELETE FROM `" . $fact_type . "` WHERE `id` = '$delete' LIMIT 1");
@@ -98,7 +98,8 @@ if ($facts) {
 		$tpl->assign([
 			'id' => $fact->id,
 			'text' => add_smile($fact->text),
-			'fact-type' => $fact_link
+			'fact-type' => $fact_link,
+			'token' => make_token('delfact-' . $fact->id)
 		]);
 	}
 }

@@ -21,7 +21,7 @@ $tpl->assign([
 	'title' => $title
 ]);
 
-if (isset($_GET['var2']) && $_GET['var2'] == 'delete' && isset($_GET['var3'])) {
+if (isset($_GET['var2']) && $_GET['var2'] == 'delete' && isset($_GET['var3']) && check_token('dellinkmgr-' . $_GET['var3'], $_GET['token'] ?? '')) {
 	$delete = (int) $_GET['var3'];
 	if ($delete) {
 		$db->query("DELETE FROM `" . $active . "_sites` WHERE `id` = $delete LIMIT 1");
@@ -45,7 +45,8 @@ if (!empty($domains)) {
 		$tpl->assign([
 			'domain' => h($domain->url),
 			'id' => $domain->id,
-			'type' => $active
+			'type' => $active,
+			'token' => make_token('dellinkmgr-' . $domain->id)
 		]);
 	}
 }

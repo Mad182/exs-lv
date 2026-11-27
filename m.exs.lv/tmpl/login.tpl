@@ -6,7 +6,7 @@
 		<meta name="robots" content="noindex, nofollow">
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="{static-server}/css/mobile.css" type="text/css" />
+		<link rel="stylesheet" href="{static-server}/css/mobile.b8bb8751.min.css" type="text/css" />
 	</head>
 
 	<body>

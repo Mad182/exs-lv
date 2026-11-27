@@ -27,11 +27,11 @@
 	<link rel="stylesheet" href="/css/{filename}">
 	<!-- END BLOCK : additional-css-->
 	<!-- START BLOCK : guest-js -->
-	<script src="{static-server}/js/guest.js"></script>
+	<script src="{static-server}/js/guest.a0525838.min.js"></script>
 	<!-- END BLOCK : guest-js -->
 	<!-- START BLOCK : user-js -->
 	<script
-		src="/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,prettify/prettify.js"></script>
+		src="/js/main_3.a0a2281a.min.js"></script>
 	<!-- END BLOCK : user-js -->
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>

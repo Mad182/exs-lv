@@ -36,11 +36,11 @@
 		c_url = "{page-url}";
 	</script>
 	<!-- START BLOCK : guest-js -->
-	<script src="{static-server}/js/guest.js" defer></script>
+	<script src="{static-server}/js/guest.a0525838.min.js" defer></script>
 	<!-- END BLOCK : guest-js -->
 	<!-- START BLOCK : user-js -->
 	<script
-		src="{static-server}/js/jquery-1.10.2.min.js,html5.js,bootstrap.min.js,fluidvids.min.js,jquery.sidr.min.js,jquery.touchSwipe.min.js,jquery.swipemenu.init.js,swfobject.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,mcp.js,j.js,exs.js"></script>
+		src="{static-server}/js/main.7a24680e.min.js"></script>
 	<!-- END BLOCK : user-js -->
 	<!-- START BLOCK : tinymce-enabled-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
@@ -195,7 +195,6 @@
 								<li{cat-sel-1132}><a href="/findby">Profilu pārvaldība</a></li>
 									<li{cat-sel-199}><a href="/log">Darbību vēsture</a></li>
 										<li{cat-sel-255}><a href="/polladmin">Aptaujas{new-polls-count}</a></li>
-											<li{cat-sel-229}><a href="/wallpaper_admin">Wallpapers</a></li>
 												<li{cat-sel-331}><a href="/?c=331">Karātavas</a></li>
 													<li{cat-sel-642}><a href="/racontest">RA konkurss</a></li>
 														<li{cat-sel-794}><a href="/user_decos">Apbalvojumu ikonas</a>

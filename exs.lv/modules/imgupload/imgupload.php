@@ -12,11 +12,11 @@ if ($auth->ok) {
 
 		if($image) {
 
-			if (file_exists('/home/www/img.exs.lv/' . $image->path . '/' . $image->file)) {
-				unlink('/home/www/img.exs.lv/' . $image->path . '/' . $image->file);
+			if (file_exists(IMG_PATH . '/' . $image->path . '/' . $image->file)) {
+				unlink(IMG_PATH . '/' . $image->path . '/' . $image->file);
 			}
-			if (file_exists('/home/www/img.exs.lv/' . $image->path . '/small/' . $image->file)) {
-				unlink('/home/www/img.exs.lv/' . $image->path . '/small/' . $image->file);
+			if (file_exists(IMG_PATH . '/' . $image->path . '/small/' . $image->file)) {
+				unlink(IMG_PATH . '/' . $image->path . '/small/' . $image->file);
 			}
 			$db->query("DELETE FROM `imgupload` WHERE `user_id` = '$auth->id' AND `id` = '$image->id' LIMIT 1");
 
@@ -168,7 +168,9 @@ if ($auth->ok) {
 
 			if (file_exists($new_file_path)) {
 				unlink($original_file);
-				unlink($original_thumb);
+				if (file_exists($new_thumb_path)) {
+					unlink($original_thumb);
+				}
 				$foo->file_dst_name = $new_filename;
 			}
 

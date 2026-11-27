@@ -6,8 +6,8 @@
 		<meta name="robots" content="noindex, nofollow">
 		<meta name="googlebot" content="noindex">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="{static-server}/css/mobile.css">
-		<script src="{static-server}/js/jquery.min.js,jquery.sidr.js,mobile.js"></script>
+		<link rel="stylesheet" href="{static-server}/css/mobile.b8bb8751.min.css">
+		<script src="{static-server}/js/m_main_sidr.7ec55ed8.min.js"></script>
 		<script>
 			var mb_refresh_limit = 12000;
 			var current_user = {currentuser-id};

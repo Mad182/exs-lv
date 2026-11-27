@@ -209,10 +209,10 @@ function api_auth_accept_2fa() {
         $token = bin2hex(random_bytes(16));
 
         $db->insert('tfa_whitelist', array(
-            'user_id' => $auth->id,
-            'ip' => $auth->ip,
-            'cookie' => $cookie,
-            'token' => $token,
+            'user_id' => (int)$auth->id,
+            'ip' => sanitize($auth->ip),
+            'cookie' => sanitize($cookie),
+            'token' => sanitize($token),
             'created' => 'NOW()',
             'modified' => 'NOW()'
         ));

@@ -9,14 +9,14 @@ require(CORE_PATH . '/includes/class.mdb.php');
 require(CORE_PATH . '/includes/functions.core.php');
 
 /* nosaka, kuru lapu rādīt (exs.lv, coding.lv, etc) */
-require('includes/site_loader.php');
+require(CORE_PATH . '/includes/site_loader.php');
 
 $db = new mdb($username, $password, $database, $hostname);
 unset($password);
 
 $mbid = (int) $_GET['mbid'];
 $lastid = (int) $_GET['lastid'];
-$lastedit = (int) $_GET['et'];
+$lastedit = isset($_GET['et']) ? (int) $_GET['et'] : 0;
 
 $json = [];
 
@@ -134,22 +134,59 @@ if ($vals) {
 
 $time = $db->get_var("SELECT `date` FROM `miniblog` WHERE `parent` = '" . $mbid . "' AND `id` = '$lastid'");
 if ($time) {
-	$time = strtotime($time);
-	$json['et'] = $time;
-	$compare = max($time, $lastedit);
-	$edit_since = $db->get_results("SELECT
-		`text`, `id`, `edit_time`
-		FROM
-		`miniblog`
-		WHERE
-		`parent` = " . $mbid . " AND
-		`edit_time` > " . $compare);
-	if ($edit_since) {
-		foreach ($edit_since as $edit) {
-			if ($edit->edit_time > $json['et']) {
-				$json['et'] = $edit->edit_time;
+	if (!isset($auth)) {
+		if (session_status() === PHP_SESSION_NONE) {
+			session_start();
+		}
+		require_once('./includes/class.auth.php');
+		if (!isset($m)) {
+			$m = new Memcached;
+			if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
+				$m->setOption(Memcached::OPT_SERIALIZER, Memcached::SERIALIZER_IGBINARY);
 			}
-			$json['edits'][$edit->id] = add_smile($edit->text);
+			$m->addServer($mc_host, $mc_port);
+		}
+		$site_access = get_site_access();
+		$auth = new Auth();
+	}
+
+	if (!$auth->ok) {
+		die('login required');
+	}
+
+	$can_view_edits = true;
+	$parent_mb = $db->get_row("SELECT `groupid` FROM `miniblog` WHERE `id` = '" . $mbid . "' LIMIT 1");
+	if (!$parent_mb) {
+		$can_view_edits = false;
+	} elseif ((int) $parent_mb->groupid > 0) {
+		$pgid = (int) $parent_mb->groupid;
+		$group = $db->get_row("SELECT `id`, `public`, `owner` FROM `clans` WHERE `id` = '$pgid' LIMIT 1");
+		if (!$group) {
+			$can_view_edits = false;
+		} elseif (!$group->public && $auth->id != $group->owner && $auth->id != 1) {
+			$can_view_edits = (bool) $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' AND `approve` = '1'");
+		}
+	}
+
+	if ($can_view_edits) {
+		$time = strtotime($time);
+		$json['et'] = $time;
+		$compare = max($time, $lastedit);
+		$edit_since = $db->get_results("SELECT
+			`text`, `id`, `edit_time`
+			FROM
+			`miniblog`
+			WHERE
+			`parent` = " . $mbid . " AND
+			`removed` = 0 AND
+			`edit_time` > " . $compare);
+		if ($edit_since) {
+			foreach ($edit_since as $edit) {
+				if ($edit->edit_time > $json['et']) {
+					$json['et'] = $edit->edit_time;
+				}
+				$json['edits'][$edit->id] = add_smile($edit->text);
+			}
 		}
 	}
 }

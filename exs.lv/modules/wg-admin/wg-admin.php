@@ -5,7 +5,7 @@ if (!im_mod()) {
 	redirect();
 }
 
-if (isset($_GET['delete'])) {
+if (isset($_GET['delete']) && check_token('delwg-' . $_GET['delete'], $_GET['token'] ?? '')) {
 	$delete = (int) $_GET['delete'];
 	if ($delete) {
 		$db->query("DELETE FROM wg_words WHERE id = '$delete' LIMIT 1");

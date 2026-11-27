@@ -100,7 +100,7 @@
 			<input type="hidden" name="ap-topic-wide" value="{article-wide}" />
 			<input type="submit" name="submit" value="Pievienot" class="button" />
 			<br>
-			<p style="text-align:right">[<a class="red" href="/write/delete/{article-id}">Dzēst</a>]</p>
+			<p style="text-align:right">[<a class="red" href="/write/delete/{article-id}?token={delete-token}">Dzēst</a>]</p>
 		</fieldset>
 	</form>
 	<!-- END BLOCK : approve-edit-->

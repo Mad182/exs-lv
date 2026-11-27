@@ -25,10 +25,10 @@
 		<link rel="stylesheet" href="{static-server}/css/{filename}">
 		<!-- END BLOCK : additional-css-->
 		<!-- START BLOCK : guest-js -->
-		<script src="{static-server}/js/guest.js"></script>
+		<script src="{static-server}/js/guest.a0525838.min.js"></script>
 		<!-- END BLOCK : guest-js -->
 		<!-- START BLOCK : user-js -->
-		<script src="{static-server}/js/jquery.min.js,tinycon.min.js,jquery.cookie.js,jquery.fancybox.js,jquery.raty.min.js,jquery.cycle.js,mcp.js,j.js"></script>
+		<script src="{static-server}/js/main_7.4a798cb2.min.js"></script>
 		<!-- END BLOCK : user-js -->
 		<!-- START BLOCK : tinymce-enabled-->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>

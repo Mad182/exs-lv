@@ -7,7 +7,7 @@ if ($auth->id != 1) {
 	redirect();
 }
 
-if (isset($_GET['delete'])) {
+if (isset($_GET['delete']) && check_token('delimgadm-' . $_GET['delete'], $_GET['token'] ?? '')) {
 	$del_id = (int) $_GET['delete'];
 	$img = $db->get_row("SELECT * FROM `imgupload` WHERE `id` = '$del_id' LIMIT 1");
 	if ($img) {
@@ -36,7 +36,7 @@ $images = $db->get_results("SELECT * FROM `imgupload` ORDER BY `id` DESC LIMIT $
 $out = '';
 if (!empty($images)) {
 	foreach ($images as $img) {
-		$out .= '<a href="?delete=' . $img->id . '"><img src="' . $img_server . '/' . $img->path . '/small/' . $img->file . '" style="max-width:200px" /></a> ';
+		$out .= '<a href="?delete=' . $img->id . '&amp;token=' . make_token('delimgadm-' . $img->id) . '"><img src="' . $img_server . '/' . $img->path . '/small/' . $img->file . '" style="max-width:200px" /></a> ';
 	}
 }
 

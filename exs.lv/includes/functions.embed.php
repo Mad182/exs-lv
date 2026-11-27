@@ -407,13 +407,6 @@ function embed_widgets($txt, $wide = 0) {
 		);
 	}
 
-	// vine videos
-	if (!empty($auth) && $auth->ok && strpos($txt, 'vine') !== false && $embed) {
-		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a[^>]*?>)(https?:\/\/vine\.co\/v\/([a-z0-9]+)\/?)(</a>)?#im", 'embed_vine', $txt
-		);
-	}
-
 	// soundcloud tracks, users, and playlists
 	if (!empty($auth) && $auth->ok && (strpos($txt, 'soundcloud') !== false ||
 			strpos($txt, 'snd.sc') !== false) && $embed) {
@@ -442,20 +435,6 @@ function embed_widgets($txt, $wide = 0) {
 	if (strpos($txt, 'gifv') !== false || strpos($txt, 'webm') !== false && $embed) {
 		$txt = preg_replace_callback(
 				"#(^|[\n ]|<a(.*?)>)https?:\/\/i\.imgur\.com\/([A-Za-z0-9]+)\.(gifv|webm)\/?#im", 'embed_gifv_imgur', $txt
-		);
-	}
-
-	// gfycat
-	if (strpos($txt, 'gfycat') !== false && $embed) {
-
-		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\.(gifv|webm|mp4)(</a>)?#im", 'embed_gifv_gfycat', $txt
-		);
-		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([a-z0-9]+)\.gfycat\.com\/([A-Za-z0-9]+)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
-		);
-		$txt = preg_replace_callback(
-				"#(^|[\n ]|<a([^>]*?)>)https?:\/\/([g])fycat\.com\/([A-Za-z0-9]+)\/(</a>)?#im", 'embed_gifv_gfycat', $txt
 		);
 	}
 
@@ -623,31 +602,6 @@ function embed_deezer($params) {
 }
 
 /**
- *  Callback metode Vine video iekļaušanai tekstā.
- *
- *	@see http://blog.vine.co/post/55514921892/embed-vine-posts
- *		 https://dev.twitter.com/web/vine/oembed
- */
-function embed_vine($params) {
-	global $m;
-
-	// [0] pilns "notvertais" saturs
-	// [1] <a...>
-	// [2] adrese uz vine video
-	// [3] video parametrs
-	// [4] </a>
-
-	$encoded_url = urlencode(strip_tags($params[3]));
-
-	return	'<iframe class="embedded-iframe vine-embed" '.
-			'src="https://vine.co/v/'.$encoded_url.'/embed/simple"'.
-			'width="320" height="320" frameborder="0">'.
-			'</iframe><script async src="'.
-			'//platform.vine.co/static/scripts/embed.js"'.
-			'charset="utf-8"></script>';
-}
-
-/**
  *  Callback metode Soundcloud dziesmu iekļaušanai tekstā.
  *
  *  Izveidoto HTML iekešo Memcached (30 min).
@@ -751,52 +705,6 @@ function embed_vimeo($params) {
 			'width="520" height="300" frameborder="0" '.
 			'webkitallowfullscreen mozallowfullscreen '.
 			'allowfullscreen></iframe>';
-}
-
-/**
- *  Callback metode gfycat gifv/mp4/webm failu embedošanai
- *
- *  @param $params  video parametri
- *  @return $html   iframe ar video
- */
-function embed_gifv_gfycat($params) {
-
-	global $m;
-	
-	$cache_key = 'gify_' . md5($params[4]);
-	
-	if (($html = $m->get($cache_key)) === false) {
-
-		$width = 560;
-		$height = 400;
-
-		$json = curl_get('https://gfycat.com/cajax/get/' . $params[4]);
-		if(!empty($json)) {
-			$jparams = json_decode($json);
-	
-			if(!empty($jparams->gfyItem->width) && !empty($jparams->gfyItem->height)) {
-	
-				if($jparams->gfyItem->width > 560) {
-					$height = floor($jparams->gfyItem->height*(560/$jparams->gfyItem->width));
-					$width = 560;
-				} else {
-					$height = $jparams->gfyItem->height;
-					$width = $jparams->gfyItem->width;
-				}
-	
-			}
-		}
-
-		$html = '<iframe class="embedded-iframe" src="//gfycat.com/ifr/'.h($params[4]).'" ';
-		$html .= 'allowfullscreen="" frameborder="0" scrolling="no" ';
-		$html .= 'style="-webkit-backface-visibility: hidden;-webkit-transform: scale(1);" ';
-		$html .= 'width="' . (int)$width . '" height="' . (int)$height . '"></iframe>';
-		
-		$m->set($cache_key, $html, 7200);
-	
-	}
-
-	return $html;
 }
 
 /**

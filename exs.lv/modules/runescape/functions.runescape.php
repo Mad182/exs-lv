@@ -98,17 +98,30 @@ function read_rss($force = false) {
         $reversed_objects = [];
         $is_oldschool = ($key === 'oldschool') ? 1 : 0;
 
+        // Batch-check existing hashes in one query instead of N+1 per RSS item
+        $candidate_hashes = [];
+        foreach ($data->channel->item as $single) {
+            $candidate_hashes[] = "'" . sanitize(md5(trim((string)$single->pubDate) . trim((string)$single->title))) . "'";
+        }
+        $existing_hashes = [];
+        if (!empty($candidate_hashes)) {
+            $existing_col = $db->get_col(
+                "SELECT `hash_value` FROM `rs_news`
+                 WHERE `is_oldschool` = " . $is_oldschool . " AND `hash_value` IN (" . implode(',', array_unique($candidate_hashes)) . ")"
+            );
+            if (!empty($existing_col)) {
+                $existing_hashes = array_flip($existing_col);
+            }
+        }
+
         foreach ($data->channel->item as $single) {
             $title = trim((string)$single->title);
             $pubDate = trim((string)$single->pubDate);
             $hashval = md5($pubDate . $title);
 
             // pārbaude, vai datubāzē šāds jaunums jau neeksistē
-            $val = $db->get_var(
-                "SELECT count(*) FROM `rs_news`
-                 WHERE `hash_value` = '" . sanitize($hashval) . "' AND `is_oldschool` = " . $is_oldschool
-            );
-            if ($val > 0) continue; // dublikātus nevajag
+            if (isset($existing_hashes[$hashval])) continue; // dublikātus nevajag
+            $existing_hashes[$hashval] = true;
 
             $item = new stdClass();
             $item->title = $title;
@@ -358,9 +371,7 @@ function save_rs_image($img_url, $target_path, $target_name = 'empty') {
     curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
     $exec = curl_exec($curl);
     $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    if (PHP_VERSION_ID < 80500) {
-        @curl_close($curl);
-    }
+    unset($curl);
     fclose($file);
 
     if (!$exec || $http_code >= 400 || !file_exists($temp_file) || filesize($temp_file) === 0) {

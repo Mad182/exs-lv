@@ -87,7 +87,7 @@
 			<td>{sidelink-title}</td>
 			<td>{sidelink-url}</td>
 			<td>[<a href="/{category-url}/?act=links&amp;edit={sidelink-id}">labot</a>]</td>
-			<td>[<a class="sarkans" href="/{category-url}/?act=links&amp;delete={sidelink-id}">dzēst</a>]</td>
+			<td>[<a class="sarkans" href="/{category-url}/?act=links&amp;delete={sidelink-id}&amp;token={sidelink-token}">dzēst</a>]</td>
 		</tr>
 		<!-- END BLOCK : user-sidelinks-node-->
 	</table>

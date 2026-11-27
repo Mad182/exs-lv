@@ -50,8 +50,9 @@ When delivering fixes, new features, or new games, execute the following steps:
    php -l exs.lv/modules/<module>/<module>.php
    php exs.lv/scripts/minify_games.php
    php exs.lv/scripts/minify_site_css.php
+   php exs.lv/scripts/minify_site_js.php
    ```
-   *(Note: Local `pre-commit` git hook and production `post-merge` git hook also run `php exs.lv/scripts/minify_games.php` and `php exs.lv/scripts/minify_site_css.php` automatically on commit & deployment).*
+   *(Note: Local `pre-commit` git hook and production `post-merge` git hook also run `minify_games.php`, `minify_site_css.php`, and `minify_site_js.php` automatically on commit & deployment).*
 
 2. **Commit & Push to Remote:**
    ```bash

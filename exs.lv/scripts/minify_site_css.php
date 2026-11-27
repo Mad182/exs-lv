@@ -2,6 +2,10 @@
 /**
  * Bundle & Minify Site CSS files and update template inclusions & PHP files with single hashed CSS filenames
  */
+if (PHP_SAPI !== 'cli') {
+	http_response_code(403);
+	exit;
+}
 
 require_once __DIR__ . '/../includes/cssmin.php';
 
@@ -184,6 +188,24 @@ if (isset($indiv_mappings['style'])) {
 		if ($new_content !== null && $new_content !== $content) {
 			file_put_contents($tpl_path, $new_content);
 			echo "Updated " . basename($tpl_path) . " tinymce content_css reference\n";
+		}
+	}
+}
+
+// Update mobile template CSS references (m.exs.lv/tmpl/*.tpl -> mobile.<hash>.min.css)
+if (isset($indiv_mappings['mobile'])) {
+	$mobile_min = $indiv_mappings['mobile'];
+	$mobile_tpls = glob(__DIR__ . '/../../m.exs.lv/tmpl/*.tpl') ?: [];
+	$mobile_pattern = '/(\/css\/)mobile(?:\.[a-f0-9]+)?(?:\.min)?\.css/i';
+	foreach ($mobile_tpls as $mtpl_path) {
+		$content = file_get_contents($mtpl_path);
+		if (strpos($content, '/css/mobile') === false) {
+			continue;
+		}
+		$new_content = preg_replace($mobile_pattern, '${1}' . $mobile_min, $content);
+		if ($new_content !== null && $new_content !== $content) {
+			file_put_contents($mtpl_path, $new_content);
+			echo "Updated m.exs.lv/tmpl/" . basename($mtpl_path) . " -> $mobile_min\n";
 		}
 	}
 }

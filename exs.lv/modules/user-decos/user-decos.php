@@ -125,8 +125,9 @@ foreach ($listdecos as $decos) {
 	$images = @unserialize($decos->decos, ['allowed_classes' => false]);
 	if (!empty($images) && is_array($images)) {
 		$new = [];
+		$can_remove = isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove']) && check_token('remdeco-' . $decos->id . '-' . $_GET['remove'], $_GET['token'] ?? '');
 		foreach ($images as $key => $deco) {
-			if (isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove']) && $_GET['remove'] != $key) {
+			if ($can_remove && $_GET['remove'] != $key) {
 				$new[$key] = [
 					'title' => $deco['title'],
 					'icon' => $deco['icon'],
@@ -139,10 +140,11 @@ foreach ($listdecos as $decos) {
 				'key' => $key,
 				'userid' => $decos->id,
 				'nick' => $decos->nick,
+				'token' => make_token('remdeco-' . $decos->id . '-' . $key),
 			]);
 		}
 
-		if (isset($_GET['uid']) && $_GET['uid'] == $decos->id && isset($_GET['remove'])) {
+		if ($can_remove) {
 			$new = serialize($new);
 
 			$db->query("UPDATE `users` SET `decos` = '" . sanitize($new) . "' WHERE `id` = '$decos->id'");

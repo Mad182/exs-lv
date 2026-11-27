@@ -28,7 +28,7 @@
 		<td>{title}</td>
 		<td>{nick}</td>
 		<td><img src="{icon}" alt="" width="16" height="16" />&nbsp;{icon}</td>
-		<td><a class="button danger confirm" style="font-size: 90%;line-height: 1.1;padding: 3px 5px;" class="confirm" href="?uid={userid}&amp;remove={key}">noņemt</a></td>
+		<td><a class="button danger confirm" style="font-size: 90%;line-height: 1.1;padding: 3px 5px;" class="confirm" href="?uid={userid}&amp;remove={key}&amp;token={token}">noņemt</a></td>
 	</tr>
 	<!-- END BLOCK : existing-deco-->
 </table>

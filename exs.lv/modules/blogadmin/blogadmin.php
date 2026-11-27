@@ -172,7 +172,7 @@ else {
 		$tpl->newBlock('blogadmin-links');
 
 		// saites dzēšana
-		if (isset($_GET['delete'])) {
+		if (isset($_GET['delete']) && check_token('dellink-' . $_GET['delete'], $_GET['token'] ?? '')) {
 			$delete = (int) $_GET['delete'];
 			$db->query("DELETE FROM sidelinks WHERE id = ('$delete') AND category = ('" . get_blog_by_user($auth->id) . "') LIMIT 1");
 			redirect('/' . $category->textid . '/?act=links');
@@ -201,6 +201,7 @@ else {
 						'sidelink-id' => $sidelink->id,
 						'sidelink-title' => $sidelink->title,
 						'sidelink-url' => $sidelink->url,
+						'sidelink-token' => make_token('dellink-' . $sidelink->id),
 					]);
 				}
 			}

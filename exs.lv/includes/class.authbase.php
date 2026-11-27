@@ -126,7 +126,7 @@ class AuthBase {
 		) {
 			$this->logout();
 			set_flash('Pieeja lapai ir liegta!', 'error');
-			redirect('http://exs.lv/?c=125&bid=' . $ban);
+			redirect('https://exs.lv/?c=125&bid=' . $ban);
 		}
 
 		return true;
@@ -206,7 +206,7 @@ class AuthBase {
 				$this->logout();
 				$this->error = 3;
 				set_flash('Pieeja lapai ir liegta!', 'error');
-				redirect('http://exs.lv/?c=125&bid=' . $ban);
+				redirect('https://exs.lv/?c=125&bid=' . $ban);
 			}
 
 			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . sanitize($this->ip) . "', `user_agent` = '" . sanitize($user_agent) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . bin2hex(random_bytes(16)) . "' WHERE `id` = '$this->id'");
@@ -258,17 +258,7 @@ class AuthBase {
 	function update_counter() {
 		global $db, $m;
 
-		$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-		if (
-			strpos($user_agent, "Googlebot") !== false ||
-			strpos($user_agent, "bingbot") !== false ||
-			strpos($user_agent, "YandexBot") !== false ||
-			strpos($user_agent, "YandexImages") !== false ||
-			strpos($user_agent, "Mail.RU_Bot") !== false ||
-			strpos($user_agent, "Mediapartners") !== false ||
-			strpos($user_agent, "SemrushBot") !== false ||
-			strpos($user_agent, "AhrefsBot") !== false
-		) {
+		if (is_bot_ua()) {
 			return false;
 		}
 

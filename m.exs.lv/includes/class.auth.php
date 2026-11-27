@@ -29,12 +29,13 @@ class Auth extends AuthBase {
 		$this->showsig = 1;
 		$this->nick = "Viesis";
 		$this->flood = 8;
-		$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$client_ip = !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? strtok($_SERVER['HTTP_X_FORWARDED_FOR'], ',') : ($_SERVER['REMOTE_ADDR'] ?? '127.0.0.1');
+		$this->ip = trim($client_ip);
 		$this->ok = false;
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
-			$this->xsrf = md5($this->ip . $remote_salt . microtime(true));
+			$this->xsrf = bin2hex(random_bytes(4));
 			$_SESSION['xsrf'] = $this->xsrf;
 		}
 		$this->check_session();
@@ -81,10 +82,10 @@ class Auth extends AuthBase {
 			redirect();
 		}
 
-		if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+		if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '" . sanitize($this->ip) . "') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 			$this->logout();
 			set_flash('Pieeja lapai ir liegta!', 'error');
-			redirect('http://exs.lv/?c=125&bid=' . $ban);
+			redirect('https://exs.lv/?c=125&bid=' . $ban);
 		}
 
 		return true;
@@ -130,13 +131,13 @@ class Auth extends AuthBase {
 			$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
 			$this->error = 0;
 
-			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '$this->ip') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
+			if ($ban = $db->get_var("SELECT `id` FROM `banned` WHERE `active` = 1 AND (`user_id` = '$this->id' OR `ip` = '" . sanitize($this->ip) . "') AND (`lang` = 0 OR `lang` = '$lang') LIMIT 1")) {
 				$this->logout();
 				set_flash('Pieeja lapai ir liegta!', 'error');
-				redirect('http://exs.lv/?c=125&bid=' . $ban);
+				redirect('https://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE users SET `lastseen` = NOW(), `lastip` = ('" . sanitize($this->ip) . "'), `user_agent` = ('" . sanitize($_SERVER['HTTP_USER_AGENT']) . "'), `android` = 0, `mobile` = 1, `mobile_seen` = 1, `seen_today` = 1 WHERE id = '$userinfo->id'");
+			$db->query("UPDATE users SET `lastseen` = NOW(), `lastip` = ('" . sanitize($this->ip) . "'), `user_agent` = ('" . sanitize($_SERVER['HTTP_USER_AGENT'] ?? '') . "'), `android` = 0, `mobile` = 1, `mobile_seen` = 1, `seen_today` = 1 WHERE id = '$userinfo->id'");
 			$this->update_visits();
 
 			update_karma($this->id, true);
@@ -151,17 +152,17 @@ class Auth extends AuthBase {
 
 	function logout() {
 		global $db, $lang;
-		$db->query("UPDATE users SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `android` = 0, `mobile` = 1 WHERE id = '$this->user_id' LIMIT 1");
-		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '$this->ip'");
-		$this->user_id = 0;
-		$this->username = "Guest";
-		$this->access = 0;
+		if ($this->id > 0) {
+			$db->query("UPDATE users SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `android` = 0, `mobile` = 0 WHERE id = '" . (int)$this->id . "' LIMIT 1");
+			$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '" . (int)$this->id . "' AND `site_id` = " . (int)$lang . " AND `ip` = '" . sanitize($this->ip) . "'");
+		}
+		$this->id = 0;
+		$this->nick = "Guest";
+		$this->level = 0;
 		$this->skin = 0;
 		$this->vote_today = 0;
-		$this->block_cs = 0;
 		$this->showsig = 1;
-		$this->custom_bg = '';
-		$this->custom_others = 0;
+		$this->karma = 0;
 		$this->persona = '';
 		$this->ok = false;
 		$_SESSION['auth_id'] = '';

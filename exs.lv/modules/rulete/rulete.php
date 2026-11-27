@@ -114,6 +114,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 			echo json_encode(['error' => 'Nepietiekams žetonu daudzums! Tev ir ' . $current_gold . ' žetoni.']);
 			exit;
 		}
+
+		// Atomic debit to prevent concurrent spin race conditions
+		$db->query("UPDATE `roulette_balance` SET `gold` = `gold` - " . intval($total_bet) . " WHERE `user_id` = " . intval($auth->id) . " AND `gold` >= " . intval($total_bet));
+		if ($db->affected_rows < 1) {
+			echo json_encode(['error' => 'Nepietiekams žetonu daudzums!']);
+			exit;
+		}
 	} else {
 		if (isset($data['guest_gold']) && is_numeric($data['guest_gold'])) {
 			$current_gold = max(0, intval($data['guest_gold']));
@@ -203,12 +210,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'spin') {
 		$existing_score = $db->get_row("SELECT * FROM `gamescore` WHERE `game` = 'rulete' AND `user_id` = " . intval($auth->id));
 		$existing_high = $existing_score ? intval($existing_score->score) : 0;
 
+		$today = date('Y-m-d');
+		if ($total_payout > 0) {
+			$db->query("UPDATE `roulette_balance` SET `gold` = `gold` + " . intval($total_payout) . ", `max_gold` = GREATEST(`max_gold`, `gold`), `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
+		} else {
+			$db->query("UPDATE `roulette_balance` SET `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
+		}
+
+		$updated_bal = $db->get_row("SELECT `gold`, `max_gold` FROM `roulette_balance` WHERE `user_id` = " . intval($auth->id));
+		$new_gold = $updated_bal ? intval($updated_bal->gold) : max(0, $current_gold + $net_gain);
+
 		$highest_previous = max($prev_max_gold, $existing_high);
 		$is_new_record = ($new_gold > $highest_previous);
 		$max_gold = max($highest_previous, $new_gold);
-
-		$today = date('Y-m-d');
-		$db->query("UPDATE `roulette_balance` SET `gold` = " . intval($new_gold) . ", `max_gold` = " . intval($max_gold) . ", `last_reset_date` = '" . $today . "' WHERE `user_id` = " . intval($auth->id));
 
 		// Sync with gamescore table for platform leaderboards
 		$prev_top = get_game_top_users('rulete');

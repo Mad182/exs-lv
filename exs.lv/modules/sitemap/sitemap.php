@@ -5,7 +5,7 @@
  */
 $add_css[] = 'sitemap.c37edbc4.min.css';
 
-$sitemap_modules = "'list','forums','rshelp','index','flash-games','raksti','groups','imgupload','items-db','listsub','miniblogs','polls','register','search','servers','snake','statistics','text','cs_monitor','kasnotiek','say','gifav'";
+$sitemap_modules = "'list','forums','rshelp','index','flash-games','raksti','groups','imgupload','items-db','miniblogs','polls','register','search','servers','snake','statistics','text','kasnotiek','say','gifav'";
 
 $tpl->newBlock('sitemap-body');
 

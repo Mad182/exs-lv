@@ -147,7 +147,7 @@ if (!$auth->ok && (!isset($_GET['viewcat']) || ($_GET['viewcat'] != 'mav' && $_G
 	} elseif (isset($_GET['r'])) {
 		include(CORE_PATH . '/modules/core/usertopics.php');
 	} elseif (isset($_GET['y'])) {
-		include('modules/core/youtube.php');
+		include(CORE_PATH . '/modules/core/youtube.php');
 	} else {
 		if (!empty($category)) {
 			$page_title = $category->title;

@@ -104,6 +104,32 @@ function h($str) {
 }
 
 /**
+ * Vienota botu / pārlūku rāpuļu noteikšana pēc User-Agent
+ */
+function is_bot_ua($user_agent = null) {
+	if ($user_agent === null) {
+		$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+	}
+	if ($user_agent === '') {
+		return false;
+	}
+	static $bots = [
+		'Googlebot', 'Google-Extended', 'bingbot', 'YandexBot', 'Mail.RU_Bot',
+		'YandexImages', 'Mediapartners', 'SemrushBot', 'CCBot', 'DotBot',
+		'ClaudeBot', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'PerplexityBot',
+		'Applebot', 'DuckDuckBot', 'facebookexternalhit', 'Twitterbot',
+		'LinkedInBot', 'Discordbot', 'Slackbot', 'WhatsApp', 'Bytespider',
+		'PetalBot', 'AhrefsBot'
+	];
+	foreach ($bots as $bot) {
+		if (strpos($user_agent, $bot) !== false) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  *  Atgriezīs TemplatePower objektu ar ielādētu norādīto failu.
  *
  *  Noderīgi moduļos, kur jāielādē kāds cits .tpl fails, ja
@@ -1221,9 +1247,9 @@ function mb_get_title($body = 'Bez nosaukuma') {
 function mb_get_strid($title = 'Bez nosaukuma', $id = null) {
 	global $m;
 	if (!empty($id)) {
-		if (($data = $m->get('strid_' . $id)) === false) {
+		if (($data = $m->get('mb_strid_' . $id)) === false) {
 			$data = mkslug(textlimit(mb_get_title($title), 36, ''));
-			$m->set('strid_' . $id, $data, 300);
+			$m->set('mb_strid_' . $id, $data, 300);
 		}
 		return $data;
 	} else {
@@ -1390,9 +1416,9 @@ function move_cat($id, $direction = 'down') {
 function get_page_strid($id = null) {
 	global $db, $m;
 	$id = (int) $id;
-	if (($data = $m->get('strid_' . $id)) === false) {
+	if (($data = $m->get('page_strid_' . $id)) === false) {
 		$data = $db->get_var("SELECT `strid` FROM `pages` WHERE `id` = '$id'");
-		$m->set('strid_' . $id, $data, 10800);
+		$m->set('page_strid_' . $id, $data, 10800);
 	}
 	return $data;
 }
@@ -1661,7 +1687,7 @@ function mb_rater($mb) {
 	if ($auth->ok === true) {
 		$check = substr(md5($mb->id . $remote_salt . $auth->id), 0, 5);
 		if (!empty($mb->vote_users)) {
-			$voters = @unserialize($mb->vote_users);
+			$voters = @unserialize($mb->vote_users, ['allowed_classes' => false]);
 			if (!is_array($voters)) {
 				$voters = [];
 			}
@@ -1702,7 +1728,7 @@ function get_game_rate_html($game) {
 	if (!empty($auth) && $auth->ok === true) {
 		$check = substr(md5($game->id . $remote_salt . $auth->id), 0, 5);
 		if (!empty($game->vote_users)) {
-			$voters = @unserialize($game->vote_users);
+			$voters = @unserialize($game->vote_users, ['allowed_classes' => false]);
 			if (!is_array($voters)) {
 				$voters = [];
 			}
@@ -2044,7 +2070,7 @@ function mb_recursive($data, $key = 0, $level = 0, $intro = 0, $answer_limit = 3
 					$out .= '<span id="m' . $val->id . '"><img class="av" src="' . get_avatar($val, 's') . '" alt="" /></span>';
 				}
 				if (!empty($val->decos)) {
-					$decos = unserialize($val->decos);
+					$decos = @unserialize($val->decos, ['allowed_classes' => false]);
 					if (!empty($decos)) {
 						$di = 0;
 						foreach ($decos as $deco) {
@@ -2381,7 +2407,7 @@ function get_latest_posts() {
 
 			$out .= '<span class="post-time">' . time_ago(strtotime($late->bump)) . '</span> ';
 
-			$readby = !empty($late->readby) ? @unserialize($late->readby) : false;
+			$readby = !empty($late->readby) ? @unserialize($late->readby, ['allowed_classes' => false]) : false;
 			if (is_array($readby) && in_array($auth->id, $readby)) {
 				$out .= $prefix . $late->title . '&nbsp;[' . $late->posts . ']</a></li>';
 			} else {
@@ -2412,14 +2438,19 @@ function get_latest_posts() {
 }
 
 function get_latest_images() {
-	global $db, $auth, $lang, $img_server;
+	global $db, $m, $auth, $lang, $img_server;
 
 	$lim = ($lang === 9) ? 8 : 15; // #rs
+	$pg = isset($_GET['pg']) ? intval($_GET['pg']) : 0;
+	$skip = ($pg > 0) ? ($lim * $pg) : 0;
 
-	if (isset($_GET['pg'])) {
-		$skip = $lim * intval($_GET['pg']);
-	} else {
-		$skip = 0;
+	$interests_hash = '';
+	if ($auth->ok && $lang == 1) {
+		$interests_hash = md5(implode(',', (array) ($auth->interests ?? [])));
+	}
+	$cache_key = 'li_' . $lang . '_' . $pg . '_' . ($auth->ok ? (int) $auth->id : 0) . '_' . $interests_hash;
+	if (($cached_html = $m->get($cache_key)) !== false) {
+		return $cached_html;
 	}
 
 	$int = "WHERE `images`.`lang` = '$lang'";
@@ -2470,7 +2501,7 @@ function get_latest_images() {
 
 			$out .= '<a title="' . h($late->nick) . '" href="/gallery/' . $late->uid . '/' . $late->id . '"><span class="cnt"><img src="' . $img . '" alt="" />';
 
-			$readby = !empty($late->readby) ? @unserialize($late->readby) : false;
+			$readby = !empty($late->readby) ? @unserialize($late->readby, ['allowed_classes' => false]) : false;
 			if (is_array($readby) && in_array($auth->id, $readby)) {
 				$out .= '<span>' . $late->posts . '</span>';
 			} else {
@@ -2498,6 +2529,7 @@ function get_latest_images() {
 	}
 	$out .= '</p>';
 
+	$m->set($cache_key, $out, 60);
 	return $out;
 }
 
@@ -2724,7 +2756,9 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 		}
 	}
 
-	$total_count = (int) $db->get_var("SELECT COUNT(*)
+	$count_limit = ($limit * 5) + 1;
+	$total_count = (int) $db->get_var("SELECT COUNT(*) FROM (
+		SELECT 1
 		FROM `miniblog`
 		WHERE
 			`miniblog`.`removed` = '0' AND
@@ -2733,7 +2767,9 @@ function get_latest_mbs($tab = 'all', $group_id = null) {
 			" . $addlang . " AND
 			(" . $groupquery . ")
 			$friendsquery
-			$priv");
+			$priv
+		LIMIT $count_limit
+	) AS `mb_count_sub`");
 
 	$max_pages = min(5, (int) ceil($total_count / $limit));
 	if ($max_pages < 1) {
@@ -3274,27 +3310,30 @@ function user_top() {
  * Top groups
  */
 function group_top() {
-	global $db;
+	global $db, $m;
 
-	$out = '<ul id="today-top">';
-	$tgroups = $db->get_results("SELECT `id`,`title`,`strid`,`avatar`,`posts_today` FROM `clans` WHERE `posts_today` > 0 ORDER BY `posts_today` DESC LIMIT 9");
-	if ($tgroups) {
+	if (($out = $m->get('group_top_html')) === false) {
+		$out = '<ul id="today-top">';
+		$tgroups = $db->get_results("SELECT `id`,`title`,`strid`,`avatar`,`posts_today` FROM `clans` WHERE `posts_today` > 0 ORDER BY `posts_today` DESC LIMIT 9");
+		if ($tgroups) {
 
-		foreach ($tgroups as $group) {
+			foreach ($tgroups as $group) {
 
-			if (!empty($group->strid)) {
-				$group->link = '/' . $group->strid;
-			} else {
-				$group->link = '/group/' . $group->id;
+				if (!empty($group->strid)) {
+					$group->link = '/' . $group->strid;
+				} else {
+					$group->link = '/group/' . $group->id;
+				}
+
+				$group->av_alt = 1;
+
+				$out .= '<li><a href="' . $group->link . '"><img class="av" src="' . get_avatar($group) . '" alt="" />';
+				$out .= '<small>' . $group->title . '</small></a><span class="count">(' . $group->posts_today . ')</span></li>';
 			}
-
-			$group->av_alt = 1;
-
-			$out .= '<li><a href="' . $group->link . '"><img class="av" src="' . get_avatar($group) . '" alt="" />';
-			$out .= '<small>' . $group->title . '</small></a><span class="count">(' . $group->posts_today . ')</span></li>';
 		}
+		$out .= '</ul><div class="c"></div>';
+		$m->set('group_top_html', $out, 60);
 	}
-	$out .= '</ul><div class="c"></div>';
 	return $out;
 }
 
@@ -3400,8 +3439,9 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 	$safe_game_title = htmlspecialchars($game_title, ENT_QUOTES, 'UTF-8');
 	$safe_game_slug = htmlspecialchars($game_slug, ENT_QUOTES, 'UTF-8');
 
+	$csrf_attr = $auth->ok ? ' data-csrf="' . h(make_token('game_chat')) . '"' : '';
 	$html = '
-	<div class="game-chat-card" id="game-chat-app">
+	<div class="game-chat-card" id="game-chat-app"' . $csrf_attr . '>
 		<div class="game-chat-header">
 			<div class="game-chat-header-left">
 				<span class="game-chat-icon">💬</span>
@@ -3502,7 +3542,7 @@ function get_game_chat_html($game_slug = 'speles', $game_title = 'Spēles') {
 	$html .= '
 		</div>
 	</div>
-	<script src="/js/game-chat.js" defer></script>';
+	<script src="/js/game-chat.20ef7d3d.min.js" defer></script>';
 
 	return $html;
 }

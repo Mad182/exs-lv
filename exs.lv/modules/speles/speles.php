@@ -56,16 +56,67 @@ if (!empty($games_list)) {
 	$latest_ids = array_slice($all_ids, 0, 3);
 }
 
+// Batch-fetch top score per game (cached 60s in Memcached to avoid ~21 N+1 queries)
+$top_scores_map = $m->get('speles_top_scores_v1');
+if (!is_array($top_scores_map)) {
+	$top_scores_map = [];
+	$asc_codes = ['wordle', 'minu-mekletajs', 'sudoku'];
+	$desc_codes = [];
+	if (!empty($games_list)) {
+		foreach ($games_list as $g) {
+			if (!empty($g->game_code) && !in_array($g->game_code, $asc_codes, true)) {
+				$desc_codes[] = "'" . sanitize($g->game_code) . "'";
+			}
+		}
+	}
+	if (!empty($desc_codes)) {
+		$in_desc = implode(',', array_unique($desc_codes));
+		$desc_rows = $db->get_results("
+			SELECT g.game, g.user_id, g.score
+			FROM gamescore g
+			INNER JOIN (
+				SELECT game, MAX(score) AS best_score
+				FROM gamescore
+				WHERE game IN ($in_desc)
+				GROUP BY game
+			) b ON g.game = b.game AND g.score = b.best_score
+		");
+		if (!empty($desc_rows)) {
+			foreach ($desc_rows as $r) {
+				if (!isset($top_scores_map[$r->game])) {
+					$top_scores_map[$r->game] = $r;
+				}
+			}
+		}
+	}
+	$in_asc = "'" . implode("','", $asc_codes) . "'";
+	$asc_rows = $db->get_results("
+		SELECT g.game, g.user_id, g.score
+		FROM gamescore g
+		INNER JOIN (
+			SELECT game, MIN(score) AS best_score
+			FROM gamescore
+			WHERE game IN ($in_asc) AND score > 0
+			GROUP BY game
+		) b ON g.game = b.game AND g.score = b.best_score
+	");
+	if (!empty($asc_rows)) {
+		foreach ($asc_rows as $r) {
+			if (!isset($top_scores_map[$r->game])) {
+				$top_scores_map[$r->game] = $r;
+			}
+		}
+	}
+	$m->set('speles_top_scores_v1', $top_scores_map, 60);
+}
+
 if (!empty($games_list)) {
 	foreach ($games_list as $game) {
 		$tpl->newBlock('game-card');
 
 		$top_player_info = '';
-		if (!empty($game->game_code)) {
-			$is_asc = in_array($game->game_code, ['wordle', 'minu-mekletajs', 'sudoku']);
-			$order = $is_asc ? 'ASC' : 'DESC';
-			$where_extra = $is_asc ? " AND score > 0" : "";
-			$top_score = $db->get_row("SELECT * FROM gamescore WHERE game = '" . sanitize($game->game_code) . "' $where_extra ORDER BY score $order LIMIT 1");
+		if (!empty($game->game_code) && isset($top_scores_map[$game->game_code])) {
+			$top_score = $top_scores_map[$game->game_code];
 			if ($top_score) {
 				$u = get_user($top_score->user_id);
 				if ($u) {
@@ -124,6 +175,7 @@ $game_meta_map = [
 	'augsup' => ['title' => 'Augšup', 'url' => '/augsup', 'is_time' => false],
 	'vardes' => ['title' => 'Vardes', 'url' => '/vardes', 'is_time' => false],
 	'runner' => ['title' => 'Runner', 'url' => '/runner', 'is_time' => false],
+	'tornis' => ['title' => 'Tornis', 'url' => '/tornis', 'is_time' => false],
 	'rezonanse' => ['title' => 'Rezonanse', 'url' => '/rezonanse', 'is_time' => false],
 	'tanki' => ['title' => 'Tanki 1990', 'url' => '/tanki', 'is_time' => false],
 	'arkanoid' => ['title' => 'Arkanoid', 'url' => '/arkanoid', 'is_time' => false],
@@ -133,45 +185,65 @@ $game_meta_map = [
 $start_of_today = strtotime('today midnight');
 $is_asc_games = ['wordle', 'minu-mekletajs', 'sudoku'];
 
-// Fetch recent scores to identify distinct (user_id, game)
-$raw_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 100");
-$recent_scores = [];
-$seen_keys = [];
+// Fetch recent scores (cached 60s in Memcached, batched without N+1 queries)
+$recent_scores = $m->get('speles_recent_scores_v1');
+if (!is_array($recent_scores)) {
+	$raw_scores = $db->get_results("SELECT * FROM gamescore WHERE score > 0 ORDER BY time DESC LIMIT 100");
+	$recent_scores = [];
+	$seen_keys = [];
 
-if (!empty($raw_scores)) {
-	foreach ($raw_scores as $sc) {
-		$key = $sc->user_id . '_' . $sc->game;
-		if (isset($seen_keys[$key])) {
-			continue;
+	if (!empty($raw_scores)) {
+		// Pre-fetch all today's scores once so we can resolve best-today in PHP without N+1 queries
+		$today_best_map = [];
+		$has_today = false;
+		foreach ($raw_scores as $sc) {
+			if ($sc->time >= $start_of_today) {
+				$has_today = true;
+				break;
+			}
 		}
-		$seen_keys[$key] = true;
-
-		$is_asc = in_array($sc->game, $is_asc_games);
-		$order = $is_asc ? 'ASC' : 'DESC';
-
-		if ($sc->time >= $start_of_today) {
-			// If player has records today, pick their highest (or lowest for asc games) today
-			$best_today = $db->get_row("
-				SELECT * FROM gamescore 
-				WHERE user_id = '" . (int)$sc->user_id . "' AND game = '" . sanitize($sc->game) . "' AND time >= '$start_of_today' AND score > 0 
-				ORDER BY score $order, time DESC 
-				LIMIT 1
-			");
-			$recent_scores[] = $best_today ? $best_today : $sc;
-		} else {
-			// If no today records, just show the latest
-			$recent_scores[] = $sc;
+		if ($has_today) {
+			$today_rows = $db->get_results("SELECT * FROM gamescore WHERE time >= '$start_of_today' AND score > 0 ORDER BY time DESC");
+			if (!empty($today_rows)) {
+				foreach ($today_rows as $tr) {
+					$tkey = $tr->user_id . '_' . $tr->game;
+					$is_asc = in_array($tr->game, $is_asc_games, true);
+					if (!isset($today_best_map[$tkey])) {
+						$today_best_map[$tkey] = $tr;
+					} else {
+						$cur = $today_best_map[$tkey];
+						if (($is_asc && $tr->score < $cur->score) || (!$is_asc && $tr->score > $cur->score)) {
+							$today_best_map[$tkey] = $tr;
+						}
+					}
+				}
+			}
 		}
 
-		if (count($recent_scores) >= 8) {
-			break;
+		foreach ($raw_scores as $sc) {
+			$key = $sc->user_id . '_' . $sc->game;
+			if (isset($seen_keys[$key])) {
+				continue;
+			}
+			$seen_keys[$key] = true;
+
+			if ($sc->time >= $start_of_today && isset($today_best_map[$key])) {
+				$recent_scores[] = $today_best_map[$key];
+			} else {
+				$recent_scores[] = $sc;
+			}
+
+			if (count($recent_scores) >= 8) {
+				break;
+			}
 		}
+
+		// Sort recent scores by time DESC
+		usort($recent_scores, function($a, $b) {
+			return $b->time - $a->time;
+		});
 	}
-
-	// Sort recent scores by time DESC
-	usort($recent_scores, function($a, $b) {
-		return $b->time - $a->time;
-	});
+	$m->set('speles_recent_scores_v1', $recent_scores, 60);
 }
 
 if (!empty($recent_scores)) {

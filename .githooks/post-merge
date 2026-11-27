@@ -2,7 +2,9 @@
 if [ -f "/home/www/exs.lv/scripts/minify_games.php" ]; then
     php /home/www/exs.lv/scripts/minify_games.php
     php /home/www/exs.lv/scripts/minify_site_css.php
+    php /home/www/exs.lv/scripts/minify_site_js.php
 elif [ -f "exs.lv/scripts/minify_games.php" ]; then
     php exs.lv/scripts/minify_games.php
     php exs.lv/scripts/minify_site_css.php
+    php exs.lv/scripts/minify_site_js.php
 fi

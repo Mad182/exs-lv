@@ -211,7 +211,6 @@ $db->query("OPTIMIZE TABLE `pages_ver`");
 $db->query("OPTIMIZE TABLE `images`");
 $db->query("OPTIMIZE TABLE `galcom`");
 $db->query("OPTIMIZE TABLE `comments`");
-$db->query("OPTIMIZE TABLE `junk_votes`");
 $db->query("OPTIMIZE TABLE `cat`");
 $db->query("OPTIMIZE TABLE `pm`");
 $db->query("OPTIMIZE TABLE `desas`");

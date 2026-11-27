@@ -188,20 +188,7 @@
 			</p>
 			<p>Nika maiņa ir maksas pakalpojums. Katra nika mainīšanas reize maksā <strong>5</strong> exs.lv kredīta punktus. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti. Apdomā labi, un raksti uzmainīgi, jo par 5 punktiem niku varēsi mainīt tikai vienu reizi. Pēc nika maiņas būs jāielogojas atkārtoti. Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Mad"><span class="admins">Mad</span></a>.</p>
 
-			<h4>Kā iegādāties 5 kredīta punktus?</h4>
-			<div class="box">
-				<ul class="tabs">
-					<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="//img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-				</ul>
-				<div id="pay" class="ajaxbox">
-				</div>
-			</div>
-
-			<script>
-				$(document).ready(function() {
-					$('#default-payment-link').click();
-				});
-			</script>
+			<p>Kredīta punktu iegāde šobrīd ir atslēgta.</p>
 
 		</fieldset>
 	</form>
@@ -214,20 +201,7 @@
 	{pay}
 	<p>Lietotāja nosaukums parādās zem profila attēliem. Brīvi izvēlētu nosaukumu var iegūt vai nu sasniedzot 500. karmas līmeni, vai nopērkot iespēju to mainīt par <strong>3</strong> exs.lv kredīta punktiem. Tev šobrīd ir <strong>{user-credit}</strong> kredīta punkti.<br>Ja rodas jautājumi vai problēmas, vispirms sazinies ar lietotāju <a href="/user/1-Minka"><span class="admins">Minka</span></a>.</p>
 
-	<h4>Kā iegādāties 5 kredīta punktus?</h4>
-	<div class="box">
-		<ul class="tabs">
-			<li><a href="/payment-info" class="active ajax" id="default-payment-link"><img src="//img.exs.lv/bildes/flags/lv.png" alt="" />&nbsp;Latvijā</a></li>
-		</ul>
-		<div id="pay" class="ajaxbox">
-		</div>
-	</div>
-
-	<script>
-		$(document).ready(function() {
-			$('#default-payment-link').click();
-		});
-	</script>
+	<p>Kredīta punktu iegāde šobrīd ir atslēgta.</p>
 
 </div>
 <!-- END BLOCK : user-profile-buytitle-->

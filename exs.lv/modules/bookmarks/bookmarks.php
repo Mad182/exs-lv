@@ -23,7 +23,7 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		$tpl->newBlock('user-bookmarks');
 
 	//delete
-	if ($auth->ok && $auth->id == $inprofile->id && isset($_GET['delete'])) {
+	if ($auth->ok && $auth->id == $inprofile->id && isset($_GET['delete']) && check_token('delbm-' . $_GET['delete'], $_GET['token'] ?? '')) {
 		$delete = (int) $_GET['delete'];
 		$db->query("DELETE FROM `bookmarks` WHERE `id` = '$delete' AND `userid` = '$auth->id'");
 		count_bookmarks($auth->id);
@@ -39,7 +39,7 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 			//delete link
 			$delete = '';
 			if ($auth->ok && $auth->id == $inprofile->id) {
-				$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->bookmark_id . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
+				$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->bookmark_id . '&amp;token=' . make_token('delbm-' . $article->bookmark_id) . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
 			}
 
 			$tpl->assign([

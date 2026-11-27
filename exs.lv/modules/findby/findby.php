@@ -456,18 +456,18 @@ if (isset($_POST['submit']) || isset($_GET['ip'])) {
 			// ja laukā ļauts ievadīt "%", tos šeit vispirms izvāc,
 			// lai varētu veikt pareizu aizstāšanu
 			if ($field == 'vip') {
-				$escaped = str_replace('%', '', trim($_POST['vip']));
+				$escaped = str_replace('%', '', trim($_POST['vip'] ?? ''));
 				$res->lastip = $res->ip;
 				$tmp_ip = $res->lastip;
 				$res->lastip = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->lastip));
 				$res->lastip = '<a href="https://whois.domaintools.com/'.h($tmp_ip).'" rel="nofollow">'.$res->lastip.'</a>';
 			} 
 			else if ($field == 'mail') {
-				$escaped = trim($_POST['mail']);
+				$escaped = trim($_POST['mail'] ?? '');
 				$res->mail = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->mail));
 			} 
 			else if ($field == 'ip') {
-				$escaped = str_replace('%', '', trim($_REQUEST['ip']));
+				$escaped = str_replace('%', '', trim($_REQUEST['ip'] ?? ''));
 				$tmp_ip = $res->lastip;
 				$res->lastip = str_replace($escaped, '<strong>' . h($escaped) . '</strong>', h($res->lastip));
 				$res->lastip = '<a href="https://whois.domaintools.com/'.h($tmp_ip).'" rel="nofollow">'.$res->lastip.'</a>';

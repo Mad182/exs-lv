@@ -2,6 +2,10 @@
 /**
  * Minify Game JS and CSS files and update template inclusions with hashed filenames
  */
+if (PHP_SAPI !== 'cli') {
+	http_response_code(403);
+	exit;
+}
 
 require_once __DIR__ . '/../includes/jsmin.php';
 require_once __DIR__ . '/../includes/cssmin.php';

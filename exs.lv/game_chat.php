@@ -70,6 +70,9 @@ function resolve_game_meta($slug, $title = '') {
 	global $game_catalog_meta, $db;
 	static $db_cache = [];
 	$slug = trim(strtolower((string) $slug));
+	if ($slug === '' || !preg_match('/^[a-z0-9_-]+$/i', $slug)) {
+		$slug = 'speles';
+	}
 	if (isset($game_catalog_meta[$slug])) {
 		return $game_catalog_meta[$slug];
 	}
@@ -82,7 +85,8 @@ function resolve_game_meta($slug, $title = '') {
 	}
 	$g = $db_cache[$slug];
 	if ($g) {
-		return ['title' => $g->title, 'url' => $g->url, 'icon' => '🎮'];
+		$safe_url = (!empty($g->url) && preg_match('/^\/[a-z0-9_\/-]+$/i', $g->url)) ? $g->url : '/' . $slug;
+		return ['title' => $g->title, 'url' => $safe_url, 'icon' => '🎮'];
 	}
 	if ($slug === '' || $slug === 'speles') {
 		return ['title' => 'Spēļu katalogs', 'url' => '/speles', 'icon' => '🎲'];
@@ -168,9 +172,12 @@ if ($action === 'fetch') {
 		");
 	}
 
-	// Purge stale online presence older than 5 minutes
-	$stale_threshold = time() - 300;
-	$db->query("DELETE FROM `game_chat_online` WHERE `last_seen` < '$stale_threshold'");
+	// Purge stale online presence older than 5 minutes (throttled via 60s Memcached lock)
+	if ($m->get('gc_online_purge_lock') === false) {
+		$m->set('gc_online_purge_lock', 1, 60);
+		$stale_threshold = time() - 300;
+		$db->query("DELETE FROM `game_chat_online` WHERE `last_seen` < '$stale_threshold'");
+	}
 
 	// Fetch active players seen in last 70 seconds
 	$active_threshold = time() - 70;
@@ -245,7 +252,8 @@ if ($action === 'fetch') {
 		'online_uids' => !empty($online_users['onlineusers']) ? array_map('intval', array_keys($online_users['onlineusers'])) : [],
 		'last_id' => $max_id,
 		'current_user_id' => $auth->ok ? (int)$auth->id : 0,
-		'is_logged_in' => (bool)$auth->ok
+		'is_logged_in' => (bool)$auth->ok,
+		'csrf_token' => $auth->ok ? make_token('game_chat') : ''
 	]);
 	exit;
 }
@@ -254,13 +262,26 @@ if ($action === 'fetch') {
 // 2. ACTION: SEND (Post new message)
 // ==========================================
 if ($action === 'send') {
+	if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+		echo json_encode(['success' => false, 'error' => 'Nederīgs pieprasījums.']);
+		exit;
+	}
+
 	if (!$auth->ok) {
 		echo json_encode(['success' => false, 'error' => 'Tikai reģistrēti lietotāji var rakstīt spēļu čatā! Lūdzu, ienāc savā profilā.']);
 		exit;
 	}
 
+	if (!check_token('game_chat', $_POST['token'] ?? '')) {
+		echo json_encode(['success' => false, 'error' => 'Drošības kļūda (CSRF). Lūdzu, pārlādē lapu.']);
+		exit;
+	}
+
 	$msg_text = isset($_POST['message']) ? trim($_POST['message']) : '';
 	$game_slug = isset($_POST['game']) ? trim($_POST['game']) : 'speles';
+	if (!preg_match('/^[a-z0-9_-]+$/i', $game_slug)) {
+		$game_slug = 'speles';
+	}
 	$game_title = isset($_POST['game_title']) ? trim($_POST['game_title']) : '';
 
 	if (empty($msg_text)) {
@@ -333,12 +354,22 @@ if ($action === 'send') {
 // 3. ACTION: DELETE (Moderation)
 // ==========================================
 if ($action === 'delete') {
+	if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+		echo json_encode(['success' => false, 'error' => 'Nederīgs pieprasījums.']);
+		exit;
+	}
+
 	if (!$auth->ok) {
 		echo json_encode(['success' => false, 'error' => 'Nav tiesību dzēst ziņu.']);
 		exit;
 	}
 
-	$msg_id = isset($_POST['id']) ? intval($_POST['id']) : (isset($_GET['id']) ? intval($_GET['id']) : 0);
+	if (!check_token('game_chat', $_POST['token'] ?? '')) {
+		echo json_encode(['success' => false, 'error' => 'Drošības kļūda (CSRF). Lūdzu, pārlādē lapu.']);
+		exit;
+	}
+
+	$msg_id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 	if ($msg_id <= 0) {
 		echo json_encode(['success' => false, 'error' => 'Nederīgs ziņas ID.']);
 		exit;

@@ -48,7 +48,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' &&
 	$user_id = (int)$_POST['user_id'];
 	if ($user_id < 1) {
 		set_flash('Norādīti kļūdaini dati!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	// nepieciešams norādītā lietotāja parent id, jo jāritina līdz tam
@@ -72,14 +72,14 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'search' &&
 	
 	if (!$get_parent) {
 		set_flash('Lietotājs netika atrasts!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	// norādītais lietotājs ir main profils
 	if ($get_parent->parent_id == '0') {
-		redirect('/'.$_GET['viewcat'].'?scroll='.$get_parent->user_id);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$get_parent->user_id);
 	} else { // norādītais lietotājs ir child profils
-		redirect('/'.$_GET['viewcat'].'?scroll='.$get_parent->parent_id);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$get_parent->parent_id);
 	}
 }
 	
@@ -93,7 +93,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 
 	if (!isset($_POST['userid']) || (int)$_POST['userid'] < 1) {
 		set_flash('Norādīti kļūdaini dati!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	$user_id = (int)$_POST['userid'];
@@ -101,10 +101,10 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 	$if_exists = get_user($user_id);
 	if (!$if_exists) {
 		set_flash('Norādītais lietotājs neeksistē!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	} else if ($if_exists->level == 1 || $if_exists->level == 2) {
 		set_flash('Norādītais lietotājs nevar tikt pievienots!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	// norādītais lietotājs vēl nedrīkst būt datubāzē, citādi 
@@ -121,7 +121,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 	");
 	if ($if_exists > 0) {
 		set_flash('Norādītais lietotājs jau atrodas kādā no grupām!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	$data = [
@@ -134,10 +134,10 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-main') {
 	
 	if ($insert !== false) {
 		set_flash('Profils pievienots sarakstam!', 'success');
-		redirect('/'.$_GET['viewcat'].'?scroll='.$user_id);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$user_id);
 	} else {
 		set_flash('Izveidot ierakstu neizdevās!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 }
 
@@ -173,7 +173,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-child' &&
 			exit;
 		} else {
 			set_flash('Darbība neizdevās!');
-			redirect('/'.$_GET['viewcat']);
+			redirect('/'.($_GET['viewcat'] ?? $category->textid));
 		}
 	}
 	
@@ -264,11 +264,11 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'add-child' &&
 		}
 		$auth->log('Piesaistīja '.$childs_added.' profilus', 'users', $parent_data->id);
 		
-		redirect('/'.$_GET['viewcat'].'?scroll='.$parent_data->id);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$parent_data->id);
 
 	} else {
 		set_flash('Kļūdaini norādīta adrese!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 }
 
@@ -306,7 +306,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'edit' &&
 			exit;
 		} else {
 			set_flash('Darbība neizdevās!');
-			redirect('/'.$_GET['viewcat']);
+			redirect('/'.($_GET['viewcat'] ?? $category->textid));
 		}
 	}
 	
@@ -341,15 +341,15 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'edit' &&
 		
 		if ($update !== false) {
 			set_flash('Apraksts atjaunots!', 'success');
-			redirect('/'.$_GET['viewcat'].'?scroll='.$data->user_id);
+			redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$data->user_id);
 		} else {
 			set_flash('Atjaunot aprakstu neizdevās!');
-			redirect('/'.$_GET['viewcat']);
+			redirect('/'.($_GET['viewcat'] ?? $category->textid));
 		}
 
 	} else {
 		set_flash('Kļūdaini norādīta adrese!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 }
 
@@ -370,7 +370,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-group' &&
 			exit;
 		} else {
 			set_flash('Darbība neizdevās!');
-			redirect('/'.$_GET['viewcat']);
+			redirect('/'.($_GET['viewcat'] ?? $category->textid));
 		}
 	}
 	
@@ -459,7 +459,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-child' &&
 	$child_id = (int)$_GET['var2'];
 	if ($child_id < 1) {
 		set_flash('Atsaistīšana neizdevās!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	$update = $db->query("
@@ -476,13 +476,13 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'delete-child' &&
 		$auth->log('Atsaistīja profilu', 'ug', $child_id);
 		if (isset($_GET['var3'])) {
 			$var3 = (int)$_GET['var3'];
-			redirect('/'.$_GET['viewcat'].'?scroll='.$var3);
+			redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$var3);
 		}
 	} else {
 		set_flash('Profilu atsaistīt neizdevās!');
 	}
 	
-	redirect('/'.$_GET['viewcat']);
+	redirect('/'.($_GET['viewcat'] ?? $category->textid));
 }
 
 
@@ -498,7 +498,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
 	$child_id = (int)$_GET['var2'];
 	if ($child_id < 1) {
 		set_flash('Darbība neizdevās!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 
 	$data = $db->get_row("
@@ -524,7 +524,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
 	
 	if (!$data) {
 		set_flash('Darbība neizdevās!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	// child -> main
@@ -534,7 +534,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
 	
 	if (!$upd) {
 		set_flash('Darbība neizdevās!');
-		redirect('/'.$_GET['viewcat']);
+		redirect('/'.($_GET['viewcat'] ?? $category->textid));
 	}
 	
 	// main -> child
@@ -546,7 +546,7 @@ else if (isset($_GET['var1']) && $_GET['var1'] == 'change-main' &&
 	$criteria = ['parent_id' => $data->parent_id, 'deleted_by' => 0];
 	$upd = $db->update('users_groups', $criteria, $arr);
 	
-	redirect('/'.$_GET['viewcat'].'?scroll='.$data->user_id);
+	redirect('/'.($_GET['viewcat'] ?? $category->textid).'?scroll='.$data->user_id);
 }
 
 

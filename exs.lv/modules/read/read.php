@@ -145,7 +145,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 
 	// lietotāja paraksta dzēšana
 	if (im_mod()) {
-		if (isset($_GET['remove_signature'])) {
+		if (isset($_GET['remove_signature']) && check_token('remsig-' . $_GET['remove_signature'], $_GET['token'] ?? '')) {
 			$remove_signature = (int) $_GET['remove_signature'];
 			$message = sanitize(h(strip_tags($_GET['message'] ?? '')));
 			$db->query("UPDATE `users` SET `signature` = ('<small>Noņēma: " . $auth->nick . ". Iemesls: " . $message . "</small>') WHERE `id` = '" . $remove_signature . "' LIMIT 1");
@@ -1204,7 +1204,7 @@ if ($article && (empty($article->needs_review) || im_mod()) && ($auth->ok === tr
 					if ($auth->ok && $auth->showsig && !empty($author[$comment->author]) && $author[$comment->author]->signature && !$auth->mobile) {
 						$signature = '<div class="comment-signature">' . $author[$comment->author]->signature . '</div>';
 						if (im_mod() && $author[$comment->author]->level != 1) {
-							$signature .= '[<a onclick="prompt_why_delete(\'?remove_signature=' . $comment->author . '\');" href="#"><span class="red">dzēst parakstu</span></a>]';
+							$signature .= '[<a onclick="prompt_why_delete(\'?remove_signature=' . $comment->author . '&amp;token=' . make_token('remsig-' . $comment->author) . '\');" href="#"><span class="red">dzēst parakstu</span></a>]';
 						}
 						$tpl->assign('signature', add_smile($signature));
 					}

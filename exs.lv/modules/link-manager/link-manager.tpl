@@ -22,7 +22,7 @@
 
 <ul style="padding:0;margin:0;list-style:none">
 	<!-- START BLOCK : link-manager-item-->
-	<li>{domain} <a class="confirm button danger small" href="/{category-url}/{type}/delete/{id}">dzēst</a></li>
+	<li>{domain} <a class="confirm button danger small" href="/{category-url}/{type}/delete/{id}?token={token}">dzēst</a></li>
 	<!-- END BLOCK : link-manager-item-->
 </ul>
 
