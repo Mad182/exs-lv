@@ -24,8 +24,11 @@ $lang = 1;
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);
 
-$source = (int)$argv[1];
-$destionation = (int)$argv[2];
+$source = isset($argv[1]) ? (int)$argv[1] : 0;
+$destionation = isset($argv[2]) ? (int)$argv[2] : 0;
+if (!$source || !$destionation) {
+	die("Usage: php mergegroup.php SOURCEID DESTINATIONID\n");
+}
 
 $db->query("DELETE FROM `clans` WHERE `id` = '$source' LIMIT 1");
 echo "deleted group...\n";

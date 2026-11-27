@@ -8,7 +8,7 @@ class Hashtag {
 	private $mbid = null;
 
 	function __construct($mbid) {
-		$this->mbid = $mbid;
+		$this->mbid = (int) $mbid;
 	}
 
 	public function hashtag($matches) {
@@ -40,8 +40,10 @@ class Hashtag {
 					$tags->add_tag($mb->id, $tagid, 2);
 				} else {
 					$db->query("INSERT INTO `tags` (`name`, `slug`) VALUES ('$newtag', '$nslug')");
-					$tagid = $db->get_var("SELECT `id` FROM `tags` WHERE `slug` = '$nslug'");
-					$tags->add_tag($mb->id, $tagid, 2);
+					$tagid = (int) $db->insert_id;
+					if ($tagid) {
+						$tags->add_tag($mb->id, $tagid, 2);
+					}
 				}
 				return $pre . '<a class="post-tag" href="/tag/' . $nslug . '" title="' . $newtag . '"><span class="hash-sign">#</span>' . $tag . '</a>';
 			}

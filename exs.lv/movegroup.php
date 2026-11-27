@@ -24,8 +24,11 @@ $lang = 1;
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);
 
-$group = (int)$argv[1];
-$destionation = (int)$argv[2];
+$group = isset($argv[1]) ? (int)$argv[1] : 0;
+$destionation = isset($argv[2]) ? (int)$argv[2] : 0;
+if (!$group || !$destionation) {
+	die("Usage: php movegroup.php GROUPID DOMAINID\n");
+}
 
 $clan = $db->get_row("SELECT * FROM `clans` WHERE `id` = $group LIMIT 1");
 if (!empty($clan)) {

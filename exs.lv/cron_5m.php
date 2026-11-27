@@ -34,8 +34,10 @@ if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
 $m->addServer($mc_host, $mc_port);
 
 $cats = $db->get_results("SELECT id FROM cat");
-foreach ($cats as $cat) {
-	update_stats($cat->id);
+if (!empty($cats)) {
+	foreach ($cats as $cat) {
+		update_stats($cat->id);
+	}
 }
 
 //remove bans

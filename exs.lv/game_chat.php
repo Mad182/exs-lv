@@ -19,6 +19,7 @@ if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
 $m->addServer($mc_host, $mc_port);
 
 $db = new mdb($username, $password, $database, $hostname);
+unset($password);
 
 if (!isset($_SESSION)) {
 	session_start();
@@ -67,15 +68,19 @@ $game_catalog_meta = [
  */
 function resolve_game_meta($slug, $title = '') {
 	global $game_catalog_meta, $db;
-	$slug = trim(strtolower($slug));
+	static $db_cache = [];
+	$slug = trim(strtolower((string) $slug));
 	if (isset($game_catalog_meta[$slug])) {
 		return $game_catalog_meta[$slug];
 	}
 	if (!empty($title)) {
 		return ['title' => $title, 'url' => '/' . $slug, 'icon' => '🎮'];
 	}
-	// Try looking up in games table
-	$g = $db->get_row("SELECT title, url FROM `games` WHERE `slug` = '" . sanitize($slug) . "' OR `game_code` = '" . sanitize($slug) . "' LIMIT 1");
+	// Try looking up in games table (cached per request)
+	if (!array_key_exists($slug, $db_cache)) {
+		$db_cache[$slug] = $db->get_row("SELECT title, url FROM `games` WHERE `slug` = '" . sanitize($slug) . "' OR `game_code` = '" . sanitize($slug) . "' LIMIT 1");
+	}
+	$g = $db_cache[$slug];
 	if ($g) {
 		return ['title' => $g->title, 'url' => $g->url, 'icon' => '🎮'];
 	}
@@ -147,17 +152,18 @@ function make_clickable($text) {
 // ==========================================
 if ($action === 'fetch') {
 	$last_id = isset($_GET['last_id']) ? intval($_GET['last_id']) : 0;
-	$current_game = isset($_GET['game']) ? sanitize(trim($_GET['game'])) : '';
-	$current_game_title = isset($_GET['game_title']) ? sanitize(trim($_GET['game_title'])) : '';
+	$current_game = isset($_GET['game']) ? trim($_GET['game']) : '';
+	$current_game_title = isset($_GET['game_title']) ? trim($_GET['game_title']) : '';
 
 	// Update presence if user is logged in
 	if ($auth->ok && !empty($current_game)) {
 		$meta = resolve_game_meta($current_game, $current_game_title);
+		$game_esc = sanitize($current_game);
 		$title_esc = sanitize($meta['title']);
 		$now = time();
 		$db->query("
 			INSERT INTO `game_chat_online` (`user_id`, `game`, `game_title`, `last_seen`) 
-			VALUES ('$auth->id', '$current_game', '$title_esc', '$now')
+			VALUES ('$auth->id', '$game_esc', '$title_esc', '$now')
 			ON DUPLICATE KEY UPDATE `game` = VALUES(`game`), `game_title` = VALUES(`game_title`), `last_seen` = VALUES(`last_seen`)
 		");
 	}
@@ -254,8 +260,8 @@ if ($action === 'send') {
 	}
 
 	$msg_text = isset($_POST['message']) ? trim($_POST['message']) : '';
-	$game_slug = isset($_POST['game']) ? sanitize(trim($_POST['game'])) : 'speles';
-	$game_title = isset($_POST['game_title']) ? sanitize(trim($_POST['game_title'])) : '';
+	$game_slug = isset($_POST['game']) ? trim($_POST['game']) : 'speles';
+	$game_title = isset($_POST['game_title']) ? trim($_POST['game_title']) : '';
 
 	if (empty($msg_text)) {
 		echo json_encode(['success' => false, 'error' => 'Ziņa nevar būt tukša!']);
@@ -267,16 +273,16 @@ if ($action === 'send') {
 		exit;
 	}
 
-	// Flood control: minimum 1.5 seconds between posts
-	$last_post_time = (int)$db->get_var("SELECT `time` FROM `game_chat` WHERE `user_id` = '$auth->id' ORDER BY `id` DESC LIMIT 1");
+	// Flood control & duplicate check in a single query
+	$last_post = $db->get_row("SELECT `time`, `message` FROM `game_chat` WHERE `user_id` = '$auth->id' ORDER BY `id` DESC LIMIT 1");
+	$last_post_time = $last_post ? (int)$last_post->time : 0;
 	if ($last_post_time && (time() - $last_post_time) < 2) {
 		echo json_encode(['success' => false, 'error' => 'Pārāk ātri! Lūdzu uzgaidi 2 sekundes pirms nākamās ziņas.']);
 		exit;
 	}
 
 	// Prevent sending identical duplicate message within 60 seconds
-	$last_post_msg = $db->get_var("SELECT `message` FROM `game_chat` WHERE `user_id` = '$auth->id' ORDER BY `id` DESC LIMIT 1");
-	if ($last_post_msg === $msg_text && (time() - $last_post_time) < 60) {
+	if ($last_post && $last_post->message === $msg_text && (time() - $last_post_time) < 60) {
 		echo json_encode(['success' => false, 'error' => 'Identiska ziņa jau tika nosūtīta tikko!']);
 		exit;
 	}

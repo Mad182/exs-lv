@@ -124,6 +124,7 @@ if (!empty($ios_local_ip)) {
 */
 
 $http_host_raw = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$request_uri = $_SERVER['REQUEST_URI'] ?? '/';
 $host_clean = preg_replace('/:\d+$/', '', $http_host_raw);
 
 if (isset($arr_domains[$host_clean])) {  
@@ -138,26 +139,26 @@ if (isset($arr_domains[$host_clean])) {
 	}
 	
 // valīdas saites ar 'www.' priekšā tiks pārvirzītas uz saitēm bez 'www.'
-} else if (strpos($_SERVER['HTTP_HOST'], 'www.') === 0) {
+} else if (strpos($http_host_raw, 'www.') === 0) {
 
-	$name = str_replace('www.', '', $_SERVER['HTTP_HOST']);   
+	$name = substr($http_host_raw, 4);
 	if (!empty($name) && isset($arr_domains[$name])) {
 		$proto = 'https://';
 		if (empty($config_domains[$arr_domains[$name]]['ssl'])) {
 			$proto = 'http://';
 		}
-		redirect($proto . $name . $_SERVER['REQUEST_URI'], true);
+		redirect($proto . $name . $request_uri, true);
 	} else {
-		redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
+		redirect('https://exs.lv' . $request_uri, true);
 	}
 
 //rs redirektējam uz runescape lai neveidojas dublikāts saturam
-} else if ($_SERVER['HTTP_HOST'] == 'rs.exs.lv') {
-	redirect('https://runescape.exs.lv' . $_SERVER['REQUEST_URI'], true);
+} else if ($http_host_raw == 'rs.exs.lv') {
+	redirect('https://runescape.exs.lv' . $request_uri, true);
 
 //ja nekas nav atpazīts, redirektējam uz exs.lv
 } else {
-	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
+	redirect('https://exs.lv' . $request_uri, true);
 }
 
 
@@ -171,13 +172,13 @@ if (isset($arr_domains[$host_clean])) {
 if ($lang > 0) {
 	require CORE_PATH . '/config/' . $config_domains[$lang]['domain'] . '.php';
 } else {
-	if (strpos($_SERVER['HTTP_HOST'], 'm') === 0) {
-		redirect('https://m.exs.lv' . $_SERVER['REQUEST_URI'], true);
+	if (strpos($http_host_raw, 'm') === 0) {
+		redirect('https://m.exs.lv' . $request_uri, true);
 	}
-	redirect('https://exs.lv' . $_SERVER['REQUEST_URI'], true);
+	redirect('https://exs.lv' . $request_uri, true);
 }
 
 // dzēsīs 'index.php' no saitēm, lai tās būtu glītākas
-if ($_SERVER['REQUEST_URI'] === '/index.php' && empty($_POST)) {
+if ($request_uri === '/index.php' && empty($_POST)) {
 	redirect('/', true);
 }

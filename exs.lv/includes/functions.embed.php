@@ -25,6 +25,11 @@
 function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $hide_spoilers = true) {
 	global $lang;
 
+	$txt = (string) ($txt ?? '');
+	if ($txt === '') {
+		return '';
+	}
+
 	// @coding.lv nerādīs smaidiņus, ja ierakstā ir koda gabals
 	if (strpos($txt, 'prettyprint') !== false && $lang == 3) {
 		$disable_emotions = true;
@@ -35,54 +40,66 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 		$txt = insert_smilies($txt);
 	}
 
-	// pārveido vecās avataru adreses uz jaunajām
-	$txt = str_replace('="/dati/bildes/useravatar/', '="//img.exs.lv/userpic/medium/', $txt);
-	$txt = str_replace('="/dati/bildes/u_small/', '="//img.exs.lv/userpic/small/', $txt);
-	$txt = str_replace('="/dati/bildes/u_large/', '="//img.exs.lv/userpic/large/', $txt);
-
-	// visu iekš /dati/bildes lādē caur img.exs.lv cache
-	$txt = str_replace('="/dati/bildes', '="//img.exs.lv/dati/bildes', $txt);
-
-	// absolūtie ceļi, lai viss no /upload un /bildes rādītos arī m.exs.lv
-	$txt = str_replace('="/upload/', '="//exs.lv/upload/', $txt);
-	$txt = str_replace('="/bildes', '="//exs.lv/bildes', $txt);
-
-	// saturā esošām adresēm pievieno "nofollow" atribūtu
-	$txt = str_replace(' rel="nofollow"', '', $txt);
-	$txt = str_replace(' href="http', ' rel="nofollow noopener noreferrer" href="http', $txt);
+	// pārveido vecās avataru adreses, /dati/bildes, absolūtos ceļus un nofollow vienā piegājienā
+	$txt = str_replace(
+		[
+			'="/dati/bildes/useravatar/',
+			'="/dati/bildes/u_small/',
+			'="/dati/bildes/u_large/',
+			'="/dati/bildes',
+			'="/upload/',
+			'="/bildes',
+			' rel="nofollow"',
+			' href="http'
+		],
+		[
+			'="//img.exs.lv/userpic/medium/',
+			'="//img.exs.lv/userpic/small/',
+			'="//img.exs.lv/userpic/large/',
+			'="//img.exs.lv/dati/bildes',
+			'="//exs.lv/upload/',
+			'="//exs.lv/bildes',
+			'',
+			' rel="nofollow noopener noreferrer" href="http'
+		],
+		$txt
+	);
 
 	// draudzīgajām un atbalstāmajām adresēm noņem "nofollow" atribūtu
 	$dofollow_sites = get_sitelist('dofollow');
-
-	foreach ($dofollow_sites as $site) {
-		if (strpos($txt, $site) !== false) {
-			$find = [
-				' rel="nofollow noopener noreferrer" href="http://' . $site,
-				' rel="nofollow noopener noreferrer" href="https://' . $site,
-				' rel="nofollow noopener noreferrer" href="http://www.' . $site,
-				' rel="nofollow noopener noreferrer" href="https://www.' . $site
-			];
-			$replace = [
-				' href="http://' . $site,
-				' href="https://' . $site,
-				' href="http://www.' . $site,
-				' href="https://www.' . $site
-			];
-			$txt = str_ireplace($find, $replace, $txt);
+	if (!empty($dofollow_sites)) {
+		foreach ($dofollow_sites as $site) {
+			if (strpos($txt, $site) !== false) {
+				$find = [
+					' rel="nofollow noopener noreferrer" href="http://' . $site,
+					' rel="nofollow noopener noreferrer" href="https://' . $site,
+					' rel="nofollow noopener noreferrer" href="http://www.' . $site,
+					' rel="nofollow noopener noreferrer" href="https://www.' . $site
+				];
+				$replace = [
+					' href="http://' . $site,
+					' href="https://' . $site,
+					' href="http://www.' . $site,
+					' href="https://www.' . $site
+				];
+				$txt = str_ireplace($find, $replace, $txt);
+			}
 		}
 	}
 
 	// adreses, kas atrodas blacklistē, tiek aizstātas ar "/ES_SPAMOJU_SUDUS"
 	$blacklisted_sites = get_sitelist('blacklisted');
-	foreach ($blacklisted_sites as $site) {
-		if (stripos($txt, $site) !== false) {
-			$replace = [
-				'http://' . $site,
-				'http://www.' . $site,
-				'https://' . $site,
-				'https://www.' . $site
-			];
-			$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
+	if (!empty($blacklisted_sites)) {
+		foreach ($blacklisted_sites as $site) {
+			if (stripos($txt, $site) !== false) {
+				$replace = [
+					'http://' . $site,
+					'http://www.' . $site,
+					'https://' . $site,
+					'https://www.' . $site
+				];
+				$txt = str_ireplace($replace, '/ES_SPAMOJU_SUDUS', $txt);
+			}
 		}
 	}
 
@@ -120,17 +137,19 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 
 		//force https for known supported sites
 		$https_sites = get_sitelist('https');
-		foreach ($https_sites as $site) {
-			if (strpos($txt, $site) !== false) {
-				$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
-			} elseif(stripos($site, '*') !== false) {
+		if (!empty($https_sites)) {
+			foreach ($https_sites as $site) {
+				if (strpos($txt, $site) !== false) {
+					$txt = str_ireplace('http://' . $site, 'https://' . $site, $txt);
+				} elseif(stripos($site, '*') !== false) {
 
-				//wildcard
-				$check = str_replace('*', '', $site);
-				if (strpos($txt, $check) !== false) {
-					$txt = preg_replace('/http:\/\/([a-zA-Z0-9]+)'.$check.'/', 'https://$1'.$check, $txt);
-				} 
+					//wildcard
+					$check = str_replace('*', '', $site);
+					if (strpos($txt, $check) !== false) {
+						$txt = preg_replace('/http:\/\/([a-zA-Z0-9]+)' . preg_quote($check, '/') . '/', 'https://$1' . $check, $txt);
+					}
 
+				}
 			}
 		}
 
@@ -157,7 +176,7 @@ function add_smile($txt, $wide = 0, $disable_emotions = 0, $disable_embed = 0, $
 function insert_smilies($txt, $just_return = false) {
 	global $img_server;
 
-	$smilies = [
+	static $smilies = [
 		':sweat:' => 'smiley-sweat.png',
 		':o:' => 'smiley-surprise.png',
 		':eek:' => 'smiley-eek.png',
@@ -291,10 +310,19 @@ function insert_smilies($txt, $just_return = false) {
         return $smilies;
     }
 
+	$txt = (string) ($txt ?? '');
+	if (strpos($txt, ':') === false && strpos($txt, ';') === false && strpos($txt, '8=)') === false) {
+		return $txt;
+	}
+
 	// Ja tekstā ir HTML tagi, aizstājam smaidiņus tikai ārpus tagiem, lai nesabojātu tagu atribūtus (piem., alt, title, href)
 	if (strpos($txt, '<') !== false) {
 		$parts = preg_split('/(<[^>]+>)/', $txt, -1, PREG_SPLIT_DELIM_CAPTURE);
-		for ($i = 0; $i < count($parts); $i += 2) {
+		$count = count($parts);
+		for ($i = 0; $i < $count; $i += 2) {
+			if (strpos($parts[$i], ':') === false && strpos($parts[$i], ';') === false && strpos($parts[$i], '8=)') === false) {
+				continue;
+			}
 			foreach ($smilies as $key => $val) {
 				if (strpos($parts[$i], $key) !== false) {
 					$parts[$i] = str_ireplace($key, ' <img src="' . $img_server . '/bildes/fugue-icons/' . $val . '" alt="' . $val . '" /> ', $parts[$i]);
@@ -815,6 +843,7 @@ function replace_spoiler($text) {
  *  @return $text
  */
 function hide_spoilers($text) {
+	$text = (string) ($text ?? '');
 	if (strpos($text, 'spoiler') !== false) {
 		$text = preg_replace('/\[spoiler\](.*)\[\/spoiler\]/is', "(spoiler) ", $text);
 		$text = str_replace('  ', ' ', $text);

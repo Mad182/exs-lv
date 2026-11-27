@@ -1738,8 +1738,7 @@ class BBCode {
 $bbcode = new BBCode();
 
 
-// Need to initialize the random numbers only ONCE
-mt_srand((double) microtime() * 1000000);
+// Need to initialize the random numbers only ONCE (auto-seeded in PHP 8+)
 
 function make_bbcode_uid() {
 // Unique ID for this message..

@@ -242,21 +242,23 @@ if ($category->module === 'movies') {
 		if (translate_genres($_GET['genre']) != $_GET['genre']) {
 			$page_title = h(translate_genres($_GET['genre']));
 		}
-	} elseif (isset($_GET['genres']) && count($_GET['genres']) == 1) {
+	} elseif (isset($_GET['genres']) && is_array($_GET['genres']) && count($_GET['genres']) == 1) {
 		if (translate_genres($_GET['genres'][0]) != $_GET['genres'][0]) {
-			redirect('/filmas/search/?genre=' . $_GET['genres'][0]);
+			redirect('/filmas/search/?genre=' . urlencode($_GET['genres'][0]));
 		}
 	}
 
 	$genres = $db->get_col("SELECT DISTINCT(`genre`) FROM `movie_genres` ORDER BY `genre` ASC");
-	foreach ($genres as $genre) {
-		$tpl->newBlock('genre-node');
-		$tpl->assign([
-			'genre' => $genre,
-			'translated' => translate_genres($genre)
-		]);
-		if (!empty($_GET['genres']) && in_array($genre, $_GET['genres'])) {
-			$tpl->assign('checked', ' checked="checked"');
+	if ($genres) {
+		foreach ($genres as $genre) {
+			$tpl->newBlock('genre-node');
+			$tpl->assign([
+				'genre' => $genre,
+				'translated' => translate_genres($genre)
+			]);
+			if (!empty($_GET['genres']) && is_array($_GET['genres']) && in_array($genre, $_GET['genres'])) {
+				$tpl->assign('checked', ' checked="checked"');
+			}
 		}
 	}
 }

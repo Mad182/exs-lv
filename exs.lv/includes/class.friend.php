@@ -21,6 +21,8 @@ class Friend {
 	//get friendship id
 	function get_friendship_id($myself = 0, $friend = 0) {
 		global $db;
+		$myself = (int) $myself;
+		$friend = (int) $friend;
 		$friendship_id = $db->get_var("SELECT id FROM friends WHERE ((friend1 = ('" . $myself . "') AND friend2 = ('" . $friend . "')) OR (friend2 = ('" . $myself . "') AND friend1 = ('" . $friend . "'))) AND confirmed = '1'");
 		if ($friendship_id) {
 			return $friendship_id;
@@ -32,6 +34,8 @@ class Friend {
 	//get friendship id
 	function pending_friendship($myself = 0, $friend = 0) {
 		global $db;
+		$myself = (int) $myself;
+		$friend = (int) $friend;
 		$friendship_id = $db->get_var("SELECT id FROM friends WHERE ((friend1 = ('" . $myself . "') AND friend2 = ('" . $friend . "')) OR (friend2 = ('" . $myself . "') AND friend1 = ('" . $friend . "'))) AND confirmed = '0'");
 		if ($friendship_id) {
 			return $friendship_id;
@@ -67,6 +71,8 @@ class Friend {
 	//adds friend
 	function add_friend($myself, $friend) {
 		global $db;
+		$myself = (int) $myself;
+		$friend = (int) $friend;
 		if ($this->check_user($friend) && !$this->get_friendship_id($myself, $friend) && $myself && $friend && $friend != $myself) {
 			if (!$this->pending_friendship($myself, $friend)) {
 				$db->query("INSERT INTO friends (id,friend1,friend2,date,confirmed) VALUES (NULL,'$myself','$friend',NOW(),'0')");
@@ -78,6 +84,8 @@ class Friend {
 	//confirm friendship
 	function confirm_friendship($myself, $friend) {
 		global $db;
+		$myself = (int) $myself;
+		$friend = (int) $friend;
 		if ($this->check_user($friend) && !$this->get_friendship_id($myself, $friend) && $myself && $friend && $friend != $myself) {
 			if ($this->pending_friendship($myself, $friend)) {
 				$date = date('Y-m-d H:i:s');

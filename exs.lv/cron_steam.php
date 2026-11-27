@@ -36,9 +36,11 @@ $users = $db->get_results("SELECT `id`, `nick`, `steam_id`  FROM `users` WHERE `
 $user_id_array = [];
 
 //array to later get exs_id from steam_id without additional query and store steam id's in separate array for curl request
-foreach ($users as $user) {
-    $user_id_array[$user->steam_id] = $user->id;
-    $steamIDs[] = $user->steam_id;
+if (!empty($users)) {
+    foreach ($users as $user) {
+        $user_id_array[$user->steam_id] = $user->id;
+        $steamIDs[] = $user->steam_id;
+    }
 }
 
 //split arrays in chunks to don't reach steam limit
@@ -51,7 +53,6 @@ foreach ($chunks as $chunk) {
     $url = $_apiURL . $ids_string;
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
     curl_setopt($ch, CURLOPT_TIMEOUT, 4);
@@ -59,72 +60,48 @@ foreach ($chunks as $chunk) {
     $output = curl_exec($ch);
 
     //json object from steam with players data
-    $response = json_decode($output);
+    $response = is_string($output) ? json_decode($output) : null;
+    if (empty($response->response->players) || !is_array($response->response->players)) {
+        continue;
+    }
 
-    foreach ($response as $players) {
-        foreach ($players as $player) {
-            foreach ($player as $user) {
-
-                //check if entry already exists
-                $is_in_table = $db->get_results("SELECT `id`, `steamid` FROM `steam_player_info` WHERE `steamid` = " . $user->steamid . " LIMIT 1;");
-
-                //get id if entry exists
-                foreach ($is_in_table as $exs_user) {
-                    $id = $exs_user->id;
-                }
-
-                //update if entry exists in table
-                if (!empty($is_in_table)) {
-                    $db->update('steam_player_info', $id, [
-                        'communityvisibilitystate' => $user->communityvisibilitystate,
-                        'profilestate'             => $user->profilestate,
-                        'personaname'              => $user->personaname,
-                        'lastlogoff'               => $user->lastlogoff,
-                        'profileurl'               => $user->profileurl,
-                        'avatar'                   => $user->avatar,
-                        'personastate'             => $user->personastate,
-                        'realname'                 => $user->realname,
-                        'primaryclanid'            => $user->primaryclanid,
-                        'timecreated'              => $user->timecreated,
-                        'personastateflags'        => $user->personastateflags,
-                        'gameextrainfo'            => $user->gameextrainfo,
-                        'gameid'                   => $user->gameid,
-                        'loccountrycode'           => $user->loccountrycode,
-                        'locstatecode'             => $user->locstatecode,
-                        'loccityid'                => $user->loccityid
-                    ]);
-                } else {
-
-                    //do first entry if user doesn't exist in table
-                    $db->insert('steam_player_info', [
-                        'user_id'                  => $user_id_array[$user->steamid],
-                        'steamid'                  => $user->steamid,
-                        'communityvisibilitystate' => $user->communityvisibilitystate,
-                        'profilestate'             => $user->profilestate,
-                        'personaname'              => $user->personaname,
-                        'lastlogoff'               => $user->lastlogoff,
-                        'profileurl'               => $user->profileurl,
-                        'avatar'                   => $user->avatar,
-                        'personastate'             => $user->personastate,
-                        'realname'                 => $user->realname,
-                        'primaryclanid'            => $user->primaryclanid,
-                        'timecreated'              => $user->timecreated,
-                        'personastateflags'        => $user->personastateflags,
-                        'gameextrainfo'            => $user->gameextrainfo,
-                        'gameid'                   => $user->gameid,
-                        'loccountrycode'           => $user->loccountrycode,
-                        'locstatecode'             => $user->locstatecode,
-                        'loccityid'                => $user->loccityid
-                    ]);
-                }
-
-            }
+    foreach ($response->response->players as $user) {
+        if (empty($user->steamid)) {
+            continue;
         }
+        $steamid_clean = sanitize($user->steamid);
+        $fields = [
+            'communityvisibilitystate' => intval($user->communityvisibilitystate ?? 0),
+            'profilestate'             => intval($user->profilestate ?? 0),
+            'personaname'              => sanitize($user->personaname ?? ''),
+            'lastlogoff'               => intval($user->lastlogoff ?? 0),
+            'profileurl'               => sanitize($user->profileurl ?? ''),
+            'avatar'                   => sanitize($user->avatar ?? ''),
+            'personastate'             => intval($user->personastate ?? 0),
+            'realname'                 => sanitize($user->realname ?? ''),
+            'primaryclanid'            => sanitize($user->primaryclanid ?? ''),
+            'timecreated'              => intval($user->timecreated ?? 0),
+            'personastateflags'        => intval($user->personastateflags ?? 0),
+            'gameextrainfo'            => sanitize($user->gameextrainfo ?? ''),
+            'gameid'                   => sanitize($user->gameid ?? ''),
+            'loccountrycode'           => sanitize($user->loccountrycode ?? ''),
+            'locstatecode'             => sanitize($user->locstatecode ?? ''),
+            'loccityid'                => intval($user->loccityid ?? 0)
+        ];
 
+        //check if entry already exists
+        $id = $db->get_var("SELECT `id` FROM `steam_player_info` WHERE `steamid` = '" . $steamid_clean . "' LIMIT 1");
 
-        //empty dynamic values for next loop
-        unset($ids_string);
-        unset($steamIDs);
+        //update if entry exists in table
+        if (!empty($id)) {
+            $db->update('steam_player_info', $id, $fields);
+        } elseif (isset($user_id_array[$user->steamid])) {
+            //do first entry if user doesn't exist in table
+            $db->insert('steam_player_info', array_merge([
+                'user_id' => intval($user_id_array[$user->steamid]),
+                'steamid' => $steamid_clean,
+            ], $fields));
+        }
     }
 }
 

@@ -61,7 +61,7 @@ if (!empty($_GET['fakeurl'])) {
 		if (!empty($parts[2])) {
 			$mbid = explode('-', $parts[2]);
 			if ($mbid[0] === 'skip') {
-				$_GET['skip'] = $mbid[1];
+				$_GET['skip'] = $mbid[1] ?? 0;
 			} else {
 				$_GET['single'] = $mbid[0];
 			}
@@ -120,7 +120,7 @@ $m->addServer($mc_host, $mc_port);
 //lapas settingu/datu glabāšana
 $ss = new SiteStorage;
 
-$requested_json = (substr($_SERVER['REQUEST_URI'], -5) === '.json' || (isset($_GET['var1']) && $_GET['var1'] == 'json'));
+$requested_json = (substr($_SERVER['REQUEST_URI'] ?? '', -5) === '.json' || (isset($_GET['var1']) && $_GET['var1'] == 'json'));
 
 if ($requested_json) {
 	header('Content-Type: application/json; charset=UTF-8');
@@ -339,18 +339,14 @@ $jquery_modules = [
 	'karatavas', 'memory', 'minu-mekletajs', 'pacman', 'register', 'rezonanse', 'rulete', 'runner', 'snake', 'speles',
 	'steam-online', 'sudoku', 'tanki', 'tetris', 'tic-tac-toe', 'tornis', 'ut99', 'vardes', 'wg-play', 'wordle'
 ];
-if (isset($category) && (
-	(!empty($category->module) && in_array($category->module, $jquery_modules)) ||
-	(!empty($category->textid) && in_array($category->textid, $jquery_modules)) ||
-	(!empty($category->parent) && $category->parent == 2516)
-)) {
-	$require_jquery = true;
-}
 $is_game = (isset($category) && (
 	(!empty($category->module) && in_array($category->module, $jquery_modules)) ||
 	(!empty($category->textid) && in_array($category->textid, $jquery_modules)) ||
 	(!empty($category->parent) && $category->parent == 2516)
 ));
+if ($is_game) {
+	$require_jquery = true;
+}
 $is_miniblog = (isset($_GET['m']) || (isset($category) && in_array($category->textid, ['say', 'miniblogs', 'miniblog'])) || (isset($category) && in_array($category->module, ['miniblogs', 'miniblog'])));
 $is_read = (isset($_GET['viewcat']) && $_GET['viewcat'] === 'read');
 
@@ -505,7 +501,7 @@ if (im_mod()) {
 
 //assigno visur izmantotas vērtības
 $tpl->assignGlobal([
-	'page-title' => hide_spoilers($page_title),
+	'page-title' => $page_title,
 	'page-loginurl' => $login_url,
 	'page-time' => time(),
 	'page-url' => h($_SERVER['REQUEST_URI']),
@@ -576,7 +572,7 @@ if (isset($category) && !isset($_GET['u']) && !isset($_GET['g']) && !isset($_GET
 	]);
 	if ($category->parent) {
 		$topcat = get_cat($category->parent);
-		if ($topcat->parent) {
+		if ($topcat && $topcat->parent) {
 			$tpl->assignGlobal([
 				'cat-sel-' . $topcat->parent => ' class="selected active"',
 			]);

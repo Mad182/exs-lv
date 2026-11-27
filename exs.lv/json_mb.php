@@ -26,7 +26,7 @@ $db = new mdb($username, $password, $database, $hostname);
 
 $mbid = (int) $_GET['mbid'];
 $lastid = (int) $_GET['lastid'];
-$lastedit = (int) $_GET['et'];
+$lastedit = isset($_GET['et']) ? (int) $_GET['et'] : 0;
 
 // apakšprojekti, kuriem rādīt ziņošanas podziņu
 $allowed_sites = [1, 7, 9]; // exs.lv; lol.exs.lv; runescape.exs.lv
@@ -78,6 +78,7 @@ if ($resps) {
 	//"cake day"
 	$cday_users = get_cakeday();
 
+	$group_access_cache = [];
 	foreach ($resps as $resp) {
 
 		$json['id'] = $resp->id;
@@ -86,17 +87,23 @@ if ($resps) {
 
 		$limit = 3;
 		if ($resp->groupid) {
-			$group = $db->get_row("SELECT `id`, `public`, `owner`  FROM `clans` WHERE `id` = '$resp->groupid'");
-			if (!$group->public) {
-				if (!$auth->ok) {
-					continue;
+			$gid = (int) $resp->groupid;
+			if (!array_key_exists($gid, $group_access_cache)) {
+				$group = $db->get_row("SELECT `id`, `public`, `owner` FROM `clans` WHERE `id` = '$gid'");
+				if (!$group) {
+					$group_access_cache[$gid] = false;
+				} elseif ($group->public) {
+					$group_access_cache[$gid] = true;
+				} elseif (!$auth->ok) {
+					$group_access_cache[$gid] = false;
+				} elseif ($auth->id == $group->owner || $auth->id == 1) {
+					$group_access_cache[$gid] = true;
+				} else {
+					$group_access_cache[$gid] = (bool) $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'");
 				}
-				if (
-						$auth->id != $group->owner &&
-						$auth->id != 1 &&
-						!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
-					continue;
-				}
+			}
+			if (!$group_access_cache[$gid]) {
+				continue;
 			}
 		}
 
@@ -108,8 +115,8 @@ if ($resps) {
 		}
 
 		if (!empty($resp->decos)) {
-			$decos = unserialize($resp->decos);
-			if (!empty($decos)) {
+			$decos = @unserialize($resp->decos);
+			if (is_array($decos) && !empty($decos)) {
 				$di = 0;
 				foreach ($decos as $deco) {
 					$out .= '<img src="' . $deco['icon'] . '" alt="' . $deco['title'] . '" title="' . $deco['title'] . '" class="user-deco deco-pos-' . $di . '" />';

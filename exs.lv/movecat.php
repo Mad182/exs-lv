@@ -29,8 +29,11 @@ if (defined('Memcached::HAVE_IGBINARY') && Memcached::HAVE_IGBINARY) {
 }
 $m->addServer($mc_host, $mc_port);
 
-$source = (int)$argv[1];
-$destionation = (int)$argv[2];
+$source = isset($argv[1]) ? (int)$argv[1] : 0;
+$destionation = isset($argv[2]) ? (int)$argv[2] : 0;
+if (!$source || !$destionation) {
+	die("Usage: php movecat.php SOURCEID DESTINATIONID\n");
+}
 
 $db->query("DELETE FROM `cat` WHERE `id` = '$source' LIMIT 1");
 echo "deleted category...\n";

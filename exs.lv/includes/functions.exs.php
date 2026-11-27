@@ -10,6 +10,7 @@
  */
 function get_blog_latest($category_id, $force = false) {
 	global $auth, $db, $m;
+	$category_id = (int) $category_id;
 	if ($force || !($html = $m->get('blog_latest_' . $category_id . '_' . $auth->ok))) {
 		if ($bloglatest = $db->get_results("SELECT strid,title,posts FROM pages WHERE category = '" . $category_id . "' ORDER BY bump DESC LIMIT 5")) {
 			$html = '<h3>Jaunākais blogā</h3><div class="box"><p>';
@@ -97,15 +98,18 @@ function get_todays_top_comment($date = null) {
 					ORDER BY
 						`vote_value` DESC LIMIT 1");
 
-		if (!empty($best)) {
-
-			$user = get_user($best->author);
+		if (!empty($best) && ($user = get_user($best->author))) {
 
 			if ($best->parent > 0) {
 				// Ja ir parent, tad tā ir atbilde uz MB, ja nav, tad tas ir pats MB ieraksts.
-				$parent = $db->get_row("SELECT `text`, `author` FROM `miniblog` WHERE `id` = $best->parent");
-				$strid = mb_get_strid(mb_get_title($parent->text), $best->parent);
-				$url = '/say/' . $parent->author . '/' . $best->parent . '-' . $strid . '#m' . $best->id;
+				$parent = $db->get_row("SELECT `text`, `author` FROM `miniblog` WHERE `id` = " . intval($best->parent));
+				if ($parent) {
+					$strid = mb_get_strid(mb_get_title($parent->text), $best->parent);
+					$url = '/say/' . $parent->author . '/' . $best->parent . '-' . $strid . '#m' . $best->id;
+				} else {
+					$strid = mb_get_strid(mb_get_title($best->text), $best->author);
+					$url = '/say/' . $best->author . '/' . $best->id . '-' . $strid;
+				}
 			} else {
 				$strid = mb_get_strid(mb_get_title($best->text), $best->author);
 				$url = '/say/' . $best->author . '/' . $best->id . '-' . $strid;

@@ -18,7 +18,7 @@ class AuthBase {
 	 * Inicializē lietotāja objektu
 	 */
 	function __construct() {
-		global $remote_salt, $lang;
+		global $lang;
 
 		$this->id = 0;
 		$this->avatar = 'none.png';
@@ -45,7 +45,7 @@ class AuthBase {
 		if (!empty($_SESSION['xsrf'])) {
 			$this->xsrf = $_SESSION['xsrf'];
 		} else {
-			$this->xsrf = substr(md5($this->ip . microtime(true)), 0, 8);
+			$this->xsrf = bin2hex(random_bytes(4));
 			$_SESSION['xsrf'] = $this->xsrf;
 		}
 		$this->check_session();
@@ -55,8 +55,6 @@ class AuthBase {
 		// vai lapa ielādēta mobilā versijā, ar to saprotot visus
 		// "m." apakšprojektus, nevis Android vai citas OS lietotni
 		$this->mobile = 0;
-
-		return $this->ok;
 	}
 
 	function update_visits() {
@@ -137,6 +135,9 @@ class AuthBase {
 	function reset() {
 		if (!empty($_SESSION['auth_id'])) {
 			$userinfo = get_user($_SESSION['auth_id'], true);
+			if (empty($userinfo)) {
+				return false;
+			}
 
 			session_regenerate_id(true);
 
@@ -208,7 +209,7 @@ class AuthBase {
 				redirect('http://exs.lv/?c=125&bid=' . $ban);
 			}
 
-			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . sanitize($this->ip) . "', `user_agent` = '" . sanitize($user_agent) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . md5(uniqid() . $this->ip . $this->nick) . "' WHERE `id` = '$this->id'");
+			$db->query("UPDATE `users` SET `lastseen` = NOW(), `lastip` = '" . sanitize($this->ip) . "', `user_agent` = '" . sanitize($user_agent) . "', `mobile` = 0, `android` = " . $this->via_android . ", `ios` = " . $this->via_ios . ", `seen_today` = 1, `token` = '" . bin2hex(random_bytes(16)) . "' WHERE `id` = '$this->id'");
 			$userinfo = get_user($found, true);
 
 			$this->update_visits();
@@ -231,14 +232,15 @@ class AuthBase {
 			$this->error = 1;
 			return false;
 		}
-		return false;
 	}
 
 	function logout() {
 		global $db;
 		$lang = get_lang();
-		$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0, `android` = 0, `ios` = 0 WHERE `id` = '$this->id' LIMIT 1");
-		$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '" . sanitize($this->ip) . "'");
+		if ($this->id > 0) {
+			$db->query("UPDATE `users` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "', `mobile` = 0, `android` = 0, `ios` = 0 WHERE `id` = '$this->id' LIMIT 1");
+			$db->query("UPDATE `visits` SET `lastseen` = '" . date('Y-m-d H:i:s', time() - 360) . "' WHERE `user_id` = '$this->id' AND `site_id` = $lang AND `ip` = '" . sanitize($this->ip) . "'");
+		}
 		$this->id = 0;
 		$this->nick = "Guest";
 		$this->level = 0;
@@ -283,7 +285,7 @@ class AuthBase {
 
 	function log($action, $foreign_table = '', $foreign_key = 0) {
 		global $db;
-		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('$this->id','" . sanitize($action) . "',NOW(),'$this->ip','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
+		return $db->query("INSERT INTO `logs` (`user_id`,`action`,`created`,`ip`,`foreign_table`,`foreign_key`) VALUES ('" . intval($this->id) . "','" . sanitize($action) . "',NOW(),'" . sanitize($this->ip) . "','" . sanitize($foreign_table) . "','" . intval($foreign_key) . "')");
 	}
 
 	/**
@@ -301,10 +303,10 @@ class AuthBase {
 			$viewcat !== 'page-avatars' && $viewcat !== 'logout'
 		) {
 
-			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $userinfo->id");
+			$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = " . intval($userinfo->id));
 			if (!empty($check_existing)) {
 				foreach ($check_existing as $device) {
-					if (!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
+					if (!empty($_COOKIE[$device->cookie]) && hash_equals((string) $device->token, (string) $_COOKIE[$device->cookie])) {
 						$_SESSION['2fa'] = 1;
 						return true;
 					}

@@ -10,11 +10,13 @@ class tags {
 
 	function check_tag($tag_id) {
 		global $db;
+		$tag_id = (int) $tag_id;
 		return $db->get_var("SELECT count(*) FROM tags WHERE id = '$tag_id'");
 	}
 
 	function check_page($page_id, $type = 0) {
 		global $db, $lang;
+		$page_id = (int) $page_id;
 		if ($type == 2) {
 			return $db->get_var("SELECT count(*) FROM miniblog WHERE id = '$page_id' AND `lang` = '$lang'");
 		} elseif ($type == 3) {
@@ -46,6 +48,7 @@ class tags {
 
 	function remove_tag($taged_id) {
 		global $db, $lang;
+		$taged_id = (int) $taged_id;
 		if ($taged_id) {
 			return $db->query("DELETE FROM `taged` WHERE `id` = '$taged_id' AND `lang` = '$lang' LIMIT 1");
 		} else {

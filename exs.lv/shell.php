@@ -21,14 +21,7 @@ $lang = 1;
 
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);
-
-function reverse_htmlentities($mixed) {
-	$htmltable = get_html_translation_table(HTML_ENTITIES);
-	foreach ($htmltable as $key => $value) {
-		$mixed = ereg_replace(addslashes($value), $key, $mixed);
-	}
-	return $mixed;
-}
+unset($password);
 
 //memcached konekcija
 $m = new Memcached;

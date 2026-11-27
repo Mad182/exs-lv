@@ -22,7 +22,7 @@ $debug = true;
 
 $lang = 1;
 
-$user = (int) $argv[1];
+$user = isset($argv[1]) ? (int) $argv[1] : 0;
 
 if ($user) {
 

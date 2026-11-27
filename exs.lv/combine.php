@@ -11,7 +11,8 @@ $cssdir = dirname(__FILE__) . '/css';
 $jsdir = dirname(__FILE__) . '/js';
 
 // Determine the directory and type we should use
-switch ($_GET['type']) {
+$type = $_GET['type'] ?? '';
+switch ($type) {
 	case 'css':
 		require(dirname(__FILE__) . '/includes/cssmin.php');
 		$base = realpath($cssdir);
@@ -23,14 +24,24 @@ switch ($_GET['type']) {
 	default:
 		header("HTTP/1.0 503 Not Implemented");
 		exit;
-};
+}
 
-$type = $_GET['type'];
+if (empty($_GET['files']) || !is_string($_GET['files'])) {
+	header("HTTP/1.0 400 Bad Request");
+	exit;
+}
+
 $elements = explode(',', $_GET['files']);
+$resolved_paths = [];
 // Determine last modification date of the files
 $lastmodified = 0;
 foreach ($elements as $element) {
 	$path = realpath($base . '/' . $element);
+
+	if ($path === false || strpos($path, $base . DIRECTORY_SEPARATOR) !== 0 || !is_file($path)) {
+		header("HTTP/1.0 404 Not Found");
+		exit;
+	}
 
 	if (($type == 'javascript' && substr($path, -3) != '.js') ||
 		($type == 'css' && substr($path, -4) != '.css')
@@ -39,11 +50,7 @@ foreach ($elements as $element) {
 		exit;
 	}
 
-	if (substr($path, 0, strlen($base)) != $base || !file_exists($path)) {
-		header("HTTP/1.0 404 Not Found");
-		exit;
-	}
-
+	$resolved_paths[] = $path;
 	$lastmodified = max($lastmodified, filemtime($path));
 }
 
@@ -106,10 +113,8 @@ if (
 
 	// Get contents of the files
 	$contents = '';
-	reset($elements);
 	$i = 0;
-	foreach ($elements as $element) {
-		$path = realpath($base . '/' . $element);
+	foreach ($resolved_paths as $path) {
 		if ($i == 0) {
 			$contents = file_get_contents($path);
 		} else {

@@ -23,7 +23,9 @@ class getWallpapers {
 						$file = $addr . '.png';
 					}
 
-					$thumb = preg_replace('/(\.[jpg|png])/', 's\1', $file);
+					if ($file) {
+						$thumb = preg_replace('/\.(jpg|png)$/i', 's.$1', $file);
+					}
 				}
 				if ($thumb && strpos($thumb, 'http') === 0 && $file) {
 					$files[] = [

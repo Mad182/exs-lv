@@ -52,18 +52,20 @@ $db->query("UPDATE `clans` SET `posts_today` = 0");
 
 $warns = $db->get_results("SELECT * FROM warns WHERE active = 1 AND created < '" . date('Y-m-d H:i:s', strtotime('-2 months')) . "'");
 
-foreach ($warns as $warn) {
-	$db->query("UPDATE `warns` SET
-  `removed_by` = `created_by`,
-  `removed` = NOW(),
-  `modified` = NOW(),
-  `remove_reason` = '" . sanitize('Pagājuši 2 mēneši (auto noņemšana)') . "',
-   `active` = '0'
-   WHERE id = '$warn->id'
-  LIMIT 1");
-	notify($warn->user_id, 11);
-	$db->query("UPDATE `users` SET `warn_count` = warn_count-1 WHERE `id` = '$warn->user_id' LIMIT 1");
-	get_user($warn->user_id, true);
+if (!empty($warns)) {
+	foreach ($warns as $warn) {
+		$db->query("UPDATE `warns` SET
+	  `removed_by` = `created_by`,
+	  `removed` = NOW(),
+	  `modified` = NOW(),
+	  `remove_reason` = '" . sanitize('Pagājuši 2 mēneši (auto noņemšana)') . "',
+	   `active` = '0'
+	   WHERE id = '$warn->id'
+	  LIMIT 1");
+		notify($warn->user_id, 11);
+		$db->query("UPDATE `users` SET `warn_count` = warn_count-1 WHERE `id` = '$warn->user_id' LIMIT 1");
+		get_user($warn->user_id, true);
+	}
 }
 
 

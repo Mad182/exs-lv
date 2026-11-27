@@ -329,7 +329,7 @@ function list_awards() {
 function get_awards($user) {
 	global $db;
 	$user = (int) $user;
-	$ret = $db->get_results("SELECT `id`,`award`,`title`,`created`,`importance` FROM `autoawards` WHERE `user_id` = $user ORDER BY `importance` DESC", 0);
+	$ret = $db->get_results("SELECT `id`,`award`,`title`,`created`,`importance` FROM `autoawards` WHERE `user_id` = $user ORDER BY `importance` DESC");
 	if ($ret) {
 		return $ret;
 	} else {
@@ -548,13 +548,14 @@ function update_awards($user) {
 		}
 
 		if (!in_array('thumbs-up', $existing_awards) && $userr->karma > 10) {
-			$pcom = $db->get_var("SELECT SUM(`vote_value`) FROM `comments` WHERE `author` = '$user'");
-			$gcom = $db->get_var("SELECT SUM(`vote_value`) FROM `galcom` WHERE `author` = '$user'");
-			$mbvt = $db->get_var("SELECT SUM(`vote_value`) FROM `miniblog` WHERE `author` = '$user'");
-			if (($pcom + $gcom + $mbvt) > 99) {
+			$pcom = (int) $db->get_var("SELECT SUM(`vote_value`) FROM `comments` WHERE `author` = '$user'");
+			$gcom = (int) $db->get_var("SELECT SUM(`vote_value`) FROM `galcom` WHERE `author` = '$user'");
+			$mbvt = (int) $db->get_var("SELECT SUM(`vote_value`) FROM `miniblog` WHERE `author` = '$user'");
+			$total_votes = $pcom + $gcom + $mbvt;
+			if ($total_votes > 99) {
 				$awards_list['thumbs-up-100']['state'] = 'active';
 			}
-			if (($pcom + $gcom + $mbvt) > 999) {
+			if ($total_votes > 999) {
 				$awards_list['thumbs-up']['state'] = 'active';
 			}
 		}
@@ -625,14 +626,18 @@ function update_awards($user) {
 		//blog
 		if ($blog_have = get_blog_by_user($user)) {
 			$awards_list['blog-have']['state'] = 'active';
-			$blogs = $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$blog_have'");
-			if ($blogs >= 50) {
-				$awards_list['blogs-50']['state'] = 'active';
+			if (!in_array('blogs-50', $existing_awards)) {
+				$blogs = $db->get_var("SELECT count(*) FROM `pages` WHERE `category` = '$blog_have'");
+				if ($blogs >= 50) {
+					$awards_list['blogs-50']['state'] = 'active';
+				}
 			}
 			//blogcom-100
-			$blogcom = $db->get_var("SELECT SUM(`posts`) FROM `pages` WHERE `author` = '$user' AND `category` = '$blog_have'");
-			if ($blogcom > 99) {
-				$awards_list['blogcom-100']['state'] = 'active';
+			if (!in_array('blogcom-100', $existing_awards)) {
+				$blogcom = $db->get_var("SELECT SUM(`posts`) FROM `pages` WHERE `author` = '$user' AND `category` = '$blog_have'");
+				if ($blogcom > 99) {
+					$awards_list['blogcom-100']['state'] = 'active';
+				}
 			}
 		}
 
@@ -656,7 +661,7 @@ function update_awards($user) {
 
 		//dienas spameris
 		if (!in_array('daily-first-5', $existing_awards)) {
-			$first = $db->get_var("SELECT `daily_first` FROM `users` WHERE `id` = '$user'");
+			$first = (int) ($userr->daily_first ?? 0);
 			if ($first >= 1) {
 				$awards_list['daily-first']['state'] = 'active';
 			}
@@ -667,7 +672,7 @@ function update_awards($user) {
 
 		//dienas hangman
 		if (!in_array('hangman', $existing_awards)) {
-			if ($db->get_var("SELECT count(*) FROM users WHERE id = '$user' AND daily_hangman > 0")) {
+			if (!empty($userr->daily_hangman)) {
 				$awards_list['hangman']['state'] = 'active';
 			}
 		}
@@ -743,7 +748,7 @@ function update_awards($user) {
 		if ($val['state'] === 'active') {
 			//ja lietotājam jau ir šāds awards, neko nedaram
 			if (!in_array($key, $existing_awards)) {
-				$db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('$user','$key','" . $val['title'] . "',NOW())");
+				$db->query("INSERT INTO `autoawards` (user_id,award,title,created) VALUES ('$user','" . sanitize($key) . "','" . sanitize($val['title']) . "',NOW())");
 				$db->update('autoawards', $db->insert_id, ['importance' => $db->insert_id]);
 				userlog($user, 'Ieguva medaļu &quot;' . $val['title'] . '&quot;', $img_server . '/dati/bildes/awards/' . $key . '.png');
 				notify($user, 7);

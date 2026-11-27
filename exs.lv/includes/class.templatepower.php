@@ -8,12 +8,7 @@ function file_strip($url) {
 		return false;
 	}
 	foreach ($data as $line) {
-		$line = str_replace('    ', ' ', $line);
-		$line = str_replace('   ', ' ', $line);
-		$line = str_replace('  ', ' ', $line);
-		$line = str_replace('	', '', $line);;
-		$line = str_replace(">\n", ">", $line);
-		$out[] = $line;
+		$out[] = str_replace(['    ', '   ', '  ', "\t", ">\n"], [' ', ' ', ' ', '', '>'], $line);
 	}
 	return $out;
 }
@@ -298,17 +293,15 @@ class TemplatePower extends TemplatePowerParser {
 	}
 
 	protected function __outputContent($blockname) {
-		$numrows = sizeof($this->content[$blockname]);
+		$numrows = count($this->content[$blockname]);
 
 		for ($i = 0; $i < $numrows; $i++) {
 			$defblockname = $this->content[$blockname][$i][0];
 
-			for (reset($this->defBlock[$defblockname]); $k = key($this->defBlock[$defblockname]); next($this->defBlock[$defblockname])) {
+			foreach ($this->defBlock[$defblockname] as $k => $defValue) {
 				if ($k[1] == 'C') {
-					print $this->defBlock[$defblockname][$k];
+					print $defValue;
 				} else if ($k[1] == 'V') {
-					$defValue = $this->defBlock[$defblockname][$k];
-
 					if (!isset($this->content[$blockname][$i]["_V:" . $defValue])) {
 						if (isset($this->globalvars[$defValue])) {
 							$value = $this->globalvars[$defValue];
@@ -425,14 +418,16 @@ class TemplatePower extends TemplatePowerParser {
 	}
 
 	public function gotoBlock($blockname) {
-		if (isset($this->defBlock[$blockname])) {
+		if (isset($this->defBlock[$blockname]) && isset($this->index[$blockname])) {
 			$ind_blockname = $blockname . '_' . $this->index[$blockname];
 
-			$lastitem = sizeof($this->content[$ind_blockname]);
+			if (isset($this->content[$ind_blockname])) {
+				$lastitem = count($this->content[$ind_blockname]);
 
-			$lastitem > 1 ? $lastitem-- : $lastitem = 0;
+				$lastitem > 1 ? $lastitem-- : $lastitem = 0;
 
-			$this->currentBlock = &$this->content[$ind_blockname][$lastitem];
+				$this->currentBlock = &$this->content[$ind_blockname][$lastitem];
+			}
 		}
 	}
 

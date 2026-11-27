@@ -7,6 +7,7 @@ class Comment {
 
 	function check_page($page_id, $place = 0) {
 		global $db;
+		$page_id = (int) $page_id;
 		if ($place == 0) {
 			$table = 'pages';
 		} else {
@@ -30,11 +31,7 @@ class Comment {
 
 	function check_isforum($catid) {
 		$cat = get_cat($catid);
-		if ($cat->isforum) {
-			return true;
-		} else {
-			return false;
-		}
+		return (!empty($cat) && !empty($cat->isforum));
 	}
 
 	function format_text($text) {
@@ -44,6 +41,7 @@ class Comment {
 	function add_comment($page_id, $user_id, $text, $place = 0, $reply = 0) {
 		global $db, $auth, $article;
 		$page_id = (int) $page_id;
+		$user_id = (int) $user_id;
 		$reply = (int) $reply;
 		if ($this->check_page($page_id, $place) && $this->check_user($user_id)) {
 

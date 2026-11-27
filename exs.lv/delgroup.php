@@ -19,16 +19,9 @@ require(CORE_PATH . '/includes/functions.core.php');
 
 //mysql konekcija
 $db = new mdb($username, $password, $database, $hostname);
+unset($password);
 
-function reverse_htmlentities($mixed) {
-	$htmltable = get_html_translation_table(HTML_ENTITIES);
-	foreach ($htmltable as $key => $value) {
-		$mixed = ereg_replace(addslashes($value), $key, $mixed);
-	}
-	return $mixed;
-}
-
-$id = (int)$argv[1];
+$id = isset($argv[1]) ? (int)$argv[1] : 0;
 
 if($title = $db->get_var("SELECT `title` FROM clans WHERE id = '".$id."'")) {
 
