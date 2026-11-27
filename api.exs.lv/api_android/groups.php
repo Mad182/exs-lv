@@ -78,7 +78,9 @@ if (!empty($var1) && !empty($var2) &&
 			`clans`.`lang` = ".$api_lang."
 	");
 
-	$credit = $db->get_var("SELECT `credit` FROM `users` WHERE `id` = ".$auth->id);
+	$credit = (!empty($group) && $group->paid == 1)
+		? $db->get_var("SELECT `credit` FROM `users` WHERE `id` = ".(int)$auth->id)
+		: 0;
 
 	if (empty($group)) {
 		api_error('Neizdevās pārbaudīt grupas datus.');
@@ -246,10 +248,14 @@ if (!empty($var1) && !empty($var2) &&
 		set_action('grupas informāciju');
 
 		$owner = get_user($group_data->owner);
-		if (!empty($owner->deleted)) {
-			$owner->nick = 'dzēsts';
+		if (!$owner) {
+			$owner = api_fetch_user(0, 'dzēsts', 0);
+		} else {
+			if (!empty($owner->deleted)) {
+				$owner->nick = 'dzēsts';
+			}
+			$owner = api_fetch_user($owner->id, $owner->nick, $owner->level);
 		}
-		$owner = api_fetch_user($owner->id, $owner->nick, $owner->level);
 
 		$is_member = ($group_data->is_member != '0') ? true : false;
 		
@@ -309,11 +315,11 @@ if (!empty($var1) && !empty($var2) &&
 		// lappušu iestatījumi
 		$max_per_page = 21;
 		$current_page = 1;
-		$page_count = ceil($total_members / $max_per_page);
+		$page_count = max(1, (int)ceil($total_members / $max_per_page));
 		
 		if (isset($_GET['page'])) {
 			$_GET['page'] = (int)$_GET['page'];
-			if ($_GET['page'] < 0) {
+			if ($_GET['page'] < 1) {
 				$_GET['page'] = 1;
 			} else if ($_GET['page'] > $page_count) {
 				api_append(array(
@@ -333,17 +339,19 @@ if (!empty($var1) && !empty($var2) &&
 		// tāpēc to var pievienot jau uzreiz (ja skatīta tiek 1. lappuse)
 		if ($current_page == 1) {  
 			$owner = get_user($group_owner->owner);
-			if (!empty($owner->deleted)) {
-				$owner->nick = 'dzēsts';
+			if ($owner) {
+				if (!empty($owner->deleted)) {
+					$owner->nick = 'dzēsts';
+				}
+				$avatar = api_get_user_avatar($owner, 'l');
+				$arr_members[] = array(
+					'member_id' => 0,
+					'av_url' => $avatar,
+					'user' => api_fetch_user($owner->id, $owner->nick, $owner->level),
+					'is_mod' => 0
+				);
+				$member_count = 1;
 			}
-			$avatar = api_get_user_avatar($owner, 'l');
-			$arr_members[] = array(
-				'member_id' => 0,
-				'av_url' => $avatar,
-				'user' => api_fetch_user($owner->id, $owner->nick, $owner->level),
-				'is_mod' => 0
-			);
-			$member_count = 1;
 		}
 
 		// atlasīs un pievienos masīvam visus pārējos grupas biedrus, ja eksistē

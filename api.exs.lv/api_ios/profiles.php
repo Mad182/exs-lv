@@ -48,18 +48,18 @@ if ($var1 === 'fetch' && !empty($var2)) {
 		$user_nick = (empty($profile->nick)) ? '<i>dzēsts</i>' : $profile->nick;
 		set_action($user_nick.' profilu');
 	
-		// komentāru kopskaits dažādās tabulās
-		$posts = ($db->get_var("SELECT count(*) FROM `comments` WHERE `author` = ".$user_id." AND `removed` = 0") +
-				  $db->get_var("SELECT count(*) FROM `galcom` WHERE `author` = ".$user_id." AND `removed` = 0") +
-				  $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = ".$user_id." AND removed = 0"));
+		// komentāru kopskaits un vērtējumu summa dažādās tabulās (3 vaicājumi 6 vietā)
+		$c_stats = $db->get_row("SELECT SUM(CASE WHEN `removed` = 0 THEN 1 ELSE 0 END) AS `cnt`, COALESCE(SUM(`vote_value`), 0) AS `votes` FROM `comments` WHERE `author` = ".$user_id);
+		$g_stats = $db->get_row("SELECT SUM(CASE WHEN `removed` = 0 THEN 1 ELSE 0 END) AS `cnt`, COALESCE(SUM(`vote_value`), 0) AS `votes` FROM `galcom` WHERE `author` = ".$user_id);
+		$m_stats = $db->get_row("SELECT SUM(CASE WHEN `removed` = 0 THEN 1 ELSE 0 END) AS `cnt`, COALESCE(SUM(`vote_value`), 0) AS `votes` FROM `miniblog` WHERE `author` = ".$user_id);
+
+		$posts = (int)($c_stats->cnt ?? 0) + (int)($g_stats->cnt ?? 0) + (int)($m_stats->cnt ?? 0);
 
 		// lietotāja rakstu skaits atvērtajā apakšprojektā
-		$user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".$api_lang);
+		$user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".(int)$api_lang);
 		
 		// kā citi lietotāji vērtējuši šī lietotāja ierakstus
-		$voteval = $db->get_var("SELECT SUM(`vote_value`) FROM `comments` WHERE `author` = ".$user_id) +
-				   $db->get_var("SELECT SUM(`vote_value`) FROM `galcom` WHERE `author` = ".$user_id) +
-				   $db->get_var("SELECT SUM(`vote_value`) FROM `miniblog` WHERE `author` = ".$user_id);
+		$voteval = (int)($c_stats->votes ?? 0) + (int)($g_stats->votes ?? 0) + (int)($m_stats->votes ?? 0);
 
 		// reģistrējās pirms x dienām
 		$days = ceil((time() - strtotime($profile->date)) / 60 / 60 / 24);

@@ -200,21 +200,21 @@ if ($var1 === 'notifications') {
 		$user_nick = (empty($profile->nick)) ? '<i>dzēsts</i>' : $profile->nick;
 		set_action($user_nick.' profilu');
 	
-		// komentāru kopskaits dažādās tabulās
-		$posts = ($db->get_var("SELECT count(*) FROM `comments` WHERE `author` = ".$user_id." AND `removed` = 0") +
-				  $db->get_var("SELECT count(*) FROM `galcom` WHERE `author` = ".$user_id." AND `removed` = 0") +
-				  $db->get_var("SELECT count(*) FROM `miniblog` WHERE `author` = ".$user_id." AND removed = 0"));
+		// komentāru kopskaits un vērtējumu summa dažādās tabulās (3 vaicājumi 6 vietā)
+		$c_stats = $db->get_row("SELECT SUM(CASE WHEN `removed` = 0 THEN 1 ELSE 0 END) AS `cnt`, COALESCE(SUM(`vote_value`), 0) AS `votes` FROM `comments` WHERE `author` = ".$user_id);
+		$g_stats = $db->get_row("SELECT SUM(CASE WHEN `removed` = 0 THEN 1 ELSE 0 END) AS `cnt`, COALESCE(SUM(`vote_value`), 0) AS `votes` FROM `galcom` WHERE `author` = ".$user_id);
+		$m_stats = $db->get_row("SELECT SUM(CASE WHEN `removed` = 0 THEN 1 ELSE 0 END) AS `cnt`, COALESCE(SUM(`vote_value`), 0) AS `votes` FROM `miniblog` WHERE `author` = ".$user_id);
+
+		$posts = (int)($c_stats->cnt ?? 0) + (int)($g_stats->cnt ?? 0) + (int)($m_stats->cnt ?? 0);
 
 		// lietotāja rakstu skaits atvērtajā apakšprojektā
-		$user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".$api_lang);
+		$user_pages = $db->get_var("SELECT count(*) FROM pages WHERE `author` = ".$user_id." AND `lang` = ".(int)$api_lang);
 		
 		// kā citi lietotāji vērtējuši šī lietotāja ierakstus
-		$voteval = $db->get_var("SELECT SUM(`vote_value`) FROM `comments` WHERE `author` = ".$user_id) +
-				   $db->get_var("SELECT SUM(`vote_value`) FROM `galcom` WHERE `author` = ".$user_id) +
-				   $db->get_var("SELECT SUM(`vote_value`) FROM `miniblog` WHERE `author` = ".$user_id);
+		$voteval = (int)($c_stats->votes ?? 0) + (int)($g_stats->votes ?? 0) + (int)($m_stats->votes ?? 0);
 
 		// reģistrējās pirms x dienām
-		$days = ceil((time() - strtotime($profile->date)) / 60 / 60 / 24);
+		$days = (int)ceil((time() - strtotime($profile->date)) / 60 / 60 / 24);
 		
 		// pēdējoreiz redzēts pirms...
 		$time_ago = time_ago(strtotime($profile->lastseen));
@@ -223,7 +223,7 @@ if ($var1 === 'notifications') {
 			'formatted' => api_fetch_user($profile->id, $profile->nick, $profile->level),
 			'avatar' => api_get_user_avatar($profile, 'l'),
 			'days_online' => $profile->days_in_row.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
-			'days_registered' => $days.' '.lv_dsk($profile->days_in_row, 'dienu', 'dienas'),
+			'days_registered' => $days.' '.lv_dsk($days, 'dienu', 'dienas'),
 			'last_seen' => 'pirms '.$time_ago,
 			'usertitle' => $profile->custom_title,
 			'gender' => 0,
@@ -256,14 +256,14 @@ if ($var1 === 'notifications') {
 
 	$contacts = $db->get_results("
 		SELECT 
-			`friend1`, `friend2`
+			`users`.`id`, `users`.`nick`, `users`.`level`, `users`.`deleted`
 		FROM `friends`
 			JOIN `users` ON (
-				`users`.`id` = CASE WHEN `friend1` = ".$auth->id." THEN `friend2` ELSE `friend1` END AND
+				`users`.`id` = CASE WHEN `friend1` = ".(int)$auth->id." THEN `friend2` ELSE `friend1` END AND
 				`users`.`deleted` = 0
 			)
 		WHERE 
-			(`friend1` = (".$auth->id.") OR `friend2` = (".$auth->id.")) AND
+			(`friend1` = ".(int)$auth->id." OR `friend2` = ".(int)$auth->id.") AND
 			`confirmed` = 1
 		ORDER BY `users`.`nick` ASC
 	");
@@ -272,29 +272,19 @@ if ($var1 === 'notifications') {
 	$cnt_friends = 0;
 	
 	if ($contacts) {    
-		foreach ($contacts as $contact) {
-		
-			if ($contact->friend1 == $auth->id) {
-				$the_other = $contact->friend2;
-			} else {
-				$the_other = $contact->friend1;
+		foreach ($contacts as $info) {
+			if ($info->deleted) {
+				$info->nick = '<em>dzēsts</em>';
 			}
 			
-			$info = get_user($the_other);
-			if ($info) {
-				if ($info->deleted) {
-					$info->nick = '<em>dzēsts</em>';
-				}
-				
-				// lietotnē ir dropdowns, kuros lietotājvārdus neizkrāsos ar stiliem
-				if ($var2 === 'simple') {
-					$friends[] = array(
-						'id' => (int)$info->id,
-						'nick' => $info->nick
-					);
-				} else {
-					$friends[] = api_fetch_user($info->id, $info->nick, $info->level);
-				}
+			// lietotnē ir dropdowns, kuros lietotājvārdus neizkrāsos ar stiliem
+			if ($var2 === 'simple') {
+				$friends[] = array(
+					'id' => (int)$info->id,
+					'nick' => $info->nick
+				);
+			} else {
+				$friends[] = api_fetch_user($info->id, $info->nick, $info->level);
 			}
 			
 			$cnt_friends++;
@@ -388,7 +378,7 @@ if ($var1 === 'notifications') {
 		}
 
 		api_append(array(
-			'group_count' => $group_count++,
+			'group_count' => $group_count,
 			'groups' => $groups
 		));
 	}

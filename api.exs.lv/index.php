@@ -33,7 +33,7 @@ if (isset($_GET['error404'])) { // via .htaccess
 // $_GET parametru rewrite hack
 $var0 = '/'; // "sadaļa"
 $var1 = $var2 = $var3 = false; // lai var izmantot "if ($var1)"
-if(!empty($_GET['params'])) {
+if (!empty($_GET['params']) && is_string($_GET['params'])) {
 	$parts = explode('/', $_GET['params']);
 	if (!empty($parts[0])) { $var0 = $parts[0]; }
 	if (!empty($parts[1])) { $var1 = $parts[1]; }

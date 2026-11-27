@@ -172,7 +172,7 @@ $movies_no_avatar = $db->get_results("
     LEFT JOIN movie_images mi ON mi.page_id = p.id AND mi.main = 1
     WHERE p.category = 80 AND (p.avatar IS NULL OR p.avatar = '')
     ORDER BY p.id ASC
-");
+") ?: [];
 
 $count_movies_fixed = 0;
 echo "Found " . count($movies_no_avatar) . " movie articles missing avatar.\n";
@@ -214,7 +214,7 @@ $movies_no_sm = $db->get_results("
     FROM pages
     WHERE category = 80 AND (avatar IS NOT NULL AND avatar != '') AND (sm_avatar IS NULL OR sm_avatar = '')
     ORDER BY id ASC
-");
+") ?: [];
 
 $count_movies_sm_fixed = 0;
 echo "Found " . count($movies_no_sm) . " movie articles with avatar but missing sm_avatar.\n";
@@ -249,7 +249,7 @@ $games_no_avatar = $db->get_results("
     FROM pages
     WHERE category = 81 AND (avatar IS NULL OR avatar = '')
     ORDER BY id ASC
-");
+") ?: [];
 
 echo "Found " . count($games_no_avatar) . " game articles missing avatar.\n";
 $count_games_fixed = 0;
@@ -323,7 +323,7 @@ $games_no_sm = $db->get_results("
     FROM pages
     WHERE category = 81 AND (avatar IS NOT NULL AND avatar != '') AND (sm_avatar IS NULL OR sm_avatar = '')
     ORDER BY id ASC
-");
+") ?: [];
 
 $count_games_sm_fixed = 0;
 echo "Found " . count($games_no_sm) . " game articles with avatar but missing sm_avatar.\n";

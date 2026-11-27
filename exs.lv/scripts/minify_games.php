@@ -59,6 +59,8 @@ foreach ($game_modules as $module_name => $assets) {
 		}
 	}
 
+	$tpl_files = glob($dir . '/*.tpl') ?: [];
+
 	// Process JS files
 	if (!empty($assets['js'])) {
 		foreach ($assets['js'] as $js_filename) {
@@ -84,14 +86,12 @@ foreach ($game_modules as $module_name => $assets) {
 			}
 
 			// Update templates
-			$tpl_files = glob($dir . '/*.tpl');
+			$pattern = '/\/modules\/' . preg_quote($module_name, '/') . '\/' . preg_quote($base_name, '/') . '(\.[a-f0-9]+)?(\.min)?\.js(\?[^"\'\s>]*)?/';
+			$replacement = '/modules/' . $module_name . '/' . $min_filename;
 			foreach ($tpl_files as $tpl_file) {
 				$tpl_content = file_get_contents($tpl_file);
-				$pattern = '/\/modules\/' . preg_quote($module_name, '/') . '\/' . preg_quote($base_name, '/') . '(\.[a-f0-9]+)?(\.min)?\.js(\?[^"\'\s>]*)?/';
-				$replacement = '/modules/' . $module_name . '/' . $min_filename;
-
-				if (preg_match($pattern, $tpl_content)) {
-					$new_tpl_content = preg_replace($pattern, $replacement, $tpl_content);
+				$new_tpl_content = preg_replace($pattern, $replacement, $tpl_content);
+				if ($new_tpl_content !== null && $new_tpl_content !== $tpl_content) {
 					file_put_contents($tpl_file, $new_tpl_content);
 					echo "Updated " . basename($tpl_file) . " to reference $min_filename\n";
 				}
@@ -124,14 +124,12 @@ foreach ($game_modules as $module_name => $assets) {
 			}
 
 			// Update templates
-			$tpl_files = glob($dir . '/*.tpl');
+			$pattern = '/\/modules\/' . preg_quote($module_name, '/') . '\/' . preg_quote($base_name, '/') . '(\.[a-f0-9]+)?(\.min)?\.css(\?[^"\'\s>]*)?/';
+			$replacement = '/modules/' . $module_name . '/' . $min_filename;
 			foreach ($tpl_files as $tpl_file) {
 				$tpl_content = file_get_contents($tpl_file);
-				$pattern = '/\/modules\/' . preg_quote($module_name, '/') . '\/' . preg_quote($base_name, '/') . '(\.[a-f0-9]+)?(\.min)?\.css(\?[^"\'\s>]*)?/';
-				$replacement = '/modules/' . $module_name . '/' . $min_filename;
-
-				if (preg_match($pattern, $tpl_content)) {
-					$new_tpl_content = preg_replace($pattern, $replacement, $tpl_content);
+				$new_tpl_content = preg_replace($pattern, $replacement, $tpl_content);
+				if ($new_tpl_content !== null && $new_tpl_content !== $tpl_content) {
 					file_put_contents($tpl_file, $new_tpl_content);
 					echo "Updated " . basename($tpl_file) . " to reference $min_filename\n";
 				}

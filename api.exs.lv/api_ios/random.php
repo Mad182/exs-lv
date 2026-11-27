@@ -167,14 +167,14 @@ if ($var1 === 'notifications') {
 
 	$contacts = $db->get_results("
 		SELECT 
-			`friend1`, `friend2`
+			`users`.`id`, `users`.`nick`, `users`.`level`, `users`.`deleted`
 		FROM `friends`
 			JOIN `users` ON (
-				`users`.`id` = CASE WHEN `friend1` = ".$auth->id." THEN `friend2` ELSE `friend1` END AND
+				`users`.`id` = CASE WHEN `friend1` = ".(int)$auth->id." THEN `friend2` ELSE `friend1` END AND
 				`users`.`deleted` = 0
 			)
 		WHERE 
-			(`friend1` = (".$auth->id.") OR `friend2` = (".$auth->id.")) AND
+			(`friend1` = ".(int)$auth->id." OR `friend2` = ".(int)$auth->id.") AND
 			`confirmed` = 1
 		ORDER BY `users`.`nick` ASC
 	");
@@ -183,29 +183,19 @@ if ($var1 === 'notifications') {
 	$cnt_friends = 0;
 	
 	if ($contacts) {    
-		foreach ($contacts as $contact) {
-		
-			if ($contact->friend1 == $auth->id) {
-				$the_other = $contact->friend2;
-			} else {
-				$the_other = $contact->friend1;
+		foreach ($contacts as $info) {
+			if ($info->deleted) {
+				$info->nick = '<em>dzēsts</em>';
 			}
 			
-			$info = get_user($the_other);
-			if ($info) {
-				if ($info->deleted) {
-					$info->nick = '<em>dzēsts</em>';
-				}
-				
-				// lietotnē ir dropdowns, kuros lietotājvārdus neizkrāsos ar stiliem
-				if ($var2 === 'simple') {
-					$friends[] = array(
-						'id' => (int)$info->id,
-						'nick' => $info->nick
-					);
-				} else {
-					$friends[] = api_fetch_user($info->id, $info->nick, $info->level);
-				}
+			// lietotnē ir dropdowns, kuros lietotājvārdus neizkrāsos ar stiliem
+			if ($var2 === 'simple') {
+				$friends[] = array(
+					'id' => (int)$info->id,
+					'nick' => $info->nick
+				);
+			} else {
+				$friends[] = api_fetch_user($info->id, $info->nick, $info->level);
 			}
 			
 			$cnt_friends++;

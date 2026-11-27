@@ -101,7 +101,8 @@ if ($var1 === 'received') {
 
 	// kļūdu pārbaudes
 	if (!isset($_POST['msg_title']) || !isset($_POST['msg_content']) ||
-		!isset($_POST['msg_to'])) {
+		!isset($_POST['msg_to']) || !is_string($_POST['msg_title']) ||
+		!is_string($_POST['msg_content'])) {
 		api_error('Kļūdaini iesniegti dati.');
 		api_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju.');
 	} else if (!api_check_xsrf()) {
@@ -156,9 +157,10 @@ if ($var1 === 'received') {
 			if (!isset($android_local) && ($receiver->pm_notify_email == 2 ||
 				($receiver->pm_notify_email == 1 && strtotime($receiver->lastseen) < time() - 259200))) {
 
-				$subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
+				$http_host = h($_SERVER['HTTP_HOST'] ?? 'exs.lv');
+				$subject = 'Tev pienākusi vēstule portālā ' . $http_host;
 				$message = '
-						<h3>Saņemta vēstule portālā ' . $_SERVER['HTTP_HOST'] . '</h3>
+						<h3>Saņemta vēstule portālā ' . $http_host . '</h3>
 						<p>
 							Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;
 						</p>
@@ -202,9 +204,7 @@ if ($var1 === 'received') {
 		// dati par lietotāju (sūtītāju vai saņēmēju)
 		$usr = ($type == 'rec') ? get_user($pm->from_uid) : get_user($pm->to_uid);
 		$usr_data = new stdClass;        
-		if (!$usr || $usr->deleted) {
-			$usr->nick = '<em>dzēsts</em>';
-		} else {
+		if ($usr && !$usr->deleted) {
 			$usr_data = api_fetch_user($usr->id, $usr->nick, $usr->level);
 		}
 		

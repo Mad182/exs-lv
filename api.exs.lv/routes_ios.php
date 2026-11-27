@@ -69,7 +69,7 @@ $json_arr = array(
 // dati par lietotāja IP liegumu, ja tādi ir
 $ip_banned = $db->get_row("
 	SELECT * FROM `banned` 
-	WHERE `ip` = '".sanitize($auth->ip)."' AND
+	WHERE `active` = 1 AND `ip` = '".sanitize($auth->ip)."' AND
 	(`lang` = 0 OR `lang` = ".(int)$api_lang.")
 	LIMIT 1
 ");

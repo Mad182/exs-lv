@@ -28,7 +28,7 @@ if ($var1 === 'in' || $var1 === 'out') {
     
 	// lappušu iestatījumi
 	$per_page = 20;
-    $page_count = (int) ceil($message_count / $per_page);    
+    $page_count = max(1, (int) ceil($message_count / $per_page));    
 	$current_page = 1;
     
 	if (isset($_GET['page'])) {
@@ -47,6 +47,7 @@ if ($var1 === 'in' || $var1 === 'out') {
 	$lim_start = ($current_page - 1) * $per_page;    
 
 	// atlasīs lietotāja saņemtās/nosūtītās vēstules
+	$other_uid_col = $user_key . '_uid';
 	$pms = $db->get_results("
 		SELECT
 			`pm`.*,
@@ -55,10 +56,10 @@ if ($var1 === 'in' || $var1 === 'out') {
 			`users`.`deleted` AS `user_deleted`
 		FROM `pm`
 			JOIN `users` ON (
-				`pm`.`".$field_prefix."_uid` = `users`.`id`
+				`pm`.`".$other_uid_col."` = `users`.`id`
 			)
 		WHERE
-			`pm`.`".$field_prefix."_uid` = ".$auth->id."
+			`pm`.`".$field_prefix."_uid` = ".(int)$auth->id."
 		ORDER BY
 			`pm`.`date` DESC
 		LIMIT
@@ -75,7 +76,6 @@ if ($var1 === 'in' || $var1 === 'out') {
 		foreach ($pms as $pm) {
 			
 			// sūtītāja/saņēmēja dati
-			$other_user = new arrayObject();            
 			if (!empty($pm->user_deleted)) {
                 $other_user = array(
                     'nick' => '<em>dzēsts</em>',
@@ -97,7 +97,7 @@ if ($var1 === 'in' || $var1 === 'out') {
                     'avatar_url' => ''
                 );
 			} else {
-				$other_user = api_fetch_user($pm->from_uid, $pm->nick, $pm->level, true);
+				$other_user = api_fetch_user($pm->$other_uid_col, $pm->nick, $pm->level, true);
 			}
 			
 			$pm_title = wordwrap(textlimit(
@@ -131,7 +131,8 @@ else if ($var1 === 'send') {
 
 	// kļūdu pārbaudes
 	if (!isset($_POST['msg_title']) || !isset($_POST['msg_content']) ||
-		!isset($_POST['msg_to'])) {
+		!isset($_POST['msg_to']) || !is_string($_POST['msg_title']) ||
+		!is_string($_POST['msg_content'])) {
 		api_error('Kļūdaini iesniegti dati.');
 		api_log('Sūtot vēstuli, nenorādīja pilnīgu informāciju.');
 	} else if (!api_check_xsrf()) {
@@ -185,9 +186,10 @@ else if ($var1 === 'send') {
 			if (!isset($android_local) && ($receiver->pm_notify_email == 2 ||
 				($receiver->pm_notify_email == 1 && strtotime($receiver->lastseen) < time() - 259200))) {
 
-				$subject = 'Tev pienākusi vēstule portālā ' . $_SERVER['HTTP_HOST'];
+				$http_host = h($_SERVER['HTTP_HOST'] ?? 'exs.lv');
+				$subject = 'Tev pienākusi vēstule portālā ' . $http_host;
 				$message = '
-						<h3>Saņemta vēstule portālā ' . $_SERVER['HTTP_HOST'] . '</h3>
+						<h3>Saņemta vēstule portālā ' . $http_host . '</h3>
 						<p>
 							Čau! Tev pienākusi jauna ziņa no ' . h($auth->nick) . ' - &quot;' . stripslashes($send_title) . '&quot;
 						</p>

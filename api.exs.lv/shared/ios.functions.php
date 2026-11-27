@@ -8,7 +8,7 @@
  *  Izmantota brīdī, kad lietotājs veiksmīgi autentificējies.
  */
 function api_append_profile_info() {
-	global $db, $auth, $img_server, $online_users;
+	global $auth, $img_server, $online_users;
     
     $is_online = 0;
 	$device = 0; // 0 - dators, 1 - mob., 2 - droīds, 3 - ios
@@ -121,14 +121,11 @@ function api_fetch_user($user_id = 0, $nick = '-', $level = 0, $append_avatar = 
  */
 function api_fetch_ban($type = 1, $ip_banned = null) {
 	global $db, $auth;
-	global $json_page, $json_banned;
 
 	$type = (int)$type;
 	if ($type !== 1 && $type !== 2) {
 		return false;
 	}
-	
-	$json_banned = $type;
 	
 	// profila liegums
 	if ($type === 2) {
@@ -204,10 +201,10 @@ function api_fetch_online($force = false) {
 	$data = array();
 	
 	// satura nolasīšana no memcached
-	if ($force || !($data = $m->get('api-online-'.$api_lang))) {
+	$cache_key = 'api-ios-online-'.(int)$api_lang;
+	if ($force || !($data = $m->get($cache_key))) {
 
-		$online = null;
-		$classes = null;
+		$online = array();
 		
 		$last_seen = date('Y-m-d H:i:s', time() - $online_seconds);
 		
@@ -219,7 +216,7 @@ function api_fetch_online($force = false) {
 			FROM `visits`
 				JOIN `users` ON `visits`.`user_id` = `users`.`id`
 			WHERE
-				`visits`.`site_id` = ".$api_lang." AND
+				`visits`.`site_id` = ".(int)$api_lang." AND
 				`visits`.`lastseen` > '".$last_seen."'
 			ORDER BY
 				`users`.`nick` ASC
@@ -234,30 +231,27 @@ function api_fetch_online($force = false) {
 			return false;
 		}
 		
+		$android_map = !empty($online_users['androidusers']) ? array_flip($online_users['androidusers']) : array();
+		$ios_map = !empty($online_users['iosusers']) ? array_flip($online_users['iosusers']) : array();
+		$mobile_map = !empty($online_users['mobileusers']) ? array_flip($online_users['mobileusers']) : array();
+
 		$cnt_registered = 0;
 
 		foreach ($lastseen as $user) {       
 
 			// noteiks ierīci, no kādas lietotājs pieslēdzies
-			$device = 0;
-			if (!empty($online_users['androidusers']) && 
-				in_array($user->nick, $online_users['androidusers'])) {
+			if (isset($android_map[$user->nick])) {
 				$device = 2; // androīda apps
-			} else if (!empty($online_users['iosusers']) && 
-				in_array($user->nick, $online_users['iosusers'])) {
+			} else if (isset($ios_map[$user->nick])) {
 				$device = 3; // ios apps
-			} else if (!empty($online_users['mobileusers']) && 
-				in_array($user->nick, $online_users['mobileusers'])) {
+			} else if (isset($mobile_map[$user->nick])) {
 				$device = 1; // mob. tel.
 			} else {
 				$device = 0; // dators
 			}
 			
 			// pārbauda, vai lietotājs ir bloķēts
-			$is_banned = 0;
-			if (!empty($busers) && !empty($busers[$user->user_id])) {
-				$is_banned = 1;
-			}
+			$is_banned = (!empty($busers) && !empty($busers[$user->user_id])) ? 1 : 0;
 		
 			$online[] = array(
 				'nick' => $user->nick,
@@ -273,7 +267,7 @@ function api_fetch_online($force = false) {
 			'users' => $online
 		);
 		
-		$m->set('api-online-'.$api_lang, $data, 15);
+		$m->set($cache_key, $data, 15);
 	}
 	
 	api_append($data);

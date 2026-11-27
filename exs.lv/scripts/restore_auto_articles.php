@@ -221,7 +221,7 @@ $updatedCount = 0;
 foreach ($articles as $art) {
     $oldId = (int)$art['old_id'];
     $title = trim($art['title']);
-    $date = trim($art['date']);
+    $date = trim($art['date'] ?? '');
     $rawAuthorNick = trim($art['author_nick'] ?? '');
     $authorId = DEFAULT_AUTHOR_ID;
     $views = (int)($art['views'] ?? 0);

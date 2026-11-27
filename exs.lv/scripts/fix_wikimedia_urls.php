@@ -107,7 +107,10 @@ function fetch_wayback_image($url) {
 
 
     if ($code == 200 && !empty($body)) {
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        static $finfo = null;
+        if ($finfo === null) {
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+        }
         $mime = $finfo->buffer($body);
         if (strpos($mime, 'image/') === 0) {
             return [
@@ -259,7 +262,6 @@ foreach ($pages as $p_idx => $page) {
             foreach ($wb_candidates as $probe_wb) {
                 $wb_res = fetch_wayback_image($probe_wb);
                 if ($wb_res['ok']) {
-                    $filename = basename(parse_url($probe_wb, PHP_URL_PATH));
                     $rel_path = preg_replace('#^https?://upload\.wikimedia\.org/wikipedia/#i', '', $probe_wb);
                     // sanitize rel path
                     $rel_path = ltrim(preg_replace('#/thumb/#i', '/', $rel_path), '/');

@@ -62,6 +62,9 @@ function api_append($obj, $value = '') {
     
     if ($lang === 2) { // androīdam
         if (!is_array($obj)) return;
+        if (!is_array($json_page)) {
+            $json_page = array();
+        }
         foreach ($obj as $key => $value) {
             $json_page[$key] = $value;
         }
@@ -117,7 +120,7 @@ function api_log($text) {
 function api_make_xsrf() {
 	global $auth;
 	// nav jēgas izmantot MD5 hashu visā garumā
-	return substr($auth->xsrf, 0, 10);
+	return substr((string)$auth->xsrf, 0, 10);
 }
 
 /**
@@ -126,14 +129,18 @@ function api_make_xsrf() {
  */
 function api_check_xsrf($token = '') {
 	global $auth, $lang;
+	$expected = substr((string)$auth->xsrf, 0, 10);
+	if ($expected === '') {
+		return false;
+	}
     $key = ($lang === 2) ? 'xsrf' : 'token';
 	if (empty($token)) {
-		if (!empty($_GET[$key])) {
-			return (substr($auth->xsrf, 0, 10) === $_GET[$key]);
+		if (!empty($_GET[$key]) && is_string($_GET[$key])) {
+			return hash_equals($expected, $_GET[$key]);
 		}
 		return false;
 	}
-	return (substr($auth->xsrf, 0, 10) === $token);
+	return is_string($token) && hash_equals($expected, $token);
 }
 
 /**
@@ -153,9 +160,8 @@ function api_format_text(&$mb_text, $return_img = true) {
 		return $arr_images;
 	}
 	
-	// lai novērstu kodējumu kļūdas
-	// (https://stackoverflow.com/questions/11309194/php-domdocument-failing-to-handle-utf-8-characters-%E2%98%86)
-	$mb_text = mb_convert_encoding($mb_text, 'HTML-ENTITIES', 'UTF-8');
+	// lai novērstu kodējumu kļūdas (PHP 8.2+ saderīgs aizvietojums HTML-ENTITIES)
+	$mb_text = mb_encode_numericentity($mb_text, [0x80, 0x10FFFF, 0, ~0], 'UTF-8');
 	
 	$dom = null;
     
@@ -325,7 +331,7 @@ function api_fill_link($string) {
  *  @param string   s|m|l   norāda nepieciešamā avatara izmēru
  */
 function api_get_user_avatar($user, $size = 'm') {
-	global $auth, $img_server;
+	global $img_server;
 	
 	if (!$user || empty($user->av_alt) || empty($user->avatar)) {
 		return '';
@@ -336,17 +342,12 @@ function api_get_user_avatar($user, $size = 'm') {
 	$real_path  = 'useravatar';
 	
 	// nepieciešamības gadījumā izmēru nomaina
-	if (($user->av_alt || !$user->avatar) && $size == 's') {
+	if ($size == 's') {
 		$path       = 'small';
 		$real_path  = 'u_small';
-	} elseif (($user->av_alt || !$user->avatar) && $size == 'l') {
+	} elseif ($size == 'l') {
 		$path       = 'large';
 		$real_path  = 'u_large';
-	}
-	
-	// rādīs silueta avataru, ja cits nebūs norādīts
-	if (empty($user->avatar)) {
-		$user->avatar = 'none.png';
 	}
 
 	// localhost avataru fix

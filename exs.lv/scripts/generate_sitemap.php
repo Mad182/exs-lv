@@ -323,7 +323,7 @@ foreach ($sites as $site_lang => $domain) {
 				if (!isset($group_map[$gid])) {
 					continue;
 				}
-				$thread_loc = $base_url . $group_map[$gid]['prefix'] . '/forum/' . base_convert((int) $gmb->id, 10, 36);
+				$thread_loc = $base_url . $group_map[$gid]['prefix'] . '/forum/' . base_convert((string) (int) $gmb->id, 10, 36);
 				$ts = !empty($gmb->bump) ? (int) $gmb->bump : strtotime($gmb->date);
 				if ($ts > $latest_group_ts) {
 					$latest_group_ts = $ts;
@@ -355,12 +355,12 @@ foreach ($sites as $site_lang => $domain) {
 	// =========================================================================
 	// 3. Public Articles & Forum Topics ({domain}-pages-*.xml)
 	// =========================================================================
-	$page_offset = 0;
+	$page_last_id = PHP_INT_MAX;
 	$page_part = 1;
 
 	while (true) {
 		$rows = $db->get_results("
-			SELECT `p`.`strid`, `p`.`date`, `p`.`updated`, `p`.`edit_time`
+			SELECT `p`.`id`, `p`.`strid`, `p`.`date`, `p`.`updated`, `p`.`edit_time`
 			FROM `pages` AS `p`
 			LEFT JOIN `cat` AS `c` ON `c`.`id` = `p`.`category`
 			WHERE `p`.`lang` = $site_lang
@@ -371,8 +371,9 @@ foreach ($sites as $site_lang => $domain) {
 			  AND (`c`.`mods_only` IS NULL OR `c`.`mods_only` = 0)
 			  AND (`c`.`private` IS NULL OR `c`.`private` = 0)
 			  AND (`c`.`noindex` IS NULL OR `c`.`noindex` = 0)
+			  AND `p`.`id` < $page_last_id
 			ORDER BY `p`.`id` DESC
-			LIMIT $page_offset, $chunk_size
+			LIMIT $chunk_size
 		");
 
 		if (!$rows) {
@@ -382,6 +383,7 @@ foreach ($sites as $site_lang => $domain) {
 		$page_urls = [];
 		$latest_ts = 0;
 		foreach ($rows as $r) {
+			$page_last_id = (int) $r->id;
 			$loc = $base_url . '/read/' . $r->strid;
 			$ts = 0;
 			if (!empty($r->updated) && $r->updated !== '0000-00-00 00:00:00') {
@@ -415,7 +417,6 @@ foreach ($sites as $site_lang => $domain) {
 		if (count($rows) < $chunk_size) {
 			break;
 		}
-		$page_offset += $chunk_size;
 		$page_part++;
 	}
 

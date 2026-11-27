@@ -95,7 +95,7 @@ if ($showStats) {
         WHERE r.status = 'pending' AND {$forumWhere}
         GROUP BY c.id
         ORDER BY cnt DESC
-    ");
+    ") ?: [];
     foreach ($breakdown as $b) {
         echo sprintf(" - [%4d] %-30s (cnt: %d, isforum: %d, module: %s)\n", $b->id, $b->title, $b->cnt, $b->isforum, $b->module);
     }
@@ -109,7 +109,7 @@ $pendingRows = $db->get_results("
     JOIN cat c ON c.id = r.category_id
     WHERE r.status = 'pending' AND {$forumWhere}
     ORDER BY r.id ASC
-");
+") ?: [];
 
 $totalPending = count($pendingRows);
 echo "Found {$totalPending} pending forum topics to approve" . ($dryRun ? " [DRY-RUN]" : "") . ".\n";

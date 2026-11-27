@@ -85,8 +85,12 @@ if (!is_dir($av_sm_dir) && !$dryRun) {
  */
 function download_url_to_temp($url, $timeout = 10, $connect_timeout = 5) {
     $tmp_file = tempnam(sys_get_temp_dir(), 'exs_av_');
+    if ($tmp_file === false) {
+        return ['ok' => false, 'error' => 'Cannot create temp file'];
+    }
     $fp = fopen($tmp_file, 'wb');
     if (!$fp) {
+        @unlink($tmp_file);
         return ['ok' => false, 'error' => 'Cannot open temp file'];
     }
 
@@ -107,7 +111,7 @@ function download_url_to_temp($url, $timeout = 10, $connect_timeout = 5) {
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $mime = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
     $curl_err = curl_error($ch);
-    @curl_close($ch);
+    unset($ch);
     fclose($fp);
 
     if (!$exec_ok || $http_code < 200 || $http_code >= 400 || filesize($tmp_file) < 100) {

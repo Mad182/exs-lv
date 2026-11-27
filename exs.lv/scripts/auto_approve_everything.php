@@ -78,7 +78,7 @@ $rsCatRows = $db->get_results("
       AND isblog = 0
       AND id NOT IN (661, 1871)
       AND isforum = 0
-");
+") ?: [];
 
 $rsCatMap = [];
 foreach ($rsCatRows as $row) {
@@ -86,7 +86,7 @@ foreach ($rsCatRows as $row) {
 }
 
 // Fetch all active categories into map for existence check
-$allActiveCats = $db->get_results("SELECT id, title, status FROM cat WHERE status = 'active' AND TRIM(title) != ''");
+$allActiveCats = $db->get_results("SELECT id, title, status FROM cat WHERE status = 'active' AND TRIM(title) != ''") ?: [];
 $activeCatMap = [];
 foreach ($allActiveCats as $c) {
     $activeCatMap[(int)$c->id] = $c->title;
@@ -114,7 +114,7 @@ $pendingReviews = $db->get_results("
     LEFT JOIN pages p ON p.id = r.page_id
     WHERE r.status = 'pending'
     ORDER BY r.id ASC
-");
+") ?: [];
 
 // 2. Also check any pages with needs_review = 1 not in review table
 $orphanPages = $db->get_results("
@@ -122,7 +122,7 @@ $orphanPages = $db->get_results("
     FROM pages p
     LEFT JOIN restored_articles_review r ON r.page_id = p.id
     WHERE p.needs_review = 1 AND r.id IS NULL
-");
+") ?: [];
 
 $totalPending = count($pendingReviews);
 $totalOrphans = count($orphanPages);
@@ -130,15 +130,18 @@ $totalOrphans = count($orphanPages);
 echo "Found {$totalPending} pending review articles and {$totalOrphans} unlinked pages with needs_review = 1" . ($dryRun ? " [DRY-RUN]" : "") . ".\n";
 
 // Also check existing approved RuneScape articles not yet in category 346
-$rsIdsList = implode(',', array_keys($rsCatMap));
-$approvedRsPages = $db->get_results("
-    SELECT p.id as page_id, p.category as page_category, r.id as review_id
-    FROM pages p
-    LEFT JOIN restored_articles_review r ON r.page_id = p.id
-    WHERE p.category IN ({$rsIdsList})
-      AND p.category != {$catRsArchiveId}
-      AND p.needs_review = 0
-");
+$approvedRsPages = [];
+if (!empty($rsCatMap)) {
+    $rsIdsList = implode(',', array_keys($rsCatMap));
+    $approvedRsPages = $db->get_results("
+        SELECT p.id as page_id, p.category as page_category, r.id as review_id
+        FROM pages p
+        LEFT JOIN restored_articles_review r ON r.page_id = p.id
+        WHERE p.category IN ({$rsIdsList})
+          AND p.category != {$catRsArchiveId}
+          AND p.needs_review = 0
+    ") ?: [];
+}
 $totalApprovedRsToMove = count($approvedRsPages);
 echo "Found {$totalApprovedRsToMove} already approved RuneScape articles in legacy categories to move to [{$catRsArchiveId}] {$catRsArchiveTitle}.\n";
 

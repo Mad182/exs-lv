@@ -31,8 +31,8 @@ if (isset($_GET['var1'])) {
 		FROM `pages`
 			JOIN `cat` ON `pages`.`category` = `cat`.`id`
 		WHERE 
-			`pages`.`id` = '".(int)$_GET['var1']."' AND
-			(`pages`.`lang` = '$api_lang' OR `pages`.`lang` = 0)
+			`pages`.`id` = ".(int)$_GET['var1']." AND
+			(`pages`.`lang` = ".(int)$api_lang." OR `pages`.`lang` = 0)
 	");
 	
 	if (!$article) {
@@ -105,13 +105,13 @@ if (isset($_GET['var1'])) {
 					
 					// noskaidro, vai šo ierakstu lietotājs jau ir vērtējis
 					$voters = array();
-					$voted = true;
 					if (!empty($comment->voted_by)) {
-						$voters = unserialize($comment->voted_by);
+						$voters = @unserialize($comment->voted_by, ['allowed_classes' => false]);
+						if (!is_array($voters)) {
+							$voters = array();
+						}
 					}
-					if (!in_array($auth->id, $voters)) {
-						$voted = false;
-					}
+					$voted = in_array($auth->id, $voters);
 					
 					$arr_comments[] = array(
 						'id'        => (int)$comment->id,

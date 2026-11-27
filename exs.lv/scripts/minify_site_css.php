@@ -58,8 +58,8 @@ $template_bundles = [
 
 // 1. Process Template Bundles into Single CSS Files
 foreach ($template_bundles as $tpl_name => $bundle) {
-	if (!file_exists($bundle['file'])) {
-		echo "Template file not found: {$bundle['file']}\n";
+	if (!$bundle['file'] || !file_exists($bundle['file'])) {
+		echo "Template file not found: {$tpl_name}\n";
 		continue;
 	}
 
@@ -97,13 +97,15 @@ foreach ($template_bundles as $tpl_name => $bundle) {
 		$has_media = strpos($matches[0], 'media="all"') !== false ? ' media="all"' : '';
 		$new_link = '<link rel="stylesheet" href="' . $prefix . $min_filename . '"' . $has_media . '>';
 		$new_tpl_content = preg_replace($bundle['pattern'], $new_link, $tpl_content);
-		file_put_contents($bundle['file'], $new_tpl_content);
-		echo "Updated " . basename($bundle['file']) . " to reference single CSS file: $min_filename\n";
+		if ($new_tpl_content !== null && $new_tpl_content !== $tpl_content) {
+			file_put_contents($bundle['file'], $new_tpl_content);
+			echo "Updated " . basename($bundle['file']) . " to reference single CSS file: $min_filename\n";
+		}
 	}
 }
 
 // 2. Process Individual CSS Files for Module $add_css and tinymce content_css
-$individual_sources = glob($css_dir . '/*.css');
+$individual_sources = glob($css_dir . '/*.css') ?: [];
 $indiv_mappings = [];
 
 foreach ($individual_sources as $src_path) {
@@ -152,6 +154,9 @@ foreach ($php_files as $php_file) {
 	}
 
 	$content = file_get_contents($php_file);
+	if (strpos($content, '$add_css') === false) {
+		continue;
+	}
 	$orig = $content;
 
 	foreach ($indiv_mappings as $base_name => $min_filename) {
@@ -169,11 +174,14 @@ foreach ($php_files as $php_file) {
 $all_tpls = glob(__DIR__ . '/../tmpl/*.tpl') ?: [];
 if (isset($indiv_mappings['style'])) {
 	$style_min = $indiv_mappings['style'];
+	$pattern = '/content_css:\s*([\'"])([^"\'\s]*\/css\/)style(\.[a-f0-9]+)?(\.min)?\.css\1/i';
 	foreach ($all_tpls as $tpl_path) {
 		$content = file_get_contents($tpl_path);
-		$pattern = '/content_css:\s*([\'"])([^"\'\s]*\/css\/)style(\.[a-f0-9]+)?(\.min)?\.css\1/i';
-		if (preg_match($pattern, $content)) {
-			$new_content = preg_replace($pattern, 'content_css: ${1}${2}' . $style_min . '${1}', $content);
+		if (strpos($content, 'content_css') === false) {
+			continue;
+		}
+		$new_content = preg_replace($pattern, 'content_css: ${1}${2}' . $style_min . '${1}', $content);
+		if ($new_content !== null && $new_content !== $content) {
 			file_put_contents($tpl_path, $new_content);
 			echo "Updated " . basename($tpl_path) . " tinymce content_css reference\n";
 		}

@@ -149,11 +149,18 @@ if (!empty($daily_frags)) {
 	}
 
 	$nick_to_uid = [];
+	$escaped_nicks = [];
 	foreach (array_keys($all_nicks) as $lnick) {
-		$esc = addslashes($lnick);
-		$uid = (int) $db->get_var("SELECT id FROM users WHERE deleted = 0 AND LOWER(nick) = '$esc' LIMIT 1");
-		if ($uid > 0) {
-			$nick_to_uid[$lnick] = $uid;
+		$escaped_nicks[] = "'" . $db->real_escape_string($lnick) . "'";
+	}
+	if (!empty($escaped_nicks)) {
+		$matched_users = $db->get_results("SELECT id, LOWER(nick) AS lnick FROM users WHERE deleted = 0 AND LOWER(nick) IN (" . implode(',', $escaped_nicks) . ")");
+		if (!empty($matched_users)) {
+			foreach ($matched_users as $mu) {
+				if (!isset($nick_to_uid[$mu->lnick])) {
+					$nick_to_uid[$mu->lnick] = (int) $mu->id;
+				}
+			}
 		}
 	}
 
@@ -199,20 +206,25 @@ if (!empty($daily_frags)) {
 // 2. Render static HTML for Today's Top & All-Time Top leaderboards
 // =========================================================================
 $start_of_today = strtotime('today midnight');
-$today_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'ut99' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+$today_scores = $db->get_results("
+	SELECT g.user_id, MAX(g.score) AS score, u.nick, u.level
+	FROM gamescore g
+	JOIN users u ON u.id = g.user_id
+	WHERE g.game = 'ut99' AND g.time >= '$start_of_today'
+	GROUP BY g.user_id, u.nick, u.level
+	ORDER BY score DESC
+	LIMIT 10
+");
 
 $today_html = '';
 if (!empty($today_scores)) {
 	$rank = 1;
 	foreach ($today_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '" . (int) $sc->user_id . "'");
-		if ($u) {
-			$today_html .= '<li>'
-				. '<span class="top-rank">' . ($rank++) . '.</span>'
-				. '<span class="top-user">' . usercolor($u->nick, $u->level) . '</span>'
-				. '<strong class="top-score">' . number_format((int) $sc->score, 0, '', ' ') . ' fr.</strong>'
-				. '</li>';
-		}
+		$today_html .= '<li>'
+			. '<span class="top-rank">' . ($rank++) . '.</span>'
+			. '<span class="top-user">' . usercolor($sc->nick, $sc->level) . '</span>'
+			. '<strong class="top-score">' . number_format((int) $sc->score, 0, '', ' ') . ' fr.</strong>'
+			. '</li>';
 	}
 }
 if ($today_html === '') {
@@ -220,19 +232,24 @@ if ($today_html === '') {
 }
 write_static_atomic($cache_dir . '/ut99_top_today.html', $today_html);
 
-$alltime_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'ut99' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+$alltime_scores = $db->get_results("
+	SELECT g.user_id, MAX(g.score) AS score, u.nick, u.level
+	FROM gamescore g
+	JOIN users u ON u.id = g.user_id
+	WHERE g.game = 'ut99'
+	GROUP BY g.user_id, u.nick, u.level
+	ORDER BY score DESC
+	LIMIT 10
+");
 $alltime_html = '';
 if (!empty($alltime_scores)) {
 	$rank = 1;
 	foreach ($alltime_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '" . (int) $sc->user_id . "'");
-		if ($u) {
-			$alltime_html .= '<li>'
-				. '<span class="top-rank">' . ($rank++) . '.</span>'
-				. '<span class="top-user">' . usercolor($u->nick, $u->level) . '</span>'
-				. '<strong class="top-score">' . number_format((int) $sc->score, 0, '', ' ') . ' fr.</strong>'
-				. '</li>';
-		}
+		$alltime_html .= '<li>'
+			. '<span class="top-rank">' . ($rank++) . '.</span>'
+			. '<span class="top-user">' . usercolor($sc->nick, $sc->level) . '</span>'
+			. '<strong class="top-score">' . number_format((int) $sc->score, 0, '', ' ') . ' fr.</strong>'
+			. '</li>';
 	}
 }
 if ($alltime_html === '') {
@@ -272,8 +289,9 @@ if ($fp) {
 	if (!empty($raw)) {
 		$ut99_mon['online'] = true;
 		$parts = explode('\\', ltrim($raw, '\\'));
+		$parts_count = count($parts);
 		$kv = [];
-		for ($i = 0; $i + 1 < count($parts); $i += 2) {
+		for ($i = 0; $i + 1 < $parts_count; $i += 2) {
 			$kv[strtolower($parts[$i])] = $parts[$i + 1];
 		}
 		if (!empty($kv['hostname'])) {

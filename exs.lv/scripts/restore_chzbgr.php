@@ -151,7 +151,7 @@ function parse_chzbgr_target($url) {
     
     $path = $parsed['path'] ?? '';
     $path = trim($path, " \t\n\r.,;:!?)'\"[]<>\\");
-    if (empty($path)) {
+    if (empty($path) || strpos($path, '..') !== false) {
         return null;
     }
 
@@ -197,7 +197,6 @@ function parse_chzbgr_target($url) {
 function get_curl_handle($reset = false) {
     static $ch = null;
     if ($reset && $ch !== null) {
-        @curl_close($ch);
         $ch = null;
     }
     if ($ch === null) {
@@ -242,7 +241,10 @@ function fetch_from_wayback($url, $delay_ms) {
         
         // Success case
         if ($http_code == 200 && !empty($body)) {
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            static $finfo = null;
+            if ($finfo === null) {
+                $finfo = new finfo(FILEINFO_MIME_TYPE);
+            }
             $detected_mime = $finfo->buffer($body);
             if (strpos($detected_mime, 'image/') === 0) {
                 return [

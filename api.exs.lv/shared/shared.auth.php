@@ -41,7 +41,8 @@ function api_auth_login() {
         return;
     }
 
-    if (!isset($_POST['username']) || !isset($_POST['password'])) {
+    if (!isset($_POST['username']) || !isset($_POST['password']) ||
+        !is_string($_POST['username']) || !is_string($_POST['password'])) {
         api_log('Veicot autentificēšanos, nav saņemts lietotājvārds un/vai parole.');
         api_error('Nepareizs lietotājvārds un/vai parole.');
         return;
@@ -132,12 +133,12 @@ function api_auth_logout() {
  *  ierīce atrodama starp tām, kuras lietotājs vēlējies "atcerēties".
  */
 function api_auth_2fa_request() {
-    global $lang, $db, $auth;
+    global $db, $auth;
     
     // atlasa iepriekš saglabātās ierīces
     $check_existing = $db->get_results("
         SELECT `cookie`, `token` FROM `tfa_whitelist`
-        WHERE `user_id` = ".$auth->id
+        WHERE `user_id` = ".(int)$auth->id
     );
     
     $device_found = false;
@@ -147,9 +148,11 @@ function api_auth_2fa_request() {
 	if (!empty($check_existing)) {
 		foreach ($check_existing as $device) {
 			if (!empty($_COOKIE[$device->cookie]) &&
-                  $_COOKIE[$device->cookie] === $device->token) {
+                  is_string($_COOKIE[$device->cookie]) &&
+                  hash_equals((string)$device->token, $_COOKIE[$device->cookie])) {
 				$_SESSION['2fa'] = 1;
                 $device_found = true;
+                break;
 			}
 		}
 	}
@@ -180,7 +183,7 @@ function api_auth_accept_2fa() {
         api_error('Profilam 2fa nav iespējota.');
         api_log('2fa pieprasījums profilam, kuram 2fa nav iespējots.');
         return;
-    } else if (!isset($_POST['2fa_code'])) {
+    } else if (!isset($_POST['2fa_code']) || !is_string($_POST['2fa_code'])) {
         api_error('Ievadīts kļūdains 2fa kods.');
         api_log('Nav saņemts 2fa kods.');
         return;
@@ -202,8 +205,8 @@ function api_auth_accept_2fa() {
     // kods nebūtu jāievada pārāk bieži, pievieno vērtību cepumos
     if (!empty($_POST['2fa_remember'])) {
 
-        $cookie = md5(uniqid());
-        $token = md5(uniqid() . $auth->xsrf);
+        $cookie = bin2hex(random_bytes(16));
+        $token = bin2hex(random_bytes(16));
 
         $db->insert('tfa_whitelist', array(
             'user_id' => $auth->id,
@@ -218,7 +221,7 @@ function api_auth_accept_2fa() {
         // ņemt vērā, ka lokālā vidē ir cits domēns, tāpēc cepums nestrādās;
         // tomēr vieglāk lokāli 2fa vienkārši izslēgt, nevis šeit pārbaudīt
         // lokālo domēnvārdu, android/ios IP adrešu virtualhostus u.tml.
-        setcookie($cookie, $token, time()+2592000, '/', '.exs.lv', 1, 1);
+        setcookie($cookie, $token, time()+2592000, '/', '.exs.lv', true, true);
     }
     
     // pēc veiksmīgas autentificēšanās atbildei pievieno

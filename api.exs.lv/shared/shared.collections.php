@@ -19,7 +19,7 @@ function api_collections_smilies() {
     } else {
         
         // no saņemtā masīva izveido pareizāku masīvu :)
-        $final_arr = null;
+        $final_arr = array();
         
         foreach ($smilies_arr as $key => $value) {
             $final_arr[] = array(

@@ -102,7 +102,7 @@ if ($showStats) {
         WHERE r.status = 'pending' AND {$blogWhere} AND u.id IS NULL
         GROUP BY c.id
         ORDER BY cnt DESC
-    ");
+    ") ?: [];
     foreach ($breakdown as $b) {
         echo sprintf(" - [%4d] %-32s: %d articles\n", $b->id, $b->title, $b->cnt);
     }
@@ -117,7 +117,7 @@ $pendingRows = $db->get_results("
     LEFT JOIN users u ON u.id = r.author_id
     WHERE r.status = 'pending' AND {$blogWhere} AND u.id IS NULL
     ORDER BY r.id ASC
-");
+") ?: [];
 
 $totalCount = count($pendingRows);
 echo "Found {$totalCount} pending blog articles of non-existing users to restore into '{$targetCategoryTitle}' [ID: {$targetCategoryId}]" . ($dryRun ? " [DRY-RUN]" : "") . ".\n";

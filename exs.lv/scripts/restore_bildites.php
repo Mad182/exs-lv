@@ -191,6 +191,9 @@ function parse_bildites_target($url) {
         // strip noise
         $subpath = preg_replace('/(%5C|%C2%A0|\xc2\xa0)+$/i', '', $subpath);
         $subpath = trim($subpath, " \t\n\r.,;:!?)'\"[]<>\\");
+        if (strpos($subpath, '..') !== false) {
+            return null;
+        }
         if (preg_match('/\.(jpg|jpeg|png|gif|bmp|webp)$/i', $subpath)) {
             $variants = [$url];
             $apex_url = "http://bildites.lv/images/" . $subpath;
@@ -217,7 +220,6 @@ function parse_bildites_target($url) {
 function get_curl_handle($reset = false) {
     static $ch = null;
     if ($reset && $ch !== null) {
-        @curl_close($ch);
         $ch = null;
     }
     if ($ch === null) {
@@ -262,7 +264,10 @@ function fetch_from_wayback($url, $delay_ms) {
         
         // Success case
         if ($http_code == 200 && !empty($body)) {
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            static $finfo = null;
+            if ($finfo === null) {
+                $finfo = new finfo(FILEINFO_MIME_TYPE);
+            }
             $detected_mime = $finfo->buffer($body);
             if (strpos($detected_mime, 'image/') === 0) {
                 return [
