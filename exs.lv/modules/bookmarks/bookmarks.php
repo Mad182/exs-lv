@@ -30,30 +30,26 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 		redirect('/bookmarks/' . $auth->id);
 	}
 
-	$articles = $db->get_results("SELECT id, pageid FROM bookmarks WHERE userid = ('" . $inprofile->id . "') ORDER BY id DESC");
+	$articles = $db->get_results("SELECT b.id AS bookmark_id, p.id, p.title, p.date, p.posts, p.strid FROM bookmarks b INNER JOIN pages p ON p.id = b.pageid WHERE b.userid = ('" . $inprofile->id . "') ORDER BY b.id DESC");
 	if ($articles) {
 		$tpl->newBlock('user-bookmarks-list');
 		foreach ($articles as $article) {
-			$info = $db->get_row("SELECT id,title,date,posts,strid FROM pages WHERE id = ('" . $article->pageid . "')");
-	
-			if(!empty($info)) {
-				$tpl->newBlock('user-bookmarks-node');
+			$tpl->newBlock('user-bookmarks-node');
 
-				//delete link
-				$delete = '';
-				if ($auth->ok && $auth->id == $inprofile->id) {
-					$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->id . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
-				}
-
-				$tpl->assign([
-					'id' => $info->id,
-					'url' => '/read/' . $info->strid,
-					'title' => $info->title,
-					'date' => substr($info->date, 0, 10),
-					'posts' => $info->posts,
-					'delete' => $delete
-				]);
+			//delete link
+			$delete = '';
+			if ($auth->ok && $auth->id == $inprofile->id) {
+				$delete = '[<a title="Dzēst no izlases" class="red confirm" href="?delete=' . $article->bookmark_id . '"><img src="/bildes/x.png" alt="x" title="Dzēst no izlases" /></a>]';
 			}
+
+			$tpl->assign([
+				'id' => $article->id,
+				'url' => '/read/' . $article->strid,
+				'title' => $article->title,
+				'date' => substr($article->date, 0, 10),
+				'posts' => $article->posts,
+				'delete' => $delete
+			]);
 		}
 	} else {
 		$robotstag = ['noindex', 'follow'];

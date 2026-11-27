@@ -49,19 +49,25 @@ if (!$game = $db->get_row("SELECT * FROM desas WHERE (user_1 = '$auth->id' OR us
 			$out['status'] = 2;
 		} else {
 			$db->query("INSERT INTO desas (user_1,data,created) VALUES ('$auth->id', '" . sanitize(serialize($fields)) . "', NOW())");
+			$game = $db->get_row("SELECT * FROM desas WHERE id = '" . (int) $db->insert_id . "'");
 			$out['status'] = 2;
 		}
 	}
 
-	$lastmove = $db->get_var("SELECT `timestamp` FROM `desas_moves` WHERE `user_id` = '$auth->id'");
-	if ($lastmove < time() - 25) {
+	$lastmove = (int) $db->get_var("SELECT `timestamp` FROM `desas_moves` WHERE `user_id` = '$auth->id'");
+	if ($game && $lastmove < time() - 25) {
 		$out['timeout'] = 1;
 		$db->query("DELETE FROM desas WHERE id = '$game->id' LIMIT 1");
 	}
 
-	$fields = unserialize($game->data);
+	$unserialized_fields = ($game && !empty($game->data)) ? unserialize($game->data, ['allowed_classes' => false]) : false;
+	if (is_array($unserialized_fields)) {
+		$fields = $unserialized_fields;
+	}
 
-	if ($game->user_1 == $auth->id && $game->user_2 != 0) {
+	$me = 1;
+	$other = 2;
+	if ($game && $game->user_1 == $auth->id && $game->user_2 != 0) {
 		$me = 1;
 		$other = 2;
 		if ($game->waiting_for == 1) {
@@ -72,7 +78,7 @@ if (!$game = $db->get_row("SELECT * FROM desas WHERE (user_1 = '$auth->id' OR us
 			$out['me'] = $me;
 		}
 		$out['other'] = $game->user_2;
-	} elseif ($game->user_2 == $auth->id) {
+	} elseif ($game && $game->user_2 == $auth->id) {
 		$me = 2;
 		$other = 1;
 		if ($game->waiting_for == 2) {
@@ -89,15 +95,16 @@ if (!$game = $db->get_row("SELECT * FROM desas WHERE (user_1 = '$auth->id' OR us
 	}
 
 	$updated = 0;
-	if (isset($_GET['mark']) && $out['status'] == 1) {
-		if (strlen($_GET['mark']) == 2) {
-			$coord_x = substr($_GET['mark'], 0, 1);
-			$coord_y = substr($_GET['mark'], 1, 1);
+	if ($game && isset($_GET['mark']) && $out['status'] == 1) {
+		$mark = (string) $_GET['mark'];
+		if (strlen($mark) == 2 && ctype_digit($mark)) {
+			$coord_x = (int) substr($mark, 0, 1);
+			$coord_y = (int) substr($mark, 1, 1);
 
-			if ($coord_x < 0 or $coord_x > 2) {
+			if ($coord_x < 0 || $coord_x > 2) {
 				die('wrong_x_coord');
 			}
-			if ($coord_y < 0 or $coord_y > 2) {
+			if ($coord_y < 0 || $coord_y > 2) {
 				die('wrong_y_coord');
 			}
 
@@ -181,8 +188,14 @@ if (!$game = $db->get_row("SELECT * FROM desas WHERE (user_1 = '$auth->id' OR us
 
 $out['mytotal']['wins'] = (int) $db->get_var("SELECT count(*) FROM desas WHERE (user_1 = '$auth->id' AND winner = '1') OR (user_2 = '$auth->id' AND winner = '2')");
 $out['mytotal']['loses'] = (int) $db->get_var("SELECT count(*) FROM desas WHERE ((user_1 = '$auth->id' AND winner = '2') OR (user_2 = '$auth->id' AND winner = '1')) AND status = '2'");
-$out['optotal']['wins'] = (int) $db->get_var("SELECT count(*) FROM desas WHERE (user_1 = '" . intval($out['other']) . "' AND winner = '1') OR (user_2 = '" . intval($out['other']) . "' AND winner = '2')");
-$out['optotal']['loses'] = (int) $db->get_var("SELECT count(*) FROM desas WHERE ((user_1 = '" . intval($out['other']) . "' AND winner = '2') OR (user_2 = '" . intval($out['other']) . "' AND winner = '1')) AND status = '2'");
+if (!empty($out['other'])) {
+	$other_id = intval($out['other']);
+	$out['optotal']['wins'] = (int) $db->get_var("SELECT count(*) FROM desas WHERE (user_1 = '$other_id' AND winner = '1') OR (user_2 = '$other_id' AND winner = '2')");
+	$out['optotal']['loses'] = (int) $db->get_var("SELECT count(*) FROM desas WHERE ((user_1 = '$other_id' AND winner = '2') OR (user_2 = '$other_id' AND winner = '1')) AND status = '2'");
+} else {
+	$out['optotal']['wins'] = 0;
+	$out['optotal']['loses'] = 0;
+}
 
 
 $json = json_encode($out);

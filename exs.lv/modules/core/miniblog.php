@@ -3,7 +3,7 @@
 /**
  * Miniblogi (saraksts, atvērums, komentēšana...)
  */
-if (!$inprofile = get_user(intval($_GET['m']))) {
+if (!$inprofile = get_user(intval($_GET['m'] ?? 0))) {
 	header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
 	set_flash('Pieprasītā lapa netika atrasta!', 'error');
 	redirect();
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_URI'] == '/?m=' . $inprofile->id) {
 
 //paginator fīčas
 if (isset($_GET['skip'])) {
-	$skip = (int) $_GET['skip'];
+	$skip = max(0, (int) $_GET['skip']);
 } else {
 	$skip = 0;
 }
@@ -86,7 +86,6 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 			stristr($body, 'kreku') || 
 			stristr($body, 'penis') || 
 			stristr($body, 'sezonas') || 
-			stristr($body, 'casino') || 
 			stristr($body, 'zaļo') || 
 			stristr($body, 'narkotikas')
 		) {
@@ -117,9 +116,9 @@ if ($auth->ok === true && $auth->id === $inprofile->id && isset($_POST['newminib
 // atbildes pievienošana (jeb komentēšana)
 if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['responseminiblog'])) {
 
-	$to = (int) $_POST['response-to'];
+	$to = (int) ($_POST['response-to'] ?? 0);
 
-	if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
+	if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['single'] ?? 0) . $remote_salt . $auth->nick)) {
 		set_flash('Kļūdains pieprasījums! Hacking around?');
 		redirect();
 	}
@@ -132,7 +131,7 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 	$reply_to = $db->get_row("SELECT * FROM `miniblog` WHERE `id` = '$to' AND `removed` = '0' AND `groupid` = '0'");
 
 	$reply_to_id = 0;
-	if ($reply_to->parent != 0) {
+	if ($reply_to && $reply_to->parent != 0) {
 		$mainid = $reply_to->parent;
 		$reply_to_id = $reply_to->id;
 	} else {
@@ -142,14 +141,14 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 	$body = post2db($_POST['responseminiblog']);
 
 	// vai parents eksistē? vai tēma nav slēgta?
-	$check = $db->get_var("SELECT `author` FROM miniblog WHERE id = '" . $mainid . "' AND removed = '0' AND groupid = '0'");
-	if (!$check || $check != $inprofile->id) {
+	$parent_row = $db->get_row("SELECT `author`, `closed`, `text`, `private` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `removed` = '0' AND `groupid` = '0'");
+	if (!$parent_row || $parent_row->author != $inprofile->id) {
 		die("Kļūdains parent id! Iespējams kamēr rakstīji komentāru, kāds izdzēsa tēmu.");
 	}
-	$check2 = $db->get_var("SELECT author FROM miniblog WHERE id = '" . $mainid . "' AND closed = '1'");
-	if ($check2) {
+	if ($parent_row->closed) {
 		die("Tēma ir slēgta.");
 	}
+	$check = $parent_row->author;
 
 	// viss kārtībā, var pievienot
 	if ($mainid) {
@@ -172,10 +171,10 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 			} else {
 				$str = 'miniblogā';
 			}
-			$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
-			$private = $db->get_var("SELECT `private` FROM `miniblog` WHERE `id` = '$mainid'");
+			$body = $parent_row->text;
+			$private = $parent_row->private;
 
-			$title = mb_get_title(stripslashes($body));
+			$title = mb_get_title(stripslashes((string) $body));
 			$strid = mb_get_strid($title, $mainid);
 			$url = '/say/' . $check . '/' . $mainid . '-' . $strid;
 
@@ -188,12 +187,12 @@ if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['re
 				$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
 				notify($inprofile->id, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
-				if (!empty($reply_to_id) && $inprofile->id != $reply_to->author) {
+				if (!empty($reply_to_id) && $reply_to && $inprofile->id != $reply_to->author) {
 					notify($reply_to->author, 3, $mainid, $url, textlimit(hide_spoilers($title), 64));
 				}
 
 				//ai stuff
-				if ($reply_to->author == 43040) {
+				if ($reply_to && $reply_to->author == 43040) {
 					$already_replied = $db->get_var("SELECT `id` FROM `miniblog` WHERE `reply_to` = '$newid' AND `author` = 43040 LIMIT 1");
 					if (!$already_replied) {
 						touch_ai_bot_online();
@@ -378,8 +377,8 @@ if (!empty($inprofile)) {
 				// apbalvojumu ikonas pie lietotājvārda
 				$add_deco = '';
 				if (!empty($inprofile->decos)) {
-					$decos = unserialize($inprofile->decos);
-					if (!empty($decos)) {
+					$decos = unserialize($inprofile->decos, ['allowed_classes' => false]);
+					if (is_array($decos) && !empty($decos)) {
 						$di = 0;
 						foreach ($decos as $deco) {
 							$add_deco .= '<img src="' . $deco['icon'] . '" alt="' . $deco['title'] . '" title="' . $deco['title'] . '" class="user-deco deco-pos-' . $di . '" />';

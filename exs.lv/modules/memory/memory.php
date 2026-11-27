@@ -30,6 +30,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'init_token') {
 		// Fallback query if not enough users
 		$high_karma_users = $db->get_results("SELECT id, nick, level, karma, avatar, av_alt FROM users WHERE deleted = 0 ORDER BY id ASC LIMIT 80");
 	}
+	if (!$high_karma_users) {
+		$high_karma_users = [];
+	}
 
 	// Shuffle and pick required number of unique users for card pairs
 	shuffle($high_karma_users);
@@ -155,53 +158,23 @@ $tpl->prepare();
 
 $active_sub = isset($_GET['var1']) ? $_GET['var1'] : (isset($_GET['act']) ? $_GET['act'] : '');
 
-if ($active_sub === 'top') {
-	$page_title = 'Atmiņas spēle — Šodienas rekordu tops';
-	$tpl->assign(['active-tab-top' => ' active']);
-
-	$start_of_today = strtotime('today midnight');
-	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'memory' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 100");
-	$tpl->newBlock('memory-top');
-	$tpl->assign('top-title', 'Šodienas tops');
-
-	if ($scores) {
-		$i = 1;
-		foreach ($scores as $score) {
-			$special = ($auth->id == $score->user_id) ? ' style="font-weight:bold"' : '';
-			if ($i == 1) {
-				$icon = '<img src="/bildes/icons/award_star_gold_3.png" alt="1." title="1." />';
-			} elseif ($i == 2) {
-				$icon = '<img src="/bildes/icons/award_star_silver_3.png" alt="2." title="2." />';
-			} elseif ($i == 3) {
-				$icon = '<img src="/bildes/icons/award_star_bronze_3.png" alt="3." title="3." />';
-			} else {
-				$icon = $i . '.';
-			}
-
-			$user = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$score->user_id'");
-			if ($user) {
-				$tpl->newBlock('top-node');
-				$tpl->assign([
-					'user-place' => $icon,
-					'user-special' => $special,
-					'user-url' => mkurl('user', $user->id, $user->nick),
-					'user-nick' => usercolor($user->nick, $user->level),
-					'user-score' => number_format($score->score, 0, '', ' '),
-					'user-date' => date('Y-m-d H:i', $score->time)
-				]);
-				$i++;
-			}
-		}
+if ($active_sub === 'top' || $active_sub === 'overall-top') {
+	if ($active_sub === 'top') {
+		$page_title = 'Atmiņas spēle — Šodienas rekordu tops';
+		$tpl->assign(['active-tab-top' => ' active']);
+		$start_of_today = strtotime('today midnight');
+		$time_where = " AND g.time >= '$start_of_today'";
+		$top_title = 'Šodienas tops';
 	} else {
-		$tpl->newBlock('no-scores');
+		$page_title = 'Atmiņas spēle — Visu laiku rekordu tops';
+		$tpl->assign(['active-tab-overall-top' => ' active']);
+		$time_where = '';
+		$top_title = 'Visu laiku tops';
 	}
-} elseif ($active_sub === 'overall-top') {
-	$page_title = 'Atmiņas spēle — Visu laiku rekordu tops';
-	$tpl->assign(['active-tab-overall-top' => ' active']);
 
-	$scores = $db->get_results("SELECT user_id, MAX(score) as score, MAX(time) as time FROM gamescore WHERE game = 'memory' GROUP BY user_id ORDER BY score DESC LIMIT 100");
+	$scores = $db->get_results("SELECT g.user_id, MAX(g.score) as score, MAX(g.time) as time, u.nick, u.level FROM gamescore g INNER JOIN users u ON u.id = g.user_id WHERE g.game = 'memory'{$time_where} GROUP BY g.user_id, u.nick, u.level ORDER BY score DESC LIMIT 100");
 	$tpl->newBlock('memory-top');
-	$tpl->assign('top-title', 'Visu laiku tops');
+	$tpl->assign('top-title', $top_title);
 
 	if ($scores) {
 		$i = 1;
@@ -217,19 +190,16 @@ if ($active_sub === 'top') {
 				$icon = $i . '.';
 			}
 
-			$user = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$score->user_id'");
-			if ($user) {
-				$tpl->newBlock('top-node');
-				$tpl->assign([
-					'user-place' => $icon,
-					'user-special' => $special,
-					'user-url' => mkurl('user', $user->id, $user->nick),
-					'user-nick' => usercolor($user->nick, $user->level),
-					'user-score' => number_format($score->score, 0, '', ' '),
-					'user-date' => date('Y-m-d H:i', $score->time)
-				]);
-				$i++;
-			}
+			$tpl->newBlock('top-node');
+			$tpl->assign([
+				'user-place' => $icon,
+				'user-special' => $special,
+				'user-url' => mkurl('user', $score->user_id, $score->nick),
+				'user-nick' => usercolor($score->nick, $score->level),
+				'user-score' => number_format($score->score, 0, '', ' '),
+				'user-date' => date('Y-m-d H:i', $score->time)
+			]);
+			$i++;
 		}
 	} else {
 		$tpl->newBlock('no-scores');
@@ -253,20 +223,17 @@ if ($active_sub === 'top') {
 		$tpl->newBlock('seo-text');
 	}
 
-	$sidebar_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'memory' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+	$sidebar_scores = $db->get_results("SELECT g.user_id, MAX(g.score) as score, u.nick, u.level FROM gamescore g INNER JOIN users u ON u.id = g.user_id WHERE g.game = 'memory' GROUP BY g.user_id, u.nick, u.level ORDER BY score DESC LIMIT 10");
 	if ($sidebar_scores) {
 		$i = 1;
 		foreach ($sidebar_scores as $score) {
-			$user = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$score->user_id'");
-			if ($user) {
-				$tpl->newBlock('mini-top-node');
-				$tpl->assign([
-					'place' => $i++,
-					'user-url' => mkurl('user', $user->id, $user->nick),
-					'user-nick' => usercolor($user->nick, $user->level),
-					'score' => number_format($score->score, 0, '', ' ')
-				]);
-			}
+			$tpl->newBlock('mini-top-node');
+			$tpl->assign([
+				'place' => $i++,
+				'user-url' => mkurl('user', $score->user_id, $score->nick),
+				'user-nick' => usercolor($score->nick, $score->level),
+				'score' => number_format($score->score, 0, '', ' ')
+			]);
 		}
 	}
 }

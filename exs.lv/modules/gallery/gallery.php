@@ -36,14 +36,14 @@ if ($inprofile && empty($inprofile->deleted)) {
 	//edit image properaties
 	if ($auth->ok && $auth->id == $inprofile->id || im_mod()) {
 		if (isset($_POST['edit-image-id'])) {
-			$closed = (bool) $_POST['edit-image-disablecomments'];
+			$closed = !empty($_POST['edit-image-disablecomments']) ? 1 : 0;
 			$editim = (int) $_POST['edit-image-id'];
 			//interešu kategorijas id. Ja mēģina nofeikot, tad 0
 			$interest_id = (isset($_POST['image-interest'])) ? (int) $_POST['image-interest'] : 0;
 			if (!$db->get_var("SELECT count(*) FROM `interests` WHERE `id` = '$interest_id'")) {
 				$interest_id = 0;
 			}
-			$auth->log('Laboja attēlu (slēgt: ' . intval($closed) . ') (kategorija: ' . $interest_id . ')', 'images', $editim);
+			$auth->log('Laboja attēlu (slēgt: ' . $closed . ') (kategorija: ' . $interest_id . ')', 'images', $editim);
 			$db->query("UPDATE `images` SET `closed` = '$closed', `interest_id` = '$interest_id' WHERE id = '$editim' AND uid = '$inprofile->id'");
 			die('ok');
 		}
@@ -52,7 +52,7 @@ if ($inprofile && empty($inprofile->deleted)) {
 	//edit comment
 	if ($auth->ok && isset($_POST['edit-comment-id'])) {
 		$edit_comment_id = (int) $_POST['edit-comment-id'];
-		$edit_comment_text = htmlpost2db($_POST['edit-comment-text']);
+		$edit_comment_text = htmlpost2db($_POST['edit-comment-text'] ?? '');
 
 		$edit_comment_author = $db->get_var("SELECT author FROM galcom WHERE id = '$edit_comment_id' LIMIT 1");
 		if ($auth->level == 3 && $edit_comment_author != $auth->id) {
@@ -69,19 +69,20 @@ if ($inprofile && empty($inprofile->deleted)) {
 
 		$auth->log('Laboja attēla komentāru', 'galcom', $edit_comment_id);
 
-		redirect('/gallery/' . $inprofile->id . '/' . intval($_GET['var2']));
+		redirect('/gallery/' . $inprofile->id . '/' . intval($_GET['var2'] ?? 0));
 	}
 
 	//delete comment
-	if ($auth->ok && ($auth->level == 1 or $auth->level == 2) && isset($_GET['delcom']) && check_token('delcom', $_GET['token'])) {
+	if ($auth->ok && ($auth->level == 1 or $auth->level == 2) && isset($_GET['delcom']) && check_token('delcom', $_GET['token'] ?? '')) {
 		$del = (int) $_GET['delcom'];
+		$img_var2 = intval($_GET['var2'] ?? 0);
 		$comment = $db->get_row("SELECT * FROM galcom WHERE id = '$del'");
-		if ($comment && $comment->bid == intval($_GET['var2'])) {
+		if ($comment && $comment->bid == $img_var2) {
 			$db->query("UPDATE `galcom` SET `removed` = 1 WHERE `id` = '$del' LIMIT 1");
-			$db->query("UPDATE `images` SET `posts` = `posts`-1 WHERE `id` = '" . intval($_GET['var2']) . "'");
+			$db->query("UPDATE `images` SET `posts` = `posts`-1 WHERE `id` = '$img_var2'");
 			$db->query("UPDATE `users` SET `posts` = `posts`-1 WHERE `id` = '$comment->author'");
 			$auth->log('Izdzēsa attēla komentāru', 'galcom', $del);
-			redirect('/gallery/' . $inprofile->id . '/' . intval($_GET['var2']));
+			redirect('/gallery/' . $inprofile->id . '/' . $img_var2);
 		}
 	}
 
@@ -158,11 +159,14 @@ if ($inprofile && empty($inprofile->deleted)) {
 			redirect('https://' . $config_domains[$image->lang]['domain'] . '/gallery/' . $image->uid . '/' . $image->id, true);
 		}
 
-		$rating_users = unserialize($image->rating_users);
+		$rating_users = !empty($image->rating_users) ? unserialize($image->rating_users, ['allowed_classes' => false]) : [];
+		if (!is_array($rating_users)) {
+			$rating_users = [];
+		}
 
 		if (isset($_POST['vote']) && !isset($_POST['questions'])) {
 			if (isset($_POST['vote']) && $auth->ok) {
-				$vote = 1 * $_POST['vote'];
+				$vote = (int) $_POST['vote'];
 
 				//parbauda vai deriga vote vertiba
 				if ($vote < 0 || $vote > 5) {
@@ -194,6 +198,9 @@ if ($inprofile && empty($inprofile->deleted)) {
 		if ($auth->ok && isset($_GET['editcom'])) {
 			$editcom = (int) $_GET['editcom'];
 			$comment = $db->get_row("SELECT text,id,author FROM galcom WHERE id = '$editcom' AND bid = '$image->id' AND `removed` = 0 LIMIT 1");
+			if (!$comment) {
+				redirect('/gallery/' . $inprofile->id);
+			}
 
 			if (!im_mod() && ($auth->karma < 100 || $comment->author != $auth->id)) {
 				set_flash('Tev jābūt vismaz 100 karmai un tu vari labot tikai savus komentārus!', 'error');
@@ -211,7 +218,7 @@ if ($inprofile && empty($inprofile->deleted)) {
 		} else {
 
 			//remove image, comments and rating, unlink image file
-			if ((isset($_GET['mode']) && $_GET['mode'] == 'delete') && ($auth->ok && $auth->id == $inprofile->id or $auth->ok && ($auth->level == 1 or $auth->level == 2)) && check_token('delete', $_GET['token'])) {
+			if ((isset($_GET['mode']) && $_GET['mode'] == 'delete') && ($auth->ok && $auth->id == $inprofile->id or $auth->ok && ($auth->level == 1 or $auth->level == 2)) && check_token('delete', $_GET['token'] ?? '')) {
                 
                 // jāiziet cauri visiem attēla komentāriem un jāarhivē arī sūdzības,
                 // ja tādas par kādu no tiem bijušas
@@ -246,7 +253,10 @@ if ($inprofile && empty($inprofile->deleted)) {
 				if (empty($image->readby)) {
 					$db->query("UPDATE `images` SET `readby` = '" . serialize([$auth->id]) . "' WHERE `id` = '$image->id'");
 				} else {
-					$readby = unserialize($image->readby);
+					$readby = unserialize($image->readby, ['allowed_classes' => false]);
+					if (!is_array($readby)) {
+						$readby = [];
+					}
 					if (!in_array($auth->id, $readby)) {
 						$readby[] = $auth->id;
 						$db->query("UPDATE `images` SET `readby` = '" . serialize($readby) . "' WHERE `id` = '$image->id'");
@@ -277,7 +287,7 @@ if ($inprofile && empty($inprofile->deleted)) {
 				$rating = 0;
 			}
 
-			$im_size = @getimagesize(CORE_PATH . '/' . $image->url);
+			$im_size = @getimagesize(CORE_PATH . '/' . $image->url) ?: [0, 0];
 			if (!empty($image->youtube_video)) {
 				$im_size[1] = 280;
 				$im_size[0] = 560;
@@ -337,11 +347,13 @@ if ($inprofile && empty($inprofile->deleted)) {
 				if ($lang == 1) {
 					$tpl->newBlock('edit-image-interest');
 					$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
-					foreach ($interests as $interest) {
-						$tpl->newBlock('select-interest');
-						$tpl->assignAll($interest);
-						if ($interest->id == $image->interest_id) {
-							$tpl->assign('sel', ' selected="selected"');
+					if ($interests) {
+						foreach ($interests as $interest) {
+							$tpl->newBlock('select-interest');
+							$tpl->assignAll($interest);
+							if ($interest->id == $image->interest_id) {
+								$tpl->assign('sel', ' selected="selected"');
+							}
 						}
 					}
 				}
@@ -393,7 +405,7 @@ if ($inprofile && empty($inprofile->deleted)) {
 							$edit_usr = $comment->author_nick;
 						} else {
 							$edit_usrinfo = get_user($comment->edit_user);
-							$edit_usr = $edit_usrinfo->nick;
+							$edit_usr = $edit_usrinfo ? $edit_usrinfo->nick : '';
 						}
 						$editedby = '<p class="comment-edited-by">Laboja ' . $edit_usr . ', ' . $comment->edit_times . 'x</p>';
 					}
@@ -442,22 +454,15 @@ if ($inprofile && empty($inprofile->deleted)) {
 					if ($auth->ok && !$auth->mobile) {
 						$check = substr(md5($comment->id . $remote_salt . $auth->id), 0, 5);
 
-						if (!empty($comment->vote_users)) {
-							$voters = unserialize($comment->vote_users);
-						} else {
+						$voters = !empty($comment->vote_users) ? unserialize($comment->vote_users, ['allowed_classes' => false]) : [];
+						if (!is_array($voters)) {
 							$voters = [];
 						}
 						$voted = in_array($auth->id, $voters);
 
 						if (!$voted && $auth->id != $comment->author) {
-							if (isset($_GET['com_page'])) {
-								$skips = (int) $_GET['com_page'];
-								$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;type=gallery&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-								$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;type=gallery&&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-							} else {
-								$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;type=gallery&&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
-								$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;type=gallery&&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
-							}
+							$pluslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;type=gallery&amp;check=' . $check . '&amp;action=plus" class="plus">plus</a>';
+							$minuslnk = '<a href="/rate-comment/?vc=' . $comment->id . '&amp;type=gallery&amp;check=' . $check . '&amp;action=minus" class="minus">minus</a>';
 						}
 					}
 

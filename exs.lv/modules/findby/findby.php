@@ -114,7 +114,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'page' &&
     
     $page_count = ceil($total / $max_in_result_page);
     if ($page_count > $max_result_pages) $page_count = $max_result_pages;
-    if ($page_nr > $page_count) $page_nr = $max_result_pages;
+    if ($page_nr > $page_count) $page_nr = max(1, (int) $page_count);
     $offset = ($page_nr - 1) * $max_in_result_page;
     
     $results = $db->get_results("

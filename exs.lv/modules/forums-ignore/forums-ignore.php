@@ -13,7 +13,7 @@ if (!$auth->ok) {
 
 $add_css[] = 'forum.da938bac.min.css';
 
-if (isset($_POST['submit-ignore'])) {
+if (isset($_POST['submit-ignore']) && !empty($_POST['forum']) && is_array($_POST['forum'])) {
 	foreach ($_POST['forum'] as $forum => $status) {
 		$forum = (int) $forum;
 		if ($db->get_var("SELECT count(*) FROM `cat` WHERE `id` = '$forum'")) {
@@ -30,15 +30,14 @@ if (isset($_POST['submit-ignore'])) {
 	}
 }
 
+$ignored_col = $db->get_col("SELECT `category_id` FROM `cat_ignore` WHERE `user_id` = '$auth->id'");
+$ignored_ids = $ignored_col ? array_flip($ignored_col) : [];
+
 $cats = $db->get_results("SELECT `id`,`title`,`textid` FROM `cat` WHERE `lang` = '$lang' AND `module` = 'forums' ORDER BY `ordered` ASC");
 
 if (!empty($cats)) {
+	$add = !im_mod() ? ' AND `mods_only` = 0' : '';
 	foreach ($cats as $cat) {
-
-		$add = '';
-		if (!im_mod()) {
-			$add = ' AND `mods_only` = 0';
-		}
 
 		$forums = $db->get_results("SELECT `title`, `textid`, `icon`, `id`, `content`, `stat_topics`, `stat_com` FROM `cat` WHERE (`lang` = '$lang' OR `lang` = 0) AND `parent` = '$cat->id' AND `module` = 'list'" . $add . " ORDER BY `ordered` ASC");
 		if ($forums) {
@@ -52,7 +51,7 @@ if (!empty($cats)) {
 
 				$tpl->newBlock('forum-item');
 
-				if ($db->get_var("SELECT count(*) FROM `cat_ignore` WHERE `user_id` = '$auth->id' AND `category_id` = '$forum->id'")) {
+				if (isset($ignored_ids[$forum->id])) {
 					$disabled = ' selected="selected"';
 					$enabled = '';
 				} else {

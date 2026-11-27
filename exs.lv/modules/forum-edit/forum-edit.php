@@ -13,7 +13,7 @@ if (isset($_GET['var1'])) {
 
 	$edit = get_cat($_GET['var1']);
 
-	if ($edit->module == 'list' && $edit->isforum) {
+	if ($edit && $edit->module == 'list' && $edit->isforum) {
 
 		if (isset($_POST['content']) && !empty($_POST['content'])) {
 			$content = sanitize(h(strip_tags($_POST['content'])));
@@ -22,7 +22,7 @@ if (isset($_GET['var1'])) {
 			$parent = get_cat($edit->parent);
 			set_flash('Kategorijas apraksts saglabāts!', 'success');
 			clear_forum_cache($edit->lang);
-			redirect('/' . $parent->textid);
+			redirect($parent ? '/' . $parent->textid : '/');
 		}
 
 		$tpl->newBlock('forum-edit');

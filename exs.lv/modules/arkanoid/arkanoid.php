@@ -11,7 +11,7 @@ if (!isset($_SESSION)) {
 // 1. Initialize Anti-Cheat Token
 if (isset($_GET['action']) && $_GET['action'] === 'init_token') {
 	header('Content-Type: application/json');
-	$token = md5(uniqid(rand(), true));
+	$token = bin2hex(random_bytes(16));
 	$_SESSION['arkanoid_token'] = $token;
 	$_SESSION['arkanoid_start_time'] = time();
 	echo json_encode(['success' => true, 'token' => $token]);
@@ -28,7 +28,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'push') {
 	}
 
 	$token = isset($_POST['token']) ? trim($_POST['token']) : '';
-	if (empty($token) || empty($_SESSION['arkanoid_token']) || $token !== $_SESSION['arkanoid_token']) {
+	if (empty($token) || empty($_SESSION['arkanoid_token']) || !hash_equals($_SESSION['arkanoid_token'], $token)) {
 		echo json_encode(['success' => false, 'error' => 'Nederīgs sesijas žetons. Lūdzu pārlādējiet spēli.']);
 		exit;
 	}
@@ -132,29 +132,27 @@ function format_rank_badge($rank) {
 // 4. Today's Leaderboard
 $start_of_today = strtotime('today midnight');
 $today_scores = $db->get_results("
-	SELECT user_id, MAX(score) as score, MIN(time) as best_time 
-	FROM gamescore 
-	WHERE game = 'arkanoid' AND time >= '$start_of_today' 
-	GROUP BY user_id 
-	ORDER BY score DESC, best_time ASC 
+	SELECT g.user_id, MAX(g.score) as score, MIN(g.time) as best_time, u.nick, u.level
+	FROM gamescore g
+	INNER JOIN users u ON u.id = g.user_id
+	WHERE g.game = 'arkanoid' AND g.time >= '$start_of_today'
+	GROUP BY g.user_id, u.nick, u.level
+	ORDER BY score DESC, best_time ASC
 	LIMIT 20
 ");
 
 if (!empty($today_scores)) {
 	$rank = 1;
 	foreach ($today_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
-		if ($u) {
-			$tpl->newBlock('today-top-node');
-			$is_me = ($auth->ok && $auth->id == $u->id);
-			$tpl->assign([
-				'user-place' => format_rank_badge($rank++),
-				'user-url' => mkurl('user', $u->id, $u->nick),
-				'user-nick' => usercolor($u->nick, $u->level),
-				'score' => number_format($sc->score, 0, '', ' '),
-				'user-special' => $is_me ? ' class="my-rank-row" style="background: rgba(235, 60, 60, 0.1); font-weight: bold;"' : ''
-			]);
-		}
+		$tpl->newBlock('today-top-node');
+		$is_me = ($auth->ok && $auth->id == $sc->user_id);
+		$tpl->assign([
+			'user-place' => format_rank_badge($rank++),
+			'user-url' => mkurl('user', $sc->user_id, $sc->nick),
+			'user-nick' => usercolor($sc->nick, $sc->level),
+			'score' => number_format($sc->score, 0, '', ' '),
+			'user-special' => $is_me ? ' class="my-rank-row" style="background: rgba(235, 60, 60, 0.1); font-weight: bold;"' : ''
+		]);
 	}
 } else {
 	$tpl->newBlock('today-empty');
@@ -162,29 +160,27 @@ if (!empty($today_scores)) {
 
 // 5. All-Time Leaderboard
 $alltime_scores = $db->get_results("
-	SELECT user_id, MAX(score) as score, MIN(time) as best_time 
-	FROM gamescore 
-	WHERE game = 'arkanoid' 
-	GROUP BY user_id 
-	ORDER BY score DESC, best_time ASC 
+	SELECT g.user_id, MAX(g.score) as score, MIN(g.time) as best_time, u.nick, u.level
+	FROM gamescore g
+	INNER JOIN users u ON u.id = g.user_id
+	WHERE g.game = 'arkanoid'
+	GROUP BY g.user_id, u.nick, u.level
+	ORDER BY score DESC, best_time ASC
 	LIMIT 20
 ");
 
 if (!empty($alltime_scores)) {
 	$rank = 1;
 	foreach ($alltime_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
-		if ($u) {
-			$tpl->newBlock('alltime-top-node');
-			$is_me = ($auth->ok && $auth->id == $u->id);
-			$tpl->assign([
-				'user-place' => format_rank_badge($rank++),
-				'user-url' => mkurl('user', $u->id, $u->nick),
-				'user-nick' => usercolor($u->nick, $u->level),
-				'score' => number_format($sc->score, 0, '', ' '),
-				'user-special' => $is_me ? ' class="my-rank-row" style="background: rgba(235, 60, 60, 0.1); font-weight: bold;"' : ''
-			]);
-		}
+		$tpl->newBlock('alltime-top-node');
+		$is_me = ($auth->ok && $auth->id == $sc->user_id);
+		$tpl->assign([
+			'user-place' => format_rank_badge($rank++),
+			'user-url' => mkurl('user', $sc->user_id, $sc->nick),
+			'user-nick' => usercolor($sc->nick, $sc->level),
+			'score' => number_format($sc->score, 0, '', ' '),
+			'user-special' => $is_me ? ' class="my-rank-row" style="background: rgba(235, 60, 60, 0.1); font-weight: bold;"' : ''
+		]);
 	}
 } else {
 	$tpl->newBlock('alltime-empty');

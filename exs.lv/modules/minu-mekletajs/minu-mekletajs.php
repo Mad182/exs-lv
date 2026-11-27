@@ -26,6 +26,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'push') {
 	$token = isset($_POST['token']) ? trim($_POST['token']) : '';
 	$time_sec = isset($_POST['time_sec']) ? intval($_POST['time_sec']) : 0;
 	$difficulty = isset($_POST['difficulty']) ? trim($_POST['difficulty']) : 'easy';
+	if (!in_array($difficulty, ['easy', 'medium', 'hard'], true)) {
+		$difficulty = 'easy';
+	}
 
 	// Anti-Cheat Check 1: Token Verification
 	if (empty($_SESSION['ms_token']) || empty($token) || !hash_equals($_SESSION['ms_token'], $token)) {
@@ -144,7 +147,7 @@ if ($act == 'top' || $act == 'overall-top') {
 		$where_time_g = ($act == 'top') ? " AND g.time >= '$today_start'" : "";
 
 		$topusers = $db->get_results("
-			SELECT g.user_id, g.score, MIN(g.time) as time
+			SELECT g.user_id, g.score, MIN(g.time) as time, u.nick, u.level
 			FROM gamescore g
 			INNER JOIN (
 				SELECT user_id, MIN(score) AS min_score
@@ -152,8 +155,9 @@ if ($act == 'top' || $act == 'overall-top') {
 				WHERE $where_game_raw $where_time_raw
 				GROUP BY user_id
 			) b ON g.user_id = b.user_id AND g.score = b.min_score
+			INNER JOIN users u ON u.id = g.user_id
 			WHERE $where_game_g $where_time_g
-			GROUP BY g.user_id, g.score
+			GROUP BY g.user_id, g.score, u.nick, u.level
 			ORDER BY g.score ASC, time ASC
 			LIMIT 100
 		");
@@ -173,24 +177,21 @@ if ($act == 'top' || $act == 'overall-top') {
 					$icon = $i . '.';
 				}
 
-				$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
-				if ($usr) {
-					$tpl->newBlock('top-node');
-					$mins = floor($topuser->score / 60);
-					$s = $topuser->score % 60;
-					$time_str = sprintf('%02d:%02d sek', $mins, $s);
+				$tpl->newBlock('top-node');
+				$mins = floor($topuser->score / 60);
+				$s = $topuser->score % 60;
+				$time_str = sprintf('%02d:%02d sek', $mins, $s);
 
-					$tpl->assign([
-						'user-place' => $icon,
-						'user-special' => $special,
-						'user-url' => mkurl('user', $topuser->user_id, $usr->nick),
-						'user-nick' => usercolor($usr->nick, $usr->level),
-						'user-score' => $time_str,
-						'user-date' => date('Y-m-d H:i', $topuser->time),
-						'user-time' => date('Y-m-d H:i', $topuser->time)
-					]);
-					$i++;
-				}
+				$tpl->assign([
+					'user-place' => $icon,
+					'user-special' => $special,
+					'user-url' => mkurl('user', $topuser->user_id, $topuser->nick),
+					'user-nick' => usercolor($topuser->nick, $topuser->level),
+					'user-score' => $time_str,
+					'user-date' => date('Y-m-d H:i', $topuser->time),
+					'user-time' => date('Y-m-d H:i', $topuser->time)
+				]);
+				$i++;
 			}
 		} else {
 			$tpl->newBlock('no-scores');
@@ -214,17 +215,21 @@ if ($act == 'top' || $act == 'overall-top') {
 	];
 
 	if ($auth->ok && $auth->id > 0) {
-		foreach (['easy', 'medium', 'hard'] as $d) {
-			if ($d == 'easy') {
-				$best_sec = intval($db->get_var("SELECT MIN(score) FROM gamescore WHERE game IN ('minu-mekletajs-easy', 'minu-mekletajs') AND user_id = '$auth->id'"));
-			} else {
-				$best_sec = intval($db->get_var("SELECT MIN(score) FROM gamescore WHERE game = 'minu-mekletajs-$d' AND user_id = '$auth->id'"));
+		$best_rows = $db->get_results("SELECT game, MIN(score) AS best_sec FROM gamescore WHERE game IN ('minu-mekletajs', 'minu-mekletajs-easy', 'minu-mekletajs-medium', 'minu-mekletajs-hard') AND user_id = '$auth->id' GROUP BY game");
+		$best_map = [];
+		if ($best_rows) {
+			foreach ($best_rows as $row) {
+				$d = ($row->game === 'minu-mekletajs') ? 'easy' : str_replace('minu-mekletajs-', '', $row->game);
+				$sec = intval($row->best_sec);
+				if ($sec > 0 && (!isset($best_map[$d]) || $sec < $best_map[$d])) {
+					$best_map[$d] = $sec;
+				}
 			}
-			if ($best_sec > 0) {
-				$mins = floor($best_sec / 60);
-				$s = $best_sec % 60;
-				$user_bests[$d] = sprintf('%02d:%02d', $mins, $s);
-			}
+		}
+		foreach ($best_map as $d => $best_sec) {
+			$mins = floor($best_sec / 60);
+			$s = $best_sec % 60;
+			$user_bests[$d] = sprintf('%02d:%02d', $mins, $s);
 		}
 	}
 

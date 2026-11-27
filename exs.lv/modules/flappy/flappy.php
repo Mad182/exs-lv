@@ -11,7 +11,7 @@ if (!isset($_SESSION)) {
 // 1. AJAX: Initialize Session Token
 if (isset($_GET['action']) && $_GET['action'] === 'init_token') {
 	header('Content-Type: application/json');
-	$token = md5(uniqid(rand(), true));
+	$token = bin2hex(random_bytes(16));
 	$_SESSION['flappy_token'] = $token;
 	echo json_encode(['success' => true, 'token' => $token]);
 	exit;
@@ -93,42 +93,36 @@ $tpl->assign([
 
 // 4. Today's Leaderboard
 $start_of_today = strtotime('today midnight');
-$today_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'flappy' AND time >= '$start_of_today' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+$today_scores = $db->get_results("SELECT g.user_id, MAX(g.score) as score, u.nick, u.level FROM gamescore g INNER JOIN users u ON u.id = g.user_id WHERE g.game = 'flappy' AND g.time >= '$start_of_today' GROUP BY g.user_id, u.nick, u.level ORDER BY score DESC LIMIT 10");
 
 if (!empty($today_scores)) {
 	$rank = 1;
 	foreach ($today_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
-		if ($u) {
-			$tpl->newBlock('today-top-node');
-			$tpl->assign([
-				'rank' => $rank++,
-				'user-url' => mkurl('user', $u->id, $u->nick),
-				'user-nick' => usercolor($u->nick, $u->level),
-				'score' => number_format($sc->score, 0, '', ' ')
-			]);
-		}
+		$tpl->newBlock('today-top-node');
+		$tpl->assign([
+			'rank' => $rank++,
+			'user-url' => mkurl('user', $sc->user_id, $sc->nick),
+			'user-nick' => usercolor($sc->nick, $sc->level),
+			'score' => number_format($sc->score, 0, '', ' ')
+		]);
 	}
 } else {
 	$tpl->newBlock('today-empty');
 }
 
 // 5. All-Time Leaderboard
-$alltime_scores = $db->get_results("SELECT user_id, MAX(score) as score FROM gamescore WHERE game = 'flappy' GROUP BY user_id ORDER BY score DESC LIMIT 10");
+$alltime_scores = $db->get_results("SELECT g.user_id, MAX(g.score) as score, u.nick, u.level FROM gamescore g INNER JOIN users u ON u.id = g.user_id WHERE g.game = 'flappy' GROUP BY g.user_id, u.nick, u.level ORDER BY score DESC LIMIT 10");
 
 if (!empty($alltime_scores)) {
 	$rank = 1;
 	foreach ($alltime_scores as $sc) {
-		$u = $db->get_row("SELECT id, nick, level FROM users WHERE id = '$sc->user_id'");
-		if ($u) {
-			$tpl->newBlock('alltime-top-node');
-			$tpl->assign([
-				'rank' => $rank++,
-				'user-url' => mkurl('user', $u->id, $u->nick),
-				'user-nick' => usercolor($u->nick, $u->level),
-				'score' => number_format($sc->score, 0, '', ' ')
-			]);
-		}
+		$tpl->newBlock('alltime-top-node');
+		$tpl->assign([
+			'rank' => $rank++,
+			'user-url' => mkurl('user', $sc->user_id, $sc->nick),
+			'user-nick' => usercolor($sc->nick, $sc->level),
+			'score' => number_format($sc->score, 0, '', ' ')
+		]);
 	}
 } else {
 	$tpl->newBlock('alltime-empty');

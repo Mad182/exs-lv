@@ -90,48 +90,19 @@ $tpl->prepare();
 
 $act = isset($_GET['act']) ? $_GET['act'] : (isset($_GET['var1']) ? $_GET['var1'] : '');
 
-if ($act == 'top') {
-	// Today's Top Scores
-	$page_title = '2048 — Šodienas rekordu tops';
-	$tpl->assign(['active-tab-top' => ' active']);
-	$today_start = strtotime('today midnight');
-	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = '2048' AND time >= '$today_start' ORDER BY score DESC LIMIT 100");
-
-	if ($topusers) {
-		$tpl->newBlock('top-table');
-		$i = 1;
-		foreach ($topusers as $topuser) {
-			$special = ($auth->ok && $auth->id == $topuser->user_id) ? ' style="font-weight:bold"' : '';
-			if ($i == 1) {
-				$icon = '<img src="/bildes/icons/award_star_gold_3.png" alt="1." title="1." />';
-			} elseif ($i == 2) {
-				$icon = '<img src="/bildes/icons/award_star_silver_3.png" alt="2." title="2." />';
-			} elseif ($i == 3) {
-				$icon = '<img src="/bildes/icons/award_star_bronze_3.png" alt="3." title="3." />';
-			} else {
-				$icon = $i . '.';
-			}
-
-			$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
-			if ($usr) {
-				$tpl->newBlock('top-node');
-				$tpl->assign([
-					'user-place' => $icon,
-					'user-special' => $special,
-					'user-url' => mkurl('user', $topuser->user_id, $usr->nick),
-					'user-nick' => usercolor($usr->nick, $usr->level),
-					'user-score' => number_format($topuser->score, 0, '', ' '),
-					'user-time' => time_ago($topuser->time)
-				]);
-				$i++;
-			}
-		}
+if ($act == 'top' || $act == 'overall-top') {
+	if ($act == 'top') {
+		$page_title = '2048 — Šodienas rekordu tops';
+		$tpl->assign(['active-tab-top' => ' active']);
+		$today_start = strtotime('today midnight');
+		$time_where = " AND g.time >= '$today_start'";
+	} else {
+		$page_title = '2048 — Visu laiku rekordu tops';
+		$tpl->assign(['active-tab-overall-top' => ' active']);
+		$time_where = '';
 	}
-} elseif ($act == 'overall-top') {
-	// All-Time Top Scores
-	$page_title = '2048 — Visu laiku rekordu tops';
-	$tpl->assign(['active-tab-overall-top' => ' active']);
-	$topusers = $db->get_results("SELECT * FROM gamescore WHERE game = '2048' ORDER BY score DESC LIMIT 100");
+
+	$topusers = $db->get_results("SELECT g.user_id, g.score, g.time, u.nick, u.level FROM gamescore g INNER JOIN users u ON u.id = g.user_id WHERE g.game = '2048'{$time_where} ORDER BY g.score DESC LIMIT 100");
 
 	if ($topusers) {
 		$tpl->newBlock('top-table');
@@ -148,19 +119,16 @@ if ($act == 'top') {
 				$icon = $i . '.';
 			}
 
-			$usr = $db->get_row("SELECT nick, level FROM users WHERE id = '$topuser->user_id'");
-			if ($usr) {
-				$tpl->newBlock('top-node');
-				$tpl->assign([
-					'user-place' => $icon,
-					'user-special' => $special,
-					'user-url' => mkurl('user', $topuser->user_id, $usr->nick),
-					'user-nick' => usercolor($usr->nick, $usr->level),
-					'user-score' => number_format($topuser->score, 0, '', ' '),
-					'user-time' => time_ago($topuser->time)
-				]);
-				$i++;
-			}
+			$tpl->newBlock('top-node');
+			$tpl->assign([
+				'user-place' => $icon,
+				'user-special' => $special,
+				'user-url' => mkurl('user', $topuser->user_id, $topuser->nick),
+				'user-nick' => usercolor($topuser->nick, $topuser->level),
+				'user-score' => number_format($topuser->score, 0, '', ' '),
+				'user-time' => time_ago($topuser->time)
+			]);
+			$i++;
 		}
 	}
 } else {

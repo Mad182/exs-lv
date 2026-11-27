@@ -28,9 +28,9 @@ if ($avs) {
 	}
 }
 
-$user = $db->get_row("SELECT * FROM users WHERE id = '$auth->id'");
+$user = $auth->ok ? $db->get_row("SELECT * FROM users WHERE id = '$auth->id'") : null;
 
-if ($auth->ok && ($user->credit >= 5 || $owned)) {
+if ($auth->ok && $user && ($user->credit >= 5 || $owned)) {
 	$tpl->newBlock('av-buy');
 
 	if (isset($_POST['avatarid'])) {
@@ -38,11 +38,11 @@ if ($auth->ok && ($user->credit >= 5 || $owned)) {
 
 		$avrow = $db->get_row("SELECT * FROM `animations` WHERE `id` = '$av'");
 
-        if ($avrow->user_id == 0 && $user->credit >= 5) {
+        if ($avrow && $avrow->user_id == 0 && $user->credit >= 5) {
 			$db->query("UPDATE animations SET user_id = '$auth->id' WHERE id = '$av'");
-			$db->query("UPDATE `users` SET credit = credit-5, av_alt = '1', avatar = '$avrow->image' WHERE id = '$auth->id'");
+			$db->query("UPDATE `users` SET credit = credit-5, av_alt = '1', avatar = '" . sanitize($avrow->image) . "' WHERE id = '$auth->id'");
 			redirect('/user/' . $auth->id);
-		} elseif ($avrow->user_id == $auth->id) {
+		} elseif ($avrow && $avrow->user_id == $auth->id) {
 
 			// support for old avatars with one size
 			$av_alt = 0;
@@ -50,7 +50,7 @@ if ($auth->ok && ($user->credit >= 5 || $owned)) {
 				$av_alt = 1;
 			}
 
-			$db->query("UPDATE `users` SET `av_alt` = '$av_alt', `avatar` = '$avrow->image' WHERE `id` = '$auth->id'");
+			$db->query("UPDATE `users` SET `av_alt` = '$av_alt', `avatar` = '" . sanitize($avrow->image) . "' WHERE `id` = '$auth->id'");
 			redirect('/user/' . $auth->id);
 		} else {
 			set_flash('Izvēlētais avatars jau ir aizņemts vai nepietiek exs kredīta!', 'error');
@@ -73,23 +73,24 @@ if (im_mod()) {
 		}
 
 		$json = json_decode($contents);
-		if (empty($json)) {
+		$filename = (!empty($json) && !empty($json->filename)) ? basename((string) $json->filename) : '';
+		if (empty($json) || $filename === '' || $filename === '.' || $filename === '..') {
 			set_flash('Neizdevās noparsēt datus!', 'error');
 			redirect('/' . $category->textid);
 		}
 
-		if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $json->filename)) {
+		if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $filename)) {
 			set_flash('Tāds avatars jau atrodas uz exs.lv servera!', 'error');
 			redirect('/' . $category->textid);
 		}
 
-		file_put_contents(CORE_PATH . '/dati/bildes/u_small/' . $json->filename, curl_get($json->img_45));
-		file_put_contents(CORE_PATH . '/dati/bildes/useravatar/' . $json->filename, curl_get($json->img_90));
-		file_put_contents(CORE_PATH . '/dati/bildes/u_large/' . $json->filename, curl_get($json->img_150));
+		file_put_contents(CORE_PATH . '/dati/bildes/u_small/' . $filename, curl_get($json->img_45));
+		file_put_contents(CORE_PATH . '/dati/bildes/useravatar/' . $filename, curl_get($json->img_90));
+		file_put_contents(CORE_PATH . '/dati/bildes/u_large/' . $filename, curl_get($json->img_150));
 
-		if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $json->filename)) {
+		if (file_exists(CORE_PATH . '/dati/bildes/useravatar/' . $filename)) {
 
-			$db->query("INSERT INTO `animations` (`image`, `added_by`) VALUES ('" . sanitize($json->filename) . "', '$auth->id')");
+			$db->query("INSERT INTO `animations` (`image`, `added_by`) VALUES ('" . sanitize($filename) . "', '$auth->id')");
 			set_flash('Fails veiksmīgi importēts!', 'success');
 			redirect('/' . $category->textid);
 		} else {

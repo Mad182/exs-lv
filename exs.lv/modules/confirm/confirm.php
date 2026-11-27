@@ -15,8 +15,9 @@ if (isset($_GET['var1'])) {
 
 	if ($user) {
 
+		$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 		$db->query("INSERT INTO users (`id`,`nick`,`password`,`mail`,`mail_confirmed`,`date`,`lastseen`,`lastip`,`user_agent`,`source_site`)
-		VALUES (NULL,'" . sanitize($user->nick) . "','" . $user->password . "','" . $user->mail . "',NOW(),'" . $user->created . "',NOW(),'" . sanitize($auth->ip) . "','" . sanitize($_SERVER['HTTP_USER_AGENT']) . "', '$lang')");
+		VALUES (NULL,'" . sanitize($user->nick) . "','" . sanitize($user->password) . "','" . sanitize($user->mail) . "',NOW(),'" . sanitize($user->created) . "',NOW(),'" . sanitize($auth->ip) . "','" . sanitize($user_agent) . "', '$lang')");
 
 		$newid = $db->insert_id;
 
@@ -43,7 +44,7 @@ if (isset($_GET['var1'])) {
 
 		//log-in new user
 		$_SESSION['auth_id'] = $newid;
-		$_SESSION['agent'] = md5($_SERVER['HTTP_USER_AGENT']);
+		$_SESSION['agent'] = md5($user_agent);
 
 		update_karma($newid);
 

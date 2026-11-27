@@ -38,13 +38,17 @@ if (isset($_GET['var1']) && isset($_GET['var2']) && $_GET['var2'] == 'lol') {
 	if ($pic = $db->get_row("SELECT * FROM `junk_queue` WHERE `approved` = 0 AND `id` = '$id'")) {
 
 		
-		$ext = substr($pic->image, -4);
+		$ext = strtolower(substr($pic->image, -4));
 
 		$gifv = false;
 		if($ext == 'gifv') {
 			$gifv = $pic->image;
 			$ext = '.jpg';
 			$pic->image = str_replace('.gifv', 'm.jpg', $pic->image);
+		} elseif (!in_array($ext, ['.jpg', '.png', '.gif', 'jpeg', 'webp'], true)) {
+			$ext = '.jpg';
+		} elseif ($ext === 'jpeg' || $ext === 'webp') {
+			$ext = '.' . $ext;
 		}
 
 		$data = curl_get($pic->image, 5, 15);

@@ -13,7 +13,7 @@ if (isset($_GET['var1'])) {
 
 	$parent = get_cat($_GET['var1']);
 
-	if (($parent->module == 'forums' || ($parent->module == 'list' && $parent->isforum)) && isset($_POST['title'])) {
+	if ($parent && ($parent->module == 'forums' || ($parent->module == 'list' && $parent->isforum)) && isset($_POST['title'])) {
 
 		$title = title2db($_POST['title']);
 		$content = '';

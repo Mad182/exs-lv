@@ -24,7 +24,7 @@ if (!empty($inprofile) && empty($inprofile->deleted)) {
 
 			update_awards($auth->id);
 
-			if (isset($_POST['position'])) {
+			if (isset($_POST['position']) && is_array($_POST['position'])) {
 				$i = count($_POST['position']);
 				foreach ($_POST['position'] as $pos) {
 					$num = intval(str_replace('award-pos-', '', $pos));

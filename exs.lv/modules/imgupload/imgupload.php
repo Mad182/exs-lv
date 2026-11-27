@@ -5,15 +5,19 @@
  */
 if ($auth->ok) {
 
-	if (isset($_GET['delete']) && check_token('delimg-' . $_GET['delete'], $_GET['token'])) {
+	if (isset($_GET['delete']) && check_token('delimg-' . $_GET['delete'], $_GET['token'] ?? '')) {
 		$delete = intval($_GET['delete']);
 		
 		$image = $db->get_row("SELECT * FROM `imgupload` WHERE `user_id` = '$auth->id' AND `id` = '$delete' LIMIT 1");
 
 		if($image) {
 
-			unlink('/home/www/img.exs.lv/' . $image->path . '/' . $image->file);
-			unlink('/home/www/img.exs.lv/' . $image->path . '/small/' . $image->file);
+			if (file_exists('/home/www/img.exs.lv/' . $image->path . '/' . $image->file)) {
+				unlink('/home/www/img.exs.lv/' . $image->path . '/' . $image->file);
+			}
+			if (file_exists('/home/www/img.exs.lv/' . $image->path . '/small/' . $image->file)) {
+				unlink('/home/www/img.exs.lv/' . $image->path . '/small/' . $image->file);
+			}
 			$db->query("DELETE FROM `imgupload` WHERE `user_id` = '$auth->id' AND `id` = '$image->id' LIMIT 1");
 
 			$auth->log('Izdzēsa attēlu', 'imgupload', $image->id);
@@ -182,7 +186,7 @@ if ($auth->ok) {
 	$total = $db->get_var("SELECT count(*) FROM `imgupload` WHERE `user_id` = '$auth->id'");
 
 	if (isset($_GET['skip'])) {
-		$skip = (int) $_GET['skip'];
+		$skip = max(0, (int) $_GET['skip']);
 	} else {
 		$skip = 0;
 	}

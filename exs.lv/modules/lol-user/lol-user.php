@@ -10,19 +10,22 @@ if (isset($_GET['var1'])) {
 if ($inprofile && $auth->id == 1) {
 
 	if (isset($_POST['url'])) {
-		$url = $_POST['url'];
-		$data = curl_get($url);
-		if ($data) {
+		$url = trim($_POST['url']);
+		$scheme = parse_url($url, PHP_URL_SCHEME);
+		if (filter_var($url, FILTER_VALIDATE_URL) && in_array($scheme, ['http', 'https'], true)) {
+			$data = curl_get($url);
+			if ($data) {
 
-			$nick = get_between($data, 'statistics and LolKing score for ', ', a summoner on');
+				$nick = get_between($data, 'statistics and LolKing score for ', ', a summoner on');
 
-			if (!empty($nick)) {
-				$s1 = str_replace('http://www.lolking.net/summoner/', '', $url);
-				$sparts = explode('/', $s1);
-				$server = $sparts[0];
-				$db->query("INSERT INTO `lol_players` (`user_id`,`lol_nick`,`server`,`url`,`created`) VALUES ('$inprofile->id','$nick', '$server', '$url', NOW())");
-				set_flash('Veiksmīgi pievienots!', 'success');
-				redirect('/' . $category->textid . '/' . $inprofile->id);
+				if (!empty($nick)) {
+					$s1 = str_replace(['http://www.lolking.net/summoner/', 'https://www.lolking.net/summoner/'], '', $url);
+					$sparts = explode('/', $s1);
+					$server = $sparts[0] ?? '';
+					$db->query("INSERT INTO `lol_players` (`user_id`,`lol_nick`,`server`,`url`,`created`) VALUES ('$inprofile->id','" . sanitize($nick) . "', '" . sanitize($server) . "', '" . sanitize($url) . "', NOW())");
+					set_flash('Veiksmīgi pievienots!', 'success');
+					redirect('/' . $category->textid . '/' . $inprofile->id);
+				}
 			}
 		}
 	}

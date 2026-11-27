@@ -58,7 +58,7 @@ if (!$auth->ok) {
 		$userdata = $db->get_row("SELECT * FROM `users` WHERE `nick` = '$nick' AND `mail` = '$mail'");
 		if ($userdata) {
 
-			$pwd_token = substr(hash('sha256', uniqid() . $userdata->mail . $auth->ip), 0, 16);
+			$pwd_token = bin2hex(random_bytes(16));
 
 			//link protocol
 			$proto = get_protocol($lang);

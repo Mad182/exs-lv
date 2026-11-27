@@ -5,7 +5,7 @@ if($auth->ok && $auth->auth_2fa && empty($_SESSION['2fa'])) {
 	$check_existing = $db->get_results("SELECT `cookie`, `token` FROM `tfa_whitelist` WHERE `user_id` = $auth->id");
 	if(!empty($check_existing)) {
 		foreach($check_existing as $device) {
-			if(!empty($_COOKIE[$device->cookie]) && $_COOKIE[$device->cookie] === $device->token) {
+			if(!empty($_COOKIE[$device->cookie]) && hash_equals((string) $device->token, (string) $_COOKIE[$device->cookie])) {
 				$_SESSION['2fa'] = 1;
 				if(!empty($_SERVER['HTTP_REFERER'])) {
 					redirect($_SERVER['HTTP_REFERER']);
@@ -22,7 +22,7 @@ if($auth->ok && $auth->auth_2fa && empty($_SESSION['2fa'])) {
 	$ga = new PHPGangsta_GoogleAuthenticator();
 	$secret = $auth->auth_secret;
 
-	if(isset($_POST['code']) && check_token('2falogin', $_POST['xsrf_token'])) {
+	if(isset($_POST['code'], $_POST['xsrf_token']) && check_token('2falogin', $_POST['xsrf_token'])) {
 
 		$checkResult = $ga->verifyCode($secret, $_POST['code'], 4);
 		if ($checkResult) {
@@ -30,8 +30,8 @@ if($auth->ok && $auth->auth_2fa && empty($_SESSION['2fa'])) {
 
 			if(!empty($_POST['remember'])) {
 
-				$cookie = md5(uniqid());
-				$token = md5(uniqid() . $auth->xsrf);
+				$cookie = bin2hex(random_bytes(16));
+				$token = bin2hex(random_bytes(16));
 
 				$db->query("INSERT INTO `tfa_whitelist` (`user_id`, `ip`, `cookie`, `token`, `created`, `modified`) VALUES ('$auth->id', '$auth->ip', '$cookie', '$token', NOW(), NOW())");
 				if($lang == 3) {

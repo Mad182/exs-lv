@@ -25,13 +25,13 @@ if ($inprofile && !$inprofile->deleted) {
 		$friend = new Friend();
 
 		//confirm friendship
-		if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['confirm']) && check_token('friend', $_GET['token'])) {
+		if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['confirm']) && check_token('friend', $_GET['token'] ?? '')) {
 			$confirm = (int) $_GET['confirm'];
 			$friend->confirm_friendship($auth->id, $confirm);
 		}
 
 		//deny or delete friendship
-		if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['deny']) && check_token('friend', $_GET['token'])) {
+		if ($auth->ok && $inprofile->id == $auth->id && isset($_GET['deny']) && check_token('friend', $_GET['token'] ?? '')) {
 			$deny = (int) $_GET['deny'];
 			$friend->delete_friend($deny);
 		}
@@ -50,6 +50,9 @@ if ($inprofile && !$inprofile->deleted) {
 				$theother = $friend->friend1;
 			}
 			$friendinfo = get_user($theother);
+			if (!$friendinfo) {
+				continue;
+			}
 
 			$avatar = get_avatar($friendinfo);
 
@@ -83,6 +86,9 @@ if ($inprofile && !$inprofile->deleted) {
 
 			foreach ($friendsp as $friend) {
 				$friendinfo = get_user($friend->friend1);
+				if (!$friendinfo) {
+					continue;
+				}
 
 				$avatar = get_avatar($friendinfo);
 

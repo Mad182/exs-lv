@@ -8,7 +8,7 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 
 	$skip = 0;
 	if (isset($_GET['skip'])) {
-		$skip = (int) $_GET['skip'];
+		$skip = max(0, (int) $_GET['skip']);
 	}
 
 	$end = 10;
@@ -55,87 +55,125 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		'strid' => $category->textid
 	]);
 
-	foreach ($articles as $article) {
-		if (!$article->nick) {
-			$article->nick = 'Nezināms';
-			$article->level = 0;
+	if (!empty($articles)) {
+		$page_ids = [];
+		foreach ($articles as $a) {
+			$page_ids[] = (int) $a->id;
 		}
-		$tpl->newBlock('list');
+		$page_ids_in = implode(',', $page_ids);
 
-		$date = display_time(strtotime($article->date));
-
-		if (!empty($article->intro)) {
-			$article->text = $article->intro;
-		} else {
-			$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 500);
-			$article->intro = sanitize($article->text);
-			$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
+		$movie_data_map = [];
+		$md_rows = $db->get_results("SELECT * FROM `movie_data` WHERE `page_id` IN ($page_ids_in)");
+		if ($md_rows) {
+			foreach ($md_rows as $md) {
+				if (!isset($movie_data_map[$md->page_id])) {
+					$movie_data_map[$md->page_id] = $md;
+				}
+			}
 		}
-		
-		$user = get_user($article->author);
-		$avatar = get_avatar($user, 's');
 
-		if (is_valid_user($user)) {
-			$author_link = '<a href="/user/' . $article->author . '" title="Apskatīt profilu" rel="author">' . usercolor($article->nick, $article->level) . '</a>';
-		} else {
-			$u_nick = !empty($article->nick) ? mb_strtolower(trim($article->nick), 'UTF-8') : '';
-			if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
-				$author_link = '<em>nezināms</em>';
+		$movie_genres_map = [];
+		$mg_rows = $db->get_results("SELECT `page_id`, `genre` FROM `movie_genres` WHERE `page_id` IN ($page_ids_in)");
+		if ($mg_rows) {
+			foreach ($mg_rows as $mg) {
+				$movie_genres_map[$mg->page_id][] = $mg->genre;
+			}
+		}
+
+		$movie_images_map = [];
+		$mi_rows = $db->get_results("SELECT * FROM `movie_images` WHERE `main` = 1 AND `page_id` IN ($page_ids_in)");
+		if ($mi_rows) {
+			foreach ($mi_rows as $mi) {
+				if (!isset($movie_images_map[$mi->page_id])) {
+					$movie_images_map[$mi->page_id] = $mi;
+				}
+			}
+		}
+
+		foreach ($articles as $article) {
+			if (!$article->nick) {
+				$article->nick = 'Nezināms';
+				$article->level = 0;
+			}
+			$tpl->newBlock('list');
+
+			$date = display_time(strtotime($article->date));
+
+			if (!empty($article->intro)) {
+				$article->text = $article->intro;
 			} else {
-				$author_link = '<em>dzēsts</em>';
+				$article->text = textlimit(strip_tags(trim(str_replace('<li>', ' • ', str_replace(['&nbsp;', '<br>'], ' ', add_smile($article->text))))), 500);
+				$article->intro = sanitize($article->text);
+				$db->query("UPDATE `pages` SET `intro` = '$article->intro' WHERE `id` = '$article->id' LIMIT 1");
 			}
-		}
+			
+			$user = get_user($article->author);
+			$avatar = get_avatar($user, 's');
 
-		$tpl->assign([
-			'id' => $article->id,
-			'node-url' => '/read/' . $article->strid,
-			'author-id' => $article->author,
-			'title' => $article->title,
-			'views' => $article->views,
-			'date' => $date,
-			'author' => usercolor($article->nick, $article->level),
-			'author-link' => $author_link,
-			'posts' => $article->posts,
-			'level' => $article->level,
-			'intro' => $article->text,
-			'avatar' => $avatar
-		]);
-
-
-		if ($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
-			if (!empty($movie_data->title_lv)) {
-				$tpl->assign('title-lv', ' &nbsp;<small>' . $movie_data->title_lv . '</small>');
+			if (is_valid_user($user)) {
+				$author_link = '<a href="/user/' . $article->author . '" title="Apskatīt profilu" rel="author">' . usercolor($article->nick, $article->level) . '</a>';
+			} else {
+				$u_nick = !empty($article->nick) ? mb_strtolower(trim($article->nick), 'UTF-8') : '';
+				if ($u_nick === 'nezināms' || $u_nick === 'nezinams') {
+					$author_link = '<em>nezināms</em>';
+				} else {
+					$author_link = '<em>dzēsts</em>';
+				}
 			}
 
-			if (!empty($movie_data->year)) {
-				$tpl->assign('year', '<strong>Gads:</strong> ' . $movie_data->year . '<br>');
-			}
-
-			if (!empty($movie_data->runtime)) {
-				$tpl->assign('runtime', '<strong>Garums:</strong> ' . $movie_data->runtime . ' minūtes<br>');
-			}
-
-			if (!empty($movie_data->type) && $movie_data->type == 'series') {
-				$tpl->assign('title-prefix', '<span class="title-prefix series">Seriāls</span> ');
-			}
-		}
-
-
-		if ($genres = $db->get_col("SELECT `genre` FROM `movie_genres` WHERE `page_id` = '$article->id'")) {
-			$gen = [];
-			foreach ($genres as $genre) {
-				$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
-			}
-			$tpl->assign('genres', '<strong>Žanrs:</strong> ' . implode(' / ', $gen) . '<br>');
-		}
-
-
-		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
-			$tpl->newBlock('list-avatar');
 			$tpl->assign([
-				'image' => $avatar->thb,
-				'alt' => h($avatar->title)
+				'id' => $article->id,
+				'node-url' => '/read/' . $article->strid,
+				'author-id' => $article->author,
+				'title' => $article->title,
+				'views' => $article->views,
+				'date' => $date,
+				'author' => usercolor($article->nick, $article->level),
+				'author-link' => $author_link,
+				'posts' => $article->posts,
+				'level' => $article->level,
+				'intro' => $article->text,
+				'avatar' => $avatar
 			]);
+
+
+			if (isset($movie_data_map[$article->id])) {
+				$movie_data = $movie_data_map[$article->id];
+				if (!empty($movie_data->title_lv)) {
+					$tpl->assign('title-lv', ' &nbsp;<small>' . $movie_data->title_lv . '</small>');
+				}
+
+				if (!empty($movie_data->year)) {
+					$tpl->assign('year', '<strong>Gads:</strong> ' . $movie_data->year . '<br>');
+				}
+
+				if (!empty($movie_data->runtime)) {
+					$tpl->assign('runtime', '<strong>Garums:</strong> ' . $movie_data->runtime . ' minūtes<br>');
+				}
+
+				if (!empty($movie_data->type) && $movie_data->type == 'series') {
+					$tpl->assign('title-prefix', '<span class="title-prefix series">Seriāls</span> ');
+				}
+			}
+
+
+			if (!empty($movie_genres_map[$article->id])) {
+				$gen = [];
+				foreach ($movie_genres_map[$article->id] as $genre) {
+					$gen[] = '<a href="/filmas/search?genre=' . $genre . '">' . translate_genres($genre) . '</a>';
+				}
+				$tpl->assign('genres', '<strong>Žanrs:</strong> ' . implode(' / ', $gen) . '<br>');
+			}
+
+
+			if (isset($movie_images_map[$article->id])) {
+				$avatar = $movie_images_map[$article->id];
+				$tpl->newBlock('list-avatar');
+				$tpl->assign([
+					'image' => $avatar->thb,
+					'alt' => h($avatar->title)
+				]);
+			}
 		}
 	}
 
@@ -164,13 +202,17 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		}
 	}
 
-	if (!empty($_GET['genres'])) {
+	if (!empty($_GET['genres']) && is_array($_GET['genres'])) {
 		$genres = [];
 		foreach ($_GET['genres'] as $genre) {
-			$genres[] = "'" . sanitize(h(trim($genre))) . "'";
+			$genres[] = "'" . sanitize(h(trim((string) $genre))) . "'";
 		}
 		$pages = $db->get_col("SELECT DISTINCT(`page_id`) FROM `movie_genres` WHERE `genre` IN(" . implode(',', $genres) . ")");
-		$genreq = " AND `pages`.`id` IN(" . implode(',', $pages) . ") ";
+		if (!empty($pages)) {
+			$genreq = " AND `pages`.`id` IN(" . implode(',', array_map('intval', $pages)) . ") ";
+		} else {
+			$genreq = " AND 1 = 0 ";
+		}
 	}
 
 
@@ -208,38 +250,51 @@ if (!isset($_GET['var1']) || $_GET['var1'] != 'search') {
 		'strid' => $category->textid
 	]);
 
-	foreach ($articles as $article) {
-		if (!$article->nick) {
-			$article->nick = 'Nezināms';
-			$article->level = 0;
+	if (!empty($articles)) {
+		$page_ids = [];
+		foreach ($articles as $a) {
+			$page_ids[] = (int) $a->id;
 		}
-		$tpl->newBlock('movie');
+		$page_ids_in = implode(',', $page_ids);
 
-		$date = display_time(strtotime($article->date));
-
-		$tpl->assign([
-			'id' => $article->id,
-			'node-url' => '/read/' . $article->strid,
-			'author-id' => $article->author,
-			'title' => $article->title,
-			'views' => $article->views,
-			'date' => $date,
-			'author' => usercolor($article->nick, $article->level),
-			'posts' => $article->posts,
-			'level' => $article->level
-		]);
-
-
-		if ($movie_data = $db->get_row("SELECT * FROM  `movie_data` WHERE `page_id` = '$article->id' LIMIT 1")) {
-			
+		$movie_images_map = [];
+		$mi_rows = $db->get_results("SELECT * FROM `movie_images` WHERE `main` = 1 AND `page_id` IN ($page_ids_in)");
+		if ($mi_rows) {
+			foreach ($mi_rows as $mi) {
+				if (!isset($movie_images_map[$mi->page_id])) {
+					$movie_images_map[$mi->page_id] = $mi;
+				}
+			}
 		}
 
+		foreach ($articles as $article) {
+			if (!$article->nick) {
+				$article->nick = 'Nezināms';
+				$article->level = 0;
+			}
+			$tpl->newBlock('movie');
 
-		if ($avatar = $db->get_row("SELECT * FROM  `movie_images` WHERE `main` = 1 AND `page_id` = '$article->id' LIMIT 1")) {
+			$date = display_time(strtotime($article->date));
+
 			$tpl->assign([
-				'image' => $avatar->thb,
-				'alt' => h($avatar->title)
+				'id' => $article->id,
+				'node-url' => '/read/' . $article->strid,
+				'author-id' => $article->author,
+				'title' => $article->title,
+				'views' => $article->views,
+				'date' => $date,
+				'author' => usercolor($article->nick, $article->level),
+				'posts' => $article->posts,
+				'level' => $article->level
 			]);
+
+			if (isset($movie_images_map[$article->id])) {
+				$avatar = $movie_images_map[$article->id];
+				$tpl->assign([
+					'image' => $avatar->thb,
+					'alt' => h($avatar->title)
+				]);
+			}
 		}
 	}
 }

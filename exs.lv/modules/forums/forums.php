@@ -14,7 +14,7 @@ if ($auth->mobile) {
 if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-body'])) {
 	$body = trim($_POST['new-topic-body']);
 	$title = trim($_POST['new-topic-title']);
-	$newcat = (int) $_POST['new-topic-category'];
+	$newcat = (int) ($_POST['new-topic-category'] ?? 0);
 	require(CORE_PATH . '/includes/class.comment.php');
 	$addcom = new Comment();
 	if ($body && $title && $addcom->check_isforum($newcat)) {
@@ -33,7 +33,7 @@ if ($auth->ok && isset($_POST['new-topic-title']) && isset($_POST['new-topic-bod
 
 			//write to database
 			$db->query("INSERT INTO `pages` (`strid`, `textid`, `category`, `text`, `title`, `author`, `date`, `bump`, `ip`, `lang`, `disable_emotions`)
-							VALUES ('$strid', '$textid', '$newcat', '$body', '$title', '$auth->id', NOW(), NOW(), '$auth->ip', '$lang', '" . intval($disable_emotions) . "')");
+							VALUES ('$strid', '$textid', '$newcat', '$body', '$title', '$auth->id', NOW(), NOW(), '$auth->ip', '$lang', '" . intval($disable_emotions ?? 0) . "')");
 
 			update_stats($newcat);
 			userlog($auth->id, 'Aizsāka foruma tēmu <a href="/read/' . $strid . '">' . $title . '</a>');

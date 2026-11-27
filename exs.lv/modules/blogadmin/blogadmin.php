@@ -20,7 +20,7 @@ elseif (!get_blog_by_user($auth->id)) {
 		$m->delete('isb_' . $auth->id . '_' . $lang);
 		update_karma($auth->id, true);
 		$db->query("UPDATE `cat` SET `ordered` = `id` WHERE `ordered` = 0");
-		header('Location: /' . strtolower(mkslug($nick)));
+		redirect('/' . strtolower(mkslug($nick)));
 	}
 
 	// lietotājs iegādājies blogu par exspunktiem
@@ -63,7 +63,7 @@ else {
 	// izveidots jauns raksts un saņemti $_POST dati
 	if (isset($_POST['new-topic-title']) && isset($_POST['new-topic-body'])) {
 
-		if (!isset($_POST['token']) or $_POST['token'] != md5('lol' . $category->title . $remote_salt . $auth->id)) {
+		if (!isset($_POST['token']) || !hash_equals(md5('lol' . $category->title . $remote_salt . $auth->id), (string) $_POST['token'])) {
 			set_flash('Kļūda, tēma netika izveidota! Hacking around?');
 			redirect();
 		}

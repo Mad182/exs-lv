@@ -7,7 +7,7 @@ if (!im_mod()) {
 $end = 100;
 $skip = 0;
 if (isset($_GET['skip'])) {
-	$skip = (int) $_GET['skip'];
+	$skip = max(0, (int) $_GET['skip']);
 }
 
 // meklētājs
@@ -38,7 +38,6 @@ if (isset($_POST['criteria']) && isset($_POST['value'])) {
 			break;
 	};
 	$skip = 0;
-	$limit = 200;
 
 	$tpl->assign([
 		'selected-' . (int) $_POST['criteria'] => ' selected="selected"',
@@ -48,6 +47,53 @@ if (isset($_POST['criteria']) && isset($_POST['value'])) {
 
 $logs = $db->get_results("SELECT * FROM `logs` $query_where ORDER BY `created` DESC LIMIT $skip, $end");
 if ($logs) {
+	// Batch-prefetch referenced pages, wallpapers, and clans to avoid N+1 queries
+	$page_ids = [];
+	$wp_ids = [];
+	$clan_ids = [];
+	foreach ($logs as $l) {
+		$fk = (int) $l->foreign_key;
+		if ($fk > 0) {
+			if ($l->foreign_table == 'pages') {
+				$page_ids[$fk] = $fk;
+			} elseif ($l->foreign_table == 'wallpapers') {
+				$wp_ids[$fk] = $fk;
+			} elseif ($l->foreign_table == 'clans') {
+				$clan_ids[$fk] = $fk;
+			}
+		}
+	}
+
+	$pages_map = [];
+	if ($page_ids) {
+		$rows = $db->get_results("SELECT `id`, `title`, `strid` FROM `pages` WHERE `id` IN (" . implode(',', $page_ids) . ")");
+		if ($rows) {
+			foreach ($rows as $r) {
+				$pages_map[$r->id] = $r;
+			}
+		}
+	}
+
+	$wps_map = [];
+	if ($wp_ids) {
+		$rows = $db->get_results("SELECT `id`, `image`, `date` FROM `wallpapers` WHERE `id` IN (" . implode(',', $wp_ids) . ")");
+		if ($rows) {
+			foreach ($rows as $r) {
+				$wps_map[$r->id] = $r;
+			}
+		}
+	}
+
+	$clans_map = [];
+	if ($clan_ids) {
+		$rows = $db->get_results("SELECT `id`, `title`, `strid` FROM `clans` WHERE `id` IN (" . implode(',', $clan_ids) . ")");
+		if ($rows) {
+			foreach ($rows as $r) {
+				$clans_map[$r->id] = $r;
+			}
+		}
+	}
+
 	foreach ($logs as $log) {
 		$tpl->newBlock('logs-list-node');
 		if ($log->user_id) {
@@ -67,10 +113,10 @@ if ($logs) {
 		}
 
 		$place = '';
+		$fk = (int) $log->foreign_key;
 
-		// pieprasījumi nepieciešami if'ā, lai arī lokāli vienmēr strādātu,
-		// nevis vienmēr jāatjauno gan rakstu un lietotāju, gan logu tabula
-		if ($log->foreign_table == 'pages' && ($page = $db->get_row("SELECT `title`, `strid` FROM `pages` WHERE `id` = '$log->foreign_key'"))) {
+		if ($log->foreign_table == 'pages' && isset($pages_map[$fk])) {
+			$page = $pages_map[$fk];
 			$place = '<a href="/read/' . $page->strid . '">' . $log->foreign_table . '-' . $log->foreign_key . '</a>';
 		} elseif ($log->foreign_table == 'users' && ($user = get_user($log->foreign_key))) {
 			if (is_valid_user($user)) {
@@ -78,10 +124,12 @@ if ($logs) {
 			} else {
 				$place = $log->foreign_table . ': ' . ($user->nick ?? 'dzēsts');
 			}
-		} elseif ($log->foreign_table == 'wallpapers' && $wp = $db->get_row("SELECT * FROM `wallpapers` WHERE `id` = $log->foreign_key")) {
+		} elseif ($log->foreign_table == 'wallpapers' && isset($wps_map[$fk])) {
+			$wp = $wps_map[$fk];
 			$place = '<a class="lightbox" href="//img.exs.lv/dati/wallpapers/' . $wp->image . '"><img src="//img.exs.lv/dati/wallpapers/thb/' . $wp->image . '" alt="' . $wp->image . '" style="width:100px" /></a>';
 			$log->action .= ' (' . $wp->date . ')';
-		} elseif ($log->foreign_table == 'clans' && $group = $db->get_row("SELECT `title`, `strid` FROM `clans` WHERE `id` = $log->foreign_key")) {
+		} elseif ($log->foreign_table == 'clans' && isset($clans_map[$fk])) {
+			$group = $clans_map[$fk];
 			if (!empty($group->strid)) {
 				$link = '/' . $group->strid;
 			} else {

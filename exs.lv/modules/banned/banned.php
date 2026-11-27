@@ -32,7 +32,7 @@ if (!$auth->ok) {
 	}
 } elseif (im_mod()) {
 
-	if (isset($_GET['delete']) && check_token('remban', $_GET['token'])) {
+	if (isset($_GET['delete']) && check_token('remban', $_GET['token'] ?? '')) {
 		$delete = (int) $_GET['delete'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
 		$db->query("DELETE FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
@@ -42,7 +42,7 @@ if (!$auth->ok) {
 		redirect('/' . $category->textid);
 	}
 
-	if (isset($_GET['delete_ip']) && check_token('remban', $_GET['token'])) {
+	if (isset($_GET['delete_ip']) && check_token('remban', $_GET['token'] ?? '')) {
 		$delete = (int) $_GET['delete_ip'];
 		$unbanned = $db->get_var("SELECT user_id FROM banned WHERE id = '$delete' " . $q_add . " LIMIT 1");
 		$db->query("UPDATE `banned` SET `ip` = '--' WHERE `id` = '$delete' " . $q_add . " LIMIT 1");
@@ -107,7 +107,7 @@ if (!$auth->ok) {
 			if ($banned->lang == 0) {
 				$tpl->assign('where', 'Globāls');
 			} else {
-				$tpl->assign('where', $config_domains[$banned->lang]['domain']);
+				$tpl->assign('where', $config_domains[$banned->lang]['domain'] ?? '');
 			}
 
 			// @mad manuāli bloķētie nebūs dzēšami

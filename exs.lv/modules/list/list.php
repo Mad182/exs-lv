@@ -6,7 +6,7 @@ if ((!isset($_GET['viewcat']) || $_GET['viewcat'] !== $category->textid) && $cat
 
 $skip = 0;
 if (isset($_GET['skip'])) {
-	$skip = (int) $_GET['skip'];
+	$skip = max(0, (int) $_GET['skip']);
 }
 
 $end = 45;

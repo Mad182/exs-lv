@@ -23,7 +23,7 @@ function gallery_upload() {
 
 			ini_set('memory_limit', '180M');
 
-			$description = post2db($_POST['new-image-description']);
+			$description = post2db($_POST['new-image-description'] ?? '');
 
 			//interešu kategorijas id. Ja mēģina nofeikot, tad 0
 			$interest_id = (isset($_POST['new-image-interest'])) ? (int) $_POST['new-image-interest'] : 0;
@@ -100,9 +100,11 @@ function gallery_upload() {
 		if ($lang == 1) {
 			$tpl->newBlock('new-image-interest');
 			$interests = $db->get_results("SELECT * FROM `interests` ORDER BY `id` ASC");
-			foreach ($interests as $interest) {
-				$tpl->newBlock('select-new-interest');
-				$tpl->assignAll($interest);
+			if ($interests) {
+				foreach ($interests as $interest) {
+					$tpl->newBlock('select-new-interest');
+					$tpl->assignAll($interest);
+				}
 			}
 		}
 	}

@@ -6,16 +6,16 @@
 $robotstag[] = 'noindex';
  
 // raksta pievienošana datubāzē
-if (isset($_POST['new-topic-body'])) {
+if ($auth->ok && isset($_POST['new-topic-body'])) {
 
 	$body = trim($_POST['new-topic-body']);
-	$title = trim($_POST['new-topic-title']);
+	$title = trim($_POST['new-topic-title'] ?? '');
     
 	if (empty($title)) {
 		$title = 'Nosaukums nav norādīts';
 	}
     
-	$newcat = (int) $_POST['new-topic-category'];
+	$newcat = (int) ($_POST['new-topic-category'] ?? 0);
     
 	if ($body && $title) {
     
@@ -120,7 +120,7 @@ if ($auth->ok) {
 
     // raksta dzēšana
 	if (im_mod() && isset($_GET['var1']) && $_GET['var1'] == 'delete') {
-		$delete = (int) $_GET['var2'];
+		$delete = (int) ($_GET['var2'] ?? 0);
 		$db->query("UPDATE `approve` SET `removed` = 1 WHERE `id` = '$delete'");
 		@unlink('modules/approve/av_l/' . $delete . '.jpg');
 		@unlink('modules/approve/av_sm/' . $delete . '.jpg');
@@ -133,7 +133,7 @@ if ($auth->ok) {
 
 		$tpl->assign('edit-active', 'active');
 
-		$edit = (int) $_GET['var2'];
+		$edit = (int) ($_GET['var2'] ?? 0);
 
 		if (isset($_POST['ap-topic-title']) && isset($_POST['ap-topic-body'])) {
 			$body = trim($_POST['ap-topic-body']);
@@ -169,6 +169,9 @@ if ($auth->ok) {
 		}
 
 		$article = $db->get_row("SELECT * FROM approve WHERE id = '$edit' AND `removed` = 0");
+		if (!$article) {
+			redirect('/write/list');
+		}
 		$author = get_user($article->author);
         
         // runescape apakšprojektā eksistē raksti ar platām tabulām,

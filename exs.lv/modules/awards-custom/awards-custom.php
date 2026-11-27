@@ -17,11 +17,12 @@ if (!$auth->ok || !in_array((int)$auth->id, [1, 115])) {
 */
 if (isset($_GET['var1']) && $_GET['var1'] === 'new_award' && isset($_POST['submit'])) {
     
-    if (!check_token('new_award_type', $_GET['token'])) {
+    if (!check_token('new_award_type', $_GET['token'] ?? '')) {
         set_flash('no hacking, pls');
         redirect('/'.$category->textid);
     }
     
+    $img_title = '';
     if (isset($_FILES['image'])) {        
         require_once(LIB_PATH . '/verot/src/class.upload.php');        
 		$foo = new Upload($_FILES['image']);
@@ -40,6 +41,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new_award' && isset($_POST['submi
                 set_flash('Kļūda: ' . $foo->error, 'error');
                 redirect('/'.$category->textid);                
 			}
+			$img_title = $foo->file_dst_name_body;
 			$foo->clean();
 		} else {
 			set_flash('Kļūda: ' . $foo->error, 'error');
@@ -54,7 +56,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new_award' && isset($_POST['submi
     
     $db->insert('autoawards_custom', [
         'award_title' => sanitize($award_title),
-        'img_title' => sanitize($foo->file_dst_name_body),
+        'img_title' => sanitize($img_title),
         'created_at' => 'NOW()',
         'created_by' => (int) $auth->id
     ]);
@@ -71,7 +73,7 @@ if (isset($_GET['var1']) && $_GET['var1'] === 'new_award' && isset($_POST['submi
 */
 if (isset($_GET['var1']) && $_GET['var1'] === 'award_user' && isset($_POST['submit'])) {
     
-    if (!check_token('new_award', $_GET['token'])) {
+    if (!check_token('new_award', $_GET['token'] ?? '')) {
         set_flash('no hacking, pls');
         redirect('/'.$category->textid);
     }

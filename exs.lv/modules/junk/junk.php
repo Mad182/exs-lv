@@ -16,7 +16,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 			ini_set('memory_limit', '200M');
 
-			$title = sanitize(nl2br(h($_POST['title'])));
+			$title = sanitize(nl2br(h($_POST['title'] ?? '')));
 			require_once(LIB_PATH . '/verot/src/class.upload.php');
 
 			$foo = new Upload($_FILES['new-image']);
@@ -62,7 +62,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 } elseif (isset($_GET['var1']) && $_GET['var1'] == 'commented') {
 
 	if (isset($_GET['skip'])) {
-		$skip = (int) $_GET['skip'];
+		$skip = max(0, (int) $_GET['skip']);
 	} else {
 		$skip = 0;
 	}
@@ -102,6 +102,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 		if ($auth->ok &&
 				isset($_GET['var2']) &&
 				($_GET['var2'] == 'upvote' || $_GET['var2'] == 'downvote') &&
+				isset($_GET['check']) &&
 				substr(md5($remote_salt . '-' . $auth->id . '-' . $pic->id), 0, 6) == $_GET['check']
 		) {
 
@@ -148,11 +149,13 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		if ($pic->author) {
 			$author = get_user($pic->author);
-			$tpl->newBlock('junk-view-author');
-			$tpl->assign([
-				'nick' => usercolor($author->nick, $author->level, false, $author->id),
-				'id' => $author->id
-			]);
+			if ($author) {
+				$tpl->newBlock('junk-view-author');
+				$tpl->assign([
+					'nick' => usercolor($author->nick, $author->level, false, $author->id),
+					'id' => $author->id
+				]);
+			}
 		} 
 
 		$page_title = h($pic->title);
@@ -177,7 +180,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 
 		if ($auth->ok === true && isset($_POST['responseminiblog']) && !empty($_POST['responseminiblog'])) {
 
-			$to = (int) $_POST['response-to'];
+			$to = (int) ($_POST['response-to'] ?? 0);
 
 			if (!isset($_POST['token']) || $_POST['token'] != md5('mb' . intval($_GET['var1']) . $remote_salt . $auth->nick)) {
 				set_flash('Kļūdains pieprasījums! Hacking around?');
@@ -222,10 +225,6 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 				redirect($url);
 			} else {
 				die('err: flood');
-			}
-
-			if (isset($_GET['postcomment'])) {
-				die('err: wrong params');
 			}
 		}
 
@@ -301,7 +300,7 @@ if (isset($_GET['var1']) && $_GET['var1'] == 'top') {
 } else {
 
 	if (isset($_GET['skip'])) {
-		$skip = (int) $_GET['skip'];
+		$skip = max(0, (int) $_GET['skip']);
 	} else {
 		$skip = 0;
 	}

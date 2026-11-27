@@ -8,11 +8,12 @@ foreach ($config_domains as $domain) {
 	}
 }
 
-$host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-if (!in_array($host, $allowed_domains)) {
+$referer = $_SERVER['HTTP_REFERER'] ?? '';
+$host = $referer !== '' ? parse_url($referer, PHP_URL_HOST) : null;
+if (!in_array($host, $allowed_domains, true)) {
 	$redirect = 'https://exs.lv/';
 } else {
-	$redirect = $_SERVER['HTTP_REFERER'];
+	$redirect = $referer;
 }
 
 redirect($redirect);

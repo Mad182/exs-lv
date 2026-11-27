@@ -50,7 +50,6 @@ if (isset($_GET['edit']) && isset($_GET['type'])) {
 
 		if ($db->query("UPDATE `$fact_type` SET `text` = '$fact_text' WHERE `id` = $fact_id ")) {
 			$tpl->newBlock("facts_admin-successupd");
-			$fact->text = $_POST['edit-fact'];
 		}
 		redirect('/' . $category->textid . $fact_link);
 	}
@@ -59,7 +58,7 @@ if (isset($_GET['edit']) && isset($_GET['type'])) {
 	$tpl->newBlock("facts_admin-edit");
 	$tpl->assign([
 		'id' => $fact->id,
-		'text' => stripslashes($fact->text),
+		'text' => stripslashes((string) $fact->text),
 		'fact-type' => $fact_link
 	]);
 }

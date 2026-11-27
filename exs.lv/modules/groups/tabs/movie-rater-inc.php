@@ -26,6 +26,39 @@ $series = $db->get_results("SELECT
 
 if (!empty($series)) {
 
+	$series_ids = [];
+	foreach ($series as $s) {
+		$series_ids[] = (int) $s->id;
+	}
+	$series_ids_in = implode(',', $series_ids);
+
+	$ratings_by_page = [];
+	$user_rated_pages = [];
+	$all_ratings = $db->get_results("SELECT
+					`movie_ratings`.`page_id`,
+					`movie_ratings`.`rating`,
+					`users`.`id`,
+					`users`.`avatar`,
+					`users`.`av_alt`,
+					`users`.`nick`,
+					`users`.`level`
+				FROM
+					`movie_ratings`,
+					`users`
+				WHERE
+					`movie_ratings`.`page_id` IN ($series_ids_in) AND
+					`users`.`id` = `movie_ratings`.`user_id`
+				ORDER BY
+					`movie_ratings`.`id` DESC");
+	if (!empty($all_ratings)) {
+		foreach ($all_ratings as $r) {
+			$ratings_by_page[$r->page_id][] = $r;
+			if ($auth->ok && $r->id == $auth->id) {
+				$user_rated_pages[$r->page_id] = true;
+			}
+		}
+	}
+
 	$module_content .= '<h2>' . $custom_p_title . '</h2>';
 	$module_content .= $movie_rater_description;
 	$module_content .= '<table class="table" id="series-ratings-ingroup">';
@@ -53,7 +86,7 @@ if (!empty($series)) {
 		/* vertejuma pievienošana */
 		$rate_like = '';
 		$rate_dislike = '';
-		if ($auth->ok && $auth->karma >= 100 && !$db->get_var("SELECT count(*) FROM `movie_ratings` WHERE `page_id` = '$s->id' AND `user_id` = '$auth->id'")) {
+		if ($auth->ok && $auth->karma >= 100 && empty($user_rated_pages[$s->id])) {
 
 			$token = md5($auth->id . '-' . $s->id . '-' . $remote_salt);
 
@@ -86,21 +119,7 @@ if (!empty($series)) {
 			$rate_dislike = '<p style="padding: 20px 0 0" class="movie-liker"><a href="?movie=' . $s->id . '&amp;check=' . $token . '&amp;dislike" class="button danger">Man nepatīk</a></p>';
 		}
 
-		$ratings = $db->get_results("SELECT
-						`movie_ratings`.`rating`,
-						`users`.`id`,
-						`users`.`avatar`,
-						`users`.`av_alt`,
-						`users`.`nick`,
-						`users`.`level`
-					FROM
-						`movie_ratings`,
-						`users`
-					WHERE
-						`movie_ratings`.`page_id` = '$s->id' AND
-						`users`.`id` = `movie_ratings`.`user_id`
-					ORDER BY
-					`movie_ratings`.`id` DESC");
+		$ratings = $ratings_by_page[$s->id] ?? [];
 
 		$max_show = 30; //maksimālais lietotāju avataru skaits, ko parādīt
 		$more_likes = 0;
@@ -146,7 +165,7 @@ if (!empty($series)) {
 
 		$more_dislikes_txt = '';
 		if($more_dislikes > 0) {
-			$more_dislikes_txt = '<br style="clear:both" /> un ' . $more_dislikes . ' ' . lv_dsk($more_likes, 'cits', 'citi') . '...';
+			$more_dislikes_txt = '<br style="clear:both" /> un ' . $more_dislikes . ' ' . lv_dsk($more_dislikes, 'cits', 'citi') . '...';
 		}
 
 		$module_content .= '		<td class="mr-us">' . implode('', $likes) . $more_likes_txt . '<div class="c"></div>'. $rate_like . '</td>';

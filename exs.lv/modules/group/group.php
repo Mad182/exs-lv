@@ -22,7 +22,7 @@ if (!empty($category->content)) {
 	$_GET['var1'] = $category->content;
 	$group_link = '/' . $category->textid;
 } else {
-	$group_link = '/group/' . intval($_GET['var1']);
+	$group_link = '/group/' . intval($_GET['var1'] ?? 0);
 }
 
 $tpl->assignGlobal('group-link', $group_link);
@@ -65,7 +65,7 @@ if ($auth->ok && ($auth->id == $group->owner || $auth->level == 1)) {
 	$is_admin = true;
 } elseif ($auth->ok && $db->get_var("SELECT count(*) FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' AND `approve` = 1 AND `moderator` = 1")) {
 	$is_mod = true;
-} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
+} elseif ($auth->ok && $db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
 	$is_member = true;
 }
 
@@ -127,7 +127,7 @@ if ($is_admin) {
 // grupas apraksta rediģēšana
 if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || im_mod())) {
 
-	if (isset($_POST['edit-group-text']) && check_token('groupedit', $_POST['xsrf_token'])) {
+	if (isset($_POST['edit-group-text']) && check_token('groupedit', $_POST['xsrf_token'] ?? '')) {
 		$edit_text = htmlpost2db($_POST['edit-group-text']);
 
 		//saglabā veco teksta versiju
@@ -143,7 +143,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 		}
 
 		if ($auth->level == 1) {
-			$group->interest_id = intval($_POST['edit-interest_id']);
+			$group->interest_id = intval($_POST['edit-interest_id'] ?? 0);
 		}
 
 		$db->update('clans', $group->id, ['category_id' => $group->category_id, 'interest_id' => $group->interest_id, 'avatar' => $group->avatar, 'text' => $edit_text, 'date_modified' => time()]);
@@ -223,8 +223,8 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 			$tpl->newBlock('pending');
 			foreach ($pendings as $pending) {
 				$p_user = get_user($pending->user);
-				$avatar = get_avatar($p_user, 's');
-				if ($pending->user) {
+				if ($pending->user && $p_user) {
+					$avatar = get_avatar($p_user, 's');
 					$tpl->newBlock('pending-node');
 					$tpl->assign([
 						'group-id' => $group->id,
@@ -270,7 +270,7 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 
 	$skip = 0;
 	if (isset($_GET['skip'])) {
-		$skip = (int) $_GET['skip'];
+		$skip = max(0, (int) $_GET['skip']);
 	}
 
 	$order_link = '';
@@ -361,30 +361,30 @@ if (isset($_GET['var2']) && $_GET['var2'] == 'edit' && ($is_admin || $is_mod || 
 }
 
 // grupas biedra dzēšana
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod) && check_token('drop', $_GET['token'])) {
-	$drop = (int) $_GET['var3'];
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'drop' && ($is_admin || $is_mod) && check_token('drop', $_GET['token'] ?? '')) {
+	$drop = (int) ($_GET['var3'] ?? 0);
 	$db->query("DELETE FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$drop'");
 	update_members($group->id);
 	$auth->log('Izmeta biedru #' . $drop, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
 // uzliek biedram moderatora statusu
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin && check_token('mod', $_GET['token'])) {
-	$uid = (int) $_GET['var3'];
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'setmod' && $is_admin && check_token('mod', $_GET['token'] ?? '')) {
+	$uid = (int) ($_GET['var3'] ?? 0);
 	$db->query("UPDATE clans_members SET moderator = '1' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Uzlika par moderatoru #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
 // noņem biedram moderatora statusu
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && check_token('mod', $_GET['token'])) {
-	$uid = (int) $_GET['var3'];
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && check_token('mod', $_GET['token'] ?? '')) {
+	$uid = (int) ($_GET['var3'] ?? 0);
 	$db->query("UPDATE clans_members SET moderator = '0' WHERE clan = '$group->id' AND user = '$uid'");
 	$auth->log('Noņēma moderatora tiesības #' . $uid, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* confirm pending member */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod) && check_token('confirm', $_GET['token'])) {
+/* confirm pending member */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'confirm' && ($is_admin || $is_mod) && check_token('confirm', $_GET['token'] ?? '')) {
 
-	$confirm = (int) $_GET['var3'];
+	$confirm = (int) ($_GET['var3'] ?? 0);
 
 	$db->query("UPDATE clans_members SET approve = '1' WHERE clan = '$group->id' AND id = '$confirm'");
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
@@ -395,9 +395,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && chec
 	$auth->log('Apstiprināja grupā biedru #' . $auser, 'clans', $group->id);
 	redirect($group_link . '/members');
 }
-/* deny pendig member, remove pending status */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod) && check_token('deny', $_GET['token'])) {
+/* deny pendig member, remove pending status */ elseif (isset($_GET['var2']) && $_GET['var2'] == 'deny' && ($is_admin || $is_mod) && check_token('deny', $_GET['token'] ?? '')) {
 
-	$confirm = (int) $_GET['var3'];
+	$confirm = (int) ($_GET['var3'] ?? 0);
 
 	$auser = $db->get_var("SELECT user FROM clans_members WHERE clan = '$group->id' AND id = '$confirm'");
 	$db->query("DELETE FROM `clans_members` WHERE clan = '$group->id' AND id = '$confirm' LIMIT 1");
@@ -406,7 +406,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'unsetmod' && $is_admin && chec
 	redirect($group_link . '/members');
 }
 // lietotājs piesakās būt par grupas biedru
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $auth->ok && check_token('apply', $_GET['token'])) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $auth->ok && check_token('apply', $_GET['token'] ?? '')) {
 	if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'") && $auth->id != $group->owner) {
 		$db->query("INSERT INTO clans_members (user,clan,approve,date_added) VALUES ('$auth->id','$group->id','$group->auto_approve','" . time() . "')");
 		update_members($group->id);
@@ -420,7 +420,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'apply' && $auth->ok && check_t
 	}
 }
 // izstāšanās no grupas
-elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel', $_GET['token'])) {
+elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && $auth->ok && check_token('cancel', $_GET['token'] ?? '')) {
 	if ($db->query("DELETE FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")) {
 		update_members($group->id);
 		push('Izstājās no grupas &quot;<a href="' . $group_link . '">' . $group->title . '</a>&quot;', get_avatar($group, 's', true), '', !$group->public, $group->id);
@@ -463,7 +463,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$body = post2db($_POST['newminiblog']);
 
 			// ja nav pārkāpts flood limits, pievieno miniblogu un visādas notifikācijas
-			if ((!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) && check_token('newmb', $_POST['token'])) {
+			if ((!isset($_SESSION['antiflood']) or $_SESSION['antiflood'] < time() - 8) && check_token('newmb', $_POST['token'] ?? '')) {
 				$_SESSION["antiflood"] = time();
 
 				$ins = post_mb([
@@ -488,13 +488,13 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// komentāra pievienošana, ja vien grupa nav arhivēta
 		if ($auth->ok && isset($_POST['responseminiblog']) && !empty($_POST['responseminiblog']) && !$group->archived) {
 
-			$to = (int) $_POST['response-to'];
+			$to = (int) ($_POST['response-to'] ?? 0);
 
 			// security pārbaudes...
 			if (get_mb_level($to) > 10) {
 				die('Too deep ;(');
 			}
-			if (!isset($_POST['token']) or $_POST['token'] != md5('mb' . intval($_GET['single']) . $remote_salt . $auth->nick)) {
+			if (!isset($_POST['token']) or $_POST['token'] != md5('mb' . intval($_GET['single'] ?? 0) . $remote_salt . $auth->nick)) {
 				set_flash('Kļūdains pieprasījums! Hacking around?');
 				redirect();
 			}
@@ -503,7 +503,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$reply_to = $db->get_row("SELECT * FROM miniblog WHERE id = '$to'");
 
 			$reply_to_id = 0;
-			if ($reply_to->parent != 0) {
+			if ($reply_to && $reply_to->parent != 0) {
 				$mainid = $reply_to->parent;
 				$reply_to_id = $reply_to->id;
 			} else {
@@ -513,14 +513,14 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			// eskeipos un embeddos dažādas specifiskas fīčas
 			$body = post2db($_POST['responseminiblog']);
 
-			$check = $db->get_var("SELECT author FROM miniblog WHERE id = '" . $mainid . "' AND removed = '0' AND groupid = '$group->id'");
-			if (!$check) {
+			$parent_row = $db->get_row("SELECT `author`, `closed`, `text` FROM `miniblog` WHERE `id` = '" . $mainid . "' AND `removed` = '0' AND `groupid` = '$group->id'");
+			if (!$parent_row) {
 				die("Kļūdains parent id! Iespējams kamēr rakstīji komentāru, kāds izdzēsa tēmu.");
 			}
-			$check2 = $db->get_var("SELECT author FROM miniblog WHERE id = '" . $mainid . "' AND closed = '1'");
-			if ($check2) {
+			if ($parent_row->closed) {
 				die("Tēma ir slēgta.");
 			}
+			$check = $parent_row->author;
 
 			// pievieno komentāru, ja nav pārsniegts flood limits
 			if ($mainid) {
@@ -534,9 +534,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						'reply_to' => $reply_to_id
 					]);
 
-					$body = $db->get_var("SELECT `text` FROM `miniblog` WHERE `id` = '$mainid'");
+					$body = $parent_row->text;
 
-					$title = mb_get_title(stripslashes($body));
+					$title = mb_get_title(stripslashes((string) $body));
 					$url = $group_link . '/forum/' . base_convert($mainid, 10, 36);
 
 					//kādā grupā?
@@ -566,12 +566,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					$db->query("UPDATE `miniblog` SET `text` = '" . sanitize($newpost->text) . "' WHERE id = '$newpost->id'");
 
 					notify($check, 8, $mainid, $url, textlimit($group->title . ' - ' . $title, 64));
-					if (!empty($reply_to_id) && $check != $reply_to->author) {
+					if (!empty($reply_to_id) && $reply_to && $check != $reply_to->author) {
 						notify($reply_to->author, 8, $mainid, $url, textlimit($group->title . ' - ' . $title, 64));
 					}
 
 					//ai stuff
-					if ($reply_to->author == 43040) {
+					if ($reply_to && $reply_to->author == 43040) {
 						$already_replied = $db->get_var("SELECT `id` FROM `miniblog` WHERE `reply_to` = '$newid' AND `author` = 43040 LIMIT 1");
 						if (!$already_replied) {
 							touch_ai_bot_online();
@@ -702,8 +702,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 				// lietotāja apbalvojumu ikonas
 				$add_deco = '';
 				if (!empty($user->decos)) {
-					$decos = unserialize($user->decos);
-					if (!empty($decos)) {
+					$decos = unserialize($user->decos, ['allowed_classes' => false]);
+					if (is_array($decos) && !empty($decos)) {
 						$di = 0;
 						foreach ($decos as $deco) {
 							$add_deco .= '<img src="' . $deco['icon'] . '" alt="' . $deco['title'] . '" title="' . $deco['title'] . '" class="user-deco deco-pos-' . $di . '" />';
@@ -914,10 +914,12 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		}
 
 		// fiksē, cik daudz komentāru attiecīgajā grupā lietotājs ir jau lasījis
-		if ($group->owner == $auth->id) {
-			$db->query("UPDATE clans SET owner_seenposts = '$group->posts' WHERE owner = '$auth->id' AND id = '$group->id'");
-		} else {
-			$db->query("UPDATE clans_members SET seenposts = '$group->posts' WHERE user = '$auth->id' AND clan = '$group->id'");
+		if ($auth->ok) {
+			if ($group->owner == $auth->id) {
+				$db->query("UPDATE clans SET owner_seenposts = '$group->posts' WHERE owner = '$auth->id' AND id = '$group->id'");
+			} else {
+				$db->query("UPDATE clans_members SET seenposts = '$group->posts' WHERE user = '$auth->id' AND clan = '$group->id'");
+			}
 		}
 	}
 	// viesiem nepubliskotas grupas nav skatāmas
@@ -954,7 +956,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		// cilnes satura rediģēšana
 		if (isset($_GET['var4']) && $_GET['var4'] == 'edit' && ($is_admin || $is_mod)) {
 
-			if (isset($_POST['tab-text']) && check_token('tabedit', $_POST['xsrf_token'])) {
+			if (isset($_POST['tab-text']) && check_token('tabedit', $_POST['xsrf_token'] ?? '')) {
 				$tab_text = htmlpost2db($_POST['tab-text']);
 				$db->query("UPDATE clans_tabs SET `text` = '$tab_text' WHERE id = '$tab->id'");
 				redirect($group_link . '/tab/' . $tab->slug);
@@ -1022,9 +1024,10 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	$tpl->newBlock('group-settings');
 
 	if ($is_admin) {
+		$group_tabs_count = is_array($group_tabs) ? count($group_tabs) : 0;
 
 		// cilnes dzēšana
-		if (isset($_GET['deltab']) && check_token('deltab' . $_GET['deltab'], $_GET['token'])) {
+		if (isset($_GET['deltab']) && check_token('deltab' . $_GET['deltab'], $_GET['token'] ?? '')) {
 			$delete = intval($_GET['deltab']);
 			if ($delete) {
 				$db->query("DELETE FROM `clans_tabs` WHERE `clan_id` = '$group->id' AND `id` = '$delete' LIMIT 1");
@@ -1034,11 +1037,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		}
 
 		// cilnes pievienošana
-		if (isset($_POST['tab-title']) && count($group_tabs) < 12 && strlen($_POST['tab-title']) > 2) {
+		if (isset($_POST['tab-title']) && $group_tabs_count < 12 && strlen($_POST['tab-title']) > 2) {
 			$title = trim(substr(strip_tags($_POST['tab-title']), 0, 16));
 			$slug = mkslug($title);
 			$title = sanitize($title);
-			$public = (bool) $_POST['public'];
+			$public = !empty($_POST['public']) ? 1 : 0;
 			if (!$db->get_var("SELECT count(*) FROM clans_tabs WHERE clan_id = '$group->id' AND slug = '$slug'") && !empty($slug)) {
 				$db->query("INSERT INTO clans_tabs (clan_id,slug,title,date_modified,public)
 											VALUES ('$group->id','$slug','$title','" . time() . "','$public')");
@@ -1049,14 +1052,14 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 		// citas iespējas
 		if (isset($_POST['submit-main'])) {
-			$public = (bool) $_POST['main-public'];
-			$auto_approve = (bool) $_POST['main-auto_approve'];
+			$public = !empty($_POST['main-public']) ? 1 : 0;
+			$auto_approve = !empty($_POST['main-auto_approve']) ? 1 : 0;
 			$db->query("UPDATE `clans` SET `public` = '$public', `auto_approve` = '$auto_approve' WHERE `id` = '$group->id'");
 			redirect($group_link . '/options');
 		}
 
 		// ciļņu skaitam ir noteikts limits, lai neaizcūkātu visu skatu
-		if (count($group_tabs) < 12) {
+		if ($group_tabs_count < 12) {
 			$tpl->newBlock('group-settings-newtab');
 		}
 
@@ -1086,8 +1089,8 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 			// saglabā
 			if (isset($_POST['submit-admin'])) {
-				$disable_vote = (bool) $_POST['admin-disable_vote'];
-				$hide_intro = (bool) $_POST['admin-hide_intro'];
+				$disable_vote = !empty($_POST['admin-disable_vote']) ? 1 : 0;
+				$hide_intro = !empty($_POST['admin-hide_intro']) ? 1 : 0;
 				$db->query("UPDATE `clans` SET `hide_intro` = '$hide_intro', `disable_vote` = '$disable_vote' WHERE `id` = '$group->id'");
 				redirect($group_link . '/options');
 			}
@@ -1371,8 +1374,29 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 		$polls = $db->get_results("SELECT p.* FROM `poll` p WHERE p.`group` = '$group->id' AND EXISTS (SELECT 1 FROM `questions` q JOIN `responses` r ON r.qid = q.id WHERE q.pid = p.id) ORDER BY p.`id` DESC");
 		if ($polls) {
+			$poll_ids = [];
+			foreach ($polls as $p) {
+				$poll_ids[] = (int) $p->id;
+			}
+			$poll_questions_map = [];
+			$poll_totals = [];
+			$all_q = $db->get_results("
+				SELECT q.`id`, q.`pid`, q.`question`, COUNT(r.`id`) AS `responses`
+				FROM `questions` q
+				LEFT JOIN `responses` r ON r.`qid` = q.`id`
+				WHERE q.`pid` IN (" . implode(',', $poll_ids) . ")
+				GROUP BY q.`id`, q.`pid`, q.`question`
+				ORDER BY q.`id`
+			");
+			if ($all_q) {
+				foreach ($all_q as $q_row) {
+					$poll_questions_map[$q_row->pid][] = $q_row;
+					$poll_totals[$q_row->pid] = ($poll_totals[$q_row->pid] ?? 0) + (int) $q_row->responses;
+				}
+			}
+
 			foreach ($polls as $poll) {
-				$total = (int) $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid` = `questions`.`id` AND `pid` = '" . $poll->id . "'");
+				$total = $poll_totals[$poll->id] ?? 0;
 				if ($total < 1) {
 					continue;
 				}
@@ -1383,14 +1407,14 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 					'poll-totalvotes' => $total,
 				]);
 
-				$questions = $db->get_results("SELECT * FROM `questions` WHERE `pid` = '" . $poll->id . "' ORDER BY `id`");
+				$questions = $poll_questions_map[$poll->id] ?? [];
 				if (!empty($questions)) {
 					$tpl->newBlock('group-polls-answers');
 					$tpl->assign('poll-totalvotes', $total);
 
 					foreach ($questions as $question) {
-						$responses = (int) $db->get_var("SELECT count(*) FROM `responses` WHERE `qid` = '" . $question->id . "'");
-						$calc = ($total == 0) ? 0 : round(($responses / $total) * 100);
+						$responses = (int) $question->responses;
+						$calc = round(($responses / $total) * 100);
 
 						$tpl->newBlock('group-polls-answers-node');
 						$tpl->assign([
@@ -1458,19 +1482,20 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 
 		} else {
 
-			if (!$db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id'")  && !$group->archived) {
+			$membership_row = $db->get_row("SELECT `approve` FROM `clans_members` WHERE `clan` = '$group->id' AND `user` = '$auth->id' LIMIT 1");
+			if (!$membership_row && !$group->archived) {
 				$tpl->newBlock('group-info-apply');
 				$tpl->assign([
 					'group-id' => $group->id,
 					'token' => make_token('apply')
 				]);
-			} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '0'")) {
+			} elseif ($membership_row && $membership_row->approve == 0) {
 				$tpl->newBlock('group-info-cancel');
 				$tpl->assign([
 					'group-id' => $group->id,
 					'token' => make_token('cancel')
 				]);
-			} elseif ($db->get_var("SELECT count(*) FROM clans_members WHERE clan = '$group->id' AND user = '$auth->id' AND approve = '1'")) {
+			} elseif ($membership_row && $membership_row->approve == 1) {
 				$tpl->newBlock('group-info-quit');
 				$tpl->assign([
 					'group-id' => $group->id,
@@ -1482,10 +1507,11 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	}
 
 	// balsošana aptaujā
-	if (isset($_POST['g-vote']) && isset($_POST['g-questions'])) {
-		$q_pid = $db->get_var("SELECT `questions`.`pid` FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid=(SELECT pid FROM `questions` WHERE id='" . intval($_POST['g-questions']) . "' LIMIT 1)");
+	if ($auth->ok && ($is_mod || $is_admin || $is_member) && isset($_POST['g-vote']) && isset($_POST['g-questions'])) {
+		$g_qid = intval($_POST['g-questions']);
+		$q_pid = $db->get_var("SELECT `questions`.`pid` FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid=(SELECT pid FROM `questions` WHERE id='$g_qid' LIMIT 1)");
 		if (empty($q_pid)) {
-			$db->query("INSERT INTO `responses` (`qid`, `user_id`) VALUES ('" . intval($_POST['g-questions']) . "', '" . $auth->id . "')");
+			$db->query("INSERT INTO `responses` (`qid`, `user_id`) VALUES ('$g_qid', '" . $auth->id . "')");
 			push('Nobalsoja aptaujā', '/bildes/poll-icon.png', '', !$group->public, $group->id);
 			update_karma($auth->id, 1);
 			if ($m instanceof Memcached) {
@@ -1494,7 +1520,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 		} else {
 			$error = 'Tu jau nobalsoji!';
 		}
-	} else if (!isset($_POST['questions']) && isset($_POST['vote'])) {
+	} else if ($auth->ok && !isset($_POST['questions']) && isset($_POST['vote'])) {
 		$error = 'Jāizvēlas atbilde!';
 	}
 
@@ -1504,22 +1530,32 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 	if ($poll) {
 		$title = $poll->name;
 
-		$responded = $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid='" . $poll->id . "'");
+		$responded = $auth->ok ? $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `responses`.`user_id`='" . $auth->id . "' AND pid='" . $poll->id . "'") : 0;
 
 		if ($responded or !($is_mod or $is_admin or $is_member)) {
-			$total = $db->get_var("SELECT count(*) FROM `responses`, `questions` WHERE `responses`.`qid`=`questions`.`id` AND `pid` = '" . $poll->id . "'");
 			$tpl->newBlock('g-poll-box');
 			$tpl->assign('poll-title', $title);
-			$questions = $db->get_results("SELECT * FROM `questions` WHERE `pid` = '" . $poll->id . "' ORDER BY `id`");
+			$questions = $db->get_results("
+				SELECT q.`id`, q.`question`, COUNT(r.`id`) AS `responses`
+				FROM `questions` q
+				LEFT JOIN `responses` r ON r.`qid` = q.`id`
+				WHERE q.`pid` = '" . $poll->id . "'
+				GROUP BY q.`id`, q.`question`
+				ORDER BY q.`id`
+			");
 			if (!empty($questions)) {
+				$total = 0;
+				foreach ($questions as $question) {
+					$total += (int) $question->responses;
+				}
 				$tpl->newBlock('g-poll-answers');
 
 				foreach ($questions as $question) {
-					$responses = $db->get_var("SELECT count(*) FROM `responses` WHERE `qid` = '" . $question->id . "'");
+					$responses = (int) $question->responses;
 					$tpl->newBlock('g-poll-answers-node');
 					$tpl->assign([
 						'poll-answer-question' => $question->question,
-						'poll-answer-percentage' => round(($responses / $total) * 100)
+						'poll-answer-percentage' => $total > 0 ? round(($responses / $total) * 100) : 0
 					]);
 				}
 
@@ -1557,6 +1593,9 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 			$tpl->newBlock('nmembers');
 			foreach ($members as $member) {
 				$m_user = get_user($member->user);
+				if (empty($m_user)) {
+					continue;
+				}
 
 				$avatar = get_avatar($m_user, 's');
 
@@ -1589,7 +1628,7 @@ elseif (isset($_GET['var2']) && $_GET['var2'] == 'cancel' && check_token('cancel
 						$db->query("INSERT INTO `clans_members` (`user`, `clan`, `approve`, `date_added`) VALUES (".intval($group->owner).", " . intval($group->id) .", 1, ".intval($group->date_created).")");
 					}
 					
-					$auth->log('Nomainija grupas administratoru ('.$olduser->nick.' &raquo; '.$newuser->nick.')', 'clans', $group->id);
+					$auth->log('Nomainija grupas administratoru ('.($olduser ? $olduser->nick : 'dzēsts').' &raquo; '.$newuser->nick.')', 'clans', $group->id);
 					redirect($group_link);
 				}
 			

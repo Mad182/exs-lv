@@ -5,7 +5,8 @@
  */
  
 // $_POST balsošana
-if (isset($_POST['vote']) && isset($_POST['questions'])) {
+if ($auth->ok && isset($_POST['vote']) && isset($_POST['questions'])) {
+	$qid = intval($_POST['questions']);
 	$voted = $db->get_var("SELECT
 			count(*)
 		FROM
@@ -14,16 +15,16 @@ if (isset($_POST['vote']) && isset($_POST['questions'])) {
 		WHERE
 			`responses`.`qid` = `questions`.`id` AND
 			`responses`.`user_id` = '" . $auth->id . "' AND
-			`pid` = (SELECT `pid` FROM `questions` WHERE `id` = '" . intval($_POST['questions']) . "' LIMIT 1)
+			`pid` = (SELECT `pid` FROM `questions` WHERE `id` = '$qid' LIMIT 1)
 		");
 	if (!$voted) {
-		$db->query("INSERT INTO `responses` (`qid`, `user_id`) VALUES ('" . intval($_POST['questions']) . "', '" . $auth->id . "')");
+		$db->query("INSERT INTO `responses` (`qid`, `user_id`) VALUES ('$qid', '" . $auth->id . "')");
 		userlog($auth->id, 'Nobalsoja aptaujā', '/bildes/poll-icon.png');
 		update_karma($auth->id, 1);
 	} else {
 		$error = 'Tu jau nobalsoji!';
 	}
-} else if (!isset($_POST['questions']) && isset($_POST['vote'])) {
+} else if ($auth->ok && !isset($_POST['questions']) && isset($_POST['vote'])) {
 	$error = 'Jāizvēlas atbilde!';
 }
 
@@ -47,28 +48,32 @@ if ($poll) {
         ")
     ) {
     
-		$total = $db->get_var("
-            SELECT count(*) FROM `responses`, `questions` 
-            WHERE 
-                `responses`.`qid` = `questions`.`id` AND
-                `pid` = '" . $poll->id . "'
-        ");
-        
 		$tpl->newBlock('poll-box');
 		$tpl->assign('poll-title', $title);
         
-		$questions = $db->get_results("SELECT * FROM `questions` WHERE `pid` = '" . $poll->id . "' ORDER BY `id`");
+		$questions = $db->get_results("
+			SELECT q.`id`, q.`question`, COUNT(r.`id`) AS `responses`
+			FROM `questions` q
+			LEFT JOIN `responses` r ON r.`qid` = q.`id`
+			WHERE q.`pid` = '" . $poll->id . "'
+			GROUP BY q.`id`, q.`question`
+			ORDER BY q.`id`
+		");
         
 		if (!empty($questions)) {
+			$total = 0;
+			foreach ($questions as $question) {
+				$total += (int) $question->responses;
+			}
         
 			$tpl->newBlock('poll-answers');
 
 			foreach ($questions as $question) {
-				$responses = $db->get_var("SELECT count(*) FROM `responses` WHERE `qid` = '" . $question->id . "'");
+				$responses = (int) $question->responses;
 				$tpl->newBlock('poll-answers-node');
 				$tpl->assign([
 					'poll-answer-question' => $question->question,
-					'poll-answer-percentage' => round(($responses / $total) * 100)
+					'poll-answer-percentage' => $total > 0 ? round(($responses / $total) * 100) : 0
 				]);
 			}
 
